@@ -1,0 +1,721 @@
+calibre (2.60.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 30 Jun 2016 10:51:32 +0200
+
+calibre (2.55.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop obsolete XS-Python-Version.
+  * Bump Standards-Version to 3.9.8 (no changes necessary).
+  * debian/copyright: Factor out licenses (fixes lintian warning
+    (dep5-copyright-license-name-not-unique)
+  * Add links-privacy.patch: content-server: Don't load external URLs for
+    privacy (spotted by lintian).
+  * Enable relro hardening.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 17 Apr 2016 23:52:46 +0200
+
+calibre (2.54.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop use_system_markdown.patch, redundant with the sedding in
+    debian/rules. Thanks Felix Dietrich.
+  * markdown-calibre: Use system "markdown" module. Thanks Felix Dietrich.
+    (Closes: #808198)
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 03 Apr 2016 21:18:01 +0200
+
+calibre (2.48.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 03 Jan 2016 10:43:05 +0100
+
+calibre (2.45.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 28 Nov 2015 15:26:52 +0100
+
+calibre (2.38.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #796929)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 16 Sep 2015 11:08:57 +0200
+
+calibre (2.33.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/watch, debian/rules: Adjust to changed upstream tarball location.
+  * debian/rules get-orig-source: Download Datejs-all-Alpha1.zip and produce
+    unminified date.js in the original tarball. Thanks Jesus M.
+    Gonzalez-Barahona! (Closes: #775663)
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 25 Jul 2015 11:27:08 +0200
+
+calibre (2.31.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #789244)
+  * Add new libssl-dev build dependency, required for this version.
+  * debian/calibre.install: Add new "duktape" module.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 28 Jun 2015 13:46:13 +0200
+
+calibre (2.24.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #782248)
+  * Drop git_pytqt_5.4.1.patch, upstream now.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 12 Apr 2015 19:02:00 -0500
+
+calibre (2.20.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #780348)
+  * Backport compatibility fix for PyQT 5.4.1 from upstream git.
+  * debian/calibre.install: Add new css_selectors private module.
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 14 Mar 2015 08:27:35 +0100
+
+calibre (2.19.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #776786)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 06 Feb 2015 12:09:59 +0100
+
+calibre (2.16.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #774547)
+  * debian/calibre.install: Drop six.py, not shipped upstream any more.
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 17 Jan 2015 11:03:00 +0100
+
+calibre (2.14.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #774003)
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 28 Dec 2014 13:20:01 +0100
+
+calibre (2.13.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #773812)
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 23 Dec 2014 20:27:32 +0100
+
+calibre (2.9.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop qt5-default metapackage (lintian complained) and set $QT_SELECT in
+    debian/rules instead.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 10 Nov 2014 07:34:49 +0100
+
+calibre (2.7.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 30 Oct 2014 10:57:06 +0100
+
+calibre (2.5.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/rules: Fix get-orig-source rule to produce tarballs with just one
+    top-level dir, not an additional "./" prefix.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 12 Oct 2014 22:33:24 +0200
+
+calibre (2.4.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Fix original file name of jquery.multiselect.js to avoid lintian error.
+  * Don't ship calibre-portable.sh, not needed in package.
+  * Use dpkg buildflags.mk for hardening.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 29 Sep 2014 13:14:54 +0200
+
+calibre (2.3.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #762155)
+  * Rebuild against current Qt/sip API. (Closes: #761517)
+  * Bump Standards-Version to 3.9.6 (no changes necessary).
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 19 Sep 2014 06:59:32 +0200
+
+calibre (2.2.0+dfsg-2) unstable; urgency=medium
+
+  * Make libudev-dev and libmtdev-dev linux-any, to fix building on BSD/Hurd.
+    (see #760863)
+  * Work around broken threading on mips builders. (Closes: #760865)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 10 Sep 2014 12:01:23 +0200
+
+calibre (2.2.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add missing python-pyqt5.qtsvg dependency. (Closes: #759551)
+  * Add libegl1-mesa-dev build dep for new version.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 08 Sep 2014 09:44:52 +0200
+
+calibre (2.0.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #759246)
+  * Adjust debian/rules get-orig-source for slightly changed upstream tarball
+    layout.
+  * This version uses Qt5 now. Close all crashes which are related to Qt4.
+    (Closes: #673598, #609705) (LP: #1294989, #1074796, #1038931, #1021047,
+    #976305, #967316, #958282, #939788, #930445, #927641, #925777, #891924,
+    #886504, #871883, #854417, #852624, #762931, #762643, #761719, #745176,
+    #720028, #701129, #696077, #659806, #565377, #565366, #565178, #563585,
+    #557883, #458403, #1216549, #1051759, #1027371, #720021, #556985, #555961)
+  * Adjust build and binary dependencies for the Qt 4 → 5 change.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 26 Aug 2014 20:43:13 +0200
+
+calibre (1.48.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #757135)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 13 Aug 2014 12:04:58 +0200
+
+calibre (1.36.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Fixes editing of metadata (Closes: #741638)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 14 May 2014 18:17:50 +0200
+
+calibre (1.25.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/rules: Drop the removal of manual/images/valid.png, got dropped
+    upstream.
+  * debian/copyright: Update copyrights, and fix wrong copyright-1.0 syntax.
+    Thanks Felix Gruber!
+  * debian/control: Remove trailing spaces.
+  * debian/control: Bump minimal dependencies to the versions at
+    http://calibre-ebook.com/download_linux. (see #738642)
+  * debian/rules: Ignore bash completion files, until we figure out what to
+    build-depend on to make these files also built in minimal schroots.
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 27 Feb 2014 07:48:06 +0100
+
+calibre (1.22.0+dfsg1-1) unstable; urgency=medium
+
+  [ Gary Preston ]
+  * get-orig-source:
+    - Remove non-free manual/images/valid.png. (Closes: #735340)
+    - Remove unnecessary and wrong gunzip switch from tar command.
+    - wget original source for jquery ui and jquery multiselect and add them
+      as *.js.orig next to their whitespace-compressed versions.
+      (Closes: #735354)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 05 Feb 2014 07:22:28 +0100
+
+calibre (1.22.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/copyright: Update to 1.0 copyright standard. Thanks Felix Gruber!
+    (LP: #737343)
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 02 Feb 2014 10:46:11 +0100
+
+calibre (1.14.0+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #731502)
+  * Depend on python-pil | python-imaging now, upstream source is compatible
+    with both. (Closes: #731501)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 06 Dec 2013 08:28:47 +0100
+
+calibre (1.9.0+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/calibre.install: Install new module.
+  * Bump Standards-Version to 3.9.5, no changes necessary.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 04 Nov 2013 11:02:15 +0100
+
+calibre (1.5.0+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #722962)
+  * Drop removal of non-free fonts, they got removed upstream.
+  * use_system_markdown.patch: Adjust for new upstream release.
+  * Drop debian/local/calibre-mount-helper and its installation in
+    debian/rules, upstream removed the mount-helper.
+  * debian/local/calibre-gui.desktop: Add GenericName, thanks Ronny
+    Standtke. (Closes: #662838)
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 14 Oct 2013 12:12:07 +0200
+
+calibre (1.0.0+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #720836)
+  * debian/calibre.install: Drop usr/etc, not shipped by upstream any more.
+  * debian/control: Add python-apsw dependency.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 26 Aug 2013 07:33:55 +0200
+
+calibre (0.9.41+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/local/calibre.desktop: Rename to calibre-gui.desktop to match its
+    window class. (LP: #1206687)
+  * Add debian/local/ebook-viewer.desktop, so that one can directly open
+    *.epub or *.mobi files in file browsers. Thanks Korey Lu!
+    (Closes: #664182)
+  * Make it possible to auto-start calibre when connecting an e-book reader
+    device:
+    - Add debian/local/mime/calibre.xml MIME association, install in
+      debian/calibre.install.
+    - debian/local/calibre-gui.desktop: Add MIME type and file argument.
+    - Thanks to Thanks Korey Lu! (Closes: #715246)
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 01 Aug 2013 18:17:22 +0200
+
+calibre (0.9.31+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuild against current sip4 ABI, this makes the package installable
+    again. (Closes: #708613)
+  * Bump Standards-Version to 3.9.4, no changes necessary.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 21 May 2013 08:56:01 +0200
+
+calibre (0.9.27+dfsg-1) experimental; urgency=low
+
+  Upload to experimental as unstable's mathjax version is too old.
+
+  [ Dmitry Shachnev ]
+  * Remove non-free bundled copy of unrar. (Closes: #704977, #702816)
+  * Remove bundled copy of mathjax. (Closes: #700838)
+  * Remove bundled copy of python-markdown.
+  * Make get-orig-tarball downloading the correct version.
+  * Remove *.pyc, *.qrc, *.so and *_ui.py files in clean target.
+
+  [ Martin Pitt ]
+  * New upstream release.
+  * dont_build_unrar_plugin.patch: Also remove "rar" as accepted file
+    extension.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 23 Apr 2013 21:58:12 +0200
+
+calibre (0.9.18+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #699700)
+  * Unfuzz patches.
+  * Add new libqt4-private-dev build dependency, required by this version.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 12 Feb 2013 16:45:34 +0100
+
+calibre (0.9.11+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add missing python-cssselect dependency.
+  * Add python_multiarch_inc.patch: Use python-config instead of
+    sysconfig.get_python_inc(), as the latter does not work with
+    multiarch-split include files. (LP: #1094246)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 28 Dec 2012 14:31:49 +0100
+
+calibre (0.9.0+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control, debian/rules: ttf-liberation is no more, move to
+    fonts-liberation. Thanks to Kan-Ru Chen! (Closes: #674838)
+  * debian/calibre.install: Drop pyPdf, not shipped upstream any more.
+  * debian/control: Add new python-netifaces dependency.
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 03 Oct 2012 23:18:14 +0200
+
+calibre (0.8.64+dfsg-1) unstable; urgency=low
+
+  * New upstream release:
+    - Update license of the quick start guide to be DFSG compatible. Thanks to
+      Christophe Siraut for sorting this out! (Closes: #653328)
+  * debian/control: Add new libmtp-dev build dependency.
+  * debian/control: Stricter python-mechanize dependency. (Closes: #684616)
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 16 Aug 2012 09:55:40 +0200
+
+calibre (0.8.60+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #677956)
+  * debian/control: New upstream release uses poppler-utils directly, drop
+    libpoppler-private-dev and libpoppler-qt4-dev build dependencies.
+    (Closes: #679883)
+  * Drop manpages-installation.patch, does not apply any more.
+  * debian/control: Fix "upports" typo. (Closes: #678686)
+  * debian/rules: Update source path for logo.png.
+  * debian/rules: Drop manpage path installation fix, as upstream does not
+    install manpages any more.
+  * debian/calibre.install: install new file qtcurve/test_rendering.py.
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 21 Jul 2012 18:14:54 +0200
+
+calibre (0.8.51+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuild against python-sip du jour. (Closes: #671809)
+  * debian/control: Bump python-cssutils dependency to >= 0.9.0, to ensure
+    that we have the "validate" keyword available.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 14 May 2012 12:13:07 +0200
+
+calibre (0.8.49+dfsg-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New upstream release. (Closes: #640021)
+  * debian/control, debian/rules: Remove internal feedparser Python module. Add
+    python-feedparser as binary dependency. (Closes: #555352)
+  * debian/control: Bump Standards-Version (no changes needed).
+  * debian/watch: Upstream switched to *.tar.xz, update accordingly. (Closes:
+    #618948)
+  * debian/rules: Fix images permissions.
+
+ -- Kefu Chai <tchaikov@gmail.com>  Sun, 29 Apr 2012 20:06:10 +0800
+
+calibre (0.8.41+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Add libpoppler-private-dev build dependency, thanks Pino
+    Toscano. (Closes: #660114)
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 03 Mar 2012 22:02:28 +0100
+
+calibre (0.8.38+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Bump Standards-Version to 3.9.2. No changes necessary.
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 10 Feb 2012 07:35:00 +0100
+
+calibre (0.8.34+dfsg-1) unstable; urgency=low
+
+  * New upstream version. (Closes: #654751)
+  * debian/rules: Do not install calibre copy of chardet; instead, add
+    build/binary python-chardet dependency.
+  * Add disable_plugins.py: Disable plugin dialog. It uses a totally
+    non-authenticated and non-trusted way of installing arbitrary code.
+    (Closes: #640026)
+  * debian/rules: Install with POSIX locale, to avoid installing translated
+    manpages into the standard locations. (Closes: #646674)
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 07 Jan 2012 11:22:54 +0100
+
+calibre (0.8.29+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control, debian/rules: Always depend on the python-qt4 which we
+    build against. This will still not stop the PyQt4 guys to break their ABI
+    with every single microrelease, but at least the dependency will
+    automatically become tighter with every calibre rebuild now.
+    (Closes: #651496)
+  * debian/control: Drop python-django-tagging dependency, not used any more.
+    (Closes: #651156)
+  * debian/rules: Fix half of the manpages landing in the wrong path.
+    (Closes: #646674)
+  * debian/control: Drop dependency to python-encutils. calibre does not use
+    it explicitly any more. (Closes: #649558)
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 20 Dec 2011 16:02:01 +0100
+
+calibre (0.8.28+dfsg-1) unstable; urgency=low
+
+  * debian/rules get-orig-source: Upstream switched to *.tar.xz, update
+    accordingly.
+  * New upstream release.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 06 Dec 2011 08:33:19 +0100
+
+calibre (0.8.25+dfsg-1) unstable; urgency=low
+
+  [ Ritesh Raj Sarraf ]
+  * New upstream release.
+
+  [ Martin Pitt ]
+  * debian/control: Bump python-qt4 build/binary dependencies against PyQt4 to
+    >= 4.8. Yay for continuous ABI breaks. (Closes: #647268, #647819)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 11 Nov 2011 09:01:24 +0100
+
+calibre (0.8.21+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #642517)
+  * debian/control: Revert accidental X-Ubuntu-Original-Maintainer change.
+    (Closes: #644029)
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 04 Oct 2011 10:29:28 +0200
+
+calibre (0.8.8+dfsg-1) unstable; urgency=low
+
+  [ Martin Pitt ]
+  * New upstream version.
+  * Fix wrong libmagick4 transition bug number in previous changelog.
+  * manpages-installation.patch: Update for new upstream version.
+  * debian/control: Fix spelling errors. Thanks Paul Stewart!
+    (LP: #803684, LP: #803676)
+
+  [ Michael Wild ]
+  * Don't remove pyPdf from installation, it is a modified version
+    (Closes: #631266, LP: #800551)
+    - debian/control: drop dependencies on python-pypdf
+    - debian/rules: do not remove pyPdf directory
+    - debian/calibre.install: install usr/lib/calibre/pyPdf
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 07 Jul 2011 09:35:43 +0200
+
+calibre (0.8.2+dfsg-1) unstable; urgency=low
+
+  * Rebuild against libmagick 4. (Closes: #625556)
+  * debian/watch: Update for new location on sourceforge.
+  * Drop kfreebsd.patch, fixed upstream.
+  * Unfuzz the other two patches.
+  * debian/control: Change build dependency to unversioned libboost-dev.
+  * debian/rules: Drop fixing recipes permissions, they are installed as a zip
+    file now.
+  * debian/rules: Rewrite weird "env python2" style hashbang lines to use
+    standard /usr/bin/python.
+  * debian/control, debian/rules: Force usage of python2.7 for now, as long as
+    it is not the default yet. The new upstream version requires it now.
+  * debian/control: Remove unnecessary python-pythonmagick dependency.
+    (Closes: #628640)
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 31 May 2011 07:38:22 +0200
+
+calibre (0.7.50+dfsg-2) unstable; urgency=low
+
+  * debian/control: Build with libpodofo-dev to enable PDF metadata.
+    (Closes: #619632)
+  * debian/control: Add libboost1.42-dev build dependency. Apparently it is
+    needed in some setups. (Closes: #619807)
+  * debian/rules: Call dh_sip to generate a proper sip API dependency, to
+    prevent crashes like #616372 for partial upgrades.
+  * debian/control: Bump python-qt4 dependency to >= 4.8.3-2, which reportedly
+    fixes crashes on startup. (Closes: #619701, #620125)
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 12 Apr 2011 11:29:25 +0200
+
+calibre (0.7.50+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuild against current python-sip ABI. (Closes: #616372, #619238)
+  * debian/control: Add poppler-utils dependency to ensure that pdftohtml is
+    available. (Closes: #612041)
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 24 Mar 2011 23:11:22 +0100
+
+calibre (0.7.44+dfsg-1) unstable; urgency=low
+
+  [ Martin Pitt ]
+  * New upstream release.
+  * debian/rules: Update get-orig-source for reorganized upstream download
+    URL.
+
+  [ Jose Ernesto Davila Pantoja ]
+  * debian/control:
+    - Support was misspelled as upport. (Closes: LP: #706221)
+    - Removed python-routes from Recommends, it's already a Depends.
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 11 Feb 2011 10:19:12 +0100
+
+calibre (0.7.43+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Replace obsolete "sip4" build dependency with
+    python-sip-dev. (Closes: #611092)
+  * debian/control: Fix forgotten hardcoded python2.6 dependency.
+  * debian/control: Add missing ${sip:Depends} to -bin.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 31 Jan 2011 12:49:13 +0100
+
+calibre (0.7.42+dfsg-1) unstable; urgency=low
+
+  [ Jonathan Carter ]
+  * Use calibre icon for LRF Viewer until it has its own one (Closes: #606900,
+    LP: #704075) 
+
+  [ Martin Pitt ]
+  * New upstream release.
+  * Drop 00upstream_content_server_xss.patch, in upstream release now.
+  * no_updates_dialog.patch: Unfuzz for new release.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 25 Jan 2011 13:12:02 +0100
+
+calibre (0.7.38+dfsg-2) unstable; urgency=low
+
+  * debian/copyright: Update according to current upstream COPYING. In
+    particular, the pdfreflow extension is now distributed under GPL-2+. This
+    permits linking against poppler (which is GPL 2 only).
+    (Closes: #609581)
+  * Add kfreebsd.patch: Fix building under GNU/kFreeBSD, thanks Petr Salinger!
+    (Closes: #609557)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 12 Jan 2011 22:25:48 -0600
+
+calibre (0.7.38+dfsg-1) unstable; urgency=low
+
+  * New upstream release:
+    - Fix path traversal vulnerability in the content server (not enabled by
+      default). See http://bugs.calibre-ebook.com/ticket/7980,
+      http://www.waraxe.us/advisory-77.html. First half of #608822
+  * debian/control: Add new build dependency libicu-dev.
+  * Add 00upstream_content_server_xss.patch: Fix XSS vulnerability in the
+    content server, the other half of above issue. (Closes: #608822) Patch
+    cherrypicked from upstream bzr (r7531)
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 10 Jan 2011 09:18:13 -0600
+
+calibre (0.7.32+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules, debian/copyright, debian/control, debian/watch: Update to
+    new upstream page domain name.
+  * manpages-installation.patch: Install manpages under /usr/share/man under
+    KFreeBSD, too. (part of #604267)
+  * debian/rules: Remove bogus /config directory which the KFreeBSD
+    installation creates. (Closes: #604267)
+  * debian/control: Add new build/binary dependency python-pythonmagick, and
+    new build dependency libsqlite3-dev.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 05 Dec 2010 13:59:11 +0100
+
+calibre (0.7.29+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #600787)
+    - Fixes handling of epubs with different local/global encoding.
+      (Closes: #597533)
+    - Removes remaining string-type exceptions. (Closes: #585216)
+  * debian/control: Add recommends to python-dnspython. (Closes: #604120)
+  * debian/control: Bump python-qt4 dependencies to >= 4.7.3.
+    (Closes: #584855)
+  * debian/rules: Remove internal copy of pyparsing and replace imports with
+    system library. Add python-pyparsing build and binary dependency.
+    (Closes: #555368)
+  * debian/control, debian/rules: Remove hacks to force Python 2.6, that
+    version is the default now.
+  * debian/rules: Call dh_install with --fail-missing.
+  * debian/calibre.install: Install new templite module.
+  * debian/control, debian/rules: Remove internal routes Python module. Add
+    python-routes build and binary dependency.
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 20 Nov 2010 17:51:59 +0100
+
+calibre (0.7.18+dfsg-1) unstable; urgency=low
+
+  * New upstream release, with support for more devices, more news recipes,
+    and bug fixes.
+  * debian/local/calibre-mount-helper: Exit with nonzero if mounting failed,
+    to avoid calibre getting confused. Thanks Olaf Leidinger!
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 13 Sep 2010 10:03:42 +0200
+
+calibre (0.7.13+dfsg-1) unstable; urgency=low
+
+  * New upstream version.
+  * debian/control: Add python-routes recommends. (Closes: #590561)
+  * Convert to 3.0 (quilt) source format.
+  * Bump debhelper compat level to 7, and drop now obsolete
+    DEB_DH_INSTALL_SOURCEDIR in debian/rules.
+  * debian/control: Add missing ${misc:Depends}.
+  * debian/control: Bump Standards-Version to 3.9.1.
+  * debian/copyright: Replace obsolete reference to
+    /usr/share/common-licenses/BSD with their verbatim text from the original
+    source.
+  * debian/rules: Remove invalid hashbang lines from *.recipe, these have no
+    __main__.
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 11 Aug 2010 11:30:57 +0200
+
+calibre (0.7.7+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+    - Fixes wrong version display in main window. (Closes: #587281)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 09 Jul 2010 10:35:31 +0200
+
+calibre (0.7.2+dfsg-1) unstable; urgency=low
+
+  * New major upstream version. See http://calibre-ebook.com/new-in/seven for
+    details.
+  * Refresh patches to apply cleanly.
+  * debian/control: Bump python-cssutils to >= 0.9.7~ to ensure the existence
+    of the CSSRuleList.rulesOfType attribute. This makes epub conversion work
+    again. (Closes: #584756)
+  * Add debian/local/calibre-mount-helper: Simple and safe replacement for
+    upstream's calibre-mount-helper, using udisks --mount and eject.
+    (Closes: #584915, LP: #561958)
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 21 Jun 2010 10:18:08 +0200
+
+calibre (0.6.54+dfsg-1) unstable; urgency=low
+
+  * New upstream release. Please see http://calibre.kovidgoyal.net/new_in_6/
+    for the list of new features and changes. (Closes: #539343, #575546,
+    LP: #529730)
+    - Fixes crashes on startup. (Closes: #533428, #539119)
+    - Fixes "invalid type" errors. (Closes: #545858)
+  * Overhaul and update the packaging for the new release's build system.
+    Changes taken from the Ubuntu branch/package.
+  * debian/control: Bump Python dependencies to 2.6, since upstream needs
+    it now.
+  * debian/rules: Force all hashbang lines to #!/usr/bin/python2.6, as long as
+    2.5 is still the default in Debian.
+  * Bump Standards-Version to 3.8.4.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 23 May 2010 15:34:44 +0200
+
+calibre (0.5.14+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules, get-orig-source: Do not unpack newly generated orig tarball
+    if we don't have unpackaged upstream sources in the tree (such as when
+    building with bzr-buildpackage).
+
+ -- Martin Pitt <mpitt@debian.org>  Sat, 06 Jun 2009 17:18:02 +0200
+
+calibre (0.5.11+dfsg-2) unstable; urgency=low
+
+  * debian/rules, debian/control: Remove upstream shipped copy of
+    python-django-tagging. Depend on the package instead.
+    (Closes: #528091)
+  * debian/control: Use my @debian.org Uploaders: address.
+  * debian/control: Bump Standards-Version (no changes necesssary).
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 14 May 2009 08:15:23 +0200
+
+calibre (0.5.11+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Drop Ubuntu specific python-mechanize binary dependency as
+    well (brown paperbag). (Closes: #525612)
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 10 May 2009 21:00:35 +0200
+
+calibre (0.5.9+dfsg-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #525339)
+  * manpages-installation.patch: Encode generated manpages as UTF-8, to avoid
+    UnicodeDecodeErrors when writing them out to files.
+  * debian/control: Demote calibre dependency of calibre-bin to Recommends:,
+    which is sufficient and avoids a circular dependency. (Closes: #522059)
+  * debian/control: Drop build dependency help2man, current version does not
+    need it any more.
+  * debian/control: Drop versioned build dependency on python-mechanize,
+    current sid version is enough.
+  * debian/rules: Copy "setup.py install" command from cdbs'
+    python-distutils.mk, since the current version broke this. This is a
+    hackish workaround until #525436 gets fixed.
+  * debian/rules: Drop using $(wildcard ), use `ls`; the former does not work
+    any more.
+
+ -- Martin Pitt <mpitt@debian.org>  Sun, 05 Apr 2009 18:42:16 -0700
+
+calibre (0.4.143+dfsg-1) unstable; urgency=low
+
+  [ Martin Pitt ]
+  * Initial release, packaging by Miriam Ruiz <miriam@debian.org> and
+    Martin Pitt <martin.pitt@ubuntu.com>. Closes: #482680
+
+ -- Miriam Ruiz <little_miry@yahoo.es>  Thu, 08 Jan 2009 21:42:04 +0100

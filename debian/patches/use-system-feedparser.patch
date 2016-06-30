@@ -1,0 +1,43 @@
+Index: calibre/recipes/lenta_ru.recipe
+===================================================================
+--- calibre.orig/recipes/lenta_ru.recipe	2013-12-06 07:22:25.477237324 +0100
++++ calibre/recipes/lenta_ru.recipe	2013-12-06 07:22:25.473237324 +0100
+@@ -4,11 +4,14 @@
+ Lenta.ru
+ '''
+ 
+-from calibre.web.feeds.feedparser import parse
+ from calibre.ebooks.BeautifulSoup import Tag
+ from calibre.web.feeds.news import BasicNewsRecipe
++from feedparser import parse
++from functools import partial
+ import re
+ 
++parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
++
+ class LentaRURecipe(BasicNewsRecipe):
+     title = u'Lenta.ru: \u041d\u043e\u0432\u043e\u0441\u0442\u0438'
+     __author__ = 'Nikolai Kotchetkov'
+Index: calibre/src/calibre/web/feeds/__init__.py
+===================================================================
+--- calibre.orig/src/calibre/web/feeds/__init__.py	2013-12-06 07:22:25.477237324 +0100
++++ calibre/src/calibre/web/feeds/__init__.py	2013-12-06 07:22:25.473237324 +0100
+@@ -11,6 +11,10 @@
+ from calibre import entity_to_unicode, strftime
+ from calibre.utils.date import dt_factory, utcnow, local_tz
+ from calibre.utils.cleantext import clean_ascii_chars
++from feedparser import parse
++from functools import partial
++
++parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
+ 
+ class Article(object):
+ 
+@@ -331,7 +335,6 @@
+                   max_articles_per_feed=100,
+                   get_article_url=lambda item: item.get('link', None),
+                   log=default_log):
+-    from calibre.web.feeds.feedparser import parse
+     # Handle unclosed escaped entities. They trip up feedparser and HBR for one
+     # generates them
+     raw_xml = re.sub(r'(&amp;#\d+)([^0-9;])', r'\1;\2', raw_xml)

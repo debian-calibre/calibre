@@ -1,0 +1,35 @@
+#!/bin/sh
+
+set -e
+
+rm_conffile() {
+  PKGNAME="calibre"
+  CONFFILE="$1"
+
+  if [ -e "$CONFFILE" ]; then
+   md5sum="`md5sum \"$CONFFILE\" | sed -e \"s/ .*//\"`"
+   old_md5sum="`dpkg-query -W -f='${Conffiles}' $PKGNAME | sed -n -e \"\\\\' $CONFFILE'{s/ obsolete$//;s/.* //p}\"`"
+   if [ "$md5sum" != "$old_md5sum" ]; then
+     echo "Obsolete conffile $CONFFILE has been modified by you."
+     echo "Saving as $CONFFILE.dpkg-bak ..."
+     mv -f "$CONFFILE" "$CONFFILE".dpkg-bak
+   else
+     echo "Removing obsolete conffile $CONFFILE ..."
+     rm -f "$CONFFILE"
+   fi
+ fi
+}
+
+case "$1" in
+  install|upgrade)
+    if dpkg --compare-versions "$2" lt-nl "0.6.3"; then
+      rm_conffile "/etc/udev/rules.d/95-calibre.rules"
+    fi
+    if [ ! -h /usr/share/calibre/viewer/mathjax ]; then
+      rm -rf /usr/share/calibre/viewer/mathjax
+    fi
+esac
+
+exit 0
+
+#DEBHELPER#

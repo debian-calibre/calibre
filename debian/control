@@ -1,0 +1,150 @@
+Source: calibre
+Section: text
+Priority: extra
+Build-Depends: cdbs (>= 0.4.43),
+ debhelper (>= 7),
+ dh-buildinfo,
+ python2.7-dev,
+ python-setuptools,
+ txt2man,
+ pyqt5-dev (>= 5.3.1),
+ qt5-qmake,
+ qtchooser,
+ python-pil | python-imaging,
+ python-lxml (>= 3.2.1),
+ python-mechanize (>= 0.2.5),
+ python-beautifulsoup (>= 3.0.5),
+ python-dateutil,
+ python-pkg-resources,
+ python-cssutils (>= 0.9.9~),
+ python-cssselect (>= 0.7.1),
+ python-cherrypy3,
+ python-markdown,
+ python-pyparsing,
+ python-routes,
+ python-chardet,
+ python-netifaces,
+ pyqt5-dev-tools,
+ python-pyqt5,
+ libmagickwand-dev,
+ libsqlite3-dev,
+ libssl-dev,
+ python-sip-dev,
+ qtbase5-dev,
+ qtbase5-private-dev,
+ libicu-dev,
+ libmtp-dev (>= 1.1.5),
+ poppler-utils,
+ libpodofo-dev (>= 0.8.2),
+ libboost-dev,
+ libudev-dev [linux-any],
+ libmtdev-dev [linux-any],
+ libegl1-mesa-dev,
+ libchm-dev
+Maintainer: Miriam Ruiz <little_miry@yahoo.es>
+Uploaders: Martin Pitt <mpitt@debian.org>
+Standards-Version: 3.9.8
+Homepage: http://calibre-ebook.com
+Vcs-Bzr: https://code.launchpad.net/~calibre-packagers/calibre/debian
+
+Package: calibre
+Architecture: all
+Depends: python2.7,
+ python-dbus,
+ python-pil | python-imaging,
+ python-lxml (>= 3.2.1),
+ python-mechanize (>= 0.2.5),
+ python-beautifulsoup (>= 3.0.5),
+ python-pkg-resources,
+ python-cssutils (>= 0.9.9~),
+ python-cssselect (>= 0.7.1),
+ python-cherrypy3 (>= 3.1.1),
+ python-dateutil,
+ python-feedparser,
+ python-markdown,
+ python-pyqt5 (>= ${pyqt:Version}),
+ python-pyqt5.qtwebkit,
+ python-pyqt5.qtsvg,
+ python-pyparsing,
+ python-routes,
+ python-chardet,
+ python-netifaces,
+ python-apsw (>= 3.7.17),
+ xdg-utils,
+ imagemagick,
+ poppler-utils,
+ fonts-liberation,
+ libjs-mathjax (>= 2.1+20121028-1),
+ calibre-bin (>= ${source:Version}),
+ ${misc:Depends}
+Recommends: python-dnspython (>= 1.6.0)
+Description: e-book converter and library management
+ Calibre is meant to be a complete e-library solution. It includes library
+ management, format conversion, news feeds to e-book conversion as well as
+ e-book reader sync features.
+ .
+ Calibre is primarily an e-book cataloging program. It manages your e-book
+ collection for you. It is designed around the concept of the logical book,
+ i.e. a single entry in the database that may correspond to e-books in several
+ formats. It also supports conversion from a dozen different e-book formats to
+ LRF and EPUB. A graphical interface to the conversion software can be
+ accessed easily by just clicking the "Convert E-books" button.
+ .
+ Supported input formats are: MOBI, LIT, PRC, EPUB, ODT, HTML, CBR, CBZ, RTF,
+ TXT, PDF and LRS.
+ .
+ Calibre has a modular device driver design that makes adding support for
+ different e-reader devices easy. At the moment, it has support for the
+ SONY PRS 500/505/700 and the iPhone (with the stanza reader software).
+ Syncing supports updating metadata on the device from metadata in the library
+ and the creation of collections on the device based on the tags defined in
+ the library view. If an book has more than one format available, calibre
+ automatically chooses the best format when uploading to the device.
+ .
+ Calibre can automatically fetch news from a number of websites/RSS feeds,
+ format the news into a e-book and upload to a connected device. There is
+ support for generating LRF/EPUB e-books. The e-books include the *full*
+ versions of the articles, not just the summaries.
+ .
+ Calibre has also a built-in e-book viewer that can display all the major e-book
+ formats.
+
+Package: calibre-bin
+Architecture: any
+Depends: ${shlibs:Depends},
+ ${misc:Depends},
+ ${sip:Depends},
+ python2.7
+Recommends: calibre (>= ${source:Version})
+Description: e-book converter and library management
+ Calibre is meant to be a complete e-library solution. It includes library
+ management, format conversion, news feeds to e-book conversion as well as
+ e-book reader sync features.
+ .
+ Calibre is primarily an e-book cataloging program. It manages your e-book
+ collection for you. It is designed around the concept of the logical book,
+ i.e. a single entry in the database that may correspond to e-books in several
+ formats. It also supports conversion from a dozen different e-book formats to
+ LRF and EPUB. A graphical interface to the conversion software can be
+ accessed easily by just clicking the "Convert E-books" button.
+ .
+ Supported input formats are: MOBI, LIT, PRC, EPUB, ODT, HTML, CBR, CBZ, RTF,
+ TXT, PDF and LRS.
+ .
+ Calibre has a modular device driver design that makes adding support for
+ different e-reader devices easy. At the moment, it has support for the
+ SONY PRS 500/505/700 and the iPhone (with the stanza reader software).
+ Syncing supports updating metadata on the device from metadata in the library
+ and the creation of collections on the device based on the tags defined in
+ the library view. If an book has more than one format available, calibre
+ automatically chooses the best format when uploading to the device.
+ .
+ Calibre can automatically fetch news from a number of websites/RSS feeds,
+ format the news into a e-book and upload to a connected device. There is
+ support for generating LRF/EPUB e-books. The e-books include the *full*
+ versions of the articles, not just the summaries.
+ .
+ Calibre has also a built-in e-book viewer that can display all the major e-book
+ formats.
+ .
+ This package contains the compiled architecture dependent plugins.

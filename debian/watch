@@ -1,0 +1,9 @@
+# watch control file for uscan
+# see uscan(1) for format
+
+# Compulsory line, this is a version 3 file
+version=3
+
+# remove +dfsg upstream version suffix
+opts="dversionmangle=s/\+dfsg$//,downloadurlmangle=s/\/(\d[\d\.]*)\//\/$1\/calibre-$1.tar.xz/" \
+  http://download.calibre-ebook.com/2.html (\d[\d\.]*)/

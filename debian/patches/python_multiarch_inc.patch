@@ -1,0 +1,21 @@
+Description: Use python-config instead of sysconfig.get_python_inc(), as the latter does not work with multiarch-split include files.
+Author: Martin Pitt <mpitt@debian.org>
+Bug-Ubuntu: https://launchpad.net/bugs/1094246
+
+Index: calibre/setup/extensions.py
+===================================================================
+--- calibre.orig/setup/extensions.py	2014-02-02 10:42:08.074954093 +0100
++++ calibre/setup/extensions.py	2014-02-02 10:42:08.066954093 +0100
+@@ -300,7 +300,11 @@
+ if islinux:
+     cflags.append('-pthread')
+     ldflags.append('-shared')
+-    cflags.append('-I'+sysconfig.get_python_inc())
++    import sys
++    config = subprocess.Popen([sys.executable + '-config', '--includes'],
++                              stdout=subprocess.PIPE)
++    cflags += config.communicate()[0].strip().split()
++    assert config.returncode == 0
+     ldflags.append('-lpython'+sysconfig.get_python_version())
+ 
+ 

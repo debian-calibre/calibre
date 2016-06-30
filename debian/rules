@@ -1,0 +1,113 @@
+#!/usr/bin/make -f
+
+SETUP=python2.7 setup.py
+
+# build hardening
+DPKG_EXPORT_BUILDFLAGS = 1
+export DEB_BUILD_MAINT_OPTIONS=hardening=+relro
+include /usr/share/dpkg/buildflags.mk
+
+# This filters out *.so for the package "calibre". With this, we can
+# install usr/lib in calibre.install and just leave out the binary
+# bits.
+DEB_DH_INSTALL_ARGS = -Xusr/etc/bash_completion.d $(if $(findstring -bin,$(cdbs_curpkg)),,-X*.so) --fail-missing
+DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python-pyqt5)
+
+export QT_SELECT=qt5
+
+-include /usr/share/cdbs/1/rules/debhelper.mk
+
+common-build-arch::
+	[ -d build ] || $(SETUP) build
+
+common-install-arch common-install-indep:: debian/tmp
+	dh_buildinfo
+	dh_sip
+
+debian/tmp:
+	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
+
+	# remove bundled python libraries which are provided by system
+	# packages
+	rm -r debian/tmp/usr/lib/calibre/cherrypy
+	rm -r debian/tmp/usr/lib/calibre/routes
+	rm -r debian/tmp/usr/lib/calibre/chardet
+
+	rm debian/tmp/usr/lib/calibre/calibre/utils/pyparsing.py
+	rm debian/tmp/usr/lib/calibre/calibre/web/feeds/feedparser.py
+	find debian/tmp/ -name '*.py' | xargs sed -i 's/calibre.utils.pyparsing/pyparsing/g'
+	find debian/tmp/ -name '*.py' -o -name "markdown-calibre" | xargs sed -i 's/calibre.ebooks.markdown/markdown/g'
+
+	# not needed
+	rm debian/tmp/usr/bin/calibre-uninstall
+	rm debian/tmp/usr/share/calibre/calibre-portable.*
+	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
+
+	# do not ship a copy of fonts-liberation
+	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
+	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
+
+	# use system mathjax
+	rm -rf debian/tmp/usr/share/calibre/viewer/mathjax
+	ln -s /usr/share/javascript/mathjax debian/tmp/usr/share/calibre/viewer/mathjax
+
+	# fix executable permissions
+	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
+	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
+
+	# add icon
+	mkdir -p debian/tmp/usr/share/pixmaps/
+	cp manual/resources/logo.png debian/tmp/usr/share/pixmaps/calibre-gui.png
+
+	# remove bogus files on KFreeBSD installation
+	rm -rf debian/tmp/config
+
+	# fix "env python2" style hashbangs
+	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
+
+install/calibre::
+	# Create and install some of the man pages
+	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES $(MAKE) -C debian/man VERSION="$(MAIN_VERSION)"
+
+clean::
+	rm -rf debian/orig
+	[ ! -d build ] || $(SETUP) build -c
+	$(MAKE) -C debian/man clean
+	find . -name *.pyc -delete
+	find . -name *.so -delete
+	find . -name *.qrc -delete
+	find . -name *_ui.py -delete
+
+# Downloads the current upstream release according to debian/changelog, removes
+# some bundled software copies, non-free image and replaces the non-free prs500
+# TTFs with symlinks to their free liberation fonts counterparts. This also
+# updates the unpacked source tree to the new upstream version and adds the
+# original non-minimized javascript source for some minified JavaScript.
+get-orig-source:
+	set -e; \
+	V=`dpkg-parsechangelog | sed -rn '/^Version:/ {s/^Version: ([0-9.]+).*$$/\1/; p}'`; \
+	mkdir -p debian/orig; cd debian/orig; \
+	wget -O - http://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
+	\
+	wget -O - https://github.com/ehynds/jquery-ui-multiselect-widget/archive/1.5.tar.gz | tar zx; \
+	\
+	cp jquery-ui-multiselect-widget-1.5/src/jquery.multiselect.js `ls -d calibre*`/resources/content_server/; \
+	rm -rf 1.5.tar.gz jquery-ui-multiselect-widget-1.5; \
+	\
+	wget https://jqueryui.com/resources/download/jquery-ui-1.8.5.zip && unzip jquery-ui-1.8.5.zip; \
+	cp jquery-ui-1.8.5/ui/jquery-ui.js `ls -d calibre*`/resources/content_server/jquery_ui/js/jquery-ui-1.8.5.custom.js.orig; \
+	rm -rf jquery-ui-1.8.5; \
+	rm jquery-ui-1.8.5.zip; \
+	\
+	wget https://datejs.googlecode.com/files/Datejs-all-Alpha1.zip; unzip Datejs-all-Alpha1.zip; \
+	(cd Datejs-all*/src; cat globalization/en-US.js core-debug.js sugarpak-debug.js parser-debug.js) > `ls -d calibre*`/resources/content_server/date.js.orig; \
+	rm -rf Datejs-all*; \
+	\
+	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
+	rm -rf calibre*/src/unrar; \
+	rm -rf calibre*/resources/viewer/mathjax; \
+	rm -rf calibre*/src/calibre/ebooks/markdown; \
+	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
+	cd ../..; rm -r debian/orig; \
+	find -mindepth 1 -maxdepth 1 ! -name '.bzr*' ! -name debian | xargs rm -rf; \
+	[ ! -e setup.py ] || tar xf ../calibre_$$V+dfsg.orig.tar.xz --strip-components 1

@@ -1,0 +1,20 @@
+calibre for Debian
+==================
+
+Customizing LRF fonts
+---------------------
+By default, the calibre package maps the LRF standard fonts to the the
+free Liberation fonts (package fonts-liberation):
+
+  Swis721 BT Roman     -> LiberationSans-Regular.ttf
+  Dutch801 Rm BT Roman -> LiberationSerif-Regular.ttf
+  Courier10 BT Roman   -> LiberationMono-Regular.ttf
+
+You can customize this mapping by creating a directory
+/etc/calibre/fonts with three symlinks (or files) to the TrueType
+fonts you want to use:
+
+  /etc/calibre/fonts/tt0003m_.ttf -> point to Swis721 BT Roman font
+  /etc/calibre/fonts/tt0011m_.ttf -> point to Dutch801 Rm BT Roman font
+  /etc/calibre/fonts/tt0419m_.ttf -> point to Courier10 BT Roman font
+

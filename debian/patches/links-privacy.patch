@@ -1,0 +1,39 @@
+Description: content-server: Don't load external URLs for privacy (spotted by lintian)
+Author: Martin Pitt <mpitt@debian.org>
+Forwarded: no
+
+Index: calibre-2.55.0+dfsg/resources/content_server/browse/browse.html
+===================================================================
+--- calibre-2.55.0+dfsg.orig/resources/content_server/browse/browse.html
++++ calibre-2.55.0+dfsg/resources/content_server/browse/browse.html
+@@ -7,7 +7,7 @@
+     <title>..:: calibre {library} ::.. {title}</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=100" />
+     <meta name="robots" content="noindex" />
+-    <link rel="icon" type="image/x-icon" href="//calibre-ebook.com/favicon.ico" />
++    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+ 
+     <link rel="stylesheet" type="text/css" href="{prefix}/static/browse/browse.css" />
+     <link type="text/css" href="{prefix}/static/jquery_ui/css/humanity-custom/jquery-ui-1.8.5.custom.css" rel="stylesheet" />
+@@ -63,8 +63,6 @@
+                     <input type="image"
+                     src="{prefix}/static/button-donate.png"
+                         name="submit"></input>
+-                    <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif"
+-                        width="1" height="1"></img>
+                 </div>
+             </form>
+             <div id="calibre-home-link" title="Go to the calibre website"></div>
+Index: calibre-2.55.0+dfsg/resources/content_server/index.html
+===================================================================
+--- calibre-2.55.0+dfsg.orig/resources/content_server/index.html
++++ calibre-2.55.0+dfsg/resources/content_server/index.html
+@@ -9,7 +9,7 @@
+         <script type="text/javascript" src="{prefix}/static/date.js" charset="utf-8"></script>
+         <script type="text/javascript" src="{prefix}/static/jquery.js" charset="utf-8"></script>
+         <script type="text/javascript" src="{prefix}/static/gui.js" charset="utf-8"></script>
+-		<link rel="icon" href="//calibre-ebook.com/favicon.ico" type="image/x-icon" />
++		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+ 	</head>
+ 	<body>
+ 	    <div id="banner">
