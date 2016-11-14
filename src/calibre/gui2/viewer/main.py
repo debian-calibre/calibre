@@ -13,10 +13,10 @@ from calibre.gui2.viewer.ui import Main as MainWindow
 from calibre.gui2.viewer.toc import TOC
 from calibre.gui2.widgets import ProgressIndicator
 from calibre.gui2 import (
-    Application, ORG_NAME, APP_UID, choose_files, info_dialog, error_dialog,
+    Application, choose_files, info_dialog, error_dialog,
     open_url, setup_gui_option_parser)
 from calibre.ebooks.oeb.iterator.book import EbookIterator
-from calibre.constants import islinux, filesystem_encoding, DEBUG
+from calibre.constants import islinux, filesystem_encoding, DEBUG, iswindows
 from calibre.utils.config import Config, StringConfig, JSONConfig
 from calibre.customize.ui import available_input_formats
 from calibre import as_unicode, force_unicode, isbytestring, prints
@@ -24,13 +24,17 @@ from calibre.ptempfile import reset_base_dir
 from calibre.utils.ipc import viewer_socket_address, RC
 from calibre.utils.zipfile import BadZipfile
 from calibre.utils.localization import canonicalize_lang, lang_as_iso639_1, get_lang
-from calibre.utils.monotonic import monotonic
+try:
+    from calibre.utils.monotonic import monotonic
+except RuntimeError:
+    from time import time as monotonic
 
 vprefs = JSONConfig('viewer')
 vprefs.defaults['singleinstance'] = False
 dprefs = JSONConfig('viewer_dictionaries')
 dprefs.defaults['word_lookups'] = {}
 singleinstance_name = 'calibre_viewer'
+
 
 class ResizeEvent(object):
 
@@ -64,6 +68,7 @@ class ResizeEvent(object):
             return False
         return True
 
+
 class Worker(Thread):
 
     def run(self):
@@ -83,11 +88,13 @@ class Worker(Thread):
             self.exception = err
             self.traceback = traceback.format_exc()
 
+
 class RecentAction(QAction):
 
     def __init__(self, path, parent):
         self.path = path
         QAction.__init__(self, os.path.basename(path), parent)
+
 
 def default_lookup_website(lang):
     if lang == 'und':
@@ -99,11 +106,13 @@ def default_lookup_website(lang):
         prefix = 'http://%s.wiktionary.org/wiki/' % lang
     return prefix + '{word}'
 
+
 def lookup_website(lang):
     if lang == 'und':
         lang = get_lang()
     wm = dprefs['word_lookups']
     return wm.get(lang, default_lookup_website(lang))
+
 
 def listen(self):
     while True:
@@ -117,6 +126,7 @@ def listen(self):
         except Exception as e:
             prints('Failed to read message from other instance with error: %s' % as_unicode(e))
     self.listener = None
+
 
 class EbookViewer(MainWindow):
 
@@ -175,6 +185,7 @@ class EbookViewer(MainWindow):
         self.action_reload = QAction(_('&Reload book'), self)
         self.action_reload.triggered.connect(self.reload_book)
         self.action_quit.triggered.connect(self.quit)
+        QApplication.instance().shutdown_signal_received.connect(self.action_quit.trigger)
         self.action_reference_mode.triggered[bool].connect(self.view.reference_mode)
         self.action_metadata.triggered[bool].connect(self.metadata.setVisible)
         self.action_table_of_contents.toggled[bool].connect(self.set_toc_visible)
@@ -197,6 +208,7 @@ class EbookViewer(MainWindow):
         self.search.focus_to_library.connect(lambda: self.view.setFocus(Qt.OtherFocusReason))
         self.toc.pressed[QModelIndex].connect(self.toc_clicked)
         self.toc.searched.connect(partial(self.toc_clicked, force=True))
+
         def toggle_toc(ev):
             try:
                 key = self.view.shortcuts.get_match(ev)
@@ -950,10 +962,9 @@ class EbookViewer(MainWindow):
                         det_msg=tb, show=True)
             self.close_progress_indicator()
         else:
-            self.metadata.show_opf(self.iterator.opf,
-                    self.iterator.book_format)
+            self.metadata.show_metadata(self.iterator.mi, self.iterator.book_format)
             self.view.current_language = self.iterator.language
-            title = self.iterator.opf.title
+            title = self.iterator.mi.title
             if not title:
                 title = os.path.splitext(os.path.basename(pathtoebook))[0]
             if self.iterator.toc:
@@ -1112,6 +1123,7 @@ class EbookViewer(MainWindow):
     def show_footnote_view(self):
         self.footnotes_dock.show()
 
+
 def config(defaults=None):
     desc = _('Options to control the ebook viewer')
     if defaults is None:
@@ -1137,6 +1149,7 @@ def config(defaults=None):
 
     return c
 
+
 def option_parser():
     c = config()
     parser = c.option_parser(usage=_('''\
@@ -1146,6 +1159,7 @@ View an ebook.
 '''))
     setup_gui_option_parser(parser)
     return parser
+
 
 def create_listener():
     if islinux:
@@ -1181,6 +1195,7 @@ def ensure_single_instance(args, open_at):
     listener = create_listener()
     return listener
 
+
 class EventAccumulator(QObject):
 
     got_file = pyqtSignal(object)
@@ -1200,10 +1215,20 @@ class EventAccumulator(QObject):
             self.got_file.emit(self.events[-1])
             self.events = []
 
+
 def main(args=sys.argv):
     # Ensure viewer can continue to function if GUI is closed
     os.environ.pop('CALIBRE_WORKER_TEMP_DIR', None)
     reset_base_dir()
+    if iswindows:
+        # Ensure that all ebook editor instances are grouped together in the task
+        # bar. This prevents them from being grouped with viewer process when
+        # launched from within calibre, as both use calibre-parallel.exe
+        import ctypes
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('com.calibre-ebook.viewer')
+        except Exception:
+            pass  # Only available on windows 7 and newer
 
     parser = option_parser()
     opts, args = parser.parse_args(args)
@@ -1215,8 +1240,6 @@ def main(args=sys.argv):
     app.file_event_hook = acc
     app.load_builtin_fonts()
     app.setWindowIcon(QIcon(I('viewer.png')))
-    QApplication.setOrganizationName(ORG_NAME)
-    QApplication.setApplicationName(APP_UID)
 
     if vprefs['singleinstance']:
         try:

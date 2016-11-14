@@ -26,12 +26,12 @@ from PyQt5.Qt import (
 from PyQt5.QtWebKitWidgets import QWebView
 
 from calibre.customize.ui import metadata_plugins
-from calibre.ebooks.metadata import authors_to_string
+from calibre.ebooks.metadata import authors_to_string, rating_to_stars
 from calibre.utils.logging import GUILog as Log
 from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf2 import OPF
-from calibre.gui2 import error_dialog, rating_font, gprefs, NO_URL_FORMATTING
+from calibre.gui2 import error_dialog, rating_font, gprefs
 from calibre.gui2.progress_indicator import draw_snake_spinner
 from calibre.utils.date import (utcnow, fromordinal, format_date,
         UNDEFINED_DATE, as_utc)
@@ -41,6 +41,7 @@ from calibre.utils.config import tweaks
 from calibre.utils.ipc.simple_worker import fork_job, WorkerError
 from calibre.ptempfile import TemporaryDirectory
 # }}}
+
 
 class RichTextDelegate(QStyledItemDelegate):  # {{{
 
@@ -79,7 +80,10 @@ class RichTextDelegate(QStyledItemDelegate):  # {{{
         painter.restore()
 # }}}
 
+
 class CoverDelegate(QStyledItemDelegate):  # {{{
+
+    ICON_SIZE = 150, 200
 
     needs_redraw = pyqtSignal()
 
@@ -118,6 +122,7 @@ class CoverDelegate(QStyledItemDelegate):  # {{{
                 QPixmap(index.data(Qt.DecorationRole)))
 
 # }}}
+
 
 class ResultsModel(QAbstractTableModel):  # {{{
 
@@ -209,6 +214,7 @@ class ResultsModel(QAbstractTableModel):  # {{{
 
 # }}}
 
+
 class ResultsView(QTableView):  # {{{
 
     show_details_signal = pyqtSignal(object)
@@ -267,7 +273,7 @@ class ResultsView(QTableView):  # {{{
                 parts.append('<div>%s: %s</div>'%series)
         if not book.is_null('rating'):
             style = 'style=\'font-family:"%s"\''%f
-            parts.append('<div %s>%s</div>'%(style, '\u2605'*int(book.rating)))
+            parts.append('<div %s>%s</div>'%(style, rating_to_stars(int(2 * book.rating))))
         parts.append('</center>')
         if book.identifiers:
             urls = urls_from_identifiers(book.identifiers)
@@ -306,6 +312,7 @@ class ResultsView(QTableView):  # {{{
 
 # }}}
 
+
 class Comments(QWebView):  # {{{
 
     def __init__(self, parent=None):
@@ -324,7 +331,7 @@ class Comments(QWebView):  # {{{
 
     def link_clicked(self, url):
         from calibre.gui2 import open_url
-        if unicode(url.toString(NO_URL_FORMATTING)).startswith('http://'):
+        if url.scheme() in {'http', 'https'}:
             open_url(url)
 
     def turnoff_scrollbar(self, *args):
@@ -373,6 +380,7 @@ class Comments(QWebView):  # {{{
         # screens.
         return QSize(800, 300)
 # }}}
+
 
 class IdentifyWorker(Thread):  # {{{
 
@@ -430,6 +438,7 @@ class IdentifyWorker(Thread):  # {{{
             self.error = force_unicode(traceback.format_exc())
 
 # }}}
+
 
 class IdentifyWidget(QWidget):  # {{{
 
@@ -547,6 +556,7 @@ class IdentifyWidget(QWidget):  # {{{
         self.abort.set()
 # }}}
 
+
 class CoverWorker(Thread):  # {{{
 
     def __init__(self, log, abort, title, authors, identifiers, caches):
@@ -626,6 +636,7 @@ class CoverWorker(Thread):  # {{{
 
 # }}}
 
+
 class CoversModel(QAbstractListModel):  # {{{
 
     def __init__(self, current_cover, parent=None):
@@ -633,8 +644,9 @@ class CoversModel(QAbstractListModel):  # {{{
 
         if current_cover is None:
             current_cover = QPixmap(I('default_cover.png'))
+        current_cover.setDevicePixelRatio(QApplication.instance().devicePixelRatio())
 
-        self.blank = QPixmap(I('blank.png')).scaled(150, 200)
+        self.blank = QIcon(I('blank.png')).pixmap(*CoverDelegate.ICON_SIZE)
         self.cc = current_cover
         self.reset_covers(do_reset=False)
 
@@ -652,8 +664,10 @@ class CoversModel(QAbstractListModel):  # {{{
     def get_item(self, src, pmap, waiting=False):
         sz = '%dx%d'%(pmap.width(), pmap.height())
         text = (src + '\n' + sz)
-        scaled = pmap.scaled(150, 200, Qt.IgnoreAspectRatio,
-                Qt.SmoothTransformation)
+        scaled = pmap.scaled(
+            int(CoverDelegate.ICON_SIZE[0] * pmap.devicePixelRatio()), int(CoverDelegate.ICON_SIZE[1] * pmap.devicePixelRatio()),
+            Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        scaled.setDevicePixelRatio(pmap.devicePixelRatio())
         return (text, (scaled), pmap, waiting)
 
     def rowCount(self, parent=None):
@@ -682,6 +696,7 @@ class CoversModel(QAbstractListModel):  # {{{
         # Remove entries that are still waiting
         good = []
         pmap = {}
+
         def keygen(x):
             pmap = x[2]
             if pmap is None:
@@ -715,6 +730,12 @@ class CoversModel(QAbstractListModel):  # {{{
                 return self.index(r)
         return self.index(0)
 
+    def load_pixmap(self, data):
+        pmap = QPixmap()
+        pmap.loadFromData(data)
+        pmap.setDevicePixelRatio(QApplication.instance().devicePixelRatio())
+        return pmap
+
     def update_result(self, plugin_name, width, height, data):
         if plugin_name.endswith('}'):
             # multi cover plugin
@@ -724,8 +745,7 @@ class CoversModel(QAbstractListModel):  # {{{
                 return
             plugin = plugin[0]
             last_row = max(self.plugin_map[plugin])
-            pmap = QPixmap()
-            pmap.loadFromData(data)
+            pmap = self.load_pixmap(data)
             if pmap.isNull():
                 return
             self.beginInsertRows(QModelIndex(), last_row, last_row)
@@ -745,8 +765,7 @@ class CoversModel(QAbstractListModel):  # {{{
                     break
             if idx is None:
                 return
-            pmap = QPixmap()
-            pmap.loadFromData(data)
+            pmap = self.load_pixmap(data)
             if pmap.isNull():
                 return
             self.covers[idx] = self.get_item(plugin_name, pmap, waiting=False)
@@ -761,6 +780,7 @@ class CoversModel(QAbstractListModel):  # {{{
 
 # }}}
 
+
 class CoversView(QListView):  # {{{
 
     chosen = pyqtSignal()
@@ -774,7 +794,7 @@ class CoversView(QListView):  # {{{
         self.setWrapping(True)
         self.setResizeMode(self.Adjust)
         self.setGridSize(QSize(190, 260))
-        self.setIconSize(QSize(150, 200))
+        self.setIconSize(QSize(*CoverDelegate.ICON_SIZE))
         self.setSelectionMode(self.SingleSelection)
         self.setViewMode(self.IconMode)
 
@@ -841,6 +861,7 @@ class CoversView(QListView):  # {{{
         return QListView.keyPressEvent(self, ev)
 
 # }}}
+
 
 class CoversWidget(QWidget):  # {{{
 
@@ -948,6 +969,7 @@ class CoversWidget(QWidget):  # {{{
 
 # }}}
 
+
 class LogViewer(QDialog):  # {{{
 
     def __init__(self, log, parent=None):
@@ -995,6 +1017,7 @@ class LogViewer(QDialog):  # {{{
         QTimer.singleShot(1000, self.update_log)
 
 # }}}
+
 
 class FullFetch(QDialog):  # {{{
 
@@ -1111,6 +1134,7 @@ class FullFetch(QDialog):  # {{{
         return self.exec_()
 # }}}
 
+
 class CoverFetch(QDialog):  # {{{
 
     def __init__(self, current_cover=None, parent=None):
@@ -1120,7 +1144,7 @@ class CoverFetch(QDialog):  # {{{
         self.cover_pixmap = None
 
         self.setWindowTitle(_('Downloading cover...'))
-        self.setWindowIcon(QIcon(I('book.png')))
+        self.setWindowIcon(QIcon(I('default_cover.png')))
 
         self.l = l = QVBoxLayout()
         self.setLayout(l)

@@ -10,11 +10,12 @@ import glob, os, string, shutil
 from functools import partial
 from PyQt5.Qt import (
     QDialog, QVBoxLayout, QListWidget, QListWidgetItem, Qt, QIcon,
-    QApplication, QSize, QPixmap, QDialogButtonBox, QTimer, QLabel)
+    QApplication, QSize, QDialogButtonBox, QTimer, QLabel)
 
 from calibre.constants import config_dir
 from calibre.gui2 import choose_files, error_dialog
 from calibre.utils.icu import sort_key
+
 
 def texture_dir():
     ans = os.path.join(config_dir, 'textures')
@@ -22,12 +23,14 @@ def texture_dir():
         os.makedirs(ans)
     return ans
 
+
 def texture_path(fname):
     if not fname:
         return
     if fname.startswith(':'):
         return I('textures/%s' % fname[1:])
     return os.path.join(texture_dir(), fname)
+
 
 class TextureChooser(QDialog):
 
@@ -91,7 +94,7 @@ class TextureChooser(QDialog):
 
     def create_item(self, data):
         x = data
-        i = QListWidgetItem(QIcon(QPixmap(x['path']).scaled(256, 256, transformMode=Qt.SmoothTransformation)), x['name'], self.images)
+        i = QListWidgetItem(QIcon(x['path']), x['name'], self.images)
         i.setData(Qt.UserRole, x['fname'])
         i.setData(Qt.UserRole+1, x['path'])
         return i

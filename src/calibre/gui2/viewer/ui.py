@@ -23,6 +23,7 @@ from calibre.gui2.viewer.toc import TOCView, TOCSearch
 from calibre.gui2.viewer.footnote import FootnotesView
 from calibre.utils.localization import is_rtl
 
+
 class DoubleSpinBox(QDoubleSpinBox):  # {{{
 
     value_changed = pyqtSignal(object, object)
@@ -44,6 +45,7 @@ class DoubleSpinBox(QDoubleSpinBox):  # {{{
         self.value_changed.emit(self.value(), self.maximum())
 # }}}
 
+
 class Reference(QLineEdit):  # {{{
 
     goto = pyqtSignal(object)
@@ -64,6 +66,7 @@ class Reference(QLineEdit):  # {{{
         self.goto.emit(text)
 # }}}
 
+
 class Metadata(QWebView):  # {{{
 
     def __init__(self, parent):
@@ -75,21 +78,19 @@ class Metadata(QWebView):  # {{{
         palette = self.palette()
         palette.setBrush(QPalette.Base, Qt.transparent)
         self.page().setPalette(palette)
-        self.css = P('templates/book_details.css', data=True).decode('utf-8')
         self.setVisible(False)
 
     def update_layout(self):
         self.setGeometry(0, 0, self.parent().width(), self.parent().height())
 
-    def show_opf(self, opf, ext=''):
-        from calibre.gui2.book_details import render_html
+    def show_metadata(self, mi, ext=''):
+        from calibre.gui2.book_details import render_html, css
         from calibre.ebooks.metadata.book.render import mi_to_html
 
         def render_data(mi, use_roman_numbers=True, all_fields=False):
             return mi_to_html(mi, use_roman_numbers=use_roman_numbers, rating_font=rating_font(), rtl=is_rtl())
 
-        mi = opf.to_book_metadata()
-        html = render_html(mi, self.css, True, self, render_data_func=render_data)
+        html = render_html(mi, css(), True, self, render_data_func=render_data)
         self.setHtml(html)
 
     def setVisible(self, x):
@@ -103,6 +104,7 @@ class Metadata(QWebView):  # {{{
         p.end()
         QWebView.paintEvent(self, ev)
 # }}}
+
 
 class History(list):  # {{{
 
@@ -172,6 +174,7 @@ class History(list):  # {{{
     def __str__(self):
         return 'History: Items=%s back_pos=%s insert_pos=%s forward_pos=%s' % (tuple(self), self.back_pos, self.insert_pos, self.forward_pos)
 
+
 def test_history():
     h = History()
     for i in xrange(4):
@@ -182,6 +185,7 @@ def test_history():
     h.add(9)
     assert h == [0, 9]
 # }}}
+
 
 class ToolBar(QToolBar):  # {{{
 
@@ -195,6 +199,7 @@ class ToolBar(QToolBar):  # {{{
             ev.accept()
             sm()
 # }}}
+
 
 class Main(MainWindow):
 

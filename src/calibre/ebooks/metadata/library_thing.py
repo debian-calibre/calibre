@@ -17,16 +17,20 @@ OPENLIBRARY = 'http://covers.openlibrary.org/b/isbn/%s-L.jpg?default=false'
 
 
 _lt_br = None
+
+
 def get_browser():
     global _lt_br
     if _lt_br is None:
         _lt_br = browser(user_agent=random_user_agent())
     return _lt_br.clone_browser()
 
+
 class HeadRequest(mechanize.Request):
 
     def get_method(self):
         return 'HEAD'
+
 
 def check_for_cover(isbn, timeout=5.):
     br = get_browser()
@@ -39,14 +43,18 @@ def check_for_cover(isbn, timeout=5.):
             return True
     return False
 
+
 class LibraryThingError(Exception):
     pass
+
 
 class ISBNNotFound(LibraryThingError):
     pass
 
+
 class ServerBusy(LibraryThingError):
     pass
+
 
 def login(br, username, password):
     raw = br.open('http://www.librarything.com').read()
@@ -59,9 +67,9 @@ def login(br, username, password):
     if '>Sign out' not in raw:
         raise ValueError('Failed to login as %r:%r'%(username, password))
 
+
 def option_parser():
-    parser = OptionParser(usage=\
-_('''
+    parser = OptionParser(usage=_('''
 %prog [options] ISBN
 
 Fetch a cover image/social metadata for the book identified by ISBN from LibraryThing.com
@@ -72,6 +80,7 @@ Fetch a cover image/social metadata for the book identified by ISBN from Library
                       help='Password for LibraryThing.com')
     return parser
 
+
 def get_social_metadata(title, authors, publisher, isbn, username=None,
         password=None):
     from calibre.ebooks.metadata import MetaInformation
@@ -81,8 +90,7 @@ def get_social_metadata(title, authors, publisher, isbn, username=None,
         try:
             login(br, username, password)
 
-            raw = br.open_novisit('http://www.librarything.com/isbn/'
-                        +isbn).read()
+            raw = br.open_novisit('http://www.librarything.com/isbn/' +isbn).read()
         except:
             return mi
         if '/wiki/index.php/HelpThing:Verify' in raw:
@@ -103,10 +111,10 @@ def get_social_metadata(title, authors, publisher, isbn, username=None,
         if h3:
             match = None
             for h in h3:
-               series = html.tostring(h, method='text', encoding=unicode)
-               match = re.search(r'(.+) \((.+)\)', series)
-               if match is not None:
-                   break
+                series = html.tostring(h, method='text', encoding=unicode)
+                match = re.search(r'(.+) \((.+)\)', series)
+                if match is not None:
+                    break
             if match is not None:
                 mi.series = match.group(1).strip()
                 match = re.search(r'[0-9.]+', match.group(2))
@@ -114,8 +122,8 @@ def get_social_metadata(title, authors, publisher, isbn, username=None,
                 if match is not None:
                     si = float(match.group())
                 mi.series_index = si
-        #tags = root.xpath('//div[@class="tags"]/span[@class="tag"]/a')
-        #if tags:
+        # tags = root.xpath('//div[@class="tags"]/span[@class="tag"]/a')
+        # if tags:
         #    mi.tags = [html.tostring(x, method='text', encoding=unicode) for x
         #            in tags]
         span = root.xpath(

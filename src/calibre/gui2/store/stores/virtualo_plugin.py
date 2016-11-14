@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import (unicode_literals, division, absolute_import, print_function)
-store_version = 6 # Needed for dynamic plugin loading
+store_version = 7  # Needed for dynamic plugin loading
 
 __license__ = 'GPL 3'
 __copyright__ = '2011-2016, Tomasz Długosz <tomek3d@gmail.com>'
@@ -22,6 +22,7 @@ from calibre.gui2.store import StorePlugin
 from calibre.gui2.store.basic_config import BasicStoreConfig
 from calibre.gui2.store.search_result import SearchResult
 from calibre.gui2.store.web_store_dialog import WebStoreDialog
+
 
 class VirtualoStore(BasicStoreConfig, StorePlugin):
 
@@ -65,7 +66,7 @@ class VirtualoStore(BasicStoreConfig, StorePlugin):
                 cover_url = ''.join(data.xpath('.//img[@class="cover"]/@src'))
                 title = ''.join(data.xpath('.//div[@class="title"]/a/text()'))
                 author = ', '.join(data.xpath('.//div[@class="information"]//div[@class="authors"]/a/text()'))
-                formats = [ form.strip() for form in data.xpath('.//div[@class="information"]//div[@class="format"]/a/text()')]
+                formats = [form.strip() for form in data.xpath('.//div[@class="information"]//div[@class="format"]/a/text()')]
                 nodrm = no_drm_pattern.search(''.join(data.xpath('.//div[@class="protection"]/text()')))
 
                 counter -= 1
@@ -74,7 +75,7 @@ class VirtualoStore(BasicStoreConfig, StorePlugin):
                 s.cover_url = cover_url
                 s.title = title.strip()
                 s.author = author.strip()
-                s.price = price.strip()
+                s.price = re.sub('\.',',',price.strip())
                 s.detail_item = 'http://virtualo.pl' + id.strip().split('http://')[0]
                 s.formats = ', '.join(formats).upper()
                 s.drm = SearchResult.DRM_UNLOCKED if nodrm else SearchResult.DRM_LOCKED

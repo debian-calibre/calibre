@@ -11,6 +11,7 @@
 #                                                                       #
 #########################################################################
 
+
 class GetCharMap:
     """
 
@@ -40,8 +41,9 @@ class GetCharMap:
         map_dict = {}
         self.__char_file.seek(0)
         for line in self.__char_file:
-            if not line.strip(): continue
-            begin_element = '<%s>' % map;
+            if not line.strip():
+                continue
+            begin_element = '<%s>' % map
             end_element = '</%s>' % map
             if not found_map:
                 if begin_element in line:

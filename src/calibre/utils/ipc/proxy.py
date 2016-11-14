@@ -17,11 +17,13 @@ from calibre import as_unicode, prints
 from calibre.constants import iswindows, DEBUG
 from calibre.utils.ipc import eintr_retry_call
 
+
 def _encode(msg):
     raw = cPickle.dumps(msg, -1)
     size = len(raw)
     header = struct.pack('!Q', size)
     return header + raw
+
 
 def _decode(raw):
     sz = struct.calcsize('!Q')
@@ -35,7 +37,7 @@ def _decode(raw):
 
 class Writer(Thread):
 
-    TIMEOUT = 60 #seconds
+    TIMEOUT = 60  # seconds
 
     def __init__(self, conn):
         Thread.__init__(self)
@@ -80,6 +82,7 @@ class Writer(Thread):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
+
 
 class Server(Thread):
 

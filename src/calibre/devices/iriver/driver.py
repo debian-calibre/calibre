@@ -10,6 +10,7 @@ import re
 
 from calibre.devices.usbms.driver import USBMS
 
+
 class IRIVER_STORY(USBMS):
 
     name           = 'Iriver Story Device Interface'
@@ -32,8 +33,8 @@ class IRIVER_STORY(USBMS):
     WINDOWS_CARD_A_MEM = ['STORY', 'STORY_SD', 'STORY_EB12_SD']
     WINDOWS_CARD_A_MEM = re.compile(r'(%s)&'%('|'.join(WINDOWS_CARD_A_MEM)))
 
-    #OSX_MAIN_MEM = 'Kindle Internal Storage Media'
-    #OSX_CARD_A_MEM = 'Kindle Card Storage Media'
+    # OSX_MAIN_MEM = 'Kindle Internal Storage Media'
+    # OSX_CARD_A_MEM = 'Kindle Card Storage Media'
 
     MAIN_MEMORY_VOLUME_LABEL  = 'Story Main Memory'
     STORAGE_CARD_VOLUME_LABEL = 'Story Storage Card'

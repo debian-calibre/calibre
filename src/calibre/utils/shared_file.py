@@ -33,8 +33,10 @@ if not speedup:
 
 valid_modes = {'a', 'a+', 'a+b', 'ab', 'r', 'rb', 'r+', 'r+b', 'w', 'wb', 'w+', 'w+b'}
 
+
 def validate_mode(mode):
     return mode in valid_modes
+
 
 class FlagConstants(object):
 
@@ -46,6 +48,7 @@ class FlagConstants(object):
             x = 'O_' + x
             setattr(self, x, getattr(os, x, 0))
 fc = FlagConstants()
+
 
 def flags_from_mode(mode):
     if not validate_mode(mode):
@@ -172,32 +175,35 @@ else:
     def raise_winerror(x):
         raise NotImplementedError(), None, sys.exc_info()[2]
 
-def test():
-    import repr as reprlib
 
-    def eq(x, y):
-        if x != y:
-            raise AssertionError('%s != %s' % (reprlib.repr(x), reprlib.repr(y)))
-
+def find_tests():
+    import unittest
     from calibre.ptempfile import TemporaryDirectory
-    with TemporaryDirectory() as tdir:
-        fname = os.path.join(tdir, 'test.txt')
-        with share_open(fname, 'wb') as f:
-            f.write(b'a' * 20 * 1024)
-            eq(fname, f.name)
-        f = share_open(fname, 'rb')
-        eq(f.read(1), b'a')
-        if iswindows:
-            os.rename(fname, fname+'.moved')
-            os.remove(fname+'.moved')
-        else:
-            os.remove(fname)
-        eq(f.read(1), b'a')
-        f2 = share_open(fname, 'w+b')
-        f2.write(b'b' * 10 * 1024)
-        f2.seek(0)
-        eq(f.read(10000), b'a'*10000)
-        eq(f2.read(100), b'b' * 100)
-        f3 = share_open(fname, 'rb')
-        eq(f3.read(100), b'b' * 100)
 
+    class SharedFileTest(unittest.TestCase):
+
+        def test_shared_file(self):
+            eq = self.assertEqual
+
+            with TemporaryDirectory() as tdir:
+                fname = os.path.join(tdir, 'test.txt')
+                with share_open(fname, 'wb') as f:
+                    f.write(b'a' * 20 * 1024)
+                    eq(fname, f.name)
+                f = share_open(fname, 'rb')
+                eq(f.read(1), b'a')
+                if iswindows:
+                    os.rename(fname, fname+'.moved')
+                    os.remove(fname+'.moved')
+                else:
+                    os.remove(fname)
+                eq(f.read(1), b'a')
+                f2 = share_open(fname, 'w+b')
+                f2.write(b'b' * 10 * 1024)
+                f2.seek(0)
+                eq(f.read(10000), b'a'*10000)
+                eq(f2.read(100), b'b' * 100)
+                f3 = share_open(fname, 'rb')
+                eq(f3.read(100), b'b' * 100)
+
+    return unittest.defaultTestLoader.loadTestsFromTestCase(SharedFileTest)

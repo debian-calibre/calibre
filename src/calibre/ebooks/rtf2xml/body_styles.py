@@ -17,17 +17,20 @@ from calibre.ptempfile import better_mktemp
 """
 Simply write the list of strings after style table
 """
+
+
 class BodyStyles:
     """
     Insert table data for tables.
     Logic:
     """
+
     def __init__(self,
             in_file,
             list_of_styles,
             bug_handler,
             copy=None,
-            run_level = 1,):
+            run_level=1,):
         """
         Required:
             'file'--file to parse
@@ -45,7 +48,8 @@ class BodyStyles:
         self.__list_of_styles = list_of_styles
         self.__run_level = run_level
         self.__write_to = better_mktemp()
-            # self.__write_to = 'table_info.data'
+        # self.__write_to = 'table_info.data'
+
     def insert_info(self):
         """
         """
@@ -71,7 +75,7 @@ class BodyStyles:
             self.__write_obj.write(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "body_styles.data")
         copy_obj.rename(self.__write_to, self.__file)

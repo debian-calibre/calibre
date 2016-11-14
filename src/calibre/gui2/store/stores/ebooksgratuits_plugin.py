@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 from __future__ import (unicode_literals, division, absolute_import, print_function)
-store_version = 1 # Needed for dynamic plugin loading
+store_version = 1  # Needed for dynamic plugin loading
 
 __license__ = 'GPL 3'
 __copyright__ = '2012, Florent FAYOLLE <florent.fayolle69@gmail.com>'
@@ -11,6 +11,7 @@ from calibre.gui2.store.basic_config import BasicStoreConfig
 from calibre.gui2.store.opensearch_store import OpenSearchOPDSStore
 from calibre.gui2.store.search_result import SearchResult
 from calibre.utils.filenames import ascii_text
+
 
 class EbooksGratuitsStore(BasicStoreConfig, OpenSearchOPDSStore):
 

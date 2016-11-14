@@ -50,15 +50,20 @@ import threading
 import Queue
 
 # exceptions
+
+
 class NoResultsPending(Exception):
     """All work requests have been processed."""
     pass
+
 
 class NoWorkersAvailable(Exception):
     """No worker threads available to process remaining requests."""
     pass
 
 # classes
+
+
 class WorkerThread(threading.Thread):
     """Background thread connected to the requests/results queues.
 
@@ -89,7 +94,7 @@ class WorkerThread(threading.Thread):
             if self._dismissed.isSet():
                 # if told to exit, return the work request we just picked up
                 self.workRequestQueue.put(request)
-                break # and exit
+                break  # and exit
             try:
                 self.resultQueue.put(
                     (request, request.callable(*request.args, **request.kwds))
@@ -231,6 +236,8 @@ class ThreadPool:
                 break
 
 # helper functions
+
+
 def makeRequests(callable, args_list, callback=None, exc_callback=None):
     """Create several work requests for same callable with different arguments.
 

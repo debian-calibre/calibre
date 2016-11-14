@@ -20,6 +20,7 @@ from calibre.utils.icu import sort_key
 from calibre.utils.search_query_parser import ParseException
 from calibre.utils.localization import localize_user_manual_link
 
+
 class SelectNames(QDialog):  # {{{
 
     def __init__(self, names, txt, parent=None):
@@ -61,6 +62,7 @@ class SelectNames(QDialog):  # {{{
 
 MAX_VIRTUAL_LIBRARY_NAME_LENGTH = 40
 
+
 def _build_full_search_string(gui):
     search_templates = (
         '',
@@ -86,6 +88,7 @@ def _build_full_search_string(gui):
         dex += 1
     template = search_templates[dex]
     return template.format(cl=cl, cr=cr, sb=sb).strip()
+
 
 class CreateVirtualLibrary(QDialog):  # {{{
 
@@ -305,6 +308,7 @@ class CreateVirtualLibrary(QDialog):  # {{{
         QDialog.accept(self)
 # }}}
 
+
 class SearchRestrictionMixin(object):
 
     no_restriction = _('<None>')
@@ -312,7 +316,7 @@ class SearchRestrictionMixin(object):
     def __init__(self, *args, **kwargs):
         pass
 
-    def init_search_restirction_mixin(self):
+    def init_search_restriction_mixin(self):
         self.checked = QIcon(I('ok.png'))
         self.empty = QIcon(I('blank.png'))
         self.current_search_action = QAction(self.empty, _('*current search'), self)
@@ -589,6 +593,7 @@ class SearchRestrictionMixin(object):
             self._apply_search_restriction(restriction, r)
 
     def clear_additional_restriction(self):
+        self.search_restriction.setCurrentIndex(0)
         self._apply_search_restriction('', '')
 
     def _apply_search_restriction(self, restriction, name):

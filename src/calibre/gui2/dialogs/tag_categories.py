@@ -11,6 +11,7 @@ from calibre.gui2 import error_dialog
 from calibre.constants import islinux
 from calibre.utils.icu import sort_key, strcmp
 
+
 class Item:
 
     def __init__(self, name, label, index, icon, exists):
@@ -19,8 +20,10 @@ class Item:
         self.index = index
         self.icon = icon
         self.exists = exists
+
     def __str__(self):
         return 'name=%s, label=%s, index=%s, exists='%(self.name, self.label, self.index, self.exists)
+
 
 class TagCategories(QDialog, Ui_TagCategories):
 
@@ -35,7 +38,7 @@ class TagCategories(QDialog, Ui_TagCategories):
     '''
     category_labels_orig =   ['', 'authors', 'series', 'publisher', 'tags']
 
-    def __init__(self, window, db, on_category=None, book_ids = None):
+    def __init__(self, window, db, on_category=None, book_ids=None):
         QDialog.__init__(self, window)
         Ui_TagCategories.__init__(self)
         self.setupUi(self)
@@ -253,8 +256,8 @@ class TagCategories(QDialog, Ui_TagCategories):
     def del_category(self):
         if self.current_cat_name is not None:
             if not confirm('<p>'+_('The current tag category will be '
-                           '<b>permanently deleted</b>. Are you sure?')
-                        +'</p>', 'tag_category_delete', self):
+                           '<b>permanently deleted</b>. Are you sure?') +
+                           '</p>', 'tag_category_delete', self):
                 return
             del self.categories[self.current_cat_name]
             self.current_cat_name = None

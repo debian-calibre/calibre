@@ -19,6 +19,54 @@
 #define PRINTERR(x) fprintf(stderr, "%s", x); fflush(stderr);
 #define SECRET_SIZE 32
 
+void set_dpi_aware() {
+    // Try SetProcessDpiAwareness first
+    HINSTANCE sh_core = LoadLibraryW(L"Shcore.dll");
+
+    if (sh_core) {
+        enum ProcessDpiAwareness
+        {
+            ProcessDpiUnaware         = 0,
+            ProcessSystemDpiAware     = 1,
+            ProcessPerMonitorDpiAware = 2
+        };
+
+        typedef HRESULT (WINAPI* SetProcessDpiAwarenessFuncType)(ProcessDpiAwareness);
+        SetProcessDpiAwarenessFuncType SetProcessDpiAwarenessFunc = reinterpret_cast<SetProcessDpiAwarenessFuncType>(GetProcAddress(sh_core, "SetProcessDpiAwareness"));
+
+        if (SetProcessDpiAwarenessFunc) {
+            // We only check for E_INVALIDARG because we would get
+            // E_ACCESSDENIED if the DPI was already set previously
+            // and S_OK means the call was successful
+            if (SetProcessDpiAwarenessFunc(ProcessPerMonitorDpiAware) == E_INVALIDARG) {
+                PRINTERR("Failed to set process DPI awareness using SetProcessDpiAwareness"); 
+            } else {
+                FreeLibrary(sh_core);
+                return;
+            }
+        }
+
+        FreeLibrary(sh_core);
+    }
+
+    // Fall back to SetProcessDPIAware if SetProcessDpiAwareness
+    // is not available on this system
+    HINSTANCE user32 = LoadLibraryW(L"user32.dll");
+
+    if (user32) {
+        typedef BOOL (WINAPI* SetProcessDPIAwareFuncType)(void);
+        SetProcessDPIAwareFuncType SetProcessDPIAwareFunc = reinterpret_cast<SetProcessDPIAwareFuncType>(GetProcAddress(user32, "SetProcessDPIAware"));
+
+        if (SetProcessDPIAwareFunc) {
+            if (!SetProcessDPIAwareFunc()) {
+                PRINTERR("Failed to set process DPI awareness using SetProcessDPIAware"); 
+            }
+        }
+
+        FreeLibrary(user32);
+    }
+}
+
 bool write_bytes(HANDLE pipe, DWORD sz, const char* buf) {
     DWORD written = 0;
     if (!WriteFile(pipe, buf, sz, &written, NULL)) {
@@ -195,7 +243,7 @@ HANDLE open_named_pipe(LPWSTR pipename) {
             fprintf(stderr, "Failed to open pipe. GetLastError()=%d\n", GetLastError()); fflush(stderr); return ans;
         }
         if (!WaitNamedPipeW(pipename, 20000)) {
-            fprintf(stderr, "Failed to open pipe. 20 second wait timed out.\n", GetLastError()); fflush(stderr); return ans;
+            fprintf(stderr, "Failed to open pipe. 20 second wait timed out. GetLastError()=%d\n", GetLastError()); fflush(stderr); return ans;
         }
     }
     return ans;
@@ -226,9 +274,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         READ(key_size, buf);
         if CHECK_KEY("HWND") {
             READ(sizeof(HWND), buf);
+#pragma warning( push )
+#pragma warning( disable : 4312)
             if (sizeof(HWND) == 8) parent = (HWND)*((__int64*)buf);
             else if (sizeof(HWND) == 4) parent = (HWND)*((__int32*)buf);
             else { fprintf(stderr, "Unknown pointer size: %zd", sizeof(HWND)); fflush(stderr); return 1;}
+#pragma warning( pop ) 
         }
 
         else if CHECK_KEY("PIPENAME") { READSTR(pipename); pipe = open_named_pipe(pipename); if (pipe == INVALID_HANDLE_VALUE) return 1; }
@@ -272,6 +323,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         if (!write_bytes(pipe, SECRET_SIZE+1, secret)) return 1;
         return write_bytes(pipe, echo_sz, echo_buf) ? 0 : 1;
     }
-
+    set_dpi_aware();
     return show_dialog(pipe, secret, parent, save_dialog, title, folder, filename, save_path, multiselect, confirm_overwrite, only_dirs, no_symlinks, file_types, num_file_types);
 }

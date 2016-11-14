@@ -10,14 +10,17 @@ from read_book.globals import set_boss, set_current_spine_item, current_layout_m
 from read_book.mathjax import apply_mathjax
 from read_book.resources import finalize_resources, unserialize_html
 from read_book.flow_mode import (
-    flow_to_scroll_fraction, flow_onwheel, flow_onkeydown, layout as flow_layout
+    flow_to_scroll_fraction, flow_onwheel, flow_onkeydown, layout as flow_layout, handle_gesture as flow_handle_gesture,
+    scroll_by_page as flow_scroll_by_page
 )
 from read_book.paged_mode import (
     layout as paged_layout, scroll_to_fraction as paged_scroll_to_fraction,
     onwheel as paged_onwheel, onkeydown as paged_onkeydown, scroll_to_elem,
-    jump_to_cfi as paged_jump_to_cfi
+    jump_to_cfi as paged_jump_to_cfi, handle_gesture as paged_handle_gesture,
+    scroll_by_page as paged_scroll_by_page
 )
-from read_book.settings import apply_settings
+from read_book.settings import apply_settings, opts
+from read_book.touch import create_handlers as create_touch_handlers
 from utils import debounce
 
 FORCE_FLOW_MODE = False
@@ -40,6 +43,10 @@ class IframeBoss:
             'initialize':self.initialize,
             'display': self.display,
             'scroll_to_anchor': self.on_scroll_to_anchor,
+            'next_screen': self.on_next_screen,
+            'change_font_size': self.change_font_size,
+            'change_color_scheme': self.change_color_scheme,
+            'gesture_from_margin': self.gesture_from_margin,
         }
         self.last_window_ypos = 0
 
@@ -70,6 +77,8 @@ class IframeBoss:
         if data.translations:
             install(data.translations)
         window.onerror = self.onerror
+        create_touch_handlers()
+        self.color_scheme = data.color_scheme
 
     def onerror(self, msg, script_url, line_number, column_number, error_object):
         console.log(error_object)
@@ -92,6 +101,7 @@ class IframeBoss:
             self.do_layout = flow_layout
             self.handle_wheel = flow_onwheel
             self.handle_keydown = flow_onkeydown
+            self._handle_gesture = flow_handle_gesture
             self.to_scroll_fraction = flow_to_scroll_fraction
             self.jump_to_cfi = scroll_to_cfi
         else:
@@ -100,11 +110,23 @@ class IframeBoss:
             self.handle_keydown = paged_onkeydown
             self.to_scroll_fraction = paged_scroll_to_fraction
             self.jump_to_cfi = paged_jump_to_cfi
+            self._handle_gesture = paged_handle_gesture
         apply_settings(data.settings)
         set_current_spine_item({'name':data.name, 'is_first':index is 0, 'is_last':index is spine.length - 1, 'initial_position':data.initial_position})
         self.last_cfi = None
         root_data, self.mathjax = finalize_resources(self.book, data.name, data.resource_data)
         unserialize_html(root_data, self.content_loaded)
+
+    def handle_gesture(self, gesture):
+        if gesture.type is 'show-chrome':
+            self.send_message('show_chrome')
+        elif gesture.type is 'pinch':
+            self.send_message('bump_font_size', increase=gesture.direction is 'out')
+        else:
+            self._handle_gesture(gesture)
+
+    def gesture_from_margin(self, data):
+        self.handle_gesture(data.gesture)
 
     def on_scroll_to_anchor(self, data):
         frag = data.frag
@@ -113,8 +135,38 @@ class IframeBoss:
         else:
             self.to_scroll_fraction(0.0)
 
+    def on_next_screen(self, data):
+        backwards = data.backwards
+        if current_layout_mode() is 'flow':
+            flow_scroll_by_page(backwards)
+        else:
+            paged_scroll_by_page(backwards, True)
+
+    def apply_font_size(self):
+        document.documentElement.style.fontSize = document.body.style.fontSize = '{}px'.format(opts.base_font_size)
+
+    def apply_colors(self):
+        for elem in (document.documentElement, document.body):
+            elem.style.color = opts.color_scheme.foreground
+            elem.style.backgroundColor = opts.color_scheme.background
+
+    def change_font_size(self, data):
+        if data.base_font_size? and data.base_font_size != opts.base_font_size:
+            opts.base_font_size = data.base_font_size
+            self.apply_font_size()
+
+    def change_color_scheme(self, data):
+        if data.color_scheme and data.color_scheme.foreground and data.color_scheme.background:
+            opts.color_scheme = data.color_scheme
+            self.apply_colors()
+
     def content_loaded(self):
         document.documentElement.style.overflow = 'hidden'
+        # document.body.appendChild(
+        #     E.style()  # TODO: User style sheet
+        # )
+        self.apply_colors()
+        self.apply_font_size()
         self.do_layout()
         if self.mathjax:
             return apply_mathjax(self.mathjax, self.book.manifest.link_uid, self.content_loaded_stage2)
@@ -154,6 +206,10 @@ class IframeBoss:
     def onresize(self):
         if current_layout_mode() is not 'flow':
             self.do_layout()
+        if self.last_cfi:
+            cfi = self.last_cfi[len('epubcfi(/'):-1].partition('/')[2]
+            if cfi:
+                paged_jump_to_cfi('/' + cfi)
         self.update_cfi()
 
     def onwheel(self, evt):

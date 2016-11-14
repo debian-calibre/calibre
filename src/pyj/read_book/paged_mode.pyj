@@ -106,14 +106,23 @@ def layout(is_single_page):
     nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen
     body_style = window.getComputedStyle(document.body)
     first_layout = not _in_paged_mode
+    cps = opts.columns_per_screen or {}
+    cps = cps.landscape if window.innerWidth > window.innerHeight else cps.portrait
+    try:
+        cps = int(cps)
+    except:
+        cps = 0
+    if not cps:
+        cps = int(Math.floor(window.innerWidth / 500.0))
+    cps = max(1, min(cps or 1, 20))
     if first_layout:
         handle_rtl_body(body_style)
         # Check if the current document is a full screen layout like
         # cover, if so we treat it specially.
         single_screen = (document.body.scrollHeight < window.innerHeight + 75)
         first_layout = True
-        if not single_screen and opts.cols_per_screen > 1:
-            num = opts.cols_per_screen - 1
+        if not single_screen and cps > 1:
+            num = cps - 1
             elems = document.querySelectorAll('body > *')
             if elems.length == 1:
                 # Workaround for the case when the content is wrapped in a
@@ -125,7 +134,7 @@ def layout(is_single_page):
                 num -= 1
                 create_page_div()
 
-    n = cols_per_screen = opts.cols_per_screen
+    n = cols_per_screen = cps
     # Calculate the column width so that cols_per_screen columns fit exactly in
     # the window width, with their separator margins
     ww = col_width = screen_width = window.innerWidth
@@ -215,7 +224,7 @@ def scroll_to_column(number, animated=False, notify=False, duration=1000):
 def scroll_to_xpos(xpos, animated=False, notify=False, duration=1000):
     # Scroll so that the column containing xpos is the left most column in
     # the viewport
-    if type(xpos) is not 'number':
+    if jstype(xpos) is not 'number':
         print(xpos, 'is not a number, cannot scroll to it!')
         return
     if is_full_screen_layout:
@@ -492,3 +501,15 @@ def onkeydown(evt):
         scroll_by_page(key is 'pageup', True)
     if handled:
         evt.preventDefault()
+
+def handle_gesture(gesture):
+    if gesture.type is 'swipe':
+        if gesture.axis is 'vertical':
+            pass  # TODO: next/prev section
+        else:
+            if not gesture.active or gesture.is_held:
+                scroll_by_page(gesture.direction is 'right', True)
+    elif gesture.type is 'prev-page':
+        scroll_by_page(True, False)
+    elif gesture.type is 'next-page':
+        scroll_by_page(False, False)

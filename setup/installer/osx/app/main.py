@@ -451,10 +451,11 @@ class Py2App(object):
 
     @flush
     def add_misc_libraries(self):
+        # Reminder to self to add iconv.dylib in the new freeze code
         for x in (
                 'usb-1.0.0', 'mtp.9', 'ltdl.7', 'chm.0', 'sqlite3.0',
                 'icudata.53', 'icui18n.53', 'icuio.53', 'icuuc.53',
-                'crypto.1.0.0', 'ssl.1.0.0'
+                'crypto.1.0.0', 'ssl.1.0.0',  # 'iconv.2'
         ):
             info('\nAdding', x)
             x = 'lib%s.dylib'%x
@@ -525,7 +526,7 @@ class Py2App(object):
                 ext = os.path.splitext(y)[1]
                 if ext not in ('', '.py', '.so') or \
                     (not ext and not os.path.isdir(join(root, y))):
-                        ans.append(y)
+                    ans.append(y)
 
             return ans
         if dest is None:
@@ -638,8 +639,9 @@ class Py2App(object):
         self.create_app_clone('console.app', specialise_plist)
         # Comes from the terminal-notifier project:
         # https://github.com/alloy/terminal-notifier
-        shutil.copytree(join(SW, 'build/notifier.app'), join(
-            self.contents_dir, 'calibre-notifier.app'))
+        dest = join(self.contents_dir, 'calibre-notifier.app')
+        shutil.copytree(join(SW, 'build/notifier.app'), dest)
+        shutil.copy2(join(self.resources_dir, 'calibre.icns'), join(dest, 'Contents', 'Resources', 'library.icns'))
 
     @flush
     def create_gui_apps(self):

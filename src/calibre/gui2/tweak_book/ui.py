@@ -48,8 +48,10 @@ from calibre.gui2.tweak_book.editor.insert_resource import InsertImage
 from calibre.utils.icu import character_name, sort_key
 from calibre.utils.localization import localize_user_manual_link
 
+
 def open_donate():
     open_url(QUrl('https://calibre-ebook.com/donate'))
+
 
 class Central(QStackedWidget):  # {{{
 
@@ -198,6 +200,7 @@ class Central(QStackedWidget):  # {{{
         return True
 # }}}
 
+
 class CursorPositionWidget(QWidget):  # {{{
 
     def __init__(self, parent):
@@ -226,6 +229,7 @@ class CursorPositionWidget(QWidget):  # {{{
                 text = name + ' : ' + text
             self.la.setText(text)
 # }}}
+
 
 class Main(MainWindow):
 
@@ -322,6 +326,7 @@ class Main(MainWindow):
                 sid, unicode(ac.text()).replace('&', ''), default_keys=keys, description=description, action=ac, group=group)
             self.addAction(ac)
             return ac
+
         def treg(icon, text, target, sid, keys, description):
             return reg(icon, text, target, sid, keys, description, toolbar_allowed=icon is not None)
 
@@ -396,6 +401,9 @@ class Main(MainWindow):
             'Compress images losslessly'))
         self.action_transform_styles = treg('wizard.png', _('Transform &styles'), self.boss.transform_styles, 'transform-styles', (), _(
             'Transform styles used in the book'))
+        self.action_get_ext_resources = treg('download-metadata.png', _('Download external &resources'),
+                                             self.boss.get_external_resources, 'get-external-resources', (), _(
+            'Download external resources in the book (images/stylesheets/etc/ that are not included in the book)'))
 
         def ereg(icon, text, target, sid, keys, description):
             return reg(icon, text, partial(self.boss.editor_action, target), sid, keys, description)
@@ -430,6 +438,7 @@ class Main(MainWindow):
         # Search actions
         group = _('Search')
         self.action_find = treg('search.png', _('&Find/Replace'), self.boss.show_find, 'find-replace', ('Ctrl+F',), _('Show the Find/Replace panel'))
+
         def sreg(name, text, action, overrides={}, keys=(), description=None, icon=None):
             return reg(icon, text, partial(self.boss.search_action_triggered, action, overrides), name, keys, description or text.replace('&', ''))
         self.action_find_next = sreg('find-next', _('Find &Next'),
@@ -557,7 +566,9 @@ class Main(MainWindow):
         e.addAction(self.action_set_semantics)
         e.addAction(self.action_filter_css)
         e.addAction(self.action_spell_check_book)
-        e.addAction(self.action_check_external_links)
+        er = e.addMenu(_('External Links'))
+        er.addAction(self.action_check_external_links)
+        er.addAction(self.action_get_ext_resources)
         e.addAction(self.action_check_book)
         e.addAction(self.action_reports)
 
@@ -635,6 +646,7 @@ class Main(MainWindow):
 
     def populate_toolbars(self, animate=False):
         self.global_bar.clear(), self.tools_bar.clear(), self.plugins_bar.clear()
+
         def add(bar, ac):
             if ac is None:
                 bar.addSeparator()

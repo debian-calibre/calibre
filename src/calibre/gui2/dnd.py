@@ -13,7 +13,7 @@ from threading import Thread
 from Queue import Queue, Empty
 
 from PyQt5.Qt import QPixmap, Qt, QDialog, QLabel, QVBoxLayout, \
-        QDialogButtonBox, QProgressBar, QTimer, QUrl
+        QDialogButtonBox, QProgressBar, QTimer, QUrl, QImageReader
 
 from calibre.constants import DEBUG, iswindows
 from calibre.ptempfile import PersistentTemporaryFile
@@ -21,7 +21,15 @@ from calibre import browser, as_unicode, prints
 from calibre.gui2 import error_dialog
 from calibre.utils.imghdr import what
 
+
+def image_extensions():
+    if not hasattr(image_extensions, 'ans'):
+        image_extensions.ans = [bytes(x).decode('utf-8') for x in QImageReader.supportedImageFormats()]
+    return image_extensions.ans
+
+# This is present for compatibility with old plugins, do not use
 IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'gif', 'png', 'bmp']
+
 
 class Worker(Thread):  # {{{
 
@@ -44,6 +52,7 @@ class Worker(Thread):  # {{{
     def callback(self, a, b, c):
         self.rq.put((a, b, c))
 # }}}
+
 
 class DownloadDialog(QDialog):  # {{{
 
@@ -119,9 +128,11 @@ class DownloadDialog(QDialog):  # {{{
 
 # }}}
 
+
 def dnd_has_image(md):
     # Chromium puts image data into application/octet-stream
-    return md.hasImage() or md.hasFormat('application/octet-stream') and what(None, bytes(md.data('application/octet-stream'))) in IMAGE_EXTENSIONS
+    return md.hasImage() or md.hasFormat('application/octet-stream') and what(None, bytes(md.data('application/octet-stream'))) in image_extensions()
+
 
 def data_as_string(f, md):
     raw = bytes(md.data(f))
@@ -131,6 +142,7 @@ def data_as_string(f, md):
         except:
             pass
     return raw
+
 
 def urls_from_md(md):
     ans = list(md.urls())
@@ -143,6 +155,7 @@ def urls_from_md(md):
                 ans.append(u)
     return ans
 
+
 def path_from_qurl(qurl):
     raw = bytes(qurl.toEncoded(
         QUrl.PreferLocalFile | QUrl.RemoveScheme | QUrl.RemovePassword | QUrl.RemoveUserInfo |
@@ -152,11 +165,13 @@ def path_from_qurl(qurl):
         ans = ans[1:]
     return ans
 
+
 def remote_urls_from_qurl(qurls, allowed_exts):
     for qurl in qurls:
         if qurl.scheme() in {'http', 'https', 'ftp'} and posixpath.splitext(
                 qurl.path())[1][1:].lower() in allowed_exts:
             yield bytes(qurl.toEncoded()), posixpath.basename(qurl.path())
+
 
 def dnd_has_extension(md, extensions, allow_all_extensions=False):
     if DEBUG:
@@ -181,13 +196,13 @@ def dnd_has_extension(md, extensions, allow_all_extensions=False):
         return bool(exts)
     return bool(exts.intersection(frozenset(extensions)))
 
-def dnd_get_image(md, image_exts=IMAGE_EXTENSIONS):
+
+def dnd_get_image(md, image_exts=None):
     '''
     Get the image in the QMimeData object md.
 
     :return: None, None if no image is found
-             QPixmap, None if an image is found, the pixmap is guaranteed not
-             null
+             QPixmap, None if an image is found, the pixmap is guaranteed not null
              url, filename if a URL that points to an image is found
     '''
     if md.hasImage():
@@ -206,6 +221,9 @@ def dnd_get_image(md, image_exts=IMAGE_EXTENSIONS):
         pmap.loadFromData(cdata)
         if not pmap.isNull():
             return pmap, None
+
+    if image_exts is None:
+        image_exts = image_extensions()
 
     # No image, look for an URL pointing to an image
     urls = urls_from_md(md)
@@ -238,7 +256,8 @@ def dnd_get_image(md, image_exts=IMAGE_EXTENSIONS):
 
     return None, None
 
-def dnd_get_files(md, exts, allow_all_extensions=False):
+
+def dnd_get_files(md, exts, allow_all_extensions=False, filter_exts=()):
     '''
     Get the file in the QMimeData object md with an extension that is one of
     the extensions in exts.
@@ -251,11 +270,12 @@ def dnd_get_files(md, exts, allow_all_extensions=False):
     urls = urls_from_md(md)
     # First look for a local file
     local_files = [path_from_qurl(x) for x in urls]
+
     def is_ok(path):
         ext = posixpath.splitext(path)[1][1:].lower()
-        if allow_all_extensions and ext:
+        if allow_all_extensions and ext and ext not in filter_exts:
             return True
-        return ext in exts
+        return ext in exts and ext not in filter_exts
     local_files = [p for p in local_files if is_ok(urllib.unquote(p))]
     local_files = [x for x in local_files if os.path.exists(x)]
     if local_files:
@@ -276,6 +296,7 @@ def dnd_get_files(md, exts, allow_all_extensions=False):
         return rurls, filenames
 
     return None, None
+
 
 def _get_firefox_pair(md, exts, url, fname):
     url = bytes(md.data(url)).decode('utf-16')
@@ -337,6 +358,7 @@ def get_firefox_rurl(md, exts):
     if DEBUG:
         prints('Firefox rurl:', url, fname)
     return url, fname
+
 
 def has_firefox_ext(md, exts):
     return bool(get_firefox_rurl(md, exts)[0])

@@ -14,7 +14,8 @@ from calibre.ebooks.lrf.objects import get_object, PageTree, StyleObject, \
 
 class LRFDocument(LRFMetaFile):
 
-    class temp(object): pass
+    class temp(object):
+        pass
 
     def __init__(self, stream):
         LRFMetaFile.__init__(self, stream)
@@ -43,7 +44,7 @@ class LRFDocument(LRFMetaFile):
         self.objects = {}
         self._file.seek(self.object_index_offset)
         obj_array = array.array("I", self._file.read(4*4*self.number_of_objects))
-        if ord(array.array("i",[1]).tostring()[0])==0: #big-endian
+        if ord(array.array("i",[1]).tostring()[0])==0:  # big-endian
             obj_array.byteswap()
         for i in range(self.number_of_objects):
             if not self.keep_parsing:
@@ -133,6 +134,7 @@ class LRFDocument(LRFMetaFile):
             self.write_files()
         return '<BBeBXylog version="1.0">\n' + bookinfo + pages + styles + objects + '</BBeBXylog>'
 
+
 def option_parser():
     parser = OptionParser(usage=_('%prog book.lrf\nConvert an LRF file into an LRS (XML UTF-8 encoded) file'))
     parser.add_option('--output', '-o', default=None, help=_('Output LRS file'), dest='out')
@@ -141,6 +143,7 @@ def option_parser():
                       dest='output_resources')
     parser.add_option('--verbose', default=False, action='store_true', dest='verbose', help=_('Be more verbose'))
     return parser
+
 
 def main(args=sys.argv, logger=None):
     parser = option_parser()

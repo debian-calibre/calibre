@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import (unicode_literals, division, absolute_import, print_function)
-store_version = 2 # Needed for dynamic plugin loading
+store_version = 2  # Needed for dynamic plugin loading
 
 __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
@@ -20,6 +20,7 @@ from calibre.gui2.store import StorePlugin
 from calibre.gui2.store.basic_config import BasicStoreConfig
 from calibre.gui2.store.search_result import SearchResult
 from calibre.gui2.store.web_store_dialog import WebStoreDialog
+
 
 class MillsBoonUKStore(BasicStoreConfig, StorePlugin):
 
@@ -43,7 +44,7 @@ class MillsBoonUKStore(BasicStoreConfig, StorePlugin):
     def search(self, query, max_results=10, timeout=60):
         base_url = 'http://www.millsandboon.co.uk'
         url = base_url + '/search?format=ebook&q=' + urllib2.quote(query)
-        #print(url)
+        # print(url)
         br = browser()
 
         counter = max_results

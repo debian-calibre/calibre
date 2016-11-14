@@ -23,7 +23,7 @@ def ProcessFileName(fileName):
     fileName = fileName.lower()
     # Change all images to jpg
     root, ext = os.path.splitext(fileName)
-    if ext in [ '.jpeg', '.jpg', '.gif', '.svg', '.png' ]:
+    if ext in ['.jpeg', '.jpg', '.gif', '.svg', '.png']:
         fileName = root + '.jpg'
     return fileName
 
@@ -53,6 +53,7 @@ CALIBRE_SNB_IMG_TAG = "<$$calibre_snb_temp_img$$>"
 CALIBRE_SNB_BM_TAG = "<$$calibre_snb_bm_tag$$>"
 CALIBRE_SNB_PRE_TAG = "<$$calibre_snb_pre_tag$$>"
 
+
 class SNBMLizer(object):
 
     curSubItem = ""
@@ -67,12 +68,12 @@ class SNBMLizer(object):
         self.opts = opts
         self.item = item
         self.subitems = subitems
-        return self.mlize();
+        return self.mlize()
 
     def merge_content(self, old_tree, oeb_book, item, subitems, opts):
         newTrees = self.extract_content(oeb_book, item, subitems, opts)
         body = old_tree.find(".//body")
-        if body != None:
+        if body is not None:
             for subName in newTrees:
                 newbody = newTrees[subName].find(".//body")
                 for entity in newbody:
@@ -81,11 +82,11 @@ class SNBMLizer(object):
     def mlize(self):
         from calibre.ebooks.oeb.base import XHTML
         from calibre.ebooks.oeb.stylizer import Stylizer
-        output = [ u'' ]
+        output = [u'']
         stylizer = Stylizer(self.item.data, self.item.href, self.oeb_book, self.opts, self.opts.output_profile)
         content = unicode(etree.tostring(self.item.data.find(XHTML('body')), encoding=unicode))
 #        content = self.remove_newlines(content)
-        trees = { }
+        trees = {}
         for subitem, subtitle in self.subitems:
             snbcTree = etree.Element("snbc")
             snbcHead = etree.SubElement(snbcTree, "head")
@@ -157,7 +158,7 @@ class SNBMLizer(object):
         text = re.sub('(?<=.)%s(?=.)' % os.linesep, ' ', text)
 
         # Remove multiple spaces.
-        #text = re.sub('[ ]{2,}', ' ', text)
+        # text = re.sub('[ ]{2,}', ' ', text)
 
         # Remove excessive newlines.
         text = re.sub('\n[ ]+\n', '\n\n', text)
@@ -173,7 +174,7 @@ class SNBMLizer(object):
 
         if self.opts.snb_max_line_length:
             max_length = self.opts.snb_max_line_length
-            if self.opts.max_line_length < 25:# and not self.opts.force_max_line_length:
+            if self.opts.max_line_length < 25:  # and not self.opts.force_max_line_length:
                 max_length = 25
             short_lines = []
             lines = text.splitlines()
@@ -207,7 +208,7 @@ class SNBMLizer(object):
 
         return text
 
-    def dump_text(self, subitems, elem, stylizer, end='', pre=False, li = ''):
+    def dump_text(self, subitems, elem, stylizer, end='', pre=False, li=''):
         from calibre.ebooks.oeb.base import XHTML_NS, barename, namespace
 
         if not isinstance(elem.tag, basestring) \
@@ -218,12 +219,11 @@ class SNBMLizer(object):
                 return [elem.tail]
             return ['']
 
-
         text = ['']
         style = stylizer.style(elem)
 
-        if elem.attrib.get('id') != None and elem.attrib['id'] in [ href for href, title in subitems ]:
-            if self.curSubItem != None and self.curSubItem != elem.attrib['id']:
+        if elem.attrib.get('id') is not None and elem.attrib['id'] in [href for href, title in subitems]:
+            if self.curSubItem is not None and self.curSubItem != elem.attrib['id']:
                 self.curSubItem = elem.attrib['id']
                 text.append(u'\n\n%s%s\n\n' % (CALIBRE_SNB_BM_TAG, self.curSubItem))
 
@@ -259,7 +259,7 @@ class SNBMLizer(object):
         # Process tags that contain text.
         if hasattr(elem, 'text') and elem.text:
             if pre:
-                text.append((u'\n\n%s' % CALIBRE_SNB_PRE_TAG ).join((li + elem.text).splitlines()))
+                text.append((u'\n\n%s' % CALIBRE_SNB_PRE_TAG).join((li + elem.text).splitlines()))
             else:
                 text.append(li + elem.text)
             li = ''
@@ -276,7 +276,7 @@ class SNBMLizer(object):
 
         if hasattr(elem, 'tail') and elem.tail:
             if pre:
-                text.append((u'\n\n%s' % CALIBRE_SNB_PRE_TAG ).join(elem.tail.splitlines()))
+                text.append((u'\n\n%s' % CALIBRE_SNB_PRE_TAG).join(elem.tail.splitlines()))
             else:
                 text.append(li + elem.tail)
             li = ''

@@ -10,7 +10,7 @@ import os, traceback, re
 from contextlib import closing
 
 
-from PyQt5.Qt import (QWizard, QWizardPage, QPixmap, Qt, QAbstractListModel,
+from PyQt5.Qt import (QWizard, QWizardPage, QIcon, Qt, QAbstractListModel,
     QItemSelectionModel, pyqtSignal, QItemSelection, QDir)
 from calibre import __appname__
 from calibre.constants import (filesystem_encoding, iswindows, plugins,
@@ -21,7 +21,6 @@ from calibre.gui2.wizard.library_ui import Ui_WizardPage as LibraryUI
 from calibre.gui2.wizard.finish_ui import Ui_WizardPage as FinishUI
 from calibre.gui2.wizard.kindle_ui import Ui_WizardPage as KindleUI
 from calibre.gui2.wizard.stanza_ui import Ui_WizardPage as StanzaUI
-from calibre.gui2 import min_available_height, available_width
 from calibre.utils.localization import localize_user_manual_link
 
 from calibre.utils.config import dynamic, prefs
@@ -31,6 +30,7 @@ if iswindows:
     winutil = plugins['winutil'][0]
 
 # Devices {{{
+
 
 class Device(object):
 
@@ -64,11 +64,13 @@ class Device(object):
             recs['dont_grayscale'] = True
             save_defaults('comic_input', recs)
 
+
 class Smartphone(Device):
 
     id = 'smartphone'
     name = 'Smartphone'
     supports_color = True
+
 
 class Tablet(Device):
 
@@ -76,6 +78,7 @@ class Tablet(Device):
     name = 'iPad like tablet'
     output_profile = 'tablet'
     supports_color = True
+
 
 class Kindle(Device):
 
@@ -85,6 +88,7 @@ class Kindle(Device):
     manufacturer = 'Amazon'
     id = 'kindle'
 
+
 class JetBook(Device):
 
     output_profile = 'jetbook5'
@@ -92,6 +96,7 @@ class JetBook(Device):
     name = 'JetBook'
     manufacturer = 'Ectaco'
     id = 'jetbook'
+
 
 class JetBookMini(Device):
 
@@ -101,6 +106,7 @@ class JetBookMini(Device):
     manufacturer = 'Ectaco'
     id = 'jetbookmini'
 
+
 class KindleDX(Kindle):
 
     output_profile = 'kindle_dx'
@@ -108,21 +114,25 @@ class KindleDX(Kindle):
     name = 'Kindle DX'
     id = 'kindledx'
 
+
 class KindleFire(KindleDX):
     name = 'Kindle Fire and Fire HD'
     id = 'kindle_fire'
     output_profile = 'kindle_fire'
     supports_color = True
 
+
 class KindlePW(Kindle):
     name = 'Kindle PaperWhite'
     id = 'kindle_pw'
     output_profile = 'kindle_pw'
 
+
 class KindleVoyage(Kindle):
-    name = 'Kindle Voyage'
+    name = 'Kindle Voyage/Oasis'
     id = 'kindle_voyage'
     output_profile = 'kindle_voyage'
+
 
 class Sony505(Device):
 
@@ -132,6 +142,7 @@ class Sony505(Device):
     manufacturer = 'SONY'
     id = 'prs505'
 
+
 class Kobo(Device):
     name = 'Kobo and Kobo Touch Readers'
     manufacturer = 'Kobo'
@@ -139,10 +150,12 @@ class Kobo(Device):
     output_format = 'EPUB'
     id = 'kobo'
 
+
 class KoboVox(Kobo):
     name = 'Kobo Vox, Aura and Glo families'
     output_profile = 'tablet'
     id = 'kobo_vox'
+
 
 class Booq(Device):
     name = 'bq Classic'
@@ -151,6 +164,7 @@ class Booq(Device):
     output_format = 'EPUB'
     id = 'booq'
 
+
 class TheBook(Device):
     name = 'The Book'
     manufacturer = 'Augen'
@@ -158,19 +172,32 @@ class TheBook(Device):
     output_format = 'EPUB'
     id = 'thebook'
 
+
 class Avant(Booq):
     name = 'bq Avant'
+
 
 class AvantXL(Booq):
     name = 'bq Avant XL'
     output_profile = 'ipad'
 
+
 class BooqPocketPlus(Booq):
     name = 'bq Pocket Plus'
     output_profile = 'sony300'
 
+
 class BooqCervantes(Booq):
     name = 'bq Cervantes'
+
+
+class BOOX(Device):
+    name = 'BOOX MAX, N96, i86, C67ML, M96, etc.'
+    manufacturer = 'Onyx'
+    output_profile = 'generic_eink_hd'
+    output_format = 'EPUB'
+    id = 'boox_eink'
+
 
 class Sony300(Sony505):
 
@@ -178,11 +205,13 @@ class Sony300(Sony505):
     id = 'prs300'
     output_profile = 'sony300'
 
+
 class Sony900(Sony505):
 
     name = 'SONY Reader Daily Edition'
     id = 'prs900'
     output_profile = 'sony900'
+
 
 class SonyT3(Sony505):
 
@@ -190,11 +219,13 @@ class SonyT3(Sony505):
     id = 'prst3'
     output_profile = 'sonyt3'
 
+
 class Nook(Sony505):
     id = 'nook'
     name = 'Nook and Nook Simple Reader'
     manufacturer = 'Barnes & Noble'
     output_profile = 'nook'
+
 
 class NookColor(Nook):
     id = 'nook_color'
@@ -202,10 +233,12 @@ class NookColor(Nook):
     output_profile = 'nook_color'
     supports_color = True
 
+
 class NookTablet(NookColor):
     id = 'nook_tablet'
     name = 'Nook Tablet/HD'
     output_profile = 'nook_hd_plus'
+
 
 class CybookG3(Device):
 
@@ -215,6 +248,7 @@ class CybookG3(Device):
     manufacturer = 'Bookeen'
     id = 'cybookg3'
 
+
 class CybookOpus(CybookG3):
 
     name = 'Cybook Opus'
@@ -222,15 +256,24 @@ class CybookOpus(CybookG3):
     output_profile = 'cybook_opus'
     id = 'cybook_opus'
 
+
 class CybookOrizon(CybookOpus):
 
     name = 'Cybook Orizon'
     id = 'cybook_orizon'
 
+
 class CybookOdyssey(CybookOpus):
 
     name = 'Cybook Odyssey'
     id = 'cybook_odyssey'
+
+
+class CybookMuse(CybookOpus):
+
+    name = 'Cybook Muse'
+    id = 'cybook_muse'
+    output_profile = 'tablet'
 
 
 class PocketBook360(CybookOpus):
@@ -240,6 +283,7 @@ class PocketBook360(CybookOpus):
     id = 'pocketbook360'
     output_profile = 'cybook_opus'
 
+
 class PocketBook(CybookG3):
 
     manufacturer = 'PocketBook'
@@ -247,11 +291,13 @@ class PocketBook(CybookG3):
     id = 'pocketbook'
     output_profile = 'cybookg3'
 
+
 class PocketBook900(PocketBook):
 
     name = 'PocketBook 900'
     id = 'pocketbook900'
     output_profile = 'pocketbook_900'
+
 
 class PocketBookPro912(PocketBook):
 
@@ -269,6 +315,7 @@ class iPhone(Device):
     supports_color = True
     output_profile = 'ipad3'
 
+
 class Android(Device):
 
     name = 'Android phone'
@@ -285,11 +332,13 @@ class Android(Device):
             if hasattr(plugin, 'configure_for_generic_epub_app'):
                 plugin.configure_for_generic_epub_app()
 
+
 class AndroidTablet(Android):
 
     name = 'Android tablet'
     id = 'android_tablet'
     output_profile = 'tablet'
+
 
 class AndroidPhoneWithKindle(Android):
 
@@ -306,11 +355,13 @@ class AndroidPhoneWithKindle(Android):
             if hasattr(plugin, 'configure_for_kindle_app'):
                 plugin.configure_for_kindle_app()
 
+
 class AndroidTabletWithKindle(AndroidPhoneWithKindle):
 
     name = 'Android tablet with Kindle reader'
     id = 'android_tablet_with_kindle'
     output_profile = 'kindle_fire'
+
 
 class HanlinV3(Device):
 
@@ -320,11 +371,13 @@ class HanlinV3(Device):
     manufacturer = 'Jinke'
     id = 'hanlinv3'
 
+
 class HanlinV5(HanlinV3):
 
     name = 'Hanlin V5'
     output_profile = 'hanlinv5'
     id = 'hanlinv5'
+
 
 class BeBook(HanlinV3):
 
@@ -332,17 +385,20 @@ class BeBook(HanlinV3):
     manufacturer = 'BeBook'
     id = 'bebook'
 
+
 class BeBookMini(HanlinV5):
 
     name = 'BeBook Mini'
     manufacturer = 'BeBook'
     id = 'bebook_mini'
 
+
 class EZReader(HanlinV3):
 
     name = 'EZReader'
     manufacturer = 'Astak'
     id = 'ezreader'
+
 
 class EZReaderPP(HanlinV5):
 
@@ -352,10 +408,12 @@ class EZReaderPP(HanlinV5):
 
 # }}}
 
+
 def get_devices():
     for x in globals().values():
         if isinstance(x, type) and issubclass(x, Device):
             yield x
+
 
 def get_manufacturers():
     mans = set([])
@@ -365,9 +423,11 @@ def get_manufacturers():
         mans.remove(Device.manufacturer)
     return [Device.manufacturer] + sorted(mans)
 
+
 def get_devices_of(manufacturer):
     ans = [d for d in get_devices() if d.manufacturer == manufacturer]
     return sorted(ans, cmp=lambda x,y:cmp(x.name, y.name))
+
 
 class ManufacturerModel(QAbstractListModel):
 
@@ -393,6 +453,7 @@ class ManufacturerModel(QAbstractListModel):
             if x == man:
                 return self.index(i)
 
+
 class DeviceModel(QAbstractListModel):
 
     def __init__(self, manufacturer):
@@ -417,6 +478,7 @@ class DeviceModel(QAbstractListModel):
             if device is dev:
                 return self.index(i)
 
+
 class KindlePage(QWizardPage, KindleUI):
 
     ID = 3
@@ -439,6 +501,7 @@ class KindlePage(QWizardPage, KindleUI):
             accs = [x for x in accs if x[1]]
         if accs:
             self.to_address.setText(accs[0][0])
+
         def x():
             t = unicode(self.to_address.text())
             if t.strip():
@@ -467,6 +530,7 @@ class KindlePage(QWizardPage, KindleUI):
         KindleUI.retranslateUi(self, widget)
         if hasattr(self, 'send_email_widget'):
             self.send_email_widget.retranslateUi(self.send_email_widget)
+
 
 class StanzaPage(QWizardPage, StanzaUI):
 
@@ -575,6 +639,7 @@ class DevicePage(QWizardPage, DeviceUI):
             return StanzaPage.ID
         return FinishPage.ID
 
+
 class LibraryPage(QWizardPage, LibraryUI):
 
     ID = 1
@@ -601,6 +666,7 @@ class LibraryPage(QWizardPage, LibraryUI):
         lang = get_lc_messages_path(lang) if lang else lang
         if lang is None or lang not in available_translations():
             lang = 'en'
+
         def get_esc_lang(l):
             if l == 'en':
                 return 'English'
@@ -742,6 +808,7 @@ class LibraryPage(QWizardPage, LibraryUI):
     def nextId(self):
         return DevicePage.ID
 
+
 class FinishPage(QWizardPage, FinishUI):
 
     ID = 4
@@ -772,22 +839,17 @@ class Wizard(QWizard):
     }
     # The latter is simply to mark the texts for translation
     if False:
-            _('&Next >')
-            _('< &Back')
-            _('Cancel')
-            _('&Finish')
-            _('Commit')
+        _('&Next >')
+        _('< &Back')
+        _('Cancel')
+        _('&Finish')
+        _('Commit')
 
     def __init__(self, parent):
         QWizard.__init__(self, parent)
         self.setWindowTitle(__appname__+' '+_('welcome wizard'))
-        p  = QPixmap()
-        p.loadFromData(open(P('content_server/calibre.png'), 'rb').read())
-        self.setPixmap(self.LogoPixmap, p.scaledToHeight(80,
-            Qt.SmoothTransformation))
-        self.setPixmap(self.WatermarkPixmap,
-            QPixmap(I('welcome_wizard.png')))
-        self.setPixmap(self.BackgroundPixmap, QPixmap(I('wizard.png')))
+        self.setPixmap(self.LogoPixmap, QIcon(I('library.png')).pixmap(48, 48))
+        self.setWizardStyle(self.ModernStyle)
         self.device_page = DevicePage()
         self.library_page = LibraryPage()
         self.library_page.retranslate.connect(self.retranslate)
@@ -802,15 +864,8 @@ class Wizard(QWizard):
         self.setPage(self.stanza_page.ID, self.stanza_page)
 
         self.device_extra_page = None
-        nh, nw = min_available_height()-75, available_width()-30
-        if nh < 0:
-            nh = 580
-        if nw < 0:
-            nw = 400
-        nh = min(400, nh)
-        nw = min(580, nw)
-        self.resize(nw, nh)
         self.set_button_texts()
+        self.resize(600, 520)
 
     def set_button_texts(self):
         for but, text in self.BUTTON_TEXTS.iteritems():
@@ -844,4 +899,3 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     wizard().exec_()
-

@@ -28,6 +28,7 @@ from calibre.utils.fonts.sfnt.cff.table import CFFTable
 
 # OpenType spec: http://www.microsoft.com/typography/otspec/otff.htm
 
+
 class Sfnt(object):
 
     TABLE_MAP = {
@@ -124,7 +125,7 @@ class Sfnt(object):
         # Write tables
         head_offset = None
         table_data = []
-        offset = stream.tell() + ( calcsize(b'>4s3L') * num_tables )
+        offset = stream.tell() + (calcsize(b'>4s3L') * num_tables)
         sizes = OrderedDict()
         for tag in self:
             table = self.tables[tag]
@@ -149,6 +150,7 @@ class Sfnt(object):
         spack(b'>L', q)
 
         return stream.getvalue(), sizes
+
 
 def test_roundtrip(ff=None):
     if ff is None:

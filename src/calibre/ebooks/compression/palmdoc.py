@@ -13,18 +13,21 @@ if not cPalmdoc:
     raise RuntimeError(('Failed to load required cPalmdoc module: '
             '%s')%plugins['cPalmdoc'][1])
 
+
 def decompress_doc(data):
     return cPalmdoc.decompress(data)
+
 
 def compress_doc(data):
     if not data:
         return u''
     return cPalmdoc.compress(data)
 
+
 def test():
     TESTS = [
-            'abc\x03\x04\x05\x06ms', # Test binary writing
-            'a b c \xfed ', # Test encoding of spaces
+            'abc\x03\x04\x05\x06ms',  # Test binary writing
+            'a b c \xfed ',  # Test encoding of spaces
             '0123456789axyz2bxyz2cdfgfo9iuyerh',
             '0123456789asd0123456789asd|yyzzxxffhhjjkk',
             ('ciewacnaq eiu743 r787q 0w%  ; sa fd\xef\ffdxosac wocjp acoiecowei '
@@ -42,6 +45,7 @@ def test():
         print '\t\t', repr(decompress_doc(x))
         assert decompress_doc(x) == test
         print
+
 
 def py_compress_doc(data):
     out = StringIO()

@@ -12,6 +12,7 @@ from collections import OrderedDict
 
 from calibre.utils.fonts.sfnt.cff.constants import cff_standard_strings
 
+
 class Index(list):
 
     def __init__(self):
@@ -42,11 +43,12 @@ class Index(list):
                 offsets = b''.join(pack(b'>L', x)[1:] for x in offsets)
             else:
                 fmt = {1:'B', 2:'H', 4:'L'}[offsize]
-                offsets = pack( ('>%d%s'%(len(offsets), fmt)).encode('ascii'),
+                offsets = pack(('>%d%s'%(len(offsets), fmt)).encode('ascii'),
                         *offsets)
 
             self.raw = prefix + offsets + obj_data
         return self.raw
+
 
 class Strings(Index):
 
@@ -62,6 +64,7 @@ class Strings(Index):
             self.append(x)
         return ans
 
+
 class Dict(Index):
 
     def __init__(self, src, strings):
@@ -71,6 +74,7 @@ class Dict(Index):
     def compile(self):
         self[:] = [self.src.compile(self.strings)]
         Index.compile(self)
+
 
 class PrivateDict(object):
 
@@ -90,6 +94,7 @@ class PrivateDict(object):
         self.raw = raw
         return raw
 
+
 class Charsets(list):
 
     def __init__(self, strings):
@@ -102,6 +107,7 @@ class Charsets(list):
         ans += pack(('>%dH'%len(self)).encode('ascii'), *sids)
         self.raw = ans
         return ans
+
 
 class Subset(object):
 
@@ -122,7 +128,7 @@ class Subset(object):
         char_strings = Index()
         self.charname_map = OrderedDict()
         charsets = Charsets(strings)
-        charsets.extend(cff.charset[1:]) # .notdef is not included
+        charsets.extend(cff.charset[1:])  # .notdef is not included
 
         endchar_operator = bytes(bytearray([14]))
         for i in xrange(self.cff.num_glyphs):
@@ -144,13 +150,13 @@ class Subset(object):
 
         # TOP DICT
         top_dict = Dict(cff.top_dict, strings)
-        top_dict.compile() # Add strings
+        top_dict.compile()  # Add strings
 
         private_dict = None
         if cff.private_dict is not None:
             private_dict = PrivateDict(cff.private_dict, cff.private_subrs,
                     strings)
-            private_dict.compile() # Add strings
+            private_dict.compile()  # Add strings
 
         fixed_prefix = header + font_names.compile()
 

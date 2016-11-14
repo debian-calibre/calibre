@@ -16,6 +16,7 @@ from calibre.library.check_library import CheckLibrary, CHECKS
 from calibre.utils.recycle_bin import delete_file, delete_tree
 from calibre import prints, as_unicode
 
+
 class DBCheck(QDialog):  # {{{
 
     update_msg = pyqtSignal(object)
@@ -70,8 +71,10 @@ class DBCheck(QDialog):  # {{{
 
 # }}}
 
+
 class Item(QTreeWidgetItem):
     pass
+
 
 class CheckLibraryDialog(QDialog):
 
@@ -322,8 +325,7 @@ class CheckLibraryDialog(QDialog):
 
     def delete_marked(self):
         if not confirm('<p>'+_('The marked files and folders will be '
-               '<b>permanently deleted</b>. Are you sure?')
-               +'</p>', 'check_library_editor_delete', self):
+               '<b>permanently deleted</b>. Are you sure?') + '</p>', 'check_library_editor_delete', self):
             return
 
         # Sort the paths in reverse length order so that we can be sure that

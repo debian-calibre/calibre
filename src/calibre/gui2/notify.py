@@ -9,6 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 from calibre.constants import islinux, isosx, get_osx_version
 
+
 class Notifier(object):
 
     DEFAULT_TIMEOUT = 5000
@@ -26,7 +27,7 @@ class Notifier(object):
 
 class DBUSNotifier(Notifier):
 
-    ICON = I('notify.png')
+    ICON = I('lt.png')
 
     def __init__(self, server, path, interface):
         self.ok, self.err = True, None
@@ -58,6 +59,7 @@ class KDENotifier(DBUSNotifier):
             import traceback
             traceback.print_exc()
 
+
 class FDONotifier(DBUSNotifier):
 
     def __init__(self):
@@ -75,6 +77,7 @@ class FDONotifier(DBUSNotifier):
         except:
             import traceback
             traceback.print_exc()
+
 
 class QtNotifier(Notifier):
 
@@ -101,12 +104,14 @@ class QtNotifier(Notifier):
             except:
                 pass
 
+
 class DummyNotifier(Notifier):
 
     ok = True
 
     def __call__(self, body, summary=None, replaces_id=None, timeout=0):
         pass
+
 
 class AppleNotifier(Notifier):
 
@@ -176,7 +181,7 @@ if __name__ == '__main__':
     '''
     from PyQt5.Qt import QApplication, QSystemTrayIcon, QIcon
     app = QApplication([])
-    ic = QIcon(I('notify.png'))
+    ic = QIcon(I('lt.png'))
     tray = QSystemTrayIcon(ic)
     tray.setVisible(True)
     n = QtNotifier(tray)

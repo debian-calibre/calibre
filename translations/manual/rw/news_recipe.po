@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 07:42+0530\n"
-"PO-Revision-Date: 2016-04-29 02:05+0000\n"
+"POT-Creation-Date: 2016-06-24 07:25+0530\n"
+"PO-Revision-Date: 2016-06-24 01:56+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Kinyarwanda (http://www.transifex.com/calibre/calibre/language/rw/)\n"
 "MIME-Version: 1.0\n"
@@ -167,6 +167,13 @@ msgid ""
 "`None`. If you want your recipe to download a cover for the e-book override "
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -558,8 +565,9 @@ msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
 ":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
 " closing `</head>` tag thereby overriding all :term:`CSS` except that which "
-"is declared using the style attribute on individual :term:`HTML` tags. For "
-"example::"
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of

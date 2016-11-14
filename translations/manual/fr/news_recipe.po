@@ -6,13 +6,14 @@
 # Xotes <alois.glibert@gmail.com>, 2015
 # Ptit Prince <leporello1791@gmail.com>, 2014-2015
 # Ptit Prince <leporello1791@gmail.com>, 2014
+# Ptit Prince <leporello1791@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 07:42+0530\n"
-"PO-Revision-Date: 2016-04-29 02:05+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-23 15:24+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +36,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr "Classe de base qui contient toute la logique nécessaire dans toutes les recettes. En comprenant progressivement plus des fonctionnalités de cette classe, vous pouvez progressivement faire recettes plus personnalisées/plus puissantes. Pour un tutoriel d'introduction sur la création des recettes, voir :doc:`news`."
+msgstr "Classe de base qui contient toute la logique nécessaire dans toutes les recettes. En comprenant progressivement plus des fonctionnalités de cette classe, vous pouvez progressivement faire des recettes plus personnalisées/plus puissantes. Pour un tutoriel d'introduction sur la création des recettes, voir :doc:`news`."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -61,7 +62,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr "Appelez ceci à partir de populate_article_metadata avec l'attribut src d'une étiquette <img> de l'article qu'il est approprié d'utiliser comme la vignette représentant l'article dans la Table des Matières. Si la vignette qui est actuellement utilisée est dépendante du périphérique (actuellement uniquement utilisé par les Kindle). Notez que l'image référencée doit être une image qui a été téléchargée avec succès, autrement elle sera ignorée."
+msgstr "Appelez ceci à partir de populate_article_metadata avec l'attribut src d'une étiquette <img> de l'article qu'il est approprié d'utiliser comme la vignette représentant l'article dans la Table des Matières. Si la vignette qui est actuellement utilisée est dépendante du dispositif (actuellement uniquement utilisé par les Kindle). Notez que l'image référencée doit être une image qui a été téléchargée avec succès, autrement elle sera ignorée."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -79,7 +80,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr "Renvoie un ensemble de représentations classiques de ``url``. L'implémentation par défaut utilise juste le hostname du serveur et le chemin de l'URL, ignorant tout paramètres de requête, fragments, etc. Les représentations classiques doivent être uniques tout au long des URLs pour cette source d'actualités. Si elles ne le sont pas, alors les liens internes peuvent être résolus incorrectement."
+msgstr "Renvoie un ensemble de représentations classiques de ``url``. L'implémentation par défaut utilise juste le hostname du serveur et le chemin de l'URL, ignorant tout paramètres de requête, fragments, etc. Les représentations classiques doivent être uniques tout au long des URLs pour cette source d'actualités. Si elles ne le sont pas, alors les liens internes peuvent être incorrectement résolus."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
@@ -171,6 +172,13 @@ msgid ""
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
 msgstr "Renvoie une :term:`URL` à l'image de couverture pour cette question ou `None`. Par défaut il retourne la valeur du membre `self.cover_url` qui est normalement `None`. Si vous voulez que votre recette télécharge une couverture pour le livre numérique outrepassez cette méthode dans votre sous-classe, ou paramétrez la variable membre `self.cover_url`avant que cette méthode ne soit appelée."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
+msgstr "Par défaut renvoie `self.extra_css`. Outrepassez si vous voulez générer par programme extra_css"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
@@ -561,9 +569,10 @@ msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
 ":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
 " closing `</head>` tag thereby overriding all :term:`CSS` except that which "
-"is declared using the style attribute on individual :term:`HTML` tags. For "
-"example::"
-msgstr "Spécifier n'importe quel :term:`CSS` supplémentaire qui devrait être ajouté aux fichiers :term:`HTML` téléchargés. Il sera inséré dans les balises `<style>`juste avant la balise de fermeture `</head>` outrepassant tous les :term:`CSS` excepté ce qui est déclaré utiliser un attribut de style sur des balises :term:`HTML`individuelles. Par exemple::"
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
+msgstr "Spécifiez n'importe quel :term:`CSS` supplémentaire qui devrait être ajouté aux fichiers :term:`HTML` téléchargés. Il sera inséré dans les balises `<style>` juste avant la balise de fermeture `</head>` outrepassant tous les :term:`CSS` excepté ce qui est déclaré utilisant un attribut de style sur des balises :term:`HTML` individuelles. Notez que si vous voulez générer par programme extra_css écrasera la méthode :meth:`get_extra_css()` à la place.  Par exemple::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
@@ -817,7 +826,7 @@ msgstr "Dimensions maximales (h,l) pour mettre les images à l'échelle. Si scal
 msgid ""
 "Rescale images to fit in the device screen dimensions set by the output "
 "profile. Ignored if no output profile is set."
-msgstr "Remet les images à l'échelle pour s'ajuster aux dimensions de l'écran du périphérique paramétré par le profil de sortie? Ignoré si aucun profil de sortie n'a été paramétré."
+msgstr "Remet les images à l'échelle pour s'ajuster aux dimensions de l'écran du périphérique paramétré par le profil de sortie ? Ignoré si aucun profil de sortie n'a été paramétré."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1

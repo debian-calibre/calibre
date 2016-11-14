@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 09:56+0530\n"
-"PO-Revision-Date: 2016-06-19 11:19+0000\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-15 20:34+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:4
 msgid "The calibre template language"
-msgstr "calibre mallspråket"
+msgstr "calibre mallspråk"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:6
 msgid ""
@@ -29,7 +29,7 @@ msgid ""
 "control the folder structure and file name when saving files from the "
 "calibre library to the disk or eBook reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
-msgstr "calibre mallspråk används på olika ställen. Den används för att anpassa katalogstruktur och filnamn när du sparar filer från calibre biblioteket till hårddisken eller e-boksläsare. Det används också för att definiera \"virtuella\" kolumner som innehåller data från andra kolumner och så vidare."
+msgstr "calibre mallspråk används på olika ställen. Den används för att hantera katalogstruktur och filnamn när du sparar filer från calibre biblioteket till hårddisken eller e-bok läsare. Det används också för att definiera \"virtuella\" kolumner som innehåller data från andra kolumner och så vidare."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:9
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 "If a particular book does not have a particular piece of metadata, the field"
 " in the template is automatically removed for that book. Consider, for "
 "example::"
-msgstr "Om en viss bok inte har en särskild bit av metadata, är det område som automatiskt avlägsnas i mallen för att boken. Tänk till exempel::"
+msgstr "Om en viss bok inte har en särskild bit av metadata, avlägsnas  automatiskt fältet i mallen för den boken. Tänk till exempel::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:36
 msgid "If a book has a series, the template will produce::"
@@ -97,7 +97,7 @@ msgid ""
 "You can do more than just simple substitution with the templates. You can "
 "also conditionally include text and control how the substituted data is "
 "formatted."
-msgstr "Du kan göra mer än bara enkel substitution med mallarna. Du kan också villkora inkludera text och anpassa hur den substituerade data formateras."
+msgstr "Du kan göra mer än bara enkel substitution med mallarna. Du kan också villkora inkludera text och hantera hur den substituerade data formateras."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:51
 msgid ""
@@ -177,7 +177,7 @@ msgid ""
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "calibres mallspråk kommer från python och för mer information om syntaxen för dessa avancerade formaterings operationer, titta på `Python dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
+msgstr "calibres mallspråk kommer från python och för mera information om syntaxen för dessa avancerade formaterings operationer, titta på `Python dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -224,7 +224,7 @@ msgid ""
 "using the functions available for templates. For example, to display the "
 "title in upper case, use ``{title:uppercase()}``. To display it in title "
 "case, use ``{title:titlecase()}``."
-msgstr "Anta att du vill visa värdet på ett fält i versaler, då detta område är normalt i rubrikformat. Du kan göra detta (och många fler saker) med hjälp av de funktioner som finns för mallar. Till exempel, för att visa titeln med versaler, använd ``{title:uppercase()}``. För att via det i rubrikformat använd ``{title:titlecase()}``."
+msgstr "Anta att du vill visa värdet på ett fält i versaler, då detta fält är normalt i rubrikformat. Du kan göra detta (och många fler saker) med hjälp av de funktioner som finns för mallar. Till exempel, för att visa titeln med versaler, använd ``{title:uppercase()}``. För att via det i rubrikformat använd ``{title:titlecase()}``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:106
 msgid ""
@@ -322,7 +322,7 @@ msgstr "``format_number(template)`` -- tolkar värdet som ett tal och formatera 
 msgid ""
 "``human_readable()`` -- expects the value to be a number and returns a "
 "string representing that number in KB, MB, GB, etc."
-msgstr "``human_readable()`` -- förväntar sig att värdet är ett nummer och returnerar en sträng som representerar det numret i kB, MB, GB, osv."
+msgstr "``human_readable()`` -- förväntar sig att värdet är ett nummer och returnerar en sträng som representerar det numret i kB, MB, GB, o.s.v."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:126
 msgid ""
@@ -400,7 +400,7 @@ msgid ""
 "`Ancient E-nhoe`. If the field's length is less than ``left chars`` + "
 "``right chars`` + the length of ``middle text``, then the field will be used"
 " intact. For example, the title `The Dome` would not be changed."
-msgstr "``shorten(left chars, middle text, right chars)`` -- Returnerar en förkortad version av fältet, som består av `vänster chars` tecken från början av fältet, följt av `mellan text`, följt av `höger chars` tecken från slutet av strängen. `Vänster chars` och `höger chars` måste vara heltal. Antag till exempel titeln på boken är `Ancient English Lagar i Times of Ivanhoe`, och du vill att den ska passa in i ett utrymme av högst 15 tecken. Om du använder ``{title:shorten(9, -, 5)}``, kommer resultatet att bli `Ancient E-nhoe`. Om fältets längd är mindre än ``vänster chars`` + ``höger chars`` + längden på ``mellan text``, då området kommer att användas intakt. Till exempel, den i rubriken 'Domen` skulle inte ändras.."
+msgstr "``shorten(left chars, middle text, right chars)`` -- Returnerar en förkortad version av fältet, som består av `vänster chars` tecken från början av fältet, följt av `mellan text`, följt av `höger chars` tecken från slutet av strängen. `Vänster chars` och `höger chars` måste vara heltal. Antag till exempel titeln på boken är `Ancient English Lagar i Times of Ivanhoe`, och du vill att den ska passa in i ett utrymme av högst 15 tecken. Om du använder ``{title:shorten(9, -, 5)}``, kommer resultatet att bli `Ancient E-nhoe`. Om fältets längd är mindre än ``vänster chars`` + ``höger chars`` + längden på ``mellan text``, då fältet kommer att användas intakt. Till exempel, den i rubriken 'Domen` skulle inte ändras.."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:135
 msgid ""
@@ -464,7 +464,7 @@ msgid ""
 "approximating the sound of the words in the source field. For example, if "
 "the source field is ``Фёдор Миха́йлович Достоевский`` the function returns "
 "``Fiodor Mikhailovich Dostoievskii``.'"
-msgstr "``transliterate()`` -- Returnerar en sträng i ett latinskt alfabet som bildas genom en tillnärmning av ljudet av orden i källfältet. Till exempel, om källområdet är`Фёдор Миха́йлович Достоевский`` returnerar funktionen ``Fiodor Mikhailovich Dostoievskii``.'"
+msgstr "``transliterate()`` -- Returnerar en sträng i ett latinskt alfabet som bildas genom en tillnärmning av ljudet av orden i källfältet. Till exempel, om källfältet är`Фёдор Миха́йлович Достоевский`` returnerar funktionen ``Fiodor Mikhailovich Dostoievskii``.'"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:157
 msgid ""
@@ -476,7 +476,7 @@ msgid ""
 "nothing, not ``000``. If you really want to see ``000`` values, then you use"
 " both the format string and the ``ifempty`` function to change the empty "
 "value back to a zero. The field reference would be::"
-msgstr "Nu, hur är det med funktioner och formatering inom samma område. Anta att du har en heltalsanpassad kolumn kallad ``#myint`` som du vill se med ledande nollor, som i ``003``. För att göra detta, skulle du använda ett format på ``0>3s``. Men som standard, om ett nummer (heltal eller flyttal) är lika med noll då producerar fältet tomt värde, så nollvärden kommer att producera någonting, inte ``000``. Om du verkligen vill se ``000`` värden, då använder du både formatsträngen och ``ifempty`` funktionen för att ändra det tomma värdet till noll. Fältreferens vore::"
+msgstr "Nu, hur är det med funktioner och formatering inom samma fält. Anta att du har en heltalsanpassad kolumn kallad ``#myint`` som du vill se med ledande nollor, som i ``003``. För att göra detta, skulle du använda ett format på ``0>3s``. Men som standard, om ett nummer (heltal eller flyttal) är lika med noll då producerar fältet tomt värde, så nollvärden kommer att producera någonting, inte ``000``. Om du verkligen vill se ``000`` värden, då använder du både formatsträngen och ``ifempty`` funktionen för att ändra det tomma värdet till noll. Fältreferens vore::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:161
 msgid ""
@@ -500,7 +500,7 @@ msgstr "Mallens språk för programläge skiljer sig från enkelfunktionsläge g
 msgid ""
 "You can use the functions documented above in template program mode. See "
 "below for details."
-msgstr "Du kan använda de funktioner som dokumenterats ovan i mallprogramsläge. Se nedan för mer information."
+msgstr "Du kan använda de funktioner som dokumenterats ovan i mallprogramsläge. Se nedan för mera information."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:174
 msgid ""
@@ -533,7 +533,7 @@ msgid ""
 "example, the standard built-in functions must be given an additional initial"
 " parameter indicating the source field, which is a significant difference "
 "from single-function mode."
-msgstr "funktioner måste få alla deras argument. Det finns inget standardvärde. Till exempel måste de inbyggda standard funktioner ges en extra initial parameter som indikerar källområdet, vilket är en avsevärd skillnad från enkelfunktionsläge."
+msgstr "funktioner måste få alla deras argument. Det finns inget standardvärde. Till exempel måste de inbyggda standard funktioner ges en extra initial parameter som indikerar källfältet, vilket är en avsevärd skillnad från enkelfunktionsläge."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:183
 msgid "white space is ignored and can be used anywhere within the expression."
@@ -586,7 +586,7 @@ msgstr "Detta program gör följande:"
 msgid ""
 "specify that the field being looked at is series_index. This sets the value "
 "of the variable ``$``."
-msgstr "ange att det område som betraktas på är series_index. Detta ställer in värdet på variabeln ``$ ``."
+msgstr "ange att det fält som betraktas på är series_index. Detta ställer in värdet på variabeln ``$ ``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:220
 msgid ""
@@ -686,7 +686,7 @@ msgid ""
 "all parameters can be statements (sequences of expressions). Note that the "
 "definitive documentation for functions is available in the section "
 ":ref:`Function classification <template_functions_reference>`:"
-msgstr "Följande funktioner finns tillgängliga utöver de som beskrivs i enkelfunktionsläge. Minns från exemplet ovan att enkelfunktionsläges funktionerna kräver att ytterligare första parameter anges för vilket område som ska användas. Med undantag för ``id`` parametertilldelning, kan alla parametrar vara satser (sekvenser av uttryck). Observera att den slutgiltiga dokumentationen för funktioner finns i avsnittet :ref:`Funktionsklassificering <template_functions_reference>`:"
+msgstr "Följande funktioner finns tillgängliga utöver de som beskrivs i enkelfunktionsläge. Minns från exemplet ovan att enkelfunktionsläges funktionerna kräver att ytterligare första parameter anges för vilket fält som ska användas. Med undantag för ``id`` parametertilldelning, kan alla parametrar vara satser (sekvenser av uttryck). Observera att den slutgiltiga dokumentationen för funktioner finns i avsnittet :ref:`Funktionsklassificering <template_functions_reference>`:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:238
 msgid ""
@@ -727,7 +727,7 @@ msgid ""
 "spaces. It is up to you to choose separator strings that do not occur in "
 "author names or links. An author is included even if the author link is "
 "empty."
-msgstr "``author_links(val_separator, pair_separator)`` -- returnerar en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` osv. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillsatta mellanslag. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillsatta platser. Det är upp till dig att välja skiljesträngar som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
+msgstr "``author_links(val_separator, pair_separator)`` -- returnerar en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` o.s.v. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillsatta mellanslag. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillsatta platser. Det är upp till dig att välja skiljesträngar som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:243
 msgid ""
@@ -738,7 +738,7 @@ msgid ""
 "author sort values in this list are in the same order as the authors of the "
 "book. If you want spaces around ``val_separator`` then include them in the "
 "separator string"
-msgstr "``author_sorts(val_separator)`` -- returnerar en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den returnerade listan har formen författaren sortera 1 ``val_separator`` författare sort 2 osv. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha mellanslag runt ``val_separator`` så inkludera dem i separatorsträngen"
+msgstr "``author_sorts(val_separator)`` -- returnerar en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den returnerade listan har formen författaren sortera 1 ``val_separator`` författare sort 2 o.s.v. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha mellanslag runt ``val_separator`` så inkludera dem i separatorsträngen"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:244
 msgid ""
@@ -1191,25 +1191,25 @@ msgstr "För att åstadkomma detta, vi:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:460
 msgid ""
-"Create a composite field (call it AA) containing ``{series}/{series_index} -"
-" {title'}``. If the series is not empty, then this template will produce "
-"`series/series_index - title`."
-msgstr "Skapa en sammansatt fält (kalla det AA) som innehåller ``{series}/{series_index} - {title'}``. Om serien inte är tom, så kommer den här mallen att producera `series/series_index - title`."
+"Create a composite field (give it lookup name #AA) containing "
+"``{series}/{series_index} - {title}``. If the series is not empty, then this"
+" template will produce `series/series_index - title`."
+msgstr "Skapa en sammansatt fält (ge det uppslagsnamn #AA) som innehåller ``{series}/{series_index} - {title'}``. Om serien inte är tom, så kommer den här mallen att producera `series/series_index - title`."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:461
 msgid ""
-"Create a composite field (call it BB) containing "
+"Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
-msgstr "Skapa en sammansatt fält (kalla det BB) som innehåller``{#genre:ifempty(Unknown)}/{author_sort}/{title}``.  Denna mall ger `genre/author_sort/title`, där en tom genre ersätts med `Unknown` (okänd)."
+msgstr "Skapa en sammansatt fält (ge det uppslagsnamn #BB) som innehåller``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Denna mall ger `genre/author_sort/title`, där en tom genre ersätts med `Okänd`."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid ""
-"Set the save template to ``{series:lookup(.,AA,BB)}``. This template chooses"
-" composite field AA if series is not empty, and composite field BB if series"
-" is empty. We therefore have two completely different save paths, depending "
-"on whether or not `series` is empty."
-msgstr "Ändra spara mallen till  ``{series:lookup(.,AA,BB)}``.  Denna mall väljer sammansatta fält AA om serien inte är tom, och sammansatta fält BB om serien är tom. Vi har alltså två helt olika sparvägar, beroende på om eller inte `series` är tom."
+"Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
+"chooses composite field #AA if series is not empty, and composite field #BB "
+"if series is empty. We therefore have two completely different save paths, "
+"depending on whether or not `series` is empty."
+msgstr "Ändra spara mallen till  ``{series:lookup(.,#AA,#BB)}``.  Denna mall väljer sammansatta fält #AA om serien inte är tom, och sammansatta fält #BB om serien är tom. Vi har alltså två helt olika sparvägar, beroende på om eller inte `series` är tom."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
 msgid "Templates and Plugboards"
@@ -1278,7 +1278,7 @@ msgid ""
 "if the template produces the value ``Thriller, Horror``, then the result "
 "will be two tags, ``Thriller`` and ``Horror``. There is no way to put a "
 "comma in the middle of a tag."
-msgstr "Etikett och författar fält har särskild behandling, eftersom båda dessa områden kan ha mer än en post. En bok kan ha många etiketter och många författare. När du anger att ett av dessa två områden ska ändras, är mallens resultat som undersöks för att se om mer än en post finns. För etiketter, skärs resultatet bort varhelst calibre finner ett kommatecken. Till exempel, om mallen producerar värdet ''Thriller, Horror``, då blir resultatet två etiketter, ``Thriller`` och ''Horror``. Det finns inget sätt att sätta ett kommatecken i mitten av en etikett."
+msgstr "Etikett och författar fält har särskild behandling, eftersom båda dessa fält kan ha mer än en post. En bok kan ha många etiketter och många författare. När du anger att ett av dessa två fält ska ändras, är mallens resultat som undersöks för att se om mer än en post finns. För etiketter, skärs resultatet bort varhelst calibre finner ett kommatecken. Till exempel, om mallen producerar värdet ''Thriller, Horror``, då blir resultatet två etiketter, ``Thriller`` och ''Horror``. Det finns inget sätt att sätta ett kommatecken i mitten av en etikett."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:480
 msgid ""

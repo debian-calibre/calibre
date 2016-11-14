@@ -22,6 +22,7 @@ from calibre.constants import __appname__, __version__
 
 TEXT_RECORD_SIZE = 4096
 
+
 class TocItem(object):
 
     def __init__(self, name, size, flags):
@@ -132,7 +133,7 @@ class RBWriter(object):
 
                     images.append((name, data))
                 except Exception as e:
-                    self.log.error('Error: Could not include file %s becuase ' \
+                    self.log.error('Error: Could not include file %s becuase '
                         '%s.' % (item.href, e))
 
         return images

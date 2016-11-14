@@ -9,16 +9,17 @@ from collections import OrderedDict
 import operator
 
 from cssutils.css import Property, CSSRule
-import regex
 
 from calibre import force_unicode
 from calibre.ebooks import parse_css_length
 from calibre.ebooks.oeb.normalize_css import normalizers, safe_parser
 
-REGEX_FLAGS = regex.VERSION1 | regex.UNICODE | regex.IGNORECASE
 
 def compile_pat(pat):
+    import regex
+    REGEX_FLAGS = regex.VERSION1 | regex.UNICODE | regex.IGNORECASE
     return regex.compile(pat, flags=REGEX_FLAGS)
+
 
 def all_properties(decl):
     ' This is needed because CSSStyleDeclaration.getProperties(None, all=True) does not work and is slower than it needs to be. '
@@ -26,6 +27,7 @@ def all_properties(decl):
         p = item.value
         if isinstance(p, Property):
             yield p
+
 
 class StyleDeclaration(object):
 
@@ -97,6 +99,7 @@ class StyleDeclaration(object):
 
 operator_map = {'==':'eq', '!=': 'ne', '<=':'le', '<':'lt', '>=':'ge', '>':'gt', '-':'sub', '+': 'add', '*':'mul', '/':'truediv'}
 
+
 def unit_convert(value, unit, dpi=96.0, body_font_size=12):
     result = None
     if unit == 'px':
@@ -117,6 +120,7 @@ def unit_convert(value, unit, dpi=96.0, body_font_size=12):
         result = value * 0.708661417325
     return result
 
+
 def parse_css_length_or_number(raw, default_unit=None):
     if isinstance(raw, (int, long, float)):
         return raw, default_unit
@@ -124,6 +128,7 @@ def parse_css_length_or_number(raw, default_unit=None):
         return float(raw), default_unit
     except Exception:
         return parse_css_length(raw)
+
 
 def numeric_match(value, unit, pts, op, raw):
     try:
@@ -141,6 +146,7 @@ def numeric_match(value, unit, pts, op, raw):
         return False
     return op(p, pts)
 
+
 def transform_number(val, op, raw):
     try:
         v, u = parse_css_length_or_number(raw, default_unit='')
@@ -152,6 +158,7 @@ def transform_number(val, op, raw):
     if int(v) == v:
         v = int(v)
     return str(v) + u
+
 
 class Rule(object):
 
@@ -226,6 +233,7 @@ MATCH_TYPE_MAP = OrderedDict((
 
 allowed_keys = frozenset('property match_type query action action_data'.split())
 
+
 def validate_rule(rule):
     keys = frozenset(rule)
     extra = keys - allowed_keys
@@ -281,8 +289,10 @@ def validate_rule(rule):
             return _('Invalid number'), _('%s is not a number') % ad
     return None, None
 
+
 def compile_rules(serialized_rules):
     return [Rule(**r) for r in serialized_rules]
+
 
 def transform_declaration(compiled_rules, decl):
     decl = StyleDeclaration(decl)
@@ -292,12 +302,14 @@ def transform_declaration(compiled_rules, decl):
             changed = True
     return changed
 
+
 def transform_sheet(compiled_rules, sheet):
     changed = False
     for rule in sheet.cssRules.rulesOfType(CSSRule.STYLE_RULE):
         if transform_declaration(compiled_rules, rule.style):
             changed = True
     return changed
+
 
 def transform_container(container, serialized_rules, names=()):
     from calibre.ebooks.oeb.polish.css import transform_css
@@ -306,6 +318,7 @@ def transform_container(container, serialized_rules, names=()):
         container, transform_sheet=partial(transform_sheet, rules),
         transform_style=partial(transform_declaration, rules), names=names
     )
+
 
 def rule_to_text(rule):
     def get(prop):
@@ -318,6 +331,7 @@ def rule_to_text(rule):
         text += get('action_data')
     return text
 
+
 def export_rules(serialized_rules):
     lines = []
     for rule in serialized_rules:
@@ -326,7 +340,9 @@ def export_rules(serialized_rules):
         lines.append('')
     return '\n'.join(lines).encode('utf-8')
 
+
 def import_rules(raw_data):
+    import regex
     pat = regex.compile('\s*(\S+)\s*:\s*(.+)', flags=regex.VERSION1)
     current_rule = {}
 
@@ -348,6 +364,7 @@ def import_rules(raw_data):
                 current_rule[k] = v
     if current_rule:
         yield sanitize(current_rule)
+
 
 def test(return_tests=False):  # {{{
     import unittest

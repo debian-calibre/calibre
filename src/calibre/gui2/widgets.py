@@ -20,10 +20,11 @@ from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.utils.config import prefs, XMLConfig
 from calibre.gui2.progress_indicator import ProgressIndicator as _ProgressIndicator
 from calibre.gui2.dnd import (dnd_has_image, dnd_get_image, dnd_get_files,
-    IMAGE_EXTENSIONS, dnd_has_extension, DownloadDialog)
+    image_extensions, dnd_has_extension, DownloadDialog)
 from calibre.utils.localization import localize_user_manual_link
 
 history = XMLConfig('history')
+
 
 class ProgressIndicator(QWidget):  # {{{
 
@@ -57,6 +58,7 @@ class ProgressIndicator(QWidget):  # {{{
         self.pi.stopAnimation()
         self.setVisible(False)
 # }}}
+
 
 class FilenamePattern(QWidget, Ui_Form):  # {{{
 
@@ -170,6 +172,7 @@ class FilenamePattern(QWidget, Ui_Form):  # {{{
 
 # }}}
 
+
 class FormatList(QListWidget):  # {{{
     DROPABBLE_EXTENSIONS = BOOK_EXTENSIONS
     formats_dropped = pyqtSignal(object, object)
@@ -210,19 +213,21 @@ class FormatList(QListWidget):  # {{{
 
 # }}}
 
+
 class ImageDropMixin(object):  # {{{
     '''
     Adds support for dropping images onto widgets and a context menu for
     copy/pasting images.
     '''
-    DROPABBLE_EXTENSIONS = IMAGE_EXTENSIONS
+    DROPABBLE_EXTENSIONS = None
 
     def __init__(self):
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event):
         md = event.mimeData()
-        if dnd_has_extension(md, self.DROPABBLE_EXTENSIONS) or \
+        exts = self.DROPABBLE_EXTENSIONS or image_extensions()
+        if dnd_has_extension(md, exts) or \
                 dnd_has_image(md):
             event.acceptProposedAction()
 
@@ -243,13 +248,15 @@ class ImageDropMixin(object):  # {{{
                 d.start_download()
                 if d.err is None:
                     pmap = QPixmap()
-                    pmap.loadFromData(open(d.fpath, 'rb').read())
+                    with lopen(d.fpath, 'rb') as f:
+                        data = f.read()
+                    pmap.loadFromData(data)
                     if not pmap.isNull():
-                        self.handle_image_drop(pmap)
+                        self.handle_image_drop(pmap, data=data)
 
-    def handle_image_drop(self, pmap):
+    def handle_image_drop(self, pmap, data=None):
         self.set_pixmap(pmap)
-        self.cover_changed.emit(pixmap_to_data(pmap, quality=100))
+        self.cover_changed.emit(data or pixmap_to_data(pmap, format='PNG'))
 
     def dragMoveEvent(self, event):
         event.acceptProposedAction()
@@ -284,8 +291,9 @@ class ImageDropMixin(object):  # {{{
         if not pmap.isNull():
             self.set_pixmap(pmap)
             self.cover_changed.emit(
-                    pixmap_to_data(pmap, quality=100))
+                    pixmap_to_data(pmap, format='PNG'))
 # }}}
+
 
 class ImageView(QWidget, ImageDropMixin):  # {{{
 
@@ -341,9 +349,9 @@ class ImageView(QWidget, ImageDropMixin):  # {{{
         cw, ch = self.rect().width(), self.rect().height()
         scaled, nw, nh = fit_image(w, h, cw, ch)
         if scaled:
-            pmap = pmap.scaled(nw, nh, Qt.IgnoreAspectRatio,
+            pmap = pmap.scaled(int(nw*pmap.devicePixelRatio()), int(nh*pmap.devicePixelRatio()), Qt.IgnoreAspectRatio,
                     Qt.SmoothTransformation)
-        w, h = pmap.width(), pmap.height()
+        w, h = int(pmap.width()/pmap.devicePixelRatio()), int(pmap.height()/pmap.devicePixelRatio())
         x = int(abs(cw - w)/2.)
         y = int(abs(ch - h)/2.)
         target = QRect(x, y, w, h)
@@ -369,6 +377,7 @@ class ImageView(QWidget, ImageDropMixin):  # {{{
         p.end()
 # }}}
 
+
 class CoverView(QGraphicsView, ImageDropMixin):  # {{{
 
     cover_changed = pyqtSignal(object)
@@ -390,6 +399,8 @@ class CoverView(QGraphicsView, ImageDropMixin):  # {{{
 # }}}
 
 # BasicList {{{
+
+
 class BasicListItem(QListWidgetItem):
 
     def __init__(self, text, user_data=None):
@@ -400,6 +411,7 @@ class BasicListItem(QListWidgetItem):
         if hasattr(other, 'text'):
             return self.text() == other.text()
         return False
+
 
 class BasicList(QListWidget):
 
@@ -423,6 +435,7 @@ class BasicList(QListWidget):
         for i in range(self.count()):
             yield self.item(i)
 # }}}
+
 
 class LineEditECM(object):  # {{{
 
@@ -472,6 +485,7 @@ class LineEditECM(object):  # {{{
 
 # }}}
 
+
 class EnLineEdit(LineEditECM, QLineEdit):  # {{{
 
     '''
@@ -488,6 +502,7 @@ class EnLineEdit(LineEditECM, QLineEdit):  # {{{
         return QLineEdit.event(self, ev)
 
 # }}}
+
 
 class ItemsCompleter(QCompleter):  # {{{
 
@@ -515,6 +530,7 @@ class ItemsCompleter(QCompleter):  # {{{
         self.setModel(model)
 
 # }}}
+
 
 class CompleteLineEdit(EnLineEdit):  # {{{
 
@@ -575,6 +591,7 @@ class CompleteLineEdit(EnLineEdit):  # {{{
 
 # }}}
 
+
 class EnComboBox(QComboBox):  # {{{
 
     '''
@@ -601,6 +618,7 @@ class EnComboBox(QComboBox):  # {{{
 
 # }}}
 
+
 class CompleteComboBox(EnComboBox):  # {{{
 
     def __init__(self, *args):
@@ -617,6 +635,7 @@ class CompleteComboBox(EnComboBox):  # {{{
         self.lineEdit().set_space_before_sep(space_before)
 
 # }}}
+
 
 class HistoryLineEdit(QComboBox):  # {{{
 
@@ -671,12 +690,14 @@ class HistoryLineEdit(QComboBox):  # {{{
 
 # }}}
 
+
 class ComboBoxWithHelp(QComboBox):  # {{{
     '''
     A combobox where item 0 is help text. CurrentText will return '' for item 0.
     Be sure to always fetch the text with currentText. Don't use the signals
     that pass a string, because they will not correct the text.
     '''
+
     def __init__(self, parent=None):
         QComboBox.__init__(self, parent)
         self.currentIndexChanged[int].connect(self.index_changed)
@@ -720,6 +741,7 @@ class ComboBoxWithHelp(QComboBox):  # {{{
 
 # }}}
 
+
 class EncodingComboBox(QComboBox):  # {{{
     '''
     A combobox that holds text encodings support
@@ -744,6 +766,7 @@ class EncodingComboBox(QComboBox):  # {{{
             self.addItem(item)
 
 # }}}
+
 
 class PythonHighlighter(QSyntaxHighlighter):  # {{{
 
@@ -904,6 +927,8 @@ class PythonHighlighter(QSyntaxHighlighter):  # {{{
 # }}}
 
 # Splitter {{{
+
+
 class SplitterHandle(QSplitterHandle):
 
     double_clicked = pyqtSignal(object)
@@ -925,6 +950,7 @@ class SplitterHandle(QSplitterHandle):
 
     def mouseDoubleClickEvent(self, ev):
         self.double_clicked.emit(self)
+
 
 class LayoutButton(QToolButton):
 
@@ -960,6 +986,7 @@ class LayoutButton(QToolButton):
             self.set_state_to_show()
         else:
             self.set_state_to_hide()
+
 
 class Splitter(QSplitter):
 

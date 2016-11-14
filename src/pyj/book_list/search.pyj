@@ -3,11 +3,13 @@
 from __python__ import hash_literals
 
 from ajax import ajax
-from dom import clear, set_css, build_rule, svgicon
+from complete import create_search_bar
+from dom import clear, set_css, build_rule, svgicon, add_extra_css
 from elementmaker import E
 from gettext import gettext as _
-from widgets import create_button, create_spinner, Breadcrumbs, add_extra_css
+from widgets import create_button, create_spinner, Breadcrumbs
 from modals import show_modal
+from utils import rating_to_stars
 from book_list.globals import get_boss, get_session_data
 from book_list.theme import get_color, get_font_size
 
@@ -56,15 +58,10 @@ class SearchPanel:
 
         # Build search input
         search_container = div.firstChild
-        search_button = create_button(_('Search'), icon='search', action=self.execute_search.bind(self), tooltip=_('Do the search'))
-        search_container.appendChild(E.div(style="display: flex; width: 100%;",
-            E.input(
-                type='search', name='search-books',
-                title=_('Search for books'), placeholder=_('Enter the search query'),
-                style="flex-grow: 10; margin-right: 0.5em", onkeydown=self.on_input_keydown.bind(self),
-            ),
-            search_button
-        ))
+        search_button = create_button(_('Search'), icon='search', tooltip=_('Do the search'))
+        search_bar = create_search_bar(self.execute_search.bind(self), 'search-books', tooltip=_('Search for books'), placeholder=_('Enter the search query'), button=search_button)
+        set_css(search_bar, flex_grow='10', margin_right='0.5em')
+        search_container.appendChild(E.div(style="display: flex; width: 100%;", search_bar, search_button))
         search_container.appendChild(E.ul(class_='search-items'))
 
         # Build loading panel
@@ -79,12 +76,6 @@ class SearchPanel:
         self.tag_browser_data = None
         self.node_id_map = {}
         self.active_nodes = {}
-
-    def on_input_keydown(self, event):
-        if event.keyCode is 13:  # Enter
-            event.preventDefault(), event.stopPropagation()
-            event.target.nextSibling.focus()
-            self.execute_search()
 
     def init(self):
         tb = self.search_control
@@ -234,6 +225,7 @@ class SearchPanel:
             return ''
 
         search_state = {'plus':'true', 'plusplus':'.true', 'minus':'false', 'minusminus':'.false'}[state]
+        stars = rating_to_stars(3, True)
 
         if item.is_category:
             category = item.category
@@ -266,9 +258,12 @@ class SearchPanel:
             return expr
 
         category = 'tags' if item.category is 'news' else item.category
-        if item.name and item.name[0] is '★':
+        if item.name and item.name[0] in stars:
             # Assume ratings
-            expr = '{}:{}'.format(category, item.name.length)
+            rnum = item.name.length
+            if item.name.endswith(stars[-1]):
+                rnum = '{}.5'.format(rnum - 1)
+            expr = '{}:{}'.format(category, rnum)
         else:
             fm = self.interface_data.field_metadata[item.category]
             suffix = ':' if fm and fm.is_csp else ''

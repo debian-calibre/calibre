@@ -29,6 +29,7 @@ from calibre.utils.config import tweaks, prefs
 from calibre.utils.icu import sort_key
 from calibre.gui2.threaded_jobs import ThreadedJob
 
+
 class Worker(Thread):
 
     def __init__(self, func, args):
@@ -52,7 +53,7 @@ class Worker(Thread):
 class Sendmail(object):
 
     MAX_RETRIES = 1
-    TIMEOUT = 15 * 60  # seconds
+    TIMEOUT = 25 * 60  # seconds
 
     def __init__(self):
         self.calculate_rate_limit()
@@ -62,9 +63,11 @@ class Sendmail(object):
         self.rate_limit = 1
         opts = email_config().parse()
         rh = opts.relay_host
-        if rh and (
-            'gmail.com' in rh or 'live.com' in rh or 'gmx.com' in rh):
-            self.rate_limit = tweaks['public_smtp_relay_delay']
+        if rh:
+            for suffix in tweaks['public_smtp_relay_host_suffixes']:
+                if rh.lower().endswith(suffix):
+                    self.rate_limit = tweaks['public_smtp_relay_delay']
+                    break
 
     def __call__(self, attachment, aname, to, subject, text, log=None,
             abort=None, notifications=None):
@@ -115,6 +118,7 @@ class Sendmail(object):
             eto = []
             for x in to.split(','):
                 eto.append(extract_email_address(x.strip()))
+
             def safe_debug(*args, **kwargs):
                 try:
                     return log.debug(*args, **kwargs)
@@ -155,6 +159,8 @@ def email_news(mi, remove, get_fmts, done, job_manager):
         files = [f for f in files if f is not None]
         if not files:
             continue
+        if opts.tags.get(account, False) and not ({t.strip() for t in opts.tags[account].split(',')} & set(mi.tags)):
+            continue
         attachment = files[0]
         to_s = [account]
         subjects = [_('News:')+' '+mi.title]
@@ -175,6 +181,7 @@ def email_news(mi, remove, get_fmts, done, job_manager):
 
 plugboard_email_value = 'email'
 plugboard_email_formats = ['epub', 'mobi', 'azw3']
+
 
 class SelectRecipients(QDialog):  # {{{
 
@@ -280,12 +287,14 @@ class SelectRecipients(QDialog):  # {{{
                 ans.append((to, fmts, subject))
         return ans
 
+
 def select_recipients(parent=None):
     d = SelectRecipients(parent)
     if d.exec_() == d.Accepted:
         return d.ans
     return ()
 # }}}
+
 
 class EmailMixin(object):  # {{{
 
@@ -470,6 +479,7 @@ class EmailMixin(object):  # {{{
                 index_is_id=True)
         remove = [id_] if config['delete_news_from_library_on_upload'] \
                 else []
+
         def get_fmts(fmts):
             files, auto = self.library_view.model().\
                     get_preferred_formats_from_ids([id_], fmts,

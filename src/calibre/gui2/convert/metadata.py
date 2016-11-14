@@ -21,6 +21,7 @@ from calibre.utils.icu import sort_key
 from calibre.library.comments import comments_to_html
 from calibre.utils.config import tweaks
 
+
 def create_opf_file(db, book_id, opf_file=None):
     mi = db.get_metadata(book_id, index_is_id=True)
     old_cover = mi.cover
@@ -34,6 +35,7 @@ def create_opf_file(db, book_id, opf_file=None):
     opf_file.close()
     return mi, opf_file
 
+
 def create_cover_file(db, book_id):
     cover = db.cover(book_id, index_is_id=True)
     cf = None
@@ -42,6 +44,7 @@ def create_cover_file(db, book_id):
         cf.write(cover)
         cf.close()
     return cf
+
 
 class MetadataWidget(Widget, Ui_Form):
 
@@ -97,11 +100,14 @@ class MetadataWidget(Widget, Ui_Form):
             pm = QPixmap()
             pm.loadFromData(cover)
             if not pm.isNull():
+                pm.setDevicePixelRatio(getattr(self, 'devicePixelRatioF', self.devicePixelRatio)())
                 self.cover.setPixmap(pm)
                 self.cover_data = cover
                 self.set_cover_tooltip(pm)
         else:
-            self.cover.setPixmap(QPixmap(I('default_cover.png')))
+            pm = QPixmap(I('default_cover.png'))
+            pm.setDevicePixelRatio(getattr(self, 'devicePixelRatioF', self.devicePixelRatio)())
+            self.cover.setPixmap(pm)
             self.cover.setToolTip(_('This book has no cover'))
         for x in ('author', 'series', 'publisher'):
             x = getattr(self, x)
@@ -201,6 +207,7 @@ class MetadataWidget(Widget, Ui_Form):
             if cover:
                 pix = QPixmap()
                 pix.loadFromData(cover)
+                pix.setDevicePixelRatio(getattr(self, 'devicePixelRatioF', self.devicePixelRatio)())
                 if pix.isNull():
                     d = error_dialog(self.parent(), _('Error reading file'),
                                       _file + _(" is not a valid picture"))

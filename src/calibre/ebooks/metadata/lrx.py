@@ -13,18 +13,23 @@ from lxml import etree
 
 from calibre.ebooks.metadata import MetaInformation, string_to_authors
 
+
 def _read(f, at, amount):
     f.seek(at)
     return f.read(amount)
 
+
 def word_be(buf):
     return struct.unpack('>L', buf)[0]
+
 
 def word_le(buf):
     return struct.unpack('<L', buf)[0]
 
+
 def short_le(buf):
     return struct.unpack('<H', buf)[0]
+
 
 def short_be(buf):
     return struct.unpack('>H', buf)[0]
@@ -71,7 +76,7 @@ def get_metadata(f):
         author = author.text
         publisher = bi.find('Publisher')
         mi.publisher = getattr(publisher, 'text', None)
-        mi.tags = [x.text for x in  bi.findall('Category')]
+        mi.tags = [x.text for x in bi.findall('Category')]
         mi.language = root.find('DocInfo').find('Language').text
         return mi
 

@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/lrf_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -128,6 +127,6 @@ class Ui_Form(object):
         self.groupBox.setTitle(_("&Embed fonts"))
         self.label_6.setText(_("&Serif font family:"))
         self.label_7.setText(_("S&ans-serif font family:"))
-        self.label_8.setText(_("&Monospaced font family:"))
+        self.label_8.setText(_("&Monospace font family:"))
 
 from calibre.gui2.font_family_chooser import FontFamilyChooser

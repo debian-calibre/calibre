@@ -17,6 +17,7 @@ from calibre.ebooks.pdb.ereader.reader132 import HeaderRecord
 from calibre.ebooks.pdb.header import PdbHeaderBuilder
 from calibre.ebooks.pdb.header import PdbHeaderReader
 
+
 def get_cover(pheader, eheader):
     cover_data = None
 
@@ -28,6 +29,7 @@ def get_cover(pheader, eheader):
             break
 
     return ('png', cover_data)
+
 
 def get_metadata(stream, extract_cover=True):
     """
@@ -45,7 +47,7 @@ def get_metadata(stream, extract_cover=True):
         if hr.compression in (2, 10) and hr.has_metadata == 1:
             try:
                 mdata = pheader.section_data(hr.metadata_offset)
-    
+
                 mdata = mdata.split('\x00')
                 mi.title = re.sub(r'[^a-zA-Z0-9 \._=\+\-!\?,\'\"]', '', mdata[0])
                 mi.authors = [re.sub(r'[^a-zA-Z0-9 \._=\+\-!\?,\'\"]', '', mdata[1])]
@@ -61,6 +63,7 @@ def get_metadata(stream, extract_cover=True):
         mi.title = pheader.title if pheader.title else _('Unknown')
 
     return mi
+
 
 def set_metadata(stream, mi):
     pheader = PdbHeaderReader(stream)
@@ -85,9 +88,9 @@ def set_metadata(stream, mi):
             if val >= hr.last_data_offset:
                 sections[0][i:i + 2] = struct.pack('>H', last_data)
 
-        sections[0][24:26] = struct.pack('>H', 1) # Set has metadata
-        sections[0][44:46] = struct.pack('>H', last_data - 1) # Set location of metadata
-        sections[0][52:54] = struct.pack('>H', last_data) # Ensure last data offset is updated
+        sections[0][24:26] = struct.pack('>H', 1)  # Set has metadata
+        sections[0][44:46] = struct.pack('>H', last_data - 1)  # Set location of metadata
+        sections[0][52:54] = struct.pack('>H', last_data)  # Ensure last data offset is updated
 
     # Merge the metadata into the file
     file_mi = get_metadata(stream, False)

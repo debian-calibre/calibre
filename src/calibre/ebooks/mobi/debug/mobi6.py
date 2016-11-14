@@ -28,13 +28,13 @@ class TagX(object):  # {{{
         self.tag, self.num_values, self.bitmask, self.eof = (tag, num_values,
                 bitmask, eof)
         self.num_of_values = num_values
-        self.is_eof = (self.eof == 1 and self.tag == 0 and self.num_values == 0
-                and self.bitmask == 0)
+        self.is_eof = (self.eof == 1 and self.tag == 0 and self.num_values == 0 and self.bitmask == 0)
 
     def __repr__(self):
         return 'TAGX(tag=%02d, num_values=%d, bitmask=%r, eof=%d)' % (self.tag,
                 self.num_values, bin(self.bitmask), self.eof)
     # }}}
+
 
 class SecondaryIndexHeader(object):  # {{{
 
@@ -98,6 +98,7 @@ class SecondaryIndexHeader(object):  # {{{
     def __str__(self):
         ans = ['*'*20 + ' Secondary Index Header '+ '*'*20]
         a = ans.append
+
         def u(w):
             a('Unknown: %r (%d bytes) (All zeros: %r)'%(w,
                 len(w), not bool(w.replace(b'\0', b''))))
@@ -130,6 +131,7 @@ class SecondaryIndexHeader(object):  # {{{
         return '\n'.join(ans)
 
 # }}}
+
 
 class IndexHeader(object):  # {{{
 
@@ -198,6 +200,7 @@ class IndexHeader(object):  # {{{
     def __str__(self):
         ans = ['*'*20 + ' Index Header (%d bytes)'%len(self.record.raw)+ '*'*20]
         a = ans.append
+
         def u(w):
             a('Unknown: %r (%d bytes) (All zeros: %r)'%(w,
                 len(w), not bool(w.replace(b'\0', b''))))
@@ -230,6 +233,7 @@ class IndexHeader(object):  # {{{
 
         return '\n'.join(ans)
     # }}}
+
 
 class Tag(object):  # {{{
 
@@ -284,6 +288,7 @@ class Tag(object):  # {{{
         return '%s : %r'%(self.desc, self.value)
 
 # }}}
+
 
 class IndexEntry(object):  # {{{
 
@@ -371,6 +376,7 @@ class IndexEntry(object):  # {{{
 
 # }}}
 
+
 class IndexRecord(object):  # {{{
 
     '''
@@ -409,6 +415,7 @@ class IndexRecord(object):  # {{{
     def __str__(self):
         ans = ['*'*20 + ' Index Entries (%d entries) '%len(self.indices)+ '*'*20]
         a = ans.append
+
         def u(w):
             a('Unknown: %r (%d bytes) (All zeros: %r)'%(w,
                 len(w), not bool(w.replace(b'\0', b''))))
@@ -428,6 +435,7 @@ class IndexRecord(object):  # {{{
         return '\n'.join(ans)
 
 # }}}
+
 
 class CNCX(object):  # {{{
 
@@ -485,6 +493,7 @@ class ImageRecord(object):  # {{{
 
 # }}}
 
+
 class BinaryRecord(object):  # {{{
 
     def __init__(self, idx, record):
@@ -504,6 +513,7 @@ class BinaryRecord(object):  # {{{
 
 # }}}
 
+
 class FontRecord(object):  # {{{
 
     def __init__(self, idx, record):
@@ -522,6 +532,7 @@ class FontRecord(object):  # {{{
             f.write(self.payload)
 
 # }}}
+
 
 class TBSIndexing(object):  # {{{
 
@@ -591,6 +602,7 @@ class TBSIndexing(object):  # {{{
                     ans.append(('\t\tIndex Entry: %s (Parent index: %s, '
                             'Depth: %d, Offset: %d, Size: %d) [%s]')%(
                         x.index, x.parent_index, x.depth, x.offset, x.size, x.label))
+
         def bin4(num):
             ans = bin(num)[2:]
             return bytes('0'*(4-len(ans)) + ans)
@@ -712,6 +724,7 @@ class TBSIndexing(object):  # {{{
 
 # }}}
 
+
 class MOBIFile(object):  # {{{
 
     def __init__(self, mf):
@@ -784,6 +797,7 @@ class MOBIFile(object):  # {{{
         print (file=f)
         print (str(self.mobi_header).encode('utf-8'), file=f)
 # }}}
+
 
 def inspect_mobi(mobi_file, ddir):
     f = MOBIFile(mobi_file)

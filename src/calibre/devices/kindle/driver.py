@@ -37,14 +37,16 @@ Adding a book to a collection on the Kindle does not change the book file at all
 file metadata.
 '''
 
+
 def get_kfx_path(path):
     return os.path.dirname(os.path.dirname(path)).rpartition('.')[0] + '.kfx'
+
 
 class KINDLE(USBMS):
 
     name           = 'Kindle Device Interface'
     gui_name       = 'Amazon Kindle'
-    icon           = I('devices/kindle.jpg')
+    icon           = I('devices/kindle.png')
     description    = _('Communicate with the Kindle eBook reader.')
     author         = 'John Schember'
     supported_platforms = ['windows', 'osx', 'linux']
@@ -327,6 +329,7 @@ class KINDLE(USBMS):
                 mi.comments = last_update
                 db.add_books([bm.value['path']], ['txt'], [mi])
 
+
 class KINDLE2(KINDLE):
 
     name           = 'Kindle 2/3/4/Touch/PaperWhite/Voyage Device Interface'
@@ -339,7 +342,7 @@ class KINDLE2(KINDLE):
     # the .sdr sidecar folder
 
     PRODUCT_ID = [0x0002, 0x0004]
-    BCD        = [0x0100]
+    BCD        = [0x0100, 0x0310]
     # SUPPORTS_SUB_DIRS = False # Apparently the Paperwhite doesn't like files placed in subdirectories
     # SUPPORTS_SUB_DIRS_FOR_SCAN = True
 
@@ -553,6 +556,7 @@ class KINDLE_DX(KINDLE2):
 
     def upload_kindle_thumbnail(self, metadata, filepath):
         pass
+
 
 class KINDLE_FIRE(KINDLE2):
 

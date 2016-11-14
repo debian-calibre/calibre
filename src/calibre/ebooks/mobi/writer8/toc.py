@@ -34,6 +34,7 @@ TEMPLATE = '''
 </html>
 '''
 
+
 def find_previous_calibre_inline_toc(oeb):
     if 'toc' in oeb.guide:
         href = urlnormalize(oeb.guide['toc'].href.partition('#')[0])
@@ -42,9 +43,10 @@ def find_previous_calibre_inline_toc(oeb):
             if (hasattr(item.data, 'xpath') and XPath('//h:body[@id="calibre_generated_inline_toc"]')(item.data)):
                 return item
 
+
 class TOCAdder(object):
 
-    def __init__(self, oeb, opts, replace_previous_inline_toc=False, ignore_existing_toc=False):
+    def __init__(self, oeb, opts, replace_previous_inline_toc=True, ignore_existing_toc=False):
         self.oeb, self.opts, self.log = oeb, opts, oeb.log
         self.title = opts.toc_title or DEFAULT_TITLE
         self.at_start = opts.mobi_toc_at_start
@@ -53,7 +55,7 @@ class TOCAdder(object):
         self.has_toc = oeb.toc and oeb.toc.count() > 1
 
         self.tocitem = tocitem = None
-        if find_previous_calibre_inline_toc:
+        if replace_previous_inline_toc:
             tocitem = self.tocitem = find_previous_calibre_inline_toc(oeb)
         if ignore_existing_toc and 'toc' in oeb.guide:
             oeb.guide.remove('toc')

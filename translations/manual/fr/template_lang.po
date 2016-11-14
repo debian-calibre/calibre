@@ -7,12 +7,13 @@
 # Ptit Prince <leporello1791@gmail.com>, 2014-2016
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016
+# sengian <sengian1@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 17:16+0530\n"
-"PO-Revision-Date: 2016-05-20 09:07+0000\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-23 15:46+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +41,7 @@ msgid ""
 "curly brackets that are then replaced by the corresponding metadata from the"
 " book being processed. So, for example, the default template used for saving"
 " books to device in calibre is::"
-msgstr "Le langage de modèle de base est très simple, mais dispose de fonctionnalités avancées très puissantes. L'idée de base est que le modèle se compose de texte et de noms entre accolades qui sont ensuite remplacés par les métadonnées correspondantes de l'ouvrage en cours de traitement. Ainsi, par exemple, le modèle par défaut utilisé dans calibre pour l'enregistrement des livres sur un périphérique est::"
+msgstr "Le langage de modèle de base est très simple, mais dispose de fonctionnalités avancées très puissantes. L'idée de base est que le modèle se compose de texte et de noms entre accolades qui sont ensuite remplacés par les métadonnées correspondantes de l'ouvrage en cours de traitement. Ainsi, par exemple, le modèle par défaut utilisé dans calibre pour l'enregistrement des livres sur un appareil est::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:13
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:21
@@ -388,7 +389,7 @@ msgid ""
 "equal to key, and return the corresponding value. This function is "
 "particularly useful for extracting a value such as an isbn from the set of "
 "identifiers for a book."
-msgstr "``select(key)`` -- interprète la valeur comme une liste d'articles séparés par des virgules, ceux-ci étant de la forme \"id:valeur\". Trouve la paire avec l’id égale à la clé, et retourne la valeur correspondante.Cette fonction est particulièrement utile pour extraire une valeur telle qu'un isbn à partir d'un ensemble d'identifiants pour un livre."
+msgstr "``select(key)`` -- interprète la valeur comme une liste d'articles séparés par des virgules, ceux-ci étant de la forme \"id:valeur\". Trouve la paire avec l’id égale à la clé, et retourne la valeur correspondante. Cette fonction est particulièrement utile pour extraire une valeur telle qu'un isbn à partir d'un ensemble d'identifiants pour un livre."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:134
 msgid ""
@@ -1164,7 +1165,7 @@ msgid ""
 "However, slashes are not changed in prefix or suffix strings, so slashes in "
 "these strings will cause folders to be created. Because of this, you can "
 "create variable-depth folder structure."
-msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au périphérique`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
+msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au dispositif`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:451
 msgid ""
@@ -1193,25 +1194,25 @@ msgstr "Pour accomplir cela, nous :"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:460
 msgid ""
-"Create a composite field (call it AA) containing ``{series}/{series_index} -"
-" {title'}``. If the series is not empty, then this template will produce "
-"`series/series_index - title`."
-msgstr "Créons une colonne composite (appelons là AA) contenant ``{series}/{series_index} - {title'}``. Si la série n'est pas vide, alors ce modèle produit `series/series_index - title`."
+"Create a composite field (give it lookup name #AA) containing "
+"``{series}/{series_index} - {title}``. If the series is not empty, then this"
+" template will produce `series/series_index - title`."
+msgstr "Créons une colonne composite (appelons-la #AA) contenant ``{series}/{series_index} - {title}``. Si la série n'est pas vide, alors ce modèle produit `series/series_index - title`."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:461
 msgid ""
-"Create a composite field (call it BB) containing "
+"Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
-msgstr "Créons une champ composite (appelons-le BB) contenant ``{#genre:ifempty(Inconnu)}/{author_sort}/{title}``. Ce modèle produit `genre/author_sort/title`, où un genre vide est remplacé par `Inconnu`."
+msgstr "Créons une champ composite (appelons-le #BB) contenant ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Ce modèle produit `genre/author_sort/title`, où un genre vide est remplacé par `Inconnu`."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid ""
-"Set the save template to ``{series:lookup(.,AA,BB)}``. This template chooses"
-" composite field AA if series is not empty, and composite field BB if series"
-" is empty. We therefore have two completely different save paths, depending "
-"on whether or not `series` is empty."
-msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,AA,BB)}``. Ce modèle choisit le champ composite AA si série n'est pas vide, et le champ composite BB si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
+"Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
+"chooses composite field #AA if series is not empty, and composite field #BB "
+"if series is empty. We therefore have two completely different save paths, "
+"depending on whether or not `series` is empty."
+msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,#AA,#BB)}``. Ce modèle choisit le champ composite #AA si série n'est pas vide, et le champ composite #BB si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
 msgid "Templates and Plugboards"
@@ -1258,7 +1259,7 @@ msgstr "un tableau de connexion avec une correspondance exacte sur le format et 
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
-msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel périphérique``, par ex., ``EPUB`` et ``n'importe quel périphérique``"
+msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel dispositif``, par ex., ``EPUB`` et ``n'importe quel dispositif``"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:475
 msgid ""
@@ -1268,7 +1269,7 @@ msgstr "un tableau de connexion avec le choix spécial ``n'importe quel format``
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:476
 msgid "a plugboard with ``any format`` and ``any device``"
-msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel périphérique``"
+msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel dispositif``"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:478
 msgid ""
@@ -1299,7 +1300,7 @@ msgid ""
 " ``save to disk`` and ``send to device`` to create the file names. Instead, "
 "file names are constructed using the templates entered on the appropriate "
 "preferences window."
-msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au périphérique``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
+msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au dispositif ``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
 msgid "Helpful Tips"

@@ -10,6 +10,7 @@ import os, re
 from calibre.utils.date import isoformat, now
 from calibre import guess_type
 
+
 def meta_info_to_oeb_metadata(mi, m, log, override_input_metadata=False):
     from calibre.ebooks.oeb.base import OPF
     if not mi.is_null('title'):
@@ -170,11 +171,14 @@ class MergeMetadata(object):
         for item in self.oeb.spine:
             try:
                 images = XPath('//h:img[@src]')(item.data)
-            except:
-                images = []
+            except Exception:
+                images = ()
             removed = False
             for img in images:
-                href = item.abshref(img.get('src'))
+                try:
+                    href = item.abshref(img.get('src'))
+                except Exception:
+                    continue  # Invalid URL, ignore
                 if href == cover_item.href:
                     img.getparent().remove(img)
                     removed = True
@@ -194,6 +198,3 @@ class MergeMetadata(object):
                         ' the cover image'%item.href)
                 self.oeb.spine.remove(item)
                 self.oeb.manifest.remove(item)
-
-
-

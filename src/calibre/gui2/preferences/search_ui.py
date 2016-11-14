@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/search.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -36,7 +35,7 @@ class Ui_Form(object):
         self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
         self.gridLayout_2.addWidget(self.label_3, 5, 0, 1, 2)
-        self.gridLayout.addWidget(self.groupBox, 5, 0, 1, 2)
+        self.gridLayout.addWidget(self.groupBox, 7, 0, 1, 2)
         self.groupBox22 = QtWidgets.QGroupBox(Form)
         self.groupBox22.setObjectName("groupBox22")
         self.gridLayout_22 = QtWidgets.QGridLayout(self.groupBox22)
@@ -91,7 +90,7 @@ class Ui_Form(object):
         self.opt_similar_publisher_match_kind = QtWidgets.QComboBox(self.groupBox22)
         self.opt_similar_publisher_match_kind.setObjectName("opt_similar_publisher_match_kind")
         self.gridLayout_22.addWidget(self.opt_similar_publisher_match_kind, 2, 5, 1, 1)
-        self.gridLayout.addWidget(self.groupBox22, 8, 0, 1, 2)
+        self.gridLayout.addWidget(self.groupBox22, 10, 0, 1, 2)
         self.clear_history_button = QtWidgets.QPushButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -99,13 +98,10 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.clear_history_button.sizePolicy().hasHeightForWidth())
         self.clear_history_button.setSizePolicy(sizePolicy)
         self.clear_history_button.setObjectName("clear_history_button")
-        self.gridLayout.addWidget(self.clear_history_button, 6, 0, 1, 2)
+        self.gridLayout.addWidget(self.clear_history_button, 8, 0, 1, 2)
         self.opt_search_as_you_type = QtWidgets.QCheckBox(Form)
         self.opt_search_as_you_type.setObjectName("opt_search_as_you_type")
         self.gridLayout.addWidget(self.opt_search_as_you_type, 0, 0, 1, 1)
-        self.opt_use_primary_find_in_search = QtWidgets.QCheckBox(Form)
-        self.opt_use_primary_find_in_search.setObjectName("opt_use_primary_find_in_search")
-        self.gridLayout.addWidget(self.opt_use_primary_find_in_search, 0, 1, 1, 1)
         self.opt_highlight_search_matches = QtWidgets.QCheckBox(Form)
         self.opt_highlight_search_matches.setObjectName("opt_highlight_search_matches")
         self.gridLayout.addWidget(self.opt_highlight_search_matches, 1, 0, 1, 2)
@@ -155,10 +151,16 @@ class Ui_Form(object):
         self.gridLayout_3.addLayout(self.hboxlayout, 1, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_3.addItem(spacerItem, 2, 0, 1, 1)
-        self.gridLayout.addWidget(self.groupBox_2, 7, 0, 1, 2)
+        self.gridLayout.addWidget(self.groupBox_2, 9, 0, 1, 2)
         self.opt_show_highlight_toggle_button = QtWidgets.QCheckBox(Form)
         self.opt_show_highlight_toggle_button.setObjectName("opt_show_highlight_toggle_button")
         self.gridLayout.addWidget(self.opt_show_highlight_toggle_button, 2, 0, 1, 2)
+        self.opt_case_sensitive = QtWidgets.QCheckBox(Form)
+        self.opt_case_sensitive.setObjectName("opt_case_sensitive")
+        self.gridLayout.addWidget(self.opt_case_sensitive, 3, 0, 1, 1)
+        self.opt_use_primary_find_in_search = QtWidgets.QCheckBox(Form)
+        self.opt_use_primary_find_in_search.setObjectName("opt_use_primary_find_in_search")
+        self.gridLayout.addWidget(self.opt_use_primary_find_in_search, 3, 1, 1, 1)
         self.label_2.setBuddy(self.opt_limit_search_columns_to)
         self.la10.setBuddy(self.gst_names)
         self.l11.setBuddy(self.opt_grouped_search_make_user_categories)
@@ -187,7 +189,6 @@ class Ui_Form(object):
         self.clear_history_button.setToolTip(_("Clear search histories from all over calibre. Including the book list, e-book viewer, fetch news dialog, etc."))
         self.clear_history_button.setText(_("Clear search &histories"))
         self.opt_search_as_you_type.setText(_("Search as you &type"))
-        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match accented characters"))
         self.opt_highlight_search_matches.setText(_("&Highlight search results instead of restricting the book list to the results"))
         self.groupBox_2.setTitle(_("Grouped Search Terms"))
         self.la10.setText(_("&Names:"))
@@ -207,6 +208,8 @@ class Ui_Form(object):
 "to be shown as user categories"))
         self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
         self.opt_show_highlight_toggle_button.setText(_("Show a quick &toggle button to switch between highlighting and restricting results next to the searchbar"))
+        self.opt_case_sensitive.setText(_("Case sensitive searching"))
+        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match accented characters"))
 
 from calibre.gui2.complete2 import EditWithComplete
 

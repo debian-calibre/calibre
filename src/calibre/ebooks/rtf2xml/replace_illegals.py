@@ -16,14 +16,16 @@ from calibre.ebooks.rtf2xml import copy
 from calibre.utils.cleantext import clean_ascii_chars
 from calibre.ptempfile import better_mktemp
 
+
 class ReplaceIllegals:
     """
     reaplace illegal lower ascii characters
     """
+
     def __init__(self,
             in_file,
-            copy = None,
-            run_level = 1,
+            copy=None,
+            run_level=1,
             ):
         self.__file = in_file
         self.__copy = copy

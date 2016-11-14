@@ -28,6 +28,7 @@ from calibre.utils.imghdr import identify
 from calibre.utils.date import qt_to_dt
 from calibre.db import _get_next_series_num_for_list
 
+
 def get_cover_data(stream, ext):  # {{{
     from calibre.ebooks.metadata.meta import get_metadata
     old = prefs['read_file_metadata']
@@ -61,6 +62,7 @@ Settings = namedtuple('Settings',
     'restore_original comments generate_cover_settings')
 
 null = object()
+
 
 class MyBlockingBusy(QDialog):  # {{{
 
@@ -138,6 +140,7 @@ class MyBlockingBusy(QDialog):  # {{{
         if args.do_swap_ta:
             title_map = cache.all_field_for('title', self.ids)
             authors_map = cache.all_field_for('authors', self.ids)
+
             def new_title(authors):
                 ans = authors_to_string(authors)
                 return titlecase(ans) if args.do_title_case else ans
@@ -153,6 +156,7 @@ class MyBlockingBusy(QDialog):  # {{{
         if args.do_title_sort:
             lang_map = cache.all_field_for('languages', self.ids)
             title_map = cache.all_field_for('title', self.ids)
+
             def get_sort(book_id):
                 if args.languages:
                     lang = args.languages[0]
@@ -231,7 +235,7 @@ class MyBlockingBusy(QDialog):  # {{{
 
         # Various fields
         if args.rating != -1:
-            cache.set_field('rating', {bid:args.rating*2 for bid in self.ids})
+            cache.set_field('rating', {bid:args.rating for bid in self.ids})
 
         if args.clear_pub:
             cache.set_field('publisher', {bid:'' for bid in self.ids})
@@ -292,6 +296,7 @@ class MyBlockingBusy(QDialog):  # {{{
 
 # }}}
 
+
 class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
     s_r_functions = {''              : lambda x: x,
@@ -341,6 +346,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.remove_format.setCurrentIndex(-1)
 
         self.series.currentIndexChanged[int].connect(self.series_changed)
+        self.rating.currentIndexChanged.connect(lambda:self.apply_rating.setChecked(True))
         self.series.editTextChanged.connect(self.series_changed)
         self.tag_editor_button.clicked.connect(self.tag_editor)
         self.autonumber_series.stateChanged[int].connect(self.auto_number_changed)
@@ -450,7 +456,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         fm = self.db.field_metadata
         for f in fm:
             if (f in ['author_sort'] or
-                    (fm[f]['datatype'] in ['text', 'series', 'enumeration', 'comments'] and
+                    (fm[f]['datatype'] in ['text', 'series', 'enumeration', 'comments', 'rating'] and
                      fm[f].get('search_terms', None) and
                      f not in ['formats', 'ondevice', 'series_sort']) or
                     (fm[f]['datatype'] in ['int', 'float', 'bool', 'datetime'] and
@@ -750,6 +756,18 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                 raise Exception(_('You must specify a destination when source is '
                                   'a composite field or a template'))
             dest = src
+
+        if self.destination_field_fm['datatype'] == 'rating' and val[0]:
+            ok = True
+            try:
+                v = int(val[0])
+                if v < 0 or v > 10:
+                    ok = False
+            except:
+                ok = False
+            if not ok:
+                raise Exception(_('The replacement value for a rating column must '
+                                  'be empty or an integer between 0 and 10'))
         dest_mode = self.replace_mode.currentIndex()
 
         if self.destination_field_fm['is_csp']:
@@ -878,6 +896,13 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
             if dest == 'title' and len(val) == 0:
                 val = _('Unknown')
 
+        if not val and dfm['datatype'] == 'datetime':
+            val = None
+        if dfm['datatype'] == 'rating':
+            if (not val or int(val) == 0):
+                val = None
+            if dest == 'rating' and val:
+                val = (int(val) // 2) * 2
         self.set_field_calls[dest][book_id] = val
     # }}}
 
@@ -964,7 +989,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
         if self.s_r_error is not None and do_sr:
             error_dialog(self, _('Search/replace invalid'),
-                    _('Search pattern is invalid: %s')%self.s_r_error.message,
+                    _('Search/replace is invalid: %s')%self.s_r_error.message,
                     show=True)
             return False
         self.changed = bool(self.ids)
@@ -981,7 +1006,9 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         au = unicode(self.authors.text())
         aus = unicode(self.author_sort.text())
         do_aus = self.author_sort.isEnabled()
-        rating = self.rating.value()
+        rating = self.rating.rating_value
+        if not self.apply_rating.isChecked():
+            rating = -1
         pub = unicode(self.publisher.text())
         do_series = self.write_series
         clear_series = self.clear_series.isChecked()

@@ -14,6 +14,7 @@ from calibre.utils.config_base import prefs
 from calibre.devices.usbms.driver import debug_print
 from calibre.ebooks.metadata import author_to_author_sort
 
+
 class Book(Book_):
 
     def __init__(self, prefix, lpath, title=None, authors=None, mime=None, date=None, ContentType=None,
@@ -80,6 +81,10 @@ class ImageWrapper(object):
 
 class KTCollectionsBookList(CollectionsBookList):
 
+    def __init__(self, oncard, prefix, settings):
+        super(KTCollectionsBookList, self).__init__(oncard, prefix, settings)
+        self.set_device_managed_collections([])
+
     def get_collections(self, collection_attributes):
         debug_print("KTCollectionsBookList:get_collections - start - collection_attributes=", collection_attributes)
 
@@ -107,7 +112,7 @@ class KTCollectionsBookList(CollectionsBookList):
                 continue
             # If the book is not in the current library, we don't want to use the metadtaa for the collections
             if book.application_id is None:
-#                debug_print("KTCollectionsBookList:get_collections - Book not in current library")
+                #                debug_print("KTCollectionsBookList:get_collections - Book not in current library")
                 continue
             # Decide how we will build the collections. The default: leave the
             # book in all existing collections. Do not add any new ones.
@@ -126,6 +131,16 @@ class KTCollectionsBookList(CollectionsBookList):
                 # For existing books, modify the collections only if the user
                 # specified 'on_connect'
                 attrs = collection_attributes
+                for cat_name in self.device_managed_collections:
+                    if cat_name in book.device_collections:
+                        if cat_name not in collections:
+                            collections[cat_name] = {}
+                            if show_debug:
+                                debug_print("KTCollectionsBookList:get_collections - Device Managed Collection:", cat_name)
+                        if lpath not in collections[cat_name]:
+                            collections[cat_name][lpath] = (book, tsval, tsval)
+                            if show_debug:
+                                debug_print("KTCollectionsBookList:get_collections - Device Managed Collection -added book to cat_name", cat_name)
                 book.device_collections = []
             if show_debug:
                 debug_print("KTCollectionsBookList:get_collections - attrs=", attrs)
@@ -144,7 +159,7 @@ class KTCollectionsBookList(CollectionsBookList):
                         debug_print("KTCollectionsBookList:get_collections - adding book.device_collections", book.device_collections)
                 # If the book is not in the current library, we don't want to use the metadtaa for the collections
                 elif book.application_id is None or not book.can_put_on_shelves:
-#                    debug_print("KTCollectionsBookList:get_collections - Book not in current library")
+                    #                    debug_print("KTCollectionsBookList:get_collections - Book not in current library")
                     continue
                 else:
                     doing_dc = False
@@ -183,7 +198,7 @@ class KTCollectionsBookList(CollectionsBookList):
                     debug_print("KTCollectionsBookList:get_collections - val=", val)
 
                 for category in val:
-#                    debug_print("KTCollectionsBookList:get_collections - category=", category)
+                    #                    debug_print("KTCollectionsBookList:get_collections - category=", category)
                     is_series = False
                     if doing_dc:
                         # Attempt to determine if this value is a series by
@@ -255,8 +270,12 @@ class KTCollectionsBookList(CollectionsBookList):
             books = lpaths.values()
             books.sort(cmp=none_cmp)
             result[category] = [x[0] for x in books]
+        # debug_print("KTCollectionsBookList:get_collections - result=", result.keys())
         debug_print("KTCollectionsBookList:get_collections - end")
         return result
+
+    def set_device_managed_collections(self, collection_names):
+        self.device_managed_collections = collection_names
 
     def set_debugging_title(self, title):
         self.debugging_title = title

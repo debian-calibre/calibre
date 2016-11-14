@@ -4,7 +4,7 @@
 
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-store_version = 11  # Needed for dynamic plugin loading
+store_version = 12  # Needed for dynamic plugin loading
 
 from contextlib import closing
 import urllib
@@ -27,6 +27,11 @@ STORE_LINK =  'http://www.amazon.fr'
 DRM_SEARCH_TEXT = 'Simultaneous Device Usage'
 DRM_FREE_TEXT = 'Unlimited'
 
+
+def get_user_agent():
+    return 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'
+
+
 def search_amazon(query, max_results=10, timeout=60,
                   write_html_to=None,
                   base_url=SEARCH_BASE_URL,
@@ -35,13 +40,14 @@ def search_amazon(query, max_results=10, timeout=60,
                   ):
     uquery = base_query.copy()
     uquery[field_keywords] = query
+
     def asbytes(x):
         if isinstance(x, type('')):
             x = x.encode('utf-8')
         return x
     uquery = {asbytes(k):asbytes(v) for k, v in uquery.iteritems()}
     url = base_url + '?' + urllib.urlencode(uquery).decode('ascii')
-    br = browser()
+    br = browser(user_agent=get_user_agent())
 
     counter = max_results
     with closing(br.open(url, timeout=timeout)) as f:
@@ -109,6 +115,7 @@ def search_amazon(query, max_results=10, timeout=60,
 
             yield s
 
+
 class AmazonKindleStore(StorePlugin):
 
     def open(self, parent=None, detail_item=None, external=False):
@@ -122,7 +129,7 @@ class AmazonKindleStore(StorePlugin):
     def get_details(self, search_result, timeout):
         url = DETAILS_URL
 
-        br = browser()
+        br = browser(user_agent=get_user_agent())
         with closing(br.open(url + search_result.detail_item, timeout=timeout)) as nf:
             idata = html.fromstring(nf.read())
             if idata.xpath('boolean(//div[@class="content"]//li/b[contains(text(), "' +

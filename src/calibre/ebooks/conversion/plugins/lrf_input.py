@@ -9,6 +9,7 @@ __docformat__ = 'restructuredtext en'
 import os, sys
 from calibre.customize.conversion import InputFormatPlugin
 
+
 class LRFInput(InputFormatPlugin):
 
     name        = 'LRF Input'
@@ -37,7 +38,6 @@ class LRFInput(InputFormatPlugin):
             parser = etree.XMLParser(no_network=True, huge_tree=True,
                     recover=True)
             doc = etree.fromstring(xml, parser=parser)
-
 
         char_button_map = {}
         for x in doc.xpath('//CharButton[@refobj]'):

@@ -10,6 +10,7 @@ import os
 
 NBSP = '\xa0'
 
+
 def mergeable(previous, current):
     if previous.tail or current.tail:
         return False
@@ -17,6 +18,9 @@ def mergeable(previous, current):
         return False
     if current.get('id', False):
         return False
+    for attr in ('style', 'lang', 'dir'):
+        if previous.get(attr) != current.get(attr):
+            return False
     try:
         return next(previous.itersiblings()) is current
     except StopIteration:
@@ -86,6 +90,7 @@ def lift(span):
         else:
             add_text(last_child, 'tail', span.tail)
 
+
 def before_count(root, tag, limit=10):
     body = root.xpath('//body[1]')
     if not body:
@@ -97,6 +102,7 @@ def before_count(root, tag, limit=10):
         ans += 1
         if ans > limit:
             return limit
+
 
 def cleanup_markup(log, root, styles, dest_dir, detect_cover, XPath):
     # Move <hr>s outside paragraphs, if possible.
@@ -114,7 +120,7 @@ def cleanup_markup(log, root, styles, dest_dir, detect_cover, XPath):
 
     # Merge consecutive spans that have the same styling
     current_run = []
-    for span in root.xpath('//span[not(@style or @lang)]'):
+    for span in root.xpath('//span'):
         if not current_run:
             current_run.append(span)
         else:
@@ -126,17 +132,33 @@ def cleanup_markup(log, root, styles, dest_dir, detect_cover, XPath):
                     merge_run(current_run)
                 current_run = [span]
 
-    # Remove unnecessary span tags that are the only child of a parent block
-    # element
+    # Process dir attributes
     class_map = dict(styles.classes.itervalues())
     parents = ('p', 'div') + tuple('h%d' % i for i in xrange(1, 7))
+    for parent in root.xpath('//*[(%s)]' % ' or '.join('name()="%s"' % t for t in parents)):
+        # Ensure that children of rtl parents that are not rtl have an
+        # explicit dir set. Also, remove dir from children if it is the same as
+        # that of the parent.
+        if len(parent):
+            parent_dir = parent.get('dir')
+            for child in parent.iterchildren('span'):
+                child_dir = child.get('dir')
+                if parent_dir == 'rtl' and child_dir != 'rtl':
+                    child_dir = 'ltr'
+                    child.set('dir', child_dir)
+                if child_dir and child_dir == parent_dir:
+                    child.attrib.pop('dir')
+
+    # Remove unnecessary span tags that are the only child of a parent block
+    # element
     for parent in root.xpath('//*[(%s) and count(span)=1]' % ' or '.join('name()="%s"' % t for t in parents)):
         if len(parent) == 1 and not parent.text and not parent[0].tail and not parent[0].get('id', None):
             # We have a block whose contents are entirely enclosed in a <span>
             span = parent[0]
             span_class = span.get('class', None)
             span_css = class_map.get(span_class, {})
-            if liftable(span_css):
+            span_dir = span.get('dir')
+            if liftable(span_css) and (not span_dir or span_dir == parent.get('dir')):
                 pclass = parent.get('class', None)
                 if span_class:
                     pclass = (pclass + ' ' + span_class) if pclass else span_class
@@ -145,6 +167,8 @@ def cleanup_markup(log, root, styles, dest_dir, detect_cover, XPath):
                 parent.remove(span)
                 if span.get('lang'):
                     parent.set('lang', span.get('lang'))
+                if span.get('dir'):
+                    parent.set('dir', span.get('dir'))
                 for child in span:
                     parent.append(child)
 
@@ -160,7 +184,7 @@ def cleanup_markup(log, root, styles, dest_dir, detect_cover, XPath):
                 del span.attrib['class']
 
     # Get rid of <span>s that have no styling
-    for span in root.xpath('//span[not(@class or @id or @style or @lang)]'):
+    for span in root.xpath('//span[not(@class or @id or @style or @lang or @dir)]'):
         lift(span)
 
     # Convert <p><br style="page-break-after:always"> </p> style page breaks

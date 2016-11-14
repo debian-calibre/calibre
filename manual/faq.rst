@@ -557,6 +557,8 @@ problem for *some* calibre users.
   * Try a different computer, in particular the Kobo does not work well with
     some Windows XP machines. If you are on Windows XP, try a computer with a
     newer version of Windows.
+  * Log out of the Kobo and log in again, this causes it to rebuild the
+    database, fixing corrupted database errors.
   * Try upgrading the firmware on your Kobo Touch to the latest
   * Try resetting the Kobo (sometimes this cures the problem for a little while, but then it re-appears, in which case you have to reset again and again)
   * Try only putting one or two books onto the Kobo at a time and do not keep large collections on the Kobo
@@ -597,7 +599,18 @@ You can copy or move books between different libraries (once you have more than 
 How does calibre manage author names and sorting?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Author names are complex, especially across cultures, see `this note <http://www.w3.org/International/questions/qa-personal-names.en.php?changelang=en>`_ for some of complexities. calibre has a very flexible strategy for managing author names. The first thing to understand is that books and authors are separate entities in calibre. A book can have more than one author, and an author can have more than one book. You can manage the authors of a book by the edit metadata dialog. You can manage individual authors by right clicking on the author in the Tag Browser on the left of the main calibre screen and selecting :guilabel:`Manage authors`. Using this dialog you can change the name of an author and also how that name is sorted. This will automatically change the name of the author in all the books of that author. When a book has multiple authors, separate their names using the & character.
+Author names are complex, especially across cultures, see `this note
+<http://www.w3.org/International/questions/qa-personal-names.en.php?changelang=en>`_
+for some of the complexities. calibre has a very flexible strategy for managing
+author names. The first thing to understand is that books and authors are
+separate entities in calibre. A book can have more than one author, and an
+author can have more than one book. You can manage the authors of a book by the
+edit metadata dialog. You can manage individual authors by right clicking on
+the author in the Tag Browser on the left of the main calibre screen and
+selecting :guilabel:`Manage authors`. Using this dialog you can change the name
+of an author and also how that name is sorted. This will automatically change
+the name of the author in all the books of that author. When a book has
+multiple authors, separate their names using the & character.
 
 Now coming to author name sorting:
 
@@ -622,9 +635,9 @@ With all this flexibility, it is possible to have calibre manage your author nam
 .. note::
 
     When changing from FN LN to LN, FN, it is often the case that the values in author_sort are already in LN, FN format. If this is your case, then do the following:
-        * set the ``author_sort_copy_method`` tweak to ``copy`` as described above.
-        * restart calibre. Do not change any book metadata before doing the remaining steps.
-        * open the Manage authors dialog. Press the ``copy all author sort values to author`` button.
+        * Set the ``author_sort_copy_method`` tweak to ``copy`` as described above.
+        * Restart calibre. Do not change any book metadata before doing the remaining steps.
+        * Open the Manage authors dialog. Press the ``copy all author sort values to author`` button.
         * Check through the authors to be sure you are happy. You can still press Cancel to abandon the changes. Once you press OK, there is no undo.
         * Press OK, at which point calibre will change the authors in all your books. This can take a while.
 
@@ -702,7 +715,7 @@ them import it on another computer. First let use see how to export the data:
 .. note:: This import/export functionality is only available from calibre
     version 2.47 onwards. If you have an older version of calibre, or if you
     encounter problems with the import/export, you can just copy over your
-    calibre library folder manually, as descibed in the next paragraph.
+    calibre library folder manually, as described in the next paragraph.
 
     Simply copy the calibre library folder from the old to the new computer. You can
     find out what the library folder is by clicking the calibre icon in the
@@ -1079,13 +1092,13 @@ a modern linux distro, you should have no problems installing calibre onto it.
 
 .. note::
     calibre needs GLIBC >= 2.13 and libstdc++ >= 6.0.17. If you have an older
-    server, you will either need to compile these from source, or use calibre 1.48
-    which requires only GLIBC >= 2.10. In addition, although the calibre
+    server, you will either need to compile these from source, or use calibre
+    1.48 which requires only GLIBC >= 2.10. In addition, although the calibre
     command line utilities do not need a running X server, some of them do
     require the X server libraries to be installed on your system. This is
-    because the use Qt, which links against these libraries. If you get an
-    ImportError about some Qt modules, you are likely missing some X
-    libraries.
+    because of Qt (which is used for various image processing tasks), and
+    links against these libraries. If you get an ImportError about some Qt
+    modules, you are likely missing some X libraries.
 
 You can run the calibre server via the command::
 

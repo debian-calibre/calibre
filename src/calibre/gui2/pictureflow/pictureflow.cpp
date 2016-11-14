@@ -870,11 +870,6 @@ static inline uint BYTE_MUL_RGB16(uint x, uint a) {
     return t;
 }
 
-static inline uint BYTE_MUL_RGB16_32(uint x, uint a) {
-    uint t = (((x & 0xf81f07e0) >> 5)*a) & 0xf81f07e0;
-    t |= (((x & 0x07e0f81f)*a) >> 5) & 0x07e0f81f;
-    return t;
-}
 
 QRect PictureFlowPrivate::renderCenterSlide(const SlideInfo &slide) {
   QImage* src = surface(slide.slideIndex);
@@ -1216,6 +1211,7 @@ void PictureFlowPrivate::clearSurfaceCache()
 PictureFlow::PictureFlow(QWidget* parent, int queueLength): QWidget(parent)
 {
   d = new PictureFlowPrivate(this, queueLength);
+  last_device_pixel_ratio = 1;
 
   setAttribute(Qt::WA_StaticContents, true);
   setAttribute(Qt::WA_OpaquePaintEvent, true);
@@ -1354,9 +1350,18 @@ void PictureFlow::keyPressEvent(QKeyEvent* event)
 #define SPEED_LOWER_THRESHOLD 10
 #define SPEED_UPPER_LIMIT 40
 
+qreal PictureFlow::device_pixel_ratio() const {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+	return devicePixelRatioF();
+#else
+	return (qreal)devicePixelRatio();
+#endif
+}
+
 void PictureFlow::mouseMoveEvent(QMouseEvent* event)
 {
-  int distanceMovedSinceLastEvent = event->pos().x() - d->previousPos.x();
+  int x = (int)(event->x() * device_pixel_ratio());
+  int distanceMovedSinceLastEvent = x - d->previousPos.x();
 
   // Check to see if we need to switch from single press mode to a drag mode
   if (d->singlePress)
@@ -1380,7 +1385,7 @@ void PictureFlow::mouseMoveEvent(QMouseEvent* event)
       speed = SPEED_LOWER_THRESHOLD;
     else
     {
-      speed = ((qAbs(event->pos().x()-d->previousPos.x())*1000) / d->previousPosTimestamp.elapsed())
+      speed = ((qAbs(x-d->previousPos.x())*1000) / d->previousPosTimestamp.elapsed())
                     / (d->buffer.width() / 10);
   
       if (speed < SPEED_LOWER_THRESHOLD)
@@ -1436,36 +1441,33 @@ void PictureFlow::mouseMoveEvent(QMouseEvent* event)
     
   }
 
-  d->previousPos = event->pos();
+  d->previousPos = event->pos() * device_pixel_ratio();
   d->previousPosTimestamp.restart();
-
-  emit inputReceived();
 }
 
 void PictureFlow::mousePressEvent(QMouseEvent* event)
 {
-  d->firstPress = event->pos();
-  d->previousPos = event->pos();
+  d->firstPress = event->pos() * device_pixel_ratio();
+  d->previousPos = event->pos() * device_pixel_ratio();
   d->previousPosTimestamp.start();
   d->singlePress = true; // Initially assume a single press
 //  d->dragStartSlide = d->getTarget();
   d->pixelDistanceMoved = 0;
-
-  emit inputReceived();
 }
 
 void PictureFlow::mouseReleaseEvent(QMouseEvent* event)
 {
   bool accepted = false;
   int sideWidth = (d->buffer.width() - slideSize().width()) /2;
+  int x = (int)(event->x() * device_pixel_ratio());
 
   if (d->singlePress)
   {
-    if (event->x() < sideWidth )
+    if (x < sideWidth )
     {
       showPrevious();
       accepted = true;
-    } else if ( event->x() > sideWidth + slideSize().width() ) {
+    } else if ( x > sideWidth + slideSize().width() ) {
       showNext();
       accepted = true;
     } else {
@@ -1479,21 +1481,29 @@ void PictureFlow::mouseReleaseEvent(QMouseEvent* event)
         event->accept();
     }
   }
-
-  emit inputReceived();
 }
 
 void PictureFlow::paintEvent(QPaintEvent* event)
 {
   Q_UNUSED(event);
+  if (last_device_pixel_ratio != device_pixel_ratio()) {
+      last_device_pixel_ratio = device_pixel_ratio();
+      d->resize((int)(width() * last_device_pixel_ratio), (int)(height() * last_device_pixel_ratio));
+      update();
+      return;
+  }
   QPainter painter(this);
+  qreal dpr = d->buffer.devicePixelRatio();
+  d->buffer.setDevicePixelRatio(device_pixel_ratio());
   painter.setRenderHint(QPainter::Antialiasing, false);
   painter.drawImage(QPoint(0,0), d->buffer);
+  d->buffer.setDevicePixelRatio(dpr);
 }
 
 void PictureFlow::resizeEvent(QResizeEvent* event)
 {
-  d->resize(width(), height());
+  last_device_pixel_ratio = device_pixel_ratio();
+  d->resize((int)(width() * last_device_pixel_ratio), (int)(height() * last_device_pixel_ratio));
   QWidget::resizeEvent(event);
 }
 

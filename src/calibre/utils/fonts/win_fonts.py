@@ -15,6 +15,7 @@ from calibre.constants import plugins, filesystem_encoding
 from calibre.utils.fonts.utils import (is_truetype_font, get_font_names,
         get_font_characteristics)
 
+
 class WinFonts(object):
 
     def __init__(self, winfonts):
@@ -26,7 +27,7 @@ class WinFonts(object):
         for f in ('Serif', 'Sans', 'Mono'):
             base = 'fonts/liberation/Liberation%s-%s.ttf'
             self.app_font_families['Liberation %s'%f] = m = {}
-            for weight, is_italic in product( (self.w.FW_NORMAL, self.w.FW_BOLD), (False, True) ):
+            for weight, is_italic in product((self.w.FW_NORMAL, self.w.FW_BOLD), (False, True)):
                 name = {(self.w.FW_NORMAL, False):'Regular',
                         (self.w.FW_NORMAL, True):'Italic',
                         (self.w.FW_BOLD, False):'Bold',
@@ -59,11 +60,12 @@ class WinFonts(object):
     def fonts_for_family(self, family, normalize=True):
         family = type(u'')(family)
         ans = {}
-        for weight, is_italic in product( (self.w.FW_NORMAL, self.w.FW_BOLD), (False, True) ):
+        for weight, is_italic in product((self.w.FW_NORMAL, self.w.FW_BOLD), (False, True)):
             if family in self.app_font_families:
                 m = self.app_font_families[family]
                 path = m.get((weight, is_italic), None)
-                if path is None: continue
+                if path is None:
+                    continue
                 data = P(path, data=True)
             else:
                 try:
@@ -136,11 +138,13 @@ class WinFonts(object):
     def remove_system_font(self, path):
         return self.w.remove_system_font(path)
 
+
 def load_winfonts():
     w, err = plugins['winfonts']
     if w is None:
         raise RuntimeError('Failed to load the winfonts module: %s'%err)
     return WinFonts(w)
+
 
 def test_ttf_reading():
     for f in sys.argv[1:]:
@@ -148,6 +152,7 @@ def test_ttf_reading():
         print (os.path.basename(f))
         get_font_characteristics(raw)
         print()
+
 
 def test():
     base = os.path.abspath(__file__)

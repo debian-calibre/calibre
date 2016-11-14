@@ -35,6 +35,7 @@ fetched_fields = ('title', 'title_sort', 'authors', 'author_sort', 'series',
                   'series_index', 'languages', 'publisher', 'tags', 'rating',
                   'comments', 'pubdate')
 
+
 class ScrollArea(QScrollArea):
 
     def __init__(self, widget=None, parent=None):
@@ -43,6 +44,7 @@ class ScrollArea(QScrollArea):
         self.setWidgetResizable(True)
         if widget is not None:
             self.setWidget(widget)
+
 
 class MetadataSingleDialogBase(QDialog):
 
@@ -436,10 +438,7 @@ class MetadataSingleDialogBase(QDialog):
         elif update_sorts and not mi.is_null('authors'):
             self.author_sort.auto_generate()
         if not mi.is_null('rating'):
-            try:
-                self.rating.set_value(mi.rating)
-            except:
-                pass
+            self.rating.set_value(mi.rating * 2)
         if not mi.is_null('publisher'):
             self.publisher.set_value(mi.publisher)
         if not mi.is_null('tags'):
@@ -661,6 +660,7 @@ class MetadataSingleDialogBase(QDialog):
         # from garbage collecting this dialog
         self.set_current_callback = self.db = None
         self.metadata_before_fetch = None
+
         def disconnect(signal):
             try:
                 signal.disconnect()
@@ -680,6 +680,7 @@ class MetadataSingleDialogBase(QDialog):
 
     # }}}
 
+
 class Splitter(QSplitter):
 
     frame_resized = pyqtSignal(object)
@@ -687,6 +688,7 @@ class Splitter(QSplitter):
     def resizeEvent(self, ev):
         self.frame_resized.emit(ev)
         return QSplitter.resizeEvent(self, ev)
+
 
 class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
 
@@ -763,6 +765,7 @@ class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
         w.l = l = QGridLayout()
         w.setLayout(w.l)
         self.splitter.addWidget(w)
+
         def create_row2(row, widget, button=None, front_button=None):
             row += 1
             ql = BuddyLabel(widget)
@@ -817,6 +820,7 @@ class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
 
 # }}}
 
+
 class DragTrackingWidget(QWidget):  # {{{
 
     def __init__(self, parent, on_drag_enter):
@@ -827,6 +831,7 @@ class DragTrackingWidget(QWidget):  # {{{
         self.on_drag_enter.emit()
 
 # }}}
+
 
 class MetadataSingleDialogAlt1(MetadataSingleDialogBase):  # {{{
 
@@ -982,6 +987,7 @@ class MetadataSingleDialogAlt1(MetadataSingleDialogBase):  # {{{
 
 # }}}
 
+
 class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
 
     cc_two_column = False
@@ -1118,6 +1124,7 @@ class MetadataSingleDialogAlt2(MetadataSingleDialogBase):  # {{{
 
 editors = {'default': MetadataSingleDialog, 'alt1': MetadataSingleDialogAlt1,
            'alt2': MetadataSingleDialogAlt2}
+
 
 def edit_metadata(db, row_list, current_row, parent=None, view_slot=None,
         set_current_callback=None, editing_multiple=False):

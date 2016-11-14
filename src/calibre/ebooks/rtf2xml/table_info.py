@@ -17,17 +17,20 @@ from calibre.ptempfile import better_mktemp
 # note to self. This is the first module in which I use tempfile. A good idea?
 """
 """
+
+
 class TableInfo:
     """
     Insert table data for tables.
     Logic:
     """
+
     def __init__(self,
             in_file,
             bug_handler,
             table_data,
             copy=None,
-            run_level = 1,):
+            run_level=1,):
         """
         Required:
             'file'--file to parse
@@ -45,7 +48,8 @@ class TableInfo:
         self.__table_data = table_data
         self.__run_level = run_level
         self.__write_to = better_mktemp()
-            # self.__write_to = 'table_info.data'
+        # self.__write_to = 'table_info.data'
+
     def insert_info(self):
         """
         """
@@ -75,7 +79,7 @@ class TableInfo:
             self.__write_obj.write(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "table_info.data")
         copy_obj.rename(self.__write_to, self.__file)

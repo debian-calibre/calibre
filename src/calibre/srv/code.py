@@ -4,7 +4,7 @@
 
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-import hashlib, random, zipfile
+import hashlib, random, zipfile, shutil, sys
 from json import load as load_json_file
 
 from calibre import as_unicode
@@ -22,9 +22,11 @@ from calibre.utils.search_query_parser import ParseException
 
 POSTABLE = frozenset({'GET', 'POST', 'HEAD'})
 
+
 @endpoint('', auth_required=False)
 def index(ctx, rd):
     return lopen(P('content-server/index-generated.html'), 'rb')
+
 
 @endpoint('/auto-reload', auth_required=False)
 def auto_reload(ctx, rd):
@@ -32,6 +34,15 @@ def auto_reload(ctx, rd):
     if auto_reload_port > 0:
         rd.outheaders.set('Calibre-Auto-Reload-Port', type('')(auto_reload_port), replace_all=True)
     return lopen(P('content-server/autoreload.js'), 'rb')
+
+
+@endpoint('/console-print', methods=('POST',))
+def console_print(ctx, rd):
+    if not getattr(rd.opts, 'allow_console_print', False):
+        raise HTTPNotFound('console printing is not allowed')
+    shutil.copyfileobj(rd.request_body_file, sys.stdout)
+    return ''
+
 
 def get_basic_query_data(ctx, rd):
     db, library_id, library_map, default_library = get_library_data(ctx, rd)
@@ -55,6 +66,7 @@ def get_basic_query_data(ctx, rd):
 
 _cached_translations = None
 
+
 def get_translations():
     global _cached_translations
     if _cached_translations is None:
@@ -71,6 +83,7 @@ def get_translations():
     return _cached_translations
 
 DEFAULT_NUMBER_OF_BOOKS = 50
+
 
 @endpoint('/interface-data/init', postprocess=json)
 def interface_data(ctx, rd):
@@ -89,6 +102,7 @@ def interface_data(ctx, rd):
         'gui_last_modified_display_format':tweaks['gui_last_modified_display_format'],
         'use_roman_numerals_for_series_number': get_use_roman(),
         'translations': get_translations(),
+        'allow_console_print':getattr(rd.opts, 'allow_console_print', False),
     }
     ans['library_map'], ans['default_library'] = ctx.library_info(rd)
     ud = {}
@@ -135,6 +149,7 @@ def interface_data(ctx, rd):
 
     return ans
 
+
 @endpoint('/interface-data/more-books', postprocess=json, methods=POSTABLE)
 def more_books(ctx, rd):
     '''
@@ -167,6 +182,7 @@ def more_books(ctx, rd):
 
     return ans
 
+
 @endpoint('/interface-data/set-session-data', postprocess=json, methods=POSTABLE)
 def set_session_data(ctx, rd):
     '''
@@ -183,6 +199,7 @@ def set_session_data(ctx, rd):
         ud = ctx.user_manager.get_session_data(rd.username)
         ud.update(new_data)
         ctx.user_manager.set_session_data(rd.username, ud)
+
 
 @endpoint('/interface-data/get-books', postprocess=json)
 def get_books(ctx, rd):
@@ -213,6 +230,7 @@ def get_books(ctx, rd):
                 mdata[book_id] = data
     return ans
 
+
 @endpoint('/interface-data/book-metadata/{book_id=0}', postprocess=json)
 def book_metadata(ctx, rd, book_id):
     '''
@@ -222,6 +240,7 @@ def book_metadata(ctx, rd, book_id):
     '''
     library_id, db = get_basic_query_data(ctx, rd)[:2]
     book_ids = ctx.allowed_book_ids(rd, db)
+
     def notfound():
         raise HTTPNotFound(_('No book with id: %d in library') % book_id)
     if not book_ids:
@@ -236,6 +255,7 @@ def book_metadata(ctx, rd, book_id):
     data['id'] = book_id  # needed for random book view (when book_id=0)
     return data
 
+
 @endpoint('/interface-data/tag-browser')
 def tag_browser(ctx, rd):
     '''
@@ -246,6 +266,7 @@ def tag_browser(ctx, rd):
     db, library_id = get_library_data(ctx, rd)[:2]
     etag = '%s||%s||%s' % (db.last_modified(), rd.username, library_id)
     etag = hashlib.sha1(etag.encode('utf-8')).hexdigest()
+
     def generate():
         db, library_id = get_library_data(ctx, rd)[:2]
         return json(ctx, rd, tag_browser, categories_as_json(ctx, rd, db))

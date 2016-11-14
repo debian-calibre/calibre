@@ -24,12 +24,21 @@ from calibre.utils.localization import localize_user_manual_link
 
 tag_maps = JSONConfig('tag-map-rules')
 
+
+def intelligent_strip(action, val):
+    ans = val.strip()
+    if not ans and action == 'split':
+        ans = ' '
+    return ans
+
+
 class QueryEdit(QLineEdit):
 
     def contextMenuEvent(self, ev):
         menu = self.createStandardContextMenu()
         self.parent().specialise_context_menu(menu)
         menu.exec_(ev.globalPos())
+
 
 class RuleEdit(QWidget):
 
@@ -151,11 +160,12 @@ class RuleEdit(QWidget):
 
     @property
     def rule(self):
+        ac = self.action.currentData()
         return {
-            'action': self.action.currentData(),
+            'action': ac,
             'match_type': self.match_type.currentData(),
-            'query': self.query.text().strip(),
-            'replace': self.replace.text().strip(),
+            'query': intelligent_strip(ac, self.query.text()),
+            'replace': intelligent_strip(ac, self.replace.text()),
         }
 
     @rule.setter
@@ -167,8 +177,9 @@ class RuleEdit(QWidget):
                 idx = 0
             c.setCurrentIndex(idx)
         sc('action'), sc('match_type')
-        self.query.setText(unicode(rule.get('query', '')).strip())
-        self.replace.setText(unicode(rule.get('replace', '')).strip())
+        ac = self.action.currentData()
+        self.query.setText(intelligent_strip(ac, unicode(rule.get('query', ''))))
+        self.replace.setText(intelligent_strip(ac, unicode(rule.get('replace', ''))))
 
     def validate(self):
         rule = self.rule
@@ -183,6 +194,7 @@ class RuleEdit(QWidget):
                     '%s is not a valid regular expression') % rule['query'], show=True)
                 return False
         return True
+
 
 class RuleEditDialog(Dialog):
 
@@ -206,6 +218,7 @@ class RuleEditDialog(Dialog):
 DATA_ROLE = Qt.UserRole
 RENDER_ROLE = DATA_ROLE + 1
 
+
 class RuleItem(QListWidgetItem):
 
     @staticmethod
@@ -225,6 +238,7 @@ class RuleItem(QListWidgetItem):
         st = self.text_from_rule(rule, parent)
         self.setData(RENDER_ROLE, st)
         self.setData(DATA_ROLE, rule)
+
 
 class Delegate(QStyledItemDelegate):
 
@@ -364,6 +378,7 @@ class Rules(QWidget):
             if 'action' in rule and 'match_type' in rule and 'query' in rule:
                 self.RuleItemClass(rule, self.rule_list)
 
+
 class Tester(Dialog):
 
     DIALOG_TITLE = _('Test tag mapper rules')
@@ -410,6 +425,7 @@ class Tester(Dialog):
         ans.setWidth(ans.width() + 150)
         return ans
 
+
 class SaveLoadMixin(object):
 
     def save_ruleset(self):
@@ -451,6 +467,7 @@ class SaveLoadMixin(object):
     def delete_ruleset(self, name):
         del self.PREFS_OBJECT[name]
         self.build_load_menu()
+
 
 class RulesDialog(Dialog, SaveLoadMixin):
 

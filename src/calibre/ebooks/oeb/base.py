@@ -52,29 +52,38 @@ OPF1_NSMAP   = {'dc': DC11_NS, 'oebpackage': OPF1_NS}
 OPF2_NSMAP   = {'opf': OPF2_NS, 'dc': DC11_NS, 'dcterms': DCTERMS_NS,
                 'xsi': XSI_NS, 'calibre': CALIBRE_NS}
 
+
 def XML(name):
     return '{%s}%s' % (XML_NS, name)
+
 
 def OPF(name):
     return '{%s}%s' % (OPF2_NS, name)
 
+
 def DC(name):
     return '{%s}%s' % (DC11_NS, name)
+
 
 def XSI(name):
     return '{%s}%s' % (XSI_NS, name)
 
+
 def DCTERMS(name):
     return '{%s}%s' % (DCTERMS_NS, name)
+
 
 def NCX(name):
     return '{%s}%s' % (NCX_NS, name)
 
+
 def SVG(name):
     return '{%s}%s' % (SVG_NS, name)
 
+
 def XLINK(name):
     return '{%s}%s' % (XLINK_NS, name)
+
 
 def CALIBRE(name):
     return '{%s}%s' % (CALIBRE_NS, name)
@@ -97,11 +106,14 @@ _self_closing_pat = re.compile(
     r'<(?P<tag>%s)(?=[\s/])(?P<arg>[^>]*)/>'%('|'.join(self_closing_bad_tags)),
     re.IGNORECASE)
 
+
 def close_self_closing_tags(raw):
     return _self_closing_pat.sub(r'<\g<tag>\g<arg>></\g<tag>>', raw)
 
+
 def uuid_id():
     return u'u'+uuid4()
+
 
 def itercsslinks(raw):
     for match in _css_url_re.finditer(raw):
@@ -110,6 +122,7 @@ def itercsslinks(raw):
         yield match.group(1), match.start(1)
 
 _link_attrs = set(html.defs.link_attrs) | {XLINK('href'), 'poster'}
+
 
 def iterlinks(root, find_links_in_css=True):
     '''
@@ -122,11 +135,11 @@ def iterlinks(root, find_links_in_css=True):
     for el in root.iter():
         attribs = el.attrib
         try:
-            tag = el.tag
-        except UnicodeDecodeError:
+            tag = barename(el.tag).lower()
+        except Exception:
             continue
 
-        if tag == XHTML('object'):
+        if tag == 'object':
             codebase = None
             # <object> tags have attributes that are relative to
             # codebase
@@ -152,7 +165,7 @@ def iterlinks(root, find_links_in_css=True):
 
         if not find_links_in_css:
             continue
-        if tag == XHTML('style') and el.text:
+        if tag == 'style' and el.text:
             for match in _css_url_re.finditer(el.text):
                 yield (el, None, match.group(1), match.start(1))
             for match in _css_import_re.finditer(el.text):
@@ -160,6 +173,7 @@ def iterlinks(root, find_links_in_css=True):
         if 'style' in attribs:
             for match in _css_url_re.finditer(attribs['style']):
                 yield (el, 'style', match.group(1), match.start(1))
+
 
 def make_links_absolute(root, base_url):
     '''
@@ -171,6 +185,7 @@ def make_links_absolute(root, base_url):
         return urljoin(base_url, href)
     rewrite_links(root, link_repl)
 
+
 def resolve_base_href(root):
     base_href = None
     basetags = root.xpath('//base[@href]|//h:base[@href]',
@@ -181,6 +196,7 @@ def resolve_base_href(root):
     if not base_href:
         return
     make_links_absolute(root, base_href, resolve_base_href=False)
+
 
 def rewrite_links(root, link_repl_func, resolve_base_href=False):
     '''
@@ -291,10 +307,12 @@ PREFIXNAME_RE = re.compile(r'^[^:]+[:][^:]+')
 XMLDECL_RE    = re.compile(r'^\s*<[?]xml.*?[?]>')
 CSSURL_RE     = re.compile(r'''url[(](?P<q>["']?)(?P<url>[^)]+)(?P=q)[)]''')
 
+
 def element(parent, *args, **kwargs):
     if parent is not None:
         return etree.SubElement(parent, *args, **kwargs)
     return etree.Element(*args, **kwargs)
+
 
 def prefixname(name, nsrmap):
     if not isqname(name):
@@ -307,8 +325,10 @@ def prefixname(name, nsrmap):
         return barename(name)
     return ':'.join((prefix, barename(name)))
 
+
 def isprefixname(name):
     return name and PREFIXNAME_RE.match(name) is not None
+
 
 def qname(name, nsmap):
     if not isprefixname(name):
@@ -318,14 +338,18 @@ def qname(name, nsmap):
         return name
     return '{%s}%s' % (nsmap[prefix], local)
 
+
 def isqname(name):
     return name and QNAME_RE.match(name) is not None
+
 
 def XPath(expr):
     return etree.XPath(expr, namespaces=XPNSMAP)
 
+
 def xpath(elem, expr):
     return elem.xpath(expr, namespaces=XPNSMAP)
+
 
 def xml2str(root, pretty_print=False, strip_comments=False, with_tail=True):
     if not strip_comments:
@@ -345,14 +369,17 @@ def xml2str(root, pretty_print=False, strip_comments=False, with_tail=True):
 def xml2unicode(root, pretty_print=False):
     return etree.tostring(root, pretty_print=pretty_print)
 
+
 def xml2text(elem):
     return etree.tostring(elem, method='text', encoding=unicode, with_tail=False)
+
 
 def escape_cdata(root):
     pat = re.compile(r'[<>&]')
     for elem in root.iterdescendants('{%s}style' % XHTML_NS, '{%s}script' % XHTML_NS):
         if elem.text and pat.search(elem.text) is not None:
             elem.text = etree.CDATA(elem.text.replace(']]>', r'\]\]\>'))
+
 
 def serialize(data, media_type, pretty_print=False):
     if isinstance(data, etree._Element):
@@ -382,6 +409,7 @@ URL_SAFE      = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                     '0123456789' '_.-/~')
 URL_UNSAFE = [ASCII_CHARS - URL_SAFE, UNIBYTE_CHARS - URL_SAFE]
 
+
 def urlquote(href):
     """ Quote URL-unsafe characters, allowing IRI-safe characters.
     That is, this function returns valid IRIs not valid URIs. In particular,
@@ -394,6 +422,7 @@ def urlquote(href):
             char = "%%%02x" % ord(char)
         result.append(char)
     return ''.join(result)
+
 
 def urlunquote(href, error_handling='strict'):
     # unquote must run on a bytestring and will return a bytestring
@@ -411,6 +440,7 @@ def urlunquote(href, error_handling='strict'):
         href = href.decode('utf-8', error_handling)
     return href
 
+
 def urlnormalize(href):
     """Convert a URL into normalized form, with all and only URL-unsafe
     characters URL quoted.
@@ -427,6 +457,7 @@ def urlnormalize(href):
     parts = (urlquote(part) for part in parts)
     return urlunparse(parts)
 
+
 def extract(elem):
     """
     Removes this element from the tree, including its children and
@@ -442,6 +473,7 @@ def extract(elem):
             else:
                 previous.tail = (previous.tail or '') + elem.tail
         parent.remove(elem)
+
 
 class DummyHandler(logging.Handler):
 
@@ -463,9 +495,11 @@ _css_logger.setLevel(logging.WARNING)
 _css_log_handler = DummyHandler()
 _css_logger.addHandler(_css_log_handler)
 
+
 class OEBError(Exception):
     """Generic OEB-processing error."""
     pass
+
 
 class NullContainer(object):
     """An empty container.
@@ -487,6 +521,7 @@ class NullContainer(object):
 
     def namelist(self):
         return []
+
 
 class DirContainer(object):
     """Filesystem directory container."""
@@ -666,6 +701,7 @@ class Metadata(object):
         def content(self):
             def fget(self):
                 return self.value
+
             def fset(self, value):
                 self.value = value
             return property(fget=fget, fset=fset)
@@ -971,6 +1007,7 @@ class Manifest(object):
             - All other content is returned as a :class:`str` object with no
               special parsing.
             """
+
             def fget(self):
                 data = self._data
                 if data is None:
@@ -997,8 +1034,10 @@ class Manifest(object):
                     self.media_type = XHTML_MIME
                 self._data = data
                 return data
+
             def fset(self, value):
                 self._data = value
+
             def fdel(self):
                 self._data = None
             return property(fget, fset, fdel, doc=doc)
@@ -1011,6 +1050,7 @@ class Manifest(object):
                     with pt:
                         pt.write(self._data)
                     self.oeb._temp_files.append(pt.name)
+
                     def loader(*args):
                         with open(pt.name, 'rb') as f:
                             ans = f.read()
@@ -1062,30 +1102,16 @@ class Manifest(object):
             """Convert the URL provided in :param:`href` from a book-absolute
             reference to a reference relative to this manifest item.
             """
-            if urlparse(href).scheme:
-                return href
-            if '/' not in self.href:
-                return href
-            base = filter(None, os.path.dirname(os.path.normpath(self.href)).replace(os.sep, '/').split('/'))
-            target, frag = urldefrag(href)
-            target = target.split('/')
-            index = 0
-            for index in xrange(min(len(base), len(target))):
-                if base[index] != target[index]:
-                    break
-            else:
-                index += 1
-            relhref = (['..'] * (len(base) - index)) + target[index:]
-            relhref = '/'.join(relhref)
-            if frag:
-                relhref = '#'.join((relhref, frag))
-            return relhref
+            return rel_href(self.href, href)
 
         def abshref(self, href):
             """Convert the URL provided in :param:`href` from a reference
             relative to this manifest item to a book-absolute reference.
             """
-            purl = urlparse(href)
+            try:
+                purl = urlparse(href)
+            except ValueError:
+                return href
             scheme = purl.scheme
             if scheme and scheme != 'file':
                 return href
@@ -1227,9 +1253,11 @@ class Manifest(object):
                         ans = item
                         break
             return ans
+
         def fset(self, item):
             self._main_stylesheet = item
         return property(fget=fget, fset=fset)
+
 
 class Spine(object):
     """Collection of manifest items composing an OEB data model book's main
@@ -1239,6 +1267,7 @@ class Spine(object):
     content and the sequence in which they appear.  Provides Python container
     access as a list-like object.
     """
+
     def __init__(self, oeb):
         self.oeb = oeb
         self.items = []
@@ -1384,6 +1413,7 @@ class Guide(object):
         @dynamic_property
         def item(self):
             doc = """The manifest item associated with this reference."""
+
             def fget(self):
                 path = urldefrag(self.href)[0]
                 hrefs = self.oeb.manifest.hrefs
@@ -1463,6 +1493,7 @@ class TOC(object):
     :attr:`description`: Optional description attribute for periodicals <mbp:>
     :attr:`toc_thumbnail`: Optional toc thumbnail image
     """
+
     def __init__(self, title=None, href=None, klass=None, id=None,
             play_order=None, author=None, description=None, toc_thumbnail=None):
         self.title = title
@@ -1631,6 +1662,7 @@ class TOC(object):
             y = href_node(x)
             if y is not None:
                 x.play_order = y.play_order
+
 
 class PageList(object):
     """Collection of named "pages" to mapped positions within an OEB data model
@@ -1932,3 +1964,37 @@ class OEBBook(object):
         if self.spine.page_progression_direction in {'ltr', 'rtl'}:
             spine.attrib['page-progression-direction'] = self.spine.page_progression_direction
         return results
+
+
+def rel_href(base_href, href):
+    """Convert the URL provided in :param:`href` to a URL relative to the URL
+    in :param:`base_href`  """
+    if urlparse(href).scheme:
+        return href
+    if '/' not in base_href:
+        return href
+    base = filter(lambda x: x and x != '.', os.path.dirname(os.path.normpath(base_href)).replace(os.sep, '/').split('/'))
+    while True:
+        try:
+            idx = base.index('..')
+        except ValueError:
+            break
+        if idx > 0:
+            del base[idx-1:idx+1]
+        else:
+            break
+    if not base:
+        return href
+    target, frag = urldefrag(href)
+    target = target.split('/')
+    index = 0
+    for index in xrange(min(len(base), len(target))):
+        if base[index] != target[index]:
+            break
+    else:
+        index += 1
+    relhref = (['..'] * (len(base) - index)) + target[index:]
+    relhref = '/'.join(relhref)
+    if frag:
+        relhref = '#'.join((relhref, frag))
+    return relhref

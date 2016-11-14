@@ -8,9 +8,11 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 from collections import OrderedDict
 
+
 class Inherit:
     pass
 inherit = Inherit()
+
 
 def binary_property(parent, name, XPath, get):
     vals = XPath('./w:%s' % name)(parent)
@@ -19,16 +21,19 @@ def binary_property(parent, name, XPath, get):
     val = get(vals[0], 'w:val', 'on')
     return True if val in {'on', '1', 'true'} else False
 
+
 def simple_color(col, auto='black'):
     if not col or col == 'auto' or len(col) != 6:
         return auto
     return '#'+col
+
 
 def simple_float(val, mult=1.0):
     try:
         return float(val) * mult
     except (ValueError, TypeError, AttributeError, KeyError):
         pass
+
 
 def twips(val, mult=0.05):
     ''' Parse val as either a pure number representing twentieths of a point or a number followed by the suffix pt, representing pts.'''
@@ -76,6 +81,7 @@ LINE_STYLES = {  # {{{
 border_props = ('padding_%s', 'border_%s_width', 'border_%s_style', 'border_%s_color')
 border_edges = ('left', 'top', 'right', 'bottom', 'between')
 
+
 def read_single_border(parent, edge, XPath, get):
     color = style = width = padding = None
     for elem in XPath('./w:%s' % edge)(parent):
@@ -100,6 +106,7 @@ def read_single_border(parent, edge, XPath, get):
                 pass
     return {p:v for p, v in zip(border_props, (padding, width, style, color))}
 
+
 def read_border(parent, dest, XPath, get, border_edges=border_edges, name='pBdr'):
     vals = {k % edge:inherit for edge in border_edges for k in border_props}
 
@@ -111,6 +118,7 @@ def read_border(parent, dest, XPath, get, border_edges=border_edges, name='pBdr'
 
     for key, val in vals.iteritems():
         setattr(dest, key, val)
+
 
 def border_to_css(edge, style, css):
     bs = getattr(style, 'border_%s_style' % edge)
@@ -127,6 +135,7 @@ def border_to_css(edge, style, css):
         if isinstance(bw, (int, float, long)):
             bw = '%.3gpt' % bw
         css['border-%s-width' % edge] = bw
+
 
 def read_indent(parent, dest, XPath, get):
     padding_left = padding_right = text_indent = inherit
@@ -154,6 +163,7 @@ def read_indent(parent, dest, XPath, get):
     setattr(dest, 'margin_right', padding_right)
     setattr(dest, 'text_indent', text_indent)
 
+
 def read_justification(parent, dest, XPath, get):
     ans = inherit
     for jc in XPath('./w:jc[@w:val]')(parent):
@@ -162,9 +172,12 @@ def read_justification(parent, dest, XPath, get):
             continue
         if val in {'both', 'distribute'} or 'thai' in val or 'kashida' in val:
             ans = 'justify'
-        if val in {'left', 'center', 'right',}:
+        elif val in {'left', 'center', 'right', 'start', 'end'}:
             ans = val
+        elif val in {'start', 'end'}:
+            ans = {'start':'left'}.get(val, 'right')
     setattr(dest, 'text_align', ans)
+
 
 def read_spacing(parent, dest, XPath, get):
     padding_top = padding_bottom = line_height = inherit
@@ -189,15 +202,6 @@ def read_spacing(parent, dest, XPath, get):
     setattr(dest, 'margin_bottom', padding_bottom)
     setattr(dest, 'line_height', line_height)
 
-def read_direction(parent, dest, XPath, get):
-    ans = inherit
-    for jc in XPath('./w:textFlow[@w:val]')(parent):
-        val = get(jc, 'w:val')
-        if not val:
-            continue
-        if 'rl' in val.lower():
-            ans = 'rtl'
-    setattr(dest, 'direction', ans)
 
 def read_shd(parent, dest, XPath, get):
     ans = inherit
@@ -206,6 +210,7 @@ def read_shd(parent, dest, XPath, get):
         if val:
             ans = simple_color(val, auto='transparent')
     setattr(dest, 'background_color', ans)
+
 
 def read_numbering(parent, dest, XPath, get):
     lvl = num_id = None
@@ -219,6 +224,7 @@ def read_numbering(parent, dest, XPath, get):
             num_id = get(num, 'w:val')
     val = (num_id, lvl) if num_id is not None or lvl is not None else inherit
     setattr(dest, 'numbering', val)
+
 
 class Frame(object):
 
@@ -297,6 +303,7 @@ class Frame(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+
 def read_frame(parent, dest, XPath, get):
     ans = inherit
     for fp in XPath('./w:framePr')(parent):
@@ -304,6 +311,7 @@ def read_frame(parent, dest, XPath, get):
     setattr(dest, 'frame', ans)
 
 # }}}
+
 
 class ParagraphStyle(object):
 
@@ -322,7 +330,7 @@ class ParagraphStyle(object):
         'margin_left', 'margin_top', 'margin_right', 'margin_bottom',
 
         # Misc.
-        'text_indent', 'text_align', 'line_height', 'direction', 'background_color',
+        'text_indent', 'text_align', 'line_height', 'background_color',
         'numbering', 'font_family', 'font_size', 'color', 'frame',
     )
 
@@ -341,7 +349,7 @@ class ParagraphStyle(object):
             ):
                 setattr(self, p, binary_property(pPr, p, namespace.XPath, namespace.get))
 
-            for x in ('border', 'indent', 'justification', 'spacing', 'direction', 'shd', 'numbering', 'frame'):
+            for x in ('border', 'indent', 'justification', 'spacing', 'shd', 'numbering', 'frame'):
                 f = globals()['read_%s' % x]
                 f(pPr, self, namespace.XPath, namespace.get)
 
@@ -389,12 +397,17 @@ class ParagraphStyle(object):
             if self.line_height not in {inherit, '1'}:
                 c['line-height'] = self.line_height
 
-            for x in ('text_indent', 'text_align', 'background_color', 'font_family', 'font_size', 'color'):
+            for x in ('text_indent', 'background_color', 'font_family', 'font_size', 'color'):
                 val = getattr(self, x)
                 if val is not inherit:
                     if x == 'font_size':
                         val = '%.3gpt' % val
                     c[x.replace('_', '-')] = val
+            ta = self.text_align
+            if ta is not inherit:
+                if self.bidi is True:
+                    ta = {'left':'right', 'right':'left'}.get(ta, ta)
+                c['text-align'] = ta
 
         return self._css
 

@@ -17,6 +17,7 @@ from calibre.utils.icu import sort_key, collation_order
 
 CATEGORY_SORTS = ('name', 'popularity', 'rating')  # This has to be a tuple not a set
 
+
 class Tag(object):
 
     __slots__ = ('name', 'original_name', 'id', 'count', 'state', 'is_hierarchical',
@@ -51,6 +52,7 @@ class Tag(object):
     def __repr__(self):
         return str(self)
 
+
 def find_categories(field_metadata):
     for category, cat in field_metadata.iteritems():
         if (cat['is_category'] and cat['kind'] not in {'user', 'search'}):
@@ -58,6 +60,7 @@ def find_categories(field_metadata):
         elif (cat['datatype'] == 'composite' and
               cat['display'].get('make_category', False)):
             yield (category, cat['is_multiple'].get('cache_to_list', None), True)
+
 
 def create_tag_class(category, fm):
     cat = fm[category]
@@ -76,6 +79,7 @@ def create_tag_class(category, fm):
 
     return partial(Tag, use_sort_as_name=use_sort_as_name,
                    is_editable=is_editable, category=category)
+
 
 def clean_user_categories(dbcache):
     user_cats = dbcache.pref('user_categories', {})
@@ -98,19 +102,16 @@ def clean_user_categories(dbcache):
         pass
     return new_cats
 
-def sort_categories(items, sort, first_letter_sort=False):
-    if sort == 'popularity':
-        key=lambda x:(-getattr(x, 'count', 0), sort_key(x.sort or x.name))
-    elif sort == 'rating':
-        key=lambda x:(-getattr(x, 'avg_rating', 0.0), sort_key(x.sort or x.name))
-    else:
-        if first_letter_sort:
-            key=lambda x:(collation_order(icu_upper(x.sort or x.name or ' ')),
-                          sort_key(x.sort or x.name))
-        else:
-            key=lambda x:sort_key(x.sort or x.name)
-    items.sort(key=key)
-    return items
+category_sort_keys = {True:{}, False: {}}
+category_sort_keys[True]['popularity'] = category_sort_keys[False]['popularity'] = \
+    lambda x:(-getattr(x, 'count', 0), sort_key(x.sort or x.name))
+category_sort_keys[True]['rating'] = category_sort_keys[False]['rating'] = \
+    lambda x:(-getattr(x, 'avg_rating', 0.0), sort_key(x.sort or x.name))
+category_sort_keys[True]['name'] = \
+    lambda x:(collation_order(icu_upper(x.sort or x.name or ' ')), sort_key(x.sort or x.name))
+category_sort_keys[False]['name'] = \
+    lambda x:sort_key(x.sort or x.name)
+
 
 def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False):
     if sort not in CATEGORY_SORTS:
@@ -131,9 +132,11 @@ def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False)
         return ans
 
     bids = None
+    first_letter_sort = bool(first_letter_sort)
 
     for category, is_multiple, is_composite in find_categories(fm):
         tag_class = create_tag_class(category, fm)
+        sort_on, reverse = sort, False
         if is_composite:
             if bids is None:
                 bids = dbcache._all_book_ids() if book_ids is None else book_ids
@@ -144,15 +147,19 @@ def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False)
         else:
             cat = fm[category]
             brm = book_rating_map
-            if cat['datatype'] == 'rating' and category != 'rating':
-                brm = dbcache.fields[category].book_value_map
+            dt = cat['datatype']
+            if dt == 'rating':
+                if category != 'rating':
+                    brm = dbcache.fields[category].book_value_map
+                if sort_on == 'name':
+                    sort_on, reverse = 'rating', True
             cats = dbcache.fields[category].get_categories(
                 tag_class, brm, lang_map, book_ids)
-            if (category != 'authors' and cat['datatype'] == 'text' and
+            if (category != 'authors' and dt == 'text' and
                 cat['is_multiple'] and cat['display'].get('is_names', False)):
                 for item in cats:
                     item.sort = author_to_author_sort(item.sort)
-        sort_categories(cats, sort, first_letter_sort=first_letter_sort)
+        cats.sort(key=category_sort_keys[first_letter_sort][sort_on], reverse=reverse)
         categories[category] = cats
 
     # Needed for legacy databases that have multiple ratings that
@@ -229,7 +236,8 @@ def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False)
                         items.append(taglist[label][n])
                 # else: do nothing, to not include nodes w zero counts
             cat_name = '@' + user_cat  # add the '@' to avoid name collision
-            categories[cat_name] = sort_categories(items, sort)
+            items.sort(key=category_sort_keys[False][sort])
+            categories[cat_name] = items
 
     # ### Finally, the saved searches category ####
     items = []

@@ -9,13 +9,13 @@ Convert an ODT file into a Open Ebook
 
 from calibre.customize.conversion import InputFormatPlugin
 
+
 class ODTInput(InputFormatPlugin):
 
     name        = 'ODT Input'
     author      = 'Kovid Goyal'
     description = 'Convert ODT (OpenOffice) files to HTML'
     file_types  = set(['odt'])
-
 
     def convert(self, stream, options, file_ext, log,
                 accelerators):

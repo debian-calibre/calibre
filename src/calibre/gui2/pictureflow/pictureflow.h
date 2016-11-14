@@ -204,7 +204,6 @@ public slots:
 
 signals:
   void itemActivated(int index);
-  void inputReceived();
   void currentChanged(int index);
   void stop(); //Emitted when the user presses the Esc key
 
@@ -219,5 +218,7 @@ protected:
 
 private:
   PictureFlowPrivate* d;
+  qreal device_pixel_ratio() const;
+  qreal last_device_pixel_ratio;
 };
 

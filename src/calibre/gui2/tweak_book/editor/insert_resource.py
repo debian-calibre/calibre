@@ -29,6 +29,7 @@ from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.localization import get_lang, canonicalize_lang
 from calibre.utils.icu import sort_key
 
+
 class ChooseName(Dialog):  # {{{
 
     ''' Chooses the filename for a newly imported file, with error checking '''
@@ -71,6 +72,8 @@ class ChooseName(Dialog):  # {{{
 # }}}
 
 # Images {{{
+
+
 class ImageDelegate(QStyledItemDelegate):
 
     MARGIN = 4
@@ -108,11 +111,16 @@ class ImageDelegate(QStyledItemDelegate):
             except:
                 pass
             else:
+                try:
+                    dpr = painter.device().devicePixelRatioF()
+                except AttributeError:
+                    dpr = painter.device().devicePixelRatio()
                 cover.loadFromData(raw)
+                cover.setDevicePixelRatio(dpr)
                 if not cover.isNull():
                     scaled, width, height = fit_image(cover.width(), cover.height(), self.cover_size.width(), self.cover_size.height())
                     if scaled:
-                        cover = self.cover_cache[name] = cover.scaled(width, height, transformMode=Qt.SmoothTransformation)
+                        cover = self.cover_cache[name] = cover.scaled(int(dpr*width), int(dpr*height), transformMode=Qt.SmoothTransformation)
 
         painter.save()
         try:
@@ -121,8 +129,8 @@ class ImageDelegate(QStyledItemDelegate):
             trect = QRect(rect)
             rect.setBottom(rect.bottom() - self.title_height)
             if not cover.isNull():
-                dx = max(0, int((rect.width() - cover.width())/2.0))
-                dy = max(0, rect.height() - cover.height())
+                dx = max(0, int((rect.width() - int(cover.width()/cover.devicePixelRatio()))/2.0))
+                dy = max(0, rect.height() - int(cover.height()/cover.devicePixelRatio()))
                 rect.adjust(dx, dy, -dx, 0)
                 painter.drawPixmap(rect, cover)
             rect = trect
@@ -133,6 +141,7 @@ class ImageDelegate(QStyledItemDelegate):
                                 metrics.elidedText(name, Qt.ElideLeft, rect.width()))
         finally:
             painter.restore()
+
 
 class Images(QAbstractListModel):
 
@@ -169,6 +178,7 @@ class Images(QAbstractListModel):
         if role in (Qt.DisplayRole, Qt.ToolTipRole):
             return name
         return None
+
 
 class InsertImage(Dialog):
 
@@ -313,11 +323,13 @@ class InsertImage(Dialog):
         self.fm.setFilterFixedString(f)
 # }}}
 
+
 def get_resource_data(rtype, parent):
     if rtype == 'image':
         d = InsertImage(parent)
         if d.exec_() == d.Accepted:
             return d.chosen_image, d.chosen_image_is_external, d.fullpage.isChecked(), d.preserve_aspect_ratio.isChecked()
+
 
 def create_folder_tree(container):
     root = {}
@@ -330,6 +342,7 @@ def create_folder_tree(container):
         for x in folder_path:
             current[x] = current = current.get(x, {})
     return root
+
 
 class ChooseFolder(Dialog):  # {{{
 
@@ -455,7 +468,5 @@ if __name__ == '__main__':
     from calibre.gui2.tweak_book.boss import get_container
     set_current_container(get_container(sys.argv[-1]))
 
-    d = ChooseFolder()
-    if d.exec_() == d.Accepted:
-        print (repr(d.chosen_folder))
-
+    d = InsertImage(for_browsing=True)
+    d.exec_()

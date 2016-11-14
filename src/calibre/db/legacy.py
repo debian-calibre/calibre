@@ -24,6 +24,7 @@ from calibre.db.write import clean_identifier, get_series_values
 from calibre.utils.date import utcnow
 from calibre.utils.search_query_parser import set_saved_searches
 
+
 def cleanup_tags(tags):
     tags = [x.strip().replace(',', ';') for x in tags if x.strip()]
     tags = [x.decode(preferred_encoding, 'replace')
@@ -36,6 +37,7 @@ def cleanup_tags(tags):
             ans.append(tag)
     return ans
 
+
 def create_backend(
         library_path, default_prefs=None, read_only=False,
         progress_callback=lambda x, y:True, restore_all_prefs=False,
@@ -44,6 +46,7 @@ def create_backend(
                      read_only=read_only, restore_all_prefs=restore_all_prefs,
                      progress_callback=progress_callback,
                      load_user_formatter_functions=load_user_formatter_functions)
+
 
 class LibraryDatabase(object):
 
@@ -275,22 +278,16 @@ class LibraryDatabase(object):
     def add_format(self, index, fmt, stream, index_is_id=False, path=None, notify=True, replace=True, copy_function=None):
         ''' path and copy_function are ignored by the new API '''
         book_id = index if index_is_id else self.id(index)
-        try:
-            return self.new_api.add_format(book_id, fmt, stream, replace=replace, run_hooks=False, dbapi=self)
-        except:
-            raise
-        else:
-            self.notify('metadata', [book_id])
+        ret = self.new_api.add_format(book_id, fmt, stream, replace=replace, run_hooks=False, dbapi=self)
+        self.notify('metadata', [book_id])
+        return ret
 
     def add_format_with_hooks(self, index, fmt, fpath, index_is_id=False, path=None, notify=True, replace=True):
         ''' path is ignored by the new API '''
         book_id = index if index_is_id else self.id(index)
-        try:
-            return self.new_api.add_format(book_id, fmt, fpath, replace=replace, run_hooks=True, dbapi=self)
-        except:
-            raise
-        else:
-            self.notify('metadata', [book_id])
+        ret = self.new_api.add_format(book_id, fmt, fpath, replace=replace, run_hooks=True, dbapi=self)
+        self.notify('metadata', [book_id])
+        return ret
 
     # }}}
 
@@ -754,6 +751,7 @@ for prop in ('author_sort', 'authors', 'comment', 'comments', 'publisher', 'max_
     def getter(prop):
         fm = {'comment':'comments', 'metadata_last_modified':
               'last_modified', 'title_sort':'sort', 'max_size':'size'}.get(prop, prop)
+
         def func(self, index, index_is_id=False):
             return self.get_property(index, index_is_id=index_is_id, loc=self.FIELD_MAP[fm])
         return func
@@ -799,6 +797,7 @@ for field in (
         if has_case_change:
             field = field[1:]
             acc = field == 'series'
+
             def func(self, book_id, val, notify=True, commit=True, allow_case_change=acc):
                 ret = self.new_api.set_field(field, {book_id:val}, allow_case_change=allow_case_change)
                 if notify:
@@ -810,6 +809,7 @@ for field in (
         else:
             null_field = field in {'title', 'sort', 'uuid'}
             retval = (True if field == 'sort' else None)
+
             def func(self, book_id, val, notify=True, commit=True):
                 if not val and null_field:
                     return (False if field == 'sort' else None)
@@ -863,6 +863,7 @@ LibraryDatabase.get_author_id = MT(
 for field in ('tags', 'series', 'publishers', 'ratings', 'languages'):
     def getter(field):
         fname = field[:-1] if field in {'publishers', 'ratings'} else field
+
         def func(self):
             return [[tid, tag] for tid, tag in self.new_api.get_id_map(fname).iteritems()]
         return func
@@ -871,6 +872,7 @@ for field in ('tags', 'series', 'publishers', 'ratings', 'languages'):
 for field in ('author', 'tag', 'series'):
     def getter(field):
         field = field if field == 'series' else (field+'s')
+
         def func(self, item_id):
             return self.new_api.get_item_name(field, item_id)
         return func
@@ -879,6 +881,7 @@ for field in ('author', 'tag', 'series'):
 for field in ('publisher', 'series', 'tag'):
     def getter(field):
         fname = 'tags' if field == 'tag' else field
+
         def func(self, item_id):
             self.new_api.remove_items(fname, (item_id,))
         return func
@@ -894,6 +897,7 @@ for func in (
     def getter(func):
         if func.startswith('!'):
             func = func[1:]
+
             def meth(self, include_composites=True):
                 return getattr(self.field_metadata, func)(include_composites=include_composites)
         elif func == 'search_term_to_field_key':
@@ -909,7 +913,7 @@ LibraryDatabase.metadata_for_field = MT(lambda self, field:self.field_metadata.g
 # }}}
 
 # Miscellaneous API {{{
-for meth in ('get_next_series_num_for', 'has_book', 'author_sort_from_authors'):
+for meth in ('get_next_series_num_for', 'has_book',):
     def getter(meth):
         def func(self, x):
             return getattr(self.new_api, meth)(x)
@@ -923,6 +927,7 @@ LibraryDatabase.saved_search_delete = MT(lambda self, x:self.new_api.saved_searc
 LibraryDatabase.saved_search_add = MT(lambda self, x, y:self.new_api.saved_search_add(x, y))
 LibraryDatabase.saved_search_rename = MT(lambda self, x, y:self.new_api.saved_search_rename(x, y))
 LibraryDatabase.commit_dirty_cache = MT(lambda self: self.new_api.commit_dirty_cache())
+LibraryDatabase.author_sort_from_authors = MT(lambda self, x: self.new_api.author_sort_from_authors(x))
 # Cleaning is not required anymore
 LibraryDatabase.clean = LibraryDatabase.clean_custom = MT(lambda self:None)
 LibraryDatabase.clean_standard_field = MT(lambda self, field, commit=False:None)

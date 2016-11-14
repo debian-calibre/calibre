@@ -17,14 +17,15 @@ from calibre.gui2 import (error_dialog, choose_files, choose_dir,
 from calibre.gui2.dialogs.add_empty_book import AddEmptyBookDialog
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.dialogs.progress import ProgressDialog
-from calibre.gui2.widgets import IMAGE_EXTENSIONS
 from calibre.ebooks import BOOK_EXTENSIONS
+from calibre.utils.config_base import tweaks
 from calibre.utils.filenames import ascii_filename
 from calibre.utils.icu import sort_key
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2 import question_dialog
 from calibre.ebooks.metadata import MetaInformation
 from calibre.ptempfile import PersistentTemporaryFile
+
 
 def get_filters():
     return [
@@ -359,11 +360,13 @@ class AddAction(InterfaceAction):
                 return
             cid = db.id(current_idx.row()) if cid is None else cid
         formats = []
+        from calibre.gui2.dnd import image_extensions
+        image_exts = set(image_extensions()) - set(tweaks['cover_drop_exclude'])
         for path in paths:
             ext = os.path.splitext(path)[1].lower()
             if ext:
                 ext = ext[1:]
-            if ext in IMAGE_EXTENSIONS:
+            if ext in image_exts:
                 pmap = QPixmap()
                 pmap.load(path)
                 if not pmap.isNull():
@@ -500,6 +503,7 @@ class AddAction(InterfaceAction):
                 return
             paths = [p for p in view.model().paths(rows) if p is not None]
         ve = self.gui.device_manager.device.VIRTUAL_BOOK_EXTENSIONS
+
         def ext(x):
             ans = os.path.splitext(x)[1]
             ans = ans[1:] if len(ans) > 1 else ans

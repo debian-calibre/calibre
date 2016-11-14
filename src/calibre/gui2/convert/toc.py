@@ -12,6 +12,7 @@ from calibre.gui2.convert import Widget
 from calibre.gui2 import error_dialog
 from calibre.utils.localization import localize_user_manual_link
 
+
 class TOCWidget(Widget, Ui_Form):
 
     TITLE = _('Table of\nContents')
@@ -36,7 +37,6 @@ class TOCWidget(Widget, Ui_Form):
                 'https://manual.calibre-ebook.com/conversion.html#table-of-contents'))
         except TypeError:
             pass  # link already localized
-
 
     def pre_commit_check(self):
         for x in ('level1', 'level2', 'level3'):

@@ -78,6 +78,7 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.every_x_days)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.schedule_stack = QtWidgets.QStackedWidget(self.frame)
+        self.schedule_stack.setMaximumSize(QtCore.QSize(16777215, 75))
         self.schedule_stack.setObjectName("schedule_stack")
         self.verticalLayout_2.addWidget(self.schedule_stack)
         self.last_downloaded = QtWidgets.QLabel(self.frame)

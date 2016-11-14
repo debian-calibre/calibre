@@ -4,7 +4,7 @@
 
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-import socket, os, struct
+import socket, os, struct, errno
 from base64 import standard_b64encode
 from collections import deque, namedtuple
 from functools import partial
@@ -26,6 +26,7 @@ Sec-WebSocket-Version: 13\r
 ''' + '\r\n'
 
 Frame = namedtuple('Frame', 'fin opcode payload')
+
 
 class WSClient(object):
 
@@ -73,7 +74,12 @@ class WSClient(object):
                 return data
             self.read_buf.appendleft(data[max_amt+1:])
             return data[:max_amt + 1]
-        return self.socket.recv(max_amt)
+        try:
+            return self.socket.recv(max_amt)
+        except socket.error as err:
+            if err.errno != errno.ECONNRESET:
+                raise
+            return b''
 
     def read_size(self, size):
         ans = b''
@@ -148,7 +154,7 @@ class WSClient(object):
 class WSTestServer(TestServer):
 
     def __init__(self, handler):
-        TestServer.__init__(self, None)
+        TestServer.__init__(self, None, shutdown_timeout=5)
         from calibre.srv.http_response import create_http_handler
         self.loop.handler = create_http_handler(websocket_handler=handler())
 
@@ -159,15 +165,20 @@ class WSTestServer(TestServer):
     def connect(self):
         return WSClient(self.address[1])
 
+
 class WebSocketTest(BaseTest):
 
-    def simple_test(self, server, msgs, expected=(), close_code=NORMAL_CLOSE, send_close=True, close_reason=b'NORMAL CLOSE'):
+    def simple_test(self, server, msgs, expected=(), close_code=NORMAL_CLOSE, send_close=True, close_reason=b'NORMAL CLOSE', ignore_send_failures=False):
         client = server.connect()
         for msg in msgs:
-            if isinstance(msg, dict):
-                client.write_frame(**msg)
-            else:
-                client.write_message(msg)
+            try:
+                if isinstance(msg, dict):
+                    client.write_frame(**msg)
+                else:
+                    client.write_message(msg)
+            except Exception:
+                if not ignore_send_failures:
+                    raise
 
         expected_messages, expected_controls = [], []
         for ex in expected:
@@ -215,40 +226,44 @@ class WebSocketTest(BaseTest):
             nc = struct.pack(b'!H', NORMAL_CLOSE)
 
             with server.silence_log:
+                # It can happen that the server detects bad data and closes the
+                # connection before the client has finished sending all
+                # messages, so ignore failures to send packets.
+                isf_test = partial(simple_test, ignore_send_failures=True)
                 for rsv in xrange(1, 7):
-                    simple_test([{'rsv':rsv, 'opcode':BINARY}], [], close_code=PROTOCOL_ERROR, send_close=False)
+                    isf_test([{'rsv':rsv, 'opcode':BINARY}], [], close_code=PROTOCOL_ERROR, send_close=False)
                 for opcode in (3, 4, 5, 6, 7, 11, 12, 13, 14, 15):
-                    simple_test([{'opcode':opcode}], [], close_code=PROTOCOL_ERROR, send_close=False)
+                    isf_test([{'opcode':opcode}], [], close_code=PROTOCOL_ERROR, send_close=False)
 
                 for opcode in (PING, PONG):
-                    simple_test([
+                    isf_test([
                         {'opcode':opcode, 'payload':'f1', 'fin':0}, {'opcode':opcode, 'payload':'f2'}
                     ], close_code=PROTOCOL_ERROR, send_close=False)
-                simple_test([(CLOSE, nc + b'x'*124)], send_close=False, close_code=PROTOCOL_ERROR)
+                isf_test([(CLOSE, nc + b'x'*124)], send_close=False, close_code=PROTOCOL_ERROR)
 
                 for fin in (0, 1):
-                    simple_test([{'opcode':0, 'fin': fin, 'payload':b'non-continuation frame'}, 'some text'], close_code=PROTOCOL_ERROR, send_close=False)
+                    isf_test([{'opcode':0, 'fin': fin, 'payload':b'non-continuation frame'}, 'some text'], close_code=PROTOCOL_ERROR, send_close=False)
 
-                simple_test([
+                isf_test([
                     {'opcode':TEXT, 'payload':fragments[0], 'fin':0}, {'opcode':CONTINUATION, 'payload':fragments[1]}, {'opcode':0, 'fin':0}
                 ], [''.join(fragments)], close_code=PROTOCOL_ERROR, send_close=False)
 
-                simple_test([
+                isf_test([
                     {'opcode':TEXT, 'payload':fragments[0], 'fin':0}, {'opcode':TEXT, 'payload':fragments[1]},
                 ], close_code=PROTOCOL_ERROR, send_close=False)
 
                 frags = []
                 for payload in (b'\xce\xba\xe1\xbd\xb9\xcf\x83\xce\xbc\xce\xb5', b'\xed\xa0\x80', b'\x80\x65\x64\x69\x74\x65\x64'):
                     frags.append({'opcode':(CONTINUATION if frags else TEXT), 'fin':1 if len(frags) == 2 else 0, 'payload':payload})
-                simple_test(frags, close_code=INCONSISTENT_DATA, send_close=False)
+                isf_test(frags, close_code=INCONSISTENT_DATA, send_close=False)
 
                 frags, q = [], b'\xce\xba\xe1\xbd\xb9\xcf\x83\xce\xbc\xce\xb5\xed\xa0\x80\x80\x65\x64\x69\x74\x65\x64'
                 for i, b in enumerate(q):
                     frags.append({'opcode':(TEXT if i == 0 else CONTINUATION), 'fin':1 if i == len(q)-1 else 0, 'payload':b})
-                simple_test(frags, close_code=INCONSISTENT_DATA, send_close=False)
+                isf_test(frags, close_code=INCONSISTENT_DATA, send_close=False, ignore_send_failures=True)
 
                 for q in (b'\xce', b'\xce\xba\xe1'):
-                    simple_test([{'opcode':TEXT, 'payload':q}], close_code=INCONSISTENT_DATA, send_close=False)
+                    isf_test([{'opcode':TEXT, 'payload':q}], close_code=INCONSISTENT_DATA, send_close=False)
 
             simple_test([
                 {'opcode':TEXT, 'payload':fragments[0], 'fin':0}, {'opcode':CONTINUATION, 'payload':fragments[1]}

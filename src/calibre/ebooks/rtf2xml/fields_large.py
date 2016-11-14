@@ -14,6 +14,7 @@ import sys, os
 from calibre.ebooks.rtf2xml import field_strings, copy
 from calibre.ptempfile import better_mktemp
 
+
 class FieldsLarge:
     """
 =========================
@@ -26,13 +27,20 @@ Make tags for fields.
 --------------
 Logic
 --------------
-1. As soon as a field is found, make a new text string by appending an empty text string to the field list. Collect all the lines in this string until the field instructions are found.
-2. Collect all the tokens and text in the field instructions. When the end of the field instructions is found, process the string of text with the field_strings module. Append the processed string to the field instructins list.
+1. As soon as a field is found, make a new text string by appending an empty
+text string to the field list. Collect all the lines in this string until the
+field instructions are found.
+2. Collect all the tokens and text in the field instructions. When the end of
+the field instructions is found, process the string of text with the
+field_strings module. Append the processed string to the field instructins
+list.
 3. Continue collecting tokens. Check for paragraphs or sections. If either is found, add to the paragraph or section list.
 4. Continue collecting tokens and text either the beginning of a new field is found, or the end of this field is found.
 5. If a new field is found, repeat steps 1-3.
 6. If the end of the field is found, process the last text string of the field list.
-7. If the field list is empty (after removing the last text string), there are no more fields. Print out the final string. If the list contains other strings, add the processed string to the last string in the field list.
+7. If the field list is empty (after removing the last text string), there are
+no more fields. Print out the final string. If the list contains other strings,
+add the processed string to the last string in the field list.
 ============================
 Examples
 ============================
@@ -81,11 +89,12 @@ Examples
         </paragraph-definition>
         </field-block>
     """
+
     def __init__(self,
             in_file,
             bug_handler,
-            copy = None,
-            run_level = 1,
+            copy=None,
+            run_level=1,
             ):
         """
         Required:
@@ -102,6 +111,7 @@ Examples
         self.__copy = copy
         self.__run_level = run_level
         self.__write_to = better_mktemp()
+
     def __initiate_values(self):
         """
         Initiate all values.
@@ -110,8 +120,8 @@ Examples
         self.__field_instruction_string = ''
         self.__marker = 'mi<mk<inline-fld\n'
         self.__state = 'before_body'
-        self.__string_obj = field_strings.FieldStrings(run_level = self.__run_level,
-                bug_handler= self.__bug_handler,)
+        self.__string_obj = field_strings.FieldStrings(run_level=self.__run_level,
+                bug_handler=self.__bug_handler,)
         self.__state_dict = {
         'before_body'       : self.__before_body_func,
         'in_body'           : self.__in_body_func,
@@ -127,14 +137,15 @@ Examples
         'cw<pf<par-end___'  : self.__par_in_field_func,
         'cw<sc<section___'  : self.__sec_in_field_func,
         }
-        self.__field_count = [] # keep track of the brackets
-        self.__field_instruction = [] # field instruction strings
+        self.__field_count = []  # keep track of the brackets
+        self.__field_instruction = []  # field instruction strings
         self.__symbol = 0   # wheter or not the field is really UTF-8
-                            # (these fields cannot be nested.)
-        self.__field_instruction_string = '' # string that collects field instruction
-        self.__par_in_field = [] # paragraphs in field?
-        self.__sec_in_field = [] # sections in field?
-        self.__field_string = [] # list of field strings
+        # (these fields cannot be nested.)
+        self.__field_instruction_string = ''  # string that collects field instruction
+        self.__par_in_field = []  # paragraphs in field?
+        self.__sec_in_field = []  # sections in field?
+        self.__field_string = []  # list of field strings
+
     def __before_body_func(self, line):
         """
         Requried:
@@ -148,6 +159,7 @@ Examples
         if self.__token_info == 'mi<mk<body-open_':
             self.__state = 'in_body'
         self.__write_obj.write(line)
+
     def __in_body_func(self, line):
         """
         Required:
@@ -161,6 +173,7 @@ Examples
         if action:
             action(line)
         self.__write_obj.write(line)
+
     def __found_field_func(self, line):
         """
         Requires:
@@ -178,6 +191,7 @@ Examples
         self.__field_count.append(ob_count)
         self.__sec_in_field.append(0)
         self.__par_in_field.append(0)
+
     def __in_field_func(self, line):
         """
         Requires:
@@ -198,6 +212,7 @@ Examples
                 action(line)
             else:
                 self.__field_string[-1] += line
+
     def __par_in_field_func(self, line):
         """
         Requires:
@@ -210,6 +225,7 @@ Examples
         """
         self.__field_string[-1] += line
         self.__par_in_field[-1] = 1
+
     def __sec_in_field_func(self, line):
         """
         Requires:
@@ -222,6 +238,7 @@ Examples
         """
         self.__field_string[-1] += line
         self.__sec_in_field[-1] = 1
+
     def __found_field_instruction_func(self, line):
         """
         Requires:
@@ -235,6 +252,7 @@ Examples
         self.__state = 'field_instruction'
         self.__field_instruction_count = self.__ob_count
         self.__cb_count = 0
+
     def __field_instruction_func(self, line):
         """
         Requires:
@@ -260,6 +278,7 @@ Examples
             self.__field_instruction_string = ''
         else:
             self.__field_instruction_string += line
+
     def __end_field_func(self):
         """
         Requires:
@@ -296,7 +315,7 @@ Examples
             'mi<mk<fldbk-end_\n' \
             'mi<tg<close_____<field-block\n'\
             'mi<mk<fld-bk-end\n' \
-            % ( instruction, inner_field_string)
+            % (instruction, inner_field_string)
         # write a marker to show an inline field for later parsing
         else:
             inner_field_string = \
@@ -314,9 +333,11 @@ Examples
         else:
             self.__field_string[-1] += inner_field_string
         self.__symbol = 0
+
     def __write_field_string(self, the_string):
         self.__state = 'in_body'
         self.__write_obj.write(the_string)
+
     def fix_fields(self):
         """
         Requires:
@@ -342,13 +363,13 @@ Examples
             if self.__token_info == 'cb<nu<clos-brack':
                 self.__cb_count = line[-5:-1]
             action = self.__state_dict.get(self.__state)
-            if action == None:
+            if action is None:
                 sys.stderr.write('no no matching state in module styles.py\n')
                 sys.stderr.write(self.__state + '\n')
             action(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "fields_large.data")
         copy_obj.rename(self.__write_to, self.__file)

@@ -25,6 +25,7 @@ from calibre.ebooks.unihandecode.pykakasi.j2h import J2H
 from calibre.ebooks.unihandecode.pykakasi.h2a import H2a
 from calibre.ebooks.unihandecode.pykakasi.k2a import K2a
 
+
 class kakasi(object):
 
     j2h = None
@@ -35,7 +36,6 @@ class kakasi(object):
         self.j2h = J2H()
         self.h2a = H2a()
         self.k2a = K2a()
-
 
     def do(self, text):
         otext =  ''

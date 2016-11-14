@@ -25,6 +25,8 @@ NAMESPACES = {
               'dc'   : 'http://purl.org/dc/terms',
               'gd'   : 'http://schemas.google.com/g/2005'
             }
+
+
 def get_details(browser, url, timeout):  # {{{
     try:
         raw = browser.open_novisit(url, timeout=timeout).read()
@@ -38,6 +40,7 @@ def get_details(browser, url, timeout):  # {{{
 
     return raw
 # }}}
+
 
 def to_metadata(browser, log, entry_, timeout):  # {{{
     from lxml import etree
@@ -153,6 +156,7 @@ def to_metadata(browser, log, entry_, timeout):  # {{{
     return mi
 # }}}
 
+
 class GoogleBooks(Source):
 
     name = 'Google'
@@ -165,19 +169,19 @@ class GoogleBooks(Source):
     supports_gzip_transfer_encoding = True
     cached_cover_url_is_reliable = False
 
-    GOOGLE_COVER = 'http://books.google.com/books?id=%s&printsec=frontcover&img=1'
+    GOOGLE_COVER = 'https://books.google.com/books?id=%s&printsec=frontcover&img=1'
 
     DUMMY_IMAGE_MD5 = frozenset(['0de4383ebad0adad5eeb8975cd796657'])
 
     def get_book_url(self, identifiers):  # {{{
         goog = identifiers.get('google', None)
         if goog is not None:
-            return ('google', goog, 'http://books.google.com/books?id=%s'%goog)
+            return ('google', goog, 'https://books.google.com/books?id=%s'%goog)
     # }}}
 
     def create_query(self, log, title=None, authors=None, identifiers={}):  # {{{
         from urllib import urlencode
-        BASE_URL = 'http://books.google.com/books/feeds/volumes?'
+        BASE_URL = 'https://books.google.com/books/feeds/volumes?'
         isbn = check_isbn(identifiers.get('isbn', None))
         q = ''
         if isbn is not None:
@@ -336,7 +340,7 @@ if __name__ == '__main__':  # tests {{{
                 {'identifiers':{'isbn': '0743273567'}, 'title':'Great Gatsby',
                     'authors':['Fitzgerald']},
                 [title_test('The great gatsby', exact=True),
-                    authors_test(['Francis Scott Fitzgerald'])]
+                    authors_test(['F. Scott Fitzgerald'])]
             ),
 
             (

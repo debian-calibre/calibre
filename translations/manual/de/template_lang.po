@@ -6,14 +6,14 @@
 # Armin Geller <armingeller@t-online.de>, 2015
 # Ettore Atalan <atalanttore@googlemail.com>, 2014
 # Sebastian Keller <Haggard@gmx.de>, 2015
-# Simon_Schuette <simonschuette@arcor.de>, 2015
+# Simon_Schuette <simonschuette@arcor.de>, 2015-2016
 # RiseT, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 17:16+0530\n"
-"PO-Revision-Date: 2016-05-20 03:51+0000\n"
+"POT-Creation-Date: 2016-09-16 07:34+0530\n"
+"PO-Revision-Date: 2016-09-16 02:05+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgid ""
 "will be the empty string (nothing); the prefix and suffix are ignored. The "
 "prefix and suffix can contain blanks. **Do not use subtemplates (`{ ... }`) "
 "or functions (see below) as the prefix or the suffix.**"
-msgstr "Wenn das Buch keine Serie hat, wird die Ausgabe ``- - Titel`` sein. Schöner ist, wenn man nur ``Titel`` bekommt, also ohne Trennstriche. Um diese Anzeige zu bekommen, benutzen Sie die erweiterte Syntax ``{field:|prefix_text|suffix_text}``. Mit dieser Syntax ist das Ergebnis ``prefix_textSERIESsuffix_text`` wenn das Feld den Wert SERIES hat. Wenn das Feld leer ist, wird kein Ergebnis angegeben (ein leerer String); Präfix und Suffix werden ignoriert. Sie können Leerzeichen enthalten. **Verwenden Sie keine Unter-Vorlagen (`{ … }`) oder Funktionen (mehr dazu weiter unten) als Präfix oder Suffix.** "
+msgstr "Falls das Buch keiner Serie angehört, wird die Antwort ``- - Titel`` sein. Viele Benutzer würden als Ergebnis einfach ``Titel`` bevorzugen, also ohne Bindestriche. Benutzen Sie hierfür die erweiterte Syntax ``{field:|prefix_text|suffix_text}``. Bei Verwendung dieser Syntax ist das Ergebnis ``prefix_textSERIESsuffix_text``, falls das Feld den Wert SERIES besitzt. Wenn das Feld keinen Wert beinhaltet, wird das Ergebnis die leere Zeichenkette sein (nichts); Präfix und Suffix werden ignoriert. Präfix und Suffix können Leerzeichen enthalten. **Verwenden Sie keine Untervorlagen (`{ … }`) oder Funktionen (siehe unten) als Präfix oder Suffix.** "
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:59
 msgid ""
@@ -180,7 +180,7 @@ msgid ""
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "Die Vorlagensprache von Calibre wurde aus Python heraus entwickelt. Um mehr über die Syntax dieser weiterführenden Formatierungsmöglichkeiten zu erfahren, können Sie in der `Python-Dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_ nachschlagen. "
+msgstr "Die Vorlagensprache von Calibre wurde aus Python heraus entwickelt. Um mehr über die Syntax dieser weiterführenden Formatierungsoperationen zu erfahren, schauen Sie sich die `Python-Dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_ an. "
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -1190,28 +1190,28 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid "To accomplish this, we:"
-msgstr ""
+msgstr "Um das zu erreichen:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:460
 msgid ""
-"Create a composite field (call it AA) containing ``{series}/{series_index} -"
-" {title'}``. If the series is not empty, then this template will produce "
-"`series/series_index - title`."
+"Create a composite field (give it lookup name #AA) containing "
+"``{series}/{series_index} - {title}``. If the series is not empty, then this"
+" template will produce `series/series_index - title`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:461
 msgid ""
-"Create a composite field (call it BB) containing "
+"Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid ""
-"Set the save template to ``{series:lookup(.,AA,BB)}``. This template chooses"
-" composite field AA if series is not empty, and composite field BB if series"
-" is empty. We therefore have two completely different save paths, depending "
-"on whether or not `series` is empty."
+"Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
+"chooses composite field #AA if series is not empty, and composite field #BB "
+"if series is empty. We therefore have two completely different save paths, "
+"depending on whether or not `series` is empty."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465

@@ -4,8 +4,9 @@
 
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-import unittest, functools, os, importlib
+import unittest, functools, os, importlib, zipfile
 from calibre.utils.monotonic import monotonic
+
 
 def no_endl(f):
     @functools.wraps(f)
@@ -18,6 +19,7 @@ def no_endl(f):
         finally:
             self.stream.writeln = orig
     return func
+
 
 class TestResult(unittest.TextTestResult):
 
@@ -51,16 +53,28 @@ class TestResult(unittest.TextTestResult):
             if len(slowest) > 1:
                 self.stream.writeln('\nSlowest tests: %s' % ' '.join(slowest))
 
+
 def find_tests_in_dir(path, excludes=('main.py',)):
-    d = os.path.dirname
-    base = d(d(d(os.path.abspath(__file__))))
-    package = os.path.relpath(path, base).replace(os.sep, '/').replace('/', '.')
+    if not os.path.exists(path) and '.zip' in path:
+        idx = path.rfind('.zip')
+        zf = path[:idx+4]
+        prefix = os.path.relpath(path, zf).replace(os.sep, '/')
+        package = prefix.replace('/', '.')
+        with zipfile.ZipFile(zf) as f:
+            namelist = f.namelist()
+        items = [i for i in namelist if i.startswith(prefix) and i.count('/') == prefix.count('/') + 1]
+    else:
+        d = os.path.dirname
+        base = d(d(d(os.path.abspath(__file__))))
+        package = os.path.relpath(path, base).replace(os.sep, '/').replace('/', '.')
+        items = os.listdir(path)
     suits = []
-    for x in os.listdir(path):
+    for x in items:
         if x.endswith('.py') and x not in excludes:
             m = importlib.import_module(package + '.' + x.partition('.')[0])
             suits.append(unittest.defaultTestLoader.loadTestsFromModule(m))
     return unittest.TestSuite(suits)
+
 
 def itertests(suite):
     stack = [suite]
@@ -74,18 +88,23 @@ def itertests(suite):
                 raise Exception('Failed to import a test module: %s' % test)
             yield test
 
+
 def init_env():
     from calibre.utils.config_base import reset_tweaks_to_default
     from calibre.ebooks.metadata.book.base import reset_field_metadata
     reset_tweaks_to_default()
     reset_field_metadata()
 
+
 def filter_tests(suite, test_ok):
     ans = unittest.TestSuite()
+    added = set()
     for test in itertests(suite):
-        if test_ok(test):
+        if test_ok(test) and test not in added:
             ans.addTest(test)
+            added.add(test)
     return ans
+
 
 def filter_tests_by_name(suite, *names):
     names = {x if x.startswith('test_') else 'test_' + x for x in names}
@@ -94,12 +113,15 @@ def filter_tests_by_name(suite, *names):
         return test._testMethodName in names
     return filter_tests(suite, q)
 
+
 def filter_tests_by_module(suite, *names):
     names = frozenset(names)
+
     def q(test):
         m = test.__class__.__module__.rpartition('.')[-1]
         return m in names
     return filter_tests(suite, q)
+
 
 def run_tests(find_tests, verbosity=4):
     import argparse
@@ -116,6 +138,7 @@ def run_tests(find_tests, verbosity=4):
         if not tests._tests:
             raise SystemExit('No test named %s found' % args.name)
     run_cli(tests, verbosity)
+
 
 def run_cli(suite, verbosity=4):
     r = unittest.TextTestRunner

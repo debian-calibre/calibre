@@ -9,11 +9,12 @@ import copy, sys
 
 from PyQt5.Qt import Qt, QTableWidgetItem, QIcon
 
-from calibre.gui2 import gprefs
+from calibre.gui2 import gprefs, Application
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget
 from calibre.gui2.preferences.columns_ui import Ui_Form
 from calibre.gui2.preferences.create_custom_column import CreateCustomColumn
 from calibre.gui2 import error_dialog, question_dialog, ALL_COLUMNS
+
 
 class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
@@ -92,7 +93,11 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             self.setup_row(self.field_metadata, row, col)
 
         self.restore_geometry()
+        self.opt_columns.cellDoubleClicked.connect(self.row_double_clicked)
         self.opt_columns.blockSignals(False)
+
+    def row_double_clicked(self, r, c):
+        self.edit_custcol()
 
     def restore_geometry(self):
         geom = gprefs.get('custcol-prefs-table-geometry', None)
@@ -110,7 +115,10 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.opt_columns.resizeRowsToContents()
 
     def setup_row(self, field_metadata, row, col, oldkey=None):
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+
         item = QTableWidgetItem(col)
+        item.setFlags(flags)
         self.opt_columns.setItem(row, 1, item)
 
         if col.startswith('#'):
@@ -133,20 +141,23 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 coltype = self.column_desc[dt]
         coltype_info = (coltype if oldkey is None else
                           ' ' + _('(lookup name was {0}) {1}'.format(oldkey, coltype)))
+
         item = QTableWidgetItem(coltype_info)
+        item.setFlags(flags)
         self.opt_columns.setItem(row, 2, item)
 
         desc = fm['display'].get('description', "")
         item = QTableWidgetItem(desc)
+        item.setFlags(flags)
         self.opt_columns.setItem(row, 3, item)
 
         item = QTableWidgetItem(fm['name'])
         item.setData(Qt.UserRole, (col))
+        item.setFlags(flags)
         self.opt_columns.setItem(row, 0, item)
 
         if col.startswith('#'):
             item.setData(Qt.DecorationRole, (QIcon(I('column.png'))))
-        flags = Qt.ItemIsEnabled|Qt.ItemIsSelectable
         if col != 'ondevice':
             flags |= Qt.ItemIsUserCheckable
         item.setFlags(flags)
@@ -235,6 +246,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         hidden_cols = list(hidden_cols.intersection(set(model.column_map)))
         if 'ondevice' in hidden_cols:
             hidden_cols.remove('ondevice')
+
         def col_pos(x, y):
             xidx = config_cols.index(x) if x in config_cols else sys.maxint
             yidx = config_cols.index(y) if y in config_cols else sys.maxint
@@ -271,6 +283,5 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
 
 if __name__ == '__main__':
-    from PyQt5.Qt import QApplication
-    app = QApplication([])
+    app = Application([])
     test_widget('Interface', 'Custom Columns')

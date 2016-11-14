@@ -10,6 +10,7 @@ import sys, os
 
 from lxml import etree
 
+
 class Font(object):
 
     def __init__(self, spec):
@@ -17,6 +18,7 @@ class Font(object):
         self.size = float(spec.get('size'))
         self.color = spec.get('color')
         self.family = spec.get('family')
+
 
 class Element(object):
 
@@ -29,6 +31,7 @@ class Element(object):
 
     def __hash__(self):
         return hash(self.id)
+
 
 class Image(Element):
 
@@ -99,6 +102,7 @@ class Text(Element):
         f.write(self.to_html().encode('utf-8'))
         f.write('\n')
 
+
 class FontSizeStats(dict):
 
     def __init__(self, stats):
@@ -109,6 +113,7 @@ class FontSizeStats(dict):
             if chars >= self.chars_at_most_common_size:
                 self.most_common_size, self.chars_at_most_common_size = sz, chars
             self[sz] = chars/total
+
 
 class Interval(object):
 
@@ -135,12 +140,12 @@ class Interval(object):
     def __hash__(self):
         return hash('(%f,%f)'%self.left, self.right)
 
+
 class Column(object):
 
     # A column contains an element is the element bulges out to
     # the left or the right by at most HFUZZ*col width.
     HFUZZ = 0.2
-
 
     def __init__(self):
         self.left = self.right = self.top = self.bottom = 0
@@ -149,12 +154,14 @@ class Column(object):
         self.average_line_separation = 0
 
     def add(self, elem):
-        if elem in self.elements: return
+        if elem in self.elements:
+            return
         self.elements.append(elem)
         self._post_add()
 
     def prepend(self, elem):
-        if elem in self.elements: return
+        if elem in self.elements:
+            return
         self.elements.insert(0, elem)
         self._post_add()
 
@@ -219,6 +226,7 @@ class Box(list):
                 ans.append(elem.to_html()+' ')
         ans.append('</%s>'%self.tag)
         return ans
+
 
 class ImageBox(Box):
 
@@ -312,7 +320,6 @@ class Region(object):
                             idx)
                 col.add(elem)
 
-
     def collect_stats(self):
         for column in self.columns:
             column.collect_stats()
@@ -398,7 +405,6 @@ class Region(object):
                 self.boxes[-1].append(elem)
 
 
-
 class Page(object):
 
     # Fraction of a character width that two strings have to be apart,
@@ -412,7 +418,6 @@ class Page(object):
     # Multiplies the average line height when determining row height
     # of a particular element to detect columns.
     YFUZZ = 1.5
-
 
     def __init__(self, page, font_map, opts, log, idc):
         self.opts, self.log = opts, log
@@ -461,7 +466,7 @@ class Page(object):
                 if t is not frag and hdelta > -hoverlap and \
                     hdelta < hoverlap and \
                     abs(t.bottom - frag.bottom) < self.LINE_FACTOR*frag.height:
-                        return t
+                    return t
 
         match_found = True
         while match_found:
@@ -485,7 +490,8 @@ class Page(object):
         current_region = Region(self.opts, self.log)
         processed = set([])
         for x in self.elements:
-            if x in processed: continue
+            if x in processed:
+                continue
             elems = set(self.find_elements_in_row_of(x))
             columns = self.sort_into_columns(x, elems)
             processed.update(elems)
@@ -561,8 +567,8 @@ class Page(object):
                                        len(self.regions[prev_region].columns)) \
                                > abs(avg_column_count -
                                        len(self.regions[next_region].columns)):
-                                   absorb_into = next_region
-                                   absorb_at = 'top'
+                                absorb_into = next_region
+                                absorb_at = 'top'
                     if absorb_into is not None:
                         self.regions[absorb_into].absorb_regions(regions, absorb_at)
                         absorbed.update(regions)
@@ -677,7 +683,6 @@ class PDFDocument(object):
                         self.elements.append(block)
                     last_block = block
                 last_region = region
-
 
     def render(self):
         html = ['<?xml version="1.0" encoding="UTF-8"?>',

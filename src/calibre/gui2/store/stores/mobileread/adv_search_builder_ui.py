@@ -173,7 +173,7 @@ class Ui_Dialog(object):
         self.label_3.setText(_("&One or more of these words:"))
         self.groupBox_2.setTitle(_("But don\'t show entries that have..."))
         self.label_4.setText(_("Any of these &unwanted words:"))
-        self.label_6.setText(_("See the <a href=\"https://calibre-ebook.com/user_manual/gui.html#the-search-interface\">User Manual</a> for more help"))
+        self.label_6.setText(_("See the <a href=\"https://manual.calibre-ebook.com/gui.html#the-search-interface\">User Manual</a> for more help"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("A&dvanced Search"))
         self.label_7.setText(_("&Title:"))
         self.title_box.setToolTip(_("Enter the title."))

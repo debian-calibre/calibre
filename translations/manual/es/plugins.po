@@ -4,15 +4,25 @@
 # 
 # Translators:
 # Adrián López Galera <adrian_201@hotmail.es>, 2015
+# Alberto Díaz Tormo <albertodiaztormo@gmail.com>, 2016
+# Alberto Díaz Tormo <albertodiaztormo@gmail.com>, 2016
 # Angelica Bravo <dra.noika@gmail.com>, 2016
+# Antonio Mireles <antonio@mirelesindependent.com>, 2016
+# Danny Marfil <dannymarfil@gmail.com>, 2016
 # dario hereñu <magallania@gmail.com>, 2014-2015
 # Fernando Salazar, 2016
+# Jaime Marquínez Ferrándiz, 2016
 # Jellby <jellby@yahoo.com>, 2014-2016
 # j <jcn363@ikasle.aeg.es>, 2015
 # Jose11091 <josemanuellh@gmail.com>, 2015
 # Juana Perez Yanez <juanaperezyanez@gmail.com>, 2016
+# Manuel Cervini <xermanu@gmail.com>, 2016
+# Mario Pozzo <camboris@gmail.com>, 2016
+# Mario Undurraga <mario.undurraga1509@gmail.com>, 2016
 # Marta Aulet <mauletsdm@gmail.com>, 2015
+# Nicolás Manzur <nicomanzur@gmail.com>, 2016
 # Qualified Projects <drako.cjs@gmail.com>, 2015
+# Máquinas de chapas, 2016
 # Rocío Gutiérrez <rogutimtorre@gmail.com>, 2016
 # Scarlet Tobar <skrlet13@hotmail.com>, 2016
 # Sheila Rodriguez <shei.baqueiro@gmail.com>, 2016
@@ -21,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 09:56+0530\n"
-"PO-Revision-Date: 2016-06-18 07:23+0000\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-29 15:43+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +49,7 @@ msgstr "Documentación de la API para complementos"
 msgid ""
 "Defines various abstract base classes that can be subclassed to create "
 "powerful plugins. The useful classes are:"
-msgstr "Define varias clases de base abstractas que pueden usarse para crear potentes complementos como subclase. Las clases útiles son:"
+msgstr "Define varias clases abstractas de base que pueden usarse para crear potentes complementos como subclase. Las clases útiles son:"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:19
 msgid "Plugin"
@@ -48,7 +58,7 @@ msgstr "Complemento"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:1
 msgid "A calibre plugin. Useful members include:"
-msgstr "Un complemento calibre. Miembros útiles:"
+msgstr "Un complemento de calibre. Los miembros útiles incluyen:"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
@@ -260,7 +270,7 @@ msgid ""
 "Return a string giving help on how to customize this plugin. By default "
 "raise a :class:`NotImplementedError`, which indicates that the plugin does "
 "not require customization."
-msgstr "Devuelve una cadena que ofrece ayuda sobre como personalizar este complemento. Por defecto, lanza el error :class:`NotImplementedError`, que indica que el complemento no necesita personalización."
+msgstr "Devuelve un texto que ofrece ayuda sobre cómo personalizar este complemento. De manera predeterminada, genera el error :class:`NotImplementedError`, que indica que el complemento no necesita personalización."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:5
@@ -343,7 +353,7 @@ msgstr "Un complemento asociado con un determinado conjunto de tipos de archivo.
 msgid ""
 "Set of file types for which this plugin should be run. For example: "
 "``{'lit', 'mobi', 'prc'}``"
-msgstr "Conjunto de tipos de archivo para que este complemento se ejecute, Por ejemplo: ``{'lit', 'mobi', 'prc'}``"
+msgstr "Conjunto de tipos de archivo para que este complemento debe ejecutarse. Por ejemplo: ``{'lit', 'mobi', 'prc'}``"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.on_import:1
@@ -367,7 +377,7 @@ msgstr "Si es True, este complemento se ejecuta justo antes de una conversión"
 msgid ""
 "If True, this plugin is run after conversion on the final file produced by "
 "the conversion output plugin."
-msgstr "Si es True, este plugin se ejecuta después de la conversión en el archivo final producido por el plugin de salida de conversión."
+msgstr "Si es True, este complemento se ejecuta después de la conversión sobre el archivo final producido por el complemento de salida de conversión."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
@@ -378,7 +388,7 @@ msgid ""
 " the path to the original ebook. If an error is encountered it should raise "
 "an Exception. The default implementation simply return the path to the "
 "original ebook."
-msgstr "Ejecute el plugin. Debe ser implementado en las subclases. Debe realizar las modificaciones que se requieren en el ebook y devolver la ruta absoluta al libro electrónico modificado. Si no se necesitan modificaciones, debe devolver la ruta de acceso al libro electrónico originales. Si se encuentra un error que debería lanzar una excepción. La implementación por defecto, simplemente devuelva la ruta de acceso al libro electrónico originales."
+msgstr "Ejecutar el complemento. Debe implementarse en subclases. Debe realizar cualquier modificación necesaria sobre el libro y devolver la ruta absoluta al libro modificado. Si no se necesita ninguna modificación, debe devolver la ruta de acceso al libro original. Si ocurre un error, debe generar una excepción. La implementación predeterminada simplemente devuelve la ruta de acceso al libro original."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:9
@@ -533,7 +543,7 @@ msgstr "Ejecutar el complemento. Debe implementarse en subclases. Debe generar e
 msgid ""
 "The generated catalog file should be created with the :meth:`temporary_file`"
 " method."
-msgstr "El archivo del catálogo generado debe ser creado con el método  :meth:`temporary_file`."
+msgstr "El archivo del catálogo generado debe crearse con el método :meth:`temporary_file`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:10
@@ -559,7 +569,7 @@ msgstr "Complementos de descarga de metadatos"
 msgid ""
 "Set of capabilities supported by this plugin. Useful capabilities are: "
 "'identify', 'cover'"
-msgstr "Conjunto de capacidades ofrecidas por este complemento. Entre ellas:  'identidd', 'cubierta'"
+msgstr "Conjunto de capacidades ofrecidas por este complemento. Algunas capacidades útiles son: 'identify', 'cover'"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.touched_fields:1
@@ -677,7 +687,7 @@ msgid ""
 "to easily visit the books page at this source. If no URL is found, return "
 "None. This method must be quick, and consistent, so only implement it if it "
 "is possible to construct the URL from a known scheme given identifiers."
-msgstr ""
+msgstr "Devuelve una 3-tupla o None. La 3-tupla es de la forma: (tipo_identificador, valor_identificador, URL). ``URL`` es el URL del libro identificado por los identificadores en este origen. ``tipo_identificador`` y ``valor_identificador`` especifican el identificador correspondiente al URL. Este URL debe ser accesible a un humano por medio de un navegador. El propósito es proporcionar un enlace que el usuario pueda pulsar para visitar la página del libro en este origen. Si no se encuentra ningún URL, devuelve None. Este método debe ser rápido y coherente, por lo que sólo debe implementarlo si es posible construir el URL mediante un esquema conocido dado ``identifiers``."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_url_name:1
@@ -697,14 +707,14 @@ msgstr "Reemplace este método si desea devolver varios URL para este libro. Dev
 msgid ""
 "Return cached cover URL for the book identified by the identifiers dict or "
 "None if no such URL exists."
-msgstr ""
+msgstr "Devuelve el URL de portada en caché para el libro identificado por el diccionario ``identifiers`` o None si no existe el URL."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4
 msgid ""
 "Note that this method must only return validated URLs, i.e. not URLS that "
 "could result in a generic cover image or a not found error."
-msgstr "Observe que este método solo debe suministrar URLs validadas, es decir, URLs que no puedan resultar en una imagen genérica de portada o en un error no encontrado."
+msgstr "Tenga en cuenta que este método sólo debe devolver URL validados, es decir no URL que puedan resultar en una imagen de portada genérica o un error."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:1
@@ -712,7 +722,7 @@ msgid ""
 "Return a function that is used to generate a key that can sort Metadata "
 "objects by their relevance given a search query (title, authors, "
 "identifiers)."
-msgstr ""
+msgstr "Devuelve una función empleada para generar una clave que pueda ordenar objetos de tipo :class:`Metadata` por su relevancia dada una consulta de búsqueda (``title``, ``authors``, ``identifiers``)."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:5
@@ -725,7 +735,7 @@ msgid ""
 "For details on the default algorithm see "
 ":class:`InternalMetadataCompareKeyGen`. Re-implement this function in your "
 "plugin if the default algorithm is not suitable."
-msgstr "Para detalles sobre el algoritmo por defecto vea :class:`InternalMetadataCompareKeyGen`. Implemente de nuevo esta función en su complemento si el algoritmo por defecto no es el adecuado."
+msgstr "Para detalles sobre el algoritmo predeterminado ver :class:`InternalMetadataCompareKeyGen`. Implemente de nuevo esta función en el complemento si el algoritmo predeterminado no es el adecuado."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:1
@@ -739,7 +749,7 @@ msgid ""
 "source does not store all related identifiers (for example, all ISBNs of a "
 "book), this method should retry with just the title and author (assuming "
 "they were specified)."
-msgstr "Si los identificador(es) son especificados y no se encontraron coincidencias y este recurso de metadata no almacena todos los identificadores relacionados (por ejemplo, todos los ISNBs de un libro), este método debe reintentar con solo el titulo y autor (asumiendo que fueron especificados)."
+msgstr "Si se especifica ``identifiers`` y no se encuentran coincidencias y este origen de metadatos no almacena todos los identificadores relacionados (por ejemplo, todos los ISBN de un libro), este método debe volver a intentarlo con sólo el título y el autor (si se especificaron)."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:8
@@ -748,7 +758,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Si este recurso de metadata también provee cubiertas, la URL para la cubierta debe ser almacenada en la memoria caché para que así, una llamada subsecuente para obtener cubiertas API con la misma ISNB/identificador especial no necesite la URL de la cubierta de nuevo. Use el almacenamiento de API para esto."
+msgstr "Si este origen de metadatos también proporciona portadas, el URL de la portada debe almacenarse en caché para que ejecuciones posteriores a la API para obtener portadas con el mismo ISBN o identificador especial no tenga que volver a obtener el URL de portada. Usar la API de caché para esto."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -758,14 +768,14 @@ msgid ""
 "which the results were returned by the metadata source for this query. This "
 "integer will be used by :meth:`compare_identify_results`. If the order is "
 "unimportant, set it to zero for every result."
-msgstr ""
+msgstr "Cada objeto :class:`Metadata` puesto en ``result_queue`` por este método debe tener un atributo attr:`source_relevance` que es un entero que indica el orden en que el origen de metadatos devuelve los resultados para esta búsqueda. Este entero se usará por :meth:`compare_identify_results`. Si el orden no es importante, póngalo a cero para todos los resultados."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:19
 msgid ""
 "Make sure that any cover/isbn mapping information is cached before the "
 "Metadata object is put into result_queue."
-msgstr "Asegúrese de que cualquier mapa de información cubierta/isnb se almacene antes de que el objeto Metadata sea puesto en la cola de resultados."
+msgstr "Asegúrese de que cualquier información de correspondencia de portada o ISBN está en caché antes de que el objeto :class:`Metadata` sea puesto en `result_queue`."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:22
@@ -777,14 +787,14 @@ msgstr "Un objeto de registro, úselo para obtener errores e información de dep
 msgid ""
 "A result Queue, results should be put into it. Each result is a Metadata "
 "object"
-msgstr ""
+msgstr "Un objeto :class:`Queue` resultante, los resultados deben ser puestos en él. Cada resultado es un objeto :class:`Metadata`."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:25
 msgid ""
 "If abort.is_set() returns True, abort further processing and return as soon "
 "as possible"
-msgstr ""
+msgstr "Si :meth:`abort.is_set()` devuelve True, interrumpir el proceso y volver tan pronto como sea posible"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:27
@@ -805,14 +815,14 @@ msgstr "Un diccionario de otros identificadores, principalmente {'isbn':'1234...
 #: of calibre.ebooks.metadata.sources.base.Source.identify:31
 msgid ""
 "Timeout in seconds, no network request should hang for longer than timeout."
-msgstr ""
+msgstr "Tiempo de espera en segundos, ninguna petición de red debería esperar más de este tiempo."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:33
 msgid ""
 "None if no errors occurred, otherwise a unicode representation of the error "
 "suitable for showing to the user"
-msgstr ""
+msgstr "None si no hubo ningún error, en caso contrario una representación unicode del error que pueda mostrarse al usuario"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:1
@@ -820,7 +830,7 @@ msgid ""
 "Download a cover and put it into result_queue. The parameters all have the "
 "same meaning as for :meth:`identify`. Put (self, cover_data) into "
 "result_queue."
-msgstr ""
+msgstr "Descargar una portada y poner el resultado en ``result_queue``. Todos los parámetros tienen el mismo significado que para :meth:`identify`. Poner (``self``, ``cover_data``) en ``result_queue``.\n\nDescargar una cubierta y ponerla en result_queue. Todos los parámetros  tienen el mismo significado para :meth:`identify`. Ponga (self, cover_data) en result_queue."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:5
@@ -828,14 +838,14 @@ msgid ""
 "This method should use cached cover URLs for efficiency whenever possible. "
 "When cached data is not present, most plugins simply call identify and use "
 "its results."
-msgstr ""
+msgstr "Este metodo de usar los URL de portada en caché siempre que sea posible. Cuando no se encuentran los datos en caché, la mayoría de los complementos ejecutan :meth:`identify` y usan sus resultados."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:9
 msgid ""
 "If the parameter get_best_cover is True and this plugin can get multiple "
 "covers, it should only get the \"best\" one."
-msgstr ""
+msgstr "Si el parámetro ``get_best_cover`` es True y este complemento puede obtener múltiples portadas, esto debería obtener sólo la «mejor»."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:1
@@ -843,14 +853,14 @@ msgid ""
 "Generate a sort key for comparison of the relevance of Metadata objects, "
 "given a search query. This is used only to compare results from the same "
 "metadata source, not across different sources."
-msgstr ""
+msgstr "Generar una clave de orden para comparar la relevancia de los objetos :class:`Metadata`, dada una consulta de búsqueda. Esto se usa sólo para comparar resultados del mismo origen de metadatos, no entre distintos orígenes."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:5
 msgid ""
 "The sort key ensures that an ascending order sort is a sort by order of "
 "decreasing relevance."
-msgstr ""
+msgstr "La clave de orden garantiza que el orden ascendente corresponde a un orden descendiente de relevancia."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:8
@@ -866,12 +876,12 @@ msgstr "Dar prioridad a los resultados que tienen al menos un identificador igua
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:11
 msgid "Prefer results with a cached cover URL"
-msgstr ""
+msgstr "Preferir resultados con un URL de portada en caché"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:12
 msgid "Prefer results with all available fields filled in"
-msgstr ""
+msgstr "Preferir resultados con todos los campos disponibles rellenos"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:13
@@ -882,18 +892,18 @@ msgstr "Dar prioridad a los resultados en el mismo idioma que la interfaz de usu
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:14
 msgid "Prefer results that are an exact title match to the query"
-msgstr ""
+msgstr "Preferir resultados con una coincidencia de título perfecto con la consulta"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:15
 msgid "Prefer results with longer comments (greater than 10% longer)"
-msgstr ""
+msgstr "Preferir resultados con comentarios más largos (diferencia mayor del 10%)"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:16
 msgid ""
 "Use the relevance of the result as reported by the metadata source's search"
-msgstr ""
+msgstr "Usar la relevancia del resultado según la indice la búsqueda del origen de metadatos"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:17
@@ -910,14 +920,14 @@ msgid ""
 "InputFormatPlugins are responsible for converting a document into "
 "HTML+OPF+CSS+etc. The results of the conversion *must* be encoded in UTF-8. "
 "The main action happens in :meth:`convert`."
-msgstr ""
+msgstr "Los complementos :class:`InputFormatPlugin` son los responsables de convertir un documento a HTML+OPF+CSS+etc. Los resultados de la conversión *deben* estar codificados en UTF-8. La acción principal ocurre en :meth:`convert`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.file_types:1
 msgid ""
 "Set of file types for which this plugin should be run For example: "
 "``set(['azw', 'mobi', 'prc'])``"
-msgstr ""
+msgstr "Conjunto de tipos de archivo para los que este complemento debe ejecutarse. Por ejemplo: ``set(['asw', 'mobi', 'prc'])``"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.is_image_collection:1
@@ -927,28 +937,28 @@ msgid ""
 "can be both image collections and non-image collections. If you set this to "
 "True, you must implement the get_images() method that returns a list of "
 "images."
-msgstr ""
+msgstr "Si es True, este complemento de entrada genera una colección de imágenes, una por archivo HTML. Esto puede ser establecido dinámicamente en el método :meth:`convert` si los archivos de entrada pueden ser o no colecciones de imágenes. Si lo establece en True, debe implementar el método :meth:`get_images()` que devuelve una lista de imágenes."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.core_usage:1
 msgid ""
 "Number of CPU cores used by this plugin A value of -1 means that it uses all"
 " available cores"
-msgstr "Número de núcleos de CPU utilizados por este complemento. Un valor  de -1 significa que utiliza todos los núcleos disponibles"
+msgstr "Número de núcleos de CPU utilizados por este complemento. Un valor de -1 significa que utiliza todos los núcleos disponibles"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.for_viewer:1
 msgid ""
 "If set to True, the input plugin will perform special processing to make its"
 " output suitable for viewing"
-msgstr ""
+msgstr "Si es True, el complemento de entrada realizará un procesado especial para que la salida sea adecuada para visualización"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.output_encoding:1
 msgid ""
 "The encoding that this input plugin creates files in. A value of None means "
 "that the encoding is undefined and must be detected individually"
-msgstr ""
+msgstr "La codificación de los archivos que crea el complemento de entrada. Un valor de None significa que la codificación no está definida y debe detectarse individualmente"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.common_options:1
@@ -958,7 +968,7 @@ msgid ""
 "Options shared by all Input format plugins. Do not override in sub-classes. "
 "Use :attr:`options` instead. Every option must be an instance of "
 ":class:`OptionRecommendation`."
-msgstr ""
+msgstr "Opciones compartidas por todos los complementos de formato de entrada. No reemplazar en subclases. Usar :attr:`options` en su lugar. Toda opción debe ser un ejemplar de :class:`OptionRecommendation`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.options:1
@@ -967,7 +977,7 @@ msgstr ""
 msgid ""
 "Options to customize the behavior of this plugin. Every option must be an "
 "instance of :class:`OptionRecommendation`."
-msgstr ""
+msgstr "Opciones para personalizar el comportamiento de este complemento. Toda opción debe ser un ejemplar de :class:`OptionRecommendation`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.recommendations:1
@@ -984,7 +994,7 @@ msgid ""
 "Return a list of absolute paths to the images, if this input plugin "
 "represents an image collection. The list of images is in the same order as "
 "the spine and the TOC."
-msgstr ""
+msgstr "Devuelve una lista de rutas absolutas a las imágenes, si este complemento representa una colección de imágenes. La lista de imágenes está en el mismo orden que el lomo y el índice."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:1
@@ -994,7 +1004,7 @@ msgid ""
 "contained in the current directory. If this plugin creates files outside the"
 " current directory they must be deleted/marked for deletion before this "
 "method returns."
-msgstr "Este método debe ser implementado en sub-clases. Debe volver la ruta al archivo OPF creado o una :class: instancia 'OEBBook'. Todas las salidas deberían ser contenidas en el directorio actual. Si este plugin crea archivos fuera del directorio actual estos deben ser eliminados/marcados para su eliminación antes que este método regrese."
+msgstr "Este método debe ser implementado en subclases. Debe volver la ruta al archivo OPF creado o un ejemplar :class:`OEBBook`. Toda la salida debe estar contenida en el directorio actual. Si este complemento crea archivos fuera del directorio actual, deben ser eliminados o marcados para su eliminación antes de que termine este método."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:8
@@ -1010,14 +1020,14 @@ msgid ""
 "Higher numbers mean be more verbose. Another useful attribute is "
 "``input_profile`` that is an instance of "
 ":class:`calibre.customize.profiles.InputProfile`."
-msgstr ""
+msgstr "Opciones para personalizar el proceso de conversión. Debe tener atributos correspondientes a todas las opciones declaradas por este complemento. Además, debe haber un atributo ``verbose`` que toma valores enteros a partir de cero. Valores mayores significan más detalles. Otro atributo útil es ``input_profile``, que es un ejemplar de :class:`calibre.customize.profiles.InputProfile`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:17
 msgid ""
 "The extension (without the .) of the input file. It is guaranteed to be one "
 "of the `file_types` supported by this plugin."
-msgstr ""
+msgstr "La extensión (sin el «.») del archivo de entrada. Debe ser uno de los ``file_types`` admitidos por este complemento."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:20
@@ -1031,14 +1041,14 @@ msgstr "Un objeto :class:`calibre.utils.logging.Log`. Toda salida debería usar 
 msgid ""
 "A dictionary of various information that the input plugin can get easily "
 "that would speed up the subsequent stages of the conversion."
-msgstr ""
+msgstr "Un diccionario con diversa información que el complemento de entrada puede obtener fácilmente y que acelerará las etapas posteriores de la conversión."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.postprocess_book:1
 msgid ""
 "Called to allow the input plugin to perform postprocessing after the book "
 "has been parsed."
-msgstr ""
+msgstr "Se ejecuta para permitir que el complemento de entrada lleve a cabo el posprocesado del libro después del procesado principal."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.specialize:1
@@ -1046,7 +1056,7 @@ msgid ""
 "Called to allow the input plugin to specialize the parsed book for a "
 "particular output format. Called after postprocess_book and before any "
 "transforms are performed on the parsed book."
-msgstr ""
+msgstr "Se ejecuta para permitir que el complemento de entrada especialice el libro analizado para un formato de salida particular. Se ejecuta después de :meth:`postprocess_book` y antes de que se realice cualquier transformación sobre el libro analizado."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of
@@ -1062,20 +1072,20 @@ msgstr "Ejecutado para crear el widget que se usa para configurar este complemen
 msgid ""
 "OutputFormatPlugins are responsible for converting an OEB document "
 "(OPF+HTML) into an output ebook."
-msgstr ""
+msgstr "Los complementos :OutputFormatPlugin: son los responsables de convertir un documento OEB (OPF+HTML) en un libro de salida."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin:4
 msgid ""
 "The OEB document can be assumed to be encoded in UTF-8. The main action "
 "happens in :meth:`convert`."
-msgstr ""
+msgstr "El documento OEB puede suponerse codificado en UTF-8. La acción principal ocurre en :meth:`convert`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.file_type:1
 msgid ""
 "The file type (extension without leading period) that this plugin outputs"
-msgstr "El tipo de archivo (extensión sin punto inicial) que este complemento produce"
+msgstr "El tipo de archivo (extensión sin punto inicial) que produce este complemento"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:1
@@ -1091,13 +1101,13 @@ msgid ""
 " directory that may or may not exist. The output plugin should write its "
 "output into that directory. If it is a file like object, the output plugin "
 "should write its output into the file."
-msgstr ""
+msgstr "Un objeto de tipo archivo o un texto. Si es un texto es la ruta a un directorio que puede existir o no. El complemento de salida debe escribir su resultado en este directorio. Si es un objeto de tipo archivo, el complemento de salida debe escribir su resultado en el archivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:8
 msgid ""
 "The input plugin that was used at the beginning of the conversion pipeline."
-msgstr ""
+msgstr "El archivo de entrada que se usó al inicio del proceso de conversión."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:10
@@ -1109,7 +1119,7 @@ msgstr "Opciones de conversión. Es seguro que tiene atributos correspondientes 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:12
 msgid "The logger. Print debug/info messages etc. using this."
-msgstr ""
+msgstr "El registrador. Escribir mensajes de depuración, información, etc. usando este objeto."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of
@@ -1130,7 +1140,7 @@ msgstr "El elemento (archivo HTML) que se está procesando."
 msgid ""
 "A Stylizer object containing the flattened styles for item. You can get the "
 "style for any element by stylizer.style(element)."
-msgstr ""
+msgstr "Un objeto de tipo :class:`Stylizer` que contiene los estilos aplanados para ``item``. Puede obtener el estilo para cualquier elemento con ``stylizer.style(elemento)`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of
@@ -1139,7 +1149,7 @@ msgid ""
 "Called to create the widget used for configuring this plugin in the calibre "
 "GUI. The widget must be an instance of the PluginWidget class. See the "
 "builtin output plugins for examples."
-msgstr ""
+msgstr "Ejecutado para crear el widget que se usa para configurar este complemento en la interfaz de calibre. El widget debe ser un objeto de la clase PluginWidget. Puede ver ejemplos en los complementos de salida incorporados."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:91
 msgid "Device Drivers"
@@ -1151,14 +1161,14 @@ msgid ""
 "your device exposes itself as a USBMS drive to the operating system, you "
 "should use the USBMS class instead as it implements all the logic needed to "
 "support these kinds of devices."
-msgstr ""
+msgstr "La clase base para todos los controladores de dispositivo es :class:`DevicePlugin`. Sin embargo, si el dispositivo se muestra como una unidad USBMS ante el sistema operativo, debe usar la clase :class:`USBMS` en su lugar, pues implementa toda la lógica necesaria para este tipo de dispositivos."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin:1
 msgid ""
 "Defines the interface that should be implemented by backends that "
 "communicate with an ebook reader."
-msgstr ""
+msgstr "Define la interfaz que deben implementar los motores que comunican con un lector de libros electrónicos."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.FORMATS:1
@@ -1170,7 +1180,7 @@ msgstr "Lista ordenada de formatos soportados"
 msgid ""
 "VENDOR_ID can be either an integer, a list of integers or a dictionary If it"
 " is a dictionary, it must be a dictionary of dictionaries, of the form::"
-msgstr ""
+msgstr "``VENDOR_ID`` puede ser un entero, una lista de enteros o un diccionario. Si es un diccionario, debe ser un diccionario de diccionarios de la forma::"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.PRODUCT_ID:1
@@ -1182,7 +1192,7 @@ msgstr "Un entero o una lista de enteros"
 msgid ""
 "BCD can be either None to not distinguish between devices based on BCD, or "
 "it can be a list of the BCD numbers of all devices supported by this driver."
-msgstr ""
+msgstr "BCD puede ser bien None para no distinguir entre dispositivos según BCD, o bien una lista de los números BCD de todos los dispositivos soportados por este controlador."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_HEIGHT:1
@@ -1198,7 +1208,7 @@ msgid ""
 "THUMBNAIL_HEIGHT Compression quality for thumbnails. Set this closer to 100 "
 "to have better quality thumbnails with fewer compression artifacts. Of "
 "course, the thumbnails get larger as well."
-msgstr ""
+msgstr "Anchura de las miniaturas en el disposivio. Si se establece, se obliga a que las miniaturas tengan este tamaño, sin mantener las proporciones. Si no se establece, se matienen las proporciones y la altura de la mininatura no será mayor que THUMBNAIL_HEIGHT Calidad de compresión para las miniaturas. Cuanto más próximo a 100 mejor calidad y menos defectos de compresión tendrán las miniaturas, aunque también ocuparán más."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.WANTS_UPDATED_THUMBNAILS:1
@@ -1206,7 +1216,7 @@ msgid ""
 "Set this to True if the device supports updating cover thumbnails during "
 "sync_booklists. Setting it to true will ask device.py to refresh the cover "
 "thumbnails during book matching"
-msgstr ""
+msgstr "Establézcalo en True si el dispositivo admite actualizar miniaturas de portada durante meth:`sync_booklists`. Si es True, se pedirá a device.py que vuelva a cargar las miniaturas al comparar libros"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.CAN_SET_METADATA:1
@@ -1253,7 +1263,7 @@ msgstr "Mensaje que se mostrará al usuario para las extensiones de libro virtua
 msgid ""
 "Whether to nuke comments in the copy of the book sent to the device. If not "
 "None this should be short string that the comments will be replaced by."
-msgstr ""
+msgstr "Indica si se eliminan los comentarios de la copia del libro que se envía al dispositivo. Si no es None, debería ser un texto corto por el que se sustituirán los comentarios."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.MANAGES_DEVICE_PRESENCE:1
@@ -1276,7 +1286,7 @@ msgstr "Si es True, indica que este controlador gestiona completamente la detecc
 msgid ""
 "If set the True, calibre will call the :meth:`get_driveinfo()` method after "
 "the books lists have been loaded to get the driveinfo."
-msgstr ""
+msgstr "Si se establece en True, calibre ejecutará el método :meth:`get_driveinfo()` una vezs cargadas las listas de libros para obtener la información de la unidad."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.ASK_TO_ALLOW_CONNECT:1
@@ -1296,7 +1306,7 @@ msgid ""
 "some callbacks are run (currently only upload_books). Be careful to not spam"
 " the user with too many messages. This variable is checked after *every* "
 "callback, so only set it when you really need to."
-msgstr ""
+msgstr "Establezca esto a un diccionario de la forma {'title':título, 'msg':mensaje, 'det_msg':mensaje_detallado} para que calibre muestre una ventana con un mensaje para el usuario tras ejecutar varias acciones (actualmente sólo :meth:`upload_books`). Procure no mostrar demasiados mensajes al usuario. Esta variable se comprueba después de *cada* acción, así que establézcala sólo cuando sea realmente necesaria."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_usb_connected:1
@@ -1324,14 +1334,14 @@ msgid ""
 "if a device is found. This object will be passed to the open() method as the"
 " connected_device. If no device is found, return None. The returned object "
 "can be anything, calibre does not use it, it is only passed to open()."
-msgstr ""
+msgstr "Buscar dispositivos que pueda gestionar este controlador. Debe devolver un objeto de dispositivo si se encuentra algún dispositivo. Este objeto se pasará al método :meth:`open()` como `connected_device`. Si no se encuentra ningún dispositivo, devuelve None. El objeto devuelto puede ser cualquier cosa, calibre no lo usa, sólo lo pasa a :meth:`open()`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.detect_managed_devices:9
 msgid ""
 "This method is called periodically by the GUI, so make sure it is not too "
 "resource intensive. Use a cache to avoid repeatedly scanning the system."
-msgstr ""
+msgstr "Este método se ejecuta periódicamente por la interfaz gráfica, así que asegúrese de que no requiere demasiados recursos. Use un caché para evitar buscar en el sistema una y otra vez."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.detect_managed_devices:13
@@ -1343,21 +1353,21 @@ msgstr "Conjunto de dispositivos USB encontrados en el sistema."
 msgid ""
 "If True and the driver uses a cache to prevent repeated scanning, the cache "
 "must be flushed."
-msgstr ""
+msgstr "Si es True y el controlador usa un caché para evitar búsquedas repetitivas, el caché debe vaciarse."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.debug_managed_device_detection:3
 msgid ""
 "Should write information about the devices detected on the system to output,"
 " which is a file like object."
-msgstr ""
+msgstr "Debe escribir en `output` información sobre los dispositivos detectados en el sistema, que es un objeto de tipo archivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.debug_managed_device_detection:6
 msgid ""
 "Should return True if a device was detected and successfully opened, "
 "otherwise False."
-msgstr ""
+msgstr "Debe devolver True si se detecta un dispositivo y se abre con éxito, en caso contrario debe devolver False."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.reset:1
@@ -1393,7 +1403,7 @@ msgid ""
 " can do some relatively time intensive checks. The default implementation "
 "returns True. This method is called only on windows. See also "
 ":meth:`can_handle`."
-msgstr ""
+msgstr "Método opcional para desempeñar más comprobaciones en un dispositivo para ver si este conductor es capaz de manejarlo. Si no lo es debería devolver Falso. Este método sólo es llamado después del vendedor, IDs de producto y después de que el BCD se haya emparejado, entonces eso puede hacer algunas comprobaciones intensivas de tiempo relativamente. La implementación por defecto devuelve Verdadero. Este método es llamado sólo en Windows. Vea también :meth:`can_handle`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle_windows:8
@@ -1430,14 +1440,14 @@ msgid ""
 "method :meth:`calibre.devices.usbms.device.Device.open` has an "
 "implementation of this function that should serve as a good example for USB "
 "Mass storage devices."
-msgstr ""
+msgstr "Desempeña cualquier inicio específico de dispositivo. Llamado después de que el dispositivo sea detectado pero antes de cualquier otra función que comunique con el dispositivo. Por ejemplo: Para dispositivos que se presenten a sí mismos como dispositivos me almacenamiento USB Mass, este método debería ser responsable de montar el dispositivo o si el dispositivo ha sido automontado, descubriendo dónde se ha montado. El método :meth:`calibre.devices.usbms.device.Device.open` tiene una implementación de esta función que debería servir como un buen ejemplo de dispositivo de almacenamiento USB Mass."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:11
 msgid ""
 "This method can raise an OpenFeedback exception to display a message to the "
 "user."
-msgstr "Este método puede emitir una excepción de tipo OpenFeedback para mostrar un mensaje al usuario final."
+msgstr "Este método puede generar una excepción de tipo OpenFeedback para mostrar un mensaje al usuario final."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:14
@@ -1446,7 +1456,7 @@ msgid ""
 "id, bcd, manufacturer name, product name, device serial number). However, "
 "some devices have no serial number and on windows only the first three "
 "fields are present, the rest are None."
-msgstr ""
+msgstr "El dispositivo que estamos intentando abrir. Es un tuple de (ID de vendedor, ID de producto, BCD, nombre de fabricante, nombre de producto, número de serie de dispositivo). No obstante, algunos dispositivos no tienen número de serie y en Windows sólo los primeros tres campos están presentes, el resto son Ninguno."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:20
@@ -1460,7 +1470,7 @@ msgstr "El UUID de la biblioteca de calibre actual. Puede ser None si no existe 
 msgid ""
 "Un-mount / eject the device from the OS. This does not check if there are "
 "pending GUI jobs that need to communicate with the device."
-msgstr ""
+msgstr "Desmontar / expulsar el dispositivo del OS Esto no verifica si hay trabajos GUI pendientes que necesiten comunicarse con el dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.eject:4
@@ -1490,7 +1500,7 @@ msgid ""
 "(device name, device version, software version on device, mime type) The "
 "tuple can optionally have a fifth element, which is a drive information "
 "dictionary. See usbms.driver for an example."
-msgstr ""
+msgstr "(nombre de dispositivo, versión de dispositivo, versión de software del dispositivo, tipo de mimo) El tuple puede opcionalmente tener un quinto elemento, que es un diccionario de información del conductor. Vea usbms.driver para un ejemplo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_driveinfo:1
@@ -1501,7 +1511,7 @@ msgid ""
 " called by calibre after the book lists have been loaded. Note that it is "
 "not called on the device thread, so the driver should cache the drive info "
 "in the books() method and this function should return the cached data."
-msgstr ""
+msgstr "Devuelve el diccionario driveinfo. Normalmente llamado desde get_device_information(), pero si la carga del driveinfo es lenta para este conductor, entonces debería fijar SLOW_DRIVEINFO. En este caso, este método será llamado por Calibre después de que las listas de libros hayan sido cargadas. Note que isto no es llamado en el hilo del dispositivo, así que el conductor debería almacenar el drive info en el método de los libros() y esta función debería devolver la información almacenada."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.card_prefix:1
@@ -1509,7 +1519,7 @@ msgid ""
 "Return a 2 element list of the prefix to paths on the cards. If no card is "
 "present None is set for the card's prefix. E.G. ('/place', '/place2') (None,"
 " 'place2') ('place', None) (None, None)"
-msgstr ""
+msgstr "Devuelve una lista de 2 elementos del prefijo a caminos de las tarjetas. Si no hay tarjeta presente Ninguno es fijado para el prefijo de la tarjeta. E.G. ('/place', '/place2') (None, 'place2') ('place', None) (None, None)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.total_space:4
@@ -1538,7 +1548,7 @@ msgstr "Tarjeta de almacenamiento B"
 msgid ""
 "A 3 element list with total space in bytes of (1, 2, 3). If a particular "
 "device doesn't have any of these locations it should return 0."
-msgstr ""
+msgstr "Una lista de 3 elementos con espacio total en bytes de (1, 2, 3). Si un dispositivo particular no tiene ninguna de estas ubicaciones debería devolver 0."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.free_space:4
@@ -1560,7 +1570,7 @@ msgstr "Tarjeta B"
 msgid ""
 "A 3 element list with free space in bytes of (1, 2, 3). If a particular "
 "device doesn't have any of these locations it should return -1."
-msgstr ""
+msgstr "Una lista de 3 elementos con espacio libre en bytes de (1, 2, 3). Si un dispositivo particular no tiene ninguna de esas ubicaciones debería devolver -1."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:1
@@ -1573,7 +1583,7 @@ msgid ""
 "If 'carda' or 'cardb' return a list of ebooks on the specific storage card, "
 "otherwise return list of ebooks in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
-msgstr ""
+msgstr "Si 'carda' o 'cardb' devuelve una lista de libros a la tarjeta de almacenamiento específica, si no, devuelve una lista de libros a la memoria principal del dispositivo. Si una tarjeta es especificada y no hay libros en la terjeta, devuelve una lista vacía."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:8
@@ -1588,7 +1598,7 @@ msgid ""
 ":class:`FreeSpaceError` if there is not enough free space on the device. The"
 " text of the FreeSpaceError must contain the word \"card\" if ``on_card`` is"
 " not None otherwise it must contain the word \"memory\"."
-msgstr ""
+msgstr "Cargar una lista de libros al dispositivo. Si un archivo ya existe en el dispositivio, debería ser reemplazado. Este método debería levantar un :class:`FreeSpaceError` si no hay bastante espacio libre en el dispositivo. El texto del FreeSpaceError debe contener la palabra \"tarjeta\" si ``on_card` no es Ninguno, si no, debe contener la palabra \"memoria\"."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:7
@@ -1600,7 +1610,7 @@ msgstr "Una lista de rutas"
 msgid ""
 "A list of file names that the books should have once uploaded to the device."
 " len(names) == len(files)"
-msgstr ""
+msgstr "Una lista de nombres de archivo que los libros deberían tener una vez cargados en el dispositivo. len(names) == len(files)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:10
@@ -1610,14 +1620,14 @@ msgid ""
 " == len(files). Apart from the regular cover (path to cover), there may also"
 " be a thumbnail attribute, which should be used in preference. The thumbnail"
 " attribute is of the form (width, height, cover_data as jpeg)."
-msgstr ""
+msgstr "Si no es Ninguno, es una lista de objetos :class:`Metadata`. La idea es utilizar la metainformación para determinar dónde poner el libro en el dispositivo. len(metadata) == len(files). Aparte de la cubierta regular (camino a la cubierta), también puede haber un atributo de miniatura, que debería ser usado en preferencia. El atributo de miniatura es de la forma (anchura, altura, cover_data como jpeg)."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:17
 msgid ""
 "A list of 3-element tuples. The list is meant to be passed to "
 ":meth:`add_books_to_metadata`."
-msgstr "Una lista de tuplas de 3 elementos. La lista es enviada a :meth:`add_books_to_metadata`."
+msgstr "Una lista de tuplas de 3 elementos. La lista se envía a :meth:`add_books_to_metadata`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.add_books_to_metadata:1
@@ -1684,21 +1694,21 @@ msgstr "objeto de archivo como ``sys.stdout`` o el resultado de ejecutar :func:`
 msgid ""
 "Should return a QWidget. The QWidget contains the settings for the device "
 "interface"
-msgstr ""
+msgstr "Debería devolver un QWidget. El QWidget contiene los ajustes de la interfaz de dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.save_settings:1
 msgid ""
 "Should save settings to disk. Takes the widget created in "
 ":meth:`config_widget` and saves all settings to disk."
-msgstr ""
+msgstr "Debería guardar los ajustes en el disco. Toma al widget creado en :meth:`config_widget` y guarda todos los ajustes en el disco."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.settings:1
 msgid ""
 "Should return an opts object. The opts object should have at least one "
 "attribute `format_map` which is an ordered list of formats for the device."
-msgstr ""
+msgstr "Debería devolver un objeto opts. El objeto opts debería tener al menos un atributo `format_map` que es una lista ordenada de formatos para el dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:1
@@ -1737,21 +1747,21 @@ msgstr "None o un único panel de conexiones."
 msgid ""
 "Set the device name in the driveinfo file to 'name'. This setting will "
 "persist until the file is re-created or the name is changed again."
-msgstr ""
+msgstr "Establecer el nombre de dispositivo en el archivo driveinfo como ``name``. Este ajuste persistirá hasta que el archivo se vuelva a crear o se cambie el nombre de nuevo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_driveinfo_name:4
 msgid ""
 "Non-disk devices should implement this method based on the location codes "
 "returned by the get_device_information() method."
-msgstr ""
+msgstr "Ningún dispositivo de disco debería implementar este método basado en los códigos de ubicación devueltos por el método get_device_information()."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.prepare_addable_books:1
 msgid ""
 "Given a list of paths, returns another list of paths. These paths point to "
 "addable versions of the books."
-msgstr ""
+msgstr "Dada una lista de caminos, devuelve otra lista de caminos. Esos caminos señalan a versiones agregables de los libros."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.prepare_addable_books:4
@@ -1759,7 +1769,7 @@ msgid ""
 "If there is an error preparing a book, then instead of a path, the position "
 "in the returned list for that book should be a three tuple: (original_path, "
 "the exception instance, traceback)"
-msgstr ""
+msgstr "Si ocurre un error preparando un libro, entonces en lugar de un camino, la posición en la lista devuelta para ese libro debería de ser una tres tuple: (original_path, the exception instance, traceback)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.startup:1
@@ -1769,7 +1779,7 @@ msgid ""
 " thus __init__ can be called multiple times, but only one instance will have"
 " this method called. This method is called on the device thread, not the GUI"
 " thread."
-msgstr ""
+msgstr "Llamado cuando Calibre está iniciando el dispositivo. Hace cualquier inicio necesario. Note que múltiples instancias pueden ser ejemplificadas, y así __init__ puede ser llamado múltiples veces, pero sólo una instancia tendrá este método ejecutado. Este método es llamado en el hilo del dispositivo, no en el de la GUI."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.shutdown:1
@@ -1777,7 +1787,7 @@ msgid ""
 "Called when calibre is shutting down, either for good or in preparation to "
 "restart. Do any cleanup required. This method is called on the device "
 "thread, not the GUI thread."
-msgstr ""
+msgstr "Llamado cuando Calibre se está cerrando, ya sea definitivamente o preparándose para reiniciarse. Cumple cualquier limpieza requerida. Este método es llamado en el hilo del dispositivo, no en el de la GUI."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_device_uid:1
@@ -1785,7 +1795,7 @@ msgid ""
 "Must return a unique id for the currently connected device (this is called "
 "immediately after a successful call to open()). You must implement this "
 "method if you set ASK_TO_ALLOW_CONNECT = True"
-msgstr ""
+msgstr "Debe devolver una única ID para el dispositivo conectado actualmente (esto es llamado inmediatamente tras una llamada exitosa para abrir()). Usted debe implementar este método si selecciona ASK_TO_ALLOW_CONNECT = True"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.ignore_connected_device:1
@@ -1795,14 +1805,14 @@ msgid ""
 "ASK_TO_ALLOW_CONNECT = True. Note that this function is called immediately "
 "after open(), so if open() caches some state, the driver should reset that "
 "state."
-msgstr ""
+msgstr "Debería ignorar el dispositivo identificado por uid (elresultado de una llamada a get_device_uid()) en el futuro. Usted debe implementar este método si selecciona ASK_TO_ALLOW_CONNECT = True. Note que esta función es llamada inmediatamente tras abrir(), así que si () se manifiesta, el dispositivo debería reiniciar esa manifestación."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_user_blacklisted_devices:1
 msgid ""
 "Return map of device uid to friendly name for all devices that the user has "
 "asked to be ignored."
-msgstr ""
+msgstr "Devuelve a la uid de mapa o dispositivo a un nombre amigable para todos los dispositivos que el usuario ha pedido que sean pasados por alto."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_user_blacklisted_devices:1
@@ -1818,7 +1828,7 @@ msgid ""
 "prefs['something']. Your method should call "
 "device_prefs.set_overrides(pref=val, pref=val, ...). Currently used for: "
 "metadata management (prefs['manage_device_metadata'])"
-msgstr ""
+msgstr "Implemente este método si su dispositivo quiere invalidar una preferencia particular. Usted debe asegurarse de que todos los sitios de llamada que quieran una preferencia que pueda ser invalidad utilicen device_prefs['something'] en lugar de prefs['something']. Su método debería de llamar a device_prefs.set_overrides(pref=val, pref=val, ...). Actualmente utilizado para: metadata management (prefs['manage_device_metadata'])"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_library_info:1
@@ -1826,7 +1836,7 @@ msgid ""
 "Implement this method if you want information about the current calibre "
 "library. This method is called at startup and when the calibre library "
 "changes while connected."
-msgstr ""
+msgstr "Emplemente este método si quiere información sobre la biblioteca actual de calibre. Este método es llamado en el arranque y cuando la biblioteca de Calibre cambia mientras está conectado."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_dynamically_controllable:1
@@ -1834,7 +1844,7 @@ msgid ""
 "Called by the device manager when starting plugins. If this method returns a"
 " string, then a) it supports the device manager's dynamic control interface,"
 " and b) that name is to be used when talking to the plugin."
-msgstr ""
+msgstr "Llamado por el gerente cuando se inician los plugins. Si este método vevuelve un cordón, entonces a) soporta el control de interfaz dinámica del gerente del dispositivo, y b) ese nombre se utiliza cuando se comunica con el plugin."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_dynamically_controllable:5
@@ -1851,7 +1861,7 @@ msgstr ""
 msgid ""
 "This method can be called on the GUI thread. A driver that implements this "
 "method must be thread safe."
-msgstr ""
+msgstr "Este método puede ser llamado en el hilo de la GUI. Un conductor que implemente este método debe estar de hilo seguro."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.start_plugin:1
@@ -1859,7 +1869,7 @@ msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
 " connections, then do nothing."
-msgstr ""
+msgstr "Este método es llamado al iniciarse el plugin. El plugin debería empezar a aceptar conexiones de dispositivo. Si el plugin está ya aceptando conexiones, no hace nada."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -1868,7 +1878,7 @@ msgid ""
 " connections, and should cleanup behind itself. It is likely that this "
 "method should call shutdown. If the plugin is already not accepting "
 "connections, then do nothing."
-msgstr ""
+msgstr "Este método es llamado para detener el plugin. El plugin no debería aceptar más conexiones, y debería limpiar tras sí mismo. Es probable que este métoso llame al apagado. Si el plugin ya no está aceptando conexiones, no hace nada."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_option:1
@@ -1876,14 +1886,14 @@ msgid ""
 "Return the value of the option indicated by opt_string. This method can be "
 "called when the plugin is not started. Return None if the option does not "
 "exist."
-msgstr ""
+msgstr "Devuelve el valor de la opción indicada por opt_string. Este método puede ser llamado cuando el plugin no se ha iniciado. Devuelve None si la opción no existe."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:1
 msgid ""
 "Set the value of the option indicated by opt_string. This method can be "
 "called when the plugin is not started."
-msgstr ""
+msgstr "Fija el valor de la opción indicada en opt_string. Este método puede ser llamado cuando el plugin no se ha llamado."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_running:1
@@ -1896,7 +1906,7 @@ msgid ""
 "Called during book matching when a book on the device is matched with a book"
 " in calibre's db. The method is responsible for syncronizing data from the "
 "device to calibre's db (if needed)."
-msgstr ""
+msgstr "Se ejecuta durante el emparejamiento de libros, cuando cada libro del dispositivo se empareja con un libro en la base de datos de calibre. El método tiene por cometido sincronizar los datos del dispositivo con la base de datos de calibre (si es necesario)."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:5
@@ -1924,14 +1934,14 @@ msgid ""
 " value in the returned tuple indicated whether the format is future-dated. "
 "Return True if it is, otherwise return False. Calibre will display a dialog "
 "to the user listing all future dated books."
-msgstr ""
+msgstr "El segundo valor es un valor tuple 2. El primer valor del tuple especifica si un formato de libro debería de ser enviado al dispositivo. El propósito es permitir verificar que el libro del dispositivo es el mismo que el de Calibre. Este valor debe ser None si no se ha enviado ningún libro, de otro modo devuelve el nombre del archivo base del dispositivo (un hilo como foobar.epub). Asegúrese de incluir la extensión en el nombre. El subsistema del dispositivo creará un trabajo send_books para todos los libros sin valores None devueltos. Nota: otro que recupere los datos de la extensión más tarde, el nombre es pasado por alto en los casos en los que el dispositivo utilice una plantilla para generar el nombre de archivo, el que hace más. el segundo valor del tuple devuelto indica si el formato está fechado en el futuro. Devuelve True si lo está, de otro modo devuelve False. Calibre mostrará un diálogo al usuario enumerando todos los libros datados en el futuro."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:27
 msgid ""
 "Extremely important: this method is called on the GUI thread. It must be "
 "threadsafe with respect to the device manager's thread."
-msgstr ""
+msgstr "Extremadamente importante: este método es llamado en el hilo de la GUI. Debe de estar seguro con respecto al hilo del gerente del dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:30
@@ -1939,7 +1949,7 @@ msgid ""
 "book_id: the calibre id for the book in the database. book_metadata: the "
 "Metadata object for the book coming from the device. first_call: True if "
 "this is the first call during a sync, False otherwise"
-msgstr ""
+msgstr "book_id: la ID de Calibre para el libro en la base de datos. book_metadata: El objeto de metadata para el libro que viene desde el dispositivo. first_call: True si esta es es la primera llamada durante la sincronización, False si es de otro modo"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList:1
@@ -1982,7 +1992,7 @@ msgid ""
 "thumbnail (can be None) thumbnail is either a str/bytes object with the "
 "image data or it should have an attribute image_path that stores an absolute"
 " (platform native) path to the image"
-msgstr ""
+msgstr "miniatura (puede ser None) la miniatura es cualquier objeto str/bytes con los datos de imagen o debería tener un atributo image_path que almacena un completo camino (plataforma nativa) a la imagen"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList:11
@@ -1999,7 +2009,7 @@ msgstr "Devuelve True si el dispositivo es compatible con colecciones para esta 
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
 "metadata. Return True if booklists must be sync'ed"
-msgstr ""
+msgstr "Añadir el libro a la ista de libros. El propósito es mantener cualquier metainformación interna del dispositivo. Devuelve True si la lista de libros debe ser sincronizada"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2013,7 +2023,7 @@ msgstr "Elimina un libro de una lista de libros. Simultáneamente, corrige cualq
 msgid ""
 "Return a dictionary of collections created from collection_attributes. Each "
 "entry in the dictionary is of the form collection name:[list of books]"
-msgstr ""
+msgstr "Devuelve un diccionario de colecciones creada desde collection_attributes. Cada entrada en el diccionario es del nombre de forma de la colección :[list of books]"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.get_collections:5
@@ -2025,7 +2035,7 @@ msgstr "El listado de los libros se ordena por título, excepto en colecciones c
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.get_collections:8
 msgid "A list of attributes of the Book object"
-msgstr "Una lista de atributos del objeto Libro"
+msgstr "Una lista de atributos del objeto :class:`Book`."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:109
 msgid "USB Mass Storage based devices"
@@ -2037,7 +2047,7 @@ msgid ""
 ":class:`calibre.devices.usbms.driver.USBMS`. This class in turn inherits "
 "some of its functionality from its bases, documented below. A typical basic "
 "USBMS based driver looks like this:"
-msgstr ""
+msgstr "La clase base para tal dispositivo es :class:`calibre.devices.usbms.driver.USBMS`. Esta clase hereda algunas de sus funcionalidades desde sus bases, documentadas arriba. Un típico básico conductor USBMS es así:"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device:1
@@ -2052,28 +2062,28 @@ msgid ""
 "This class provides logic common to all drivers for devices that export "
 "themselves as USB Mass Storage devices. Provides implementations for "
 "mounting/ejecting of USBMS devices on all platforms."
-msgstr ""
+msgstr "Esta clase provee común lógico a todos los conductores para dispositivos que se exportan a sí mismos como dispositivos de Almacenamiento USB Mass. Provee implementaciones para montar/expulsar de los dispositivos USBMS en todas las plataformas."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_MAIN_MEM:1
 msgid ""
 "String identifying the main memory of the device in the windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr ""
+msgstr "Hilo identificando la memoria principal del dispositivo en los hilos de ID de PnP de Windows. Esto puede ser ninguno None, hilo, lista de hilos o regex compilado"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_CARD_A_MEM:1
 msgid ""
 "String identifying the first card of the device in the windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr ""
+msgstr "Hilo identificando la primera tarjeta del dispositivo en los hilos de Id de PnP de Windows Esto puede ser None, hilo, lista de hilos o regex compilado"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_CARD_B_MEM:1
 msgid ""
 "String identifying the second card of the device in the windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr ""
+msgstr "Cordón identificando la segunda tarjeta del dispositivo en los hilos de ID de PnP de Windows. Esto puede ser None, hilo, lista de hilos o regex compilado"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.OSX_MAIN_MEM_VOL_PAT:1
@@ -2081,7 +2091,7 @@ msgid ""
 "Used by the new driver detection to disambiguate main memory from storage "
 "cards. Should be a regular expression that matches the main memory mount "
 "point assigned by OS X"
-msgstr ""
+msgstr "Utilizado por la nueva detección de conductor para desambiguar la memoria principal desde las tarjetas almacenadas. Debería ser una expresión regular que empareje el punto montado de la memoria principal asignada por OSX"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.MAX_PATH_LEN:1
@@ -2099,28 +2109,28 @@ msgid ""
 "Called to disambiguate main memory and storage card for devices that do not "
 "distinguish between them on the basis of `WINDOWS_CARD_NAME`. For e.g.: The "
 "EB600"
-msgstr ""
+msgstr "Llamado para desambiguar la memoria principal y la tarjeta almacenada para dispositivos que no se distingan entre ellos en la forma de `WINDOWS_CARD_NAME`. Por ej.: El EB600"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.sanitize_callback:1
 msgid ""
 "Callback to allow individual device drivers to override the path "
 "sanitization used by :meth:`create_upload_path`."
-msgstr ""
+msgstr "Devuelve la llamada para permitir a conductores de dispositivo individual pasar por alto el camino sanitization utilizado por :meth:`create_upload_path`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.filename_callback:1
 msgid ""
 "Callback to allow drivers to change the default file name set by "
 ":meth:`create_upload_path`."
-msgstr ""
+msgstr "Devuelve la llamada para permitir a los conductores cambiar el nombre de archivo por defecto introducido por :meth:`create_upload_path`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.sanitize_path_components:1
 msgid ""
 "Perform any device specific sanitization on the path components for files to"
 " be uploaded to the device"
-msgstr ""
+msgstr "Desempeña la sanitization de cualquier dispositivo específico sobre los componentes de camino para los archivos que sean cargados en el dispositivo"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.get_annotations:1
@@ -2144,7 +2154,7 @@ msgstr "Bases: :class:`calibre.devices.usbms.cli.CLI`, :class:`calibre.devices.u
 msgid ""
 "The base class for all USBMS devices. Implements the logic for "
 "sending/getting/updating metadata/caching metadata/etc."
-msgstr ""
+msgstr "La clase base para todos los dispositivos USBMS. Emplementa la lógica para for enviar/obtener/cargar metadatos/almacenamiento metadatos/etc."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
@@ -2164,7 +2174,7 @@ msgstr "El nombre del archivo del libro electrónico sin la extensión."
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:5
 msgid "metadata belonging to the book. Use metadata.thumbnail for cover"
-msgstr "metadatos perteneciente al libro. Use metadata.thumbnail para la portada"
+msgstr "metadatos perteneciente al libro. Use ``metadata.thumbnail`` para la portada"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:7
@@ -2186,7 +2196,7 @@ msgid ""
 "InterfaceActionBase and InterfaceAction. The :meth:`load_actual_plugin` "
 "method of you InterfaceActionBase subclass must return an instantiated "
 "object of your InterfaceBase subclass."
-msgstr ""
+msgstr "Si usted está añadiendo su propio plugin en un archivo zip, debería subdividir InterfaceActionBase i InterfaceAction. El método :meth:`load_actual_plugin` de su subclase InterfaceActionBase debe devolver un objeto instantáneo de su subclas InterfaceBase."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:1
@@ -2199,7 +2209,7 @@ msgid ""
 "A plugin representing an \"action\" that can be taken in the graphical user "
 "interface. All the items in the toolbar and context menus are implemented by"
 " these plugins."
-msgstr ""
+msgstr "Un plugin representando una \"acción\" que puede ser tomada en la interfaz gráfica de usuario. Todos los artículos de los menús de herramientas y de contexto son implementados por estos plugins."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:5
@@ -2208,14 +2218,14 @@ msgid ""
 "integrate the plugin with calibre's plugin system, you have to make a "
 "wrapper class that references the actual plugin. See the "
 ":mod:`calibre.customize.builtins` module for examples."
-msgstr ""
+msgstr "Tenga en cuenta que esta clase es la clase base para estos complementos, pero para integrar el complemento con el sistema de complementos de calibre debe crear una clase envoltorio que haga referencia al complemento real. Ver ejemplos en el módulo :mod:`calibre.customize.builtins`."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:10
 msgid ""
 "If two :class:`InterfaceAction` objects have the same name, the one with "
 "higher priority takes precedence."
-msgstr ""
+msgstr "Si dos objetos :class:`InterfaceAction` tienen el mismo nombre, tiene preferencia el que tenga mayor prioridad."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:13
@@ -2223,7 +2233,7 @@ msgid ""
 "Sub-classes should implement the :meth:`genesis`, :meth:`library_changed`, "
 ":meth:`location_selected` :meth:`shutting_down` and "
 ":meth:`initialization_complete` methods."
-msgstr ""
+msgstr "Las subclases deberían implementar los métodos :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected` :meth:`shutting_down` y :meth:`initialization_complete`."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:17
@@ -2239,7 +2249,7 @@ msgid ""
 "attribute, this attribute only becomes available after the plugin has been "
 "initialized. Useful if you want to use methods from the plugin class like "
 "do_user_config()."
-msgstr ""
+msgstr "Para acceder al plugin actual, utilice el atributo :attr:`interface_action_base_plugin`, este atributo sólo está disponible cuando el plugin haya sido iniciado. Útil si quiere utilizar métodos de la clase de plugin como do_user_config()."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:27
@@ -2282,12 +2292,12 @@ msgid ""
 "shortcuts. If None, a keyboard shortcut corresponding to the action is not "
 "registered. If you pass an empty tuple, then the shortcut is registered with"
 " no default key binding."
-msgstr ""
+msgstr "De la forma: (texto, ruta_icono, ayuda, atajo_teclado). ruta_icono, ayuda y atajo_teclado pueden ser None. atajo_teclado puede ser un texto, None o una tupla de atajos. Si es None, no se registra ningún atajo de teclado correspondiente a la acción. Si se pasa una tupla vacía, se registra un atajo sin ninguna tecla predefinida."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_add_menu:1
 msgid "If True, a menu is automatically created and added to self.qaction"
-msgstr "Si es True, se cra automáticamente un menú y se añade a self.qaction"
+msgstr "Si es True, se crea automáticamente un menú y se añade a ``self.qaction``"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_menu_clone_qaction:1
@@ -2295,14 +2305,14 @@ msgid ""
 "If True, a clone of self.qaction is added to the menu of self.qaction If you"
 " want the text of this action to be different from that of self.qaction, set"
 " this variable to the new text"
-msgstr ""
+msgstr "Si es True, se añade un clon de ``self.qaction`` al menú de ``self.qaction``. Si quiere que el texto de esta acción sea distinto del de ``self.qaction``, establezca esta variable como el nuevo texto."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.dont_add_to:1
 msgid ""
 "Set of locations to which this action must not be added. See "
 ":attr:`all_locations` for a list of possible locations"
-msgstr ""
+msgstr "Conjunto de ubicaciones a las que no debe añadirse esta acción. Ver :attr:`all_locations` para una lista de posibles ubicaciones"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.dont_remove_from:1
@@ -2317,7 +2327,7 @@ msgid ""
 "Type of action 'current' means acts on the current view 'global' means an "
 "action that does not act on the current view, but rather on calibre as a "
 "whole"
-msgstr ""
+msgstr "Tipo de acción. «current» significa que actúa sobre la vista actual, «global» indica una acción que no actúa sobre la vista actual, sino sobre calibre en general"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.accepts_drops:1
@@ -2325,7 +2335,7 @@ msgid ""
 "If True, then this InterfaceAction will have the opportunity to interact "
 "with drag and drop events. See the methods, :meth:`accept_enter_event`, "
 ":meth`:accept_drag_move_event`, :meth:`drop_event` for details."
-msgstr ""
+msgstr "Si es True, este :class:`InterfaceAction` tendrá la oportunidad de interactuar con acciones de arrastrar y soltar. Ver los métodos :meth:`accept_enter_event`, :meth`:accept_drag_move_event`, :meth:`drop_event` para más detalles."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.accept_enter_event:1
@@ -2335,7 +2345,7 @@ msgid ""
 "This method should return True iff this interface action is capable of "
 "handling the drag event. Do not call accept/ignore on the event, that will "
 "be taken care of by the calibre UI."
-msgstr ""
+msgstr "Este método debe devolver True si y sólo si esta acción de interfaz puede gestionar la acción de arrastrar. No ejecute ``accept`` o ``ignore`` en la acción, la interfaz de calibre se encargará de ello."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.drop_event:1
@@ -2346,7 +2356,7 @@ msgid ""
 "You should not perform blocking/long operations in this function. Instead "
 "emit a signal or use QTimer.singleShot and return quickly. See the builtin "
 "actions for examples."
-msgstr ""
+msgstr "Este método debería desempeñar algunas acciones útiles y devolver True si esta acción de interfaz es capaz de manejar el evento drop. No llama a aceptar/ignorar en el evento, del que se ocupará la UI de Calibre. Usted no debería ejecutar las operaciones bloqueo/largo en esta función. En su lugar emita una señal o utilice QTimer.singleShot y devuélvalo rápidamente. Vea las acciones incorporadas para ver ejemplos."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:1
@@ -2355,7 +2365,7 @@ msgid ""
 "QAction, This action has one extra attribute calibre_shortcut_unique_name "
 "which if not None refers to the unique name under which this action is "
 "registered with the keyboard manager."
-msgstr ""
+msgstr "Método práctico para añadir acciones a un QMenu. Devuelve la QAction creada. Esta acción tiene un atributo adicional ``calibre_shortcut_unique_name`` que, si no es None, se refiere al nombre único con el que esta acción se registra en el gestor de teclado."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:6
@@ -2367,7 +2377,7 @@ msgstr "El QMenu al que se añadirá la nueva acción creada"
 msgid ""
 "A unique name for this action, this must be globally unique, so make it as "
 "descriptive as possible. If in doubt add a uuid to it."
-msgstr ""
+msgstr "Un nombre único para esta acción. Debe ser un nombre globalmente único, así que hágalo tan descriptivo como sea posible. Si duda, añádale un identificador uuid."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:10
@@ -2379,7 +2389,7 @@ msgstr "El texto de la acción."
 msgid ""
 "Either a QIcon or a file name. The file name is passed to the I() builtin, "
 "so you do not need to pass the full path to the images directory."
-msgstr ""
+msgstr "Un QIcon o un nombre de archivo. El nombre de archivo se pasa al ``I()`` predefinido, así que no necesita pasar la ruta completa al directorio de imágenes."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:14
@@ -2388,7 +2398,7 @@ msgid ""
 "is registered for this action. If None, a keyboard shortcut with no default "
 "keybinding is registered. String and list of strings register a shortcut "
 "with default keybinding as specified."
-msgstr ""
+msgstr "Un texto, una lista de textos, None o False. Si es False, no se registra ningún atajo de teclado para esta acción. Si es None, se registra un atajo de teclado sin ninguna tecla predeterminada. Con un texto o lista de textos se registra un atajo con las teclas asociadas predeterminadas que se especifiquen."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:18
@@ -2399,14 +2409,14 @@ msgstr "Una descripción para esta acción. Usado para establecer ayudas de herr
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:20
 msgid ""
 "A callable which is connected to the triggered signal of the created action."
-msgstr ""
+msgstr "Un objeto ejecutable conectado con la señal desencadenada de la acción creada."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:22
 msgid ""
 "The test displayed to the user when customizing the keyboard shortcuts for "
 "this action. By default it is set to the value of ``text``."
-msgstr ""
+msgstr "El texto que se muestra al usuario al personalizar los atajos de teclado para esta acción. De manera predeterminada toma el valor de ``text``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:12
@@ -2428,7 +2438,7 @@ msgstr "Configurar este complemento. Sólo se ejecuta una vez durante la inicial
 msgid ""
 "Called whenever the book list being displayed in calibre changes. Currently "
 "values for loc are: ``library, main, card and cardb``."
-msgstr ""
+msgstr "Llamado dondequiera que la lista de libros sea mostrada en los cambios de Calibre. Los valores actuales para loc son: ``library, main, card y cardb``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.location_selected:4
@@ -2453,7 +2463,7 @@ msgid ""
 "Called once per action when the layout of the main GUI is completed. If your"
 " action needs to make changes to the layout, they should be done here, "
 "rather than in :meth:`initialization_complete`."
-msgstr ""
+msgstr "Llamado una vez por acción, cuando la capa de la GUI principal esté completa. Si su acción necesita hacer cambios en la capa, deberían ser realizados aqui, mejor que en :meth:`initialization_complete`."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.initialization_complete:1
@@ -2467,14 +2477,14 @@ msgid ""
 "Called once per plugin when the main GUI is in the process of shutting down."
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
-msgstr ""
+msgstr "Llamado una vez por plugin donde la GUI principal está en el proceso de apagado. Lanca cualquier recurso utilizado, pero intenta no bloquear el apagado durante largos períodos de tiempo."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.shutting_down:5
 msgid ""
 "False to halt the shutdown. You are responsible for telling the user why the"
 " shutdown was halted."
-msgstr ""
+msgstr "False para detener el apagado. Usted es responsable de decirle al usuario dónde se detuvo el apagado."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1
@@ -2502,7 +2512,7 @@ msgstr "Este complemento posee un solo método importante: :meth:`create_widget`
 msgid ""
 "Import path to module that contains a class named ConfigWidget which "
 "implements the ConfigWidgetInterface. Used by :meth:`create_widget`."
-msgstr ""
+msgstr "Importa el camino al módulo que contiene una clase llamada ConfigWidget que implementa la ConfigWidgetInterface. Utilizado por :meth:`create_widget`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.category_order:1
@@ -2571,7 +2581,7 @@ msgstr "Esta clase define la interfaz que deben implementar todos los widgets mo
 #: of calibre.gui2.preferences.ConfigWidgetInterface.changed_signal:1
 msgid ""
 "This signal must be emitted whenever the user changes a value in this widget"
-msgstr "Esta señal debe ser emitida cuando el usuario cambia un valor en este widget"
+msgstr "Esta señal debe emitirse cuando el usuario cambia un valor en este widget"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of
@@ -2589,7 +2599,7 @@ msgstr "La ayuda de herramienta para el botón de restauración de los valores p
 msgid ""
 "If True the Preferences dialog will not allow the user to set any more "
 "preferences. Only has effect if :meth:`commit` returns True."
-msgstr ""
+msgstr "Si es True el diálogo de preferencias no permitirá al usuario introducir más preferencias. Sólo tiene efecto si :meth:`commit` devuelve True."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:1
@@ -2608,7 +2618,7 @@ msgstr "La interfaz gráfica principal de calibre"
 msgid ""
 "Should set all config values to their initial values (the values stored in "
 "the config files)."
-msgstr ""
+msgstr "Debe establecer todos los valores de configuración a sus valores iniciales (los valores almacenados en los archivos de configuración)."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults:1
@@ -2622,7 +2632,7 @@ msgid ""
 "False otherwise. Raise an :class:`AbortCommit` exception to indicate that an"
 " error occurred. You are responsible for giving the user feedback about what"
 " the error is and how to correct it."
-msgstr ""
+msgstr "Guarda cualquier ajuste modificado. Devuelve True si los cambios requieren un reinicio, False si no es así. Genera una excepción :class:`AbortCommit` para indicar que ocurrió un error. Es su responsabilidad informar al usuario del error y cómo corregirlo."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.refresh_gui:1
@@ -2630,7 +2640,7 @@ msgid ""
 "Called once after this widget is committed. Responsible for causing the gui "
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
-msgstr ""
+msgstr "Se ejecuta una vez después de crear este widget. Es responsable de hacer que la interfaz gráfica vuelva a leer cualquier configuración modificada. Tenga en cuenta que la interfaz gráfica predeterminada reinicia varios elementos de todas formas, así que la mayoría de los widgets no necesitarán usar este método."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1
@@ -2638,7 +2648,7 @@ msgid ""
 "Base class that contains code to easily add standard config widgets like "
 "checkboxes, combo boxes, text fields and so on. See the :meth:`register` "
 "method."
-msgstr ""
+msgstr "Clase base que contiene código para añadir widgets de configuración corrientes, como casillas de verificación, cuadros combinados, campos de texto, etc. Ver el método :meth:`register`."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:5
@@ -2646,7 +2656,7 @@ msgid ""
 "This class automatically handles change notification, resetting to default, "
 "translation between gui objects and config objects, etc. for registered "
 "settings."
-msgstr ""
+msgstr "Esta clase gestiona automáticamente, para las configuraciones registradas, notificaciones de cambio, reinicio a valores predeterminados, correspondencia entre objetos de interfaz gráfica y de configuración, etc."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:9
@@ -2654,7 +2664,7 @@ msgid ""
 "If your config widget inherits from this class but includes setting that are"
 " not registered, you should override the :class:`ConfigWidgetInterface` "
 "methods and call the base class methods inside the overrides."
-msgstr ""
+msgstr "Si el widget de configuración hereda esta clase pero incluye configuraciones que no están registradas, debe reemplazar los métodos de :class:`ConfigWidgetInterface` y llamar a los métodos de la clase base en los reemplazos."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:1
@@ -2676,7 +2686,7 @@ msgstr "El objeto de configuración que lee y escribe la configuración"
 msgid ""
 "The name of the GUI object that presents an interface to change the setting."
 " By default it is assumed to be ``'opt_' + name``."
-msgstr ""
+msgstr "El nombre del objeto de interfaz gráfica que ofrece una interfaz para modificar la configuración. De manera predeterminada se supone que es ``'opt_' + name``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:8
@@ -2684,7 +2694,7 @@ msgid ""
 "If this setting is a multiple choice (combobox) based setting, the list of "
 "choices. The list is a list of two element tuples of the form: ``[(gui name,"
 " value), ...]``"
-msgstr ""
+msgstr "Si esta configuración es de elección múltiple (un cuadro combinado), la lista de posibilidades. La lista es una lista de tuplas de dos elementos de la forma: ``[(nombre de interfaz, valor), ...]``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:11
@@ -2729,7 +2739,7 @@ msgid ""
 "This method is called once when the viewer is created. Use it to make any "
 "customizations you want to the viewer's user interface. For example, you can"
 " modify the toolbars via ui.tool_bar and ui.tool_bar2."
-msgstr ""
+msgstr "Este método se ejecuta una vez al crear el visor. Úselo para hacer cualquier personalización que desee en la interfaz de usuario del visor. Por ejemplo, puede modificar las barras de herramientas mediante ``ui.tool_bar`` y ``ui.tool_bar2``."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.customize_context_menu:1
@@ -2738,4 +2748,4 @@ msgid ""
 "You can use it to customize the context menu. ``event`` is the context menu "
 "event and hit_test_result is the QWebHitTestResult for this event in the "
 "currently loaded document."
-msgstr ""
+msgstr "Este método se ejecuta cada vez que se muestra el menú de contexto (botón derecho). Puede usarlo para personalizar el menú de contexto. ``event`` es la acción del menú de contextoy ``hit_test_result``es el QWebHitTestResult para esta acción en el documento cargado actualmente."

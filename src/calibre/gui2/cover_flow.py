@@ -13,6 +13,7 @@ from PyQt5.Qt import (QImage, QSizePolicy, QTimer, QDialog, Qt, QSize, QAction,
         QStackedLayout, QLabel, QByteArray, pyqtSignal, QKeySequence, QFont)
 
 from calibre import plugins
+from calibre.ebooks.metadata import rating_to_stars
 from calibre.constants import islinux
 from calibre.gui2 import (config, available_height, available_width, gprefs,
         rating_font)
@@ -86,15 +87,22 @@ if pictureflow is not None:
             self.model.modelReset.connect(self.reset, type=Qt.QueuedConnection)
             self.ignore_image_requests = True
             self.template_inited = False
+            self.subtitle_error_reported = False
 
         def init_template(self, db):
             self.template_cache = {}
             self.template_error_reported = False
             self.template = db.pref('cover_browser_title_template', '{title}')
             self.template_is_title = self.template == '{title}'
+            self.template_is_empty = not self.template.strip()
 
         def count(self):
             return self.model.count()
+
+        def render_template(self, template, index, db):
+            book_id = self.model.id(index)
+            mi = db.get_proxy_metadata(book_id)
+            return mi.formatter.safe_format(template, mi, _('TEMPLATE ERROR'), mi, template_cache=self.template_cache)
 
         def caption(self, index):
             if self.ignore_image_requests:
@@ -106,11 +114,11 @@ if pictureflow is not None:
                     self.init_template(db)
                 if self.template_is_title:
                     ans = self.model.title(index)
+                elif self.template_is_empty:
+                    ans = ''
                 else:
-                    book_id = self.model.id(index)
-                    mi = db.get_proxy_metadata(book_id)
                     try:
-                        ans = mi.formatter.safe_format(self.template, mi, _('TEMPLATE ERROR'), mi, template_cache=self.template_cache)
+                        ans = self.render_template(self.template, index, db)
                     except Exception:
                         if not self.template_error_reported:
                             self.template_error_reported = True
@@ -123,11 +131,23 @@ if pictureflow is not None:
             return ans
 
         def subtitle(self, index):
-            if gprefs['show_rating_in_cover_browser']:
-                try:
-                    return u'\u2605'*self.model.rating(index)
-                except:
-                    pass
+            try:
+                db = self.model.db.new_api
+                field = db.pref('cover_browser_subtitle_field', 'rating')
+                if field and field != 'none':
+                    book_id = self.model.id(index)
+                    fm = db.field_metadata[field]
+                    if fm['datatype'] == 'rating':
+                        val = db.field_for(field, book_id, default_value=0)
+                        if val:
+                            return rating_to_stars(val, allow_half_stars=db.field_metadata[field]['display'].get('allow_half_stars'))
+                    else:
+                        return self.render_template('{%s}' % field, index, db).replace('&', '&&')
+            except Exception:
+                if not self.subtitle_error_reported:
+                    self.subtitle_error_reported = True
+                    import traceback
+                    traceback.print_exc()
             return ''
 
         def reset(self):
@@ -162,9 +182,14 @@ if pictureflow is not None:
             self.context_menu = None
             self.setContextMenuPolicy(Qt.DefaultContextMenu)
             self.setPreserveAspectRatio(gprefs['cb_preserve_aspect_ratio'])
-            self.setSubtitleFont(QFont(rating_font()))
             if not gprefs['cover_browser_reflections']:
                 self.setShowReflections(False)
+
+        def set_subtitle_font(self, for_ratings=True):
+            if for_ratings:
+                self.setSubtitleFont(QFont(rating_font()))
+            else:
+                self.setSubtitleFont(self.font())
 
         def set_context_menu(self, cm):
             self.context_menu = cm
@@ -200,6 +225,7 @@ else:
     CoverFlow = None
     DatabaseImages = None
     FileSystemImages = None
+
 
 class CBDialog(QDialog):
 
@@ -282,6 +308,7 @@ class CoverFlowMixin(object):
             self.db_images = DatabaseImages(self.library_view.model(), self.is_cover_browser_visible)
             self.cover_flow.setImages(self.db_images)
             self.cover_flow.itemActivated.connect(self.iactions['View'].view_specific_book)
+            self.update_cover_flow_subtitle_font()
         else:
             self.cover_flow = QLabel('<p>'+_('Cover browser could not be loaded') +
                                      '<br>'+pictureflowerror)
@@ -300,6 +327,16 @@ class CoverFlowMixin(object):
             if CoverFlow is not None:
                 self.cover_flow.stop.connect(self.cb_splitter.hide_side_pane)
         self.cb_splitter.button.toggled.connect(self.cover_browser_toggled, type=Qt.QueuedConnection)
+
+    def update_cover_flow_subtitle_font(self):
+        db = self.current_db.new_api
+        field = db.pref('cover_browser_subtitle_field', 'rating')
+        try:
+            is_rating = db.field_metadata[field]['datatype'] == 'rating'
+        except Exception:
+            is_rating = False
+        if hasattr(self.cover_flow, 'set_subtitle_font'):
+            self.cover_flow.set_subtitle_font(is_rating)
 
     def toggle_cover_browser(self, *args):
         cbd = getattr(self, 'cb_dialog', None)
@@ -408,6 +445,7 @@ class CoverFlowMixin(object):
     def sync_listview_to_cf(self, row):
         self.cf_last_updated_at = time.time()
 
+
 def test():
     from PyQt5.Qt import QApplication, QMainWindow
     app = QApplication([])
@@ -423,6 +461,7 @@ def test():
     w.show()
     cf.setFocus(Qt.OtherFocusReason)
     sys.exit(app.exec_())
+
 
 def main(args=sys.argv):
     return 0

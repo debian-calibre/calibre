@@ -13,6 +13,7 @@ from lxml import etree
 
 from calibre import guess_type
 
+
 class Canvas(etree.XSLTExtension):
 
     def __init__(self, doc, styles, text_block, log):
@@ -42,7 +43,6 @@ class Canvas(etree.XSLTExtension):
                         self.processed.add(oid)
                 else:
                     break
-
 
             table = etree.Element('table')
             table.text = '\n\t'
@@ -82,7 +82,6 @@ class Canvas(etree.XSLTExtension):
         div.append(img)
         output_parent.append(div)
 
-
     def get_objects(self, node):
         for x in node.xpath('descendant::PutObj[@refobj and @x1 and @y1]'):
             objs = node.xpath('//*[@objid="%s"]'%x.get('refobj'))
@@ -92,12 +91,14 @@ class Canvas(etree.XSLTExtension):
 
 
 class MediaType(etree.XSLTExtension):
+
     def execute(self, context, self_node, input_node, output_parent):
         name = input_node.get('file', None)
         typ = guess_type(name)[0]
         if not typ:
             typ = 'application/octet-stream'
         output_parent.text = typ
+
 
 class ImageBlock(etree.XSLTExtension):
 
@@ -174,7 +175,7 @@ class TextBlock(etree.XSLTExtension):
             return
 
         self.log.warn('Found deeply nested spans. Flattening.')
-        #with open('/t/before.xml', 'wb') as f:
+        # with open('/t/before.xml', 'wb') as f:
         #    f.write(etree.tostring(node, method='xml'))
 
         spans = [(depth(span), span) for span in node.xpath('descendant::Span')]
@@ -200,11 +201,10 @@ class TextBlock(etree.XSLTExtension):
                     attrib.update(child.attrib)
                     child.attrib.update(attrib)
 
-
             for child in reversed(children):
                 gp.insert(pidx+1, child)
 
-        #with open('/t/after.xml', 'wb') as f:
+        # with open('/t/after.xml', 'wb') as f:
         #    f.write(etree.tostring(node, method='xml'))
 
     def add_text(self, text):
@@ -308,8 +308,6 @@ class Styles(etree.XSLTExtension):
                     s = join(s)
                     f.write(rsel + ' {\n\t' + s + '\n}\n\n')
 
-
-
     def execute(self, context, self_node, input_node, output_parent):
         if input_node.tag == 'TextStyle':
             idx = self.get_text_styles(input_node)
@@ -377,8 +375,8 @@ class Styles(etree.XSLTExtension):
         fw = self.to_num(node.get('fontweight', None))
         if fw is not None:
             ans['font-weight'] = ('bold' if fw >= 700 else 'normal')
-        #fn = getattr(obj, 'fontfacename', None)
-        #if fn is not None:
+        # fn = getattr(obj, 'fontfacename', None)
+        # if fn is not None:
         #    fn = cls.FONT_MAP[fn]
         #    item('font-family: %s;'%fn)
         fg = self.color(node.get('textcolor', None))
@@ -391,8 +389,8 @@ class Styles(etree.XSLTExtension):
         if al is not None:
             all = dict(head='left', center='center', foot='right')
             ans['text-align'] = all.get(al, 'left')
-        #lh = self.to_num(node.get('linespace', None), 0.1)
-        #if lh is not None:
+        # lh = self.to_num(node.get('linespace', None), 0.1)
+        # if lh is not None:
         #    ans['line-height'] = '%fpt'%lh
         pi = self.to_num(node.get('parindent', None), 0.1)
         if pi is not None:

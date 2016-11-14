@@ -21,6 +21,7 @@ from calibre.library.coloring import (displayable_columns, color_row_key)
 from calibre.gui2 import error_dialog, choose_files, pixmap_to_data
 from calibre.utils.localization import localize_user_manual_link
 
+
 class ParenPosition:
 
     def __init__(self, block, pos, paren):
@@ -31,6 +32,7 @@ class ParenPosition:
 
     def set_highlight(self, to_what):
         self.highlight = to_what
+
 
 class TemplateHighlighter(QSyntaxHighlighter):
 
@@ -200,6 +202,7 @@ class TemplateHighlighter(QSyntaxHighlighter):
         self.rehighlight()
         self.generate_paren_positions = False
 
+
 class TemplateDialog(QDialog, Ui_TemplateDialog):
 
     def __init__(self, parent, text, mi=None, fm=None, color_field=None,
@@ -337,7 +340,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         tt = _('Template function reference')
         self.template_func_reference.setText(
             '<a href="%s">%s</a>' % (
-                localize_user_manual_link('https://manual.calibre-ebook.com/template_ref.html'), tt))
+                localize_user_manual_link('https://manual.calibre-ebook.com/generated/en/template_ref.html'), tt))
 
         self.font_size_box.setValue(gprefs['gpm_template_editor_font_size'])
         self.font_size_box.valueChanged.connect(self.font_size_changed)

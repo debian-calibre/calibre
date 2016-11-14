@@ -15,6 +15,7 @@ from calibre.ebooks.docx.char_styles import RunStyle
 read_shd = rs
 edges = ('left', 'top', 'right', 'bottom')
 
+
 def _read_width(elem, get):
     ans = inherit
     try:
@@ -32,17 +33,20 @@ def _read_width(elem, get):
         ans = '%.3g%%' % (w/50)
     return ans
 
+
 def read_width(parent, dest, XPath, get):
     ans = inherit
     for tblW in XPath('./w:tblW')(parent):
         ans = _read_width(tblW, get)
     setattr(dest, 'width', ans)
 
+
 def read_cell_width(parent, dest, XPath, get):
     ans = inherit
     for tblW in XPath('./w:tcW')(parent):
         ans = _read_width(tblW, get)
     setattr(dest, 'width', ans)
+
 
 def read_padding(parent, dest, XPath, get):
     name = 'tblCellMar' if parent.tag.endswith('}tblPr') else 'tcMar'
@@ -53,6 +57,7 @@ def read_padding(parent, dest, XPath, get):
                 ans[x] = _read_width(edge, get)
     for x in edges:
         setattr(dest, 'cell_padding_%s' % x, ans[x])
+
 
 def read_justification(parent, dest, XPath, get):
     left = right = inherit
@@ -69,17 +74,20 @@ def read_justification(parent, dest, XPath, get):
     setattr(dest, 'margin_left', left)
     setattr(dest, 'margin_right', right)
 
+
 def read_spacing(parent, dest, XPath, get):
     ans = inherit
     for cs in XPath('./w:tblCellSpacing')(parent):
         ans = _read_width(cs, get)
     setattr(dest, 'spacing', ans)
 
+
 def read_float(parent, dest, XPath, get):
     ans = inherit
     for x in XPath('./w:tblpPr')(parent):
         ans = {k.rpartition('}')[-1]: v for k, v in x.attrib.iteritems()}
     setattr(dest, 'float', ans)
+
 
 def read_indent(parent, dest, XPath, get):
     ans = inherit
@@ -89,9 +97,11 @@ def read_indent(parent, dest, XPath, get):
 
 border_edges = ('left', 'top', 'right', 'bottom', 'insideH', 'insideV')
 
+
 def read_borders(parent, dest, XPath, get):
     name = 'tblBorders' if parent.tag.endswith('}tblPr') else 'tcBorders'
     read_border(parent, dest, XPath, get, border_edges, name)
+
 
 def read_height(parent, dest, XPath, get):
     ans = inherit
@@ -102,12 +112,14 @@ def read_height(parent, dest, XPath, get):
             ans = (rule, val)
     setattr(dest, 'height', ans)
 
+
 def read_vertical_align(parent, dest, XPath, get):
     ans = inherit
     for va in XPath('./w:vAlign')(parent):
         val = get(va, 'w:val')
         ans = {'center': 'middle', 'top': 'top', 'bottom': 'bottom'}.get(val, 'middle')
     setattr(dest, 'vertical_align', ans)
+
 
 def read_col_span(parent, dest, XPath, get):
     ans = inherit
@@ -118,12 +130,14 @@ def read_col_span(parent, dest, XPath, get):
             continue
     setattr(dest, 'col_span', ans)
 
+
 def read_merge(parent, dest, XPath, get):
     for x in ('hMerge', 'vMerge'):
         ans = inherit
         for m in XPath('./w:%s' % x)(parent):
             ans = get(m, 'w:val', 'continue')
         setattr(dest, x, ans)
+
 
 def read_band_size(parent, dest, XPath, get):
     for x in ('Col', 'Row'):
@@ -134,6 +148,7 @@ def read_band_size(parent, dest, XPath, get):
             except (TypeError, ValueError):
                 continue
         setattr(dest, '%s_band_size' % x.lower(), ans)
+
 
 def read_look(parent, dest, XPath, get):
     ans = 0
@@ -146,6 +161,7 @@ def read_look(parent, dest, XPath, get):
 
 # }}}
 
+
 def clone(style):
     if style is None:
         return None
@@ -156,13 +172,19 @@ def clone(style):
     ans.update(style)
     return ans
 
+
 class Style(object):
+
+    is_bidi = False
 
     def update(self, other):
         for prop in self.all_properties:
             nval = getattr(other, prop)
             if nval is not inherit:
                 setattr(self, prop, nval)
+
+    def apply_bidi(self):
+        self.is_bidi = True
 
     def convert_spacing(self):
         ans = {}
@@ -181,7 +203,15 @@ class Style(object):
             val = getattr(self, 'padding_%s' % x)
             if val is not inherit:
                 c['padding-%s' % x] = '%.3gpt' % val
+        if self.is_bidi:
+            for a in ('padding-%s', 'border-%s-style', 'border-%s-color', 'border-%s-width'):
+                l, r = c.get(a % 'left'), c.get(a % 'right')
+                if l is not None:
+                    c[a % 'right'] = l
+                if r is not None:
+                    c[a % 'left'] = r
         return c
+
 
 class RowStyle(Style):
 
@@ -217,6 +247,7 @@ class RowStyle(Style):
                         pass
             c.update(self.convert_spacing())
         return self._css
+
 
 class CellStyle(Style):
 
@@ -261,12 +292,13 @@ class CellStyle(Style):
 
         return self._css
 
+
 class TableStyle(Style):
 
     all_properties = (
         'width', 'float', 'cell_padding_left', 'cell_padding_right', 'cell_padding_top',
         'cell_padding_bottom', 'margin_left', 'margin_right', 'background_color',
-        'spacing', 'indent', 'overrides', 'col_band_size', 'row_band_size', 'look',
+        'spacing', 'indent', 'overrides', 'col_band_size', 'row_band_size', 'look', 'bidi',
     ) + tuple(k % edge for edge in border_edges for k in border_props)
 
     def __init__(self, namespace, tblPr=None):
@@ -276,6 +308,7 @@ class TableStyle(Style):
                 setattr(self, p, inherit)
         else:
             self.overrides = inherit
+            self.bidi = binary_property(tblPr, 'bidiVisual', namespace.XPath, namespace.get)
             for x in ('width', 'float', 'padding', 'shd', 'justification', 'spacing', 'indent', 'borders', 'band_size', 'look'):
                 f = globals()['read_%s' % x]
                 f(tblPr, self, self.namespace.XPath, self.namespace.get)
@@ -399,6 +432,10 @@ class Table(object):
         self.handle_merged_cells()
         self.sub_tables = {x:Table(namespace, x, styles, para_map, is_sub_table=True) for x in self.namespace.XPath('./w:tr/w:tc/w:tbl')(tbl)}
 
+    @property
+    def bidi(self):
+        return self.table_style.bidi is True
+
     def override_allowed(self, name):
         'Check if the named override is allowed by the tblLook element'
         if name.endswith('Cell') or name == 'wholeTable':
@@ -417,6 +454,7 @@ class Table(object):
     def get_overrides(self, r, c, num_of_rows, num_of_cols_in_row):
         'List of possible overrides for the given para'
         overrides = ['wholeTable']
+
         def divisor(m, n):
             return (m - (m % n)) // n
         if c is not None:
@@ -460,6 +498,8 @@ class Table(object):
 
         for trPr in self.namespace.XPath('./w:trPr')(tr):
             rs.update(RowStyle(self.namespace, trPr))
+        if self.bidi:
+            rs.apply_bidi()
         self.style_map[tr] = rs
 
     def resolve_cell_style(self, tc, overrides, row, col, rows, cols_in_row):
@@ -507,6 +547,8 @@ class Table(object):
                     val = 'hidden'
                 setattr(cs, eprop, val)
 
+        if self.bidi:
+            cs.apply_bidi()
         self.style_map[tc] = cs
 
     def resolve_para_style(self, p, overrides):
@@ -582,6 +624,8 @@ class Table(object):
 
     def apply_markup(self, rmap, page, parent=None):
         table = TABLE('\n\t\t')
+        if self.bidi:
+            table.set('dir', 'rtl')
         self.table_style.page = page
         style_map = {}
         if parent is None:
@@ -625,6 +669,7 @@ class Table(object):
             css = style.css
             if css:
                 elem.set('class', self.styles.register(css, elem.tag))
+
 
 class Tables(object):
 

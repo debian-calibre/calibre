@@ -6,9 +6,10 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, cPickle, re, shutil, marshal, zipfile, glob, time, sys, hashlib, json, urllib, errno
+import os, cPickle, re, shutil, marshal, zipfile, glob, time, sys, hashlib, json, errno, subprocess
 from zlib import compress
 from itertools import chain
+is_ci = os.environ.get('CI', '').lower() == 'true'
 
 from setup import Command, basenames, __appname__
 
@@ -25,6 +26,12 @@ def get_opts_from_parser(parser):
         for o in g.option_list:
             for x in do_opt(o):
                 yield x
+
+def download_securely(url):
+    # We use curl here as on some OSes (OS X) when bootstrapping calibre,
+    # python will be unable to validate certificates until after cacerts is
+    # installed
+    return subprocess.check_output(['curl', '-fsSL', url])
 
 class Coffee(Command):  # {{{
 
@@ -235,7 +242,7 @@ class CACerts(Command):  # {{{
             if err.errno != errno.ENOENT:
                 raise
             raw = b''
-        nraw = urllib.urlopen('https://curl.haxx.se/ca/cacert.pem').read()
+        nraw = download_securely('https://curl.haxx.se/ca/cacert.pem')
         if not nraw:
             raise RuntimeError('Failed to download CA cert bundle')
         if nraw != raw:
@@ -248,6 +255,41 @@ class CACerts(Command):  # {{{
         from calibre.utils.https import get_https_resource_securely
         get_https_resource_securely('https://calibre-ebook.com', cacerts=self.b(self.CA_PATH))
 # }}}
+
+class RecentUAs(Command):
+
+    description = 'Get updated list of recent browser user agents'
+    UA_PATH = os.path.join(Command.RESOURCES, 'common-user-agents.txt')
+
+    def get_list(self):
+        if is_ci:
+            # Dont hammer the server from CI
+            return [
+                 # IE 11 - windows 10
+                 'Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko',
+                 # IE 11 - windows 8.1
+                 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko',
+                 # IE 11 - windows 8
+                 'Mozilla/5.0 (Windows NT 6.2; Trident/7.0; rv:11.0) like Gecko',
+                 # IE 11 - windows 7
+                 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
+                 # 32bit IE 11 on 64 bit win 10
+                 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+                 # 32bit IE 11 on 64 bit win 8.1
+                 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+                 # 32bit IE 11 on 64 bit win 7
+                 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
+        ]
+        raw = download_securely('https://techblog.willshouse.com/2012/01/03/most-common-user-agents/').decode('utf-8')
+        lines = re.search(r'<textarea.+"get-the-list".+>([^<]+)</textarea>', raw).group(1).splitlines()
+        return [x.strip() for x in lines if x.strip()]
+
+    def run(self, opts):
+        lines = self.get_list()[:10]
+        if not lines:
+            raise RuntimeError('Failed to download list of common user agents')
+        with open(self.UA_PATH, 'wb') as f:
+            f.write('\n'.join(lines).encode('ascii'))
 
 class RapydScript(Command):  # {{{
 

@@ -14,6 +14,7 @@ completion.
 
 import sys, os, shlex, glob, re, cPickle
 
+
 def prints(*args, **kwargs):
     '''
     Print unicode arguments safely by encoding them to preferred_encoding
@@ -53,7 +54,6 @@ def prints(*args, **kwargs):
     file.write(end)
 
 
-
 def split(src):
     try:
         return shlex.split(src)
@@ -74,6 +74,7 @@ def files_and_dirs(prefix, allowed_exts=[]):
         elif allowed_exts is None or ext in allowed_exts:
             yield i+' '
 
+
 def get_opts_from_parser(parser, prefix):
     def do_opt(opt):
         for x in opt._long_opts:
@@ -83,10 +84,13 @@ def get_opts_from_parser(parser, prefix):
             if x.startswith(prefix):
                 yield x
     for o in parser.option_list:
-        for x in do_opt(o): yield x+' '
+        for x in do_opt(o):
+            yield x+' '
     for g in parser.option_groups:
         for o in g.option_list:
-            for x in do_opt(o): yield x+' '
+            for x in do_opt(o):
+                yield x+' '
+
 
 def send(ans):
     pat = re.compile('([^0-9a-zA-Z_./-])')
@@ -95,7 +99,6 @@ def send(ans):
         if x.endswith('\\ '):
             x = x[:-2]+' '
         prints(x)
-
 
 
 class EbookConvert(object):
