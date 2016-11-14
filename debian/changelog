@@ -1,3 +1,19 @@
+calibre (2.71.0+dfsg-1) UNRELEASED; urgency=medium
+
+  [ Martin Pitt ]
+  * Move from bzr to collab-maint git, update Vcs-* tags
+  * Turn patches into "gbp pq" format
+  * debian/rules get-orig-source: Don't update checkout any more.
+    This was appropriate for debian/ only bzr branch, but not for full-source gbp.
+
+  [ Ritesh Raj Sarraf ]
+  * debian/rules get-orig-source: Update download URL for Datejs
+  * New upstream release.
+    Adjust patches, add new python-pyqt5.qtwebkit and python-apsw dependencies.
+    (Closes: #840999)
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 14 Nov 2016 23:28:10 +0100
+
 calibre (2.60.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release.
