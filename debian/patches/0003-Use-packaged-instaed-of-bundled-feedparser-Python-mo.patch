@@ -1,7 +1,16 @@
-Index: calibre/recipes/lenta_ru.recipe
-===================================================================
---- calibre.orig/recipes/lenta_ru.recipe	2013-12-06 07:22:25.477237324 +0100
-+++ calibre/recipes/lenta_ru.recipe	2013-12-06 07:22:25.473237324 +0100
+From: Martin Pitt <mpitt@debian.org>
+Date: Mon, 14 Nov 2016 22:41:23 +0100
+Subject: Use packaged instaed of bundled feedparser Python module
+
+---
+ recipes/lenta_ru.recipe           | 5 ++++-
+ src/calibre/web/feeds/__init__.py | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/recipes/lenta_ru.recipe b/recipes/lenta_ru.recipe
+index d452496..ebbd0d3 100644
+--- a/recipes/lenta_ru.recipe
++++ b/recipes/lenta_ru.recipe
 @@ -4,11 +4,14 @@
  Lenta.ru
  '''
@@ -18,11 +27,11 @@ Index: calibre/recipes/lenta_ru.recipe
  class LentaRURecipe(BasicNewsRecipe):
      title = u'Lenta.ru: \u041d\u043e\u0432\u043e\u0441\u0442\u0438'
      __author__ = 'Nikolai Kotchetkov'
-Index: calibre/src/calibre/web/feeds/__init__.py
-===================================================================
---- calibre.orig/src/calibre/web/feeds/__init__.py	2013-12-06 07:22:25.477237324 +0100
-+++ calibre/src/calibre/web/feeds/__init__.py	2013-12-06 07:22:25.473237324 +0100
-@@ -11,6 +11,10 @@
+diff --git a/src/calibre/web/feeds/__init__.py b/src/calibre/web/feeds/__init__.py
+index cc66a7d..938d62e 100644
+--- a/src/calibre/web/feeds/__init__.py
++++ b/src/calibre/web/feeds/__init__.py
+@@ -11,6 +11,10 @@ from calibre.utils.logging import default_log
  from calibre import entity_to_unicode, strftime
  from calibre.utils.date import dt_factory, utcnow, local_tz
  from calibre.utils.cleantext import clean_ascii_chars
@@ -33,7 +42,7 @@ Index: calibre/src/calibre/web/feeds/__init__.py
  
  class Article(object):
  
-@@ -331,7 +335,6 @@
+@@ -331,7 +335,6 @@ def feed_from_xml(raw_xml, title=None, oldest_article=7,
                    max_articles_per_feed=100,
                    get_article_url=lambda item: item.get('link', None),
                    log=default_log):

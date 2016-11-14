@@ -1,13 +1,17 @@
-Author: Dmitry Shachnev <mitya57@gmail.com>
-Description: do not build unrar extension as we strip unrar from the tarball
-Forwarded: not-needed
-Last-Update: 2013-04-04
+From: Dmitry Shachnev <mitya57@gmail.com>
+Date: Mon, 14 Nov 2016 22:41:23 +0100
+Subject: Do not build unrar extension as we strip unrar from the tarball
 
-Index: calibre/setup/extensions.py
-===================================================================
---- calibre.orig/setup/extensions.py	2014-02-02 10:42:14.510954007 +0100
-+++ calibre/setup/extensions.py	2014-02-02 10:42:14.502954007 +0100
-@@ -209,24 +209,6 @@
+---
+ setup/extensions.py                    | 18 ------------------
+ src/calibre/ebooks/metadata/archive.py |  2 +-
+ 2 files changed, 1 insertion(+), 19 deletions(-)
+
+diff --git a/setup/extensions.py b/setup/extensions.py
+index 6a6d6f2..a634f76 100644
+--- a/setup/extensions.py
++++ b/setup/extensions.py
+@@ -244,24 +244,6 @@ extensions = [
                  sip_files=['calibre/ebooks/pdf/render/qt_hack.sip']
                  ),
  
@@ -32,11 +36,11 @@ Index: calibre/setup/extensions.py
      ]
  
  
-Index: calibre/src/calibre/ebooks/metadata/archive.py
-===================================================================
---- calibre.orig/src/calibre/ebooks/metadata/archive.py	2014-02-02 10:42:14.510954007 +0100
-+++ calibre/src/calibre/ebooks/metadata/archive.py	2014-02-02 10:42:14.502954007 +0100
-@@ -42,7 +42,7 @@
+diff --git a/src/calibre/ebooks/metadata/archive.py b/src/calibre/ebooks/metadata/archive.py
+index 96fc0de..9071531 100644
+--- a/src/calibre/ebooks/metadata/archive.py
++++ b/src/calibre/ebooks/metadata/archive.py
+@@ -42,7 +42,7 @@ class ArchiveExtract(FileTypePlugin):
      description = _('Extract common e-book formats from archives '
          '(zip/rar) files. Also try to autodetect if they are actually '
          'cbz/cbr files.')
