@@ -1,17 +1,17 @@
 From: Martin Pitt <mpitt@debian.org>
 Date: Mon, 14 Nov 2016 22:41:23 +0100
-Subject: Use packaged instaed of bundled feedparser Python module
+Subject: Use packaged instead of bundled feedparser Python module
 
 ---
- recipes/lenta_ru.recipe           | 5 ++++-
- src/calibre/web/feeds/__init__.py | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ recipes/lenta_ru.recipe           | 4 +++-
+ src/calibre/web/feeds/__init__.py | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/recipes/lenta_ru.recipe b/recipes/lenta_ru.recipe
-index d452496..ebbd0d3 100644
+index aa4dac4..4b6710c 100644
 --- a/recipes/lenta_ru.recipe
 +++ b/recipes/lenta_ru.recipe
-@@ -4,11 +4,14 @@
+@@ -4,11 +4,13 @@
  Lenta.ru
  '''
  
@@ -23,26 +23,25 @@ index d452496..ebbd0d3 100644
  import re
  
 +parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
-+
+ 
  class LentaRURecipe(BasicNewsRecipe):
      title = u'Lenta.ru: \u041d\u043e\u0432\u043e\u0441\u0442\u0438'
-     __author__ = 'Nikolai Kotchetkov'
 diff --git a/src/calibre/web/feeds/__init__.py b/src/calibre/web/feeds/__init__.py
-index cc66a7d..938d62e 100644
+index 8c9d748..f262604 100644
 --- a/src/calibre/web/feeds/__init__.py
 +++ b/src/calibre/web/feeds/__init__.py
-@@ -11,6 +11,10 @@ from calibre.utils.logging import default_log
- from calibre import entity_to_unicode, strftime
+@@ -11,7 +11,10 @@ from calibre.utils.logging import default_log
+ from calibre import entity_to_unicode, strftime, force_unicode
  from calibre.utils.date import dt_factory, utcnow, local_tz
- from calibre.utils.cleantext import clean_ascii_chars
+ from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
 +from feedparser import parse
 +from functools import partial
-+
+ 
 +parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
  
  class Article(object):
  
-@@ -331,7 +335,6 @@ def feed_from_xml(raw_xml, title=None, oldest_article=7,
+@@ -334,7 +337,6 @@ def feed_from_xml(raw_xml, title=None, oldest_article=7,
                    max_articles_per_feed=100,
                    get_article_url=lambda item: item.get('link', None),
                    log=default_log):

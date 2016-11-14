@@ -33,7 +33,6 @@ debian/tmp:
 	rm -r debian/tmp/usr/lib/calibre/routes
 	rm -r debian/tmp/usr/lib/calibre/chardet
 
-	rm debian/tmp/usr/lib/calibre/calibre/utils/pyparsing.py
 	rm debian/tmp/usr/lib/calibre/calibre/web/feeds/feedparser.py
 	find debian/tmp/ -name '*.py' | xargs sed -i 's/calibre.utils.pyparsing/pyparsing/g'
 	find debian/tmp/ -name '*.py' -o -name "markdown-calibre" | xargs sed -i 's/calibre.ebooks.markdown/markdown/g'
