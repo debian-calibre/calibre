@@ -108,6 +108,4 @@ get-orig-source:
 	rm -rf calibre*/resources/viewer/mathjax; \
 	rm -rf calibre*/src/calibre/ebooks/markdown; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
-	cd ../..; rm -r debian/orig; \
-	find -mindepth 1 -maxdepth 1 ! -name '.bzr*' ! -name debian | xargs rm -rf; \
-	[ ! -e setup.py ] || tar xf ../calibre_$$V+dfsg.orig.tar.xz --strip-components 1
+	cd ../..; rm -r debian/orig
