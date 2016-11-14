@@ -1,0 +1,45 @@
+#!/usr/bin/env python2
+# vim:fileencoding=utf-8
+# License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+
+from __future__ import (unicode_literals, division, absolute_import,
+                        print_function)
+from calibre.web.feeds.recipes import BasicNewsRecipe
+
+def classes(classes):
+    q = frozenset(classes.split(' '))
+    return dict(attrs={'class':lambda x:x and frozenset(x.split()).intersection(q)})
+
+class TagesspiegelRss(BasicNewsRecipe):
+    title          = 'Der Tagesspiegel'
+    __author__     = 'Kovid Goyal'
+    oldest_article = 1
+    max_articles_per_feed = 100
+    language = 'de'
+    publication_type = 'newspaper'
+    no_stylesheets = True
+    remove_stylesheets = True
+    remove_javascript = True
+    encoding = 'utf-8'
+    use_embedded_content = False
+    ignore_duplicate_articles = {'title', 'url'}
+    remove_empty_feeds = True
+
+    keep_only_tags = [
+        classes('ts-lead ts-article-body ts-intro ts-title ts-authors')
+    ]
+
+    feeds          = [
+        (u'Politik', u'http://www.tagesspiegel.de/contentexport/feed/politik'),
+        (u'Meinung', u'http://www.tagesspiegel.de/contentexport/feed/meinung'),
+        (u'Berlin', u'http://www.tagesspiegel.de/contentexport/feed/berlin'),
+        (u'Wirtschaft', u'http://www.tagesspiegel.de/contentexport/feed/wirtschaft'),
+        (u'Sport', u'http://www.tagesspiegel.de/contentexport/feed/sport'),
+        (u'Kultur', u'http://www.tagesspiegel.de/contentexport/feed/kultur'),
+        (u'Weltspiegel', u'http://www.tagesspiegel.de/contentexport/feed/weltspiegel'),
+        (u'Medien', u'http://www.tagesspiegel.de/contentexport/feed/medien'),
+        (u'Wissen', u'http://www.tagesspiegel.de/contentexport/feed/wissen')
+    ]
+
+    def get_masthead_url(self):
+        return 'http://www.tagesspiegel.de/images/tsp_logo/3114/6.png'

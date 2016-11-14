@@ -1,0 +1,46 @@
+__license__   = 'GPL v3'
+__copyright__ = '2010-2011, Darko Miletic <darko.miletic at gmail.com>'
+'''
+nrc.nl
+'''
+
+from calibre.web.feeds.news import BasicNewsRecipe
+from calibre.ebooks.BeautifulSoup import Tag
+
+class Pagina12(BasicNewsRecipe):
+    title                 = 'NRC'
+    __author__            = 'Darko Miletic'
+    description           = 'News from Netherlands'
+    publisher             = 'nrc.nl'
+    category              = 'news, politics, Netherlands'
+    oldest_article        = 2
+    max_articles_per_feed = 200
+    no_stylesheets        = True
+    encoding              = 'utf8'
+    use_embedded_content  = False
+    language              = 'nl'
+    country               = 'NL'
+    remove_empty_feeds    = True
+    masthead_url          = 'http://www.nrc.nl/nrc.nl/images/logo_nrc.png'
+
+    keep_only_tags = [
+        dict(name=['h1', 'figure']),
+        dict(attrs={'class':['intro', 'byline']}),
+        dict(attrs={'class':lambda x: x and 'article__content' in x}),
+    ]
+    remove_attributes = ['style']
+
+    feeds = ['http://www.nrc.nl/rss/']
+
+    def preprocess_html(self, soup):
+        src = None
+        for meta in soup.findAll('meta', itemprop='image', content=True):
+            src = meta['content']
+            break
+        if src is not None:
+            div = soup.find('div', attrs={'class':lambda x: x and 'featured-img' in x})
+            if div is not None:
+                img = Tag(soup, 'img')
+                img['src'] = src
+                div.append(img)
+        return soup

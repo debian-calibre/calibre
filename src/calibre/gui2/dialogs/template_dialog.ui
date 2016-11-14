@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TemplateDialog</class>
+ <widget class="QDialog" name="TemplateDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>588</width>
+    <height>546</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Edit Comments</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="color_layout">
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="colored_field_label">
+        <property name="text">
+         <string>Set the color of the column:</string>
+        </property>
+        <property name="buddy">
+         <cstring>colored_field</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="colored_field">
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="color_chooser_label">
+        <property name="text">
+         <string>Copy a color name to the clipboard:</string>
+        </property>
+        <property name="buddy">
+         <cstring>color_name</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="ColorButton" name="color_name">
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QToolButton" name="color_copy_button">
+        <property name="icon">
+         <iconset resource="../../../../resources/images.qrc">
+          <normaloff>:/images/edit-copy.png</normaloff>:/images/edit-copy.png</iconset>
+        </property>
+        <property name="toolTip">
+         <string>Copy the selected color name to the clipboard</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="icon_layout">
+     <layout class="QGridLayout">
+      <item row="0" column="0" colspan="2">
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="icon_kind_label">
+          <property name="text">
+           <string>Kind:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="icon_kind">
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="icon_chooser_label">
+        <property name="text">
+         <string>Apply the icon to column:</string>
+        </property>
+        <property name="buddy">
+         <cstring>icon_field</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="icon_field">
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="image_chooser_label">
+        <property name="text">
+         <string>Copy an icon file name to the clipboard:</string>
+        </property>
+        <property name="buddy">
+         <cstring>color_name</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QWidget">
+        <layout class="QHBoxLayout">
+         <item>
+          <widget class="QComboBox" name="icon_files">
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="icon_copy_button">
+           <property name="icon">
+            <iconset resource="../../../../resources/images.qrc">
+             <normaloff>:/images/edit-copy.png</normaloff>:/images/edit-copy.png</iconset>
+           </property>
+           <property name="toolTip">
+            <string>Copy the selected icon file name to the clipboard</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="filename_button">
+           <property name="text">
+            <string>Add icon</string>
+           </property>
+           <property name="toolTip">
+            <string>Add an icon file to the set of choices</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="textbox"/>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="5" column="0">
+      <widget class="QLabel">
+       <property name="text">
+        <string>Template value:</string>
+       </property>
+       <property name="buddy">
+        <cstring>template_value</cstring>
+       </property>
+       <property name="toolTip">
+        <string>The value of the template using the current book in the library view</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="template_value">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Font size:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QSpinBox" name="font_size_box"/>
+       </item>
+       <item row="1" column="1">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2">
+        <widget class="QDialogButtonBox" name="buttonBox">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <widget class="QFrame">
+       <property name="frameShape">
+        <enum>QFrame::HLine</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Function &amp;name:</string>
+       </property>
+       <property name="buddy">
+        <cstring>function</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QComboBox" name="function"/>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&amp;Documentation:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="buddy">
+        <cstring>documentation</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Python &amp;code:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="buddy">
+        <cstring>source_code</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QPlainTextEdit" name="documentation">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>75</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QPlainTextEdit" name="source_code"/>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLabel" name="template_tutorial">
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QLabel" name="template_func_reference">
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorButton</class>
+   <extends>QPushButton</extends>
+   <header>calibre/gui2/widgets2.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>TemplateDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>TemplateDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>297</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

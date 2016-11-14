@@ -1,0 +1,101 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from dom import set_css
+from read_book.globals import get_boss
+from keycodes import get_key
+from utils import document_height, document_width
+
+def flow_to_scroll_fraction(frac):
+    window.scrollTo(0, document_height() * frac)
+
+def check_for_scroll_end(func):
+    return def ():
+        before = window.pageYOffset
+        func.apply(this, arguments)
+        if window.pageYOffset is before:
+            get_boss().send_message('next_spine_item', previous=arguments[0] < 0)
+            return False
+        return True
+
+@check_for_scroll_end
+def scroll_by(y):
+    window.scrollBy(0, y)
+
+def flow_onwheel(evt):
+    dx = dy = 0
+    if evt.deltaY:
+        if evt.deltaMode is evt.DOM_DELTA_PIXEL:
+            dy = evt.deltaY
+        elif evt.deltaMode is evt.DOM_DELTA_LINE:
+            dy = 15 * evt.deltaY
+        if evt.deltaMode is evt.DOM_DELTA_PAGE:
+            dy = (window.innerHeight - 30) * evt.deltaY
+    if evt.deltaX:
+        if evt.deltaMode is evt.DOM_DELTA_PIXEL:
+            dx = evt.deltaX
+        elif evt.deltaMode is evt.DOM_DELTA_LINE:
+            dx = 15 * evt.deltaX
+        else:
+            dx = (window.innerWidth - 30) * evt.deltaX
+    if dx:
+        window.scrollBy(dx, 0)
+    elif dy:
+        scroll_by(dy)
+
+smooth_y_data = {'last_event_at':0, 'up': False, 'timer':None, 'source':'wheel', 'pixels_per_ms': 0.2, 'scroll_interval':10, 'stop_scrolling_after':100}
+
+def do_y_scroll():
+    if scroll_by((-1 if smooth_y_data.up else 1) * smooth_y_data.pixels_per_ms * smooth_y_data.scroll_interval):
+        if Date.now() - smooth_y_data.last_event_at < smooth_y_data.stop_scrolling_after:
+            smooth_y_data.timer = setTimeout(do_y_scroll, smooth_y_data.scroll_interval)
+
+def smooth_y_scroll(up):
+    clearTimeout(smooth_y_data.timer)
+    smooth_y_data.last_event_at = Date.now()
+    smooth_y_data.up = up
+    do_y_scroll()
+
+@check_for_scroll_end
+def goto_boundary(y):
+    window.scrollTo(window.pageXOffset, 0)
+
+@check_for_scroll_end
+def scroll_by_page(y):
+    h = window.innerHeight - 10
+    window.scrollBy(0, -h if y < 0 else h)
+
+def flow_onkeydown(evt):
+    handled = False
+    key = get_key(evt)
+    if key is 'up' or key is 'down':
+        handled = True
+        if evt.ctrlKey:
+            goto_boundary(-1 if key is 'up' else 1)
+        else:
+            smooth_y_scroll(key is 'up')
+    elif (key is 'left' or key is 'right') and not evt.altKey:
+        handled = True
+        if evt.ctrlKey:
+            window.scrollTo(0 if key is 'left' else document_width(), window.pageYOffset)
+        else:
+            window.scrollBy(-15 if key is 'left' else 15, 0)
+    elif key is 'home' or key is 'end':
+        handled = True
+        if evt.ctrlKey:
+            get_boss().send_message('goto_doc_boundary', start=key is 'home')
+        else:
+            if key is 'home':
+                window.scrollTo(window.pageXOffset, 0)
+            else:
+                window.scrollTo(window.pageXOffset, document_height())
+    elif key is 'pageup' or key is 'pagedown' or key is 'space':
+        handled = True
+        scroll_by_page(-1 if key is 'pageup' else 1)
+    if handled:
+        evt.preventDefault()
+
+def layout(is_single_page):
+    set_css(document.body, margin='0', border_width='0', padding='0')
+

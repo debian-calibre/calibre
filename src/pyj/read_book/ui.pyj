@@ -1,0 +1,393 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+# globals: __RENDER_VERSION__
+from __python__ import hash_literals
+
+import traceback
+from ajax import ajax, encode_query
+from elementmaker import E
+from gettext import gettext as _
+from book_list.globals import get_boss
+from modals import error_dialog
+from utils import human_readable
+from read_book.db import create_db
+from read_book.view import View
+
+RENDER_VERSION = __RENDER_VERSION__
+MATHJAX_VERSION = "__MATHJAX_VERSION__"
+
+class ReadUI:
+
+    def __init__(self, interface_data, container):
+        self.interface_data = interface_data
+        self.db = None
+        self.current_metadata = {'title': _('Unknown book')}
+        self.current_book_id = None
+        self.manifest_xhr = None
+        create_db(self, interface_data)
+        self.pending_load = None
+        self.downloads_in_progress = []
+        self.progress_id = 'book-load-progress'
+        self.display_id = 'book-iframe-container'
+        self.error_id = 'book-global-error-container'
+        self.stacked_widgets = [self.progress_id, self.display_id, self.error_id]
+
+        container.appendChild(E.div(
+            id=self.progress_id, style='display:none; text-align: center',
+            E.h3(style='margin-top:30vh; margin-bottom: 1ex;'),
+            E.progress(style='margin: 1ex'),
+            E.div(style='margin: 1ex')
+        ))
+
+        container.appendChild(E.div(
+            id=self.error_id, style='display:none; text-align: center',
+            E.h2(_('Could not open book'), style='margin: 1ex; margin-top: 30vh;'),
+            E.div(style='margin: 1ex', E.a()),
+        ))
+
+        container.appendChild(E.div(
+            id=self.display_id, style='display:none',
+        ))
+        self.view = View(container.lastChild, self)
+
+    def on_resize(self):
+        self.view.on_resize()
+
+    def show_stack(self, name):
+        ans = None
+        for w in self.stacked_widgets:
+            d = document.getElementById(w)
+            v = 'none'
+            if name is w:
+                ans = d
+                v = 'block'
+            d.style.display = v
+        return ans
+
+    def show_error(self, title, msg, details):
+        div = self.show_stack(self.error_id)
+        error_dialog(title, msg, details)
+        a = div.lastChild.firstChild
+        if self.current_book_id:
+            a.setAttribute('href', encode_query({
+                'library_id':self.interface_data.library_id,
+                'book-id': (self.current_book_id + ''),
+                'panel':'book-details'
+            }))
+            a.textContent = _(
+                'Click to go back to the details page for: {}').format(self.current_metadata.title)
+        else:
+            a.textContent = ''
+            a.setAttribute('href', '')
+
+    def init_ui(self):
+        div = self.show_stack(self.progress_id)
+        if self.current_metadata:
+            div.firstChild.textContent = _(
+                'Downloading {0} for offline reading, please wait...').format(self.current_metadata.title)
+        else:
+            div.firstChild.textContent = ''
+        pr = div.firstChild.nextSibling
+        pr.removeAttribute('value'), pr.removeAttribute('max')
+        div.lastChild.textContent = _('Downloading book manifest...')
+
+    def show_progress_message(self, msg):
+        div = document.getElementById(self.progress_id)
+        div.lastChild.textContent = msg or ''
+
+    def load_book(self, book_id, fmt, metadata, force_reload):
+        self.base_url_data = {'book_id':book_id, 'fmt':fmt}
+        if self.db is None:
+            self.pending_load = [book_id, fmt, metadata, force_reload]
+            return
+        self.start_load(book_id, fmt, metadata, force_reload)
+
+    def reload_book(self):
+        book_id = self.base_url_data.book_id
+        metadata = self.metadata or self.interface_data.metadata[book_id]
+        self.load_book(book_id, self.base_url_data.fmt, metadata, True)
+
+    @property
+    def url_data(self):
+        ans = {'book_id':self.base_url_data.book_id, 'fmt': self.base_url_data.fmt}
+        bookpos = self.view.currently_showing.bookpos
+        if bookpos:
+            ans.bookpos = bookpos
+        return ans
+
+    def db_initialized(self, db):
+        self.db = db
+        if self.pending_load is not None:
+            pl, self.pending_load = self.pending_load, None
+            self.start_load(*pl)
+
+    def start_load(self, book_id, fmt, metadata, force_reload):
+        self.current_book_id = book_id
+        metadata = metadata or self.interface_data.metadata[book_id]
+        self.current_metadata = metadata or {'title':_('Book id #') + book_id}
+        get_boss().update_window_title()
+        self.init_ui()
+        if type(self.db) is 'string':
+            self.show_error(_('Cannot read book'), self.db)
+            return
+        self.db.get_book(book_id, fmt, metadata, self.got_book.bind(self, force_reload))
+
+    def got_book(self, force_reload, book):
+        if not book.manifest or book.manifest.version is not RENDER_VERSION or not book.is_complete:
+            # We re-download the manifest when the book is not complete to ensure we have the
+            # correct manifest, even though doing so is not strictly necessary
+            self.get_manifest(book, force_reload)
+        else:
+            self.display_book(book)
+
+    def get_manifest(self, book, force_reload):
+        library_id, book_id, fmt = book.key
+        if self.manifest_xhr:
+            self.manifest_xhr.abort()
+        query = {'library_id': library_id}
+        if force_reload:
+            query.force_reload = '1'
+        self.manifest_xhr = ajax(('book-manifest/' + encodeURIComponent(book_id) + '/' + encodeURIComponent(fmt)),
+                                 self.got_manifest.bind(self, book), query=query)
+        self.manifest_xhr.send()
+
+    def got_manifest(self, book, end_type, xhr, ev):
+        self.manifest_xhr = None
+        if end_type is 'abort':
+            return
+        if end_type is not 'load':
+            return self.show_error(_('Failed to load book manifest'),
+                _('Could not open {title} as the book manifest failed to load, click "Show Details" for more information.').format(title=self.current_metadata.title),
+                                xhr.error_html)
+        try:
+            manifest = JSON.parse(xhr.responseText)
+        except Exception:
+            return self.show_error(_('Failed to load book manifest'),
+                _('The manifest for {title} is not valid').format(title=self.current_metadata.title),
+                traceback.format_exc())
+        if manifest.version is not undefined:
+            if manifest.version is not RENDER_VERSION:
+                print('calibre upgraded: RENDER_VERSION={} manifest.version={}'.format(RENDER_VERSION, manifest.version))
+                return self.show_error(_('calibre upgraded!'), _(
+                    'A newer version of calibre is available, please click the reload button in your browser.'))
+            self.current_metadata = manifest.metadata
+            self.db.save_manifest(book, manifest, self.download_book.bind(self, book))
+            return
+        # Book is still being processed
+        msg = _('Downloading book manifest...')
+        if manifest.job_status is 'finished':
+            if manifest.aborted:
+                return self.show_error(_('Failed to prepare book for reading'), _('Preparation of book for reading was aborted because it took too long'))
+            if manifest.traceback:
+                return self.show_error(_('Failed to prepare book for reading'), _(
+                    'There was an error processing the book, click "Show details" for more information'), manifest.traceback or '')
+        elif manifest.job_status is 'waiting':
+            msg = _('Book is queued for processing on the server...')
+        elif manifest.job_status is 'running':
+            msg = _('Book is being prepared for reading on the server...')
+        self.show_progress_message(msg)
+        setTimeout(self.get_manifest.bind(self, book), 100)
+
+    def download_book(self, book):
+        files = book.manifest.files
+        total = 0
+        cover_total_updated = False
+        for name in files:
+            total += files[name].size
+        files_left = set(book.manifest.files)
+        failed_files = []
+        for xhr in self.downloads_in_progress:
+            xhr.abort()
+        self.downloads_in_progress = []
+        progress = document.getElementById(self.progress_id)
+        pbar = progress.firstChild.nextSibling
+        library_id, book_id, fmt = book.key
+        base_path = 'book-file/{}/{}/{}/{}/'.format(encodeURIComponent(book_id), encodeURIComponent(fmt),
+            encodeURIComponent(book.manifest.book_hash.size), encodeURIComponent(book.manifest.book_hash.mtime))
+        query = {'library_id': library_id}
+        progress_track = {}
+        pbar.setAttribute('max', total + '')
+        raster_cover_name = book.manifest.raster_cover_name
+        raster_cover_size = 0
+
+        def update_progress():
+            x = 0
+            for name in progress_track:
+                x += progress_track[name]
+            pbar.setAttribute('value', x + '')
+            if x is total:
+                msg = _('Downloaded {}, saving to disk, this may take a few seconds...').format(human_readable(total))
+            else:
+                msg = _('Downloaded {0}, {1} left').format(human_readable(x), human_readable(total - x))
+            progress.lastChild.textContent = msg
+
+        def show_failure():
+            det = ['<h4>{}</h4><div>{}</div><hr>'.format(fname, err_html) for fname, err_html in failed_files].join('')
+            self.show_error(_('Could not download book'), _(
+                'Failed to download some book data, click "Show details" for more information'), det)
+
+        def on_stored(err):
+            files_left.discard(this)
+            if err:
+                failed_files.append([this, err])
+            if len(files_left):
+                return
+            if failed_files.length:
+                return show_failure()
+            self.db.finish_book(book, self.display_book.bind(self, book))
+
+        def on_complete(end_type, xhr, ev):
+            self.downloads_in_progress.remove(xhr)
+            progress_track[this] = raster_cover_size if this is raster_cover_name else files[this].size
+            update_progress()
+            if end_type is 'abort':
+                files_left.discard(this)
+                return
+            if end_type is 'load':
+                self.db.store_file(book, this, xhr, on_stored.bind(this), this is raster_cover_name)
+            else:
+                failed_files.append([this, xhr.error_html])
+                files_left.discard(this)
+                if not len(files_left):
+                    show_failure()
+
+        def on_progress(loaded, ftotal):
+            nonlocal total, cover_total_updated, raster_cover_size
+            if this is raster_cover_name and not cover_total_updated:
+                raster_cover_size = ftotal
+                cover_total_updated = True
+                total = total - files[raster_cover_name].size + raster_cover_size
+                pbar.setAttribute('max', total + '')
+            progress_track[this] = loaded
+            update_progress()
+
+        def start_download(fname, path):
+            xhr = ajax(path, on_complete.bind(fname), on_progress=on_progress.bind(fname), query=query, progress_totals_needed=fname is raster_cover_name)
+            xhr.responseType = 'text'
+            if not book.manifest.files[fname].is_virtualized:
+                xhr.responseType = 'blob' if self.db.supports_blobs else 'arraybuffer'
+            xhr.send()
+            self.downloads_in_progress.append(xhr)
+
+        if raster_cover_name:
+            start_download(raster_cover_name, 'get/cover/' + book_id + '/' + encodeURIComponent(library_id))
+
+        for fname in files_left:
+            if fname is not raster_cover_name:
+                start_download(fname, base_path + encodeURIComponent(fname))
+
+    def ensure_maths(self, proceed):
+        self.db.get_mathjax_info(def(mathjax_info):
+            if mathjax_info.version is MATHJAX_VERSION:
+                return proceed()
+            print('Upgrading MathJax, previous version:', mathjax_info.version)
+            self.db.clear_mathjax(def():
+                self.get_mathjax_manifest(mathjax_info, proceed)
+            )
+        )
+
+    def get_mathjax_manifest(self, mathjax_info, proceed):
+        ajax('mathjax', def(end_type, xhr, event):
+            if end_type is 'abort':
+                return
+            if end_type is not 'load':
+                return self.show_error(_('Failed to load MathJax manifest'),
+                    _('Could not open {title} as the MathJax manifest failed to load, click "Show Details" for more information.').format(title=self.current_metadata.title),
+                                    xhr.error_html)
+            try:
+                manifest = JSON.parse(xhr.responseText)
+            except Exception:
+                return self.show_error(_('Failed to load MathJax manifest'),
+                    _('The MathJax manifest is not valid'), traceback.format_exc())
+            if manifest.etag is not MATHJAX_VERSION:
+                print('calibre upgraded: MATHJAX_VERSION={} manifest.etag={}'.format(MATHJAX_VERSION, manifest.etag))
+                return self.show_error(_('calibre upgraded!'), _(
+                    'A newer version of calibre is available, please click the reload button in your browser.'))
+            mathjax_info.version = manifest.etag
+            mathjax_info.files = manifest.files
+            self.download_mathjax(mathjax_info, proceed)
+        ).send()
+
+    def download_mathjax(self, mathjax_info, proceed):
+        files = mathjax_info.files
+        total = 0
+        progress_track = {}
+        files_left = set()
+        failed_files = []
+        for key in files:
+            total += files[key]
+            progress_track[key] = 0
+            files_left.add(key)
+        progress = document.getElementById(self.progress_id)
+        progress.firstChild.textContent = _(
+            'Downloading MathJax to render mathematics in this book...')
+        pbar = progress.firstChild.nextSibling
+        pbar.setAttribute('max', total + '')
+        for xhr in self.downloads_in_progress:
+            xhr.abort()
+        self.downloads_in_progress = []
+
+        def update_progress():
+            x = 0
+            for name in progress_track:
+                x += progress_track[name]
+            pbar.setAttribute('value', x + '')
+            if x is total:
+                msg = _('Downloaded {}, saving to disk, this may take a few seconds...').format(human_readable(total))
+            else:
+                msg = _('Downloaded {0}, {1} left').format(human_readable(x), human_readable(total - x))
+            progress.lastChild.textContent = msg
+
+        def on_progress(loaded, ftotal):
+            progress_track[this] = loaded
+            update_progress()
+
+        def show_failure():
+            det = ['<h4>{}</h4><div>{}</div><hr>'.format(fname, err_html) for fname, err_html in failed_files].join('')
+            self.show_error(_('Could not download MathJax'), _(
+                'Failed to download some MathJax data, click "Show details" for more information'), det)
+
+        def on_complete(end_type, xhr, ev):
+            self.downloads_in_progress.remove(xhr)
+            progress_track[this] = files[this]
+            update_progress()
+            if end_type is 'abort':
+                files_left.discard(this)
+                return
+            if end_type is 'load':
+                self.db.store_mathjax_file(this, xhr, on_stored.bind(this))
+            else:
+                failed_files.append([this, xhr.error_html])
+                files_left.discard(this)
+                if not len(files_left):
+                    show_failure()
+
+        def on_stored(err):
+            files_left.discard(this)
+            if err:
+                failed_files.append([this, err])
+            if len(files_left):
+                return
+            if failed_files.length:
+                return show_failure()
+            self.db.finish_mathjax(mathjax_info, proceed)
+
+        def start_download(name):
+            path = 'mathjax/' + name
+            xhr = ajax(path, on_complete.bind(name), on_progress=on_progress.bind(name), progress_totals_needed=False)
+            xhr.responseType = 'blob' if self.db.supports_blobs else 'arraybuffer'
+            xhr.send()
+            self.downloads_in_progress.push(xhr)
+
+        for fname in files_left:
+            start_download(fname)
+
+    def display_book(self, book):
+        if book.manifest.has_maths:
+            self.ensure_maths(self.display_book_stage2.bind(self, book))
+        else:
+            self.display_book_stage2(book)
+
+    def display_book_stage2(self, book):
+        self.show_stack(self.display_id)
+        self.view.display_book(book)

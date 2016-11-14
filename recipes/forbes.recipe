@@ -1,0 +1,74 @@
+from __future__ import (unicode_literals, division, absolute_import,
+                        print_function)
+import html5lib, json, re
+from calibre.web.feeds.news import BasicNewsRecipe
+
+def classes(classes):
+    q = frozenset(classes.split(' '))
+    return dict(attrs={'class':lambda x:x and frozenset(x.split()).intersection(q)})
+
+class Forbes(BasicNewsRecipe):
+    title          = u'Forbes'
+    description    = 'Business and Financial News'
+    __author__     = 'Kovid Goyal'
+    oldest_article = 30
+    max_articles_per_feed = 20
+    language = 'en'
+    encoding = 'utf-8'
+    no_stylesheets = True
+    ignore_duplicate_articles = {'title', 'url'}
+    remove_empty_feeds = True
+
+    extra_css = '''
+    div.fb-captioned-img {
+        font-size: smaller;
+        margin-top: 1em; margin-bottom: 1em;
+    }
+    div.fb-captioned-img img {
+        display:block;
+        margin-left: auto; margin-right: auto;
+    }
+    '''
+    feeds          = [
+        (u'Latest', u'http://www.forbes.com/news/index.xml'),
+        (u'Most Popular', u'http://www.forbes.com/feeds/popstories.xml'),
+        (u'Technology', u'http://www.forbes.com/technology/index.xml'),
+        (u'Business', u'http://www.forbes.com/business/index.xml'),
+        (u'Sports Money', u'http://www.forbes.com/sportsmoney/index.xml'),
+        (u'Leadership', u'http://www.forbes.com/leadership/index.xml'),
+    ]
+
+    def get_browser(self):
+        br = BasicNewsRecipe.get_browser(self)
+        br.set_cookie('dailyWelcomeCookie', 'true', '.forbes.com')
+        br.set_cookie('welcomeAd', 'true', '.forbes.com')
+        return br
+
+    def preprocess_raw_html(self, raw, url):
+        root = html5lib.parse(raw, namespaceHTMLElements=False, treebuilder='lxml')
+        for script in root.xpath('//script'):
+            if script.text and script.text.startswith('try {'):
+                idx = script.text.find('fbs_settings.content = {')
+                if idx > -1:
+                    text = script.text.partition('=')[2].lstrip()
+                    ridx = text.rfind('} catch(err)')
+                    text = text[:ridx].rstrip().rstrip(';')
+                    data = json.loads(text)
+                    # from pprint import pformat
+                    # print(pformat(data), file=open('/t/data.py', 'w'))
+                    break
+        else:
+            raise ValueError('Failed to find serialized JSON content')
+        title = data['brandVoiceTitle']
+        body = data['body']
+        def cap(m):
+            val = m.group()
+            if val.startswith('[/'):
+                return '</div>'
+            return '<div class="fb-captioned-img">'
+        body = re.sub(r'\[/?caption[^\]]*\]', cap, body)
+        return '''<html><head><title>{0}</title></head><body><h1>{0}</h1><div>{1}</div></body></html>'''.format(title, body)
+
+    # def parse_index(self):
+    #     return [('Articles', [{'title':'Test', 'url':
+    #         'http://www.forbes.com/sites/hamdiraini/2016/04/25/bazin-seeks-startups-to-accelerate-accorhotels-transformation/'}])]

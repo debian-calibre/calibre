@@ -1,0 +1,136 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from encodings import hexlify
+
+def debounce(func, wait, immediate=False):
+    # Returns a function, that, as long as it continues to be invoked, will not
+    # be triggered. The function will be called after it stops being called for
+    # wait milliseconds. If `immediate` is True, trigger the function on the
+    # leading edge, instead of the trailing.
+    timeout = None
+    return def debounce_inner():  # noqa: unused-local
+        nonlocal timeout
+        context, args = this, arguments
+        def later():
+            nonlocal timeout
+            timeout = None
+            if not immediate:
+                func.apply(context, args)
+        call_now = immediate and not timeout
+        window.clearTimeout(timeout)
+        timeout = window.setTimeout(later, wait)
+        if call_now:
+            func.apply(context, args)
+
+def parse_url_params(url=None, allow_multiple=False):
+    url = url or window.location.href
+    qs = url.indexOf('?')
+    ans = {}
+    if qs < 0:
+        return ans
+    q = url.slice(qs + 1, ((url.indexOf('#') + 1) or (url.length + 1)))
+    if not q:
+        return ans
+    pairs = q.replace(/\+/g, " ").split("&")
+    for pair in pairs:
+        key, val = pair.partition('=')[::2]
+        key, val = decodeURIComponent(key), decodeURIComponent(val)
+        if allow_multiple:
+            if ans[key] is undefined:
+                ans[key] = []
+            ans[key].append(val)
+        else:
+            ans[key] = val
+    return ans
+
+_roman = list(zip(
+[1000,900,500,400,100,90,50,40,10,9,5,4,1],
+["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"]
+))
+
+def roman(num):
+    if num <= 0 or num >= 4000 or int(num) is not num:
+        return num + ''
+    result = []
+    for d, r in _roman:
+        while num >= d:
+            result.append(r)
+            num -= d
+    return result.join('')
+
+def fmt_sidx(val, fmt='{:.2f}', use_roman=True):
+    if val is undefined or val is None or val is '':
+        return '1'
+    if int(val) is float(val):
+        if use_roman:
+            return roman(val)
+        return int(val) + ''
+    return fmt.format(float(val))
+
+def human_readable(size, sep=' '):
+    divisor, suffix = 1, "B"
+    for i, candidate in enumerate(('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB')):
+        if size < (1 << ((i + 1) * 10)):
+            divisor, suffix = (1 << (i * 10)), candidate
+            break
+    size = (float(size)/divisor) + ''
+    pos = size.find(".")
+    if pos > -1:
+        size = size[:pos + 2]
+    if size.endswith('.0'):
+        size = size[:-2]
+    return size + sep + suffix
+
+def document_height():
+    html = document.documentElement
+    return max(document.body.scrollHeight, document.body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
+
+def document_width():
+    html = document.documentElement
+    return max(document.body.scrollWidth, document.body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth)
+
+_data_ns = None
+
+def data_ns(name):
+    nonlocal _data_ns
+    if _data_ns is None:
+        rand = Uint8Array(12)
+        window.crypto.getRandomValues(rand)
+        _data_ns = 'data-' + hexlify(rand) + '-'
+    return _data_ns + name
+
+def get_elem_data(elem, name, defval):
+    ans = elem.getAttribute(data_ns(name))
+    if ans is None:
+        return defval ? None
+    return JSON.parse(ans)
+
+def set_elem_data(elem, name, val):
+    elem.setAttribute(data_ns(name), JSON.stringify(val))
+
+def viewport_to_document(x, y, doc):
+    # Convert x, y from the viewport (window) co-ordinate system to the
+    # document (body) co-ordinate system
+    doc = doc or window.document
+    topdoc = window.document
+    while doc is not topdoc:
+        # We are in a frame
+        frame = doc.defaultView.frameElement
+        rect = frame.getBoundingClientRect()
+        x += rect.left
+        y += rect.top
+        doc = frame.ownerDocument
+    win = doc.defaultView
+    wx, wy = win.pageXOffset, win.pageYOffset
+    x += wx
+    y += wy
+    return x, y
+
+def username_key(username):
+    return ('u' if username else 'n') + username
+
+if __name__ is '__main__':
+    print(fmt_sidx(10), fmt_sidx(1.2))
+    print(list(map(human_readable, [1, 1024.0, 1025, 1024*1024*2.3])))

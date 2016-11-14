@@ -1,0 +1,57 @@
+<html xmlns="{xmlns}">
+    <head>
+        <title>{title_str}</title>
+        <meta name="calibre-content" content="jacket"/>
+        <style type="text/css">{css}</style>
+    </head>
+    <body>
+        <div class="cbj_banner">
+            <table class="cbj_header">
+            	<tr>
+            		<td class="cbj_title" colspan="2">{title}</td>
+            	</tr>
+                <tr>
+                    <!-- If you do not want the series number to be formatted using roman numerals
+                        change {series.roman} to {series} -->
+                    <td  class="cbj_series" colspan="2">{series.roman}</td>
+                </tr>
+            	<tr>
+            		<td class="cbj_author" colspan="2">{author}</td>
+            	</tr>
+                <tr>
+                	<td class="cbj_pubdata" colspan="2">{publisher} ({pubdate})</td>
+                </tr>
+
+            	<tr>
+            		<td class="cbj_author" colspan="2"><hr class="metadata_divider" /></td>
+            	</tr>
+
+                <tr class="cbj_rating">
+                    <td class="cbj_label">{rating_label}:</td>
+                    <td class="cbj_content">{rating}</td>
+                </tr>
+                <tr class="cbj_tags">
+                    <td class="cbj_label">{tags_label}:</td>
+                    <!-- If you want the tags to be alphabetical, change {tags} to
+                        {tags.alphabetical} -->
+                    <td class="cbj_content">{tags}</td>
+                </tr>
+                <tr data-calibre-jacket-searchable-tags="1" style="color:white; display:none"><td colspan="2">{searchable_tags}</td></tr>
+            </table>
+            <div class="cbj_footer">{footer}</div>
+        </div>
+        <hr class="cbj_kindle_banner_hr" />
+        <!-- 
+        In addition you can add code to show the values of custom columns here.
+        The value is available as _column_name and the title as
+        _column_name_label.  For example, if you have a custom column with
+        label #genre, you can add it to this template with _genre_label and
+        _genre. Note that the # is replaced by an underscore. For example
+        
+        <div><b>{_genre_label}:</b> {_genre}</div>
+        -->
+
+        <div class="cbj_comments">{comments}</div>
+    </body>
+</html>
+

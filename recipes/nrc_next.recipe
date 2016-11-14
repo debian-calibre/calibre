@@ -1,0 +1,75 @@
+#!/usr/bin/env  python2
+# -*- coding: utf-8 -*-
+# Based on veezh's original recipe, Kovid Goyal's New York Times
+# recipe and Snaabs nrc Handelsblad recipe
+
+__license__   = 'GPL v3'
+__copyright__ = '2014 Niels Giesen'
+
+'''
+www.nrc.nl
+'''
+import os, zipfile, re
+from io import BytesIO
+
+from calibre.web.feeds.news import BasicNewsRecipe
+from datetime import date, timedelta
+
+
+class NRCNext(BasicNewsRecipe):
+
+    title = u'nrc•next'
+    description = u'De ePaper-versie van nrc•next'
+    language = 'nl'
+    needs_subscription = True
+    requires_version = (1, 24, 0)
+
+    __author__ = 'Niels Giesen'
+
+    conversion_options = {
+        'no_default_epub_cover' : True
+    }
+
+    def build_index(self):
+        import mechanize
+        br = mechanize.Browser()
+        br.open('https://login.nrc.nl/login', timeout=60)
+        br.select_form(nr=0)
+        br['username'] = self.username
+        br['password'] = self.password
+        response2 = br.submit()
+        raw = response2.get_data()
+        if 'niet ingelogd' in raw: # in body class
+            raise ValueError('Failed to login, check username and password')
+        epubraw = None
+        for today in (date.today(), date.today() - timedelta(days=1),):
+            url = 'http://digitaleeditie.nrc.nl/digitaleeditie/helekrant/epub/nn_%s.epub' \
+                  % today.strftime('%Y%m%d')
+            self.log('Trying to download epub from:', url)
+            try:
+                response3 = br.open(url, timeout=60)
+                epubraw = response3.get_data()
+                break
+            except mechanize.HTTPError:
+                self.log('%r not available yet' % url)
+                continue
+
+        if epubraw is None:
+            raise ValueError('Krant van vandaag nog niet beschikbaar')
+
+        zfile = zipfile.ZipFile(BytesIO(epubraw), 'r')
+        zfile.extractall(self.output_dir)
+        namelist = zfile.namelist()
+        emre = re.compile("&lt;em(?:.*)&gt;(.*)&lt;/em&gt;")
+        subst = '\\1'
+        for name in namelist:
+            _, ext = os.path.splitext(name);
+            if (ext == '.html') or (ext == '.ncx'):
+                fname = os.path.join(self.output_dir, name)
+                with open(fname) as f:
+                    s = f.read()
+                    s = emre.sub(subst, s)
+                with open(fname, 'w') as f:
+                    f.write(s)
+        index = os.path.join(self.output_dir, 'metadata.opf')
+        return index

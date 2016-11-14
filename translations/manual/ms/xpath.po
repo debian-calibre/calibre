@@ -1,0 +1,188 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# abuyop <abuyop@gmail.com>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-03 09:39+0530\n"
+"PO-Revision-Date: 2015-04-07 12:31+0000\n"
+"Last-Translator: abuyop <abuyop@gmail.com>\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/calibre/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+# 8a801f60e4af41fc9fb9c01fec54cd8a
+#: ../../home/kovid/work/calibre/manual/xpath.rst:4
+msgid "XPath Tutorial"
+msgstr "Tutorial XPath"
+
+# 5e404c7131a04032be190ead2ab533e1
+#: ../../home/kovid/work/calibre/manual/xpath.rst:6
+msgid ""
+"In this tutorial, you will be given a gentle introduction to `XPath "
+"<http://en.wikipedia.org/wiki/XPath>`_, a query language that can be used to"
+" select arbitrary parts of `HTML <http://en.wikipedia.org/wiki/HTML>`_ "
+"documents in calibre. XPath is a widely used standard, and googling it will "
+"yield a ton of information. This tutorial, however, focuses on using XPath "
+"for ebook related tasks like finding chapter headings in an unstructured "
+"HTML document."
+msgstr "Dalam tutorial ini, anda diperkenalkan dengan bahasa `XPath <http://en.wikipedia.org/wiki/XPath>`_, iaitu bahasa kueri atau pertanyaan yang boleh digunakan untuk memilih bahagian arbitrari `HTML <http://en.wikipedia.org/wiki/HTML>`_ dokumen di dalam calibre. XPath merupakan piawaian yang banyak digunakan, dan jika anda mencari di dalam google akan dapati sangat banyak maklumat mengenai. Walaubagaimanapun, tutorial ini lebih fokuskan pada penggunaan XPath untuk tugasan berkaitan ebuku seperti mencari pengepala bab di dalam dokumen HTML tidak berstruktur."
+
+# 451d1e66fa5c40d6a95d7eadb760db57
+#: ../../home/kovid/work/calibre/manual/xpath.rst:0
+msgid "Contents"
+msgstr "Kandungan"
+
+# cb0c75cda8f041bca829fe9cca63b6bf
+#: ../../home/kovid/work/calibre/manual/xpath.rst:19
+msgid "Selecting by tagname"
+msgstr "Memilih berdasarkan nama tag"
+
+# 334a37be69164550acfd63e8df144aa2
+#: ../../home/kovid/work/calibre/manual/xpath.rst:21
+msgid ""
+"The simplest form of selection is to select tags by name. For example, "
+"suppose you want to select all the ``<h2>`` tags in a document. The XPath "
+"query for this is simply::"
+msgstr "Bentuk paling ringkas pemilihan ialah dengan memilih tag mengikut nama. Contohnya, anda mahu memilih semua tag ``<h2>`` di dalam dokumen. Pertanyaan XPath untuk ini hanyalah simply::"
+
+# 8d53f4a375da43918538c97cbadf0113
+#: ../../home/kovid/work/calibre/manual/xpath.rst:27
+msgid ""
+"The prefix `//` means *search at any level of the document*. Now suppose you"
+" want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
+"be achieved with::"
+msgstr "Awalan `//` bermaksud *gelintar pada mana-mana aras dokumen*. Sekarang anda mahu gelintar tag ``<span>`` yang berada di dalam tag ``<a>`` tags. Ia boleh dibuat dengan::"
+
+# 353e6759ff3c4a11b74c912c96ab1e7b
+#: ../../home/kovid/work/calibre/manual/xpath.rst:33
+msgid ""
+"If you want to search for tags at a particular level in the document, change"
+" the prefix::"
+msgstr "Jika anda mahu gelintar tag pada aras tertentu di dalam dokumen, ubah prefix::"
+
+# c12009690b7d4249b50cea4257f8fafd
+#: ../../home/kovid/work/calibre/manual/xpath.rst:39
+msgid ""
+"This will match only ``<p>A very short ebook to demonstrate the use of "
+"XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
+"tags. The ``h:`` prefix in the above examples is needed to match XHTML tags."
+" This is because internally, calibre represents all content as XHTML. In "
+"XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
+"tags."
+msgstr "Ini hanya padankan ``<p>A very short ebook to demonstrate the use of XPath.</p>`` di dalam :ref:`sample_ebook` tetapi bukan pada mana-mana tag ``<p>`` yang lain. Awalan ``h:`` dalam contoh di atas diperlukan untuk memadani tag XHTML. Ini kerana secara dalaman, calibre mewakili semua kandungan sebagai XHTML. Dalam tag XHTML yang mempunyai *namespace*, dan ``h:`` merupakan awalan ruang nama untuk tag HTML."
+
+# f86c3e8508a248b99d9892d207dd9145
+#: ../../home/kovid/work/calibre/manual/xpath.rst:45
+msgid ""
+"Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
+"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
+" test that is used to select tags. Tests can be arbitrarily powerful and as "
+"this tutorial progresses, you will see more powerful examples. A predicate "
+"is created by enclosing the test expression in square brackets::"
+msgstr "Sekarang anda mahu memilih kedua-dua tag ``<h1>`` dan ``<h2>``. Untuk membuatnya,m kita perlukan konstruk XPath yang dikenali sebagai *predikat*. `Predikat` :dfn: ialah ujian yang digunakan untuk memilih tag. Ujian boleh jadi berguna sepanjang tutorial ini dijalanakn, anda akan lihat lagu beberapa contoh yang berguna. Predikat dicipta dengan menutup ungkapan ujian dengan simbol kurungan::"
+
+# a5d5d5a7314940d6975e64b2e040f546
+#: ../../home/kovid/work/calibre/manual/xpath.rst:53
+msgid ""
+"There are several new features in this XPath expression. The first is the "
+"use of the wildcard ``*``. It means *match any tag*. Now look at the test "
+"expression ``name()='h1' or name()='h2'``. :term:`name()` is an example of a"
+" *built-in function*. It simply evaluates to the name of the tag. So by "
+"using it, we can select tags whose names are either `h1` or `h2`. Note that "
+"the :term:`name()` function ignores namespaces so that there is no need for "
+"the ``h:`` prefix. XPath has several useful built-in functions. A few more "
+"will be introduced in this tutorial."
+msgstr "Terdapat beberapa fitur baharu di dalam ungkapan XPath ini. Yang pertama ialah penggunaan kad liar ``*``. Ia bermaksud *padan mana-mana tag*. Sekarang lihat pada ungkapan uji `name()='h1' atau name()='h2'``. :term:`name()` ialah contoh *fungsi terbina-dalam*. Ia hanyalah menilai nama tag. Oleh itu dengan menggunakannya, kita boleh memilih tag yang namanya sama ada `h1` atau `h2`. Perhatian, fungsi :term:`name()` mengabaikan ruang nama supaya tidak memerlukan awalan ``h:``. XPath mempunyai beberapa fungsi terbina-dalam yang berguna. Ada beberapa lagi fungsi akan diperkenalkan di dalam tutorial ini."
+
+# 431741f42b10497e839e81cc2fe5e173
+#: ../../home/kovid/work/calibre/manual/xpath.rst:62
+msgid "Selecting by attributes"
+msgstr "Memilih berdasarkan atribut"
+
+# 375995bf0ffd4556a2aae4059b0945bf
+#: ../../home/kovid/work/calibre/manual/xpath.rst:64
+msgid ""
+"To select tags based on their attributes, the use of predicates is "
+"required::"
+msgstr "Untuk memilih tag berdasarkan atribut mereka, penggunaan predikat diperlukan::"
+
+# aa9953e14a844908ad4e738f7503003d
+#: ../../home/kovid/work/calibre/manual/xpath.rst:70
+msgid ""
+"Here, the ``@`` operator refers to the attributes of the tag. You can use "
+"some of the `XPath built-in functions`_ to perform more sophisticated "
+"matching on attribute values."
+msgstr "Di sini, operator ``@`` merujuk pada atribut tag. Anda boleh guna beberapa `fungsi terbina-dalam XPath`_ untuk membuat padanan lebih kompleks pada nilai atribut."
+
+# a59f37f878a84d67a09709b34f8b1624
+#: ../../home/kovid/work/calibre/manual/xpath.rst:76
+msgid "Selecting by tag content"
+msgstr "Memilih berdasarkan kandungan tag"
+
+# 432a60bf3dd445178c65e58cefb49795
+#: ../../home/kovid/work/calibre/manual/xpath.rst:78
+msgid ""
+"Using XPath, you can even select tags based on the text they contain. The "
+"best way to do this is to use the power of *regular expressions* via the "
+"built-in function :term:`re:test()`::"
+msgstr "Dengan menggunakan XPath, anda boleh pilih tag berdasarkan pada teks yang dikandunginnya. Cara terbaik membuatnya ialah denga gunakan kehebatan *ungkapan nalar* melalui fungsi terbina-dalam :term:`re:test()`::"
+
+# 77baecb286494a4da4a47162e8e98f45
+#: ../../home/kovid/work/calibre/manual/xpath.rst:84
+msgid ""
+"Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
+" operator referred to its attributes."
+msgstr "Di sini operator ``.`` merujuk pada kandungan tag, sepertimana operator ``@`` merujuk pada atributnya."
+
+# dc5a16c9cdd7417f8e3c19e49d9b4327
+#: ../../home/kovid/work/calibre/manual/xpath.rst:90
+msgid "Sample ebook"
+msgstr "ebuku sampel"
+
+# 8229e719f92a48f0b9c08995f4d754ca
+#: ../../home/kovid/work/calibre/manual/xpath.rst:96
+msgid "XPath built-in functions"
+msgstr "Fungsi terbina-dalam XPath"
+
+# b015e0dc7b95477d976bea8a64681589
+#: ../../home/kovid/work/calibre/manual/xpath.rst:99
+msgid "name()"
+msgstr "name()"
+
+# df00ec18c0fe4bd6954143d00c8497a7
+#: ../../home/kovid/work/calibre/manual/xpath.rst:101
+msgid "The name of the current tag."
+msgstr "Nama bagi tag semasa"
+
+# 8d8b9cf4bcab460bac733f0dd361a2c0
+#: ../../home/kovid/work/calibre/manual/xpath.rst:102
+msgid "contains()"
+msgstr "contains()"
+
+# f9c7c097a7104448b3e04d78b124f9f4
+#: ../../home/kovid/work/calibre/manual/xpath.rst:104
+msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
+msgstr "``contains(s1, s2)`` kembali `true` jika s1 mengandungi s2."
+
+# 0b53e3d842b0407b886688fa86fedd92
+#: ../../home/kovid/work/calibre/manual/xpath.rst:105
+msgid "re:test()"
+msgstr "re:test()"
+
+# 4342f61127f7437a82397a7b376a5d19
+#: ../../home/kovid/work/calibre/manual/xpath.rst:107
+msgid ""
+"``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
+"the regular expression `pattern`. A particularly useful flag is ``i``, it "
+"makes matching case insensitive. A good primer on the syntax for regular "
+"expressions can be found at `regexp syntax "
+"<https://docs.python.org/2.7/library/re.html>`_"
+msgstr "``re:test(src, pattern, flags)``  kembalikan `true` jika rentetan `src` memadani `pattern` ungkapan nalar. Salah satu bendera yang berguna adalah ``i``, ia menjadikan padanan tidak sensitif kata. Satu primer yang baik di dalam sintaks boleh ditemui dalam sintaks `sintakas regexp <https://docs.python.org/2.7/library/re.html>`_"

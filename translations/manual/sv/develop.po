@@ -1,0 +1,661 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Merarom <merarom@yahoo.es>, 2014-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-22 09:56+0530\n"
+"PO-Revision-Date: 2016-06-22 08:31+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
+"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:4
+msgid "Setting up a calibre development environment"
+msgstr "Anpassa calibres utvecklingsmiljö"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:6
+msgid ""
+"calibre is completely open source, licensed under the `GNU GPL v3 "
+"<http://www.gnu.org/copyleft/gpl.html>`_. This means that you are free to "
+"download and modify the program to your heart's content. In this section, "
+"you will learn how to get a calibre development environment set up on the "
+"operating system of your choice. calibre is written primarily in `Python "
+"<https://www.python.org>`_ with some C/C++ code for speed and system "
+"interfacing. Note that calibre is not compatible with Python 3 and requires "
+"at least Python 2.7.9."
+msgstr "calibre har helt öppen källkod, licensierat under `GNU GPL v3 <http://www.gnu.org/copyleft/gpl.html>`_. Detta innebär att du är fri att hämta och ändra programmet hur mycket du vill. I det här avsnittet får du lära dig hur du får en calibre utvecklingsmiljö inrättat på valfritt operativsystem. calibre är främst skriven i `Python <https://www.python.org>`_ med lite C/C++-kod för hastighet och systemetgränssnitt. Observera att calibre inte är kompatibel med Python 3 och kräver minst Python 2.7.9."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:0
+msgid "Contents"
+msgstr "Innehåll"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:17
+msgid "Design philosophy"
+msgstr "Konstruktionsfilosofi"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:19
+msgid ""
+"calibre has its roots in the Unix world, which means that its design is "
+"highly modular. The modules interact with each other via well defined "
+"interfaces. This makes adding new features and fixing bugs in calibre very "
+"easy, resulting in a frenetic pace of development. Because of its roots, "
+"calibre has a comprehensive command line interface for all its functions, "
+"documented in :doc:`generated/en/cli-index`."
+msgstr "calibre har sina rötter i Unix världen, vilket innebär att dess konstruktions är mycket modulärt. Modulerna interagerar med varandra via väl definierade gränssnitt. Detta gör att lägga till nya funktioner och rätta fel i calibre mycket lätt, vilket resulterar i en frenetisk takt i utvecklingen. På grund av sina rötter, har calibre ett omfattande kommandoradsgränssnitt för alla dess funktioner, dokumenterade i :doc:`generated/sv/cli-index`."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:24
+msgid ""
+"The modular design of calibre is expressed via ``Plugins``. There is a "
+":ref:`tutorial <customize>` on writing calibre plugins. For example, adding "
+"support for a new device to calibre typically involves writing less than a "
+"100 lines of code in the form of a device driver plugin. You can browse the "
+"`built-in drivers "
+"<https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. "
+"Similarly, adding support for new conversion formats involves writing "
+"input/output format plugins. Another example of the modular design is the "
+":ref:`recipe system <news>` for fetching news. For more examples of plugins "
+"designed to add features to calibre, see the `plugin index "
+"<http://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+msgstr "Den modulära konstruktionen av calibre uttrycks via ``Tillägg``. Det finns en  :ref:`handledning <customize>` om att skriva calibre tillägg. Till exempel, för att lägga till stöd för en ny enhet till calibre vanligtvis innebär att skriva mindre än 100 rader kod i form av en drivrutinstilläggsprogram. Du kan bläddra i  `inbyggda drivrutiner <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. På samma\nsätt lägga till stöd för nya konverteringsformat involverar skrivande indata-/utdataformat tilläggsprogram. Ett annat exempel på den modulära konstruktionen är :ref:`receptsystemet <news>` för att hämta nyheter. För fler exempel på tilläggsprogram som syftar till att lägga till funktioner till calibre, se `tilläggsprogram index <http://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:34
+msgid "Code layout"
+msgstr "Kodutformning"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:36
+msgid ""
+"All the calibre python code is in the ``calibre`` package. This package "
+"contains the following main sub-packages"
+msgstr "All calibre pythonkod finns i ``caliber`` paketet. Paketet innehåller följande huvud-underpaket"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:38
+msgid ""
+"devices - All the device drivers. Just look through some of the built-in "
+"drivers to get an idea for how they work."
+msgstr "enheter - Alla drivrutiner. Bara titta igenom några av de inbyggda drivrutiner för att få en uppfattning om hur de fungerar."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:40
+msgid ""
+"For details, see: ``devices.interface`` which defines the interface "
+"supported by device drivers and ``devices.usbms`` which defines a generic "
+"driver that connects to a USBMS device. All USBMS based drivers in calibre "
+"inherit from it."
+msgstr "För mer information, se: ``devices.interface`` som definierar gränssnitt stöds av drivrutiner och ``devices.usbms`` som definierar en generisk drivrutin som ansluter till en USBMS enhet. Alla USBMS baserade drivrutiner i calibre ärver från den."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:43
+msgid ""
+"ebooks  - All the ebook conversion/metadata code. A good starting point is "
+"``calibre.ebooks.conversion.cli`` which is the module powering the :command"
+":`ebook-convert` command. The conversion process is controlled via "
+"``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
+" and the format dependent code is in ``ebooks.format_name``."
+msgstr "e-böcker - All e-bokkonvertering/metadatakod. En bra utgångspunkt är ``calibre.ebooks.conversion.cli`` vilken är modulen som driver :command:`ebook-convert` kommandot. Konverteringen styrs via ``conversion.plumber``. Formatoberoende kod är alla i ``ebooks.oeb`` och formatberoende kod finns i ``ebooks.format_name``."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:47
+msgid ""
+"Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
+msgstr "Metadataläsning, skrivning, och hämtning finns i ``ebooks.metadata``"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:48
+msgid ""
+"Conversion happens in a pipeline, for the structure of the pipeline, see "
+":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
+"various transforms and an output plugin. The code that constructs and drives"
+" the pipeline is in :file:`plumber.py`. The pipeline works on a "
+"representation of an ebook that is like an unzipped epub, with manifest, "
+"spine, toc, guide, html content, etc. The class that manages this "
+"representation is OEBBook in ``ebooks.oeb.base``. The various "
+"transformations that are applied to the book during conversions live in "
+":file:`oeb/transforms/*.py`. And the input and output plugins live in "
+":file:`conversion/plugins/*.py`."
+msgstr "Konvertering sker i en \"rörledning\", för strukturen av rörledningen, se :ref:`konversions-introduktion`. Rörledningen består av ett indataprogram, olika konverteringar och ett utdataprogram. Den kod som konstruerar och driver rörledningen i :file:`plumber.py`. Rörledningen fungerar på en representation av en e-bok som är som en uppackade epub, med manifest, rygg, innehållsförteckning, guide, html innehåll, osv. Den klass som hanterar denna representation är OEBBook i ``ebooks.oeb.base`` . De olika ändringar som tillämpas på boken under konvertering finns i :file:`oeb/transforms/*.py`. Och input och output plugins finns i  :file:`conversion/plugins/*.py`."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:58
+msgid ""
+"Ebook editing happens using a different container object. It is documented "
+"in :ref:`polish_api`."
+msgstr "E-bokredigering sker med hjälp av en annat kontainerobjekt. Det är dokumenterat i :ref:`polish_api`."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:61
+msgid ""
+"db - The database back-end. See :ref:`db_api` for the interface to the "
+"calibre library."
+msgstr "db - Databasens backend. Se :ref:`db_api` för gränssnittet till calibre biblioteket."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:63
+msgid "content server: ``library.server`` is the calibre Content Server."
+msgstr "mediaserver: ``library.server`` är calibres mediaserver."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:65
+msgid ""
+"gui2 - The Graphical User Interface. GUI initialization happens in "
+"``gui2.main`` and ``gui2.ui``. The ebook-viewer is in ``gui2.viewer``. The "
+"ebook editor is in ``gui2.tweak_book``."
+msgstr "gui2 - Det grafiska användargränssnittet (GUI). GUI initialiseringen händer i ``gui2.main``och ``gui2.ui``. E-bokvisaren finns i ``gui2.viewer``. E-bokredigeraren finns i ``gui2.tweak_book``."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:67
+msgid ""
+"If you want to locate the entry points for all the various calibre "
+"executables, look at the ``entry_points`` structure in `linux.py "
+"<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
+msgstr "Om du vill hitta startplatser för alla de olika calibres körbara delar, titta på ``entry_points`` struktur i `linux.py <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:71
+msgid ""
+"If you need help understanding the code, post in the `development forum "
+"<http://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
+"most likely get help from one of calibre's many developers."
+msgstr "Om du behöver hjälp att förstå koden, post i  `development forum <http://www.mobileread.com/forums/forumdisplay.php?f=240>`_ och du kommer sannolikt att få hjälp av en av calibres många utvecklare."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:75
+msgid "Getting the code"
+msgstr "Få koden"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:77
+msgid ""
+"You can get the calibre source code in two ways, using a version control "
+"system or directly downloading a `tarball <https://calibre-"
+"ebook.com/dist/src>`_."
+msgstr "Du kan få calibre källkoden på två sätt, med hjälp av ett versionshanteringssystem eller direkt hämta en \"tarboll\" - `tarball <https://calibre-ebook.com/dist/src>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:80
+msgid ""
+"calibre uses `Git <http://www.git-scm.com/>`_, a distributed version control"
+" system. Git is available on all the platforms calibre supports.  After "
+"installing Git, you can get the calibre source code with the command::"
+msgstr "calibre använder `Git <http://www.git-scm.com/>`_ , ett distribuerat versionshanteringssystem. Git är tillgänglig på alla plattformar som calibre stöder. När du har installerat Git kan du få calibre källkoden med kommandot:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:86
+msgid ""
+"On Windows you will need the complete path name, that will be something like"
+" :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
+msgstr "I Windows behöver du den fullständiga sökvägen, som kommer att vara något i stil med :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:88
+msgid ""
+"calibre is a very large project with a very long source control history, so "
+"the above can take a while (10 mins to an hour depending on your internet "
+"speed)."
+msgstr "calibre är ett mycket stort projekt med en mycket lång källkontrollshistoria, så ovanstående kan ta ett tag (10 minuter till en timme beroende på din internet hastighet)."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:91
+msgid ""
+"If you want to get the code faster, the source code for the latest release "
+"is always available as an `archive <https://calibre-ebook.com/dist/src>`_."
+msgstr "Om du vill få koden snabbare, är källkoden för den senaste versionen alltid finns som ett `arkiv <https://calibre-ebook.com/dist/src>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:94
+msgid "To update a branch to the latest code, use the command::"
+msgstr "För att uppdatera en filial till den senaste koden använder du kommandot:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:99
+msgid "Submitting your changes to be included"
+msgstr "Skicka in dina ändringar som ska ingå"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:101
+msgid ""
+"If you only plan to make a few small changes, you can make your changes and "
+"create a \"merge directive\" which you can then attach to a ticket in the "
+"calibre `bug tracker <https://bugs.launchpad.net/calibre>`_. To do this, "
+"make your changes, then run::"
+msgstr "Om du bara planerar att göra några små förändringar kan du göra dina ändringar och skapa ett \"merge direktivet\" som du sedan kan fästa på ett ärende i calibre  bug tracker <https://bugs.launchpad.net/calibre>`_.  För att göra detta, gör ändringarna, kör sedan::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:109
+msgid ""
+"This will create a :file:`my-changes` file in the current directory, simply "
+"attach that to a ticket on the calibre `bug tracker "
+"<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
+"the commits you have made. If you only want to send some commits, you have "
+"to change ``origin/master`` above. To send only the last commit, use::"
+msgstr "Detta kommer att skapa en file:`my-changes` fil i den aktuella katalogen, helt enkelt bifoga det till ett ärende i calibre  `bug tracker <https://bugs.launchpad.net/calibre>`_.  Observera att detta kommer att omfatta *alla* de åtgärder du har gjort. Om du bara vill skicka några åtgärder, måste du ändra ``origin/master`` ovan. Om du vill skicka bara den senaste bekräftelsen, använd::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:117
+msgid ""
+"To send the last *n* commits, replace *1* with *n*, for example, for the "
+"last 3 commits::"
+msgstr "Om du vill skicka de senaste *n* ändringar, ersätt *1* med *n* , till exempel under de senaste 3 ändringarna:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:122
+msgid "Be careful to not include merges when using ``HEAD~n``."
+msgstr "Var noga med att inte inkludera sammanslagningar när ``HEAD~n`` ."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:124
+msgid ""
+"If you plan to do a lot of development on calibre, then the best method is "
+"to create a `GitHub <https://github.com>`_ account. Below is a basic guide "
+"to setting up your own fork of calibre in a way that will allow you to "
+"submit pull requests for inclusion into the main calibre repository:"
+msgstr "Om du planerar att göra en hel del calibre utveckling, då det bästa sättet är att skapa ett `GitHub <https://github.com>`_ -konto. Här är en grundläggande guide till att ställa in din egen förgrening av calibre på ett sätt som gör att du kan skicka in hämtansökningar för införande i calibres huvudarkiv/gren:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:129
+msgid ""
+"Setup git on your machine as described in this article: `Setup Git "
+"<https://help.github.com/articles/set-up-git>`_"
+msgstr "Installering av git på maskinen som beskrivs i denna artikel: `Setup Git <https://help.github.com/articles/set-up-git>`_"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:130
+msgid ""
+"Setup ssh keys for authentication to GitHub, as described here: `Generating "
+"SSH keys <https://help.github.com/articles/generating-ssh-keys>`_"
+msgstr "Installera ssh nycklar för autentisering till GitHub, som beskrivs här:  `Generating SSH keys <https://help.github.com/articles/generating-ssh-keys>`_"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:131
+msgid ""
+"Go to https://github.com/kovidgoyal/calibre and click the :guilabel:`Fork` "
+"button."
+msgstr "Gå till https://github.com/kovidgoyal/calibre och klicka på :guilabel:`Förgrenings` knappen."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:132
+msgid "In a Terminal do::"
+msgstr "I en terminal utför:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:137
+msgid ""
+"Replace <username> above with your github username. That will get your fork "
+"checked out locally."
+msgstr "Ersätt <användarnamn> ovan med ditt github användarnamn. Det kommer att få din förgrening utcheckat lokalt."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:138
+msgid ""
+"You can make changes and commit them whenever you like. When you are ready "
+"to have your work merged, do a::"
+msgstr "Du kan göra ändringar och överlämna dem när du vill. När du är redo att ha ditt arbete ihopslaget, gör en::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:142
+msgid ""
+"and go to ``https://github.com/<username>/calibre`` and click the "
+":guilabel:`Pull Request` button to generate a pull request that can be "
+"merged."
+msgstr "och gå till ``https://github.com/<username>/calibre`` och klicka på  :guilabel:`Pull Request`-knappen för att generera en hämtbegäran som kan sammanfogas."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:143
+msgid ""
+"You can update your local copy with code from the main repo at any time by "
+"doing::"
+msgstr "Du kan uppdatera din lokala kopia med kod från huvudarkivet när som helst genom att göra::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:148
+msgid ""
+"You should also keep an eye on the calibre `development forum "
+"<http://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
+"major changes, you should discuss them in the forum or contact Kovid "
+"directly (his email address is all over the source code)."
+msgstr "Du bör också hålla ett öga på calibre `development forum <http://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Innan du gör stora förändringar, bör du diskutera dem i forumet eller kontakta Kovid direkt (hans e-postadress är hela källkoden)."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:154
+msgid "Windows development environment"
+msgstr "Windows-utvecklingsmiljö "
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:156
+#: ../../home/kovid/work/calibre/manual/develop.rst:190
+#: ../../home/kovid/work/calibre/manual/develop.rst:222
+msgid ""
+"You must also get the calibre source code separately as described above."
+msgstr "Du måste också få calibre källkod separat som beskrivet ovan."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:158
+msgid ""
+"Install calibre normally, using the Windows installer. Then open a Command "
+"Prompt and change to the previously checked out calibre code directory. For "
+"example::"
+msgstr "Installera calibre normalt, med hjälp av installationsprogrammet för Windows. Öppna sedan en kommandotolk och ändra till den tidigare kontrollerade calibre kodkatalogen. Till exempel:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:163
+#: ../../home/kovid/work/calibre/manual/develop.rst:234
+msgid ""
+"calibre is the directory that contains the src and resources sub-"
+"directories."
+msgstr "calibre är den katalog som innehåller src och resurser underkataloger."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:165
+msgid ""
+"The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
+" the absolute path of the src directory. So, following the example above, it"
+" would be ``C:\\Users\\kovid\\work\\calibre\\src``. `Here is a short guide "
+"<https://docs.python.org/2/using/windows.html#excursus-setting-environment-"
+"variables>`_ to setting environment variables on Windows."
+msgstr "Nästa steg är att ställa in miljövariabeln ``CALIBRE_DEVELOP_FROM`` till den absoluta sökvägen till src-katalog. Så, efter exemplet ovan skulle det vara ``C:\\Users\\kovid\\work\\calibre\\src``.  \n`Här är en kort guide till <https://docs.python.org/2/using/windows.html#excursus-setting-environment-variables>`_ att sätta miljövariabler i Windows."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:170
+msgid ""
+"Once you have set the environment variable, open a new command prompt and "
+"check that it was correctly set by using the command::"
+msgstr "När du har ställt in miljövariabeln, öppna en ny kommandotolk och kontrollera att den blev rätt inställd med kommandot::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:175
+#: ../../home/kovid/work/calibre/manual/develop.rst:245
+msgid ""
+"Setting this environment variable means that calibre will now load all its "
+"Python code from the specified location."
+msgstr "Ställa denna miljövariabel innebär att calibre kommer nu laddar all sin Python-kod från den angivna platsen."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:177
+msgid ""
+"That's it! You are now ready to start hacking on the calibre code. For "
+"example, open the file :file:`src\\\\calibre\\\\__init__.py` in your "
+"favorite editor and add the line::"
+msgstr "Det är allt! Du är nu redo att börja hacka på calibre koden. Till exempel öppna filen :file:`src\\\\calibre\\\\__init__.py` i din favorit redigerare och lägg till raden::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:182
+#: ../../home/kovid/work/calibre/manual/develop.rst:252
+msgid ""
+"near the top of the file. Now run the command :command:`calibredb`. The very"
+" first line of output should be ``Hello, world!``."
+msgstr "nära toppen av filen. Nu kör kommandot :command:`calibredb` . Den allra första raden av produktionen bör vara Hej världen! ."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:184
+msgid ""
+"You can also setup a calibre development environment inside the free "
+"Microsoft Visual Studio, if you like, following the instructions `here "
+"<http://www.mobileread.com/forums/showthread.php?t=251201>`_."
+msgstr "Du kan även anpassa en calibres utvecklingsmiljö inuti gratis Microsoft Visual Studio, om man så vill, att följa instruktionerna `här <http://www.mobileread.com/forums/showthread.php?t=251201>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:188
+msgid "OS X development environment"
+msgstr "OS X-utvecklingsmiljö"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:192
+msgid ""
+"Install calibre normally using the provided .dmg. Then open a Terminal and "
+"change to the previously checked out calibre code directory, for example::"
+msgstr "Installera calibre normalt med den medföljande .dmg. Öppna sedan en terminal och ändra till den tidigare kontrollerade calibre kodkatalogen, till exempel::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:197
+msgid ""
+"calibre is the directory that contains the src and resources sub-"
+"directories. Ensure you have installed the calibre commandline tools via "
+":guilabel:`Preferences->Advanced->Miscellaneous` in the calibre GUI."
+msgstr "calibre är den katalog som innehåller src och resurser underkataloger. Se till att du har installerat den calibre kommandoradsverktyg via :guilabel:`Inställningar->Avancerat->Diverse` i calibre grafiska gränssnitt."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:199
+msgid ""
+"The next step is to create a bash script that will set the environment "
+"variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src directory "
+"when running calibre in debug mode."
+msgstr "Nästa steg är att skapa ett bash skript som kommer att sätta miljövariabeln ``CALIBRE_DEVELOP_FROM`` till den absoluta sökvägen till katalogen src när man kör calibre i felsökningsläge."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:201
+msgid "Create a plain text file::"
+msgstr "Skapa en vanlig textfil::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:207
+msgid ""
+"Save this file as ``/usr/bin/calibre-develop``, then set its permissions so "
+"that it can be executed::"
+msgstr "Spara den här filen som ``/usr/bin/calibre-develop``, ställ sedan in dess rättigheter så att den kan köras::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:211
+msgid "Once you have done this, run::"
+msgstr "När du har gjort det, kör::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:215
+msgid ""
+"You should see some diagnostic information in the Terminal window as calibre"
+" starts up, and you should see an asterisk after the version number in the "
+"GUI window, indicating that you are running from source."
+msgstr "Du bör se några diagnostisk information i terminalfönstret som calibre startar, och du bör se en asterisk efter versionsnumret i grafiska gränssnittsfönstret, vilket indikerar att du kör från källkod."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:220
+msgid "Linux development environment"
+msgstr "Linux-utvecklingsmiljö"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:224
+msgid ""
+"calibre is primarily developed on Linux. You have two choices in setting up "
+"the development environment. You can install the calibre binary as normal "
+"and use that as a runtime environment to do your development. This approach "
+"is similar to that used in Windows and OS X. Alternatively, you can install "
+"calibre from source. Instructions for setting up a development environment "
+"from source are in the INSTALL file in the source tree. Here we will address"
+" using the binary as a runtime, which is the recommended method."
+msgstr "calibre är främst utvecklats på Linux. Du har två val i inrättandet av utvecklingsmiljön. Du kan installera calibre binär som vanligt och använda det som en körtidsmiljö för att göra din utveckling. Detta tillvägagångssätt liknar den som används i Windows och OS X. Alternativt kan du installera calibre från källan. Instruktioner för hur du installerar en utvecklingsmiljö från källan är i installationsfilen i källkodsträdet. Här kommer vi att ta itu med den binär som en körbar, vilket är den rekommenderade metoden."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:230
+msgid ""
+"Install calibre using the binary installer. Then open a terminal and change "
+"to the previously checked out calibre code directory, for example::"
+msgstr "Installera calibre att använda den binära installationsprogrammet. Öppna sedan en terminal och ändra till den tidigare kontrollerade calibre kodkatalogen, till exempel:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:236
+msgid ""
+"The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
+" the absolute path of the src directory. So, following the example above, it"
+" would be ``/home/kovid/work/calibre/src``. How to set environment variables"
+" depends on your Linux distribution and what shell you are using."
+msgstr "Nästa steg är att ställa in miljövariabeln ``CALIBRE_DEVELOP_FROM`` till den absoluta sökvägen till src katalog. Så, efter exemplet ovan skulle det vara ``/home/kovid/work/calibre/src``. Så ställer du in miljövariabler beror på din Linux-distribution och vad kommandoskal du använder."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:240
+msgid ""
+"Once you have set the environment variable, open a new terminal and check "
+"that it was correctly set by using the command::"
+msgstr "När du har ställt in miljövariabeln, öppna en ny terminal och kontrollera att den blev rätt inställd med kommandot::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:247
+msgid ""
+"That's it! You are now ready to start hacking on the calibre code. For "
+"example, open the file :file:`src/calibre/__init__.py` in your favorite "
+"editor and add the line::"
+msgstr "Det är allt! Du är nu redo att börja hacka på calibre koden. Till exempel öppna filen :file:`src/calibre/__init__.py` i din favorit redigerare och lägg till raden:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:255
+msgid ""
+"Having separate \"normal\" and \"development\" calibre installs on the same "
+"computer"
+msgstr "Att ha separata \"normal\" och \"utveckling\" calibre inställningar på samma dator "
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:257
+msgid ""
+"The calibre source tree is very stable and rarely breaks, but if you feel "
+"the need to run from source on a separate test library and run the released "
+"calibre version with your everyday library, you can achieve this easily "
+"using .bat files or shell scripts to launch calibre. The example below shows"
+" how to do this on Windows using .bat files (the instructions for other "
+"platforms are the same, just use a shell script instead of a .bat file)"
+msgstr "calibre källkodsträd är mycket stabila och sällan brytes sönder, men om du känner behov av att köras från källan på ett separat testbibliotek och kör släppt calibre version med ditt vardagliga biblioteket kan du uppnå detta enkelt med hjälp bat-filer eller skalskript för att starta calibre. Exemplet nedan visar hur man gör detta på Windows med bat-filer (instruktionerna för andra plattformar är samma, bara använda ett skalskript istället för en bat-fil)"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:262
+msgid "To launch the release version of calibre with your everyday library:"
+msgstr "För att starta den utgivna versionen av calibre med din vardagliga biblioteket:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:264
+msgid "calibre-normal.bat::"
+msgstr "calibre-normal.bat::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:268
+msgid "calibre-dev.bat::"
+msgstr "calibre-dev.bat::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:275
+msgid "Debugging tips"
+msgstr "Felsökningstips"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:277
+msgid ""
+"Python is a dynamically typed language with excellent facilities for "
+"introspection. Kovid wrote the core calibre code without once using a "
+"debugger. There are many strategies to debug calibre code:"
+msgstr "Python är ett dynamiskt typat språk med utmärkta faciliteter för introspektion. Kovid skrev kärndelar av calibrekod utan en gång med hjälp av ett avlusningsprogram. Det finns många strategier för att felsöka calibre-kod:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:282
+msgid "Using print statements"
+msgstr "Användsa print-satser"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:284
+msgid ""
+"This is Kovid's favorite way to debug. Simply insert print statements at "
+"points of interest and run your program in the terminal. For example, you "
+"can start the GUI from the terminal as::"
+msgstr "Det här är Kovids favorit sätt att felsöka. Sätt bara in utskrift-satser vid intressanta punkter och köra ditt program i terminalen. Till exempel kan du starta det grafiska gränssnittet från terminalen som::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:289
+msgid "Similarly, you can start the ebook-viewer as::"
+msgstr "På samma sätt kan du starta E-bokvisaren med::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:293
+msgid "The ebook-editor can be started as::"
+msgstr "E-bokredigeraren kan startas som::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:298
+msgid "Using an interactive python interpreter"
+msgstr "Med hjälp av en interaktiv python-tolk "
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:300
+msgid ""
+"You can insert the following two lines of code to start an interactive "
+"python session at that point::"
+msgstr "Du kan infoga följande två rader kod för att starta en interaktiv python-session på den punkten::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:305
+msgid ""
+"When running from the command line, this will start an interactive Python "
+"interpreter with access to all locally defined variables (variables in the "
+"local scope). The interactive prompt even has TAB completion for object "
+"properties and you can use the various Python facilities for introspection, "
+"such as :func:`dir`, :func:`type`, :func:`repr`, etc."
+msgstr "När du kör från kommandoraden, kommer detta att starta en interaktiv python-tolk med tillgång till alla lokalt definierade variabler (variabler i den lokala omfattning). Den interaktiva prompten har till och med TAB komplettering för objektegenskaper och du kan använda de olika python-finnesser för introspektion, såsom :func:`dir`, :func:`type`, :func:`repr`, osv."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:311
+msgid "Using the python debugger as a remote debugger"
+msgstr "Använda python-felsökare som fjärrfelsökare"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:313
+msgid ""
+"You can use the builtin python debugger (pdb) as a remote debugger from the "
+"command line. First, start the remote debugger at the point in the calibre "
+"code you are interested in, like this::"
+msgstr "Du kan använda den inbyggda python-felsökare (PDB) som fjärrfelsökare från kommandoraden. Först startar fjärrfelsökaren vid den punkt i calibre koden du är intresserad av, så här:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:320
+msgid ""
+"Then run calibre, either as normal, or using one of the calibre-debug "
+"commands described in the previous section. Once the above point in the code"
+" is reached, calibre will freeze, waiting for the debugger to connect."
+msgstr "Kör sedan calibre, antingen som vanligt, eller använda någon av calibre felsökningskommandon som beskrivs i föregående avsnitt. När ovanstående punkt i koden är nådd kommer calibre frysa, väntar på felsökaren för att ansluta."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:324
+msgid ""
+"Now open a terminal or command prompt and use the following command to start"
+" the debugging session::"
+msgstr "Nu öppna en terminal eller kommandotolk och använd följande kommando för att starta felsökningssessionen::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:329
+msgid ""
+"You can read about how to use the python debugger in the `python stdlib docs"
+" for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-"
+"commands>`_."
+msgstr "Du kan läsa om hur man använder python-felsökaren i `python stdlib docs för pdb modulen <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:333
+msgid ""
+"By default, the remote debugger will try to connect on port 4444. You can "
+"change it, by passing the port parameter to both the set_trace() and the "
+"cli() functions above, like this: ``set_trace(port=1234)`` and "
+"``cli(port=1234)``."
+msgstr "Som standard kommer fjärrfelsökaren försöker ansluta på port 4444. Du kan ändra det, genom att skicka portparametern till både set_trace()- och cli()-funktioner ovan, så här: ``set_trace(port=1234)`` och ``cli(port=1234)``."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:339
+msgid ""
+"The python debugger cannot handle multiple threads, so you have to call "
+"set_trace once per thread, each time with a different port number."
+msgstr "Python-felsökaren kan inte hantera flera trådar, så du måste anropa set_trace en gång per tråd, varje gång med ett annat portnummer."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:343
+msgid "Using the debugger in your favorite python IDE"
+msgstr "Använda felsökaren i din favorit python-IDE"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:345
+msgid ""
+"It is possible to use the builtin debugger in your favorite python IDE, if "
+"it supports remote debugging. The first step is to add the calibre src "
+"checkout to the ``PYTHONPATH`` in your IDE. In other words, the directory "
+"you set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the "
+"``PYTHONPATH`` of your IDE."
+msgstr "Det är möjligt att använda den inbyggda felsökaren i din favorit python-IDE, om den stödjer fjärrfelsökning. Det första steget är att lägga till utcheckat calibre src till ``PYTHONPATH`` i IDE. Med andra ord, den katalog du anger som ``CALIBRE_DEVELOP_FROM`` måste ovan, också vara i ``PYTHONPATH`` din IDE."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:350
+msgid ""
+"Then place the IDE's remote debugger module into the :file:`src` "
+"subdirectory of the calibre source code checkout. Add whatever code is "
+"needed to launch the remote debugger to calibre at the point of interest, "
+"for example in the main function. Then run calibre as normal. Your IDE "
+"should now be able to connect to the remote debugger running inside calibre."
+msgstr "Placera sedan IDE fjärrfelsökarmodulen i src katalog till calibre källkod kassan. Lägg allt vad kod som behövs för att starta fjärrfelsökaren för calibre på den intressanta, till exempel i huvudfunktionen. Kör sedan calibre som vanligt. Din IDE bör nu kunna ansluta till fjärrfelsökaren kör inne i calibre."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:357
+msgid "Executing arbitrary scripts in the calibre python environment"
+msgstr "Kör godtyckliga skript i calibre python-miljön "
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:359
+msgid ""
+"The :command:`calibre-debug` command provides a couple of handy switches to "
+"execute your own code, with access to the calibre modules::"
+msgstr ":command:`calibre-debug`-kommandot ger ett par praktiska flaggor för att köra egen kod, med tillgång till calibre moduler::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:364
+msgid ""
+"is great for testing a little snippet of code on the command line. It works "
+"in the same way as the -c switch to the python interpreter::"
+msgstr "är bra för att testa en liten kodavsnitt på kommandoraden. Det fungerar på samma sätt som den -c flaggan till python-tolken::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:368
+msgid ""
+"can be used to execute your own Python script. It works in the same way as "
+"passing the script to the Python interpreter, except that the calibre "
+"environment is fully initialized, so you can use all the calibre code in "
+"your script. To use command line arguments with your script, use the form::"
+msgstr "kan användas för att köra din egen Python-skript. Det fungerar på samma sätt som att skicka skriptet till Python-tolken, förutom att calibre miljön är helt initierad, så att du kan använda all calibre kod i skriptet. För att använda kommandoradsargument med ditt manus, använd formuläret:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:373
+msgid ""
+"The ``--`` causes all subsequent arguments to be passed to your script."
+msgstr "Den ``--``  leder till att alla efterföljande argument skickas till ditt skript."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:377
+msgid "Using calibre in your projects"
+msgstr "Använda calibre i dina projekt"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:379
+msgid ""
+"It is possible to directly use calibre functions/code in your Python "
+"project. Two ways exist to do this:"
+msgstr "Det är möjligt att direkt använda calibrefunktioner/kod i Python-projektet. Två sätt finns för att göra detta:"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:382
+msgid "Binary install of calibre"
+msgstr "Binär installation av calibre"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:384
+msgid ""
+"If you have a binary install of calibre, you can use the Python interpreter "
+"bundled with calibre, like this::"
+msgstr "Om du har en binär installation av calibre, kan du använda Python-tolken som medföljer calibre, så här::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:389
+msgid "Source install on Linux"
+msgstr "Installera källkod på Linux"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:391
+msgid ""
+"In addition to using the above technique, if you do a source install on "
+"Linux, you can also directly import calibre, as follows::"
+msgstr "Förutom att använda ovanstående teknik, om du gör en källkodsinstallation på Linux, kan du också direkt importera calibre, enligt följande::"
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:399
+msgid ""
+"It is essential that you import the init_calibre module before any other "
+"calibre modules/packages as it sets up the interpreter to run calibre code."
+msgstr "Det är viktigt att du importerar init_calibre modulen innan någon annan calibre modules/packages som det sätter upp tolken att köra calibre kod."
+
+#: ../../home/kovid/work/calibre/manual/develop.rst:403
+msgid "API documentation for various parts of calibre"
+msgstr "API-dokumentation för olika delar av calibre"

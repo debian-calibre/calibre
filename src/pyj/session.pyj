@@ -1,0 +1,171 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from ajax import ajax_send
+
+defaults = {
+    # Book list settings
+    'view_mode': 'cover_grid',
+    'sort': 'timestamp.desc',  # comma separated list of items of the form: field.order
+
+    # Tag Browser settings
+    'partition_method': 'first letter',  # other choices: 'disable', 'partition'
+    'collapse_at': 25,  # number of items at which sub-groups are created, 0 to disable
+    'dont_collapse': '',  # comma separated list of category names
+    'sort_tags_by': 'name', # other choices: popularity, rating
+    'hide_empty_categories': 'no',
+    'and_search_terms': False,  # how to add search terms to the search expression from the Tag Browser
+
+    # Book reader settings
+    'margin_right': 20,
+    'margin_left': 20,
+    'margin_top': 20,
+    'margin_bottom': 20,
+    'read_mode': 'paged',
+    'max_text_height': 0,
+    'max_text_width': 0,
+    'cols_per_screen': 1,
+}
+
+def storage_available(which):
+    which = which or 'localStorage'
+    try:
+        storage = window[which]
+        x = '__storage__test__'
+        storage.setItem(x, x)
+        storage.removeItem(x)
+        return True
+    except:
+        return False
+
+session_storage = None
+
+class FakeStorage:
+
+    def __init__(self):
+        self.data = {}
+
+    def getItem(self, key):
+        return self.data[key]
+
+    def setItem(self, key, value):
+        if type(value) is not 'string':
+            value = JSON.stringify(value)
+        self.data[key] = value
+
+    def clear(self):
+        self.data = {}
+
+def get_session_storage():
+    nonlocal session_storage
+    if session_storage is None:
+        if storage_available('localStorage'):
+            session_storage = window.localStorage
+        elif storage_available('sessionStorage'):
+            session_storage = window.sessionStorage
+            console.error('localStorage not available using sessionStorage instead')
+        else:
+            session_storage = FakeStorage()
+            console.error('sessionStorage and localStorage not available using a temp cache instead')
+    return session_storage
+
+class SessionData:
+
+    global_prefix = 'calibre-'
+
+    def __init__(self):
+        self.storage = get_session_storage()
+        self.overflow_storage = {}
+        self.has_overflow = False
+
+    def get(self, key, defval):
+        key = self.global_prefix + key
+        if self.has_overflow:
+            ans = self.overflow_storage[key]
+            if ans is undefined:
+                ans = self.storage.getItem(key)
+        else:
+            ans = self.storage.getItem(key)
+        if ans is undefined or ans is None:
+            if defval is undefined:
+                defval = None
+            return defval
+        return JSON.parse(ans)
+
+    def set(self, key, value):
+        key = self.global_prefix + key
+        if value is None:
+            self.storage.removeItem(key)
+            v'delete self.overflow_storage[key]'
+            return True
+        value = JSON.stringify(value)
+        try:
+            self.storage.setItem(key, value)
+            v'delete self.overflow_storage[key]'
+            return True
+        except:
+            self.overflow_storage[key] = value
+            self.has_overflow = True
+            console.error('session storage has overflowed, using a temp cache instead')
+        return False
+
+    def clear(self):
+        self.storage.clear()
+        self.overflow_storage = {}
+        self.has_overflow = False
+
+class UserSessionData(SessionData):
+
+    def __init__(self, username, saved_data):
+        self.prefix = (username or '') + '-'
+        self.has_user = bool(username)
+        self.username = username
+        SessionData.__init__(self)
+        self.echo_changes = False
+        self.changes = {}
+        self.has_changes = False
+        self.push_timer_id = None
+        if saved_data:
+            for key in saved_data:
+                self.set(key, saved_data[key])
+        self.echo_changes = True
+
+    def defval(self, key):
+        return defaults[key]
+
+    def get(self, key, defval):
+        if defval is undefined:
+            defval = defaults[key]
+        return SessionData.get(self, (self.prefix + key), defval)
+
+    def get_library_option(self, library_id, key, defval):
+        if not library_id:
+            return self.get(key, defval)
+        lkey = key + '-||-' + library_id
+        if defval is undefined:
+            defval = defaults[key]
+        return self.get(lkey, defval)
+
+    def set(self, key, value):
+        if self.echo_changes and self.has_user:
+            self.changes[key] = value
+            self.has_changes = True
+            if self.push_timer_id is not None:
+                clearTimeout(self.push_timer_id)
+            self.push_timer_id = setTimeout(self.push_to_server.bind(self), 1000)
+        return SessionData.set(self, (self.prefix + key), value)
+
+    def set_library_option(self, library_id, key, value):
+        if library_id:
+            key = key + '-||-' + library_id
+        return self.set(key, value)
+
+    def push_to_server(self):
+        if self.has_changes:
+            ajax_send('interface-data/set-session-data', self.changes, def(end_type, xhr, ev):
+                if end_type is not 'load':
+                    console.error('Failed to send session data to server: ' + xhr.error_html)
+            )
+            self.changes = {}
+            self.has_changes = False

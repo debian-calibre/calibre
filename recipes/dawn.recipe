@@ -1,0 +1,40 @@
+from calibre.web.feeds.news import BasicNewsRecipe
+
+class DawnRecipe(BasicNewsRecipe):
+    __license__  = 'GPL v3'
+    __author__ = 'kwetal'
+    language = 'en_PK'
+    version = 1
+
+    title = u'Dawn'
+    publisher = u'Dawn Media Group'
+    category = u'News, Pakistan'
+    description = u'Leading English Newspaper of Pakistan covering national & international news'
+
+    use_embedded_content = False
+    remove_empty_feeds = True
+    oldest_article = 2
+    max_articles_per_feed = 100
+
+    no_stylesheets = True
+    remove_javascript = True
+    encoding = 'utf-8'
+    keep_only_tags = [
+        dict(name='div', attrs={'class':'push-half--sides  push--top'}),
+        dict(name='article', attrs={'class':'story  story--single  push-half'})]
+
+    # Feeds from http://www.dawn.com/wps/wcm/connect/dawn-content-library/dawn/services/rss
+    feeds = []
+    feeds.append((u'Latest News', u'http://feeds.feedburner.com/dawn-news'))
+
+    conversion_options = {'comments': description, 'tags': category, 'language': 'en',
+                          'publisher': publisher}
+
+    extra_css = '''
+                body{font-family:verdana,arial,helvetica,geneva,sans-serif;}
+                center {font-size: xx-small; color: #666666;}
+                strong {font-size: small; font-weight: bold;}
+                span.news_headline {font-size: xx-large; font-weight: bold; margin: 0em; padding: 0em}
+                span.news_byline {font-size: x-small; color: #696969; margin-top: 1em;}
+                '''
+

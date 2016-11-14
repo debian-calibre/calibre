@@ -1,0 +1,147 @@
+#!/usr/bin/env python2
+
+__license__   = 'GPL v3'
+__copyright__ = '2011, Davide Cavalca <davide125 at tiscali.it>'
+'''
+lwn.net
+'''
+
+from calibre.web.feeds.news import BasicNewsRecipe
+import re
+import sys
+
+class WeeklyLWN(BasicNewsRecipe):
+    title = 'LWN.net Weekly Edition'
+    description = 'Weekly summary of what has happened in the free software world.'
+    __author__ = 'Davide Cavalca'
+    language = 'en'
+    site_url = u'http://lwn.net'
+
+    no_stylesheets = True
+    remove_javascript = True
+    extra_css = '''pre,code,samp,kbd,tt { font-size: 80% }
+                   blockquote {margin-left:0 }
+                   DIV.BigQuote,SPAN { font-style:oblique }
+                   DIV.FeatureByline,DIV.GaByline { background-color:#EEE }
+                   DIV.tlr { background-color:#EED; border-style:groove; }
+                   * { color: black }'''
+
+    cover_url = site_url + '/images/lcorner.png'
+    # masthead_url = 'http://lwn.net/images/lcorner.png'
+    publication_type = 'magazine'
+
+    keep_only_tags = [dict(attrs={'class':['PageHeadline','ArticleText']})]
+    remove_tags = [dict(name=['h2', 'form'])]
+
+    preprocess_regexps = [
+        # Remove the <hr> and "Log in to post comments"
+        (re.compile(r'<hr [^>]+>\s*\n\s*.*?comments[)]'), lambda m: ''),
+    ]
+
+    conversion_options = {
+        'no_inline_navbars': True,
+    }
+
+    oldest_article = 7.0
+    needs_subscription = 'optional'
+
+    def get_browser(self):
+        br = BasicNewsRecipe.get_browser(self)
+        if self.username is not None and self.password is not None:
+            br.open('https://lwn.net/login')
+            br.select_form(name='loginform')
+            br['Username'] = self.username
+            br['Password'] = self.password
+            br.submit()
+        return br
+
+    def print_version(self, url):
+
+        # Strip off anchor
+        url = url.split('#')[0]
+
+        # Prepend site_url
+        if url[0:len(self.site_url)] != self.site_url:
+            url = self.site_url + url
+
+        # Append printable URL parameter
+        print_param = '?format=printable'
+        if url[-len(print_param):] != print_param:
+            url += print_param
+
+        return url
+
+    def parse_index(self):
+        if self.username is not None and self.password is not None:
+            index_url = self.print_version('/current/bigpage')
+        else:
+            index_url = self.print_version('/free/bigpage')
+        soup = self.index_to_soup(index_url)
+        curr = soup.body
+
+        articles = {}
+        ans = []
+
+        section = soup.title.string
+        subsection = None
+
+        while True:
+            curr = curr.findNext(attrs={'class': ['SummaryHL', 'Cat1HL', 'Cat2HL']})
+
+            if curr is None:
+                break
+
+            text = curr.contents[0].string
+
+            if 'Cat2HL' in curr.attrMap['class']:
+                subsection = text
+
+            elif 'Cat1HL' in curr.attrMap['class']:
+                section = text
+                subsection = None
+
+            elif 'SummaryHL' in curr.attrMap['class']:
+                article_title = text
+
+                if subsection:
+                    section_title = "%s: %s" % (section, subsection)
+                else:
+                    section_title = section
+
+                # Most articles have anchors in their titles, *except* the security vulnerabilities
+                article_anchor = curr.findNext(name='a', attrs={'href': re.compile('^/Articles/')})
+
+                if article_anchor:
+                    article_url = article_anchor.get('href')
+                    if not article_url:
+                        print >>sys.stderr, 'article_url is None for article_anchor "%s": "%s"' \
+                                % (str(article_anchor), article_title)
+                        continue
+
+                else:
+                    print >>sys.stderr, 'article_anchor is None for "%s"; skipping' % article_title
+                    article_url = None
+                    continue
+
+                if section_title not in articles:
+                    articles[section_title] = []
+                if section_title not in ans:
+                    ans.append(section_title)
+
+                articles[section_title].append({
+                        'url': article_url,
+                        'title': article_title,
+                        'description': '', 'content': '', 'date': '',
+                    })
+
+            else:
+                print >>sys.stderr, "lwn_weekly.recipe: something bad happened; should not be able to reach this"
+
+        ans = [(section2, articles[section2]) for section2 in ans if section2 in articles]
+        # from pprint import pprint
+        # pprint(ans)
+
+        return ans
+
+# vim: expandtab:ts=4:sw=4
+

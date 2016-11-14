@@ -1,0 +1,171 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# abuyop <abuyop@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-24 09:10+0530\n"
+"PO-Revision-Date: 2015-07-31 06:26+0000\n"
+"Last-Translator: abuyop <abuyop@gmail.com>\n"
+"Language-Team: Malay (http://www.transifex.com/calibre/calibre/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:4
+msgid "Integrating the calibre content server into other servers"
+msgstr "Menyepadukan pelayan kandungan calibre ke dalam pelayan lain"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:6
+msgid ""
+"Here, we will show you how to integrate the calibre content server into "
+"another server. The most common reason for this is to make use of SSL or "
+"more sophisticated authentication. There are two main techniques: Running "
+"the calibre content server as a standalone process and using a reverse proxy"
+" to connect it with your main server or running the content server in "
+"process in your main server with WSGI. The examples below are all for Apache"
+" 2.x on linux, but should be easily adaptable to other platforms."
+msgstr "Di sini, kita akan tunjukkan bagaimana anda dapat mengintegrasikan pelayan kandungan calibre ke dalam pelayan lain. Sebab utama melakukannya kerana penggunaan SSL atau pengesahihan canggih. Terdapat dua teknik utama: Menjalankan pelayan kandungan calibre sebagai proses berdiri-sendiri dan menggunakan proksi songsang untuk menyambung ia dengan pelayan utama anda atau menjalankan pelayan kandungan dalam proses di dalam pelayan utama denga WSGI. Contoh-contoh di bawah menggunakan Apache 2.x dalam linux, tetapi ia mudah disuaikan dengan platform lain."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:0
+msgid "Contents"
+msgstr "Kandungan"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:12
+msgid "This only applies to calibre releases >= 0.7.25"
+msgstr "Ini hanya dilaksanakan pada calibre keluaran >= 0.7.25"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:15
+msgid "Using a reverse proxy"
+msgstr "Menggunakan proksi songsang"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:17
+msgid ""
+"A reverse proxy is when your normal server accepts incoming requests and "
+"passes them onto the calibre server. It then reads the response from the "
+"calibre server and forwards it to the client. This means that you can simply"
+" run the calibre server as normal without trying to integrate it closely "
+"with your main server, and you can take advantage of whatever authentication"
+" systems your main server has in place. This is the simplest approach as it "
+"allows you to use the binary calibre install with no external "
+"dependencies/system integration requirements. Below, is an example of how to"
+" achieve this with Apache as your main server, but it will work with any "
+"server that supports Reverse Proxies."
+msgstr "Proksi songsang berlaku bila pelayan biasa anda menerima permintaan masuk dan melepasi ia ke dalam pelayan calibre. Kemudian ia membaca respon dari pelayan calibre dan memajukannya kepada klien. Ini bermaksud anda dengan mudah jalankan pelayan calibre seperti biasa tanpa cuba menyepadukannya dengan pelayan utama anda, dan anda boleh guna apa jua kelebihan sistem pengesahihan pelayan utama yang ada. Pendekatan yang paling mudah adalah membenarkan anda guna binary calibre install tanpa apa-apa keperluan penyepaduan sistem/dependensi luaran. Contoh di bawah adalah bagaimana hendak menjalankannya dengan Apache sebagai pelayan utama anda, tetapi ia akan berfungsi dengan mana-mana pelayan yang menyokong Proksi Songsang."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:19
+msgid "First start the calibre content server as shown below::"
+msgstr "Pertama, mulakan pelayan kandungan calibre yang ditunjukkan di bawah::"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:23
+msgid ""
+"The key parameter here is ``--url-prefix /calibre``. This causes the content"
+" server to serve all URLs prefixed by calibre. To see this in action, visit "
+"``http://localhost:8080/calibre`` in your browser. You should see the normal"
+" content server website, but now it will run under /calibre."
+msgstr "Parameter kunci di sini ialah ``--url-prefix /calibre``. Ini membolehkan pelayan kandungan melayan semua URL yang diawali oleh calibre. Untuk melihat tindakan ini, lawati ``http://localhost:8080/calibre`` dalam pelayar anda. Anda dapat melihat laman sesawang pelayan kandungan biasa, tetapi kini ia akan dijalankan di bawah /calibre."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:25
+msgid ""
+"Now suppose you are using Apache as your main server. First enable the proxy"
+" modules in apache, by adding the following to :file:`httpd.conf`::"
+msgstr "Sekarang anggap anda menggunakan Apache sebagai pelayan utama anda. Pertama sekali, benarkan modul proksi di dalam apache, dengan menambah yang berikut ke :file:`httpd.conf`::"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:30
+msgid ""
+"The exact technique for enabling the proxy modules will vary depending on "
+"your Apache installation. Once you have the proxy modules enabled, add the "
+"following rules to httpd.conf (or if you are using virtual hosts to the conf"
+" file for the virtual host in question)::"
+msgstr "Teknik yang tepat untuk membenarkan modul proksi akan berubah mengikut cara pemasangan Apache anda. Bilamana anda telah membenarkan modul proksi, tambah peraturan berikut ke httpd.conf (atau jika  anda menggunakan hos maya ke dalam fail conf untuk hos maya dalam persoalan)::"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:38
+msgid ""
+"That's all, you will now be able to access the calibre Content Server under "
+"the /calibre URL in your apache server. The above rules pass all requests "
+"under /calibre to the calibre server running on port 8080 and thanks to the "
+"--url-prefix option above, the calibre server handles them transparently."
+msgstr "Setakat ini sahaja, anda kini dapat mencapai Pelayan Kandungan di bawah URL /calibre dalam pelayan apache. Peratuan di atas melepasi semua permintaan di bawah /calibre kepada pelayan calibre yang dijalankan pada port 8080 dan atas penggunaan pilihan --url-prefix seperti di atas, pelayan calibre akan mengendalikannya tanpa masalah."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:40
+msgid ""
+"If you are willing to devote an entire VirtualHost to the content server, "
+"then there is no need to use --url-prefix and RewriteRule, instead just use "
+"the ProxyPass directive."
+msgstr "Jika anda mahu guna sepenuhnya VirtualHost ke pelayan kandungan, maka tidak perlu guna --url-prefix dan RewriteRule, sebagai pengganti guna arahan ProxyPass."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:42
+msgid ""
+"The server engine calibre uses, CherryPy, can have trouble with proxying and"
+" KeepAlive requests, so turn them off in Apache, with the SetEnv directives "
+"shown above."
+msgstr "Enjin pelayan calibre gunakan iaitu, CherryPy, kadangkala menghadapi masalah dengan proses proksi dan permintaan KeepAlive, oleh itu sebaiknya matikan mereka di dalam Apache, dengan arahan SetEnv ditunjukkan seperti di atas."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:45
+msgid "In process"
+msgstr "Dalam proses"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:47
+msgid ""
+"The calibre content server can be run directly, in process, inside a host "
+"server like Apache using the WSGI framework."
+msgstr "Pelayan kandungan calibre boleh dijalankan secara terus, dalam proses, di dalam pelayan hos seperti Apache menggunakan bingkai kerja WSGI."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:49
+msgid ""
+"For this to work, all the dependencies needed by calibre must be installed "
+"on your system. Doing so is highly non-trivial and you are encouraged not to"
+" use in process servers. You will not get any assistance with debugging in "
+"process server problems."
+msgstr "Untuk memastikannya berfungsi, semua dependensi yang diperlukan oleh calibre mesti dipasang dalam sistem anda. Membuatnya sangat tidak-trivial dan tidak digalakkan guna ia di dalam pelayan proses. Ini kerana, anda tidak akan dapat apa-apa bantuan berkenaan penyahpepijatan jika ada masalah pelayan proses."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:51
+msgid ""
+"First, we have to create a WSGI *adapter* for the calibre content server. "
+"Here is a template you can use for the purpose. Replace the paths as "
+"directed in the comments"
+msgstr "Mula-mula, kita perlu wujudkan WSGI *adapter* untuk pelayan kandungan calibre content. Contoh di sini merupakan templat yang anda boleh gunakan. Gantikan laluan sepertimana yang diarah dalam ulasan"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:101
+msgid ""
+"Save this adapter as :file:`calibre-wsgi-adpater.py` somewhere your server "
+"will have access to it."
+msgstr "Simpan penyesuai ini sebagai :file:`calibre-wsgi-adpater.py` dilokasi yang mana pelayan anda akan mencapainya."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:103
+msgid ""
+"Let's suppose that we want to use WSGI in Apache. First enable WSGI in "
+"Apache by adding the following to :file:`httpd.conf`::"
+msgstr "Kita anggap mahu gunakan WSGI di dalam Apache. Pertama, benarkan WSGI di dalam Apache dengan menambah yang berikut ke dalam :file:`httpd.conf`::"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:107
+msgid ""
+"The exact technique for enabling the wsgi module will vary depending on your"
+" Apache installation. Once you have the proxy modules enabled, add the "
+"following rules to httpd.conf (or if you are using virtual hosts to the conf"
+" file for the virtual host in question::"
+msgstr "Teknik yang tepat untuk membenarkan modul wsgi akan berubah mengikut cara pemasangan Apache anda. Bilamana anda telah membenarkan modul proksi, tambah peraturan berikut ke httpd.conf (atau jika  anda menggunakan hos maya ke dalam fail conf untuk hos maya dalam question::"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:111
+msgid ""
+"Change the path to :file:`calibre-wsgi-adapter.py` to wherever you saved it "
+"previously (make sure Apache has access to it)."
+msgstr "Ubah laluan ke :file:`calibre-wsgi-adapter.py` ke mana sahaja yang anda simpan ia sebelum ini (pastikan Apache dapat mencapainya)."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:113
+msgid ""
+"That's all, you will now be able to access the calibre Content Server under "
+"the /calibre URL in your apache server."
+msgstr "Setakat ini sahaja, anda kini akan dapat mencapai Pelayan Kandungan calibre di bawah URL / calibre di dalam pelayan apache anda."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:115
+msgid ""
+"For more help with using mod_wsgi in Apache, see `mod_wsgi "
+"<http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
+msgstr "Untuk bantuan lanjut berkenaan penggunaan mod_wsgi di dalam Apache, sila rujuk `mod_wsgi <http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."

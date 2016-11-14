@@ -1,0 +1,790 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-17 08:20+0530\n"
+"PO-Revision-Date: 2014-10-17 02:53+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/projects/p/calibre/language/sl_SI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl_SI\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+# 4369364041d744b58a644bba705bf674
+#: ../../home/kovid/work/calibre/manual/db_api.rst:4
+msgid "API Documentation for the database interface"
+msgstr ""
+
+# edc4c62a0ec94d4c800c64aea842402b
+#: ../../home/kovid/work/calibre/manual/db_api.rst:9
+msgid ""
+"This API is thread safe (it uses a multiple reader, single writer locking "
+"scheme).  You can access this API like this::"
+msgstr ""
+
+# 24733531174e4035b974921eae719765
+#: ../../home/kovid/work/calibre/manual/db_api.rst:14
+msgid ""
+"If you are in a calibre plugin that is part of the main calibre GUI, you get"
+" access to it like this instead::"
+msgstr ""
+
+# d99fb36993fe412ea6c8f8d0406c1897
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache:1
+msgid ""
+"An in-memory cache of the metadata.db file from a calibre library. This "
+"class also serves as a threadsafe API for accessing the database. The in-"
+"memory cache is maintained in normal form for maximum performance."
+msgstr ""
+
+# bd29271265b34a29a4914efa4a9c9a47
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache:5
+msgid ""
+"SQLITE is simply used as a way to read and write from metadata.db robustly. "
+"All table reading/sorting/searching/caching logic is re-implemented. This "
+"was necessary for maximum performance and flexibility."
+msgstr ""
+
+# 0264e73cadca46d383e3775b9c60ae9b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_books:1
+msgid ""
+"Add the specified books to the library. Books should be an iterable of "
+"2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
+"Metadata object and format_map is a dictionary of the form :code:`{fmt: "
+"path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
+msgstr ""
+
+# 3b0cb6f70f0c4b919d531656e14e8668
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_books:6
+msgid ""
+"Returns a pair of lists: :code:`ids, duplicates`. ``ids`` contains the book "
+"ids for all newly created books in the database. ``duplicates`` contains the"
+" :code:`(mi, format_map)` for all books that already exist in the database "
+"as per the simple duplicate detection heuristic used by :meth:`has_book`."
+msgstr ""
+
+# bed831ec5a604e9e84dc234c0d23a7dd
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_custom_book_data:1
+msgid ""
+"Add data for name where val_map is a map of book_ids to values. If "
+"delete_first is True, all previously stored data for name will be removed."
+msgstr ""
+
+# 82d624b716f744c7a066235f89984694
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:1
+msgid ""
+"Add a format to the specified book. Return True of the format was added "
+"successfully."
+msgstr ""
+
+# 04b1af387c4d49d0b2ad915b6a421da7
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:3
+msgid ""
+"If True replace existing format, otherwise if the format already exists, "
+"return False."
+msgstr ""
+
+# a68c6f2dee39410b9bd83b847b7b5c43
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:4
+msgid ""
+"If True, file type plugins are run on the format before and after being "
+"added."
+msgstr ""
+
+# 3458d2e50fdf47688d9cc0e6c77cb077
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:5
+msgid "Internal use only."
+msgstr ""
+
+# 2bfac5fcbb0945b98fad032f93c3a57f
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_book_ids:1
+msgid "Frozen set of all known book ids."
+msgstr ""
+
+# 94941ff01d414655bcca667eae28724f
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_field_for:1
+msgid "Same as field_for, except that it operates on multiple books at once"
+msgstr ""
+
+# 75e535dc6b5841a0baf79b6cab31e328
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_field_ids:1
+msgid "Frozen set of ids for all values in the field ``name``."
+msgstr ""
+
+# b6dc3c46c2ff44d28239423d70191b2d
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_field_names:1
+msgid ""
+"Frozen set of all fields names (should only be used for many-one and many-"
+"many fields)"
+msgstr ""
+
+# c9227835fc3544bdaf736e4c3d479025
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_data:1
+msgid "Return author data as a dictionary with keys: name, sort, link"
+msgstr ""
+
+# 2e099343784e40a5b22e1b66aa0746a4
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_data:3
+msgid ""
+"If no authors with the specified ids are found an empty dictionary is "
+"returned. If author_ids is None, data for all authors is returned."
+msgstr ""
+
+# 591b4ff349054c6a8621e73bbb9f1958
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sort_from_authors:1
+msgid ""
+"Given a list of authors, return the author_sort string for the authors, "
+"preferring the author sort associated with the author over the computed "
+"string."
+msgstr ""
+
+# 16f6f1dab3d6494a91a4d0573d77fb47
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.books_for_field:1
+msgid ""
+"Return all the books associated with the item identified by ``item_id``, "
+"where the item belongs to the field ``name``."
+msgstr ""
+
+# 157d9a761c794262adae321033beeb41
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.books_for_field:4
+msgid ""
+"Returned value is a set of book ids, or the empty set if the item or the "
+"field does not exist."
+msgstr ""
+
+# 24bcaddb16814936b28f424850816528
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.copy_cover_to:1
+msgid ""
+"Copy the cover to the file like object ``dest``. Returns False if no cover "
+"exists or dest is the same file as the current cover. dest can also be a "
+"path in which case the cover is copied to it if and only if the path is "
+"different from the current path (taking case sensitivity into account)."
+msgstr ""
+
+# c223f872b3a44ca38abf30511be3c34b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.copy_format_to:1
+msgid ""
+"Copy the format ``fmt`` to the file like object ``dest``. If the specified "
+"format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
+"a path, in which case the format is copied to it, iff the path is different "
+"from the current path (taking case sensitivity into account)."
+msgstr ""
+
+# 1e17760dd14447d698d4ef03ba5868c6
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:1
+msgid ""
+"Return the cover image or None. By default, returns the cover as a "
+"bytestring."
+msgstr ""
+
+# 6d880346e5674701ab9df866f1efffcf
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:4
+msgid ""
+"WARNING: Using as_path will copy the cover to a temp file and return the "
+"path to the temp file. You should delete the temp file when you are done "
+"with it."
+msgstr ""
+
+# 8fb4e17acd8c4ee589bac134927dc9a9
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:8
+msgid ""
+"If True return the image as an open file object (a SpooledTemporaryFile)"
+msgstr ""
+
+# 85eddebe713a40689f8a49eaaa72ad6e
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:9
+msgid "If True return the image as a QImage object"
+msgstr ""
+
+# 20a5fa5c588942dcbf2722b80d15cd71
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:10
+msgid "If True return the image as a path pointing to a temporary file"
+msgstr ""
+
+# 9574ec8afb4d4b319c1e2b0018177b9b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_custom_book_data:1
+msgid ""
+"Delete data for name. By default deletes all data, if you only want to "
+"delete data for some book ids, pass in a list of book ids."
+msgstr ""
+
+# 5379db49169a455597e006debd86c019
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.embed_metadata:1
+msgid ""
+"Update metadata in all formats of the specified book_ids to current metadata"
+" in the database."
+msgstr ""
+
+# dd86dc2732b844398562e58f9f98cf39
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.fast_field_for:1
+msgid ""
+"Same as field_for, except that it avoids the extra lookup to get the field "
+"object"
+msgstr ""
+
+# 7e7b61743ee2434b995ea70db6fea903
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_for:1
+msgid ""
+"Return the value of the field ``name`` for the book identified by "
+"``book_id``. If no such book exists or it has no defined value for the field"
+" ``name` or no such field exists, then ``default_value`` is returned."
+msgstr ""
+
+# faa5033ce4054edf8344ac82572c5b46
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_for:6
+msgid ""
+"``default_value`` is not used for title, title_sort, authors, author_sort "
+"and series_index. This is because these always have values in the db. "
+"``default_value`` is used for all custom columns."
+msgstr ""
+
+# 8c1b9515055a4b049d55468511b61d1a
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_for:10
+msgid ""
+"The returned value for is_multiple fields are always tuples, even when no "
+"values are found (in other words, default_value is ignored). The exception "
+"is identifiers for which the returned value is always a dict. The returned "
+"tuples are always in link order, that is, the order in which they were "
+"created."
+msgstr ""
+
+# 652d9e6c63cb4f068355ba5e0922d49c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_ids_for:1
+msgid ""
+"Return the ids (as a tuple) for the values that the field ``name`` has on "
+"the book identified by ``book_id``. If there are no values, or no such book,"
+" or no such field, an empty tuple is returned."
+msgstr ""
+
+# 28aa34c829ae4c038613e8d8e8da303c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.find_identical_books:1
+msgid ""
+"Finds books that have a superset of the authors in mi and the same title "
+"(title is fuzzy matched)"
+msgstr ""
+
+# e53c428075304fff99193eb16369e595
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:1
+msgid ""
+"Return the ebook format as a bytestring or `None` if the format doesn't "
+"exist, or we don't have permission to write to the ebook file."
+msgstr ""
+
+# f9bc73d8f5e445fda59d65170dd74342
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:4
+msgid ""
+"If True the ebook format is returned as a file object. Note that the file "
+"object is a SpooledTemporaryFile, so if what you want to do is copy the "
+"format to another file, use :meth:`copy_format_to` instead for performance."
+msgstr ""
+
+# 827406de447047efa6d3e6bd90e14e40
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:8
+msgid ""
+"Copies the format file to a temp file and returns the path to the temp file"
+msgstr ""
+
+# bdaed7b9629c4e12b2f6fb4e7ac64a92
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:10
+msgid ""
+"If True and returning a path the filename is the same as that used in the "
+"library. Note that using this means that repeated calls yield the same temp "
+"file (which is re-created each time)"
+msgstr ""
+
+# 82d1ed0753044cdcaa475c1eaf0dd423
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_abspath:1
+msgid ""
+"Return absolute path to the ebook file of format `format`. You should almost"
+" never use this, as it breaks the threadsafe promise of this API. Instead "
+"use, :meth:`copy_format_to`."
+msgstr ""
+
+# 1e4f29f5fd6643b38bba0997a4ef4ab4
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_abspath:5
+msgid ""
+"Currently used only in calibredb list, the viewer, edit book, compare_format"
+" to original format and the catalogs (via get_data_as_dict())."
+msgstr ""
+
+# ea3d914e0b494b188b7aff4e110474d8
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_abspath:9
+msgid ""
+"Apart from the viewer and edit book, I don't believe any of the others do "
+"any file write I/O with the results of this call."
+msgstr ""
+
+# cc5c5cdce3714c2c9173452819d0c5cb
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_hash:1
+msgid ""
+"Return the hash of the specified format for the specified book. The kind of "
+"hash is backend dependent, but is usually SHA-256."
+msgstr ""
+
+# 2d8af6b5cee448138119e6a7f9bc839d
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_metadata:1
+msgid ""
+"Return the path, size and mtime for the specified format for the specified "
+"book. You should not use path unless you absolutely have to, since accessing"
+" it directly breaks the threadsafe guarantees of this API. Instead use the "
+":meth:`copy_format_to` method."
+msgstr ""
+
+# ab06f4bd36f24248b83480871df2bdf9
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_metadata:6
+msgid ""
+"If ``True`` cached values are used, otherwise a slow filesystem access is "
+"done. The cache values could be out of date if access was performed to the "
+"filesystem outside of this API."
+msgstr ""
+
+# 26726eb693b6432f8950e4428b439d76
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_metadata:10
+msgid ""
+"If ``True`` The max_size field of the database is updates for this book."
+msgstr ""
+
+# ff17a19b4b594e7394634e8626a3d16c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.formats:1
+msgid ""
+"Return tuple of all formats for the specified book. If verify_formats is "
+"True, verifies that the files exist on disk."
+msgstr ""
+
+# 35deaf7ad8d94ac29eed0726815cb475
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_categories:1
+msgid "Used internally to implement the Tag Browser"
+msgstr ""
+
+# 8c6624ae16d94c118778c9480c0a0403
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_custom_book_data:1
+msgid ""
+"Get data for name. By default returns data for all book_ids, pass in a list "
+"of book ids if you only want some data. Returns a map of book_id to values. "
+"If a particular value could not be decoded, uses default for it."
+msgstr ""
+
+# b8d51247756643719b3b9a0e390f3010
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_id_map:1
+msgid ""
+"Return a mapping of id numbers to values for the specified field. The field "
+"must be a many-one or many-many field, otherwise a ValueError is raised."
+msgstr ""
+
+# e5d39b13c72f43e8bc343232917982ea
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
+msgid "Return the set of book ids for which name has data."
+msgstr ""
+
+# 0fb9eaf13e5e4ba7a760ce43b0599fef
+# e210215547db427e9831cc973991f23f
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_id:1
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_ids:1
+msgid "Return the item id for item_name (case-insensitive)"
+msgstr ""
+
+# f584dbcf87184217a1e27bc387d63ac6
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_name:1
+msgid ""
+"Return the item name for the item specified by item_id in the specified "
+"field. See also :meth:`get_id_map`."
+msgstr ""
+
+# 1a3d07ae161b472394d5b3e3eef1bb5d
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_metadata:1
+msgid ""
+"Return metadata for the book identified by book_id as a :class:`Metadata` "
+"object. Note that the list of formats is not verified. If get_cover is True,"
+" the cover is returned, either a path to temp file as mi.cover or if "
+"cover_as_data is True then as mi.cover_data."
+msgstr ""
+
+# 4850c2914bfa405f9731436f350dd370
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_next_series_num_for:1
+msgid ""
+"Return the next series index for the specified series, taking into account "
+"the various preferences that control next series number generation."
+msgstr ""
+
+# 73e7e511897245d2838044058cab2692
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_next_series_num_for:4
+msgid "The series-like field (defaults to the builtin series column)"
+msgstr ""
+
+# fb73578120834d229495071a2e81f0c3
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_next_series_num_for:5
+msgid ""
+"If True, returns a mapping of book_id to current series_index value instead."
+msgstr ""
+
+# 75eca023572c4586b6e8be6f7f603d75
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_proxy_metadata:1
+msgid ""
+"Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
+" only reads values from the database on demand. This is much faster than "
+"get_metadata when only a small number of fields need to be accessed from the"
+" returned metadata object."
+msgstr ""
+
+# 85883989304248aa89c75122a672a1bf
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_usage_count_by_id:1
+msgid ""
+"Return a mapping of id to usage count for all values of the specified field,"
+" which must be a many-one or many-many field."
+msgstr ""
+
+# 1b76b455a7bf457aa50431c8e336fb52
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.has_book:1
+msgid ""
+"Return True iff the database contains an entry with the same title as the "
+"passed in Metadata object. The comparison is case-insensitive."
+msgstr ""
+
+# 62fc2277a99e49a78a724ed076317df2
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.has_format:1
+msgid "Return True iff the format exists on disk"
+msgstr ""
+
+# 0912d0e3d61f40ec93c33d8b3a0403c7
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.has_id:1
+msgid "Return True iff the specified book_id exists in the db"
+msgstr ""
+
+# b2519ce3ad4e436f924add1b8602f592
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.init:1
+msgid "Initialize this cache with data from the backend."
+msgstr ""
+
+# 08331a2355174c1ea67235c128eab382
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.multisort:1
+msgid ""
+"Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
+"returned."
+msgstr ""
+
+# c03b8c66a8d740c7bfcd4bab71b3517a
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.multisort:4
+msgid ""
+"fields must be a list of 2-tuples of the form (field_name, ascending=True or"
+" False). The most significant field is the first 2-tuple."
+msgstr ""
+
+# 375971dde33247a0a8a08b425db18ed9
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.pref:1
+msgid ""
+"Return the value for the specified preference or the value specified as "
+"``default`` if the preference is not set."
+msgstr ""
+
+# a52f71de99be4cd8912eb45922ee555a
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.read_backup:1
+msgid ""
+"Return the OPF metadata backup for the book as a bytestring or None if no "
+"such backup exists."
+msgstr ""
+
+# a0e3e640d69a4fea91a95e5953796f53
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:1
+msgid ""
+"Remove the books specified by the book_ids from the database and delete "
+"their format files. If ``permanent`` is False, then the format files are not"
+" deleted."
+msgstr ""
+
+# 683368bf3c644012b51c3b1091dc8392
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:1
+msgid "Remove the specified formats from the specified books."
+msgstr ""
+
+# a3b179369a4b46b49fe3b225c1dda078
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:3
+msgid "A mapping of book_id to a list of formats to be removed from the book."
+msgstr ""
+
+# b29e1e836bd04f7e8254bf6fc70373ce
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:4
+msgid ""
+"If True, only remove the record for the format from the db, do not delete "
+"the actual format file from the filesystem."
+msgstr ""
+
+# 823a5a67b44f4b60a3fafedf709da07b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_items:1
+msgid ""
+"Delete all items in the specified field with the specified ids. Returns the "
+"set of affected book ids."
+msgstr ""
+
+# f7cdb64e2ab64ec3bd9515b2621ae687
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_items:1
+msgid ""
+"Rename items from a many-one or many-many field such as tags or series."
+msgstr ""
+
+# d33587f2ab0d41c9822c50a8c2785f2f
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_items:3
+msgid ""
+"When renaming in a series-like field also change the series_index values."
+msgstr ""
+
+# 44637ec92ee741f08d3ad4481c0020bb
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.restore_book:1
+msgid ""
+"Restore the book entry in the database for a book that already exists on the"
+" filesystem"
+msgstr ""
+
+# ee69f93f3418402eb641f91422b4808e
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.restore_original_format:1
+msgid ""
+"Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
+"any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
+"successful restore."
+msgstr ""
+
+# 42c49a93761a453bbf62f451bbd02b3e
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.safe_read_lock:1
+msgid ""
+"A safe read lock is a lock that does nothing if the thread already has a "
+"write lock, otherwise it acquires a read lock. This is necessary to prevent "
+"DowngradeLockErrors, which can happen when updating the search cache in the "
+"presence of composite columns. Updating the search cache holds an exclusive "
+"lock, but searching a composite column involves reading field values via "
+"ProxyMetadata which tries to get a shared lock. There may be other scenarios"
+" that trigger this as well."
+msgstr ""
+
+# 42cfbe217a8b41da9a91760e461353e2
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.safe_read_lock:9
+msgid ""
+"This property returns a new lock object on every access. This lock object is"
+" not recursive (for performance) and must only be used in a with statement "
+"as ``with cache.safe_read_lock:`` otherwise bad things will happen."
+msgstr ""
+
+# 1c1eb09270e24ff99d49c6f31f6e7602
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.save_original_format:1
+msgid ""
+"Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
+"existing ORIGINAL_FORMAT."
+msgstr ""
+
+# b2da0e9b535e4852ade5f4174787494c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:1
+msgid ""
+"Search the database for the specified query, returning a set of matched book"
+" ids."
+msgstr ""
+
+# 68b400f7919243e2a8a095bbe9e78093
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:3
+msgid ""
+"A restriction that is ANDed to the specified query. Note that restrictions "
+"are cached, therefore the search for a AND b will be slower than a with "
+"restriction b."
+msgstr ""
+
+# b09400e4bd464a07b752af28aee8b8bb
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:6
+msgid "Used internally (virtual fields such as on_device to search over)."
+msgstr ""
+
+# 01fbf640ca024963bc5f9f362aa72983
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:8
+msgid ""
+"If not None, a set of book ids for which books will be searched instead of "
+"searching all books."
+msgstr ""
+
+# 8a663a33dfe04d2cbdd581b7aaaa12f4
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_conversion_options:1
+msgid "options must be a map of the form {book_id:conversion_options}"
+msgstr ""
+
+# 77bacdcd447447eeb6263f87bb065ed1
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_cover:1
+msgid ""
+"Set the cover for this book.  data can be either a QImage, QPixmap, file "
+"object or bytestring. It can also be None, in which case any existing cover "
+"is removed."
+msgstr ""
+
+# a289c6c387e949d3b41b5eb92248d96c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:1
+msgid ""
+"Set the values of the field specified by ``name``. Returns the set of all "
+"book ids that were affected by the change."
+msgstr ""
+
+# 26fc8e10654f4dd08589bd6c6909d17a
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:3
+msgid "Mapping of book_ids to values that should be applied."
+msgstr ""
+
+# ddbdf57b10424d7fbd2a3b3219810843
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:4
+msgid ""
+"If True, the case of many-one or many-many fields will be changed. For "
+"example, if a  book has the tag ``tag1`` and you set the tag for another "
+"book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
+"allow_case_change is True, otherwise they will both have the tag ``tag1``."
+msgstr ""
+
+# e828ca3081214d9f815de30182b719f5
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:8
+msgid "Used internally, you should never change it."
+msgstr ""
+
+# 736a84ec692848769a705eb9a10d3fff
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_metadata:1
+msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
+msgstr ""
+
+# 202ec93c1358468ca5d51f43661ddf64
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_metadata:3
+msgid ""
+"Setting force_changes=True will force set_metadata to update fields even if "
+"mi contains empty values. In this case, 'None' is distinguished from "
+"'empty'. If mi.XXX is None, the XXX is not replaced, otherwise it is. The "
+"tags, identifiers, and cover attributes are special cases. Tags and "
+"identifiers cannot be set to None so then will always be replaced if "
+"force_changes is true. You must ensure that mi contains the values you want "
+"the book to have. Covers are always changed if a new cover is provided, but "
+"are never deleted. Also note that force_changes has no effect on setting "
+"title or authors."
+msgstr ""
+
+# a87a24825daf47b09b5d90409cb8de5b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_pref:1
+msgid ""
+"Set the specified preference to the specified value. See also :meth:`pref`."
+msgstr ""
+
+# 56a1cc26983049ee961fdd47fd52644a
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:1
+msgid ""
+"Return the ids of all books having the tag ``tag`` that are older than than "
+"the specified time. tag comparison is case insensitive."
+msgstr ""
+
+# 3e5b9e7017a94f0d88479fd65bfe4cbc
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:4
+msgid ""
+"A timedelta object or None. If None, then all ids with the tag are returned."
+msgstr ""
+
+# 36d125e13613455393b41f626e2fc74c
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:7
+msgid ""
+"If not None the list of matches will be restricted to books that have this "
+"tag"
+msgstr ""
+
+# 77d07be4b5e143dfb471eee4e79ef41b
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:10
+msgid ""
+"A list of authors. If not None the list of matches will be restricted to "
+"books that have these authors (case insensitive)."
+msgstr ""

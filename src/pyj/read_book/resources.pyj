@@ -1,0 +1,266 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from dom import clear
+from encodings import base64decode, utf8_decode
+
+JSON_XHTML_MIMETYPE = 'application/calibre+xhtml+json'
+
+def decode_component(x):
+    return utf8_decode(base64decode(x))
+
+def decode_url(x):
+    parts = x.split('#', 1)
+    return decode_component(parts[0]), parts[1] or ''
+
+def create_link_pat(book):
+    return RegExp(book.manifest.link_uid + r'\|([^|]+)\|', 'g')
+
+def load_resources(db, book, root_name, previous_resources, proceed):
+    ans = Object.create(None)
+    pending_resources = v'[root_name]'
+    link_pat = create_link_pat(book)
+
+    def do_one():
+        if not pending_resources.length:
+            for k in previous_resources:
+                v'delete previous_resources[k]'
+            if book.manifest.files[root_name].has_maths:
+                return load_mathjax(db, book, ans, proceed)
+            return proceed(ans)
+        name = pending_resources.shift()
+        if ans[name]:
+            return setTimeout(do_one, 0)
+        if previous_resources[name]:
+            ans[name] = data = previous_resources[name]
+            if type(data[0]) is 'string':
+                find_virtualized_resources(data[0])
+            return setTimeout(do_one, 0)
+        db.get_file(book, name, got_one)
+
+    def got_one(data, name, mimetype):
+        if False and name is book.manifest.title_page_name:
+            # Enable to have cover image not preserve aspect ratio
+            data = data.replace('width: auto', 'width: 100%')
+        ans[name] = v'[data, mimetype]'
+        if type(data) is 'string':
+            find_virtualized_resources(data)
+        return setTimeout(do_one, 0)
+
+    def find_virtualized_resources(text):
+        seen = set()
+        already_pending = {x.name for x in pending_resources}
+        link_pat.lastIndex = 0
+        while True:
+            m = link_pat.exec(text)
+            if not m:
+                break
+            name = decode_url(m[1])[0]
+            if name in seen or name in already_pending:
+                continue
+            seen.add(name)
+            pending_resources.push(name)
+
+    do_one()
+
+mathjax_data = None
+
+def load_mathjax(db, book, resource_data, proceed):
+    if mathjax_data is None:
+        db.get_mathjax_files(def(data):
+            nonlocal mathjax_data
+            mathjax_data = data
+            resource_data['..mathjax-files..'] = data
+            proceed(resource_data)
+        )
+    else:
+        resource_data['..mathjax-files..'] = mathjax_data
+        proceed(resource_data)
+
+def finalize_resources(book, root_name, resource_data):
+    blob_url_map = Object.create(None)
+    root_data = None
+    link_pat = create_link_pat(book)
+    mathjax = resource_data['..mathjax-files..']
+    v'delete resource_data["..mathjax-files.."]'
+
+    # Resolve the non virtualized resources immediately
+    for name in resource_data:
+        data, mimetype = resource_data[name]
+        if type(data) is not 'string':
+            blob_url_map[name] = window.URL.createObjectURL(data)
+    for name in blob_url_map:
+        v'delete resource_data[name]'
+
+    def add_virtualized_resource(name, text, mimetype):
+        nonlocal root_data
+        if name is root_name:
+            root_data = JSON.parse(text)
+        else:
+            blob_url_map[name] = window.URL.createObjectURL(Blob([text], {'type': mimetype}))
+
+    def replace_deps(text):
+        replacements = v'[]'
+        unresolved_deps = set()
+        link_pat.lastIndex = 0
+        while True:
+            m = link_pat.exec(text)
+            if not m:
+                break
+            dname, frag = decode_url(m[1])
+            if blob_url_map[dname]:
+                rtext = blob_url_map[dname]
+                if frag:
+                    rtext += '#' + frag
+                replacements.push(v'[m.index, m[0].length, rtext]')
+            else:
+                unresolved_deps.add(dname)
+        for index, sz, repl in reversed(replacements):
+            text = text[:index] + repl + text[index + sz:]
+        return unresolved_deps, text
+
+    unresolved_deps_map = {}
+
+    def has_unresolvable_deps(name):
+        deps = unresolved_deps_map[name]
+        if not deps or not deps.length:
+            return False
+        for x in deps:
+            if not blob_url_map[x]:
+                return True
+        return False
+
+    while True:
+        resolved = v'[]'
+        num = 0
+        for name in resource_data:
+            if not blob_url_map[name]:
+                num += 1
+                text, mimetype = resource_data[name]
+                if not has_unresolvable_deps(name):
+                    unresolved_deps, text = replace_deps(text)
+                    unresolved_deps_map[name] = unresolved_deps
+                    if not unresolved_deps.length:
+                        add_virtualized_resource(name, text, mimetype)
+                        resolved.push(name)
+        if not num:
+            break
+        if not resolved.length:
+            unresolved = [name for name in resource_data if not blob_url_map[name]]
+            print('ERROR: Could not resolve all dependencies of {} because of a cyclic dependency. Remaining deps: {}'.format(root_name, unresolved))
+            # Add the items anyway, without resolving remaining deps
+            for name in resource_data:
+                if not blob_url_map[name]:
+                    text, mimetype = resource_data[name]
+                    text = replace_deps(text)[1]
+                    add_virtualized_resource(name, text, mimetype)
+            break
+        for name in resolved:
+            v'delete resource_data[name]'
+
+    return root_data, mathjax
+
+js_types = set('text/javascript text/ecmascript application/javascript application/ecmascript'.split(' '))
+resource_tag_names = {'script':'src', 'link':'href', 'img':'src', 'image':'xlink:href'}
+ns_rmap = {'http://www.w3.org/2000/svg':'svg', 'http://www.w3.org/1999/xlink':'xlink', 'http://www.w3.org/1998/Math/MathML':'math', 'http://www.w3.org/XML/1998/namespace': 'xml'}
+ns_count = 0
+
+def get_prefix(ns):
+    nonlocal ns_count
+    ans = ns_rmap[ns]
+    if not ans:
+        ns_rmap[ns] = ans = 'ns' + ns_count
+        ns_count += 1
+    return ans + ':'
+
+def apply_attributes(src, elem, ns_map):
+    attributes = src.a
+    if not attributes:
+        return
+    for a in attributes:
+        if a[2]:
+            ns = ns_map[a[2]]
+            elem.setAttributeNS(ns, get_prefix(ns) + a[0], a[1])
+        else:
+            elem.setAttribute(a[0], a[1])
+
+def process_stack(stack, tag_map, ns_map, load_required, onload):
+    while stack.length:
+        node, parent = stack.pop()
+        src = tag_map[node[0]]
+        if src.s:
+            elem = document.createElementNS(ns_map[src.s], src.n)
+        else:
+            elem = document.createElement(src.n)
+        loadable = False
+        if src.n in resource_tag_names:
+            attr = resource_tag_names[src.n]
+            if attr.indexOf(':') != -1:
+                attr = attr.replace('xlink:', '')
+            for a in (src.a or v'[]'):
+                if a[0] is attr:
+                    loadable = a[1].startswith('blob:')
+                    break
+        if loadable:
+            load_required.add(node[0])
+            elem.addEventListener('load', onload.bind(node[0]))
+            elem.addEventListener('error', onload.bind(node[0]))
+
+        apply_attributes(src, elem, ns_map)
+        parent.appendChild(elem)
+        if src.x:
+            if src.n is 'script' and (elem.getAttribute('type') or 'text/javascript').toLowerCase() in js_types:
+                elem.text = src.x
+            else:
+                elem.appendChild(document.createTextNode(src.x))
+        if src.l:
+            parent.appendChild(document.createTextNode(src.l))
+        for v'var i = node.length - 1; i >= 1; i--':  # noqa: unused-local
+            stack.push(v'[node[i], elem]')
+
+def unserialize_html(serialized_data, proceed):
+    tag_map = serialized_data.tag_map
+    tree = serialized_data.tree
+    ns_map = serialized_data.ns_map
+    html = tag_map[0]
+    apply_attributes(html, document.documentElement, ns_map)
+    head, body = tree[1], tree[2]  # noqa: unused-local
+    clear(document.head, document.body)
+    load_required = set()
+    proceeded = False
+    hang_timeout = 5
+
+    def hangcheck():
+        nonlocal proceeded
+        if not proceeded:
+            proceeded = True
+            print('WARNING: All resources did not load in {} seconds, proceeding anyway ({} resources left)'.format(hang_timeout, load_required.length))
+            proceed()
+
+    def onload():
+        nonlocal proceeded
+        load_required.discard(this)
+        if not load_required.length:
+            proceeded = True
+            proceed()
+
+    stack = v'[]'
+    for v'var i = head.length - 1; i >= 1; i--':
+        stack.push(v'[head[i], document.head]')
+    process_stack(stack, tag_map, ns_map, load_required, onload)
+    bnode = tag_map[body[0]]
+    apply_attributes(bnode, document.body, ns_map)
+    if bnode.x:
+        document.body.appendChild(document.createTextNode(bnode.x))
+    for v'var i = body.length - 1; i >= 1; i--':  # noqa: unused-local
+        stack.push(v'[body[i], document.body]')
+    process_stack(stack, tag_map, ns_map, load_required, onload)
+    ev = document.createEvent('Event')
+    ev.initEvent('DOMContentLoaded', True, True)
+    document.dispatchEvent(ev)
+    if load_required.length:
+        setTimeout(hangcheck, hang_timeout * 1000)
+    else:
+        proceeded = True
+        proceed()

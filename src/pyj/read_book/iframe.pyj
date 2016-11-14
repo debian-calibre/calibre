@@ -1,0 +1,206 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import bound_methods, hash_literals
+
+import traceback
+from aes import GCM
+from gettext import install, gettext as _
+from read_book.cfi import at_current, scroll_to as scroll_to_cfi
+from read_book.globals import set_boss, set_current_spine_item, current_layout_mode, current_spine_item, set_layout_mode
+from read_book.mathjax import apply_mathjax
+from read_book.resources import finalize_resources, unserialize_html
+from read_book.flow_mode import (
+    flow_to_scroll_fraction, flow_onwheel, flow_onkeydown, layout as flow_layout
+)
+from read_book.paged_mode import (
+    layout as paged_layout, scroll_to_fraction as paged_scroll_to_fraction,
+    onwheel as paged_onwheel, onkeydown as paged_onkeydown, scroll_to_elem,
+    jump_to_cfi as paged_jump_to_cfi
+)
+from read_book.settings import apply_settings
+from utils import debounce
+
+FORCE_FLOW_MODE = False
+
+class IframeBoss:
+
+    def __init__(self):
+        self.ready_sent = False
+        self.last_cfi = None
+        self.replace_history_on_next_cfi_update = True
+        self.encrypted_communications = False
+        window.addEventListener('message', self.handle_message, False)
+        window.addEventListener('load', def():
+            if not self.ready_sent:
+                self.send_message('ready')
+                self.ready_sent = True
+        )
+        set_boss(self)
+        self.handlers = {
+            'initialize':self.initialize,
+            'display': self.display,
+            'scroll_to_anchor': self.on_scroll_to_anchor,
+        }
+        self.last_window_ypos = 0
+
+    def handle_message(self, event):
+        if event.source is not window.parent:
+            return
+        data = event.data
+        if self.encrypted_communications:
+            try:
+                data = JSON.parse(self.gcm_from_parent.decrypt(data))
+            except Exception as e:
+                print('Could not process message from parent:')
+                console.log(e)
+                return
+        func = self.handlers[data.action]
+        if func:
+            try:
+                func(data)
+            except Exception as e:
+                console.log('Error in iframe message handler:')
+                console.log(e)
+                self.send_message('error', title=_('Error in message handler'), details=traceback.format_exc(), msg=e.toString())
+        else:
+            print('Unknown action in message to iframe from parent: ' + data.action)
+
+    def initialize(self, data):
+        self.gcm_from_parent, self.gcm_to_parent = GCM(data.secret.subarray(0, 32)), GCM(data.secret.subarray(32))
+        if data.translations:
+            install(data.translations)
+        window.onerror = self.onerror
+
+    def onerror(self, msg, script_url, line_number, column_number, error_object):
+        console.log(error_object)
+        try:
+            fname = script_url.rpartition('/')[-1] or script_url
+            msg = msg + '<br><span style="font-size:smaller">' + 'Error at {}:{}:{}'.format(fname, line_number, column_number or '') + '</span>'
+            details = traceback.format_exception(error_object).join('') if error_object else ''
+            self.send_message('error', title=_('Unhandled error'), details=details, msg=msg)
+            return True
+        except:
+            console.log('There was an error in the iframe unhandled exception handler')
+
+    def display(self, data):
+        self.encrypted_communications = True
+        self.book = data.book
+        spine = self.book.manifest.spine
+        index = spine.indexOf(data.name)
+        set_layout_mode('flow' if FORCE_FLOW_MODE else data.settings.read_mode)
+        if current_layout_mode() is 'flow':
+            self.do_layout = flow_layout
+            self.handle_wheel = flow_onwheel
+            self.handle_keydown = flow_onkeydown
+            self.to_scroll_fraction = flow_to_scroll_fraction
+            self.jump_to_cfi = scroll_to_cfi
+        else:
+            self.do_layout = paged_layout
+            self.handle_wheel = paged_onwheel
+            self.handle_keydown = paged_onkeydown
+            self.to_scroll_fraction = paged_scroll_to_fraction
+            self.jump_to_cfi = paged_jump_to_cfi
+        apply_settings(data.settings)
+        set_current_spine_item({'name':data.name, 'is_first':index is 0, 'is_last':index is spine.length - 1, 'initial_position':data.initial_position})
+        self.last_cfi = None
+        root_data, self.mathjax = finalize_resources(self.book, data.name, data.resource_data)
+        unserialize_html(root_data, self.content_loaded)
+
+    def on_scroll_to_anchor(self, data):
+        frag = data.frag
+        if frag:
+            self.scroll_to_anchor(frag)
+        else:
+            self.to_scroll_fraction(0.0)
+
+    def content_loaded(self):
+        document.documentElement.style.overflow = 'hidden'
+        self.do_layout()
+        if self.mathjax:
+            return apply_mathjax(self.mathjax, self.book.manifest.link_uid, self.content_loaded_stage2)
+        self.content_loaded_stage2()
+
+    def content_loaded_stage2(self):
+        self.connect_links()
+        window.addEventListener('scroll', debounce(self.update_cfi, 1000))
+        window.addEventListener('resize', debounce(self.onresize, 500))
+        window.addEventListener('wheel', self.onwheel)
+        window.addEventListener('keydown', self.onkeydown)
+        csi = current_spine_item()
+        if csi.initial_position:
+            ipos = csi.initial_position
+            self.replace_history_on_next_cfi_update = ipos.replace_history
+            if ipos.type is 'frac':
+                self.to_scroll_fraction(ipos.frac)
+            elif ipos.type is 'anchor':
+                self.scroll_to_anchor(ipos.anchor)
+            elif ipos.type is 'cfi':
+                self.jump_to_cfi(ipos.cfi)
+        self.update_cfi()
+        self.send_message('content_loaded')
+
+    def update_cfi(self):
+        cfi = at_current()
+        if cfi:
+            spine = self.book.manifest.spine
+            index = spine.indexOf(current_spine_item().name)
+            if index > -1:
+                cfi = 'epubcfi(/{}{})'.format(2*(index+1), cfi)
+                if cfi != self.last_cfi:
+                    self.last_cfi = cfi
+                    self.send_message('update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update)
+                    self.replace_history_on_next_cfi_update = True
+
+    def onresize(self):
+        if current_layout_mode() is not 'flow':
+            self.do_layout()
+        self.update_cfi()
+
+    def onwheel(self, evt):
+        evt.preventDefault()
+        self.handle_wheel(evt)
+
+    def onkeydown(self, evt):
+        self.handle_keydown(evt)
+
+    def send_message(self, action, **data):
+        data.action = action
+        if self.encrypted_communications:
+            data = self.gcm_to_parent.encrypt(JSON.stringify(data))
+        window.parent.postMessage(data, '*')
+
+    def connect_links(self):
+        link_attr = 'data-' + self.book.manifest.link_uid
+        for a in document.body.querySelectorAll('a[{}]'.format(link_attr)):
+            a.addEventListener('click', self.link_activated)
+
+    def link_activated(self, evt):
+        link_attr = 'data-' + self.book.manifest.link_uid
+        try:
+            data = JSON.parse(evt.currentTarget.getAttribute(link_attr))
+        except:
+            print('WARNING: Failed to parse link data {}, ignoring'.format(evt.currentTarget?.getAttribute?(link_attr)))
+            return
+        name, frag = data.name, data.frag
+        if not name:
+            name = current_spine_item().name
+        if name is current_spine_item().name:
+            self.replace_history_on_next_cfi_update = False
+            self.scroll_to_anchor(frag)
+        else:
+            self.send_message('scroll_to_anchor', name=name, frag=frag)
+
+    def scroll_to_anchor(self, frag):
+        if frag:
+            elem = document.getElementById(frag)
+            if not elem:
+                c = document.getElementsByName(frag)
+                if c and c.length:
+                    elem = c[0]
+            if elem:
+                scroll_to_elem(elem)
+
+def init():
+    script = document.getElementById('bootstrap')
+    script.parentNode.removeChild(script)  # free up some memory
+    IframeBoss()

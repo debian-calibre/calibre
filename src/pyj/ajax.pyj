@@ -1,0 +1,107 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from gettext import gettext as _
+
+def encode_query_component(x):
+    ans = encodeURIComponent(x)
+    # The following exceptions are to make epubcfi() look better
+    ans = ans.replace(/%2[fF]/g, '/')
+    ans = ans.replace(/%40/g, '@')
+    ans = ans.replace(/%5[bB]/g, '[')
+    ans = ans.replace(/%5[dD]/g, ']')
+    ans = ans.replace(/%5[eE]/g, '^')
+    ans = ans.replace(/%3[aA]/g, ':')
+    return ans
+
+def encode_query(query):
+    if not query:
+        return ''
+    keys = Object.keys(query)
+    has_query = False
+    path = ''
+    if keys.length:
+        for k in keys:
+            val = query[k]
+            if val is undefined or val is None:
+                continue
+            path += ('&' if has_query else '?') + encodeURIComponent(k) + '=' + encode_query_component(val.toString())
+            has_query = True
+    return path
+
+def ajax(path, on_complete, on_progress=None, bypass_cache=True, method='GET', query=None, timeout=30*1000, ok_code=200, progress_totals_needed=True):
+    # Run an AJAX request. on_complete must be a function that accepts three
+    # arguments: end_type, xhr, ev where end_type is one of 'abort', 'error',
+    # 'load', 'timeout'. In case end_type is anything other than 'load' you can
+    # get a descriptive error message via `xhr.error_html`.  on_progress, if
+    # provided must be a function accepting three arguments: loaded, total, xhr
+    # where loaded is the number of bytes received, total is the total size.
+    #
+    # Returns the xhr object, call xhr.send() to start the request.
+    query = query or {}
+    xhr = XMLHttpRequest()
+    eq = encode_query(query)
+    has_query = eq.length > 0
+    path += eq
+    if bypass_cache:
+        path += ('&' if has_query else '?') + Date().getTime()
+
+    xhr.request_path = path
+    xhr.error_html = ''
+
+    def set_error(event):
+        if event is 'timeout':
+            xhr.error_html = str.format(_('Failed to communicate with "{}", timed out after: {} seconds'), xhr.request_path, timeout/1000)
+        elif event is 'abort':
+            xhr.error_html = str.format(_('Failed to communicate with "{}", aborted'), xhr.request_path)
+        else:
+            rtext = xhr.responseText or ''
+            xhr.error_html = str.format(_('Failed to communicate with "{}", with status: [{}] {}<br><br>{}'), xhr.request_path, xhr.status, xhr.statusText, rtext[:200])
+
+    def progress_callback(ev):
+        if ev.lengthComputable:
+            on_progress(ev.loaded, ev.total, xhr)
+        elif ev.loaded:
+            if not progress_totals_needed:
+                on_progress(ev.loaded, undefined, xhr)
+                return
+            ul = xhr.getResponseHeader('Calibre-Uncompressed-Length')
+            if ul:
+                try:
+                    ul = int(ul)
+                except Exception:
+                    return
+                on_progress(ev.loaded, ul, xhr)
+
+    def complete_callback(end_type, ev):
+        if xhr.status is not ok_code and end_type is 'load':
+            end_type = 'error'
+        if end_type is not 'load':
+            set_error(end_type)
+        on_complete(end_type, xhr, ev)
+
+    if on_progress:
+        xhr.addEventListener('progress', progress_callback)
+    xhr.addEventListener('abort', def(ev): complete_callback('abort', ev);)
+    xhr.addEventListener('error', def(ev): complete_callback('error', ev);)
+    xhr.addEventListener('load', def(ev): complete_callback('load', ev);)
+    xhr.addEventListener('timeout', def(ev): complete_callback('timeout', ev);)
+    xhr.open(method, path)
+    xhr.timeout = timeout  # IE requires timeout to be set after open
+    return xhr
+
+def ajax_send(path, data, on_complete, on_progress=None, query=None, timeout=30*1000, ok_code=200):
+    # Unfortunately, browsers do not allow sending of data with HTTP GET, except
+    # as query parameters, so we have to use POST
+    xhr = ajax(path, on_complete, on_progress, False, 'POST', query, timeout, ok_code)
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+    xhr.send(JSON.stringify(data))
+    return xhr
+
+# TODO: Implement AJAX based switch user by:
+# 1) POST to a logout URL with an incorrect username and password
+# 2) Have the server accept that incorrect username/password
+# 3) Navigate to / which should cause the browser to re-prompt for username and password
+# (only problem is login dialog will likely pre-show the wrong username) To workaround that,
+# You can consider using a dedicated ajax based login form, see http://www.peej.co.uk/articles/http-auth-with-html-forms.html)

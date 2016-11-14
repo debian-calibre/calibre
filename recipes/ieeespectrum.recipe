@@ -1,0 +1,45 @@
+'''
+Fetch RSS-Feeds http://spectrum.ieee.org via feedburner.com
+'''
+from calibre.web.feeds.news import BasicNewsRecipe
+
+class BasicUserRecipe1406801106(BasicNewsRecipe):
+    title          = u'IEEE-Spectrum Online'
+    description    = u'The world\'s largest professional association dedicated to advancing technological innovation and excellence for the benefit of humanity'
+    publisher      = u'IEEE.org'
+    __author__     = 'Armin Geller'
+    category       = 'news, electronics, IT, computer science'
+    # Version: 1.0 AGe 2014-07-31
+    language       = 'en'
+    encoding       = 'utf-8'
+    oldest_article = 7
+    max_articles_per_feed = 100
+    remove_empty_feeds = True
+    auto_cleanup = True
+
+    feeds          = [
+        (u'IEEE Spectrum Recent Content',
+         u'http://feeds.feedburner.com/IeeeSpectrum?format=xml'),
+        (u' - Aerospace',
+         u'http://feeds.feedburner.com/IeeeSpectrumAerospace?format=xml'),
+        (u' - Biomedical',
+         u'http://feeds.feedburner.com/IeeeSpectrumBiomedical?format=xml'),
+        (u' - Computing',
+         u'http://feeds.feedburner.com/IeeeSpectrumComputing?format=xml'),
+        (u' - Consumer Electronics',
+         u'http://feeds.feedburner.com/IeeeSpectrumConsumer?format=xml'),
+        (u' - Energy',
+         u'http://feeds.feedburner.com/IeeeSpectrumEnergy?format=xml'),
+        (u' - GreenTech',
+         u'http://feeds.feedburner.com/IeeeSpectrumGreenTech?format=xml'),
+        (u' - Robotics',
+         u'http://feeds.feedburner.com/IeeeSpectrumRobotics?format=xml'),
+        (u' - Semiconductors',
+         u'http://feeds.feedburner.com/IeeeSpectrumSemiconductors?format=xml'),
+        (u' - Telecom',
+         u'http://feeds.feedburner.com/IeeeSpectrumTelecom?format=xml'),
+        (u' - At Work',
+         u'http://feeds.feedburner.com/IeeeSpectrumAtWork?format=xml'),
+        (u' - Geek Life',
+         u'http://feeds.feedburner.com/IeeeSpectrumGeekLife?format=xml'),
+    ]

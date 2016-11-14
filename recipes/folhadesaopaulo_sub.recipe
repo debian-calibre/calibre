@@ -1,0 +1,136 @@
+#!/usr/bin/env python2
+# vim:fileencoding=utf-8
+
+from calibre.web.feeds.news import BasicNewsRecipe
+
+import re
+import datetime
+
+class FSP(BasicNewsRecipe):
+
+    title      = u'Folha de S\xE3o Paulo'
+    __author__ = 'Joao Eduardo Bertacchi, lc_addicted '
+    description = u'Printed edition contents. UOL subscription required (Folha subscription currently not supported).' + \
+                  u' [Conte\xfado completo da edi\xe7\xe3o impressa. Somente para assinantes UOL.]'
+
+    today=datetime.date.today()
+
+    masthead_url = 'http://f.i.uol.com.br/fsp/furniture/images/lgo-fsp-430x50-ffffff.gif'
+
+    language = 'pt_BR'
+    no_stylesheets = True
+    max_articles_per_feed  = 100
+    remove_javascript  = True
+    needs_subscription = True
+
+    keep_only_tags = [
+        dict(name='div', id='articleNew'), dict(name='table', attrs={'class':'articleGraphic'}),
+        dict(name='article', id='news'),
+    ]
+
+    publication_type = 'newspaper'
+    simultaneous_downloads = 5
+
+    remove_attributes = ['height','width']
+
+    # The following is an attempt to fix the problem with the section names, but whenever new sections are added it can generate accentuation problems still
+    section_dict = {'cotidian' : 'cotidiano', 'ilustrad': 'ilustrada',
+                    'quadrin': 'quadrinhos' , 'opiniao' : u'opini\xE3o',
+                    'ciencia' : u'cincia' , 'saude' : u'sa\xfade',
+                    'ribeirao' : u'ribeir\xE3o' , 'equilibrio' : u'equil\xedbrio',
+                    'imoveis' : u'im\xf3veis', 'negocios' : u'neg\xf3cios',
+                    'veiculos' : u've\xedculos', 'corrida' : 'folha corrida',
+                    'turismo':'turismo'}
+
+    # this solves the problem with truncated content in Kindle
+    conversion_options = {'linearize_tables' : True}
+
+    extra_css = """
+#articleNew { font: 18px Times New Roman,verdana,arial; }
+img { background: none !important; float: none; margin: 0px; }
+.newstexts { list-style-type: none; height: 20px; margin: 15px 0 10px 0; }
+.newstexts.last { border-top: 1px solid #ccc; margin: 5px 0 15px 0; padding-top: 15px; }
+.newstexts li { display: inline; padding: 0 5px; }
+.newstexts li.prev { float: left; }
+.newstexts li.next { float: right; }
+.newstexts li span { width: 12px; height: 15px; display: inline-block; }
+.newstexts li.prev span { background-position: -818px -46px; }
+.newstexts li.next span { background-position: -832px -46px; }
+.newstexts li a { font: bold 12px arial, verdana, sans-serif; text-transform: uppercase; color: #999; text-decoration: none !important; }
+.newstexts li a:hover { text-decoration: underline !important }
+.headerart { font-weight: bold; }
+.title { font: bold 39px Times New Roman,verdana,arial; margin-bottom: 15px; margin-top: 10px; }
+.creditart, .origin { font: bold 12px arial, verdana, sans-serif; color: #999; margin: 0px; display: block; }
+.headerart p, .fine_line p { margin: 0 !important; }
+.fine_line { font: bold 18px Times New Roman,verdana,arial; }
+.fine_line p { margin-bottom: 18px !important;  }
+.fine_line p:first-child { font-weight: normal; font-style: italic; font-size: 20px !important; }
+.eye { display: block; width: 317px; border-top: 2px solid #666; padding: 7px 0 7px; border-bottom: 2px solid #666; font-style: italic; font-weight: bold; }
+.kicker { font-weight: bold; text-transform: uppercase; font-size: 18px; font-family: Times New Roman,verdana,arial !important; }
+.blue { color: #000080; }
+.red { color: #F00; }
+.blue { color: #000080; }
+.green { color: #006400; }
+.orange { color: #FFA042; }
+.violet { color: #8A2BE2; }
+.text_footer { font-size: 15px; }
+.title_end { font-size: 23px; font-weight: bold; }
+.divisor { text-indent: -9999px; border-bottom: 1px solid #ccc; height: 1px; margin: 0; }
+.star { background: none !important; height: 15px; }
+.articleGraphic { margin-bottom: 20px; }
+"""
+
+    # This is the code for login, here a mini browser is called and id entered
+    def get_browser(self):
+        br = BasicNewsRecipe.get_browser(self)
+        if self.username is not None and self.password is not None:
+            br.open('https://acesso.uol.com.br/login.html')
+            br.form = br.forms().next()
+            br['user']   = self.username
+            br['pass'] = self.password
+            br.submit().read()
+        return br
+
+    # Parsing the index webpage
+    def parse_index(self):
+
+        # In the last version, the index page has become simpler:
+        INDEX = 'http://www1.folha.uol.com.br/fsp/'
+        self.log('--> INDEX set ', INDEX)
+        soup = self.index_to_soup(INDEX)
+
+        feeds = []
+        articles = []
+        section_title = u'Primeira p\xe1gina'
+
+        for post in soup.findAll('a'):
+            strpost = str(post)
+            if re.match('<a href="http://www1.folha.uol.com.br/.*/"><span.class="', strpost):
+                if articles:
+                    feeds.append((section_title, articles))
+                    self.log()
+                    self.log('--> new section found, creating old section feed: ', section_title)
+                # section_title = post['name']
+                section_title = self.tag_to_string(post)
+                if section_title in self.section_dict:
+                    section_title = self.section_dict[section_title]
+                articles = []
+                self.log('--> new section title:   ', section_title)
+            elif strpost.startswith('<a href="/fsp/cp'):
+                break
+            elif strpost.startswith('<a href'):
+                url = post['href']
+                if url.startswith('http://www1.folha.uol.com.br/'):
+                    title = self.tag_to_string(post)
+                    self.log()
+                    self.log('--> post:  ', post)
+                    self.log('--> url:   ', url)
+                    self.log('--> title: ', title)
+                    articles.append({'title':title, 'url':url})
+
+        if articles:
+            feeds.append((section_title, articles))
+
+        del feeds[0]
+
+        return feeds

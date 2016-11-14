@@ -1,0 +1,104 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+simple_vendor_prefixes = {
+    'animation': v"['webkit', 'moz', 'o']",
+    'animation-name': v"['webkit', 'moz', 'o']",
+    'animation-duration': v"['webkit', 'moz', 'o']",
+    'animation-timing-function': v"['webkit', 'moz', 'o']",
+    'animation-delay': v"['webkit', 'moz', 'o']",
+    'animation-iteration-count': v"['webkit', 'moz', 'o']",
+    'animation-direction': v"['webkit', 'moz', 'o']",
+    'animation-fill-mode': v"['webkit', 'moz', 'o']",
+    'animation-play-state': v"['webkit', 'moz', 'o']",
+    'transform': v"['webkit', 'ms', 'moz', 'o']",
+    'transition': v"['webkit', 'moz', 'o']",
+    'filter': v"['webkit']",
+    'user-select': v"['webkit', 'moz', 'ms']",
+    'break-before': v"['webkit-column']",
+    'break-after': v"['webkit-column']",
+    'break-inside': v"['webkit-column']",
+    'column-gap': v"['webkit', 'moz']",
+    'column-width': v"['webkit', 'moz']",
+    'column-rule': v"['webkit', 'moz']",
+}
+
+def set_css(elem, **kw):
+    if type(elem) is 'string':
+        elem = document.querySelector(elem)
+    s = elem.style
+    if s:
+        for prop in kw:
+            name, val = str.replace(str.rstrip(prop, '_'), '_', '-'), kw[prop]
+            if val is None or val is undefined:
+                s.removeProperty(name)
+            else:
+                s.setProperty(name, val)
+            prefixes = simple_vendor_prefixes[name]
+            if prefixes:
+                for prefix in prefixes:
+                    if val is None or val is undefined:
+                        s.removeProperty('-' + prefix + '-' + name)
+                    else:
+                        s.setProperty('-' + prefix + '-' + name, val)
+    return elem
+
+def build_rule(selector, **kw):
+    ans = v'[selector + " { "]'
+    for prop in kw:
+        name, val = str.replace(str.rstrip(prop, '_'), '_', '-'), kw[prop]
+        ans.push(name + ':' + val + ';')
+        prefixes = simple_vendor_prefixes[name]
+        if prefixes:
+            for prefix in prefixes:
+                ans.push('-' + prefix + '-' + name + ':' + val + ';')
+    ans.push('}')
+    return ans.join('\n') + '\n'
+
+def clear():
+    for v'var i = 0; i < arguments.length; i++':
+        node = arguments[i]
+        while node.firstChild:
+            node.removeChild(node.firstChild)
+
+def create_keyframes(animation_name, *frames):
+    ans = v'[]'
+    for prefix in '-webkit-', '-moz-', '-o-', '':
+        ans.push('@' + prefix + 'keyframes ' + animation_name + ' {')
+        for frame in frames:
+            ans.push(frame)
+        ans.push('}')
+    return ans.join('\n') + '\n'
+
+def change_icon_image(icon_element, new_name):
+    if new_name:
+        icon_element.firstChild.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-' + new_name)
+    else:
+        icon_element.firstChild.removeAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href')
+
+def svgicon(name, height, width):
+    ans = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    ans.setAttribute('style', 'fill: currentColor; height: {}; width: {}; vertical-align: text-top'.format(height ? '2ex', width ? '2ex'))
+    u = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+    ans.appendChild(u)
+    if name:
+        ans.firstChild.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-' + name)
+    return ans
+
+def element(elem_id, child_selector):
+    ans = document.getElementById(elem_id) if elem_id else document.body
+    if child_selector:
+        ans = ans.querySelector(child_selector)
+    return ans
+
+auto_id_count = 0
+
+def ensure_id(w):
+    nonlocal auto_id_count
+    ans = w.getAttribute('id')
+    if not ans:
+        auto_id_count += 1
+        ans = 'auto-id-' + auto_id_count
+        w.setAttribute('id', ans)
+    return ans

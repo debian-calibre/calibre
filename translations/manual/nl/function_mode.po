@@ -1,0 +1,448 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# 
+# Translators:
+# W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-01 12:31+0530\n"
+"PO-Revision-Date: 2015-05-05 13:33+0000\n"
+"Last-Translator: W.P.M.E. Hofland <wpme.hofland@gmail.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/calibre/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# 265d678c650448158f78f4d4a513c7af
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:2
+msgid "Function Mode for Search & Replace in the Editor"
+msgstr "Functie modus voor zoek & vervang in de bewerker"
+
+# f575f97832dc4929ad5997806dcf389e
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:4
+msgid ""
+"The Search & Replace tool in the editor support a *function mode*. In this "
+"mode, you can combine regular expressions (see :doc:`regexp`) with "
+"arbitrarily powerful python functions to do all sorts of advanced text "
+"processing."
+msgstr ""
+
+# f1c3ac708be14628a02f5f4e720abaee
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:9
+msgid ""
+"In the standard *regexp* mode for search and replace, you specify both a "
+"regular expression to search for as well as a template that is used to "
+"replace all found matches. In function mode, instead of using a fixed "
+"template, you specify an arbitrary function, in the `python programming "
+"language <https://docs.python.org/2.7/>`_. This allows you to do lots of "
+"things that are not possible with simple templates."
+msgstr ""
+
+# c8697aa77de94ec58bd52e73d15aa1b4
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:16
+msgid ""
+"Techniques for using function mode and the syntax will be described by means"
+" of examples, showing you how to create functions to perform progressively "
+"more complex tasks."
+msgstr ""
+
+# 13a86079433b4855bb09a3d1fce36fb8
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:26
+msgid "Automatically fixing the case of headings in the document"
+msgstr ""
+
+# 9138e02997dd4ff79ca4191fabbd60e1
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:28
+msgid ""
+"Here, we will leverage one of the builtin functions in the editor to "
+"automatically change the case of all text inside heading tags to title "
+"case::"
+msgstr ""
+
+# 8c77ddc247d44c799b39b6b88a74e288
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:33
+msgid ""
+"For the function, simply choose the :guilabel:`Title-case text (ignore "
+"tags)` builtin function. The will change titles that look like: ``<h1>some "
+"TITLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
+"other HTML tags inside the heading tags."
+msgstr ""
+
+# f22072fec8574e0087a9089f8f9dabe3
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:40
+msgid "Your first custom function - smartening hyphens"
+msgstr ""
+
+# 78c0512eadf64812a4fa3d6404beea95
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:42
+msgid ""
+"The real power of function mode comes from being able to create your own "
+"functions to process text in arbitrary ways. The Smarten Punctuation tool in"
+" the editor leaves individual hyphens alone, so you can use the this "
+"function to replace them with em-dashes."
+msgstr ""
+
+# 6a5ed79289f744dca77dbbb73918d75c
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:47
+msgid ""
+"To create a new function, simply click the Create/Edit button to create a "
+"new function and copy the python code from below."
+msgstr ""
+
+# 9250952c74574b13b0d849e038d782e9
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:55
+msgid ""
+"Every Search & Replace custom function must have a unique name and consist "
+"of a python function named replace, that accepts all the arguments shown "
+"above. For the moment, we wont worry about all the different arguments to "
+"``replace()`` function. Just focus on the ``match`` argument. It represents "
+"a match when running a search and replace. Its full documentation in "
+"available `here <https://docs.python.org/2.7/library/re.html#match-"
+"objects>`_. ``match.group()`` simply returns all the matched text and all we"
+" do is replace hyphens in that text with em-dashes, first replacing double "
+"hyphens and then single hyphens."
+msgstr ""
+
+# 3560f66322724a2380757d3e2d97b094
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:65
+msgid "Use this function with the find regular expression::"
+msgstr ""
+
+# e75f32969c734d6c91883a1845978064
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:69
+msgid ""
+"And it will replace all hyphens with em-dashes, but only in actual text and "
+"not inside HTML tag definitions."
+msgstr ""
+
+# b2c62c11173b44eab44fb12a8a14e75e
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:74
+msgid ""
+"The power of function mode - using a spelling dictionary to fix mis-"
+"hyphenated words"
+msgstr ""
+
+# 05eb661be8134acc8d84e7946de4fb42
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:76
+msgid ""
+"Often, ebooks created from scans of printed books contain mis-hyphenated "
+"words -- words that were split at the end of the line on the printed page. "
+"We will write a simple function to automatically find and fix such words."
+msgstr ""
+
+# 3c740a460dbb421cb0ba10c2c07aef40
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:101
+msgid "Use this function with the same find expression as before, namely::"
+msgstr ""
+
+# e4f32056e94949a18ff6ad822aece413
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:105
+msgid ""
+"And it will magically fix all mis-hyphenated words in the text of the book. "
+"The main trick is to use one of the useful extra arguments to the replace "
+"function, ``dictionaries``.  This refers to the dictionaries the editor "
+"itself uses to spell check text in the book. What this function does is look"
+" for words separated by a hyphen, remove the hyphen and check if the "
+"dictionary recognizes the composite word, if it does, the original words are"
+" replaced by the hyphen free composite word."
+msgstr ""
+
+# 36d41764ca7b4c289f7acb9561697d4b
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:113
+msgid ""
+"Note that one limitation of this technique is it will only work for mono-"
+"lingual books, because, by default, ``dictionaries.recognized()`` uses the "
+"main language of the book."
+msgstr ""
+
+# 129ec9a9eb6c4f2288429e4fa68804a7
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:119
+msgid "Auto numbering sections"
+msgstr "Automatische nummering secties"
+
+# c5fd87d6429b417d9d8e987b61a50a3b
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:121
+msgid ""
+"Now we will see something a little different. Suppose your HTML file has "
+"many sections, each with a heading in an :code:`<h2>` tag that looks like "
+":code:`<h2>Some text</h2>`. You can create a custom function that will "
+"automatically number these headings with consecutive section numbers, so "
+"that they look like :code:`<h2>1. Some text</h2>`."
+msgstr ""
+
+# 608f0558a9774c418967c57460f3885a
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:137
+msgid "Use it with the find expression::"
+msgstr "Gebruik  het met de find expresse::"
+
+# 81b3a8990fe54b36bba5e6f8a6818ed7
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:141
+msgid ""
+"Place the cursor at the top of the file and click :guilabel:`Replace all`."
+msgstr ""
+
+# 78670c6fc32344b0890d8ca330f61512
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:143
+msgid ""
+"This function uses another of the useful extra arguments to ``replace()``: "
+"the ``number`` argument. When doing a :guilabel:`Replace All` number is "
+"automatically incremented for every successive match."
+msgstr ""
+
+# c91358f2cfef4b4bb5c6bf82b57c0715
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:147
+msgid ""
+"Another new feature is the use of ``replace.file_order`` -- setting that to "
+"``'spine'`` means that if this search is run on multiple HTML files, the "
+"files are processed in the order in which they appear in the book. See "
+":ref:`file_order_replace_all` for details."
+msgstr ""
+
+# 403e97c8b9df44cd9d9a339573ab3558
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:154
+msgid "Auto create a Table of Contents"
+msgstr "Maak automatische inhoudsopgave aan"
+
+# 07b80f03e91743b8a3a4eee3685375ca
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:156
+msgid ""
+"Finally, lets try something a little more ambitious. Suppose your book has "
+"headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
+"Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
+"headings. Create the custom function below:"
+msgstr ""
+
+# ddb45a8a38ad4c4983ea105c4534a1d9
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:199
+msgid "And use it with the find expression::"
+msgstr "En gebruik het met de find expressie::"
+
+# 22be928269804094a7376fd1d7fe1813
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:203
+msgid ""
+"Run the search on :guilabel:`All text files` and at the end of the search, a"
+" window will popup with \"Debug Output from your function\" which will have "
+"the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
+msgstr ""
+
+# 2d503ec6d7684fbe851eeb5dc2882c8d
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:207
+msgid ""
+"The function above is heavily commented, so it should be easy to follow. The"
+" key new feature is the use of another useful extra argument to the "
+"``replace()`` function, the ``data`` object. The ``data`` object is a python"
+" *dict* that persists between all successive invocations of ``replace()`` "
+"during a single :guilabel:`Replace All` operation."
+msgstr ""
+
+# 31c9e928d1c74abfb338c9cf4783e997
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:213
+msgid ""
+"Another new feature is the use of ``call_after_last_match`` -- setting that "
+"to ``True`` on the ``replace()`` function means that the editor will call "
+"``replace()`` one extra time after all matches have been found. For this "
+"extra call, the match object will be ``None``."
+msgstr ""
+
+# 9679ec9c61fa42019deaddedfb53fc05
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:218
+msgid ""
+"This was just a demonstration to show you the power of function mode, if you"
+" really needed to generate a Table of Contents from headings in your book, "
+"you would be better off using the dedicated Table of Contents tool in "
+":guilabel:`Tools->Table of Contents`."
+msgstr ""
+
+# 4ba99be1887741ccbd9c25e03a8edd3d
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:224
+msgid "The API for the function mode"
+msgstr "De API voor de functie modus"
+
+# cb8c7d57143946f9b754fc0eea41cfcc
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:226
+msgid ""
+"All function mode functions must be python functions named replace, with the"
+" following signature::"
+msgstr ""
+
+# cd6c0df95e8d4d979ea0a087aa4ab30f
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:232
+msgid ""
+"When a find/replace is run, for every match that is found, the ``replace()``"
+" function will be called, it must return the replacement string for that "
+"match. If no replacements are to be done, it should return ``match.group()``"
+" which is the original string. The various arguments to the ``replace()`` "
+"function are documented below."
+msgstr ""
+
+# b55d45d9d0e5451891c2037f388bae01
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:239
+msgid "The ``match`` argument"
+msgstr ""
+
+# 394b2a4a15ef437f8149e5495fed2eb2
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:241
+msgid ""
+"The ``match`` argument represents the currently found match. It is a `python"
+" Match object <https://docs.python.org/2.7/library/re.html#match-objects>`_."
+" It's most useful method is ``group()`` which can be used to get the matched"
+" text corresponding to individual capture groups in the search regular "
+"expression."
+msgstr ""
+
+# 4301e548ba5145b489b61666220396a7
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:248
+msgid "The ``number`` argument"
+msgstr ""
+
+# c814a3ea4fc046ce91ec5abed162a921
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:250
+msgid ""
+"The ``number`` argument is the number of the current match. When you run "
+":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
+"be called with an increasing number. The first match has number 1."
+msgstr ""
+
+# 3d1635df535a4aa3bc4915ccdec8968f
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:255
+msgid "The ``file_name`` argument"
+msgstr ""
+
+# 24615925285f4867a6f68e0867edc850
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:257
+msgid ""
+"This is the filename of the file in which the current match was found. When "
+"searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
+"is in canonical form, a path relative to the root of the book, using ``/`` "
+"as the path separator."
+msgstr ""
+
+# f0477e5a29cf460e820bb00f02eca16d
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:263
+msgid "The ``metadata`` argument"
+msgstr ""
+
+# b74b46e2c189475b9432b503993aecd1
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:265
+msgid ""
+"This represents the metadata of the current book, such as title, authors, "
+"language, etc. It is an object of class "
+":class:`calibre.ebooks.metadata.book.base.Metadata`. Useful attributes "
+"include, ``title``, ``authors`` (a list of authors) and ``language`` (the "
+"language code)."
+msgstr ""
+
+# aabf5b4530b24359b93728dffbd770a0
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:271
+msgid "The ``dictionaries`` argument"
+msgstr ""
+
+# b6804831c752467a933d1b854d73837e
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:273
+msgid ""
+"This represents the collection of dictionaries used for spell checking the "
+"current book. It's most useful method is ``dictionaries.recognized(word)`` "
+"which will return ``True`` if the passed in word is recognized by the "
+"dictionary for the current book's language."
+msgstr ""
+
+# 8a331e269c1f491c9206aa20ce2375f4
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:279
+msgid "The ``data`` argument"
+msgstr ""
+
+# 5b8e27bcab21466a817e564c919a44a1
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:281
+msgid ""
+"This a simple python ``dict``. When you run :guilabel:`Replace All`, every "
+"successive match will cause ``replace()`` to be called with the same "
+"``dict`` as data. You can thus use it to store arbitrary data between "
+"invocations of ``replace()`` during a :guilabel:`Replace All` operation."
+msgstr ""
+
+# 6fead7dc44d94a269f3b49f46a873350
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:288
+msgid "The ``functions`` argument"
+msgstr ""
+
+# 660c54792d6b4993b5c93ee93e3c1a9f
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:290
+msgid ""
+"The ``functions`` argument gives you access to all other user defined "
+"functions. This is useful for code re-use. You can define utility functions "
+"in one place and re-use them in all your other functions. For example, "
+"suppose you create a function name ``My Function`` like this:"
+msgstr ""
+
+# 6b1b8fc5bcc643ffbc11e404418dd476
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:303
+msgid ""
+"Then, in another function, you can access the ``utility()`` function like "
+"this:"
+msgstr ""
+
+# 96355f74fce94fbf8ed594206459358d
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:311
+msgid ""
+"You can also use the functions object to store persistent data, that can be "
+"re-used by other functions. For example, you could have one function that "
+"when run with :guilabel:`Replace All` collects some data and another "
+"function that uses it when it is run afterwards. Consider the following two "
+"functions:"
+msgstr ""
+
+# f88295694d8f4cd1945e80519c7e2ce2
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:331
+msgid "Debugging your functions"
+msgstr "Debuggen van uw functies"
+
+# b02b31bbd24b48e4b34cf4ee6151ebd7
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:333
+msgid ""
+"You can debug the functions you create by using the standard ``print()`` "
+"function from python. The output of print will be displayed in a popup "
+"window after the Find/replace has completed. You saw an example of using "
+"``print()`` to output an entire table of contents above."
+msgstr ""
+
+# b60d07a504a24211a8a0843e71246153
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:341
+msgid "Choose file order when running on multiple HTML files"
+msgstr ""
+
+# c9282b8860354549bd45362065f40254
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:343
+msgid ""
+"When you run a :guilabel:`Replace All` on multiple HTML files, the order in "
+"which the files are processes depends on what files you have open for "
+"editing. You can force the search to process files in the order in which the"
+" appear by setting the ``file_order`` attribute on your function, like this:"
+msgstr ""
+
+# d524c97bfdca4ac5b09c5fae743fbade
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:355
+msgid ""
+"``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
+"cause the search to process multiple files in the order they appear in the "
+"book, either forwards or backwards, respectively."
+msgstr ""
+
+# 4e657be5bcaf47c1a30f7a5104852e4e
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:360
+msgid ""
+"Having your function called an extra time after the last match is found"
+msgstr ""
+
+# 0d0f95bc481945418b00f79aaa4b40b1
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:362
+msgid ""
+"Sometimes, as in the auto generate table of contents example above, it is "
+"useful to have your function called an extra time after the last match is "
+"found. You can do this by setting the ``call_after_last_match`` attribute on"
+" your function, like this:"
+msgstr ""

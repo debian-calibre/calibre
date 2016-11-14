@@ -1,0 +1,40 @@
+__license__   = 'GPL v3'
+__copyright__ = '2008-2012, Darko Miletic <darko.miletic at gmail.com>'
+'''
+harpers.org
+'''
+from calibre.web.feeds.news import BasicNewsRecipe
+
+class Harpers(BasicNewsRecipe):
+    title                 = u"Harper's Magazine"
+    __author__            = u'Darko Miletic'
+    language              = 'en'
+    description           = u"Harper's Magazine: Founded June 1850."
+    publisher             = "Harper's Magazine "
+    category              = 'news, politics, USA'
+    oldest_article        = 30
+    max_articles_per_feed = 100
+    no_stylesheets        = True
+    use_embedded_content  = False
+    masthead_url          = 'http://harpers.org/wp-content/themes/harpers/images/pheader.gif'
+
+    conversion_options = {
+                          'comment'   : description
+                        , 'tags'      : category
+                        , 'publisher' : publisher
+                        , 'language'  : language
+                        }
+
+    extra_css = '''
+                h1{ font-family:georgia ; color:#111111; font-size:large;}
+                .box-of-helpful{ font-family:arial ; font-size:x-small;}
+                p{font-family:georgia ;}
+                .caption{font-family:Verdana,sans-serif;font-size:x-small;color:#666666;}
+                '''
+
+    keep_only_tags = [ dict(name='div', attrs={'class':['postdetailFull', 'articlePost']}) ]
+    remove_tags = [dict(name=['link','object','embed','meta','base'])]
+    remove_attributes = ['width','height']
+
+    feeds       = [(u"Harper's Magazine", u'http://harpers.org/feed/')]
+

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>638</width>
+    <height>588</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>&lt;b&gt;Note:&lt;/b&gt; The paper size settings below only take effect if you enable the &quot;Override&quot; checkbox below. Otherwise the size from the output profile will be used.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="opt_override_profile_size">
+     <property name="text">
+      <string>&amp;Override paper size set in output profile</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&amp;Paper Size:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_paper_size</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="opt_paper_size"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>&amp;Custom size:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_custom_size</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="opt_custom_size">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>&amp;Unit:</string>
+       </property>
+       <property name="buddy">
+        <cstring>opt_unit</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="opt_unit"/>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QCheckBox" name="opt_preserve_cover_aspect_ratio">
+     <property name="text">
+      <string>Preserve &amp;aspect ratio of cover</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QCheckBox" name="opt_pdf_page_numbers">
+     <property name="text">
+      <string>Add page &amp;numbers to the bottom of every page</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Se&amp;rif family:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_serif_family</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QFontComboBox" name="opt_pdf_serif_family"/>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>&amp;Sans family:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_sans_family</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="QFontComboBox" name="opt_pdf_sans_family"/>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>&amp;Monospace family:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_mono_family</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="QFontComboBox" name="opt_pdf_mono_family"/>
+   </item>
+   <item row="13" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>S&amp;tandard font:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_standard_font</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QComboBox" name="opt_pdf_standard_font"/>
+   </item>
+   <item row="14" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Default font si&amp;ze:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_default_font_size</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="QSpinBox" name="opt_pdf_default_font_size">
+     <property name="suffix">
+      <string> px</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Monospace &amp;font size:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_pdf_mono_font_size</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="1">
+    <widget class="QSpinBox" name="opt_pdf_mono_font_size">
+     <property name="suffix">
+      <string> px</string>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="0" colspan="2">
+    <widget class="QGroupBox" name="template_box">
+     <property name="title">
+      <string>Page headers and footers</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="hf_label">
+        <property name="text">
+         <string>You can insert headers and footers into every page of the produced PDF file by using header and footer templates. For examples, see the &lt;a href=&quot;%s&quot;&gt;documentation&lt;/a&gt;.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>&amp;Header template:</string>
+        </property>
+        <property name="buddy">
+         <cstring>opt_pdf_header_template</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="opt_pdf_header_template"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>&amp;Footer template:</string>
+        </property>
+        <property name="buddy">
+         <cstring>opt_pdf_footer_template</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="opt_pdf_footer_template"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <widget class="QCheckBox" name="opt_pdf_add_toc">
+     <property name="text">
+      <string>Add a printable &amp;Table of Contents at the end</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="opt_toc_title"/>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_14">
+     <property name="text">
+      <string>&amp;Title for ToC:</string>
+     </property>
+     <property name="buddy">
+      <cstring>opt_toc_title</cstring>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

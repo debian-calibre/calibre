@@ -1,0 +1,101 @@
+#include <QtGlobal>
+#include "headless_integration.h"
+#include "headless_backingstore.h"
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 1))
+#include "fontconfig_database.h"
+#else
+#include <QtPlatformSupport/private/qfontconfigdatabase_p.h>
+#endif
+#ifndef Q_OS_WIN
+#include <QtPlatformSupport/private/qgenericunixeventdispatcher_p.h>
+#else
+#include <QtCore/private/qeventdispatcher_win_p.h>
+#endif
+
+#include <QtGui/private/qpixmap_raster_p.h>
+#include <QtGui/private/qguiapplication_p.h>
+#include <qpa/qplatformwindow.h>
+#include <qpa/qplatformfontdatabase.h>
+
+QT_BEGIN_NAMESPACE
+
+class GenericUnixServices : public QGenericUnixServices {
+    /* We must return desktop environment as UNKNOWN otherwise other parts of
+     * Qt will try to query the nativeInterface() without checking if it exists
+     * leading to a segfault.  For example, defaultHintStyleFromMatch() queries
+     * the nativeInterface() without checking that it is NULL. See
+     * https://bugreports.qt-project.org/browse/QTBUG-40946 
+     * This is no longer strictly neccessary since we implement our own fontconfig database 
+     * (a patched version of the Qt fontconfig database). However, it is probably a good idea to
+     * keep it unknown, since the headless QPA is used in contexts where a desktop environment 
+     * does not make sense anyway.
+     */
+    QByteArray desktopEnvironment() const { return QByteArrayLiteral("UNKNOWN"); }
+};
+
+HeadlessIntegration::HeadlessIntegration(const QStringList &parameters)
+{
+    Q_UNUSED(parameters);
+    HeadlessScreen *mPrimaryScreen = new HeadlessScreen();
+
+    mPrimaryScreen->mGeometry = QRect(0, 0, 240, 320);
+    mPrimaryScreen->mDepth = 32;
+    mPrimaryScreen->mFormat = QImage::Format_ARGB32_Premultiplied;
+
+    screenAdded(mPrimaryScreen);
+    m_fontDatabase.reset(new QFontconfigDatabase());
+
+    platform_services.reset(new GenericUnixServices());
+}
+
+HeadlessIntegration::~HeadlessIntegration()
+{
+}
+
+bool HeadlessIntegration::hasCapability(QPlatformIntegration::Capability cap) const
+{
+    switch (cap) {
+    case ThreadedPixmaps: return true;
+    case MultipleWindows: return true;
+    case OpenGL: return false;
+    case ThreadedOpenGL: return false;
+    default: return QPlatformIntegration::hasCapability(cap);
+    }
+}
+
+QPlatformOpenGLContext *HeadlessIntegration::createPlatformOpenGLContext(QOpenGLContext *context) const
+{
+    Q_UNUSED(context);
+    // Suppress warnings about this plugin not supporting createPlatformOpenGLContext that come from the default implementation of this function
+    return 0;
+}
+
+QPlatformFontDatabase *HeadlessIntegration::fontDatabase() const
+{
+    return m_fontDatabase.data();
+}
+
+QPlatformWindow *HeadlessIntegration::createPlatformWindow(QWindow *window) const
+{
+    Q_UNUSED(window);
+    QPlatformWindow *w = new QPlatformWindow(window);
+    w->requestActivateWindow();
+    return w;
+}
+
+QPlatformBackingStore *HeadlessIntegration::createPlatformBackingStore(QWindow *window) const
+{
+    return new HeadlessBackingStore(window);
+}
+
+QAbstractEventDispatcher *HeadlessIntegration::createEventDispatcher() const
+{
+    return createUnixEventDispatcher();
+}
+
+HeadlessIntegration *HeadlessIntegration::instance()
+{
+    return static_cast<HeadlessIntegration *>(QGuiApplicationPrivate::platformIntegration());
+}
+
+QT_END_NAMESPACE

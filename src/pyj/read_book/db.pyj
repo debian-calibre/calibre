@@ -1,0 +1,255 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from gettext import gettext as _
+from encodings import base64encode, base64decode
+
+def upgrade_schema(idb, old_version, new_version):
+    print('upgrade_schema:', old_version, new_version)
+    if not idb.objectStoreNames.contains('books'):
+        idb.createObjectStore('books', {'keyPath':'key'})
+    if not idb.objectStoreNames.contains('files'):
+        idb.createObjectStore('files')
+    if not idb.objectStoreNames.contains('mathjax'):
+        idb.createObjectStore('mathjax')
+    if not idb.objectStoreNames.contains('objects'):
+        idb.createObjectStore('objects', {'keyPath':'key'})
+
+def file_store_name(book, name):
+    return book.book_hash + ' ' + name
+
+def get_error_details(event):
+    desc = event.target
+    if desc.error and desc.error.toString:
+        desc = desc.error.toString()
+    elif desc.errorCode:
+        desc = desc.errorCode
+
+DB_NAME = 'calibre-books-db-testing'  # TODO: Remove test suffix and change version back to 1
+DB_VERSION = 2
+
+class DB:
+
+    def __init__(self, idb, ui, supports_blobs):
+        self.interface_data = ui.interface_data
+        self.idb = idb
+        self.supports_blobs = supports_blobs
+        if not supports_blobs:
+            print('IndexedDB does not support Blob storage, using base64 encoding instead')
+        self.show_error = ui.show_error.bind(ui)
+
+        idb.onerror = def(event):
+            self.display_error(None, event)
+            if console.dir:
+                console.dir(event)
+            else:
+                console.log(event)
+
+        idb.onversionchange = def(event):
+            idb.close()
+            ui.show_error(_('Database upgraded!'), _(
+                'A newer version of calibre is available, please click the reload button in your browser.'))
+
+    def display_error(self, msg, event):
+        if event.already_displayed_by_calibre:
+            return
+        event.already_displayed_by_calibre = True
+        msg = msg or _(
+            'There was an error while interacting with the'
+            ' database used to store books for offline reading. Click "Show details" for more information.')
+        self.show_error(_('Cannot read book'), msg, get_error_details(event))
+
+    def do_op(self, stores, data, error_msg, proceed, op='get', store=None):
+        store = store or stores[0]
+        if op is 'get':
+            transaction = self.idb.transaction(stores)
+            req = transaction.objectStore(store).get(data)
+            req.onsuccess = def(event): proceed(req.result)
+        elif op is 'put':
+            transaction = self.idb.transaction(stores, 'readwrite')
+            req = transaction.objectStore(store).put(data)
+            req.onsuccess = proceed
+        req.onerror = def(event):
+            self.display_error(error_msg, event)
+
+    def get_book(self, book_id, fmt, metadata, proceed):
+        fmt = fmt.toUpperCase()
+        # The key has to be a JavaScript array as otherwise it cannot be stored
+        # into indexed db, because the RapydScript list has properties that
+        # refer to non-serializable objects like functions.
+        key = v'[self.interface_data.library_id, book_id, fmt]'
+        self.do_op(['books'], key, _('Failed to read from the books database'), def(result):
+            proceed(result or {
+                'key':key,
+                'is_complete':False,
+                'stored_files': {},
+                'book_hash':None,
+                'last_read': Date(),
+                'metadata': metadata,
+                'manifest': None,
+                'cover_width': None,
+                'cover_height': None,
+                'last_read_position': {},
+            })
+        )
+
+    def get_mathjax_info(self, proceed):
+        self.do_op(['objects'], 'mathjax-info', _('Failed to read from the objects database'), def(result):
+            proceed(result or {'key':'mathjax-info'})
+        )
+
+    def save_manifest(self, book, manifest, proceed):
+        book.manifest = manifest
+        book.metadata = manifest.metadata
+        book.book_hash = manifest.book_hash.hash
+        book.stored_files = {}
+        book.is_complete = False
+        v'delete manifest["metadata"]'
+        self.do_op(['books'], book, _('Failed to write to the books database'), proceed, op='put')
+
+    def store_file(self, book, name, xhr, proceed, is_cover):
+        store_as_text = xhr.responseType is 'text' or not xhr.responseType
+        fname = file_store_name(book, name)
+        needs_encoding = not store_as_text and not self.supports_blobs
+        book.stored_files[fname] = {'encoded':needs_encoding, 'mimetype':book.manifest.files[name].mimetype, 'store_as_text':store_as_text}
+        if is_cover:
+            self.store_cover(book, needs_encoding, xhr.response, name, fname, proceed)
+        else:
+            self.store_file_stage2(needs_encoding, xhr.response, name, fname, proceed)
+
+    def store_cover(self, book, needs_encoding, data, name, fname, proceed):
+        blob = data
+        if needs_encoding:
+            blob = Blob([data], {'type':'image/jpeg'})
+        url = window.URL.createObjectURL(blob)
+        img = new Image()
+        proceeded = False
+
+        def done():
+            nonlocal proceeded
+            if not proceeded:
+                proceeded = True
+                window.URL.revokeObjectURL(url)
+                self.store_file_stage2(needs_encoding, data, name, fname, proceed)
+
+        img.onload = def():
+            book.cover_width = this.width
+            book.cover_height = this.height
+            done()
+
+        img.onerror = def():
+            print('WARNING: Failed to read dimensions of cover')
+            done()
+        img.src = url
+
+    def store_file_stage2(self, needs_encoding, data, name, fname, proceed):
+        if needs_encoding:
+            data = base64encode(Uint8Array(data))
+        req = self.idb.transaction(['files'], 'readwrite').objectStore('files').put(data, fname)
+        req.onsuccess = def(event): proceed()
+        req.onerror = def(event):
+            proceed(_('Failed to store book data ({0}) with error: {1}').format(name, get_error_details(event)))
+
+    def clear_mathjax(self, proceed):
+        self.idb.transaction(['mathjax'], 'readwrite').objectStore('mathjax').clear().onsuccess = proceed
+
+    def store_mathjax_file(self, name, xhr, proceed):
+        data = xhr.response
+        if not self.supports_blobs:
+            data = base64encode(Uint8Array(data))
+        req = self.idb.transaction(['mathjax'], 'readwrite').objectStore('mathjax').put(data, name)
+        req.onsuccess = def(event): proceed()
+        req.onerror = def(event):
+            proceed(_('Failed to store mathjax file ({0}) with error: {1}').format(name, get_error_details(event)))
+
+    def finish_book(self, book, proceed):
+        book.is_complete = True
+        self.do_op(['books'], book, _('Failed to write to the books database'), proceed, op='put')
+
+    def finish_mathjax(self, mathjax_info, proceed):
+        self.do_op(['objects'], mathjax_info, _('Failed to write to the objects database'), proceed, op='put')
+
+    def update_last_read_time(self, book):
+        book.last_read = Date()
+        self.do_op(['books'], book, _('Failed to write to the books database'), op='put')
+
+    def get_file(self, book, name, proceed):
+        key = file_store_name(book, name)
+        err = _(
+            'Failed to read the file {0} for the book {1} from the database').format(name, book.metadata.title)
+        self.do_op(['files'], key, err, def (result):
+            if not result:
+                self.show_error(_('Cannot read book'), err)
+                return
+            fdata = book.stored_files[key]
+            mt = fdata.mimetype or 'application/octet-stream'
+            if fdata.encoded:
+                result = Blob([base64decode(result)], {'type':mt})
+            proceed(result, name, mt, book)
+        )
+
+    def get_mathjax_files(self, proceed):
+        c = self.idb.transaction('mathjax').objectStore('mathjax').openCursor()
+        c.onerror = def(event):
+            err = _('Failed to read the MathJax files from local storage')
+            self.display_error(err, event)
+        data = {}
+        c.onsuccess = def(event):
+            cursor = event.target.result
+            if cursor:
+                name, result = cursor.key, cursor.value
+                if not isinstance(result, Blob):
+                    mt = 'application/x-font-woff' if name.endswith('.woff') else 'text/javascript'
+                    result = Blob([base64decode(result)], {'type':mt})
+                data[name] = result
+                cursor.continue()
+            else:
+                proceed(data)
+
+    def delete_book(self, book, proceed):
+        c = self.idb.transaction(['books', 'files'], 'readwrite')
+        files = c.objectStore('files')
+        books = c.objectStore('books')
+        filenames = Object.keys(book.stored_files)
+        c.oncomplete = def(event):
+            proceed(book)
+        c.onerror = def (event):
+            proceed(book, c.error.toString())
+
+        def next_step():
+            if filenames.length:
+                r = files.delete(filenames.pop())
+                r.onsuccess = next_step
+            else:
+                books.delete(book.key)
+        next_step()
+
+def create_db(ui, interface_data):
+    if not window.indexedDB:
+        return ui.db_initialized(_('Your browser does not support IndexedDB. Cannot read books. Consider using a modern browser, such as Firefox, Chrome or Edge.'))
+
+    request = window.indexedDB.open(DB_NAME, DB_VERSION)
+
+    request.onupgradeneeded = def(event):
+        upgrade_schema(event.target.result, event.oldVersion, event.newVersion)
+
+    request.onblocked = def(event):
+        alert(_('Please close all other tabs with a calibre book open'))
+
+    request.onerror = def(event):
+        ui.db_initialized(_('You must allow calibre to use IndexedDB storage in your browser to read books'))
+
+    request.onsuccess = def(event):
+        blob = Blob(['test'], {'type':"text/plain"})
+        idb = event.target.result
+        try:
+            req = idb.transaction(['files'], 'readwrite').objectStore('files').put(blob, ':-test-blob-:')
+        except Exception:
+            print('WARNING: browser does not support blob storage, calibre falling back to base64 encoding')
+            return ui.db_initialized(DB(idb, ui, False))
+        req.onsuccess = def(event):
+            ui.db_initialized(DB(idb, ui, True))
+        req.onerror = def(event):
+            print('WARNING: browser does not support blob storage, calibre falling back to base64 encoding')
+            ui.db_initialized(DB(idb, ui, False))

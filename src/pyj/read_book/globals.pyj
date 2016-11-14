@@ -1,0 +1,51 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from aes import GCM, random_bytes
+from encodings import hexlify
+
+_boss = None
+
+def set_boss(b):
+    nonlocal _boss
+    _boss = b
+
+def get_boss():
+    return _boss
+
+class Messenger:
+
+    def __init__(self):
+        self.secret = Uint8Array(64)
+
+    def reset(self):
+        window.crypto.getRandomValues(self.secret)
+        self.gcm_to_iframe = GCM(self.secret.subarray(0, 32))
+        self.gcm_from_iframe = GCM(self.secret.subarray(32))
+
+    def encrypt(self, data):
+        return self.gcm_to_iframe.encrypt(JSON.stringify(data))
+
+    def decrypt(self, data):
+        return JSON.parse(self.gcm_from_iframe.decrypt(data))
+
+messenger = Messenger()
+iframe_id = 'read-book-iframe'
+uid = 'calibre-' + hexlify(random_bytes(12))
+
+_layout_mode = 'flow'
+def current_layout_mode():
+    return _layout_mode
+
+def set_layout_mode(val):
+    nonlocal _layout_mode
+    _layout_mode = val
+
+_current_spine_item = None
+def current_spine_item():
+    return _current_spine_item
+
+def set_current_spine_item(val):
+    nonlocal _current_spine_item
+    _current_spine_item = val
