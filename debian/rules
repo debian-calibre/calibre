@@ -99,7 +99,7 @@ get-orig-source:
 	rm -rf jquery-ui-1.8.5; \
 	rm jquery-ui-1.8.5.zip; \
 	\
-	wget https://datejs.googlecode.com/files/Datejs-all-Alpha1.zip; unzip Datejs-all-Alpha1.zip; \
+	wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/datejs/Datejs-all-Alpha1.zip; unzip Datejs-all-Alpha1.zip; \
 	(cd Datejs-all*/src; cat globalization/en-US.js core-debug.js sugarpak-debug.js parser-debug.js) > `ls -d calibre*`/resources/content_server/date.js.orig; \
 	rm -rf Datejs-all*; \
 	\
