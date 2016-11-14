@@ -29,8 +29,6 @@ class PreferencesAction(InterfaceAction):
             pm.addAction(QIcon(I('config.png')), _('Preferences'), self.do_config)
         cm('welcome wizard', _('Run welcome &wizard'),
                 icon='wizard.png', triggered=self.gui.run_wizard)
-        cm('plugin updater', _('Get plugins to enhance calibre'),
-                icon='plugins/plugin_updater.png', triggered=self.get_plugins)
         if not DEBUG:
             pm.addSeparator()
             cm('restart', _('Restart in debug mode'), icon='debug.png',
