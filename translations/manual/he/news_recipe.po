@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 17:16+0530\n"
-"PO-Revision-Date: 2016-05-30 15:14+0000\n"
+"POT-Creation-Date: 2016-07-22 07:51+0530\n"
+"PO-Revision-Date: 2016-07-28 22:05+0000\n"
 "Last-Translator: ori d <orid50@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/calibre/calibre/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -171,6 +171,13 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
 msgid ""
 "Return a list of :term:`RSS` feeds to fetch for this profile. Each element "
@@ -243,7 +250,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
 msgid "The URL to be followed"
-msgstr ""
+msgstr "כתובת ה-URL למעקב"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
@@ -314,7 +321,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
 msgid "An OEBBook object"
-msgstr ""
+msgstr "אובייקט OEBBook"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
@@ -559,8 +566,9 @@ msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
 ":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
 " closing `</head>` tag thereby overriding all :term:`CSS` except that which "
-"is declared using the style attribute on individual :term:`HTML` tags. For "
-"example::"
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of

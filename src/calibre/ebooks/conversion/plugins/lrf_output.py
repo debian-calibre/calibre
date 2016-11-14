@@ -11,6 +11,7 @@ import sys, os
 from calibre.customize.conversion import OutputFormatPlugin
 from calibre.customize.conversion import OptionRecommendation
 
+
 class LRFOptions(object):
 
     def __init__(self, output, opts, oeb):
@@ -73,7 +74,6 @@ class LRFOptions(object):
         self.header_separation = (self.profile.dpi/72.) * opts.header_separation
         self.headerformat = opts.header_format
 
-
         for x in ('top', 'bottom', 'left', 'right'):
             setattr(self, x+'_margin',
                 (self.profile.dpi/72.) * float(getattr(opts, 'margin_'+x)))
@@ -83,6 +83,7 @@ class LRFOptions(object):
                 'render_tables_as_images', 'sans_family', 'mono_family',
                 'text_size_multiplier_for_rendered_tables'):
             setattr(self, x, getattr(opts, x))
+
 
 class LRFOutput(OutputFormatPlugin):
 
@@ -172,7 +173,6 @@ class LRFOutput(OutputFormatPlugin):
         for x in self.oeb.toc.iterdescendants():
             nroot.add(x.title, x.href)
         self.oeb.toc = nroot
-
 
     def convert(self, oeb, output_path, input_plugin, opts, log):
         self.log, self.opts, self.oeb = log, opts, oeb

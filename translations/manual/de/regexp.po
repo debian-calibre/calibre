@@ -5,16 +5,20 @@
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014
 # H K <HK@hallo.ms>, 2016
+# Martin Schaerer <martin.scharer@gmail.com>, 2016
+# bd sn <mightyscoopa@zoho.com>, 2016
 # Philip De, 2016
+# Philip De, 2016
+# RiseT, 2016
 # Simon_Schuette <simonschuette@arcor.de>, 2015-2016
 # RiseT, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 17:16+0530\n"
-"PO-Revision-Date: 2016-05-30 16:42+0000\n"
-"Last-Translator: H K <HK@hallo.ms>\n"
+"POT-Creation-Date: 2016-09-02 07:27+0530\n"
+"PO-Revision-Date: 2016-09-06 13:15+0000\n"
+"Last-Translator: bd sn <mightyscoopa@zoho.com>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -222,7 +226,7 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand::"
-msgstr ""
+msgstr "Ich wusste, du würdest fragen. Nützliche Formulierungen sind ``[0-9]`` entspricht einer einzelnen Zahl, ``[a-z]`` entspricht einem einzelnen Kleinbuchstaben, ``[A-Z]`` entspricht einem einzelnen Grossbuchstaben, ``[a-zA-Z]`` entspricht einem einzelnen Buchstaben und ``[a-zA-Z0-9]`` entspricht einem einzelnen Buchstabe oder Zahl. Du kannst auch eine \"Escape-Sequenz\" als Abkürzung benutzen::"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:68
 msgid ""
@@ -266,7 +270,7 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "Keine Angst, das Leben ist noch immer schön und leicht. Betrachten Sie dieses Beispiel: Das Buch, das Sie konvertieren hat \"Titel\" auf jeder ungeraden, und \"Autor\" auf jeder geraden Seite stehen. Das sieht im Druck toll aus, stimmt's? Nur: Bei Ebooks ist das lästig. Sie können ganze Ausdrücke mit normalen Klammern gruppieren, und das Zeichen ``\"|\"`` erlaubt Ihnen *entweder* den Ausdruck links *oder* denjenigen rechts davon zu finden. Kombinieren Sie diese beiden und sie haben es. Das war zu schnell? OK, als Erstes kombinieren wir die Ausdrücke für gerade und ungerade Seiten, erhalten also ``(Title)(Author)`` für unsere zwei benötigten Ausdrücke. Nun vereinfachen wir das Ganze, indem wir den senkrechten Strich verwenden (``\"|\"`` wird senkrechter Strich oder Verkettungszeichen genannt): Wenn Sie den Ausdruck ``(Title|Author)`` verwenden finden Sie entweder \"Titel\" (auf den ungeraden Seiten) oder \"Autor\" (auf den geraden Seiten). Na, war das nicht einfach?"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:77
 msgid ""
@@ -282,7 +286,7 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr ""
+msgstr "Sie können den senkrechten Strich natürlich auch ohne gruppierende Klammern verwenden. Erinnern Sie sich, dass ich sagte Quantifizierer wiederholten das vorangegangene Element? Nun, der senkrechte Strich funktioniert ein wenig anders: Der Ausdruck \"Titel|Autor\" wird also entweder die Zeichenfolge \"Titel\" oder die Zeichenfolge \"Autor\" finden, genau wie das vorhergehende Beispiel mit der Gruppierung. *Der senkrechte Strich wählt aus zwischen der ganzen Zeichenfolge vor und der nach ihm*. Wollten Sie also die Zeichenfolgen \"Calibre\" und \"calibre\" finden und dabei nur zwischen dem großen und dem kleinen \"c\" wählen, müssten Sie den Ausdruck ``(c|C)alibre`` verwenden, bei dem die Gruppierung sicherstellt, dass nur das \"c\" gewählt wird. Sollten Sie ``c|Calibre`` verwenden, fänden Sie die Zeichenfolgen \"c\" oder \"Calibre\", was nicht unsere Absicht war. Kurz gesagt: Verwenden Sie im Zweifel die Gruppierung zusammen mit dem senkrechten Strich."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:80
 msgid "You missed..."
@@ -297,7 +301,7 @@ msgid ""
 "you want to reference, thus, the fifth group would be referenced as ``\\5``."
 " So, if you searched for ``([^ ]+) \\1`` in the string \"Test Test\", you'd "
 "match the whole string!"
-msgstr ""
+msgstr "... es gäbe da noch eine letzte, wirklich geschickte Sache, die Sie mit Gruppen anstellen können. Wenn Sie einen Gruppierungsausdruck haben, den Sie zuvor eingesetzt haben, können Sie Referenzen auf diese Gruppe im weiteren Ausdruck verwenden: Gruppen werden beginnend mit 1 nummeriert, und Sie werden referenziert, indem die Nummer der Gruppe mit einer \"Escape-Sequenz\" versehen wird, folglich würde die fünfte Gruppe als ``\\5`` referenziert. Daher fänden Sie bei einer Suche nach ``([^ ]+) \\1`` in der Zeichenfolge \"Test Test\" die komplette Zeichenfolge!"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:86
 msgid ""
@@ -314,7 +318,7 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``test(?i)`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "Ja, das habe ich. Danke für's Aufpassen. Sie können Calibre sagen, wie es mit bestimmten Dingen umgehen soll, indem Sie sogenannte \"Flags\" verwenden. Sie fügen Flags in ihren Ausdruck mithilfe des speziellen Konstrukts ``(?Flag hierher)`` ein, in welchem Sie selbstverständlich \"Flags hierher\" durch die genauen Flags, die Sie wollen, ersetzen würden. Um die Groß-/Kleinschreibung zu ignorieren lautet die Flag ``i``, folglich würden Sie ``(?i)`` in Ihren Ausdruck einfügen. Also würde ``test(?i)`` auf \"Test\", \"tEst\", \"TEst\" und jegliche Variation der Groß-/Kleinschreibung, die Ihnen einfällt, passen."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:90
 msgid ""
@@ -325,7 +329,7 @@ msgid ""
 "``(?si)`` would be equivalent to the above. By the way, good places for "
 "putting flags in your expression would be either the very beginning or the "
 "very end. That way, they don't get mixed up with anything else."
-msgstr ""
+msgstr "Eine weitere nützliche Flag lässt den Punkt jedes beliebige Zeichen finden, *einschließlich* dem Zeilenumbruch, – die Flag ``s``. Falls Sie mehrere Flags in einem Ausdruck einsetzen wollen, setzen Sie diese einfach in die selbe Anweisung: ``(?is)`` würde die Groß-/Kleinschreibung ignorieren und den Punkt alle Zeichen finden lassen. Es spielt keine Rolle, welche Flag Sie zuerst anmelden, ``(?si)`` wäre gleichwertig zum oben genannten. Übrigens, gute Stellen um Flags in ihren Ausdruck zu setzen sind entweder ganz am Anfang oder ganz am Ende. Auf diese Weise werden Sie nicht mit irgendetwas anderem vermischt."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:93
 msgid ""
@@ -351,7 +355,7 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "Beginnen wir mit den Konvertierungs-Einstellungen, die wirklich praktisch sind. Im Bereich Suchen und Ersetzen können Sie einen reg. Ausdruck eingeben, der die Zeichenfolge beschreibt, welche bei der Konvertierung ersetzt wird. Das praktische daran ist der Assistent. Klicken Sie auf den Zauberstab und Sie bekommen eine Vorschau dessen angezeigt, was Calibre während des Konvertierungsvorgangs \"sieht\". Fahren Sie runter zur Zeichenfolge, die Sie entfernen möchten, wählen Sie diese aus, kopieren sie und fügen sie dann in das reg.-Ausdruck-Feld oben im Fenster ein. Sollten veränderliche Teile enthalten sein, wie z.B. Seitenzahlen, verwenden Sie Quantifizierer um diese abzudecken; und wo Sie schon dabei sind, vergessen Sie nicht, Sonderzeichen mit Escape-Sequenzen zu versehen, falls vorhanden. Drücken Sie die Schaltfläche :guilabel:`Test` und Calibre wird die Abschnitte hervorheben, die es ersetzen würde, sollten Sie diesen reg. Ausdruck verwenden. Sobald Sie zufrieden sind, drücken Sie OK und konvertieren. Seien Sie vorsichtig, falls Ihre Quelle für die Konvertierung Marken (\"Tags\") wie in diesem Beispiel enthält::"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:108
 msgid ""
@@ -378,7 +382,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(Schamlos stibitzt aus `dieser Forumsdiskussion <http://www.mobileread.com/forums/showthread.php?t=75594\">`_). Sie müssten auch einige der Marken (\"Tags\") entfernen. In diesem Beispiel würde ich empfehlen, mit der Marke ``<b class=\"calibre2\">`` anzufangen, die Sie dann mit der entsprechenden schließenden Marke beenden müssen, die in diesem Fall einfach das nächste ``<\\b>`` ist. (Öffnende Marken lauten ``<Marke>``, schließende Marken ``</Marke>``; wenden Sie sich an ein gutes HTML-Handbuch oder fragen Sie im Forum nach, falls Ihnen dieser Punkt nicht ganz klar ist.) Die öffnende Marke kann hier mit ``<b.*?>``, die schließende mit ``</b>`` beschrieben werden, also könnten wir alles zwischen diesen Marken mit ``<b.*?>.*?</b>`` entfernen. Diesen Ausdruck zu verwenden wäre aber keine gute Idee, denn es würde alles von <b>-Marken eingeschlossene (diese geben übrigens Text in Fettdruck wieder) entfernen und dabei jede Wette Teile des Buches löschen. Stattdessen fügen Sie auch den Anfang der eingeschlossenen Zeichenfolge ein, was den regulären Ausdruck zu ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` macht. Hier wurden die ``\\s`` mit Quantifizierern eingefügt, statt die Leerzeichen selbst wie in der Zeichenfolge einzusetzen, um jegliche vorkommenden Variationen derselben abzufangen. Vergessen Sie beim Ausprobieren eines neuen Ausdruckes nicht zu überprüfen, was Calibre entfernen würde, um sicherzugehen, dass Sie keine Abschnitte verlieren, die Sie behalten wollten. Wenn Sie nur ein Auftreten überprüfen, übersehen Sie vielleicht ein fälschlicherweise gefundenes woanders im Text. Beachten Sie außerdem: Sollten Sie aus Versehen mehr oder weniger Marken als sie wollten entfernt haben, versucht Calibre, den beschädigten Code nach der Entfernung zu reparieren."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:111
 msgid "Adding books"
@@ -405,7 +409,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Etwas anderes, wofür Sie reguläre Ausdrücke verwenden können, ist das Extrahieren von Metadaten aus Dateinamen. Sie finden diese Funktion im Bereich \"Bücher hinzufügen\" der Einstellungen.Es gibt hierbei eine Spezialfunktion: Sie können Feldnamen für die Metadaten-Felder vewenden, beispielsweise bedeutete ``(?P<title>)``, dass Calibre diesen Teil der Zeichenfolge als Buchtitel einsetzen würde. Die erlaubten Feldnamen sind in den Fenstern aufgelistet, zusammen mit einem weiteren netten Testfeld. Ein Beispiel: Nehmen wir an, Sie wollen einen ganzen Haufen Dateien importieren, die ähnlich wie ``Klassische Texte: Die göttliche Komödie von Dante Alighieri.mobi`` benannt sind. (Selbstverständlich befindet sich das schon in Ihrer Bibliothek, denn wir alle lieben klassische italienische Dichtkunst.) ... oder ``Monumentalwerke der Science-Fiction: Die Foundation-Trilogie von Isaac Asimov.epub``. Dies ist offensichtlich ein Namensschema, aus dem Calibre keinerlei sinnvolle Informationen extrahieren wird – sein Standardausdruck für die Extraktion von Metadaten ist ``(?P<title>.+) - (?P<author>[^_]+)``. Ein regulärer Ausdruck, der hier funktionieren würde, wäre ``[a-zA-Z]+: (?P<title>.+) von (?P<author>.+)``. Beachten Sie bitte, dass Sie in der Gruppe für das jeweilige Metadaten-Feld Ausdrücke einsetzen müssen, um zu beschreiben was eigentlich auf das Feld passt. Und beachten Sie außerdem, dass Sie beim verwenden von Calibres vorgegebenem Testfeld die Dateiendung zu ihrem Versuchs-Dateinamen hinzufügen müssen, andernfalls werden Sie trotz eines korrekten Ausdrucks nichts finden."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:117
 msgid "Bulk editing metadata"
@@ -435,7 +439,7 @@ msgid ""
 "as well. As you by now have undoubtedly noticed, there's a checkbox labeled "
 ":guilabel:`Case sensitive`, so you won't have to use flags to select "
 "behaviour here."
-msgstr ""
+msgstr "Der letzte Teil ist das Suchen und Ersetzen in Metadaten-Feldern mithilfe von regulären Ausrücken. Sie können darauf zugreifen, indem Sie mehrere Bücher in der Bibliothek auswählen und Metadaten-Stapelverarbeitung darauf anwenden.Seien Sie sehr vorsichtig beim Verwenden dieser letzten Funktion, denn sie kann ihrer Bibliothek **schlimme Schäden** zufügen! Überprüfen Sie zweimal, ob Ihre Ausdrücke das tun, was sie sollen, indem Sie die Testfelder verwenden, und wählen Sie nur die Bücher aus, die Sie auch wirklich verändern wollen! Im Suchmodus für reguläre Ausdrücke können Sie in einem Feld suchen, den Text mit etwas anderem ersetzen und sogar das Suchergebnis in ein anderes Feld übertragen. Ein praktisches Beispiel: Nehmen wir an Ihre Bibliothek enthielte die Bücher aus Frank Herberts Dune-Serie, benannt nach dem Schema ``Dune 1 - Der Wüstenplanet``, ``Dune 2 - Der Herr des Wüstenplaneten`` und so weiter. Nun wollen Sie ``Dune`` in das Serien-Feld bekommen. Das erreichen Sie, indem Sie im Titel-Feld nach ``(.*?) \\d+ - .*`` suchen und das Serien-Feld mit ``\\1`` ersetzen. Sehen Sie was ich da gemacht habe? Das ist eine Referenz zur ersten Gruppe, mit der Sie so das Serien-Feld ersetzen. Jetzt, da die Serie abgehakt ist, müssen Sie nur noch eine weitere Suche nach ``.*? -`` im Titel-Feld durchführen und es mit ``\"\"`` (einer leeren Zeichenfolge), wieder im Titel-Feld, ersetzen und ihre Metadaten sind sauber und ordentlich. Ist das nicht großartig? Übrigens können Sie auch an ein Feld vorne oder hinten anfügen, anstatt das Ganze zu ersetzen. Sie können also, wenn Sie *möchten*, dass der Titel mit der Serien-Info beginnt, auch das erreichen. Wie Sie inzwischen zweifellos bemerkt haben, gibt es da ein Kontrollkästchen mit der Beschriftung :guilabel:`Groß-/Kleinschreibung`, also brauchen Sie in diesem Fall keine Flags einzusetzen, um das Verhalten zu steuern."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:121
 msgid ""

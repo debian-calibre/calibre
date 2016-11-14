@@ -34,6 +34,7 @@ from calibre.ebooks.oeb.display.webview import load_html
 from calibre.constants import isxp, iswindows, DEBUG, __version__
 # }}}
 
+
 def apply_settings(settings, opts):
     settings.setFontSize(QWebSettings.DefaultFontSize, opts.default_font_size)
     settings.setFontSize(QWebSettings.DefaultFixedFontSize, opts.mono_font_size)
@@ -44,6 +45,7 @@ def apply_settings(settings, opts):
     settings.setFontFamily(QWebSettings.SansSerifFont, opts.sans_family)
     settings.setFontFamily(QWebSettings.FixedFont, opts.mono_family)
     settings.setAttribute(QWebSettings.ZoomTextOnly, True)
+
 
 def apply_basic_settings(settings):
     # Security
@@ -67,9 +69,6 @@ class Document(QWebPage):  # {{{
     mark_element = pyqtSignal(QWebElement)
     settings_changed = pyqtSignal()
     animated_scroll_done_signal = pyqtSignal()
-
-    def userAgentForUrl(self, url):
-        return QWebPage.userAgentForUrl(self, url).replace('libprs500', 'calibre (libprs500)/%s' % __version__)
 
     def set_font_settings(self, opts):
         settings = self.settings()
@@ -478,6 +477,7 @@ class Document(QWebPage):  # {{{
                     return abs(float(self.ypos)/(self.height-self.window_height))
                 except ZeroDivisionError:
                     return 0.
+
         def fset(self, val):
             if self.in_paged_mode and self.loaded_javascript:
                 self.javascript('paged_display.scroll_to_pos(%f)'%val)
@@ -491,10 +491,12 @@ class Document(QWebPage):  # {{{
     @dynamic_property
     def page_number(self):
         ' The page number is the number of the page at the left most edge of the screen (starting from 0) '
+
         def fget(self):
             if self.in_paged_mode:
                 return self.javascript(
                     'ans = 0; if (window.paged_display) ans = window.paged_display.column_boundaries()[0]; ans;', typ='int')
+
         def fset(self, val):
             if self.in_paged_mode and self.loaded_javascript:
                 self.javascript('if (window.paged_display) window.paged_display.scroll_to_column(%d)' % int(val))
@@ -547,11 +549,13 @@ class Document(QWebPage):  # {{{
 
 # }}}
 
+
 class DocumentView(QWebView):  # {{{
 
     magnification_changed = pyqtSignal(object)
     DISABLED_BRUSH = QBrush(Qt.lightGray, Qt.Dense5Pattern)
     gesture_handler = lambda s, e: False
+    last_loaded_path = None
 
     def initialize_view(self, debug_javascript=False):
         self.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing|QPainter.SmoothPixmapTransform)
@@ -887,6 +891,7 @@ class DocumentView(QWebView):  # {{{
     def scroll_fraction(self):
         def fget(self):
             return self.document.scroll_fraction
+
         def fset(self, val):
             self.document.scroll_fraction = float(val)
         return property(fget=fget, fset=fset)
@@ -903,6 +908,7 @@ class DocumentView(QWebView):  # {{{
     def current_language(self):
         def fget(self):
             return self.document.current_language
+
         def fset(self, val):
             self.document.current_language = val
         return property(fget=fget, fset=fset)
@@ -920,6 +926,9 @@ class DocumentView(QWebView):  # {{{
     def load_path(self, path, pos=0.0):
         self.initial_pos = pos
         self.last_loaded_path = path
+        # This is needed otherwise percentage margins on body are not correctly
+        # evaluated in read_document_margins() in paged mode.
+        self.document.setPreferredContentsSize(QSize())
 
         def callback(lu):
             self.loading_url = lu
@@ -1199,6 +1208,7 @@ class DocumentView(QWebView):  # {{{
     def multiplier(self):
         def fget(self):
             return self.zoomFactor()
+
         def fset(self, val):
             oval = self.zoomFactor()
             self.setZoomFactor(val)
@@ -1242,7 +1252,8 @@ class DocumentView(QWebView):  # {{{
         painter.end()
 
     def wheelEvent(self, event):
-        if event.phase() != Qt.ScrollUpdate:
+        if event.phase() not in (Qt.ScrollUpdate, 0):
+            # 0 is Qt.NoScrollPhase which is not yet available in PyQt
             return
         mods = event.modifiers()
         num_degrees = event.angleDelta().y() // 8

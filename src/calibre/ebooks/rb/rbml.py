@@ -53,6 +53,7 @@ STYLES = [
     ('text-align', {'center' : 'center'}),
 ]
 
+
 class RBMLizer(object):
 
     def __init__(self, log, name_map={}):
@@ -65,7 +66,6 @@ class RBMLizer(object):
         self.oeb_book = oeb_book
         self.opts = opts
         return self.mlize_spine()
-
 
     def mlize_spine(self):
         self.link_hrefs = {}
@@ -218,7 +218,7 @@ class RBMLizer(object):
         text += self.close_tags(close_tag_list)
 
         if hasattr(elem, 'tail') and elem.tail:
-                text.append(prepare_string_for_xml(elem.tail))
+            text.append(prepare_string_for_xml(elem.tail))
 
         return text
 

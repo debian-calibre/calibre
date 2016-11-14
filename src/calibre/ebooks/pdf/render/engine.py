@@ -25,9 +25,11 @@ Point = namedtuple('Point', 'x y')
 ColorState = namedtuple('ColorState', 'color opacity do')
 GlyphInfo = namedtuple('GlyphInfo', 'name size stretch positions indices')
 
+
 def repr_transform(t):
     vals = map(fmtnum, (t.m11(), t.m12(), t.m21(), t.m22(), t.dx(), t.dy()))
     return '[%s]'%' '.join(vals)
+
 
 def store_error(func):
 
@@ -41,11 +43,13 @@ def store_error(func):
 
     return errh
 
+
 class Font(FontMetrics):
 
     def __init__(self, sfnt):
         FontMetrics.__init__(self, sfnt)
         self.glyph_map = {}
+
 
 class PdfEngine(QPaintEngine):
 
@@ -285,7 +289,8 @@ class PdfEngine(QPaintEngine):
             last_x, last_y = x, y
 
         if not self.content_written_to_current_page:
-            ypositions = [y for x, y in gi.positions]
+            dy = self.graphics.current_state.transform.dy()
+            ypositions = [y + dy for x, y in gi.positions]
             miny = min(ypositions or (0,))
             maxy = max(ypositions or (self.pixel_height,))
             page_top = self.header_height if self.has_headers else 0
@@ -334,6 +339,7 @@ class PdfEngine(QPaintEngine):
             link[1] = pos['column'] + start_page
             link.append((llx, lly, urx, ury))
         self.pdf.links.add(current_item, start_page, links, anchors)
+
 
 class PdfDevice(QPaintDevice):  # {{{
 

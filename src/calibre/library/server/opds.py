@@ -7,7 +7,6 @@ __docformat__ = 'restructuredtext en'
 
 import hashlib, binascii
 from functools import partial
-from itertools import repeat
 from collections import OrderedDict
 
 from lxml import etree, html
@@ -16,13 +15,13 @@ import cherrypy
 import routes
 
 from calibre.constants import __appname__
-from calibre.ebooks.metadata import fmt_sidx
+from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
 from calibre.library.comments import comments_to_html
 from calibre.library.server import custom_fields_to_display
 from calibre.library.server.utils import format_tag_string, Offsets
 from calibre import guess_type, prepare_string_for_xml as xml
 from calibre.utils.icu import sort_key
-from calibre.utils.date import as_utc
+from calibre.utils.date import as_utc, is_date_undefined
 
 BASE_HREFS = {
         0 : '/stanza',
@@ -31,24 +30,28 @@ BASE_HREFS = {
 
 STANZA_FORMATS = frozenset(['epub', 'pdb', 'pdf', 'cbr', 'cbz', 'djvu'])
 
+
 def url_for(name, version, **kwargs):
     if not name.endswith('_'):
         name += '_'
     return routes.url_for(name+str(version), **kwargs)
+
 
 def hexlify(x):
     if isinstance(x, unicode):
         x = x.encode('utf-8')
     return binascii.hexlify(x)
 
+
 def unhexlify(x):
     return binascii.unhexlify(x).decode('utf-8')
 
 # Vocabulary for building OPDS feeds {{{
+DC_NS = 'http://purl.org/dc/terms/'
 E = ElementMaker(namespace='http://www.w3.org/2005/Atom',
                  nsmap={
                      None   : 'http://www.w3.org/2005/Atom',
-                     'dc'   : 'http://purl.org/dc/terms/',
+                     'dc'   : DC_NS,
                      'opds' : 'http://opds-spec.org/2010/catalog',
                      })
 
@@ -58,6 +61,7 @@ TITLE   = E.title
 ID      = E.id
 ICON    = E.icon
 
+
 def UPDATED(dt, *args, **kwargs):
     return E.updated(as_utc(dt).strftime('%Y-%m-%dT%H:%M:%S+00:00'), *args, **kwargs)
 
@@ -65,11 +69,13 @@ LINK = partial(E.link, type='application/atom+xml')
 NAVLINK = partial(E.link,
         type='application/atom+xml;type=feed;profile=opds-catalog')
 
+
 def SEARCH_LINK(base_href, *args, **kwargs):
     kwargs['rel'] = 'search'
     kwargs['title'] = 'Search'
     kwargs['href'] = base_href+'/search/{searchTerms}'
     return LINK(*args, **kwargs)
+
 
 def AUTHOR(name, uri=None):
     args = [E.name(name)]
@@ -78,6 +84,7 @@ def AUTHOR(name, uri=None):
     return E.author(*args)
 
 SUBTITLE = E.subtitle
+
 
 def NAVCATALOG_ENTRY(base_href, updated, title, description, query, version=0):
     href = base_href+'/navcatalog/'+hexlify(query)
@@ -96,6 +103,7 @@ FIRST_LINK = partial(NAVLINK, rel='first')
 LAST_LINK  = partial(NAVLINK, rel='last')
 NEXT_LINK  = partial(NAVLINK, rel='next', title='Next')
 PREVIOUS_LINK  = partial(NAVLINK, rel='previous')
+
 
 def html_to_lxml(raw):
     raw = u'<div>%s</div>'%raw
@@ -118,6 +126,7 @@ def html_to_lxml(raw):
         except:
             from calibre.ebooks.oeb.parse_utils import _html4_parse
             return _html4_parse(raw)
+
 
 def CATALOG_ENTRY(item, item_kind, base_href, version, updated,
                   ignore_count=False, add_kind=False):
@@ -142,6 +151,7 @@ def CATALOG_ENTRY(item, item_kind, base_href, version, updated,
             link
             )
 
+
 def CATALOG_GROUP_ENTRY(item, category, base_href, version, updated):
     id_ = 'calibre:category-group:'+category+':'+item.text
     iid = item.text
@@ -153,6 +163,7 @@ def CATALOG_GROUP_ENTRY(item, category, base_href, version, updated):
             E.content(_('%d items')%item.count, type='text'),
             link
             )
+
 
 def ACQUISITION_ENTRY(item, version, db, updated, CFM, CKEYS, prefix):
     FM = db.FIELD_MAP
@@ -167,7 +178,7 @@ def ACQUISITION_ENTRY(item, version, db, updated, CFM, CKEYS, prefix):
     extra = []
     rating = item[FM['rating']]
     if rating > 0:
-        rating = u''.join(repeat(u'\u2605', int(rating/2.)))
+        rating = rating_to_stars(rating)
         extra.append(_('RATING: %s<br />')%rating)
     tags = item[FM['tags']]
     if tags:
@@ -179,8 +190,8 @@ def ACQUISITION_ENTRY(item, version, db, updated, CFM, CKEYS, prefix):
         extra.append(_('SERIES: %(series)s [%(sidx)s]<br />')%
                 dict(series=xml(series),
                 sidx=fmt_sidx(float(item[FM['series_index']]))))
+    mi = db.get_metadata(item[CFM['id']['rec_index']], index_is_id=True)
     for key in CKEYS:
-        mi = db.get_metadata(item[CFM['id']['rec_index']], index_is_id=True)
         name, val = mi.format_field(key)
         if val:
             datatype = CFM[key]['datatype']
@@ -205,19 +216,27 @@ def ACQUISITION_ENTRY(item, version, db, updated, CFM, CKEYS, prefix):
     idm = 'calibre' if version == 0 else 'uuid'
     id_ = 'urn:%s:%s'%(idm, item[FM['uuid']])
     ans = E.entry(TITLE(title), E.author(E.name(authors)), ID(id_),
-            UPDATED(updated))
+            UPDATED(item[FM['last_modified']]), E.published(item[FM['timestamp']].isoformat()))
+    if mi.pubdate and not is_date_undefined(mi.pubdate):
+        ans.append(ans.makeelement('{%s}date' % DC_NS))
+        ans[-1].text = mi.pubdate.isoformat()
     if len(extra):
         ans.append(E.content(extra, type='xhtml'))
     formats = item[FM['formats']]
     if formats:
+        book_id = item[FM['id']]
         for fmt in formats.split(','):
             fmt = fmt.lower()
             mt = guess_type('a.'+fmt)[0]
-            href = prefix + '/get/%s/%s'%(fmt, item[FM['id']])
+            href = prefix + '/get/%s/%s'%(fmt, book_id)
             if mt:
                 link = E.link(type=mt, href=href)
                 if version > 0:
                     link.set('rel', "http://opds-spec.org/acquisition")
+                    fm = db.format_metadata(book_id, fmt)
+                    if fm:
+                        link.set('length', str(fm['size']))
+                        link.set('mtime', fm['mtime'].isoformat())
                 ans.append(link)
     ans.append(E.link(type='image/jpeg', href=prefix+'/get/cover/%s'%item[FM['id']],
         rel="x-stanza-cover-image" if version == 0 else
@@ -232,6 +251,7 @@ def ACQUISITION_ENTRY(item, version, db, updated, CFM, CKEYS, prefix):
 # }}}
 
 default_feed_title = __appname__ + ' ' + _('Library')
+
 
 class Feed(object):  # {{{
 
@@ -269,6 +289,7 @@ class Feed(object):  # {{{
                 xml_declaration=True)
     # }}}
 
+
 class TopLevel(Feed):  # {{{
 
     def __init__(self,
@@ -289,6 +310,7 @@ class TopLevel(Feed):  # {{{
             self.root.append(x)
 # }}}
 
+
 class NavFeed(Feed):
 
     def __init__(self, id_, updated, version, offsets, page_url, up_url, title=None):
@@ -305,6 +327,7 @@ class NavFeed(Feed):
             kwargs['title'] = title
         Feed.__init__(self, id_, updated, version, **kwargs)
 
+
 class AcquisitionFeed(NavFeed):
 
     def __init__(self, updated, id_, items, offsets, page_url, up_url, version,
@@ -316,6 +339,7 @@ class AcquisitionFeed(NavFeed):
         for item in items:
             self.root.append(ACQUISITION_ENTRY(item, version, db, updated,
                                                CFM, CKEYS, prefix))
+
 
 class CategoryFeed(NavFeed):
 
@@ -329,6 +353,7 @@ class CategoryFeed(NavFeed):
             self.root.append(CATALOG_ENTRY(item, item.category, base_href, version,
                                            updated, ignore_count=ignore_count,
                                            add_kind=which != item.category))
+
 
 class CategoryGroupFeed(NavFeed):
 
@@ -441,6 +466,7 @@ class OPDSServer(object):
         owhich = hexlify('N'+which)
         up_url = url_for('opdsnavcatalog', version, which=owhich)
         items = categories[category]
+
         def belongs(x, which):
             return getattr(x, 'sort', x.name).lower().startswith(which.lower())
         items = [x for x in items if belongs(x, which)]
@@ -508,6 +534,7 @@ class OPDSServer(object):
                 page_url, up_url, self.db, title=feed_title)
         else:
             class Group:
+
                 def __init__(self, text, count):
                     self.text, self.count = text, count
 
@@ -602,6 +629,7 @@ class OPDSServer(object):
                 (_('Newest'), _('Date'), 'Onewest'),
                 (_('Title'), _('Title'), 'Otitle'),
                 ]
+
         def getter(x):
             try:
                 return category_meta[x]['name'].lower()

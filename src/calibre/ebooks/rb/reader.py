@@ -15,6 +15,7 @@ from calibre.ebooks.rb import RocketBookError
 from calibre.ebooks.metadata.rb import get_metadata
 from calibre.ebooks.metadata.opf2 import OPFCreator
 
+
 class RBToc(list):
 
     class Item(object):
@@ -77,7 +78,7 @@ class Reader(object):
 
         if toc_item.flags == 8:
             count = self.read_i32()
-            self.read_i32() # Uncompressed size.
+            self.read_i32()  # Uncompressed size.
             chunck_sizes = []
             for i in xrange(count):
                 chunck_sizes.append(self.read_i32())

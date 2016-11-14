@@ -40,16 +40,6 @@ PKGCONFIG = os.environ.get('PKG_CONFIG', PKGCONFIG)
 if islinux and not PKGCONFIG:
     raise SystemExit('Failed to find pkg-config on your system. You can use the environment variable PKG_CONFIG to point to the pkg-config executable')
 
-if iswindows:
-    import win32api
-    cpu_count = win32api.GetSystemInfo()[5]
-else:
-    from multiprocessing import cpu_count
-    try:
-        cpu_count = cpu_count()
-    except NotImplementedError:
-        cpu_count = 1
-
 def run_pkgconfig(name, envvar, default, flag, prefix):
     ans = []
     if envvar:
@@ -114,8 +104,6 @@ qt_lib = pyqt['lib']
 ft_lib_dirs = []
 ft_libs = []
 ft_inc_dirs = []
-jpg_libs = []
-jpg_lib_dirs = []
 podofo_inc = '/usr/include/podofo'
 podofo_lib = '/usr/lib'
 chmlib_inc_dirs = chmlib_lib_dirs = []
@@ -124,8 +112,8 @@ icu_inc_dirs = []
 icu_lib_dirs = []
 zlib_inc_dirs = []
 zlib_lib_dirs = []
-zlib_libs = ['z']
 openssl_inc_dirs, openssl_lib_dirs = [], []
+icu_libs = ['icudata', 'icui18n', 'icuuc', 'icuio']
 ICU = sw = ''
 
 QT_DLLS = ['Qt5' + x for x in (
@@ -141,7 +129,9 @@ PYQT_MODULES = ('Qt', 'QtCore', 'QtGui', 'QtNetwork',  # 'QtMultimedia', 'QtMult
                 'QtPrintSupport', 'QtSensors', 'QtSvg', 'QtWebKit', 'QtWebKitWidgets', 'QtWidgets')
 QT_FRAMEWORKS = []
 
+
 if iswindows:
+    icu_libs = ['icudt', 'icuin', 'icuuc', 'icuio']
     QT_DLLS += ['Qt5WinExtras']
     QT_DLLS = {x + '.dll' for x in QT_DLLS}
     PYQT_MODULES += ('QtWinExtras',)
@@ -161,29 +151,21 @@ if iswindows:
         'build', 'chmlib-0.40', 'src'))
     chmlib_lib_dirs = consolidate('CHMLIB_LIB_DIR', os.path.join(prefix,
         'build', 'chmlib-0.40', 'src', 'Release'))
-    png_inc_dirs = [sw_inc_dir]
-    png_lib_dirs = [sw_lib_dir]
-    png_libs = ['png16']
-    jpg_lib_dirs = [sw_lib_dir]
-    jpg_libs = ['jpeg']
     ft_lib_dirs = [sw_lib_dir]
     ft_libs = ['freetype']
     ft_inc_dirs = [os.path.join(sw_inc_dir, 'freetype2'), sw_inc_dir]
     zlib_inc_dirs = [sw_inc_dir]
     zlib_lib_dirs = [sw_lib_dir]
-    zlib_libs = ['zlib']
 
     podofo_inc = os.path.join(sw_inc_dir, 'podofo')
     podofo_lib = sw_lib_dir
 elif isosx:
-    QT_DLLS += ['Qt5DBus']
+    QT_DLLS += ['Qt5DBus', 'Qt5MacExtras']
+    PYQT_MODULES += ('QtMacExtras',)
     QT_FRAMEWORKS = [x.replace('5', '') for x in QT_DLLS]
     sw = os.environ.get('SW', os.path.expanduser('~/sw'))
     podofo_inc = os.path.join(sw, 'include', 'podofo')
     podofo_lib = os.path.join(sw, 'lib')
-    png_inc_dirs = consolidate('PNG_INC_DIR', sw + '/include')
-    png_lib_dirs = consolidate('PNG_LIB_DIR', sw + '/lib')
-    png_libs = ['png12']
     ft_libs = ['freetype']
     ft_inc_dirs = [sw + '/include/freetype2']
     icu_inc_dirs = [sw + '/include']
@@ -192,17 +174,8 @@ elif isosx:
     openssl_inc_dirs = [os.path.join(SSL, 'include')]
     openssl_lib_dirs = [os.path.join(SSL, 'lib')]
 else:
-    QT_DLLS += ['Qt5DBus', 'Qt5XcbQpa']
-    # PYQT_MODULES += ('QtDBus',)
-    # Include directories
-    png_inc_dirs = pkgconfig_include_dirs('libpng', 'PNG_INC_DIR',
-        '/usr/include')
-
-    # Library directories
-    png_lib_dirs = pkgconfig_lib_dirs('libpng', 'PNG_LIB_DIR', '/usr/lib')
-
-    # Libraries
-    png_libs = ['png']
+    QT_DLLS += ['Qt5DBus', 'Qt5XcbQpa', 'Qt5X11Extras']
+    PYQT_MODULES += ('QtX11Extras',)
     ft_inc_dirs = pkgconfig_include_dirs('freetype2', 'FT_INC_DIR',
             '/usr/include/freetype2')
     ft_lib_dirs = pkgconfig_lib_dirs('freetype2', 'FT_LIB_DIR', '/usr/lib')
@@ -221,6 +194,7 @@ podofo_error = None if os.path.exists(os.path.join(podofo_inc, 'podofo.h')) else
         ('PoDoFo not found on your system. Various PDF related',
     ' functionality will not work. Use the PODOFO_INC_DIR and',
     ' PODOFO_LIB_DIR environment variables.')
+podofo_inc = [podofo_inc, os.path.dirname(podofo_inc)]
 
 BUILD_HOST='192.168.81.1'
 PROJECT=os.path.basename(os.path.abspath('.'))

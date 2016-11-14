@@ -11,10 +11,10 @@ from functools import partial
 from binascii import hexlify
 
 from calibre import prepare_string_for_xml, force_unicode
-from calibre.ebooks.metadata import fmt_sidx
+from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
 from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
 from calibre.constants import filesystem_encoding
-from calibre.library.comments import comments_to_html
+from calibre.library.comments import comments_to_html, markdown
 from calibre.utils.icu import sort_key
 from calibre.utils.formatter import EvalFormatter
 from calibre.utils.date import is_date_undefined
@@ -22,12 +22,14 @@ from calibre.utils.localization import calibre_langcode_to_name
 
 default_sort = ('title', 'title_sort', 'authors', 'author_sort', 'series', 'rating', 'pubdate', 'tags', 'publisher', 'identifiers')
 
+
 def field_sort(mi, name):
     try:
         title = mi.metadata_for_field(name)['name']
     except:
         title = 'zzz'
     return {x:(i, None) for i, x in enumerate(default_sort)}.get(name, (10000, sort_key(title)))
+
 
 def displayable_field_keys(mi):
     for k in mi.all_field_keys():
@@ -42,16 +44,20 @@ def displayable_field_keys(mi):
         ):
             yield k
 
+
 def get_field_list(mi):
     for field in sorted(displayable_field_keys(mi), key=partial(field_sort, mi)):
         yield field, True
+
 
 def search_href(search_term, value):
     search = '%s:"=%s"' % (search_term, value.replace('"', '\\"'))
     return prepare_string_for_xml('search:' + hexlify(search.encode('utf-8')), True)
 
+
 def item_data(field_name, value, book_id):
     return hexlify(cPickle.dumps((field_name, value, book_id), -1))
+
 
 def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=True, rating_font='Liberation Serif', rtl=False):
     if field_list is None:
@@ -83,24 +89,39 @@ def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=
         if not name:
             name = field
         name += ':'
+        disp = metadata['display']
         if metadata['datatype'] == 'comments' or field == 'comments':
             val = getattr(mi, field)
             if val:
+                ctype = disp.get('interpret_as') or 'html'
                 val = force_unicode(val)
-                comment_fields.append(comments_to_html(val))
+                if ctype == 'long-text':
+                    val = '<pre style="white-space:pre-wrap">%s</pre>' % p(val)
+                elif ctype == 'short-text':
+                    val = '<span>%s</span>' % p(val)
+                elif ctype == 'markdown':
+                    val = markdown(val)
+                else:
+                    val = comments_to_html(val)
+                if disp.get('heading_position', 'hide') == 'side':
+                    ans.append((field, row % (name, val)))
+                else:
+                    if disp.get('heading_position', 'hide') == 'above':
+                        val = '<h3 class="comments-heading">%s</h3>%s' % (p(name), val)
+                    comment_fields.append('<div id="%s" class="comments">%s</div>' % (field.replace('#', '_'), val))
         elif metadata['datatype'] == 'rating':
             val = getattr(mi, field)
             if val:
-                val = val/2.0
+                star_string = rating_to_stars(val, disp.get('allow_half_stars', False))
                 ans.append((field,
                     u'<td class="title">%s</td><td class="rating value" '
                     'style=\'font-family:"%s"\'>%s</td>'%(
-                        name, rating_font, u'\u2605'*int(val))))
+                        name, rating_font, star_string)))
         elif metadata['datatype'] == 'composite':
             val = getattr(mi, field)
             if val:
                 val = force_unicode(val)
-                if metadata['display'].get('contains_html', False):
+                if disp.get('contains_html', False):
                     ans.append((field, row % (name, comments_to_html(val))))
                 else:
                     if not metadata['is_multiple']:

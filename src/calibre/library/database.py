@@ -11,8 +11,10 @@ from calibre.ebooks.metadata import MetaInformation
 from calibre.ebooks.metadata import string_to_authors
 from calibre import isbytestring
 
+
 class Concatenate(object):
     '''String concatenation aggregator for sqlite'''
+
     def __init__(self, sep=','):
         self.sep = sep
         self.ans = ''
@@ -27,6 +29,8 @@ class Concatenate(object):
         if self.sep:
             return self.ans[:-len(self.sep)]
         return self.ans
+
+
 class Connection(sqlite.Connection):
 
     def get(self, *args, **kw):
@@ -38,6 +42,7 @@ class Connection(sqlite.Connection):
             return ans[0]
         return ans.fetchall()
 
+
 def _connect(path):
     if isinstance(path, unicode):
         path = path.encode('utf-8')
@@ -45,6 +50,7 @@ def _connect(path):
     conn.row_factory = lambda cursor, row : list(row)
     conn.create_aggregate('concat', 1, Concatenate)
     title_pat = re.compile('^(A|The|An)\s+', re.IGNORECASE)
+
     def title_sort(title):
         match = title_pat.search(title)
         if match:
@@ -53,6 +59,7 @@ def _connect(path):
         return title.strip()
     conn.create_function('title_sort', 1, title_sort)
     return conn
+
 
 class LibraryDatabase(object):
 
@@ -66,7 +73,7 @@ class LibraryDatabase(object):
         book = cur.fetchone()
         while book:
             id = book[0]
-            meta = { 'title':book[1], 'authors':book[2], 'publisher':book[3],
+            meta = {'title':book[1], 'authors':book[2], 'publisher':book[3],
                      'tags':book[5], 'comments':book[7], 'rating':book[8],
                      'timestamp':datetime.datetime.strptime(book[6], '%Y-%m-%d %H:%M:%S'),
                     }
@@ -123,7 +130,8 @@ class LibraryDatabase(object):
                 tags = []
             for a in tags:
                 a = a.strip()
-                if not a: continue
+                if not a:
+                    continue
                 tag = conn.execute('SELECT id from tags WHERE name=?', (a,)).fetchone()
                 if tag:
                     tid = tag[0]
@@ -146,10 +154,9 @@ class LibraryDatabase(object):
             if progress:
                 progress(count)
 
-
     @staticmethod
     def create_version1(conn):
-        conn.executescript(\
+        conn.executescript(
         '''
         /**** books table *****/
         CREATE TABLE books ( id        INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -559,7 +566,7 @@ class LibraryDatabase(object):
                (SELECT sort FROM authors WHERE authors.id IN (SELECT author from books_authors_link WHERE book=books.id)) authors_sort,
                (SELECT sort FROM publishers WHERE publishers.id IN (SELECT publisher from books_publishers_link WHERE book=books.id)) publisher_sort
         FROM books;
-        '''\
+        '''
         )
         conn.execute('pragma user_version=1')
         conn.commit()
@@ -570,7 +577,8 @@ class LibraryDatabase(object):
 '''
 /***** authors_sort table *****/
         ALTER TABLE books ADD COLUMN author_sort TEXT COLLATE NOCASE;
-        UPDATE books SET author_sort=(SELECT name FROM authors WHERE id=(SELECT author FROM books_authors_link WHERE book=books.id)) WHERE id IN (SELECT id FROM books ORDER BY id);
+        UPDATE books SET author_sort=(SELECT name FROM authors WHERE id=\
+        (SELECT author FROM books_authors_link WHERE book=books.id)) WHERE id IN (SELECT id FROM books ORDER BY id);
         DROP INDEX authors_idx;
         DROP TRIGGER authors_insert_trg;
         DROP TRIGGER authors_update_trg;
@@ -685,7 +693,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
 
     @staticmethod
     def upgrade_version5(conn):
-        conn.executescript(\
+        conn.executescript(
         '''
         DROP TRIGGER fkc_delete_books_tags_link;
         CREATE TRIGGER fkc_delete_books_tags_link
@@ -792,7 +800,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             self.conn.row_factory = sqlite.Row
         self.cache = []
         self.data  = []
-        if self.user_version == 0: # No tables have been created
+        if self.user_version == 0:  # No tables have been created
             LibraryDatabase.create_version1(self.conn)
         i = 0
         while True:
@@ -804,17 +812,17 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                 print 'Upgrading database from version: %d'%i
                 func(self.conn)
 
-
     def close(self):
-#        global _lock_file
-#        _lock_file.close()
-#        os.unlink(_lock_file.name)
-#        _lock_file = None
+        #        global _lock_file
+        #        _lock_file.close()
+        #        os.unlink(_lock_file.name)
+        #        _lock_file = None
         self.conn.close()
 
     @dynamic_property
     def user_version(self):
         doc = 'The user version of this database'
+
         def fget(self):
             return self.conn.get('pragma user_version;', all=False)
         return property(doc=doc, fget=fget)
@@ -1007,7 +1015,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         if not ans:
             return []
         ans = [id[0] for id in ans]
-        ans.sort(cmp = lambda x, y: cmp(self.series_index(x, True), self.series_index(y, True)))
+        ans.sort(cmp=lambda x, y: cmp(self.series_index(x, True), self.series_index(y, True)))
         return ans
 
     def books_in_series_of(self, index, index_is_id=False):
@@ -1017,7 +1025,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         '''
         series_id = self.series_id(index, index_is_id=index_is_id)
         return self.books_in_series(series_id)
-
 
     def comments(self, index, index_is_id=False):
         '''Comments as string or None'''
@@ -1035,13 +1042,12 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         format = format.upper()
         return self.conn.get('SELECT uncompressed_size FROM data WHERE data.book=? AND data.format=?', (id, format), all=False)
 
-
     def format(self, index, format, index_is_id=False):
         id = index if index_is_id else self.id(index)
         return decompress(self.conn.get('SELECT data FROM data WHERE book=? AND format=?', (id, format), all=False))
 
     def all_series(self):
-        return [ (i[0], i[1]) for i in \
+        return [(i[0], i[1]) for i in
                 self.conn.get('SELECT id, name FROM series')]
 
     def series_name(self, series_id):
@@ -1057,7 +1063,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                 all=False)
 
     def all_authors(self):
-        return [ (i[0], i[1]) for i in \
+        return [(i[0], i[1]) for i in
                 self.conn.get('SELECT id, name FROM authors')]
 
     def all_author_names(self):
@@ -1065,18 +1071,18 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             'SELECT name FROM authors')])
 
     def all_publishers(self):
-        return [ (i[0], i[1]) for i in \
+        return [(i[0], i[1]) for i in
                 self.conn.get('SELECT id, name FROM publishers')]
 
     def all_tags(self):
         return [i[0].strip() for i in self.conn.get('SELECT name FROM tags') if i[0].strip()]
 
     def all_tags2(self):
-        return [ (i[0], i[1]) for i in \
+        return [(i[0], i[1]) for i in
                 self.conn.get('SELECT id, name FROM tags')]
 
     def all_titles(self):
-        return [ (i[0], i[1]) for i in \
+        return [(i[0], i[1]) for i in
                 self.conn.get('SELECT id, title FROM books')]
 
     def conversion_options(self, id, format):
@@ -1102,7 +1108,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                 (id, format.upper()))
         if commit:
             self.conn.commit()
-
 
     def add_format(self, index, ext, stream, index_is_id=False):
         '''
@@ -1167,7 +1172,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             self.conn.execute('INSERT INTO conversion_options(book,format,data) VALUES (?,?,?)', (id,format.upper(),data))
         self.conn.commit()
 
-
     def set_authors(self, id, authors):
         '''
         @param authors: A list of authors.
@@ -1186,7 +1190,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                 aid = self.conn.execute('INSERT INTO authors(name) VALUES (?)', (a,)).lastrowid
             try:
                 self.conn.execute('INSERT INTO books_authors_link(book, author) VALUES (?,?)', (id, aid))
-            except sqlite.IntegrityError: # Sometimes books specify the same author twice in their metadata
+            except sqlite.IntegrityError:  # Sometimes books specify the same author twice in their metadata
                 pass
         self.conn.commit()
 
@@ -1254,7 +1258,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                               (id, tid))
         self.conn.commit()
 
-
     def set_series(self, id, series):
         self.conn.execute('DELETE FROM books_series_link WHERE book=?',(id,))
         if series:
@@ -1307,7 +1310,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         if mi.title:
             self.set_title(id, mi.title)
         if not mi.authors:
-                mi.authors = ['Unknown']
+            mi.authors = ['Unknown']
         authors = []
         for a in mi.authors:
             authors += string_to_authors(a)
@@ -1322,9 +1325,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             self.set_series(id, mi.series)
         if mi.cover_data[1] is not None:
             self.set_cover(id, mi.cover_data[1])
-
-
-
 
     def add_books(self, paths, formats, metadata, uris=[], add_duplicates=True):
         '''
@@ -1368,8 +1368,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             return (paths, formats, metadata, uris)
         return None
 
-
-
     def index(self, id, cache=False):
         data = self.cache if cache else self.data
         for i in range(len(data)):
@@ -1404,7 +1402,6 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
                                   (title, script))
         self.conn.commit()
 
-
     def set_feeds(self, feeds):
         self.conn.execute('DELETE FROM feeds')
         for title, script in feeds:
@@ -1419,7 +1416,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         try:
             self.cache.pop(self.index(id, cache=True))
             self.data.pop(self.index(id, cache=False))
-        except TypeError: #If data and cache are the same object
+        except TypeError:  # If data and cache are the same object
             pass
         self.conn.execute('DELETE FROM books WHERE id=?', (id,))
         self.conn.commit()
@@ -1429,7 +1426,8 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
         Convenience method to return metadata as a L{MetaInformation} object.
         '''
         aum = self.authors(idx, index_is_id=index_is_id)
-        if aum: aum = [a.strip().replace('|', ',') for a in aum.split(',')]
+        if aum:
+            aum = [a.strip().replace('|', ',') for a in aum.split(',')]
         mi = MetaInformation(self.title(idx, index_is_id=index_is_id), aum)
         mi.author_sort = self.author_sort(idx, index_is_id=index_is_id)
         mi.comments    = self.comments(idx, index_is_id=index_is_id)
@@ -1453,20 +1451,13 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
     def all_ids(self):
         return [i[0] for i in self.conn.get('SELECT id FROM books')]
 
-
-
-
-
-
     def has_id(self, id):
         return self.conn.get('SELECT id FROM books where id=?', (id,), all=False) is not None
 
 
-
-
 class SearchToken(object):
 
-    FIELD_MAP = { 'title'       : 1,
+    FIELD_MAP = {'title'       : 1,
                   'author'      : 2,
                   'publisher'   : 3,
                   'tag'         : 7,
@@ -1499,6 +1490,7 @@ class SearchToken(object):
         else:
             text = ' '.join([item[i] if item[i] else '' for i in self.FIELD_MAP.values()])
         return bool(self.pattern.search(text)) ^ self.negate
+
 
 def text_to_tokens(text):
     OR = False

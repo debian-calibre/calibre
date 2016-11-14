@@ -32,7 +32,7 @@ def server_config(defaults=None):
     c.add_opt('username', ['--username'], default='calibre',
               help=_('Username for access. By default, it is: %default'))
     c.add_opt('develop', ['--develop'], default=False,
-              help=_('Development mode. Server automatically restarts on file changes and serves code files (html, css, js) from the file system instead of calibre\'s resource system.'))
+              help=_('Development mode. Server logs to stdout, with more verbose logging and has much lower timeouts.'))  # noqa
     c.add_opt('max_cover', ['--max-cover'], default='600x800',
               help=_('The maximum size for displayed covers. Default is %default.'))
     c.add_opt('max_opds_items', ['--max-opds-items'], default=30,
@@ -50,6 +50,7 @@ def server_config(defaults=None):
 
     return c
 
+
 def custom_fields_to_display(db):
     ckeys = set(db.field_metadata.ignorable_field_keys())
     yes_fields = set(tweaks['content_server_will_display'])
@@ -59,6 +60,7 @@ def custom_fields_to_display(db):
     if '*' in no_fields:
         no_fields = ckeys
     return frozenset(ckeys & (yes_fields - no_fields))
+
 
 def main():
     from calibre.library.server.main import main

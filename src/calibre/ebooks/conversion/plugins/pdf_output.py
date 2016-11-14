@@ -10,7 +10,7 @@ Convert OEB ebook format to PDF.
 
 import glob, os
 
-from calibre.constants import iswindows, islinux
+from calibre.constants import islinux
 from calibre.customize.conversion import (OutputFormatPlugin,
     OptionRecommendation)
 from calibre.ptempfile import TemporaryDirectory
@@ -21,7 +21,9 @@ UNITS = ['millimeter', 'centimeter', 'point', 'inch' , 'pica' , 'didot',
 PAPER_SIZES = [u'a0', u'a1', u'a2', u'a3', u'a4', u'a5', u'a6', u'b0', u'b1',
                u'b2', u'b3', u'b4', u'b5', u'b6', u'legal', u'letter']
 
+
 class PDFMetadata(object):  # {{{
+
     def __init__(self, mi=None):
         from calibre import force_unicode
         from calibre.ebooks.metadata import authors_to_string
@@ -41,6 +43,7 @@ class PDFMetadata(object):  # {{{
         self.title = force_unicode(self.title)
         self.author = force_unicode(self.author)
 # }}}
+
 
 class PDFOutput(OutputFormatPlugin):
 
@@ -81,11 +84,11 @@ class PDFOutput(OutputFormatPlugin):
                 'The font family used to render sans-serif fonts')),
         OptionRecommendation(name='pdf_mono_family',
             recommended_value='Liberation Mono' if islinux else 'Courier New', help=_(
-                'The font family used to render monospaced fonts')),
+                'The font family used to render monospace fonts')),
         OptionRecommendation(name='pdf_standard_font', choices=['serif',
             'sans', 'mono'],
             recommended_value='serif', help=_(
-                'The font family used to render monospaced fonts')),
+                'The font family used to render monospace fonts')),
         OptionRecommendation(name='pdf_default_font_size',
             recommended_value=20, help=_(
                 'The default font size')),
@@ -120,29 +123,34 @@ class PDFOutput(OutputFormatPlugin):
 
     def convert(self, oeb_book, output_path, input_plugin, opts, log):
         from calibre.gui2 import must_use_qt, load_builtin_fonts
-        must_use_qt()
-        load_builtin_fonts()
+        # Turn off hinting in WebKit (requires a patched build of QtWebKit)
+        os.environ['CALIBRE_WEBKIT_NO_HINTING'] = '1'
+        try:
+            must_use_qt()
+            load_builtin_fonts()
 
-        self.oeb = oeb_book
-        self.input_plugin, self.opts, self.log = input_plugin, opts, log
-        self.output_path = output_path
-        from calibre.ebooks.oeb.base import OPF, OPF2_NS
-        from lxml import etree
-        from io import BytesIO
-        package = etree.Element(OPF('package'),
-            attrib={'version': '2.0', 'unique-identifier': 'dummy'},
-            nsmap={None: OPF2_NS})
-        from calibre.ebooks.metadata.opf2 import OPF
-        self.oeb.metadata.to_opf2(package)
-        self.metadata = OPF(BytesIO(etree.tostring(package))).to_book_metadata()
-        self.cover_data = None
+            self.oeb = oeb_book
+            self.input_plugin, self.opts, self.log = input_plugin, opts, log
+            self.output_path = output_path
+            from calibre.ebooks.oeb.base import OPF, OPF2_NS
+            from lxml import etree
+            from io import BytesIO
+            package = etree.Element(OPF('package'),
+                attrib={'version': '2.0', 'unique-identifier': 'dummy'},
+                nsmap={None: OPF2_NS})
+            from calibre.ebooks.metadata.opf2 import OPF
+            self.oeb.metadata.to_opf2(package)
+            self.metadata = OPF(BytesIO(etree.tostring(package))).to_book_metadata()
+            self.cover_data = None
 
-        if input_plugin.is_image_collection:
-            log.debug('Converting input as an image collection...')
-            self.convert_images(input_plugin.get_images())
-        else:
-            log.debug('Converting input as a text based book...')
-            self.convert_text(oeb_book)
+            if input_plugin.is_image_collection:
+                log.debug('Converting input as an image collection...')
+                self.convert_images(input_plugin.get_images())
+            else:
+                log.debug('Converting input as a text based book...')
+                self.convert_text(oeb_book)
+        finally:
+            os.environ.pop('CALIBRE_WEBKIT_NO_HINTING', None)
 
     def convert_images(self, images):
         from calibre.ebooks.pdf.writer import ImagePDFWriter
@@ -157,21 +165,14 @@ class PDFOutput(OutputFormatPlugin):
             self.cover_data = item.data
 
     def handle_embedded_fonts(self):
-        ''' On windows, Qt uses GDI which does not support OpenType
-        (CFF) fonts, so we need to nuke references to OpenType
-        fonts. Qt's directwrite text backend is not mature.
-        Also make sure all fonts are embeddable. '''
+        ''' Make sure all fonts are embeddable. '''
         from calibre.ebooks.oeb.base import urlnormalize
         from calibre.utils.fonts.utils import remove_embed_restriction
-        from PyQt5.Qt import QByteArray, QRawFont
 
-        font_warnings = set()
         processed = set()
-        is_cff = {}
         for item in list(self.oeb.manifest):
             if not hasattr(item.data, 'cssRules'):
                 continue
-            remove = set()
             for i, rule in enumerate(item.data.cssRules):
                 if rule.type == rule.FONT_FACE_RULE:
                     try:
@@ -194,18 +195,6 @@ class PDFOutput(OutputFormatPlugin):
                         if nraw != raw:
                             ff.data = nraw
                             self.oeb.container.write(path, nraw)
-
-                    if iswindows:
-                        if path not in is_cff:
-                            f = QRawFont(QByteArray(nraw), 12)
-                            is_cff[path] = f.isValid() and len(f.fontTable('head')) == 0
-                        if is_cff[path]:
-                            if path not in font_warnings:
-                                font_warnings.add(path)
-                                self.log.warn('CFF OpenType fonts are not supported on windows, ignoring: %s' % path)
-                            remove.add(i)
-            for i in sorted(remove, reverse=True):
-                item.data.cssRules.pop(i)
 
     def convert_text(self, oeb_book):
         from calibre.ebooks.metadata.opf2 import OPF

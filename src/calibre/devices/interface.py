@@ -7,6 +7,7 @@ from calibre import prints
 from calibre.constants import iswindows
 from calibre.customize import Plugin
 
+
 class DevicePlugin(Plugin):
     """
     Defines the interface that should be implemented by backends that
@@ -38,11 +39,6 @@ class DevicePlugin(Plugin):
 
     #: Height for thumbnails on the device
     THUMBNAIL_HEIGHT = 68
-    #: Width for thumbnails on the device. Setting this will force thumbnails
-    #: to this size, not preserving aspect ratio. If it is not set, then
-    #: the aspect ratio will be preserved and the thumbnail will be no higher
-    #: than THUMBNAIL_HEIGHT
-    # THUMBNAIL_WIDTH = 68
 
     #: Compression quality for thumbnails. Set this closer to 100 to have better
     #: quality thumbnails with fewer compression artifacts. Of course, the
@@ -712,6 +708,7 @@ class DevicePlugin(Plugin):
         '''
         return (None, (None, False))
 
+
 class BookList(list):
     '''
     A list of books. Each Book object must have the fields
@@ -765,6 +762,7 @@ class BookList(list):
 
         '''
         raise NotImplementedError()
+
 
 class CurrentlyConnectedDevice(object):
 

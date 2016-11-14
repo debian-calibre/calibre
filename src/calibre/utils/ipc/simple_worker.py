@@ -17,11 +17,13 @@ from calibre.constants import iswindows
 from calibre.utils.ipc import eintr_retry_call
 from calibre.utils.ipc.launch import Worker
 
+
 class WorkerError(Exception):
 
     def __init__(self, msg, orig_tb=''):
         Exception.__init__(self, msg)
         self.orig_tb = orig_tb
+
 
 class ConnectedWorker(Thread):
 
@@ -52,6 +54,7 @@ class ConnectedWorker(Thread):
             except BaseException:
                 self.tb = traceback.format_exc()
 
+
 class OffloadWorker(object):
 
     def __init__(self, listener, worker):
@@ -70,6 +73,8 @@ class OffloadWorker(object):
     def shutdown(self):
         try:
             eintr_retry_call(self.conn.send, None)
+        except IOError:
+            pass
         except:
             import traceback
             traceback.print_exc()
@@ -83,6 +88,7 @@ class OffloadWorker(object):
 
     def is_alive(self):
         return self.worker.is_alive or self.kill_thread.is_alive()
+
 
 def communicate(ans, worker, listener, args, timeout=300, heartbeat=None,
         abort=None):
@@ -116,6 +122,7 @@ def communicate(ans, worker, listener, args, timeout=300, heartbeat=None,
         raise WorkerError('Worker failed', cw.res['tb'])
     ans['result'] = cw.res['result']
 
+
 def create_worker(env, priority='normal', cwd=None, func='main'):
     from calibre.utils.ipc.server import create_listener
     auth_key = os.urandom(32)
@@ -131,6 +138,7 @@ def create_worker(env, priority='normal', cwd=None, func='main'):
     w = Worker(env)
     w(cwd=cwd, priority=priority)
     return listener, w
+
 
 def start_pipe_worker(command, env=None, priority='normal', **process_args):
     import subprocess
@@ -159,6 +167,7 @@ def start_pipe_worker(command, env=None, priority='normal', **process_args):
     cmd = [exe] if isinstance(exe, basestring) else exe
     p = subprocess.Popen(cmd + ['--pipe-worker', command], **args)
     return p
+
 
 def fork_job(mod_name, func_name, args=(), kwargs={}, timeout=300,  # seconds
         cwd=None, priority='normal', env={}, no_output=False, heartbeat=None,
@@ -231,9 +240,11 @@ def fork_job(mod_name, func_name, args=(), kwargs={}, timeout=300,  # seconds
         ans['stdout_stderr'] = w.log_path
     return ans
 
+
 def offload_worker(env={}, priority='normal', cwd=None):
     listener, w = create_worker(env=env, priority=priority, cwd=cwd, func='offload')
     return OffloadWorker(listener, w)
+
 
 def compile_code(src):
     import re, io
@@ -251,6 +262,7 @@ def compile_code(src):
     }
     exec src in namespace
     return namespace
+
 
 def main():
     # The entry point for the simple worker process
@@ -280,6 +292,7 @@ def main():
         except:
             # Maybe EINTR
             conn.send(res)
+
 
 def offload():
     # The entry point for the offload worker process

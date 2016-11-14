@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/heuristics.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -109,7 +109,7 @@ class Ui_Form(object):
         self.opt_enable_heuristics.setText(_("Enable &heuristic processing"))
         self.heuristic_options.setTitle(_("Heuristic Processing"))
         self.opt_unwrap_lines.setText(_("Unwrap lines"))
-        self.huf_label.setText(_("Line &un-wrap factor :"))
+        self.huf_label.setText(_("Line &un-wrap factor:"))
         self.opt_markup_chapter_headings.setText(_("Detect and markup unformatted chapter headings and sub headings"))
         self.opt_renumber_headings.setText(_("Renumber sequences of <h1> or <h2> tags to prevent splitting"))
         self.opt_delete_blank_paragraphs.setText(_("Delete blank lines between paragraphs"))

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 09:56+0530\n"
-"PO-Revision-Date: 2016-06-21 17:18+0000\n"
+"POT-Creation-Date: 2016-09-08 08:36+0530\n"
+"PO-Revision-Date: 2016-09-13 14:59+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "Returnerar ett listpar: :code:`ids, duplicates`. ``id`` innehållande bo
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr "Lägg till data för namn där val_map är en karta över book_ids till värden. Om delete_first är Sann kommer alla tidigare lagrade data för namn tas bort."
+msgstr "Lägg till data för namn där val_map är en karta över book_ids till värden. Om delete_first är True kommer alla tidigare lagrade data för namn tas bort."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
@@ -88,14 +88,14 @@ msgstr "Lägg ett format till angiven bok. Returnerar True om formatet lyckades 
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr "Om True ersätt existerande format, annars om formatet redan finns, returneras False"
+msgstr "Om True ersätt befintligt format, annars om formatet redan finns, returneras False"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr "Om Sann, körs filtypstillägg på formatet innan och efter tillägg."
+msgstr "Om True, körs filtypstillägg på formatet innan och efter tillägg."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
@@ -165,7 +165,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr "Kopiera omslag till filen som objektet ``dest``. Returnerar Falsk om inget omslag finns eller dest är samma fil som det aktuella omslaget. dest kan också vara en sökväg i vilket fall omslaget kopieras till det om och endast om sökvägen är en annan än den aktuella sökvägen (med små bokstäver i beräkningen)."
+msgstr "Kopiera omslag till filen som objektet ``dest``. Returnerar False om inget omslag finns eller dest är samma fil som det aktuella omslaget. dest kan också vara en sökväg i vilket fall omslaget kopieras till det om och endast om sökvägen är en annan än den aktuella sökvägen (med små bokstäver i beräkningen)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -195,17 +195,17 @@ msgstr "VARNING: Att använda as_path kommer att kopiera omslaget till en temp f
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr "Om Sann returnerar bilden som ett öppet filobjekt (en SpooledTemporaryFile)"
+msgstr "Om True returnerar bilden som ett öppet filobjekt (en SpooledTemporaryFile)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr "Om Sann returnera bilden som ett Q-bildobjekt"
+msgstr "Om True returnera bilden som ett Q-bildobjekt"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr "Om Sann returnera bilden som en sökväg till en temporärfil"
+msgstr "Om True returnera bilden som en sökväg till en temporärfil"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
@@ -297,7 +297,7 @@ msgid ""
 "If True the ebook format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr "Om Sann returneras e-bokformat som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd: meth: `copy_format_to` stället för utförande."
+msgstr "Om True returneras e-bokformat som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd: meth: `copy_format_to` stället för utförande."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
@@ -311,7 +311,7 @@ msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr "Om Sann och returneras en sökväg, filnamnet är samma som den som används i biblioteket. Observera att detta innebär att upprepade anrop ger samma temp fil (som återskapas varje gång)"
+msgstr "Om True och returneras en sökväg, filnamnet är samma som den som används i biblioteket. Observera att detta innebär att upprepade anrop ger samma temp fil (som återskapas varje gång)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
@@ -357,20 +357,20 @@ msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr "Om Sann, används buffrade värden, annars sker en långsam filsystemaccess. Buffrade värden kan vara utdaterade om access sker till filsystem utanför detta API (gränssnitt)."
+msgstr "Om True, används buffrade värden, annars sker en långsam filsystemaccess. Buffrade värden kan vara utdaterade om access sker till filsystem utanför detta API (gränssnitt)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updates for this book."
-msgstr "Om Sann är max_size-fältet av databasen uppdatering av denna bok."
+msgstr "Om True är max_size-fältet av databasen uppdatering av denna bok."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr "Returnerar tupel av alla format för den specifika boken. Om verify_formats är Sann verifieras att filer existerar på disken."
+msgstr "Returnerar tupel av alla format för den specifika boken. Om verify_formats är True verifieras att filer existerar på disken."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
@@ -419,7 +419,7 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr "Returnerar metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Notera att listan av format inte är verifierad. Om get_cover är Sann, kommer omslag att returneras, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
+msgstr "Returnerar metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Notera att listan av format inte är verifierad. Om get_cover är True, kommer omslag att returneras, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
@@ -437,7 +437,7 @@ msgstr "Serielikt fält (som standard för inbyggda seriekolumnen)"
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr "Om Sann, returnerar en översikt av book_id till aktuell serie_index-värde istället."
+msgstr "Om True, returnerar en översikt av book_id till aktuell serie_index-värde istället."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -453,7 +453,7 @@ msgstr "Liksom: meth: `get_metadata` förutom att den returnerar ett ProxyMetada
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr "Returnerar en översikt av id till räkningsanvändning för alla värden på det angivna området, som måste vara en många-en eller många-många fält."
+msgstr "Returnerar en översikt av id till räkningsanvändning för alla värden på det angivna fältet, som måste vara en många-en eller många-många fält."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -461,17 +461,17 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr "Returnerar Sann om och endast om databasen innehåller en post med samma titel som den angivna i metadataobjektet. Jämförelsen är skiftlägeskänsliga . Se även :meth:'data_for_has_book`."
+msgstr "Returnerar True om och endast om databasen innehåller en post med samma titel som den angivna i metadataobjektet. Jämförelsen är skiftlägeskänsliga . Se även :meth:'data_for_has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr "Returnerar Sann om (och endast om) formatet existerar på disk"
+msgstr "Returnerar True om (och endast om) formatet existerar på disk"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr "Returnerar Sann om (och endast om) specificerat bok_id existerar i db"
+msgstr "Returnerar True om (och endast om) specificerat bok_id existerar i db"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
@@ -512,7 +512,7 @@ msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are not"
 " deleted."
-msgstr "Ta bort böcker  angivna av book_ids från databasen eller tar bort deras formatfiler. Om ``permanent`` är Falsk, så kommer inte format-filer tas bort."
+msgstr "Ta bort böcker  angivna av book_ids från databasen eller tar bort deras formatfiler. Om ``permanent`` är False, så kommer inte format-filer tas bort."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -529,7 +529,7 @@ msgstr "En översikt av book_id till en lista med format som ska tas bort från 
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
-msgstr "Om Sann, tas bara handlingen av format från databasen, tar inte bort de aktuella filformaten från filsystemet."
+msgstr "Om True, tas bara handlingen av format från databasen, tar inte bort de aktuella filformaten från filsystemet."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
@@ -537,7 +537,7 @@ msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr "Radera alla objekt i det angivna området med de angivna id. Returnerar uppsättningen påverkade bok-id. ``restrict_to_book_ids`` är en valfri uppsättning bok-id. Om specificerat,  kommer endast objekten att tas bort från dessa böcker."
+msgstr "Radera alla objekt i det angivna fältet med de angivna id. Returnerar uppsättningen påverkade bok-id. ``restrict_to_book_ids`` är en valfri uppsättning bok-id. Om specificerat,  kommer endast objekten att tas bort från dessa böcker."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
@@ -571,7 +571,7 @@ msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr "Återställer det angivna formatet från tidigare sparat ORIGINAL_FORMAT, om något. Returnerar Sann vid framgång. The ORIGINAL_FORMAT tas bort efter en lyckad återställning."
+msgstr "Återställer det angivna formatet från tidigare sparat ORIGINAL_FORMAT, om något. Returnerar True vid framgång. The ORIGINAL_FORMAT tas bort efter en lyckad återställning."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
@@ -659,7 +659,7 @@ msgid ""
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr "Om Sann, i fall det rör sig om många-en eller många-många områden förändras. Till exempel, om en bok har etiketten ``tag1`` och du anger etiketten för en annan bok till ``Tag1`` då kommer båda böckerna att ha etiketten ``Tag1`` om allow_case_change är Sann, annars kommer de båda ha etiketten ``tag1``."
+msgstr "Om True, i fall det rör sig om många-en eller många-många fälten förändras. Till exempel, om en bok har etiketten ``tag1`` och du anger etiketten för en annan bok till ``Tag1`` då kommer båda böckerna att ha etiketten ``Tag1`` om allow_case_change är True, annars kommer de båda ha etiketten ``tag1``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
@@ -683,7 +683,7 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr "När man sätter force_changes = Sann tvingas set_metadata att uppdatera fält, även om mi innehåller tomma värden. I det här fallet är \"None\" skiljt från \"empty\". Om mi.XXX är None ersätts XXX inte, annars görs det. Etiketter, identifierare, och omslagsattribut är specialfall. Etiketter och identifierare kan inte ställas in på None för då kommer de alltid ersättas om force_changes är Sann. Du måste se till att mi innehåller de värden som du vill att boken ska ha. Omlslag förändras alltid om ett nytt omslag finns, men de raderas aldrig . Observera också att force_changes har ingen effekt på inställningen titel eller författare."
+msgstr "När man sätter force_changes=True tvingas set_metadata att uppdatera fält, även om mi innehåller tomma värden. I det här fallet är \"None\" skiljt från \"empty\". Om mi.XXX är None ersätts XXX inte, annars görs det. Etiketter, identifierare, och omslagsattribut är specialfall. Etiketter och identifierare kan inte ställas in på None för då kommer de alltid ersättas om force_changes är True. Du måste se till att mi innehåller de värden som du vill att boken ska ha. Omlslag förändras alltid om ett nytt omslag finns, men de raderas aldrig . Observera också att force_changes har ingen effekt på inställningen titel eller författare."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

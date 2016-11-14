@@ -13,6 +13,7 @@ from PyQt5.QtWebKitWidgets import QWebView
 
 from calibre.gui2 import gprefs, error_dialog
 
+
 class TableView(QDialog):
 
     def __init__(self, parent, font_magnification_step):
@@ -42,8 +43,7 @@ class TableView(QDialog):
                                 self.font_magnification_step)
 
     def zoom_out(self):
-        self.view.setZoomFactor(max(0.1, self.view.zoomFactor()
-                                    -self.font_magnification_step))
+        self.view.setZoomFactor(max(0.1, self.view.zoomFactor() - self.font_magnification_step))
 
     def __call__(self, html, baseurl):
         self.view.setHtml(
@@ -60,6 +60,7 @@ class TableView(QDialog):
     def done(self, e):
         gprefs['viewer_table_popup_geometry'] = bytearray(self.saveGeometry())
         return QDialog.done(self, e)
+
 
 class TablePopup(object):
 

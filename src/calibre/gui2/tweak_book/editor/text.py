@@ -17,7 +17,7 @@ from PyQt5.Qt import (
     QColorDialog, QTimer, pyqtSignal)
 
 from calibre import prepare_string_for_xml
-from calibre.gui2.tweak_book import tprefs, TOP
+from calibre.gui2.tweak_book import tprefs, TOP, current_container
 from calibre.gui2.tweak_book.completion.popup import CompletionPopup
 from calibre.gui2.tweak_book.editor import (
     SYNTAX_PROPERTY, SPELL_PROPERTY, SPELL_LOCALE_PROPERTY, store_locale, LINK_PROPERTY)
@@ -39,6 +39,7 @@ def get_highlighter(syntax):
             pass
     return SyntaxHighlighter
 
+
 def get_smarts(syntax):
     if syntax:
         smartsname = {'xml':'html'}.get(syntax, syntax)
@@ -48,6 +49,8 @@ def get_smarts(syntax):
             pass
 
 _dff = None
+
+
 def default_font_family():
     global _dff
     if _dff is None:
@@ -60,6 +63,7 @@ def default_font_family():
             _dff = 'Courier New'
     return _dff
 
+
 class LineNumbers(QWidget):  # {{{
 
     def __init__(self, parent):
@@ -71,6 +75,7 @@ class LineNumbers(QWidget):  # {{{
     def paintEvent(self, ev):
         self.parent().paint_line_numbers(ev)
 # }}}
+
 
 class TextEdit(PlainTextEdit):
 
@@ -108,8 +113,10 @@ class TextEdit(PlainTextEdit):
     def is_modified(self):
         ''' True if the document has been modified since it was loaded or since
         the last time is_modified was set to False. '''
+
         def fget(self):
             return self.document().isModified()
+
         def fset(self, val):
             self.document().setModified(bool(val))
         return property(fget=fget, fset=fset)
@@ -313,7 +320,12 @@ class TextEdit(PlainTextEdit):
             raw, count = pat.subn(template, raw)
             if repl_is_func:
                 from calibre.gui2.tweak_book.search import show_function_debug_output
-                template.end()
+                if getattr(template.func, 'append_final_output_to_marked', False):
+                    retval = template.end()
+                    if retval:
+                        raw += unicode(retval)
+                else:
+                    template.end()
                 show_function_debug_output(template)
             if count > 0:
                 start_pos = min(c.anchor(), c.position())
@@ -326,6 +338,21 @@ class TextEdit(PlainTextEdit):
     def smart_comment(self):
         from calibre.gui2.tweak_book.editor.comments import smart_comment
         smart_comment(self, self.syntax)
+
+    def sort_css(self):
+        from calibre.gui2.dialogs.confirm_delete import confirm
+        if confirm(_('Sorting CSS rules can in rare cases change the effective styles applied to the book.'
+                     ' Are you sure you want to proceed?'), 'edit-book-confirm-sort-css', parent=self, config_set=tprefs):
+            c = self.textCursor()
+            c.beginEditBlock()
+            c.movePosition(c.Start), c.movePosition(c.End, c.KeepAnchor)
+            text = unicode(c.selectedText()).replace(PARAGRAPH_SEPARATOR, '\n').rstrip('\0')
+            from calibre.ebooks.oeb.polish.css import sort_sheet
+            text = sort_sheet(current_container(), text).cssText
+            c.insertText(text)
+            c.movePosition(c.Start)
+            c.endEditBlock()
+            self.setTextCursor(c)
 
     def find(self, pat, wrap=False, marked=False, complete=False, save_match=None):
         if marked:
@@ -570,24 +597,20 @@ class TextEdit(PlainTextEdit):
             num += 1
     # }}}
 
-    def event(self, ev):
-        if ev.type() == ev.ToolTip:
-            self.show_tooltip(ev)
+    def override_shortcut(self, ev):
+        # Let the global cut/copy/paste/undo/redo shortcuts work, this avoids the nbsp
+        # problem as well, since they use the overridden copy() method
+        # instead of the one from Qt, and allows proper customization
+        # of the shortcuts
+        if ev in (QKeySequence.Copy, QKeySequence.Cut, QKeySequence.Paste, QKeySequence.Undo, QKeySequence.Redo):
+            ev.ignore()
             return True
-        if ev.type() == ev.ShortcutOverride:
-            # Let the global cut/copy/paste/undo/redo shortcuts work, this avoids the nbsp
-            # problem as well, since they use the overridden copy() method
-            # instead of the one from Qt, and allows proper customization
-            # of the shortcuts
-            if ev in (QKeySequence.Copy, QKeySequence.Cut, QKeySequence.Paste, QKeySequence.Undo, QKeySequence.Redo):
-                ev.ignore()
-                return True
-            # This is used to convert typed hex codes into unicode
-            # characters
-            if ev.key() == Qt.Key_X and ev.modifiers() == Qt.AltModifier:
-                ev.accept()
-                return True
-        return QPlainTextEdit.event(self, ev)
+        # This is used to convert typed hex codes into unicode
+        # characters
+        if ev.key() == Qt.Key_X and ev.modifiers() == Qt.AltModifier:
+            ev.accept()
+            return True
+        return PlainTextEdit.override_shortcut(self, ev)
 
     def text_for_range(self, block, r):
         c = self.textCursor()

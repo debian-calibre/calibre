@@ -10,9 +10,9 @@ __docformat__ = 'restructuredtext en'
 from collections import namedtuple
 
 from PyQt5.Qt import (
-    QWidget, Qt, QLabel, QVBoxLayout, QPixmap, QDialogButtonBox, QApplication, QTimer,
+    QWidget, Qt, QLabel, QVBoxLayout, QDialogButtonBox, QApplication, QTimer, QPixmap,
     QSize, pyqtSignal, QIcon, QPlainTextEdit, QCheckBox, QPainter, QHBoxLayout, QFontMetrics,
-    QPainterPath, QRectF, pyqtProperty, QPropertyAnimation, QEasingCurve, QSizePolicy)
+    QPainterPath, QRectF, pyqtProperty, QPropertyAnimation, QEasingCurve, QSizePolicy, QImage)
 
 from calibre.constants import __version__
 from calibre.gui2.dialogs.message_box import ViewLog
@@ -22,6 +22,7 @@ Question = namedtuple('Question', 'payload callback cancel_callback '
         'show_copy_button checkbox_msg checkbox_checked action_callback '
         'action_label action_icon focus_action show_det show_ok icon '
         'log_viewer_unique_name')
+
 
 class Icon(QWidget):
 
@@ -58,7 +59,7 @@ class Icon(QWidget):
         elif icon is None:
             self.icon = self.default_icon
         else:
-            self.icon = QPixmap(I(icon)).scaled(self.sizeHint(), transformMode=Qt.SmoothTransformation)
+            self.icon = QIcon(I(icon)).pixmap(self.sizeHint())
         self.update()
 
     def sizeHint(self):
@@ -70,6 +71,7 @@ class Icon(QWidget):
         p.drawPixmap(self.rect(), self.icon)
         p.end()
 
+
 class PlainTextEdit(QPlainTextEdit):
 
     def sizeHint(self):
@@ -77,6 +79,7 @@ class PlainTextEdit(QPlainTextEdit):
         ans = QPlainTextEdit.sizeHint(self)
         ans.setWidth(fm.averageCharWidth() * 50)
         return ans
+
 
 class ProceedQuestion(QWidget):
 
@@ -263,9 +266,11 @@ class ProceedQuestion(QWidget):
         if self.rendered_pixmap is not None:
             return
 
-        p = QPixmap(self.size())
+        dpr = getattr(self, 'devicePixelRatioF', self.devicePixelRatio)()
+        p = QImage(dpr * self.size(), QImage.Format_ARGB32_Premultiplied)
+        p.setDevicePixelRatio(dpr)
         self.render(p)
-        self.rendered_pixmap = p
+        self.rendered_pixmap = QPixmap.fromImage(p)
         self.original_visibility = v = []
         for child in self.findChildren(QWidget):
             if child.isVisible():
@@ -390,6 +395,7 @@ class ProceedQuestion(QWidget):
         p.addRoundedRect(QRectF(self.rect()).adjusted(bw, bw, -bw, -bw), br, br)
         painter.fillPath(p, pal.color(pal.WindowText))
 
+
 def main():
     from calibre.gui2 import Application
     from PyQt5.Qt import QMainWindow, QStatusBar, QTimer
@@ -400,6 +406,7 @@ def main():
     s.showMessage('Testing ProceedQuestion')
     w.show()
     p = ProceedQuestion(w)
+
     def doit():
         p.dummy_question()
         p.dummy_question(action_label='A very long button for testing relayout (indeed)')
@@ -412,4 +419,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

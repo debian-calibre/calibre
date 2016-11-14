@@ -11,6 +11,7 @@ from calibre.gui2.convert.heuristics_ui import Ui_Form
 from calibre.gui2.convert import Widget
 from calibre.utils.localization import localize_user_manual_link
 
+
 class HeuristicsWidget(Widget, Ui_Form):
 
     TITLE = _('Heuristic\nProcessing')
@@ -95,7 +96,8 @@ class HeuristicsWidget(Widget, Ui_Form):
 
     def save_histories(self):
         rssb_history = []
-        history_pats = [unicode(self.opt_replace_scene_breaks.lineEdit().text())] + [unicode(self.opt_replace_scene_breaks.itemText(i)) for i in xrange(self.opt_replace_scene_breaks.count())]
+        history_pats = [unicode(self.opt_replace_scene_breaks.lineEdit().text())] + [unicode(self.opt_replace_scene_breaks.itemText(i))
+                                for i in xrange(self.opt_replace_scene_breaks.count())]
         for p in history_pats[:10]:
             # Ensure we don't have duplicate items.
             if p not in rssb_history:

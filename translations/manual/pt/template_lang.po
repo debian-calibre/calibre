@@ -3,12 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Maria Manuela Silva <manuela.silva@sky.com>, 2016
+# Paulo Pereira <pauloizidoro@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 17:16+0530\n"
-"PO-Revision-Date: 2016-05-20 03:51+0000\n"
+"POT-Creation-Date: 2016-09-16 07:34+0530\n"
+"PO-Revision-Date: 2016-09-16 02:05+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:4
 msgid "The calibre template language"
-msgstr ""
+msgstr "A linguagem de modelos do Calibre"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:6
 msgid ""
@@ -27,7 +29,7 @@ msgid ""
 "control the folder structure and file name when saving files from the "
 "calibre library to the disk or eBook reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
-msgstr ""
+msgstr "A linguagem de modelos do Calibre é utilizada em vários locais. É utilizada para controlar a estrutura de pastas e o nome de ficheiros ao guardar ficheiros da biblioteca do Calibre no disco ou no leitor de eBook. Também é utilizada para definir as colunas \"virtuais\" que contêm dados de outras colunas, e assim por diante."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:9
 msgid ""
@@ -88,7 +90,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:47
 msgid "Advanced formatting"
-msgstr ""
+msgstr "Formatação avançada"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:49
 msgid ""
@@ -179,7 +181,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
-msgstr ""
+msgstr "Funcionalidades avançadas"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:93
 msgid "Using templates in custom columns"
@@ -1189,24 +1191,24 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:460
 msgid ""
-"Create a composite field (call it AA) containing ``{series}/{series_index} -"
-" {title'}``. If the series is not empty, then this template will produce "
-"`series/series_index - title`."
+"Create a composite field (give it lookup name #AA) containing "
+"``{series}/{series_index} - {title}``. If the series is not empty, then this"
+" template will produce `series/series_index - title`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:461
 msgid ""
-"Create a composite field (call it BB) containing "
+"Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid ""
-"Set the save template to ``{series:lookup(.,AA,BB)}``. This template chooses"
-" composite field AA if series is not empty, and composite field BB if series"
-" is empty. We therefore have two completely different save paths, depending "
-"on whether or not `series` is empty."
+"Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
+"chooses composite field #AA if series is not empty, and composite field #BB "
+"if series is empty. We therefore have two completely different save paths, "
+"depending on whether or not `series` is empty."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465

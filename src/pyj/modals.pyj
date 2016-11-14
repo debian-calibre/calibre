@@ -4,11 +4,10 @@ from __python__ import hash_literals
 
 from ajax import ajax, ajax_send
 from elementmaker import E
-from dom import set_css, clear, build_rule, svgicon
+from dom import set_css, clear, build_rule, svgicon, add_extra_css
 from gettext import gettext as _
 from book_list.theme import get_color, get_font_size
 from popups import MODAL_Z_INDEX
-from widgets import add_extra_css
 
 modal_container = None
 modal_count = 0
@@ -54,7 +53,7 @@ class ModalContainer:
         # Popup style
         set_css(div.firstChild,
             position='relative', display='inline-block', top='50vh', transform='translateY(-50%)',
-            min_width='25vw', max_width='75vw',
+            min_width='25vw', max_width='70vw',  # Needed for iPhone 5
             border_radius='1em', padding='1em 2em', margin_right='1em', margin_left='1em',
             background=get_color('dialog-background'), color=get_color('dialog-foreground'),
             background_image=get_color('dialog-background-image'), get_color('dialog-background'), get_color('dialog-background2')

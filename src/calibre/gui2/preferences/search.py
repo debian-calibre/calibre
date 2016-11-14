@@ -8,12 +8,13 @@ __docformat__ = 'restructuredtext en'
 from PyQt5.Qt import QApplication
 
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget, \
-        CommaSeparatedList
+        CommaSeparatedList, AbortCommit
 from calibre.gui2.preferences.search_ui import Ui_Form
 from calibre.gui2 import config, error_dialog, gprefs
 from calibre.utils.config import prefs
 from calibre.utils.icu import sort_key
 from calibre.library.caches import set_use_primary_find_in_search
+
 
 class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
@@ -29,6 +30,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r('show_highlight_toggle_button', gprefs)
         r('limit_search_columns', prefs)
         r('use_primary_find_in_search', prefs)
+        r('case_sensitive', prefs)
         r('limit_search_columns_to', prefs, setting=CommaSeparatedList)
         fl = db.field_metadata.get_search_terms()
         self.opt_limit_search_columns_to.update_items_cache(fl)
@@ -211,6 +213,11 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.gst_value.blockSignals(False)
 
     def commit(self):
+        if self.opt_case_sensitive.isChecked() and self.opt_use_primary_find_in_search.isChecked():
+            error_dialog(self, _('Incompatible options'), _(
+                'The option to have un-accented characters match accented characters has no effect'
+                ' if you also turn on case-sensitive searching. So only turn on one of those options'), show=True)
+            raise AbortCommit()
         if self.gst_changed:
             self.db.new_api.set_pref('grouped_search_terms', self.gst)
             self.db.field_metadata.add_grouped_search_terms(self.gst)
@@ -225,6 +232,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         return ConfigWidgetBase.commit(self)
 
     def refresh_gui(self, gui):
+        gui.current_db.new_api.clear_caches()
         set_use_primary_find_in_search(prefs['use_primary_find_in_search'])
         gui.set_highlight_only_button_icon()
         if self.muc_changed:

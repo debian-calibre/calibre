@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Kevin Jin <kevin.defan@gmail.com>, 2016
+# Yuanzhong Xia <imewx@qq.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 09:56+0530\n"
-"PO-Revision-Date: 2016-06-20 06:06+0000\n"
-"Last-Translator: Kevin Jin <kevin.defan@gmail.com>\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-19 02:28+0000\n"
+"Last-Translator: Yuanzhong Xia <imewx@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,7 +90,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:47
 msgid "Advanced formatting"
-msgstr ""
+msgstr "高级格式"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:49
 msgid ""
@@ -156,7 +157,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:75
 msgid "For trailing zeros, use::"
-msgstr ""
+msgstr "对于尾数0，使用::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:79
 msgid ""
@@ -276,11 +277,11 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:118
 msgid "``lowercase()``   -- return value of the field in lower case."
-msgstr ""
+msgstr "``lowercase()`` -- 返回作用域中值的小写形式"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:119
 msgid "``uppercase()``   -- return the value of the field in upper case."
-msgstr ""
+msgstr "``uppercase()`` -- 返回作用域中值的大写形式"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:120
 msgid "``titlecase()``   -- return the value of the field in title case."
@@ -290,7 +291,7 @@ msgstr ""
 msgid ""
 "``capitalize()``  -- return the value with the first letter upper case and "
 "the rest lower case."
-msgstr ""
+msgstr "``capitalize()`` -- 返回作用域中值的首字母大写形式（其他字母小写）"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:122
 msgid ""
@@ -1190,24 +1191,24 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:460
 msgid ""
-"Create a composite field (call it AA) containing ``{series}/{series_index} -"
-" {title'}``. If the series is not empty, then this template will produce "
-"`series/series_index - title`."
+"Create a composite field (give it lookup name #AA) containing "
+"``{series}/{series_index} - {title}``. If the series is not empty, then this"
+" template will produce `series/series_index - title`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:461
 msgid ""
-"Create a composite field (call it BB) containing "
+"Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid ""
-"Set the save template to ``{series:lookup(.,AA,BB)}``. This template chooses"
-" composite field AA if series is not empty, and composite field BB if series"
-" is empty. We therefore have two completely different save paths, depending "
-"on whether or not `series` is empty."
+"Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
+"chooses composite field #AA if series is not empty, and composite field #BB "
+"if series is empty. We therefore have two completely different save paths, "
+"depending on whether or not `series` is empty."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465

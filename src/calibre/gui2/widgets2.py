@@ -6,13 +6,19 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
+import weakref
+
 from PyQt5.Qt import (
     QPushButton, QPixmap, QIcon, QColor, Qt, QColorDialog, pyqtSignal,
-    QKeySequence, QToolButton, QDialog, QDialogButtonBox)
+    QKeySequence, QToolButton, QDialog, QDialogButtonBox, QComboBox, QFont,
+    QAbstractListModel, QModelIndex, QApplication, QStyledItemDelegate,
+    QUndoCommand, QUndoStack)
 
-from calibre.gui2 import gprefs
+from calibre.ebooks.metadata import rating_to_stars
+from calibre.gui2 import gprefs, rating_font
 from calibre.gui2.complete2 import LineEdit, EditWithComplete
 from calibre.gui2.widgets import history
+
 
 class HistoryMixin(object):
 
@@ -54,15 +60,18 @@ class HistoryMixin(object):
         history.set(self.store_name, self.history)
         self.update_items_cache(self.history)
 
+
 class HistoryLineEdit2(LineEdit, HistoryMixin):
 
     def __init__(self, parent=None, completer_widget=None, sort_func=lambda x:None):
         LineEdit.__init__(self, parent=parent, completer_widget=completer_widget, sort_func=sort_func)
 
+
 class HistoryComboBox(EditWithComplete, HistoryMixin):
 
     def __init__(self, parent=None):
         EditWithComplete.__init__(self, parent, sort_func=lambda x:None)
+
 
 class ColorButton(QPushButton):
 
@@ -79,6 +88,7 @@ class ColorButton(QPushButton):
     def color(self):
         def fget(self):
             return self._color
+
         def fset(self, val):
             val = unicode(val or '')
             col = QColor(val)
@@ -109,6 +119,7 @@ def access_key(k):
         return '\t' + QKeySequence(k).toString(QKeySequence.NativeText)
     return ''
 
+
 def populate_standard_spinbox_context_menu(spinbox, menu, add_clear=False):
     m = menu
     le = spinbox.lineEdit()
@@ -123,6 +134,7 @@ def populate_standard_spinbox_context_menu(spinbox, menu, add_clear=False):
     m.addAction(_('Step &down'), spinbox.stepDown)
     m.setAttribute(Qt.WA_DeleteOnClose)
 
+
 class RightClickButton(QToolButton):
 
     def mousePressEvent(self, ev):
@@ -131,6 +143,7 @@ class RightClickButton(QToolButton):
             ev.accept()
             return
         return QToolButton.mousePressEvent(self, ev)
+
 
 class Dialog(QDialog):
 
@@ -180,3 +193,118 @@ class Dialog(QDialog):
     def setup_ui(self):
         raise NotImplementedError('You must implement this method in Dialog subclasses')
 
+
+class RatingModel(QAbstractListModel):
+
+    def __init__(self, parent=None, is_half_star=False):
+        QAbstractListModel.__init__(self, parent)
+        self.is_half_star = is_half_star
+        self.rating_font = QFont(rating_font())
+        self.null_text = _('Not rated')
+
+    def rowCount(self, parent=QModelIndex()):
+        return 11 if self.is_half_star else 6
+
+    def data(self, index, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole:
+            val = index.row() * (1 if self.is_half_star else 2)
+            return rating_to_stars(val, self.is_half_star) or self.null_text
+        if role == Qt.FontRole:
+            return QApplication.instance().font() if index.row() == 0 else self.rating_font
+
+
+class UndoCommand(QUndoCommand):
+
+    def __init__(self, widget, val):
+        QUndoCommand.__init__(self)
+        self.widget = weakref.ref(widget)
+        self.undo_val = widget.rating_value
+        self.redo_val = val
+
+        def undo(self):
+            w = self.widget()
+            w.setCurrentIndex(self.undo_val)
+
+        def redo(self):
+            w = self.widget()
+            w.setCurrentIndex(self.redo_val)
+
+
+class RatingEditor(QComboBox):
+
+    def __init__(self, parent=None, is_half_star=False):
+        QComboBox.__init__(self, parent)
+        self.undo_stack = QUndoStack(self)
+        self.undo, self.redo = self.undo_stack.undo, self.undo_stack.redo
+        self.allow_undo = False
+        self.is_half_star = is_half_star
+        self._model = RatingModel(is_half_star=is_half_star, parent=self)
+        self.setModel(self._model)
+        self.delegate = QStyledItemDelegate(self)
+        self.view().setItemDelegate(self.delegate)
+        self.view().setStyleSheet('QListView { background: palette(window) }\nQListView::item { padding: 6px }')
+        self.setMaxVisibleItems(self.count())
+        self.currentIndexChanged.connect(self.update_font)
+
+    @property
+    def null_text(self):
+        return self._model.null_text
+
+    @null_text.setter
+    def null_text(self, val):
+        self._model.null_text = val
+        self._model.dataChanged.emit(self._model.index(0, 0), self._model.index(0, 0))
+
+    def update_font(self):
+        if self.currentIndex() == 0:
+            self.setFont(QApplication.instance().font())
+        else:
+            self.setFont(self._model.rating_font)
+
+    def clear_to_undefined(self):
+        self.setCurrentIndex(0)
+
+    @property
+    def rating_value(self):
+        ' An integer from 0 to 10 '
+        ans = self.currentIndex()
+        if not self.is_half_star:
+            ans *= 2
+        return ans
+
+    @rating_value.setter
+    def rating_value(self, val):
+        val = max(0, min(int(val or 0), 10))
+        if self.allow_undo:
+            cmd = UndoCommand(self, val)
+            self.undo_stack.push(cmd)
+        else:
+            self.undo_stack.clear()
+        if not self.is_half_star:
+            val //= 2
+        self.setCurrentIndex(val)
+
+    def keyPressEvent(self, ev):
+        if ev == QKeySequence.Undo:
+            self.undo()
+            return ev.accept()
+        if ev == QKeySequence.Redo:
+            self.redo()
+            return ev.accept()
+        k = ev.key()
+        num = {getattr(Qt, 'Key_%d'%i):i for i in range(6)}.get(k)
+        if num is None:
+            return QComboBox.keyPressEvent(self, ev)
+        ev.accept()
+        if self.is_half_star:
+            num *= 2
+        self.setCurrentIndex(num)
+
+if __name__ == '__main__':
+    from calibre.gui2 import Application
+    app = Application([])
+    app.load_builtin_fonts()
+    q = RatingEditor(is_half_star=True)
+    q.rating_value = 7
+    q.show()
+    app.exec_()

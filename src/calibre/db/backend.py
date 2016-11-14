@@ -31,7 +31,7 @@ from calibre.utils.filenames import (
     WindowsAtomicFolderMove, atomic_rename, remove_dir_if_empty,
     copytree_using_links, copyfile_using_links)
 from calibre.utils.img import save_cover_data_to
-from calibre.utils.formatter_functions import load_user_template_functions
+from calibre.utils.formatter_functions import load_user_template_functions, unload_user_template_functions
 from calibre.db.tables import (OneToOneTable, ManyToOneTable, ManyToManyTable,
         SizeTable, FormatsTable, AuthorsTable, IdentifiersTable, PathTable,
         CompositeTable, UUIDTable, RatingTable)
@@ -64,6 +64,7 @@ class DynamicFilter(object):  # {{{
     def change(self, ids):
         self.ids = frozenset(ids)
 # }}}
+
 
 class DBPrefs(dict):  # {{{
 
@@ -160,6 +161,8 @@ class DBPrefs(dict):  # {{{
 # }}}
 
 # Extra collators {{{
+
+
 def pynocase(one, two, encoding='utf-8'):
     if isbytestring(one):
         try:
@@ -173,10 +176,12 @@ def pynocase(one, two, encoding='utf-8'):
             pass
     return cmp(one.lower(), two.lower())
 
+
 def _author_to_author_sort(x):
     if not x:
         return ''
     return author_to_author_sort(x.replace('|', ','))
+
 
 def icu_collator(s1, s2):
     return cmp(sort_key(force_unicode(s1, 'utf-8')),
@@ -185,6 +190,8 @@ def icu_collator(s1, s2):
 # }}}
 
 # Unused aggregators {{{
+
+
 def Concatenate(sep=','):
     '''String concatenation aggregator for sqlite'''
 
@@ -198,6 +205,7 @@ def Concatenate(sep=','):
         return sep.join(ctxt)
 
     return ([], step, finalize)
+
 
 def SortedConcatenate(sep=','):
     '''String concatenation aggregator for sqlite, sorted by supplied index'''
@@ -213,6 +221,7 @@ def SortedConcatenate(sep=','):
 
     return ({}, step, finalize)
 
+
 def IdentifiersConcat():
     '''String concatenation aggregator for the identifiers map'''
 
@@ -223,6 +232,7 @@ def IdentifiersConcat():
         return ','.join(ctxt)
 
     return ([], step, finalize)
+
 
 def AumSortedConcatenate():
     '''String concatenation aggregator for the author sort map'''
@@ -244,6 +254,7 @@ def AumSortedConcatenate():
 
 # }}}
 
+
 class Connection(apsw.Connection):  # {{{
 
     BUSY_TIMEOUT = 10000  # milliseconds
@@ -252,7 +263,7 @@ class Connection(apsw.Connection):  # {{{
         apsw.Connection.__init__(self, path)
 
         self.setbusytimeout(self.BUSY_TIMEOUT)
-        self.execute('pragma cache_size=5000')
+        self.execute('pragma cache_size=-5000')
         self.execute('pragma temp_store=2')
 
         encoding = self.execute('pragma encoding').next()[0]
@@ -303,6 +314,7 @@ class Connection(apsw.Connection):  # {{{
             return self.cursor().executemany(sql, sequence_of_bindings)
 
 # }}}
+
 
 class DB(object):
 
@@ -445,6 +457,7 @@ class DB(object):
         defs['update_all_last_mod_dates_on_start'] = False
         defs['field_under_covers_in_grid'] = 'title'
         defs['cover_browser_title_template'] = '{title}'
+        defs['cover_browser_subtitle_field'] = 'rating'
 
         # Migrate the bool tristate tweak
         defs['bools_are_tristate'] = \
@@ -1030,13 +1043,18 @@ class DB(object):
         data = self.custom_field_metadata(label, num)
         self.execute('UPDATE custom_columns SET mark_for_delete=1 WHERE id=?', (data['num'],))
 
-    def close(self, force=False):
+    def close(self, force=False, unload_formatter_functions=True):
         if getattr(self, '_conn', None) is not None:
+            if unload_formatter_functions:
+                try:
+                    unload_user_template_functions(self.library_id)
+                except Exception:
+                    pass
             self._conn.close(force)
             del self._conn
 
     def reopen(self, force=False):
-        self.close(force)
+        self.close(force=force, unload_formatter_functions=False)
         self._conn = None
         self.conn
 
@@ -1065,7 +1083,7 @@ class DB(object):
                     shell.process_command('.read ' + fname.replace(os.sep, '/'))
                     conn.execute('PRAGMA user_version=%d;'%uv)
 
-                self.close()
+                self.close(unload_formatter_functions=False)
                 try:
                     atomic_rename(tmpdb, self.dbpath)
                 finally:
@@ -1620,6 +1638,7 @@ class DB(object):
 
     def get_custom_book_data(self, name, book_ids, default=None):
         book_ids = frozenset(book_ids)
+
         def safe_load(val):
             try:
                 return json.loads(val, object_hook=from_json)

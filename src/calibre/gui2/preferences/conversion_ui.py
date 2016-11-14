@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/conversion.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -34,7 +33,6 @@ class Ui_Form(object):
         self.list.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
         self.list.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.list.setFlow(QtWidgets.QListView.TopToBottom)
-        self.list.setSpacing(10)
         self.list.setViewMode(QtWidgets.QListView.ListMode)
         self.list.setObjectName("list")
         self.horizontalLayout.addWidget(self.list)

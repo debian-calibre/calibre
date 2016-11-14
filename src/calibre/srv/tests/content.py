@@ -13,12 +13,14 @@ from calibre.ebooks.metadata.epub import get_metadata
 from calibre.ebooks.metadata.opf2 import OPF
 from calibre.srv.tests.base import LibraryBaseTest
 from calibre.utils.imghdr import identify
-from calibre.utils.shared_file import share_open, test as test_share_open
+from calibre.utils.shared_file import share_open
+
 
 def setUpModule():
     # Needed for cover generation
     from calibre.gui2 import ensure_app, load_builtin_fonts
     ensure_app(), load_builtin_fonts()
+
 
 class ContentTest(LibraryBaseTest):
 
@@ -174,7 +176,6 @@ class ContentTest(LibraryBaseTest):
             self.ae(r.getheader('Used-Cache'), 'no')
 
             # Test file sharing in cache
-            test_share_open()
             r, data = get('cover', 2)
             self.ae(r.status, httplib.OK)
             self.ae(data, db.cover(2))

@@ -11,6 +11,7 @@ from calibre.ebooks.metadata import MetaInformation
 from calibre.ebooks.snb.snbfile import SNBFile
 from lxml import etree
 
+
 def get_metadata(stream, extract_cover=True):
     """ Return metadata as a L{MetaInfo} object """
     mi = MetaInformation(_('Unknown'), [_('Unknown')])
@@ -25,7 +26,7 @@ def get_metadata(stream, extract_cover=True):
 
         meta = snbFile.GetFileStream('snbf/book.snbf')
 
-        if meta != None:
+        if meta is not None:
             meta = etree.fromstring(meta)
             mi.title = meta.find('.//head/name').text
             mi.authors = [meta.find('.//head/author').text]
@@ -34,7 +35,7 @@ def get_metadata(stream, extract_cover=True):
 
             if extract_cover:
                 cover = meta.find('.//head/cover')
-                if cover != None and cover.text != None:
+                if cover is not None and cover.text is not None:
                     root, ext = os.path.splitext(cover.text)
                     if ext == '.jpeg':
                         ext = '.jpg'

@@ -4,14 +4,14 @@
 
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-import regex
 from collections import deque
-
-REGEX_FLAGS = regex.VERSION1 | regex.WORD | regex.FULLCASE | regex.IGNORECASE | regex.UNICODE
 
 
 def compile_pat(pat):
+    import regex
+    REGEX_FLAGS = regex.VERSION1 | regex.WORD | regex.FULLCASE | regex.IGNORECASE | regex.UNICODE
     return regex.compile(pat, flags=REGEX_FLAGS)
+
 
 def matcher(rule):
     mt = rule['match_type']
@@ -32,7 +32,7 @@ def matcher(rule):
         return lambda x: pat.match(x) is None
 
     if mt == 'has':
-        s = rule['query']
+        s = icu_lower(rule['query'])
         return lambda x: s in x
 
     return lambda x: False
@@ -57,7 +57,7 @@ def apply_rules(tag, rules):
                     break
                 if ac == 'replace':
                     if 'matches' in rule['match_type']:
-                        tag = regex.sub(rule['query'], rule['replace'], tag, flags=REGEX_FLAGS)
+                        tag = compile_pat(rule['query']).sub(rule['replace'], tag)
                     else:
                         tag = rule['replace']
                     if ',' in tag:
@@ -101,6 +101,7 @@ def apply_rules(tag, rules):
     ans.extend(tags)
     return ans
 
+
 def uniq(vals, kmap=icu_lower):
     ''' Remove all duplicates from vals, while preserving order. kmap must be a
     callable that returns a hashable value for every item in vals '''
@@ -122,41 +123,50 @@ def map_tags(tags, rules=()):
         ans.extend(apply_rules(t, rules))
     return uniq(filter(None, ans))
 
-def test():
 
-    def rule(action, query, replace=None, match_type='one_of'):
-        ans = {'action':action, 'query': query, 'match_type':match_type}
-        if replace is not None:
-            ans['replace'] = replace
-        return ans
+def find_tests():
+    import unittest
 
-    def run(rules, tags, expected):
-        if isinstance(rules, dict):
-            rules = [rules]
-        if isinstance(tags, type('')):
-            tags = [x.strip() for x in tags.split(',')]
-        if isinstance(expected, type('')):
-            expected = [x.strip() for x in expected.split(',')]
-        ans = map_tags(tags, rules)
-        if ans != expected:
-            raise AssertionError('Expected: %r != %r' % (expected, ans))
+    class TestTagMapper(unittest.TestCase):
 
-    run(rule('capitalize', 't1,t2'), 't1,x1', 'T1,x1')
-    run(rule('upper', 'ta,t2'), 'ta,x1', 'TA,x1')
-    run(rule('lower', 'ta,x1'), 'TA,X1', 'ta,x1')
-    run(rule('replace', 't1', 't2'), 't1,x1', 't2,x1')
-    run(rule('replace', '(.)1', r'\g<1>2', 'matches'), 't1,x1', 't2,x2')
-    run(rule('replace', '(.)1', r'\g<1>2,3', 'matches'), 't1,x1', 't2,3,x2')
-    run(rule('replace', 't1', 't2, t3'), 't1,x1', 't2,t3,x1')
-    run([rule('replace', 't1', 't2,t3'), rule('remove', 't2')], 't1,x1', 't3,x1')
-    run(rule('replace', 't1', 't1'), 't1,x1', 't1,x1')
-    run([rule('replace', 't1', 't2'), rule('replace', 't2', 't1')], 't1,t2', 't1,t2')
-    run(rule('replace', 'a', 'A'), 'a,b', 'A,b')
-    run(rule('replace', 'a,b', 'A,B'), 'a,b', 'A,B')
-    run(rule('split', '/', '/', 'has'), 'a/b/c,d', 'a,b,c,d')
-    run(rule('split', '/', '/', 'has'), '/,d', 'd')
-    run(rule('split', '/', '/', 'has'), '/a/', 'a')
-    run(rule('split', 'a,b', '/'), 'a,b', 'a,b')
+        def test_tag_mapper(self):
+
+            def rule(action, query, replace=None, match_type='one_of'):
+                ans = {'action':action, 'query': query, 'match_type':match_type}
+                if replace is not None:
+                    ans['replace'] = replace
+                return ans
+
+            def run(rules, tags, expected):
+                if isinstance(rules, dict):
+                    rules = [rules]
+                if isinstance(tags, type('')):
+                    tags = [x.strip() for x in tags.split(',')]
+                if isinstance(expected, type('')):
+                    expected = [x.strip() for x in expected.split(',')]
+                ans = map_tags(tags, rules)
+                self.assertEqual(ans, expected)
+
+            run(rule('capitalize', 't1,t2'), 't1,x1', 'T1,x1')
+            run(rule('upper', 'ta,t2'), 'ta,x1', 'TA,x1')
+            run(rule('lower', 'ta,x1'), 'TA,X1', 'ta,x1')
+            run(rule('replace', 't1', 't2'), 't1,x1', 't2,x1')
+            run(rule('replace', '(.)1', r'\g<1>2', 'matches'), 't1,x1', 't2,x2')
+            run(rule('replace', '(.)1', r'\g<1>2,3', 'matches'), 't1,x1', 't2,3,x2')
+            run(rule('replace', 't1', 't2, t3'), 't1,x1', 't2,t3,x1')
+            run([rule('replace', 't1', 't2,t3'), rule('remove', 't2')], 't1,x1', 't3,x1')
+            run(rule('replace', 't1', 't1'), 't1,x1', 't1,x1')
+            run([rule('replace', 't1', 't2'), rule('replace', 't2', 't1')], 't1,t2', 't1,t2')
+            run(rule('replace', 'a', 'A'), 'a,b', 'A,b')
+            run(rule('replace', 'a,b', 'A,B'), 'a,b', 'A,B')
+            run(rule('replace', 'L', 'T', 'has'), 'L', 'T')
+            run(rule('split', '/', '/', 'has'), 'a/b/c,d', 'a,b,c,d')
+            run(rule('split', '/', '/', 'has'), '/,d', 'd')
+            run(rule('split', '/', '/', 'has'), '/a/', 'a')
+            run(rule('split', 'a,b', '/'), 'a,b', 'a,b')
+            run(rule('split', 'a b', ' ', 'has'), 'a b', 'a,b')
+    return unittest.defaultTestLoader.loadTestsFromTestCase(TestTagMapper)
 
 if __name__ == '__main__':
-    test()
+    from calibre.utils.run_tests import run_cli
+    run_cli(find_tests())

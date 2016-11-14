@@ -69,6 +69,16 @@ def fmt_sidx(val, fmt='{:.2f}', use_roman=True):
         return int(val) + ''
     return fmt.format(float(val))
 
+def rating_to_stars(value, allow_half_stars=False, star='★', half='½'):
+    r = max(0, min(int(value or 0), 10))
+    if allow_half_stars:
+        ans = star.repeat(r // 2)
+        if r % 2:
+            ans += half
+    else:
+        ans = star.repeat(int(r/2.0))
+    return ans
+
 def human_readable(size, sep=' '):
     divisor, suffix = 1, "B"
     for i, candidate in enumerate(('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB')):
@@ -131,6 +141,19 @@ def viewport_to_document(x, y, doc):
 def username_key(username):
     return ('u' if username else 'n') + username
 
+def uniq(vals):
+    # Remove all duplicates from vals, while preserving order
+    ans = v'[]'
+    seen = {}
+    for x in vals:
+        if not seen[x]:
+            seen[x] = True
+            ans.push(x)
+    return ans
+
 if __name__ is '__main__':
+    from pythonize import strings
+    strings()
+    print(rating_to_stars(3, True))
     print(fmt_sidx(10), fmt_sidx(1.2))
     print(list(map(human_readable, [1, 1024.0, 1025, 1024*1024*2.3])))

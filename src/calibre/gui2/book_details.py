@@ -12,18 +12,41 @@ from functools import partial
 from PyQt5.Qt import (QPixmap, QSize, QWidget, Qt, pyqtSignal, QUrl, QIcon,
     QPropertyAnimation, QEasingCurve, QApplication, QFontInfo, QAction,
     QSizePolicy, QPainter, QRect, pyqtProperty, QLayout, QPalette, QMenu,
-    QPen, QColor)
+    QPen, QColor, QMimeData)
 from PyQt5.QtWebKitWidgets import QWebView
 
 from calibre import fit_image
 from calibre.gui2.dnd import (dnd_has_image, dnd_get_image, dnd_get_files,
-    IMAGE_EXTENSIONS, dnd_has_extension)
+    dnd_has_extension, image_extensions)
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import (field_metadata, Metadata)
 from calibre.ebooks.metadata.book.render import mi_to_html
 from calibre.gui2 import (config, open_url, pixmap_to_data, gprefs, rating_font, NO_URL_FORMATTING)
 from calibre.utils.config import tweaks
+from calibre.utils.img import image_from_x, blend_image
 from calibre.utils.localization import is_rtl
+
+_css = None
+
+
+def css():
+    global _css
+    if _css is None:
+        _css = P('templates/book_details.css', data=True).decode('utf-8')
+        col = QApplication.instance().palette().color(QPalette.Link).name()
+        _css = _css.replace('LINK_COLOR', col)
+    return _css
+
+
+def copy_all(web_view):
+    web_view = getattr(web_view, 'details', web_view)
+    mf = web_view.page().mainFrame()
+    c = QApplication.clipboard()
+    md = QMimeData()
+    md.setText(mf.toPlainText())
+    md.setHtml(mf.toHtml())
+    c.setMimeData(md)
+
 
 def render_html(mi, css, vertical, widget, all_fields=False, render_data_func=None):  # {{{
     table, comment_fields = (render_data_func or render_data)(mi, all_fields=all_fields,
@@ -78,6 +101,7 @@ def render_html(mi, css, vertical, widget, all_fields=False, render_data_func=No
                 % (table, right_pane))
     return ans
 
+
 def get_field_list(fm, use_defaults=False):
     from calibre.gui2.ui import get_gui
     db = get_gui().current_db
@@ -98,6 +122,7 @@ def get_field_list(fm, use_defaults=False):
     available = frozenset(fm.displayable_field_keys())
     return [(f, d) for f, d in fieldlist if f in available]
 
+
 def render_data(mi, use_roman_numbers=True, all_fields=False):
     field_list = get_field_list(getattr(mi, 'field_metadata', field_metadata))
     field_list = [(x, all_fields or display) for x, display in field_list]
@@ -105,6 +130,7 @@ def render_data(mi, use_roman_numbers=True, all_fields=False):
                       rating_font=rating_font(), default_author_link=gprefs.get('default_author_link'))
 
 # }}}
+
 
 def details_context_menu_event(view, ev, book_info):  # {{{
     p = view.page()
@@ -116,6 +142,7 @@ def details_context_menu_event(view, ev, book_info):  # {{{
     for action in list(menu.actions()):
         if action is not ca:
             menu.removeAction(action)
+    menu.addAction(QIcon(I('edit-copy.png')), _('Copy &all'), partial(copy_all, book_info))
     if not r.isNull():
         if url.startswith('format:'):
             parts = url.split(':')
@@ -170,7 +197,7 @@ def details_context_menu_event(view, ev, book_info):  # {{{
             el = r.linkElement()
             data = el.attribute('data-item')
             author = el.toPlainText() if unicode(el.attribute('calibre-data')) == u'authors' else None
-            if not url.startswith('search:'):
+            if url and not url.startswith('search:'):
                 for a, t in [('copy', _('&Copy Link')),
                 ]:
                     ac = getattr(book_info, '%s_link_action'%a)
@@ -199,6 +226,7 @@ def details_context_menu_event(view, ev, book_info):  # {{{
         menu.exec_(ev.globalPos())
 # }}}
 
+
 class CoverView(QWidget):  # {{{
 
     cover_changed = pyqtSignal(object, object)
@@ -220,7 +248,7 @@ class CoverView(QWidget):  # {{{
                 QSizePolicy.Expanding if vertical else QSizePolicy.Minimum,
                 QSizePolicy.Expanding)
 
-        self.default_pixmap = QPixmap(I('book.png'))
+        self.default_pixmap = QPixmap(I('default_cover.png'))
         self.pixmap = self.default_pixmap
         self.pwidth = self.pheight = None
         self.data = {}
@@ -279,8 +307,13 @@ class CoverView(QWidget):  # {{{
         target = QRect(x, y, width, height)
         p = QPainter(self)
         p.setRenderHints(QPainter.Antialiasing | QPainter.SmoothPixmapTransform)
-        p.drawPixmap(target, self.pixmap.scaled(target.size(),
-            Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        try:
+            dpr = self.devicePixelRatioF()
+        except AttributeError:
+            dpr = self.devicePixelRatio()
+        spmap = self.pixmap.scaled(target.size() * dpr, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        spmap.setDevicePixelRatio(dpr)
+        p.drawPixmap(target, spmap)
         if gprefs['bd_overlay_cover_size']:
             sztgt = target.adjusted(0, 0, 0, -4)
             f = p.font()
@@ -353,6 +386,8 @@ class CoverView(QWidget):  # {{{
             pmap.loadFromData(cdata)
         if pmap.isNull():
             return
+        if pmap.hasAlphaChannel():
+            pmap = QPixmap.fromImage(blend_image(image_from_x(pmap)))
         self.pixmap = pmap
         self.do_layout()
         self.update()
@@ -396,6 +431,7 @@ class CoverView(QWidget):  # {{{
 
 # Book Info {{{
 
+
 class BookInfo(QWebView):
 
     link_clicked = pyqtSignal(object)
@@ -422,12 +458,11 @@ class BookInfo(QWebView):
         self.setAcceptDrops(False)
         palette.setBrush(QPalette.Base, Qt.transparent)
         self.page().setPalette(palette)
-        self.css = P('templates/book_details.css', data=True).decode('utf-8')
         for x, icon in [
             ('remove_format', 'trash.png'), ('save_format', 'save.png'),
             ('restore_format', 'edit-undo.png'), ('copy_link','edit-copy.png'),
             ('manage_author', 'user_profile.png'), ('compare_format', 'diff.png'),
-            ('set_cover_format', 'book.png'),
+            ('set_cover_format', 'default_cover.png'),
         ]:
             ac = QAction(QIcon(I(icon)), '', self)
             ac.current_fmt = None
@@ -485,7 +520,7 @@ class BookInfo(QWebView):
         self.page().mainFrame().setScrollBarPolicy(Qt.Horizontal, Qt.ScrollBarAlwaysOff)
 
     def show_data(self, mi):
-        html = render_html(mi, self.css, self.vertical, self.parent())
+        html = render_html(mi, css(), self.vertical, self.parent())
         self.setHtml(html)
 
     def mouseDoubleClickEvent(self, ev):
@@ -602,6 +637,7 @@ class DetailsLayout(QLayout):  # {{{
 
 # }}}
 
+
 class BookDetails(QWidget):  # {{{
 
     show_book_info = pyqtSignal()
@@ -625,11 +661,10 @@ class BookDetails(QWidget):  # {{{
     open_fmt_with = pyqtSignal(int, object, object)
 
     # Drag 'n drop {{{
-    DROPABBLE_EXTENSIONS = IMAGE_EXTENSIONS+BOOK_EXTENSIONS
 
     def dragEnterEvent(self, event):
         md = event.mimeData()
-        if dnd_has_extension(md, self.DROPABBLE_EXTENSIONS, allow_all_extensions=True) or \
+        if dnd_has_extension(md, image_extensions() + BOOK_EXTENSIONS, allow_all_extensions=True) or \
                 dnd_has_image(md):
             event.acceptProposedAction()
 
@@ -637,7 +672,8 @@ class BookDetails(QWidget):  # {{{
         event.setDropAction(Qt.CopyAction)
         md = event.mimeData()
 
-        x, y = dnd_get_image(md)
+        image_exts = set(image_extensions()) - set(tweaks['cover_drop_exclude'])
+        x, y = dnd_get_image(md, image_exts)
         if x is not None:
             # We have an image, set cover
             event.accept()
@@ -652,7 +688,7 @@ class BookDetails(QWidget):  # {{{
                 return
 
         # Now look for ebook files
-        urls, filenames = dnd_get_files(md, BOOK_EXTENSIONS, allow_all_extensions=True)
+        urls, filenames = dnd_get_files(md, BOOK_EXTENSIONS, allow_all_extensions=True, filter_exts=image_exts)
         if not urls:
             # Nothing found
             return

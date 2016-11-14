@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Anne Mügge <info@numijneigenwebsite.nl>, 2016
 # Toon van Gerwen <papillon@vgerwen.nl>, 2015
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 09:42+0530\n"
-"PO-Revision-Date: 2016-04-15 04:14+0000\n"
+"POT-Creation-Date: 2016-09-02 07:27+0530\n"
+"PO-Revision-Date: 2016-09-02 01:58+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +33,7 @@ msgid ""
 " then how to specify your own static resources like icons and templates to "
 "override the defaults and finally how to use *plugins* to add functionality "
 "to calibre."
-msgstr ""
+msgstr "calibre is bijzonder modulair ontworpen. Diverse delen kunnen worden aangepast naar eigen wensen. U leert hoe u *recepten* maakt om nieuwe bronnen van internetinhoud toevoegt in de Sectie :ref:`news`. Hier leert u eerst hoe u omgevingsvariabelen gebruikt en *aanpassingen* om het gedrag van calibre te personaliseren en hoe u uw eigen statische hulpbronnen zoals pictogrammen en sjablonen kunt bepalen om de standaards te overschrijven en tenslotte hoe u *plugins* gebruikt om functionaliteit toe te voegen aan calibre."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:24
 msgid "Environment variables"
@@ -42,17 +43,17 @@ msgstr "Omgevingsvariabelen"
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the directory where configuration files "
 "are stored/read."
-msgstr ""
+msgstr "``CALIBRE_CONFIG_DIRECTORY`` - bepaalt de map waar configuratie-bestanden worden opgeslagen/gelezen."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:27
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary directory used by calibre"
-msgstr ""
+msgstr "``CALIBRE_TEMP_DIR`` - bepaalt de tijdelijke map die door calibre gebruikt kan worden "
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:28
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the directory calibre uses to cache "
 "persistent data between sessions"
-msgstr ""
+msgstr "``CALIBRE_CACHE_DIRECTORY`` - bepaalt de map die calibre gebruikt om aanhoudende data te cachen tussen sessies "
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:29
 msgid ""
@@ -60,37 +61,37 @@ msgid ""
 "metadata.db. Using this variable you can have metadata.db be in a location "
 "other than the library folder. Useful if your library folder is on a "
 "networked drive that does not support file locking."
-msgstr ""
+msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - hiermee kunt u een volledig pad opgeven naar metadata.db. Met deze variabele kunt u metadata.db op een andere locatie hebben dan in de bibliotheek-map. Zinvol als uw bibliotheek-map staat in een netwerk waar bestandsvergrending niet is toegestaan. "
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:30
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - Used to run from a calibre development "
 "environment. See :ref:`develop`."
-msgstr ""
+msgstr "``CALIBRE_DEVELOP_FROM`` - gebruikt om calibre te laten werken van een ontwikkelomgeving. Zie :ref:`develop`."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:31
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - Used to force the language used by the interface"
 " (ISO 639 language code)"
-msgstr ""
+msgstr "``CALIBRE_OVERRIDE_LANG`` - Gebruikt om de taal van calibre af te dwingen (ISO 639 language code)"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:32
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - Used to test a translation .po file (should "
 "be the path to the .po file)"
-msgstr ""
+msgstr "``CALIBRE_TEST_TRANSLATION`` - Gebruikt om een vertaling .po bestand (moet het pad zijn naar het .po bestand)"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:33
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Causes calibre to not use native file "
 "dialogs for selecting files/directories."
-msgstr ""
+msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Hiermee zal calibre niet de ingebouwde dialoogvensters gebruiken om bestanden/mappen te selecteren."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:34
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - Causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
-"menu is instead placed inside the window, as traditional."
+"menu is instead placed inside the window, as is traditional."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:35
@@ -111,15 +112,15 @@ msgstr ""
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with windows."
-msgstr ""
+msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Hindert calibre eraan om automatisch de bestandstypen te registreren die het kan verwerken met windows. "
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:38
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
-msgstr ""
+msgstr "``SYSFS_PATH`` - Gebruik dit als sysfs niet staat in /sys maar ergens anders"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:39
 msgid "``http_proxy`` - Used on linux to specify an HTTP proxy"
-msgstr ""
+msgstr "``http_proxy`` - Gebruikt op linux om een HTTP proxy te specificeren"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:41
 msgid ""
@@ -127,7 +128,7 @@ msgid ""
 "<http://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
 "environment variables in OS X <http://www.dowdandassociates.com/blog/content"
 "/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
-msgstr ""
+msgstr "Zie `Hoe omgevingsvariabelen worden ingesteld in windows <http://www.computerhope.com/issues/ch000549.htm>`_ of `Hoe omgevingsvariabelen worden ingesteld in OS X <http://www.dowdandassociates.com/blog/content/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:45
 msgid "Tweaks"
@@ -139,7 +140,7 @@ msgid ""
 "calibre's behavior. You can change them by going to "
 "Preferences->Advanced->Tweaks. The default values for the tweaks are "
 "reproduced below"
-msgstr ""
+msgstr "Aanpassingen zijn kleine wijzigingen die u kunt aanbrengen om diverse aspecten te beheren in calibre's gedrag. U kunt deze wijzigen in Voorkeuren->Geavanceerd->Aanpassingen. De standaard waardes voor aanpassingen staan hieronder"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:54
 msgid "Overriding icons, templates, et cetera"
@@ -151,7 +152,7 @@ msgid ""
 "available for calibre, that you can use by going to "
 ":guilabel:`Preferences->Look & Feel->Change Icon theme`. The icon themes use"
 " the same mechanism as described below for overriding static resources."
-msgstr ""
+msgstr "calibre biedt meerdere thema's aan voor pictogrammen die u kunt gebruiken. Ga naar :guilabel:`Voorkeuren->Uiterlijk & gedrag->Wijzig icon thema`. De thema's voor icons passen hetzelfde mechanisme toe als hieronder beschreven voor het overschrijven van statische hulpbronnen."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:62
 msgid ""
@@ -164,7 +165,7 @@ msgid ""
 "if you are using the binary installer from the calibre website it will be "
 ":file:`/opt/calibre/resources`. These paths can change depending on where "
 "you choose to install calibre."
-msgstr ""
+msgstr "calibre laat toe dat u statische hulpbronnen kunt overschrijven zoals pictogrammen, javascript en sjablonen voor metadat, calagogen, enz. met gebruikersgedefineerde versies die u wenst. Alle statische hulpbronnen worden opgeslagen in de hulpbronnen-ondermap van de installatielocatie. Onder Windows is dit meestal :file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. Onder OS X :file:`/Applications/calibre.app/Contents/Resources/resources/`. Onder linux als u de binaire installer gebruikt van de calibre website zal dit zijn :file:`/opt/calibre/resources`. Deze paden kunnen afwijken afhankelijk van waar u calibre installeert."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:71
 msgid ""
@@ -176,7 +177,7 @@ msgid ""
 "Place the files in the appropriate sub folders, for example place images in "
 ":file:`resources/images`, etc. calibre will automatically use your custom "
 "file in preference to the built-in one the next time it is started."
-msgstr ""
+msgstr "U moet niet de bestanden wijzigen in deze hupbronnen-map omdat deze wijzigingen worden overschreven als u calibre een volgende keer update. In plaats hiervan, ga naar :guilabel:`Voorkeuren->Geavanceerd->Diversen` en klik op :guilabel:`Open calibre configuratie-map`. Maak hier een sub-map aan en noem deze resources en plaats de bestanden die u wilt aanpassen hierin. Plaats de bestanden in betreffende sub-mappen, bijboorbeeld plaats afbeeldngen in :file:`resources/images` enz. Calibre zal automatisch uw aangepaste bestanden met voorrang gebruiken voor de ingebouwde nadat het programma opnieuw is opgestart."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:80
 msgid ""
@@ -187,11 +188,11 @@ msgid ""
 "save it in the configuration directory as "
 ":file:`resources/images/trash.png`. All the icons used by the calibre user "
 "interface are in :file:`resources/images` and its sub-folders."
-msgstr ""
+msgstr "Bijvoorbeeld: U wilt het pictogram wijzigen voor de taak :guilabel:`Boeken verwijderen`. U kijkt eerst in de ingebouwde hulpbronnen-map en ziet dat het betreffende bestand is :file:`resources/images/trash.png`. Aangenomen dat u een alternatief pictogram heeft in PNG-formaat genoemd :file:`mytrash.png slaat u het op in de configuratie-map als :file:`resources/images/trash.png`. Alle pictogrammen die gebruikt worden door het gebruikers-interface staan in :file:`resources/images` en de sub-mappen."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:89
 msgid "Creating your own icon theme for calibre"
-msgstr ""
+msgstr "Maak uw eigen icon thema voor calibre"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:91
 msgid ""
@@ -205,7 +206,7 @@ msgid ""
 " icons. You can upload that to the calibre forum at `Mobileread "
 "<http://www.mobileread.com/forums/forumdisplay.php?f=166>`_ and then I will "
 "make your theme available via calibre's builtin icon theme system."
-msgstr ""
+msgstr "Wanneer u een mooi pakket pictogrammen heeft gemaakt dat u wilt delen met andere gebruikers met calibre's ingebouwde icon thema ondersteuning, kunt u makkelijk uw icons verpakken in een thema. Om dit te doen gaat u naar :guilabel:`Voorkeuren->Diversen->Maak icon thema`, selecteer de map waarin u uw icons heeft opgeslagen (normaal de map :file:`resources/images` in de calibre configuratie-map zoals hierboven beschreven). Vul dan de thema metadata in en klik Ok. Hiermee wordt een zip-bestand gemaakt waarin de icons van het thema staan. U kunt dat uploaden naar het forum van calibre op `Mobileread <http://www.mobileread.com/forums/forumdisplay.php?f=166>`_ en dan zal ik uw thema beschikbaar maken in het ingebouwde icon themasysteem."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:104
 msgid "Customizing calibre with plugins"
@@ -219,11 +220,11 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr ""
+msgstr "calibre heeft een bijzonder modulair ontwerp. Bijna alle functionaliteit in calibre komt in de vorm van plugins. Plugins worden gebruikt voor conversies, voor het downloaden van nieuws (door iddel van genoemde recepten), voor diverse componenten van het gebruikers-interface, om diverse apparaten te verbinden, om bestanden te verwerken wanneer deze worden toegevoegt aan calibre en meer. U kunt een compleet overzicht van alle ingebouwde plugins in calibre vinden op :guilabel:`Voorkeuren->Plugins`."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:108
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
-msgstr ""
+msgstr "U kunt een eigen plugin schrijven om het gebdrag van calibre aan te passen en uit te breiden. De opbouw van plugins is heel simpel, lees hierover de handleiding :ref:`pluginstutorial`."

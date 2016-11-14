@@ -11,6 +11,7 @@ from calibre.constants import preferred_encoding
 from calibre.utils.config import to_json, from_json
 from calibre import prints
 
+
 class DBPrefs(dict):
 
     def __init__(self, db):
@@ -68,8 +69,10 @@ class DBPrefs(dict):
             return default
 
     def set_namespaced(self, namespace, key, val):
-        if u':' in key: raise KeyError('Colons are not allowed in keys')
-        if u':' in namespace: raise KeyError('Colons are not allowed in'
+        if u':' in key:
+            raise KeyError('Colons are not allowed in keys')
+        if u':' in namespace:
+            raise KeyError('Colons are not allowed in'
                 ' the namespace')
         key = u'namespaced:%s:%s'%(namespace, key)
         self[key] = val

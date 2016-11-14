@@ -14,7 +14,7 @@ from PyQt5.Qt import (QWidget, QDialog, QLabel, QGridLayout, QComboBox, QSize,
         QLineEdit, QIntValidator, QDoubleValidator, QFrame, Qt, QIcon,
         QScrollArea, QPushButton, QVBoxLayout, QDialogButtonBox, QToolButton,
         QListView, QAbstractListModel, pyqtSignal, QSizePolicy, QSpacerItem,
-        QApplication, QStandardItem, QStandardItemModel, QCheckBox, QMenu, QPixmap)
+        QApplication, QStandardItem, QStandardItemModel, QCheckBox, QMenu)
 
 from calibre import prepare_string_for_xml, sanitize_file_name_unicode
 from calibre.constants import config_dir
@@ -34,6 +34,7 @@ icon_rule_kinds = [(_('icon with text'), 'icon'),
                    (_('icon with no text'), 'icon_only'),
                    (_('composed icons w/text'), 'icon_composed'),
                    (_('composed icons w/no text'), 'icon_only_composed'),]
+
 
 class ConditionEditor(QWidget):  # {{{
 
@@ -140,6 +141,7 @@ class ConditionEditor(QWidget):  # {{{
         def fget(self):
             idx = self.column_box.currentIndex()
             return unicode(self.column_box.itemData(idx) or '')
+
         def fset(self, val):
             for idx in range(self.column_box.count()):
                 c = unicode(self.column_box.itemData(idx) or '')
@@ -154,6 +156,7 @@ class ConditionEditor(QWidget):  # {{{
         def fget(self):
             idx = self.action_box.currentIndex()
             return unicode(self.action_box.itemData(idx) or '')
+
         def fset(self, val):
             for idx in range(self.action_box.count()):
                 c = unicode(self.action_box.itemData(idx) or '')
@@ -275,6 +278,7 @@ class ConditionEditor(QWidget):  # {{{
                 'is undefined'):
             self.value_box.setEnabled(False)
 # }}}
+
 
 class RuleEditor(QDialog):  # {{{
 
@@ -479,7 +483,7 @@ class RuleEditor(QDialog):  # {{{
                 item.setData(Qt.Unchecked, Qt.CheckStateRole)
             else:
                 item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            icon = QIcon(QPixmap(os.path.join(self.icon_folder, filename)).scaled(self.filenamebox_view.iconSize(), transformMode=Qt.SmoothTransformation))
+            icon = QIcon(os.path.join(self.icon_folder, filename))
             item.setIcon(icon)
             model.appendRow(item)
 
@@ -672,6 +676,7 @@ class RuleEditor(QDialog):  # {{{
         return kind, col, r
 # }}}
 
+
 class RulesModel(QAbstractListModel):  # {{{
 
     def __init__(self, prefs, fm, pref_name, parent=None):
@@ -845,6 +850,7 @@ class RulesModel(QAbstractListModel):  # {{{
                 col=c, action=action_name, val=prepare_string_for_xml(v)))
 
 # }}}
+
 
 class EditRules(QWidget):  # {{{
 
@@ -1048,7 +1054,8 @@ class EditRules(QWidget):  # {{{
 # }}}
 
 if __name__ == '__main__':
-    app = QApplication([])
+    from calibre.gui2 import Application
+    app = Application([])
 
     from calibre.library import db
 

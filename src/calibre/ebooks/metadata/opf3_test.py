@@ -22,22 +22,23 @@ from calibre.ebooks.metadata.opf3 import (
     set_comments, read_publisher, set_publisher, read_tags, set_tags, read_rating,
     set_rating, read_series, set_series, read_user_metadata, set_user_metadata,
     read_author_link_map, read_user_categories, set_author_link_map, set_user_categories,
-    apply_metadata
+    apply_metadata, read_raster_cover, ensure_is_only_raster_cover
 )
 # This import is needed to prevent a test from running slowly
 from calibre.ebooks.oeb.polish.pretty import pretty_opf, pretty_xml_tree  # noqa
 
 read_author_link_map, read_user_categories, set_author_link_map, set_user_categories
 
-TEMPLATE = '''<package xmlns="http://www.idpf.org/2007/opf" version="3.0" prefix="calibre: %s" unique-identifier="uid"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">{metadata}</metadata></package>''' % CALIBRE_PREFIX  # noqa
+TEMPLATE = '''<package xmlns="http://www.idpf.org/2007/opf" version="3.0" prefix="calibre: %s" unique-identifier="uid"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">{metadata}</metadata><manifest>{manifest}</manifest></package>''' % CALIBRE_PREFIX  # noqa
 default_refines = defaultdict(list)
+
 
 class TestOPF3(unittest.TestCase):
 
     ae = unittest.TestCase.assertEqual
 
-    def get_opf(self, metadata=''):
-        return etree.fromstring(TEMPLATE.format(metadata=metadata))
+    def get_opf(self, metadata='', manifest=''):
+        return etree.fromstring(TEMPLATE.format(metadata=metadata, manifest=manifest))
 
     def test_prefix_parsing(self):  # {{{
         self.ae(parse_prefixes('foaf: http://xmlns.com/foaf/spec/\n dbp: http://dbpedia.org/ontology/'),
@@ -57,6 +58,7 @@ class TestOPF3(unittest.TestCase):
     def test_identifiers(self):  # {{{
         def idt(val, scheme=None, iid=''):
             return '<dc:identifier id="{id}" {scheme}>{val}</dc:identifier>'.format(scheme=('opf:scheme="%s"'%scheme if scheme else ''), val=val, id=iid)
+
         def ri(root):
             return dict(read_identifiers(root, read_prefixes(root), default_refines))
 
@@ -94,6 +96,7 @@ class TestOPF3(unittest.TestCase):
     def test_title(self):  # {{{
         def rt(root):
             return read_title(root, read_prefixes(root), read_refines(root))
+
         def st(root, title, title_sort=None):
             set_title(root, read_prefixes(root), read_refines(root), title, title_sort)
             return rt(root)
@@ -111,6 +114,7 @@ class TestOPF3(unittest.TestCase):
     def test_languages(self):  # {{{
         def rl(root):
             return read_languages(root, read_prefixes(root), read_refines(root))
+
         def st(root, languages):
             set_languages(root, read_prefixes(root), read_refines(root), languages)
             return rl(root)
@@ -124,6 +128,7 @@ class TestOPF3(unittest.TestCase):
     def test_authors(self):  # {{{
         def rl(root):
             return read_authors(root, read_prefixes(root), read_refines(root))
+
         def st(root, authors):
             set_authors(root, read_prefixes(root), read_refines(root), authors)
             return rl(root)
@@ -141,11 +146,15 @@ class TestOPF3(unittest.TestCase):
         authors = [Author('x y', 'y, x'), Author('u i', None)]
         self.ae(authors, st(root, authors))
         self.ae(root.get('prefix'), 'calibre: %s' % CALIBRE_PREFIX)
+        root = self.get_opf('''<dc:creator>a  b</dc:creator><dc:creator opf:role="aut">c d</dc:creator>''')
+        self.ae([Author('c d', None)], rl(root))
+        self.ae(authors, st(root, authors))
     # }}}
 
     def test_book_producer(self):  # {{{
         def rl(root):
             return read_book_producers(root, read_prefixes(root), read_refines(root))
+
         def st(root, producers):
             set_book_producers(root, read_prefixes(root), read_refines(root), producers)
             return rl(root)
@@ -155,17 +164,20 @@ class TestOPF3(unittest.TestCase):
             self.ae(['c d'], rl(root))
         root = self.get_opf('''<dc:contributor>a  b</dc:contributor><dc:contributor opf:role="bkp">c d</dc:contributor>''')
         self.ae(['c d'], rl(root))
-        self.ae('12'.split(), st(root, '12'.split()))
+        self.ae(['12'], st(root, ['12']))
     # }}}
 
     def test_dates(self):  # {{{
         from calibre.utils.date import utcnow
+
         def rl(root):
             return read_pubdate(root, read_prefixes(root), read_refines(root)), read_timestamp(root, read_prefixes(root), read_refines(root))
+
         def st(root, pd, ts):
             set_pubdate(root, read_prefixes(root), read_refines(root), pd)
             set_timestamp(root, read_prefixes(root), read_refines(root), ts)
             return rl(root)
+
         def ae(root, y1=None, y2=None):
             x1, x2 = rl(root)
             for x, y in ((x1, y1), (x2, y2)):
@@ -186,6 +198,7 @@ class TestOPF3(unittest.TestCase):
     def test_comments(self):  # {{{
         def rt(root):
             return read_comments(root, read_prefixes(root), read_refines(root))
+
         def st(root, val):
             set_comments(root, read_prefixes(root), read_refines(root), val)
             return rt(root)
@@ -197,6 +210,7 @@ class TestOPF3(unittest.TestCase):
     def test_publisher(self):  # {{{
         def rt(root):
             return read_publisher(root, read_prefixes(root), read_refines(root))
+
         def st(root, val):
             set_publisher(root, read_prefixes(root), read_refines(root), val)
             return rt(root)
@@ -205,9 +219,24 @@ class TestOPF3(unittest.TestCase):
         self.ae('<a>p</a>', st(root, '<a>p</a> '))
     # }}}
 
+    def test_raster_cover(self):  # {{{
+        def rt(root):
+            return read_raster_cover(root, read_prefixes(root), read_refines(root))
+        root = self.get_opf('<meta name="cover" content="cover"/>', '<item id="cover" media-type="image/jpeg" href="x.jpg"/>')
+        self.ae('x.jpg', rt(root))
+        root = self.get_opf('<meta name="cover" content="cover"/>',
+                            '<item id="cover" media-type="image/jpeg" href="x.jpg"/><item media-type="image/jpeg" href="y.jpg" properties="cover-image"/>')
+        self.ae('y.jpg', rt(root))
+        ensure_is_only_raster_cover(root, read_prefixes(root), read_refines(root), 'x.jpg')
+        self.ae('x.jpg', rt(root))
+        self.ae(['x.jpg'], root.xpath('//*[@properties="cover-image"]/@href'))
+        self.assertFalse(root.xpath('//*[@name]'))
+    # }}}
+
     def test_tags(self):  # {{{
         def rt(root):
             return read_tags(root, read_prefixes(root), read_refines(root))
+
         def st(root, val):
             set_tags(root, read_prefixes(root), read_refines(root), val)
             return rt(root)
@@ -219,6 +248,7 @@ class TestOPF3(unittest.TestCase):
     def test_rating(self):  # {{{
         def rt(root):
             return read_rating(root, read_prefixes(root), read_refines(root))
+
         def st(root, val):
             set_rating(root, read_prefixes(root), read_refines(root), val)
             return rt(root)
@@ -232,6 +262,7 @@ class TestOPF3(unittest.TestCase):
     def test_series(self):  # {{{
         def rt(root):
             return read_series(root, read_prefixes(root), read_refines(root))
+
         def st(root, val, i):
             set_series(root, read_prefixes(root), read_refines(root), val, i)
             return rt(root)
@@ -248,6 +279,7 @@ class TestOPF3(unittest.TestCase):
         def rt(root, name):
             f = globals()['read_' + name]
             return f(root, read_prefixes(root), read_refines(root))
+
         def st(root, name, val):
             f = globals()['set_' + name]
             f(root, read_prefixes(root), read_refines(root), val)
@@ -258,8 +290,10 @@ class TestOPF3(unittest.TestCase):
             root = self.get_opf('''<meta name="calibre:%s" content='{"1":1}'/><meta property="calibre:%s">{"2":2}</meta>''' % (name, name))
             self.ae({'2':2}, rt(root, name))
             self.ae({'3':3}, st(root, name, {3:3}))
+
         def ru(root):
             return read_user_metadata(root, read_prefixes(root), read_refines(root))
+
         def su(root, val):
             set_user_metadata(root, read_prefixes(root), read_refines(root), val)
             return ru(root)
@@ -472,20 +506,22 @@ class TestOPF3(unittest.TestCase):
         &quot;label&quot;: &quot;date&quot;, &quot;table&quot;:
         &quot;custom_column_2&quot;, &quot;is_multiple&quot;: null,
         &quot;is_category&quot;: false}"/>
-    </metadata>
+    </metadata><manifest><item href="start.html" media-type="text/html" id="m1"/></manifest><spine><itemref idref="m1"/></spine>
 </package>'''  # }}}
 
         def compare_metadata(mi2, mi3):
             self.ae(mi2.get_all_user_metadata(False), mi3.get_all_user_metadata(False))
             for field in ALL_METADATA_FIELDS:
-                if field != 'manifest':
+                if field not in 'manifest spine':
                     v2, v3 = getattr(mi2, field, None), getattr(mi3, field, None)
                     self.ae(v2, v3, '%s: %r != %r' % (field, v2, v3))
 
         mi2 = OPF(BytesIO(raw.encode('utf-8'))).to_book_metadata()
         root = etree.fromstring(raw)
         root.set('version', '3.0')
-        mi3 = read_metadata(root)
+        mi3, _, raster_cover, first_spine_item  = read_metadata(root, return_extra_data=True)
+        self.assertIsNone(raster_cover)
+        self.ae('start.html', first_spine_item)
         compare_metadata(mi2, mi3)
         apply_metadata(root, mi3, force_identifiers=True)
         nmi = read_metadata(root)
@@ -506,17 +542,22 @@ class TestOPF3(unittest.TestCase):
         self.assertFalse(nmi.tags)
         self.assertFalse(nmi.get('#tags'))
         self.assertFalse(nmi.get('#commetns'))
+        self.assertIsNone(apply_metadata(root, mi3, cover_data=b'x', cover_prefix='xxx', add_missing_cover=False))
+        self.ae('xxx/cover.jpg', apply_metadata(root, mi3, cover_data=b'x', cover_prefix='xxx'))
     # }}}
 
 # Run tests {{{
 
+
 def suite():
     return unittest.TestLoader().loadTestsFromTestCase(TestOPF3)
+
 
 class TestRunner(unittest.main):
 
     def createTests(self):
         self.test = suite()
+
 
 def run(verbosity=4):
     TestRunner(verbosity=verbosity, exit=False)

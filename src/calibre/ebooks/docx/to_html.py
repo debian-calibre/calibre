@@ -32,6 +32,7 @@ from calibre.utils.localization import canonicalize_lang, lang_as_iso639_1
 
 NBSP = '\xa0'
 
+
 class Text:
 
     def __init__(self, elem, attr, buf):
@@ -41,12 +42,14 @@ class Text:
         setattr(self.elem, self.attr, ''.join(self.buf))
         self.elem, self.attr, self.buf = elem, 'tail', []
 
+
 def html_lang(docx_lang):
     lang = canonicalize_lang(docx_lang)
     if lang and lang != 'und':
         lang = lang_as_iso639_1(lang)
         if lang:
             return lang
+
 
 class Convert(object):
 
@@ -365,6 +368,7 @@ class Convert(object):
         opf.create_spine(['index.html'])
         if self.cover_image is not None:
             opf.guide.set_cover(self.cover_image)
+
         def process_guide(E, guide):
             if self.toc_anchor is not None:
                 guide.append(E.reference(
@@ -466,7 +470,7 @@ class Convert(object):
             n = min(6, max(1, int(m.group(1))))
             dest.tag = 'h%d' % n
 
-        if style.direction == 'rtl':
+        if style.bidi is True:
             dest.set('dir', 'rtl')
 
         border_runs = []
@@ -674,6 +678,8 @@ class Convert(object):
             lang = html_lang(style.lang)
             if lang is not None and lang != self.doc_lang:
                 ans.set('lang', lang)
+        if style.rtl is True:
+            ans.set('dir', 'rtl')
         return ans
 
     def add_frame(self, html_obj, style):

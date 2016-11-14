@@ -403,7 +403,7 @@ cover_trim_fuzz_value = 10
 doubleclick_on_library_view = 'open_viewer'
 horizontal_scrolling_per_column = True
 
-#: Language to use when sorting.
+#: Language to use when sorting
 # Setting this tweak will force sorting to use the
 # collating order for the specified language. This might be useful if you run
 # calibre in English but want sorting to work in the language where you live.
@@ -437,8 +437,11 @@ metadata_edit_custom_column_order = []
 # public email server like gmx/hotmail/gmail. Default is: 5 minutes
 # Setting it to lower may cause the server's SPAM controls to kick in,
 # making email sending fail. Changes will take effect only after a restart of
-# calibre.
+# calibre. You can also change the list of hosts that calibre considers
+# to be public relays here. Any relay host ending with one of the suffixes
+# in the list below will be considered a public email server.
 public_smtp_relay_delay = 301
+public_smtp_relay_host_suffixes = ['gmail.com', 'live.com', 'gmx.com']
 
 #: The maximum width and height for covers saved in the calibre library
 # All covers in the calibre library will be resized, preserving aspect ratio,
@@ -565,3 +568,11 @@ restrict_output_formats = None
 # numbers.
 # The value can be between 50 and 99
 content_server_thumbnail_compression_quality = 75
+
+#: Image file types to treat as ebooks when dropping onto the Book Details panel
+# Normally, if you drop any image file in a format known to calibre onto the
+# Book Details panel, it will be used to set the cover. If you want to store
+# some image types as ebooks instead, you can set this tweak.
+# Examples:
+#    cover_drop_exclude = {'tiff', 'webp'}
+cover_drop_exclude = ()

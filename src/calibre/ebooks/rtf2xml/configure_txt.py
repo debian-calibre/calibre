@@ -1,10 +1,13 @@
 import os, sys
+
+
 class Configure:
-    def __init__(   self,
+
+    def __init__(self,
                     configuration_file,
                     bug_handler,
-                    debug_dir = None,
-                    show_config_file = None,
+                    debug_dir=None,
+                    show_config_file=None,
                     ):
         """
         Requires:
@@ -18,6 +21,7 @@ class Configure:
         self.__debug_dir = debug_dir
         self.__bug_handler = bug_handler
         self.__show_config_file = show_config_file
+
     def get_configuration(self, type):
         self.__configuration_file = self.__get_file_name()
         return_dict = {}
@@ -58,6 +62,7 @@ class Configure:
                     % self.__configuration_file)
             raise self.__bug_handler, msg
         return return_dict
+
     def __get_file_name(self):
         home_var = os.environ.get('HOME')
         if home_var:
@@ -73,16 +78,17 @@ class Configure:
         if os.path.isfile(script_file):
             return script_file
         return self.__configuration_file
+
     def __parse_dict(self, return_dict):
         allowable = [
             'configuration-directory',
             'smart-output',  # = false
-            'level', #  = 1
-            'convert-symbol',#   = true
-            'convert-wingdings',#   = true
-            'convert-zapf-dingbats', #   = true
-            'convert-caps',# true
-            'indent', #   = 1
+            'level',  # = 1
+            'convert-symbol',  # = true
+            'convert-wingdings',  # = true
+            'convert-zapf-dingbats',  # = true
+            'convert-caps',  # true
+            'indent',  # = 1
             'group-styles',
             'group-borders',
             'headings-to-sections',
@@ -99,7 +105,7 @@ class Configure:
                         % the_key)
                 return 1
         configuration_dir = return_dict.get('configuration-directory')
-        if configuration_dir == None:
+        if configuration_dir is None:
             return_dict['configure-directory'] = None
         else:
             if not os.path.isdir(configuration_dir):

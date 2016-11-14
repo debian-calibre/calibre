@@ -14,14 +14,16 @@ import os, re
 from calibre.ebooks.rtf2xml import copy
 from calibre.ptempfile import better_mktemp
 
+
 class HeadingsToSections:
     """
     """
+
     def __init__(self,
             in_file,
             bug_handler,
-            copy = None,
-            run_level = 1,
+            copy=None,
+            run_level=1,
             ):
         """
         Required:
@@ -37,6 +39,7 @@ class HeadingsToSections:
         self.__bug_handler = bug_handler
         self.__copy = copy
         self.__write_to = better_mktemp()
+
     def __initiate_values(self):
         """
         Required:
@@ -61,8 +64,8 @@ class HeadingsToSections:
         'mi<mk<body-close',
         # changed 2004-04-26
         # 'mi<mk<par-in-fld',
-        'mi<mk<sect-close', # right before close of section
-        'mi<mk<sect-start', # right before section start
+        'mi<mk<sect-close',  # right before close of section
+        'mi<mk<sect-start',  # right before section start
                             # this should be sect-close!
         # 'mi<mk<header-beg',
         # 'mi<mk<header-end',
@@ -79,6 +82,7 @@ class HeadingsToSections:
         ]
         self.__section_num = [0]
         self.__id_regex = re.compile(r'\<list-id\>(\d+)')
+
     def __close_lists(self):
         """
         Required:
@@ -104,6 +108,7 @@ class HeadingsToSections:
                 num_levels_closed += 1
         self.__all_lists = self.__all_lists[num_levels_closed:]
         self.__all_lists.reverse()
+
     def __close_sections(self, current_level):
         self.__all_sections.reverse()
         num_levels_closed = 0
@@ -113,6 +118,7 @@ class HeadingsToSections:
                 num_levels_closed += 1
         self.__all_sections = self.__all_sections[num_levels_closed:]
         self.__all_sections.reverse()
+
     def __write_start_section(self, current_level, name):
         section_num = ''
         for the_num in self.__section_num:
@@ -124,14 +130,16 @@ class HeadingsToSections:
         self.__write_obj.write(
             'mi<mk<sect-start\n'
                 )
-        self.__write_obj.write (
+        self.__write_obj.write(
                 'mi<tg<open-att__<section<num>%s<num-in-level>%s<level>%s'
                 '<type>%s\n'
                 % (section_num, num_in_level, level, name)
                 )
+
     def __write_end_section(self):
         self.__write_obj.write('mi<mk<sect-close\n')
         self.__write_obj.write('mi<tg<close_____<section\n')
+
     def __default_func(self, line):
         """
         Required:
@@ -160,6 +168,7 @@ class HeadingsToSections:
         if self.__token_info == 'mi<mk<body-close':
             self.__state = 'after_body'
         self.__write_obj.write(line)
+
     def __handle_heading(self, name):
         num = self.__headings.index(name) + 1
         self.__close_sections(num)
@@ -171,10 +180,12 @@ class HeadingsToSections:
         else:
             self.__section_num[-1] += 1
         self.__write_start_section(num, name)
+
     def __in_table_func(self, line):
         if self.__token_info == 'mi<mk<table-end_':
             self.__state = 'default'
         self.__write_obj.write(line)
+
     def __in_list_func(self, line):
         if self.__token_info == 'mi<mk<list_close':
             self.__list_depth -= 1
@@ -183,8 +194,10 @@ class HeadingsToSections:
         if self.__list_depth == 0:
             self.__state = 'default'
         self.__write_obj.write(line)
+
     def __after_body_func(self, line):
         self.__write_obj.write(line)
+
     def make_sections(self):
         """
         Required:
@@ -205,7 +218,7 @@ class HeadingsToSections:
             action(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "sections_to_headings.data")
         copy_obj.rename(self.__write_to, self.__file)

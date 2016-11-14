@@ -16,22 +16,22 @@ from calibre import CurrentDir
 
 entry_points = {
         'console_scripts': [
-             'ebook-device       = calibre.devices.cli:main',
-             'ebook-meta         = calibre.ebooks.metadata.cli:main',
-             'ebook-convert      = calibre.ebooks.conversion.cli:main',
-             'ebook-polish       = calibre.ebooks.oeb.polish.main:main',
-             'markdown-calibre   = calibre.ebooks.markdown.__main__:run',
-             'web2disk           = calibre.web.fetch.simple:main',
-             'calibre-server     = calibre.library.server.main:main',
-             'lrf2lrs            = calibre.ebooks.lrf.lrfparser:main',
-             'lrs2lrf            = calibre.ebooks.lrf.lrs.convert_from:main',
-             'calibre-debug      = calibre.debug:main',
-             'calibredb          = calibre.library.cli:main',
-             'calibre-parallel   = calibre.utils.ipc.worker:main',
-             'calibre-customize  = calibre.customize.ui:main',
-             'calibre-complete   = calibre.utils.complete:main',
+             'ebook-device         = calibre.devices.cli:main',
+             'ebook-meta           = calibre.ebooks.metadata.cli:main',
+             'ebook-convert        = calibre.ebooks.conversion.cli:main',
+             'ebook-polish         = calibre.ebooks.oeb.polish.main:main',
+             'markdown-calibre     = calibre.ebooks.markdown.__main__:run',
+             'web2disk             = calibre.web.fetch.simple:main',
+             'calibre-server       = calibre.library.server.main:main',
+             'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
+             'lrs2lrf              = calibre.ebooks.lrf.lrs.convert_from:main',
+             'calibre-debug        = calibre.debug:main',
+             'calibredb            = calibre.library.cli:main',
+             'calibre-parallel     = calibre.utils.ipc.worker:main',
+             'calibre-customize    = calibre.customize.ui:main',
+             'calibre-complete     = calibre.utils.complete:main',
              'fetch-ebook-metadata = calibre.ebooks.metadata.sources.cli:main',
-             'calibre-smtp = calibre.utils.smtp:main',
+             'calibre-smtp         = calibre.utils.smtp:main',
         ],
         'gui_scripts' : [
             __appname__+' = calibre.gui_launch:calibre',
@@ -40,6 +40,7 @@ entry_points = {
             'ebook-edit   = calibre.gui_launch:ebook_edit',
         ],
       }
+
 
 class PreserveMIMEDefaults(object):
 
@@ -164,6 +165,7 @@ if mimetype_icons and raw_input('Remove the ebook format icons? [y/n]:').lower()
 
 # Completion {{{
 
+
 class ZshCompleter(object):  # {{{
 
     def __init__(self, opts):
@@ -286,6 +288,7 @@ class ZshCompleter(object):  # {{{
         w('\n}\n')
 
         log = DevNull()
+
         def get_parser(input_fmt='epub', output_fmt=None):
             of = ('dummy2.'+output_fmt) if output_fmt else 'dummy'
             return create_option_parser(('ec', 'dummy1.'+input_fmt, of, '-h'), log)[0]
@@ -484,6 +487,7 @@ _ebook_edit() {
                 f.write('esac\n')
 # }}}
 
+
 def get_bash_completion_path(root, share, info):
     if root == '/usr':
         # Try to get the system bash completion dir since we are installing to
@@ -498,6 +502,7 @@ def get_bash_completion_path(root, share, info):
     else:
         # Use the default bash-completion dir under staging_share
         return os.path.join(share, 'bash-completion', 'completions', 'calibre')
+
 
 def write_completion(bash_comp_dest, zsh):
     from calibre.ebooks.metadata.cli import option_parser as metaop, filetypes as meta_filetypes
@@ -528,6 +533,7 @@ def write_completion(bash_comp_dest, zsh):
         def o_and_e(*args, **kwargs):
             f.write(opts_and_exts(*args, **kwargs))
             zsh.opts_and_exts(*args, **kwargs)
+
         def o_and_w(*args, **kwargs):
             f.write(opts_and_words(*args, **kwargs))
             zsh.opts_and_words(*args, **kwargs)
@@ -631,6 +637,7 @@ def write_completion(bash_comp_dest, zsh):
         ''')%complete)
     zsh.write()
 # }}}
+
 
 class PostInstall:
 
@@ -867,6 +874,7 @@ class PostInstall:
 
     # }}}
 
+
 def option_parser():
     from calibre.utils.config import OptionParser
     parser = OptionParser()
@@ -892,6 +900,7 @@ def options(option_parser):
         opts.extend(opt._short_opts)
         opts.extend(opt._long_opts)
     return opts
+
 
 def opts_and_words(name, op, words, takes_files=False):
     opts  = '|'.join(options(op))
@@ -924,6 +933,7 @@ def opts_and_words(name, op, words, takes_files=False):
 complete -F _'''%(opts, words) + fname + ' ' + name +"\n\n").encode('utf-8')
 
 pics = {'jpg', 'jpeg', 'gif', 'png', 'bmp'}
+
 
 def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(),
                   file_map={}):
@@ -1028,10 +1038,13 @@ Icon=calibre-gui
 Categories=Office;
 '''
 
+
 def get_appdata():
     _ = lambda x: x  # Make sure the text below is not translated, but is marked for translation
     return {
         'calibre-gui': {
+            'name':'calibre',
+            'summary':_('The one stop solution to all your e-book needs'),
             'description':(
                 _('calibre is the one stop solution to all your e-book needs.'),
                 _('You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various ebook formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.')  # noqa
@@ -1044,6 +1057,8 @@ def get_appdata():
         },
 
         'calibre-ebook-edit': {
+            'name':'calibre - E-book Editor',
+            'summary':_('Edit the text and styles inside e-books'),
             'description':(
                 _('The calibre e-book editor allows you to edit the text and styles inside the book with a live preview of your changes.'),
                 _('It can edit books in both the EPUB and AZW3 (kindle) formats. It includes various useful tools for checking the book for errors, editing the Table of Contents, performing automated cleanups, etc.'),  # noqa
@@ -1056,6 +1071,8 @@ def get_appdata():
         },
 
         'calibre-ebook-viewer': {
+            'name':'calibre - E-book Viewer',
+            'summary':_('Read e-books in over a dozen different formats'),
             'description': (
                 _('The calibre e-book viewer allows you to read e-books in over a dozen different formats.'),
                 _('It has a full screen mode for distraction free reading and can display the text with multiple columns per screen.'),
@@ -1067,28 +1084,40 @@ def get_appdata():
         },
     }
 
+
 def write_appdata(key, entry, base, translators):
     from lxml.etree import tostring
     from lxml.builder import E
     fpath = os.path.join(base, '%s.appdata.xml' % key)
-    root = E.application(
-        E.id(key + '.desktop', type='desktop'),
-        E.licence('CC0'),
-        E.description(),
-        E.url('https://calibre-ebook.com', type='homepage'),
-        E.screenshots(),
-    )
+    screenshots = E.screenshots()
     for w, h, url in entry['screenshots']:
         s = E.screenshot(url, width=str(w), height=str(h))
-        root[-1].append(s)
-    root[-1][0].set('type', 'default')
+        screenshots.append(s)
+    screenshots[0].set('type', 'default')
+    description = E.description()
     for para in entry['description']:
-        root[2].append(E.p(para))
+        description.append(E.p(para))
         for lang, t in translators.iteritems():
             tp = t.ugettext(para)
             if tp != para:
-                root[2].append(E.p(tp))
-                root[2][-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
+                description.append(E.p(tp))
+                description[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
+
+    root = E.application(
+        E.id(key + '.desktop', type='desktop'),
+        E.name(entry['name']),
+        E.metadata_license('CC0-1.0'),
+        E.project_license('GPL-3.0'),
+        E.summary(entry['summary']),
+        description,
+        E.url('https://calibre-ebook.com', type='homepage'),
+        screenshots,
+    )
+    for lang, t in translators.iteritems():
+        tp = t.ugettext(entry['summary'])
+        if tp != entry['summary']:
+            root.append(E.summary(tp))
+            root[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
     with open(fpath, 'wb') as f:
         f.write(tostring(root, encoding='utf-8', xml_declaration=True, pretty_print=True))
     return fpath
@@ -1099,11 +1128,13 @@ def render_img(image, dest, width=128, height=128):
     img = QImage(I(image)).scaled(width, height, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
     img.save(dest)
 
+
 def main():
     p = option_parser()
     opts, args = p.parse_args()
     PostInstall(opts)
     return 0
+
 
 def cli_index_strings():
     return _('Command Line Interface'), _(

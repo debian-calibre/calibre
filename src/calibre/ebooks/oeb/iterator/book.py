@@ -29,6 +29,7 @@ TITLEPAGE = CoverManager.SVG_TEMPLATE.decode('utf-8').replace(
         '__ar__', 'none').replace('__viewbox__', '0 0 600 800'
         ).replace('__width__', '600').replace('__height__', '800')
 
+
 class FakeOpts(object):
     verbose = 0
     breadth_first = False
@@ -44,6 +45,7 @@ def write_oebbook(oeb, path):
     for f in walk(path):
         if f.endswith('.opf'):
             return f
+
 
 def extract_book(pathtoebook, tdir, log=None, view_kepub=False, processed=False, only_input_plugin=False):
     from calibre.ebooks.conversion.plumber import Plumber, create_oebbook
@@ -79,6 +81,7 @@ def extract_book(pathtoebook, tdir, log=None, view_kepub=False, processed=False,
         book_format = 'KF8' + fs
     return book_format, pathtoopf, plumber.input_fmt
 
+
 def run_extract_book(*args, **kwargs):
     from calibre.utils.ipc.simple_worker import fork_job
     ans = fork_job('calibre.ebooks.oeb.iterator.book', 'extract_book', args=args, kwargs=kwargs, timeout=3000, no_output=True)
@@ -111,6 +114,7 @@ class EbookIterator(BookmarksMixin):
                     raw = f.read().decode(path.encoding)
                 root = parse(raw)
                 fragments = []
+
                 def serialize(elem):
                     if elem.text:
                         fragments.append(elem.text.lower())
@@ -139,9 +143,10 @@ class EbookIterator(BookmarksMixin):
         self.book_format, self.pathtoopf, input_fmt = run_extract_book(
             self.pathtoebook, self.base, only_input_plugin=only_input_plugin, view_kepub=view_kepub, processed=processed)
         self.opf = OPF(self.pathtoopf, os.path.dirname(self.pathtoopf))
-        self.language = self.opf.language
-        if self.language:
-            self.language = self.language.lower()
+        self.mi = self.opf.to_book_metadata()
+        self.language = None
+        if self.mi.languages:
+            self.language = self.mi.languages[0].lower()
         ordered = [i for i in self.opf.spine if i.is_linear] + \
                   [i for i in self.opf.spine if not i.is_linear]
         self.spine = []

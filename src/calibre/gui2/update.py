@@ -6,7 +6,7 @@ from future_builtins import map
 from threading import Thread, Event
 
 from PyQt5.Qt import (QObject, pyqtSignal, Qt, QUrl, QDialog, QGridLayout,
-        QLabel, QCheckBox, QDialogButtonBox, QIcon, QPixmap)
+        QLabel, QCheckBox, QDialogButtonBox, QIcon)
 
 from calibre.constants import (__appname__, __version__, iswindows, isosx,
         isportable, is64bit, numeric_version)
@@ -20,12 +20,14 @@ URL = 'https://code.calibre-ebook.com/latest'
 # URL = 'http://localhost:8000/latest'
 NO_CALIBRE_UPDATE = (0, 0, 0)
 
+
 def get_download_url():
     which = ('portable' if isportable else 'windows' if iswindows
             else 'osx' if isosx else 'linux')
     if which == 'windows' and is64bit:
         which += '64'
     return 'https://calibre-ebook.com/download_' + which
+
 
 def get_newest_version():
     try:
@@ -58,9 +60,11 @@ def get_newest_version():
         ans = tuple(map(int, (m.group(1), m.group(2), m.group(3))))
     return ans
 
+
 class Signal(QObject):
 
     update_found = pyqtSignal(object, object)
+
 
 class CheckForUpdates(Thread):
 
@@ -95,6 +99,7 @@ class CheckForUpdates(Thread):
     def shutdown(self):
         self.shutdown_event.set()
 
+
 class UpdateNotification(QDialog):
 
     def __init__(self, calibre_version, plugin_updates, parent=None):
@@ -105,8 +110,7 @@ class UpdateNotification(QDialog):
         self.setLayout(self.l)
         self.logo = QLabel()
         self.logo.setMaximumWidth(110)
-        self.logo.setPixmap(QPixmap(I('lt.png')).scaled(100, 100,
-            Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
+        self.logo.setPixmap(QIcon(I('lt.png')).pixmap(100, 100))
         ver = calibre_version
         if ver.endswith('.0'):
             ver = ver[:-2]
@@ -154,6 +158,7 @@ class UpdateNotification(QDialog):
         open_url(QUrl(get_download_url()))
 
         QDialog.accept(self)
+
 
 class UpdateMixin(object):
 

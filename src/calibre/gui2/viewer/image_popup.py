@@ -13,6 +13,7 @@ from PyQt5.Qt import (QDialog, QPixmap, QUrl, QScrollArea, QLabel, QSizePolicy,
 
 from calibre.gui2 import choose_save_file, gprefs, NO_URL_FORMATTING
 
+
 class ImageView(QDialog):
 
     def __init__(self, parent, current_img, current_url, geom_name='viewer_image_popup_geometry'):
@@ -68,7 +69,8 @@ class ImageView(QDialog):
                 _('Choose a file to save to'), filters=filters,
                 all_files=False)
         if f:
-            self.current_img.save(f)
+            from calibre.utils.img import save_image
+            save_image(self.current_img.toImage(), f)
 
     def adjust_image(self, factor):
         self.label.resize(self.factor * self.current_img.size())
@@ -122,6 +124,7 @@ class ImageView(QDialog):
             event.accept()
             (self.zoom_out if d < 0 else self.zoom_in)()
 
+
 class ImagePopup(object):
 
     def __init__(self, parent):
@@ -145,7 +148,8 @@ class ImagePopup(object):
 
 if __name__ == '__main__':
     import sys
-    app = QApplication([])
+    from calibre.gui2 import Application
+    app = Application([])
     p = QPixmap()
     p.load(sys.argv[-1])
     u = QUrl.fromLocalFile(sys.argv[-1])

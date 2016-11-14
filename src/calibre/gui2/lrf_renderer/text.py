@@ -15,7 +15,9 @@ NULL       = lambda a, b: a
 COLOR      = lambda a, b: QColor(*a)
 WEIGHT     = lambda a, b: WEIGHT_MAP(a)
 
+
 class PixmapItem(QGraphicsPixmapItem):
+
     def __init__(self, data, encoding, x0, y0, x1, y1, xsize, ysize):
         p = QPixmap()
         p.loadFromData(data, encoding, Qt.AutoColor)
@@ -65,7 +67,7 @@ class FontLoader(object):
                 face = self.font_map[text_style.fontfacename]
             else:
                 face = self.face_map[text_style.fontfacename]
-        except KeyError: # Bad fontfacename field in LRF
+        except KeyError:  # Bad fontfacename field in LRF
             face = self.font_map['Dutch801 Rm BT Roman']
 
         sz = text_style.fontsize
@@ -87,6 +89,7 @@ class FontLoader(object):
             qfont.setUnderline(text_style.emplineposition == 'after')
         return qfont
 
+
 class Style(object):
     map = collections.defaultdict(lambda : NULL)
 
@@ -107,20 +110,20 @@ class Style(object):
 class TextStyle(Style):
 
     map = collections.defaultdict(lambda : NULL,
-        fontsize         = operator.mul,
-        fontwidth        = operator.mul,
-        fontweight       = WEIGHT,
-        textcolor        = COLOR,
-        textbgcolor      = COLOR,
-        wordspace        = operator.mul,
-        letterspace      = operator.mul,
-        baselineskip     = operator.mul,
-        linespace        = operator.mul,
-        parindent        = operator.mul,
-        parskip          = operator.mul,
-        textlinewidth    = operator.mul,
-        charspace        = operator.mul,
-        linecolor        = COLOR,
+        fontsize=operator.mul,
+        fontwidth=operator.mul,
+        fontweight=WEIGHT,
+        textcolor=COLOR,
+        textbgcolor=COLOR,
+        wordspace=operator.mul,
+        letterspace=operator.mul,
+        baselineskip=operator.mul,
+        linespace=operator.mul,
+        parindent=operator.mul,
+        parskip=operator.mul,
+        textlinewidth=operator.mul,
+        charspace=operator.mul,
+        linecolor=COLOR,
         )
 
     def __init__(self, style, font_loader, ruby_tags):
@@ -132,7 +135,6 @@ class TextStyle(Style):
         self.emplinetype = 'none'
         self.font = self.font_loader.font(self)
 
-
     def update(self, *args, **kwds):
         Style.update(self, *args, **kwds)
         self.font = self.font_loader.font(self)
@@ -140,11 +142,13 @@ class TextStyle(Style):
 
 class BlockStyle(Style):
     map = collections.defaultdict(lambda : NULL,
-        bgcolor          = COLOR,
-        framecolor       = COLOR,
+        bgcolor=COLOR,
+        framecolor=COLOR,
         )
 
+
 class ParSkip(object):
+
     def __init__(self, parskip):
         self.height = parskip
 
@@ -187,7 +191,7 @@ class TextBlock(object):
             self.end_line()
         except TextBlock.HeightExceeded:
             pass
-            #logger.warning('TextBlock height exceeded, skipping line:\n%s'%(err,))
+            # logger.warning('TextBlock height exceeded, skipping line:\n%s'%(err,))
 
     def peek(self):
         return self.lines[self.peek_index+1]
@@ -306,15 +310,16 @@ class TextBlock(object):
             if line_filled:
                 self.end_line()
 
-
     def __iter__(self):
-        for line in self.lines: yield line
+        for line in self.lines:
+            yield line
 
     def __str__(self):
         s = ''
         for line in self:
             s += str(line) + '\n'
         return s
+
 
 class Link(QGraphicsRectItem):
     inactive_brush = QBrush(QColor(0xff, 0xff, 0xff, 0xff))
@@ -340,6 +345,7 @@ class Link(QGraphicsRectItem):
     def mousePressEvent(self, event):
         self.hoverLeaveEvent(None)
         self.slot(self.refobj)
+
 
 class Line(QGraphicsItem):
     whitespace = re.compile(r'\s+')
@@ -398,7 +404,7 @@ class Line(QGraphicsItem):
             width = fm.width(word)
             if self.current_width + width < self.line_length:
                 self.commit(word, width, height, descent, ts, font)
-                if space_width > 0  and self.current_width + space_width < self.line_length:
+                if space_width > 0 and self.current_width + space_width < self.line_length:
                     self.add_space(space_width)
                 phrase_pos = right
                 continue
@@ -412,7 +418,7 @@ class Line(QGraphicsItem):
                     if self.current_width + width < self.line_length:
                         self.commit(word, width, height, descent, ts, font)
                         return phrase_pos + len(word)-1, True
-            if self.current_width < 5: # Force hyphenation as word is longer than line
+            if self.current_width < 5:  # Force hyphenation as word is longer than line
                 for i in range(len(word)-5, 0, -5):
                     part = word[:i] + '-'
                     width = fm.width(part)
@@ -467,7 +473,6 @@ class Line(QGraphicsItem):
         for link in self.links:
             Link(self, *link)
 
-
         return self.height
 
     def boundingRect(self):
@@ -518,7 +523,8 @@ class Line(QGraphicsItem):
 
     def search(self, phrase):
         tokens = phrase.lower().split()
-        if len(tokens) < 1: return None
+        if len(tokens) < 1:
+            return None
 
         words = self.words()
         matches = []
@@ -539,7 +545,6 @@ class Line(QGraphicsItem):
                     return self
         except StopIteration:
             return None
-
 
     def getx(self, textwidth):
         if self.align == 'head':
@@ -570,6 +575,7 @@ class Word(object):
         self.text_color = ts.textcolor
         self.highlight = False
         self.valign = valign
+
 
 def main(args=sys.argv):
     return 0

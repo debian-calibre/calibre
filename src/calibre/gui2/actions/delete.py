@@ -21,6 +21,7 @@ from calibre.utils.recycle_bin import can_recycle
 
 single_shot = partial(QTimer.singleShot, 10)
 
+
 class MultiDeleter(QObject):  # {{{
 
     def __init__(self, gui, ids, callback):
@@ -82,10 +83,11 @@ class MultiDeleter(QObject):  # {{{
                     ' for details.'), det_msg='\n\n'.join(msg), show=True)
 # }}}
 
+
 class DeleteAction(InterfaceAction):
 
     name = 'Remove Books'
-    action_spec = (_('Remove books'), 'trash.png', _('Delete books'), 'Backspace' if isosx else 'Del')
+    action_spec = (_('Remove books'), 'remove_books.png', _('Delete books'), 'Backspace' if isosx else 'Del')
     action_type = 'current'
     action_add_menu = True
     action_menu_clone_qaction = _('Remove selected books')
@@ -364,10 +366,12 @@ class DeleteAction(InterfaceAction):
                     self.remove_matching_books_from_device()
         # The following will run if the selected books are not on a connected device.
         # The user has selected to delete from the library or the device and library.
-        if not confirm('<p>'+_('The %d selected book(s) will be '
-                                '<b>permanently deleted</b> and the files '
-                                'removed from your calibre library. Are you sure?')%len(to_delete_ids) +
-                       '</p>', 'library_delete_books', self.gui):
+        if not confirm('<p>'+ngettext(
+                'The selected book will be <b>permanently deleted</b> and the files '
+                'removed from your calibre library. Are you sure?',
+                'The {} selected books will be <b>permanently deleted</b> and the files '
+                'removed from your calibre library. Are you sure?', len(to_delete_ids)).format(len(to_delete_ids)),
+                'library_delete_books', self.gui):
             return
         if len(to_delete_ids) < 5:
             try:
@@ -411,10 +415,10 @@ class DeleteAction(InterfaceAction):
                 view = self.gui.card_b_view
             paths = view.model().paths(rows)
             ids = view.model().indices(rows)
-            if not confirm('<p>'+_('The %d selected book(s) will be '
-                                   '<b>permanently deleted</b> '
-                                   'from your device. Are you sure?')%len(paths) +
-                           '</p>', 'device_delete_books', self.gui):
+            if not confirm('<p>'+ngettext(
+                    'The selected book will be <b>permanently deleted</b> from your device. Are you sure?',
+                    'The {} selected books will be <b>permanently deleted</b> from your device. Are you sure?', len(paths)).format(len(paths)),
+                    'device_delete_books', self.gui):
                 return
             job = self.gui.remove_paths(paths)
             self.delete_memory[job] = (paths, view.model())

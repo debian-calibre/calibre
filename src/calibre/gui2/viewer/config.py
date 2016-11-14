@@ -23,6 +23,7 @@ from calibre.gui2.languages import LanguagesEdit
 from calibre.gui2.shortcuts import ShortcutConfig
 from calibre.gui2.viewer.config_ui import Ui_Dialog
 
+
 def config(defaults=None):
     desc = _('Options to customize the ebook viewer')
     if defaults is None:
@@ -99,9 +100,9 @@ def config(defaults=None):
     fonts('sans_family', default='Verdana' if iswindows else 'Liberation Sans',
           help=_('The sans-serif font family'))
     fonts('mono_family', default='Courier New' if iswindows else 'Liberation Mono',
-          help=_('The monospaced font family'))
+          help=_('The monospace font family'))
     fonts('default_font_size', default=20, help=_('The standard font size in px'))
-    fonts('mono_font_size', default=16, help=_('The monospaced font size in px'))
+    fonts('mono_font_size', default=16, help=_('The monospace font size in px'))
     fonts('standard_font', default='serif', help=_('The standard font type'))
     fonts('minimum_font_size', default=8, help=_('The minimum font size in px'))
 
@@ -116,8 +117,10 @@ def config(defaults=None):
 
     return c
 
+
 def load_themes():
     return JSONConfig('viewer_themes')
+
 
 class ConfigDialog(QDialog, Ui_Dialog):
 
@@ -140,7 +143,15 @@ class ConfigDialog(QDialog, Ui_Dialog):
         with zipfile.ZipFile(P('viewer/hyphenate/patterns.zip',
             allow_user_override=False), 'r') as zf:
             pats = [x.split('.')[0].replace('-', '_') for x in zf.namelist()]
-        names = list(map(get_language, pats))
+
+        lang_pats = {
+            'el_monoton': get_language('el').partition(';')[0] + _(' monotone'), 'el_polyton':get_language('el').partition(';')[0] + _(' polytone'),
+            'sr_cyrl': get_language('sr') + _(' cyrillic'), 'sr_latn': get_language('sr') + _(' latin'),
+        }
+
+        def gl(pat):
+            return lang_pats.get(pat, get_language(pat))
+        names = list(map(gl, pats))
         pmap = {}
         for i in range(len(pats)):
             pmap[names[i]] = pats[i]
@@ -228,6 +239,7 @@ class ConfigDialog(QDialog, Ui_Dialog):
     def word_lookups(self):
         def fget(self):
             return dict(self.dictionary_list.item(i).data(Qt.UserRole) for i in range(self.dictionary_list.count()))
+
         def fset(self, wl):
             self.dictionary_list.clear()
             for langcode, url in sorted(wl.iteritems(), key=lambda (lc, url):sort_key(calibre_langcode_to_name(lc))):

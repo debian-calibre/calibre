@@ -11,6 +11,7 @@ from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 ADOBE_OBFUSCATION =  'http://ns.adobe.com/pdf/enc#RC'
 IDPF_OBFUSCATION = 'http://www.idpf.org/2008/embedding'
 
+
 def decrypt_font_data(key, data, algorithm):
     is_adobe = algorithm == ADOBE_OBFUSCATION
     crypt_len = 1024 if is_adobe else 1040
@@ -19,10 +20,12 @@ def decrypt_font_data(key, data, algorithm):
     decrypt = bytes(bytearray(x^key.next() for x in crypt))
     return decrypt + data[crypt_len:]
 
+
 def decrypt_font(key, path, algorithm):
     with open(path, 'r+b') as f:
         data = decrypt_font_data(key, f.read(), algorithm)
         f.seek(0), f.truncate(), f.write(data)
+
 
 class EPUBInput(InputFormatPlugin):
 
@@ -39,7 +42,7 @@ class EPUBInput(InputFormatPlugin):
         import uuid, hashlib
         idpf_key = opf.raw_unique_identifier
         if idpf_key:
-            idpf_key = re.sub(u'\u0020\u0009\u000d\u000a', u'', idpf_key)
+            idpf_key = re.sub(u'[\u0020\u0009\u000d\u000a]', u'', idpf_key)
             idpf_key = hashlib.sha1(idpf_key.encode('utf-8')).digest()
         key = None
         for item in opf.identifier_iter():
@@ -76,7 +79,51 @@ class EPUBInput(InputFormatPlugin):
             traceback.print_exc()
         return False
 
-    def rationalize_cover(self, opf, log):
+    def set_guide_type(self, opf, gtype, href=None, title=''):
+        # Set the titlepage guide entry
+        for elem in list(opf.iterguide()):
+            if elem.get('type', '').lower() == 'titlepage':
+                elem.getparent().remove(elem)
+
+        if href is not None:
+            t = opf.create_guide_item(gtype, title, href)
+            for guide in opf.root.iterchildren('guide'):
+                guide.append(t)
+                return
+            guide = opf.create_guide_element()
+            opf.root.append(guide)
+            guide.append(t)
+            return t
+
+    def rationalize_cover3(self, opf, log):
+        ''' If there is a reference to the cover/titlepage via manifest properties, convert to
+        entries in the <guide> so that the rest of the pipeline picks it up. '''
+        from calibre.ebooks.metadata.opf3 import items_with_property
+        removed = None
+        raster_cover_href = opf.epub3_raster_cover
+        if raster_cover_href:
+            self.set_guide_type(opf, 'cover', raster_cover_href, 'Cover Image')
+        titlepage_id = titlepage_href = None
+        for item in items_with_property(opf.root, 'calibre:title-page'):
+            tid, href = item.get('id'), item.get('href')
+            if href and tid:
+                titlepage_id, titlepage_href = tid, href.partition('#')[0]
+                break
+        if titlepage_href is not None:
+            self.set_guide_type(opf, 'titlepage', titlepage_href, 'Title Page')
+            spine = list(opf.iterspine())
+            if len(spine) > 1:
+                for item in spine:
+                    if item.get('idref') == titlepage_id:
+                        log('Found HTML cover', titlepage_href)
+                        if self.for_viewer:
+                            item.attrib.pop('linear', None)
+                        else:
+                            item.getparent().remove(item)
+                            removed = titlepage_href
+                        return removed
+
+    def rationalize_cover2(self, opf, log):
         ''' Ensure that the cover information in the guide is correct. That
         means, at most one entry with type="cover" that points to a raster
         cover and at most one entry with type="titlepage" that points to an
@@ -149,18 +196,12 @@ class EPUBInput(InputFormatPlugin):
                         renderer)
 
         # Set the titlepage guide entry
-        for elem in list(opf.iterguide()):
-            if elem.get('type', '').lower() == 'titlepage':
-                elem.getparent().remove(elem)
-
-        t = etree.SubElement(guide_elem.getparent(), OPF('reference'))
-        t.set('type', 'titlepage')
-        t.set('href', guide_cover)
-        t.set('title', 'Title Page')
+        self.set_guide_type(opf, 'titlepage', guide_cover, 'Title Page')
         return removed
 
     def find_opf(self):
         from lxml import etree
+
         def attr(n, attr):
             for k, v in n.attrib.items():
                 if k.endswith(attr):
@@ -229,7 +270,8 @@ class EPUBInput(InputFormatPlugin):
             for elem in opf.iterguide():
                 elem.set('href', delta+elem.get('href'))
 
-        self.removed_cover = self.rationalize_cover(opf, log)
+        f = self.rationalize_cover3 if opf.package_version >= 3.0 else self.rationalize_cover2
+        self.removed_cover = f(opf, log)
 
         for x in opf.itermanifest():
             if x.get('media-type', '') == 'application/x-dtbook+xml':

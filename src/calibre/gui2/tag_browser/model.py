@@ -15,6 +15,7 @@ from PyQt5.Qt import (QAbstractItemModel, QIcon, QFont, Qt,
         QMimeData, QModelIndex, pyqtSignal, QObject)
 
 from calibre.constants import config_dir
+from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import gprefs, config, error_dialog, file_icon_provider
 from calibre.db.categories import Tag
 from calibre.utils.config import tweaks
@@ -26,8 +27,11 @@ from calibre.utils.formatter import EvalFormatter
 TAG_SEARCH_STATES = {'clear': 0, 'mark_plus': 1, 'mark_plusplus': 2,
                      'mark_minus': 3, 'mark_minusminus': 4}
 DRAG_IMAGE_ROLE = Qt.UserRole + 1000
+COUNT_ROLE = DRAG_IMAGE_ROLE + 1
 
 _bf = None
+
+
 def bf():
     global _bf
     if _bf is None:
@@ -35,6 +39,7 @@ def bf():
         _bf.setBold(True)
         _bf = (_bf)
     return _bf
+
 
 class TagTreeItem(object):  # {{{
 
@@ -151,7 +156,7 @@ class TagTreeItem(object):  # {{{
 
     def category_data(self, role):
         if role == Qt.DisplayRole:
-            return (self.py_name + ' [%d]'%len(self.child_tags()))
+            return self.py_name
         if role == Qt.EditRole:
             return (self.py_name)
         if role == Qt.DecorationRole:
@@ -165,6 +170,8 @@ class TagTreeItem(object):  # {{{
         if role == DRAG_IMAGE_ROLE:
             self.ensure_icon()
             return self.icon_state_map[0]
+        if role == COUNT_ROLE:
+            return len(self.child_tags())
         return None
 
     def tag_data(self, role):
@@ -177,11 +184,7 @@ class TagTreeItem(object):  # {{{
             else:
                 name = tag.name
         if role == Qt.DisplayRole:
-            count = self.item_count
-            if count == 0:
-                return ('%s'%(name))
-            else:
-                return ('[%d] %s'%(count, name))
+            return unicode(name)
         if role == Qt.EditRole:
             return (tag.original_name)
         if role == Qt.DecorationRole:
@@ -201,10 +204,14 @@ class TagTreeItem(object):  # {{{
                 tt.append(_('Books in this category are unrated'))
             if self.type == self.TAG and self.tag.category == 'search':
                 tt.append(_('Search expression:') + ' ' + self.tag.search_expression)
+            if self.type == self.TAG:
+                tt.append(_('Number of books: %s') % self.item_count)
             return '\n'.join(tt)
         if role == DRAG_IMAGE_ROLE:
             self.ensure_icon()
             return self.icon_state_map[0]
+        if role == COUNT_ROLE:
+            return self.item_count
         return None
 
     def dump_data(self):
@@ -248,6 +255,7 @@ class TagTreeItem(object):  # {{{
 
     def all_children(self):
         res = []
+
         def recurse(nodes, res):
             for t in nodes:
                 res.append(t)
@@ -257,6 +265,7 @@ class TagTreeItem(object):  # {{{
 
     def child_tags(self):
         res = []
+
         def recurse(nodes, res, depth):
             if depth > 100:
                 return
@@ -267,6 +276,7 @@ class TagTreeItem(object):  # {{{
         recurse(self.children, res, 1)
         return res
     # }}}
+
 
 class TagsModel(QAbstractItemModel):  # {{{
 
@@ -666,7 +676,7 @@ class TagsModel(QAbstractItemModel):  # {{{
             key = node.category_key
             if key in self.row_map:
                 if self.prefs['tag_browser_hide_empty_categories'] and len(node.child_tags()) == 0:
-                    continue;
+                    continue
                 if self.hidden_categories:
                     if key in self.hidden_categories:
                         continue
@@ -1250,6 +1260,7 @@ class TagsModel(QAbstractItemModel):  # {{{
 
     def reset_all_states(self, except_=None):
         update_list = []
+
         def process_tag(tag_item):
             tag = tag_item.tag
             if tag is except_:
@@ -1294,6 +1305,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         # They will be 'checked' in both places, but we want to put the node
         # into the search string only once. The nodes_seen set helps us do that
         nodes_seen = set()
+        stars = rating_to_stars(3, True)
 
         node_searches = {TAG_SEARCH_STATES['mark_plus']       : 'true',
                          TAG_SEARCH_STATES['mark_plusplus']   : '.true',
@@ -1351,8 +1363,11 @@ class TagsModel(QAbstractItemModel):  # {{{
                     if self.db.field_metadata[tag.category]['is_csp']:
                         add_colon = True
 
-                    if tag.name and tag.name[0] == u'\u2605':  # char is a star. Assume rating
-                        ans.append('%s%s:%s'%(prefix, category, len(tag.name)))
+                    if tag.name and tag.name[0] in stars:  # char is a star or a half. Assume rating
+                        rnum = len(tag.name)
+                        if tag.name.endswith(stars[-1]):
+                            rnum = '%s.5' % (rnum - 1)
+                        ans.append('%s%s:%s'%(prefix, category, rnum))
                     else:
                         name = tag.original_name
                         use_prefix = tag.state in [TAG_SEARCH_STATES['mark_plusplus'],

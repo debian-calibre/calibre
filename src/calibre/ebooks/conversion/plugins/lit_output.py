@@ -9,6 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 from calibre.customize.conversion import OutputFormatPlugin
 
+
 class LITOutput(OutputFormatPlugin):
 
     name = 'LIT Output'
@@ -25,7 +26,6 @@ class LITOutput(OutputFormatPlugin):
         split = Split(split_on_page_breaks=True, max_flow_size=0,
                 remove_css_pagebreaks=False)
         split(self.oeb, self.opts)
-
 
         tocadder = HTMLTOCAdder()
         tocadder(oeb, opts)

@@ -12,6 +12,7 @@ from PyQt5.Qt import QDialog, QVBoxLayout, QPlainTextEdit, QTimer, \
 
 from calibre.gui2 import error_dialog
 
+
 class DebugDevice(QDialog):
 
     def __init__(self, gui, parent=None):
@@ -51,7 +52,8 @@ class DebugDevice(QDialog):
         self.gui.debug_detection(self)
 
     def __call__(self, job):
-        if not self.isVisible(): return
+        if not self.isVisible():
+            return
         self.bbox.setEnabled(True)
         if job.failed:
             return error_dialog(self, _('Debugging failed'),

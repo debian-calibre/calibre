@@ -15,6 +15,7 @@ import sys, os
 from calibre.ebooks.rtf2xml import copy
 from calibre.ptempfile import better_mktemp
 
+
 class Paragraphs:
     """
     =================
@@ -38,12 +39,13 @@ class Paragraphs:
     a paragraph definition; the end of a field-block; and the beginning of a
     section. (How about the end of a section or the end of a field-block?)
     """
+
     def __init__(self,
             in_file,
             bug_handler,
-            copy = None,
-            write_empty_para = 1,
-            run_level = 1,
+            copy=None,
+            write_empty_para=1,
+            run_level=1,
             ):
         """
         Required:
@@ -67,10 +69,10 @@ class Paragraphs:
         Initiate all values.
         """
         self.__state = 'before_body'
-        self.__start_marker =  'mi<mk<para-start\n' # outside para tags
-        self.__start2_marker = 'mi<mk<par-start_\n' # inside para tags
-        self.__end2_marker =   'mi<mk<par-end___\n' # inside para tags
-        self.__end_marker =    'mi<mk<para-end__\n' # outside para tags
+        self.__start_marker =  'mi<mk<para-start\n'  # outside para tags
+        self.__start2_marker = 'mi<mk<par-start_\n'  # inside para tags
+        self.__end2_marker =   'mi<mk<par-end___\n'  # inside para tags
+        self.__end_marker =    'mi<mk<para-end__\n'  # outside para tags
         self.__state_dict = {
         'before_body'       : self.__before_body_func,
         'not_paragraph'     : self.__not_paragraph_func,
@@ -79,7 +81,7 @@ class Paragraphs:
         self.__paragraph_dict = {
         'cw<pf<par-end___'      : self.__close_para_func,   # end of paragraph
         'mi<mk<headi_-end'      : self.__close_para_func,   # end of header or footer
-        ## 'cw<pf<par-def___'      : self.__close_para_func,   # paragraph definition
+        # 'cw<pf<par-def___'      : self.__close_para_func,   # paragraph definition
         # 'mi<mk<fld-bk-end'      : self.__close_para_func,   # end of field-block
         'mi<mk<fldbk-end_'      : self.__close_para_func,   # end of field-block
         'mi<mk<body-close'      : self.__close_para_func,   # end of body
@@ -160,7 +162,7 @@ class Paragraphs:
             This function writes the beginning tags for a paragraph and
             changes the state to paragraph.
         """
-        self.__write_obj.write(self.__start_marker) # marker for later parsing
+        self.__write_obj.write(self.__start_marker)  # marker for later parsing
         self.__write_obj.write(
         'mi<tg<open______<para\n'
         )
@@ -178,7 +180,7 @@ class Paragraphs:
             It does not do anything if self.__write_empty_para is 0.
         """
         if self.__write_empty_para:
-            self.__write_obj.write(self.__start_marker) # marker for later parsing
+            self.__write_obj.write(self.__start_marker)  # marker for later parsing
             self.__write_obj.write(
             'mi<tg<empty_____<para\n'
             )
@@ -207,11 +209,11 @@ class Paragraphs:
             This function writes the end tags for a paragraph and
             changes the state to not_paragraph.
         """
-        self.__write_obj.write(self.__end2_marker) # marker for later parser
+        self.__write_obj.write(self.__end2_marker)  # marker for later parser
         self.__write_obj.write(
         'mi<tg<close_____<para\n'
         )
-        self.__write_obj.write(self.__end_marker) # marker for later parser
+        self.__write_obj.write(self.__end_marker)  # marker for later parser
         self.__write_obj.write(line)
         self.__state = 'not_paragraph'
 
@@ -252,7 +254,7 @@ class Paragraphs:
                         except:
                             pass
                     action(line)
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "paragraphs.data")
         copy_obj.rename(self.__write_to, self.__file)

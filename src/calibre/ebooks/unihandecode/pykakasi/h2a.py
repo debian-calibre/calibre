@@ -21,6 +21,7 @@
 # *
 # */
 
+
 class H2a (object):
 
     H2a_table = {
@@ -166,7 +167,7 @@ class H2a (object):
         return self
 
     def isHiragana(self, char):
-        return ( 0x3040 < ord(char) and ord(char) < 0x3094)
+        return (0x3040 < ord(char) and ord(char) < 0x3094)
 
     def convert(self, text):
         Hstr = ""

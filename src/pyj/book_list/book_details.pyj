@@ -6,12 +6,12 @@ import traceback
 from ajax import ajax
 from book_list.globals import get_current_query
 from book_list.theme import get_font_size
-from dom import clear, build_rule, svgicon
+from dom import clear, build_rule, svgicon, add_extra_css
 from elementmaker import E
 from gettext import gettext as _
 from book_list.globals import get_boss
 from modals import error_dialog
-from widgets import create_spinner, create_button, add_extra_css
+from widgets import create_spinner, create_button
 from date import format_date
 from utils import fmt_sidx
 
@@ -144,8 +144,11 @@ def render_metadata(mi, interface_data, table, field_list=None):
 
     def process_rating(field, fm, name, val):
         stars = E.span()
-        for i in range(int(val) // 2):
+        val = int(val)
+        for i in range(val // 2):
             stars.appendChild(svgicon('star'))
+        if fm.display.allow_half_stars and (val % 2):
+            stars.appendChild(svgicon('star-half'))
         add_row(name, stars)
 
     def process_identifiers(field, fm, name, val):
@@ -201,7 +204,10 @@ def render_metadata(mi, interface_data, table, field_list=None):
         datatype = fm.datatype
         val = mi[field]
         if field is 'comments' or datatype is 'comments':
-            comments[field] = val
+            if fm.display?.heading_position is 'side':
+                add_row(name, val, is_html=True)
+            else:
+                comments[field] = val
             return
         func = None
         if datatype is 'composite':
@@ -249,9 +255,13 @@ def render_metadata(mi, interface_data, table, field_list=None):
             traceback.print_exc()
 
     for i, field in enumerate(sorted(comments)):
+        fm = interface_data.field_metadata[field]
         comment = comments[field]
         div = E.div()
         div.innerHTML = comment
+        if fm.display?.heading_position is 'above':
+            name = fm.name or field
+            div.insertBefore(E.h3(name), div.firstChild or None)
         table.parentNode.appendChild(div)
         if i is 0:
             div.style.marginTop = '2ex'

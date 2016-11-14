@@ -19,6 +19,7 @@ from calibre.srv.utils import RotatingLog
 from calibre.utils.config import prefs
 from calibre.db.legacy import LibraryDatabase
 
+
 def daemonize():  # {{{
     try:
         pid = os.fork()
@@ -54,6 +55,7 @@ def daemonize():  # {{{
         os.dup2(se, sys.stderr.fileno())
 # }}}
 
+
 class Server(object):
 
     def __init__(self, libraries, opts):
@@ -78,6 +80,8 @@ class Server(object):
             compile_srv()
 
 # Manage users CLI {{{
+
+
 def manage_users(path=None):
     from calibre.srv.users import UserManager
     m = UserManager(path)
@@ -207,6 +211,7 @@ program will be used.
 
     return parser
 
+
 def main(args=sys.argv):
     opts, args=create_option_parser().parse_args(args)
     if opts.manage_users:
@@ -235,6 +240,7 @@ def main(args=sys.argv):
         except NoAutoReload as e:
             raise SystemExit(e.message)
     opts.auto_reload_port=int(os.environ.get('CALIBRE_AUTORELOAD_PORT', 0))
+    opts.allow_console_print = 'CALIBRE_ALLOW_CONSOLE_PRINT' in os.environ
     server=Server(libraries, opts)
     if opts.daemonize:
         if not opts.log and not iswindows:

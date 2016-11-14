@@ -25,6 +25,7 @@ def match_string(s1, s2_already_lowered):
             return True
     return False
 
+
 def check_all_prev_empty(tag):
     if tag is None:
         return True
@@ -32,12 +33,14 @@ def check_all_prev_empty(tag):
         return False
     return check_all_prev_empty(tag.previousSibling)
 
+
 def check_empty(s, rex=re.compile(r'\S')):
     return rex.search(s) is None
 
 
 class CHMError(Exception):
     pass
+
 
 class CHMReader(CHMFile):
 
@@ -200,16 +203,14 @@ class CHMReader(CHMFile):
         # containing prev, next or team
         t = soup('table')
         if t:
-            if (t[0].previousSibling is None
-              or t[0].previousSibling.previousSibling is None):
+            if (t[0].previousSibling is None or t[0].previousSibling.previousSibling is None):
                 try:
                     alt = t[0].img['alt'].lower()
                     if alt.find('prev') != -1 or alt.find('next') != -1 or alt.find('team') != -1:
                         t[0].extract()
                 except:
                     pass
-            if (t[-1].nextSibling is None
-              or t[-1].nextSibling.nextSibling is None):
+            if (t[-1].nextSibling is None or t[-1].nextSibling.nextSibling is None):
                 try:
                     alt = t[-1].img['alt'].lower()
                     if alt.find('prev') != -1 or alt.find('next') != -1 or alt.find('team') != -1:
@@ -268,6 +269,7 @@ class CHMReader(CHMFile):
         if self._contents is not None:
             return self._contents
         paths = []
+
         def get_paths(chm, ui, ctx):
             # skip directories
             # note this path refers to the internal CHM structure

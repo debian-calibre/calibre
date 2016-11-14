@@ -24,13 +24,13 @@ class FakeAction(object):
         self.dont_remove_from = dont_remove_from
         self.dont_add_to = dont_add_to
 
+
 class BaseModel(QAbstractListModel):
 
     def name_to_action(self, name, gui):
         if name == 'Donate':
             return FakeAction(
-                'Donate', _('Donate'), 'donate.png', tooltip=
-                _('Donate to support the development of calibre'),
+                'Donate', _('Donate'), 'donate.png', tooltip=_('Donate to support the development of calibre'),
                 dont_add_to=frozenset(['context-menu', 'context-menu-device']))
         if name == 'Location Manager':
             return FakeAction('Location Manager', _('Location Manager'), 'reader.png',
@@ -140,6 +140,7 @@ class AllModel(BaseModel):
         self.beginResetModel()
         self._data = self.get_all_actions(current)
         self.endResetModel()
+
 
 class CurrentModel(BaseModel):
 

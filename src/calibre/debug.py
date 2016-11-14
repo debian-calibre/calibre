@@ -11,6 +11,7 @@ from calibre.utils.config import OptionParser
 from calibre.constants import iswindows
 from calibre import prints
 
+
 def option_parser():
     parser = OptionParser(usage=_('''\
 {0}
@@ -53,8 +54,6 @@ Everything after the -- is passed to the script.
     parser.add_option('--reinitialize-db', default=None,
             help=_('Re-initialize the sqlite calibre database at the '
             'specified path. Useful to recover from db corruption.'))
-    parser.add_option('-p', '--py-console', help=_('Run python console'),
-            default=False, action='store_true')
     parser.add_option('-m', '--inspect-mobi', action='store_true',
             default=False,
             help=_('Inspect the MOBI file(s) at the specified path(s)'))
@@ -90,6 +89,7 @@ Everything after the -- is passed to the script.
         help='Run the new calibre content server. Any options specified after a -- will be passed to the server.')
 
     return parser
+
 
 def reinit_db(dbpath):
     from contextlib import closing
@@ -129,6 +129,7 @@ def reinit_db(dbpath):
         atomic_rename(tmpdb, dbpath)
     prints('Database successfully re-initialized')
 
+
 def debug_device_driver():
     from calibre.devices import debug
     debug(ioreg_to_tmp=True, buf=sys.stdout)
@@ -150,6 +151,7 @@ def add_simple_plugin(path_to_plugin):
     main(['calibre-customize', '-a', 'plugin.zip'])
     os.chdir(odir)
     shutil.rmtree(tdir)
+
 
 def print_basic_debug_info(out=None):
     if out is None:
@@ -185,6 +187,7 @@ def print_basic_debug_info(out=None):
         names = ('{0} {1}'.format(p.name, p.version) for p in initialized_plugins() if getattr(p, 'plugin_path', None) is not None)
         out('Successfully initialized third party plugins:', ' && '.join(names))
 
+
 def run_debug_gui(logpath):
     import time
     time.sleep(3)  # Give previous GUI time to shutdown fully and release locks
@@ -193,6 +196,7 @@ def run_debug_gui(logpath):
     print_basic_debug_info()
     from calibre.gui_launch import calibre
     calibre(['__CALIBRE_GUI_DEBUG__', logpath])
+
 
 def run_script(path, args):
     # Load all user defined plugins so the script can import from the
@@ -210,11 +214,13 @@ def run_script(path, args):
     g['__file__'] = ef
     execfile(ef, g)
 
+
 def inspect_mobi(path):
     from calibre.ebooks.mobi.debug.main import inspect_mobi
     prints('Inspecting:', path)
     inspect_mobi(path)
     print
+
 
 def main(args=sys.argv):
     from calibre.constants import debug
@@ -230,9 +236,6 @@ def main(args=sys.argv):
     elif opts.viewer:
         from calibre.gui_launch import ebook_viewer
         ebook_viewer(['ebook-viewer', '--debug-javascript'] + args[1:])
-    elif opts.py_console:
-        from calibre.utils.pyconsole.main import main
-        main()
     elif opts.command:
         sys.argv = args
         exec(opts.command)

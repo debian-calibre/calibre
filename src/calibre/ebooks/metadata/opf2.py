@@ -27,6 +27,7 @@ from calibre.utils.config import tweaks
 
 pretty_print_opf = False
 
+
 class PrettyPrint(object):
 
     def __enter__(self):
@@ -37,6 +38,7 @@ class PrettyPrint(object):
         global pretty_print_opf
         pretty_print_opf = False
 pretty_print = PrettyPrint()
+
 
 class Resource(object):  # {{{
 
@@ -121,6 +123,7 @@ class Resource(object):  # {{{
 
 # }}}
 
+
 class ResourceCollection(object):  # {{{
 
     def __init__(self):
@@ -174,6 +177,7 @@ class ResourceCollection(object):  # {{{
 
 # }}}
 
+
 class ManifestItem(Resource):  # {{{
 
     @staticmethod
@@ -190,6 +194,7 @@ class ManifestItem(Resource):  # {{{
     def media_type(self):
         def fget(self):
             return self.mime_type
+
         def fset(self, val):
             self.mime_type = val
         return property(fget=fget, fset=fset)
@@ -211,6 +216,7 @@ class ManifestItem(Resource):  # {{{
         raise IndexError('%d out of bounds.'%index)
 
 # }}}
+
 
 class Manifest(ResourceCollection):  # {{{
 
@@ -283,6 +289,7 @@ class Manifest(ResourceCollection):  # {{{
 
 # }}}
 
+
 class Spine(ResourceCollection):  # {{{
 
     class Item(Resource):
@@ -301,10 +308,11 @@ class Spine(ResourceCollection):  # {{{
     def from_opf_spine_element(itemrefs, manifest):
         s = Spine(manifest)
         seen = set()
+        path_map = {i.id:i.path for i in s.manifest}
         for itemref in itemrefs:
             idref = itemref.get('idref', None)
             if idref is not None:
-                path = s.manifest.path_for_id(idref)
+                path = path_map.get(idref)
                 if path and path not in seen:
                     r = Spine.Item(lambda x:idref, path, is_path=True)
                     r.is_linear = itemref.get('linear', 'yes') == 'yes'
@@ -356,6 +364,7 @@ class Spine(ResourceCollection):  # {{{
 
 # }}}
 
+
 class Guide(ResourceCollection):  # {{{
 
     class Reference(Resource):
@@ -393,6 +402,7 @@ class Guide(ResourceCollection):  # {{{
             self[-1].title = ''
 
 # }}}
+
 
 class MetadataField(object):
 
@@ -436,6 +446,7 @@ class MetadataField(object):
             elem = obj.create_metadata_element(self.name, is_dc=self.is_dc)
         obj.set_text(elem, self.renderer(val))
 
+
 class TitleSortField(MetadataField):
 
     def __get__(self, obj, type=None):
@@ -463,6 +474,7 @@ class TitleSortField(MetadataField):
                 for attr in list(match.attrib):
                     if attr.endswith('file-as'):
                         del match.attrib[attr]
+
 
 def serialize_user_metadata(metadata_elem, all_user_metadata, tail='\n'+(' '*8)):
     from calibre.utils.config import to_json
@@ -493,6 +505,7 @@ def dump_dict(cats):
     from calibre.ebooks.metadata.book.json_codec import object_to_unicode
     return json.dumps(object_to_unicode(cats), ensure_ascii=False,
             skipkeys=True)
+
 
 class OPF(object):  # {{{
 
@@ -619,6 +632,9 @@ class OPF(object):  # {{{
         self._user_metadata_ = temp.get_all_user_metadata(True)
 
     def to_book_metadata(self):
+        if self.package_version >= 3.0:
+            from calibre.ebooks.metadata.opf3 import read_metadata
+            return read_metadata(self.root)
         ans = MetaInformation(self)
         for n, v in self._user_metadata_.items():
             ans.set_user_metadata(n, v)
@@ -1152,6 +1168,15 @@ class OPF(object):  # {{{
                             return cpath
 
     @property
+    def epub3_raster_cover(self):
+        for item in self.itermanifest():
+            props = set((item.get('properties') or '').lower().split())
+            if 'cover-image' in props:
+                mt = item.get('media-type', '')
+                if mt and 'xml' not in mt and 'html' not in mt:
+                    return item.get('href', None)
+
+    @property
     def raster_cover(self):
         covers = self.raster_cover_path(self.metadata)
         if covers:
@@ -1167,12 +1192,7 @@ class OPF(object):  # {{{
                     if mt and 'xml' not in mt and 'html' not in mt:
                         return item.get('href', None)
         elif self.package_version >= 3.0:
-            for item in self.itermanifest():
-                props = set((item.get('properties') or '').lower().split())
-                if 'cover-image' in props:
-                    mt = item.get('media-type', '')
-                    if mt and 'xml' not in mt and 'html' not in mt:
-                        return item.get('href', None)
+            return self.epub3_raster_cover
 
     @property
     def guide_raster_cover(self):
@@ -1275,6 +1295,7 @@ class OPF(object):  # {{{
             smap[child.get('name')] = (child, self.metadata.index(child))
         if len(smap) == 2 and smap['calibre:series'][1] > smap['calibre:series_index'][1]:
             s, si = smap['calibre:series'][0], smap['calibre:series_index'][0]
+
             def swap(attr):
                 t = s.get(attr, '')
                 s.set(attr, si.get(attr, '')), si.set(attr, t)
@@ -1333,6 +1354,7 @@ class OPF(object):  # {{{
         self._user_metadata_ = temp.get_all_user_metadata(True)
 
 # }}}
+
 
 class OPFCreator(Metadata):
 
@@ -1591,6 +1613,7 @@ def metadata_to_opf(mi, as_string=True, default_lang=None):
     metadata = root[0]
     guide = root[1]
     metadata[0].tail = '\n'+(' '*8)
+
     def factory(tag, text=None, sort=None, role=None, scheme=None, name=None,
             content=None):
         attrib = {}
@@ -1778,11 +1801,14 @@ class OPFTest(unittest.TestCase):
         self.opf.smart_update(MetaInformation(self.opf))
         self.testReading()
 
+
 def suite():
     return unittest.TestLoader().loadTestsFromTestCase(OPFTest)
 
+
 def test():
     unittest.TextTestRunner(verbosity=2).run(suite())
+
 
 def test_user_metadata():
     from cStringIO import StringIO

@@ -15,24 +15,20 @@ value.
 
 import gc, os
 
-from calibre.constants import iswindows, islinux
 
 def get_memory():
     'Return memory usage in bytes'
+    # See https://pythonhosted.org/psutil/#psutil.Process.memory_info
     import psutil
-    p = psutil.Process(os.getpid())
-    if hasattr(p, 'memory_info_ex'):
-        mem = p.memory_info_ex()
-    else:
-        mem = p.get_ext_memory_info()
-    attr = 'wset' if iswindows else 'data' if islinux else 'rss'
-    return getattr(mem, attr)
+    return psutil.Process(os.getpid()).memory_info().rss
+
 
 def memory(since=0.0):
     'Return memory used in MB. The value of since is subtracted from the used memory'
     ans = get_memory()
     ans /= float(1024**2)
     return ans - since
+
 
 def gc_histogram():
     """Returns per-class counts of existing objects."""
@@ -42,6 +38,7 @@ def gc_histogram():
         count = result.get(t, 0)
         result[t] = count + 1
     return result
+
 
 def diff_hists(h1, h2):
     """Prints differences between two results of gc_histogram()."""

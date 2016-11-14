@@ -25,6 +25,7 @@ from calibre.ebooks.pdf.render.common import (inch, cm, mm, pica, cicero,
 from calibre.ebooks.pdf.render.engine import PdfDevice
 from calibre.ptempfile import PersistentTemporaryFile
 
+
 def get_page_size(opts, for_comic=False):  # {{{
     use_profile = not (opts.override_profile_size or
                        opts.output_profile.short_name == 'default' or
@@ -59,6 +60,7 @@ def get_page_size(opts, for_comic=False):  # {{{
             page_size = PAPER_SIZES[opts.paper_size]
     return page_size
 # }}}
+
 
 class Page(QWebPage):  # {{{
 
@@ -104,6 +106,7 @@ class Page(QWebPage):  # {{{
 
 # }}}
 
+
 def draw_image_page(page_rect, painter, p, preserve_aspect_ratio=True):
     if preserve_aspect_ratio:
         aspect_ratio = float(p.width())/p.height()
@@ -120,6 +123,7 @@ def draw_image_page(page_rect, painter, p, preserve_aspect_ratio=True):
         page_rect.setHeight(nnh)
         page_rect.setWidth(nnw)
     painter.drawPixmap(page_rect, p, p.rect())
+
 
 class PDFWriter(QObject):
 
@@ -145,6 +149,10 @@ class PDFWriter(QObject):
     def section(self):
         return self.current_section
 
+    @pyqtSlot(result=unicode)
+    def tl_section(self):
+        return self.current_tl_section
+
     def __init__(self, opts, log, cover_data=None, toc=None):
         from calibre.gui2 import must_use_qt
         must_use_qt()
@@ -169,6 +177,7 @@ class PDFWriter(QObject):
                     Qt.ScrollBarAlwaysOff)
         self.report_progress = lambda x, y: x
         self.current_section = ''
+        self.current_tl_section = ''
 
     def dump(self, items, out_stream, pdf_metadata):
         opts = self.opts
@@ -310,11 +319,12 @@ class PDFWriter(QObject):
                 self.loop.processEvents(self.loop.ExcludeUserInputEvents)
             evaljs('document.getElementById("MathJax_Message").style.display="none";')
 
-    def get_sections(self, anchor_map):
+    def get_sections(self, anchor_map, only_top_level=False):
         sections = defaultdict(list)
         ci = os.path.abspath(os.path.normcase(self.current_item))
         if self.toc is not None:
-            for toc in self.toc.flat():
+            tocentries = self.toc.top_level_items() if only_top_level else self.toc.flat()
+            for toc in tocentries:
                 path = toc.abspath or None
                 frag = toc.fragment or None
                 if path is None:
@@ -362,6 +372,7 @@ class PDFWriter(QObject):
         if not isinstance(amap, dict):
             amap = {'links':[], 'anchors':{}}  # Some javascript error occurred
         sections = self.get_sections(amap['anchors'])
+        tl_sections = self.get_sections(amap['anchors'], True)
         col = 0
 
         if self.header:
@@ -376,13 +387,16 @@ class PDFWriter(QObject):
         start_page = self.current_page_num
 
         mf = self.view.page().mainFrame()
+
+        def set_section(col, sections, attr):
+            # If this page has no section, use the section from the previous page
+            idx = col if col in sections else col - 1 if col - 1 in sections else None
+            if idx is not None:
+                setattr(self, attr, sections[idx][0])
+
         while True:
-            if col in sections:
-                self.current_section = sections[col][0]
-            elif col - 1 in sections:
-                # Ensure we are using the last section on the previous page as
-                # the section for this page, since this page has no sections
-                self.current_section = sections[col-1][-1]
+            set_section(col, sections, 'current_section')
+            set_section(col, tl_sections, 'current_tl_section')
             self.doc.init_page()
             if self.header or self.footer:
                 evaljs('paged_display.update_header_footer(%d)'%self.current_page_num)
@@ -404,6 +418,3 @@ class PDFWriter(QObject):
         if not self.doc.errors_occurred:
             self.doc.add_links(self.current_item, start_page, amap['links'],
                             amap['anchors'])
-
-
-

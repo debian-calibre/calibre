@@ -20,6 +20,7 @@ from calibre.ebooks import BOOK_EXTENSIONS
 
 bexts = frozenset(BOOK_EXTENSIONS) - {'mbp', 'tan', 'rar', 'zip', 'xml'}
 
+
 class FileOrFolder(object):
 
     def __init__(self, entry, fs_cache):
@@ -31,7 +32,8 @@ class FileOrFolder(object):
         # self.parent_id is None for storage objects
         self.parent_id = entry.get('parent_id', None)
         n = entry.get('name', None)
-        if not n: n = '___'
+        if not n:
+            n = '___'
         self.name = force_unicode(n, 'utf-8')
         self.persistent_id = entry.get('persistent_id', self.object_id)
         self.size = entry.get('size', 0)
@@ -179,6 +181,7 @@ class FileOrFolder(object):
     def mtp_id_path(self):
         return 'mtp:::' + json.dumps(self.object_id) + ':::' + '/'.join(self.full_path)
 
+
 class FilesystemCache(object):
 
     def __init__(self, all_storage, entries):
@@ -227,7 +230,7 @@ class FilesystemCache(object):
         for x in self.id_map.itervalues():
             if x.storage_id == storage_id and x.is_ebook:
                 if x.parent_id == storage_id and x.name.lower().endswith('.txt'):
-                    continue # Ignore .txt files in the root
+                    continue  # Ignore .txt files in the root
                 yield x
 
     def __len__(self):

@@ -10,6 +10,7 @@ Device driver for IRex Iliad
 
 from calibre.devices.usbms.driver import USBMS
 
+
 class ILIAD(USBMS):
 
     name           = 'IRex Iliad Device Interface'
@@ -28,7 +29,7 @@ class ILIAD(USBMS):
     VENDOR_NAME = 'IREX'
     WINDOWS_MAIN_MEM = 'ILIAD'
 
-    #OSX_MAIN_MEM = ''
+    # OSX_MAIN_MEM = ''
 
     MAIN_MEMORY_VOLUME_LABEL  = 'IRex Iliad Main Memory'
 

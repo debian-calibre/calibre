@@ -6,24 +6,26 @@ from functools import partial
 
 import apsw
 from PyQt5.Qt import (
-    QCoreApplication, QIcon, QObject, QTimer, Qt, QSplashScreen, QBrush,
-    QColor, QPixmap)
+    QCoreApplication, QIcon, QObject, QTimer)
 
 from calibre import prints, plugins, force_unicode
 from calibre.constants import (iswindows, __appname__, isosx, DEBUG, islinux,
         filesystem_encoding, get_portable_base)
 from calibre.utils.ipc import gui_socket_address, RC
 from calibre.gui2 import (
-    ORG_NAME, APP_UID, initialize_file_icon_provider, Application, choose_dir,
+    initialize_file_icon_provider, Application, choose_dir,
     error_dialog, question_dialog, gprefs, setup_gui_option_parser)
 from calibre.gui2.main_window import option_parser as _option_parser
+from calibre.gui2.splash_screen import SplashScreen
 from calibre.utils.config import prefs, dynamic
 
 if iswindows:
     winutil = plugins['winutil'][0]
 
+
 class AbortInit(Exception):
     pass
+
 
 def option_parser():
     parser = _option_parser(_('''\
@@ -50,6 +52,7 @@ path_to_ebook to the database.
                 'will be silently aborted, so use with care.'))
     setup_gui_option_parser(parser)
     return parser
+
 
 def find_portable_library():
     base = get_portable_base()
@@ -84,6 +87,7 @@ def find_portable_library():
     if not os.path.exists(lib):
         os.mkdir(lib)
 
+
 def init_qt(args):
     parser = option_parser()
     opts, args = parser.parse_args(args)
@@ -95,12 +99,18 @@ def init_qt(args):
         if os.path.isdir(libpath):
             prefs.set('library_path', os.path.abspath(libpath))
             prints('Using library at', prefs['library_path'])
-    QCoreApplication.setOrganizationName(ORG_NAME)
-    QCoreApplication.setApplicationName(APP_UID)
     override = 'calibre-gui' if islinux else None
     app = Application(args, override_program_name=override)
     app.file_event_hook = EventAccumulator()
-    app.setWindowIcon(QIcon(I('lt.png')))
+    try:
+        from PyQt5.Qt import QX11Info
+        is_x11 = QX11Info.isPlatformX11()
+    except Exception:
+        is_x11 = False
+    # Ancient broken VNC servers cannot handle icons of size greater than 256
+    # http://www.mobileread.com/forums/showthread.php?t=278447
+    ic = 'lt.png' if is_x11 else 'library.png'
+    app.setWindowIcon(QIcon(I(ic, allow_user_override=False)))
     return app, opts, args
 
 
@@ -149,9 +159,34 @@ def get_library_path(gui_runner):
             library_path = gui_runner.choose_dir(get_default_library_path())
     return library_path
 
+
 def repair_library(library_path):
     from calibre.gui2.dialogs.restore_library import repair_library_at
     return repair_library_at(library_path)
+
+
+def windows_repair(library_path=None):
+    from binascii import hexlify, unhexlify
+    import cPickle, subprocess
+    if library_path:
+        library_path = hexlify(cPickle.dumps(library_path, -1))
+        winutil.prepare_for_restart()
+        os.environ['CALIBRE_REPAIR_CORRUPTED_DB'] = library_path
+        subprocess.Popen([sys.executable])
+    else:
+        try:
+            app = Application([])
+            from calibre.gui2.dialogs.restore_library import repair_library_at
+            library_path = cPickle.loads(unhexlify(os.environ.pop('CALIBRE_REPAIR_CORRUPTED_DB')))
+            done = repair_library_at(library_path, wait_time=4)
+        except Exception:
+            done = False
+            error_dialog(None, _('Failed to repair library'), _(
+                'Could not repair library. Click "Show details" for more information.'), det_msg=traceback.format_exc(), show=True)
+        if done:
+            subprocess.Popen([sys.executable])
+        app.quit()
+
 
 class EventAccumulator(object):
 
@@ -161,34 +196,6 @@ class EventAccumulator(object):
     def __call__(self, ev):
         self.events.append(ev)
 
-class SplashScreen(QSplashScreen):
-
-    def __init__(self):
-        self.drawn_once = False
-        QSplashScreen.__init__(self, QPixmap(I('library.png')))
-        self.setWindowTitle(__appname__)
-
-    def drawContents(self, painter):
-        self.drawn_once = True
-        painter.setBackgroundMode(Qt.OpaqueMode)
-        painter.setBackground(QBrush(QColor(0xee, 0xee, 0xee)))
-        painter.setPen(Qt.black)
-        painter.setRenderHint(painter.TextAntialiasing, True)
-        r = self.rect().adjusted(5, 5, -5, -5)
-        br = painter.drawText(r, Qt.AlignLeft, self.message())
-        painter.fillRect(br.adjusted(-2, -3, 80, 3), painter.background())
-        br = painter.drawText(r, Qt.AlignLeft, self.message())
-
-    def show_message(self, msg):
-        self.showMessage(msg)
-        self.wait_for_draw()
-
-    def wait_for_draw(self):
-        # Without this the splash screen is not painted on linux and windows
-        self.drawn_once = False
-        st = time.time()
-        while not self.drawn_once and (time.time() - st < 0.1):
-            Application.instance().processEvents()
 
 class GuiRunner(QObject):
     '''Make sure an event loop is running before starting the main work of
@@ -297,6 +304,13 @@ class GuiRunner(QObject):
                         det_msg=traceback.format_exc()
                         )
             if repair:
+                if iswindows:
+                    # On some windows systems the existing db file gets locked
+                    # by something when running restore from the main process.
+                    # So run the restore in a separate process.
+                    windows_repair(self.library_path)
+                    self.app.quit()
+                    return
                 if repair_library(self.library_path):
                     db = LibraryDatabase(self.library_path)
         except:
@@ -326,6 +340,7 @@ class GuiRunner(QObject):
 
         self.initialize_db()
 
+
 def get_debug_executable():
     e = sys.executable if getattr(sys, 'frozen', False) else sys.argv[0]
     if hasattr(sys, 'frameworks_dir'):
@@ -343,6 +358,7 @@ def get_debug_executable():
             exe = base + '-debug' + ext
     return exe
 
+
 def run_in_debug_mode(logpath=None):
     import tempfile, subprocess
     fd, logpath = tempfile.mkstemp('.txt')
@@ -358,8 +374,10 @@ def run_in_debug_mode(logpath=None):
             stderr=subprocess.STDOUT, stdin=open(os.devnull, 'r'),
             creationflags=creationflags)
 
+
 def shellquote(s):
     return "'" + s.replace("'", "'\\''") + "'"
+
 
 def run_gui(opts, args, listener, app, gui_debug=None):
     initialize_file_icon_provider()
@@ -416,6 +434,7 @@ def run_gui(opts, args, listener, app, gui_debug=None):
 
 singleinstance_name = 'calibre_GUI'
 
+
 def cant_start(msg=_('If you are sure it is not running')+', ',
                det_msg=_('Timed out waiting for response from running calibre'),
                listener_failed=False):
@@ -441,6 +460,7 @@ def cant_start(msg=_('If you are sure it is not running')+', ',
 
     raise SystemExit(1)
 
+
 def build_pipe(print_error=True):
     t = RC(print_error=print_error)
     t.start()
@@ -449,6 +469,7 @@ def build_pipe(print_error=True):
         cant_start()
         raise SystemExit(1)
     return t
+
 
 def shutdown_other(rc=None):
     if rc is None:
@@ -466,6 +487,7 @@ def shutdown_other(rc=None):
     prints(_('Failed to shutdown running calibre instance'))
     raise SystemExit(1)
 
+
 def communicate(opts, args):
     t = build_pipe()
     if opts.shutdown_running_calibre:
@@ -478,6 +500,7 @@ def communicate(opts, args):
     t.conn.close()
     raise SystemExit(0)
 
+
 def create_listener():
     if islinux:
         from calibre.utils.ipc.server import LinuxListener as Listener
@@ -485,11 +508,25 @@ def create_listener():
         from multiprocessing.connection import Listener
     return Listener(address=gui_socket_address())
 
+
 def main(args=sys.argv):
+    if iswindows and 'CALIBRE_REPAIR_CORRUPTED_DB' in os.environ:
+        windows_repair()
+        return 0
     gui_debug = None
     if args[0] == '__CALIBRE_GUI_DEBUG__':
         gui_debug = args[1]
         args = ['calibre']
+
+    if iswindows:
+        # Ensure that all ebook editor instances are grouped together in the task
+        # bar. This prevents them from being grouped with viewer process when
+        # launched from within calibre, as both use calibre-parallel.exe
+        import ctypes
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('com.calibre-ebook.main-gui')
+        except Exception:
+            pass  # Only available on windows 7 and newer
 
     try:
         app, opts, args = init_qt(args)

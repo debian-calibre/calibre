@@ -5,11 +5,11 @@
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
 
-import math
 from PyQt5.Qt import (
     Qt, QWidget, QSizePolicy, QSize, QRect, QConicalGradient, QPen, QBrush,
-    QPainter, QTimer, QVBoxLayout, QLabel, QStackedWidget
+    QPainter, QTimer, QVBoxLayout, QLabel, QStackedWidget, QDialog
 )
+
 
 def draw_snake_spinner(painter, rect, angle, light, dark):
     painter.setRenderHint(QPainter.Antialiasing)
@@ -20,24 +20,20 @@ def draw_snake_spinner(painter, rect, angle, light, dark):
     elif rect.height() > rect.width():
         delta = (rect.height() - rect.width()) // 2
         rect = rect.adjusted(0, delta, 0, -delta)
-    disc_width = max(4, rect.width() // 10)
+    disc_width = max(3, min(rect.width() // 10, 8))
 
     drawing_rect = QRect(rect.x() + disc_width, rect.y() + disc_width, rect.width() - 2 * disc_width, rect.height() - 2 *disc_width)
-    try:
-        angle_for_width = math.degrees(math.atan2(1.3 * disc_width, drawing_rect.width()))
-    except ZeroDivisionError:
-        angle_for_width = 5
 
-    gradient = QConicalGradient(drawing_rect.center(), angle - angle_for_width)
-    gradient.setColorAt(1, light)
+    gap = 60  # degrees
+    gradient = QConicalGradient(drawing_rect.center(), angle - gap // 2)
+    gradient.setColorAt((360 - gap//2)/360.0, light)
     gradient.setColorAt(0, dark)
 
-    painter.setPen(QPen(light, disc_width))
-    painter.drawArc(drawing_rect, 0, 360 * 16)
     pen = QPen(QBrush(gradient), disc_width)
     pen.setCapStyle(Qt.RoundCap)
     painter.setPen(pen)
-    painter.drawArc(drawing_rect, angle * 16, (360 - 2 * angle_for_width) * 16)
+    painter.drawArc(drawing_rect, angle * 16, (360 - gap) * 16)
+
 
 class ProgressSpinner(QWidget):
 
@@ -119,6 +115,7 @@ class ProgressSpinner(QWidget):
 
 ProgressIndicator = ProgressSpinner
 
+
 class WaitPanel(QWidget):
 
     def __init__(self, msg, parent=None, size=256, interval=10):
@@ -131,6 +128,15 @@ class WaitPanel(QWidget):
         self.la = QLabel(msg)
         self.la.setStyleSheet('QLabel { font-size: 40px; font-weight: bold }')
         l.addWidget(self.la, 0, Qt.AlignCenter), l.addStretch()
+
+    @property
+    def msg(self):
+        return self.la.text()
+
+    @msg.setter
+    def msg(self, val):
+        self.la.setText(val)
+
 
 class WaitStack(QStackedWidget):
 
@@ -151,11 +157,23 @@ class WaitStack(QStackedWidget):
         self.wp.stop()
         self.setCurrentWidget(self.after)
 
+    @property
+    def msg(self):
+        return self.wp.msg
+
+    @msg.setter
+    def msg(self, val):
+        self.wp.msg = val
+
 if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
-    w = ProgressSpinner()
-    w.show()
+    d = QDialog()
+    d.resize(64, 64)
+    w = ProgressSpinner(d)
+    l = QVBoxLayout(d)
+    l.addWidget(w)
     w.start()
-    app.exec_()
+    d.exec_()
+    del d
     del app

@@ -40,6 +40,8 @@ States.
     1. 'mi<mk<not-in-tbl', end table
     2. 'cw<tb<cell______', end cell
 """
+
+
 class Table:
     """
     Make tables.
@@ -47,11 +49,12 @@ class Table:
     Read one line at a time. The default state (self.__state) is
     'not_in_table'. Look for either a 'cw<tb<in-table__', or a row definition.
     """
+
     def __init__(self,
             in_file,
             bug_handler,
-            copy = None,
-            run_level = 1,):
+            copy=None,
+            run_level=1,):
         """
         Required:
             'file'--file to parse
@@ -67,6 +70,7 @@ class Table:
         self.__copy = copy
         self.__run_level = run_level
         self.__write_to = better_mktemp()
+
     def __initiate_values(self):
         """
         Initiate all values.
@@ -103,6 +107,7 @@ class Table:
         self.__row_dict = {}
         self.__cell_list = []
         self.__cell_widths = []
+
     def __in_table_func(self, line):
         """
         Requires:
@@ -125,8 +130,9 @@ class Table:
             self.__found_row_def_func(line)
         elif self.__token_info == 'cw<tb<cell______':
             self.__start_row_func(line)
-            self.__empty_cell( line)
+            self.__empty_cell(line)
         self.__write_obj.write(line)
+
     def __not_in_table_func(self, line):
         """
         Requires:
@@ -143,6 +149,7 @@ class Table:
         if action:
             action(line)
         self.__write_obj.write(line)
+
     def __close_table(self, line):
         """
         Requires:
@@ -162,6 +169,7 @@ class Table:
         self.__table_data[-1]['average-cells-per-row'] = average_cells_in_row
         average_cell_width = self.__mode(self.__cell_widths)
         self.__table_data[-1]['average-cell-width'] = average_cell_width
+
     def __found_row_def_func(self, line):
         """
         Requires:
@@ -178,6 +186,7 @@ class Table:
         self.__cell_list = []
         self.__cell_list.append({})
         self.__cell_widths = []
+
     def __start_table_func(self, line):
         """
         Requires:
@@ -189,14 +198,15 @@ class Table:
             Write out the table marker.
             Initialize table values (not sure about these yet)
         """
-	self.__rows_in_table = 0;
-	self.__cells_in_table = 0;
-	self.__cells_in_row = 0;
+        self.__rows_in_table = 0
+        self.__cells_in_table = 0
+        self.__cells_in_row = 0
         self.__max_number_cells_in_row = 0
         self.__table_data.append({})
         self.__list_of_cells_in_row = []
         self.__write_obj.write('mi<mk<tabl-start\n')
         self.__state.append('in_table')
+
     def __end_row_table_func(self, line):
         """
         Requires:
@@ -207,6 +217,7 @@ class Table:
             ?
         """
         self.__close_table(self, line)
+
     def __end_row_def_func(self, line):
         """
         Requires:
@@ -227,8 +238,9 @@ class Table:
         widths = self.__row_dict.get('widths')
         if widths:
             width_list = widths.split(',')
-            num_cells = len (width_list)
+            num_cells = len(width_list)
             self.__row_dict['number-of-cells'] = num_cells
+
     def __in_row_def_func(self, line):
         """
         Requires:
@@ -271,6 +283,7 @@ class Table:
             self.__write_obj.write(line)
         else:
             self.__write_obj.write(line)
+
     def __handle_row_token(self, line):
         """
         Requires:
@@ -311,6 +324,7 @@ class Table:
             self.__row_dict['left-row-position'] = position
         elif self.__token_info == 'cw<tb<row-header':
             self.__row_dict['header'] = 'true'
+
     def __start_cell_func(self, line):
         """
         Required:
@@ -341,6 +355,7 @@ class Table:
             self.__write_obj.write('mi<tg<open______<cell\n')
         self.__cells_in_table += 1
         self.__cells_in_row += 1
+
     def __start_row_func(self, line):
         """
         Required:
@@ -359,6 +374,7 @@ class Table:
         self.__write_obj.write('\n')
         self.__cells_in_row = 0
         self.__rows_in_table += 1
+
     def __found_cell_position(self, line):
         """
         needs:
@@ -389,6 +405,7 @@ class Table:
         self.__cell_list[-1]['width'] = width
         self.__cell_list.append({})
         self.__cell_widths.append(width)
+
     def __in_cell_func(self, line):
         """
         Required:
@@ -417,6 +434,7 @@ class Table:
             self.__end_cell_func(line)
         else:
             self.__write_obj.write(line)
+
     def __end_cell_func(self, line):
         """
         Requires:
@@ -432,6 +450,7 @@ class Table:
         self.__write_obj.write('mi<mk<close_cell\n')
         self.__write_obj.write('mi<tg<close_____<cell\n')
         self.__write_obj.write('mi<mk<closecell_\n')
+
     def __in_row_func(self, line):
         if self.__token_info == 'mi<mk<not-in-tbl' or\
             self.__token_info == 'mi<mk<sect-start' or\
@@ -455,6 +474,7 @@ class Table:
         else:
             self.__write_obj.write(line)
         """
+
     def __end_row_func(self, line):
         """
         """
@@ -467,6 +487,7 @@ class Table:
         if self.__cells_in_row > self.__max_number_cells_in_row:
             self.__max_number_cells_in_row = self.__cells_in_row
         self.__list_of_cells_in_row.append(self.__cells_in_row)
+
     def __empty_cell(self, line):
         """
         Required:
@@ -488,6 +509,7 @@ class Table:
             self.__write_obj.write('mi<tg<empty_____<cell\n')
         self.__cells_in_table += 1
         self.__cells_in_row += 1
+
     def __mode(self, the_list):
         """
         Required:
@@ -506,6 +528,7 @@ class Table:
                 mode = item
                 max = num_of_values
         return mode
+
     def make_table(self):
         """
         Requires:
@@ -526,13 +549,13 @@ class Table:
             self.__token_info = line[:16]
             action = self.__state_dict.get(self.__state[-1])
             # print self.__state[-1]
-            if action == None:
+            if action is None:
                 sys.stderr.write('No matching state in module table.py\n')
                 sys.stderr.write(self.__state[-1] + '\n')
             action(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "table.data")
         copy_obj.rename(self.__write_to, self.__file)

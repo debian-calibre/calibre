@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 09:56+0530\n"
-"PO-Revision-Date: 2016-06-17 09:07+0000\n"
+"POT-Creation-Date: 2016-10-14 09:27+0530\n"
+"PO-Revision-Date: 2016-10-16 11:15+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -37,17 +37,17 @@ msgstr "Les outils d'édition de livre numérique consistent en un objet :class:
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
-msgstr "Vous obtenez un objet de conteneur pour un livre à un chemin comme ceci : :"
+msgstr "Vous obtenez un objet de conteneur pour un livre à un chemin comme ceci::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:20
 msgid ""
 "If you are writing a plugin for the ebook editor, you get the current "
 "container for the book being edited like this::"
-msgstr "Si vous écrivez une extension pour l'éditeur de livre numérique, vous obtenez le conteneur actuel pour le livre étant édité comme ceci : :"
+msgstr "Si vous écrivez une extension pour l'éditeur de livre numérique, vous obtenez le conteneur actuel pour le livre étant édité comme ceci::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:30
 msgid "The Container object"
-msgstr "L'objet conteneur"
+msgstr "L'objet Conteneur"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
@@ -61,7 +61,7 @@ msgstr "Un conteneur représente un Livre Numérique Ouvert comme un répertoire
 msgid ""
 "The root directory. This is the base of the ebook. All the ebooks files are "
 "inside this directory or in its sub-directories."
-msgstr "Le répertoire racine. Ceci est la la base du livre numérique. Tous les fichiers de livres numériques sont dans ce répertoire ou dans ses sous répertoires."
+msgstr "Le répertoire racine. Ceci est la base du livre numérique. Tous les fichiers de livres numériques sont dans ce répertoire ou dans ses sous-répertoires."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -114,6 +114,14 @@ msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
 msgstr "Ajouter une entrée au manifeste pour le fichier avec le nom spécifié. Renvoie l'id du manifeste."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
+msgid ""
+"Ensure that the specified properties are set on only the manifest item "
+"identified by name. You can pass None as the name to remove the property "
+"from all items."
+msgstr "Assure que les propriétés spécifiées soient paramétrées uniquement sur l'élément du manifeste spécifié par un nom. Vous pouvez utiliser None comme nom pour supprimer la propriété de tous les éléments. "
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.book_type:1
@@ -226,6 +234,14 @@ msgstr "Renvoie True si le manifeste a une entrée correspondante au nom"
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
 msgstr "Mappage de l'id du manifeste aux noms de référence"
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
+msgid ""
+"The names of all manifest items whose media-type matches predicate. "
+"`predicate` can be a set, a list, a string or a function taking a single "
+"argument, which will be called with the media-type."
+msgstr "Les noms de tous les éléments du manifeste dont le media-type correspond à predicate. `predicate` peut être un paramètre, une liste, une chaîne ou une fonction comprenant un simple argument, qui sera appelé avec le media-type."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -709,6 +725,11 @@ msgid ""
 "If True, class attributes in the HTML that do not match any CSS rules are "
 "also removed."
 msgstr "Si Vrai, les attibuts de classe HTML qui ne correspondent à aucunes règles CSS sont aussi supprimées."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:5
+msgid "If True, rules with identical selectors are merged."
+msgstr "Si Vrai, les règles avec des sélecteurs identiques sont fusionnées"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.filter_css:1

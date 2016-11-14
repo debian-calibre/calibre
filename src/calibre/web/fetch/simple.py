@@ -23,11 +23,14 @@ from calibre.utils.img import image_from_data, image_to_data
 from calibre.utils.imghdr import what
 from calibre.web.fetch.utils import rescale_image
 
+
 class AbortArticle(Exception):
     pass
 
+
 class FetchError(Exception):
     pass
+
 
 class closing(object):
 
@@ -47,6 +50,8 @@ class closing(object):
 
 
 bad_url_counter = 0
+
+
 def basename(url):
     try:
         parts = urlparse.urlsplit(url)
@@ -59,6 +64,7 @@ def basename(url):
     if not os.path.splitext(res)[1]:
         return 'index.html'
     return res
+
 
 def save_soup(soup, target):
     ns = BeautifulSoup('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />')
@@ -86,6 +92,7 @@ def save_soup(soup, target):
     with open(target, 'wb') as f:
         f.write(html.encode('utf-8'))
 
+
 class response(str):
 
     def __new__(cls, *args):
@@ -93,8 +100,10 @@ class response(str):
         obj.newurl = None
         return obj
 
+
 def default_is_link_wanted(url, tag):
     raise NotImplementedError()
+
 
 class RecursiveFetcher(object):
     LINK_FILTER = tuple(re.compile(i, re.IGNORECASE) for i in
@@ -200,8 +209,10 @@ class RecursiveFetcher(object):
                 remove_beyond(tag, 'nextSibling')
 
         if self.remove_tags_before is not None:
-            tag = soup.find(**self.remove_tags_before)
-            remove_beyond(tag, 'previousSibling')
+            rt = [self.remove_tags_before] if isinstance(self.remove_tags_before, dict) else self.remove_tags_before
+            for spec in rt:
+                tag = soup.find(**spec)
+                remove_beyond(tag, 'previousSibling')
 
         for kwds in self.remove_tags:
             for tag in soup.findAll(**kwds):
@@ -303,13 +314,13 @@ class RecursiveFetcher(object):
         diskpath = unicode_path(os.path.join(self.current_dir, 'stylesheets'))
         if not os.path.exists(diskpath):
             os.mkdir(diskpath)
-        for c, tag in enumerate(soup.findAll(lambda tag: tag.name.lower()in ['link', 'style'] and tag.has_key('type') and tag['type'].lower() == 'text/css')):
-            if tag.has_key('href'):
+        for c, tag in enumerate(soup.findAll(lambda tag: tag.name.lower()in ['link', 'style'] and tag.has_key('type') and tag['type'].lower() == 'text/css')):  # noqa
+            if tag.has_key('href'):  # noqa
                 iurl = tag['href']
                 if not urlparse.urlsplit(iurl).scheme:
                     iurl = urlparse.urljoin(baseurl, iurl, False)
                 with self.stylemap_lock:
-                    if self.stylemap.has_key(iurl):
+                    if self.stylemap.has_key(iurl):  # noqa
                         tag['href'] = self.stylemap[iurl]
                         continue
                 try:
@@ -332,7 +343,7 @@ class RecursiveFetcher(object):
                         if not urlparse.urlsplit(iurl).scheme:
                             iurl = urlparse.urljoin(baseurl, iurl, False)
                         with self.stylemap_lock:
-                            if self.stylemap.has_key(iurl):
+                            if self.stylemap.has_key(iurl):  # noqa
                                 ns.replaceWith(src.replace(m.group(1), self.stylemap[iurl]))
                                 continue
                         try:
@@ -356,7 +367,7 @@ class RecursiveFetcher(object):
         if not os.path.exists(diskpath):
             os.mkdir(diskpath)
         c = 0
-        for tag in soup.findAll(lambda tag: tag.name.lower()=='img' and tag.has_key('src')):
+        for tag in soup.findAll(lambda tag: tag.name.lower()=='img' and tag.has_key('src')):  # noqa
             iurl = tag['src']
             if iurl.startswith('data:image/'):
                 try:
@@ -370,7 +381,7 @@ class RecursiveFetcher(object):
                 if not urlparse.urlsplit(iurl).scheme:
                     iurl = urlparse.urljoin(baseurl, iurl, False)
                 with self.imagemap_lock:
-                    if self.imagemap.has_key(iurl):
+                    if self.imagemap.has_key(iurl):  # noqa
                         tag['src'] = self.imagemap[iurl]
                         continue
                 try:
@@ -441,16 +452,16 @@ class RecursiveFetcher(object):
 
     def localize_link(self, tag, key, path):
         parts = urlparse.urlsplit(tag[key])
-        suffix = '#'+parts.fragment if parts.fragment else ''
+        suffix = ('#'+parts.fragment) if parts.fragment else ''
         tag[key] = path+suffix
 
     def process_return_links(self, soup, baseurl):
-        for tag in soup.findAll(lambda tag: tag.name.lower()=='a' and tag.has_key('href')):
+        for tag in soup.findAll(lambda tag: tag.name.lower()=='a' and tag.has_key('href')):  # noqa
             iurl = self.absurl(baseurl, tag, 'href')
             if not iurl:
                 continue
             nurl = self.normurl(iurl)
-            if self.filemap.has_key(nurl):
+            if self.filemap.has_key(nurl):  # noqa
                 self.localize_link(tag, 'href', self.filemap[nurl])
 
     def process_links(self, soup, baseurl, recursion_level, into_dir='links'):
@@ -472,7 +483,7 @@ class RecursiveFetcher(object):
                 if not iurl:
                     continue
                 nurl = self.normurl(iurl)
-                if self.filemap.has_key(nurl):
+                if self.filemap.has_key(nurl):  # noqa
                     self.localize_link(tag, 'href', self.filemap[nurl])
                     continue
                 if self.files > self.max_files:
@@ -550,6 +561,7 @@ class RecursiveFetcher(object):
             print
         return res
 
+
 def option_parser(usage=_('%prog URL\n\nWhere URL is for example http://google.com')):
     parser = OptionParser(usage=usage)
     parser.add_option('-d', '--base-dir',
@@ -589,6 +601,7 @@ def create_fetcher(options, image_map={}, log=None):
     if log is None:
         log = Log(level=Log.DEBUG) if options.verbose else Log()
     return RecursiveFetcher(options, log, image_map={})
+
 
 def main(args=sys.argv):
     parser = option_parser()

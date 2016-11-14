@@ -5,7 +5,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, subprocess, hashlib, shutil, glob, stat, sys, time
+import os, subprocess, hashlib, shutil, glob, stat, sys, time, urllib2, urllib, json, httplib
 from subprocess import check_call
 from tempfile import NamedTemporaryFile, mkdtemp, gettempdir
 from zipfile import ZipFile
@@ -99,6 +99,10 @@ def get_github_data():
 def get_sourceforge_data():
     return {'username':'kovidgoyal', 'project':'calibre'}
 
+def get_fosshub_data():
+    with open(os.path.expanduser('~/work/env/private/fosshub'), 'rb') as f:
+        return f.read().decode('utf-8')
+
 def send_data(loc):
     subprocess.check_call(['rsync', '--inplace', '--delete', '-r', '-z', '-h', '--progress', '-e', 'ssh -x',
         loc+'/', '%s@%s:%s'%(STAGING_USER, STAGING_HOST, STAGING_DIR)])
@@ -113,9 +117,6 @@ def sf_cmdline(ver, sdata):
 def calibre_cmdline(ver):
     return [__appname__, ver, 'fmap', 'calibre']
 
-def dbs_cmdline(ver):
-    return [__appname__, ver, 'fmap', 'dbs']
-
 def run_remote_upload(args):
     print 'Running remotely:', ' '.join(args)
     subprocess.check_call(['ssh', '-x', '%s@%s'%(STAGING_USER, STAGING_HOST),
@@ -123,12 +124,34 @@ def run_remote_upload(args):
 
 # }}}
 
+def upload_to_fosshub():
+    # fosshub has no API to do partial uploads, so we always upload all files.
+    print('Sending upload request to fosshub...')
+    files = set(installers())
+    entries = []
+    for fname in files:
+        desc = installer_description(fname)
+        url = 'https://download.calibre-ebook.com/%s/%s' % (__version__, os.path.basename(fname))
+        entries.append({
+            'url':url,
+            'type': desc,
+            'version': __version__,
+        })
+    jq = {'software': 'Calibre', 'apiKey':get_fosshub_data(), 'upload':entries, 'delete':[{'type':'*', 'version':'*', 'name':'*'}]}
+    # print(json.dumps(jq, indent=2))
+    rq = urllib2.urlopen('https://www.fosshub.com/JSTools/uploadJson', urllib.urlencode({'content':json.dumps(jq)}))
+    resp = rq.read()
+    if rq.getcode() != httplib.OK:
+        raise SystemExit('Failed to upload to fosshub, with HTTP error code: %d and response: %s' % (rq.getcode(), resp))
+
+
 class UploadInstallers(Command):  # {{{
 
     def add_options(self, parser):
         parser.add_option('--replace', default=False, action='store_true', help='Replace existing installers')
 
     def run(self, opts):
+        # return upload_to_fosshub()
         all_possible = set(installers())
         available = set(glob.glob('dist/*'))
         files = {x:installer_description(x) for x in
@@ -148,7 +171,7 @@ class UploadInstallers(Command):  # {{{
                 upload_signatures()
                 check_call('ssh code /apps/update-calibre-version.py'.split())
             # self.upload_to_sourceforge()
-            self.upload_to_dbs()
+            upload_to_fosshub()
             self.upload_to_github(opts.replace)
         finally:
             shutil.rmtree(tdir, ignore_errors=True)
@@ -198,8 +221,6 @@ class UploadInstallers(Command):  # {{{
     def upload_to_calibre(self):
         run_remote_upload(calibre_cmdline(__version__))
 
-    def upload_to_dbs(self):
-        run_remote_upload(dbs_cmdline(__version__))
 # }}}
 
 class UploadUserManual(Command):  # {{{

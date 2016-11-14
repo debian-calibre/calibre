@@ -28,9 +28,12 @@ from calibre.constants import islinux
 DBPATH = 'Sony_Reader/database/books.db'
 THUMBPATH = 'Sony_Reader/database/cache/books/%s/thumbnail/main_thumbnail.jpg'
 
+
 class ImageWrapper(object):
+
     def __init__(self, image_path):
         self.image_path = image_path
+
 
 class PRST1(USBMS):
     name           = 'SONY PRST1 and newer Device Interface'
@@ -672,8 +675,7 @@ class PRST1(USBMS):
                                 'WHERE content_id = ? AND collection_id = ? ')
                         t = (bookId, db_collections[collection],)
                         cursor.execute(query, t)
-                        debug_print('Deleted Book From Collection: ' + bookPath
-                                + ' -> ' + collection)
+                        debug_print('Deleted Book From Collection: ' + bookPath + ' -> ' + collection)
 
                 db_collections[collection] = None
 

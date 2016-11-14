@@ -1,9 +1,10 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-__license__   = 'GPL v3'
+__license__ = 'GPL v3'
 
 from calibre.web.feeds.news import BasicNewsRecipe
 from calibre import browser
+
 
 class NewYorker(BasicNewsRecipe):
 
@@ -12,16 +13,11 @@ class NewYorker(BasicNewsRecipe):
 
     masthead_url = 'http://www.newyorker.com/images/elements/print/newyorker_printlogo.gif'
 
-    compress_news_images = True
-    compress_news_images_auto_size = 8
-    scale_news_images_to_device = False
-    scale_news_images = (768, 1024)
-
     url_list = []
     language = 'en'
     __author__ = 'Kovid Goyal'
     no_stylesheets = True
-    timefmt =  ' [%b %d]'
+    timefmt = ' [%b %d]'
     encoding = 'utf-8'
     extra_css = '''
                 .byline { font-size:xx-small; font-weight: bold;}
@@ -31,16 +27,20 @@ class NewYorker(BasicNewsRecipe):
     needs_subscription = 'optional'
     keep_only_tags = [
         dict(itemprop=['headline', 'alternativeHeadline', 'author', 'articleBody']),
+        dict(id=['featured-item']),
     ]
     remove_tags = [
-        dict(attrs={'class':lambda x: x and set(x.split()).intersection({'content-ad-wrapper', 'social-hover'})}),
+        dict(attrs={'class': lambda x: x and set(x.split()).intersection(
+            {'content-ad-wrapper', 'social-hover'})}),
         dict(id=['newsletter-signup']),
 
     ]
 
     def parse_index(self):
-        soup = self.index_to_soup('http://www.newyorker.com/magazine?intcid=magazine')
-        ph = soup.find('div', attrs={'class':lambda x: x and 'cover-info' in x.split()})
+        soup = self.index_to_soup(
+            'http://www.newyorker.com/magazine?intcid=magazine')
+        ph = soup.find(
+            'div', attrs={'class': lambda x: x and 'cover-info' in x.split()})
         if ph is not None:
             img = ph.find('img', src=True)
             if img is not None:
@@ -72,16 +72,28 @@ class NewYorker(BasicNewsRecipe):
             self.log('Found article:', title)
             self.log('\t', url)
             self.log('\t', desc)
-            articles.append({'title':title, 'url':url, 'date':'',
-                'description':desc})
+            articles.append({'title': title, 'url': url, 'date': '',
+                             'description': desc})
 
         return feeds
 
     def preprocess_html(self, soup):
         for img in soup.findAll('img'):
-            ds = img['data-src']
+            try:
+                ds = img['data-src']
+            except KeyError:
+                continue
             if ds:
                 img['src'] = ds
+        return soup
+
+    def postprocess_html(self, soup, *a):
+        ab = soup.find(id='articleBody')
+        if ab is not None:
+            fi = soup.find(id='featured-item')
+            if fi is not None:
+                p = fi.parent
+                p.insert(len(p) - 2, fi)
         return soup
 
     # The New Yorker changes the content it delivers based on cookies, so the
@@ -96,5 +108,3 @@ class NewYorker(BasicNewsRecipe):
         br = browser()
         return br.open_novisit(*args, **kwargs)
     open = open_novisit
-
-

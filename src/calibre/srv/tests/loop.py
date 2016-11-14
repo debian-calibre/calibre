@@ -17,12 +17,12 @@ try:
 except ImportError:
     create_server_cert = None
 
-
 from calibre.srv.pre_activated import has_preactivated_support
 from calibre.srv.tests.base import BaseTest, TestServer
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.monotonic import monotonic
-is_travis = os.environ.get('TRAVIS') == 'true'
+is_ci = os.environ.get('CI', '').lower() == 'true'
+
 
 class LoopTest(BaseTest):
 
@@ -57,15 +57,18 @@ class LoopTest(BaseTest):
     def test_plugins(self):
         'Test plugin semantics'
         class Plugin(object):
+
             def __init__(self):
                 self.running = Event()
                 self.event = Event()
                 self.port = None
+
             def start(self, loop):
                 self.running.set()
                 self.port = loop.bound_address[1]
                 self.event.wait()
                 self.running.clear()
+
             def stop(self):
                 self.event.set()
 
@@ -104,7 +107,7 @@ class LoopTest(BaseTest):
         with TestServer(lambda data:(data.path[0] + data.read()), listen_on='1.1.1.1', fallback_to_detected_interface=True, specialize=specialize) as server:
             self.assertNotEqual('1.1.1.1', server.address[0])
 
-    @skipIf(is_travis, 'Travis does not support BonJour')
+    @skipIf(is_ci, 'Continuous Integration servers do not support BonJour')
     def test_bonjour(self):
         'Test advertising via BonJour'
         from calibre.srv.bonjour import BonJour
@@ -125,6 +128,7 @@ class LoopTest(BaseTest):
     def test_ring_buffer(self):
         'Test the ring buffer used for reads'
         class FakeSocket(object):
+
             def __init__(self, data):
                 self.data = data
 
@@ -134,8 +138,10 @@ class LoopTest(BaseTest):
                 return sz
         from calibre.srv.loop import ReadBuffer, READ, WRITE
         buf = ReadBuffer(100)
+
         def write(data):
             return buf.recv_from(FakeSocket(data))
+
         def set(data, rpos, wpos, state):
             buf.ba = bytearray(data)
             buf.buf = memoryview(buf.ba)
@@ -179,15 +185,13 @@ class LoopTest(BaseTest):
     @skipIf(create_server_cert is None, 'certgen module not available')
     def test_ssl(self):
         'Test serving over SSL'
-        s = socket.socket(socket.AF_INET if is_travis else socket.AF_INET6, socket.SOCK_STREAM, 0)
-        s.bind(('localhost', 0))
-        address = s.getsockname()[0]
+        address = '127.0.0.1'
         with TemporaryDirectory('srv-test-ssl') as tdir:
             cert_file, key_file, ca_file = map(lambda x:os.path.join(tdir, x), 'cka')
             create_server_cert(address, ca_file, cert_file, key_file, key_size=1024)
             ctx = ssl.create_default_context(cafile=ca_file)
-            with TestServer(lambda data:(data.path[0] + data.read()), ssl_certfile=cert_file, ssl_keyfile=key_file) as server:
-                conn = httplib.HTTPSConnection(server.address[0], server.address[1], strict=True, context=ctx)
+            with TestServer(lambda data:(data.path[0] + data.read()), ssl_certfile=cert_file, ssl_keyfile=key_file, listen_on=address, port=0) as server:
+                conn = httplib.HTTPSConnection(address, server.address[1], strict=True, context=ctx)
                 conn.request('GET', '/test', 'body')
                 r = conn.getresponse()
                 self.ae(r.status, httplib.OK)
@@ -230,11 +234,14 @@ class LoopTest(BaseTest):
         'Test the jobs manager'
         from calibre.srv.jobs import JobsManager
         O = namedtuple('O', 'max_jobs max_job_time')
+
         class FakeLog(list):
+
             def error(self, *args):
                 self.append(' '.join(args))
         s = ('waiting', 'running')
         jm = JobsManager(O(1, 5), FakeLog())
+
         def job_status(jid):
             return jm.job_status(jid)[0]
 

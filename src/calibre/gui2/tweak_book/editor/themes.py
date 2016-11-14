@@ -22,6 +22,8 @@ from calibre.gui2.tweak_book.widgets import Dialog
 underline_styles = {'single', 'dash', 'dot', 'dash_dot', 'dash_dot_dot', 'wave', 'spell'}
 
 _default_theme = None
+
+
 def default_theme():
     global _default_theme
     if _default_theme is None:
@@ -108,7 +110,7 @@ THEMES = {
     Type         fg={identifier}
     Statement    fg={keyword}
     Keyword      fg={keyword}
-    Special      fg=e7f6da
+    Special      fg={special}
     Error        us=wave uc=red
     SpellError   us=wave uc=orange
     SpecialCharacter bg={cursor_loc}
@@ -126,7 +128,8 @@ THEMES = {
         comment='99968b',
         string='95e454',
         keyword='8ac6f2',
-        constant='e5786d'),  # }}}
+        constant='e5786d',
+        special='e7f6da'),  # }}}
 
     'pyte-light':  # {{{
     '''
@@ -156,7 +159,7 @@ THEMES = {
     Type         fg={identifier}
     Statement    fg={keyword}
     Keyword      fg={keyword}
-    Special      fg=70a0d0 italic
+    Special      fg={special} italic
     SpecialCharacter bg={cursor_loc}
     Error        us=wave uc=red
     SpellError   us=wave uc=magenta
@@ -174,7 +177,8 @@ THEMES = {
         comment='a0b0c0',
         string='4070a0',
         keyword='007020',
-        constant='a07040'),  # }}}
+        constant='a07040',
+        special='70a0d0'),  # }}}
 
     'solarized-x-dark': SOLARIZED.format(**SLDX),
     'solarized-dark': SOLARIZED.format(**SLD),
@@ -182,6 +186,7 @@ THEMES = {
     'solarized-x-light': SOLARIZED.format(**SLLX),
 
 }
+
 
 def read_color(col):
     if QColor.isValidColor(col):
@@ -197,6 +202,7 @@ def read_color(col):
         pass
 
 Highlight = namedtuple('Highlight', 'fg bg bold italic underline underline_color')
+
 
 def read_theme(raw):
     ans = {}
@@ -231,6 +237,7 @@ def read_theme(raw):
 
 THEMES = {k:read_theme(raw) for k, raw in THEMES.iteritems()}
 
+
 def u(x):
     x = {'spell':'SpellCheck', 'dash_dot':'DashDot', 'dash_dot_dot':'DashDotDot'}.get(x, x.capitalize())
     if 'Dot' in x:
@@ -238,16 +245,19 @@ def u(x):
     return x + 'Underline'
 underline_styles = {x:getattr(QTextCharFormat, u(x)) for x in underline_styles}
 
+
 def to_highlight(data):
     data = data.copy()
     for c in ('fg', 'bg', 'underline_color'):
         data[c] = read_color(data[c]) if data.get(c, None) is not None else None
     return Highlight(**data)
 
+
 def read_custom_theme(data):
     dt = THEMES[default_theme()].copy()
     dt.update({k:to_highlight(v) for k, v in data.iteritems()})
     return dt
+
 
 def get_theme(name):
     try:
@@ -259,6 +269,7 @@ def get_theme(name):
             return THEMES[default_theme()]
         else:
             return read_custom_theme(ans)
+
 
 def highlight_to_char_format(h):
     ans = syntax_text_char_format()
@@ -276,11 +287,13 @@ def highlight_to_char_format(h):
             ans.setUnderlineColor(h.underline_color.color())
     return ans
 
+
 def theme_color(theme, name, attr):
     try:
         return getattr(theme[name], attr).color()
     except (KeyError, AttributeError):
         return getattr(THEMES[default_theme()][name], attr).color()
+
 
 def theme_format(theme, name):
     try:
@@ -289,16 +302,20 @@ def theme_format(theme, name):
         h = THEMES[default_theme()][name]
     return highlight_to_char_format(h)
 
+
 def custom_theme_names():
     return tuple(tprefs['custom_themes'].iterkeys())
 
+
 def builtin_theme_names():
     return tuple(THEMES.iterkeys())
+
 
 def all_theme_names():
     return builtin_theme_names() + custom_theme_names()
 
 # Custom theme creation/editing {{{
+
 
 class CreateNewTheme(Dialog):
 
@@ -335,8 +352,10 @@ class CreateNewTheme(Dialog):
                 'A custom theme with the name %s already exists') % self.theme_name, show=True)
         return Dialog.accept(self)
 
+
 def col_to_string(color):
     return '%02X%02X%02X' % color.getRgb()[:3]
+
 
 class ColorButton(QPushButton):
 
@@ -384,6 +403,7 @@ class ColorButton(QPushButton):
             return None
         return col_to_string(self.current_color)
 
+
 class Bool(QCheckBox):
 
     changed = pyqtSignal()
@@ -401,6 +421,7 @@ class Bool(QCheckBox):
     @property
     def value(self):
         return self.checkState() == Qt.Checked
+
 
 class Property(QWidget):
 
@@ -456,60 +477,57 @@ class Property(QWidget):
 HELP_TEXT = _('''\
 <h2>Creating a custom theme</h2>
 
-<p id="attribute" lang="und">You can create a custom syntax highlighting
-theme, with your own colors and font styles. The most important
-types of highlighting rules are described below. Note that not
-every rule supports every kind of customization, for example,
-changing font or underline styles for the <code>Cursor</code> rule
-does not have any effect as that rule is used only for the color of
-the blinking cursor.</p>
+<p id="attribute" lang="und">You can create a custom syntax highlighting theme, \
+with your own colors and font styles. The most important types of highlighting \
+rules are described below. Note that not every rule supports every kind of \
+customization, for example, changing font or underline styles for the \
+<code>Cursor</code> rule does not have any effect as that rule is used only for \
+the color of the blinking cursor.</p>
 
-<p>As you make changes to your theme on the left, the changes will
-be reflected live in this panel.</p>
+<p>As you make changes to your theme on the left, the changes will be reflected live in this panel.</p>
 
 <p xml:lang="und">
-{0}
-    The most important rule. Sets the
-    foreground and background colors for the editor as well as the
-    style of "normal" text, that is, text that does not match any
-    special syntax.
+{}
+    The most important rule. Sets the foreground and background colors for the \
+    editor as well as the style of "normal" text, that is, text that does not match any special syntax.
 
-{1}
+{}
     Defines the colors for text selected by the mouse.
 
-{2}
+{}
     Defines the color for the line containing the cursor.
 
-{3}
+{}
     Defines the colors for the line numbers on the left.
 
-{4}
+{}
     Defines the colors for matching tags in HTML and matching
     braces in CSS.
 
-{5}
+{}
     Used for highlighting tags in HTML
 
-{6}
+{}
     Used for highlighting attributes in HTML
 
-{7}
+{}
     Tag names in HTML
 
-{8}
+{}
     Namespace prefixes in XML and constants in CSS
 
-{9}
+{}
     Non-breaking spaces/hyphens in HTML
 
-{10}
+{}
     Syntax errors such as <this <>
 
-{11}
+{}
     Misspelled words such as <span lang="en">thisword</span>
 
-{12}
+{}
     Comments like <!-- this one -->
+
 </p>
 
 <style type="text/css">
@@ -522,6 +540,7 @@ p.someclass {{
 }}
 </style>
 ''')  # }}}
+
 
 class ThemeEditor(Dialog):
 
@@ -566,7 +585,8 @@ class ThemeEditor(Dialog):
         p.load_text(HELP_TEXT.format(
                 *['<b>%s</b>' % x for x in (
                     'Normal', 'Visual', 'CursorLine', 'LineNr', 'MatchParen',
-                    'Function', 'Type', 'Statement', 'Constant', 'SpecialCharacter', 'Error', 'SpellError', 'Comment'
+                    'Function', 'Type', 'Statement', 'Constant', 'SpecialCharacter',
+                    'Error', 'SpellError', 'Comment'
                 )]
             ))
         p.setMaximumWidth(p.size_hint.width() + 5)

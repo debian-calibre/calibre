@@ -7,8 +7,10 @@ from calibre.ebooks.lrf.pylrs.pylrs import TextBlock, Text, CR, Span, \
                                              CharButton, Plot, Paragraph, \
                                              LrsTextTag
 
+
 def ceil(num):
     return int(math.ceil(num))
+
 
 def print_xml(elem):
     from calibre.ebooks.lrf.pylrs.pylrs import ElementWriter
@@ -17,10 +19,12 @@ def print_xml(elem):
     ew.write(sys.stdout)
     print
 
+
 def cattrs(base, extra):
     new = base.copy()
     new.update(extra)
     return new
+
 
 def tokens(tb):
     '''
@@ -50,7 +54,6 @@ def tokens(tb):
                 for z in process_element(y, attrs):
                     yield z
 
-
     for i in tb.contents:
         if isinstance(i, CR):
             yield 1, None
@@ -71,12 +74,12 @@ class Cell(object):
         self.css  = css
         self.text_blocks = []
         self.pwidth = -1.
-        if tag.has_key('width') and '%' in tag['width']:
+        if tag.has_key('width') and '%' in tag['width']:  # noqa
             try:
                 self.pwidth = float(tag['width'].replace('%', ''))
             except ValueError:
                 pass
-        if css.has_key('width') and '%' in css['width']:
+        if css.has_key('width') and '%' in css['width']:  # noqa
             try:
                 self.pwidth = float(css['width'].replace('%', ''))
             except ValueError:
@@ -85,8 +88,8 @@ class Cell(object):
             self.pwidth = -1
         self.rowspan = self.colspan = 1
         try:
-            self.colspan = int(tag['colspan']) if tag.has_key('colspan') else 1
-            self.rowspan = int(tag['rowspan']) if tag.has_key('rowspan') else 1
+            self.colspan = int(tag['colspan']) if tag.has_key('colspan') else 1  # noqa
+            self.rowspan = int(tag['rowspan']) if tag.has_key('rowspan') else 1  # noqa
         except:
             pass
 
@@ -118,9 +121,6 @@ class Cell(object):
                 if isinstance(tb.contents[-1], Paragraph):
                     tb.contents[-1].append(' ')
 
-
-
-
     def pts_to_pixels(self, pts):
         pts = int(pts)
         return ceil((float(self.conv.profile.dpi)/72.)*(pts/10.))
@@ -135,7 +135,7 @@ class Cell(object):
         mwidth = 0
         for token, attrs in tokens(tb):
             font = default_font
-            if isinstance(token, int): # Handle para and line breaks
+            if isinstance(token, int):  # Handle para and line breaks
                 continue
             if isinstance(token, Plot):
                 return self.pts_to_pixels(token.xsize)
@@ -170,14 +170,14 @@ class Cell(object):
             return left, right, top, bottom
 
         for token, attrs in tokens(tb):
-            if attrs == None:
+            if attrs is None:
                 attrs = {}
             font = default_font
             ls = self.pts_to_pixels(attrs.get('baselineskip', ts['baselineskip']))+\
                  self.pts_to_pixels(attrs.get('linespace', ts['linespace']))
             ws = self.pts_to_pixels(attrs.get('wordspace', ts['wordspace']))
-            if isinstance(token, int): # Handle para and line breaks
-                if top != bottom: #Previous element not a line break
+            if isinstance(token, int):  # Handle para and line breaks
+                if top != bottom:  # Previous element not a line break
                     top = bottom
                 else:
                     top += ls
@@ -207,8 +207,8 @@ class Cell(object):
         return sum([self.text_block_size(i, width)[1] for i in self.text_blocks])
 
 
-
 class Row(object):
+
     def __init__(self, conv, row, css, colpad):
         self.cells = []
         self.colpad = colpad
@@ -218,10 +218,9 @@ class Row(object):
             ccss = conv.tag_css(cell, css)[0]
             self.cells.append(Cell(conv, cell, ccss))
         for a in row.findAll(id=True) + row.findAll(name=True):
-            name = a['name'] if a.has_key('name') else a['id'] if a.has_key('id') else None
+            name = a['name'] if a.has_key('name') else a['id'] if a.has_key('id') else None  # noqa
             if name is not None:
                 self.targets.append(name.replace('#', ''))
-
 
     def number_of_cells(self):
         '''Number of cells in this row. Respects colspan'''
@@ -276,6 +275,7 @@ class Row(object):
 
 
 class Table(object):
+
     def __init__(self, conv, table, css, rowpad=10, colpad=10):
         self.rows = []
         self.conv = conv
@@ -315,7 +315,7 @@ class Table(object):
         rows, cols = self.number_or_rows(), self.number_of_columns()
         widths = range(cols)
         for c in range(cols):
-            cellwidths = [ 0 for i in range(rows)]
+            cellwidths = [0 for i in range(rows)]
             for r in range(rows):
                 try:
                     cellwidths[r] = self.rows[r].preferred_width(c)
@@ -328,7 +328,6 @@ class Table(object):
             wp = self.width_percent(i)
             if wp >= 0.:
                 widths[i] = max(min_widths[i], ceil((wp/100.) * (maxwidth - (cols-1)*self.colpad)))
-
 
         itercount = 0
 
@@ -356,9 +355,8 @@ class Table(object):
                             rowpos[r+k] += 1
                         except IndexError:
                             break
-            except StopIteration: # No more cells in this row
+            except StopIteration:  # No more cells in this row
                 continue
-
 
         widths = self.get_widths(maxwidth)
         heights = [row.height(widths) for row in self.rows]

@@ -18,6 +18,7 @@ from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.zipfile import ZipFile
 from calibre import prepare_string_for_xml
 
+
 def get_metadata(stream, extract_cover=True):
     """ Return metadata as a L{MetaInfo} object """
     mi = MetaInformation(_('Unknown'), [_('Unknown')])
@@ -61,6 +62,7 @@ def get_metadata(stream, extract_cover=True):
 
     return mi
 
+
 def get_cover(name, tdir, top_level=False):
     cover_path = ''
     cover_data = None
@@ -68,7 +70,8 @@ def get_cover(name, tdir, top_level=False):
     if top_level:
         cover_path = os.path.join(tdir, 'cover.png') if os.path.exists(os.path.join(tdir, 'cover.png')) else ''
     if not cover_path:
-        cover_path = os.path.join(tdir, name + '_img', 'cover.png') if os.path.exists(os.path.join(tdir, name + '_img', 'cover.png')) else os.path.join(os.path.join(tdir, 'images'), 'cover.png') if os.path.exists(os.path.join(os.path.join(tdir, 'images'), 'cover.png')) else ''
+        cover_path = os.path.join(tdir, name + '_img', 'cover.png') if os.path.exists(os.path.join(tdir, name + '_img', 'cover.png')) else os.path.join(
+            os.path.join(tdir, 'images'), 'cover.png') if os.path.exists(os.path.join(os.path.join(tdir, 'images'), 'cover.png')) else ''
     if cover_path:
         with open(cover_path, 'r+b') as cstream:
             cover_data = cstream.read()

@@ -13,11 +13,12 @@ from calibre.gui2 import (error_dialog, question_dialog, warning_dialog,
 from calibre import force_unicode
 from calibre.constants import filesystem_encoding
 
+
 class DBRestore(QDialog):
 
     update_signal = pyqtSignal(object, object)
 
-    def __init__(self, parent, library_path):
+    def __init__(self, parent, library_path, wait_time=2):
         QDialog.__init__(self, parent)
         self.l = QVBoxLayout()
         self.setLayout(self.l)
@@ -46,7 +47,7 @@ class DBRestore(QDialog):
         self.restorer.daemon = True
 
         # Give the metadata backup thread time to stop
-        QTimer.singleShot(2000, self.start)
+        QTimer.singleShot(wait_time * 1000, self.start)
 
     def start(self):
         self.restorer.start()
@@ -74,6 +75,7 @@ class DBRestore(QDialog):
             self.msg.setText(msg)
             self.pb.setValue(step)
 
+
 def _show_success_msg(restorer, parent=None):
     r = restorer
     olddb = _('The old database was saved as: %s')%force_unicode(r.olddb,
@@ -87,6 +89,7 @@ def _show_success_msg(restorer, parent=None):
         info_dialog(parent, _('Success'),
                 _('Restoring database was successful. %s')%olddb, show=True,
                 show_copy_button=False)
+
 
 def restore_database(db, parent=None):
     if not question_dialog(parent, _('Are you sure?'), '<p>'+
@@ -117,14 +120,15 @@ def restore_database(db, parent=None):
         _show_success_msg(r, parent=parent)
     return True
 
-def repair_library_at(library_path, parent=None):
-    d = DBRestore(parent, library_path)
+
+def repair_library_at(library_path, parent=None, wait_time=2):
+    d = DBRestore(parent, library_path, wait_time=wait_time)
     d.exec_()
     if d.rejected:
         return False
     r = d.restorer
     if r.tb is not None:
-        error_dialog(parent, _('Failed'),
+        error_dialog(parent, _('Failed to repair library'),
         _('Restoring database failed, click Show details to see details'),
         det_msg=r.tb, show=True)
         return False

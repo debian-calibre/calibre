@@ -49,6 +49,7 @@ d['spell_check_case_sensitive_sort'] = False
 d['inline_spell_check'] = True
 d['custom_themes'] = {}
 d['remove_unused_classes'] = False
+d['merge_identical_selectors'] = False
 d['global_book_toolbar'] = [
 'new-file', 'open-book',  'save-book', None, 'global-undo', 'global-redo', 'create-checkpoint', None, 'donate', 'user-manual']
 d['global_tools_toolbar'] = [
@@ -57,7 +58,7 @@ d['global_tools_toolbar'] = [
 ]
 d['global_plugins_toolbar'] = []
 d['editor_common_toolbar'] = [('editor-' + x) if x else None for x in ('undo', 'redo', None, 'cut', 'copy', 'paste', 'smart-comment')]
-d['editor_css_toolbar'] = ['pretty-current', 'insert-image']
+d['editor_css_toolbar'] = ['pretty-current', 'editor-sort-css', 'insert-image']
 d['editor_xml_toolbar'] = ['pretty-current', 'insert-tag']
 d['editor_html_toolbar'] = ['fix-html-current', 'pretty-current', 'insert-image', 'insert-hyperlink', 'insert-tag', 'change-paragraph']
 d['editor_format_toolbar'] = [('format-text-' + x) if x else x for x in (
@@ -77,17 +78,22 @@ d['file_list_shows_full_pathname'] = False
 del d
 
 ucase_map = {l:string.ascii_uppercase[i] for i, l in enumerate(string.ascii_lowercase)}
+
+
 def capitalize(x):
     return ucase_map[x[0]] + x[1:]
 
 _current_container = None
 
+
 def current_container():
     return _current_container
+
 
 def set_current_container(container):
     global _current_container
     _current_container = container
+
 
 class NonReplaceDict(dict):
 
@@ -105,10 +111,12 @@ editor_toolbar_actions = {
 TOP = object()
 dictionaries = Dictionaries()
 
+
 def editor_name(editor):
     for n, ed in editors.iteritems():
         if ed is editor:
             return n
+
 
 def set_book_locale(lang):
     dictionaries.initialize()
@@ -120,6 +128,7 @@ def set_book_locale(lang):
         dictionaries.default_locale = dictionaries.ui_locale
     from calibre.gui2.tweak_book.editor.syntax.html import refresh_spell_check_status
     refresh_spell_check_status()
+
 
 def verify_link(url, name=None):
     if _current_container is None or name is None:
@@ -135,6 +144,7 @@ def verify_link(url, name=None):
     if url.partition(':')[0] in {'http', 'https', 'mailto'}:
         return True
     return False
+
 
 def update_mark_text_action(ed=None):
     has_mark = False

@@ -8,11 +8,16 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import codecs, shutil, os, posixpath
+from future_builtins import map
+from functools import partial
 from urlparse import urlparse, urlunparse
 from collections import Counter, defaultdict
 
 from calibre import sanitize_file_name_unicode
 from calibre.ebooks.chardet import strip_encoding_declarations
+from calibre.ebooks.oeb.polish.css import iter_declarations, remove_property_value
+from calibre.ebooks.oeb.polish.utils import extract
+
 
 class LinkReplacer(object):
 
@@ -46,6 +51,7 @@ class LinkReplacer(object):
             self.replaced = True
         return href
 
+
 class IdReplacer(object):
 
     def __init__(self, base, container, id_map):
@@ -74,6 +80,7 @@ class IdReplacer(object):
         if href != url:
             self.replaced = True
         return href
+
 
 class LinkRebaser(object):
 
@@ -117,6 +124,7 @@ def replace_links(container, link_map, frag_map=lambda name, frag:frag, replace_
         repl = LinkReplacer(name, container, link_map, frag_map)
         container.replace_links(name, repl)
 
+
 def replace_ids(container, id_map):
     '''
     Replace all links in the container that pointed to the changed ids.
@@ -140,6 +148,7 @@ def replace_ids(container, id_map):
         if repl.replaced:
             changed = True
     return changed
+
 
 def smarten_punctuation(container, report):
     from calibre.ebooks.conversion.preprocess import smarten_punctuation
@@ -169,6 +178,7 @@ def smarten_punctuation(container, report):
         report(_('No punctuation that could be smartened found'))
     return smartened
 
+
 def rename_files(container, file_map):
     '''
     Rename files in the container, automatically updating all links to them.
@@ -194,6 +204,7 @@ def rename_files(container, file_map):
             link_map[current_name] = new_name
     replace_links(container, link_map, replace_in_opf=True)
 
+
 def replace_file(container, name, path, basename, force_mt=None):
     dirname, base = name.rpartition('/')[0::2]
     nname = sanitize_file_name_unicode(basename)
@@ -216,6 +227,7 @@ def replace_file(container, name, path, basename, force_mt=None):
         with container.open(nname, 'wb') as dest:
             shutil.copyfileobj(src, dest)
 
+
 def mt_to_category(container, mt):
     from calibre.ebooks.oeb.polish.utils import guess_type
     from calibre.ebooks.oeb.polish.container import OEB_FONTS
@@ -233,6 +245,7 @@ def mt_to_category(container, mt):
     else:
         category = mt.partition('/')[0]
     return category
+
 
 def get_recommended_folders(container, names):
     ''' Return the folders that are recommended for the given filenames. The
@@ -253,10 +266,26 @@ def get_recommended_folders(container, names):
     recommendations = {category:counter.most_common(1)[0][0] for category, counter in counts.iteritems()}
     return {n:recommendations.get(mt_to_category(container, guess_type(os.path.basename(n))), opf_folder) for n in names}
 
+
+def normalize_case(container, val):
+    parts = val.split('/')
+    ans = []
+    for i in range(len(parts)):
+        q = '/'.join(parts[:i+1])
+        x = container.name_to_abspath(q)
+        xl = parts[i].lower()
+        candidates = [c for c in os.listdir(os.path.dirname(x)) if c != parts[i] and c.lower() == xl]
+        ans.append(candidates[0] if candidates else parts[i])
+    return '/'.join(ans)
+
+
 def rationalize_folders(container, folder_type_map):
     all_names = set(container.mime_map)
     new_names = set()
     name_map = {}
+    for key in tuple(folder_type_map):
+        val = folder_type_map[key]
+        folder_type_map[key] = normalize_case(container, val)
     for name in all_names:
         if name.startswith('META-INF/'):
             continue
@@ -274,3 +303,78 @@ def rationalize_folders(container, folder_type_map):
                 name_map[name] = new_name
                 new_names.add(new_name)
     return name_map
+
+
+def remove_links_in_sheet(href_to_name, sheet, predicate):
+    import_rules_to_remove = []
+    changed = False
+    for i, r in enumerate(sheet):
+        if r.type == r.IMPORT_RULE:
+            name = href_to_name(r.href)
+            if predicate(name, r.href, None):
+                import_rules_to_remove.append(i)
+    for i in sorted(import_rules_to_remove, reverse=True):
+        sheet.deleteRule(i)
+        changed = True
+
+    for dec in iter_declarations(sheet):
+        changed = remove_links_in_declaration(href_to_name, dec, predicate) or changed
+    return changed
+
+
+def remove_links_in_declaration(href_to_name, style, predicate):
+    def check_pval(v):
+        if v.type == v.URI:
+            name = href_to_name(v.uri)
+            return predicate(name, v.uri, None)
+        return False
+
+    changed = False
+
+    for p in tuple(style.getProperties(all=True)):
+        changed = remove_property_value(p, check_pval) or changed
+    return changed
+
+
+def remove_links_to(container, predicate):
+    ''' predicate must be a function that takes the arguments (name, href,
+    fragment=None) and returns True iff the link should be removed '''
+    from calibre.ebooks.oeb.base import iterlinks, OEB_DOCS, OEB_STYLES, XPath, XHTML
+    stylepath = XPath('//h:style')
+    styleattrpath = XPath('//*[@style]')
+    changed = set()
+    for name, mt in container.mime_map.iteritems():
+        removed = False
+        if mt in OEB_DOCS:
+            root = container.parsed(name)
+            for el, attr, href, pos in iterlinks(root, find_links_in_css=False):
+                hname = container.href_to_name(href, name)
+                frag = href.partition('#')[-1]
+                if predicate(hname, href, frag):
+                    if attr is None:
+                        el.text = None
+                    else:
+                        if el.tag == XHTML('link') or el.tag == XHTML('img'):
+                            extract(el)
+                        else:
+                            del el.attrib[attr]
+                    removed = True
+            for tag in stylepath(root):
+                if tag.text and (tag.get('type') or 'text/css').lower() == 'text/css':
+                    sheet = container.parse_css(tag.text)
+                    if remove_links_in_sheet(partial(container.href_to_name, base=name), sheet, predicate):
+                        tag.text = sheet.cssText
+                        removed = True
+            for tag in styleattrpath(root):
+                style = tag.get('style')
+                if style:
+                    style = container.parse_css(style, is_declaration=True)
+                    if remove_links_in_declaration(partial(container.href_to_name, base=name), style, predicate):
+                        removed = True
+                        tag.set('style', style.cssText)
+        elif mt in OEB_STYLES:
+            removed = remove_links_in_sheet(partial(container.href_to_name, base=name), container.parsed(name), predicate)
+        if removed:
+            changed.add(name)
+    tuple(map(container.dirty, changed))
+    return changed

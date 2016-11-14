@@ -8,13 +8,17 @@ __copyright__ = '2016, Kovid Goyal <kovid at kovidgoyal.net>'
 
 from functools import partial
 
+from cssutils import parseStyle
+
 from calibre.constants import iswindows
 from calibre.ebooks.oeb.base import OEB_STYLES, OEB_DOCS
 from calibre.ebooks.oeb.polish.cascade import iterrules, resolve_styles, DEFAULTS
+from calibre.ebooks.oeb.polish.css import remove_property_value
 from calibre.ebooks.oeb.polish.container import ContainerBase, href_to_name
 from calibre.ebooks.oeb.polish.stats import StatsCollector, font_keys, normalize_font_properties, prepare_font_rule
 from calibre.ebooks.oeb.polish.tests.base import BaseTest
 from calibre.utils.logging import Log, Stream
+
 
 class VirtualContainer(ContainerBase):
 
@@ -25,6 +29,7 @@ class VirtualContainer(ContainerBase):
         self.log_stream = s.stream
         log = Log()
         log.outputs = [s]
+        self.opf_version_parsed = (2, 0, 0)
         ContainerBase.__init__(self, log=log)
         self.mime_map = {k:self.guess_type(k) for k in files}
         self.files = files
@@ -51,6 +56,7 @@ class VirtualContainer(ContainerBase):
         for name in sorted(self.mime_map):
             if self.mime_map[name] in OEB_DOCS:
                 yield name, True
+
 
 class CascadeTest(BaseTest):
 
@@ -141,6 +147,7 @@ class CascadeTest(BaseTest):
 
     def test_font_stats(self):
         embeds = '@font-face { font-family: X; src: url(X.otf) }\n@font-face { font-family: X; src: url(XB.otf); font-weight: bold }'
+
         def get_stats(html, *fonts):
             styles = []
             html = '<html><head><link href="styles.css"></head><body>{}</body></html>'.format(html)
@@ -200,3 +207,9 @@ class CascadeTest(BaseTest):
 
         s = get_stats('<p style="font-family: X; text-transform:uppercase">abc</p><b style="font-family: X; font-variant: small-caps">d\nef</b>')
         self.assertEqual(s.font_stats, {'XB.otf':set('defDEF'), 'X.otf':set('ABC')})
+
+    def test_remove_property_value(self):
+        style = parseStyle('background-image: url(b.png); background: black url(a.png) fixed')
+        for prop in style.getProperties(all=True):
+            remove_property_value(prop, lambda val:'png' in val.cssText)
+        self.assertEqual('background: black fixed', style.cssText)

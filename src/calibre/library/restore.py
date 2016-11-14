@@ -22,6 +22,7 @@ NON_EBOOK_EXTENSIONS = frozenset([
         'opf', 'swp', 'swo'
         ])
 
+
 class RestoreDatabase(LibraryDatabase2):
 
     PATH_LIMIT = 10
@@ -32,6 +33,7 @@ class RestoreDatabase(LibraryDatabase2):
 
     def dirtied(self, *args, **kwargs):
         pass
+
 
 class Restore(Thread):
 
@@ -93,9 +95,7 @@ class Restore(Thread):
             for x in self.mismatched_dirs:
                 ans += '\t'+x+'\n'
 
-
         return ans
-
 
     def run(self):
         try:

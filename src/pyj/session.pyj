@@ -25,7 +25,23 @@ defaults = {
     'read_mode': 'paged',
     'max_text_height': 0,
     'max_text_width': 0,
-    'cols_per_screen': 1,
+    'columns_per_screen': {'portrait':0, 'landscape':0},
+    'current_color_scheme': 'white',
+    'user_color_schemes': {},
+    'base_font_size': 16,
+}
+
+is_local_setting = {
+    'margin_right': True,
+    'margin_left': True,
+    'margin_top': True,
+    'margin_bottom': True,
+    'read_mode': 'paged',
+    'max_text_height': True,
+    'max_text_width': True,
+    'columns_per_screen': True,
+    'current_color_scheme': True,
+    'base_font_size': True,
 }
 
 def storage_available(which):
@@ -50,7 +66,7 @@ class FakeStorage:
         return self.data[key]
 
     def setItem(self, key, value):
-        if type(value) is not 'string':
+        if jstype(value) is not 'string':
             value = JSON.stringify(value)
         self.data[key] = value
 
@@ -72,9 +88,8 @@ def get_session_storage():
 
 class SessionData:
 
-    global_prefix = 'calibre-'
-
-    def __init__(self):
+    def __init__(self, global_prefix=None):
+        self.global_prefix = global_prefix or 'calibre-session-'
         self.storage = get_session_storage()
         self.overflow_storage = {}
         self.has_overflow = False
@@ -115,6 +130,11 @@ class SessionData:
         self.overflow_storage = {}
         self.has_overflow = False
 
+def local_storage():
+    if not local_storage.storage:
+        local_storage.storage = SessionData('calibre-local-')
+    return local_storage.storage
+
 class UserSessionData(SessionData):
 
     def __init__(self, username, saved_data):
@@ -128,7 +148,8 @@ class UserSessionData(SessionData):
         self.push_timer_id = None
         if saved_data:
             for key in saved_data:
-                self.set(key, saved_data[key])
+                if not is_local_setting[key]:
+                    self.set(key, saved_data[key])
         self.echo_changes = True
 
     def defval(self, key):
@@ -148,7 +169,7 @@ class UserSessionData(SessionData):
         return self.get(lkey, defval)
 
     def set(self, key, value):
-        if self.echo_changes and self.has_user:
+        if self.echo_changes and self.has_user and not is_local_setting[key]:
             self.changes[key] = value
             self.has_changes = True
             if self.push_timer_id is not None:

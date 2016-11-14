@@ -14,6 +14,7 @@ import sys, os, re
 from calibre.ebooks.rtf2xml import copy
 from calibre.ptempfile import better_mktemp
 
+
 class MakeLists:
     """
     Form lists.
@@ -21,15 +22,16 @@ class MakeLists:
     list.
     Use indents to determine items and how lists are nested.
     """
+
     def __init__(self,
             in_file,
             bug_handler,
             headings_to_sections,
             list_of_lists,
-            copy = None,
-            run_level = 1,
-            no_headings_as_list = 1,
-            write_list_info = 0,
+            copy=None,
+            run_level=1,
+            no_headings_as_list=1,
+            write_list_info=0,
             ):
         """
         Required:
@@ -50,6 +52,7 @@ class MakeLists:
         self.__write_to = better_mktemp()
         self.__list_of_lists = list_of_lists
         self.__write_list_info = write_list_info
+
     def __initiate_values(self):
         """
         Required:
@@ -104,6 +107,7 @@ class MakeLists:
         self.__lv_regex = re.compile(r'\<list-level\>(\d+)')
         self.__found_appt = 0
         self.__line_num = 0
+
     def __in_pard_func(self, line):
         """
         Required:
@@ -117,6 +121,7 @@ class MakeLists:
         if self.__token_info == 'mi<mk<pard-end__':
             self.__state = 'after_pard'
         self.__write_obj.write(line)
+
     def __after_pard_func(self, line):
         """
         Required:
@@ -140,7 +145,7 @@ class MakeLists:
             is_heading = self.__is_a_heading()
             # found paragraph definition and not heading 1
             search_obj = re.search(self.__id_regex, line)
-            if search_obj and not is_heading: # found list-id
+            if search_obj and not is_heading:  # found list-id
                 search_obj_lv = re.search(self.__lv_regex, line)
                 if search_obj_lv:
                     self.__level = search_obj_lv.group(1)
@@ -176,6 +181,7 @@ class MakeLists:
             self.__write_obj.write(line)
         else:
             self.__list_chunk += line
+
     def __list_after_par_def_func(self, line, id):
         """
         Required:
@@ -209,6 +215,7 @@ class MakeLists:
                 self.__write_obj.write(self.__list_chunk)
                 self.__write_start_item()
             self.__list_chunk = ''
+
     def __close_lists(self):
         """
         Required:
@@ -239,6 +246,7 @@ class MakeLists:
                 num_levels_closed += 1
         self.__all_lists = self.__all_lists[num_levels_closed:]
         self.__all_lists.reverse()
+
     def __write_end_list(self):
         """
         Required:
@@ -250,6 +258,7 @@ class MakeLists:
         """
         self.__write_obj.write('mi<tg<close_____<list\n')
         self.__write_obj.write('mi<mk<list_close\n')
+
     def __write_start_list(self, id):
         """
         Required:
@@ -285,9 +294,9 @@ class MakeLists:
             % (id, lev_num)
                 )
         list_dict = {}
-        if self.__list_of_lists: # older RTF won't generate a list_of_lists
+        if self.__list_of_lists:  # older RTF won't generate a list_of_lists
             index_of_list = self.__get_index_of_list(id)
-            if index_of_list != None:# found a matching id
+            if index_of_list is not None:  # found a matching id
                 curlist = self.__list_of_lists[index_of_list]
                 list_dict = curlist[0]
                 level = int(self.__level) + 1
@@ -301,10 +310,10 @@ class MakeLists:
                     list_type = 'ordered'
                 self.__write_obj.write(
                     '<list-type>%s' % (list_type))
-            else: #  no matching id
+            else:  # no matching id
                 self.__write_obj.write(
                     '<list-type>%s' % (self.__list_type))
-        else:# older RTF
+        else:  # older RTF
             self.__write_obj.write(
                 '<list-type>%s' % (self.__list_type))
         # if you want to dump all the info to the list, rather than
@@ -325,6 +334,7 @@ class MakeLists:
             'mi<mk<liststart_\n'
                 )
         self.__write_start_item()
+
     def __get_index_of_list(self, id):
         """
         Requires:
@@ -343,10 +353,10 @@ class MakeLists:
         if id == '0':
             return
         the_index = 0
-        for list in  self.__list_of_lists:
+        for list in self.__list_of_lists:
             the_dict = list[0]
             id_in_list = the_dict.get('list-id')
-            if  id in id_in_list:
+            if id in id_in_list:
                 return the_index
             the_index += 1
         if self.__run_level > 0:
@@ -359,14 +369,17 @@ class MakeLists:
 #        if self.__run_level > 3:
 #            msg = 'level is "%s"\n' % self.__run_level
 #            self.__bug_handler
+
     def __write_start_item(self):
         self.__write_obj.write('mi<mk<item_start\n')
         self.__write_obj.write('mi<tg<open______<item\n')
         self.__write_obj.write('mi<mk<itemstart_\n')
+
     def __write_end_item(self):
         self.__write_obj.write('mi<tg<item_end__\n')
         self.__write_obj.write('mi<tg<close_____<item\n')
         self.__write_obj.write('mi<tg<item__end_\n')
+
     def __default_func(self, line):
         """
         Required:
@@ -390,6 +403,7 @@ class MakeLists:
                         self.__level = search_obj_lv.group(1)
                     self.__write_start_list(num)
         self.__write_obj.write(line)
+
     def __is_a_heading(self):
         if self.__style_name in self.__headings:
             if self.__headings_to_sections:
@@ -401,17 +415,21 @@ class MakeLists:
                     return 0
         else:
             return 0
+
     def __get_indent(self, line):
         if self.__token_info == 'mi<mk<left_inden':
             self.__left_indent = float(line[17:-1])
+
     def __get_list_type(self, line):
-        if self.__token_info == 'mi<mk<list-type_': # <ordered
+        if self.__token_info == 'mi<mk<list-type_':  # <ordered
             self.__list_type = line[17:-1]
             if self.__list_type == 'item':
                 self.__list_type = "unordered"
+
     def __get_style_name(self, line):
         if self.__token_info == 'mi<mk<style-name':
             self.__style_name = line[17:-1]
+
     def make_lists(self):
         """
         Required:
@@ -435,7 +453,7 @@ class MakeLists:
             action(line)
         read_obj.close()
         self.__write_obj.close()
-        copy_obj = copy.Copy(bug_handler = self.__bug_handler)
+        copy_obj = copy.Copy(bug_handler=self.__bug_handler)
         if self.__copy:
             copy_obj.copy_file(self.__write_to, "make_lists.data")
         copy_obj.rename(self.__write_to, self.__file)

@@ -13,6 +13,7 @@ from io import BytesIO
 from calibre.utils.date import utc_tz
 from calibre.db.tests.base import BaseTest
 
+
 class ReadingTest(BaseTest):
 
     def test_read(self):  # {{{
@@ -328,6 +329,13 @@ class ReadingTest(BaseTest):
         self.assertEqual(cache.search('rating:2'), {1, 3})
         self.assertEqual(cache.search('rating:!=2'), {2})
 
+        cache.field_metadata.all_metadata()['#rating']['display']['allow_half_stars'] = True
+        cache.set_field('#rating', {1:3, 2:4, 3:9})
+        self.assertEqual(cache.search('#rating:1'), set())
+        self.assertEqual(cache.search('#rating:1.5'), {1})
+        self.assertEqual(cache.search('#rating:>4'), {3})
+        self.assertEqual(cache.search('#rating:2'), {2})
+
         # Note that the old db searched uuid for un-prefixed searches, the new
         # db does not, for performance
 
@@ -486,18 +494,22 @@ class ReadingTest(BaseTest):
     def test_search_caching(self):  # {{{
         ' Test caching of searches '
         from calibre.db.search import LRUCache
+
         class TestCache(LRUCache):
             hit_counter = 0
             miss_counter = 0
+
             def get(self, key, default=None):
                 ans = LRUCache.get(self, key, default=default)
                 if ans is not None:
                     self.hit_counter += 1
                 else:
                     self.miss_counter += 1
+
             @property
             def cc(self):
                 self.hit_counter = self.miss_counter = 0
+
             @property
             def counts(self):
                 return self.hit_counter, self.miss_counter
@@ -552,6 +564,7 @@ class ReadingTest(BaseTest):
                                 'Standard field: %s not the same for book %s' % (field, book_id))
                 self.assertEqual(mi.format_field(field), pmi.format_field(field),
                                 'Standard field format: %s not the same for book %s' % (field, book_id))
+
                 def f(x):
                     try:
                         x.pop('rec_index', None)

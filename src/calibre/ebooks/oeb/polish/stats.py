@@ -16,6 +16,8 @@ import regex
 from calibre.ebooks.oeb.base import XHTML
 from calibre.ebooks.oeb.polish.cascade import iterrules, resolve_styles, iterdeclaration
 from calibre.utils.icu import ord_string, safe_chr
+from tinycss.fonts3 import parse_font_family
+
 
 def normalize_font_properties(font):
     w = font.get('font-weight', None)
@@ -45,6 +47,7 @@ widths = {x:i for i, x in enumerate(('ultra-condensed',
         'extra-condensed', 'condensed', 'semi-condensed', 'normal',
         'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded'
         ))}
+
 
 def get_matching_rules(rules, font):
     matches = []
@@ -98,6 +101,7 @@ def get_matching_rules(rules, font):
             return m
     return []
 
+
 def get_css_text(elem, resolve_pseudo_property, which='before'):
     text = resolve_pseudo_property(elem, which, 'content')[0].value
     if text and len(text) > 2 and text[0] == '"' and text[-1] == '"':
@@ -105,6 +109,7 @@ def get_css_text(elem, resolve_pseudo_property, which='before'):
     return ''
 
 caps_variants = {'smallcaps', 'small-caps', 'all-small-caps', 'petite-caps', 'all-petite-caps', 'unicase'}
+
 
 def get_element_text(elem, resolve_property, resolve_pseudo_property, capitalize_pat, for_pseudo=None):
     ans = []
@@ -143,6 +148,7 @@ def get_element_text(elem, resolve_property, resolve_pseudo_property, capitalize
                 ans += icu_upper(m.group())
     return ans
 
+
 def get_font_dict(elem, resolve_property, pseudo=None):
     ans = {}
     if pseudo is None:
@@ -162,10 +168,12 @@ exclude_chars = frozenset(ord_string('\n\r\t'))
 skip_tags = {XHTML(x) for x in 'script style title meta link'.split()}
 font_keys = {'font-weight', 'font-style', 'font-stretch', 'font-family'}
 
+
 def prepare_font_rule(cssdict):
     cssdict['font-family'] = frozenset(cssdict['font-family'][:1])
     cssdict['width'] = widths[cssdict['font-stretch']]
     cssdict['weight'] = int(cssdict['font-weight'])
+
 
 class StatsCollector(object):
 
@@ -191,7 +199,7 @@ class StatsCollector(object):
                 cssdict = {}
                 for prop in iterdeclaration(rule.style):
                     if prop.name == 'font-family':
-                        cssdict['font-family'] = [icu_lower(x.value) for x in prop.propertyValue]
+                        cssdict['font-family'] = [icu_lower(x) for x in parse_font_family(prop.propertyValue.cssText)]
                     elif prop.name.startswith('font-'):
                         cssdict[prop.name] = prop.propertyValue[0].value
                     elif prop.name == 'src':

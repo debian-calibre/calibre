@@ -1,22 +1,21 @@
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 """ The GUI """
-import os, sys, Queue, threading, glob
+import os, sys, Queue, threading, glob, signal
 from contextlib import contextmanager
 from threading import RLock, Lock
 from urllib import unquote
 from PyQt5.QtWidgets import QStyle  # Gives a nicer error message than import from Qt
 from PyQt5.Qt import (
-    QFileInfo, QObject, QBuffer, Qt, QByteArray, QTranslator,
-    QCoreApplication, QThread, QEvent, QTimer, pyqtSignal, QDateTime,
+    QFileInfo, QObject, QBuffer, Qt, QByteArray, QTranslator, QSocketNotifier,
+    QCoreApplication, QThread, QEvent, QTimer, pyqtSignal, QDateTime, QFontMetrics,
     QDesktopServices, QFileDialog, QFileIconProvider, QSettings, QIcon,
     QApplication, QDialog, QUrl, QFont, QFontDatabase, QLocale, QFontInfo)
 
-ORG_NAME = 'KovidsBrain'
-APP_UID  = 'libprs500'
 from calibre import prints
 from calibre.constants import (islinux, iswindows, isbsd, isfrozen, isosx,
-        plugins, config_dir, filesystem_encoding, isxp)
+        plugins, config_dir, filesystem_encoding, isxp, DEBUG, __version__, __appname__ as APP_UID)
+from calibre.ptempfile import base_dir
 from calibre.utils.config import Config, ConfigProxy, dynamic, JSONConfig
 from calibre.ebooks.metadata import MetaInformation
 from calibre.utils.date import UNDEFINED_DATE
@@ -140,12 +139,12 @@ defs['show_vl_tabs'] = False
 defs['show_highlight_toggle_button'] = False
 defs['add_comments_to_email'] = False
 defs['cb_preserve_aspect_ratio'] = False
-defs['show_rating_in_cover_browser'] = True
 defs['gpm_template_editor_font_size'] = 10
 defs['show_emblems'] = False
 defs['emblem_size'] = 32
 defs['emblem_position'] = 'left'
 defs['metadata_diff_mark_rejected'] = False
+defs['tag_browser_show_counts'] = True
 del defs
 # }}}
 
@@ -153,6 +152,7 @@ UNDEFINED_QDATETIME = QDateTime(UNDEFINED_DATE)
 
 ALL_COLUMNS = ['title', 'ondevice', 'authors', 'size', 'timestamp', 'rating', 'publisher',
         'tags', 'series', 'pubdate']
+
 
 def _config():  # {{{
     c = Config('gui', 'preferences for the calibre GUI')
@@ -263,23 +263,29 @@ QSettings.setPath(QSettings.IniFormat, QSettings.UserScope, config_dir)
 QSettings.setPath(QSettings.IniFormat, QSettings.SystemScope, config_dir)
 QSettings.setDefaultFormat(QSettings.IniFormat)
 
+
 def available_heights():
     desktop  = QCoreApplication.instance().desktop()
     return map(lambda x: x.height(), map(desktop.availableGeometry, range(desktop.screenCount())))
+
 
 def available_height():
     desktop  = QCoreApplication.instance().desktop()
     return desktop.availableGeometry().height()
 
+
 def max_available_height():
     return max(available_heights())
+
 
 def min_available_height():
     return min(available_heights())
 
+
 def available_width():
     desktop       = QCoreApplication.instance().desktop()
     return desktop.availableGeometry().width()
+
 
 def get_windows_color_depth():
     import win32gui, win32con, win32print
@@ -289,11 +295,13 @@ def get_windows_color_depth():
     win32gui.ReleaseDC(hwin, hwindc)
     return ans
 
+
 def get_screen_dpi():
     d = QApplication.desktop()
     return (d.logicalDpiX(), d.logicalDpiY())
 
 _is_widescreen = None
+
 
 def is_widescreen():
     global _is_widescreen
@@ -303,6 +311,7 @@ def is_widescreen():
         except:
             _is_widescreen = False
     return _is_widescreen
+
 
 def extension(path):
     return os.path.splitext(path)[1][1:].lower()
@@ -318,6 +327,7 @@ def warning_dialog(parent, title, msg, det_msg='', show=False,
         return d.exec_()
     return d
 
+
 def error_dialog(parent, title, msg, det_msg='', show=False,
         show_copy_button=True):
     from calibre.gui2.dialogs.message_box import MessageBox
@@ -327,6 +337,7 @@ def error_dialog(parent, title, msg, det_msg='', show=False,
     if show:
         return d.exec_()
     return d
+
 
 def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
         default_yes=True,
@@ -367,6 +378,7 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
 
     return ret
 
+
 def info_dialog(parent, title, msg, det_msg='', show=False,
         show_copy_button=True):
     from calibre.gui2.dialogs.message_box import MessageBox
@@ -377,12 +389,14 @@ def info_dialog(parent, title, msg, det_msg='', show=False,
         return d.exec_()
     return d
 
+
 def show_restart_warning(msg, parent=None):
     d = warning_dialog(parent, _('Restart needed'), msg,
             show_copy_button=False)
     b = d.bb.addButton(_('Restart calibre now'), d.bb.AcceptRole)
     b.setIcon(QIcon(I('lt.png')))
     d.do_restart = False
+
     def rf():
         d.do_restart = True
     b.clicked.connect(rf)
@@ -416,6 +430,7 @@ class Dispatcher(QObject):
 
     def dispatch(self, args, kwargs):
         self.func(*args, **kwargs)
+
 
 class FunctionDispatcher(QObject):
     '''
@@ -459,6 +474,7 @@ class FunctionDispatcher(QObject):
             res = None
         q.put(res)
 
+
 class GetMetadata(QObject):
     '''
     Convenience class to ensure that metadata readers are used only in the
@@ -496,6 +512,7 @@ class GetMetadata(QObject):
         except:
             mi = MetaInformation('', [_('Unknown')])
         self.metadata.emit(id, mi)
+
 
 class FileIconProvider(QFileIconProvider):
 
@@ -564,15 +581,19 @@ class FileIconProvider(QFileIconProvider):
         return QFileIconProvider.icon(self, arg)
 
 _file_icon_provider = None
+
+
 def initialize_file_icon_provider():
     global _file_icon_provider
     if _file_icon_provider is None:
         _file_icon_provider = FileIconProvider()
 
+
 def file_icon_provider():
     global _file_icon_provider
     initialize_file_icon_provider()
     return _file_icon_provider
+
 
 def select_initial_dir(q):
     while q:
@@ -584,7 +605,9 @@ def select_initial_dir(q):
         q = c
     return expanduser(u'~')
 
+
 class FileDialog(QObject):
+
     def __init__(self, title=_('Choose Files'),
                        filters=[],
                        add_all_files_filter=True,
@@ -750,9 +773,11 @@ else:
                 ans = ans[0]
         return ans
 
-    def choose_images(window, name, title, select_only_single_file=True,
-                    formats=('png', 'gif', 'jpg', 'jpeg', 'svg')):
+    def choose_images(window, name, title, select_only_single_file=True, formats=None):
         mode = QFileDialog.ExistingFile if select_only_single_file else QFileDialog.ExistingFiles
+        if formats is None:
+            from calibre.gui2.dnd import image_extensions
+            formats = image_extensions()
         fd = FileDialog(title=title, name=name,
                         filters=[(_('Images'), list(formats))],
                         parent=window, add_all_files_filter=False, mode=mode,
@@ -762,6 +787,7 @@ else:
             return fd.get_files()
         return None
 
+
 def choose_osx_app(window, name, title, default_dir='/Applications'):
     fd = FileDialog(title=title, parent=window, name=name, mode=QFileDialog.ExistingFile,
             default_dir=default_dir)
@@ -769,6 +795,7 @@ def choose_osx_app(window, name, title, default_dir='/Applications'):
     fd.setParent(None)
     if app:
         return app
+
 
 def pixmap_to_data(pixmap, format='JPEG', quality=90):
     '''
@@ -780,6 +807,7 @@ def pixmap_to_data(pixmap, format='JPEG', quality=90):
     pixmap.save(buf, format, quality=quality)
     return bytes(ba.data())
 
+
 def decouple(prefix):
     ' Ensure that config files used by utility code are not the same as those used by the main calibre GUI '
     dynamic.decouple(prefix)
@@ -788,12 +816,15 @@ def decouple(prefix):
 
 _gui_prefs = gprefs
 
+
 def gui_prefs():
     return _gui_prefs
+
 
 def set_gui_prefs(prefs):
     global _gui_prefs
     _gui_prefs = prefs
+
 
 class ResizableDialog(QDialog):
 
@@ -809,6 +840,7 @@ class ResizableDialog(QDialog):
         nh = min(self.height(), nh)
         nw = min(self.width(), nw)
         self.resize(nw, nh)
+
 
 class Translator(QTranslator):
     '''
@@ -832,6 +864,7 @@ qt_app = None
 
 builtin_fonts_loaded = False
 
+
 def load_builtin_fonts():
     global _rating_font, builtin_fonts_loaded
     # Load the builtin fonts and any fonts added to calibre by the user to
@@ -853,12 +886,25 @@ def load_builtin_fonts():
                     if u'calibre Symbols' in fam:
                         _rating_font = u'calibre Symbols'
 
+
 def setup_gui_option_parser(parser):
     if islinux:
         parser.add_option('--detach', default=False, action='store_true',
                           help=_('Detach from the controlling terminal, if any (linux only)'))
 
+
+def show_temp_dir_error(err):
+    import traceback
+    extra = _('Click "Show details" for more information.')
+    if 'CALIBRE_TEMP_DIR' in os.environ:
+        extra = _('The %s environment variable is set. Try unsetting it.') % 'CALIBRE_TEMP_DIR'
+    error_dialog(None, _('Could not create temporary directory'), _(
+        'Could not create temporary directory, calibre cannot start.') + ' ' + extra, det_msg=traceback.format_exc(), show=True)
+
+
 class Application(QApplication):
+
+    shutdown_signal_received = pyqtSignal()
 
     def __init__(self, args, force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs):
         self.file_event_hook = None
@@ -871,7 +917,37 @@ class Application(QApplication):
         self.headless = headless
         qargs = [i.encode('utf-8') if isinstance(i, unicode) else i for i in args]
         self.pi = plugins['progress_indicator'][0]
+        if not isosx and not headless and hasattr(Qt, 'AA_EnableHighDpiScaling'):
+            # On OS X high dpi scaling is turned on automatically by the OS, so we dont need to set it explicitly
+            # This requires Qt >= 5.6
+            for v in ('QT_AUTO_SCREEN_SCALE_FACTOR', 'QT_SCALE_FACTOR', 'QT_SCREEN_SCALE_FACTORS', 'QT_DEVICE_PIXEL_RATIO'):
+                if os.environ.get(v):
+                    break
+            else:
+                # Should probably make a preference to allow the user to
+                # control this, if needed.
+                # Could have options: auto, off, 1.25, 1.5, 1.75, 2, 2.25, 2.5
+                QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+        QApplication.setOrganizationName('calibre-ebook.com')
+        QApplication.setOrganizationDomain(QApplication.organizationName())
+        QApplication.setApplicationVersion(__version__)
+        QApplication.setApplicationName(APP_UID)
         QApplication.__init__(self, qargs)
+        self.setAttribute(Qt.AA_UseHighDpiPixmaps)
+        try:
+            base_dir()
+        except EnvironmentError as err:
+            if not headless:
+                show_temp_dir_error(err)
+            raise SystemExit('Failed to create temporary directory')
+        if DEBUG and not headless:
+            prints('devicePixelRatio:', self.devicePixelRatio())
+            s = self.primaryScreen()
+            if s:
+                prints('logicalDpi:', s.logicalDotsPerInchX(), 'x', s.logicalDotsPerInchY())
+                prints('physicalDpi:', s.physicalDotsPerInchX(), 'x', s.physicalDotsPerInchY())
+        if not iswindows:
+            self.setup_unix_signals()
         if islinux or isbsd:
             self.setAttribute(Qt.AA_DontUseNativeMenuBar, 'CALIBRE_NO_NATIVE_MENUBAR' in os.environ)
         self.setup_styles(force_calibre_style)
@@ -891,6 +967,7 @@ class Application(QApplication):
             if s is not None:
                 font.setStretch(s)
             QApplication.setFont(font)
+        self.line_height = max(12, QFontMetrics(self.font()).lineSpacing())
 
         dl = QLocale(get_lang())
         if unicode(dl.bcp47Name()) != u'C':
@@ -1022,9 +1099,11 @@ class Application(QApplication):
     @dynamic_property
     def current_custom_colors(self):
         from PyQt5.Qt import QColorDialog, QColor
+
         def fget(self):
             return [col.getRgb() for col in
                     (QColorDialog.customColor(i) for i in xrange(QColorDialog.customCount()))]
+
         def fset(self, colors):
             num = min(len(colors), QColorDialog.customCount())
             for i in xrange(num):
@@ -1048,7 +1127,30 @@ class Application(QApplication):
     def __exit__(self, *args):
         self.setQuitOnLastWindowClosed(True)
 
+    def setup_unix_signals(self):
+        import fcntl
+        read_fd, write_fd = os.pipe()
+        cloexec_flag = getattr(fcntl, 'FD_CLOEXEC', 1)
+        for fd in (read_fd, write_fd):
+            flags = fcntl.fcntl(fd, fcntl.F_GETFD)
+            fcntl.fcntl(fd, fcntl.F_SETFD, flags | cloexec_flag | os.O_NONBLOCK)
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            signal.signal(sig, lambda x, y: None)
+            signal.siginterrupt(sig, False)
+        signal.set_wakeup_fd(write_fd)
+        self.signal_notifier = QSocketNotifier(read_fd, QSocketNotifier.Read, self)
+        self.signal_notifier.setEnabled(True)
+        self.signal_notifier.activated.connect(self.signal_received, type=Qt.QueuedConnection)
+
+    def signal_received(self, read_fd):
+        try:
+            os.read(read_fd, 1024)
+        except EnvironmentError:
+            return
+        self.shutdown_signal_received.emit()
+
 _store_app = None
+
 
 @contextmanager
 def sanitize_env_vars():
@@ -1088,6 +1190,7 @@ def sanitize_env_vars():
                     del os.environ[var]
 SanitizeLibraryPath = sanitize_env_vars  # For old plugins
 
+
 def open_url(qurl):
     # Qt 5 requires QApplication to be constructed before trying to use
     # QDesktopServices::openUrl()
@@ -1096,6 +1199,7 @@ def open_url(qurl):
         qurl = QUrl(qurl)
     with sanitize_env_vars():
         QDesktopServices.openUrl(qurl)
+
 
 def get_current_db():
     '''
@@ -1110,6 +1214,7 @@ def get_current_db():
     from calibre.library import db
     return db()
 
+
 def open_local_file(path):
     if iswindows:
         with sanitize_env_vars():
@@ -1119,6 +1224,7 @@ def open_local_file(path):
         open_url(url)
 
 _ea_lock = Lock()
+
 
 def ensure_app(headless=True):
     global _store_app
@@ -1139,6 +1245,7 @@ def ensure_app(headless=True):
             # dont feel like going through all the code and making sure no
             # unhandled exceptions ever occur. All the actual GUI apps already
             # override sys.except_hook with a proper error handler.
+
             def eh(t, v, tb):
                 try:
                     traceback.print_exception(t, v, tb, file=sys.stderr)
@@ -1146,8 +1253,10 @@ def ensure_app(headless=True):
                     pass
             sys.excepthook = eh
 
+
 def app_is_headless():
     return getattr(_store_app, 'headless', False)
+
 
 def must_use_qt(headless=True):
     ''' This function should be called if you want to use Qt for some non-GUI
@@ -1162,6 +1271,7 @@ def must_use_qt(headless=True):
     if gui_thread is not QThread.currentThread():
         raise RuntimeError('Cannot use Qt in non GUI thread')
 
+
 def is_ok_to_use_qt():
     try:
         must_use_qt()
@@ -1169,14 +1279,18 @@ def is_ok_to_use_qt():
         return False
     return True
 
+
 def is_gui_thread():
     global gui_thread
     return gui_thread is QThread.currentThread()
 
 _rating_font = 'Arial Unicode MS' if iswindows else 'sans-serif'
+
+
 def rating_font():
     global _rating_font
     return _rating_font
+
 
 def elided_text(text, font=None, width=300, pos='middle'):
     ''' Return a version of text that is no wider than width pixels when
@@ -1197,6 +1311,7 @@ def elided_text(text, font=None, width=300, pos='middle'):
         text = chomp(text)
     return unicode(text)
 
+
 def find_forms(srcdir):
     base = os.path.join(srcdir, 'calibre', 'gui2')
     forms = []
@@ -1207,8 +1322,10 @@ def find_forms(srcdir):
 
     return forms
 
+
 def form_to_compiled_form(form):
     return form.rpartition('.')[0]+'_ui.py'
+
 
 def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
     import re, cStringIO
@@ -1218,6 +1335,7 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
         from calibre import prints
         info = prints
     pat = re.compile(r'''(['"]):/images/([^'"]+)\1''')
+
     def sub(match):
         ans = 'I(%s%s%s)'%(match.group(1), match.group(2), match.group(1))
         return ans
@@ -1255,6 +1373,7 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
 _df = os.environ.get('CALIBRE_DEVELOP_FROM', None)
 if _df and os.path.exists(_df):
     build_forms(_df, check_for_migration=True)
+
 
 def event_type_name(ev_or_etype):
     from PyQt5.QtCore import QEvent

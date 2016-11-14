@@ -4,6 +4,8 @@
 # 
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014
+# Johannes Schöpp <mail@jschpp.de>, 2016
+# Johannes Schöpp <mail@jschpp.de>, 2016
 # Moritz, 2015
 # Rouven Wachhaus <rouvenwachhaus@live.de>, 2015
 # Simon_Schuette <simonschuette@arcor.de>, 2015
@@ -12,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-03 20:27+0530\n"
-"PO-Revision-Date: 2016-03-02 22:32+0000\n"
-"Last-Translator: RiseT\n"
+"POT-Creation-Date: 2016-09-30 08:31+0530\n"
+"PO-Revision-Date: 2016-10-02 20:27+0000\n"
+"Last-Translator: Johannes Schöpp <mail@jschpp.de>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +26,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:2
 msgid "Function Mode for Search & Replace in the Editor"
-msgstr "Funktionsmodus für Suchen & Ersetzen im Editor"
+msgstr "Funktionsmodus für das Suchen & Ersetzen im Editor"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:4
 msgid ""
@@ -32,7 +34,7 @@ msgid ""
 "mode, you can combine regular expressions (see :doc:`regexp`) with "
 "arbitrarily powerful python functions to do all sorts of advanced text "
 "processing."
-msgstr ""
+msgstr "Das Suchen & Ersetzen Werkzeug des Editors unterstützt einen *Funktions Modus*. Dieser Modus kann Reguläre Ausdrücke (Siehe :doc:`regexp`) mit beliebig mächtigen Python Funktionen kombinieren um damit alle möglichen Arten erweiterter Textverarbeitung durchzuführen."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:9
 msgid ""
@@ -42,25 +44,25 @@ msgid ""
 "template, you specify an arbitrary function, in the `python programming "
 "language <https://docs.python.org/2.7/>`_. This allows you to do lots of "
 "things that are not possible with simple templates."
-msgstr ""
+msgstr "Im Standard *regexp* Suchen und Ersetzen Modus wird sowohl ein zu suchendede regulärer Ausdruck, als auch eine Vorlage, die verwendet wird um alle gefundenen Treffen zu ersetzen, festgelegt. Im Funktions Modus wird statt einer festen Vorlage eine beliebige Funktion aus der `Python Programmiersprache <https://docs.python.org/2.7/>`_ festgelegt. Dadurch werden viele Dinge ermöglicht welche mit einfachen Vorlagen nicht machbar wären."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
-msgstr ""
+msgstr "Techniken und Syntax des Funktions Modus werden mithilfe von Beispielen beschrieben, welche zeigen wie zunehmend schwierigere Aufgaben erledigt werden."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
-msgstr ""
+msgstr "Automatisches Anpassen der Groß/Kleinschreibung der Dokumentüberschriften"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
-msgstr ""
+msgstr "Hier verwenden wir eine der eingebauten Funktionen des Editors um automatisch die Groß/Kleinschreibung aller Texte innerhalb eines Überschriften Tags in Titel Schreibweise zu ändern:"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:33
 msgid ""
@@ -68,11 +70,11 @@ msgid ""
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
 "TITLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "Als Funktion einfach die eingebaute :guilabel:`Title-case text (ignore tags)` Funktion wählen. Die Funktion wird alle Titel der Form ``<h1>ein TITEL</h1>`` in die Form ``<h1> Ein Titel</h1>`` umwandeln. Die Funktion funktioniert auch wenn andere HTML Tags innerhalb der Titel Tags enthalten sind."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
-msgstr ""
+msgstr "Die erste benutzerdefinierte Funktion - Trennstriche typografisieren"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:42
 msgid ""
@@ -80,7 +82,7 @@ msgid ""
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
 " the editor leaves individual hyphens alone, so you can use the this "
 "function to replace them with em-dashes."
-msgstr ""
+msgstr "Die echten Macht der Funktions Modus kommt von der Möglichkeit eigene Funktionen zu schreiben, die Text willkürlich anpassen. Das Satzzeichen typografisieren Werkzeug im Editor ignoriert einzelne Trennstriche, mit dieser Funktion können diese durch Gedankenstriche ersetzen."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:47
 msgid ""
@@ -99,34 +101,34 @@ msgid ""
 "objects>`_. ``match.group()`` simply returns all the matched text and all we"
 " do is replace hyphens in that text with em-dashes, first replacing double "
 "hyphens and then single hyphens."
-msgstr ""
+msgstr "Jede benutzerdefinierte Suchen & Ersetzen Funktion muss einen einzigartigen namen besitzen und aus einer Python Funktion mit dem Namen replace bestehen die alle obigen Argumente aktzeptiert. Im Moment sind die verschiedenen Argumente der ``replace()`` Funktion nicht wichtig. Stattdessen betrachten wir nur das ``match`` Argument. Es representiert einen Treffer wenn Suchen & Ersetzen durchgeführt wird. Die Vollständige Dokumentation findet sich `hier <https://docs.python.org/2.7/library/re.html#match-objects>`_. ``match.group()`` gibt schlicht den gefundenen Text zurück und alles was wir machen ist alle Trennstriche durch Gedankenstriche zu ersetzen. Zunächst doppelte Trennstriche danach einfache Trennstriche."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
-msgstr ""
+msgstr "Verwendet man diese Funktion um den folgenden Regulären Ausdruck zu suchen::"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
-msgstr ""
+msgstr "Wird sie alle Trennstriche mit Gedankenstrichen ersetzen. Allerdings nur im tatsächlichen Text und nicht innerhalb von HTML Tags."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
-msgstr ""
+msgstr "Die Macht des Funktions Modus - Mit einem Rechtschreibbuch schlecht getrennte Wörter korrigieren"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, ebooks created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
-msgstr ""
+msgstr "EBooks die durch das Scannen von gedruckten Büchern erstellt werden beinhalten häufig inkorrekt getrennte Wörter -- Wörter die am Ende einer Zeile auf einer gedruckten Seite getrennt wurden. Wir werden eine einfache Funktion schreiben mit deren Hilfe solche Wörter automatisch gefunden und korrigiert werden."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
-msgstr ""
+msgstr "Diese Funktion wird mit dem selben Regulären Ausdruck verwendet wie die vorherige und zwar::"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:105
 msgid ""
@@ -137,14 +139,14 @@ msgid ""
 " for words separated by a hyphen, remove the hyphen and check if the "
 "dictionary recognizes the composite word, if it does, the original words are"
 " replaced by the hyphen free composite word."
-msgstr ""
+msgstr "Damit werden wie durch Magie alle inkorrekt getrennten Wörter im Buchtext korrigiert. Diese Funktion bedients sich hauptsächlich einem der zusätzlichen Argumente der replace Funktion und zwar ``dictionaries``. Dieses Argument verweißt auf die Wörterbücher die vom Editor selbst verwendet werden um die Rechtschreibkontrolle des Buches durchzuführen. Was diese Funktion mach ist sich alle Wörter die durch einen Bindestrich getrennt sind zu nehmen, den Bindestrich zu entfernen und zu überprüfen ob das Wort ohne Bindestrich im Wörterbuch steht. Wenn ja werden die ürsprünglichen Wörter durch das zusammengesetzte Wort ohne Bindestrich ersetzt. "
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
-msgstr ""
+msgstr "Zu Beachten ist, dass diese Technik nur bei einsprachigen Büchern funktioniert, da ``dictionaries.recognized()`` im Normalfall nur die Hauptsprache des Buches verwendet."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
@@ -161,7 +163,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
-msgstr ""
+msgstr "Verwendung mit dem Suchausdruck::"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:141
 msgid ""
@@ -392,4 +394,27 @@ msgid ""
 "useful to have your function called an extra time after the last match is "
 "found. You can do this by setting the ``call_after_last_match`` attribute on"
 " your function, like this:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:376
+msgid "Appending the output from the function to marked text"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:378
+msgid ""
+"When running search and replace on marked text, it is sometimes useful to "
+"append so text to the end of the marked text. You can do that by setting the"
+" ``append_final_output_to_marked`` attribute on your function (note that you"
+" also need to set ``call_after_last_match``), like this:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:393
+msgid "Suppressing the result dialog when performing searches on marked text"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/function_mode.rst:395
+msgid ""
+"You can also suppress the result dialog (which can slow down the repeated "
+"application of a search/replace on many blocks of text) by setting the "
+"``suppress_result_dialog`` attribute on your function, like this:"
 msgstr ""

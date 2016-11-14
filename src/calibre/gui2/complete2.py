@@ -20,8 +20,10 @@ from calibre.utils.icu import sort_key, primary_startswith, primary_contains
 from calibre.gui2.widgets import EnComboBox, LineEditECM
 from calibre.utils.config import tweaks
 
+
 def containsq(x, prefix):
     return primary_contains(prefix, x)
+
 
 class CompleteModel(QAbstractListModel):  # {{{
 
@@ -72,6 +74,7 @@ class CompleteModel(QAbstractListModel):  # {{{
             if primary_startswith(item, prefix):
                 return self.index(i)
 # }}}
+
 
 class Completer(QListView):  # {{{
 
@@ -211,7 +214,10 @@ class Completer(QListView):  # {{{
         # self.debug_event(e)
 
         if etype == e.KeyPress:
-            key = e.key()
+            try:
+                key = e.key()
+            except AttributeError:
+                return QObject.eventFilter(self, obj, e)
             if key == Qt.Key_Escape:
                 self.hide()
                 e.accept()
@@ -280,6 +286,7 @@ class Completer(QListView):  # {{{
         return False
 # }}}
 
+
 class LineEdit(QLineEdit, LineEditECM):
     '''
     A line edit that completes on multiple items separated by a
@@ -327,6 +334,7 @@ class LineEdit(QLineEdit, LineEditECM):
     def all_items(self):
         def fget(self):
             return self.mcompleter.model().all_items
+
         def fset(self, items):
             self.mcompleter.model().set_items(items)
         return property(fget=fget, fset=fset)
@@ -335,6 +343,7 @@ class LineEdit(QLineEdit, LineEditECM):
     def disable_popup(self):
         def fget(self):
             return self.mcompleter.disable_popup
+
         def fset(self, val):
             self.mcompleter.disable_popup = bool(val)
         return property(fget=fget, fset=fset)
@@ -417,6 +426,7 @@ class LineEdit(QLineEdit, LineEditECM):
         self.setCursorPosition(len(before_text))
         self.item_selected.emit(text)
 
+
 class EditWithComplete(EnComboBox):
 
     item_selected = pyqtSignal(object)
@@ -459,6 +469,7 @@ class EditWithComplete(EnComboBox):
     def all_items(self):
         def fget(self):
             return self.lineEdit().all_items
+
         def fset(self, val):
             self.lineEdit().all_items = val
         return property(fget=fget, fset=fset)
@@ -467,6 +478,7 @@ class EditWithComplete(EnComboBox):
     def disable_popup(self):
         def fget(self):
             return self.lineEdit().disable_popup
+
         def fset(self, val):
             self.lineEdit().disable_popup = bool(val)
         return property(fget=fget, fset=fset)

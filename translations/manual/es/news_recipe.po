@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# dario hereñu <magallania@gmail.com>, 2014-2015
-# Jellby <jellby@yahoo.com>, 2014-2015
+# dario hereñu <magallania@gmail.com>, 2014-2016
+# Jellby <jellby@yahoo.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 07:42+0530\n"
-"PO-Revision-Date: 2016-04-29 02:05+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2016-06-24 07:25+0530\n"
+"PO-Revision-Date: 2016-06-24 12:37+0000\n"
+"Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -170,6 +170,13 @@ msgid ""
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
 msgstr "Devuelve un :term:`URL` para la imagen de portada de este número o `None`. De manera predeterminada, devuelve el valor del miembro `self.cover_url` que es normalmente `None`. Si quiere que la fórmula descargue una portada para el libro electrónico reemplace este método en la subclase, o establezca la variable miembro `self.cover_url` antes de utilizar este método."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
+msgid ""
+"By default returns `self.extra_css`. Override if you want to "
+"programmatically generate the extra_css."
+msgstr "De manera predeterminada devuelve `self.extra_css`. Reemplácelo si desea generar el archivo extra_css mediante un programa."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
@@ -560,9 +567,10 @@ msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
 ":term:`HTML` files. It will be inserted into `<style>` tags, just before the"
 " closing `</head>` tag thereby overriding all :term:`CSS` except that which "
-"is declared using the style attribute on individual :term:`HTML` tags. For "
-"example::"
-msgstr "Especifica cualquier :term:`CSS` extra que deba añadirse a los archivos :term:`HTML` descargados. Se insertará en etiquetas `<style>`, justo antes de la etiqueta de cierre `</head>` con prioridad sobre todo :term:`CSS` excepto el que se declara con el atributo «style» en etiquetas :term:`HTML` individuales. Por ejemplo::"
+"is declared using the style attribute on individual :term:`HTML` tags. Note "
+"that if you want to programmatically generate the extra_css override the "
+":meth:`get_extra_css()` method instead. For example::"
+msgstr "Especifique cualquier :term:`CSS` extra que debe añadirse a los archivos :term:`HTML` descargados. Será insertado en etiquetas `<style>`, justo antes de la etiqueta de cierre `</head>` sustituyendo así todos los :term:`CSS` excepto los que estén declarados mediante el atributo `style` en etiquetas :term:`HTML` individuales. Tenga en cuenta que si desea generar un archivo extra_css mediante un programa debe reemplazar el método :meth:`get_extra_css()`. Por ejemplo:"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
@@ -714,7 +722,7 @@ msgstr "Establecer a un texto no vacío para desactivar esta fórmula. El texto 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
 msgid "Number of levels of links to follow on article webpages"
-msgstr "Número de niveles de enlaces para seguir en las páginas web de los artículos"
+msgstr "Número de niveles de enlaces para seguir en las páginas de internet de los artículos"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1

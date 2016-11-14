@@ -14,15 +14,9 @@ from PyQt5.QtWebKitWidgets import QWebView
 
 from calibre.gui2 import gprefs, NO_URL_FORMATTING
 from calibre import fit_image
-from calibre.gui2.book_details import render_html, details_context_menu_event
+from calibre.gui2.book_details import render_html, details_context_menu_event, css
 from calibre.gui2.widgets import CoverView
 
-_css = None
-def css():
-    global _css
-    if _css is None:
-        _css = P('templates/book_details.css', data=True).decode('utf-8')
-    return _css
 
 class Details(QWebView):
 
@@ -35,6 +29,7 @@ class Details(QWebView):
 
     def contextMenuEvent(self, ev):
         details_context_menu_event(self, ev, self.book_info)
+
 
 class BookInfo(QDialog):
 
@@ -173,8 +168,13 @@ class BookInfo(QDialog):
                     pixmap.height(), self.cover.size().width()-10,
                     self.cover.size().height()-10)
             if scaled:
-                pixmap = pixmap.scaled(new_width, new_height,
+                try:
+                    dpr = self.devicePixelRatioF()
+                except AttributeError:
+                    dpr = self.devicePixelRatio()
+                pixmap = pixmap.scaled(int(dpr * new_width), int(dpr * new_height),
                         Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                pixmap.setDevicePixelRatio(dpr)
         self.cover.set_pixmap(pixmap)
         self.update_cover_tooltip()
 
@@ -205,6 +205,11 @@ class BookInfo(QDialog):
         self.current_row = row
         self.setWindowTitle(mi.title)
         self.cover_pixmap = QPixmap.fromImage(mi.cover_data[1])
+        try:
+            dpr = self.devicePixelRatioF()
+        except AttributeError:
+            dpr = self.devicePixelRatio()
+        self.cover_pixmap.setDevicePixelRatio(dpr)
         self.resize_cover()
         html = render_html(mi, self.css, True, self, all_fields=True)
         self.details.setHtml(html)

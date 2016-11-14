@@ -14,6 +14,7 @@ from PyQt5.Qt import (QDialog, QIcon, QApplication, QSize, QKeySequence,
 from calibre.constants import __version__, isfrozen
 from calibre.gui2 import gprefs
 
+
 class MessageBox(QDialog):  # {{{
 
     ERROR = 0
@@ -29,7 +30,7 @@ class MessageBox(QDialog):  # {{{
         self.gridLayout = l = QGridLayout(self)
         l.setObjectName("gridLayout")
         self.icon_label = la = QLabel('')
-        la.setMaximumSize(QSize(68, 68))
+        la.setMaximumSize(QSize(64, 64))
         la.setScaledContents(True)
         la.setObjectName("icon_label")
         l.addWidget(la)
@@ -74,7 +75,7 @@ class MessageBox(QDialog):  # {{{
 
         self.setWindowTitle(title)
         self.setWindowIcon(self.icon)
-        self.icon_label.setPixmap(self.icon.pixmap(128, 128))
+        self.icon_label.setPixmap(self.icon.pixmap(64, 64))
         self.msg.setText(msg)
         self.det_msg.setPlainText(det_msg)
         self.det_msg.setVisible(False)
@@ -166,6 +167,7 @@ class MessageBox(QDialog):  # {{{
         self.resize_needed.emit()
 # }}}
 
+
 class ViewLog(QDialog):  # {{{
 
     def __init__(self, title, html, parent=None, unique_name=None):
@@ -203,11 +205,11 @@ class ViewLog(QDialog):  # {{{
         QApplication.clipboard().setText(txt)
 
     def dialog_closing(self, result):
-        self.geom = bytearray(self.saveGeometry())
-        gprefs[self.unique_name] = self.geom
+        gprefs[self.unique_name] = bytearray(self.saveGeometry())
 # }}}
 
 _proceed_memory = []
+
 
 class ProceedNotification(MessageBox):  # {{{
 
@@ -280,6 +282,7 @@ class ProceedNotification(MessageBox):  # {{{
 
 # }}}
 
+
 class ErrorNotification(MessageBox):  # {{{
 
     def __init__(self, html_log, log_viewer_title, title, msg,
@@ -319,6 +322,7 @@ class ErrorNotification(MessageBox):  # {{{
         self.vlb.clicked.disconnect()
         _proceed_memory.remove(self)
 # }}}
+
 
 class JobError(QDialog):  # {{{
 
@@ -448,9 +452,8 @@ class JobError(QDialog):  # {{{
 # }}}
 
 if __name__ == '__main__':
-    app = QApplication([])
-    from calibre.gui2 import question_dialog
-    print question_dialog(None, 'title', 'msg <a href="http://google.com">goog</a> ',
+    from calibre.gui2 import question_dialog, Application
+    app = Application([])
+    print(question_dialog(None, 'title', 'msg <a href="http://google.com">goog</a> ',
             det_msg='det '*1000,
-            show_copy_button=True)
-
+            show_copy_button=True))

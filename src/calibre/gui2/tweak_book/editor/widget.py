@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import unicodedata
+import unicodedata, math
 from functools import partial
 
 from PyQt5.Qt import (
@@ -25,10 +25,11 @@ from calibre.gui2.tweak_book.editor.help import help_url
 from calibre.gui2.tweak_book.editor.text import TextEdit
 from calibre.utils.icu import utf16_length
 
+
 def create_icon(text, palette=None, sz=None, divider=2, fill='white'):
     if isinstance(fill, basestring):
         fill = QColor(fill)
-    sz = sz or tprefs['toolbar_icon_size']
+    sz = sz or int(math.ceil(tprefs['toolbar_icon_size'] * QApplication.instance().devicePixelRatio()))
     if palette is None:
         palette = QApplication.palette()
     img = QImage(sz, sz, QImage.Format_ARGB32)
@@ -43,6 +44,7 @@ def create_icon(text, palette=None, sz=None, divider=2, fill='white'):
     p.drawText(img.rect().adjusted(2, 2, -2, -2), Qt.AlignCenter, text)
     p.end()
     return QIcon(QPixmap.fromImage(img))
+
 
 def register_text_editor_actions(_reg, palette):
     def reg(*args, **kw):
@@ -80,6 +82,8 @@ def register_text_editor_actions(_reg, palette):
     ac = reg('format-justify-fill.png', _('&Justify'), ('format_text', 'justify_justify'), 'format-text-justify-fill', (), _('Justify'))
     ac.setToolTip(_('<h3>Justify</h3>Align the paragraph to both the left and right margins'))
 
+    ac = reg('sort.png', _('&Sort style rules'), ('sort_css',), 'editor-sort-css', (),
+             _('Sort the style rules'), syntaxes=('css',))
     ac = reg('view-image.png', _('&Insert image'), ('insert_resource', 'image'), 'insert-image', (),
              _('Insert an image into the text'), syntaxes=('html', 'css'))
     ac.setToolTip(_('<h3>Insert image</h3>Insert an image into the text'))
@@ -155,6 +159,7 @@ class Editor(QMainWindow):
     def current_line(self):
         def fget(self):
             return self.editor.textCursor().blockNumber()
+
         def fset(self, val):
             self.editor.go_to_line(val)
         return property(fget=fget, fset=fset)
@@ -164,6 +169,7 @@ class Editor(QMainWindow):
         def fget(self):
             c = self.editor.textCursor()
             return {'cursor':(c.anchor(), c.position())}
+
         def fset(self, val):
             anchor, position = val.get('cursor', (None, None))
             if anchor is not None and position is not None:
@@ -187,6 +193,7 @@ class Editor(QMainWindow):
             if changed:
                 self.data = ans
             return ans.encode('utf-8')
+
         def fset(self, val):
             self.editor.load_text(val, syntax=self.syntax, doc_name=editor_name(self))
         return property(fget=fget, fset=fset)
@@ -310,6 +317,7 @@ class Editor(QMainWindow):
     def is_modified(self):
         def fget(self):
             return self.editor.is_modified
+
         def fset(self, val):
             self.editor.is_modified = val
         return property(fget=fget, fset=fset)
@@ -351,6 +359,7 @@ class Editor(QMainWindow):
 
     def populate_toolbars(self):
         self.action_bar.clear(), self.tools_bar.clear()
+
         def add_action(name, bar):
             if name is None:
                 bar.addSeparator()
@@ -581,6 +590,7 @@ class Editor(QMainWindow):
         else:
             dictionaries.add_to_user_dictionary(dic, word, locale)
         self.word_ignored.emit(word, locale)
+
 
 def launch_editor(path_to_edit, path_is_raw=False, syntax='html', callback=None):
     from calibre.gui2.tweak_book import dictionaries

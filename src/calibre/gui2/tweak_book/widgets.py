@@ -16,9 +16,10 @@ from PyQt5.Qt import (
     QPainter, QStaticText, pyqtSignal, QTextOption, QAbstractListModel,
     QModelIndex, QStyledItemDelegate, QStyle, QCheckBox, QListView,
     QTextDocument, QSize, QComboBox, QFrame, QCursor, QGroupBox, QSplitter,
-    QPixmap, QRect, QPlainTextEdit, pyqtSlot, QMimeData, QKeySequence)
+    QPixmap, QRect, QPlainTextEdit, QMimeData)
 
 from calibre import prepare_string_for_xml, human_readable
+from calibre.constants import iswindows
 from calibre.ebooks.oeb.polish.utils import lead_text, guess_type
 from calibre.gui2 import error_dialog, choose_files, choose_save_file, info_dialog, choose_images
 from calibre.gui2.tweak_book import tprefs, current_container
@@ -30,6 +31,7 @@ from calibre.gui2.complete2 import EditWithComplete
 ROOT = QModelIndex()
 PARAGRAPH_SEPARATOR = '\u2029'
 
+
 class BusyCursor(object):
 
     def __enter__(self):
@@ -38,10 +40,12 @@ class BusyCursor(object):
     def __exit__(self, *args):
         QApplication.restoreOverrideCursor()
 
+
 class Dialog(BaseDialog):
 
     def __init__(self, title, name, parent=None):
         BaseDialog.__init__(self, title, name, parent=parent, prefs=tprefs)
+
 
 class InsertTag(Dialog):  # {{{
 
@@ -75,6 +79,7 @@ class InsertTag(Dialog):  # {{{
             print (d.tag)
 
 # }}}
+
 
 class RationalizeFolders(Dialog):  # {{{
 
@@ -135,6 +140,7 @@ class RationalizeFolders(Dialog):  # {{{
         return Dialog.accept(self)
 # }}}
 
+
 class MultiSplit(Dialog):  # {{{
 
     def __init__(self, parent=None):
@@ -168,6 +174,7 @@ class MultiSplit(Dialog):  # {{{
         return self._xpath.xpath
 
 # }}}
+
 
 class ImportForeign(Dialog):  # {{{
 
@@ -251,6 +258,7 @@ class ImportForeign(Dialog):  # {{{
 
 # Quick Open {{{
 
+
 def make_highlighted_text(emph, text, positions):
     positions = sorted(set(positions) - {-1})
     if positions:
@@ -264,6 +272,7 @@ def make_highlighted_text(emph, text, positions):
         parts.append(prepare_string_for_xml(text[pos:]))
         return ''.join(parts)
     return text
+
 
 class Results(QWidget):
 
@@ -395,6 +404,7 @@ class Results(QWidget):
         except IndexError:
             pass
 
+
 class QuickOpen(Dialog):
 
     def __init__(self, items, parent=None):
@@ -469,6 +479,7 @@ class QuickOpen(Dialog):
 
 # Filterable names list {{{
 
+
 class NamesDelegate(QStyledItemDelegate):
 
     def sizeHint(self, option, index):
@@ -507,6 +518,7 @@ class NamesDelegate(QStyledItemDelegate):
             painter.translate(option.rect.left(), option.rect.top() + (max(0, option.rect.height() - height) // 2))
             doc.drawContents(painter)
         painter.restore()
+
 
 class NamesModel(QAbstractListModel):
 
@@ -552,6 +564,7 @@ class NamesModel(QAbstractListModel):
         except IndexError:
             pass
 
+
 def create_filterable_names_list(names, filter_text=None, parent=None, model=NamesModel):
     nl = QListView(parent)
     nl.m = m = model(names, parent=nl)
@@ -568,6 +581,7 @@ def create_filterable_names_list(names, filter_text=None, parent=None, model=Nam
 # }}}
 
 # Insert Link {{{
+
 
 class AnchorsModel(QAbstractListModel):
 
@@ -600,6 +614,7 @@ class AnchorsModel(QAbstractListModel):
         self.items = [x for x in self.names if primary_contains(query, x[0]) or primary_contains(query, x[1])]
         self.endResetModel()
         self.filtered.emit(not bool(query))
+
 
 class InsertLink(Dialog):
 
@@ -716,6 +731,7 @@ class InsertLink(Dialog):
 # }}}
 
 # Insert Semantics {{{
+
 
 class InsertSemantics(Dialog):
 
@@ -909,6 +925,7 @@ class InsertSemantics(Dialog):
 
 # }}}
 
+
 class FilterCSS(Dialog):  # {{{
 
     def __init__(self, current_name=None, parent=None):
@@ -980,6 +997,7 @@ class FilterCSS(Dialog):  # {{{
 
 # Add Cover {{{
 
+
 class CoverView(QWidget):
 
     def __init__(self, parent=None):
@@ -1016,6 +1034,7 @@ class CoverView(QWidget):
 
     def sizeHint(self):
         return QSize(300, 400)
+
 
 class AddCover(Dialog):
 
@@ -1115,14 +1134,14 @@ class AddCover(Dialog):
 
 # }}}
 
+
 class PlainTextEdit(QPlainTextEdit):  # {{{
 
     ''' A class that overrides some methods from QPlainTextEdit to fix handling
-    of the nbsp unicode character. '''
+    of the nbsp unicode character and AltGr input method on windows. '''
 
     def __init__(self, parent=None):
         QPlainTextEdit.__init__(self, parent)
-        self.selectionChanged.connect(self.selection_changed)
         self.syntax = None
 
     def toPlainText(self):
@@ -1138,22 +1157,6 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
         # non BMP characters such as 0x1f431 are present.
         return ans.rstrip('\0')
 
-    @pyqtSlot()
-    def copy(self):
-        # Workaround Qt replacing nbsp with normal spaces on copy
-        c = self.textCursor()
-        if not c.hasSelection():
-            return
-        md = QMimeData()
-        md.setText(self.selected_text)
-        QApplication.clipboard().setMimeData(md)
-
-    @pyqtSlot()
-    def cut(self):
-        # Workaround Qt replacing nbsp with normal spaces on copy
-        self.copy()
-        self.textCursor().removeSelectedText()
-
     def selected_text_from_cursor(self, cursor):
         return unicodedata.normalize('NFC', unicode(cursor.selectedText()).replace(PARAGRAPH_SEPARATOR, '\n').rstrip('\0'))
 
@@ -1161,20 +1164,35 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
     def selected_text(self):
         return self.selected_text_from_cursor(self.textCursor())
 
-    def selection_changed(self):
-        # Workaround Qt replacing nbsp with normal spaces on copy
-        clipboard = QApplication.clipboard()
-        if clipboard.supportsSelection() and self.textCursor().hasSelection():
-            md = QMimeData()
-            md.setText(self.selected_text)
-            clipboard.setMimeData(md, clipboard.Selection)
+    def createMimeDataFromSelection(self):
+        ans = QMimeData()
+        ans.setText(self.selected_text)
+        return ans
+
+    def show_tooltip(self, ev):
+        pass
+
+    def override_shortcut(self, ev):
+        if iswindows and self.windows_ignore_altgr_shortcut(ev):
+            ev.accept()
+            return True
+
+    def windows_ignore_altgr_shortcut(self, ev):
+        import win32api, win32con
+        s = win32api.GetAsyncKeyState(win32con.VK_RMENU) & 0xffff  # VK_RMENU == R_ALT
+        return s & 0x8000
 
     def event(self, ev):
-        if ev.type() == ev.ShortcutOverride and ev in (QKeySequence.Copy, QKeySequence.Cut):
-            ev.accept()
-            (self.copy if ev == QKeySequence.Copy else self.cut)()
+        et = ev.type()
+        if et == ev.ToolTip:
+            self.show_tooltip(ev)
             return True
+        if et == ev.ShortcutOverride:
+            ret = self.override_shortcut(ev)
+            if ret:
+                return True
         return QPlainTextEdit.event(self, ev)
+
 # }}}
 
 if __name__ == '__main__':

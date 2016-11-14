@@ -33,6 +33,7 @@ from calibre.gui2.preferences.coloring import EditRules
 from calibre.gui2.library.alternate_views import auto_height, CM_TO_INCH
 from calibre.gui2.widgets2 import Dialog
 
+
 class BusyCursor(object):
 
     def __enter__(self):
@@ -42,6 +43,7 @@ class BusyCursor(object):
         QApplication.restoreOverrideCursor()
 
 # IdLinksEditor {{{
+
 
 class IdLinksRuleEdit(Dialog):
 
@@ -82,6 +84,7 @@ class IdLinksRuleEdit(Dialog):
                 return error_dialog(self, _('Value needed'), _(
                     'The %s field cannot be empty') % which, show=True)
         Dialog.accept(self)
+
 
 class IdLinksEditor(Dialog):
 
@@ -149,6 +152,7 @@ class IdLinksEditor(Dialog):
         if r > -1:
             self.table.removeRow(r)
 # }}}
+
 
 class DisplayedFields(QAbstractListModel):  # {{{
 
@@ -224,6 +228,7 @@ class DisplayedFields(QAbstractListModel):  # {{{
 
 # }}}
 
+
 class Background(QWidget):  # {{{
 
     def __init__(self, parent):
@@ -239,7 +244,13 @@ class Background(QWidget):  # {{{
             from calibre.gui2.preferences.texture_chooser import texture_path
             path = texture_path(self.btex)
             if path:
-                self.brush.setTexture(QPixmap(path))
+                p = QPixmap(path)
+                try:
+                    dpr = self.devicePixelRatioF()
+                except AttributeError:
+                    dpr = self.devicePixelRatio()
+                p.setDevicePixelRatio(dpr)
+                self.brush.setTexture(p)
         self.update()
 
     def sizeHint(self):
@@ -250,6 +261,7 @@ class Background(QWidget):  # {{{
         painter.fillRect(ev.rect(), self.brush)
         painter.end()
 # }}}
+
 
 class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
@@ -282,11 +294,15 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r('cover_grid_disk_cache_size', gprefs)
         r('cover_grid_spacing', gprefs)
         r('cover_grid_show_title', gprefs)
+        r('tag_browser_show_counts', gprefs)
 
         r('cover_flow_queue_length', config, restart_required=True)
         r('cover_browser_reflections', gprefs)
-        r('show_rating_in_cover_browser', gprefs)
         r('cover_browser_title_template', db.prefs)
+        fm = db.field_metadata
+        r('cover_browser_subtitle_field', db.prefs, choices=[(_('No subtitle'), 'none')] + sorted(
+            (fm[k].get('name'), k) for k in fm.all_field_keys() if fm[k].get('name')
+        ))
         r('emblem_size', gprefs)
         r('emblem_position', gprefs, choices=[
             (_('Left'), 'left'), (_('Top'), 'top'), (_('Right'), 'right'), (_('Bottom'), 'bottom')])
@@ -630,6 +646,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         gui.library_view.refresh_book_details()
         gui.cover_flow.setShowReflections(gprefs['cover_browser_reflections'])
         gui.cover_flow.setPreserveAspectRatio(gprefs['cb_preserve_aspect_ratio'])
+        gui.update_cover_flow_subtitle_font()
         gui.cover_flow.template_inited = False
         gui.library_view.refresh_row_sizing()
         gui.grid_view.refresh_settings()

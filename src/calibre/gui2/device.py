@@ -37,6 +37,7 @@ from calibre.library.save_to_disk import find_plugboard
 from calibre.ptempfile import PersistentTemporaryFile, force_unicode as filename_to_unicode
 # }}}
 
+
 class DeviceJob(BaseJob):  # {{{
 
     def __init__(self, func, done, job_manager, args=[], kwargs={},
@@ -116,10 +117,12 @@ class DeviceJob(BaseJob):  # {{{
 
     # }}}
 
+
 def device_name_for_plugboards(device_class):
     if hasattr(device_class, 'DEVICE_PLUGBOARD_NAME'):
         return device_class.DEVICE_PLUGBOARD_NAME
     return device_class.__class__.__name__
+
 
 class BusyCursor(object):
 
@@ -685,6 +688,7 @@ class DeviceManager(Thread):  # {{{
 
     # }}}
 
+
 class DeviceAction(QAction):  # {{{
 
     a_s = pyqtSignal(object)
@@ -703,6 +707,7 @@ class DeviceAction(QAction):  # {{{
         return self.__class__.__name__ + ':%s:%s:%s'%(self.dest, self.delete,
                 self.specific)
     # }}}
+
 
 class DeviceMenu(QMenu):  # {{{
 
@@ -853,6 +858,7 @@ class DeviceMenu(QMenu):  # {{{
 
     # }}}
 
+
 class DeviceSignals(QObject):  # {{{
     #: This signal is emitted once, after metadata is downloaded from the
     #: connected device.
@@ -871,6 +877,7 @@ class DeviceSignals(QObject):  # {{{
 
 device_signals = DeviceSignals()
 # }}}
+
 
 class DeviceMixin(object):  # {{{
 
@@ -955,23 +962,34 @@ class DeviceMixin(object):  # {{{
                     _('Cannot configure the device while there are running'
                         ' device jobs.'), show=True)
         dev = self.device_manager.connected_device
+        prefname = 'plugin config dialog:' + dev.type + ':' + dev.name
+        geom = gprefs.get(prefname, None)
+
         cw = dev.config_widget()
-        d = QDialog(self)
-        d.setWindowTitle(_('Configure %s')%dev.get_gui_name())
-        d.setWindowIcon(QIcon(I('config.png')))
-        l = QVBoxLayout(d)
-        d.setLayout(l)
+        config_dialog = QDialog(self)
+
+        config_dialog.setWindowTitle(_('Configure %s')%dev.get_gui_name())
+        config_dialog.setWindowIcon(QIcon(I('config.png')))
+        l = QVBoxLayout(config_dialog)
+        config_dialog.setLayout(l)
         bb = QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel)
-        bb.accepted.connect(d.accept)
-        bb.rejected.connect(d.reject)
+        bb.accepted.connect(config_dialog.accept)
+        bb.rejected.connect(config_dialog.reject)
         l.addWidget(cw)
         l.addWidget(bb)
+        config_dialog.resize(config_dialog.sizeHint())
+        if geom is not None:
+            config_dialog.restoreGeometry(geom)
+
         def validate():
             if cw.validate():
-                QDialog.accept(d)
-        d.accept = validate
-        if d.exec_() == d.Accepted:
+                QDialog.accept(config_dialog)
+        config_dialog.accept = validate
+        if config_dialog.exec_() == config_dialog.Accepted:
             dev.save_settings(cw)
+            geom = bytearray(config_dialog.saveGeometry())
+            gprefs[prefname] = geom
+
             do_restart = show_restart_warning(_('Restart calibre for the changes to %s'
                 ' to be applied.')%dev.get_gui_name(), parent=self)
             if do_restart:
@@ -1353,6 +1371,7 @@ class DeviceMixin(object):  # {{{
     @dynamic_property
     def news_to_be_synced(self):
         doc = 'Set of ids to be sent to device'
+
         def fget(self):
             ans = []
             try:
@@ -1753,6 +1772,7 @@ class DeviceMixin(object):  # {{{
             return False
 
         string_pat = re.compile('(?u)\W|[_]')
+
         def clean_string(x):
             x = x.lower() if x else ''
             return string_pat.sub('', x)

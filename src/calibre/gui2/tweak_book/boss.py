@@ -12,7 +12,7 @@ from urlparse import urlparse
 
 from PyQt5.Qt import (
     QObject, QApplication, QDialog, QGridLayout, QLabel, QSize, Qt,
-    QDialogButtonBox, QIcon, QPixmap, QInputDialog, QUrl, pyqtSignal)
+    QDialogButtonBox, QIcon, QInputDialog, QUrl, pyqtSignal)
 
 from calibre import prints, isbytestring
 from calibre.constants import cache_dir
@@ -52,13 +52,16 @@ from calibre.utils.icu import numeric_sort_key
 _diff_dialogs = []
 last_used_transform_rules = []
 
+
 def get_container(*args, **kwargs):
     kwargs['tweak_mode'] = True
     container = _gc(*args, **kwargs)
     return container
 
+
 def setup_cssutils_serialization():
     scs(tprefs['editor_tab_stop_width'])
+
 
 def in_thread_job(func):
     @wraps(func)
@@ -68,6 +71,8 @@ def in_thread_job(func):
     return ans
 
 _boss = None
+
+
 def get_boss():
     return _boss
 
@@ -205,8 +210,8 @@ class Boss(QObject):
     def _check_before_open(self):
         if self.gui.action_save.isEnabled():
             if not question_dialog(self.gui, _('Unsaved changes'), _(
-                'The current book has unsaved changes. If you open a new book, they will be lost'
-                ' are you sure you want to proceed?')):
+                'The current book has unsaved changes. If you open a new book, they will be lost.'
+                ' Are you sure you want to proceed?')):
                 return
         if self.save_manager.has_tasks:
             return info_dialog(self.gui, _('Cannot open'),
@@ -241,6 +246,7 @@ class Boss(QObject):
             from calibre.ebooks.oeb.polish.import_book import import_book_as_epub
             src, dest = d.data
             self._clear_notify_data = True
+
             def func(src, dest, tdir):
                 import_book_as_epub(src, dest)
                 return get_container(dest, tdir=tdir)
@@ -378,6 +384,7 @@ class Boss(QObject):
             self.set_modified()
         self.gui.toc_view.update_if_visible()
         completion_worker().clear_caches()
+        self.gui.preview.start_refresh_timer()
 
     @in_thread_job
     def delete_requested(self, spine_items, other_items):
@@ -576,6 +583,25 @@ class Boss(QObject):
             return
         self.show_current_diff()
 
+    def get_external_resources(self):
+        if not self.ensure_book(_('You must first open a book in order to transform styles.')):
+            return
+        from calibre.gui2.tweak_book.download import DownloadResources
+        with BusyCursor():
+            self.add_savepoint(_('Before get external resources'))
+        try:
+            d = DownloadResources(self.gui)
+            d.exec_()
+        except Exception:
+            self.rewind_savepoint()
+            raise
+        if d.resources_replaced:
+            self.apply_container_update_to_gui()
+            if d.show_diff:
+                self.show_current_diff()
+        else:
+            self.rewind_savepoint()
+
     def manage_fonts(self):
         self.commit_all_editors_to_container()
         self.gui.manage_fonts.display()
@@ -694,6 +720,7 @@ class Boss(QObject):
     def create_diff_dialog(self, revert_msg=_('&Revert changes'), show_open_in_editor=True):
         global _diff_dialogs
         from calibre.gui2.tweak_book.diff.main import Diff
+
         def line_activated(name, lnum, right):
             if right:
                 self.edit_file_requested(name, None, guess_type(name))
@@ -795,6 +822,8 @@ class Boss(QObject):
             ed.mark_selected_text()
             if ed.has_marked_text:
                 self.gui.central.search_panel.set_where('selected-text')
+            else:
+                self.gui.central.search_panel.unset_marked()
 
     def editor_action(self, action):
         ed = self.gui.central.current_editor
@@ -969,7 +998,10 @@ class Boss(QObject):
         if current_container().has_name(target):
             self.link_clicked(target, frag, show_anchor_not_found=True)
         else:
-            purl = urlparse(url)
+            try:
+                purl = urlparse(url)
+            except ValueError:
+                return
             if purl.scheme not in {'', 'file'}:
                 open_url(QUrl(url))
             else:
@@ -1062,6 +1094,8 @@ class Boss(QObject):
             filters=[(_('Book (%s)') % ext.upper(), [ext.lower()])], all_files=False)
         if not path:
             return
+        if '.' not in os.path.basename(path):
+            path += '.' + ext.lower()
         tdir = self.mkdtemp(prefix='save-copy-')
         container = clone_container(c, tdir)
         for name, ed in editors.iteritems():
@@ -1163,11 +1197,16 @@ class Boss(QObject):
     def check_item_activated(self, item):
         is_mult = item.has_multiple_locations and getattr(item, 'current_location_index', None) is not None
         name = item.all_locations[item.current_location_index][0] if is_mult else item.name
+        editor = None
         if name in editors:
             editor = editors[name]
             self.gui.central.show_editor(editor)
         else:
-            editor = self.edit_file_requested(name, None, current_container().mime_map[name])
+            try:
+                editor = self.edit_file_requested(name, None, current_container().mime_map[name])
+            except KeyError:
+                error_dialog(self.gui, _('File deleted'), _(
+                    'The file {} has already been deleted, re-run Check Book to update the results.').format(name), show=True)
         if getattr(editor, 'has_line_numbers', False):
             if is_mult:
                 editor.go_to_line(*(item.all_locations[item.current_location_index][1:3]))
@@ -1515,9 +1554,8 @@ class Boss(QObject):
             d.setLayout(d.l)
             d.setWindowTitle(_('Unsaved changes'))
             d.i = QLabel('')
-            d.i.setPixmap(QPixmap(I('save.png')).scaledToHeight(64, Qt.SmoothTransformation))
-            d.i.setMaximumSize(QSize(d.i.pixmap().width(), 64))
-            d.i.setScaledContents(True)
+            d.i.setMaximumSize(QSize(64, 64))
+            d.i.setPixmap(QIcon(I('dialog_warning.png')).pixmap(d.i.maximumSize()))
             d.l.addWidget(d.i, 0, 0)
             d.m = QLabel(_('There are unsaved changes, if you quit without saving, you will lose them.'))
             d.m.setWordWrap(True)
@@ -1527,6 +1565,7 @@ class Boss(QObject):
             d.bb.accepted.connect(d.accept)
             d.l.addWidget(d.bb, 1, 0, 1, 2)
             d.do_save = None
+
             def endit(x):
                 d.do_save = x
                 d.accept()

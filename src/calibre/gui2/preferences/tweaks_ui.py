@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,7 +40,6 @@ class Ui_Form(object):
         self.tweaks_view.setSizePolicy(sizePolicy)
         self.tweaks_view.setMinimumSize(QtCore.QSize(300, 0))
         self.tweaks_view.setAlternatingRowColors(True)
-        self.tweaks_view.setSpacing(5)
         self.tweaks_view.setUniformItemSizes(True)
         self.tweaks_view.setObjectName("tweaks_view")
         self.verticalLayout_2.addWidget(self.tweaks_view)

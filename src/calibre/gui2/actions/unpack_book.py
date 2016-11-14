@@ -18,6 +18,7 @@ from calibre.ptempfile import (PersistentTemporaryDirectory,
         PersistentTemporaryFile)
 from calibre.utils.config import prefs, tweaks
 
+
 class UnpackBook(QDialog):
 
     def __init__(self, parent, book_id, fmts, db):
@@ -176,8 +177,7 @@ class UnpackBook(QDialog):
             det_msg = e.orig_tb
         except Error as e:
             return error_dialog(self, _('Failed to unpack'),
-                (_('Could not explode the %s file.')%self.current_format) + ' '
-                + as_unicode(e), show=True)
+                (_('Could not explode the %s file.')%self.current_format) + ' ' + as_unicode(e), show=True)
         except:
             import traceback
             det_msg = traceback.format_exc()
@@ -282,6 +282,7 @@ class UnpackBook(QDialog):
         for b in self.fmt_choice_buttons:
             if b.isChecked():
                 return unicode(b.text())
+
 
 class UnpackBookAction(InterfaceAction):
 

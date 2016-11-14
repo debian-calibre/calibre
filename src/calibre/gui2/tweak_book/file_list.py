@@ -25,7 +25,7 @@ from calibre.ebooks.oeb.polish.replace import get_recommended_folders
 from calibre.ebooks.oeb.polish.cover import (
     get_cover_page_name, get_raster_cover_name, is_raster_image)
 from calibre.gui2 import error_dialog, choose_files, question_dialog, elided_text, choose_save_file
-from calibre.gui2.tweak_book import current_container, tprefs
+from calibre.gui2.tweak_book import current_container, tprefs, editors
 from calibre.gui2.tweak_book.editor import syntax_from_mime
 from calibre.gui2.tweak_book.templates import template_for
 from calibre.utils.icu import sort_key
@@ -45,6 +45,7 @@ CATEGORIES = (
     ('misc', _('Miscellaneous'), _('Misc-')),
 )
 
+
 def name_is_ok(name, show_error):
     if not name or not name.strip():
         return show_error('') and False
@@ -60,6 +61,7 @@ def name_is_ok(name, show_error):
         return show_error(_('This file name already exists in the book')) and False
     show_error('')
     return True
+
 
 def get_bulk_rename_settings(parent, number, msg=None, sanitize=sanitize_file_name_unicode, leading_zeros=True, prefix=None, category='text'):  # {{{
     d = QDialog(parent)
@@ -91,6 +93,7 @@ def get_bulk_rename_settings(parent, number, msg=None, sanitize=sanitize_file_na
         return prefix + fmt, num
     return None, None
 # }}}
+
 
 class ItemDelegate(QStyledItemDelegate):  # {{{
 
@@ -151,6 +154,7 @@ class ItemDelegate(QStyledItemDelegate):  # {{{
             painter.drawText(option.rect, Qt.AlignRight|Qt.AlignVCenter, suffix)
 # }}}
 
+
 class FileList(QTreeWidget):
 
     delete_requested = pyqtSignal(object, object)
@@ -196,7 +200,7 @@ class FileList(QTreeWidget):
         self.emblem_cache = {}
         self.rendered_emblem_cache = {}
         self.top_level_pixmap_cache = {
-            name : QPixmap(I(icon)).scaled(TOP_ICON_SIZE, TOP_ICON_SIZE, transformMode=Qt.SmoothTransformation)
+            name : QIcon(I(icon)).pixmap(TOP_ICON_SIZE, TOP_ICON_SIZE)
             for name, icon in {
                 'text':'keyboard-prefs.png',
                 'styles':'lookfeel.png',
@@ -336,8 +340,7 @@ class FileList(QTreeWidget):
                 for emblem in emblems:
                     pm = self.emblem_cache.get(emblem, None)
                     if pm is None:
-                        pm = self.emblem_cache[emblem] = QPixmap(
-                            I(emblem)).scaled(self.iconSize(), transformMode=Qt.SmoothTransformation)
+                        pm = self.emblem_cache[emblem] = QIcon(I(emblem)).pixmap(self.iconSize())
                     pixmaps.append(pm)
                 num = len(pixmaps)
                 w, h = pixmaps[0].width(), pixmaps[0].height()
@@ -345,10 +348,11 @@ class FileList(QTreeWidget):
                     icon = self.rendered_emblem_cache[emblems] = QIcon(pixmaps[0])
                 else:
                     canvas = QPixmap((num * w) + ((num-1)*2), h)
+                    canvas.setDevicePixelRatio(pixmaps[0].devicePixelRatio())
                     canvas.fill(Qt.transparent)
                     painter = QPainter(canvas)
                     for i, pm in enumerate(pixmaps):
-                        painter.drawPixmap(i * (w + 2), 0, pm)
+                        painter.drawPixmap(int(i * (w + 2)/canvas.devicePixelRatio()), 0, pm)
                     painter.end()
                     icon = self.rendered_emblem_cache[emblems] = canvas
             item.setData(0, Qt.DecorationRole, icon)
@@ -648,7 +652,7 @@ class FileList(QTreeWidget):
 
     @property
     def searchable_names(self):
-        ans = {'text':OrderedDict(), 'styles':OrderedDict(), 'selected':OrderedDict()}
+        ans = {'text':OrderedDict(), 'styles':OrderedDict(), 'selected':OrderedDict(), 'open':OrderedDict()}
         for item in self.all_files:
             category = unicode(item.data(0, CATEGORY_ROLE) or '')
             mime = unicode(item.data(0, MIME_ROLE) or '')
@@ -658,8 +662,14 @@ class FileList(QTreeWidget):
                 ans[category][name] = syntax_from_mime(name, mime)
             if not ok and category == 'misc':
                 ok = mime in {guess_type('a.'+x) for x in ('opf', 'ncx', 'txt', 'xml')}
-            if ok and item.isSelected():
-                ans['selected'][name] = syntax_from_mime(name, mime)
+            if ok:
+                cats = []
+                if item.isSelected():
+                    cats.append('selected')
+                if name in editors:
+                    cats.append('open')
+                for cat in cats:
+                    ans[cat][name] = syntax_from_mime(name, mime)
         return ans
 
     def export(self, name):
@@ -731,6 +741,7 @@ class FileList(QTreeWidget):
             sheets = [unicode(s.item(il).text()) for il in xrange(s.count()) if s.item(il).checkState() == Qt.Checked]
             if sheets:
                 self.link_stylesheets_requested.emit(names, sheets, r.isChecked())
+
 
 class NewFileDialog(QDialog):  # {{{
 
@@ -813,6 +824,7 @@ class NewFileDialog(QDialog):  # {{{
         QDialog.accept(self)
 # }}}
 
+
 class MergeDialog(QDialog):  # {{{
 
     def __init__(self, names, parent=None):
@@ -847,6 +859,7 @@ class MergeDialog(QDialog):  # {{{
                 return unicode(b.text())
 
 # }}}
+
 
 class FileListWidget(QWidget):
 
