@@ -4,11 +4,13 @@
 Lenta.ru
 '''
 
-from calibre.web.feeds.feedparser import parse
 from calibre.ebooks.BeautifulSoup import Tag
 from calibre.web.feeds.news import BasicNewsRecipe
+from feedparser import parse
+from functools import partial
 import re
 
+parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
 
 class LentaRURecipe(BasicNewsRecipe):
     title = u'Lenta.ru: \u041d\u043e\u0432\u043e\u0441\u0442\u0438'

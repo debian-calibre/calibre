@@ -11,7 +11,10 @@ from calibre.utils.logging import default_log
 from calibre import entity_to_unicode, strftime, force_unicode
 from calibre.utils.date import dt_factory, utcnow, local_tz
 from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
+from feedparser import parse
+from functools import partial
 
+parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
 
 class Article(object):
 
@@ -334,7 +337,6 @@ def feed_from_xml(raw_xml, title=None, oldest_article=7,
                   max_articles_per_feed=100,
                   get_article_url=lambda item: item.get('link', None),
                   log=default_log):
-    from calibre.web.feeds.feedparser import parse
     # Handle unclosed escaped entities. They trip up feedparser and HBR for one
     # generates them
     raw_xml = re.sub(r'(&amp;#\d+)([^0-9;])', r'\1;\2', raw_xml)
