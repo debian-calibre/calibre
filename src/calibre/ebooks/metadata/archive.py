@@ -44,7 +44,7 @@ class ArchiveExtract(FileTypePlugin):
     description = _('Extract common e-book formats from archive files '
         '(ZIP/RAR). Also try to autodetect if they are actually '
         'CBZ/CBR files.')
-    file_types = set(['zip', 'rar'])
+    file_types = set(['zip'])
     supported_platforms = ['windows', 'osx', 'linux']
     on_import = True
 
