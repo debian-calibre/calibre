@@ -4,8 +4,8 @@
 # 
 # Translators:
 # Adrián López Galera <adrian_201@hotmail.es>, 2015
-# Alberto Díaz Tormo <albertodiaztormo@gmail.com>, 2016
-# Alberto Díaz Tormo <albertodiaztormo@gmail.com>, 2016
+# Albert, 2016
+# Albert, 2016
 # Angelica Bravo <dra.noika@gmail.com>, 2016
 # Antonio Mireles <antonio@mirelesindependent.com>, 2016
 # Danny Marfil <dannymarfil@gmail.com>, 2016
@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 09:27+0530\n"
-"PO-Revision-Date: 2016-10-29 15:43+0000\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-10 09:41+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -387,23 +387,24 @@ msgid ""
 "path to the modified ebook. If no modifications are needed, it should return"
 " the path to the original ebook. If an error is encountered it should raise "
 "an Exception. The default implementation simply return the path to the "
-"original ebook."
-msgstr "Ejecutar el complemento. Debe implementarse en subclases. Debe realizar cualquier modificación necesaria sobre el libro y devolver la ruta absoluta al libro modificado. Si no se necesita ninguna modificación, debe devolver la ruta de acceso al libro original. Si ocurre un error, debe generar una excepción. La implementación predeterminada simplemente devuelve la ruta de acceso al libro original."
+"original ebook. Note that the path to the original file (before any file "
+"type plugins are run, is available as self.original_path_to_file)."
+msgstr "Ejecutar el complemento. Debe implementarse en subclases. Debe realizar cualquier modificación necesaria sobre el libro y devolver la ruta absoluta al libro modificado. Si no se necesita ninguna modificación, debe devolver la ruta de acceso al libro original. Si ocurre un error, debe generar una excepción. La implementación predeterminada simplemente devuelve la ruta de acceso al libro original. Tenga en cuenta que la ruta al archivo original (antes de que se ejecute ningún complemento de tipo de archivo) está disponible como ``self.original_path_to_file``."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:9
+#: calibre.customize.FileTypePlugin.run:11
 msgid ""
 "The modified ebook file should be created with the :meth:`temporary_file` "
 "method."
 msgstr "El archivo de libro electrónico modificado debe crearse con el método :meth:`temporary_file`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:12
+#: calibre.customize.FileTypePlugin.run:14
 msgid "Absolute path to the ebook."
 msgstr "Ruta absoluta al libro electrónico."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:14
+#: calibre.customize.FileTypePlugin.run:16
 msgid "Absolute path to the modified ebook."
 msgstr "Ruta absoluta al libro electrónico modificado."
 
@@ -1202,13 +1203,10 @@ msgstr "Altura de las miniaturas en el dispositivo"
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_COMPRESSION_QUALITY:1
 msgid ""
-"Width for thumbnails on the device. Setting this will force thumbnails to "
-"this size, not preserving aspect ratio. If it is not set, then the aspect "
-"ratio will be preserved and the thumbnail will be no higher than "
-"THUMBNAIL_HEIGHT Compression quality for thumbnails. Set this closer to 100 "
-"to have better quality thumbnails with fewer compression artifacts. Of "
-"course, the thumbnails get larger as well."
-msgstr "Anchura de las miniaturas en el disposivio. Si se establece, se obliga a que las miniaturas tengan este tamaño, sin mantener las proporciones. Si no se establece, se matienen las proporciones y la altura de la mininatura no será mayor que THUMBNAIL_HEIGHT Calidad de compresión para las miniaturas. Cuanto más próximo a 100 mejor calidad y menos defectos de compresión tendrán las miniaturas, aunque también ocuparán más."
+"Compression quality for thumbnails. Set this closer to 100 to have better "
+"quality thumbnails with fewer compression artifacts. Of course, the "
+"thumbnails get larger as well."
+msgstr "Calidad de compresión para las miniaturas. Cuanto más cercano a 100, mejor será la calidad de las miniaturas y menores los defectos de compresión. Por supuesto, también ocuparán más espacio las miniaturas."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.WANTS_UPDATED_THUMBNAILS:1
@@ -1403,7 +1401,7 @@ msgid ""
 " can do some relatively time intensive checks. The default implementation "
 "returns True. This method is called only on windows. See also "
 ":meth:`can_handle`."
-msgstr "Método opcional para desempeñar más comprobaciones en un dispositivo para ver si este conductor es capaz de manejarlo. Si no lo es debería devolver Falso. Este método sólo es llamado después del vendedor, IDs de producto y después de que el BCD se haya emparejado, entonces eso puede hacer algunas comprobaciones intensivas de tiempo relativamente. La implementación por defecto devuelve Verdadero. Este método es llamado sólo en Windows. Vea también :meth:`can_handle`."
+msgstr "Método opcional para comprobar si este controlador puede manejar un dispositivo mediante más pruebas. Si no puede, debe devolver False. Este método sólo se ejecuta una vez que los identificadores del fabricante y del producto, así como el BCD se han reconocido, por lo que puede realizar pruebas que requieran un tiempo relativamente prolongado. La implementación predeterminada devuelve True. Este método sólo se ejecuta en Windows. Véase también :meth:`can_handle`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle_windows:8
@@ -1440,7 +1438,7 @@ msgid ""
 "method :meth:`calibre.devices.usbms.device.Device.open` has an "
 "implementation of this function that should serve as a good example for USB "
 "Mass storage devices."
-msgstr "Desempeña cualquier inicio específico de dispositivo. Llamado después de que el dispositivo sea detectado pero antes de cualquier otra función que comunique con el dispositivo. Por ejemplo: Para dispositivos que se presenten a sí mismos como dispositivos me almacenamiento USB Mass, este método debería ser responsable de montar el dispositivo o si el dispositivo ha sido automontado, descubriendo dónde se ha montado. El método :meth:`calibre.devices.usbms.device.Device.open` tiene una implementación de esta función que debería servir como un buen ejemplo de dispositivo de almacenamiento USB Mass."
+msgstr "Realiza cualquier inicio específico del dispositivo. Se ejecuta una vez que se ha detectado el dispositivo, pero antes de cualquier otra función que comunique con él. Por ejemplo, para dispositivos que se muestran como dispositivos de almacenamiento masivo USB, este método será el responsable de montar el dispositivo o, si se ha montado automáticamente, averiguar dónde. El método :meth:`calibre.devices.usbms.device.Device.open` tiene una implementación de esta función que puede ser un buen ejemplo para dispositivos de almacenamiento masivo USB."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:11
@@ -1456,7 +1454,7 @@ msgid ""
 "id, bcd, manufacturer name, product name, device serial number). However, "
 "some devices have no serial number and on windows only the first three "
 "fields are present, the rest are None."
-msgstr "El dispositivo que estamos intentando abrir. Es un tuple de (ID de vendedor, ID de producto, BCD, nombre de fabricante, nombre de producto, número de serie de dispositivo). No obstante, algunos dispositivos no tienen número de serie y en Windows sólo los primeros tres campos están presentes, el resto son Ninguno."
+msgstr "El dispositivo que se intenta abrir. Es una tupla de (identificador de fabricante, identificador de producto, bcd, nombre de fabricante, nombre de producto, número de serie del dispositivo). Sin embargo, algunos dispositivos no tienen número de serie y en Windows sólo aparecen los tres primeros campos, el resto son None."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:20
@@ -1470,7 +1468,7 @@ msgstr "El UUID de la biblioteca de calibre actual. Puede ser None si no existe 
 msgid ""
 "Un-mount / eject the device from the OS. This does not check if there are "
 "pending GUI jobs that need to communicate with the device."
-msgstr "Desmontar / expulsar el dispositivo del OS Esto no verifica si hay trabajos GUI pendientes que necesiten comunicarse con el dispositivo."
+msgstr "Desmontar o expulsar el dispositivo del sistema operativo. Esto no comprueba si hay tareas de interfaz gráfica pendientes que tengan que comunicar con el dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.eject:4
@@ -1500,7 +1498,7 @@ msgid ""
 "(device name, device version, software version on device, mime type) The "
 "tuple can optionally have a fifth element, which is a drive information "
 "dictionary. See usbms.driver for an example."
-msgstr "(nombre de dispositivo, versión de dispositivo, versión de software del dispositivo, tipo de mimo) El tuple puede opcionalmente tener un quinto elemento, que es un diccionario de información del conductor. Vea usbms.driver para un ejemplo."
+msgstr "(nombre del dispositivo, versión del dispositivo, versión del software en el dispositivo, tipo mime) La tupla puede tener un quinto elemento opcional, que es un diccionario de información de unidad. Puede verse un ejemplo en `usbms.driver`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_driveinfo:1
@@ -1511,7 +1509,7 @@ msgid ""
 " called by calibre after the book lists have been loaded. Note that it is "
 "not called on the device thread, so the driver should cache the drive info "
 "in the books() method and this function should return the cached data."
-msgstr "Devuelve el diccionario driveinfo. Normalmente llamado desde get_device_information(), pero si la carga del driveinfo es lenta para este conductor, entonces debería fijar SLOW_DRIVEINFO. En este caso, este método será llamado por Calibre después de que las listas de libros hayan sido cargadas. Note que isto no es llamado en el hilo del dispositivo, así que el conductor debería almacenar el drive info en el método de los libros() y esta función debería devolver la información almacenada."
+msgstr "Devuelve el diccionario de información de dispositivo. Normalmente se ejecuta desde :meth:`get_device_information()`, pero si la carga de la información del dispositivo es lenta para este controlador, debería establecer `SLOW_DRIVEINFO`. En este caso, calibre ejecutará este método después de cargar la lista de libros. Tenga en cuenta que no se ejecuta en el hilo del dispositivo, por lo que el controlador debería almacenar en caché la información del dispositivo en el método :meth:`books()` y esta función debería devolver los datos almacenados."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.card_prefix:1
@@ -1519,7 +1517,7 @@ msgid ""
 "Return a 2 element list of the prefix to paths on the cards. If no card is "
 "present None is set for the card's prefix. E.G. ('/place', '/place2') (None,"
 " 'place2') ('place', None) (None, None)"
-msgstr "Devuelve una lista de 2 elementos del prefijo a caminos de las tarjetas. Si no hay tarjeta presente Ninguno es fijado para el prefijo de la tarjeta. E.G. ('/place', '/place2') (None, 'place2') ('place', None) (None, None)"
+msgstr "Devuelve una lista de dos elementos con los prefijos para las rutas de acceso en las tarjetas. Si no hay tarjeta, el prefijo correspondiente será None. Por ejemplo: ('/lugar', '/lugar2') (None, 'lugar2') ('lugar', None) (None, None)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.total_space:4
@@ -1548,7 +1546,7 @@ msgstr "Tarjeta de almacenamiento B"
 msgid ""
 "A 3 element list with total space in bytes of (1, 2, 3). If a particular "
 "device doesn't have any of these locations it should return 0."
-msgstr "Una lista de 3 elementos con espacio total en bytes de (1, 2, 3). Si un dispositivo particular no tiene ninguna de estas ubicaciones debería devolver 0."
+msgstr "Una lista de tres elementos con el espacio total en bytes de (1, 2, 3). Si un dispositivo concreto no tiene alguna de estas ubicaciones, debe devolver 0."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.free_space:4
@@ -1570,7 +1568,7 @@ msgstr "Tarjeta B"
 msgid ""
 "A 3 element list with free space in bytes of (1, 2, 3). If a particular "
 "device doesn't have any of these locations it should return -1."
-msgstr "Una lista de 3 elementos con espacio libre en bytes de (1, 2, 3). Si un dispositivo particular no tiene ninguna de esas ubicaciones debería devolver -1."
+msgstr "Una lista de tres elementos con el espacio libre en bytes de (1, 2, 3). Si un dispositivo concreto no tiene alguna de estas ubicaciones, debe devolver -1."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:1
@@ -1583,7 +1581,7 @@ msgid ""
 "If 'carda' or 'cardb' return a list of ebooks on the specific storage card, "
 "otherwise return list of ebooks in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
-msgstr "Si 'carda' o 'cardb' devuelve una lista de libros a la tarjeta de almacenamiento específica, si no, devuelve una lista de libros a la memoria principal del dispositivo. Si una tarjeta es especificada y no hay libros en la terjeta, devuelve una lista vacía."
+msgstr "Si es 'carda' o 'cardb', devuelve una lista de los libros en la tarjeta de almacenamiento especificada, en caso contrario devuelve una lista de los libros en la memoria principal del dispositivo. Si se especifica una tarjeta y no hay libros en ella, devuelva una lista vacía."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:8
@@ -1598,7 +1596,7 @@ msgid ""
 ":class:`FreeSpaceError` if there is not enough free space on the device. The"
 " text of the FreeSpaceError must contain the word \"card\" if ``on_card`` is"
 " not None otherwise it must contain the word \"memory\"."
-msgstr "Cargar una lista de libros al dispositivo. Si un archivo ya existe en el dispositivio, debería ser reemplazado. Este método debería levantar un :class:`FreeSpaceError` si no hay bastante espacio libre en el dispositivo. El texto del FreeSpaceError debe contener la palabra \"tarjeta\" si ``on_card` no es Ninguno, si no, debe contener la palabra \"memoria\"."
+msgstr "Copia una lista de libros al dispositivo. Si un archivo ya existe en el dispositivio, deberá ser sustituido. Este método debería generar un error :class:`FreeSpaceError` si no hay suficiente espacio libre en el dispositivo. El texto del error :class:`FreeSpaceError` debe contener la palabra «card» si ``on_card` no es None, si no, debe contener la palabra «memory»."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:7
@@ -1610,7 +1608,7 @@ msgstr "Una lista de rutas"
 msgid ""
 "A list of file names that the books should have once uploaded to the device."
 " len(names) == len(files)"
-msgstr "Una lista de nombres de archivo que los libros deberían tener una vez cargados en el dispositivo. len(names) == len(files)"
+msgstr "Una lista de nombres de archivo que los libros deberán tener una vez copiados al dispositivo. len(names) == len(files)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:10
@@ -1620,7 +1618,7 @@ msgid ""
 " == len(files). Apart from the regular cover (path to cover), there may also"
 " be a thumbnail attribute, which should be used in preference. The thumbnail"
 " attribute is of the form (width, height, cover_data as jpeg)."
-msgstr "Si no es Ninguno, es una lista de objetos :class:`Metadata`. La idea es utilizar la metainformación para determinar dónde poner el libro en el dispositivo. len(metadata) == len(files). Aparte de la cubierta regular (camino a la cubierta), también puede haber un atributo de miniatura, que debería ser usado en preferencia. El atributo de miniatura es de la forma (anchura, altura, cover_data como jpeg)."
+msgstr "Si no es None, es una lista de objetos :class:`Metadata`. La idea es utilizar los metadatos para determinar dónde poner el libro en el dispositivo. len(metadata) == len(files). Aparte de la portada normal (ruta a la portada), también puede haber un atributo de miniatura (``thumbnail``), que debería tener prioridad. El atributo ``thumbnail`` es de la forma (anchura, altura, datos_de_portada como jpeg)."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:17
@@ -1694,21 +1692,21 @@ msgstr "objeto de archivo como ``sys.stdout`` o el resultado de ejecutar :func:`
 msgid ""
 "Should return a QWidget. The QWidget contains the settings for the device "
 "interface"
-msgstr "Debería devolver un QWidget. El QWidget contiene los ajustes de la interfaz de dispositivo."
+msgstr "Debe devolver un QWidget. El QWidget contiene las configuraciones de la interfaz de dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.save_settings:1
 msgid ""
 "Should save settings to disk. Takes the widget created in "
 ":meth:`config_widget` and saves all settings to disk."
-msgstr "Debería guardar los ajustes en el disco. Toma al widget creado en :meth:`config_widget` y guarda todos los ajustes en el disco."
+msgstr "Debe guardar las configuraciones en el disco. Toma el widget creado en :meth:`config_widget` y guarda todas las configuraciones en el disco."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.settings:1
 msgid ""
 "Should return an opts object. The opts object should have at least one "
 "attribute `format_map` which is an ordered list of formats for the device."
-msgstr "Debería devolver un objeto opts. El objeto opts debería tener al menos un atributo `format_map` que es una lista ordenada de formatos para el dispositivo."
+msgstr "Debe devolver un objeto ``opts``. El objeto ``opts`` debería tener al menos un atributo `format_map` que es una lista ordenada de formatos para el dispositivo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:1
@@ -1747,21 +1745,21 @@ msgstr "None o un único panel de conexiones."
 msgid ""
 "Set the device name in the driveinfo file to 'name'. This setting will "
 "persist until the file is re-created or the name is changed again."
-msgstr "Establecer el nombre de dispositivo en el archivo driveinfo como ``name``. Este ajuste persistirá hasta que el archivo se vuelva a crear o se cambie el nombre de nuevo."
+msgstr "Establece el nombre de dispositivo en el archivo driveinfo como ``name``. Este ajuste persistirá hasta que el archivo se vuelva a crear o se cambie el nombre de nuevo."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_driveinfo_name:4
 msgid ""
 "Non-disk devices should implement this method based on the location codes "
 "returned by the get_device_information() method."
-msgstr "Ningún dispositivo de disco debería implementar este método basado en los códigos de ubicación devueltos por el método get_device_information()."
+msgstr "Los dispositivos que no son de disco deberían implementar este método según los códigos de ubicación devueltos por el método :meth:`get_device_information()`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.prepare_addable_books:1
 msgid ""
 "Given a list of paths, returns another list of paths. These paths point to "
 "addable versions of the books."
-msgstr "Dada una lista de caminos, devuelve otra lista de caminos. Esos caminos señalan a versiones agregables de los libros."
+msgstr "Dada una lista de rutas de acceso, devuelve otra lista de rutas de acceso. Estas rutas apuntan a versiones de los libros que pueden añadirse."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.prepare_addable_books:4
@@ -1769,7 +1767,7 @@ msgid ""
 "If there is an error preparing a book, then instead of a path, the position "
 "in the returned list for that book should be a three tuple: (original_path, "
 "the exception instance, traceback)"
-msgstr "Si ocurre un error preparando un libro, entonces en lugar de un camino, la posición en la lista devuelta para ese libro debería de ser una tres tuple: (original_path, the exception instance, traceback)"
+msgstr "Si ocurre un error al preparar un libro, en lugar de una ruta de acceso, la posición en la lista devuelta para ese libro debería de ser una tupla de tres elementos: (ruta_original, la excepción, rastro)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.startup:1
@@ -1779,7 +1777,7 @@ msgid ""
 " thus __init__ can be called multiple times, but only one instance will have"
 " this method called. This method is called on the device thread, not the GUI"
 " thread."
-msgstr "Llamado cuando Calibre está iniciando el dispositivo. Hace cualquier inicio necesario. Note que múltiples instancias pueden ser ejemplificadas, y así __init__ puede ser llamado múltiples veces, pero sólo una instancia tendrá este método ejecutado. Este método es llamado en el hilo del dispositivo, no en el de la GUI."
+msgstr "Se ejecuta cuando calibre inicia el dispositivo. Realiza cualquier inicialización necesaria. Tenga en cuenta que pueden generarse varios especímenes de la clase, y por lo tanto :meth:`__init__` puede ejecutarse varias veces, pero sólo un espécimen ejecutará este método. Este método se ejecuta en el hilo del dispositivo, no en el de la interfaz gráfica."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.shutdown:1
@@ -2632,7 +2630,7 @@ msgid ""
 "False otherwise. Raise an :class:`AbortCommit` exception to indicate that an"
 " error occurred. You are responsible for giving the user feedback about what"
 " the error is and how to correct it."
-msgstr "Guarda cualquier ajuste modificado. Devuelve True si los cambios requieren un reinicio, False si no es así. Genera una excepción :class:`AbortCommit` para indicar que ocurrió un error. Es su responsabilidad informar al usuario del error y cómo corregirlo."
+msgstr "Guarda cualquier configuración modificada. Devuelve True si los cambios requieren un reinicio, False si no es así. Genera una excepción :class:`AbortCommit` para indicar que ocurrió un error. Es su responsabilidad informar al usuario del error y cómo corregirlo."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.refresh_gui:1
@@ -2701,7 +2699,7 @@ msgstr "Si esta configuración es de elección múltiple (un cuadro combinado), 
 msgid ""
 "The class responsible for managing this setting. The default class handles "
 "almost all cases, so this param is rarely used."
-msgstr "La clase responsable de la gestión de este ajuste. La clase predeterminada contempla casi todos los casos, por lo que este parámetro es raramente usado."
+msgstr "La clase responsable de la gestión de esta configuración. La clase predeterminada contempla casi todos los casos, por lo que este parámetro es raramente usado."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:188
 msgid "Viewer plugins"

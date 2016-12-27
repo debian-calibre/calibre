@@ -57,6 +57,7 @@ def save_dialog(parent, title, msg, det_msg=''):
 def clean_text(x):
     return re.sub(r'\s', ' ', x.strip())
 
+
 '''
 The interface common to all widgets used to set basic metadata
 class BasicMetadataWidget(object):
@@ -1731,6 +1732,10 @@ class DateEdit(make_undoable(QDateTimeEdit), ToMetadataMixin):
         elif ev.key() == Qt.Key_Equal:
             ev.accept()
             self.setDateTime(QDateTime.currentDateTime())
+        elif ev.key() == Qt.Key_Up and is_date_undefined(self.current_val):
+            self.setDateTime(QDateTime.currentDateTime())
+        elif ev.key() == Qt.Key_Tab and is_date_undefined(self.current_val):
+            ev.ignore()
         else:
             return super(DateEdit, self).keyPressEvent(ev)
 

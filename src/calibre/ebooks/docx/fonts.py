@@ -29,6 +29,27 @@ def get_variant(bold=False, italic=False):
             (True, False):'Bold', (True, True):'BoldItalic'}[(bold, italic)]
 
 
+def find_fonts_matching(fonts, style='normal', stretch='normal'):
+    for font in fonts:
+        if font['font-style'] == style and font['font-stretch'] == stretch:
+            yield font
+
+
+def weight_key(font):
+    w = font['font-weight']
+    try:
+        return abs(int(w) - 400)
+    except Exception:
+        return abs({'normal': 400, 'bold': 700}.get(w, 1000000) - 400)
+
+
+def get_best_font(fonts, style, stretch):
+    try:
+        return sorted(find_fonts_matching(fonts, style, stretch), key=weight_key)[0]
+    except Exception:
+        pass
+
+
 class Family(object):
 
     def __init__(self, elem, embed_relationships, XPath, get):
@@ -132,4 +153,3 @@ class Fonts(object):
             dest.write(raw[32:])
 
         return fname
-

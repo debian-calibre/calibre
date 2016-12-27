@@ -98,6 +98,7 @@ class Worker(Thread):  # {{{
 
     def __init__(self, ids, db, loc, progress, done, delete_after, add_duplicates):
         Thread.__init__(self)
+        self.was_canceled = False
         self.ids = ids
         self.processed = set()
         self.db = db
@@ -105,12 +106,16 @@ class Worker(Thread):  # {{{
         self.error = None
         self.progress = progress
         self.done = done
+        self.left_after_cancel = 0
         self.delete_after = delete_after
         self.auto_merged_ids = {}
         self.add_duplicates = add_duplicates
         self.duplicate_ids = {}
         self.check_for_duplicates = not add_duplicates and (prefs['add_formats_to_existing'] or prefs['check_for_dupes_on_ctl'])
         self.failed_books = {}
+
+    def cancel_processing(self):
+        self.was_canceled = True
 
     def run(self):
         try:
@@ -144,6 +149,9 @@ class Worker(Thread):  # {{{
 
     def _doit(self, newdb):
         for i, x in enumerate(self.ids):
+            if self.was_canceled:
+                self.left_after_cancel = len(self.ids) - i
+                break
             try:
                 self.do_one(i, x, newdb)
             except Exception as err:
@@ -480,7 +488,7 @@ class CopyToLibraryAction(InterfaceAction):
         aname = _('Moving to') if delete_after else _('Copying to')
         dtitle = '%s %s'%(aname, os.path.basename(loc))
         self.pd = ProgressDialog(dtitle, min=0, max=len(ids)-1,
-                parent=self.gui, cancelable=False, icon='lt.png')
+                parent=self.gui, cancelable=True, icon='lt.png')
 
         def progress(idx, title):
             self.pd.set_msg(title)
@@ -489,12 +497,19 @@ class CopyToLibraryAction(InterfaceAction):
         self.worker = Worker(ids, db, loc, Dispatcher(progress),
                              Dispatcher(self.pd.accept), delete_after, add_duplicates)
         self.worker.start()
+        self.pd.canceled_signal.connect(self.worker.cancel_processing)
 
         self.pd.exec_()
+        self.pd.canceled_signal.disconnect()
 
-        donemsg = _('Copied %(num)d books to %(loc)s')
-        if delete_after:
-            donemsg = _('Moved %(num)d books to %(loc)s')
+        if self.worker.left_after_cancel:
+            msg = _('The copying process was interrupted. {} books were copied.').format(len(self.worker.processed))
+            if delete_after:
+                msg += ' ' + _('No books were deleted from this library.')
+            msg += ' ' + _('The best way to resume this operation is to re-copy all the books with the option to'
+                     ' "Check for duplicates when Copying to Library" in Preferences->Adding books turned on.')
+            warning_dialog(self.gui, _('Canceled'), msg, show=True)
+            return
 
         if self.worker.error is not None:
             e, tb = self.worker.error
@@ -502,8 +517,12 @@ class CopyToLibraryAction(InterfaceAction):
                     det_msg=tb, show=True)
             return
 
-        self.gui.status_bar.show_message(donemsg %
-                dict(num=len(self.worker.processed), loc=loc), 2000)
+        if delete_after:
+            donemsg = ngettext('Moved the book to {loc}', 'Moved {num} books to {loc}', len(self.worker.processed))
+        else:
+            donemsg = ngettext('Copied the book to {loc}', 'Copied {num} books to {loc}', len(self.worker.processed))
+
+        self.gui.status_bar.show_message(donemsg.format(num=len(self.worker.processed), loc=loc), 2000)
         if self.worker.auto_merged_ids:
             books = '\n'.join(self.worker.auto_merged_ids.itervalues())
             info_dialog(self.gui, _('Auto merged'),
@@ -532,7 +551,9 @@ class CopyToLibraryAction(InterfaceAction):
                 return _('Copying: {0} failed, with error:\n{1}').format(title, tb)
             title, msg = _('Failed to copy some books'), _('Could not copy some books, click "Show Details" for more information.')
             tb = '\n\n'.join(map(fmt_err, self.worker.failed_books))
-            tb = _('Failed to copy {0} book(s), see below for details').format(len(self.worker.failed_books)) + '\n\n' + tb
+            tb = ngettext('Failed to copy a book, see below for details',
+                          'Failed to copy {} books, see below for details', len(self.worker.failed_books)).format(
+                len(self.worker.failed_books)) + '\n\n' + tb
             if len(ids) == len(self.worker.failed_books):
                 title, msg = _('Failed to copy books'), _('Could not copy any books, click "Show Details" for more information.')
             error_dialog(self.gui, title, msg, det_msg=tb, show=True)

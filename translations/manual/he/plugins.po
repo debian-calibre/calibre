@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 09:36+0530\n"
-"PO-Revision-Date: 2016-07-19 10:28+0000\n"
-"Last-Translator: ori d <orid50@gmail.com>\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-09 03:34+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Hebrew (http://www.transifex.com/calibre/calibre/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:4
 msgid "API Documentation for plugins"
-msgstr ""
+msgstr "תיעוד API עבור תוספים"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:9
 msgid ""
@@ -30,7 +30,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:19
 msgid "Plugin"
-msgstr ""
+msgstr "תוסף"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:1
@@ -55,7 +55,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:7
 msgid "by the user."
-msgstr ""
+msgstr "מאת המשתמש."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:9
@@ -364,23 +364,24 @@ msgid ""
 "path to the modified ebook. If no modifications are needed, it should return"
 " the path to the original ebook. If an error is encountered it should raise "
 "an Exception. The default implementation simply return the path to the "
-"original ebook."
+"original ebook. Note that the path to the original file (before any file "
+"type plugins are run, is available as self.original_path_to_file)."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:9
+#: calibre.customize.FileTypePlugin.run:11
 msgid ""
 "The modified ebook file should be created with the :meth:`temporary_file` "
 "method."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:12
+#: calibre.customize.FileTypePlugin.run:14
 msgid "Absolute path to the ebook."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:14
+#: calibre.customize.FileTypePlugin.run:16
 msgid "Absolute path to the modified ebook."
 msgstr ""
 
@@ -404,7 +405,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
-msgstr ""
+msgstr "סוג הקובץ של הספר שנוסף."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
@@ -478,7 +479,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:54
 msgid "Catalog plugins"
-msgstr ""
+msgstr "קטלוג תוספים"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin:1
@@ -842,7 +843,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:8
 msgid "The algorithm is:"
-msgstr ""
+msgstr "האלגוריתם הוא:"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:10
@@ -885,7 +886,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:17
 msgid "engine"
-msgstr ""
+msgstr "מנוע"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:76
 msgid "Conversion plugins"
@@ -1179,12 +1180,9 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_COMPRESSION_QUALITY:1
 msgid ""
-"Width for thumbnails on the device. Setting this will force thumbnails to "
-"this size, not preserving aspect ratio. If it is not set, then the aspect "
-"ratio will be preserved and the thumbnail will be no higher than "
-"THUMBNAIL_HEIGHT Compression quality for thumbnails. Set this closer to 100 "
-"to have better quality thumbnails with fewer compression artifacts. Of "
-"course, the thumbnails get larger as well."
+"Compression quality for thumbnails. Set this closer to 100 to have better "
+"quality thumbnails with fewer compression artifacts. Of course, the "
+"thumbnails get larger as well."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of

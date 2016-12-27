@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-16 07:34+0530\n"
-"PO-Revision-Date: 2016-09-16 09:48+0000\n"
+"POT-Creation-Date: 2016-11-25 08:21+0530\n"
+"PO-Revision-Date: 2016-12-07 18:44+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr "E-bokredigeringsverktygen består av :class:`calibre.ebooks.oeb.polish.container.Container` poster som representerar en bok som en samling av HTML + resursfiler, samt olika verktyg som kan användas för att utföra operationer på behållaren. Alla verktyg är i form av modulnivåsfunktioner i de olika `calibre.ebooks.oeb.polish.*`` modulerna."
+msgstr "E-bokredigeringsverktygen består av :class:`calibre.ebooks.oeb.polish.container.Container` poster som representerar en bok som en samling av HTML + resursfiler, samt olika verktyg som kan användas för att utföra operationer på behållaren. Alla verktyg är i form av modulnivåsfunktioner i de olika ``calibre.ebooks.oeb.polish.*`` modulerna."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
@@ -111,7 +111,7 @@ msgstr "Lägg en fil till denna behållare. Posten för filen skapas automatiskt
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr "Lägg till en post i manifestet för en fil med det angivna namnet. Returnerar manifestet id."
+msgstr "Lägg till en post i manifestet för en fil med angivna namnet. Återger manifest id:t."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -153,26 +153,26 @@ msgstr " Markera analyserad objekt som motsvarar namnet som smutsiga. Se även: 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.exists:1
 msgid ""
-"True iff a file corresponding to the canonical name exists. Note that this "
-"function suffers from the limitations of the underlying OS filesystem, in "
-"particular case (in)sensitivity. So on a case insensitive filesystem this "
-"will return True even if the case of name is different from the case of the "
-"underlying filesystem file. See also :meth:`has_name`"
-msgstr "True om en fil som motsvarar det kanoniska namn som finns. Observera att denna funktion lider av begränsningarna i det underliggande operativsystemets filsystemet, i särskilda fall (i) känsligheten. Så ifall okänsligt filsystem kommer tillbaka gäller även om det rör sig om namn skiljer sig från fallet med den underliggande filsystemet filen. Se även :meth:`has_name`"
+"True iff a file/directory corresponding to the canonical name exists. Note "
+"that this function suffers from the limitations of the underlying OS "
+"filesystem, in particular case (in)sensitivity. So on a case insensitive "
+"filesystem this will return True even if the case of name is different from "
+"the case of the underlying filesystem file. See also :meth:`has_name`"
+msgstr "True iff en fil/katalog som motsvarar det kanoniska namnet finns. Observera att denna funktion lider av begränsningarna i det underliggande OS filsystemet, i särskilda fall (o)känslighet. Så ifall filsystem är okänsliga kommer det att återge True även om namnet skiljer sig från fallet med den underliggande filsystemsfilen. Se även :meth:`has_name`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr "Returnera storlek i oktetter av filen som representeras av det angivna kanoniska namnet. Automatiskt hanterar smutsiga tolkade objekt. Se även: :met:'parsed`"
+msgstr "Återge storlek i bytes av filen som representeras av det angivna kanoniska namnet. Automatiskt hanterar smutsiga tolkade objekt. Se även: :met:'parsed`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
 msgid ""
 "Add an item to the manifest with href derived from the given name. Ensures "
 "uniqueness of href and id automatically. Returns generated item."
-msgstr "Lägg till ett objekt i manifestetet med href som härrör från förnamnet. Säkerställer unika href och id automatiskt. Returnerar genererade objekt."
+msgstr "Lägg till ett objekt i manifestetet med href som härrör från förnamnet. Säkerställer unika href och id automatiskt. Återger genererade objekt."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -180,7 +180,7 @@ msgstr "Lägg till ett objekt i manifestetet med href som härrör från förnam
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr "Liknar open() förutom att den returnerar en sökväg, istället för ett öppet filobjekt."
+msgstr "Liknar open() förutom att den återger en sökväg, istället för ett öppet filobjekt."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
@@ -316,7 +316,7 @@ msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
-msgstr "Bekvämlig metod för att antingen returnera första XML-element med det angivna namnet eller skapar den under opf:package element och sedan lämna tillbaka den, om den inte redan finns."
+msgstr "Bekvämlig metod för att antingen återge första XML-element med det angivna namnet eller skapar den under opf:package element och sedan lämna tillbaka den, om den inte redan finns."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
@@ -343,26 +343,26 @@ msgid ""
 "returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr "Returnerar en analyserad representation av den fil som anges med namn. För HTML- och XML-filer returneras ett lxml-träd. För CSS filer returneras ett cssutils-format. Observera att analyserat objekt mellanlagras för prestanda. Om du gör några ändringar i objekttolkningen måste du anropa :meth:`dirty` så att behållaren vet att bufferten ska uppdateras. Se även :meth:`replace`. "
+msgstr "Återge en analyserad representation av den fil som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges ett cssutils-format. Observera att analyserat objekt mellanlagras för prestanda. Om du gör några ändringar i objekttolkningen måste du anropa :meth:`dirty` så att behållaren vet att bufferten ska uppdateras. Se även :meth:`replace`. "
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
 msgid "Return the raw data corresponding to the file specified by name"
-msgstr "Returnera rådata motsvarande filen som anges med namn"
+msgstr "Återge rådata motsvarande filen som anges med namn"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:3
 msgid ""
 "If True and the file has a text based mimetype, decode it and return a "
 "unicode object instead of raw bytes."
-msgstr "Om True och filen har en textbaserad mimetype, avkoda den och returnera ett unicode-objekt istället för råa oktetten."
+msgstr "Om True och filen har en textbaserad mimetype, avkoda den och återge ett unicode-objekt istället för råa bytes."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:4
 msgid ""
 "If True the returned unicode object is normalized to the NFC normal form as "
 "is required for the EPUB and AZW3 file formats."
-msgstr "Om True det returneras unicode objektet som är normaliserad till NFC normalform som krävs för EPUB- och AZW3-filformat."
+msgstr "Om True det återges unicode objektet som är normaliserad till NFC normalform som krävs för EPUB- och AZW3-filformat."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
@@ -420,7 +420,7 @@ msgid ""
 "attribute that is set to True if any actual replacement is done. Convenient "
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
-msgstr "Ersätt alla länkar i namn med replace_func, vilket måste vara en anropsbar som accepterar en URL och returnerar den ersatta URL:n. Den måste också ha ett \"ersatt\" attribut som är satt till True om någon faktisk ersättning görs. Praktiska sätt att skapa sådana anropbara använd :class:`LinkReplacer` och :class:`LinkRebaser` klasser."
+msgstr "Ersätt alla länkar i namn med replace_func, vilket måste vara en anropsbar som accepterar en URL och återger den ersatta URL:n. Den måste också ha ett \"ersatt\" attribut som är satt till True om någon faktisk ersättning görs. Praktiska sätt att skapa sådana anropbara använd :class:`LinkReplacer` och :class:`LinkRebaser` klasser."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1
@@ -484,7 +484,7 @@ msgid ""
 "A callable that takes two arguments ``(name, anchor)`` and returns a new "
 "anchor. This is useful if you need to change the anchors in HTML files. By "
 "default, it does nothing."
-msgstr "Ett anropbart som tar två argument ``(namn, ankare)`` och returnerar ett nytt ankare. Detta är användbart om du behöver ändra ankare i HTML-filer. Som standard gör det ingenting."
+msgstr "Ett anropbart som tar två argument ``(namn, ankare)`` och återger ett nytt ankare. Detta är användbart om du behöver ändra ankare i HTML-filer. Som standard gör det ingenting."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:7
@@ -511,7 +511,7 @@ msgid ""
 "recommendation is based on where the majority of files of the same type are "
 "located in the container. If no files of a particular type are present, the "
 "recommended folder is assumed to be the folder containing the OPF file."
-msgstr "Returnerar katalogerna som rekommenderas för de givna filnamnen. Rekommendationen är baserad på var majoriteten av filer av samma typ finns i behållaren. Om inga filer av en viss typ är närvarande, antas den rekommenderade mappen vara den mapp som innehåller OPF-filen."
+msgstr "Återge katalogerna som rekommenderas för de givna filnamnen. Rekommendationen är baserad på var majoriteten av filer av samma typ finns i behållaren. Om inga filer av en viss typ är närvarande, antas den rekommenderade mappen vara den mapp som innehåller OPF-filen."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
@@ -562,14 +562,14 @@ msgstr "Hantera bok skal"
 msgid ""
 "Remove an existing jacket, if any. Returns False if no existing jacket was "
 "found."
-msgstr "Ta bort ett befintligt skal, om något. Returnerar False om inget befintligt skal hittades."
+msgstr "Ta bort ett befintligt skal, om något. Återger False om inget befintligt skal hittades."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.add_or_replace_jacket:1
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta en befintligt skal. Returnerar True om ett befintligt skal ersattes."
+msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta en befintligt skal. Återger True om ett befintligt skal ersattes."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
@@ -857,7 +857,7 @@ msgstr "Rullgardinsläget för menyn (om någon) på knappen i verktygsfältet. 
 msgid ""
 "The :class:`calibre.gui2.tweak_book.boss.Boss` object. Used to control the "
 "user interface."
-msgstr ":class:`calibre.gui2.tweak_book.boss.Boss` objektet. Används för att hantera användargränssnittet. "
+msgstr ":class:`calibre.gui2.tweak_book.boss.Boss` objektet. Används för att anpassa användargränssnittet. "
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.gui:1
@@ -869,7 +869,7 @@ msgstr "Huvudfönstret i användargränssnittet"
 msgid ""
 "Return the current :class:`calibre.ebooks.oeb.polish.container.Container` "
 "object that represents the book being edited."
-msgstr "Returnera nuvarande :class:`calibre.ebooks.oeb.polish.container.Container` objekt som representerar boken som redigeras."
+msgstr "Återge nuvarande :class:`calibre.ebooks.oeb.polish.container.Container` objekt som representerar boken som redigeras."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
@@ -922,7 +922,7 @@ msgstr "En valfri längre beskrivning av denna åtgärd, det kommer att använda
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr "Skapa en QAction som kommer att läggas till antingen tilläggets verktygsfält eller tilläggets meny beroende på ``for_toolbar``. Till exempel::"
+msgstr "Skapa en QAction som kommer att läggas till antingen till tilläggets verktygsfält eller tilläggets meny beroende på ``for_toolbar``. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
@@ -931,7 +931,7 @@ msgstr "Metod :meth:`register_shortcut`."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:131
 msgid "Controlling the editor's user interface"
-msgstr "Hanterar redigerarens användargränssnitt"
+msgstr "Anpassa redigerarens användargränssnitt"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:133
 msgid ""

@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -102,7 +101,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label_8.setText(_("Here you can customize the behavior of Calibre by controlling what plugins it uses."))
+        self.label_8.setText(_("Here you can customize the behavior of calibre by controlling what plugins it uses."))
         self.next_button.setText(_("&Next"))
         self.previous_button.setText(_("&Previous"))
         self.user_installed_plugins.setToolTip(_("Show only those plugins that have been installed by you"))

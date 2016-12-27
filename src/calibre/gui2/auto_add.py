@@ -11,7 +11,7 @@ import os, tempfile, shutil, time
 from threading import Thread, Event
 from future_builtins import map
 
-from PyQt5.Qt import (QFileSystemWatcher, QObject, Qt, pyqtSignal, QTimer)
+from PyQt5.Qt import (QFileSystemWatcher, QObject, Qt, pyqtSignal, QTimer, QApplication, QCursor)
 
 from calibre import prints
 from calibre.ptempfile import PersistentTemporaryDirectory
@@ -203,7 +203,17 @@ class AutoAdder(QObject):
         if hasattr(self, 'worker'):
             self.worker.join()
 
+    def __enter__(self):
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+
+    def __exit__(self, *args):
+        QApplication.restoreOverrideCursor()
+
     def add_to_db(self, data):
+        with self:
+            self.do_add(data)
+
+    def do_add(self, data):
         from calibre.ebooks.metadata.opf2 import OPF
 
         gui = self.parent()
@@ -296,9 +306,9 @@ class AutoAdder(QObject):
 
         if count > 0:
             m.books_added(count)
-            gui.status_bar.show_message(_(
-                'Added %(num)d book(s) automatically from %(src)s') %
-                dict(num=count, src=self.worker.path), 2000)
+            gui.status_bar.show_message(
+                ngettext('Added a book automatically from {src}', 'Added {num} books automatically from {src}', count).format(
+                    num=count, src=self.worker.path), 2000)
             gui.refresh_cover_browser()
 
         if needs_rescan:

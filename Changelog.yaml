@@ -20,6 +20,187 @@
 #   new recipes:
 #     - title: 
 
+- version: 2.75.1
+  date: 2016-12-23
+
+  new features:
+    - title: "Happy Holidays everyone!"
+
+    - title: "Add support for new Kobo firmware version 4.2"
+
+    - title: "Allow using amazon_in, amazon_au, amazon_com identifiers in the Book details panel."
+      tickets: [1649371]
+
+  bug fixes:
+    - title: "Version 2.75.1 has fixes for a regression in 2.75.0 that broke the Live CSS feature in the editor and caused some minor problems in the viewer"
+
+    - title: "Kobo driver: Fix incorrectly sized covers being sent to some Kobo devices"
+
+    - title: "E-book viewer: Prevent javascript in the book from accessing files on the computer using XMLHttpRequest."
+      tickets: [1651728]
+
+    - title: "Edit Book: Fix the 'Search ignoring markup tool' not ignoring comments/processing instructions, etc."
+      tickets: [1651160]
+
+    - title: "CSS Transforms: Fix 'is'/'is not' rules not matching currentColor."
+      tickets: [1650930]
+
+    - title: "E-book viewer: Make the swipe up gesture move to next section instead of previous section."
+      tickets: [1651034]
+
+    - title: "Edit Book: Allow the Spell Check dialog and the search panel to be made much narrower than before."
+      tickets: [1650932]
+
+    - title: "Edit Book: Fix customize template window not freely resizable on windows."
+      tickets: [1650924]
+
+    - title: "Edit Book: Fix newlines not being matched by the 'Search ignoring markup' tool."
+      tickets: [1649383]
+
+    - title: "EPUB Input: Fix incorrect handling of html files that are in a folder above the OPF file."
+      tickets: [1649357]
+
+  improved recipes:
+    - Ambito Financiero
+    - Die Zeit (subscription)
+    - Irish Times
+    - Guardian
+    - Independent
+    - Ambito.com
+
+
+- version: 2.74.0
+  date: 2016-12-09
+
+  new features:
+    - title: "Amazon metadata download: Allow downloading from amazon.cn as well. To use go to Preferences->Metadata download and customize the amazon plugin to download from amazon.cn"
+
+    - title: "Edit Book: Allow disabling the 'Files already arranged into folders' message popup"
+
+  bug fixes:
+    - title: "Edit Book: Fix selected text not being fully highlighted when using the solarized color schemes."
+      tickets: [1647448]
+
+    - title: "calibredb: Fix CSV output for the check_library command not being properly escaped"
+
+    - title: "Fix subsetting of fonts whose names start with 'and' not working"
+
+    - title: "Fix a regression in 2.72 that broke the --start-in-tray command line option."
+      tickets: [1644876]
+
+    - title: "Fix third party plugins that create dynamic context menus not working in linux"
+
+    - title: "DOCX Input: Fix images wider than 50% of the page width being incorrectly right aligned even when anchored to the center of the page."
+      tickets: [1646086]
+
+    - title: "Catalog generation: Ensure all citation keys in BiBTeX catalogs have only ascii characters."
+      tickets: [1646239]
+
+    - title: "Get Books: Update ebookpoint and legimi plugins for website changes"
+
+    - title: "EPUB3 metadata: Ensure updating metadata never produces empty dc:contributor elements."
+      tickets: [1644702]
+
+    - title: "DOCX Output: Fix an error when converting tables with spanning cells."
+      tickets: [1644912]
+
+    - title: "Nicer error message if the user tries to import data while the content server is running"
+
+  improved recipes:
+    - Frontline
+    - Korea Herald
+    - Pagina 12
+    - Edge Conversations
+    - Kitsapun
+    - Mobile Nations
+    - NME
+    - Security Watch
+    - Sign on SD
+    - Star Advertiser
+    - tyzden
+
+
+- version: 2.73.0
+  date: 2016-11-25
+
+  new features:
+    - title: "Add a preference in Preferences->Look & Feel to hide the row numbers in the main book list."
+      tickets: [1643313]
+
+    - title: "Allow Export/Import of column coloring and icon rules."
+      tickets: [1643314]
+
+    - title: "Edit Book: Allow bulk changing of file extension for selected files by right clicking ont he selected files in the file browser."
+      tickets: [1643232]
+
+    - title: "Edit Book: Check Book: Add a check for nav documents that contain no ToC in EPUB 3 books"
+
+    - title:  "Edit Book: Check Book: Add a test to check if the embedded fonts in the book have their embedding permissions enabled"
+
+  bug fixes:
+    - title: "Pressing the up arrow in an date edit with undefined value should jump to the current date rather than Feb 101"
+
+    - title: "EPUB Input: When an invalid nav based ToC is used in an EPUB 3.0 document that also has a fallback NCX ToC, use the fallback ToC."
+      tickets: [1643247]
+
+    - title: "Fix a regression that broke the icon theme creation tool in the previous release"
+      tickets: [1643228]
+
+    - title: "Fix insert character dialog not reflowing characters on resize. Also only allow the search bar in the dialog to get input focus"
+
+  improved recipes:
+    - Dilbert
+    - The Hindu
+
+
+- version: 2.72.0
+  date: 2016-11-18
+
+  new features:
+    - title: "Font embedding: Implement automatic embedding for fonts with non-normal stretch and weight values such as Condensed/Light/Extra Bold fonts"
+
+    - title: "Allow aborting an in-progress Copy-to-library action."
+      tickets: [1641458]
+
+    - title: "Edit Book: When adding a font file via File->New automatically generate the appropriate @font-face rule and copy it to the clipboard so that it can be easily inserted into the appropriate CSS files."
+
+    - title: "Edit Book: Check Book: Add a warning for links with the : character in them on windows"
+
+    - title: "Conversion: When converting markdown documents recognize basic metadata in the markdown document formatted as per the markdown metadata extension."
+
+    - title: "Edit Book: Spell Check dialog: Various small usability enhancements -- preserve position in word list on refresh, ensure that new current word is highlighted after changing a word, etc."
+
+    - title: "Edit Book: Flash the taskbar icon after beautify all files completes."
+      tickets: [1639024]
+
+  bug fixes:
+    - title: "Fix creating an empty library with the same structure as current library not creating custom columns on the first restart after creating the new custom columns."
+      tickets: [1641278]
+
+    - title: "Edit Book: Dont fail to rename files on windows if there is a link containing the colon character."
+      tickets: [1641202]
+
+    - title: "PDF Output: Dont fail if one of the embedded fonts has no names"
+
+    - title: "Edit Book: When downloading external resources, ensure the generated filenames are valid."
+      tickets: [1639448]
+
+    - title: "Windows: Fix file extension not being added automatically when missing in save dialogs."
+      tickets: [1637353]
+
+    - title: "Fix calibre not opening full-screen in windows tablet mode."
+      tickets: [1638158]
+
+    - title: "Edit Book: Fix check external links tool not detecting changes that have not yet been saved"
+
+    - title: "Generate covers: Fix & in the series causing incorrect formatting of series number."
+      tickets: [1638759]
+
+    - title: "Edit Book: Fix a regression in the last release that broke the Arrange into folders tool when arranging into sub-folders of a folder that does not exist."
+
+  improved recipes:
+    - Mediapart
+
 - version: 2.71.0
   date: 2016-10-31
 

@@ -17,16 +17,15 @@ from urlparse import urlparse
 
 from PyQt5.Qt import (
     QWidget, QVBoxLayout, QApplication, QSize, QNetworkAccessManager, QMenu, QIcon,
-    QNetworkReply, QTimer, QNetworkRequest, QUrl, Qt, QNetworkDiskCache, QToolBar,
+    QNetworkReply, QTimer, QNetworkRequest, QUrl, Qt, QToolBar,
     pyqtSlot, pyqtSignal)
 from PyQt5.QtWebKitWidgets import QWebView, QWebInspector, QWebPage
 
 from calibre import prints
-from calibre.constants import iswindows
+from calibre.constants import FAKE_PROTOCOL, FAKE_HOST
 from calibre.ebooks.oeb.polish.parsing import parse
 from calibre.ebooks.oeb.base import serialize, OEB_DOCS
-from calibre.ptempfile import PersistentTemporaryDirectory
-from calibre.gui2 import error_dialog, open_url, NO_URL_FORMATTING
+from calibre.gui2 import error_dialog, open_url, NO_URL_FORMATTING, secure_web_page
 from calibre.gui2.tweak_book import current_container, editors, tprefs, actions, TOP
 from calibre.gui2.viewer.documentview import apply_settings
 from calibre.gui2.viewer.config import config
@@ -145,6 +144,7 @@ class ParseWorker(Thread):
     def is_alive(self):
         return Thread.is_alive(self) or (hasattr(self, 'worker') and self.worker.is_alive())
 
+
 parse_worker = ParseWorker()
 # }}}
 
@@ -168,6 +168,12 @@ class NetworkReply(QNetworkReply):
                 data = data.encode('utf-8')
                 mime_type += '; charset=utf-8'
             self.__data = data
+            mime_type = {
+                # Prevent warning in console about mimetype of fonts
+                'application/vnd.ms-opentype':'application/x-font-ttf',
+                'application/x-font-truetype':'application/x-font-ttf',
+                'application/font-sfnt': 'application/x-font-ttf',
+            }.get(mime_type, mime_type)
             self.setHeader(QNetworkRequest.ContentTypeHeader, mime_type)
             self.setHeader(QNetworkRequest.ContentLengthHeader, len(self.__data))
             QTimer.singleShot(0, self.finalize_reply)
@@ -214,30 +220,11 @@ class NetworkReply(QNetworkReply):
 
 class NetworkAccessManager(QNetworkAccessManager):
 
-    OPERATION_NAMES = {getattr(QNetworkAccessManager, '%sOperation'%x) :
-            x.upper() for x in ('Head', 'Get', 'Put', 'Post', 'Delete',
-                'Custom')
-    }
-
-    def __init__(self, *args):
-        QNetworkAccessManager.__init__(self, *args)
-        self.current_root = None
-        self.cache = QNetworkDiskCache(self)
-        self.setCache(self.cache)
-        self.cache.setCacheDirectory(PersistentTemporaryDirectory(prefix='disk_cache_'))
-        self.cache.setMaximumCacheSize(0)
-
     def createRequest(self, operation, request, data):
-        url = unicode(request.url().toString(NO_URL_FORMATTING))
-        if operation == self.GetOperation and url.startswith('file://'):
-            path = url[7:]
-            if iswindows and path.startswith('/'):
-                path = path[1:]
+        qurl = request.url()
+        if operation == self.GetOperation and qurl.host() == FAKE_HOST:
+            name = qurl.path()[1:]
             c = current_container()
-            try:
-                name = c.abspath_to_name(path, root=self.current_root)
-            except ValueError:  # Happens on windows with absolute paths on different drives
-                name = None
             if c.has_name(name):
                 try:
                     return NetworkReply(self, request, c.mime_map.get(name, 'application/octet-stream'), name)
@@ -275,11 +262,8 @@ class WebPage(QWebPage):
         settings = self.settings()
         apply_settings(settings, config().parse())
         settings.setMaximumPagesInCache(0)
-        settings.setAttribute(settings.JavaEnabled, False)
-        settings.setAttribute(settings.PluginsEnabled, False)
+        secure_web_page(settings)
         settings.setAttribute(settings.PrivateBrowsingEnabled, True)
-        settings.setAttribute(settings.JavascriptCanOpenWindows, False)
-        settings.setAttribute(settings.JavascriptCanAccessClipboard, False)
         settings.setAttribute(settings.LinksIncludedInFocusChain, False)
         settings.setAttribute(settings.DeveloperExtrasEnabled, True)
         settings.setDefaultTextEncoding('utf-8')
@@ -292,15 +276,6 @@ class WebPage(QWebPage):
         self.setLinkDelegationPolicy(self.DelegateAllLinks)
         self.mainFrame().javaScriptWindowObjectCleared.connect(self.init_javascript)
         self.init_javascript()
-
-    @dynamic_property
-    def current_root(self):
-        def fget(self):
-            return self.networkAccessManager().current_root
-
-        def fset(self, val):
-            self.networkAccessManager().current_root = val
-        return property(fget=fget, fset=fset)
 
     def javaScriptConsoleMessage(self, msg, lineno, source_id):
         prints('preview js:%s:%s:'%(unicode(source_id), lineno), unicode(msg))
@@ -414,11 +389,6 @@ class WebView(QWebView):
             only, it is not intended to simulate an actual ebook reader. Some
             aspects of your ebook will not work, such as page breaks and page margins.
             '''))
-        self.page().current_root = None
-
-    def setUrl(self, qurl):
-        self.page().current_root = current_container().root
-        return QWebView.setUrl(self, qurl)
 
     def inspect(self):
         self.inspector.parent().show()
@@ -557,13 +527,19 @@ class Preview(QWidget):
             error_dialog(self, _('Failed to launch worker'), _(
                 'Failed to launch the worker process used for rendering the preview'), det_msg=tb, show=True)
 
+    def name_to_qurl(self, name=None):
+        name = name or self.current_name
+        qurl = QUrl()
+        qurl.setScheme(FAKE_PROTOCOL), qurl.setAuthority(FAKE_HOST), qurl.setPath('/' + name)
+        return qurl
+
     def show(self, name):
         if name != self.current_name:
             self.refresh_timer.stop()
             self.current_name = name
             self.report_worker_launch_error()
             parse_worker.add_request(name)
-            self.view.setUrl(QUrl.fromLocalFile(current_container().name_to_abspath(name)))
+            self.view.setUrl(self.name_to_qurl())
             return True
 
     def refresh(self):
@@ -574,7 +550,7 @@ class Preview(QWidget):
             self.report_worker_launch_error()
             parse_worker.add_request(self.current_name)
             # Tell webkit to reload all html and associated resources
-            current_url = QUrl.fromLocalFile(current_container().name_to_abspath(self.current_name))
+            current_url = self.name_to_qurl()
             self.refresh_starting.emit()
             if current_url != self.view.url():
                 # The container was changed
@@ -586,10 +562,6 @@ class Preview(QWidget):
     def clear(self):
         self.view.clear()
         self.current_name = None
-
-    @property
-    def current_root(self):
-        return self.view.page().current_root
 
     @property
     def is_visible(self):

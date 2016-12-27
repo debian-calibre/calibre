@@ -8,6 +8,7 @@ __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import sys, re
 from operator import itemgetter
+from itertools import chain
 
 from cssutils import parseStyle
 from PyQt5.Qt import QTextEdit, Qt, QTextCursor
@@ -250,6 +251,7 @@ def ensure_not_within_tag_definition(cursor, forward=True):
 
     return False
 
+
 BLOCK_TAG_NAMES = frozenset((
     'address', 'article', 'aside', 'blockquote', 'center', 'dir', 'fieldset',
     'isindex', 'menu', 'noframes', 'hgroup', 'noscript', 'pre', 'section',
@@ -293,6 +295,7 @@ def set_style_property(tag, property_name, value, editor):
         d = parseStyle(editor.selected_text_from_cursor(c)[1:-1])
         d.setProperty(property_name, value)
         c.insertText('"%s"' % css(d))
+
 
 entity_pat = re.compile(r'&(#{0,1}[a-zA-Z0-9]{1,8});$')
 
@@ -698,8 +701,19 @@ class Smarts(NullSmarts):
         c.setPosition(cstart)
         block = c.block()
         in_text = find_tag_definition(block, 0)[0] is None
+        if in_text:
+            # Check if we are in comment/PI/etc.
+            pb = block.previous()
+            while pb.isValid():
+                boundaries = pb.userData().non_tag_structures
+                if boundaries:
+                    if boundaries[-1].is_start:
+                        in_text = False
+                    break
+                pb = pb.previous()
 
         def append(text, start):
+            text = text.replace(PARAGRAPH_SEPARATOR, '\n')
             after = start + len(text)
             if start <= cend and cstart < after:
                 extra = after - (cend + 1)
@@ -711,13 +725,13 @@ class Smarts(NullSmarts):
                 chunks.append((text, start + max(extra, 0)))
 
         while block.isValid() and block.position() <= cend:
-            boundaries = sorted(block.userData().tags, key=get_offset)
+            ud = block.userData()
+            boundaries = sorted(chain(ud.tags, ud.non_tag_structures), key=get_offset)
             if not boundaries:
                 # Add the whole line
                 if in_text:
-                    text = block.text()
-                    if text:
-                        append(text, block.position())
+                    text = block.text() + '\n'
+                    append(text, block.position())
             else:
                 start = block.position()
                 c.setPosition(start)
@@ -733,10 +747,11 @@ class Smarts(NullSmarts):
                     c.setPosition(block.position() + boundaries[-1].offset + 1)
                     c.movePosition(c.EndOfBlock, c.KeepAnchor)
                     if c.hasSelection():
-                        append(c.selectedText(), c.anchor())
+                        append(c.selectedText() + '\n', c.anchor())
             block = block.next()
         s, e = find_text_in_chunks(pat, chunks)
         return s != -1 and e != -1, s, e
+
 
 if __name__ == '__main__':  # {{{
     from calibre.gui2.tweak_book.editor.widget import launch_editor
