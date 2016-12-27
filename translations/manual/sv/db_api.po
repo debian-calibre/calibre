@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-08 08:36+0530\n"
-"PO-Revision-Date: 2016-09-13 14:59+0000\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-18 09:16+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,13 @@ msgstr "API-dokumentation för databasgränssnittet"
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr "Detta API är trådsäkert (det används en flerläsare, singelskrivare utelåsningsschema). Du kan access detta API så här::"
+msgstr "Detta API är trådsäkert (använder en flerläsare, singelskrivare utelåsningsschema). Du kan access detta API så här::"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "Om du är i ett calibre tillägg som är del av calibre huvudgränssnittet, får du istället tillgång till det så här::"
+msgstr "Om du är i ett calibre tillägg som är del av calibre huvudanvändargränssnittet, får du tillgång till det så här istället::"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -67,7 +67,7 @@ msgid ""
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr "Returnerar ett listpar: :code:`ids, duplicates`. ``id`` innehållande bokens identiteter för all nyligen skapade böcker i databasen. \"duplikat\" innehåller :code:`(mi, format_map)` for alla böcker som redan finns i databasen genom enkel heuristisk duplikationsdetektering använd av :meth:`has_book`."
+msgstr "Återger ett listpar: :code:`ids, duplicates`. ``id`` innehållande bokens identiteter för all nyligen skapade böcker i databasen. \"duplikat\" innehåller :code:`(mi, format_map)` for alla böcker som redan finns i databasen genom enkel heuristisk duplikationsdetektering använd av :meth:`has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
@@ -81,14 +81,14 @@ msgstr "Lägg till data för namn där val_map är en karta över book_ids till 
 msgid ""
 "Add a format to the specified book. Return True of the format was added "
 "successfully."
-msgstr "Lägg ett format till angiven bok. Returnerar True om formatet lyckades   att läggas till."
+msgstr "Lägg ett format till angiven bok. Återger True om formatet lyckades   att läggas till."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr "Om True ersätt befintligt format, annars om formatet redan finns, returneras False"
+msgstr "Om True ersätt befintligt format, annars om formatet redan finns, återges False"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
@@ -127,14 +127,14 @@ msgstr "Frusen uppsättning av alla fältnamn (bör bara användas för många t
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr "Returnerar författardata som ordlista med nycklar: namn, sort, länk"
+msgstr "Återger författardata som ordlista med nycklar: namn, sort, länk"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr "Om inga författare med angivna identiteter hittas returneras en tom ordlista. Om author_ids är None, returneras data för alla författare."
+msgstr "Om inga författare med angivna identiteter hittas återges en tom ordlista. Om author_ids är None, återges data för alla författare."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -142,21 +142,21 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr "Given en lista med författare, returnerar author_sort sträng för författare,  framför författarsortering associerad med författare över bearbetade strängen."
+msgstr "Given en lista med författare, återge author_sort sträng för författare,  framför författarsortering associerad med författare över bearbetade strängen."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr "Returnerar alla böcker associerade med posten identifierad av ``item_id``, där posten tillhör fältet  ``name``."
+msgstr "Återger alla böcker associerade med posten identifierad av ``item_id``, där posten tillhör fältet  ``name``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
-msgstr "Returnerat värde är en mängd av bokidentiteter eller den tomma mängden om posten eller fältet inte finns."
+msgstr "Återgett värde är en mängd av bokidentiteter eller den tomma mängden om posten eller fältet inte finns."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -165,7 +165,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr "Kopiera omslag till filen som objektet ``dest``. Returnerar False om inget omslag finns eller dest är samma fil som det aktuella omslaget. dest kan också vara en sökväg i vilket fall omslaget kopieras till det om och endast om sökvägen är en annan än den aktuella sökvägen (med små bokstäver i beräkningen)."
+msgstr "Kopiera omslag till filen som objektet ``dest``. Återger False om inget omslag finns eller dest är samma fil som det aktuella omslaget. dest kan också vara en sökväg i vilket fall omslaget kopieras till det om och endast om sökvägen är en annan än den aktuella sökvägen (med små bokstäver i beräkningen)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -181,7 +181,7 @@ msgstr "Kopiera formatet ``fmt`` till filen som posten ``dest``. Om angivet form
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr "Returnerar omslagsbild eller inget. Som standard, returneras omslag som en oktettsträng."
+msgstr "Återge omslagsbild eller inget. Som standard, återges omslag som en byte sträng."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
@@ -189,30 +189,30 @@ msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr "VARNING: Att använda as_path kommer att kopiera omslaget till en temp fil och returnera sökvägen till temp filen. Du bör ta bort temp filen när du är klar med den."
+msgstr "VARNING: Att använda as_path kommer att kopiera omslaget till en temp fil och återge sökvägen till temporära filen. Du bör ta bort temp filen när du är klar med den."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr "Om True returnerar bilden som ett öppet filobjekt (en SpooledTemporaryFile)"
+msgstr "Om True återger bilden som ett öppet filobjekt (en SpooledTemporaryFile)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr "Om True returnera bilden som ett Q-bildobjekt"
+msgstr "Om True återger bilden som ett Q-bildobjekt"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr "Om True returnera bilden som en sökväg till en temporärfil"
+msgstr "Om True återger bilden som en sökväg till en temporärfil"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
-msgstr "Returnerar uppgifter som kan användas för att implementera :meth:`find_identical_books` i en arbetsprocess utan tillgång till db. Se db.utils för en implementering"
+msgstr "Återge uppgifter som kan användas för att implementera :meth:`find_identical_books` i en arbetsprocess utan tillgång till db. Se db.utils för en implementering"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
@@ -220,7 +220,7 @@ msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
-msgstr "Returnerar data som är lämpliga för användning i :meth:'has_book`. Detta kan användas för en implementering av :meth:`has_book` i en arbetsprocess utan tillgång till db."
+msgstr "Återger data som är lämpliga för användning i :meth:'has_book`. Detta kan användas för en implementering av :meth:`has_book` i en arbetsprocess utan tillgång till db."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
@@ -249,7 +249,7 @@ msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr "Returnera värdet av fältet ``name`` för boken som identifieras av ``book_id``. Om ingen sådan bok existerar eller inte har något definierat värde för fältet ``name`` eller inget sådant fält finns, så returneras ``default_value``."
+msgstr "Återge värdet av fältet ``name`` för boken som identifieras av ``book_id``. Om ingen sådan bok existerar eller inte har något definierat värde för fältet ``name`` eller inget sådant fält finns, så återges ``default_value``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
@@ -267,7 +267,7 @@ msgid ""
 "is identifiers for which the returned value is always a dict. The returned "
 "tuples are always in link order, that is, the order in which they were "
 "created."
-msgstr "Det returnerade värdet för is_multiple fält är alltid tupler, även om inga värden finns (med andra ord, default_value ignoreras). Undantaget är identifierare som det returnerade värdet alltid är en 'dict'. De returnerade tupler är alltid länkordning, det vill säga i vilken ordning de skapades."
+msgstr "Det återgivna värdet för is_multiple fält är alltid tupler, även om inga värden finns (med andra ord, default_value ignoreras). Undantaget är identifierare som det återgav värdet alltid är en 'dict'. De återgivna tuplerna är alltid i länkordning, det vill säga i vilken ordning de skapades."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -275,7 +275,7 @@ msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr "Returnera id:ar (som en tupel) för de värden som fältet ``namn`` har på boken som identifieras av ``book_id``. Om det inte finns några värden, eller ingen sådan bok, eller något sådant fält, returneras en tom tupel tillbaka."
+msgstr "Återge id:ar (som en tupel) för de värden som fältet ``namn`` har på boken som identifieras av ``book_id``. Om det inte finns några värden, eller ingen sådan bok, eller något sådant fält, återges en tom tupel tillbaka."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
@@ -289,7 +289,7 @@ msgstr "Hittar böcker som har en övermängd av författarna i mi och samma tit
 msgid ""
 "Return the ebook format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the ebook file."
-msgstr "Returnera e-bokformat som en oktettsträng eller `None` om formatet inte finns, eller att vi inte har behörighet att skriva till e-bokfilen."
+msgstr "Återge e-bokformat som en oktettsträng eller `None` om formatet inte finns, eller att vi inte har behörighet att skriva till e-bokfilen."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -297,13 +297,13 @@ msgid ""
 "If True the ebook format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr "Om True returneras e-bokformat som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd: meth: `copy_format_to` stället för utförande."
+msgstr "Om True återges e-bokformat som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd: meth: `copy_format_to` stället för utförande."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
-msgstr "Kopierar formatet filen till en temp fil och returnerar sökvägen till temp fil"
+msgstr "Kopierar formatet filen till en temp fil och återger sökvägen till temp filen"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
@@ -311,7 +311,7 @@ msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr "Om True och returneras en sökväg, filnamnet är samma som den som används i biblioteket. Observera att detta innebär att upprepade anrop ger samma temp fil (som återskapas varje gång)"
+msgstr "Om True och återges en sökväg, filnamnet är samma som den som används i biblioteket. Observera att detta innebär att upprepade anrop ger samma temp fil (som återskapas varje gång)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
@@ -319,7 +319,7 @@ msgid ""
 "Return absolute path to the ebook file of format `format`. You should almost"
 " never use this, as it breaks the threadsafe promise of this API. Instead "
 "use, :meth:`copy_format_to`."
-msgstr "Returnera absolut sökväg till e-bokfilen i formatet `format`. Du bör nästan aldrig använda det, eftersom det bryter trådsäkerhetsgarantin i detta API. Använd istället, :meth:`copy_format_to`."
+msgstr "Återge absolut sökväg till e-bokfilen i formatet `format`. Du bör nästan aldrig använda det, eftersom det bryter trådsäkerhetsgarantin i detta API. Använd istället, :meth:`copy_format_to`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
@@ -340,7 +340,7 @@ msgstr "Bortsett från läsaren, öppna med och redigera boken, tror jag inte n�
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
-msgstr "Returnera hash för det angivna formatet för den angivna boken. Den typ av hash är algoritmberoende, men är oftast SHA-256."
+msgstr "Återge hash för det angivna formatet för den angivna boken. Den typ av hash är algoritmberoende, men är oftast SHA-256."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
@@ -349,7 +349,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr "Returnerar sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direktaccess av den förstör trådsäkerhetsgarantin av detta API(gränssnitt). Istället använd :meth:`copy_format_to` metoden."
+msgstr "Återge sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direktaccess av den förstör trådsäkerhetsgarantin av detta API(gränssnitt). Istället använd :meth:`copy_format_to` metoden."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -370,7 +370,7 @@ msgstr "Om True är max_size-fältet av databasen uppdatering av denna bok."
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr "Returnerar tupel av alla format för den specifika boken. Om verify_formats är True verifieras att filer existerar på disken."
+msgstr "Återge tupel av alla format för den specifika boken. Om verify_formats är True verifieras att filer existerar på disken."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
@@ -383,33 +383,33 @@ msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr "Hämta data för namn. Som standard returneras data för alla book_ids, förse med en lista med bokidentifierare om du bara vill  ha några data. Returnerar en översikt av book_id till värden. Om en speciellt värde inte kan identifieras, används istället standardvärde för den."
+msgstr "Hämta data för namn. Som standard återges data för alla book_ids, förse med en lista med bokidentifierare om du bara vill  ha några data. Återger en översikt av book_id till värden. Om en speciellt värde inte kan identifieras, används istället standardvärde för den."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Returnerar en översik av id nummer till värden för specifika fält. Fältet måste vara en många-en eller många-många fält, annars genereras ett ValueError."
+msgstr "Återge en översik av id nummer till värden för specifika fält. Fältet måste vara en många-en eller många-många fält, annars genereras ett ValueError."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
-msgstr "Returnerar en uppsättning bok id för vilket namn har data."
+msgstr "Återge en uppsättning bok id för vilket namn har data."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
-msgstr "Returnerar posten id för item_name (skiftlägesokänslig)"
+msgstr "Återge posten id för item_name (skiftlägesokänslig)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
-msgstr "Returnerar postnamnet för posten som anges av item_id i specificerat fält. Se också :meth:`get_id_map`."
+msgstr "Återge postnamnet för posten som anges av item_id i specificerat fält. Se också :meth:`get_id_map`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -419,14 +419,14 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr "Returnerar metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Notera att listan av format inte är verifierad. Om get_cover är True, kommer omslag att returneras, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
+msgstr "Återge metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Notera att listan av format inte är verifierad. Om get_cover är True, kommer omslag att återges, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
-msgstr "Returnerar nästa serieindex för den specifika serien, med beaktning av olika förval som styr generering av nästa serienummer."
+msgstr "Återge nästa serieindex för den specifika serien, med beaktning av olika förval som styr generering av nästa serienummer."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
@@ -437,7 +437,7 @@ msgstr "Serielikt fält (som standard för inbyggda seriekolumnen)"
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr "Om True, returnerar en översikt av book_id till aktuell serie_index-värde istället."
+msgstr "Om True, återger en översikt av book_id till aktuell serie_index-värde istället."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -446,14 +446,14 @@ msgid ""
 " only reads values from the database on demand. This is much faster than "
 "get_metadata when only a small number of fields need to be accessed from the"
 " returned metadata object."
-msgstr "Liksom: meth: `get_metadata` förutom att den returnerar ett ProxyMetadata-objekt som bara läser värden från databasen på förfrågan. Det är mycket snabbare än get_metadata när endast ett mindre antal fält behöver nås från returnerat metadataobjekt."
+msgstr "Liksom: meth: `get_metadata` förutom att den återger ett ProxyMetadata-objekt som bara läser värden från databasen på förfrågan. Det är mycket snabbare än get_metadata när endast ett mindre antal fält behöver nås från återgett metadataobjekt."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr "Returnerar en översikt av id till räkningsanvändning för alla värden på det angivna fältet, som måste vara en många-en eller många-många fält."
+msgstr "Återge en översikt av id till räkningsanvändning för alla värden på det angivna fältet, som måste vara en många-en eller många-många fält."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -461,17 +461,17 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr "Returnerar True om och endast om databasen innehåller en post med samma titel som den angivna i metadataobjektet. Jämförelsen är skiftlägeskänsliga . Se även :meth:'data_for_has_book`."
+msgstr "Återge True om och endast om databasen innehåller en post med samma titel som den angivna i metadataobjektet. Jämförelsen är skiftlägeskänsliga . Se även :meth:'data_for_has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr "Returnerar True om (och endast om) formatet existerar på disk"
+msgstr "Återge True om (och endast om) formatet existerar på disk"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr "Returnerar True om (och endast om) specificerat bok_id existerar i db"
+msgstr "Återge True om (och endast om) specificerat bok_id existerar i db"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
@@ -483,7 +483,7 @@ msgstr "Initialisera denna buffring med data från fjärrsidan."
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
-msgstr "Returnerar en lista med sorterade bokidentifierare. Om ids_to_sort är  None, kommer alla bokidentifierare att returneras."
+msgstr "Återge en lista med sorterade bokidentifierare. Om ids_to_sort är  None, kommer alla bokidentifierare att återges."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
@@ -497,14 +497,14 @@ msgstr "fälten måste vara en lista med 2-tupler på formatet (field_name, asce
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr "Returnerar värdet för det specifika förvalet eller värdet angivet som ``standard`` om inget förval är angivet."
+msgstr "Återge värdet för det specifika förvalet eller värdet angivet som ``standard`` om inget förval är angivet."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr "Returnerar OPF metadatalagringen för boken som en oktettsträng eller None om ingen sådan lagrad finns."
+msgstr "Återge OPF metadatalagringen för boken som en oktettsträng eller None om ingen sådan lagrad finns."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
@@ -537,7 +537,7 @@ msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr "Radera alla objekt i det angivna fältet med de angivna id. Returnerar uppsättningen påverkade bok-id. ``restrict_to_book_ids`` är en valfri uppsättning bok-id. Om specificerat,  kommer endast objekten att tas bort från dessa böcker."
+msgstr "Radera alla objekt i det angivna fältet med de angivna id. Återger uppsättningen påverkade bok-id. ``restrict_to_book_ids`` är en valfri uppsättning bok-id. Om specificerat,  kommer endast objekten att tas bort från dessa böcker."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
@@ -571,7 +571,7 @@ msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr "Återställer det angivna formatet från tidigare sparat ORIGINAL_FORMAT, om något. Returnerar True vid framgång. The ORIGINAL_FORMAT tas bort efter en lyckad återställning."
+msgstr "Återställer det angivna formatet från tidigare sparat ORIGINAL_FORMAT, om något. Återger True vid framgång. The ORIGINAL_FORMAT tas bort efter en lyckad återställning."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
@@ -591,7 +591,7 @@ msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr "Den här egenskapen returnerar ett nytt låsobjekt på varje access. Detta låsobjekt är inte rekursivt (för prestanda) och får endast användas i ett med uttalande som ``with cache.safe_read_lock:`` annars kommer dåliga saker att hända."
+msgstr "Den här egenskapen återger ett nytt låsobjekt på varje access. Detta låsobjekt är inte rekursivt (för prestanda) och får endast användas i ett med uttalande som ``with cache.safe_read_lock:`` annars kommer dåliga saker att hända."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
@@ -605,7 +605,7 @@ msgstr "Spara en kopia i angivet format som ORIGINAL_FORMAT, skriver över alla 
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
-msgstr "Söker i databasen med angiven sökning, returnerar en uppsättning av matchade bok id:ar."
+msgstr "Söker i databasen med angiven sökning, återger en uppsättning av matchade bok id:ar."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
@@ -613,7 +613,7 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr "En begränsning som är AND-ad med angiven förfrågan. Observera att restriktioner mellanlagras, alltså sökandet efter a AND b kommer att vara långsammare än en med a restriktions b."
+msgstr "En begränsning som är ANDad med angiven förfrågan. Observera att restriktioner mellanlagras, alltså sökandet efter a AND b kommer att vara långsammare än en med a restriktions b."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
@@ -645,7 +645,7 @@ msgstr "Ange omslag för denna bok. data kan antingen vara en QImage, QPixmap, f
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr "Ange värden av fält angivna av  ``namn``. Returnerar uppsättningen av bok id:ar som påverkades av förändringen."
+msgstr "Ange värden av fält angivna av  ``namn``. Återger uppsättningen av bok id:ar som påverkades av förändringen."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
@@ -696,13 +696,13 @@ msgstr "Ange angivna förval till de angivna värdet. Se också :meth:`pref`."
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr "Returnera id av alla böcker som har etiketten ``etikett`` som är äldre än den angivna tiden. etikettjämförelse är skiftlägesoberoende."
+msgstr "Återge id av alla böcker som har etiketten ``etikett`` som är äldre än den angivna tiden. etikettjämförelse är skiftlägesoberoende."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr "En timedelta-objekt eller None. Om None kommer alla id:ar med etiketten returneras."
+msgstr "En timedelta-objekt eller None. Om None kommer alla id:ar med etiketten återges."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
@@ -725,4 +725,4 @@ msgid ""
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr "Returnera användarkategorier för de angivna böckerna. proxy_metadata_map är valfritt och är användbar för en prestandaökning, i sammanhang där ett ProxyMetadata objekt för böckerna redan finns. Det bör vara en korsreferens av book_ids till deras motsvarande ProxyMetadata objekt."
+msgstr "Återge användarkategorier för de angivna böckerna. proxy_metadata_map är valfritt och är användbar för en prestandaökning, i sammanhang där ett ProxyMetadata objekt för böckerna redan finns. Det bör vara en korsreferens av book_ids till deras motsvarande ProxyMetadata objekt."

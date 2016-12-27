@@ -70,11 +70,9 @@ def in_thread_job(func):
             return func(*args, **kwargs)
     return ans
 
-_boss = None
-
 
 def get_boss():
-    return _boss
+    return get_boss.boss
 
 
 class Boss(QObject):
@@ -82,7 +80,6 @@ class Boss(QObject):
     handle_completion_result_signal = pyqtSignal(object)
 
     def __init__(self, parent, notify=None):
-        global _boss
         QObject.__init__(self, parent)
         self.global_undo = GlobalUndoHistory()
         self.container_count = 0
@@ -93,7 +90,7 @@ class Boss(QObject):
         self.doing_terminal_save = False
         self.ignore_preview_to_editor_sync = False
         setup_cssutils_serialization()
-        _boss = self
+        get_boss.boss = self
         self.gui = parent
         completion_worker().result_callback = self.handle_completion_result_signal.emit
         self.handle_completion_result_signal.connect(self.handle_completion_result, Qt.QueuedConnection)
@@ -435,14 +432,17 @@ class Boss(QObject):
         d = NewFileDialog(self.gui)
         if d.exec_() != d.Accepted:
             return
-        self.do_add_file(d.file_name, d.file_data, using_template=d.using_template, edit_file=True)
+        added_name = self.do_add_file(d.file_name, d.file_data, using_template=d.using_template, edit_file=True)
+        if d.file_name.rpartition('.')[2].lower() in ('ttf', 'otf', 'woff'):
+            from calibre.gui2.tweak_book.manage_fonts import show_font_face_rule_for_font_file
+            show_font_face_rule_for_font_file(d.file_data, added_name, self.gui)
 
     def do_add_file(self, file_name, data, using_template=False, edit_file=False):
         self.add_savepoint(_('Before: Add file %s') % self.gui.elided_text(file_name))
         c = current_container()
         adata = data.replace(b'%CURSOR%', b'') if using_template else data
         try:
-            c.add_file(file_name, adata)
+            added_name = c.add_file(file_name, adata)
         except:
             self.rewind_savepoint()
             raise
@@ -459,6 +459,7 @@ class Boss(QObject):
                 self.edit_file(file_name, syntax)
         self.set_modified()
         completion_worker().clear_caches('names')
+        return added_name
 
     def add_files(self):
         if not self.ensure_book(_('You must first open a book to tweak, before trying to create new files in it.')):
@@ -588,7 +589,7 @@ class Boss(QObject):
             return
         from calibre.gui2.tweak_book.download import DownloadResources
         with BusyCursor():
-            self.add_savepoint(_('Before get external resources'))
+            self.add_savepoint(_('Before: Get external resources'))
         try:
             d = DownloadResources(self.gui)
             d.exec_()
@@ -627,8 +628,11 @@ class Boss(QObject):
         self.commit_all_editors_to_container()
         name_map = rationalize_folders(c, d.folder_map)
         if not name_map:
-            return info_dialog(self.gui, _('Nothing to do'), _(
-                'The files in this book are already arranged into folders'), show=True)
+            confirm(_(
+                'The files in this book are already arranged into folders'), 'already-arranged-into-folders',
+                self.gui, pixmap='dialog_information.png', title=_('Nothing to do'), show_cancel_button=False,
+                config_set=tprefs, confirm_msg=_('Show this message &again'))
+            return
         self.add_savepoint(_('Before: Arrange into folders'))
         self.gui.blocking_job(
             'rationalize_folders', _('Renaming and updating links...'), partial(self.rename_done, name_map),
@@ -652,7 +656,7 @@ class Boss(QObject):
                   ' different ebook viewers. Are you sure you want to proceed?').format(
                       '<pre>%s</pre>'%newname, '<pre>%s</pre>' % urlnormalize(newname)),
                 'confirm-urlunsafe-change', parent=self.gui, title=_('Are you sure?'), config_set=tprefs):
-                    return
+                return
         self.add_savepoint(_('Before: Rename %s') % oldname)
         name_map = {oldname:newname}
         self.gui.blocking_job(
@@ -815,6 +819,7 @@ class Boss(QObject):
                 pretty_all(current_container())
                 self.update_editors_from_container()
                 self.set_modified()
+                QApplication.alert(self.gui)
 
     def mark_selected_text(self):
         ed = self.gui.central.current_editor
@@ -1299,6 +1304,7 @@ class Boss(QObject):
 
     def check_external_links(self):
         if self.ensure_book(_('You must first open a book in order to check links.')):
+            self.commit_all_editors_to_container()
             self.gui.check_external_links.show()
 
     def compress_images(self):

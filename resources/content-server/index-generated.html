@@ -1566,18 +1566,23 @@ if (typeof Map !== "function" || typeof Map.prototype.delete !== "function") {
 } else {
     ρσ_dict_implementation = Map;
 }
-function ρσ_dict(iterable) {
+function ρσ_dict() {
+    var iterable = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+    var kw = arguments[arguments.length-1];
+    if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
     if (this instanceof ρσ_dict) {
         this.jsmap = new ρσ_dict_implementation;
         if (iterable !== undefined) {
             this.update(iterable);
         }
+        this.update(kw);
         return this;
     } else {
-        return new ρσ_dict(iterable);
+        return ρσ_interpolate_kwargs_constructor.call(Object.create(ρσ_dict.prototype), false, ρσ_dict, [iterable].concat([ρσ_desugar_kwargs(kw)]));
     }
 };
 Object.defineProperties(ρσ_dict, {
+    __handles_kwarg_interpolation__ : {value: true},
     __argnames__ : {value: ["iterable"]}
 });
 
@@ -1788,13 +1793,13 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
         ρσ_dict.prototype.update.call(this, arguments[1]);
     }
 };
-ρσ_dict.prototype.toString = ρσ_dict.prototype.inspect = function () {
+ρσ_dict.prototype.toString = ρσ_dict.prototype.inspect = ρσ_dict.prototype.__str__ = ρσ_dict.prototype.__repr__ = function () {
     var entries, iterator, r;
     entries = [];
     iterator = this.jsmap.entries();
     r = iterator.next();
     while (!r.done) {
-        entries.push(r.value[0] + ": " + r.value[1]);
+        entries.push(ρσ_repr(r.value[0]) + ": " + ρσ_repr(r.value[1]));
         r = iterator.next();
     }
     return "{" + entries.join(", ") + "}";
@@ -2299,6 +2304,23 @@ function ρσ_bound_index(idx, arr) {
 };
 Object.defineProperties(ρσ_bound_index, {
     __argnames__ : {value: ["idx", "arr"]}
+});
+
+function ρσ_splice(arr, val, start, end) {
+    start = start || 0;
+    if (start < 0) {
+        start += arr.length;
+    }
+    if (end === undefined) {
+        end = arr.length;
+    }
+    if (end < 0) {
+        end += arr.length;
+    }
+    Array.prototype.splice.apply(arr, [start, end - start].concat(val));
+};
+Object.defineProperties(ρσ_splice, {
+    __argnames__ : {value: ["arr", "val", "start", "end"]}
 });
 
 ρσ_exists = (function(){
@@ -13320,7 +13342,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.globals";
-        var _boss, messenger, iframe_id, uid, _layout_mode, _current_spine_item, default_color_schemes;
+        var _boss, messenger, iframe_id, uid, default_color_schemes;
         var GCM = ρσ_modules.aes.GCM;
         var random_bytes = ρσ_modules.aes.random_bytes;
 
@@ -13389,27 +13411,38 @@ return this.__repr__();
         messenger = new Messenger;
         iframe_id = "read-book-iframe";
         uid = "calibre-" + hexlify(random_bytes(12));
-        _layout_mode = "flow";
         function current_layout_mode() {
-            return _layout_mode;
+            return current_layout_mode.value;
         };
 
+        current_layout_mode.value = "flow";
         function set_layout_mode(val) {
-            _layout_mode = val;
+            current_layout_mode.value = val;
         };
         Object.defineProperties(set_layout_mode, {
             __argnames__ : {value: ["val"]}
         });
 
-        _current_spine_item = null;
         function current_spine_item() {
-            return _current_spine_item;
+            return current_spine_item.value;
         };
 
+        current_spine_item.value = null;
         function set_current_spine_item(val) {
-            _current_spine_item = val;
+            current_spine_item.value = val;
         };
         Object.defineProperties(set_current_spine_item, {
+            __argnames__ : {value: ["val"]}
+        });
+
+        function toc_anchor_map() {
+            return toc_anchor_map.value;
+        };
+
+        function set_toc_anchor_map(val) {
+            toc_anchor_map.value = val;
+        };
+        Object.defineProperties(set_toc_anchor_map, {
             __argnames__ : {value: ["val"]}
         });
 
@@ -13458,8 +13491,6 @@ return this.__repr__();
         ρσ_modules["read_book.globals"].messenger = messenger;
         ρσ_modules["read_book.globals"].iframe_id = iframe_id;
         ρσ_modules["read_book.globals"].uid = uid;
-        ρσ_modules["read_book.globals"]._layout_mode = _layout_mode;
-        ρσ_modules["read_book.globals"]._current_spine_item = _current_spine_item;
         ρσ_modules["read_book.globals"].default_color_schemes = default_color_schemes;
         ρσ_modules["read_book.globals"].set_boss = set_boss;
         ρσ_modules["read_book.globals"].get_boss = get_boss;
@@ -13468,6 +13499,8 @@ return this.__repr__();
         ρσ_modules["read_book.globals"].set_layout_mode = set_layout_mode;
         ρσ_modules["read_book.globals"].current_spine_item = current_spine_item;
         ρσ_modules["read_book.globals"].set_current_spine_item = set_current_spine_item;
+        ρσ_modules["read_book.globals"].toc_anchor_map = toc_anchor_map;
+        ρσ_modules["read_book.globals"].set_toc_anchor_map = set_toc_anchor_map;
     })();
 
     (function(){
@@ -13963,11 +13996,110 @@ return this.__repr__();
         var find_text_in_tree = ρσ_modules.widgets.find_text_in_tree;
         var scroll_tree_item_into_view = ρσ_modules.widgets.scroll_tree_item_into_view;
 
+        var toc_anchor_map = ρσ_modules["read_book.globals"].toc_anchor_map;
+        var set_toc_anchor_map = ρσ_modules["read_book.globals"].set_toc_anchor_map;
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
+        var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
+
+        function update_visible_toc_nodes(visible_anchors) {
+            update_visible_toc_nodes.data = visible_anchors;
+        };
+        Object.defineProperties(update_visible_toc_nodes, {
+            __argnames__ : {value: ["visible_anchors"]}
+        });
+
+        update_visible_toc_nodes.data = Object.create(null);
+        function iter_toc_nodes(node, callback) {
+            var child;
+            if (callback(node)) {
+                return;
+            }
+            var ρσ_Iter0 = ρσ_Iterable(node.children);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                child = ρσ_Iter0[ρσ_Index0];
+                if (callback(child)) {
+                    return;
+                }
+            }
+        };
+        Object.defineProperties(iter_toc_nodes, {
+            __argnames__ : {value: ["node", "callback"]}
+        });
+
+        function get_highlighted_toc_nodes(toc, spine, parent_map, id_map) {
+            var data, ans, nodes_before, pid, node_id;
+            data = update_visible_toc_nodes.data;
+            ans = Object.create(null);
+            if (data.has_visible) {
+                ans = data.visible_anchors;
+            } else {
+                if (data.before) {
+                    ans[ρσ_bound_index(data.before, ans)] = true;
+                } else {
+                    nodes_before = [];
+                    iter_toc_nodes(toc, (function() {
+                        var ρσ_anonfunc = function (node) {
+                            if (node.dest === current_spine_item()) {
+                                return true;
+                            }
+                            nodes_before.push(node);
+                        };
+                        Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["node"]}
+                        });
+                        return ρσ_anonfunc;
+                    })());
+                    if (nodes_before.length) {
+                        ans[ρσ_bound_index(nodes_before[nodes_before.length-1].id, ans)] = true;
+                    }
+                }
+            }
+            var ρσ_Iter1 = ρσ_Iterable(Object.keys(ans));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                node_id = ρσ_Iter1[ρσ_Index1];
+                pid = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
+                while (pid) {
+                    ans[(typeof pid === "number" && pid < 0) ? ans.length + pid : pid] = true;
+                    pid = parent_map[(typeof pid === "number" && pid < 0) ? parent_map.length + pid : pid];
+                }
+            }
+            return ans;
+        };
+        Object.defineProperties(get_highlighted_toc_nodes, {
+            __argnames__ : {value: ["toc", "spine", "parent_map", "id_map"]}
+        });
+
         function create_toc_tree(toc, onclick) {
+            var ρσ_unpack, parent_map, id_map, highlighted_toc_nodes;
+            ρσ_unpack = [Object.create(null), Object.create(null)];
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            function process_node(node, parent) {
+                var c;
+                id_map[ρσ_bound_index(node.id, id_map)] = node;
+                parent_map[ρσ_bound_index(node.id, parent_map)] = parent;
+                var ρσ_Iter2 = ρσ_Iterable(node.children);
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    c = ρσ_Iter2[ρσ_Index2];
+                    process_node(c, node);
+                }
+            };
+            Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node", "parent"]}
+            });
+
+            process_node(toc);
+            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map);
             function populate_data(node, li, a) {
+                var title;
                 li.dataset.tocDest = node.dest || "";
                 li.dataset.tocFrag = node.frag || "";
-                a.textContent = node.title || "";
+                title = node.title || "";
+                if (highlighted_toc_nodes[ρσ_bound_index(node.id, highlighted_toc_nodes)]) {
+                    a.appendChild(E.b(E.i(title)));
+                } else {
+                    a.textContent = title;
+                }
             };
             Object.defineProperties(populate_data, {
                 __argnames__ : {value: ["node", "li", "a"]}
@@ -14030,9 +14162,104 @@ return this.__repr__();
             __argnames__ : {value: ["book", "container", "onclick", "onclose"]}
         });
 
+        function current_toc_anchor_map(tam, anchor_funcs) {
+            var current_map, name, am, anchors, val, elem, anchor, sort_map, ρσ_unpack, i, aid;
+            current_map = toc_anchor_map();
+            if (!(current_map && current_map.layout_mode === current_layout_mode() && current_map.width === window.innerWidth && current_map.height === window.innerHeight)) {
+                name = current_spine_item().name;
+                am = Object.create(null);
+                anchors = [];
+                var ρσ_Iter3 = ρσ_Iterable(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []);
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    anchor = ρσ_Iter3[ρσ_Index3];
+                    val = anchor_funcs.pos_for_elem();
+                    if (anchor.frag) {
+                        elem = document.getElementById(anchor.frag);
+                        if (elem) {
+                            val = anchor_funcs.pos_for_elem(elem);
+                        }
+                    }
+                    am[ρσ_bound_index(anchor.id, am)] = val;
+                    anchors.push(anchor.id);
+                }
+                anchors.sort((function() {
+                    var ρσ_anonfunc = function (a, b) {
+                        anchor_funcs.cmp(am[(typeof a === "number" && a < 0) ? am.length + a : a], am[(typeof b === "number" && b < 0) ? am.length + b : b]);
+                    };
+                    Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["a", "b"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                sort_map = (function() {
+                    var ρσ_Iter = ρσ_Iterable(enumerate(anchors)), ρσ_Result = Object.create(null), i, aid;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        ρσ_unpack = ρσ_Iter[ρσ_Index];
+                        i = ρσ_unpack[0];
+                        aid = ρσ_unpack[1];
+                        ρσ_Result[aid] = (i);
+                    }
+                    return ρσ_Result;
+                })();
+                current_map = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["layout_mode"] = current_layout_mode;
+                    ρσ_d["width"] = window.innerWidth;
+                    ρσ_d["height"] = window.innerHeight;
+                    ρσ_d["pos_map"] = am;
+                    ρσ_d["sort_map"] = sort_map;
+                    return ρσ_d;
+                }).call(this);
+                set_toc_anchor_map(current_map);
+            }
+            return current_map;
+        };
+        Object.defineProperties(current_toc_anchor_map, {
+            __argnames__ : {value: ["tam", "anchor_funcs"]}
+        });
+
+        function update_visible_toc_anchors(toc_anchor_map, anchor_funcs) {
+            var tam, prev, before, after, visible_anchors, has_visible, pos, visibility, anchor_id;
+            tam = current_toc_anchor_map(toc_anchor_map, anchor_funcs);
+            prev = before = after = null;
+            visible_anchors = Object.create(null);
+            has_visible = false;
+            var ρσ_Iter4 = ρσ_Iterable(tam.pos_map);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                anchor_id = ρσ_Iter4[ρσ_Index4];
+                pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
+                visibility = anchor_funcs.visibility(pos);
+                if (visibility === 0) {
+                    before = prev;
+                    has_visible = true;
+                    visible_anchors[(typeof anchor_id === "number" && anchor_id < 0) ? visible_anchors.length + anchor_id : anchor_id] = true;
+                } else if (visibility > 0) {
+                    after = anchor_id;
+                    break;
+                }
+                prev = anchor_id;
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["visible_anchors"] = visible_anchors;
+                ρσ_d["has_visible"] = has_visible;
+                ρσ_d["before"] = before;
+                ρσ_d["after"] = after;
+                return ρσ_d;
+            }).call(this);
+        };
+        Object.defineProperties(update_visible_toc_anchors, {
+            __argnames__ : {value: ["toc_anchor_map", "anchor_funcs"]}
+        });
+
+        ρσ_modules["read_book.toc"].update_visible_toc_nodes = update_visible_toc_nodes;
+        ρσ_modules["read_book.toc"].iter_toc_nodes = iter_toc_nodes;
+        ρσ_modules["read_book.toc"].get_highlighted_toc_nodes = get_highlighted_toc_nodes;
         ρσ_modules["read_book.toc"].create_toc_tree = create_toc_tree;
         ρσ_modules["read_book.toc"].do_search = do_search;
         ρσ_modules["read_book.toc"].create_toc_panel = create_toc_panel;
+        ρσ_modules["read_book.toc"].current_toc_anchor_map = current_toc_anchor_map;
+        ρσ_modules["read_book.toc"].update_visible_toc_anchors = update_visible_toc_anchors;
     })();
 
     (function(){
@@ -16089,6 +16316,8 @@ return this.__repr__();
         var set_left_margin_handler = ρσ_modules["read_book.touch"].set_left_margin_handler;
         var set_right_margin_handler = ρσ_modules["read_book.touch"].set_right_margin_handler;
 
+        var update_visible_toc_nodes = ρσ_modules["read_book.toc"].update_visible_toc_nodes;
+
         var get_color = ρσ_modules["book_list.theme"].get_color;
 
         var parse_url_params = ρσ_modules.utils.parse_url_params;
@@ -16134,6 +16363,7 @@ return this.__repr__();
             this.goto_named_destination = View.prototype.goto_named_destination.bind(this);
             this.on_next_spine_item = View.prototype.on_next_spine_item.bind(this);
             this.on_update_cfi = View.prototype.on_update_cfi.bind(this);
+            this.on_update_toc_position = View.prototype.on_update_toc_position.bind(this);
             this.show_spine_item = View.prototype.show_spine_item.bind(this);
             this.show_spine_item_stage2 = View.prototype.show_spine_item_stage2.bind(this);
             this.on_content_loaded = View.prototype.on_content_loaded.bind(this);
@@ -16176,6 +16406,7 @@ return this.__repr__();
                 ρσ_d["goto_doc_boundary"] = self.goto_doc_boundary;
                 ρσ_d["scroll_to_anchor"] = self.on_scroll_to_anchor;
                 ρσ_d["update_cfi"] = self.on_update_cfi;
+                ρσ_d["update_toc_position"] = self.on_update_toc_position;
                 ρσ_d["content_loaded"] = self.on_content_loaded;
                 ρσ_d["show_chrome"] = self.show_chrome;
                 ρσ_d["bump_font_size"] = self.bump_font_size;
@@ -16627,6 +16858,13 @@ return this.__repr__();
             self.ui.db.update_last_read_time(self.book);
         };
         Object.defineProperties(View.prototype.on_update_cfi, {
+            __argnames__ : {value: ["data"]}
+        });
+        View.prototype.on_update_toc_position = function on_update_toc_position(data) {
+            var self = this;
+            update_visible_toc_nodes(data.visible_anchors);
+        };
+        Object.defineProperties(View.prototype.on_update_toc_position, {
             __argnames__ : {value: ["data"]}
         });
         View.prototype.show_spine_item = function show_spine_item(resource_data) {
@@ -18531,7 +18769,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.flow_mode";
-        var smooth_y_data, flick_animator;
+        var smooth_y_data, flick_animator, anchor_funcs;
         var set_css = ρσ_modules.dom.set_css;
 
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
@@ -18540,6 +18778,7 @@ return this.__repr__();
 
         var document_height = ρσ_modules.utils.document_height;
         var document_width = ρσ_modules.utils.document_width;
+        var viewport_to_document = ρσ_modules.utils.viewport_to_document;
 
         function flow_to_scroll_fraction(frac) {
             window.scrollTo(0, document_height() * frac);
@@ -18830,8 +19069,63 @@ return this.__repr__();
             __argnames__ : {value: ["gesture"]}
         });
 
+        anchor_funcs = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["pos_for_elem"] = (function() {
+                var ρσ_anonfunc = function pos_for_elem(elem) {
+                    var br, ρσ_unpack, x, y;
+                    if (!elem) {
+                        return [0, 0];
+                    }
+                    br = elem.getBoundingClientRect();
+                    ρσ_unpack = viewport_to_document(br.left, br.top, elem.ownerDocument);
+                    x = ρσ_unpack[0];
+                    y = ρσ_unpack[1];
+                    return [y, x];
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["elem"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            ρσ_d["visibility"] = (function() {
+                var ρσ_anonfunc = function visibility(pos) {
+                    var ρσ_unpack, y, x;
+                    ρσ_unpack = pos;
+                    y = ρσ_unpack[0];
+                    x = ρσ_unpack[1];
+                    if (y < window.pageYOffset) {
+                        return -1;
+                    }
+                    if (y < window.pageYOffset + window.innerHeight) {
+                        if (x < window.pageXOffset) {
+                            return -1;
+                        }
+                        if (x < window.pageXOffset + window.innerWidth) {
+                            return 0;
+                        }
+                    }
+                    return 1;
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["pos"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            ρσ_d["cmp"] = (function() {
+                var ρσ_anonfunc = function cmp(a, b) {
+                    return a[0] - b[0] || a[1] - b[1];
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a", "b"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            return ρσ_d;
+        }).call(this);
         ρσ_modules["read_book.flow_mode"].smooth_y_data = smooth_y_data;
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
+        ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction = flow_to_scroll_fraction;
         ρσ_modules["read_book.flow_mode"].check_for_scroll_end = check_for_scroll_end;
         ρσ_modules["read_book.flow_mode"].scroll_by = scroll_by;
@@ -18874,7 +19168,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.paged_mode";
-        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, is_full_screen_layout, current_scroll_animation;
+        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, is_full_screen_layout, current_scroll_animation, anchor_funcs;
         var set_css = ρσ_modules.dom.set_css;
 
         var E = ρσ_modules.elementmaker.E;
@@ -19594,6 +19888,51 @@ return this.__repr__();
             __argnames__ : {value: ["gesture"]}
         });
 
+        anchor_funcs = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["pos_for_elem"] = (function() {
+                var ρσ_anonfunc = function pos_for_elem(elem) {
+                    var br, x;
+                    if (!elem) {
+                        return 0;
+                    }
+                    br = elem.getBoundingClientRect();
+                    x = viewport_to_document(br.left, br.top, elem.ownerDocument)[0];
+                    return column_at(x);
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["elem"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            ρσ_d["visibility"] = (function() {
+                var ρσ_anonfunc = function visibility(pos) {
+                    var first;
+                    first = column_at(window.pageXOffset + 10);
+                    if (pos < first) {
+                        return -1;
+                    }
+                    if (pos < first + cols_per_screen) {
+                        return 0;
+                    }
+                    return 1;
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["pos"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            ρσ_d["cmp"] = (function() {
+                var ρσ_anonfunc = function cmp(a, b) {
+                    return a - b;
+                };
+                Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a", "b"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            return ρσ_d;
+        }).call(this);
         ρσ_modules["read_book.paged_mode"]._in_paged_mode = _in_paged_mode;
         ρσ_modules["read_book.paged_mode"].col_width = col_width;
         ρσ_modules["read_book.paged_mode"].screen_width = screen_width;
@@ -19603,6 +19942,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].col_and_gap = col_and_gap;
         ρσ_modules["read_book.paged_mode"].is_full_screen_layout = is_full_screen_layout;
         ρσ_modules["read_book.paged_mode"].current_scroll_animation = current_scroll_animation;
+        ρσ_modules["read_book.paged_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.paged_mode"].first_child = first_child;
         ρσ_modules["read_book.paged_mode"].has_start_text = has_start_text;
         ρσ_modules["read_book.paged_mode"].handle_rtl_body = handle_rtl_body;
@@ -19655,6 +19995,8 @@ return this.__repr__();
 
         var apply_mathjax = ρσ_modules["read_book.mathjax"].apply_mathjax;
 
+        var update_visible_toc_anchors = ρσ_modules["read_book.toc"].update_visible_toc_anchors;
+
         var finalize_resources = ρσ_modules["read_book.resources"].finalize_resources;
         var unserialize_html = ρσ_modules["read_book.resources"].unserialize_html;
 
@@ -19664,6 +20006,7 @@ return this.__repr__();
         var flow_layout = ρσ_modules["read_book.flow_mode"].layout;
         var flow_handle_gesture = ρσ_modules["read_book.flow_mode"].handle_gesture;
         var flow_scroll_by_page = ρσ_modules["read_book.flow_mode"].scroll_by_page;
+        var flow_anchor_funcs = ρσ_modules["read_book.flow_mode"].anchor_funcs;
 
         var paged_layout = ρσ_modules["read_book.paged_mode"].layout;
         var paged_scroll_to_fraction = ρσ_modules["read_book.paged_mode"].scroll_to_fraction;
@@ -19673,6 +20016,7 @@ return this.__repr__();
         var paged_jump_to_cfi = ρσ_modules["read_book.paged_mode"].jump_to_cfi;
         var paged_handle_gesture = ρσ_modules["read_book.paged_mode"].handle_gesture;
         var paged_scroll_by_page = ρσ_modules["read_book.paged_mode"].scroll_by_page;
+        var paged_anchor_funcs = ρσ_modules["read_book.paged_mode"].anchor_funcs;
 
         var apply_settings = ρσ_modules["read_book.settings"].apply_settings;
         var opts = ρσ_modules["read_book.settings"].opts;
@@ -19703,6 +20047,8 @@ return this.__repr__();
             this.content_loaded = IframeBoss.prototype.content_loaded.bind(this);
             this.content_loaded_stage2 = IframeBoss.prototype.content_loaded_stage2.bind(this);
             this.update_cfi = IframeBoss.prototype.update_cfi.bind(this);
+            this.update_toc_position = IframeBoss.prototype.update_toc_position.bind(this);
+            this.onscroll = IframeBoss.prototype.onscroll.bind(this);
             this.onresize = IframeBoss.prototype.onresize.bind(this);
             this.onwheel = IframeBoss.prototype.onwheel.bind(this);
             this.onkeydown = IframeBoss.prototype.onkeydown.bind(this);
@@ -19838,6 +20184,7 @@ return this.__repr__();
                 self._handle_gesture = flow_handle_gesture;
                 self.to_scroll_fraction = flow_to_scroll_fraction;
                 self.jump_to_cfi = scroll_to_cfi;
+                self.anchor_funcs = flow_anchor_funcs;
             } else {
                 self.do_layout = paged_layout;
                 self.handle_wheel = paged_onwheel;
@@ -19845,6 +20192,7 @@ return this.__repr__();
                 self.to_scroll_fraction = paged_scroll_to_fraction;
                 self.jump_to_cfi = paged_jump_to_cfi;
                 self._handle_gesture = paged_handle_gesture;
+                self.anchor_funcs = paged_anchor_funcs;
             }
             apply_settings(data.settings);
             set_current_spine_item((function(){
@@ -19968,7 +20316,7 @@ return this.__repr__();
             var self = this;
             var csi, ipos;
             self.connect_links();
-            window.addEventListener("scroll", debounce(self.update_cfi, 1e3));
+            window.addEventListener("scroll", debounce(self.onscroll, 1e3));
             window.addEventListener("resize", debounce(self.onresize, 500));
             window.addEventListener("wheel", self.onwheel);
             window.addEventListener("keydown", self.onkeydown);
@@ -19984,7 +20332,7 @@ return this.__repr__();
                     self.jump_to_cfi(ipos.cfi);
                 }
             }
-            self.update_cfi();
+            self.onscroll();
             self.send_message("content_loaded");
         };
         Object.defineProperties(IframeBoss.prototype.content_loaded_stage2, {
@@ -20010,6 +20358,23 @@ return this.__repr__();
         Object.defineProperties(IframeBoss.prototype.update_cfi, {
             __argnames__ : {value: []}
         });
+        IframeBoss.prototype.update_toc_position = function update_toc_position() {
+            var self = this;
+            var visible_anchors;
+            visible_anchors = update_visible_toc_anchors(self.book.manifest.toc_anchor_map, self.anchor_funcs);
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["update_toc_position"].concat([ρσ_desugar_kwargs({visible_anchors: visible_anchors})]));
+        };
+        Object.defineProperties(IframeBoss.prototype.update_toc_position, {
+            __argnames__ : {value: []}
+        });
+        IframeBoss.prototype.onscroll = function onscroll() {
+            var self = this;
+            self.update_cfi();
+            self.update_toc_position();
+        };
+        Object.defineProperties(IframeBoss.prototype.onscroll, {
+            __argnames__ : {value: []}
+        });
         IframeBoss.prototype.onresize = function onresize() {
             var self = this;
             var cfi;
@@ -20023,6 +20388,7 @@ return this.__repr__();
                 }
             }
             self.update_cfi();
+            self.update_toc_position();
         };
         Object.defineProperties(IframeBoss.prototype.onresize, {
             __argnames__ : {value: []}

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-03 08:46+0530\n"
-"PO-Revision-Date: 2016-06-03 03:18+0000\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-09 03:34+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -367,23 +367,24 @@ msgid ""
 "path to the modified ebook. If no modifications are needed, it should return"
 " the path to the original ebook. If an error is encountered it should raise "
 "an Exception. The default implementation simply return the path to the "
-"original ebook."
-msgstr "Eklentiyi çalıştır. Alt sınıflarda uygulanmalıdır. E-kitapta gerekli tüm değişiklikleri yapıp değiştirilmiş e-kitaba mutlak yolu döndürmelidir. Herhangi bir değişiklik gerekmiyorsa, asıl e-kitaba yolu döndürmelidir. Bir hatayla karşılaşılırsa bir Exception yükseltmelidir. Varsayılan uygulaması basitçe asıl e-kitaba yolu döndürür."
+"original ebook. Note that the path to the original file (before any file "
+"type plugins are run, is available as self.original_path_to_file)."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:9
+#: calibre.customize.FileTypePlugin.run:11
 msgid ""
 "The modified ebook file should be created with the :meth:`temporary_file` "
 "method."
 msgstr "Değiştirilmiş e-kitap dosyası :meth:`temporary_file` metoduyla oluşturulmalıdır."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:12
+#: calibre.customize.FileTypePlugin.run:14
 msgid "Absolute path to the ebook."
 msgstr "E-kitaba mutlak yol."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:14
+#: calibre.customize.FileTypePlugin.run:16
 msgid "Absolute path to the modified ebook."
 msgstr "Değiştirilmiş e-kitaba mutlak yol."
 
@@ -1182,13 +1183,10 @@ msgstr "Küçük resimlerin aygıttaki yüksekliği"
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_COMPRESSION_QUALITY:1
 msgid ""
-"Width for thumbnails on the device. Setting this will force thumbnails to "
-"this size, not preserving aspect ratio. If it is not set, then the aspect "
-"ratio will be preserved and the thumbnail will be no higher than "
-"THUMBNAIL_HEIGHT Compression quality for thumbnails. Set this closer to 100 "
-"to have better quality thumbnails with fewer compression artifacts. Of "
-"course, the thumbnails get larger as well."
-msgstr "Küçük resimlerin aygıttaki genişliği. Bunu ayarlamak küçük resimleri bu boyutta olmaya zorlar, en-boy oranını korumaz. Ayarlanmamışsa, en-boy oranı korunur ve küçük resim THUMBNAIL_HEIGHT'dan yüksek olamaz. Küçük resimler için sıkıştırma kalitesi. Bunu 100'e yakın tutarak daha kaliteli ve daha az sıkıştırma kalıntılı küçük resimler elde edebilirsiniz. Tabi ki küçük resimler büyüyecektir."
+"Compression quality for thumbnails. Set this closer to 100 to have better "
+"quality thumbnails with fewer compression artifacts. Of course, the "
+"thumbnails get larger as well."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.WANTS_UPDATED_THUMBNAILS:1

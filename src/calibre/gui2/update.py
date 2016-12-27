@@ -190,7 +190,7 @@ class UpdateMixin(object):
         if has_calibre_update:
             plt = u''
             if has_plugin_updates:
-                plt = _(' (%d plugin updates)')%number_of_plugin_updates
+                plt = ngettext(' (one plugin update)', ' ({} plugin updates)', number_of_plugin_updates).format(number_of_plugin_updates)
             msg = (u'<span style="color:green; font-weight: bold">%s: '
                     u'<a href="update:%s">%s%s</a></span>') % (
                         _('Update found'), version_url, calibre_version, plt)
@@ -226,7 +226,8 @@ class UpdateMixin(object):
             plugin.qaction.setText(_('Plugin Updates')+'*')
             plugin.qaction.setIcon(QIcon(I('plugins/plugin_updater_updates.png')))
             plugin.qaction.setToolTip(
-                _('There are %d plugin updates available')%number_of_updates)
+                ngettext('A plugin update is available',
+                         'There are {} plugin updates available', number_of_updates).format(number_of_updates))
         else:
             plugin.qaction.setText(_('Plugin Updates'))
             plugin.qaction.setIcon(QIcon(I('plugins/plugin_updater.png')))

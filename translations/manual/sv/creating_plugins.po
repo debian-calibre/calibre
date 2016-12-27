@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 08:31+0530\n"
-"PO-Revision-Date: 2016-10-10 13:46+0000\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-17 21:28+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr "calibre är en väldigt modulär konstruktion. Nästan alla funktioner i calibre  kommer i form av tillägg. Tillägg används för konvertering, för hämtning av nyheter (även om dessa kallas för recept), för diverse komponenter av användargränssnitt, för anslutning av olika enheter, för bearbetning av filer när de läggs till  calibre och så vidare. Du kan få en komplett lista med alla inbyggda tillägg i calibre genom att gå till :guilabel:`Inställningar->Tillägg`."
+msgstr "calibre är en väldigt modulär konstruktion. Nästan alla funktioner i calibre  kommer i form av tillägg. Tillägg används för konvertering, för nedladdning av nyheter (även om dessa kallas för recept), för diverse komponenter av användargränssnitt, för anslutning av olika enheter, för bearbetning av filer när de läggs till  calibre och så vidare. Du kan få en komplett lista med alla inbyggda tillägg i calibre genom att gå till :guilabel:`Inställningar->Tillägg`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
 msgid ""
@@ -85,7 +85,7 @@ msgstr "På OS X, kommandoradverktyget är inne i calibre paketet, till exempel 
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
-msgstr "Du kan hämta Hello World-tillägget från `helloworld_plugin.zip <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
+msgstr "Du kan ladda ner Hello World-tillägget från `helloworld_plugin.zip <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -106,13 +106,13 @@ msgid ""
 "zip file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr "Detta tillägg kommer att spridas över några filer (för att hålla koden ren). Det kommer att visa dig hur du får resurser (bilder eller datafiler) från tilläggs ZIP-filen, tillåta användare att anpassa tillägg, hur man skapar element i calibres användargränssnittet och hur man kommer åt och söka i böcker databasen i calibre."
+msgstr "Detta tillägg kommer att spridas över några filer (för att hålla koden ren). Det kommer att visa dig hur du får resurser (bilder eller datafiler) från tilläggs ZIP-filen, tillåta användare att anpassa tillägg, hur man skapar element i calibre användargränssnittet och hur man kommer åt och söka i böcker databasen i calibre."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
-msgstr "Du kan hämta detta tillägg från  `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
+msgstr "Du kan ladda ner detta tillägg från  `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
 msgid ""
@@ -263,7 +263,7 @@ msgstr "Att få resurser från tilläggs ZIP-filen"
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin zip file."
-msgstr "calibres  tilläggsladdningsssystem definierar ett par inbyggda funktioner som gör att du bekvämt hämta filer från tilläggets ZIP-fil."
+msgstr "calibres  tilläggsladdningsssystem definierar ett par inbyggda funktioner som gör att du bekvämt hämtar filer från tillägg ZIP-filen."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -279,7 +279,7 @@ msgid ""
 "found in the zip file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr "Denna funktion bör anropas med en lista med sökvägar till filer i ZIP-filen. Till exempel för att komma åt filen icon.png i katalogen bilder i ZIP-filen, skulle du använda: ``bilder/ikon.png``. Använd alltid ett snedstreck som sökvägsavgränsare, även på fönstren. När du skickar vidare ett enda namn, kommer funktionen returnera råa bytes filen eller Ingen om namnet inte hittades i ZIP-filen. Om du skickar mer än ett namn så är det returneras en ordlista passande namn till bytes. Om ett namn inte hittas, kommer det inte att finnas i den returnerade listan."
+msgstr "Denna funktion bör anropas med en lista med sökvägar till filer i ZIP-filen. Till exempel för att komma åt filen icon.png i katalogen bilder i ZIP-filen, skulle du använda: ``bilder/ikon.png``. Använd alltid ett snedstreck som sökvägsavgränsare, även på fönstren. När du skickar vidare ett enda namn, kommer funktionen återge råa bytes filen eller Ingen om namnet inte hittades i ZIP-filen. Om du skickar mer än ett namn så är det återges en ordlista passande namn till bytes. Om ett namn inte hittas, kommer det inte att finnas i den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -290,7 +290,7 @@ msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the zip "
 "file the corresponding QIcon will be null."
-msgstr "Ett bekvämligt omslag för get_resources() som skapar QIcon objekt från rådata returneras av get_resources. Om ett namn inte finns i ZIP-filen blir motsvarande QIcon null."
+msgstr "Ett bekvämligt omslag för get_resources() som skapar QIcon objekt från rådata återges av get_resources. Om ett namn inte finns i ZIP-filen blir motsvarande QIcon null."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
@@ -335,7 +335,7 @@ msgid ""
 "to the calibre book editor. The plugin is available here: "
 "`editor_demo_plugin.zip  <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr "Låt oss nu byta växel för ett tag och se hur man skapar ett tillägg för att lägga till verktyg till calibres boksredigerare. Tillägget finns här: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip> '_."
+msgstr "Låt oss nu byta växel för ett tag och se hur man skapar ett tillägg för att lägga till verktyg till calibre boksredigerare. Tillägget finns här: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip> '_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:190
 msgid ""
@@ -442,7 +442,7 @@ msgid ""
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`poedit <http://poedit.net/>`_ program for this."
-msgstr "Använd sedan något program för att generera .po-filer från din tilläggskällkod. Det bör finnas en .po-fil för varje språk du vill översätta till. Till exempel: de.po för tyska, fr.po för franska och så vidare. Du kan använda `poedit <https://poedit.net/>` _ programmet för detta."
+msgstr "Använd sedan något program för att generera .po-filer från din tilläggskällkod. Det bör finnas en .po-fil för varje språk du vill översätta till. Till exempel: de.po för tyska, fr.po för franska och så vidare. Du kan använda `poedit <http://poedit.net/>` _ programmet för detta."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
 msgid ""
@@ -492,7 +492,7 @@ msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr "Ditt tillägg kommer nästan säkert att använda kod från calibre. Om du vill veta hur man hittar olika bitar av funktionalitet i calibres kodbas, läs avsnittet om calibre :ref:`code_layout`."
+msgstr "Ditt tillägg kommer nästan säkert att använda kod från calibre. Om du vill veta hur man hittar olika bitar av funktionalitet i calibre kodbas, läs avsnittet om calibre :ref:`code_layout`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Debugging plugins"
@@ -514,7 +514,7 @@ msgstr "Eller inifrån calibre med kortkommandot att högerklicka på knappen in
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr "När du kör från kommandoraden, kommer felsäkningsutskrifter skrivas ut till konsolen, när man kör inifrån calibre kommer de att gå till en TXT-fil."
+msgstr "När du kör från kommandoraden, kommer felsökningsutdata skrivas till konsolen, när man kör inifrån calibre kommer utdata gå till en TXT-fil."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
 msgid ""

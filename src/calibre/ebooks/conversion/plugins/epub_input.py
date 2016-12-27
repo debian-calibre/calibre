@@ -3,7 +3,7 @@ __license__ = 'GPL 3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, re
+import os, re, posixpath
 from itertools import cycle
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
@@ -265,10 +265,14 @@ class EPUBInput(InputFormatPlugin):
 
         if len(parts) > 1 and parts[0]:
             delta = '/'.join(parts[:-1])+'/'
+
+            def normpath(x):
+                return posixpath.normpath(delta + elem.get('href'))
+
             for elem in opf.itermanifest():
-                elem.set('href', delta+elem.get('href'))
+                elem.set('href', normpath(elem.get('href')))
             for elem in opf.iterguide():
-                elem.set('href', delta+elem.get('href'))
+                elem.set('href', normpath(elem.get('href')))
 
         f = self.rationalize_cover3 if opf.package_version >= 3.0 else self.rationalize_cover2
         self.removed_cover = f(opf, log)
@@ -350,6 +354,8 @@ class EPUBInput(InputFormatPlugin):
                 if ol is not None:
                     process_nav_node(ol, navmap)
                     break
+        else:
+            return
 
         with NamedTemporaryFile(suffix='.ncx', dir=os.path.dirname(nav_path), delete=False) as f:
             f.write(etree.tostring(ncx, encoding='utf-8'))
@@ -368,5 +374,3 @@ class EPUBInput(InputFormatPlugin):
             spine = {x.href for x in oeb.spine}
             if (cover_toc_item is not None and cover_toc_item not in spine):
                 oeb.toc.item_that_refers_to_cover = cover_toc_item
-
-

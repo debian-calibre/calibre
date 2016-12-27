@@ -430,7 +430,7 @@ class Main(MainWindow):
         self.action_auto_sync_preview = reg('sync-right.png', _('Sync preview position to editor position'), None, 'sync-preview-to-editor', (), _(
             'Sync preview position to editor position'))
         self.action_reload_preview = reg('view-refresh.png', _('Refresh preview'), None, 'reload-preview', ('F5',), _('Refresh preview'))
-        self.action_split_in_preview = reg('auto_author_sort.png', _('Split this file'), None, 'split-in-preview', (), _(
+        self.action_split_in_preview = reg('document-split.png', _('Split this file'), None, 'split-in-preview', (), _(
             'Split file in the preview panel'))
         self.action_find_next_preview = reg('arrow-down.png', _('Find Next'), None, 'find-next-preview', (), _('Find next in preview'))
         self.action_find_prev_preview = reg('arrow-up.png', _('Find Previous'), None, 'find-prev-preview', (), _('Find previous in preview'))
@@ -495,7 +495,7 @@ class Main(MainWindow):
             'view-image.png', _('&Browse images in book'), self.boss.browse_images, 'browse-images', (), _(
                 'Browse images in the books visually'))
         self.action_multiple_split = treg(
-            'auto_author_sort.png', _('&Split at multiple locations'), self.boss.multisplit, 'multisplit', (), _(
+            'document-split.png', _('&Split at multiple locations'), self.boss.multisplit, 'multisplit', (), _(
                 'Split HTML file at multiple locations'))
         self.action_compare_book = treg('diff.png', _('&Compare to another book'), self.boss.compare_book, 'compare-book', (), _(
             'Compare to another book'))

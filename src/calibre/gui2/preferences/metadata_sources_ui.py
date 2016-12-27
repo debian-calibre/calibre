@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -20,6 +20,7 @@ class Ui_Form(object):
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.gridLayout = QtWidgets.QGridLayout(self.page)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.opt_find_first_edition_date = QtWidgets.QCheckBox(self.page)
         self.opt_find_first_edition_date.setObjectName("opt_find_first_edition_date")
@@ -132,7 +133,7 @@ class Ui_Form(object):
         self.clear_all_button.setText(_("&Clear all"))
         self.select_default_button.setToolTip(_("Restore your own subset of checked fields that you define using the \'Set as default\' button"))
         self.select_default_button.setText(_("&Select default"))
-        self.set_as_default_button.setToolTip(_("Store the currently checked fields as a default you can restore using the \'Select default\' button"))
+        self.set_as_default_button.setToolTip(_("Store the currently checked fields as the default, you can quickly apply the default using the \'Select default\' button"))
         self.set_as_default_button.setText(_("&Set as default"))
         self.opt_txt_comments.setText(_("Convert all downloaded comments to plain &text"))
         self.label_2.setText(_("Max. &number of tags to download:"))

@@ -5,14 +5,14 @@
 # Translators:
 # Zoriana Zaiats, 2014
 # Surmay Danilo <den-surmay@mail.ru>, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-03 08:46+0530\n"
-"PO-Revision-Date: 2016-06-03 03:18+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2016-12-09 11:28+0530\n"
+"PO-Revision-Date: 2016-12-09 17:27+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgstr "Документація з програмного інтерфейсу 
 msgid ""
 "Defines various abstract base classes that can be subclassed to create "
 "powerful plugins. The useful classes are:"
-msgstr ""
+msgstr "Визначає різноманітні абстрактні базові класи, з яких можна утворювати підкласи для створення потужних додатків. Корисні класи:"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:19
 msgid "Plugin"
@@ -37,7 +37,7 @@ msgstr "Додаток"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:1
 msgid "A calibre plugin. Useful members include:"
-msgstr ""
+msgstr "Додаток до calibre. Корисні учасники:"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
@@ -47,12 +47,12 @@ msgstr "``self.plugin_path``: Зберігає шлях до zip файлу, ш�
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
 msgid "this plugin or None if it is a builtin plugin"
-msgstr ""
+msgstr "цей додаток або None, якщо це вбудований додаток"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:7
 msgid "``self.site_customization``: Stores a customization string entered"
-msgstr ""
+msgstr "``self.site_customization``: зберігає введений рядок налаштовування"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:7
@@ -62,7 +62,7 @@ msgstr "користувачем"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:9
 msgid "Methods that should be overridden in sub classes:"
-msgstr ""
+msgstr "Методи, які слід перевизначити у підкласах:"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:11
@@ -99,24 +99,24 @@ msgstr ":meth:`load_resources`"
 msgid ""
 "List of platforms this plugin works on. For example: ``['windows', 'osx', "
 "'linux']``"
-msgstr ""
+msgstr "Список платформ, на яких працює додаток. Приклад: ``['windows', 'osx', 'linux']``"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.name:1
 msgid ""
 "The name of this plugin. You must set it something other than Trivial Plugin"
 " for it to work."
-msgstr ""
+msgstr "Назва цього додатка. Щоб додаток працював, вам слід вказати якусь назву, не просто Trivial Plugin."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.version:1
 msgid "The version of this plugin as a 3-tuple (major, minor, revision)"
-msgstr ""
+msgstr "Версія цього додатка у форматі кортежу з трьох чисел (основний номер, додатковий номер, модифікація)"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.description:1
 msgid "A short string describing what this plugin does"
-msgstr ""
+msgstr "Короткий рядок із описом призначення додатка"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.author:1
@@ -366,23 +366,24 @@ msgid ""
 "path to the modified ebook. If no modifications are needed, it should return"
 " the path to the original ebook. If an error is encountered it should raise "
 "an Exception. The default implementation simply return the path to the "
-"original ebook."
+"original ebook. Note that the path to the original file (before any file "
+"type plugins are run, is available as self.original_path_to_file)."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:9
+#: calibre.customize.FileTypePlugin.run:11
 msgid ""
 "The modified ebook file should be created with the :meth:`temporary_file` "
 "method."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:12
+#: calibre.customize.FileTypePlugin.run:14
 msgid "Absolute path to the ebook."
 msgstr "Повний шлях до електронної книги."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
-#: calibre.customize.FileTypePlugin.run:14
+#: calibre.customize.FileTypePlugin.run:16
 msgid "Absolute path to the modified ebook."
 msgstr "Повний шлях до зміненої електронної книги."
 
@@ -1181,12 +1182,9 @@ msgstr "Висота мініатюр на пристрої"
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_COMPRESSION_QUALITY:1
 msgid ""
-"Width for thumbnails on the device. Setting this will force thumbnails to "
-"this size, not preserving aspect ratio. If it is not set, then the aspect "
-"ratio will be preserved and the thumbnail will be no higher than "
-"THUMBNAIL_HEIGHT Compression quality for thumbnails. Set this closer to 100 "
-"to have better quality thumbnails with fewer compression artifacts. Of "
-"course, the thumbnails get larger as well."
+"Compression quality for thumbnails. Set this closer to 100 to have better "
+"quality thumbnails with fewer compression artifacts. Of course, the "
+"thumbnails get larger as well."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
