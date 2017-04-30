@@ -29,6 +29,15 @@ class TopazError(ValueError):
     pass
 
 
+class KFXError(ValueError):
+
+    def __init__(self):
+        ValueError.__init__(self, _(
+            'This is an Amazon KFX book. It cannot be processed.'
+            ' See {} for information on how to handle KFX books.'
+        ).format('https://www.mobileread.com/forums/showthread.php?t=283371'))
+
+
 class MobiReader(object):
     PAGE_BREAK_PAT = re.compile(
         r'<\s*/{0,1}\s*mbp:pagebreak((?:\s+[^/>]*){0,1})/{0,1}\s*>\s*(?:<\s*/{0,1}\s*mbp:pagebreak\s*/{0,1}\s*>)*',
@@ -71,6 +80,8 @@ class MobiReader(object):
         raw = stream.read()
         if raw.startswith('TPZ'):
             raise TopazError(_('This is an Amazon Topaz book. It cannot be processed.'))
+        if raw.startswith(b'\xeaDRMION\xee'):
+            raise KFXError()
 
         self.header   = raw[0:72]
         self.name     = self.header[:32].replace('\x00', '')
@@ -890,5 +901,3 @@ def test_mbp_regex():
         ans = MobiReader.PAGE_BREAK_PAT.sub(r'\1', raw)
         if ans != m:
             raise Exception('%r != %r for %r'%(ans, m, raw))
-
-

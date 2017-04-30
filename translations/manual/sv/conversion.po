@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
 # Merarom <merarom@yahoo.es>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 11:28+0530\n"
-"PO-Revision-Date: 2016-12-17 21:29+0000\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-21 14:50+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:4
 msgid "Ebook Conversion"
-msgstr "E-bok konvertering"
+msgstr "E-bokskonvertering"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:6
 msgid ""
@@ -37,7 +37,7 @@ msgid ""
 "EPUB or AZW3 using calibre and then using the Edit Book feature to get them "
 "into perfect shape. You can then use the edited ebook as input for "
 "conversion into other formats in calibre."
-msgstr "calibre har ett konverteringssystem som är utdataformat för att vara mycket lätt att använda. Normalt du bara lägger till en bok till calibre, klicka konvertera och calibre kommer att försöka intensivt för att generera utdata som är så nära som möjligt till ingången. Däremot accepterar calibre ett mycket stort antal indataformat, inte alla som är så lämpliga som andra för konvertering till e-böcker. I fråga om sådana inmatningsformat, eller om du bara vill ha större kontroll över konverteringssystemet, har calibre en hel del alternativ för att finjustera konverteringen. Observera dock att calibre konverteringssystem inte är en ersättning för en fullständig e-bokredigerare. Om du vill redigera e-böcker, rekommenderar jag att du först konverterar dem till EPUB eller AZW3 med calibre och sedan använder Redigera Bok-funktionen för att få dem i perfekt form. Du kan sedan använda den redigerade e-boken som indata för konvertering till andra format i calibre."
+msgstr "calibre har ett konverteringssystem som är utdataformat för att vara mycket lätt att använda. Normalt du bara lägger till en bok till calibre, klicka konvertera och calibre kommer att försöka intensivt för att generera utdata som är så nära som möjligt till ingången. Däremot accepterar calibre ett mycket stort antal indataformat, inte alla som är så lämpliga som andra för konvertering till e-böcker. I fråga om sådana inmatningsformat, eller om du bara vill ha större kontroll över konverteringssystemet, har calibre en hel del alternativ för att finjustera konverteringen. Observera dock att calibre konverteringssystem inte är en ersättning för en fullständig e-bokredigerare. Om du vill redigera e-böcker, rekommenderar jag att du först konverterar dem till EPUB eller AZW3 med calibre och sedan använder Redigera bok-funktionen för att få dem i perfekt form. Du kan sedan använda den redigerade e-boken som indata för konvertering till andra format i calibre."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:18
 msgid ""
@@ -47,11 +47,6 @@ msgid ""
 "/ebook-convert`. In calibre, you can obtain help on any individual setting "
 "by holding your mouse over it, a tooltip will appear describing the setting."
 msgstr "Detta dokument kommer avser främst konverteringsinställningarna som finns i dialogrutan konverteringen, bilden nedan. Alla dessa inställningar är även tillgängliga via kommandoraden för  konvertering, dokumenterat på :doc:`generated/sv/ebook-convert`. I calibre, kan du få hjälp av någon enskild inställning genom att hålla musen över det, då kommer ett verktygstips visas som beskriver inställningen."
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:0
-#: ../../home/kovid/work/calibre/manual/conversion.rst:0
-msgid "Contents"
-msgstr "Innehåll"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:36
 msgid "Introduction"
@@ -72,7 +67,7 @@ msgid ""
 " format. Some formats convert much better than others. A list of the best "
 "source formats for conversion is available :ref:`here <best-source-"
 "formats>`."
-msgstr "Inmatningsformatet först konverteras till XHTML med lämplig *indata-tillägg*. Denna HTML *transformeras* sedan. I det sista steget, är den bearbetade XHTML konverterad till det angivna utdataformat med lämplig utdata-tillägg. Resultaten av konverteringen kan variera kraftigt, beroende på inmatningsformatet. Vissa format konverterar mycket bättre än andra. En lista med de bästa källformaten för konvertering finns :ref:`här <best-source-formats>`."
+msgstr "Inmatningsformatet först konverteras till XHTML med lämplig *indata insticksprogram*. Denna HTML *transformeras* sedan. I det sista steget, är den bearbetade XHTML konverterad till det angivna utdataformat med lämplig *utdata insticksprogram*. Resultaten av konverteringen kan variera kraftigt, beroende på inmatningsformatet. Vissa format konverterar mycket bättre än andra. En lista med de bästa källformaten för konvertering finns :ref:`här <best-source-formats>`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:56
 msgid ""
@@ -86,7 +81,7 @@ msgid ""
 "XHTML internally, the various transforms will be applied to the XHTML and "
 "then the *Output Plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
-msgstr "De konverteringar som verkar på XHTML-utdata är där allt arbete sker. Det finns olika transformer, till exempel för att sätta in bokens metadata som en sida i början av boken, för att upptäcka kapitelrubriker och automatiskt skapa en innehållsförteckning, att proportionellt justera teckenstorlekar och så vidare. Det är viktigt att minnas att alla konverteringar verkar på XHTML-utdata av indatatillägget, inte på indatafilen. Så, till exempel, om du ber calibre att konvertera en RTF-fil till EPUB, kommer den först konverteras till XHTML internt, de olika transformationer kommer appliceras på XHTML och sedan kommer utdatatillägget att skapa EPUB-filen, automatiskt skapa all metadata, innehållsförteckning, och så vidare."
+msgstr "De konverteringar som verkar på XHTML-utdata är där allt arbete sker. Det finns olika transformer, till exempel för att sätta in bokens metadata som en sida i början av boken, för att upptäcka kapitelrubriker och automatiskt skapa en innehållsförteckning, att proportionellt justera teckenstorlekar och så vidare. Det är viktigt att minnas att alla konverteringar verkar på XHTML-utdata av indatainsticksprogrammet, inte på indatafilen. Så, till exempel, om du ber calibre att konvertera en RTF-fil till EPUB, kommer den först konverteras till XHTML internt, de olika transformationer kommer appliceras på XHTML och sedan kommer *utdatainsticksprogrammet* att skapa EPUB-filen, automatiskt skapa all metadata, innehållsförteckning, och så vidare."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:65
 msgid ""
@@ -97,7 +92,7 @@ msgid ""
 "are:"
 msgstr "Du kan se denna process i handling genom att använda felsökningsalternativet |dbgi|. Bara ange sökvägen till en katalog för felsökningsutdata. Under konverteringen kommer calibre att placera XHTML-genererade av de olika stegen av konverteringen i olika underkataloger. De fyra underkataloger är:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:0
+#: ../../home/kovid/work/calibre/manual/conversion.rst:70
 msgid "Stages of the conversion pipeline"
 msgstr "Skeden av konverteringen"
 
@@ -117,7 +112,7 @@ msgstr "indata"
 msgid ""
 "This contains the HTML output by the Input Plugin. Use this to debug the "
 "Input Plugin."
-msgstr "Det innehåller HTML-utdata från indatatillägget. Använd detta för att felsöka indatatillägget."
+msgstr "Det innehåller HTML-utdata från indatainsticksprogrammet. Använd detta för att felsöka indatainsticksprogrammet."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:76
 msgid "parsed"
@@ -127,7 +122,7 @@ msgstr "analyserad"
 msgid ""
 "The result of pre-processing and converting to XHTML the output from the "
 "Input Plugin. Use to debug structure detection."
-msgstr "Resultatet av förbehandling och konvertering till XHTML-utdata från indatatillägget. Används för att felsöka strukturdetektering."
+msgstr "Resultatet av förbehandling och konvertering till XHTML-utdata från indatainsticksprogrammet. Används för att felsöka strukturdetektering."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:77
 msgid "structure"
@@ -147,7 +142,7 @@ msgstr "bearbetad"
 msgid ""
 "Just before the ebook is passed to the output plugin. Use to debug the "
 "Output Plugin."
-msgstr "Precis innan e-bok leds till utdatatillägget. Används för att felsöka utdatatillägget."
+msgstr "Precis innan e-bok leds till utdatainsticksprogrammet. Används för att felsöka utdatainsticksprogrammet."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:81
 msgid ""
@@ -391,7 +386,7 @@ msgid ""
 "setting. `cp1252` is a common encoding for documents produced using windows "
 "software. You should also read :ref:`char-encoding-faq` for more on encoding"
 " issues."
-msgstr "Äldre dokument anger ibland inte sin teckenkodning. Vi omkodning kan detta resultera i icke-engelska tecken eller specialtecken som smarta citat skadas. calibre försöker att automatiskt detektera teckenkodning av källdokumentet, men det är inte alltid lyckas. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en gemensam kodning för dokument för Windows-programvara. Du bör också läsa :ref: `char-kodning-faq` för mera information om kodningsfrågor."
+msgstr "Äldre dokument anger ibland inte sin teckenkodning. Vi omkodning kan detta resultera i icke-engelska tecken eller specialtecken som smarta citat skadas. calibre försöker att automatiskt detektera teckenkodning av källdokumentet, men det är inte alltid lyckas. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en gemensam kodning för dokument för Windows-programvara. Du bör också läsa :ref:`char-kodning-faq` för mer information om kodningsfrågor."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:245
 msgid "Page Setup"
@@ -405,7 +400,7 @@ msgid ""
 "addition, you should choose an Input profile and an Output profile. Both "
 "sets of profiles basically deal with how to interpret measurements in the "
 "input/output documents, screen sizes and default font rescaling keys."
-msgstr "Sidinställningsalternativen är till för att anpassa skärmlayout, som marginaler och skärmstorlekar. Det finns alternativ till sidmarginalsinställningar, som kommer att användas av utdatatillägget, om det valda utmatningsformatet stödjer sidmarginaler. Dessutom bör du välja en inmatningsprofil och en utskriftsprofil. Båda uppsättningarna av profiler i princip behandlar hur man ska tolka mått i dokumentets indata/utdata, skärmstorlekar och standardtypsnitts omskalningsnycklar."
+msgstr "Sidinställningsalternativen är till för att anpassa skärmlayout, som marginaler och skärmstorlekar. Det finns alternativ till sidmarginalsinställningar, som kommer att användas av utdata insticksprogrammet, om det valda utmatningsformatet stödjer sidmarginaler. Dessutom bör du välja en inmatningsprofil och en utskriftsprofil. Båda uppsättningarna av profiler i princip behandlar hur man ska tolka mått i dokumentets indata/utdata, skärmstorlekar och standardtypsnitts omskalningsnycklar."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:253
 msgid ""
@@ -544,11 +539,11 @@ msgid ""
 "Feel' in that it actually modifies the HTML content, while the other option "
 "modifies the document styles.  This option can also remove paragraphs which "
 "were inserted using calibre's 'Insert blank line' option."
-msgstr "Detta alternativ kommer att få calibre att analysera tomma rader som ingår i dokumentet. Om varje stycke interfolierade med en tom rad, då kommer calibre att ta bort alla dessa tomma stycken. Sekvenser av flera tomma rader kommer att betraktas som scenbrott och behållas som ett enda stycke. Detta alternativ skiljer sig från 'Ta bort styckesavstånd \"alternativ under\" Utseende och känsla \"i att det faktiskt ändrar HTML-innehåll, medan det andra alternativet ändrar dokumentmallar. Detta alternativ kan också ta bort stycken som infogats med hjälp av calibres \"Infoga tom rad\" alternativ."
+msgstr "Detta alternativ kommer att få calibre att analysera tomma rader som ingår i dokumentet. Om varje stycke interfolierade med en tom rad, då kommer calibre att ta bort alla dessa tomma stycken. Sekvenser av flera tomma rader kommer att betraktas som scenbrytning och behållas som ett enda stycke. Detta alternativ skiljer sig från 'Ta bort styckesavstånd \"alternativ under\" Utseende och känsla \"i att det faktiskt ändrar HTML-innehåll, medan det andra alternativet ändrar dokumentmallar. Detta alternativ kan också ta bort stycken som infogats med hjälp av calibres \"Infoga tom rad\" alternativ."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:316
 msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
-msgstr ":guilabel:`Se till scenslut är konsekvent formaterade`"
+msgstr ":guilabel:`Se till att scenavbrytning är konsekvent formaterade`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:314
 msgid ""
@@ -556,18 +551,18 @@ msgid ""
 "and ensure that they are center aligned. 'Soft' scene break markers, i.e. "
 "scene breaks only defined by extra white space, are styled to ensure that "
 "they will not be displayed in conjunction with page breaks."
-msgstr "Med detta alternativ kommer calibre att försöka upptäcka vanliga scen-brytmarkörer och se till att de är centrerad. \"Mjuka\" scen brytmarkörer, d.v.s. scenbyten definieras endast av extra tomrum, är utformade för att säkerställa att de inte kommer att visas i samband med sidbrytningar."
+msgstr "Med detta alternativ kommer calibre att försöka upptäcka vanliga scen-brytmarkörer och se till att de är centrerad. \"Mjuka\" scenavbrytningsmarkörer, d.v.s. scenavbrytning definieras endast av extra tomrum, är utformade för att säkerställa att de inte kommer att visas i samband med sidbrytningar."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:332
 msgid ":guilabel:`Replace scene breaks`"
-msgstr ":guilabel:`Ersätt scenbyten`"
+msgstr ":guilabel:`Ersätt scenbrytningar`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:319
 msgid ""
 "If this option is configured then calibre will replace scene break markers "
 "it finds with the replacement text specified by the user.  Please note that "
 "some ornamental characters may not be supported across all reading devices."
-msgstr "Om det här alternativet konfigureras sedan ersätter calibre scenbrytmarkörer som hittas med den nya texten som anges av användaren. Observera att vissa prydnadstecken kanske inte stöds i alla läser enheter."
+msgstr "Om det här alternativet konfigureras sedan ersätter calibre scenbrytningsmarkörer som hittas med den nya texten som anges av användaren. Observera att vissa prydnadstecken kanske inte stöds i alla läser enheter."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:322
 msgid ""
@@ -657,7 +652,7 @@ msgid ""
 "expressions for your document.  Click the magic wand beside the expression "
 "box, and click the 'Test' button after composing your search expression.  "
 "Successful matches will be highlighted in Yellow."
-msgstr "De här alternativen är användbart främst för konvertering av PDF-dokument eller OCR konverteringar, även om de också kan användas för att åtgärda många dokument-specifika problem. Som ett exempel kan lämna bladen bakom sidhuvud och sidfot i texten några konverteringar. Dessa alternativ använder vanliga uttryck för att försöka upptäcka sidhuvuden, sidfötter eller annan godtycklig text och ta bort eller ersätta dem. Kom ihåg att de är verksamma på mellan XHTML producerad av konverteringsrörledning. Det finns en guide som hjälper dig att anpassa de reguljära uttryck för dokumentet. Klicka på trollstaven bredvid uttrycksrutan och klicka på \"Test\" knappen efter att komponerat ditt sökuttryck. Framgångsrika träffar kommer att markeras i gult."
+msgstr "De här alternativen är användbart främst för konvertering av PDF-dokument eller OCR konverteringar, även om de också kan användas för att åtgärda många dokument-specifika problem. Som ett exempel kan lämna bladen bakom rubrik och sidfot i texten några konverteringar. Dessa alternativ använder vanliga uttryck för att försöka upptäcka sidrubriken, sidfötter eller annan godtycklig text och ta bort eller ersätta dem. Kom ihåg att de är verksamma på mellan XHTML producerad av konverteringsrörledning. Det finns en guide som hjälper dig att anpassa de reguljära uttryck för dokumentet. Klicka på trollstaven bredvid uttrycksrutan och klicka på \"Test\" knappen efter att komponerat ditt sökuttryck. Framgångsrika träffar kommer att markeras i gult."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:363
 msgid ""
@@ -696,7 +691,7 @@ msgid ""
 "this is that there are often location where page breaks should be inserted "
 "that are not chapter boundaries. Also, detected chapters can be optionally "
 "inserted into the auto generated Table of Contents."
-msgstr "calibre har två uppsättningar av alternativ för :guilabel:`kapiteldetektering` och :guilabel:`infoga sidbrytningar`. Detta kan ibland vara lite förvirrande, som standard, kommer calibre infoga sidbrytningar innan upptäckta kapitel samt de platser som upptäckts av alternativet sidbrytningar. Anledningen till detta är att det ofta finns platser där sidbrytningar bör införas som inte är kapitelgränser. Dessutom upptäckta kapitlen kan eventuellt införas i automatiskt genererade innehållsförteckningen. "
+msgstr "calibre har två uppsättningar av alternativ för :guilabel:`kapiteldetektering` och :guilabel:`infoga sidbrytningar`. Detta kan ibland vara lite förvirrande, som standard, kommer calibre infoga sidbrytningar innan upptäckta kapitel samt de platser som upptäckts av alternativet sidbrytningar. Anledningen till detta är att det ofta finns platser där sidbrytningar bör infogas som inte är kapitelgränser. Dessutom upptäckta kapitlen kan eventuellt infogas i den automatiskt genererade innehållsförteckningen. "
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:383
 msgid ""
@@ -1012,7 +1007,7 @@ msgid ""
 "ebook.com/downloads/demos/demo.docx>`_ that demonstrates the capabilities of"
 " the calibre conversion engine. Just download it and convert it to EPUB or "
 "AZW3 to see what calibre can do."
-msgstr "Det finns en `demo .docx-fil <https://calibre-ebook.com/downloads/demos/demo.docx>`_ som demonstrerar förmågorna hos calibres konverteringsmotor. Bara ladda ner den och omvandla den till EPUB eller AZW3 för att se vad calibre kan göra."
+msgstr "Det finns en `demo .docx-fil <https://calibre-ebook.com/downloads/demos/demo.docx>`_ som demonstrerar förmågorna hos calibres konverteringsmotor. Bara hämtar den och omvandla den till EPUB eller AZW3 för att se vad calibre kan göra."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:623
 msgid ""
@@ -1034,7 +1029,7 @@ msgid ""
 "produce clean HTML that will convert well. Note that Word produces really "
 "messy HTML, converting it can take a long time, so be patient. If you have a"
 " newer version of Word available, you can directly save it as docx as well."
-msgstr "För äldre DOC-filer, kan du spara dokumentet som HTML med Microsoft Word och sedan konvertera den resulterande HTML-filen med calibre. När du sparar som HTML, se till att använda \"Spara som webbsida, filtrerad\" alternativet eftersom detta kommer att producera ren HTML som kommer att konverteras bra. Observera att Word producerar en riktigt rörig HTML, att konvertera det kan ta lång tid, så ha tålamod. Om du har en nyare version av Word tillgänglig kan du också direkt spara den som DOCX."
+msgstr "För äldre DOC-filer, kan du spara dokumentet som HTML med Microsoft Word och sedan konvertera den resulterande HTML-filen med calibre. När du sparar som HTML, se till att använda \"Spara som webbplats, filtrerad\" alternativet eftersom detta kommer att producera ren HTML som kommer att konverteras bra. Observera att Word producerar en riktigt rörig HTML, att konvertera det kan ta lång tid, så ha tålamod. Om du har en nyare version av Word tillgänglig kan du också direkt spara den som DOCX."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:638
 msgid ""
@@ -1129,7 +1124,7 @@ msgstr ":guilabel:`Utformningsmall: Heuristisk`"
 msgid ""
 "Analyzes the document for common chapter headings, scene breaks, and "
 "italicized words and applies the appropriate html markup during conversion."
-msgstr "Analyserar dokumentet för gemensamma kapitelrubriker, scenbrott och kursiverade ord och tillämpar lämpliga HTML-kod under konverteringen."
+msgstr "Analyserar dokumentet för gemensamma kapitelrubriker, scenbrytningar och kursiverade ord och tillämpar lämpliga HTML-kod under konverteringen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:699
 msgid ":guilabel:`Formatting Style: Markdown`"
@@ -1144,8 +1139,8 @@ msgid ""
 "chapter XPath detection expression to \"//h:h1\" is the easiest way to have "
 "a proper table of contents generated from a TXT document. You can learn more"
 " about the markdown syntax at `daringfireball "
-"<http://daringfireball.net/projects/markdown/syntax>`_."
-msgstr "calibre stöder också kör TXT-indata genom en tranformationspreprocessor som kallas markdown. Markdown möjliggör grundläggande formatering som ska läggas till TXT-dokument, till exempel fet, kursiv, avsnittsrubriker, tabeller, listor, en innehållsförteckning, o.s.v. Markeringskapitelrubriker med en ledande # och sätta XPath-kapiteldetekteringsuttryck för \"//h:h1\" är det enklaste sättet att få en korrekt innehållsförteckning att genereras från ett TXT-dokument. Du kan läsa mer om markdown-syntax i `daringfireball <http://daringfireball.net/projects/markdown/syntax>` _."
+"<https://daringfireball.net/projects/markdown/syntax>`_."
+msgstr "calibre stöder också kör TXT-indata genom en tranformationspreprocessor som kallas markdown. Markdown möjliggör grundläggande formatering som ska läggas till TXT-dokument, till exempel fet, kursiv, avsnittsrubriker, tabeller, listor, en innehållsförteckning, o.s.v. Markeringskapitelrubriker med en ledande # och sätta XPath-kapiteldetekteringsuttryck för \"//h:h1\" är det enklaste sättet att få en korrekt innehållsförteckning att genereras från ett TXT-dokument. Du kan läsa mer om markdown-syntax i `daringfireball <https://daringfireball.net/projects/markdown/syntax>` _."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:702
 msgid ":guilabel:`Formatting Style: None`"
@@ -1182,7 +1177,7 @@ msgid ""
 "not removed from the text it can throw off the paragraph unwrapping. To "
 "learn how to use the header and footer removal options, read "
 ":ref:`regexptutorial`."
-msgstr "De har också ofta sidhuvud och sidfot som en del av dokumentet som kommer att bli inkluderat med texten. Använd Sök och ersätt panel för att ta bort sidhuvud och sidfot för att lindra problemet. Om sidhuvuden och sidfötter inte tas bort från texten kan den ge upp uppackning. Om du vill veta hur du använder sidhuvud och sidfot borttagningsalternativ, läs :ref:`regexptutorial`."
+msgstr "De har också ofta rubriker och sidfötter som en del av dokumentet som kommer att bli inkluderat med texten. Använd Sök och ersätt panel för att ta bort rubriker och sidfötter för att lindra problemet. Om rubrikerna och sidfötterna inte tas bort från texten kan den ge upp uppackning. Om du vill veta hur du använder rubriks- och sidfotsborttagningsalternativ, läs :ref:`regexptutorial`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:721
 msgid "Some limitations of PDF input are:"
@@ -1265,17 +1260,17 @@ msgstr "EPUB avancerad formateringsdemo"
 #: ../../home/kovid/work/calibre/manual/conversion.rst:758
 msgid ""
 "Various advanced formatting for EPUB files is demonstrated in this `demo "
-"file <http://calibre-ebook.com/downloads/demos/demo.epub>`_. The file was "
+"file <https://calibre-ebook.com/downloads/demos/demo.epub>`_. The file was "
 "created from hand coded HTML using calibre and is meant to be used as a "
 "template for your own EPUB creation efforts."
-msgstr "Olika avancerad formatering för EPUB-filer demonstreras i det här `demofil <http://calibre-ebook.com/downloads/demos/demo.epub>` _. Filen skapades från handkodat HTML med calibre och är tänkt att användas som en mall för dina egna EPUB skapande insatser."
+msgstr "Olika avancerad formatering för EPUB-filer demonstreras i det här `demofil <https://calibre-ebook.com/downloads/demos/demo.epub>` _. Filen skapades från handkodat HTML med calibre och är tänkt att användas som en mall för dina egna EPUB skapande insatser."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:761
 msgid ""
-"The source HTML it was created from is available `demo.zip <http://calibre-"
+"The source HTML it was created from is available `demo.zip <https://calibre-"
 "ebook.com/downloads/demos/demo.zip>`_. The settings used to create the EPUB "
 "from the ZIP file are::"
-msgstr "HTML-källan som det skapades från är tillgänglig `demo.zip <http://calibre-ebook.com/downloads/demos/demo.zip>` _. De inställningar som används för att skapa EPUB från ZIP-filen är:: "
+msgstr "HTML-källan som det skapades från är tillgänglig `demo.zip <https://calibre-ebook.com/downloads/demos/demo.zip>` _. De inställningar som används för att skapa EPUB från ZIP-filen är:: "
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:766
 msgid ""
@@ -1325,7 +1320,7 @@ msgid ""
 "Well-known document properties (Title, Keywords, Description, Creator) are "
 "recognized and calibre will use the first image (not to small, and with good"
 " aspect-ratio) as the cover image."
-msgstr "Välkända dokumentegenskaper (titel, sökord, Beskrivning, Skapare) känns igen och calibre kommer att använda den första bilden (inte för liten, och med god aspektförhållande) som omslagsbild."
+msgstr "Välkända dokumentegenskaper (titel, sökord, beskrivning, skapare) känns igen och calibre kommer att använda den första bilden (inte för liten, och med god aspektförhållande) som omslagsbild."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:782
 msgid ""
@@ -1350,7 +1345,7 @@ msgstr "Utöver detta kan du ange vilken bild som ska användas som omslag genom
 msgid ""
 "To disable cover detection you can set the custom property ``opf.nocover`` "
 "('Yes or No' type) to Yes in advanced mode."
-msgstr "För att inaktivera omslagsupptäckt kan du ställa in den anpassade egenskapen ``opf.nocover`` (\"Ja eller Nej\" typ) till Ja i avancerat läge."
+msgstr "För att avaktivera omslagsupptäckt kan du ställa in den anpassade egenskapen ``opf.nocover`` (\"Ja eller Nej\" typ) till Ja i avancerat läge."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:805
 msgid "Converting to PDF"
@@ -1370,7 +1365,7 @@ msgstr "Den första, viktigaste, inställning för att bestämma när du konvert
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:816
 msgid "Headers and Footers"
-msgstr "Sidhuvud och sidfötter"
+msgstr "Rubrik och sidfötter"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:817
 msgid ""
@@ -1379,7 +1374,7 @@ msgid ""
 "code that get rendered in the header and footer locations. For example, to "
 "display page numbers centered at the bottom of every page, in green, use the"
 " following footer template::"
-msgstr "Du kan infoga godtyckliga sidhuvud och sidfot på varje sida i PDF genom att ange sidhuvud och sidfot mallar. Mallar är bara fragmentsavsnitt av HTML-kod som blir utförda i sidhuvud och sidfot platser. Till exempel, för att visa sidnummer centrerat längst ner på varje sida, i grönt, använd följande sidfotsmall::"
+msgstr "Du kan infoga godtyckliga rubrik och sidfot på varje sida i PDF genom att ange rubrik och sidfot mallar. Mallar är bara fragmentsavsnitt av HTML-kod som blir utförda i rubrik och sidfot platser. Till exempel, för att visa sidnummer centrerat längst ner på varje sida, i grönt, använd följande sidfotsmall::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:825
 msgid ""
@@ -1423,14 +1418,14 @@ msgid ""
 "You can even use javascript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
-msgstr "Du kan även använda javascript inne i sidhuvud och sidfot mallar, till exempel, kommer följande mall resultera i att  sidnummer börjar vid 4 istället för på 1::"
+msgstr "Du kan även använda javascript inne i rubrik och sidfot mallar, till exempel, kommer följande mall resultera i att  sidnummer börjar vid 4 istället för på 1::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:858
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the Page Setup section of the "
 "conversion dialog."
-msgstr "När du lägger till sidhuvud och sidfot se till att du ställa in sidan övre och nedre marginal till tillräckligt stora värden, under avsnittet Sidinställningar i konverteringsdialogrutan."
+msgstr "När du lägger till rubrik och sidfot se till att du ställa in sidan övre och nedre marginal till tillräckligt stora värden, under avsnittet Sidinställningar i konverteringsdialogrutan."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:863
 msgid "Printable Table of Contents"
@@ -1447,8 +1442,8 @@ msgstr "Du kan också infoga en utskrift/tryckbar innehållsförteckning i slute
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:870
 msgid ""
-"You can customize the look of the the generated Table of contents by using "
-"the Extra CSS conversion setting under the Look & Feel part of the "
-"conversion dialog. The default css used is listed below, simply copy it and "
-"make whatever changes you like."
-msgstr "Du kan anpassa utseendet på den genererade Innehållsförteckning med hjälp av extra CSS-konverteringsinställningen under Utseende och känsla delen av konverteringsdialogen. Standard css som används är listade nedan, helt enkelt kopiera den och göra de ändringar du vill."
+"You can customize the look of the generated Table of contents by using the "
+"Extra CSS conversion setting under the Look & Feel part of the conversion "
+"dialog. The default css used is listed below, simply copy it and make "
+"whatever changes you like."
+msgstr "Du kan anpassa utseendet på den genererade Innehållsförteckningen med hjälp av extra CSS-konverteringsinställningen under Utseende och känsla delen av konverteringsdialogen. Standard css som används är listade nedan, helt enkelt kopiera den och gör de ändringar du vill."

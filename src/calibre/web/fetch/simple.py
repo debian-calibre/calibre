@@ -397,7 +397,7 @@ class RecursiveFetcher(object):
             if isinstance(fname, unicode):
                 fname = fname.encode('ascii', 'replace')
             itype = what(None, data)
-            if itype is None and b'<svg' in data[:1024]:
+            if itype == 'svg' or (itype is None and b'<svg' in data[:1024]):
                 # SVG image
                 imgpath = os.path.join(diskpath, fname+'.svg')
                 with self.imagemap_lock:
@@ -562,7 +562,7 @@ class RecursiveFetcher(object):
         return res
 
 
-def option_parser(usage=_('%prog URL\n\nWhere URL is for example http://google.com')):
+def option_parser(usage=_('%prog URL\n\nWhere URL is for example https://google.com')):
     parser = OptionParser(usage=usage)
     parser.add_option('-d', '--base-dir',
                       help=_('Base directory into which URL is saved. Default is %default'),

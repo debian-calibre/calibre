@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 07:42+0530\n"
-"PO-Revision-Date: 2016-04-28 03:22+0000\n"
+"POT-Creation-Date: 2017-02-12 07:41+0530\n"
+"PO-Revision-Date: 2017-02-10 03:12+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -124,14 +124,14 @@ msgstr "아래의 *The BBC* 사이트 피드 두개를 시도해봅시다:"
 #: ../../home/kovid/work/calibre/manual/news.rst:62
 msgid ""
 "News Front Page: "
-"http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"
-msgstr "News Front Page: http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"
+"https://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:63
 msgid ""
 "Science/Nature: "
-"http://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml"
-msgstr "Science/Nature: http://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml"
+"https://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:65
 msgid ""
@@ -186,8 +186,8 @@ msgid "Article URL"
 msgstr "기사 URL"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:80
-msgid "http://news.bbc.co.uk/2/hi/science/nature/7312016.stm"
-msgstr "http://news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+msgid "https://news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:83
 msgid "Print version URL"
@@ -195,8 +195,8 @@ msgstr "인쇄 버전 URL"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:83
 msgid ""
-"http://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm"
-msgstr "http://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+"https://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:85
 msgid ""
@@ -360,25 +360,25 @@ msgid ""
 "code in :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` actually "
 "does the login into the NYT website. Once logged in, calibre will use the "
 "same, logged in, browser instance to fetch all content. See `mechanize "
-"<http://wwwsearch.sourceforge.net/mechanize/>`_ to understand the code in "
+"<https://github.com/jjlee/mechanize>`_ to understand the code in "
 "``get_browser``."
-msgstr "``needs_subscription = True``는 이 레시피가 내용에 접근하기 위해 username과 password가 필요하다는 사실을 캘리버에게 알려줍니다. 이로 인해, 이 레시피를 사용하려고 할 때마다 캘리버가 username과 password를 묻게 됩니다. :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser`에 있는 코드는 실제로 NYT 웹세이트에 로그인을 하게 합니다. 로그인이 성공하면, 캘리버는 모든 내용을 가져오는데 이 브라우저 인스턴스를 사용할 것입니다. ``get_browser``안의 코드를 이해하려면 `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`를 참조하세요."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:264
 msgid ""
 "The next new feature is the "
 ":meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index` method. Its job "
-"is to go to http://www.nytimes.com/pages/todayspaper/index.html and fetch "
+"is to go to https://www.nytimes.com/pages/todayspaper/index.html and fetch "
 "the list of articles that appear in *todays* paper. While more complex than "
 "simply using :term:`RSS`, the recipe creates an ebook that corresponds very "
 "closely to the days paper. ``parse_index`` makes heavy use of `BeautifulSoup"
-" <http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ to "
+" <https://www.crummy.com/software/BeautifulSoup/documentation.html>`_ to "
 "parse the daily paper webpage. You can also use other, more modern parsers "
 "if you dislike BeatifulSoup. calibre comes with `lxml <http://lxml.de/>`_ "
 "and `html5lib <https://github.com/html5lib/html5lib-python>`_, which are the"
 " recommended parsers. To use them, replace the call to ``index_to_soup()`` "
 "with the following::"
-msgstr "다음 새 기능은 :meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index` 메소드 입니다. 이것의 역할은 http://www.nytimes.com/pages/todayspaper/index.html 로 가서 *todays* 지면에 있는 기사들의 목록을 가져오는 것입니다. 단순히 :term:`RSS`를 사용하는 것 보다 복자하긴 하지만, 일간 신문과 매우 흡사한 eBook을 만들 수 있습니다. ``parse_index``는 일간 뉴스 웹페이지를 파싱(parsing)하기 위하여 `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/documentation.html>`에 상당히 의존합니다. 사용자가 BeautifulSoup를 좋아하지 않는 경우, 좀더 최신의 다른 파서(parser)를 사용할 수도 있습니다. 캘리버는 `lxml <http://lxml.de/>`와 `html5lib <https://github.com/html5lib/html5lib-python>`가 내장되어 있으며, 추천되는 파서들입니다. 이것들을 사용하려면 ``index_to_soup()``에 대한 호출을 아래와 같이 교체하세요::"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:285
 msgid ""
@@ -426,9 +426,9 @@ msgid ""
 "If you're satisfied with your recipe, and you feel there is enough demand to"
 " justify its inclusion into the set of built-in recipes, post your recipe in"
 " the `calibre recipes forum "
-"<http://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it with"
-" other calibre users."
-msgstr "자신의 레시피에 만족하고, 내장 레시피에 포함시킬 만한 정도의 충분한 요구가 있다고 느낀다면, `캘리버 레시피 포럼 <http://www.mobileread.com/forums/forumdisplay.php?f=228>`에 레시피를 올려서 다른 캘리버 사용자와 공유해보세요."
+"<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it "
+"with other calibre users."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:312
 msgid ""
@@ -488,8 +488,8 @@ msgstr "캘리버에 내장된 레시피들의 소스 코드"
 #: ../../home/kovid/work/calibre/manual/news.rst:338
 msgid ""
 "`The calibre recipes forum "
-"<http://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
-msgstr "`캘리버 레시피 포럼 <http://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
+"<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:337
 msgid "Lots of knowledgeable calibre recipe writers hang out here."

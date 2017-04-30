@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Trottel <trottel09@gmail.com>, 2014-2015
+# Trottel <trottel09@gmail.com>, 2014-2015,2017
 # Trottel <trottel09@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-04 12:48+0530\n"
-"PO-Revision-Date: 2015-09-04 06:12+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-13 13:03+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -30,10 +30,6 @@ msgid ""
 " gentle introduction to getting you started with using regular expressions "
 "in calibre."
 msgstr "Regulární výrazy jsou funkce používané na mnoha místech v Calibre pro provádění propracovaného zpracování obsahu e-knihy a metadat. Tento kurz je mírný úvod do problematiky používání regulárních výrazů v Calibre."
-
-#: ../../home/kovid/work/calibre/manual/regexp.rst:0
-msgid "Contents"
-msgstr "Obsah"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
@@ -118,7 +114,7 @@ msgstr "To nezní tak špatně. Co dál?"
 #: ../../home/kovid/work/calibre/manual/regexp.rst:42
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
-"regular expressions can match multiple strings? This is were it gets a "
+"regular expressions can match multiple strings? This is where it gets a "
 "little more complicated. Say, as a somewhat more practical exercise, the "
 "ebook you wanted to convert had a nasty footer counting the pages, like "
 "\"Page 5 of 423\". Obviously the page number would rise from 1 to 423, thus "
@@ -135,7 +131,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr "Dál začínají opravdu dobré věci. Pamatujete si, jak jsem říkal, že regulární výrazy mohou odpovídat více řetězcům? Tady to bude trochu složitější. Řekněme, jako poněkud praktičtější cvičení, že e-kniha, kterou chcete převést, má ošklivé zápatí počítající stránky, jako \"Strana 5 z 423\". Je zřejmé, že číslo stránky bude růst od 1 do 423, takže budete muset porovnat 423 různých řetězců, že? Špatně, ve skutečnosti: regulární výrazy vám umožňují definovat sady znaků, které jsou porovnávány. Abyste definovali sadu, dejte všechny znaky, které chcete mít v sadě, do hranatých závorek. Takže například sada ``[abc]`` by odpovídala buď znaku \"a\", \"b\" nebo \"c\". *Sady budou vždy porovnávat pouze jeden ze znaků v sadě*. \"Rozumějí\" rozsahům znaků, takže pokud chcete porovnat všechna malá písmena, použili byste sadu ``[a-z]``, pro malá a velká písmena byste použili ``[a-zA-Z]`` a tak dále. Chápete to? Takže samozřejmě pomocí výrazu ``Strana [0-9] z 423`` byste byli schopni porovnat prvních 9 stránek, čímž se sníží počet potřebných výrazů na tři: Druhý výraz ``Strana [0-9][0-9] z 423`` by porovnal všechna dvojciferná čísla stránek, a jsem si jistý, že umíte odhadnout, jak by vypadal třetí výraz. Ano, do toho. Napište ho."
+msgstr "Dál začínají opravdu dobré věci. Pamatujete si, jak jsem říkal, že regulární výrazy mohou odpovídat více řetězcům? Teď to začne být trochu složitější. Řekněme, jako poněkud praktičtější cvičení, že e-kniha, kterou chcete převést, má ošklivé zápatí počítající stránky, jako \"Strana 5 z 423\". Je zřejmé, že číslo stránky bude růst od 1 do 423, takže budete muset porovnat 423 různých řetězců, že? Špatně, ve skutečnosti: regulární výrazy vám umožňují definovat sady znaků, které jsou porovnávány. Abyste definovali sadu, dejte všechny znaky, které chcete mít v sadě, do hranatých závorek. Takže například sada ``[abc]`` by odpovídala buď znaku \"a\", \"b\" nebo \"c\". *Sady budou vždy porovnávat pouze jeden ze znaků v sadě*. \"Rozumějí\" rozsahům znaků, takže pokud chcete porovnat všechna malá písmena, použili byste sadu ``[a-z]``, pro malá a velká písmena byste použili ``[a-zA-Z]`` a tak dále. Chápete to? Takže samozřejmě pomocí výrazu ``Strana [0-9] z 423`` byste byli schopni porovnat prvních 9 stránek, čímž se sníží počet potřebných výrazů na tři: Druhý výraz ``Strana [0-9][0-9] z 423`` by porovnal všechna dvojciferná čísla stránek, a jsem si jistý, že umíte odhadnout, jak by vypadal třetí výraz. Ano, do toho. Napište ho."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:45
 msgid "Hey, neat! This is starting to make sense!"
@@ -353,7 +349,7 @@ msgstr "Začněme s nastavením převodu, což je opravdu elegantní. Do části
 #: ../../home/kovid/work/calibre/manual/regexp.rst:108
 msgid ""
 "(shamelessly ripped out of `this thread "
-"<http://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
+"<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
 "to remove some of the tags as well. In this example, I'd recommend beginning"
 " with the tag ``<b class=\"calibre2\">``, now you have to end with the "
 "corresponding closing tag (opening tags are ``<tag>``, closing tags are "
@@ -375,7 +371,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(nestydatě vytrženo z `tohoto vlákna <http://www.mobileread.com/forums/showthread.php?t=75594\">`_). Museli byste také odstranit některé značky. V tomto příkladu bych doporučoval začít značkou ``<b class=\"calibre2\">``, nyní budete muset skončit odpovídající uzavírací značkou (otevírací značky jsou ``<značka>``, uzavírací značky jsou ``</značka>``), což je v tomto případě jednoduše následující ``</b>``. (Podívejte se do dobré příručky k HTML nebo se zeptejte ve fóru, pokud si v tomto bodě nejste jisti.) Počáteční značku lze popsat pomocí ``<b.*?>``, uzavírací značku pomocí ``</b>``, takže bychom mohli odstranit vše mezi těmito značkami pomocí ``<b.*?>.*?</b>``. Ale použití tohoto výrazu by byl špatný nápad, protože odstraňuje vše, co je uzavřeno značkami <b> (který mimochodem vykreslí uzavřený text tučným písmem), a vsaďte se, že tímto způsobem odstraníme části knihy. Místo toho zahrňte i začátek uzavřeného řetězce, takže regulární výraz bude ``<b.*?>\\s*Vygeneroval\\s+ABC\\s+Amber\\s+LIT.*?</b>``.  ``\\s`` s kvantifikátory jsou zde zahrnuty namísto výslovného použití mezer, jak je vidět v řetězci, aby byly zachyceny všechny variace řetězce, které by mohly nastat. Nezapomeňte zkontrolovat, co Calibre odstraní, když testuje nový výraz, abyste se ujistili, že neodstraníte žádné části, které chcete zachovat. Pokud zkontrolujete pouze jeden výskyt, může vám uniknout neshoda někde jinde v textu. Také pamatujte, že kdybyste omylem odstranili více nebo méně značek, než jste doopravdy chtěli, Calibre se pokusí opravit poškozený kód po provedení odstranění."
+msgstr "(nestydatě vytrženo z `tohoto vlákna <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Museli byste také odstranit některé značky. V tomto příkladu bych doporučoval začít značkou ``<b class=\"calibre2\">``, nyní budete muset skončit odpovídající uzavírací značkou (otevírací značky jsou ``<značka>``, uzavírací značky jsou ``</značka>``), což je v tomto případě jednoduše následující ``</b>``. (Podívejte se do dobré příručky k HTML nebo se zeptejte ve fóru, pokud si v tomto bodě nejste jisti.) Počáteční značku lze popsat pomocí ``<b.*?>``, uzavírací značku pomocí ``</b>``, takže bychom mohli odstranit vše mezi těmito značkami pomocí ``<b.*?>.*?</b>``. Ale použití tohoto výrazu by byl špatný nápad, protože odstraňuje vše, co je uzavřeno značkami <b> (který mimochodem vykreslí uzavřený text tučným písmem), a vsaďte se, že tímto způsobem odstraníme části knihy. Místo toho zahrňte i začátek uzavřeného řetězce, takže regulární výraz bude ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``.  ``\\s`` s kvantifikátory jsou zde zahrnuty namísto výslovného použití mezer, jak je vidět v řetězci, aby byly zachyceny všechny variace řetězce, které by mohly nastat. Nezapomeňte zkontrolovat, co Calibre odstraní, když testuje nový výraz, abyste se ujistili, že neodstraníte žádné části, které chcete zachovat. Pokud zkontrolujete pouze jeden výskyt, může vám uniknout neshoda někde jinde v textu. Také pamatujte, že kdybyste omylem odstranili více nebo méně značek, než jste doopravdy chtěli, Calibre se pokusí opravit poškozený kód po provedení odstranění."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:111
 msgid "Adding books"

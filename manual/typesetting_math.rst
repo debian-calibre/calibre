@@ -7,7 +7,7 @@ Typesetting Math in ebooks
 The calibre ebook viewer has the ability to display math embedded in ebooks (ePub
 and HTML files). You can typeset the math directly with TeX or MathML or
 AsciiMath. The calibre viewer uses the excellent `MathJax
-<http://www.mathjax.org>`_ library to do this. This is a brief tutorial on
+<https://www.mathjax.org>`_ library to do this. This is a brief tutorial on
 creating ebooks with math in them that work well with the calibre viewer.
 
 
@@ -61,5 +61,5 @@ More information
 
 Since the calibre viewer uses the MathJax library to render mathematics, the best
 place to find out more about math in ebooks and get help is the `MathJax
-website <http://www.mathjax.org>`_.
+website <https://www.mathjax.org>`_.
 

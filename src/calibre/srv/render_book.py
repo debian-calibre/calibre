@@ -26,7 +26,7 @@ from calibre.ebooks.oeb.polish.cover import set_epub_cover, find_cover_image
 from calibre.ebooks.oeb.polish.css import transform_css
 from calibre.ebooks.oeb.polish.utils import extract
 from calibre.ebooks.css_transform_rules import StyleDeclaration
-from calibre.ebooks.oeb.polish.toc import get_toc
+from calibre.ebooks.oeb.polish.toc import get_toc, get_landmarks
 from calibre.ebooks.oeb.polish.utils import guess_type
 from calibre.utils.short_uuid import uuid4
 from calibre.utils.logging import default_log
@@ -133,14 +133,15 @@ def anchor_map(root):
 def get_length(root):
     strip_space = re.compile(r'\s+')
     ans = 0
+    ignore_tags = frozenset('script style title noscript'.split())
 
     def count(elem):
         num = 0
         tname = elem.tag.rpartition('}')[-1].lower()
-        if elem.text and tname not in 'script style':
-            num += len(strip_space.sub(elem.text, ''))
+        if elem.text and tname not in ignore_tags:
+            num += len(strip_space.sub('', elem.text))
         if elem.tail:
-            num += len(strip_space.sub(elem.tail, ''))
+            num += len(strip_space.sub('', elem.tail))
         if tname in 'img svg':
             num += 2000
         return num
@@ -154,11 +155,13 @@ def get_length(root):
 
 def toc_anchor_map(toc):
     ans = defaultdict(list)
+    seen_map = defaultdict(set)
 
     def process_node(node):
         name = node['dest']
-        if name:
+        if name and node['id'] not in seen_map[name]:
             ans[name].append({'id':node['id'], 'frag':node['frag']})
+            seen_map[name].add(node['id'])
         tuple(map(process_node, node['children']))
 
     process_node(toc)
@@ -180,11 +183,14 @@ class Container(ContainerBase):
         }
         raster_cover_name, titlepage_name = self.create_cover_page(input_fmt.lower())
         toc = get_toc(self).to_dict(count())
+        spine = [name for name, is_linear in self.spine_names]
+        spineq = frozenset(spine)
+        landmarks = [l for l in get_landmarks(self) if l['dest'] in spineq]
 
         self.book_render_data = data = {
             'version': RENDER_VERSION,
             'toc':toc,
-            'spine':[name for name, is_linear in self.spine_names],
+            'spine':spine,
             'link_uid': uuid4(),
             'book_hash': book_hash,
             'is_comic': input_fmt.lower() in {'cbc', 'cbz', 'cbr', 'cb7'},
@@ -194,6 +200,7 @@ class Container(ContainerBase):
             'total_length': 0,
             'spine_length': 0,
             'toc_anchor_map': toc_anchor_map(toc),
+            'landmarks': landmarks,
         }
         # Mark the spine as dirty since we have to ensure it is normalized
         for name in data['spine']:
@@ -485,7 +492,7 @@ def html_as_dict(root):
     stack = [(root, tree)]
     while stack:
         elem, node = stack.pop()
-        for i, child in enumerate(elem.iterchildren('*')):
+        for child in elem.iterchildren('*'):
             cnode = serialize_elem(child, nsmap)
             if cnode is not None:
                 tags.append(cnode)

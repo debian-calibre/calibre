@@ -233,7 +233,7 @@ class Mobi8Reader(object):
         # The primary css style sheet is typically stored next followed by any
         # snippets of code that were previously inlined in the
         # original xhtml but have been stripped out and placed here.
-        # This can include local CDATA snippets and and svg sections.
+        # This can include local CDATA snippets and svg sections.
 
         # The problem is that for most browsers and ereaders, you can not
         # use <img src="imageXXXX.svg" /> to import any svg image that itself
@@ -334,7 +334,7 @@ class Mobi8Reader(object):
                 return m.group(1)
             # For some files, kindlegen apparently creates links to tags
             # without HTML anchors, using the AID instead. See
-            # See http://www.mobileread.com/forums/showthread.php?t=259557
+            # See https://www.mobileread.com/forums/showthread.php?t=259557
             m = self.aid_re.match(tag)
             if m is not None:
                 self.linked_aids.add(m.group(1))

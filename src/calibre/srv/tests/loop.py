@@ -87,13 +87,18 @@ class LoopTest(BaseTest):
             server.join()
             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
         # Test shutdown with hung worker
-        with TestServer(lambda data:time.sleep(1000), worker_count=3, shutdown_timeout=0.01, timeout=0.01) as server:
+        block = Event()
+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.01, timeout=0.01) as server:
             pool = server.loop.pool
             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
             conn = server.connect()
             conn.request('GET', '/')
             with self.assertRaises(socket.timeout):
-                conn.getresponse()
+                res = conn.getresponse()
+                if str(res.status) == str(httplib.REQUEST_TIMEOUT):
+                    raise socket.timeout('Timeout')
+                raise Exception('Got unexpected response: code: %s %s headers: %r data: %r' % (
+                    res.status, res.reason, res.getheaders(), res.read()))
             self.ae(pool.busy, 1)
             server.loop.log.filter_level = server.loop.log.ERROR
             server.loop.stop()

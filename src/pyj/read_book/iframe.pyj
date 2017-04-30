@@ -5,8 +5,10 @@ from __python__ import bound_methods, hash_literals
 import traceback
 from aes import GCM
 from gettext import install, gettext as _
+from utils import html_escape
+
 from read_book.cfi import at_current, scroll_to as scroll_to_cfi
-from read_book.globals import set_boss, set_current_spine_item, current_layout_mode, current_spine_item, set_layout_mode
+from read_book.globals import set_boss, set_current_spine_item, current_layout_mode, current_spine_item, set_layout_mode, current_book
 from read_book.mathjax import apply_mathjax
 from read_book.toc import update_visible_toc_anchors
 from read_book.resources import finalize_resources, unserialize_html
@@ -18,7 +20,8 @@ from read_book.paged_mode import (
     layout as paged_layout, scroll_to_fraction as paged_scroll_to_fraction,
     onwheel as paged_onwheel, onkeydown as paged_onkeydown, scroll_to_elem,
     jump_to_cfi as paged_jump_to_cfi, handle_gesture as paged_handle_gesture,
-    scroll_by_page as paged_scroll_by_page, anchor_funcs as paged_anchor_funcs
+    scroll_by_page as paged_scroll_by_page, anchor_funcs as paged_anchor_funcs,
+    snap_to_selection, reset_paged_mode_globals, progress_frac
 )
 from read_book.settings import apply_settings, opts
 from read_book.touch import create_handlers as create_touch_handlers
@@ -33,6 +36,8 @@ class IframeBoss:
         self.last_cfi = None
         self.replace_history_on_next_cfi_update = True
         self.encrypted_communications = False
+        self.blob_url_map = {}
+        self.content_ready = False
         window.addEventListener('message', self.handle_message, False)
         window.addEventListener('load', def():
             if not self.ready_sent:
@@ -48,14 +53,18 @@ class IframeBoss:
             'change_font_size': self.change_font_size,
             'change_color_scheme': self.change_color_scheme,
             'gesture_from_margin': self.gesture_from_margin,
+            'find': self.find,
         }
         self.last_window_ypos = 0
 
     def handle_message(self, event):
         if event.source is not window.parent:
             return
-        data = event.data
-        if self.encrypted_communications:
+        msg = event.data
+        data = msg.data
+        if msg.encrypted:
+            # We cannot use self.encrypted_communications as the 'display'
+            # message has to be unencrypted as it transports Blob objects
             try:
                 data = JSON.parse(self.gcm_from_parent.decrypt(data))
             except Exception as e:
@@ -78,8 +87,14 @@ class IframeBoss:
         if data.translations:
             install(data.translations)
         window.onerror = self.onerror
+        window.addEventListener('scroll', debounce(self.onscroll, 1000))
+        window.addEventListener('resize', debounce(self.onresize, 500))
+        window.addEventListener('wheel', self.onwheel)
+        window.addEventListener('keydown', self.onkeydown)
+        document.documentElement.addEventListener('contextmenu', self.oncontextmenu)
         create_touch_handlers()
         self.color_scheme = data.color_scheme
+        self.encrypted_communications = True
 
     def onerror(self, msg, script_url, line_number, column_number, error_object):
         console.log(error_object)
@@ -93,10 +108,12 @@ class IframeBoss:
             console.log('There was an error in the iframe unhandled exception handler')
 
     def display(self, data):
-        self.encrypted_communications = True
-        self.book = data.book
+        self.content_ready = False
+        self.replace_history_on_next_cfi_update = True
+        self.book = current_book.book = data.book
         spine = self.book.manifest.spine
         index = spine.indexOf(data.name)
+        reset_paged_mode_globals()
         set_layout_mode('flow' if FORCE_FLOW_MODE else data.settings.read_mode)
         if current_layout_mode() is 'flow':
             self.do_layout = flow_layout
@@ -117,7 +134,9 @@ class IframeBoss:
         apply_settings(data.settings)
         set_current_spine_item({'name':data.name, 'is_first':index is 0, 'is_last':index is spine.length - 1, 'initial_position':data.initial_position})
         self.last_cfi = None
-        root_data, self.mathjax = finalize_resources(self.book, data.name, data.resource_data)
+        for name in self.blob_url_map:
+            window.URL.revokeObjectURL(self.blob_url_map[name])
+        root_data, self.mathjax, self.blob_url_map = finalize_resources(self.book, data.name, data.resource_data)
         unserialize_html(root_data, self.content_loaded)
 
     def handle_gesture(self, gesture):
@@ -177,10 +196,7 @@ class IframeBoss:
 
     def content_loaded_stage2(self):
         self.connect_links()
-        window.addEventListener('scroll', debounce(self.onscroll, 1000))
-        window.addEventListener('resize', debounce(self.onresize, 500))
-        window.addEventListener('wheel', self.onwheel)
-        window.addEventListener('keydown', self.onkeydown)
+        self.content_ready = True
         csi = current_spine_item()
         if csi.initial_position:
             ipos = csi.initial_position
@@ -191,19 +207,36 @@ class IframeBoss:
                 self.scroll_to_anchor(ipos.anchor)
             elif ipos.type is 'cfi':
                 self.jump_to_cfi(ipos.cfi)
+            elif ipos.type is 'search':
+                self.find(ipos.search_data, True)
         self.onscroll()
         self.send_message('content_loaded')
+
+    def get_progress_frac(self, current_name, spine_index):
+        length_before = 0
+        spine = self.book.manifest.spine
+        files = self.book.manifest.files
+        for i in range(spine_index):
+            si = spine[i]
+            if si:
+                length_before += files[si]?.length or 0
+        file_length = files[current_name]?.length or 0
+        frac = progress_frac()
+        ans = (length_before + (file_length * frac)) / self.book.manifest.spine_length
+        return ans
 
     def update_cfi(self):
         cfi = at_current()
         if cfi:
             spine = self.book.manifest.spine
-            index = spine.indexOf(current_spine_item().name)
+            current_name = current_spine_item().name
+            index = spine.indexOf(current_name)
             if index > -1:
                 cfi = 'epubcfi(/{}{})'.format(2*(index+1), cfi)
                 if cfi != self.last_cfi:
                     self.last_cfi = cfi
-                    self.send_message('update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update)
+                    self.send_message('update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update,
+                                      progress_frac=self.get_progress_frac(current_name, index))
                     self.replace_history_on_next_cfi_update = True
 
     def update_toc_position(self):
@@ -211,25 +244,34 @@ class IframeBoss:
         self.send_message('update_toc_position', visible_anchors=visible_anchors)
 
     def onscroll(self):
-        self.update_cfi()
-        self.update_toc_position()
+        if self.content_ready:
+            self.update_cfi()
+            self.update_toc_position()
 
     def onresize(self):
-        if current_layout_mode() is not 'flow':
-            self.do_layout()
-        if self.last_cfi:
-            cfi = self.last_cfi[len('epubcfi(/'):-1].partition('/')[2]
-            if cfi:
-                paged_jump_to_cfi('/' + cfi)
-        self.update_cfi()
-        self.update_toc_position()
+        if self.content_ready:
+            if current_layout_mode() is not 'flow':
+                self.do_layout()
+            if self.last_cfi:
+                cfi = self.last_cfi[len('epubcfi(/'):-1].partition('/')[2]
+                if cfi:
+                    paged_jump_to_cfi('/' + cfi)
+            self.update_cfi()
+            self.update_toc_position()
 
     def onwheel(self, evt):
-        evt.preventDefault()
-        self.handle_wheel(evt)
+        if self.content_ready:
+            evt.preventDefault()
+            self.handle_wheel(evt)
 
     def onkeydown(self, evt):
-        self.handle_keydown(evt)
+        if self.content_ready:
+            self.handle_keydown(evt)
+
+    def oncontextmenu(self, evt):
+        if self.content_ready:
+            evt.preventDefault()
+            self.send_message('show_chrome')
 
     def send_message(self, action, **data):
         data.action = action
@@ -267,6 +309,19 @@ class IframeBoss:
                     elem = c[0]
             if elem:
                 scroll_to_elem(elem)
+
+    def find(self, data, from_load):
+        if data.searched_in_spine:
+            window.getSelection().removeAllRanges()
+        if window.find(data.text, False, data.backwards):
+            if current_layout_mode() is not 'flow':
+                snap_to_selection()
+        else:
+            if from_load:
+                self.send_message('error', title=_('Invisible text'), msg=_(
+                    'The text <i>{}</i> is present on this page but not visible').format(html_escape(data.text)))
+            else:
+                self.send_message('find_in_spine', text=data.text, backwards=data.backwards, searched_in_spine=data.searched_in_spine)
 
 def init():
     script = document.getElementById('bootstrap')

@@ -27,9 +27,7 @@ from calibre.ptempfile import PersistentTemporaryFile
 
 
 def get_page_size(opts, for_comic=False):  # {{{
-    use_profile = not (opts.override_profile_size or
-                       opts.output_profile.short_name == 'default' or
-                       opts.output_profile.width > 9999)
+    use_profile = opts.use_profile_size and opts.output_profile.short_name != 'default' and opts.output_profile.width <= 9999
     if use_profile:
         w = (opts.output_profile.comic_screen_size[0] if for_comic else
                 opts.output_profile.width)
@@ -185,10 +183,16 @@ class PDFWriter(QObject):
         opts = self.opts
         page_size = get_page_size(self.opts)
         xdpi, ydpi = self.view.logicalDpiX(), self.view.logicalDpiY()
+
+        def margin(which):
+            val = getattr(opts, 'pdf_page_margin_' + which)
+            if val == 0.0:
+                val = getattr(opts, 'margin_' + which)
+            return val
+        ml, mr, mt, mb = map(margin, 'left right top bottom'.split())
         # We cannot set the side margins in the webview as there is no right
         # margin for the last page (the margins are implemented with
         # -webkit-column-gap)
-        ml, mr = opts.margin_left, opts.margin_right
         self.doc = PdfDevice(out_stream, page_size=page_size, left_margin=ml,
                              top_margin=0, right_margin=mr, bottom_margin=0,
                              xdpi=xdpi, ydpi=ydpi, errors=self.log.error,
@@ -204,18 +208,18 @@ class PDFWriter(QObject):
         if self.header:
             self.header = self.header.strip()
         min_margin = 1.5 * opts._final_base_font_size
-        if self.footer and opts.margin_bottom < min_margin:
+        if self.footer and mb < min_margin:
             self.log.warn('Bottom margin is too small for footer, increasing it to %.1fpts' % min_margin)
-            opts.margin_bottom = min_margin
-        if self.header and opts.margin_top < min_margin:
+            mb = min_margin
+        if self.header and mt < min_margin:
             self.log.warn('Top margin is too small for header, increasing it to %.1fpts' % min_margin)
-            opts.margin_top = min_margin
+            mt = min_margin
 
         self.page.setViewportSize(QSize(self.doc.width(), self.doc.height()))
         self.render_queue = items
         self.total_items = len(items)
 
-        mt, mb = map(self.doc.to_px, (opts.margin_top, opts.margin_bottom))
+        mt, mb = map(self.doc.to_px, (mt, mb))
         self.margin_top, self.margin_bottom = map(lambda x:int(floor(x)), (mt, mb))
 
         self.painter = QPainter(self.doc)
@@ -417,6 +421,55 @@ class PDFWriter(QObject):
                 break
             col += 1
 
-        if not self.doc.errors_occurred:
+        if not self.doc.errors_occurred and self.doc.current_page_num > 1:
             self.doc.add_links(self.current_item, start_page, amap['links'],
                             amap['anchors'])
+
+
+class ImagePDFWriter(object):
+
+    def __init__(self, opts, log, cover_data=None, toc=None):
+        from calibre.gui2 import must_use_qt
+        must_use_qt()
+
+        self.logger = self.log = log
+        self.opts = opts
+        self.cover_data = cover_data
+        self.toc = toc
+
+    def dump(self, items, out_stream, pdf_metadata):
+        opts = self.opts
+        page_size = get_page_size(self.opts)
+        ml, mr = opts.margin_left, opts.margin_right
+        self.doc = PdfDevice(
+            out_stream, page_size=page_size, left_margin=ml,
+            top_margin=opts.margin_top, right_margin=mr,
+            bottom_margin=opts.margin_bottom,
+            errors=self.log.error, debug=self.log.debug, compress=not
+            opts.uncompressed_pdf, opts=opts, mark_links=opts.pdf_mark_links)
+        self.painter = QPainter(self.doc)
+        self.doc.set_metadata(title=pdf_metadata.title,
+                              author=pdf_metadata.author,
+                              tags=pdf_metadata.tags, mi=pdf_metadata.mi)
+        self.doc_title = pdf_metadata.title
+        self.doc_author = pdf_metadata.author
+        page_rect = QRect(*self.doc.full_page_rect)
+
+        for imgpath in items:
+            self.log.debug('Processing %s...' % imgpath)
+            self.doc.init_page()
+            p = QPixmap()
+            with lopen(imgpath, 'rb') as f:
+                if not p.loadFromData(f.read()):
+                    raise ValueError('Could not read image from: {}'.format(imgpath))
+            draw_image_page(page_rect,
+                    self.painter, p,
+                    preserve_aspect_ratio=True)
+            self.doc.end_page()
+        if self.toc is not None and len(self.toc) > 0:
+            self.doc.add_outline(self.toc)
+
+        self.painter.end()
+
+        if self.doc.errors_occurred:
+            raise Exception('PDF Output failed, see log for details')

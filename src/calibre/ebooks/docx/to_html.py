@@ -133,14 +133,14 @@ class Convert(object):
         notes_header = None
         orig_rid_map = self.images.rid_map
         if self.footnotes.has_notes:
-            dl = DL()
-            dl.set('class', 'notes')
             self.body.append(H1(self.notes_text))
             notes_header = self.body[-1]
             notes_header.set('class', 'notes-header')
-            self.body.append(dl)
             for anchor, text, note in self.footnotes:
-                dl.append(DT('[', A('←' + text, href='#back_%s' % anchor, title=text), id=anchor))
+                dl = DL(id=anchor)
+                dl.set('class', 'footnote')
+                self.body.append(dl)
+                dl.append(DT('[', A('←' + text, href='#back_%s' % anchor, title=text)))
                 dl[-1][0].tail = ']'
                 dl.append(DD())
                 paras = []
@@ -352,11 +352,11 @@ class Convert(object):
     def write(self, doc):
         toc = create_toc(doc, self.body, self.resolved_link_map, self.styles, self.object_map, self.log, self.namespace)
         raw = html.tostring(self.html, encoding='utf-8', doctype='<!DOCTYPE html>')
-        with open(os.path.join(self.dest_dir, 'index.html'), 'wb') as f:
+        with lopen(os.path.join(self.dest_dir, 'index.html'), 'wb') as f:
             f.write(raw)
         css = self.styles.generate_css(self.dest_dir, self.docx, self.notes_nopb, self.nosupsub)
         if css:
-            with open(os.path.join(self.dest_dir, 'docx.css'), 'wb') as f:
+            with lopen(os.path.join(self.dest_dir, 'docx.css'), 'wb') as f:
                 f.write(css.encode('utf-8'))
 
         opf = OPFCreator(self.dest_dir, self.mi)
@@ -374,7 +374,7 @@ class Convert(object):
                 guide.append(E.reference(
                     href='index.html#' + self.toc_anchor, title=_('Table of Contents'), type='toc'))
         toc_file = os.path.join(self.dest_dir, 'toc.ncx')
-        with open(os.path.join(self.dest_dir, 'metadata.opf'), 'wb') as of, open(toc_file, 'wb') as ncx:
+        with lopen(os.path.join(self.dest_dir, 'metadata.opf'), 'wb') as of, open(toc_file, 'wb') as ncx:
             opf.render(of, ncx, 'toc.ncx', process_guide=process_guide)
         if os.path.getsize(toc_file) == 0:
             os.remove(toc_file)
@@ -764,6 +764,7 @@ class Convert(object):
         if len(run) > 1:
             process_run(run)
 
+
 if __name__ == '__main__':
     import shutil
     from calibre.utils.logging import default_log
@@ -773,4 +774,3 @@ if __name__ == '__main__':
         shutil.rmtree(dest_dir)
     os.mkdir(dest_dir)
     Convert(sys.argv[-1], dest_dir=dest_dir, log=default_log)()
-

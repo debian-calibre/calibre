@@ -19,7 +19,7 @@ Click the book you want to edit and then click the :guilabel:`Edit metadata` but
     * You can click the button in between title and authors to swap them automatically. 
     * You can click the button next to author sort to have calibre automatically fill it in using the sort values stored with each author. Use the :guilabel:`Manage authors` dialog to see and change the authors' sort values. This dialog can be opened by clicking and holding the button next to author sort.
     * You can click the button next to tags to use the Tag Editor to manage the tags associated with the book.
-    * The ISBN box will have a red background if you enter an invalid ISBN. It will be green for valid ISBNs
+    * The "Ids" box can be used to enter an ISBN (and many other types of id), it will have a red background if you enter an invalid ISBN. It will be green for valid ISBNs.
     * The author sort box will be red if the author sort value differs from what calibre thinks it should be.
 
 Downloading metadata
@@ -54,7 +54,7 @@ Search and replace
 
 The Bulk metadata edit dialog allows you to perform arbitrarily powerful search and replace operations on the selected books. By default it uses a simple text search and replace, but it also support *regular expressions*. For more on regular expressions, see :ref:`regexptutorial`.
 
-As noted above, there are two search and replace modes: character match and regular expression. Character match will look in the `Search field` you choose for the characters you type in the `search for` box and replace those characters with what you type in the `replace with` box. Each occurance of the search characters in the field will be replaced. For example, assume the field being searched contains `a bad cat`. if you search for `a` to be replaced with `HELLO`, then the result will be `HELLO bHELLOd cHELLOt`.
+As noted above, there are two search and replace modes: character match and regular expression. Character match will look in the `Search field` you choose for the characters you type in the `search for` box and replace those characters with what you type in the `replace with` box. Each occurance of the search characters in the field will be replaced. For example, assume the field being searched contains `a bad cat`. If you search for `a` to be replaced with `HELLO`, then the result will be `HELLO bHELLOd cHELLOt`.
 
 If the field you are searching on is a `multiple` field like tags, then each tag is treated separately. For example, if your tags contain `Horror, Scary`, the search expression `r,` will not match anything because the expression will first be applied to `Horror` and then to `Scary`.
 

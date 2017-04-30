@@ -1,29 +1,38 @@
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
+#!/usr/bin/env python2
+# vim:fileencoding=utf-8
+# License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-import traceback, os, sys, functools
+import functools
+import os
+import sys
+import traceback
 from functools import partial
 from threading import Thread
 
 from PyQt5.Qt import (
-    QApplication, Qt, QIcon, QTimer, QByteArray, QSize, QTime, QObject,
-    QPropertyAnimation, QInputDialog, QAction, QModelIndex, pyqtSignal)
+    QAction, QApplication, QByteArray, QIcon, QInputDialog, QModelIndex, QObject,
+    QPropertyAnimation, QSize, Qt, QTime, QTimer, pyqtSignal
+)
 
-from calibre.gui2.viewer.ui import Main as MainWindow
-from calibre.gui2.viewer.toc import TOC
-from calibre.gui2.widgets import ProgressIndicator
-from calibre.gui2 import (
-    Application, choose_files, info_dialog, error_dialog,
-    open_url, setup_gui_option_parser)
-from calibre.ebooks.oeb.iterator.book import EbookIterator
-from calibre.constants import islinux, filesystem_encoding, DEBUG, iswindows
-from calibre.utils.config import Config, StringConfig, JSONConfig
-from calibre.customize.ui import available_input_formats
 from calibre import as_unicode, force_unicode, isbytestring, prints
+from calibre.constants import (
+    DEBUG, VIEWER_APP_UID, filesystem_encoding, islinux, iswindows
+)
+from calibre.customize.ui import available_input_formats
+from calibre.ebooks.oeb.iterator.book import EbookIterator
+from calibre.gui2 import (
+    Application, choose_files, error_dialog, info_dialog, open_url,
+    setup_gui_option_parser
+)
+from calibre.gui2.viewer.toc import TOC
+from calibre.gui2.viewer.ui import Main as MainWindow
+from calibre.gui2.widgets import ProgressIndicator
 from calibre.ptempfile import reset_base_dir
-from calibre.utils.ipc import viewer_socket_address, RC
+from calibre.utils.config import Config, JSONConfig, StringConfig
+from calibre.utils.ipc import RC, viewer_socket_address
+from calibre.utils.localization import canonicalize_lang, get_lang, lang_as_iso639_1
 from calibre.utils.zipfile import BadZipfile
-from calibre.utils.localization import canonicalize_lang, lang_as_iso639_1, get_lang
+
 try:
     from calibre.utils.monotonic import monotonic
 except RuntimeError:
@@ -162,6 +171,7 @@ class EbookViewer(MainWindow):
         self.pending_bookmark  = None
         self.pending_restore   = False
         self.pending_goto_page = None
+        self.pending_toc_click = None
         self.cursor_hidden     = False
         self.existing_bookmarks= []
         self.selected_text     = None
@@ -238,6 +248,9 @@ class EbookViewer(MainWindow):
             QTimer.singleShot(50, file_events.flush)
         self.window_mode_changed = None
         self.toggle_toolbar_action = QAction(_('Show/hide controls'), self)
+        tts = self.view.shortcuts.get_shortcuts('Show/hide controls')
+        if tts:
+            self.toggle_toolbar_action.setText(self.toggle_toolbar_action.text() + '\t' + tts[0])
         self.toggle_toolbar_action.setCheckable(True)
         self.toggle_toolbar_action.triggered.connect(self.toggle_toolbars)
         self.toolbar_hidden = None
@@ -251,7 +264,7 @@ class EbookViewer(MainWindow):
         self.clear_recent_history_action = QAction(
                 _('Clear list of recently opened books'), self)
         self.clear_recent_history_action.triggered.connect(self.clear_recent_history)
-        self.build_recent_menu()
+        self.open_history_menu.aboutToShow.connect(self.build_recent_menu)
         self.open_history_menu.triggered.connect(self.open_recent)
 
         for x in ('tool_bar', 'tool_bar2'):
@@ -319,7 +332,6 @@ class EbookViewer(MainWindow):
 
     def clear_recent_history(self, *args):
         vprefs.set('viewer_open_history', [])
-        self.build_recent_menu()
 
     def build_recent_menu(self):
         m = self.open_history_menu
@@ -337,9 +349,11 @@ class EbookViewer(MainWindow):
                 count += 1
 
     def continue_reading(self):
-        actions = self.open_history_menu.actions()[2:]
-        if actions:
-            actions[0].trigger()
+        recent = vprefs.get('viewer_open_history', [])
+        if recent:
+            for path in recent:
+                if os.path.exists(path):
+                    self.load_ebook(path)
 
     def shutdown(self):
         if self.isFullScreen() and not self.view.document.start_in_fullscreen:
@@ -606,7 +620,8 @@ class EbookViewer(MainWindow):
             self.load_ebook(files[0])
 
     def open_recent(self, action):
-        self.load_ebook(action.path)
+        if hasattr(action, 'path'):
+            self.load_ebook(action.path)
 
     def font_size_larger(self):
         self.view.magnify_fonts()
@@ -814,6 +829,9 @@ class EbookViewer(MainWindow):
         if self.pending_goto_page is not None:
             pos, self.pending_goto_page = self.pending_goto_page, None
             self.goto_page(pos, loaded_check=False)
+        elif self.pending_toc_click is not None:
+            index, self.pending_toc_click = self.pending_toc_click, None
+            self.toc_clicked(index, force=True)
         else:
             if self.resize_events_stack:
                 self.resize_events_stack[-1].finished(self.view.size(), self.view.multiplier, self.view.last_loaded_path, self.view.document.page_number)
@@ -950,6 +968,7 @@ class EbookViewer(MainWindow):
         while worker.isAlive():
             worker.join(0.1)
             QApplication.processEvents()
+        self.view.settings().clearMemoryCaches()
         if worker.exception is not None:
             tb = worker.traceback.strip()
             if tb and tb.splitlines()[-1].startswith('DRMError:'):
@@ -978,6 +997,7 @@ class EbookViewer(MainWindow):
                 self.action_table_of_contents.setChecked(False)
             if isbytestring(pathtoebook):
                 pathtoebook = force_unicode(pathtoebook, filesystem_encoding)
+            pathtoebook = os.path.abspath(pathtoebook)
             vh = vprefs.get('viewer_open_history', [])
             try:
                 vh.remove(pathtoebook)
@@ -985,7 +1005,13 @@ class EbookViewer(MainWindow):
                 pass
             vh.insert(0, pathtoebook)
             vprefs.set('viewer_open_history', vh[:50])
-            self.build_recent_menu()
+            if iswindows:
+                try:
+                    from win32com.shell import shell, shellcon
+                    shell.SHAddToRecentDocs(shellcon.SHARD_PATHW, pathtoebook)
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
             self.view.set_book_data(self.iterator)
 
             self.footnotes_dock.close()
@@ -1011,14 +1037,19 @@ class EbookViewer(MainWindow):
                 if open_at is None:
                     self.next_document()
                 else:
-                    if open_at > self.pos.maximum():
-                        open_at = self.pos.maximum()
-                    if open_at < self.pos.minimum():
-                        open_at = self.pos.minimum()
-                    if self.resize_in_progress:
-                        self.pending_goto_page = open_at
-                    else:
-                        self.goto_page(open_at, loaded_check=False)
+                    if isinstance(open_at, float):
+                        open_at = max(self.pos.minimum(), min(open_at, self.pos.maximum()))
+                        if self.resize_in_progress:
+                            self.pending_goto_page = open_at
+                        else:
+                            self.goto_page(open_at, loaded_check=False)
+                    elif open_at.startswith('toc:'):
+                        index = self.toc_model.search(open_at[4:])
+                        if index.isValid():
+                            if self.resize_in_progress:
+                                self.pending_toc_click = index
+                            else:
+                                self.toc_clicked(index, force=True)
 
     def set_vscrollbar_value(self, pagenum):
         self.vertical_scrollbar.blockSignals(True)
@@ -1080,12 +1111,15 @@ class EbookViewer(MainWindow):
             'Reload': self.action_reload,
             'Table of Contents': self.action_table_of_contents,
             'Print': self.action_print,
+            'Show/hide controls': self.toggle_toolbar_action,
         }.get(key, None)
         if action is not None:
             event.accept()
             action.trigger()
             return
         if key == 'Focus Search':
+            if not self.tool_bar.isVisible():
+                self.toggle_toolbars()
             self.search.setFocus(Qt.OtherFocusReason)
             return
         if not self.view.handle_key_press(event):
@@ -1144,7 +1178,9 @@ def config(defaults=None):
         help=_('Print javascript alert and console messages to the console'))
     c.add_opt('open_at', ['--open-at'], default=None,
         help=_('The position at which to open the specified book. The position is '
-            'a location as displayed in the top left corner of the viewer.'))
+               'a location as displayed in the top left corner of the viewer. '
+               'Alternately, you can use the form toc:something and it will open '
+               'at the location of the first Table of Contents entry that contains the string "something".'))
     c.add_opt('continue_reading', ['--continue'], default=False,
         help=_('Continue reading at the previously opened book'))
 
@@ -1227,13 +1263,18 @@ def main(args=sys.argv):
         # launched from within calibre, as both use calibre-parallel.exe
         import ctypes
         try:
-            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('com.calibre-ebook.viewer')
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(VIEWER_APP_UID)
         except Exception:
             pass  # Only available on windows 7 and newer
 
     parser = option_parser()
     opts, args = parser.parse_args(args)
-    open_at = float(opts.open_at.replace(',', '.')) if opts.open_at else None
+    open_at = None
+    if opts.open_at is not None:
+        if opts.open_at.startswith('toc:'):
+            open_at = opts.open_at
+        else:
+            open_at = float(opts.open_at.replace(',', '.'))
     listener = None
     override = 'calibre-ebook-viewer' if islinux else None
     acc = EventAccumulator()

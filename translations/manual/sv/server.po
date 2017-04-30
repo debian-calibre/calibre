@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
 # Merarom <merarom@yahoo.es>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 11:28+0530\n"
-"PO-Revision-Date: 2016-12-10 19:33+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-13 17:31+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/server.rst:4
 msgid "Integrating the calibre content server into other servers"
-msgstr "Integrera calibre mediaserver till andra servrar"
+msgstr "Integrera calibre-mediaserver till andra servrar"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:6
 msgid ""
@@ -32,11 +32,7 @@ msgid ""
 " to connect it with your main server or running the content server in "
 "process in your main server with WSGI. The examples below are all for Apache"
 " 2.x on linux, but should be easily adaptable to other platforms."
-msgstr "Här, vi kommer visa hur du integrerar calibre mediaserver till en annan server. Den vanligaste orsaken till detta är att använda sig av SSL eller mer sofistikerad autentisering. Det finns två huvudsakliga metoder: Köra calibre mediaserver som en fristående process och med hjälp av en omvänd proxyserver för att ansluta den med din huvudsakliga server eller kör mediaservern i processen i huvudservern med WSGI. Exemplen nedan är alla för Apache 2.x på Linux, men bör vara lätt att anpassa till andra plattformar."
-
-#: ../../home/kovid/work/calibre/manual/server.rst:0
-msgid "Contents"
-msgstr "Innehåll"
+msgstr "Här, vi kommer visa hur du integrerar calibre mediaserver till en annan server. Den vanligaste orsaken till detta är att använda sig av SSL eller mer sofistikerad autentisering. Det finns två huvudsakliga metoder: Köra calibre mediaserver som en fristående process och med hjälp av en omvänd proxy för att ansluta den med din huvudsakliga server eller kör mediaservern i processen i huvudservern med WSGI. Exemplen nedan är alla för Apache 2.x på Linux, men bör vara lätt att anpassa till andra plattformar."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:12
 msgid "This only applies to calibre releases >= 0.7.25"
@@ -44,7 +40,7 @@ msgstr "Detta gäller bara calibre utgåvor >= 0.7.25"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:15
 msgid "Using a reverse proxy"
-msgstr "Användning av en omvänd proxyserver"
+msgstr "Användning av en omvänd proxy"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:17
 msgid ""
@@ -58,7 +54,7 @@ msgid ""
 "dependencies/system integration requirements. Below, is an example of how to"
 " achieve this with Apache as your main server, but it will work with any "
 "server that supports Reverse Proxies."
-msgstr "En omvänd proxyserver är när din normala servern accepterar inkommande förfrågningar och skickar dem på calibre servern. Det läser sedan svaret från calibre servern och vidarebefordrar det till klienten. Detta innebär att du helt enkelt kan köra calibre servern som vanligt utan att försöka integrera den nära med din huvudsakliga server, och du kan dra nytta av oavsett autentiseringssystem din huvudservern har på plats. Detta är det enklaste tillvägagångssättet eftersom det tillåter dig att använda den binära calibre som installerats utan yttre beroenden/krav systemintegration. Nedan är ett exempel på hur detta kan uppnås med Apache som huvudserver, men det kommer att fungera med alla servrar som stöder Reverse Proxy."
+msgstr "En omvänd proxy är när din normala servern accepterar inkommande förfrågningar och skickar dem på calibre-servern. Det läser sedan svaret från calibre-servern och vidarebefordrar det till klienten. Detta innebär att du helt enkelt kan köra calibre-servern som vanligt utan att försöka integrera den nära med din huvudsakliga server, och du kan dra nytta av oavsett autentiseringssystem din huvudservern har på plats. Detta är det enklaste tillvägagångssättet eftersom det tillåter dig att använda den binära calibre som installerats utan yttre beroenden/krav systemintegration. Nedan är ett exempel på hur detta kan uppnås med Apache som huvudserver, men det kommer att fungera med alla servrar som stöder omvänd proxy."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:19
 msgid "First start the calibre content server as shown below::"
@@ -70,13 +66,13 @@ msgid ""
 " server to serve all URLs prefixed by calibre. To see this in action, visit "
 "``http://localhost:8080/calibre`` in your browser. You should see the normal"
 " content server website, but now it will run under /calibre."
-msgstr "Nyckelparametern här är ``--url-prefix /calibre``. Den får mediaservern att serva alla URL:er som prefixas av calibre. För att se detta i handling, besök ``http://localhost:8080/calibre`` i din webbläsare. Du bör se den normala mediaserverns webbsida, men nu kör den under /calibre."
+msgstr "Nyckelparametern här är ``--url-prefix /calibre``. Den får mediaservern att serva alla URL:er som prefixas av calibre. För att se detta i handling, besök ``http://localhost:8080/calibre`` i din webbläsare. Du bör se den normala mediaserverns webbplats, men nu kör den under /calibre."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:25
 msgid ""
 "Now suppose you are using Apache as your main server. First enable the proxy"
 " modules in apache, by adding the following to :file:`httpd.conf`::"
-msgstr "Nu antag att du använder Apache som huvudserver. Först tillåt proxyservermoduler i apache genom att lägga till följande :file:`httpd.conf`::"
+msgstr "Nu antag att du använder Apache som huvudserver. Först tillåt proxymoduler i apache genom att lägga till följande :file:`httpd.conf`::"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:30
 msgid ""
@@ -84,7 +80,7 @@ msgid ""
 "your Apache installation. Once you have the proxy modules enabled, add the "
 "following rules to httpd.conf (or if you are using virtual hosts to the conf"
 " file for the virtual host in question)::"
-msgstr "Den exakta tekniken för att möjliggöra proxyservermoduler varierar beroende på din Apache-installation. När du aktiverar proxyservermodulerna, lägg till följande regler till httpd.conf (eller om du använder virtuella värdar till conf-filen för den virtuella värden i fråga)::"
+msgstr "Den exakta tekniken för att möjliggöra proxymoduler varierar beroende på din Apache-installation. När du aktiverar proxymodulerna, lägg till följande regler till httpd.conf (eller om du använder virtuella värdar till conf-filen för den virtuella värden i fråga)::"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:38
 msgid ""
@@ -92,7 +88,7 @@ msgid ""
 "the /calibre URL in your apache server. The above rules pass all requests "
 "under /calibre to the calibre server running on port 8080 and thanks to the "
 "--url-prefix option above, the calibre server handles them transparently."
-msgstr "Det är allt, du kommer nu kunna accessa calibre mediaservern under  /calibre URL i din apache-server. Ovan regler vidarbefodrar alla begäran under /calibre till calibre servern som kör på port 8080 och tack vare -url-prefixet valet ovan, kommer calibre servern hantera dem transparent."
+msgstr "Det är allt, du kommer nu kunna komma åt calibre mediaservern under  /calibre URL i din apache-server. Ovan regler vidarbefodrar alla begäran under /calibre till calibre-servern som kör på port 8080 och tack vare -url-prefixet valet ovan, kommer calibre-servern hantera dem transparent."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:40
 msgid ""
@@ -106,7 +102,7 @@ msgid ""
 "The server engine calibre uses, CherryPy, can have trouble with proxying and"
 " KeepAlive requests, so turn them off in Apache, with the SetEnv directives "
 "shown above."
-msgstr "Servermotorn som calibre använder, CherryPy, kan ha problem med proxyservern och \"KeepAlive\" begäran, så stäng av dem i Apache, med SetEnv direktivet som visas ovan."
+msgstr "Servermotorn som calibre använder, CherryPy, kan ha problem med proxy och \"KeepAlive\" begäran, så stäng av dem i Apache, med SetEnv direktivet som visas ovan."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:45
 msgid "In process"
@@ -137,7 +133,7 @@ msgstr "Först, måste vi skapa en WSGI *tillsats* för calibre mediaservern. H�
 msgid ""
 "Save this adapter as :file:`calibre-wsgi-adpater.py` somewhere your server "
 "will have access to it."
-msgstr "Spara denna anpassning som :file:`calibre-wsgi-adpater.py` någonstans som din server har access till."
+msgstr "Spara denna anpassning som :file:`calibre-wsgi-adpater.py` någonstans som din server har tillgång till."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:103
 msgid ""
@@ -151,13 +147,13 @@ msgid ""
 " Apache installation. Once you have the proxy modules enabled, add the "
 "following rules to httpd.conf (or if you are using virtual hosts to the conf"
 " file for the virtual host in question::"
-msgstr "Den exakta tekniken för att tillåta wsgi modulen kommer variera beroende på din Apache-installation. När du har tillåtit proxyservermoduler, lägg till följande regler till httpd.conf (eller om du använder virtuella värdar till conf filen för den virtuella värden i fråga::"
+msgstr "Den exakta tekniken för att tillåta wsgi modulen kommer variera beroende på din Apache-installation. När du har tillåtit proxymoduler, lägg till följande regler till httpd.conf (eller om du använder virtuella värdar till conf filen för den virtuella värden i fråga::"
 
 #: ../../home/kovid/work/calibre/manual/server.rst:111
 msgid ""
 "Change the path to :file:`calibre-wsgi-adapter.py` to wherever you saved it "
 "previously (make sure Apache has access to it)."
-msgstr "Ändra sökväg till :file:`calibre-wsgi-adapter.py` till vad oavset tdu sparade den tidigare (se bara till att Apache har access till den)."
+msgstr "Ändra sökväg till :file:`calibre-wsgi-adapter.py` till vad oavset tdu sparade den tidigare (se bara till att Apache har tillgång till den)."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:113
 msgid ""
@@ -168,5 +164,5 @@ msgstr "Det är allt, du kommer nu kunna nå calibre mediaservern under /calibre
 #: ../../home/kovid/work/calibre/manual/server.rst:115
 msgid ""
 "For more help with using mod_wsgi in Apache, see `mod_wsgi "
-"<http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
-msgstr "För mer hjälp med att använda mod_wsgi i Apache, se `mod_wsgi <http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
+"<https://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
+msgstr "För mer hjälp med att använda mod_wsgi i Apache, se `mod_wsgi <https://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."

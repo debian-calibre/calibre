@@ -53,7 +53,7 @@ Add books
 
     4. **Add multiple books from archive (ZIP/RAR)**: Allows you to add multiple ebooks that are stored inside the selected ZIP or RAR files. It is a convenient shortcut that avoids having to first unzip the archive and then add the books via one of the above two options.
 
-    5. **Add empty book. (Book Entry with no formats)**: Allows you to create a blank book record. This can be used to then manually fill out the information about a book that you may not have yet in your collection.
+    5. **Add empty book (Book Entry with no formats)**: Allows you to create a blank book record. This can be used to then manually fill out the information about a book that you may not have yet in your collection.
 
     6. **Add from ISBN**: Allows you to add one or more books by entering their ISBNs.
 
@@ -80,7 +80,7 @@ Edit metadata
 |emii| The :guilabel:`Edit metadata` action has four variations which can be accessed by doing a right-click on the button.
 
     1. **Edit metadata individually**: Allows you to edit the metadata of books one-by-one with the option of fetching metadata, including covers, from the Internet. It also allows you to add or remove particular ebook formats from a book.
-    2. **Edit metadata in bulk**: Allows you to edit common metadata fields for large numbers of books simulataneously. It operates on all the books you have selected in the :ref:`Library view <search_sort>`.
+    2. **Edit metadata in bulk**: Allows you to edit common metadata fields for large numbers of books simultaneously. It operates on all the books you have selected in the :ref:`Library view <search_sort>`.
     3. **Download metadata and covers**: Downloads metadata and covers (if available) for the books that are selected in the book list.
     4. **Merge book records**: Gives you the capability of merging the metadata and formats of two or more book records. You can choose to either delete or keep the records that were not clicked first.
 
@@ -94,7 +94,7 @@ Convert books
     :class: float-right-img
 
 |cei| Ebooks can be converted from a number of formats into whatever format your ebook reader prefers.
-Many ebooks available for purchase will be protected by `Digital Rights Management <http://drmfree.calibre-ebook.com/about#drm>`_ *(DRM)* technology.
+Many ebooks available for purchase will be protected by `Digital Rights Management <https://drmfree.calibre-ebook.com/about#drm>`_ *(DRM)* technology.
 calibre will not convert these ebooks. It is easy to remove the DRM from many formats, but as this may be illegal,
 you will have to find tools to liberate your books yourself and then use calibre to convert them.
 
@@ -159,7 +159,7 @@ The :guilabel:`Fetch news` action uses simple recipes (10-15 lines of code) for 
 
 The :guilabel:`Fetch news` action has three variations, accessed by doing a right-click on the button.
 
-    1. **Schedule news download**: Allows you to schedule the download of of your selected news sources from a list of hundreds available.  Scheduling can be set individually for each news source you select and the scheduling is flexible allowing you to select specific days of the week or a frequency of days between downloads.
+    1. **Schedule news download**: Allows you to schedule the download of your selected news sources from a list of hundreds available.  Scheduling can be set individually for each news source you select and the scheduling is flexible allowing you to select specific days of the week or a frequency of days between downloads.
     2. **Add a custom news source**: Allows you to create a simple recipe for downloading news from a custom news site that you wish to access.  Creating the recipe can be as simple as specifying an RSS news feed URL, or you can be more prescriptive by creating Python-based code for the task. For more information see :ref:`news`.
     3. **Download all scheduled news sources**: Causes calibre to immediately begin downloading all news sources that you have scheduled.
 
@@ -234,7 +234,7 @@ Connect/Share
 .. |csi| image:: images/connect_share.png
     :class: float-right-img
 
-|csi| The :guilabel:`Connect/Share` action allows you to manually connect to a device or folder on your computer. It also allows you to set up you calibre library for access via a web browser or email.
+|csi| The :guilabel:`Connect/Share` action allows you to manually connect to a device or folder on your computer. It also allows you to set up your calibre library for access via a web browser or email.
 
     The :guilabel:`Connect/Share` action has four variations, accessed by doing a right-click on the button.
 
@@ -338,7 +338,7 @@ are available in the LRF format. Some more examples::
     format:epub publisher:feedbooks.com
 
 Searches are by default 'contains'. An item matches if the search string appears anywhere in the indicated metadata.
-Two other kinds of searches are available: equality search and search using `regular expressions <http://en.wikipedia.org/wiki/Regular_expression>`_.
+Two other kinds of searches are available: equality search and search using `regular expressions <https://en.wikipedia.org/wiki/Regular_expression>`_.
 
 Equality searches are indicated by prefixing the search string with an equals sign (=). For example, the query
 ``tag:"=science"`` will match "science", but not "science fiction" or "hard science". Regular expression searches are
@@ -596,7 +596,7 @@ without changing the contents of the library view.
 
 The Quickview window opens on top of the calibre window and will stay open until you explicitly close it. You can use Quickview and the calibre library view at the same time. For example, if in the calibre library view you click on a category column (tags, series, publisher, authors, etc) for a book, the Quickview window contents will change to show you in the left-hand side pane the items in that category for the selected book (e.g., the tags for that book). The first item in that list will be selected, and Quickview will show you on the right-hand side pane all the books in your library that reference that item. Click on an different item in the left-hand pane to see the books with that different item. 
 
-Double-click on a book in the Quickview window to select that book in the library view. This will also change the items display in the QuickView window(the left-hand pane) to show the items in the newly-selected book.
+Double-click on a book in the Quickview window to select that book in the library view. This will also change the items display in the QuickView window (the left-hand pane) to show the items in the newly-selected book.
 
 Shift- (or Ctrl-) double-click on a book in the Quickview window to open the edit metadata dialog on that book in the calibre window.
 

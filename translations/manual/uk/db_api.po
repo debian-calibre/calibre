@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017
+# Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-23 15:15+0530\n"
-"PO-Revision-Date: 2016-02-12 04:00+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-18 13:58+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,13 +28,13 @@ msgstr "Документація з програмного інтерфейсу 
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr ""
+msgstr "Цей програмний інтерфейс безпечний щодо потоків виконання (використовує схему із декількома потоками читання і одним потоком запису із блокуванням). Доступ до програмного інтерфейсу можна отримати так::"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr ""
+msgstr "Якщо ви працюєте із додатком до calibre, який є частиною основного графічного інтерфейсу calibre, доступ можна отримати ось так::"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -41,7 +42,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr ""
+msgstr "Кеш у пам’яті файла metadata.db з бібліотеки calibre. Цей клас також слугує безпечним для потоків обробки програмним інтерфейсом для доступу до бази даних. Кеш у пам’яті підтримується у нормальній формі для збільшення швидкодії."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -49,7 +50,7 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr ""
+msgstr "SQLITE просто використовується як стійкий спосіб читання і запису metadata.db. Усю логіку читання, упорядковування, пошуку та кешування таблиць реалізовано окремо. Так зроблено для забезпечення максимальної швидкодії і гнучкості."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -58,7 +59,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr ""
+msgstr "Додати вказані книги до бібліотеки. Books має бути ітерованим списком з двоелементних кортежів, кожен кортеж має бути записано у формі :code:`(mi, format_map)`, де mi — об’єкт Metadata, а format_map — словник у формі form :code:`{формат: шлях_або_потік}`. Приклад: :code:`{'EPUB': '/шлях/до/файла.epub'}`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -67,14 +68,14 @@ msgid ""
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr ""
+msgstr "Повертає пару списків: :code:`ids, duplicates`. ``ids`` містить ідентифікатори усіх новостворених записів книг у базі даних. ``duplicates`` містить записи :code:`(mi, format_map)` для усіх книг, які вже є у базі даних, на основі простої евристики виявлення дублікатів, що використовується у :meth:`has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr ""
+msgstr "Додати дані для вказаної назви, де val_map — прив’язка book_id до значень. Якщо delete_first має значення True, усі раніше збережені для вказаної назви дані буде вилучено."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
@@ -84,18 +85,41 @@ msgid ""
 msgstr "Додати запис формату до вказаного запису книги. Повертає True, якщо запис формату було успішно додано."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_items:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:0
+msgid "Parameters"
+msgstr "Параметри"
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr ""
+msgstr "Якщо True, замінити наявний формат, інакше, якщо формат вже існує, повернути False."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr ""
+msgstr "Якщо True, додатки форматів типів файлів опрацьовують формат до і після додавання."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
@@ -122,19 +146,19 @@ msgstr "Заморожений набір ідентифікаторів для 
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr ""
+msgstr "Заморожений набір усіх назв полів (слід використовувати лише для полів багато-одне і багато-багато)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr ""
+msgstr "Повернути дані щодо авторів у форматі словника з такими ключами: name, sort, link"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr ""
+msgstr "Якщо авторів із вказаними ідентифікаторами немає, буде повернуто порожній словник. Якщо author_ids має значення None, буде повернуто дані для усіх авторів."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -142,21 +166,21 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr ""
+msgstr "За вказаними списком авторів повертає рядок author_sort для авторів, надаючи перевагу упрядковуванню за авторами, пов’язаному з автором, над обчисленим рядком."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr ""
+msgstr "Повертає усі книги, пов’язані із записом, вказаними за допомогою ``item_id``, де запис належить полю ``name``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
-msgstr ""
+msgstr "Повернуте значення є набором ідентифікаторів книг або порожньою множиною, якщо запису або поля не існує."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -165,7 +189,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "Копіювати зображення обкладинки до файлоподібного об’єкта ``dest``. Повертає False, якщо зображення обкладинки не існує, або ``dest`` є тим самим файлом, що і поточне зображення обкладинки. ``dest`` також може бути шляхом. У випадку шляху зображення обкладинки буде скопійовано тоді і лише тоді, коли шлях відрізняється від поточного шляху (із врахуванням регістру символів)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -174,14 +198,14 @@ msgid ""
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path, in which case the format is copied to it, iff the path is different "
 "from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "Копіювати формат ``fmt`` до файлоподібного об’єкта ``dest``. Якщо вказаного формату не існує, повідомляє про помилку :class:`NoSuchFormat`. ``dest`` може бути шляхом. Якщо ``dest`` є шляхом, формат буде скопійовано до нього тоді і лише тоді, коли шлях відрізняється від поточного шляху (із врахуванням регістру символів)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr ""
+msgstr "Повертає зображення обкладинки або None. Типово, повертає обкладинку як байтовий рядок."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
@@ -189,30 +213,30 @@ msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr ""
+msgstr "ПОПЕРЕДЖЕННЯ: використання as_path призведе до копіювання зображення обкладинки до тимчасового файла і повернення шляху до цього тимчасового файла. Вам слід вилучити тимчасовий файл, коли ви завершите роботу з ним."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr ""
+msgstr "Якщо True, повернути зображення як відкритий об’єкт файла (SpooledTemporaryFile)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr ""
+msgstr "Якщо True, повернути зображення як об’єкт QImage."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr ""
+msgstr "Якщо True, повернути зображення як шлях, що вказує на тимчасовий файл."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
-msgstr ""
+msgstr "Повертає дані, якими можна скористатися для реалізації :meth:`find_identical_books` у робочому процесі без доступу до бази даних. Див. db.utils, щоб ознайомитися із реалізацією."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
@@ -220,28 +244,28 @@ msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
-msgstr ""
+msgstr "Повертає дані, придатні до використання у :meth:`has_book`. Можна скористатися для реалізації :meth:`has_book` у процесі обробки без доступу до бази даних."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
 "delete data for some book ids, pass in a list of book ids."
-msgstr ""
+msgstr "Вилучити дані за вказаною назвою. Типово вилучає усі дані. Якщо вам потрібно вилучити дані лише для деяких ідентифікаторів книг, передайте список ідентифікаторів книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
-msgstr ""
+msgstr "Оновити метадані в усіх форматах вказаних book_id до поточних метаданих у базі даних."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr ""
+msgstr "Те саме, що і field_for, але з униканням додаткового пошуку для отримання об’єкта поля."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
@@ -249,7 +273,7 @@ msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr ""
+msgstr "Повертає значення поля ``name`` для книги, яку вказано за допомогою ідентифікатора ``book_id``. Якщо такої книги не існує, у поля ``name`` немає певного значення, або таке поле не існує, буде повернуто ``default_value``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
@@ -257,7 +281,7 @@ msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr ""
+msgstr "``default_value`` не використовується для полів title, title_sort, authors, author_sort та series_index. Так зроблено, оскільки ці поля завжди мають значення у базі даних. ``default_value`` використовується для усіх нетипових стовпчиків."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
@@ -267,7 +291,7 @@ msgid ""
 "is identifiers for which the returned value is always a dict. The returned "
 "tuples are always in link order, that is, the order in which they were "
 "created."
-msgstr ""
+msgstr "Повернутим значення для полів is_multiple завжди будуть кортежі, навіть якщо значень не буде знайдено (іншими словами, default_value буде проігноровано). Виключенням є ідентифікатори, для яких повернуте значення завжди буде словником. Кортежі, які буде повернуто, завжди упорядковуються за посиланнями, тобто порядком їхнього створення."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -275,21 +299,21 @@ msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr ""
+msgstr "Повертає ідентифікатори (у форматі кортежу) для значень, які поле ``name`` містить для книги, що визначається ідентифікатором ``book_id``. Якщо значень немає, або немає такої книги, або немає такого поля, буде повернуто порожній кортеж."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
-msgstr ""
+msgstr "Знаходить книги, набір авторів яких містить ``mi``, і які мають ту саму назву ``title`` (відповідність ``title`` встановлюється неточно). Див. також :meth:`data_for_find_identical_books`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
 msgid ""
 "Return the ebook format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the ebook file."
-msgstr ""
+msgstr "Повертає дані формату електронної книги у форматі байтового рядка або «None», якщо формату не існує або у вашого користувача немає права доступу до запису файла електронної книги."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -297,13 +321,13 @@ msgid ""
 "If True the ebook format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr ""
+msgstr "Якщо має значення True, дані формату електронної книги повертаються як файловий об’єкт. Зауважте, що файлових об’єкт належатиме до типу SpooledTemporaryFile. Отже, якщо ви хочете скопіювати формат до іншого файла, скористайтеся замість цієї функції функцією :meth:`copy_format_to` з міркувань швидкодії."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
-msgstr ""
+msgstr "Копіює файл формату до тимчасового файла і повертає шлях до тимчасового файла."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
@@ -311,7 +335,7 @@ msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr ""
+msgstr "Якщо має значення True і повертаємо шлях, назва файла збігається з використаною у бібліотеці назвою. Зауважте, що використання цього параметра означає, що повторні виклики даватимуть той самий тимчасовий файл (який лише кожного разу створюватиметься повторно)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
@@ -319,28 +343,28 @@ msgid ""
 "Return absolute path to the ebook file of format `format`. You should almost"
 " never use this, as it breaks the threadsafe promise of this API. Instead "
 "use, :meth:`copy_format_to`."
-msgstr ""
+msgstr "Повертає абсолютний шлях до файла електронної книги формату `format`. Цим майже ніколи не варто користуватися, оскільки використання шкодить захисту потоків виконання цього програмного інтерфейсу. Замість цієї функції, скористайтеся :meth:`copy_format_to`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
 msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with and the catalogs (via get_data_as_dict())."
-msgstr ""
+msgstr "У поточній версії використовується лише у списку calibredb, засобі перегляду, засобі редагування, compare_format для порівняння з початковим форматом, засобі відкриття файла за допомогою іншої програми та у каталогах (через get_data_as_dict())."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
-msgstr ""
+msgstr "Окрім засобів перегляду, відкриття за допомогою іншої програми та редагування книги, як здається авторові програми, жодна інша частина не виконує будь-яких дій із запису файла вхідних-вихідних даних із результатами цього виклику."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
-msgstr ""
+msgstr "Повертає хеш-суму вказаного формату вказаної книги. Тип модуля обробки для отримання сум може бути різним, але, зазвичай, це SHA-256."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
@@ -349,7 +373,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr ""
+msgstr "Повертає шлях, розмір і mtime для вказаного формату вказаної книги. Вам не варто використовувати шлях, окрім безвихідних випадків, оскільки доступ до нього безпосередньо шкодить захисту виконання у потоках, який гарантується цим програмним інтерфейсом. Замість цієї функції, скористайтеся методом :meth:`copy_format_to`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -357,25 +381,25 @@ msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr ""
+msgstr "Якщо має значення ``True``, використовуються кешовані значення. У інших випадках використовується повільний доступ до файлової системи. Кешовані значення можуть втрачати актуальність, якщо доступ до файлової системи здійснюється поза цим програмним інтерфейсом."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
-"If ``True`` The max_size field of the database is updates for this book."
-msgstr ""
+"If ``True`` The max_size field of the database is updated for this book."
+msgstr "Якщо має значення ``True``, поле бази даних max_size для цієї книги оновлено."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr ""
+msgstr "Повертає кортеж усіх форматів для вказаної книги. Якщо verify_formats має значення True, перевіряє наявність файлів на диску."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
-msgstr ""
+msgstr "Для внутрішньої реалізації панелі перегляду міток"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
@@ -383,33 +407,33 @@ msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr ""
+msgstr "Отримати дані для назви `name`. Типово, повертає дані для усіх book_ids. Передайте функції список ідентифікаторів книг, якщо вам потрібна лише якась частина даних. Повертає прив’язку book_id до значень. Якщо певне значення не вдасться декодувати, використовує типове значення."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr ""
+msgstr "Повертає прив’язку номерів ідентифікаторів до значень для вказаного поля. Поле має бути полем багато-одне або багато-багато, інакше буде надіслано повідомлення ValueError."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
-msgstr ""
+msgstr "Повернути набір ідентифікаторів книг, для яких для вказаної назви є дані."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
-msgstr ""
+msgstr "Повертає ідентифікатор запису для item_name (без врахування регістру)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
-msgstr ""
+msgstr "Повертає назву запису для запису, вказаного за item_id, у вказаному полі. Див. також :meth:`get_id_map`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -419,25 +443,25 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr ""
+msgstr "Повертає метадані для книги, заданої book_id, як об’єкт :class:`calibre.ebooks.metadata.book.base.Metadata`. Зауважте, що список форматів не буде перевірено. Якщо get_cover має значення True, буде повернуто зображення обкладинки, як шлях до тимчасового файла у форматі mi.cover або, якщо cover_as_data має значення True, у форматі mi.cover_data."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
-msgstr ""
+msgstr "Повертає наступний індекс циклу для вказаного циклу, беручи до уваги різноманітні налаштування, які керують створенням наступного номера у книжковому циклі."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
-msgstr ""
+msgstr "Поле, яке подібне до поля циклу (типово, вбудований стовпчик циклу)"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr ""
+msgstr "Якщо має значення True, повертає прив’язку book_id до поточного значення series_index."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -446,14 +470,14 @@ msgid ""
 " only reads values from the database on demand. This is much faster than "
 "get_metadata when only a small number of fields need to be accessed from the"
 " returned metadata object."
-msgstr ""
+msgstr "Подібний до :meth:`get_metadata`, але повертає об’єкт ProxyMetadata, який лише читає значення з бази даних на вимогу. Так виходить набагато швидше за get_metadata, якщо потрібен доступ лише до невеликої кількості полів із повернутого об’єкта метаданих."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr ""
+msgstr "Повертає прив’язку ідентифікатора до кількості використань для усіх значень вказаного поля, яке має бути полем багато-одне або багато-багато."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -461,7 +485,7 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr ""
+msgstr "Повертає True тоді і лише тоді, коли база даних містить запис із таким самим заголовком, що і у переданому об’єкті Metadata. При порівнянні не враховується регістр символів. Див. також :meth:`data_for_has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
@@ -476,35 +500,35 @@ msgstr "Повертає True, лише якщо вказане значення
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
-msgstr ""
+msgstr "Ініціалізувати цей кеш даними від модуля обробки."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
-msgstr ""
+msgstr "Повертає список упорядкованих ідентифікаторів книг. Якщо ids_to_sort має значення None, буде повернуто ідентифікатори усіх книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr ""
+msgstr "fields має бути списком двоелементних кортежів у формі (назва_поля, за_зростанням=True або False). Найбільше значення має перша двоелементна комбінація."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr ""
+msgstr "Повертає значення вказаного налаштування або значення, вказане як ``default``, якщо налаштування не встановлено."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr ""
+msgstr "Повертає резервну копію метаданих OPF для книги у форматі рядка байтів або None, якщо така резервна копія вже існує."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
@@ -512,7 +536,7 @@ msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are not"
 " deleted."
-msgstr ""
+msgstr "Вилучити книги, вказані за допомогою параметра book_ids з бази даних і вилучити відповідні файли форматів. Якщо значенням ``permanent`` є False, файли форматів не вилучатимуться."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -522,14 +546,14 @@ msgstr "Вилучити вказані формат із запису вказ�
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
-msgstr ""
+msgstr "Прив’язка book_id до списку форматів книги, які слід вилучити."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
-msgstr ""
+msgstr "Якщо має значення True, вилучити запис щодо формату лише з бази даних, не вилучати файл формату з файлової системи."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
@@ -537,33 +561,33 @@ msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr ""
+msgstr "Вилучити усі записи у вказаному полі з вказаними ідентифікаторами. Повертає список оброблених ідентифікаторів книг. ``restrict_to_book_ids`` — необов’язковий набір ідентифікаторів книг. Якщо вказано такий набір, записи вилучатимуться лише із книг цього набору."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr ""
+msgstr "Перейменувати записи з поля «багато-один» або «багато-багато», зокрема з полів міток або циклів."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
-msgstr ""
+msgstr "Під час перейменування у полі, подібному до поля циклу, змінити значення series_index."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
-msgstr ""
+msgstr "Необов’язковий набір ідентифікаторів книг, для яких слід виконати перейменовування. Типово, перейменовування виконується для усіх книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
 msgid ""
 "Restore the book entry in the database for a book that already exists on the"
 " filesystem"
-msgstr ""
+msgstr "Відновити запис книги у базі даних для книги, яка вже існує у файловій системі."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_original_format:1
@@ -571,7 +595,7 @@ msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr ""
+msgstr "Відновити вказаний формат на основі раніше збереженого ORIGINAL_FORMAT, якщо такий існує. Повертає True, якщо дію виконано успішно. Після успішного відновлення ORIGINAL_FORMAT буде вилучено."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
@@ -583,7 +607,7 @@ msgid ""
 "lock, but searching a composite column involves reading field values via "
 "ProxyMetadata which tries to get a shared lock. There may be other scenarios"
 " that trigger this as well."
-msgstr ""
+msgstr "Безпечною дією з блокування на читання є блокування, яке забороняє дії, якщо якщо потік вже має блокування на запис, інакше отримує блокування на читання. Це необхідно для запобігання DowngradeLockErrors, помилкам, які можуть трапитися під час оновлення кешу пошуку, коли існують складені стовпчики. Оновлення кешу пошуку отримує виключне блокування, але пошук складеного стовпчика включає читання значень полів за допомогою ProxyMetadata, який намагається отримати блокування зі спільним доступом. Можливі і інші сценарії, які призводять до цієї ситуації."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
@@ -591,21 +615,21 @@ msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr ""
+msgstr "Ця властивість повертає новий об’єкт блокування під час кожного доступу. Цей об’єкт блокування не є рекурсивним (з міркувань швидкодії). Його слід використовувати лише у a з інструкцією ``with cache.safe_read_lock:``, інакше можливі небажані наслідки."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
-msgstr ""
+msgstr "Зберегти копію вказаного формату ORIGINAL_FORMAT, переписати усі наявні записи ORIGINAL_FORMAT."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
-msgstr ""
+msgstr "Виконати пошук у базі даних за вказаним запитом. Повертає набір ідентифікаторів відповідних до критерію пошуку книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
@@ -613,19 +637,19 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr ""
+msgstr "Обмеження яке буде об’єднано логічним «І» із вказаним запитом. Зауважте, що обмеження кешуються, тому пошук «a І b» буде повільнішим за пошук «a» з обмеженням «b»."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
-msgstr ""
+msgstr "Для внутрішнього використання (віртуальні поля, зокрема on_device, для пошуку)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
-msgstr ""
+msgstr "Якщо має значення, відмінне від None, пошук виконуватиметься для набору вказаних за допомогою ідентифікаторів книг, а не для усіх книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
@@ -638,19 +662,19 @@ msgid ""
 "Set the cover for this book.  data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr ""
+msgstr "Встановити зображення обкладинки для цієї книги. Значенням data може бути QImage, QPixmap, об’єкт файла або рядок байтів. Також можливе значення None, яке означає, що слід вилучити будь-яке наявне зображення обкладинки."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr ""
+msgstr "Встановлює значення для поля, вказаного за допомогою ``name``. Повертає набір усіх ідентифікаторів книг, на які впливає зміна."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
-msgstr ""
+msgstr "Прив’язка book_ids до значень, які слід застосувати."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
@@ -659,7 +683,7 @@ msgid ""
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr ""
+msgstr "Якщо має значення True, регістр символів у полях багато-одне або багато-багато буде змінено. Наприклад, якщо у книги була мітка ``мітка1`` і ви встановили для іншої книги мітку ``Мітка1``, обидві книги отримають мітку ``Мітка1``, якщо allow_case_change має значення True, і мітку ``мітка1`` у іншому випадку."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
@@ -669,7 +693,7 @@ msgstr "Використовується для внутрішніх потре�
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
-msgstr ""
+msgstr "Встановлює метадані для книги з ідентифікатором `id` на основі об’єкта `Metadata` `mi`"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
@@ -678,12 +702,12 @@ msgid ""
 "mi contains empty values. In this case, 'None' is distinguished from "
 "'empty'. If mi.XXX is None, the XXX is not replaced, otherwise it is. The "
 "tags, identifiers, and cover attributes are special cases. Tags and "
-"identifiers cannot be set to None so then will always be replaced if "
+"identifiers cannot be set to None so they will always be replaced if "
 "force_changes is true. You must ensure that mi contains the values you want "
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr ""
+msgstr "Встановлення значення force_changes=True наказує set_metadata оновити поля у примусовому порядку, навіть якщо mi містить порожні значення. У цьому випадку `None` відрізняється від `empty`. Якщо mi.XXX має значення None, XXX не буде замінено, а якщо ні, буде. Мітки, ідентифікатори і атрибути зображення є особливими випадками. Для міток та ідентифікаторів не можна встановлювати значення `None`, отже їх буде завжди замінено, якщо force_changes має значення True. Вам слід забезпечити наявність у mi значень, які повинна мати книга. Зображення обкладинок замінюються завжди, якщо надано нове зображення обкладинки, але ніколи не вилучаються. Також зауважте, що force_changes не впливає на встановлення назви книги або авторів."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
@@ -696,27 +720,27 @@ msgstr "Встановити вказаний рівень пріоритетн�
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr ""
+msgstr "Повертає ідентифікатори усіх книг, які мають мітку ``tag`` і які є старішими за вказаний час. При порівнянні міток регістр символів не враховується."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr ""
+msgstr "Об’єкт timedelta або None. Якщо має значення None, буде повернуто усі ідентифікатори з вказаною міткою."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr ""
+msgstr "Якщо встановлено значення None, список відповідників буде обмежено до книг, які мають вказану мітку."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
-msgstr ""
+msgstr "Список авторів. Якщо не None, список відповідників буде обмежено до книг, авторами яких є вказані письменники (без врахування регістру символів)."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
@@ -725,4 +749,4 @@ msgid ""
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr ""
+msgstr "Повертає категорії користувача для вказаних книг. Параметр proxy_metadata_map є необов’язковим. Він корисний для пришвидшення обробки у контекстах, коли для книг вже існує об’єкт ProxyMetadata. Має повернути прив’язку book_ids до відповідних об’єктів ProxyMetadata."

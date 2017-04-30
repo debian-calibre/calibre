@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.ui'
 #
-# Created: Sun Nov 16 11:58:00 2014
-#      by: PyQt5 UI code generator 5.3.2
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -162,7 +161,7 @@ class Ui_TemplateDialog(object):
 
     def retranslateUi(self, TemplateDialog):
 
-        TemplateDialog.setWindowTitle(_("Edit Comments"))
+        TemplateDialog.setWindowTitle(_("Edit Template"))
         self.colored_field_label.setText(_("Set the color of the column:"))
         self.color_chooser_label.setText(_("Copy a color name to the clipboard:"))
         self.color_copy_button.setToolTip(_("Copy the selected color name to the clipboard"))

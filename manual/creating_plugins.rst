@@ -151,7 +151,7 @@ calibre's plugin loading system defines a couple of built-in functions that allo
 Enabling user configuration of your plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To allow users to configure your plugin, you must define three methods in your base plugin class, '**is_customizable**, **config_widget** and **save_settings** as shown below:
+To allow users to configure your plugin, you must define three methods in your base plugin class, **is_customizable**, **config_widget** and **save_settings** as shown below:
 
 .. literalinclude:: plugin_examples/interface_demo/__init__.py
   :pyobject: InterfacePluginDemo.is_customizable
@@ -262,7 +262,7 @@ visible strings as translatable, by surrounding them in _(). For example::
 Then use some program to generate .po files from your plugin source code. There
 should be one .po file for every language you want to translate into. For
 example: de.po for German, fr.po for French and so on. You can use the
-`poedit <http://poedit.net/>`_ program for this.
+`poedit <https://poedit.net/>`_ program for this.
 
 Send these .po files to your translators. Once you get them back, compile them
 into .mo files. You can again use poedit for that, or just do::
@@ -318,11 +318,11 @@ This will shutdown a running calibre, wait for the shutdown to complete, then up
 More plugin examples
 ----------------------
 
-You can find a list of many, sophisticated calibre plugins `here <http://www.mobileread.com/forums/showthread.php?t=118764>`_.
+You can find a list of many, sophisticated calibre plugins `here <https://www.mobileread.com/forums/showthread.php?t=118764>`_.
 
 Sharing your plugins with others
 ----------------------------------
 
 If you would like to share the plugins you have created with other users of calibre, post your plugin in a new thread in the
-`calibre plugins forum <http://www.mobileread.com/forums/forumdisplay.php?f=237>`_.
+`calibre plugins forum <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_.
 

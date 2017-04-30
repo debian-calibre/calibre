@@ -63,6 +63,7 @@ class CompositeProgressReporter(object):
                 (self.global_max - self.global_min)
         self.global_reporter(global_frac, msg)
 
+
 ARCHIVE_FMTS = ('zip', 'rar', 'oebzip')
 
 
@@ -409,28 +410,32 @@ OptionRecommendation(name='margin_top',
         help=_('Set the top margin in pts. Default is %default. '
             'Setting this to less than zero will cause no margin to be set '
             '(the margin setting in the original document will be preserved). '
-            'Note: 72 pts equals 1 inch')),
+            'Note: Page oriented formats such as PDF and DOCX have their own'
+            ' margin settings that take precedence.')),
 
 OptionRecommendation(name='margin_bottom',
         recommended_value=5.0, level=OptionRecommendation.LOW,
         help=_('Set the bottom margin in pts. Default is %default. '
             'Setting this to less than zero will cause no margin to be set '
             '(the margin setting in the original document will be preserved). '
-            'Note: 72 pts equals 1 inch')),
+            'Note: Page oriented formats such as PDF and DOCX have their own'
+            ' margin settings that take precedence.')),
 
 OptionRecommendation(name='margin_left',
         recommended_value=5.0, level=OptionRecommendation.LOW,
         help=_('Set the left margin in pts. Default is %default. '
             'Setting this to less than zero will cause no margin to be set '
             '(the margin setting in the original document will be preserved). '
-            'Note: 72 pts equals 1 inch')),
+            'Note: Page oriented formats such as PDF and DOCX have their own'
+            ' margin settings that take precedence.')),
 
 OptionRecommendation(name='margin_right',
         recommended_value=5.0, level=OptionRecommendation.LOW,
         help=_('Set the right margin in pts. Default is %default. '
             'Setting this to less than zero will cause no margin to be set '
             '(the margin setting in the original document will be preserved). '
-            'Note: 72 pts equals 1 inch')),
+            'Note: Page oriented formats such as PDF and DOCX have their own'
+            ' margin settings that take precedence.')),
 
 OptionRecommendation(name='change_justification',
         recommended_value='original', level=OptionRecommendation.LOW,
@@ -500,7 +505,7 @@ OptionRecommendation(name='smarten_punctuation',
         recommended_value=False, level=OptionRecommendation.LOW,
         help=_('Convert plain quotes, dashes and ellipsis to their '
             'typographically correct equivalents. For details, see '
-            'http://daringfireball.net/projects/smartypants'
+            'https://daringfireball.net/projects/smartypants'
             )
         ),
 
@@ -717,6 +722,7 @@ OptionRecommendation(name='search_replace',
         if view_kepub and input_fmt.lower() == 'kepub':
             input_fmt = 'epub'
         self.archive_input_tdir = None
+        self.changed_options = set()
         if input_fmt in ARCHIVE_FMTS:
             self.log('Processing archive...')
             tdir = PersistentTemporaryDirectory('_pl_arc')
@@ -852,11 +858,24 @@ OptionRecommendation(name='search_replace',
         level is >= the baseline recommended level, the UI value is used,
         *except* if the baseline has a recommendation level of `HIGH`.
         '''
+
+        def eq(name, a, b):
+            if name in {'sr1_search', 'sr1_replace', 'sr2_search', 'sr2_replace', 'sr3_search', 'sr3_replace', 'filter_css'}:
+                if not a and not b:
+                    return True
+            if name in {'transform_css_rules', 'search_replace'}:
+                if b == '[]':
+                    b = None
+            return a == b
+
         for name, val, level in recommendations:
             rec = self.get_option_by_name(name)
             if rec is not None and rec.level <= level and rec.level < rec.HIGH:
+                changed = not eq(name, rec.recommended_value, val)
                 rec.recommended_value = val
                 rec.level = level
+                if changed:
+                    self.changed_options.add(rec)
 
     def opts_to_mi(self, mi):
         from calibre.ebooks.metadata import string_to_authors
@@ -955,6 +974,11 @@ OptionRecommendation(name='search_replace',
                 and self.output_fmt == 'mobi'
         if self.opts.verbose:
             self.log.filter_level = self.log.DEBUG
+        if self.changed_options:
+            self.log('Conversion options changed from defaults:')
+            for rec in self.changed_options:
+                if rec.option.name not in ('username', 'password'):
+                    self.log(' ', '%s:' % rec.option.name, repr(rec.recommended_value))
         if self.opts.verbose > 1:
             self.log.debug('Resolved conversion options')
             try:
@@ -1100,6 +1124,8 @@ OptionRecommendation(name='search_replace',
         self.opts.source = self.opts.input_profile
         self.opts.dest = self.opts.output_profile
 
+        from calibre.ebooks.oeb.transforms.jacket import RemoveFirstImage
+        RemoveFirstImage()(self.oeb, self.opts, self.user_metadata)
         from calibre.ebooks.oeb.transforms.metadata import MergeMetadata
         MergeMetadata()(self.oeb, self.user_metadata, self.opts,
                 override_input_metadata=self.override_input_metadata)
@@ -1230,6 +1256,7 @@ OptionRecommendation(name='search_replace',
 
         self.log(self.output_fmt.upper(), 'output written to', self.output)
         self.flush()
+
 
 # This has to be global as create_oebbook can be called from other locations
 # (for example in the html input plugin)

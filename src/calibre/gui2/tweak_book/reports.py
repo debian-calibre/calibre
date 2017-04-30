@@ -29,7 +29,7 @@ from calibre.constants import DEBUG
 from calibre.ebooks.oeb.polish.report import (
     gather_data, CSSEntry, CSSFileMatch, MatchLocation, ClassEntry,
     ClassFileMatch, ClassElement, CSSRule, LinkLocation)
-from calibre.gui2 import error_dialog, question_dialog, choose_save_file, open_url
+from calibre.gui2 import error_dialog, question_dialog, choose_save_file, open_url, secure_web_page
 from calibre.gui2.tweak_book import current_container, tprefs, dictionaries
 from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
@@ -55,6 +55,7 @@ def save_state(name, val):
     if data is None:
         tprefs['reports-ui-state'] = data = {}
     data[name] = val
+
 
 SORT_ROLE = Qt.UserRole + 1
 
@@ -111,7 +112,7 @@ class FileCollection(QAbstractTableModel):
     def location(self, index):
         try:
             return self.files[index.row()].name
-        except IndexError:
+        except (IndexError, AttributeError):
             pass
 
 
@@ -350,6 +351,7 @@ class Jump(object):
             loc = locations[self.pos_map[key]]
             jump_to_location(loc)
 
+
 jump = Jump()  # }}}
 
 # Images {{{
@@ -509,7 +511,7 @@ class ImagesWidget(QWidget):
 
 class LinksModel(FileCollection):
 
-    COLUMN_HEADERS = ['✓ ', _('Source'), _('Source text'), _('Target'), _('Anchor'), _('Target text')]
+    COLUMN_HEADERS = ['✓', _('Source'), _('Source text'), _('Target'), _('Anchor'), _('Target text')]
 
     def __init__(self, parent=None):
         FileCollection.__init__(self, parent)
@@ -539,7 +541,7 @@ class LinksModel(FileCollection):
             except IndexError:
                 return None
             if col == 0:
-                return {True:'✓ ', False:'✗'}.get(link.ok)
+                return {True:'✓', False:'✗'}.get(link.ok)
             if col == 1:
                 return link.location.name
             if col == 2:
@@ -598,6 +600,9 @@ class LinksWidget(QWidget):
         s.addWidget(f)
         self.links.restore_table('links-table', sort_column=1)
         self.view = WebView(self)
+        secure_web_page(self.view.page())
+        self.setContextMenuPolicy(Qt.NoContextMenu)
+        self.view.setContextMenuPolicy(Qt.NoContextMenu)
         s.addWidget(self.view)
         self.ignore_current_change = False
         self.current_url = None
@@ -1440,6 +1445,7 @@ class Reports(Dialog):
         self.reports.save()
         Dialog.reject(self)
 # }}}
+
 
 if __name__ == '__main__':
     from calibre.gui2 import Application

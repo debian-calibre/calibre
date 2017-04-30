@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
 import os
 
-from PyQt5.Qt import QNetworkReply, QNetworkAccessManager, QUrl, QNetworkRequest, QTimer, pyqtSignal
+from PyQt5.Qt import QNetworkReply, QNetworkAccessManager, QUrl, QNetworkRequest, QTimer, pyqtSignal, QByteArray
 
 from calibre import guess_type as _guess_type, prints
 from calibre.constants import FAKE_HOST, FAKE_PROTOCOL, DEBUG
@@ -17,6 +17,9 @@ from calibre.utils.short_uuid import uuid4
 
 def guess_type(x):
     return _guess_type(x)[0] or 'application/octet-stream'
+
+
+cc_header = QByteArray(b'Cache-Control'), QByteArray(b'max-age=864001')
 
 
 class NetworkReply(QNetworkReply):
@@ -30,6 +33,7 @@ class NetworkReply(QNetworkReply):
         self.__data = data
         self.setHeader(QNetworkRequest.ContentTypeHeader, mime_type)
         self.setHeader(QNetworkRequest.ContentLengthHeader, len(self.__data))
+        self.setRawHeader(*cc_header)
         QTimer.singleShot(0, self.finalize_reply)
 
     def bytesAvailable(self):
@@ -59,6 +63,35 @@ class NetworkReply(QNetworkReply):
         self.finished.emit()
 
 
+class NotFound(QNetworkReply):
+
+    def __init__(self, parent, request):
+        QNetworkReply.__init__(self, parent)
+        self.setOpenMode(QNetworkReply.ReadOnly | QNetworkReply.Unbuffered)
+        self.setHeader(QNetworkRequest.ContentTypeHeader, 'application/octet-stream')
+        self.setHeader(QNetworkRequest.ContentLengthHeader, 0)
+        self.setRequest(request)
+        self.setUrl(request.url())
+        QTimer.singleShot(0, self.finalize_reply)
+
+    def bytesAvailable(self):
+        return 0
+
+    def isSequential(self):
+        return True
+
+    def abort(self):
+        pass
+
+    def readData(self, maxlen):
+        return b''
+
+    def finalize_reply(self):
+        self.setAttribute(QNetworkRequest.HttpStatusCodeAttribute, 404)
+        self.setAttribute(QNetworkRequest.HttpReasonPhraseAttribute, "Not Found")
+        self.finished.emit()
+
+
 def normpath(p):
     return os.path.normcase(os.path.abspath(p))
 
@@ -76,7 +109,7 @@ class NetworkAccessManager(QNetworkAccessManager):
 
     def set_book_data(self, root, spine):
         self.orig_root = root
-        self.root = os.path.normcase(os.path.abspath(root))
+        self.root = normpath(root)
         self.mime_map, self.single_pages, self.codec_map = {}, set(), {}
         for p in spine:
             mt = getattr(p, 'mime_type', None)
@@ -147,6 +180,7 @@ class NetworkAccessManager(QNetworkAccessManager):
                 except Exception:
                     import traceback
                     self.load_error.emit(name, traceback.format_exc())
-        if DEBUG:
-            prints('URL not found in book: %r' % qurl.toString())
+            if DEBUG:
+                prints('URL not found in book: %r' % qurl.toString())
+            return NotFound(self, request)
         return QNetworkAccessManager.createRequest(self, operation, request)

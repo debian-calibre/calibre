@@ -7,22 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-02 10:34+0530\n"
-"PO-Revision-Date: 2015-01-06 00:51+0000\n"
-"Last-Translator: Necdet Yücel <necdetyucel@gmail.com>\n"
-"Language-Team: Turkish (http://www.transifex.com/projects/p/calibre/language/tr/)\n"
+"POT-Creation-Date: 2017-02-12 07:41+0530\n"
+"PO-Revision-Date: 2017-02-10 03:11+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-# 1c587f4f30f6402ca2046b7809868057
 #: ../../home/kovid/work/calibre/manual/server.rst:4
 msgid "Integrating the calibre content server into other servers"
 msgstr "calibre içerik sunucusunu başka sunucularla bütünleştirmek"
 
-# b8ee8f83dea84019a1caa0844618448a
 #: ../../home/kovid/work/calibre/manual/server.rst:6
 msgid ""
 "Here, we will show you how to integrate the calibre content server into "
@@ -34,22 +32,14 @@ msgid ""
 " 2.x on linux, but should be easily adaptable to other platforms."
 msgstr "Burada size calibre içerik sunucusunun başka bir sunucu ile nasıl bütünleştirileceğini göstereceğiz. Bunun için en yaygın neden SSL veya daha gelişmiş bir kimlik doğrulama yönteminin kullanılmasıdır. İki ana teknik bulunmaktadır: calibre içerik sunucusunu tek başına çalışan bir süreç olarak çalıştırmak ve ana sunucunuza bağlanmak için ters vekil sunucu kullanmak veya içerik sunucusunu ana sunucunuzun içerisinde WSGI ile bir süreç olarak çalıştırmak. Aşağıdaki örneklerin tümü Linux üzerinde Apache 2.x sürümleri için geçerli olsa da kolaylıkla diğer platformlara uyarlanabilirler."
 
-# 1b04680e5e8b41439b7862e0c4d5ccd6
-#: ../../home/kovid/work/calibre/manual/server.rst:0
-msgid "Contents"
-msgstr "İçindekiler"
-
-# e22c343f9b26487c89e9128eac99db9d
 #: ../../home/kovid/work/calibre/manual/server.rst:12
 msgid "This only applies to calibre releases >= 0.7.25"
 msgstr "Bu sadece calibre 0.7.25 ve üzeri sürümlerde uygulanabilir"
 
-# ec1dce3327464e3ab720fc36726c244f
 #: ../../home/kovid/work/calibre/manual/server.rst:15
 msgid "Using a reverse proxy"
 msgstr "Ters vekil sunucu kullanmak"
 
-# 72b9cfdb632e4e99b8c9e8c040faff52
 #: ../../home/kovid/work/calibre/manual/server.rst:17
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
@@ -64,12 +54,10 @@ msgid ""
 "server that supports Reverse Proxies."
 msgstr "Bir ters vekil sunucu gelen istekleri kabul eden ve onları calibre sunucusuna ileten bir sunucudur. Yanıtı da calibre sunucusundan okur ve istemciye iletir. Bu calibre sunucusunu ana sunucunuza bütünleştirmek için uğraşmadan normal bir şekilde çalıştıracağınız ve ana sunucunuzun sağladığı kimlik doğrulama sisteminden faydalanabileceğiniz anlamına gelir. Bu calibre kurulumuna ilave biçbir dış bağımlılık veya sistem bütünleştirmesi ihtiyacı ile uğraşmayacağınız en basit yaklaşımdır. Aşağıda ana sunucunuz olarak Apache kullanıldığında bu işlemin nasıl yapıldığının bir örneği bulunmaktaysa da Ters Vekil Sunucu destekli her sunucu ile çalışacaktır."
 
-# 40d8aa89d2e74b20a9d93792a8bb295d
 #: ../../home/kovid/work/calibre/manual/server.rst:19
 msgid "First start the calibre content server as shown below::"
 msgstr "İlk olarak calibre içerik sunucusunu aşağıdaki gibi başlatın::"
 
-# ffa1648d660b4af0845fdcdd8ae6d910
 #: ../../home/kovid/work/calibre/manual/server.rst:23
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the content"
@@ -78,14 +66,12 @@ msgid ""
 " content server website, but now it will run under /calibre."
 msgstr "Buradaki anahtar parametre ``--url-prefix /calibre``dir. Bu içerik sunucusunun tüm adresleri calibre önekiyle sunacağı anlamına gelir. Bunu görmek için tarayıcınıza ``http://localhost:8080/calibre`` yazın. Normal içeriğinizin web sayfasında göründüğünü ama artık /calibre dizininde bulunduğunu göreceksiniz."
 
-# 398a25bcf35743f1894cd35ce478c70f
 #: ../../home/kovid/work/calibre/manual/server.rst:25
 msgid ""
 "Now suppose you are using Apache as your main server. First enable the proxy"
 " modules in apache, by adding the following to :file:`httpd.conf`::"
 msgstr "Şimdi ana sunucunuz olarak Apache kullandığınızı düşünelim. Önce Apache vekil sunucu modüllerini :file:`httpd.conf` dosyasına aşağıdakileri ekleyerek etkinleştirin::"
 
-# 71570014e99c4f6897c17d03408a7b69
 #: ../../home/kovid/work/calibre/manual/server.rst:30
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
@@ -94,7 +80,6 @@ msgid ""
 " file for the virtual host in question)::"
 msgstr "Vekil sunucu modüllerinin tam olarak nasıl etkinleştirileceği Apache kurulumunuza bağlıdır. Bir defa vekil sunucu modüllerini etkinleştirdiğinizde aşağıdaki kuralları httpd.conf dosyasına (veya sanal host kullanıyorsanız ilgili dosyaya) ekleyin::"
 
-# 4cb215252bc74d38a3e7c50df499a37f
 #: ../../home/kovid/work/calibre/manual/server.rst:38
 msgid ""
 "That's all, you will now be able to access the calibre Content Server under "
@@ -103,7 +88,6 @@ msgid ""
 "--url-prefix option above, the calibre server handles them transparently."
 msgstr "Hepsi bu kadar, artık apache sunucunuzda adresin sonuna /calibre yazarak calibre içerik sunucunuza ulaşabilirsiniz. Yukarıdaki kurallar /calibre dizini altındaki tüm istekleri calibre sunucunuzun 8080 portuna iletir ve yukarıdaki --url-prefix seçeneği sayesinde calibre sunucusu onları şeffaf olarak işler."
 
-# 91b18d679b8048ff9d9f3fe8b6595cdc
 #: ../../home/kovid/work/calibre/manual/server.rst:40
 msgid ""
 "If you are willing to devote an entire VirtualHost to the content server, "
@@ -111,7 +95,6 @@ msgid ""
 "the ProxyPass directive."
 msgstr "Eğer bir Sanal Hst'un tamamını içerik sunucusuna ayırmak istiyorsanız --url-prefix ve RewriteRule ifadelerini kullanmanıza gerek yoktur, sadece ProxyPass kullanmanız yeterli olacaktır."
 
-# bfbe1e2d44c24a32812e12b8066ad525
 #: ../../home/kovid/work/calibre/manual/server.rst:42
 msgid ""
 "The server engine calibre uses, CherryPy, can have trouble with proxying and"
@@ -119,19 +102,16 @@ msgid ""
 "shown above."
 msgstr "calibre'nin kullandığı sunucu motoru, CherryPy, vekil sunucu ve KeepAlive istekleri ile sorun yaşayabileceğinden onları yukarıda gösterildiği gibi SetEnv ifadeleriyle Apache içinden kapatın."
 
-# d13331c41b7f4818b4a87c17b7b426fb
 #: ../../home/kovid/work/calibre/manual/server.rst:45
 msgid "In process"
 msgstr "Uygulama içinde"
 
-# 347158550aed4774ab861cdb258dcab8
 #: ../../home/kovid/work/calibre/manual/server.rst:47
 msgid ""
 "The calibre content server can be run directly, in process, inside a host "
 "server like Apache using the WSGI framework."
 msgstr "calibre içerik sunucusu Apache gibi bir sunucu içinde WSGI çatısı kullanılarak uygulama içinde çalıştırılabilir."
 
-# ce6515d47e45499098949d5f5267646e
 #: ../../home/kovid/work/calibre/manual/server.rst:49
 msgid ""
 "For this to work, all the dependencies needed by calibre must be installed "
@@ -140,7 +120,6 @@ msgid ""
 "process server problems."
 msgstr "Bu işlem için calibre'nin tüm bağımlılıkları sisteminize kurulu olmalıdır. Bunu yapmak pek açık olmadığından sunucular içinde çalıştırmanız önerilmemektedir. Sunucu sorunlarının hatalarını ayıklamak için yardım alamayacaksınız."
 
-# ece1970f6c3344f2be1ca1a3cc239e45
 #: ../../home/kovid/work/calibre/manual/server.rst:51
 msgid ""
 "First, we have to create a WSGI *adapter* for the calibre content server. "
@@ -148,21 +127,18 @@ msgid ""
 "directed in the comments"
 msgstr "İlk olarak calibre içerik sunucunuza bir WSGI *bağdaştırıcı*oluşturmalısınız. Burada bu amaç için kullanabileceğiniz bir şablon bulacaksınız. Yolları uygun şekilde değiştirmelisiniz"
 
-# 5b38d094ec2d42829f370b05364a9f47
 #: ../../home/kovid/work/calibre/manual/server.rst:101
 msgid ""
 "Save this adapter as :file:`calibre-wsgi-adpater.py` somewhere your server "
 "will have access to it."
 msgstr "Bu bağdaştırıcıyı sunucunuzun erişebileceği bir yere :file:`calibre-wsgi-adpater.py` adıyla kaydedin."
 
-# ef2c2da810b148a283b777b41b93c49d
 #: ../../home/kovid/work/calibre/manual/server.rst:103
 msgid ""
 "Let's suppose that we want to use WSGI in Apache. First enable WSGI in "
 "Apache by adding the following to :file:`httpd.conf`::"
 msgstr "Şimdi Apache içinde WSGI kullanmak istediğinizi varsayalım. İlk olarak :file:`httpd.conf`dosyasına aşağıdaki satırı ekleyerek Apache içinde WSGI'yı etkinleştirin::"
 
-# 5f493e6f236642e68f42aee0da0c6a1b
 #: ../../home/kovid/work/calibre/manual/server.rst:107
 msgid ""
 "The exact technique for enabling the wsgi module will vary depending on your"
@@ -171,23 +147,20 @@ msgid ""
 " file for the virtual host in question::"
 msgstr "WSGI modülünün tam olarak etkinleştirilmesi Apache kurulumunuza bağlıdır. Vekil sunucu modülleri etkinleştirildiğinde aşağıdaki kuralı httpd.conf (veya ilgili sanal suncuu dosyasına) dosyasına ekleyin::"
 
-# 047ea351a3c0469e91c9c926a4fcccda
 #: ../../home/kovid/work/calibre/manual/server.rst:111
 msgid ""
 "Change the path to :file:`calibre-wsgi-adapter.py` to wherever you saved it "
 "previously (make sure Apache has access to it)."
 msgstr ":file:`calibre-wsgi-adapter.py` dosyasının yolunu önceden kaydettiğiniz şekilde değiştirin (Apache'nin buraya erişimi olduğundan emin olun)."
 
-# f6f5bc2f503f40bf890896831e4005cf
 #: ../../home/kovid/work/calibre/manual/server.rst:113
 msgid ""
 "That's all, you will now be able to access the calibre Content Server under "
 "the /calibre URL in your apache server."
 msgstr "Hepsi bu kadar, artık Apache sunucunuzdan /calibre adresi altından calibre İçerik Sunucusuna erişebilirsiniz."
 
-# f5ad9ed9fdfa4baeb50181ffc6f1ba4b
 #: ../../home/kovid/work/calibre/manual/server.rst:115
 msgid ""
 "For more help with using mod_wsgi in Apache, see `mod_wsgi "
-"<http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
-msgstr "Apache ile mod_wsgi kullanımı için `mod_wsgi <http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_ sayfasına bakabilirsiniz."
+"<https://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
+msgstr ""

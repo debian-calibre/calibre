@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/viewer/config.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -598,7 +598,7 @@ class Ui_Dialog(object):
         self.tabs.setTabText(self.tabs.indexOf(self.tab), _("&General"))
         self.label_9.setText(_("Double click to change a keyboard shortcut"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_2), _("&Keyboard shortcuts"))
-        self.label_10.setText(_("<p>A CSS stylesheet that can be used to control the look and feel of books. For examples, click <a href=\"http://www.mobileread.com/forums/showthread.php?t=51500\">here</a>."))
+        self.label_10.setText(_("<p>A CSS stylesheet that can be used to control the look and feel of books. For examples, click <a href=\"https://www.mobileread.com/forums/showthread.php?t=51500\">here</a>."))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_3), _("User &Stylesheet"))
         self.label_23.setText(_("You can save and load the viewer settings as <i>themes</i>"))
         self.label_15.setText(_("Save current settings as a theme:"))

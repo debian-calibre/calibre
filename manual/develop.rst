@@ -3,7 +3,7 @@
 Setting up a calibre development environment
 ===========================================================
 
-calibre is completely open source, licensed under the `GNU GPL v3 <http://www.gnu.org/copyleft/gpl.html>`_.
+calibre is completely open source, licensed under the `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_.
 This means that you are free to download and modify the program to your heart's content. In this section,
 you will learn how to get a calibre development environment set up on the operating system of your choice.
 calibre is written primarily in `Python <https://www.python.org>`_ with some C/C++ code for speed and system interfacing.
@@ -26,7 +26,7 @@ For example, adding support for a new device to calibre typically involves writi
 a device driver plugin. You can browse the
 `built-in drivers <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. Similarly, adding support
 for new conversion formats involves writing input/output format plugins. Another example of the modular design is the :ref:`recipe system <news>` for
-fetching news. For more examples of plugins designed to add features to calibre, see the `plugin index <http://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_.
+fetching news. For more examples of plugins designed to add features to calibre, see the `plugin index <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_.
 
 .. _code_layout:
 
@@ -68,7 +68,7 @@ If you want to locate the entry points for all the various calibre executables,
 look at the ``entry_points`` structure in `linux.py
 <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_.
 
-If you need help understanding the code, post in the `development forum <http://www.mobileread.com/forums/forumdisplay.php?f=240>`_
+If you need help understanding the code, post in the `development forum <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_
 and you will most likely get help from one of calibre's many developers.
 
 Getting the code
@@ -77,7 +77,7 @@ Getting the code
 You can get the calibre source code in two ways, using a version control system or
 directly downloading a `tarball <https://calibre-ebook.com/dist/src>`_.
 
-calibre uses `Git <http://www.git-scm.com/>`_, a distributed version control
+calibre uses `Git <https://www.git-scm.com/>`_, a distributed version control
 system. Git is available on all the platforms calibre supports.  After
 installing Git, you can get the calibre source code with the command::
 
@@ -146,7 +146,7 @@ for inclusion into the main calibre repository:
 
 
 You should also keep an eye on the calibre `development forum
-<http://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making
+<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making
 major changes, you should discuss them in the forum or contact Kovid directly
 (his email address is all over the source code).
 
@@ -182,7 +182,7 @@ in your favorite editor and add the line::
 near the top of the file. Now run the command :command:`calibredb`. The very first line of output should be ``Hello, world!``.
 
 You can also setup a calibre development environment inside the free Microsoft
-Visual Studio, if you like, following the instructions `here <http://www.mobileread.com/forums/showthread.php?t=251201>`_.
+Visual Studio, if you like, following the instructions `here <https://www.mobileread.com/forums/showthread.php?t=251201>`_.
 
 OS X development environment
 ------------------------------

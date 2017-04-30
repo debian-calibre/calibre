@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
 # Merarom <merarom@yahoo.es>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 11:28+0530\n"
-"PO-Revision-Date: 2016-12-18 09:16+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-13 17:30+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,13 @@ msgstr "API-dokumentation för databasgränssnittet"
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr "Detta API är trådsäkert (använder en flerläsare, singelskrivare utelåsningsschema). Du kan access detta API så här::"
+msgstr "Denna API är trådsäker (använder en flerläsare, singelskrivare utelåsningsschema). Du kan komma åt denna API så här::"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "Om du är i ett calibre tillägg som är del av calibre huvudanvändargränssnittet, får du tillgång till det så här istället::"
+msgstr "Om du är i ett calibre-insticksprogram som är del av calibre huvudanvändargränssnittet, får du tillgång till det så här istället::"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -41,7 +41,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr "En inminnesbuffer av metadata.db filen från calibre biblioteket. Denna klass fungerar också som ett trådsäkert API för accessa databasen. Inminnesbufferten hanteras på normalt sätt för maximal prestanda."
+msgstr "En in-minnecache av metadata.db filen från calibre-biblioteket. Denna klass fungerar också som en trådsäker API för komma åt databasen. Inminnecachen hanteras på normalt sätt för maximal prestanda."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -84,6 +84,29 @@ msgid ""
 msgstr "Lägg ett format till angiven bok. Återger True om formatet lyckades   att läggas till."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_format:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.format_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_items:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_field:0
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.tags_older_than:0
+msgid "Parameters"
+msgstr "Parametrar"
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
@@ -95,7 +118,7 @@ msgstr "Om True ersätt befintligt format, annars om formatet redan finns, åter
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr "Om True, körs filtypstillägg på formatet innan och efter tillägg."
+msgstr "Om True, körs filtyp insticksprogram på formatet innan och efter det tilläggs."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
@@ -189,7 +212,7 @@ msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr "VARNING: Att använda as_path kommer att kopiera omslaget till en temp fil och återge sökvägen till temporära filen. Du bör ta bort temp filen när du är klar med den."
+msgstr "VARNING: Använda as_path kommer att kopiera omslaget till en temporär fil och återge sökvägen till temporära filen. Du bör ta bort temporära filen när du är klar med den."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
@@ -349,7 +372,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr "Återge sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direktaccess av den förstör trådsäkerhetsgarantin av detta API(gränssnitt). Istället använd :meth:`copy_format_to` metoden."
+msgstr "Återge sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direkt tillgång av den förstör trådsäkerhetsgarantin av denna API. Istället använd :meth:`copy_format_to` metoden."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -357,13 +380,13 @@ msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr "Om True, används buffrade värden, annars sker en långsam filsystemaccess. Buffrade värden kan vara utdaterade om access sker till filsystem utanför detta API (gränssnitt)."
+msgstr "Om True, används cachade värden, annars sker en långsam filsystem tillgång. Cache-värden kan vara utdaterade om tillgång sker till filsystem utanför detta API."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
-"If ``True`` The max_size field of the database is updates for this book."
-msgstr "Om True är max_size-fältet av databasen uppdatering av denna bok."
+"If ``True`` The max_size field of the database is updated for this book."
+msgstr "Om True är max_size-fältet av databasen uppdaterad för denna bok."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
@@ -419,7 +442,7 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr "Återge metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Notera att listan av format inte är verifierad. Om get_cover är True, kommer omslag att återges, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
+msgstr "Återge metadata för boken identifierat av book_id som ett :class:`calibre.ebooks.metadata.book.base.Metadata` objekt. Observera att listan av format inte är verifierad. Om get_cover är True, kommer omslag att återges, antingen som en sökväg till temporärfilen mi.cover eller om cover_as_data är Sant som mi.cover_data."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
@@ -490,7 +513,7 @@ msgstr "Återge en lista med sorterade bokidentifierare. Om ids_to_sort är  Non
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr "fälten måste vara en lista med 2-tupler på formatet (field_name, ascending=True eller False). Det mest signifikata fältet är den första 2-tupeln."
+msgstr "fälten måste vara en lista med 2-tupler av formatet (field_name, ascending=True eller False). Det mest signifikata fältet är den första 2-tupeln."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
@@ -543,13 +566,13 @@ msgstr "Radera alla objekt i det angivna fältet med de angivna id. Återger upp
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr "Döp om objekt från många-en eller många-många fält som etiketter eller serier."
+msgstr "Byt namn på objekt från många-en eller många-många fält som etiketter eller serier."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
-msgstr "Vi omdöpning i en serielikt fält förändras även series_index värden."
+msgstr "Vid namnändring i en serielikt fält förändras även series_index-värden."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
@@ -591,7 +614,7 @@ msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr "Den här egenskapen återger ett nytt låsobjekt på varje access. Detta låsobjekt är inte rekursivt (för prestanda) och får endast användas i ett med uttalande som ``with cache.safe_read_lock:`` annars kommer dåliga saker att hända."
+msgstr "Den här egenskapen återger ett nytt låsobjekt på varje åtkomst. Detta låsobjekt är inte rekursivt (för prestanda) och får endast användas i ett med uttalande som ``with cache.safe_read_lock:`` annars kommer dåliga saker att hända."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
@@ -613,7 +636,7 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr "En begränsning som är ANDad med angiven förfrågan. Observera att restriktioner mellanlagras, alltså sökandet efter a AND b kommer att vara långsammare än en med a restriktions b."
+msgstr "En begränsning som är ANDad med angiven förfrågan. Observera att restriktioner lagras i cache, alltså sökandet efter a AND b kommer att vara långsammare än a med restriktion b."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
@@ -678,7 +701,7 @@ msgid ""
 "mi contains empty values. In this case, 'None' is distinguished from "
 "'empty'. If mi.XXX is None, the XXX is not replaced, otherwise it is. The "
 "tags, identifiers, and cover attributes are special cases. Tags and "
-"identifiers cannot be set to None so then will always be replaced if "
+"identifiers cannot be set to None so they will always be replaced if "
 "force_changes is true. You must ensure that mi contains the values you want "
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "

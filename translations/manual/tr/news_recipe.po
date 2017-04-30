@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-24 07:25+0530\n"
-"PO-Revision-Date: 2016-06-24 01:56+0000\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-21 03:54+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -79,6 +79,19 @@ msgid ""
 msgstr "``url``nin kuralsal temsillerinin kümesini döndür.  Varsayılan gerçekleme yalnızca sunucu makine adı ve URL yolunu kullanır, sorgu parametrelerini, parçaları, vs göz ardı eder. Kuralsal ifadeler bu haber kaynağının URL'leri arasında benzersiz olmalıdırlar. Olmazlarsa, dahili bağlantılar yanlış şekilde çözümlenebilir."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+msgid "Parameters"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
@@ -146,10 +159,10 @@ msgstr "Her makalenin içeriğine işaret eden :term:`URL`nin çıkarılmasını
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
 msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
-"it returns a `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ "
-"browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "Web'de belge getirmeye yarayan bir tarayıcı örneği döndürür. Varsayılan olarak çerezleri destekleyen, robots.txt göz ardı eden, tazelemeleri ele alan ve mozilla firefox kullanıcı vekili olan bir `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ tarayıcı örneği döndürür."
+"it returns a `mechanize <https://github.com/jjlee/mechanize>`_ browser "
+"instance that supports cookies, ignores robots.txt, handles refreshes and "
+"has a mozilla firefox user agent."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -230,9 +243,9 @@ msgstr "Resim url'lerinde bir takım işlemler yap (dinamik üretilen resimler i
 msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
 "it."
-msgstr "Dizin sayfasına URL'yi alıp `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ lanmış halini döndüren bir kolaylaştırıcı araç."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
@@ -305,12 +318,25 @@ msgstr "Herhangi sebepten işlemeyi durdurmak ve calibre'nin kullanıcıya hata 
 msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
-"HTML (soup). :param article: A object of class "
-":class:`calibre.web.feeds.Article`. If you change the summary, remember to "
-"also change the text_summary :param soup: Parsed HTML belonging to this "
-"article :param first: True iff the parsed HTML is the first page of the "
-"article."
-msgstr "Makaleye bağlı her HTML sayfası indirildiğinde çağrılır. Ayrıştırılmış HTML'den (soup) yazar/özet/vs gibi makale metadata'sı alırken kullanmak amaçlıdır. :param article: :class:`calibre.web.feeds.Article` sınıfı bir nesne. Özeti değiştirirseniz text_summary değiştirmeyi de unutmayın :param soup: Bu makaleye ait ayrıştırılmış HTML :param first: Ayrıştırılmış HTML makalenin ilk sayfasıysa True."
+"HTML (soup)."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
+msgid ""
+"A object of class :class:`calibre.web.feeds.Article`. If you change the "
+"summary, remember to also change the text_summary"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
+msgid "Parsed HTML belonging to this article"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
+msgid "True iff the parsed HTML is the first page of the article."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
@@ -342,9 +368,9 @@ msgstr "Bu metod indirilen her bir :term:`HTML` dosyası kaynağı ile, bağlant
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
 "instance containing the downloaded :term:`HTML`."
-msgstr "İndirilen :term:`HTML`yi içeren bir `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  örneği."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
@@ -366,9 +392,9 @@ msgstr "Bu metod indirilen her bir :term:`HTML` dosyası kaynağı ile, bağlant
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
 msgid ""
 "`soup`: A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "instance containing the downloaded :term:`HTML`."
-msgstr "`soup`: İndirilen :term:`HTML`yi içeren bir `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  örneği."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -430,10 +456,10 @@ msgstr "`weights`: Ağırlıkları başlığa haritalayan bir sözlük. Index'de
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
 msgid ""
 "Convenience method to take a `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag` and extract the text from it recursively, including any CDATA sections"
 " and alt tag attributes. Return a possibly empty unicode string."
-msgstr "Bir `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ `Tag`ını alıp tüm CDATA kısımları ve alt etiket öznitelikleri dahil metni yinelemeli olarak çıkaran kolaylık sağlayıcı bir metod. Muhtemelen boş bir evrensel kod metni döndürür."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -446,9 +472,9 @@ msgstr "`use_alt`: `True` ise metinsel içeriği olmayan etiketler için alt öz
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag`"
-msgstr "`tag`: `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ `Etiketi`"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
@@ -531,9 +557,9 @@ msgid ""
 "expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
 "'#ffffff') pads the cover with a white margin 10px on the left and right, "
 "15px on the top and bottom. Color names defined at "
-"http://www.imagemagick.org/script/color.php Note that for some reason, white"
-" does not always work on windows. Use #ffffff instead"
-msgstr "Varsayılan olarak, get_cover_url() ile döndürülen kapak resmi süreli yayın için kapak olarak kullanılır.  Bunu reçetenizde ezmek, calibre'ye, indirilen kapağı genişliği ve yüksekliği indirilen kapağın yüzdesi olarak ifade edilen bir çerçeveye gerçeklemesini söyler. cover_margins = (10, 15, '#ffffff') kapağı soldan ve sağdan 10px, yukardan ve aşağıdan 15px doldurur. Renk isimleri http://www.imagemagick.org/script/color.php de tanımlanmıştır. Beyazın bir sebepten ötürü windows'da çalışmadığını not edin. Yerine #ffffff kullanın"
+"https://www.imagemagick.org/script/color.php Note that for some reason, "
+"white does not always work on windows. Use #ffffff instead"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -597,6 +623,13 @@ msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
 msgstr ":attr:`BasicNewsRecipe.match_regexps` veya :attr:`BasicNewsRecipe.filter_regexps` den yalnızca biri tanımlanmalıdır."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
+msgid ""
+"Set to True if you want to use gziped transfers. Note that some old servers "
+"flake out with this so it is off by default."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -753,9 +786,9 @@ msgstr "Kaldırılacak etiket listesi. Belirtilen etiketler indirilen HTML'den �
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
 "`Beautiful Soup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
 " A common example::"
-msgstr "Tüm anahtarlar isteğe bağlıdır. Arama kriterinin tam açıklaması için, bakınız `Beautiful Soup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_ Yaygın bir örnek::"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15

@@ -4,13 +4,13 @@
 # 
 # Translators:
 # dario hereñu <magallania@gmail.com>, 2014-2016
-# Jellby <jellby@yahoo.com>, 2014-2016
+# Jellby <jellby@yahoo.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-24 07:25+0530\n"
-"PO-Revision-Date: 2016-06-24 12:37+0000\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-24 18:27+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -81,6 +81,19 @@ msgid ""
 msgstr "Devuelve un conjunto de representaciones canónicas de ``url``. La implementación predeterminada usa el nombre del servidor y la ruta de acceso del URL, descartando parámetros de consulta, fragmentos, etc. Las representaciones canónicas deben ser únicas para todos los URL de esta fuente de noticias. Si no lo son, los enlaces internos pueden ser incorrectos."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+msgid "Parameters"
+msgstr "Parámetros"
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
@@ -148,10 +161,10 @@ msgstr "Sustituir en una subclase para personalizar la extracción del :term:`UR
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
 msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
-"it returns a `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ "
-"browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "Devuelve un navegador utilizado para obtener documentos desde Internet. De manera predeterminada devuelve un navegador `mechanize<http://wwwsearch.sourceforge.net/mechanize/>`_ que soporta cookies, ignora robots.txt, tiene en cuenta los refrescos y tiene un agente de usuario de tipo mozilla firefox."
+"it returns a `mechanize <https://github.com/jjlee/mechanize>`_ browser "
+"instance that supports cookies, ignores robots.txt, handles refreshes and "
+"has a mozilla firefox user agent."
+msgstr "Devuelve un navegador utilizado para obtener documentos desde Internet. De manera predeterminada devuelve un navegador `mechanize <https://github.com/jjlee/mechanize>`_ que soporta cookies, ignora robots.txt, tiene en cuenta los refrescos y tiene un agente de usuario de tipo mozilla firefox."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -232,9 +245,9 @@ msgstr "Realiza algún procesado sobre las direcciones URL de las imágenes (tal
 msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
 "it."
-msgstr "Método práctico que toma el URL de una página de índice y devuelve un objeto `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que lo representa."
+msgstr "Método práctico que toma el URL de una página de índice y devuelve un objeto `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que lo representa."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
@@ -307,12 +320,25 @@ msgstr "Si desea cancelar el proceso por alguna razón y hacer que calibre muest
 msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
-"HTML (soup). :param article: A object of class "
-":class:`calibre.web.feeds.Article`. If you change the summary, remember to "
-"also change the text_summary :param soup: Parsed HTML belonging to this "
-"article :param first: True iff the parsed HTML is the first page of the "
-"article."
-msgstr "Utilizada al descargar cada página HTML perteneciente al artículo. Pensada para obtener los metadatos del artículo, como autor, resumen, etc. a partir del HTML analizado (el argumento ``soup``). :param article: Un objeto de la clase :class:`calibre.web.feeds.Article`. Si cambia el resumen, recuerde que debe cambiar también el text_summary :param soup: HTML analizado perteneciente a este artículo :param first: es True si y sólo si el HTML analizado es la primera página del artículo."
+"HTML (soup)."
+msgstr "Se ejecuta al descargar cada página HTML perteneciente al artículo ``article``. Pensado para obtener metadatatos del artículo como autor, resumen, etc. del HTML procesado (``soup``)."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
+msgid ""
+"A object of class :class:`calibre.web.feeds.Article`. If you change the "
+"summary, remember to also change the text_summary"
+msgstr "Un objeto de la clase :class:`calibre.web.feeds.Article`. Si cambia el resumen, recuerde cambiar también `text_summary`"
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
+msgid "Parsed HTML belonging to this article"
+msgstr "HTML procesado perteneciente a este artículo"
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
+msgid "True iff the parsed HTML is the first page of the article."
+msgstr "True si y sólo si el HTML procesado es la primera página del artículo."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
@@ -344,9 +370,9 @@ msgstr "Este método se ejecuta con el código fuente de cada archivo :term:`HTM
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
 "instance containing the downloaded :term:`HTML`."
-msgstr "Un objeto `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que contiene el :term:`HTML` descargado."
+msgstr "Un objeto `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que contiene el :term:`HTML` descargado."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
@@ -368,9 +394,9 @@ msgstr "Este método se ejecuta con el código fuente de cada archivo :term:`HTM
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
 msgid ""
 "`soup`: A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "instance containing the downloaded :term:`HTML`."
-msgstr "`soup`: Un objeto `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que contiene el :term:`HTML` descargado."
+msgstr "`soup`: Un objeto `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ que contiene el :term:`HTML` descargado."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -432,10 +458,10 @@ msgstr "`weights`: Un diccionario que asigna pesos a los títulos. Si un título
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
 msgid ""
 "Convenience method to take a `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag` and extract the text from it recursively, including any CDATA sections"
 " and alt tag attributes. Return a possibly empty unicode string."
-msgstr "Método práctico que toma un objeto `Tag` de `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ y extrae el texto recursivamente, incluyendo secciones CDATA y atributos «alt». Devuelve un texto unicode posiblemente vacío."
+msgstr "Método práctico que toma un objeto `Tag` de `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ y extrae el texto recursivamente, incluyendo secciones CDATA y atributos «alt». Devuelve un texto unicode posiblemente vacío."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -448,9 +474,9 @@ msgstr "`use_alt`: Si es `True` intenta usar el atributo «alt» para las etique
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag`"
-msgstr "`tag`: Un objeto `Tag` de `BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_"
+msgstr "`tag`: Un objeto `Tag` de `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
@@ -533,9 +559,9 @@ msgid ""
 "expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
 "'#ffffff') pads the cover with a white margin 10px on the left and right, "
 "15px on the top and bottom. Color names defined at "
-"http://www.imagemagick.org/script/color.php Note that for some reason, white"
-" does not always work on windows. Use #ffffff instead"
-msgstr "De manera predeterminada, la imagen de portada devuelta por get_cover_url() se utilizará como portada para la publicación. Si se establece un valor para esta variable en una fórmula, calibre colocará la portada descargada dentro de un marco cuya anchura y altura se expresan como un porcentaje de la portada descargada. cover_margins = (10, 15, '#ffffff') rellena la portada con un margen blanco de 10px a la izquierda y derecha, 15px en la parte superior e inferior. Los nombres de los colores están definidos en http://www.imagemagick.org/script/color.php. Tenga en cuenta que, por alguna razón, «white» no siempre funciona en Windows. Utilice «#ffffff» en su lugar."
+"https://www.imagemagick.org/script/color.php Note that for some reason, "
+"white does not always work on windows. Use #ffffff instead"
+msgstr "De manera predeterminada, la imagen de portada devuelta por get_cover_url() se utilizará como portada para la publicación. Si se establece un valor para esta variable en una fórmula, calibre colocará la portada descargada dentro de un marco cuya anchura y altura se expresan como un porcentaje de la portada descargada. cover_margins = (10, 15, '#ffffff') rellena la portada con un margen blanco de 10px a la izquierda y derecha, 15px en la parte superior e inferior. Los nombres de los colores están definidos en https://www.imagemagick.org/script/color.php. Tenga en cuenta que, por alguna razón, «white» no siempre funciona en Windows. Utilice «#ffffff» en su lugar."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -599,6 +625,13 @@ msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
 msgstr "Sólo uno de entre :attr:`BasicNewsRecipe.match_regexps` y :attr:`BasicNewsRecipe.filter_regexps` deben definirse."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
+msgid ""
+"Set to True if you want to use gziped transfers. Note that some old servers "
+"flake out with this so it is off by default."
+msgstr "Establézcalo en True para usar transferencias comprimidas con gzip. Tenga en cuenta que algunos servidores antiguos pueden fallar con esta opción, por lo que está desactivada de manera predeterminada."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -755,9 +788,9 @@ msgstr "Lista de etiquetas para ser eliminadas. Las etiquetas especificadas se e
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
 "`Beautiful Soup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
 " A common example::"
-msgstr "Todas las claves son opcionales. Para una explicación completa de los criterios de búsqueda, véase `Beautiful Soup <http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_ (en inglés). Un ejemplo frecuente::"
+msgstr "Todas las claves son opcionales. Para una explicación completa de los criterios de búsqueda, véase `Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_ (en inglés). Un ejemplo frecuente::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
