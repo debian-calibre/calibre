@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
-# Merarom <merarom@yahoo.es>, 2014-2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
+# Merarom <merarom@yahoo.es>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 11:28+0530\n"
-"PO-Revision-Date: 2016-12-18 11:28+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-13 17:51+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -21,23 +21,19 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:4
 msgid "Setting up a calibre development environment"
-msgstr "Anpassa en calibre utvecklingsmiljö"
+msgstr "Anpassa en calibre-utvecklingsmiljö"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:6
 msgid ""
 "calibre is completely open source, licensed under the `GNU GPL v3 "
-"<http://www.gnu.org/copyleft/gpl.html>`_. This means that you are free to "
+"<https://www.gnu.org/licenses/gpl.html>`_. This means that you are free to "
 "download and modify the program to your heart's content. In this section, "
 "you will learn how to get a calibre development environment set up on the "
 "operating system of your choice. calibre is written primarily in `Python "
 "<https://www.python.org>`_ with some C/C++ code for speed and system "
 "interfacing. Note that calibre is not compatible with Python 3 and requires "
 "at least Python 2.7.9."
-msgstr "calibre har helt öppen källkod, licensierat under `GNU GPL v3 <http://www.gnu.org/copyleft/gpl.html>`_. Detta innebär att du är fri att ladda ner och ändra programmet hur mycket du vill. I det här avsnittet får du lära dig hur du får en calibre utvecklingsmiljö inrättat på valfritt operativsystem. calibre är främst skriven i `Python <https://www.python.org>`_ med lite C/C++-kod för hastighet och systemetgränssnitt. Observera att calibre inte är kompatibel med Python 3 och kräver minst Python 2.7.9."
-
-#: ../../home/kovid/work/calibre/manual/develop.rst:0
-msgid "Contents"
-msgstr "Innehåll"
+msgstr "calibre har helt öppen källkod, licensierat under `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html'>`_. Detta innebär att du är fri att hämtar och ändra programmet hur mycket du vill. I det här avsnittet får du lära dig hur du får en calibre-utvecklingsmiljö inrättat på valfritt operativsystem. calibre är främst skriven i `Python <https://www.python.org>`_ med lite C/C++-kod för hastighet och systemetgränssnitt. Observera att calibre inte är kompatibel med Python 3 och kräver minst Python 2.7.9."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:17
 msgid "Design philosophy"
@@ -65,8 +61,8 @@ msgid ""
 "input/output format plugins. Another example of the modular design is the "
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
 "designed to add features to calibre, see the `plugin index "
-"<http://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr "Den modulära konstruktionen av calibre uttrycks via ``Tillägg``. Det finns en  :ref:`handledning <customize>` om att skriva calibre tillägg. Till exempel, för att lägga till stöd för en ny enhet till calibre vanligtvis innebär att skriva mindre än 100 rader kod i form av en drivrutinstilläggsprogram. Du kan bläddra i  `inbyggda drivrutiner <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. På samma\nsätt lägga till stöd för nya konverteringsformat involverar skrivande indata-/utdataformat tilläggsprogram. Ett annat exempel på den modulära konstruktionen är :ref:`receptsystemet <news>` för att hämta nyheter. För fler exempel på tilläggsprogram som syftar till att lägga till funktioner till calibre, se `tilläggsprogram index <http://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+"<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+msgstr "Den modulära uppbyggnaden av calibre uttrycks via ``Insticksprogram``. Det finns en :ref:`tutorial <customize>` för att skriva calibre insticksprogram. Till exempel, för att lägga till stöd för en ny enhet i calibre behövs vanligtvis att man skriver mindre än 100 rader kod i form av ett drivrutininsticksprogram.\nDu kan bläddra i `inbyggda drivrutiner <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. På samma sätt lägga till stöd för nya konverteringsformat innebär att skriva indata/utdata formatsinsticksprogram. Ett annat exempel på modulär design är :ref:`recipe system <news>` för att hämta nyheter. För fler exempel på insticksprogram som syftar till att lägga till funktioner till calibre, se det så kallade `insticksprogram index <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -90,7 +86,7 @@ msgid ""
 "supported by device drivers and ``devices.usbms`` which defines a generic "
 "driver that connects to a USBMS device. All USBMS based drivers in calibre "
 "inherit from it."
-msgstr "För mera information, se: ``devices.interface`` som definierar gränssnitt stöds av drivrutiner och ``devices.usbms`` som definierar en generisk drivrutin som ansluter till en USBMS enhet. Alla USBMS baserade drivrutiner i calibre ärver från den."
+msgstr "För mer information, se: ``devices.interface`` som definierar gränssnitt stöds av drivrutiner och ``devices.usbms`` som definierar en generisk drivrutin som ansluter till en USBMS enhet. Alla USBMS baserade drivrutiner i calibre ärver från den."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:43
 msgid ""
@@ -99,12 +95,12 @@ msgid ""
 ":`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
-msgstr "e-böcker - All e-bokkonvertering/metadatakod. En bra utgångspunkt är ``calibre.ebooks.conversion.cli`` vilken är modulen som driver :command:`ebook-convert` kommandot. Konverteringen styrs via ``conversion.plumber``. Formatoberoende kod är alla i ``ebooks.oeb`` och formatberoende kod finns i ``ebooks.format_name``."
+msgstr "e-böcker - All e-bokskonvertering/metadatakod. En bra utgångspunkt är ``calibre.ebooks.conversion.cli`` vilken är modulen som driver :command:`ebook-convert` kommandot. Konverteringen styrs via ``conversion.plumber``. Formatoberoende kod är alla i ``ebooks.oeb`` och formatberoende kod finns i ``ebooks.format_name``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:47
 msgid ""
 "Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
-msgstr "Metadataläsning, skrivning, och nedladdning finns i ``ebooks.metadata``"
+msgstr "Metadataläsning, skrivning, och hämtning finns i ``ebooks.metadata``"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:48
 msgid ""
@@ -118,7 +114,7 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr "Konvertering sker i en \"rörledning\", för strukturen av rörledningen, se :ref:`konversions-introduktion`. Rörledningen består av ett indataprogram, olika konverteringar och ett utdataprogram. Den kod som konstruerar och driver rörledningen i :file:`plumber.py`. Rörledningen fungerar på en representation av en e-bok som är som en uppackade epub, med manifest, rygg, innehållsförteckning, guide, html innehåll, o.s.v. Den klass som hanterar denna representation är OEBBook i ``ebooks.oeb.base`` . De olika ändringar som tillämpas på boken under konvertering finns i :file:`oeb/transforms/*.py`. Och indata och utdata tillägg finns i  :file:`conversion/plugins/*.py`."
+msgstr "Konvertering sker i en \"rörledning\", för strukturen av rörledningen, se :ref:`konversions-introduktion`. Rörledningen består av ett indatainsticksprogram, olika konverteringar och ett utdatainsticksprogram. Den kod som konstruerar och driver rörledningen i :file:`plumber.py`. Rörledningen fungerar på en representation av en e-bok som är som en uppackad EPUB, med manifest, rygg, innehållsförteckning, guide, html innehåll, o.s.v. Den klass som hanterar denna representation är OEBBook i ``ebooks.oeb.base`` . De olika ändringar som tillämpas på boken under konvertering finns i :file:`oeb/transforms/*.py`. Och indata och utdata insticksprogram finns i :file:`conversion/plugins/*.py`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:58
 msgid ""
@@ -130,7 +126,7 @@ msgstr "E-bokredigering sker med hjälp av en annat kontainerobjekt. Det är dok
 msgid ""
 "db - The database back-end. See :ref:`db_api` for the interface to the "
 "calibre library."
-msgstr "db - Databasens backend. Se :ref:`db_api` för gränssnittet till calibre biblioteket."
+msgstr "db - Databasens backend. Se :ref:`db_api` för gränssnittet till calibre-biblioteket."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:63
 msgid "content server: ``library.server`` is the calibre Content Server."
@@ -153,9 +149,9 @@ msgstr "Om du vill hitta startplatser för alla olika calibre körbara delar, ti
 #: ../../home/kovid/work/calibre/manual/develop.rst:71
 msgid ""
 "If you need help understanding the code, post in the `development forum "
-"<http://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
 "most likely get help from one of calibre's many developers."
-msgstr "Om du behöver hjälp att förstå koden, skriv inlägg i  `development forumet <http://www.mobileread.com/forums/forumdisplay.php?f=240>`_ och du kommer sannolikt att få hjälp av en av calibres många utvecklare."
+msgstr "Om du behöver hjälp med att förstå koden, skicka inlägg i det så kallade utvecklingsforum <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ och du kommer sannolikt att få hjälp från en av kaliber många utvecklare ."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:75
 msgid "Getting the code"
@@ -166,14 +162,14 @@ msgid ""
 "You can get the calibre source code in two ways, using a version control "
 "system or directly downloading a `tarball <https://calibre-"
 "ebook.com/dist/src>`_."
-msgstr "Du kan få calibre källkoden på två sätt, med hjälp av ett versionshanteringssystem eller direkt ladda ner en \"tarboll\" - `tarball <https://calibre-ebook.com/dist/src>`_."
+msgstr "Du kan få calibre källkoden på två sätt, med hjälp av ett versionshanteringssystem eller direkt hämtar en \"tarboll\" - `tarball <https://calibre-ebook.com/dist/src>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:80
 msgid ""
-"calibre uses `Git <http://www.git-scm.com/>`_, a distributed version control"
-" system. Git is available on all the platforms calibre supports.  After "
-"installing Git, you can get the calibre source code with the command::"
-msgstr "calibre använder `Git <http://www.git-scm.com/>`_ , ett distribuerat versionshanteringssystem. Git är tillgänglig på alla plattformar som calibre stöder. När du har installerat Git kan du få calibre källkoden med kommandot:"
+"calibre uses `Git <https://www.git-scm.com/>`_, a distributed version "
+"control system. Git is available on all the platforms calibre supports.  "
+"After installing Git, you can get the calibre source code with the command::"
+msgstr "calibre använder `Git <https://www.git-scm.com/>`_ , ett distribuerat versionshanteringssystem. Git är tillgänglig på alla plattformar som calibre stöder. När du har installerat Git kan du få calibre källkoden med kommandot:"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:86
 msgid ""
@@ -287,14 +283,14 @@ msgstr "Du kan uppdatera din lokala kopia med kod från huvudarkivet när som he
 #: ../../home/kovid/work/calibre/manual/develop.rst:148
 msgid ""
 "You should also keep an eye on the calibre `development forum "
-"<http://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
 "major changes, you should discuss them in the forum or contact Kovid "
 "directly (his email address is all over the source code)."
-msgstr "Du bör också hålla ett öga på calibre `development forum <http://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Innan du gör stora förändringar, bör du diskutera dem i forumet eller kontakta Kovid direkt (hans e-postadress är hela källkoden)."
+msgstr "Du bör också hålla ett öga på calibres `utvecklingsforum <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Innan större förändringar, bör du diskutera dem i forumet eller kontakta Kovid direkt (hans e-postadress är hela källkoden )."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:154
 msgid "Windows development environment"
-msgstr "Windows utvecklingsmiljö "
+msgstr "Windows-utvecklingsmiljö "
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:156
 #: ../../home/kovid/work/calibre/manual/develop.rst:190
@@ -337,7 +333,7 @@ msgstr "När du har ställt in miljövariabeln, öppna en ny kommandotolk och ko
 msgid ""
 "Setting this environment variable means that calibre will now load all its "
 "Python code from the specified location."
-msgstr "Ställa denna miljövariabel innebär att calibre kommer nu laddar all sin Python-kod från den angivna platsen."
+msgstr "Ställa denna miljövariabel innebär att calibre kommer nu laddar all sin Pythonkod från den angivna platsen."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:177
 msgid ""
@@ -357,12 +353,12 @@ msgstr "nära toppen av filen. Nu kör kommandot :command:`calibredb` . Den allr
 msgid ""
 "You can also setup a calibre development environment inside the free "
 "Microsoft Visual Studio, if you like, following the instructions `here "
-"<http://www.mobileread.com/forums/showthread.php?t=251201>`_."
-msgstr "Du kan även anpassa en calibre utvecklingsmiljö inuti gratis Microsoft Visual Studio, om man så vill, genom att följa instruktionerna `här <http://www.mobileread.com/forums/showthread.php?t=251201>`_."
+"<https://www.mobileread.com/forums/showthread.php?t=251201>`_."
+msgstr "Du kan också konfigurera en calibre-utvecklingsmiljö i den fria Microsoft Visual Studio, om man så vill, att följa instruktionerna `här <https://www.mobileread.com/forums/showthread.php?t=251201>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:188
 msgid "OS X development environment"
-msgstr "OS X utvecklingsmiljö"
+msgstr "OS X-utvecklingsmiljö"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:192
 msgid ""
@@ -407,7 +403,7 @@ msgstr "Du bör se några diagnostisk information i terminalfönstret som calibr
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:220
 msgid "Linux development environment"
-msgstr "Linux utvecklingsmiljö"
+msgstr "Linux-utvecklingsmiljö"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:224
 msgid ""

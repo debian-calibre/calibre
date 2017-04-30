@@ -258,6 +258,7 @@ class DynamicConfig(dict):
                 f.truncate()
                 f.write(raw)
 
+
 dynamic = DynamicConfig()
 
 
@@ -267,7 +268,7 @@ class XMLConfig(dict):
     Similar to :class:`DynamicConfig`, except that it uses an XML storage
     backend instead of a pickle file.
 
-    See `http://docs.python.org/dev/library/plistlib.html`_ for the supported
+    See `https://docs.python.org/dev/library/plistlib.html`_ for the supported
     data types.
     '''
 
@@ -284,6 +285,18 @@ class XMLConfig(dict):
             self.file_path += self.EXTENSION
 
         self.refresh()
+
+    def mtime(self):
+        try:
+            return os.path.getmtime(self.file_path)
+        except EnvironmentError:
+            return 0
+
+    def touch(self):
+        try:
+            os.utime(self.file_path, None)
+        except EnvironmentError:
+            pass
 
     def raw_to_object(self, raw):
         return plistlib.readPlistFromString(raw)
@@ -428,6 +441,5 @@ class DevicePrefs:
     def __getitem__(self, key):
         return self.overrides.get(key, self.global_prefs[key])
 
+
 device_prefs = DevicePrefs(prefs)
-
-

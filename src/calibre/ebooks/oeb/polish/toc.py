@@ -281,15 +281,60 @@ def get_toc(container, verify_destinations=True):
         return ans
 
 
-def ensure_id(elem):
+def get_guide_landmarks(container):
+    for ref in container.opf_xpath('./opf:guide/opf:reference'):
+        href, title, rtype = ref.get('href'), ref.get('title'), ref.get('type')
+        href, frag = href.partition('#')[::2]
+        name = container.href_to_name(href, container.opf_name)
+        if container.has_name(name):
+            yield {'dest':name, 'frag':frag, 'title':title or '', 'type':rtype or ''}
+
+
+def get_nav_landmarks(container):
+    nav = find_existing_nav_toc(container)
+    if nav and container.has_name(nav):
+        root = container.parsed(nav)
+        et = '{%s}type' % EPUB_NS
+        for elem in root.iterdescendants(XHTML('nav')):
+            if elem.get(et) == 'landmarks':
+                for li in elem.iterdescendants(XHTML('li')):
+                    for a in li.iterdescendants(XHTML('a')):
+                        href, rtype = a.get('href'), a.get(et)
+                        title = etree.tostring(a, method='text', encoding=unicode, with_tail=False).strip()
+                        href, frag = href.partition('#')[::2]
+                        name = container.href_to_name(href, nav)
+                        if container.has_name(name):
+                            yield {'dest':name, 'frag':frag, 'title':title or '', 'type':rtype or ''}
+                        break
+
+
+def get_landmarks(container):
+    ver = container.opf_version_parsed
+    if ver.major < 3:
+        return list(get_guide_landmarks(container))
+    ans = list(get_nav_landmarks(container))
+    if len(ans) == 0:
+        ans = list(get_guide_landmarks(container))
+    return ans
+
+
+def ensure_id(elem, all_ids):
+    elem_id = elem.get('id')
+    if elem_id:
+        return False, elem_id
     if elem.tag == XHTML('a'):
         anchor = elem.get('name', None)
         if anchor:
+            elem.set('id', anchor)
             return False, anchor
-    elem_id = elem.get('id', None)
-    if elem_id:
-        return False, elem_id
-    elem.set('id', uuid_id())
+    c = 0
+    while True:
+        c += 1
+        q = 'toc_{}'.format(c)
+        if q not in all_ids:
+            elem.set('id', q)
+            all_ids.add(q)
+            break
     return True, elem.get('id')
 
 
@@ -375,6 +420,7 @@ def from_xpaths(container, xpaths):
         root = container.parsed(name)
         item_level_map = {e:i for i, elems in level_item_map.iteritems() for e in elems}
         item_dirtied = False
+        all_ids = set(root.xpath('//*/@id'))
 
         for item in root.iterdescendants(etree.Element):
             lvl = item_level_map.get(item, None)
@@ -385,7 +431,7 @@ def from_xpaths(container, xpaths):
             if item_at_top(item):
                 dirtied, elem_id = False, None
             else:
-                dirtied, elem_id = ensure_id(item)
+                dirtied, elem_id = ensure_id(item, all_ids)
             item_dirtied = dirtied or item_dirtied
             toc = parent.add(text, name, elem_id)
             node_level_map[toc] = lvl
@@ -493,7 +539,8 @@ def add_id(container, name, loc, totals=None):
                                     ' before editing.') % name)
         container.replace(name, root)
 
-    node.set('id', node.get('id', uuid_id()))
+    if not node.get('id'):
+        ensure_id(node, set(root.xpath('//*/@id')))
     container.commit_item(name, keep_parsed=True)
     return node.get('id')
 

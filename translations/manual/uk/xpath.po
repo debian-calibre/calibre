@@ -3,72 +3,62 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# sorenabell, 2014
+# Zoriana Zaiats, 2014
+# Yuri Chornoivan <yurchor@ukr.net>, 2017
+# Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 09:14+0530\n"
-"PO-Revision-Date: 2014-12-16 14:41+0000\n"
-"Last-Translator: sorenabell\n"
-"Language-Team: Ukrainian (http://www.transifex.com/projects/p/calibre/language/uk/)\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-19 16:04+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-# 85327d040e364d6793aa0477b9294453
 #: ../../home/kovid/work/calibre/manual/xpath.rst:4
 msgid "XPath Tutorial"
-msgstr "XPath туторіал"
+msgstr "Підручник з XPath"
 
-# d79b97321c4842698d658d86d33135b5
 #: ../../home/kovid/work/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
-"<http://en.wikipedia.org/wiki/XPath>`_, a query language that can be used to"
-" select arbitrary parts of `HTML <http://en.wikipedia.org/wiki/HTML>`_ "
+"<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
+"to select arbitrary parts of `HTML <https://en.wikipedia.org/wiki/HTML>`_ "
 "documents in calibre. XPath is a widely used standard, and googling it will "
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for ebook related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr ""
+msgstr "У цій частині підручника ми наведемо вступні зауваження щодо `XPath <https://en.wikipedia.org/wiki/XPath>`_, мови запитів, якою можна скористатися для вибору довільних частин документів `HTML <https://en.wikipedia.org/wiki/HTML>`_ у calibre. XPath є широковживаним стандартом, отже, пошук у мережі надасть вам дуже багато інформації щодо неї. Втім, увагу у цій частині підручника зосереджено на використанні XPath для завдань, пов’язаних із електронними книгами, зокрема пошуку заголовків глав у неструктурованому документі HTML."
 
-# b75a8530feee48509ad1fc40a1c8e4be
-#: ../../home/kovid/work/calibre/manual/xpath.rst:0
-msgid "Contents"
-msgstr "Зміст"
-
-# 806f1970075148098fbb23daa6623f44
 #: ../../home/kovid/work/calibre/manual/xpath.rst:19
 msgid "Selecting by tagname"
-msgstr ""
+msgstr "Вибір за назвою теґу"
 
-# aef2b431ddbf40f1b69384e42721a1cd
 #: ../../home/kovid/work/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr ""
+msgstr "Найпростішою формою вибору є вибір теґів за назвою. Наприклад, припустімо, що вам хочеться вибрати усі теґи ``<h2>`` у документі. Запит XPath для цього буде дуже простим::"
 
-# 7eccd84abcea48ea8424c42ec189b2a2
 #: ../../home/kovid/work/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr ""
+msgstr "Префікс «//» означає *шукати на усіх рівнях документа*. Тепер, припустімо, що ви хочете знайти теґи ``<span>``, які перебувають всередині теґів ``<a>``. Зробити це можна ось так::"
 
-# 8c01c114b3e34adb8c1743a206f63004
 #: ../../home/kovid/work/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr ""
+msgstr "Якщо ви хочете шукати теґи на певному рівні у документі, змініть префікс::"
 
-# b30918bf700b47aeb7d6cac724a429ff
 #: ../../home/kovid/work/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short ebook to demonstrate the use of "
@@ -77,9 +67,8 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr ""
+msgstr "Буде знайдено лише ``<p>A very short ebook to demonstrate the use of XPath.</p>`` у :ref:`sample_ebook`, але не буде знайдено жодного іншого теґу ``<p>``. Префікс ``h:`` у наведених вище прикладах потрібен для встановлення відповідності теґам XHTML. Він потрібен, тому що на внутрішньому рівні calibre представляє усі дані як XHTML. У теґів XHTML є власний *простір назв*, і ``h:`` є префіксом простору назв для теґів HTML."
 
-# 366f53fb612840a1b7511a33fb808307
 #: ../../home/kovid/work/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
@@ -87,9 +76,8 @@ msgid ""
 " test that is used to select tags. Tests can be arbitrarily powerful and as "
 "this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "Тепер, припустімо, вам потрібно вибрати одразу теґи ``<h1>`` і теґи ``<h2>``. Для виконання цього завдання нам знадобиться конструкція XPath, яка називається *предикатом*. :dfn:`предикат` є простою перевіркою, яка використовується для вибору теґів. Перевірки можуть мати довільну потужність. У межах цього розділу ми наведемо і потужніші приклади. Предикат створюється взяттям виразу перевірки у квадратні дужки::"
 
-# 2107a43cddcc4b7284897ba6b830b103
 #: ../../home/kovid/work/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
@@ -100,84 +88,70 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "У цьому виразі XPath є декілька нових особливостей. Першою є використання замінника ``*``. Цей замінник означає *знайти будь-який теґ*. Далі, зверніть увагу на вираз перевірки ``name()='h1' or name()='h2'``. :term:`name()` є прикладом *вбудованої функції*. Ця функція просто повертає назву теґу. Отже, за її допомогою ми можемо вибрати теґи, назвами яких є `h1` або `h2`. Зауважте, що функція :term:`name()` ігнорує простори назв, отже, у додаванні префікса ``h:`` немає потреби. У XPath є декілька корисних вбудованих функцій. Ще декілька буде представлено у цьому розділі."
 
-# 58868b4fdd5146e8bffbf932a8b2c19f
 #: ../../home/kovid/work/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "Вибір за атрибутами"
 
-# 1574409f62d9476cb06ea0be1ca2c396
 #: ../../home/kovid/work/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "Для вибору тегу на основі його атрибутів слід користуватися предикатами::"
 
-# d55a049a7d8349a3a42cb5b22f846312
 #: ../../home/kovid/work/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "Тут оператор ``@`` посилається на атрибути теґу. Ви можете скористатися деякими з `вбудованих функцій XPath`_ для встановлення складних відповідностей із значеннями атрибутів."
 
-# 588aab25763c4f52b0314caabd373bbe
 #: ../../home/kovid/work/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
-msgstr ""
+msgstr "Вибір за вмістом теґу"
 
-# 92fe910aa2a34cf18277bd9968742765
 #: ../../home/kovid/work/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "За допомогою XPath ви навіть можете вибирати теґи на основі тексту, який у них міститься. Найкращим способом це зробити є використання потужності *формальних виразів*, тобто вбудованої функції :term:`re:test()`::"
 
-# 94b08ffde9f94a80b7e63f49f4e05c93
 #: ../../home/kovid/work/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr ""
+msgstr "Тут оператор ``.`` посилається на вміст теґу, так само, як оператор ``@`` посилається на його атрибути."
 
-# 4e8ae44a8d514ec499416f18ad475325
 #: ../../home/kovid/work/calibre/manual/xpath.rst:90
 msgid "Sample ebook"
 msgstr "Зразок електронної книги"
 
-# 9a28a8486fb949b3b3b3b4d6cce3e058
 #: ../../home/kovid/work/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
-msgstr ""
+msgstr "Вбудовані функції XPath"
 
-# 0fc0e8487f2f4f459519711d1d80b798
 #: ../../home/kovid/work/calibre/manual/xpath.rst:99
 msgid "name()"
-msgstr ""
+msgstr "name()"
 
-# b2021f02490e45fe80b2101056e9f75f
 #: ../../home/kovid/work/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
-msgstr ""
+msgstr "Назва поточного теґу."
 
-# dffa28dd33bb441eb7719a65d266560e
 #: ../../home/kovid/work/calibre/manual/xpath.rst:102
 msgid "contains()"
-msgstr ""
+msgstr "contains()"
 
-# 6f8b6342a25b4fd99c21b7ddd6887d75
 #: ../../home/kovid/work/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
-msgstr ""
+msgstr "``contains(s1, s2)`` повертає «true», якщо s1 містить s2."
 
-# 2a6b82735a9e43618527a269bf4d69c1
 #: ../../home/kovid/work/calibre/manual/xpath.rst:105
 msgid "re:test()"
-msgstr ""
+msgstr "re:test()"
 
-# d727b06e28c64e15aaaa581f9b6bbaf6
 #: ../../home/kovid/work/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
@@ -185,4 +159,4 @@ msgid ""
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/2.7/library/re.html>`_"
-msgstr ""
+msgstr "``re:test(джерело, взірець, прапорці)`` повертає `true`, якщо рядок `джерело` відповідає формальному виразу `взірець`. Одним із особливо корисних прапорців є ``i``, прапорець, який вимикає врахування регістру символів під час порівняння. Чудовий підручник із синтаксису формальних виразів можна знайти на `сторінці синтаксису формальних виразів <https://docs.python.org/2.7/library/re.html>`_"

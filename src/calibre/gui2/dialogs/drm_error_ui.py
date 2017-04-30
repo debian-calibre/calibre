@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/drm_error.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -49,7 +48,7 @@ class Ui_Dialog(object):
 
         Dialog.setWindowTitle(_("This book is DRMed"))
         self.msg.setText(_("<p>This book is locked by <b>DRM</b>. To learn more about DRM and why you cannot read or convert this book in calibre, \n"
-"          <a href=\"http://drmfree.calibre-ebook.com/about#drm\">click here</a>.<p>A large number of recent, DRM free releases are \n"
-"          available at <a href=\"http://drmfree.calibre-ebook.com\">Open Books</a>."))
+"          <a href=\"https://drmfree.calibre-ebook.com/about#drm\">click here</a>.<p>A large number of recent, DRM free releases are \n"
+"          available at <a href=\"https://drmfree.calibre-ebook.com\">Open Books</a>."))
 
 

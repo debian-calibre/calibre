@@ -37,6 +37,8 @@ class PrettyPrint(object):
     def __exit__(self, *args):
         global pretty_print_opf
         pretty_print_opf = False
+
+
 pretty_print = PrettyPrint()
 
 
@@ -946,10 +948,24 @@ class OPF(object):  # {{{
                 return self.get_text(match) or None
 
         def fset(self, val):
+            uuid_id = None
+            for attr in self.root.attrib:
+                if attr.endswith('unique-identifier'):
+                    uuid_id = self.root.attrib[attr]
+                    break
+
             matches = self.isbn_path(self.metadata)
             if not val:
                 for x in matches:
-                    x.getparent().remove(x)
+                    xid = x.get('id', None)
+                    is_package_identifier = uuid_id is not None and uuid_id == xid
+                    if is_package_identifier:
+                        self.set_text(x, str(uuid.uuid4()))
+                        for attr in x.attrib:
+                            if attr.endswith('scheme'):
+                                x.attrib[attr] = 'uuid'
+                    else:
+                        x.getparent().remove(x)
                 return
             if not matches:
                 attrib = {'{%s}scheme'%self.NAMESPACES['opf']: 'ISBN'}
@@ -1570,6 +1586,7 @@ class OPFCreator(Metadata):
                 guide
         )
         root.set('unique-identifier', __appname__+'_id')
+        root.set('version', '2.0')
         raw = etree.tostring(root, pretty_print=True, xml_declaration=True,
                 encoding=encoding)
         raw = raw.replace(DNS, OPF2_NS)
@@ -1834,6 +1851,7 @@ def test_user_metadata():
     assert um == opf._user_metadata_
     assert um == opf2._user_metadata_
     print opf.render()
+
 
 if __name__ == '__main__':
     # test_user_metadata()

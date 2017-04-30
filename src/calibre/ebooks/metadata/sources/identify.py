@@ -386,7 +386,7 @@ def identify(log, abort,  # {{{
 
     log('Running identify query with parameters:')
     log(kwargs)
-    log('Using plugins:', ', '.join([p.name for p in plugins]))
+    log('Using plugins:', ', '.join(['%s %s' % (p.name, p.version) for p in plugins]))
     log('The log from individual plugins is below')
 
     workers = [Worker(p, kwargs, abort) for p in plugins]
@@ -455,8 +455,7 @@ def identify(log, abort,  # {{{
         results[plugin] = presults = filtered_results
 
         plog = logs[plugin].getvalue().strip()
-        log('\n'+'*'*30, plugin.name, '*'*30)
-        log('Request extra headers:', plugin.browser.addheaders)
+        log('\n'+'*'*30, plugin.name, '%s' % (plugin.version,), '*'*30)
         log('Found %d results'%len(presults))
         time_spent = getattr(plugin, 'dl_time_spent', None)
         if time_spent is None:
@@ -555,23 +554,23 @@ def urls_from_identifiers(identifiers):  # {{{
     isbn = identifiers.get('isbn', None)
     if isbn:
         ans.append((isbn, 'isbn', isbn,
-            'http://www.worldcat.org/isbn/'+isbn))
+            'https://www.worldcat.org/isbn/'+isbn))
     doi = identifiers.get('doi', None)
     if doi:
         ans.append(('DOI', 'doi', doi,
-            'http://dx.doi.org/'+doi))
+            'https://dx.doi.org/'+doi))
     arxiv = identifiers.get('arxiv', None)
     if arxiv:
         ans.append(('arXiv', 'arxiv', arxiv,
-            'http://arxiv.org/abs/'+arxiv))
+            'https://arxiv.org/abs/'+arxiv))
     oclc = identifiers.get('oclc', None)
     if oclc:
         ans.append(('OCLC', 'oclc', oclc,
-            'http://www.worldcat.org/oclc/'+oclc))
+            'https://www.worldcat.org/oclc/'+oclc))
     issn = check_issn(identifiers.get('issn', None))
     if issn:
         ans.append((issn, 'issn', issn,
-            'http://www.worldcat.org/issn/'+issn))
+            'https://www.worldcat.org/issn/'+issn))
     for k, url in identifiers.iteritems():
         if url and re.match(r'ur[il]\d*$', k) is not None:
             url = url[:8].replace('|', ':') + url[8:].replace('|', ',')
@@ -581,6 +580,7 @@ def urls_from_identifiers(identifiers):  # {{{
                 ans.append((name, k, url, url))
     return ans
 # }}}
+
 
 if __name__ == '__main__':  # tests {{{
     # To run these test use: calibre-debug -e
@@ -628,4 +628,3 @@ if __name__ == '__main__':  # tests {{{
     # test_identify(tests[1:2])
     test_identify(tests)
 # }}}
-

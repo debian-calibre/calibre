@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -116,9 +115,9 @@ class Ui_Form(object):
 "One possible use for a plugboard is to alter the title to contain series information. Another would be to change the author sort, something that mobi users might do to force it to use the \';\' that the kindle requires. A third would be to specify the language."))
         self.label_6.setText(_("Format (choose first)"))
         self.label_7.setText(_("Device (choose second)"))
-        self.label_5.setText(_("Add new plugboard"))
-        self.label_4.setText(_("Edit existing plugboard"))
-        self.label_41.setText(_("Existing plugboards"))
+        self.label_5.setText(_("Add new plugboard:"))
+        self.label_4.setText(_("Edit existing plugboard:"))
+        self.label_41.setText(_("Existing plugboards:"))
         self.label_2.setText(_("Source template"))
         self.label_3.setText(_("Destination field"))
         self.ok_button.setText(_("Save plugboard"))

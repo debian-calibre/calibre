@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Andreas Dreyer Hysing <andreashysing@gmail.com>, 2016
+# Andreas Dreyer Hysing, 2016
 # Kurt-Håkon Eilertsen <kurt@kheds.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 07:51+0530\n"
-"PO-Revision-Date: 2016-08-04 19:49+0000\n"
-"Last-Translator: Andreas Dreyer Hysing <andreashysing@gmail.com>\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-21 03:54+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/calibre/calibre/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,6 +78,19 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+msgid "Parameters"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -148,9 +161,9 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
 msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
-"it returns a `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ "
-"browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
+"it returns a `mechanize <https://github.com/jjlee/mechanize>`_ browser "
+"instance that supports cookies, ignores robots.txt, handles refreshes and "
+"has a mozilla firefox user agent."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -232,7 +245,7 @@ msgstr ""
 msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
 "it."
 msgstr ""
 
@@ -307,11 +320,24 @@ msgstr ""
 msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
-"HTML (soup). :param article: A object of class "
-":class:`calibre.web.feeds.Article`. If you change the summary, remember to "
-"also change the text_summary :param soup: Parsed HTML belonging to this "
-"article :param first: True iff the parsed HTML is the first page of the "
-"article."
+"HTML (soup)."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
+msgid ""
+"A object of class :class:`calibre.web.feeds.Article`. If you change the "
+"summary, remember to also change the text_summary"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
+msgid "Parsed HTML belonging to this article"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
+msgid "True iff the parsed HTML is the first page of the article."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -344,7 +370,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
 "instance containing the downloaded :term:`HTML`."
 msgstr ""
 
@@ -368,7 +394,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
 msgid ""
 "`soup`: A `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "instance containing the downloaded :term:`HTML`."
 msgstr ""
 
@@ -432,7 +458,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
 msgid ""
 "Convenience method to take a `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag` and extract the text from it recursively, including any CDATA sections"
 " and alt tag attributes. Return a possibly empty unicode string."
 msgstr ""
@@ -448,7 +474,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag`"
 msgstr ""
 
@@ -533,8 +559,8 @@ msgid ""
 "expressed as a percentage of the downloaded cover. cover_margins = (10, 15, "
 "'#ffffff') pads the cover with a white margin 10px on the left and right, "
 "15px on the top and bottom. Color names defined at "
-"http://www.imagemagick.org/script/color.php Note that for some reason, white"
-" does not always work on windows. Use #ffffff instead"
+"https://www.imagemagick.org/script/color.php Note that for some reason, "
+"white does not always work on windows. Use #ffffff instead"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -598,6 +624,13 @@ msgstr ""
 msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
+msgid ""
+"Set to True if you want to use gziped transfers. Note that some old servers "
+"flake out with this so it is off by default."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -755,7 +788,7 @@ msgstr ""
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
 "`Beautiful Soup "
-"<http://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
+"<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html#Searching%20the%20Parse%20Tree>`_"
 " A common example::"
 msgstr ""
 

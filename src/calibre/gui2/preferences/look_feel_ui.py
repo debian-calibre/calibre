@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -476,7 +476,7 @@ class Ui_Form(object):
         self.change_font_button.setText(_("Change &font (needs restart)"))
         self.opt_book_list_tooltips.setText(_("Show &tooltips in the book list"))
         self.opt_systray_icon.setText(_("Enable system &tray icon (needs restart)"))
-        self.label_7.setText(_("Choose &language (requires restart):"))
+        self.label_7.setText(_("Choose &language (needs restart):"))
         self.label_2.setText(_("Interface font:"))
         self.opt_disable_tray_notification.setText(_("Disable &notifications in system tray"))
         self.label_widget_style.setText(_("User interface style (&needs restart):"))

@@ -246,7 +246,7 @@ def samefile(src, dst):
 
     Returns True iff both paths exist and point to the same file on disk.
 
-    Note: On windows will return True if the two string are identical (upto
+    Note: On windows will return True if the two string are identical (up to
     case) even if the file does not exist. This is because I have no way of
     knowing how reliable the GetFileInformationByHandle method is.
     '''
@@ -524,6 +524,7 @@ def remove_dir_if_empty(path, ignore_metadata_caches=False):
                     remove_dir_if_empty(path)
             return
         raise
+
 
 if iswindows:
     # Python's expanduser is broken for non-ASCII usernames

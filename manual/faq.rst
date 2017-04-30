@@ -207,7 +207,7 @@ Follow these steps to find the problem:
       etc. at the same time.
     * If you are connecting an Apple iDevice (iPad, iPod Touch, iPhone), use
       the 'Connect to iTunes' method in the 'Getting started' instructions in
-      `Calibre + Apple iDevices: Start here <http://www.mobileread.com/forums/showthread.php?t=118559>`_.
+      `Calibre + Apple iDevices: Start here <https://www.mobileread.com/forums/showthread.php?t=118559>`_.
     * Make sure you are running the latest version of calibre. The latest version
       can always be downloaded from `the calibre website <https://calibre-ebook.com/download>`_.
       You can tell what version of calibre you are currently running by looking
@@ -301,7 +301,7 @@ With recent reader iterations, SONY, in all its wisdom has decided to try to for
 use their software. If you install it, it auto-launches whenever you connect the reader.
 If you don't want to uninstall it altogether, there are a couple of tricks you can use. The
 simplest is to simply re-name the executable file that launches the library program. More detail
-`in the forums <http://www.mobileread.com/forums/showthread.php?t=65809>`_.
+`in the forums <https://www.mobileread.com/forums/showthread.php?t=65809>`_.
 
 How do I use calibre with my iPad/iPhone/iPod touch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -382,7 +382,7 @@ iBooks.
 With the USB cable + iTunes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Use the 'Connect to iTunes' method in the 'Getting started' instructions in `Calibre + Apple iDevices: Start here <http://www.mobileread.com/forums/showthread.php?t=118559>`_.
+Use the 'Connect to iTunes' method in the 'Getting started' instructions in `Calibre + Apple iDevices: Start here <https://www.mobileread.com/forums/showthread.php?t=118559>`_.
 
 This method only works on Windows Vista and higher, and OS X up to 10.8. Linux
 is not supported (iTunes is not available in linux) and OS X newer than 10.8 is
@@ -412,10 +412,15 @@ single android device out there, so if your device is not automatically
 detected, follow the instructions at :ref:`devsupport` to get your device
 supported in calibre.
 
-.. note:: With newer Android devices, the USB connection is not supported on
-          Windows XP and OS X before Mavericks (10.9). If you are on Windows
-          XP or old versions of OS X, you should use one of the wireless
-          connection methods.
+.. note:: With newer Android devices, you might have to jump through a few hoops
+    to get the connection working, as Google really does not want you to be
+    independent of its cloud. First, unlock the screen before plugging in the
+    USB cable. When you plugin in the USB cable you will get a popup
+    notification. Make sure it says some thing like "Transferring Media files"
+    or "MTP (Media Transfer mode)". If it does not, tap the notification, and
+    change the mode to Media Transfer (MTP).  Finally, you might get a popup on
+    the device every time calibre or the operating system actually tries to
+    connect to it, asking for permission, tap OK.
 
 Over the air
 ^^^^^^^^^^^^^^
@@ -470,7 +475,7 @@ the server has IP address 63.45.128.5, in the browser, you would type::
     http://63.45.128.5:8080
 
 Some devices, like the Kindle (1/2/DX), do not allow you to access port 8080 (the default port on which the content
-server runs. In that case, change the port in the calibre Preferences to 80. (On some operating systems,
+server runs). In that case, change the port in the calibre Preferences to 80. (On some operating systems,
 you may not be able to run the server on a port number less than 1024 because of security settings. In
 this case the simplest solution is to adjust your router to forward requests on port 80 to port 8080).
 
@@ -486,9 +491,10 @@ Because of the large amount of spam in email, sending email can be tricky, as di
 The most common problem is if you are sending email directly (without a mail relay) in calibre. Many servers (for example, Amazon) block email
 that does not come from a well known relay. The most robust way to setup email sending in calibre is to do the following:
 
-  * Create a free GMX account at `GMX <http://www.gmx.com>`_.
+  * Create a free GMX account at `GMX <https://www.gmx.com>`_.
   * Goto :guilabel:`Preferences->Sharing by Email` in calibre and click the :guilabel:`Use GMX` button and fill in the information asked for.
-  * calibre will then use GMX to send the mail.
+  * Log into your GMX account on the website and enable SMTP sending (`Settings->POP3 & IMAP->Send and receive emails via external program`)
+  * calibre will then be able to use GMX to send the mail.
   * If you are sending to your Kindle, remember to update the email preferences
     on your Amazon Kindle page to allow email sent from your GMX email
     address. Also note that Amazon does not allow email delivery of AZW3 and
@@ -546,7 +552,7 @@ disconnected from the computer, for the changes to the collections to be
 recognized. As such, it is unlikely that any calibre developers will ever feel
 motivated enough to support it. There is however, a calibre plugin that allows
 you to create collections on your Kindle from the calibre metadata. It is
-available `from here <http://www.mobileread.com/forums/showthread.php?t=244202>`_.
+available `from here <https://www.mobileread.com/forums/showthread.php?t=244202>`_.
 
 .. note::
     Amazon have removed the ability to manipulate collections completely
@@ -600,9 +606,9 @@ Where are the book files stored?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 When you first run calibre, it will ask you for a folder in which to store your books. Whenever you add a book to calibre, it will copy the book into that folder. Books in the folder are nicely arranged into sub-folders by Author and Title. Note that the contents of this folder are automatically managed by calibre, **do not** add any files/folders manually to this folder, as they may be automatically deleted. If you want to add a file associated to a particular book, use the top right area of :guilabel:`Edit metadata` dialog to do so. Then, calibre will automatically put that file into the correct folder and move it around when the title/author changes.
 
-Metadata about the books is stored in the file ``metadata.db`` at the top level of the library folder This file is is a sqlite database. When backing up your library make sure you copy the entire folder and all its sub-folders.
+Metadata about the books is stored in the file ``metadata.db`` at the top level of the library folder. This file is a sqlite database. When backing up your library make sure you copy the entire folder and all its sub-folders.
 
-The library folder and all it's contents make up what is called a calibre library. You can have multiple such libraries. To manage the libraries, click the calibre icon on the toolbar. You can create new libraries, remove/rename existing ones and switch between libraries easily.
+The library folder and all its contents make up what is called a calibre library. You can have multiple such libraries. To manage the libraries, click the calibre icon on the toolbar. You can create new libraries, remove/rename existing ones and switch between libraries easily.
 
 You can copy or move books between different libraries (once you have more than one library setup) by right clicking on a book and selecting the :guilabel:`Copy to library` action.
 
@@ -610,7 +616,7 @@ How does calibre manage author names and sorting?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Author names are complex, especially across cultures, see `this note
-<http://www.w3.org/International/questions/qa-personal-names.en.php?changelang=en>`_
+<https://www.w3.org/International/questions/qa-personal-names.en.php?changelang=en>`_
 for some of the complexities. calibre has a very flexible strategy for managing
 author names. The first thing to understand is that books and authors are
 separate entities in calibre. A book can have more than one author, and an
@@ -681,7 +687,7 @@ fields. In addition, you can add any columns you like. Columns can be added via
 :guilabel:`Preferences->Interface->Add your own columns`.  Watch the tutorial
 `UI Power tips <https://calibre-ebook.com/demo#tutorials>`_ to learn how to
 create your own columns, or read `this blog post
-<http://blog.calibre-ebook.com/2011/11/calibre-custom-columns.html>`_.
+<https://blog.calibre-ebook.com/2011/11/calibre-custom-columns.html>`_.
 
 You can also create "virtual columns" that contain combinations of the metadata
 from other columns. In the add column dialog  use the :guilabel:`Quick create`
@@ -698,7 +704,7 @@ How do I move my calibre data from one computer to another?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can export all calibre data (books, settings and plugins) and
-them import it on another computer. First let use see how to export the data:
+then import it on another computer. First let's see how to export the data:
 
   * Right click the calibre icon in the main calibre toolbar and select
     :guilabel:`Export/Import all calibre data`. Then click the button labelled
@@ -734,7 +740,7 @@ them import it on another computer. First let use see how to export the data:
     you for the location of the calibre library. Point it to the previously copied
     folder. If the computer you are transferring to already has a calibre
     installation, then the Welcome wizard wont run. In that case, right-click the
-    calibre icon in the tooolbar and point it to the newly copied directory. You will
+    calibre icon in the toolbar and point it to the newly copied directory. You will
     now have two calibre libraries on your computer and you can switch between them
     by clicking the calibre icon on the toolbar. Transferring your library in this
     manner preserver all your metadata, tags, custom columns, etc.
@@ -796,7 +802,7 @@ Even with these tools there is danger of data corruption/loss, so only do this
 if you are willing to live with that risk. In particular, be aware that
 **Google Drive** is incompatible with calibre, if you put your calibre library in
 Google Drive, **you will suffer data loss**. See `this thread
-<http://www.mobileread.com/forums/showthread.php?t=205581>`_ for details.
+<https://www.mobileread.com/forums/showthread.php?t=205581>`_ for details.
 
 
 Miscellaneous
@@ -811,7 +817,7 @@ I want calibre to download news from my favorite news website.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you are reasonably proficient with computers, you can teach calibre to download news from any website of your choosing. To learn how to do this see :ref:`news`.
 
-Otherwise, you can request a particular news site by posting in the `calibre Recipes forum <http://www.mobileread.com/forums/forumdisplay.php?f=228>`_.
+Otherwise, you can request a particular news site by posting in the `calibre Recipes forum <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_.
 
 
 Why the name calibre?
@@ -865,7 +871,7 @@ If it still wont launch, start a command prompt (press the windows key and R; th
 
     calibre-debug -g
 
-Post any output you see in a help message on the `Forum <http://www.mobileread.com/forums/forumdisplay.php?f=166>`_.
+Post any output you see in a help message on the `Forum <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_.
 
 calibre freezes/crashes occasionally?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -903,7 +909,7 @@ There are several possible things I know of, that can cause this:
       computer. Known culprits include: *SpiderOak*, *odrive sync* and *Dell
       Backup and Recovery*. If you have one of these, uninstall them and you
       will be fine. You can also use the
-      `NirSoft Shell Extension Viewer <http://www.nirsoft.net/utils/shexview.html>`_
+      `NirSoft Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_
       to see what shell extensions are installed on your system
       and disable them individually, if you dont want to uninstall the full program.
       Remember to use "Restart Explorer" or reboot your computer after
@@ -1083,11 +1089,11 @@ For many reasons:
     updating trivial. Instructions are :ref:`available here <develop>`.
 
   * There are third party automatic updaters for calibre made by calibre users
-    in the `calibre forum <http://www.mobileread.com/forums/forumdisplay.php?f=238>`_.
+    in the `calibre forum <https://www.mobileread.com/forums/forumdisplay.php?f=238>`_.
 
 How is calibre licensed?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-calibre is licensed under the GNU General Public License v3 (an open source license). This means that you are free to redistribute calibre as long as you make the source code available. So if you want to put calibre on a CD with your product, you must also put the calibre source code on the CD. The source code is available `for download <https://download.calibre-ebook.com>`_. You are free to use the results of conversions from calibre however you want. You cannot use either code or libraries from calibre in your software without making your software open source. For details, see `The GNU GPL v3 <http://www.gnu.org/licenses/gpl.html>`_.
+calibre is licensed under the GNU General Public License v3 (an open source license). This means that you are free to redistribute calibre as long as you make the source code available. So if you want to put calibre on a CD with your product, you must also put the calibre source code on the CD. The source code is available `for download <https://download.calibre-ebook.com>`_. You are free to use the results of conversions from calibre however you want. You cannot use either code or libraries from calibre in your software without making your software open source. For details, see `The GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_.
 
 How do I run calibre from my USB stick?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

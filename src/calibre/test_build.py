@@ -55,10 +55,6 @@ class BuildTest(unittest.TestCase):
         from calibre.ebooks.oeb.polish.parsing import parse_html5
         parse_html5('<p>xxx')
 
-    def test_spell(self):
-        from calibre.spell.dictionary import test_dictionaries
-        test_dictionaries()
-
     def test_plugins(self):
         exclusions = set()
         if is_ci:
@@ -142,6 +138,9 @@ class BuildTest(unittest.TestCase):
         os.environ.pop('DISPLAY', None)
         app = Application([], headless=islinux)
         self.assertGreaterEqual(len(QFontDatabase().families()), 5, 'The QPA headless plugin is not able to locate enough system fonts via fontconfig')
+        if islinux:
+            from calibre.ebooks.covers import create_cover
+            create_cover('xxx', ['yyy'])
         na = QNetworkAccessManager()
         self.assertTrue(hasattr(na, 'sslErrors'), 'Qt not compiled with openssl')
         from PyQt5.QtWebKitWidgets import QWebView
@@ -240,12 +239,15 @@ def find_tests():
     ans.addTests(unittest.defaultTestLoader.loadTestsFromModule(dtests))
     from tinycss.tests.main import find_tests
     ans.addTests(find_tests())
+    from calibre.spell.dictionary import find_tests
+    ans.addTests(find_tests())
     return ans
 
 
 def test():
     from calibre.utils.run_tests import run_cli
     run_cli(find_tests())
+
 
 if __name__ == '__main__':
     test()

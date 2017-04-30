@@ -369,7 +369,7 @@ class TreeBuilder(BaseTreeBuilder):
         self.promote_elem(elem, token_name)
         position = token.get('position', None)
         if position is not None:
-            # Unfortunately, libxml2 can only store line numbers upto 65535
+            # Unfortunately, libxml2 can only store line numbers up to 65535
             # (unsigned short). If you really need to workaround this, use the
             # patch here:
             # https://bug325533.bugzilla-attachments.gnome.org/attachment.cgi?id=56951
@@ -541,6 +541,8 @@ class NoNamespaceTreeBuilder(TreeBuilder):
                     body.set(to_xml_name(k), v)
 
 # Input Stream {{{
+
+
 _regex_cache = {}
 
 
@@ -603,6 +605,7 @@ class FastStream(object):
             offset = pos
         return (lnum + 1, offset)
 # }}}
+
 
 if len("\U0010FFFF") == 1:  # UCS4 build
     replace_chars = re.compile("[\uD800-\uDFFF]")
@@ -689,9 +692,9 @@ def parse(raw, decoder=None, log=None, line_numbers=True, linenumber_attribute=N
             log.exception('Failed to parse as XML, parsing as tag soup')
         return parse_html5(raw, log=log, line_numbers=line_numbers, linenumber_attribute=linenumber_attribute, replace_entities=False, fix_newlines=False)
 
+
 if __name__ == '__main__':
     from lxml import etree
     root = parse_html5('\n<html><head><title>a\n</title><p b=1 c=2 a=0>&nbsp;\n<b>b<svg ass="wipe" viewbox="0">', discard_namespaces=False)
     print (etree.tostring(root, encoding='utf-8'))
     print()
-

@@ -4,14 +4,14 @@
 # 
 # Translators:
 # dario hereñu <magallania@gmail.com>, 2014
-# Jellby <jellby@yahoo.com>, 2014-2016
+# Jellby <jellby@yahoo.com>, 2014-2017
 # Luis gomez quintana <luis.lgq@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 08:17+0530\n"
-"PO-Revision-Date: 2016-11-20 10:09+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-10 18:14+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -31,10 +31,6 @@ msgid ""
 " gentle introduction to getting you started with using regular expressions "
 "in calibre."
 msgstr "Las expresiones regulares son funciones utilizadas en muchos lugares en calibre para llevar a cabo sofisticadas manipulaciones de contenido y metadatos de libros electrónicos. Este cursillo es una breve introducción al uso de expresiones regulares en calibre."
-
-#: ../../home/kovid/work/calibre/manual/regexp.rst:0
-msgid "Contents"
-msgstr "Índice"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
@@ -119,7 +115,7 @@ msgstr "No suena tan mal. ¿Qué viene después?"
 #: ../../home/kovid/work/calibre/manual/regexp.rst:42
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
-"regular expressions can match multiple strings? This is were it gets a "
+"regular expressions can match multiple strings? This is where it gets a "
 "little more complicated. Say, as a somewhat more practical exercise, the "
 "ebook you wanted to convert had a nasty footer counting the pages, like "
 "\"Page 5 of 423\". Obviously the page number would rise from 1 to 423, thus "
@@ -354,7 +350,7 @@ msgstr "Vamos a empezar con las configuraciones de conversión. En la sección B
 #: ../../home/kovid/work/calibre/manual/regexp.rst:108
 msgid ""
 "(shamelessly ripped out of `this thread "
-"<http://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
+"<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
 "to remove some of the tags as well. In this example, I'd recommend beginning"
 " with the tag ``<b class=\"calibre2\">``, now you have to end with the "
 "corresponding closing tag (opening tags are ``<tag>``, closing tags are "
@@ -376,7 +372,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(copiado descaradamente de `este hilo <http://www.mobileread.com/forums/showthread.php?t=75594\">`_). Habría que eliminar también algunas de las etiquetas. En este ejemplo, recomendaría empezar con la etiqueta ``<b class=\"calibre2\">``, tiene que acabar con la etiqueta de cierre correspondiente (las etiquetas de apertura son ``<etiqueta>``, las etiquetas de cierre son ``</etiqueta>``), que es simplemente el siguiente ``</b>`` en este caso. (Consulte un buen manual de HTML o pregunte en el foro si tiene dudas sobre este punto). La etiqueta de apertura puede describirse usando ``<b.*?>``, la etiqueta de cierre usando ``</b>``, por lo que podríamos quitar todo lo que está entre estas etiquetas usando ``<b.*?>.*?</b>``. Pero usar esta expresión sería una mala idea, ya que elimina todo lo encerrado entre las etiquetas <b> (que, por cierto, hacen que el texto encerrado se muestre en negrita), y es casi seguro que eliminaremos porciones del libro de esta manera. En su lugar, incluya también el principio del texto entre las etiquetas, haciendo la expresión regular ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``. La ``\\s`` con cuantificadores se incluye aquí en lugar de utilizar explícitamente los espacios que aparecen en el texto para recoger cualquier variación del texto que pudiera ocurrir. Si prueba una nueva expresión, recuerde revisar qué eliminará calibre para asegurarse de que no elimina partes que desea conservar. Si sólo examina un caso, es posible que pase por alto un desajuste en otro lugar del texto. También tenga en cuenta que en caso de que accidentalmente elimine más o menos etiquetas de las que realmente deseaba, calibre intenta reparar el código dañado después de hacer la eliminación."
+msgstr "(copiado descaradamente de `este hilo <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Habría que eliminar también algunas de las etiquetas. En este ejemplo, recomendaría empezar con la etiqueta ``<b class=\"calibre2\">``, tiene que acabar con la etiqueta de cierre correspondiente (las etiquetas de apertura son ``<etiqueta>``, las etiquetas de cierre son ``</etiqueta>``), que es simplemente el siguiente ``</b>`` en este caso. (Consulte un buen manual de HTML o pregunte en el foro si tiene dudas sobre este punto). La etiqueta de apertura puede describirse usando ``<b.*?>``, la etiqueta de cierre usando ``</b>``, por lo que podríamos quitar todo lo que está entre estas etiquetas usando ``<b.*?>.*?</b>``. Pero usar esta expresión sería una mala idea, ya que elimina todo lo encerrado entre las etiquetas <b> (que, por cierto, hacen que el texto encerrado se muestre en negrita), y es casi seguro que eliminaremos porciones del libro de esta manera. En su lugar, incluya también el principio del texto entre las etiquetas, haciendo la expresión regular ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``. La ``\\s`` con cuantificadores se incluye aquí en lugar de utilizar explícitamente los espacios que aparecen en el texto para recoger cualquier variación del texto que pudiera ocurrir. Si prueba una nueva expresión, recuerde revisar qué eliminará calibre para asegurarse de que no elimina partes que desea conservar. Si sólo examina un caso, es posible que pase por alto un desajuste en otro lugar del texto. También tenga en cuenta que en caso de que accidentalmente elimine más o menos etiquetas de las que realmente deseaba, calibre intenta reparar el código dañado después de hacer la eliminación."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:111
 msgid "Adding books"

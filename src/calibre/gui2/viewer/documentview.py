@@ -25,7 +25,7 @@ from calibre.gui2.viewer.keys import SHORTCUTS
 from calibre.gui2.viewer.javascript import JavaScriptLoader
 from calibre.gui2.viewer.position import PagePosition
 from calibre.gui2.viewer.config import config, ConfigDialog, load_themes
-from calibre.gui2.viewer.image_popup import ImagePopup
+from calibre.gui2.viewer.image_popup import ImagePopup, render_svg
 from calibre.gui2.viewer.table_popup import TablePopup
 from calibre.gui2.viewer.inspector import WebInspector
 from calibre.gui2.viewer.gestures import GestureHandler
@@ -729,6 +729,11 @@ class DocumentView(QWebView):  # {{{
         elem = r.element()
         if elem.isNull():
             elem = r.enclosingBlockElement()
+        if img.isNull() and elem.tagName().lower() == 'img':
+            # QtWebKit return null pixmaps for svg images
+            iqurl = r.imageUrl()
+            path = self.path(iqurl)
+            img = render_svg(self, path)
         table = None
         parent = elem
         while not parent.isNull():
@@ -876,6 +881,10 @@ class DocumentView(QWebView):  # {{{
     def link_clicked(self, url):
         if self.manager is not None:
             self.manager.link_clicked(url)
+
+    def footnote_link_clicked(self, qurl):
+        path = qurl.toLocalFile()
+        self.link_clicked(self.as_url(path))
 
     def sizeHint(self):
         return self._size_hint

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
 # Merarom <merarom@yahoo.es>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 08:21+0530\n"
-"PO-Revision-Date: 2016-12-07 18:44+0000\n"
+"POT-Creation-Date: 2017-03-21 09:38+0530\n"
+"PO-Revision-Date: 2017-03-25 20:11+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Du erhåller ett behållarobjekt för en bok på en sökväg så här::"
 msgid ""
 "If you are writing a plugin for the ebook editor, you get the current "
 "container for the book being edited like this::"
-msgstr "Om du skriver ett tillägg för e-bokredigeraren, får du den aktuella behållaren för boken som redigeras så här::"
+msgstr "Om du skriver ett insticksprogram för e-bokredigeraren, får du den aktuella behållaren för boken som redigeras så här::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:30
 msgid "The Container object"
@@ -94,6 +94,45 @@ msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
 msgstr "Konvertera en absolut sökväg till en kanoniskt namn i förhållande till :attr:`root`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.rename_files:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.split:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.multisplit:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: of calibre.ebooks.oeb.polish.split.merge:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:0
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.create_inline_toc:0
+#: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
+#: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
+#: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:0
+#: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.open_book:0
+#: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+msgid "Parameters"
+msgstr "Parametrar"
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base directory. By default the root for this container object is used."
@@ -130,10 +169,21 @@ msgstr "Typen av bok (epub för EPUB-filer och azw3 för AZW3-filer)"
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the ebook "
-"file at outpath. :param output: The path to write the saved ebook file to. "
-"If None, the path of the original book file is used. :param keep_parsed: If "
-"True the parsed representations of committed items are kept in the cache."
-msgstr "Överlämna alla nedsmutsade tolkade objekt till filsystemet och skriver ut e-bokfilen på :param output: Sökvägen att skriva den sparade e-bokfilen till. Om None, är sökvägen till den ursprungliga bokfilen som används. :param keep_parsed: Om True hålls tolkade representationer av engagerade objekt i buffertminnet."
+"file at outpath."
+msgstr "Begå alla dirtied analyserade föremål till filsystemet och skriva ut ebook filen på outpath."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:3
+msgid ""
+"The path to write the saved ebook file to. If None, the path of the original"
+" book file is used."
+msgstr "Sökvägen att skriva den sparade e-bok-filen till. Om None används sökvägen till den ursprungliga bokfilen."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.commit:4
+msgid ""
+"If True the parsed representations of committed items are kept in the cache."
+msgstr "Om True kommer analyserade representationer av engagerade poster hållas i cache."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
@@ -165,7 +215,7 @@ msgstr "True iff en fil/katalog som motsvarar det kanoniska namnet finns. Observ
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr "Återge storlek i bytes av filen som representeras av det angivna kanoniska namnet. Automatiskt hanterar smutsiga tolkade objekt. Se även: :met:'parsed`"
+msgstr "Återge storlek i bytes av filen som representeras av det angivna kanoniska namnet. Automatiskt hanterar dirtied tolkade objekt. Se även: :met:'tolkade`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
@@ -206,7 +256,7 @@ msgstr "Konvertera en href (i förhållande till bas) till ett namn. basen måst
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr "Infoga objekt i förälder (eller lägga om index är None), fastställande indrag. Fungerar endast med självstängande objekt."
+msgstr "Infoga objekt i förälder (eller lägga till om index är None), fastställande indrag. Fungerar endast med självstängande objekt."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.is_dir:1
@@ -222,6 +272,13 @@ msgid ""
 "from the start of the line. Note that offset could actually encompass "
 "several lines if not zero."
 msgstr "Iterera över alla länkar i namnet. Om get_line_numbers är True ger det resultat i form (länk, line_number, offset). Där line_number är line_number där länken förekommer och offset är antalet tecken från början av raden. Observera att offset kan faktiskt omfatta flera rader om inte noll."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
+msgid ""
+"Ensure that `name` does not already exist in this book. If it does, return a"
+" modified version that does not exist."
+msgstr "Se till att `name` inte redan finns i denna bok. Om så är fallet, returnera en modifierad version som inte existerar."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
@@ -278,7 +335,7 @@ msgstr "Konvertera ett namn till en href förhållande till basen, som måste va
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
 "Set of names that must never be renamed. Depends on the ebook file format."
-msgstr "Uppsättning med namn som aldrig får döpas om. Beror på e-bokformatet."
+msgstr "Uppsättning med namn som aldrig får byta namn. Beror på e-bokformatet."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -303,7 +360,7 @@ msgid ""
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr "Öppna filen som utpekas av namn för direkt läs / skriv. Observera att detta kommer att förkasta filen om den är smutsig och ta bort den från tolkningsbufferten. Du måste avsluta med den här filen innan du öppnar den tolkas versionen av den igen, eller dåliga saker kommer att hända."
+msgstr "Öppna filen som utpekas av namn för direkt läs / skriv. Observera att detta kommer att förkasta filen om den är dirtied och ta bort den från tolkningsbufferten. Du måste avsluta med den här filen innan du öppnar den tolkas versionen av den igen, eller dåliga saker kommer att hända."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
@@ -343,7 +400,7 @@ msgid ""
 "returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr "Återge en analyserad representation av den fil som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges ett cssutils-format. Observera att analyserat objekt mellanlagras för prestanda. Om du gör några ändringar i objekttolkningen måste du anropa :meth:`dirty` så att behållaren vet att bufferten ska uppdateras. Se även :meth:`replace`. "
+msgstr "Återge en analyserad representation av den fil som anges med namn. För HTML- och XML-filer återges ett lxml-träd. För CSS-filer återges ett cssutils-format. Observera att analyserat objekt cachas för prestanda. Om du gör några ändringar i objekttolkningen måste du anropa :meth:`dirty` så att behållaren vet att bufferten ska uppdateras. Se även :meth:`replace`. "
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
@@ -402,7 +459,7 @@ msgid ""
 "links inside the file if the directory the file is in changes. Note however,"
 " that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr "Döper om en fil från current_name till new_name. Det automatiskt baserar om alla länkar inne i filen om katalogfilen har förändringar. Observera dock att länkar inte uppdateras i de övriga filerna som kan referera den här filen. Detta är för prestanda, sådana uppdateringar ska göras en gång, i grupp."
+msgstr "Byter namn på en fil från current_name till new_name. Det automatiskt baserar om alla länkar inne i filen om katalogfilen har förändringar. Observera dock att länkar inte uppdateras i de övriga filerna som kan referera den här filen. Detta är för prestanda, sådana uppdateringar ska göras en gång, i grupp."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
@@ -495,7 +552,7 @@ msgstr "Om False,  ersätts inte länkar i OPF-filen."
 #: of calibre.ebooks.oeb.polish.replace.rename_files:1
 msgid ""
 "Rename files in the container, automatically updating all links to them."
-msgstr "Döp om filer i behållaren, uppdaterar automatiskt alla länkar till dem."
+msgstr "Byt namn på filer i behållaren, uppdaterar automatiskt alla länkar till dem."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:3
@@ -606,9 +663,9 @@ msgstr "Används internt"
 #: of calibre.ebooks.oeb.polish.split.multisplit:1
 msgid ""
 "Split the specified file at multiple locations (all tags that match the "
-"specified XPath expression. See also: :func:`split`. Splitting automatically"
-" migrates all links and references to the affected files."
-msgstr "Dela den angivna filen på flera platser (alla etiketter som matchar det angivna XPath-uttrycket Se också: :func:`split` Delning migrerar automatiskt alla länkar och referenser till de berörda filerna"
+"specified XPath expression). See also: :func:`split`. Splitting "
+"automatically migrates all links and references to the affected files."
+msgstr "Dela den angivna filen på flera platser (alla etiketter som matchar det angivna XPath-uttrycket). Se också: :func:`split` Delning migrerar automatiskt alla länkar och referenser till de berörda filerna"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:5
@@ -796,7 +853,7 @@ msgstr "Bas: :class:`object`"
 msgid ""
 "The base class for individual tools in an Edit Book plugin. Useful members "
 "include:"
-msgstr "Basklass för enskilda verktyg i ett bokredigeringstillägg. Användbara medlemmar är:"
+msgstr "Basklass för enskilda verktyg i ett bokredigering insticksprogram. Användbara medlemmar är:"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool:5
@@ -838,12 +895,12 @@ msgstr "Ändra detta till ett unikt namn det kommer att användas som en nyckel"
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
 msgid "If True the user can choose to place this tool in the plugins toolbar"
-msgstr "Om True användaren kan välja att placera detta verktyg i tilläggsverktygsfältet"
+msgstr "Om True användaren kan välja att placera detta verktyg i insticksprogram verktygsfältet"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
 msgid "If True the user can choose to place this tool in the plugins menu"
-msgstr "Om True användaren kan välja att placera detta verktyg i tilläggsmenyn"
+msgstr "Om True användaren kan välja att placera detta verktyg i insticksprogram menyn"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
@@ -891,7 +948,7 @@ msgstr "Ett QAction-objekt kommer att utlösas när den anpassade tangentkombina
 msgid ""
 "A unique name for this shortcut/action. It will be used internally, it must "
 "not be shared by any other actions in this plugin."
-msgstr "Ett unikt namn för genvägen/åtgärden. Den kommer att användas internt, får inte delas av några andra åtgärder i detta tillägg. "
+msgstr "Ett unikt namn för genvägen/åtgärden. Den kommer att användas internt, får inte delas av några andra åtgärder i detta insticksprogram. "
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
@@ -901,7 +958,7 @@ msgid ""
 "builtin shortcuts or shortcuts from user configuration/other plugins, they "
 "will be ignored. In that case, users will have to configure the shortcuts "
 "manually via Preferences. For example: ``default_keys=('Ctrl+J', 'F9')``."
-msgstr "En lista med standardtangentbordsgenvägarna. Om inget anges kommer inga standardgenvägar att fastställas. Om genväg anges här konflikt med antingen inbyggda genvägar och genvägar från användarkonfigurations/andra tillägg, kommer de att ignoreras. I så fall kommer användarna att behöva anpassa snabb manuellt via Inställningar. Till exempel: ``default_keys=('Ctrl+J', 'F9')``."
+msgstr "En lista med standardtangentbordsgenvägarna. Om inget anges kommer inga standardgenvägar att fastställas. Om genväg anges här konflikt med antingen inbyggda genvägar och genvägar från användarkonfigurations/andra insticksprogram, kommer de att ignoreras. I så fall kommer användarna att behöva anpassa snabb manuellt via Inställningar. Till exempel: ``default_keys=('Ctrl+J', 'F9')``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
@@ -922,7 +979,7 @@ msgstr "En valfri längre beskrivning av denna åtgärd, det kommer att använda
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr "Skapa en QAction som kommer att läggas till antingen till tilläggets verktygsfält eller tilläggets meny beroende på ``for_toolbar``. Till exempel::"
+msgstr "Skapa en QAction som kommer att läggas till antingen till insticksprogram verktygsfältet eller insticksprogram meny beroende på ``for_toolbar``. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
@@ -938,7 +995,7 @@ msgid ""
 "The ebook editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
-msgstr "E-bokredigerarens användargränssnitt bestäms av ett enda global *Boss* objekt. Detta har många användbara metoder som kan användas i tilläggskod för att utföra vanliga uppgifter."
+msgstr "E-bokredigerarens användargränssnitt bestäms av ett enda global *Boss* objekt. Detta har många användbara metoder som kan användas i insticksprogram kod för att utföra vanliga uppgifter."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.add_savepoint:1

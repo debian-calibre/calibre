@@ -4,16 +4,16 @@
 # 
 # Translators:
 # Xotes <alois.glibert@gmail.com>, 2015-2016
-# Franck, 2015
+# Franck, 2015,2017
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2014
-# Ptit Prince <leporello1791@gmail.com>, 2016
+# Ptit Prince <leporello1791@gmail.com>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 09:27+0530\n"
-"PO-Revision-Date: 2016-10-16 10:56+0000\n"
+"POT-Creation-Date: 2017-03-18 09:50+0530\n"
+"PO-Revision-Date: 2017-03-10 13:22+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -33,10 +33,6 @@ msgid ""
 " gentle introduction to getting you started with using regular expressions "
 "in calibre."
 msgstr "Les expressions régulières sont des fonctions utilisées à différents endroits dans calibre pour effectuer des manipulations élaborées sur le contenu et sur les métadonnées de vos livres numériques. Ce tutoriel est une introduction légère pour vous permettre de démarrer dans l'utilisation des expressions régulières de calibre."
-
-#: ../../home/kovid/work/calibre/manual/regexp.rst:0
-msgid "Contents"
-msgstr "Contenu"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
@@ -121,7 +117,7 @@ msgstr "Cela ne semble pas trop mauvais. Ensuite ?"
 #: ../../home/kovid/work/calibre/manual/regexp.rst:42
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
-"regular expressions can match multiple strings? This is were it gets a "
+"regular expressions can match multiple strings? This is where it gets a "
 "little more complicated. Say, as a somewhat more practical exercise, the "
 "ebook you wanted to convert had a nasty footer counting the pages, like "
 "\"Page 5 of 423\". Obviously the page number would rise from 1 to 423, thus "
@@ -138,7 +134,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr "La suite est le commencement des choses vraiment intéressantes. Vous souvenez-vous où j'ai dit que les expressions régulières peuvent correspondre à plusieurs chaînes ? C'est ce qui les rendait un peu plus compliquées. Disons, comme une sorte d'exercice plus pratique, que le livre numérique que vous vouliez convertir avait de méchantes notes de bas de page comptant les pages, comme \"Page 5 de 423\". Évidemment le nombre de pages devrait augmenter de 1 à 423, donc vous devriez avoir à faire correspondre 423 chaînes, juste ? Faux, en fait: les expressions régulières vous permettent de définir un ensemble de caractères qui correspond : Pour définir un ensemble, vous mettez tous les caractères que vous voulez y voir figurer entre crochets. Aussi, par exemple, l'ensemble ``[abc]``devra correspondre soit au caractère  \"a\", soit au \"b\" ou au \"c\". *Les ensembles correspondront toujours uniquement à un des caractères dans l'ensemble*, c'est à dire, si vous voulez faire correspondre tous les caractères minuscules, vous devrez utiliser l'ensemble ``[a-z]`` pour les caractères minuscules et majuscules vous devrez utiliser l'ensemble ``[a-zA-Z]`` et ainsi de suite. Vous voyez l'idée ? Ainsi, évidemment, en utilisant l'expression ``Page [0-9] de 423`` vous serez capable de correspondre aux 9 premières pages, donc par conséquent les expressions en ont besoin de trois : la seconde expression ``Page [0-9][0-9] de 423` correspondra aux numéros de pages à deux chiffres, et je suis sûr que vous pouvez deviner à quoi ressemblera la troisième expression. Oui, allez-y. Mettez-la par écrit."
+msgstr "La suite est le commencement des choses vraiment intéressantes. Vous souvenez-vous quand j'ai dit que les expressions régulières peuvent correspondre à plusieurs chaînes ? C'est là où ça les rendait un peu plus compliquées. Disons, comme une sorte d'exercice plus pratique, que le livre numérique que vous vouliez convertir avait de méchantes notes de bas de page comptant les pages, comme \"Page 5 de 423\". Évidemment le nombre de pages devrait augmenter de 1 à 423, donc vous devriez avoir à faire correspondre 423 chaînes, juste ? Faux, en fait: les expressions régulières vous permettent de définir un ensemble de caractères qui correspond : Pour définir un ensemble, vous mettez tous les caractères que vous voulez y voir figurer entre crochets. Aussi, par exemple, l'ensemble ``[abc]``devra correspondre soit au caractère  \"a\", soit au \"b\" ou au \"c\". *Les ensembles correspondront toujours uniquement à un des caractères dans l'ensemble*, c'est à dire, si vous voulez faire correspondre tous les caractères minuscules, vous devrez utiliser l'ensemble ``[a-z]`` pour les caractères minuscules et majuscules vous devrez utiliser l'ensemble ``[a-zA-Z]`` et ainsi de suite. Vous voyez l'idée ? Ainsi, évidemment, en utilisant l'expression ``Page [0-9] de 423`` vous serez capable de correspondre aux 9 premières pages, donc par conséquent les expressions en ont besoin de trois : la seconde expression ``Page [0-9][0-9] de 423`` correspondra aux numéros de pages à deux chiffres, et je suis sûr que vous pouvez deviner à quoi ressemblera la troisième expression. Oui, allez-y. Mettez-la par écrit."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:45
 msgid "Hey, neat! This is starting to make sense!"
@@ -356,7 +352,7 @@ msgstr "Commençons avec les paramètres de conversion, qui est vraiment bien. D
 #: ../../home/kovid/work/calibre/manual/regexp.rst:108
 msgid ""
 "(shamelessly ripped out of `this thread "
-"<http://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
+"<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
 "to remove some of the tags as well. In this example, I'd recommend beginning"
 " with the tag ``<b class=\"calibre2\">``, now you have to end with the "
 "corresponding closing tag (opening tags are ``<tag>``, closing tags are "
@@ -378,7 +374,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(honteusement tiré de `ce poste <http://www.mobileread.com/forums/showthread.php?t=75594\">`_).  Vous devriez également enlever certaines des balises . Dans cet exemple, je recommanderais de commencer par la balise ``<b class=\"calibre2\">``, maintenant vous devez terminé avec la balise fermante correspondante(les balises ouvrantes sont ``<balise>``, les balises fermantes sont ``</tag>``, qui est simplement le prochain  ``</b>`` dans ce cas. (Référez-vous à un bon manuel HTML ou posez la question sur le forum si vous n’êtes pas au clair sur ce point). La balise ouvrante peut être décrite en utilisant ``<b.*?>``, la balise fermante en utilisant  ``</b>``, donc nous pourrions retirer entièrement ce qui se trouve entre ces deux balises en utilisant ``<b.*?>.*?</b>``. Mais utiliser cette expression serait une mauvaise idée, parce qu'elle retire tout ce qui se trouve encadré par des balises <b>- (qui, par ailleurs, rend le texte encadré en gras), et c'est un pari gagné que nous enlèverons des parties du livre de cette façon. A la place, inclure également le commencement de la chaîne encadrée, faisant l'expression régulière ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` Le ``\\s`` avec les quantificateurs sont inclus ici à la place d'utiliser explicitement les espaces comme considéré dans la chaîne pour saisir toutes les variations de la chaîne qui pourraient survenir. Souvenez-vous de vérifier qu'est ce que calibre retirera pour vous assurer que vous ne retirez pas des portions que vous voulez garder si vous testez une nouvelle expression. Si vous vérifiez uniquement une occurrence, vous pourriez manquer une disparité ailleurs dans le texte. Notez également que si vous enlevez  accidentellement plus ou moins de balises que vous ne le vouliez réellement, calibre essaye de réparer le code endommagé après avoir fait le retrait."
+msgstr "(honteusement tiré de `ce fil de discussion <https://www.mobileread.com/forums/showthread.php?t=75594\">`_).  Vous devriez également enlever certaines des balises . Dans cet exemple, je recommanderais de commencer par la balise ``<b class=\"calibre2\">``, maintenant vous devez terminé avec la balise fermante correspondante (les balises ouvrantes sont ``<balise>``, les balises fermantes sont ``</tag>``), qui est simplement le prochain  ``</b>`` dans ce cas. (Référez-vous à un bon manuel HTML ou posez la question sur le forum si vous n’êtes pas au clair sur ce point). La balise ouvrante peut être décrite en utilisant ``<b.*?>``, la balise fermante en utilisant  ``</b>``, donc nous pourrions retirer entièrement ce qui se trouve entre ces deux balises en utilisant ``<b.*?>.*?</b>``. Mais utiliser cette expression serait une mauvaise idée, parce qu'elle retire tout ce qui se trouve encadré par des balises <b>- (qui, par ailleurs, rend le texte encadré en gras), et c'est un pari gagné que nous enlèverons des parties du livre de cette façon. À la place, inclure également le commencement de la chaîne encadrée, faisant l'expression régulière ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` Le ``\\s`` avec les quantificateurs sont inclus ici à la place d'utiliser explicitement les espaces comme considéré dans la chaîne pour saisir toutes les variations de la chaîne qui pourraient survenir. Souvenez-vous de vérifier qu'est ce que calibre retirera pour vous assurer que vous ne retirez pas des portions que vous voulez garder si vous testez une nouvelle expression. Si vous vérifiez uniquement une occurrence, vous pourriez manquer une disparité ailleurs dans le texte. Notez également que si vous enlevez  accidentellement plus ou moins de balises que vous ne le vouliez réellement, calibre essaye de réparer le code endommagé après avoir fait le retrait."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:111
 msgid "Adding books"

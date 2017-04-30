@@ -320,6 +320,7 @@ class FileTypePlugin(Plugin):  # {{{
     '''
 
     #: Set of file types for which this plugin should be run.
+    #: Use '*' for all file types.
     #: For example: ``{'lit', 'mobi', 'prc'}``
     file_types     = set()
 
@@ -389,7 +390,7 @@ class FileTypePlugin(Plugin):  # {{{
         :param fmt_map: Map of file format to path from which the file format
             was added. Note that this might or might not point to an actual
             existing file, as sometimes files are added as streams. In which case
-            it might be a dummy value or an on-existent path.
+            it might be a dummy value or a non-existent path.
         :param db: Library database
         '''
         pass  # Default implementation does nothing
@@ -420,8 +421,9 @@ class MetadataReaderPlugin(Plugin):  # {{{
         Return metadata for the file represented by stream (a file like object
         that supports reading). Raise an exception when there is an error
         with the input data.
+
         :param type: The type of file. Guaranteed to be one of the entries
-        in :attr:`file_types`.
+            in :attr:`file_types`.
         :return: A :class:`calibre.ebooks.metadata.book.Metadata` object
         '''
         return None
@@ -451,8 +453,9 @@ class MetadataWriterPlugin(Plugin):  # {{{
         Set metadata for the file represented by stream (a file like object
         that supports reading). Raise an exception when there is an error
         with the input data.
+
         :param type: The type of file. Guaranteed to be one of the entries
-        in :attr:`file_types`.
+            in :attr:`file_types`.
         :param mi: A :class:`calibre.ebooks.metadata.book.Metadata` object
         '''
         pass

@@ -1,49 +1,62 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-__license__   = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
-import os, logging, sys, hashlib, uuid, re, shutil, unicodedata, errno, time
+import errno
+import hashlib
+import logging
+import os
+import re
+import shutil
+import sys
+import time
+import unicodedata
+import uuid
 from collections import defaultdict
-from io import BytesIO
-from urlparse import urlparse
 from future_builtins import zip
+from io import BytesIO
+from itertools import count
+from urlparse import urlparse
 
+from cssutils import getUrls, replaceUrls
 from lxml import etree
-from cssutils import replaceUrls, getUrls
 
 from calibre import CurrentDir
 from calibre.constants import iswindows
-from calibre.customize.ui import (plugin_for_input_format, plugin_for_output_format)
+from calibre.customize.ui import plugin_for_input_format, plugin_for_output_format
 from calibre.ebooks import escape_xpath_attr
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ebooks.conversion.plugins.epub_input import (
-    ADOBE_OBFUSCATION, IDPF_OBFUSCATION, decrypt_font_data)
-from calibre.ebooks.conversion.preprocess import HTMLPreProcessor, CSSPreProcessor as cssp
-from calibre.ebooks.metadata.opf3 import read_prefixes, items_with_property, ensure_prefix, CALIBRE_PREFIX
+    ADOBE_OBFUSCATION, IDPF_OBFUSCATION, decrypt_font_data
+)
+from calibre.ebooks.conversion.preprocess import (
+    CSSPreProcessor as cssp, HTMLPreProcessor
+)
+from calibre.ebooks.metadata.opf3 import (
+    CALIBRE_PREFIX, ensure_prefix, items_with_property, read_prefixes
+)
 from calibre.ebooks.metadata.utils import parse_opf_version
 from calibre.ebooks.mobi import MobiError
 from calibre.ebooks.mobi.reader.headers import MetadataHeader
 from calibre.ebooks.mobi.tweak import set_cover
 from calibre.ebooks.oeb.base import (
-    serialize, OEB_DOCS, OEB_STYLES, OPF2_NS, DC11_NS, OPF, Manifest,
-    rewrite_links, iterlinks, itercsslinks, urlquote, urlunquote)
-from calibre.ebooks.oeb.polish.errors import InvalidBook, DRMError
+    DC11_NS, OEB_DOCS, OEB_STYLES, OPF, OPF2_NS, Manifest, itercsslinks, iterlinks,
+    rewrite_links, serialize, urlquote, urlunquote
+)
+from calibre.ebooks.oeb.parse_utils import RECOVER_PARSER, NotHTML, parse_html
+from calibre.ebooks.oeb.polish.errors import DRMError, InvalidBook
 from calibre.ebooks.oeb.polish.parsing import parse as parse_html_tweak
-from calibre.ebooks.oeb.polish.utils import PositionFinder, CommentFinder, guess_type, parse_css
-from calibre.ebooks.oeb.parse_utils import NotHTML, parse_html, RECOVER_PARSER
+from calibre.ebooks.oeb.polish.utils import (
+    CommentFinder, PositionFinder, guess_type, parse_css
+)
 from calibre.ptempfile import PersistentTemporaryDirectory, PersistentTemporaryFile
-from calibre.utils.filenames import nlinks_file, hardlink_file
-from calibre.utils.ipc.simple_worker import fork_job, WorkerError
+from calibre.utils.filenames import hardlink_file, nlinks_file
+from calibre.utils.ipc.simple_worker import WorkerError, fork_job
 from calibre.utils.logging import default_log
 from calibre.utils.zipfile import ZipFile
 
 exists, join, relpath = os.path.exists, os.path.join, os.path.relpath
-
 
 OEB_FONTS = {guess_type('a.ttf'), guess_type('b.otf'), guess_type('a.woff'), 'application/x-font-ttf', 'application/x-font-otf', 'application/font-sfnt'}
 OPF_NAMESPACES = {'opf':OPF2_NS, 'dc':DC11_NS}
@@ -319,6 +332,17 @@ class Container(ContainerBase):  # {{{
         all_names = {self.href_to_name(x.get('href'), self.opf_name) for x in self.opf_xpath('//opf:manifest/opf:item[@href]')}
         return name in all_names
 
+    def make_name_unique(self, name):
+        ''' Ensure that `name` does not already exist in this book. If it does, return a modified version that does not exist. '''
+        counter = count()
+        while self.has_name_case_insensitive(name) or self.manifest_has_name(name):
+            c = next(counter) + 1
+            base, ext = name.rpartition('.')[::2]
+            if c > 1:
+                base = base.rpartition('-')[0]
+            name = '%s-%d.%s' % (base, c, ext)
+        return name
+
     def add_file(self, name, data, media_type=None, spine_index=None, modify_name_if_needed=False, process_manifest_item=None):
         ''' Add a file to this container. Entries for the file are
         automatically created in the OPF manifest and spine
@@ -326,19 +350,12 @@ class Container(ContainerBase):  # {{{
         if '..' in name:
             raise ValueError('Names are not allowed to have .. in them')
         href = self.name_to_href(name, self.opf_name)
-        if self.has_name(name) or self.manifest_has_name(name):
+        if self.has_name_case_insensitive(name) or self.manifest_has_name(name):
             if not modify_name_if_needed:
-                raise ValueError(('A file with the name %s already exists' % name) if self.has_name(name) else
+                raise ValueError(('A file with the name %s already exists' % name) if self.has_name_case_insensitive(name) else
                                  ('An item with the href %s already exists in the manifest' % href))
-            base, ext = name.rpartition('.')[::2]
-            c = 0
-            while True:
-                c += 1
-                q = '%s-%d.%s' % (base, c, ext)
-                href = self.name_to_href(q, self.opf_name)
-                if not self.has_name(q) and not self.manifest_has_name(q):
-                    name = q
-                    break
+            name = self.make_name_unique(name)
+            href = self.name_to_href(name, self.opf_name)
         path = self.name_to_abspath(name)
         base = os.path.dirname(path)
         if not os.path.exists(base):
@@ -508,6 +525,15 @@ class Container(ContainerBase):  # {{{
         ''' Return True iff a file with the same canonical name as that specified exists. Unlike :meth:`exists` this method is always case-sensitive. '''
         return name and name in self.name_path_map
 
+    def has_name_case_insensitive(self, name):
+        if not name:
+            return False
+        name = name.lower()
+        for q in self.name_path_map:
+            if q.lower() == name:
+                return True
+        return False
+
     def relpath(self, path, base=None):
         '''Convert an absolute path (with os separators) to a path relative to
         base (defaults to self.root). The relative path is *not* a name. Use
@@ -675,6 +701,23 @@ class Container(ContainerBase):  # {{{
                         item.set('properties', ' '.join(props))
         self.dirty(self.opf_name)
         return removed_names, added_names
+
+    def add_properties(self, name, *properties):
+        ''' Add the specified properties to the manifest item identified by name. '''
+        properties = frozenset(properties)
+        if not properties:
+            return True
+        for p in properties:
+            if p.startswith('calibre:'):
+                ensure_prefix(self.opf, None, 'calibre', CALIBRE_PREFIX)
+                break
+        for item in self.opf_xpath('//opf:manifest/opf:item'):
+            iname = self.href_to_name(item.get('href'), self.opf_name)
+            if name == iname:
+                props = frozenset((item.get('properties') or '').split()) | properties
+                item.set('properties', ' '.join(props))
+                return True
+        return False
 
     @property
     def guide_type_map(self):
@@ -862,6 +905,8 @@ class Container(ContainerBase):  # {{{
         generated item.'''
         id_prefix = id_prefix or 'id'
         media_type = media_type or guess_type(name)
+        if unique_href:
+            name = self.make_name_unique(name)
         href = self.name_to_href(name, self.opf_name)
         base, ext = href.rpartition('.')[0::2]
         all_ids = {x.get('id') for x in self.opf_xpath('//*[@id]')}
@@ -871,15 +916,6 @@ class Container(ContainerBase):  # {{{
             c += 1
             item_id = id_prefix + '%d'%c
 
-        def exists(h):
-            n = self.href_to_name(h, self.opf_name)
-            return self.exists(n) or self.manifest_has_name(n)
-
-        if unique_href:
-            c = 0
-            while exists(href):
-                c += 1
-                href = '%s_%d.%s'%(base, c, ext)
         manifest = self.opf_xpath('//opf:manifest')[0]
         item = manifest.makeelement(OPF('item'),
                                     id=item_id, href=href)
@@ -996,6 +1032,7 @@ class Container(ContainerBase):  # {{{
     def commit(self, outpath=None, keep_parsed=False):
         '''
         Commit all dirtied parsed objects to the filesystem and write out the ebook file at outpath.
+
         :param output: The path to write the saved ebook file to. If None, the path of the original book file is used.
         :param keep_parsed: If True the parsed representations of committed items are kept in the cache.
         '''

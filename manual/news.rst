@@ -29,7 +29,7 @@ The calibre blog is a blog of posts that describe many useful calibre features
 in a simple and accessible way for new calibre users. In order to download this
 blog into an ebook, we rely on the :term:`RSS` feed of the blog::
 
-    http://blog.calibre-ebook.com/feeds/posts/default
+    https://blog.calibre-ebook.com/feeds/posts/default
 
 I got the RSS URL by looking under "Subscribe to" at the bottom of the blog
 page and choosing :guilabel:`Posts->Atom`. To make calibre download the feeds and convert
@@ -59,8 +59,8 @@ bbc.co.uk
 
 Lets try the following two feeds from *The BBC*:
 
-    #. News Front Page: http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml
-    #. Science/Nature: http://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml
+    #. News Front Page: https://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml
+    #. Science/Nature: https://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml
 
 Follow the procedure outlined in :ref:`calibre_blog` above to create a recipe for *The BBC* (using the feeds above). Looking at the downloaded ebook, we see that calibre has done a creditable job of extracting only the content you care about from each article's webpage. However, the extraction process is not perfect. Sometimes it leaves in undesirable content like menus and navigation aids or it removes content that should have been left alone, like article headings. In order, to have perfect content extraction, we will need to customize the fetch process, as described in the next section. 
 
@@ -77,10 +77,10 @@ Using the print version of bbc.co.uk
 The first step is to look at the ebook we downloaded previously from :ref:`bbc`. At the end of each article, in the ebook is a little blurb telling you where the article was downloaded from. Copy and paste that URL into a browser. Now on the article webpage look for a link that points to the "Printable version". Click it to see the print version of the article. It looks much neater! Now compare the two URLs. For me they were:
 
     Article URL
-        http://news.bbc.co.uk/2/hi/science/nature/7312016.stm
+        https://news.bbc.co.uk/2/hi/science/nature/7312016.stm
 
     Print version URL
-        http://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm
+        https://newsvote.bbc.co.uk/mpapps/pagetools/print/news.bbc.co.uk/2/hi/science/nature/7312016.stm
 
 So it looks like to get the print version, we need to prefix every article URL with:
     
@@ -96,7 +96,7 @@ You can see that the fields from the :guilabel:`Basic mode` have been translated
 .. code-block:: python
 
     def print_version(self, url):
-        return url.replace('http://', 'http://newsvote.bbc.co.uk/mpapps/pagetools/print/')
+        return url.replace('https://', 'https://newsvote.bbc.co.uk/mpapps/pagetools/print/')
 
 This is python, so indentation is important. After you've added the lines, it should look like:
 
@@ -179,7 +179,7 @@ A reasonably complex real life example that exposes more of the :term:`API` of `
        def get_browser(self):
            br = BasicNewsRecipe.get_browser()
            if self.username is not None and self.password is not None:
-               br.open('http://www.nytimes.com/auth/login')
+               br.open('https://www.nytimes.com/auth/login')
                br.select_form(name='login')
                br['USERID']   = self.username
                br['PASSWORD'] = self.password
@@ -187,7 +187,7 @@ A reasonably complex real life example that exposes more of the :term:`API` of `
            return br
     
        def parse_index(self):
-           soup = self.index_to_soup('http://www.nytimes.com/pages/todayspaper/index.html')
+           soup = self.index_to_soup('https://www.nytimes.com/pages/todayspaper/index.html')
         
            def feed_title(div):
                return ''.join(div.findAll(text=True, recursive=False)).strip()
@@ -233,7 +233,7 @@ A reasonably complex real life example that exposes more of the :term:`API` of `
            if refresh is None:
                return soup
            content = refresh.get('content').partition('=')[2]
-           raw = self.browser.open('http://www.nytimes.com'+content).read()
+           raw = self.browser.open('https://www.nytimes.com'+content).read()
            return BeautifulSoup(raw.decode('cp1252', 'replace'))
  
 
@@ -259,15 +259,15 @@ The next interesting feature is::
     def get_browser(self):
         ...
 
-``needs_subscription = True`` tells calibre that this recipe needs a username and password in order to access the content. This causes, calibre to ask for a username and password whenever you try to use this recipe. The code in :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` actually does the login into the NYT website. Once logged in, calibre will use the same, logged in, browser instance to fetch all content. See `mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_ to understand the code in ``get_browser``.
+``needs_subscription = True`` tells calibre that this recipe needs a username and password in order to access the content. This causes, calibre to ask for a username and password whenever you try to use this recipe. The code in :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` actually does the login into the NYT website. Once logged in, calibre will use the same, logged in, browser instance to fetch all content. See `mechanize <https://github.com/jjlee/mechanize>`_ to understand the code in ``get_browser``.
 
 The next new feature is the
 :meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index` method. Its job is
-to go to http://www.nytimes.com/pages/todayspaper/index.html and fetch the list
+to go to https://www.nytimes.com/pages/todayspaper/index.html and fetch the list
 of articles that appear in *todays* paper. While more complex than simply using
 :term:`RSS`, the recipe creates an ebook that corresponds very closely to the
 days paper. ``parse_index`` makes heavy use of `BeautifulSoup
-<http://www.crummy.com/software/BeautifulSoup/documentation.html>`_ to parse
+<https://www.crummy.com/software/BeautifulSoup/documentation.html>`_ to parse
 the daily paper webpage. You can also use other, more modern parsers if you
 dislike BeatifulSoup. calibre comes with `lxml <http://lxml.de/>`_ and
 `html5lib <https://github.com/html5lib/html5lib-python>`_, which are the
@@ -306,7 +306,7 @@ Once the download is complete, you can look at the downloaded :term:`HTML` by op
     ...
 
 
-If you're satisfied with your recipe, and you feel there is enough demand to justify its inclusion into the set of built-in recipes, post your recipe in the `calibre recipes forum <http://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it with other calibre users.
+If you're satisfied with your recipe, and you feel there is enough demand to justify its inclusion into the set of built-in recipes, post your recipe in the `calibre recipes forum <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it with other calibre users.
 
 .. note:: 
     On OS X, the command line tools are inside the calibre bundle, for example,
@@ -333,7 +333,7 @@ To learn more about writing advanced recipes using some of the facilities, avail
     `Built-in recipes <https://github.com/kovidgoyal/calibre/tree/master/recipes>`_
         The source code for the built-in recipes that come with calibre
 
-    `The calibre recipes forum <http://www.mobileread.com/forums/forumdisplay.php?f=228>`_
+    `The calibre recipes forum <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_
         Lots of knowledgeable calibre recipe writers hang out here.
 
 

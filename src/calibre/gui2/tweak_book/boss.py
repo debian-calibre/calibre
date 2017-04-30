@@ -15,7 +15,7 @@ from PyQt5.Qt import (
     QDialogButtonBox, QIcon, QInputDialog, QUrl, pyqtSignal)
 
 from calibre import prints, isbytestring
-from calibre.constants import cache_dir
+from calibre.constants import cache_dir, iswindows
 from calibre.ptempfile import PersistentTemporaryDirectory, TemporaryDirectory
 from calibre.ebooks.oeb.base import urlnormalize
 from calibre.ebooks.oeb.polish.main import SUPPORTED, tweak_polish
@@ -48,6 +48,7 @@ from calibre.gui2.tweak_book.widgets import (
     InsertSemantics, BusyCursor, InsertTag, FilterCSS, AddCover)
 from calibre.utils.config import JSONConfig
 from calibre.utils.icu import numeric_sort_key
+from calibre.utils.imghdr import identify
 
 _diff_dialogs = []
 last_used_transform_rules = []
@@ -342,6 +343,13 @@ class Boss(QObject):
             recent_books.insert(0, path)
             tprefs['recent-books'] = recent_books[:10]
             self.gui.update_recent_books()
+            if iswindows:
+                try:
+                    from win32com.shell import shell, shellcon
+                    shell.SHAddToRecentDocs(shellcon.SHARD_PATHW, path)
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
             if ef:
                 if isinstance(ef, type('')):
                     ef = [ef]
@@ -475,7 +483,7 @@ class Boss(QObject):
             for path in sorted(files, key=numeric_sort_key):
                 name = files[path]
                 i = 0
-                while c.exists(name) or c.manifest_has_name(name):
+                while c.exists(name) or c.manifest_has_name(name) or c.has_name_case_insensitive(name):
                     i += 1
                     name, ext = name.rpartition('.')[0::2]
                     name = '%s_%d.%s' % (name, i, ext)
@@ -660,16 +668,16 @@ class Boss(QObject):
         self.add_savepoint(_('Before: Rename %s') % oldname)
         name_map = {oldname:newname}
         self.gui.blocking_job(
-            'rename_file', _('Renaming and updating links...'), partial(self.rename_done, name_map),
+            'rename_file', _('Renaming and updating links...'), partial(self.rename_done, name_map, from_filelist=self.gui.file_list.current_name),
             rename_files, current_container(), name_map)
 
     def bulk_rename_requested(self, name_map):
         self.add_savepoint(_('Before: Bulk rename'))
         self.gui.blocking_job(
-            'bulk_rename_files', _('Renaming and updating links...'), partial(self.rename_done, name_map),
+            'bulk_rename_files', _('Renaming and updating links...'), partial(self.rename_done, name_map, from_filelist=self.gui.file_list.current_name),
             rename_files, current_container(), name_map)
 
-    def rename_done(self, name_map, job):
+    def rename_done(self, name_map, job, from_filelist=None):
         if job.traceback is not None:
             return error_dialog(self.gui, _('Failed to rename files'),
                     _('Failed to rename files, click Show details for more information.'),
@@ -684,6 +692,10 @@ class Boss(QObject):
             if self.gui.preview.current_name == oldname:
                 self.gui.preview.current_name = newname
         self.apply_container_update_to_gui()
+        if from_filelist:
+            self.gui.file_list.select_names(frozenset(name_map.itervalues()), current_name=name_map.get(from_filelist))
+            self.gui.file_list.file_list.setFocus(Qt.PopupFocusReason)
+
     # }}}
 
     # Global history {{{
@@ -850,7 +862,8 @@ class Boss(QObject):
                         self.refresh_file_list()
                         chosen_name = chosen_image_is_external[0]
                     href = current_container().name_to_href(chosen_name, edname)
-                    ed.insert_image(href, fullpage=fullpage, preserve_aspect_ratio=preserve_ar)
+                    fmt, width, height = identify(current_container().raw_data(chosen_name, decode=False))
+                    ed.insert_image(href, fullpage=fullpage, preserve_aspect_ratio=preserve_ar, width=width, height=height)
             elif action[0] == 'insert_hyperlink':
                 self.commit_all_editors_to_container()
                 d = InsertLink(current_container(), edname, initial_text=ed.get_smart_selection(), parent=self.gui)

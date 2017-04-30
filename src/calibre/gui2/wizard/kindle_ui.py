@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/kindle.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,7 +41,7 @@ class Ui_WizardPage(object):
         WizardPage.setWindowTitle(_("WizardPage"))
         WizardPage.setTitle(_("Welcome to calibre"))
         WizardPage.setSubTitle(_("The one stop solution to all your e-book needs."))
-        self.label.setText(_("<p>calibre can automatically send books by email to your Kindle. To do that you have to setup email delivery below. The easiest way is to setup a free <a href=\"http://gmx.com\">GMX account</a> and click the Use GMX button below. You will also have to register your email address in your Amazon account."))
+        self.label.setText(_("<p>calibre can automatically send books by email to your Kindle. To do that you have to setup email delivery below. The easiest way is to setup a free <a href=\"https://gmx.com\">GMX account</a> and click the Use GMX button below. You will also have to register your email address in your Amazon account."))
         self.label_2.setText(_("&Kindle email:"))
 
 from calibre.gui2.wizard.send_email import SendEmail

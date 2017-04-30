@@ -8,22 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-01 12:31+0530\n"
-"PO-Revision-Date: 2015-05-05 13:33+0000\n"
-"Last-Translator: W.P.M.E. Hofland <wpme.hofland@gmail.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/projects/p/calibre/language/nl/)\n"
+"POT-Creation-Date: 2017-02-12 07:41+0530\n"
+"PO-Revision-Date: 2017-02-10 03:11+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# 54295133a3f14b088639e347b32243b2
 #: ../../home/kovid/work/calibre/manual/server.rst:4
 msgid "Integrating the calibre content server into other servers"
 msgstr ""
 
-# 6dbf643fa0524259b587c62a67e28dab
 #: ../../home/kovid/work/calibre/manual/server.rst:6
 msgid ""
 "Here, we will show you how to integrate the calibre content server into "
@@ -35,22 +33,14 @@ msgid ""
 " 2.x on linux, but should be easily adaptable to other platforms."
 msgstr ""
 
-# 27ad1bd3b7e344a083e149ad8a3fb0da
-#: ../../home/kovid/work/calibre/manual/server.rst:0
-msgid "Contents"
-msgstr "Inhoud"
-
-# 7445f15807c84447851b0631260c7890
 #: ../../home/kovid/work/calibre/manual/server.rst:12
 msgid "This only applies to calibre releases >= 0.7.25"
 msgstr "Enkel van toepassing op calibre releases >= 0.7.25"
 
-# 340f29af8f1c45c9b97c518c2576a68e
 #: ../../home/kovid/work/calibre/manual/server.rst:15
 msgid "Using a reverse proxy"
 msgstr "Gebruik van een reverse proxy"
 
-# 2dbffe23bd57402ba3f6d257b2e4b9c7
 #: ../../home/kovid/work/calibre/manual/server.rst:17
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
@@ -65,12 +55,10 @@ msgid ""
 "server that supports Reverse Proxies."
 msgstr ""
 
-# a8556a3c221f4acc8f96bac9c95dd023
 #: ../../home/kovid/work/calibre/manual/server.rst:19
 msgid "First start the calibre content server as shown below::"
 msgstr "Start eerst de calibre inhoudsserver zoals hieronder beschreven::"
 
-# 6954865c5cb04f3faea44819dc4b331c
 #: ../../home/kovid/work/calibre/manual/server.rst:23
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the content"
@@ -79,14 +67,12 @@ msgid ""
 " content server website, but now it will run under /calibre."
 msgstr ""
 
-# 647bbc6a78904f33aa04a34897c8baab
 #: ../../home/kovid/work/calibre/manual/server.rst:25
 msgid ""
 "Now suppose you are using Apache as your main server. First enable the proxy"
 " modules in apache, by adding the following to :file:`httpd.conf`::"
 msgstr ""
 
-# ca181e9075af4463b1fb89c07eb609fb
 #: ../../home/kovid/work/calibre/manual/server.rst:30
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
@@ -95,7 +81,6 @@ msgid ""
 " file for the virtual host in question)::"
 msgstr ""
 
-# 45707516c1624871bca73ab28332f4f5
 #: ../../home/kovid/work/calibre/manual/server.rst:38
 msgid ""
 "That's all, you will now be able to access the calibre Content Server under "
@@ -104,7 +89,6 @@ msgid ""
 "--url-prefix option above, the calibre server handles them transparently."
 msgstr ""
 
-# fecc15f64de34647bdbc9c221f61a2fe
 #: ../../home/kovid/work/calibre/manual/server.rst:40
 msgid ""
 "If you are willing to devote an entire VirtualHost to the content server, "
@@ -112,7 +96,6 @@ msgid ""
 "the ProxyPass directive."
 msgstr ""
 
-# c446a2e1cc5d4163a55f1bf4db63517a
 #: ../../home/kovid/work/calibre/manual/server.rst:42
 msgid ""
 "The server engine calibre uses, CherryPy, can have trouble with proxying and"
@@ -120,19 +103,16 @@ msgid ""
 "shown above."
 msgstr ""
 
-# 1bf104f1968e43a9ac9923b686857da6
 #: ../../home/kovid/work/calibre/manual/server.rst:45
 msgid "In process"
 msgstr "Wordt verwerkt"
 
-# f0a23ca5121e41d7815391d4ca1f433e
 #: ../../home/kovid/work/calibre/manual/server.rst:47
 msgid ""
 "The calibre content server can be run directly, in process, inside a host "
 "server like Apache using the WSGI framework."
 msgstr ""
 
-# 018c88c01da04b41a1b746487bac6eed
 #: ../../home/kovid/work/calibre/manual/server.rst:49
 msgid ""
 "For this to work, all the dependencies needed by calibre must be installed "
@@ -141,7 +121,6 @@ msgid ""
 "process server problems."
 msgstr ""
 
-# b895b69d4d334cf5a6bbf38112494f25
 #: ../../home/kovid/work/calibre/manual/server.rst:51
 msgid ""
 "First, we have to create a WSGI *adapter* for the calibre content server. "
@@ -149,21 +128,18 @@ msgid ""
 "directed in the comments"
 msgstr ""
 
-# 547d8cfa5573445fa09d80ce30ad82f1
 #: ../../home/kovid/work/calibre/manual/server.rst:101
 msgid ""
 "Save this adapter as :file:`calibre-wsgi-adpater.py` somewhere your server "
 "will have access to it."
 msgstr ""
 
-# 0ce6c6158319456ebde447f8c70cb72f
 #: ../../home/kovid/work/calibre/manual/server.rst:103
 msgid ""
 "Let's suppose that we want to use WSGI in Apache. First enable WSGI in "
 "Apache by adding the following to :file:`httpd.conf`::"
 msgstr ""
 
-# a57508916f7548878f098d20a0aaa2ad
 #: ../../home/kovid/work/calibre/manual/server.rst:107
 msgid ""
 "The exact technique for enabling the wsgi module will vary depending on your"
@@ -172,23 +148,20 @@ msgid ""
 " file for the virtual host in question::"
 msgstr ""
 
-# cce9b33c7c504e04b56d4d78e016ab44
 #: ../../home/kovid/work/calibre/manual/server.rst:111
 msgid ""
 "Change the path to :file:`calibre-wsgi-adapter.py` to wherever you saved it "
 "previously (make sure Apache has access to it)."
 msgstr ""
 
-# e045278a64814bfaa5dad0667dd5a6fb
 #: ../../home/kovid/work/calibre/manual/server.rst:113
 msgid ""
 "That's all, you will now be able to access the calibre Content Server under "
 "the /calibre URL in your apache server."
 msgstr ""
 
-# 377b00fe8fc64200beca465b35222235
 #: ../../home/kovid/work/calibre/manual/server.rst:115
 msgid ""
 "For more help with using mod_wsgi in Apache, see `mod_wsgi "
-"<http://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
+"<https://code.google.com/p/modwsgi/wiki/WhereToGetHelp>`_."
 msgstr ""

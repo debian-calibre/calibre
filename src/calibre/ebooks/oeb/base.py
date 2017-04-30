@@ -88,6 +88,7 @@ def XLINK(name):
 def CALIBRE(name):
     return '{%s}%s' % (CALIBRE_NS, name)
 
+
 _css_url_re = re.compile(r'url\s*\([\'"]{0,1}(.*?)[\'"]{0,1}\)', re.I)
 _css_import_re = re.compile(r'@import "(.*?)"')
 _archive_re = re.compile(r'[^ ]+')
@@ -120,6 +121,7 @@ def itercsslinks(raw):
         yield match.group(1), match.start(1)
     for match in _css_import_re.finditer(raw):
         yield match.group(1), match.start(1)
+
 
 _link_attrs = set(html.defs.link_attrs) | {XLINK('href'), 'poster'}
 
@@ -401,6 +403,7 @@ def serialize(data, media_type, pretty_print=False):
             data = data.encode('utf-8')
         return data + b'\n'
     return bytes(data)
+
 
 ASCII_CHARS   = set(chr(x) for x in xrange(128))
 UNIBYTE_CHARS = set(chr(x) for x in xrange(256))
@@ -999,7 +1002,7 @@ class Manifest(object):
             entry's associated content.
 
             - XHTML, HTML, and variant content is parsed as necessary to
-              convert and and return as an lxml.etree element in the XHTML
+              convert and return as an lxml.etree element in the XHTML
               namespace.
             - XML content is parsed and returned as an lxml.etree element.
             - CSS and CSS-variant content is parsed and returned as a cssutils
@@ -1434,6 +1437,11 @@ class Guide(object):
 
     def remove(self, type):
         return self.refs.pop(type, None)
+
+    def remove_by_href(self, href):
+        remove = [r for r, i in self.refs.iteritems() if i.href == href]
+        for r in remove:
+            self.remove(r)
 
     def iterkeys(self):
         for type in self.refs:

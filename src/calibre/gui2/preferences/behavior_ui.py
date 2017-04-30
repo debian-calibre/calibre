@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -148,7 +147,7 @@ class Ui_Form(object):
         self.opt_new_version_notification.setText(_("Show notification when &new version is available"))
         self.opt_bools_are_tristate.setToolTip(_("If checked, Yes/No custom columns values can be Yes, No, or Unknown.\n"
 "If not checked, the values can be Yes or No."))
-        self.opt_bools_are_tristate.setText(_("Yes/No columns have three values (Requires restart)"))
+        self.opt_bools_are_tristate.setText(_("Yes/No columns have three values (needs restart)"))
         self.opt_upload_news_to_device.setText(_("Automatically send downloaded &news to ebook reader"))
         self.opt_delete_news_from_library_on_upload.setText(_("&Delete news from library when it is automatically sent to reader"))
         self.label_23.setText(_("Preferred &output format:"))
