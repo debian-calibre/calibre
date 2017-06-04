@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-13 17:31+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-09 07:20+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgid ""
 " then how to specify your own static resources like icons and templates to "
 "override the defaults and finally how to use *plugins* to add functionality "
 "to calibre."
-msgstr "calibre är en mycket modulär konstruktion. Diverse delar av den kan anpassas. Du kan lära dig skapa *recpt* som läggs till källan av tillängliga innehållet av calibre i sektionen :ref:`news`. Här kommer du för lära dig använda miljövarabler och *justera* för att anpassa calibreers beteende,  och sedan hur du specifierar dina statiska resurser som ikoner och mallar för att åsidosätta grundinställningar och slutligen hur *insticksprogram* kan användas för att lägga till funktionalitet till calibre."
+msgstr "calibre är en mycket modulär konstruktion. Diverse delar av den kan anpassas. Du kan lära dig skapa *recpt* som läggs till källan av tillängliga innehållet av calibre i sektionen :ref:`news`. Här kommer du för lära dig använda miljövarabler och *justera* för att anpassa calibreers beteende,  och sedan hur du specifierar dina statiska resurser som ikoner och mallar för att åsidosätta grundinställningar och slutligen hur *insticksmoduler* kan användas för att lägga till funktionalitet till calibre."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:24
 msgid "Environment variables"
@@ -62,7 +62,7 @@ msgid ""
 "metadata.db. Using this variable you can have metadata.db be in a location "
 "other than the library folder. Useful if your library folder is on a "
 "networked drive that does not support file locking."
-msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - tillåter dig att ange fulla sökvägen till metadata.db. Genom att använda denna variabel kan du ha metadata.db i en annan plats än bibliotekskatalogen. Användbart om din bibliotekskatalog är på ett nätverk som inte stöder låsning av filer."
+msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - tillåter dig att ange fulla sökvägen till metadata.db. Genom att använda denna variabel kan du ha metadata.db i en annan plats än biblioteksmappen. Användbart om din biblioteksmapp är på ett nätverk som inte stöder låsning av filer."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:30
 msgid ""
@@ -101,7 +101,7 @@ msgid ""
 "style plugins and use its builtin style plugin instead. Useful to workaround"
 " crashes caused by the system Qt plugin being incompatible with the version "
 "of Qt shipped with calibre."
-msgstr "``CALIBRE_IGNORE_SYSTEM_THEME`` - Får calibre att ignorera några system Qt stilinsticksprogram och använda sitt inbyggda stilinsticksprogram istället. Användbar för att komma runt krascher som orsakas av systemet Qt-insticksprogram som är oförenligt med den version av Qt som levereras med calibre."
+msgstr "``CALIBRE_IGNORE_SYSTEM_THEME`` - Får calibre att ignorera några system Qt stilinsticksmoduler och använda sin inbyggda stilinsticksmodul istället. Användbar för att komma runt krascher som orsakas av system Qt insticksmodulen som är oförenligt med den version av Qt som levereras med calibre."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:36
 msgid ""
@@ -112,8 +112,8 @@ msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Får calibre att skriva ut depre
 #: ../../home/kovid/work/calibre/manual/customize.rst:37
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
-"registering the filetypes it is capable of handling with windows."
-msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Förhindra calibre från att automatiskt registrera de filtyper den är kapabel att hantera med windows."
+"registering the filetypes it is capable of handling with Windows."
+msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Förhindra calibre från att automatiskt registrera de filtyper den är kapabel att hantera med Windows."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:38
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
@@ -125,7 +125,7 @@ msgstr "``http_proxy`` - Används på linux för att ange en specifik HTTP proxy
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:41
 msgid ""
-"See `How to set environment variables in windows "
+"See `How to set environment variables in Windows "
 "<http://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
 "environment variables in OS X <http://www.dowdandassociates.com/blog/content"
 "/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
@@ -151,11 +151,12 @@ msgstr "Åsidosätta ikoner, mallar, o.s.v."
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
-":guilabel:`Preferences->Look & Feel->Change Icon theme`. The icon themes use"
-" the same mechanism as described below for overriding static resources."
-msgstr "calibre har direkt stöd för ikonteman, det finns flera ikonteman tillgängliga för calibre som du kan använda genom att gå till :guilabel:`Inställningar->Utseende och känsla->Ändra ikontema`. Ikonteman använder samma mekanism som beskriven nedan för att åsidosätta statiska resurser."
+":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon"
+" themes use the same mechanism as described below for overriding static "
+"resources."
+msgstr "calibre har direkt stöd för ikonteman, det finns flera ikonteman tillgängliga för calibre som du kan använda genom att gå till :guilabel:`Inställningar->Gränssnitt->Utseende & känsla->Ändra ikontema`. Ikonteman använder samma mekanism som beskriven nedan för att åsidosätta statiska resurser."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:62
+#: ../../home/kovid/work/calibre/manual/customize.rst:61
 msgid ""
 "calibre allows you to override the static resources, like icons, javascript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -166,9 +167,9 @@ msgid ""
 "if you are using the binary installer from the calibre website it will be "
 ":file:`/opt/calibre/resources`. These paths can change depending on where "
 "you choose to install calibre."
-msgstr "calibre gör att du kan åsidosätta de statiska resurser, som ikoner, javascript och mallar för metadata omslag, kataloger, o.s.v. med anpassade versioner som du gillar. Alla statiska resurser sparas i resursunderkataloger i calibre installationsplats. I Windows är det oftast  :file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. På OS X :file:`/Applications/calibre.app/Contents/Resources/resources/`. På Linux, om du använder det binära installationsprogrammet från calibres webbplats blir det :file:`/opt/calibre/resources`. Dessa vägar kan ändras beroende på var du väljer att installera calibre."
+msgstr "calibre gör att du kan åsidosätta de statiska resurser, som ikoner, javascript och mallar för metadata omslag, mappar, o.s.v. med anpassade versioner som du gillar. Alla statiska resurser sparas i resursundermappar i calibre installationsplats. I Windows är det oftast  :file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. På OS X :file:`/Applications/calibre.app/Contents/Resources/resources/`. På Linux, om du använder det binära installationsprogrammet från calibres webbplats blir det :file:`/opt/calibre/resources`. Dessa vägar kan ändras beroende på var du väljer att installera calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:71
+#: ../../home/kovid/work/calibre/manual/customize.rst:70
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -178,9 +179,9 @@ msgid ""
 "Place the files in the appropriate sub folders, for example place images in "
 ":file:`resources/images`, etc. calibre will automatically use your custom "
 "file in preference to the built-in one the next time it is started."
-msgstr "Du ska inte ändra filer i denna resurskatalog, eftersom dina ändringar kommer skrivas över nästa gång du uppdaterar calibre. Gå istället till :guilabel:`Inställningar->Avancerat->Diverse` och klicka :guilabel:`Öppna calibre inställningsmappkatalog`. I denna konfigurationskatalog skapa en underkatalog med namnet resurser och placera filerna du vill åsidosätta i den. Placera filer i lämplig underkatalog, som till exempel för bilder :file:`resources/images`, o.s.v. calibre kommer automatisk använda dessa anpassade inställningar i stället för de inbyggda nästa gång det startar."
+msgstr "Du ska inte ändra filer i denna resursmapp, eftersom dina ändringar kommer skrivas över nästa gång du uppdaterar calibre. Gå istället till :guilabel:`Inställningar->Avancerat->Diverse` och klicka :guilabel:`Öppna calibre konfigurationsmapp`. I denna konfigurationsmapp skapa en undermapp med namnet resurser och placera filerna du vill åsidosätta i den. Placera filer i lämplig undermapp, som till exempel för bilder :file:`resources/images`, o.s.v. calibre kommer automatisk använda dessa anpassade inställningar i stället för de inbyggda nästa gång det startar."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:80
+#: ../../home/kovid/work/calibre/manual/customize.rst:79
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -189,13 +190,13 @@ msgid ""
 "save it in the configuration directory as "
 ":file:`resources/images/trash.png`. All the icons used by the calibre user "
 "interface are in :file:`resources/images` and its sub-folders."
-msgstr "Till exempel, om du vill anvnda ikonen för :guilabel:`Ta bort böcker` åtgärd, ska du för titta i den inbyggda resurskatalogen och se att den relevanta filen är :file:`resources/images/trash.png`. Med antagandet att du har en alternativ ikon i PNG-format kallad :file:`mytrash.png` kommer du spara den i konfigurationskatalogen som :file:`resources/images/trash.png`. Alla ikoner som används av calibre användargränssnitt är i :file:`resources/images` och dess underkataloger."
+msgstr "Till exempel, om du vill anvnda ikonen för :guilabel:`Ta bort böcker` åtgärd, ska du för titta i den inbyggda resursmappen och se att den relevanta filen är :file:`resources/images/trash.png`. Med antagandet att du har en alternativ ikon i PNG-format kallad :file:`mytrash.png` kommer du spara den i konfigurationsmappen som :file:`resources/images/trash.png`. Alla ikoner som används av calibre-användargränssnittet är i :file:`resources/images` och dess undermappar."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:89
+#: ../../home/kovid/work/calibre/manual/customize.rst:88
 msgid "Creating your own icon theme for calibre"
 msgstr "Skapa dina egna ikonteman för calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:91
+#: ../../home/kovid/work/calibre/manual/customize.rst:90
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -203,29 +204,29 @@ msgid ""
 ":guilabel:`Preferences->Miscellaneous->Create icon theme`, select the folder"
 " where you have put your icons (usually the :file:`resources/images` folder "
 "in the calibre config directory, as described above). Then fill up the theme"
-" metadata and click OK.  This will result in a zip file containing the theme"
+" metadata and click OK.  This will result in a ZIP file containing the theme"
 " icons. You can upload that to the calibre forum at `Mobileread "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ and then I will"
 " make your theme available via calibre's builtin icon theme system."
-msgstr "Om du har skapat en vacker uppsättning ikoner och vill dela dem med andra calibre användare via calibres inbyggda ikontemastöd, kan du enkelt paketera dina ikoner i ett tema. För att göra detta, gå till :guilabel:`Inställningar->Diverse->Skapa ikontema`, välj den mapp där du har lagt dina ikoner (oftast :file:`resources/images` mapp för calibres konfiguration, som beskrivits ovan ). Fyll sedan upp temat metadata och klicka på OK. Detta kommer att resultera i en zip-fil som innehåller temat ikoner. Du kan överföra det till calibres forum på\n `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ och då jag kommer att göra ditt tema tillgänglig via calibres inbyggda ikontemasystem."
+msgstr "Om du har skapat en vacker uppsättning ikoner och vill dela dem med andra calibre användare via calibres inbyggda ikontemastöd, kan du enkelt paketera in dina ikoner i ett tema. För att göra detta, gå till :guilabel:`Inställningar->Diverse->Skapa ikontema`, välj den mapp där du har lagt dina ikoner (oftast :file:`resources/images` mapp för calibres konfiguration, som beskrivits ovan). Fyll sedan upp tema-metadata och klicka på OK. Detta kommer att resultera i en ZIP-fil som innehåller temaikoner. Du kan överföra det till calibres forum på\n `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ och då kommer  jag att göra ditt tema tillgänglig via calibres inbyggda ikontemasystem."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:104
+#: ../../home/kovid/work/calibre/manual/customize.rst:103
 msgid "Customizing calibre with plugins"
-msgstr "Anpassa calibre med insticksprogram"
+msgstr "Anpassa calibre med insticksmodul"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:106
+#: ../../home/kovid/work/calibre/manual/customize.rst:105
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
 "news (though these are called recipes), for various components of the user "
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
-"plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr "calibre är en väldigt modulär konstruktion. Nästan alla funktioner i calibre  kommer i form av insticksprogram. Insticksprogram används för konvertering, för hämtning av nyheter (även om dessa kallas för recept), för diverse komponenter av användargränssnitt, för anslutning av olika enheter, för bearbetning av filer när de läggs till calibre och så vidare. Du kan få en komplett lista med alla inbyggda insticksprogram i calibre genom att gå till :guilabel:`Inställningar->Insticksprogram`."
+"plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
+msgstr "calibre är en väldigt modulär konstruktion. Nästan alla funktioner i calibre kommer i form av insticksmoduler. Insticksmoduler används för konvertering, för hämtning av nyheter (även om dessa kallas för recept), för diverse komponenter av användargränssnitt, för anslutning av olika enheter, för bearbetning av filer när de läggs till calibre och så vidare. Du kan få en komplett lista med alla inbyggda insticksmoduler i calibre genom att gå till :guilabel:`Inställningar->Avancerat->Insticksmoduler`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:108
+#: ../../home/kovid/work/calibre/manual/customize.rst:107
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
-msgstr "Du kan skriva dina egna insticksprogram för att anpassa och utöka beteendet av calibre. Insticksprogramsarkiteturen i calibre är mycket enkel, se handledningen :ref:`pluginstutorial`."
+msgstr "Du kan skriva dina egna insticksmoduler för att anpassa och utöka beteendet av calibre. Insticksmodulsarkiteturen i calibre är mycket enkel, se handledningen :ref:`pluginstutorial`."

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-24 08:14+0530\n"
-"PO-Revision-Date: 2017-03-06 19:38+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-06 06:17+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgid ""
 "Similarly, adding support for new conversion formats involves writing "
 "input/output format plugins. Another example of the modular design is the "
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
-"designed to add features to calibre, see the `plugin index "
+"designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 msgstr "Модульність calibre реалізується ``додатками``. У нашому підручнику є :ref:`розділ <customize>` щодо написання додатків до calibre. Наприклад, додавання підтримки нового пристрою у calibre типово полягає у написанні менш ніж 100 рядків коду у формі додатка драйвера пристрою. Ви можете ознайомитися зі списком `вбудованих драйверів <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. Так само, додавання підтримки нових форматів перетворення полягає у написанні додатків форматів введення і виведення даних. Іншим прикладом модульної побудови є :ref:`система рецептів <news>` для отримання новин. З іншими прикладами додатків, розроблених для розширення можливостей calibre, можна ознайомитися `тут <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 
@@ -89,8 +89,8 @@ msgstr "Докладніший опис можна знайти у ``devices.int
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:43
 msgid ""
-"ebooks  - All the ebook conversion/metadata code. A good starting point is "
-"``calibre.ebooks.conversion.cli`` which is the module powering the :command"
+"e-books  - All the e-book conversion/metadata code. A good starting point is"
+" ``calibre.ebooks.conversion.cli`` which is the module powering the :command"
 ":`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
@@ -107,7 +107,7 @@ msgid ""
 ":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
 "various transforms and an output plugin. The code that constructs and drives"
 " the pipeline is in :file:`plumber.py`. The pipeline works on a "
-"representation of an ebook that is like an unzipped epub, with manifest, "
+"representation of an e-book that is like an unzipped epub, with manifest, "
 "spine, toc, guide, html content, etc. The class that manages this "
 "representation is OEBBook in ``ebooks.oeb.base``. The various "
 "transformations that are applied to the book during conversions live in "
@@ -117,7 +117,7 @@ msgstr "Перетворення виконується у конвеєрі. З�
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:58
 msgid ""
-"Ebook editing happens using a different container object. It is documented "
+"E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
 msgstr "Редагування електронних книг відбувається за допомогою іншого об’єкта-контейнера. Його документовано у розділі :ref:`polish_api`."
 
@@ -128,14 +128,14 @@ msgid ""
 msgstr "db — модуль бази даних. Див. розділ :ref:`db_api`, щоб дізнатися більше про інтерфейс бібліотеки calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:63
-msgid "content server: ``library.server`` is the calibre Content Server."
+msgid "Content server: ``library.server`` is the calibre Content server."
 msgstr "сервер даних: «library.server» — це сервер даних calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
-"``gui2.main`` and ``gui2.ui``. The ebook-viewer is in ``gui2.viewer``. The "
-"ebook editor is in ``gui2.tweak_book``."
+"``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
+"e-book editor is in ``gui2.tweak_book``."
 msgstr "gui2 — графічний інтерфейс користувача. Ініціалізація інтерфейсу виконується у ``gui2.main`` і ``gui2.ui``. Сам засіб перегляду електронних книг міститься у ``gui2.viewer``. За редагування електронних книг відповідає ``gui2.tweak_book``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:67
@@ -493,22 +493,22 @@ msgid ""
 msgstr "Цей улюблений спосіб діагностування Ковіда. Просто вставте інструкції print у потрібні вам місця у коді і запустіть програму з термінала. Наприклад, ви можете запустити графічний інтерфейс програми з термінала ось так::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:289
-msgid "Similarly, you can start the ebook-viewer as::"
+msgid "Similarly, you can start the e-book-viewer as::"
 msgstr "Так само, ви можете запустити ebook-viewer ось так::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:293
-msgid "The ebook-editor can be started as::"
-msgstr "ebook-editor можна запустити ось так::"
+msgid "The e-book-editor can be started as::"
+msgstr "Редактор електронних книг можна запустити ось так::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:298
-msgid "Using an interactive python interpreter"
-msgstr "Використання інтерактивного інтерпретатора python"
+msgid "Using an interactive Python interpreter"
+msgstr "Використання інтерактивного інтерпретатора Python"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:300
 msgid ""
 "You can insert the following two lines of code to start an interactive "
-"python session at that point::"
-msgstr "Ви можете вставити такі два рядки коду, щоб запустити інтерактивний сеанс python на цьому кроці::"
+"Python session at that point::"
+msgstr "Ви можете вставити такі два рядки коду, щоб запустити інтерактивний сеанс Python на цьому кроці::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:305
 msgid ""
@@ -520,15 +520,15 @@ msgid ""
 msgstr "Якщо програму запущено з командного рядка, цей код запустити інтерактивний інтерпретатор Python із доступом до усіх локально визначених змінних (змінних у області local). У інтерактивному командному рядку передбачено навіть автоматичне доповнення за натисканням клавіші Tab властивостей об’єктів. Ви також можете скористатися різноманітними можливостями Python для інтроспекції, зокрема :func:`dir`, :func:`type`, :func:`repr` тощо."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:311
-msgid "Using the python debugger as a remote debugger"
-msgstr "Використання засобу діагностики python як віддалений засіб діагностики"
+msgid "Using the Python debugger as a remote debugger"
+msgstr "Використання засобу діагностики Python як віддалений засіб діагностики"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:313
 msgid ""
-"You can use the builtin python debugger (pdb) as a remote debugger from the "
+"You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
-msgstr "Ви можете скористатися вбудованим засобом діагностики python (pdb) як віддаленим засобом діагностики з командного рядка. Спочатку, запустіть віддалений засіб діагностики у точці коду calibre, яка вам потрібна, ось так::"
+msgstr "Ви можете скористатися вбудованим засобом діагностики Python (pdb) як віддаленим засобом діагностики з командного рядка. Спочатку, запустіть віддалений засіб діагностики у точці коду calibre, яка вам потрібна, ось так::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:320
 msgid ""
@@ -545,10 +545,10 @@ msgstr "Тепер відкрийте вікно термінала або ко�
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:329
 msgid ""
-"You can read about how to use the python debugger in the `python stdlib docs"
+"You can read about how to use the Python debugger in the `Python stdlib docs"
 " for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-"
 "commands>`_."
-msgstr "Дізнатися більше про те, як користуватися засобом діагностики python, можна за допомогою `документації щодо стандартної бібліотеки python, модуль pdb <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
+msgstr "Дізнатися більше про те, як користуватися засобом діагностики python, можна за допомогою `документації щодо стандартної бібліотеки Python, модуль pdb <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:333
 msgid ""
@@ -560,17 +560,17 @@ msgstr "Типово, засіб віддаленої діагностики н�
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:339
 msgid ""
-"The python debugger cannot handle multiple threads, so you have to call "
+"The Python debugger cannot handle multiple threads, so you have to call "
 "set_trace once per thread, each time with a different port number."
-msgstr "Засіб діагностики python не може працювати одночасно з декількома потоками виконання, тому вам слід викликати set_trace для кожного потоку, кожного разу на портах із різними номерами."
+msgstr "Засіб діагностики Python не може працювати одночасно з декількома потоками виконання, тому вам слід викликати set_trace для кожного потоку, кожного разу на портах із різними номерами."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:343
-msgid "Using the debugger in your favorite python IDE"
-msgstr "Використання засобу діагностики у вашому улюбленому комплексному середовищі розробки python"
+msgid "Using the debugger in your favorite Python IDE"
+msgstr "Використання засобу діагностики у вашому улюбленому комплексному середовищі розробки Python"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:345
 msgid ""
-"It is possible to use the builtin debugger in your favorite python IDE, if "
+"It is possible to use the builtin debugger in your favorite Python IDE, if "
 "it supports remote debugging. The first step is to add the calibre src "
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the directory "
 "you set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the "
@@ -587,8 +587,8 @@ msgid ""
 msgstr "Далі, розташуйте модуль віддаленого засобу діагностики комплексного середовища розробки у підкаталозі :file:`src` клону початкового коду calibre. Додайте код, який потрібен для запуску віддаленого засобу діагностики у код calibre у потрібному вам місці, наприклад у функції main. Далі, запустіть calibre у звичний спосіб. Після цього ваше комплексне середовище розробки має з’єднатися із засобом віддаленої діагностики, запущеним у calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:357
-msgid "Executing arbitrary scripts in the calibre python environment"
-msgstr "Виконання довільних скриптів у середовищі python calibre"
+msgid "Executing arbitrary scripts in the calibre Python environment"
+msgstr "Виконання довільних скриптів у середовищі Python calibre"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:359
 msgid ""
@@ -599,8 +599,8 @@ msgstr "У програмі :command:`calibre-debug` передбачено де
 #: ../../home/kovid/work/calibre/manual/develop.rst:364
 msgid ""
 "is great for testing a little snippet of code on the command line. It works "
-"in the same way as the -c switch to the python interpreter::"
-msgstr "чудово пасує для тестування невеличкого фрагмента коду у командному рядку. Працює так само, як перемикач -c самого інтерпретатора python::"
+"in the same way as the -c switch to the Python interpreter::"
+msgstr "чудово пасує для тестування невеличкого фрагмента коду у командному рядку. Працює так само, як перемикач -c самого інтерпретатора Python::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:368
 msgid ""

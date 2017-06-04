@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-16 07:34+0530\n"
-"PO-Revision-Date: 2016-09-16 02:05+0000\n"
+"POT-Creation-Date: 2017-05-01 16:52+0530\n"
+"PO-Revision-Date: 2017-04-26 03:34+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,9 @@ msgstr "Calibre şablon dili"
 msgid ""
 "The calibre template language is used in various places. It is used to "
 "control the folder structure and file name when saving files from the "
-"calibre library to the disk or eBook reader. It is also used to define "
+"calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
-msgstr "Calibre şablon dili çeşitli yerlerde kullanılır. Calibre kitaplığından diske veya e-kitap okuyucuya dosyaları kaydederken dizin yapısını ve dosya isimlerini kontrol etmede kullanılır. Ayrıca diğer sütunlardan veri içeren \"sanal\" sütunlar tanımlamada kullanılır vs."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:9
 msgid ""
@@ -171,11 +171,11 @@ msgstr "Verinin yalnızca ilk iki harfini istiyorsanız, şunu kullanın::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:87
 msgid ""
-"The calibre template language comes from python and for more details on the "
+"The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "Calibre şablon dili python'dan gelir ve bu gelişmiş biçimleme işlemleri hakkında daha çok detay için, `Python belgelerine <https://docs.python.org/2/library/string.html#format-string-syntax>`_ göz atabilirsiniz."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -309,12 +309,12 @@ msgstr "``count(separator)`` -- değeri `separator` ile ayrılmış bir öğe li
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
-"that number using a python formatting template such as \"{0:5.2f}\" or "
+"that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
 "0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"python documentation for more examples. Returns the empty string if "
+"Python documentation for more examples. Returns the empty string if "
 "formatting fails."
-msgstr "``format_number(template)`` -- değeri bir sayı olarak yorumlar ve bu numarayı python biçimleme şablonu kullanarak \"{0:5.2f}\" veya \"{0:,d}\" veya \"${0:5,.2f}\" gibi biçimlendirir. Şablonun field_name kısmı 0 (sıfır) olmalıdır (yukarıdaki örneklerdeki \"{0:\"). Daha çok örnek için şablon dili ve python belgelerine göz atın. Biçimlendirme başarısız olursa boş karakter dizisi döndürür."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:125
 msgid ""
@@ -374,8 +374,8 @@ msgstr "``lookup(pattern, field, pattern, field, ..., else_field)`` -- switch gi
 msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
-"in all of calibre, these are python-compatible regular expressions."
-msgstr "``re(pattern, replacement)`` -- alanı, düzenli ifade uyguladıktan sonra döndür. `pattern`in tüm örnekleri `replacement` ile değiştirilir. Calibre'nin tamamında olduğu gibi, bunlar python-uyumlu düzenli ifadelerdir."
+"in all of calibre, these are Python-compatible regular expressions."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:133
 msgid ""
@@ -427,12 +427,12 @@ msgstr "``subitems(val, start_index, end_index)`` -- Bu fonksiyon, türler gibi 
 msgid ""
 "``sublist(val, start_index, end_index, separator)`` -- interpret the value "
 "as a list of items separated by `separator`, returning a new list made from "
-"the items from `start_index`to `end_index`. The first item is number zero. "
+"the items from `start_index` to `end_index`. The first item is number zero. "
 "If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list. "
 "Examples assuming that the tags column (which is comma-separated) contains "
 "\"A, B ,C\"::"
-msgstr "``sublist(val, start_index, end_index, separator)`` -- değeri `separator` ile ayrılmış öğe listesi olarak yorumla, `start_index` den `end_index` e öğelerden oluşan yeni bir liste döndür. İlk öğe sıfır sayısıdır. İndis negatifse listenin sonundan sayar. Özel bir durum olarak, sıfır end_index'i listenin boyutu olarak varsayılır. Etiket sütununun (virgülle ayrılmıştır) \"A, B ,C\" içerdiğini varsayarsak::"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:152
 msgid ""
@@ -1136,16 +1136,16 @@ msgid ""
 msgstr "Programı santralin şablon kutusuna koyarak yukardaki özel sütunlar kullanmadan yapmak da mümkün olurdu. Ancak böyle yapmak için, santral metni birden çok satır düzenlemeye izin vermediğinden tüm yorum satırlarının kaldırılması gerekirdi. Özel sütuna sahip olmamanın programın koca tek bir satır olarak getirdiği zorluk artışına deyip deymeyeceği tartışılır."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:442
-msgid "User-defined Template Functions"
-msgstr "Kullanıcı-tanımlı Şablon Fonksiyonları"
+msgid "User-defined template functions"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:444
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
-" written in python, and can be used in any of the three template programming"
+" written in Python, and can be used in any of the three template programming"
 " modes. The functions are added by going to Preferences -> Advanced -> "
-"Template Functions. Instructions are shown in that dialog."
-msgstr "Şablon işlemcisine kendi fonksiyonlarınızı ekleyebilirsiniz. Bu fonksiyonlar python ile yazılır, ve her üç şablon programlama kipinde de kullanılabilir. Fonksiyonlar Seçenekler -> Gelişmiş -> Şablon Fonksiyonları ile eklenebilirler. Yönergeler bu iletişim penceresinde gösterilir."
+"Template functions. Instructions are shown in that dialog."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:447
 msgid "Special notes for save/send templates"
@@ -1210,8 +1210,8 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
-msgid "Templates and Plugboards"
-msgstr "Şablonlar ve Santrallar"
+msgid "Templates and plugboards"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:467
 msgid ""
@@ -1237,12 +1237,12 @@ msgstr "Bir santral oluşturduğunuzda, santralin kullanılacağı biçim ve ayg
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:471
 msgid ""
-"When a plugboard might apply (content server, save to disk, or send to "
+"When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr "Bir santralin uygulanacağı durumda (içerik sunucusu, diske kaydet, veya aygıta gönder), calibre verilen biçim ve aygıt için doğru olanı tanımlı santraller içinden arar. Örneğin, ANDROID aygıta gönderilen bir EPUB kitap için uygun santrali ararken, calibre santralleri aşağıdaki arama sırasını kullanarak arar:"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:473
 msgid ""
@@ -1298,8 +1298,8 @@ msgid ""
 msgstr "Santraller diske kaydedilirken ya da aygıta yazılırken kitaba yazılan metadata'yı etkilerler. Santraller ``diske kaydet`` ve ``aygıta gönder`` tarafından dosya isimlerini oluşturmakta kullanılan metadata'yı etkilemezler. Bunun yerine, dosya isimleri, uygun seçenekler penceresinde girilen şablonlar kullanılarak oluştururlur."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
-msgid "Helpful Tips"
-msgstr "Yardımcı İpuçları"
+msgid "Helpful tips"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:487
 msgid "You might find the following tips useful."

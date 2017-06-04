@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/smartdevice.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -83,7 +82,7 @@ class Ui_Dialog(object):
         self.msg.setText(_("<p>Start wireless device connections. Currently used only\n"
 "       by <a href=\"http://www.multipie.co.uk/calibre-companion/\">Calibre Companion</a>.\n"
 "       <p>You may see some messages from your computer\'s firewall or anti-virus manager asking you if it is OK for calibre to connect to the network. <b>Please answer yes</b>. If you do not, wireless connections will not work."))
-        self.label_23.setText(_("Calibre IP addresses:"))
+        self.label_23.setText(_("calibre IP addresses:"))
         self.ip_addresses.setText(_("Possibe IP addresses:"))
         self.label_2.setText(_("Optional &password:"))
         self.password_box.setPlaceholderText(_("Optional password for security"))

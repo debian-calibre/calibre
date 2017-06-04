@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.ui'
 #
-# Created: Sun Nov 16 11:58:00 2014
-#      by: PyQt5 UI code generator 5.3.2
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -32,7 +31,6 @@ class Ui_Form(object):
         self.groupBox = QtWidgets.QGroupBox(self.actions_widget)
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.all_actions = QtWidgets.QListView(self.groupBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -42,7 +40,6 @@ class Ui_Form(object):
         self.all_actions.setSizePolicy(sizePolicy)
         self.all_actions.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.all_actions.setIconSize(QtCore.QSize(32, 32))
-        self.all_actions.setSpacing(10)
         self.all_actions.setWordWrap(True)
         self.all_actions.setObjectName("all_actions")
         self.verticalLayout.addWidget(self.all_actions)
@@ -78,7 +75,6 @@ class Ui_Form(object):
         self.current_actions.setSizePolicy(sizePolicy)
         self.current_actions.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.current_actions.setIconSize(QtCore.QSize(32, 32))
-        self.current_actions.setSpacing(10)
         self.current_actions.setWordWrap(True)
         self.current_actions.setObjectName("current_actions")
         self.horizontalLayout.addWidget(self.current_actions)

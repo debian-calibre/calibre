@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/web_store_dialog.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -56,6 +55,6 @@ class Ui_Dialog(object):
         self.reload.setText(_("Reload"))
         self.progress.setFormat(_("%p%"))
         self.back.setText(_("Back"))
-        self.close.setText(_("Close"))
+        self.close.setText(_("&Close"))
 
 from calibre.gui2.store.web_control import NPWebView

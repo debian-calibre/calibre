@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/match_books.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -68,7 +67,7 @@ class Ui_MatchBooks(object):
 
     def retranslateUi(self, MatchBooks):
 
-        MatchBooks.setWindowTitle(_("Match Books"))
+        MatchBooks.setWindowTitle(_("Match books"))
         self.search_button.setText(_("Search"))
         self.label.setText(_("Do a search to find the book you want to match"))
         self.label1.setText(_("<p>Remember to update metadata on the device when you are done (Right click the device icon and select <i>Update cached metadata</i>)</p>"))

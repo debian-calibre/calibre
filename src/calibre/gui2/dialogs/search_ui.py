@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -44,6 +44,7 @@ class Ui_Dialog(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.tab)
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.buttonBox = QtWidgets.QDialogButtonBox(self.tab)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -102,6 +103,7 @@ class Ui_Dialog(object):
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.gridLayout = QtWidgets.QGridLayout(self.tab_2)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.label_7 = QtWidgets.QLabel(self.tab_2)
         self.label_7.setObjectName("label_7")
@@ -152,6 +154,7 @@ class Ui_Dialog(object):
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.tab_3)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
@@ -303,7 +306,7 @@ class Ui_Dialog(object):
         self.tags_box.setToolTip(_("Enter tags separated by spaces"))
         self.clear_button.setText(_("&Clear"))
         self.label_11.setText(_("Search only in specific fields:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("Titl&e/Author/Series ..."))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("Titl&e/author/series..."))
         self.label_6.setText(_("&Search the"))
         self.label_13.setText(_("date column for books whose date is "))
         self.label_17.setText(_("..."))

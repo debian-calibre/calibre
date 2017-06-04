@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 09:38+0530\n"
-"PO-Revision-Date: 2017-03-18 10:19+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-06 19:41+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -22,18 +22,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:4
-msgid "API Documentation for the ebook editing tools"
+msgid "API documentation for the e-book editing tools"
 msgstr "Documentation API pour l'outil d'édition de livre numérique"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:6
 msgid ""
-"The ebook editing tools consist of a "
+"The e-book editing tools consist of a "
 ":class:`calibre.ebooks.oeb.polish.container.Container` object that "
 "represents a book as a collection of HTML + resource files, and various "
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr "Les outils d'édition de livre numérique consistent en un objet :class:`calibre.ebooks.oeb.polish.container.Container` qui représente un livre comme une collection d'HTML + fichiers ressources, et différents outils qui peuvent être utilisés pour effectuer des opérations sur le conteneur. Tous les outils sont sous forme de fonctions de niveau de module dans les divers modules de ``calibre.ebooks.oeb.polish.*``"
+msgstr "Les outils d'édition de livre numérique consistent en un objet :class:`calibre.ebooks.oeb.polish.container.Container` qui représente un livre comme une collection d'HTML + des fichiers ressources, et différents outils qui peuvent être utilisés pour effectuer des opérations sur le conteneur. Tous les outils sont sous forme de fonctions de niveau de module dans les divers modules de ``calibre.ebooks.oeb.polish.*``"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
@@ -41,9 +41,9 @@ msgstr "Vous obtenez un objet de conteneur pour un livre à un chemin comme ceci
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:20
 msgid ""
-"If you are writing a plugin for the ebook editor, you get the current "
+"If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr "Si vous écrivez une extension pour l'éditeur de livre numérique, vous obtenez le conteneur actuel pour le livre étant édité comme ceci::"
+msgstr "Si vous écrivez une extension pour l'`Èditeur de livre numérique, vous obtenez le conteneur actuel pour le livre étant édité comme ceci::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:30
 msgid "The Container object"
@@ -52,15 +52,15 @@ msgstr "L'objet Conteneur"
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
-"A container represents an Open EBook as a directory full of files and an opf"
-" file. There are two important concepts:"
+"A container represents an Open E-Book as a directory full of files and an "
+"opf file. There are two important concepts:"
 msgstr "Un conteneur représente un Livre Numérique Ouvert comme un répertoire remplit de fichiers et un fichier OPF. Il y a deux concepts importants :"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
-"The root directory. This is the base of the ebook. All the ebooks files are "
-"inside this directory or in its sub-directories."
+"The root directory. This is the base of the e-book. All the e-books files "
+"are inside this directory or in its sub-directories."
 msgstr "Le répertoire racine. Ceci est la base du livre numérique. Tous les fichiers de livres numériques sont dans ce répertoire ou dans ses sous-répertoires."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -77,11 +77,11 @@ msgstr "Noms : Ce sont des chemins vers les fichiers de livres relatifs au répe
 #: of calibre.ebooks.oeb.polish.container.Container:13
 msgid ""
 "Clones: the container object supports efficient on-disk cloning, which is "
-"used to implement checkpoints in the ebook editor. In order to make this "
+"used to implement checkpoints in the e-book editor. In order to make this "
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr "Clones : l'objet conteneur soutient le clonage efficace sur disque, qui est employé pour mettre en application des points de contrôle dans l'éditeur de livre numérique. Afin de faire ce travail, vous devriez ne jamais accéder à des dossiers directement sur le système de fichiers. Au lieu de cela, utilisez : meth :`raw_data` ou : meth :`open` à la lecture/écriture aux fichiers composants le livre."
+msgstr "Clones : l'objet conteneur soutient le clonage efficace sur disque, qui est employé pour mettre en application des points de contrôle dans l'éditeur de livre numérique. Afin de faire ce travail, vous devriez ne jamais accéder à des dossiers directement sur le système de fichiers. Au lieu de cela, utilisez : meth :`raw_data` ou :meth:`open` à la lecture/écriture aux fichiers composants le livre."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
@@ -155,6 +155,11 @@ msgid ""
 msgstr "Ajouter une entrée au manifeste pour le fichier avec le nom spécifié. Renvoie l'id du manifeste."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
+msgid "Add the specified properties to the manifest item identified by name."
+msgstr "Ajouter les propriétés spécifiées à l'élément du manifeste identifié par le nom."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
 msgid ""
 "Ensure that the specified properties are set on only the manifest item "
@@ -170,16 +175,16 @@ msgstr "Le type de livre (epub pour les fichiers EPUB et azw3 pour les fichiers 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
-"Commit all dirtied parsed objects to the filesystem and write out the ebook "
-"file at outpath."
-msgstr "Engager tous les fichiers analysés encrassés vers le système de fichiers et écrire le fichier de livre à OUTPATH."
+"Commit all dirtied parsed objects to the filesystem and write out the e-book"
+" file at outpath."
+msgstr "Engager tous les fichiers analysés encrassés vers le système de fichiers et écrire le fichier de livre numérique à outpath."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
-"The path to write the saved ebook file to. If None, the path of the original"
-" book file is used."
-msgstr "Le chemin où écrire le fichier du livre sauvegardé. Si aucun, le chemin du livre original est utilisé."
+"The path to write the saved e-book file to. If None, the path of the "
+"original book file is used."
+msgstr "Le chemin où écrire le fichier du livre numérique sauvegardé. Si aucun, le chemin du livre original est utilisé."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
@@ -336,24 +341,24 @@ msgstr "Convertir un nom en une href relative à la base, qui doit être un nom 
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
-"Set of names that must never be renamed. Depends on the ebook file format."
-msgstr "Ensemble de noms qui ne doivent jamais être renommés. Dépend du format de fichier de l'elivre"
+"Set of names that must never be renamed. Depends on the e-book file format."
+msgstr "Ensemble de noms qui ne doivent jamais être renommés. Dépend du format de fichier du livre numérique."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_removed:1
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
-"ebook file format."
-msgstr "Ensemble de noms qui ne doivent jamais être supprimés du conteneur. Dépend du format de fichier de l'elivre."
+"e-book file format."
+msgstr "Ensemble de noms qui ne doivent jamais être supprimés du conteneur. Dépend du format de fichier du livre numérique."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_need_not_be_manifested:1
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
-"the ebook file format."
-msgstr "Ensemble de noms qui ont la possibilité d'être absents du manifeste. Dépend du format de fichier de l'elivre"
+"the e-book file format."
+msgstr "Ensemble de noms qui ont la possibilité d'être absents du manifeste. Dépend du format de fichier du livre numérique"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.open:1
@@ -842,7 +847,7 @@ msgid "The title for this table of contents."
 msgstr "Le titre pour cette table des matières"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:122
-msgid "Edit Book Tool"
+msgid "Edit book tool"
 msgstr "Outil d'édition de livre"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
@@ -994,7 +999,7 @@ msgstr "Contrôler l'interface utilisateur de l'éditeur"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:133
 msgid ""
-"The ebook editor's user interface is controlled by a single global *Boss* "
+"The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
 msgstr "L'interface utilisateur de l'éditeur de livre numérique est contrôlée par un unique objet global *Boss*. Il y a beaucoup de méthodes utiles qui peuvent  être utilisée dans le code de l'extension pour effectuer des tâches courantes."
@@ -1058,8 +1063,8 @@ msgstr "Un modèle pour initialiser l'ouverture de l'éditeur"
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.open_book:1
 msgid ""
-"Open the ebook at ``path`` for editing. Will show an error if the ebook is "
-"not in a supported format or the current book has unsaved changes."
+"Open the e-book at ``path`` for editing. Will show an error if the e-book is"
+" not in a supported format or the current book has unsaved changes."
 msgstr "Ouvrez le livre numérique au ``path`` pour l'édition. Montrera une erreur si le livre numérique n'est pas dans un format soutenu ou que le livre actuel a des changements non sauvegardés."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring

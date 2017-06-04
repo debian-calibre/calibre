@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -162,7 +162,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
 
-        Dialog.setWindowTitle(_("Advanced Search"))
+        Dialog.setWindowTitle(_("Advanced search"))
         self.label_5.setText(_("&What kind of match to use:"))
         self.matchkind.setItemText(0, _("Contains: the word or phrase matches anywhere in the metadata field"))
         self.matchkind.setItemText(1, _("Equals: the word or phrase must match the entire metadata field"))
@@ -174,14 +174,14 @@ class Ui_Dialog(object):
         self.groupBox_2.setTitle(_("But don\'t show entries that have..."))
         self.label_4.setText(_("Any of these &unwanted words:"))
         self.label_6.setText(_("See the <a href=\"https://manual.calibre-ebook.com/gui.html#the-search-interface\">User Manual</a> for more help"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("A&dvanced Search"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("A&dvanced search"))
         self.label_7.setText(_("&Title:"))
         self.title_box.setToolTip(_("Enter the title."))
         self.label_8.setText(_("&Author:"))
         self.clear_button.setText(_("&Clear"))
         self.label_11.setText(_("Search only in specific fields:"))
         self.label_10.setText(_("&Format:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("Titl&e/Author/Price ..."))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("Titl&e/author/price ..."))
 
 from calibre.gui2.widgets import EnLineEdit
 

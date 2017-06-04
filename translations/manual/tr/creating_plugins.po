@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-10 04:03+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 06:01+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,8 @@ msgid ""
 "news (though these are called recipes), for various components of the user "
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
-"plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr "calibre çok modüler bir tasarıma sahiptir. calibre'nin tüm işlevselliği neredeyse eklentilerinden gelmektedir. Eklentiler iletişim, haberleri indirmek (bunlara tarif denilmektedir), kullanıcı arayüzündeki çeşitli bileşenler için, farklı aygıtlara bağlanmak ve dosyaları calibre'ye eklerken işlemek gibi amaçlar için kullanılırlar. Kurulumda gelen eklentilerin bir listesini :guilabel:`Tercihler->Eklentiler` menüsünde bulabilirsiniz."
+"plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
 msgid ""
@@ -49,10 +49,10 @@ msgstr "Bir calibre eklentisinin anatomisi"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
 msgid ""
-"A calibre plugin is very simple, it's just a zip file that contains some "
-"python code and any other resources like image files needed by the plugin. "
+"A calibre plugin is very simple, it's just a ZIP file that contains some "
+"Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr "Calibre eklentisi oldukça basittir, bir miktar python kodu ve eklentilerin ihtiyaç duyduğu resim dosyaları gibi diğer kaynakları içeren bir zip dosyasıdır. Devam etmeden, basit bir örnek görelim."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -99,10 +99,10 @@ msgstr "Kullanıcı Arayüzü eklentisi"
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
-"zip file, allow users to configure your plugin, how to create elements in "
+"ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr "Bu eklenti bir kaç dosyaya dağılacak (kodu temiz tutmak için). Eklenti zip dosyasındaki kaynakları nasıl alacağınızı (resimler ve veri dosyaları), kullanıcıların eklentinizi nasıl yapılandıracağını, calibre kullanıcı arayüzünde öğeleri oluşturmayı ve calibre veri tabanındaki kitapları sorgulamayı ve kitaplara erişmeyi gösterecek."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
 msgid ""
@@ -112,10 +112,10 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
 msgid ""
-"The first thing to note is that this zip file has a lot more files in it, "
+"The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr "Dikkat çeken ilk şey, aşağıda açıklanacağı üzere bu zip dosyasının daha fazla dosya içermesi, ``plugin-import-name-interface_demo.txt`` dosyasına özellikle dikkat edin."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
@@ -125,28 +125,29 @@ msgstr "**plugin-import-name-interface_demo.txt**"
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
-" empty and its filename must be of the form: plugin-import-"
-"name-**some_name**.txt The presence of this file allows you to import code "
-"from the .py files present inside the zip file, using a statement like::"
-msgstr "Çoklu-dosya sihrini etkinleştirmek için boş bir metin dosyası. Bu dosya birden fazla .py dosyası içeren tüm eklentilerde bulunmalıdır. Boş olmalıdır ve dosya ismi plugin-import-name-**bir_isim**.txt biçiminde olmalıdır. Bu dosyanın varlığı zip dosyası içerisindeki .py kodlarını içe aktarmanıza şu şekilde bir ifade ile izin verir::"
+" empty and its filename must be of the form: ``plugin-import-"
+"name-**some_name**.txt``. The presence of this file allows you to import "
+"code from the .py files present inside the ZIP file, using a statement "
+"like::"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
 "from the filename of the empty text file. ``some_module`` refers to  "
-":file:`some_module.py` file inside the zip file. Note that this importing is"
-" just as powerful as regular python imports. You can create packages and "
-"subpackages of .py modules inside the zip file, just like you would normally"
-" (by defining __init__.py in each sub-directory), and everything should Just"
-" Work."
-msgstr "``calibre_eklentileri`` her zaman hazır bulunmalıdır. ``bazı_isimler`` boş metin dosyasının dosya adından gelmektedir. ``bazı_modüller`` zip dosyası içindeki :dosya:`bazı_modüller.py` dosyasına atıfta bulunmaktadır. Bu içe aktarmanın düzenli python içe aktarmaları kadar güçlü olduğunu dikkate alın. Tıpkı normalde yapacağınız gibi (her alt dizinde __init__.py tanımlayarak), zip dosyası içinde .py modüllerinin paket ve alt paketlerini oluşturabilirsiniz,  ve her şey Olduğu gibi Çalışıyor olmalı."
+":file:`some_module.py` file inside the ZIP file. Note that this importing is"
+" just as powerful as regular Python imports. You can create packages and "
+"subpackages of .py modules inside the ZIP file, just like you would normally"
+" (by defining __init__.py in each sub-directory), and everything should "
+"\"just work\"."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
-"a valid python identifier (only alphabets, numbers and the underscore)."
-msgstr "``bir_isim`` için kullandığınız isim tüm eklentiler tarafından paylaşılan bir isim uzayına girer, **yani olabildiğince benzersiz bir isim seçin**. Ama geçerli bir python belirteci olmasına da dikkat edin (alfabetik harfler, sayılar ve alt çizgi)."
+"a valid Python identifier (only alphabets, numbers and the underscore)."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
@@ -216,15 +217,15 @@ msgid ""
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
 "should not load any GUI libraries in __init__.py. The actual_plugin field "
 "does this for you, by telling calibre that the actual plugin is to be found "
-"in another file inside your zip archive, which will only be loaded in a GUI "
+"in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "Kayda değer tek özelli :attr:`actual_plugin`. Calibre'nin hem komut satırı hem GUI arayüzleri olduğundan, bu gibi GUI eklentileri herhangi GUI kitaplıklarını __init.py__ içinde yüklememelidir. actual_plugin alanı bunu calibre'ye asıl eklentinin zip arşivinde başka bir dosyada olduğunu söyleyerek sizin için yapar, bu da sadece GUI bağlamında yüklenir."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
-"some_name.txt file in your plugin zip file, as discussed above."
-msgstr "Bunun çalışması için eklenti zip dosyanızda yukarıda anlatıldığı gibi plugin-import-name-bir_isim.txt dosyası olması gerektiğini unutmayın."
+"some_name.txt file in your plugin ZIP file, as discussed above."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
 msgid ""
@@ -252,14 +253,14 @@ msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr "Arayüz Eklenti Tanıtım iletişim penceresini uygulayan asıl mantıksal kısım."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
-msgid "Getting resources from the plugin zip file"
-msgstr "Eklenti zip dosyasından kaynakların alınması"
+msgid "Getting resources from the plugin ZIP file"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
-"allow you to conveniently get files from the plugin zip file."
-msgstr "calibre'nin eklent yükleme sistemi eklenti zip dosyasından dosyaların alınabilmesi için bir takım yerleşik metodlar tanımlar."
+"allow you to conveniently get files from the plugin ZIP file."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -267,15 +268,15 @@ msgstr "**get_resources(isim_veya_isim_listesi)**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
 msgid ""
-"This function should be called with a list of paths to files inside the zip "
+"This function should be called with a list of paths to files inside the ZIP "
 "file. For example to access the file icon.png in the directory images in the"
-" zip file, you would use: ``images/icon.png``. Always use a forward slash as"
+" ZIP file, you would use: ``images/icon.png``. Always use a forward slash as"
 " the path separator, even on windows. When you pass in a single name, the "
 "function will return the raw bytes of that file or None if the name was not "
-"found in the zip file. If you pass in more than one name then it returns a "
+"found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr "Bu fonksiyon zip dosyası içindeki dosyaları gösteren yolların listesi ile çağrılmalıdır. Örneğin zip dosyasındaki resimler klasöründeki icon.png dosyasına erişmek için: ``images/icon.png`` kullanırsınız. Her zaman, windows'da bile yol ayracı olarak düz taksim işareti kullanın. Tek bir isim geçirdiğinizde, fonksiyon o dosyanın ham byte sayısını veya isim zip dosyasında bulunmazsa None döndürür. Birden fazla isim geçirirseniz, isimleri byte'lara haritayalan bir dict döndürür. İsim bulunamazsa, döndürülen dict nesnesinde bulunmayacaktır."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -284,9 +285,9 @@ msgstr "**get_icons(isim_veya_isim_listesi)**"
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
 msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
-"the raw bytes returned by get_resources. If a name is not found in the zip "
+"the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
-msgstr "get_resources tarafından döndürülen ham baytlardan QIcon nesneleri yaratan bir get_resources() sargısı. Zip dosyasında bir isim bulunmazsa ilgili QIcon null döner."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
@@ -322,8 +323,8 @@ msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr "``prefs`` nesnesinin main.py'de kullanıldığını görebilirsiniz:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
-msgid "Edit Book plugins"
-msgstr "Kitap eklentilerini düzenle"
+msgid "Edit book plugins"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:186
 msgid ""
@@ -462,9 +463,9 @@ msgstr "Son adım eklentinizin .py dosyalarının başına `load_translations()`
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
-" language in calibre under Preferences->Look & Feel or by running calibre "
-"like this::"
-msgstr "Çevirileri Seçenekler->Görünüm & Doku altından calibre kullanıcı arayüzü dilini değiştirerek veya calibre'yi şu şekilde çalıştırarak test edebilirsiniz::"
+" language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
+"or by running calibre like this::"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
 msgid ""
@@ -502,9 +503,9 @@ msgstr "İlk, en önemli adım calibre'yi hata ayıklama kipinde çalıştırmak
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
 msgid ""
-"Or from within calibre by right-clicking the preferences button or using the"
-" `Ctrl+Shift+R` keyboard shortcut."
-msgstr "Veya calibre içinden seçenekler düğmesine sağ tıklayarak veya `Ctrl+Shift+R` klavye kısayolunu kullanarak yapabilirsiniz."
+"Or from within calibre by right-clicking the :guilabel:`Preferences` button "
+"or using the `Ctrl+Shift+R` keyboard shortcut."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
@@ -515,10 +516,10 @@ msgstr "Komut satırından çalıştırırken, hata ayıklama çıktısı konsol
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
-"output in debug mode. Remember, this is python, you really shouldn't need "
+"output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr "Eklentinizde herhangi bir yere yazdırma ifadeleri ekleyebilirsiniz, bunlar da hata ayıklama kipinde yazdırılır. Bunun python olduğunu ve hata ayıklamak için yazdırma ifadelerinden başka bir şeye ihtiyaç duymamanız gerektiğini unutmayın ;) Tüm calibre'yi bu hata ayıklama tekniğiyle geliştirdim."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
 msgid ""

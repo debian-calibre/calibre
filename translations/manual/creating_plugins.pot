@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 2.83.0\n"
+"Project-Id-Version: calibre 2.85.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-15 08:08+0530\n"
+"POT-Creation-Date: 2017-05-13 09:24+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgid "Writing your own plugins to extend calibre's functionality"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:6
-msgid "calibre has a very modular design. Almost all functionality in calibre comes in the form of plugins. Plugins are used for conversion, for downloading news (though these are called recipes), for various components of the user interface, to connect to different devices, to process files when adding them to calibre and so on. You can get a complete list of all the built-in plugins in calibre by going to :guilabel:`Preferences->Plugins`."
+msgid "calibre has a very modular design. Almost all functionality in calibre comes in the form of plugins. Plugins are used for conversion, for downloading news (though these are called recipes), for various components of the user interface, to connect to different devices, to process files when adding them to calibre and so on. You can get a complete list of all the built-in plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
@@ -37,7 +37,7 @@ msgid "Anatomy of a calibre plugin"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
-msgid "A calibre plugin is very simple, it's just a zip file that contains some python code and any other resources like image files needed by the plugin. Without further ado, let's see a basic example."
+msgid "A calibre plugin is very simple, it's just a ZIP file that contains some Python code and any other resources like image files needed by the plugin. Without further ado, let's see a basic example."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
@@ -65,7 +65,7 @@ msgid "A User Interface plugin"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:52
-msgid "This plugin will be spread over a few files (to keep the code clean). It will show you how to get resources (images or data files) from the plugin zip file, allow users to configure your plugin, how to create elements in the calibre user interface and how to access and query the books database in calibre."
+msgid "This plugin will be spread over a few files (to keep the code clean). It will show you how to get resources (images or data files) from the plugin ZIP file, allow users to configure your plugin, how to create elements in the calibre user interface and how to access and query the books database in calibre."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
@@ -73,7 +73,7 @@ msgid "You can download this plugin from `interface_demo_plugin.zip <https://cal
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
-msgid "The first thing to note is that this zip file has a lot more files in it, explained below, pay particular attention to ``plugin-import-name-interface_demo.txt``."
+msgid "The first thing to note is that this ZIP file has a lot more files in it, explained below, pay particular attention to ``plugin-import-name-interface_demo.txt``."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
@@ -81,15 +81,15 @@ msgid "**plugin-import-name-interface_demo.txt**"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:65
-msgid "An empty text file used to enable the multi-file plugin magic. This file must be present in all plugins that use more than one .py file. It should be empty and its filename must be of the form: plugin-import-name-**some_name**.txt The presence of this file allows you to import code from the .py files present inside the zip file, using a statement like::"
+msgid "An empty text file used to enable the multi-file plugin magic. This file must be present in all plugins that use more than one .py file. It should be empty and its filename must be of the form: ``plugin-import-name-**some_name**.txt``. The presence of this file allows you to import code from the .py files present inside the ZIP file, using a statement like::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
-msgid "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes from the filename of the empty text file. ``some_module`` refers to  :file:`some_module.py` file inside the zip file. Note that this importing is just as powerful as regular python imports. You can create packages and subpackages of .py modules inside the zip file, just like you would normally (by defining __init__.py in each sub-directory), and everything should Just Work."
+msgid "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes from the filename of the empty text file. ``some_module`` refers to  :file:`some_module.py` file inside the ZIP file. Note that this importing is just as powerful as regular Python imports. You can create packages and subpackages of .py modules inside the ZIP file, just like you would normally (by defining __init__.py in each sub-directory), and everything should \"just work\"."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
-msgid "The name you use for ``some_name`` enters a global namespace shared by all plugins, **so make it as unique as possible**. But remember that it must be a valid python identifier (only alphabets, numbers and the underscore)."
+msgid "The name you use for ``some_name`` enters a global namespace shared by all plugins, **so make it as unique as possible**. But remember that it must be a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
@@ -153,11 +153,11 @@ msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:109
-msgid "The only noteworthy feature is the field :attr:`actual_plugin`. Since calibre has both command line and GUI interfaces, GUI plugins like this one should not load any GUI libraries in __init__.py. The actual_plugin field does this for you, by telling calibre that the actual plugin is to be found in another file inside your zip archive, which will only be loaded in a GUI context."
+msgid "The only noteworthy feature is the field :attr:`actual_plugin`. Since calibre has both command line and GUI interfaces, GUI plugins like this one should not load any GUI libraries in __init__.py. The actual_plugin field does this for you, by telling calibre that the actual plugin is to be found in another file inside your ZIP archive, which will only be loaded in a GUI context."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
-msgid "Remember that for this to work, you must have a plugin-import-name-some_name.txt file in your plugin zip file, as discussed above."
+msgid "Remember that for this to work, you must have a plugin-import-name-some_name.txt file in your plugin ZIP file, as discussed above."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
@@ -182,11 +182,11 @@ msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
-msgid "Getting resources from the plugin zip file"
+msgid "Getting resources from the plugin ZIP file"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
-msgid "calibre's plugin loading system defines a couple of built-in functions that allow you to conveniently get files from the plugin zip file."
+msgid "calibre's plugin loading system defines a couple of built-in functions that allow you to conveniently get files from the plugin ZIP file."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
@@ -194,7 +194,7 @@ msgid "**get_resources(name_or_list_of_names)**"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
-msgid "This function should be called with a list of paths to files inside the zip file. For example to access the file icon.png in the directory images in the zip file, you would use: ``images/icon.png``. Always use a forward slash as the path separator, even on windows. When you pass in a single name, the function will return the raw bytes of that file or None if the name was not found in the zip file. If you pass in more than one name then it returns a dict mapping the names to bytes. If a name is not found, it will not be present in the returned dict."
+msgid "This function should be called with a list of paths to files inside the ZIP file. For example to access the file icon.png in the directory images in the ZIP file, you would use: ``images/icon.png``. Always use a forward slash as the path separator, even on windows. When you pass in a single name, the function will return the raw bytes of that file or None if the name was not found in the ZIP file. If you pass in more than one name then it returns a dict mapping the names to bytes. If a name is not found, it will not be present in the returned dict."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
@@ -202,7 +202,7 @@ msgid "**get_icons(name_or_list_of_names)**"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
-msgid "A convenience wrapper for get_resources() that creates QIcon objects from the raw bytes returned by get_resources. If a name is not found in the zip file the corresponding QIcon will be null."
+msgid "A convenience wrapper for get_resources() that creates QIcon objects from the raw bytes returned by get_resources. If a name is not found in the ZIP file the corresponding QIcon will be null."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
@@ -230,7 +230,7 @@ msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
-msgid "Edit Book plugins"
+msgid "Edit book plugins"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:186
@@ -306,7 +306,7 @@ msgid "The last step is to simply call the function `load_translations()` at the
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
-msgid "You can test the translations of your plugins by changing the user interface language in calibre under Preferences->Look & Feel or by running calibre like this::"
+msgid "You can test the translations of your plugins by changing the user interface language in calibre under :guilabel:`Preferences->Interface->Look & feel` or by running calibre like this::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
@@ -334,7 +334,7 @@ msgid "The first, most important step is to run calibre in debug mode. You can d
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
-msgid "Or from within calibre by right-clicking the preferences button or using the `Ctrl+Shift+R` keyboard shortcut."
+msgid "Or from within calibre by right-clicking the :guilabel:`Preferences` button or using the `Ctrl+Shift+R` keyboard shortcut."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
@@ -342,7 +342,7 @@ msgid "When running from the command line, debug output will be printed to the c
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
-msgid "You can insert print statements anywhere in your plugin code, they will be output in debug mode. Remember, this is python, you really shouldn't need anything more than print statements to debug ;) I developed all of calibre using just this debugging technique."
+msgid "You can insert print statements anywhere in your plugin code, they will be output in debug mode. Remember, this is Python, you really shouldn't need anything more than print statements to debug ;) I developed all of calibre using just this debugging technique."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311

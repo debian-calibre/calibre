@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-10 06:25+0000\n"
+"POT-Creation-Date: 2017-05-01 16:52+0530\n"
+"PO-Revision-Date: 2017-04-26 05:37+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -24,21 +24,21 @@ msgstr "Функціональний режим для пошуку і замі�
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:4
 msgid ""
-"The Search & Replace tool in the editor support a *function mode*. In this "
-"mode, you can combine regular expressions (see :doc:`regexp`) with "
-"arbitrarily powerful python functions to do all sorts of advanced text "
-"processing."
-msgstr "У інструменті пошуку із заміною редактора передбачено підтримку *функціонального режиму*. У цьому режимі ви можете поєднувати формальні вирази (див. :doc:`regexp`) із довільними потужними функціями python для виконання усіх типів розширеної обробки тексту."
+"The :guilabel:`Search & replace` tool in the editor support a *function "
+"mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
+" with arbitrarily powerful Python functions to do all sorts of advanced text"
+" processing."
+msgstr "У інструменті пошуку із заміною редактора передбачено підтримку *функціонального режиму*. У цьому режимі ви можете поєднувати формальні вирази (див. :doc:`regexp`) із довільними потужними функціями Python для виконання усіх типів розширеної обробки тексту."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:9
 msgid ""
 "In the standard *regexp* mode for search and replace, you specify both a "
 "regular expression to search for as well as a template that is used to "
 "replace all found matches. In function mode, instead of using a fixed "
-"template, you specify an arbitrary function, in the `python programming "
+"template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org/2.7/>`_. This allows you to do lots of "
 "things that are not possible with simple templates."
-msgstr "У стандартному режимі *формальних виразів* для пошуку з заміною ви вказуєте формальний вираз для пошуку і шаблон, який буде використано для заміни усіх відповідників. У функціональному режимі, замість використання фіксованого шаблона, ви вказуєте довільну функцію, яку написано `мовою програмування python <https://docs.python.org/2.7/>`_. Це надає ам змогу виконувати багато завдань, які неможливо виконати за допомогою прости шаблонів."
+msgstr "У стандартному режимі *формальних виразів* для пошуку з заміною ви вказуєте формальний вираз для пошуку і шаблон, який буде використано для заміни усіх відповідників. У функціональному режимі, замість використання фіксованого шаблона, ви вказуєте довільну функцію, яку написано `мовою програмування Python <https://docs.python.org/2.7/>`_. Це надає ам змогу виконувати багато завдань, які неможливо виконати за допомогою прости шаблонів."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:16
 msgid ""
@@ -80,21 +80,22 @@ msgstr "Справжня потужність функціонального р�
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:47
 msgid ""
-"To create a new function, simply click the Create/Edit button to create a "
-"new function and copy the python code from below."
-msgstr "Щоб створити нову функцію, просто натисніть кнопку «Створити/Редагувати» для створення нової функції і скопіюйте код Python, наведений нижче."
+"To create a new function, simply click the :guilabel:`Create/edit` button to"
+" create a new function and copy the Python code from below."
+msgstr "Щоб створити нову функцію, просто натисніть кнопку :guilabel:`Створити/Редагувати` для створення нової функції і скопіюйте код Python, наведений нижче."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:55
 msgid ""
-"Every Search & Replace custom function must have a unique name and consist "
-"of a python function named replace, that accepts all the arguments shown "
-"above. For the moment, we wont worry about all the different arguments to "
-"``replace()`` function. Just focus on the ``match`` argument. It represents "
-"a match when running a search and replace. Its full documentation in "
-"available `here <https://docs.python.org/2.7/library/re.html#match-"
-"objects>`_. ``match.group()`` simply returns all the matched text and all we"
-" do is replace hyphens in that text with em-dashes, first replacing double "
-"hyphens and then single hyphens."
+"Every :guilabel:`Search & replace` custom function must have a unique name "
+"and consist of a Python function named replace, that accepts all the "
+"arguments shown above. For the moment, we wont worry about all the different"
+" arguments to ``replace()`` function. Just focus on the ``match`` argument. "
+"It represents a match when running a search and replace. Its full "
+"documentation in available `here "
+"<https://docs.python.org/2.7/library/re.html#match-objects>`_. "
+"``match.group()`` simply returns all the matched text and all we do is "
+"replace hyphens in that text with em-dashes, first replacing double hyphens "
+"and then single hyphens."
 msgstr "Кожна нетипова функція пошуку з заміною повинна мати неповторну назву і складатися з функції python із назвою replace, яка приймає усі аргументи, вказані вище. Для початку, пропустимо усі різні аргументи функції ``replace()``. Зосередимо нашу увагу на аргументі ``match``. Він представляє відповідник рядка пошуку під час пошуку з заміною. Повну документацію щодо нього можна знайти `тут <https://docs.python.org/2.7/library/re.html#match-objects>`_. ``match.group()`` просто повертає увесь відповідний текст, і усе, що нам лишається зробити, це замінити дефіси у цьому тексті на тире. Спочатку замінюємо подвійні дефіси, а потім одинарні."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:65
@@ -115,7 +116,7 @@ msgstr "Потужність режиму функцій — використа�
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:76
 msgid ""
-"Often, ebooks created from scans of printed books contain mis-hyphenated "
+"Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
 msgstr "Часто у електронних книгах, які створено на основі даних оптичного розпізнавання тексту друкованих книг, містяться слова із помилковими переносами — слова, які було розділено дефісом наприкінці рядка друкованої сторінки. Давайте напишемо просту функцію, яка автоматично виявлятиме і виправлятиме такі слова."
@@ -198,7 +199,7 @@ msgstr "І скористайтеся цим у виразі для пошуку
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
-" window will popup with \"Debug Output from your function\" which will have "
+" window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
 msgstr "Виконайте пошук у :guilabel:`Всіх текстових файлах`. Наприкінці пошуку буде показано контекстне вікно «Діагностичні повідомлення від вашої функції», у якому буде показано таблицю змісту у форматі HTML, готову до вставлення до :file:`toc.html`."
 
@@ -206,10 +207,10 @@ msgstr "Виконайте пошук у :guilabel:`Всіх текстових 
 msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
-"``replace()`` function, the ``data`` object. The ``data`` object is a python"
+"``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dict* that persists between all successive invocations of ``replace()`` "
 "during a single :guilabel:`Replace All` operation."
-msgstr "Наведений вище код функції містить багато коментарів, тому його доволі просто зрозуміти. Ключовою новою можливістю є використання ще одного додаткового аргументу функції ``replace()``, а саме, об’єкта ``data``. Об’єкт ``data`` є *словником* python, який зберігається протягом усіх послідовних викликів ``replace()`` під час виконання однієї дії :guilabel:`Замінити всі`."
+msgstr "Наведений вище код функції містить багато коментарів, тому його доволі просто зрозуміти. Ключовою новою можливістю є використання ще одного додаткового аргументу функції ``replace()``, а саме, об’єкта ``data``. Об’єкт ``data`` є *словником* Python, який зберігається протягом усіх послідовних викликів ``replace()`` під час виконання однієї дії :guilabel:`Замінити всі`."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:213
 msgid ""
@@ -233,9 +234,9 @@ msgstr "Програмний інтерфейс функціонального �
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:226
 msgid ""
-"All function mode functions must be python functions named replace, with the"
+"All function mode functions must be Python functions named replace, with the"
 " following signature::"
-msgstr "Усі функції режиму функцій мають бути функціями python із назвою replace, з таким підписом::"
+msgstr "Усі функції режиму функцій мають бути функціями Python із назвою replace, з таким підписом::"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:232
 msgid ""
@@ -252,12 +253,12 @@ msgstr "Аргумент «match»"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:241
 msgid ""
-"The ``match`` argument represents the currently found match. It is a `python"
+"The ``match`` argument represents the currently found match. It is a `Python"
 " Match object <https://docs.python.org/2.7/library/re.html#match-objects>`_."
 " Its most useful method is ``group()`` which can be used to get the matched "
 "text corresponding to individual capture groups in the search regular "
 "expression."
-msgstr "Аргумент ``match`` представляє поточний знайдений відповідник. Це `об’єкт Match python <https://docs.python.org/2.7/library/re.html#match-objects>`_. Його найкориснішим методом є ``group()``, метод, яким можна скористатися для отримання відповідного тексту для окремих груп захоплення під час пошуку за формальним виразом."
+msgstr "Аргумент ``match`` представляє поточний знайдений відповідник. Це `об’єкт Match Python <https://docs.python.org/2.7/library/re.html#match-objects>`_. Його найкориснішим методом є ``group()``, метод, яким можна скористатися для отримання відповідного тексту для окремих груп захоплення під час пошуку за формальним виразом."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
@@ -313,11 +314,11 @@ msgstr "Аргумент «data»"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:281
 msgid ""
-"This a simple python ``dict``. When you run :guilabel:`Replace All`, every "
+"This a simple Python ``dict``. When you run :guilabel:`Replace All`, every "
 "successive match will cause ``replace()`` to be called with the same "
 "``dict`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace All` operation."
-msgstr "Це простий ``словник`` python. Після натискання кнопки :guilabel:`Замінити всі` кожен наступний відповідник спричинятиме виклик ``replace()`` із тим самим ``словником`` як даними. Таким чином, ви можете скористатися ним для збереження довільних даних між викликами ``replace()`` під час виконання дії :guilabel:`Замінити всі`."
+msgstr "Це простий ``словник`` Python. Після натискання кнопки :guilabel:`Замінити всі` кожен наступний відповідник спричинятиме виклик ``replace()`` із тим самим ``словником`` як даними. Таким чином, ви можете скористатися ним для збереження довільних даних між викликами ``replace()`` під час виконання дії :guilabel:`Замінити всі`."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
@@ -353,10 +354,10 @@ msgstr "Діагностика ваших функцій"
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:333
 msgid ""
 "You can debug the functions you create by using the standard ``print()`` "
-"function from python. The output of print will be displayed in a popup "
+"function from Python. The output of print will be displayed in a popup "
 "window after the Find/replace has completed. You saw an example of using "
 "``print()`` to output an entire table of contents above."
-msgstr "Ви можете виконувати діагностику створених вами функцій за допомогою стандартної функції ``print()`` python. Виведені цією функцією дані буде показано у контекстному вікні після завершення дії з пошуку з заміною. Вище було наведено приклад використання ``print()`` для виведення цілої таблиці змісту."
+msgstr "Ви можете виконувати діагностику створених вами функцій за допомогою стандартної функції ``print()`` Python. Виведені цією функцією дані буде показано у контекстному вікні після завершення дії з пошуку з заміною. Вище було наведено приклад використання ``print()`` для виведення цілої таблиці змісту."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"

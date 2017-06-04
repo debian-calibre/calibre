@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/toc.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -75,7 +75,7 @@ class Ui_Form(object):
         self.opt_use_auto_toc.setText(_("&Force use of auto-generated Table of Contents"))
         self.opt_no_chapters_in_toc.setText(_("Do not add &detected chapters to the Table of Contents"))
         self.label_10.setText(_("Number of &links to add to Table of Contents:"))
-        self.label.setText(_("TOC &Filter:"))
+        self.label.setText(_("TOC &filter:"))
         self.label_16.setText(_("Chapter &threshold:"))
         self.opt_duplicate_links_in_toc.setText(_("Allow &duplicate links when creating the Table of Contents"))
         self.help_label.setText(_("<a href=\"%s\">Help with using these options to generate a Table of Contents</a>"))

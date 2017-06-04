@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/azw3_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -48,8 +47,8 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.opt_prefer_author_sort.setText(_("Use author &sort for author"))
         self.label.setText(_("&Title for Table of Contents:"))
-        self.opt_share_not_sync.setText(_("Enable sharing of book content via Facebook, etc. WARNING: Disables last read syncing"))
-        self.opt_no_inline_toc.setText(_("Do not add Table of Contents to book"))
+        self.opt_share_not_sync.setText(_("Enable &sharing of book content via Facebook, etc. WARNING: Disables last read syncing"))
+        self.opt_no_inline_toc.setText(_("Do not add &Table of Contents to book"))
         self.opt_mobi_toc_at_start.setText(_("Put generated Table of Contents at &start of book instead of end"))
-        self.opt_dont_compress.setText(_("Disable compression of the file contents"))
+        self.opt_dont_compress.setText(_("Disable &compression of the file contents"))
 

@@ -782,6 +782,7 @@ class Metadata(object):
     def __init__(self, oeb):
         self.oeb = oeb
         self.items = defaultdict(list)
+        self.primary_writing_mode = None
 
     def add(self, term, value, attrib={}, nsmap={}, **kwargs):
         """Add a new metadata item."""
@@ -864,6 +865,8 @@ class Metadata(object):
         for term in self.items:
             for item in self.items[term]:
                 item.to_opf2(elem, nsrmap=nsrmap)
+        if self.primary_writing_mode:
+            elem.append(elem.makeelement(OPF('meta'), attrib={'name':'primary-writing-mode', 'content':self.primary_writing_mode}))
         return elem
 
 
@@ -1365,7 +1368,7 @@ class Guide(object):
             a fragment identifier.
         """
         _TYPES_TITLES = [('cover', __('Cover')),
-                         ('title-page', __('Title Page')),
+                         ('title-page', __('Title page')),
                          ('toc', __('Table of Contents')),
                          ('index', __('Index')),
                          ('glossary', __('Glossary')),
@@ -1376,11 +1379,11 @@ class Guide(object):
                          ('dedication', __('Dedication')),
                          ('epigraph', __('Epigraph')),
                          ('foreword', __('Foreword')),
-                         ('loi', __('List of Illustrations')),
-                         ('lot', __('List of Tables')),
+                         ('loi', __('List of illustrations')),
+                         ('lot', __('List of tables')),
                          ('notes', __('Notes')),
                          ('preface', __('Preface')),
-                         ('text', __('Main Text'))]
+                         ('text', __('Main text'))]
         TYPES = set(t for t, _ in _TYPES_TITLES)  # noqa
         TITLES = dict(_TYPES_TITLES)
         ORDER = dict((t, i) for i, (t, _) in enumerate(_TYPES_TITLES))  # noqa

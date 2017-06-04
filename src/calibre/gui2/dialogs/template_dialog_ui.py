@@ -161,7 +161,7 @@ class Ui_TemplateDialog(object):
 
     def retranslateUi(self, TemplateDialog):
 
-        TemplateDialog.setWindowTitle(_("Edit Template"))
+        TemplateDialog.setWindowTitle(_("Edit template"))
         self.colored_field_label.setText(_("Set the color of the column:"))
         self.color_chooser_label.setText(_("Copy a color name to the clipboard:"))
         self.color_copy_button.setToolTip(_("Copy the selected color name to the clipboard"))

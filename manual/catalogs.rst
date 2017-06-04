@@ -1,6 +1,6 @@
 .. _catalog_tut:
 
-Creating AZW3 • EPUB • MOBI Catalogs 
+Creating AZW3 • EPUB • MOBI catalogs 
 =====================================
 
 calibre's Create catalog feature enables you to create a catalog of your library in a variety of formats. This help file describes cataloging options when generating a catalog in AZW3, EPUB and MOBI formats.
@@ -17,7 +17,7 @@ If you want *all* of your library cataloged, remove any search or filtering crit
 If you want only *some* of your library cataloged, you have two options:
 
     * Create a multiple selection of the books you want cataloged. With more than one book selected in calibre's main window, only the selected books will be cataloged.
-    * Use the Search field or the Tag Browser to filter the displayed books. Only the displayed books will be cataloged.
+    * Use the Search field or the Tag browser to filter the displayed books. Only the displayed books will be cataloged.
 
 To begin catalog generation, select the menu item :guilabel:`Convert books > Create a catalog of the books in your calibre library`. You may also add a :guilabel:`Create Catalog` button to a toolbar in :guilabel:`Preferences > Interface > Toolbars` for easier access to the Generate catalog dialog.
 

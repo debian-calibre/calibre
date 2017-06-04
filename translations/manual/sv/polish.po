@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 09:38+0530\n"
-"PO-Revision-Date: 2017-03-25 20:11+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-09 07:20+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -20,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:4
-msgid "API Documentation for the ebook editing tools"
+msgid "API documentation for the e-book editing tools"
 msgstr "API-dokumentation för e-bokredigeringsverktygen"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:6
 msgid ""
-"The ebook editing tools consist of a "
+"The e-book editing tools consist of a "
 ":class:`calibre.ebooks.oeb.polish.container.Container` object that "
 "represents a book as a collection of HTML + resource files, and various "
 "tools that can be used to perform operations on the container. All the tools"
@@ -39,9 +39,9 @@ msgstr "Du erhåller ett behållarobjekt för en bok på en sökväg så här::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:20
 msgid ""
-"If you are writing a plugin for the ebook editor, you get the current "
+"If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr "Om du skriver ett insticksprogram för e-bokredigeraren, får du den aktuella behållaren för boken som redigeras så här::"
+msgstr "Om du skriver en insticksmodul för E-bokredigeraren, får du den aktuella behållaren för boken som redigeras så här::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:30
 msgid "The Container object"
@@ -50,15 +50,15 @@ msgstr "Behållarobjektet"
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
-"A container represents an Open EBook as a directory full of files and an opf"
-" file. There are two important concepts:"
+"A container represents an Open E-Book as a directory full of files and an "
+"opf file. There are two important concepts:"
 msgstr "En behållare är en Open Ebook som en katalog full av filer och en OPF-fil. Det finns två viktiga begrepp:"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
-"The root directory. This is the base of the ebook. All the ebooks files are "
-"inside this directory or in its sub-directories."
+"The root directory. This is the base of the e-book. All the e-books files "
+"are inside this directory or in its sub-directories."
 msgstr "Rotkatalogen. Detta är basen för e-boken. Alla e-bok filerna är inuti katalogen och i dess underkataloger."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -75,7 +75,7 @@ msgstr "Namn: Dessa är sökvägar till böckernas filerna relativt rotkatalogen
 #: of calibre.ebooks.oeb.polish.container.Container:13
 msgid ""
 "Clones: the container object supports efficient on-disk cloning, which is "
-"used to implement checkpoints in the ebook editor. In order to make this "
+"used to implement checkpoints in the e-book editor. In order to make this "
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
@@ -143,7 +143,7 @@ msgstr "Grundkatalogen. Som standard används roten till detta behållarobjekt."
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr "Lägg en fil till denna behållare. Posten för filen skapas automatiskt i OPF manifestet och ryggrad (om filen är ett textdokument) "
+msgstr "Lägg en fil till denna behållare. Posten för filen skapas automatiskt i OPF manifestet och rygg (om filen är ett textdokument) "
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
@@ -151,6 +151,11 @@ msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
 msgstr "Lägg till en post i manifestet för en fil med angivna namnet. Återger manifest id:t."
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
+msgid "Add the specified properties to the manifest item identified by name."
+msgstr "Lägg specificerade egenskaperna till manifest objektet som identifierats med namn."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -168,15 +173,15 @@ msgstr "Typen av bok (epub för EPUB-filer och azw3 för AZW3-filer)"
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
-"Commit all dirtied parsed objects to the filesystem and write out the ebook "
-"file at outpath."
-msgstr "Begå alla dirtied analyserade föremål till filsystemet och skriva ut ebook filen på outpath."
+"Commit all dirtied parsed objects to the filesystem and write out the e-book"
+" file at outpath."
+msgstr "Begå alla smutsiga analyserade objekt till filsystemet och skriva ut ebook filen på utsökväg."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
-"The path to write the saved ebook file to. If None, the path of the original"
-" book file is used."
+"The path to write the saved e-book file to. If None, the path of the "
+"original book file is used."
 msgstr "Sökvägen att skriva den sparade e-bok-filen till. Om None används sökvägen till den ursprungliga bokfilen."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -334,7 +339,7 @@ msgstr "Konvertera ett namn till en href förhållande till basen, som måste va
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
-"Set of names that must never be renamed. Depends on the ebook file format."
+"Set of names that must never be renamed. Depends on the e-book file format."
 msgstr "Uppsättning med namn som aldrig får byta namn. Beror på e-bokformatet."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -342,7 +347,7 @@ msgstr "Uppsättning med namn som aldrig får byta namn. Beror på e-bokformatet
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_removed:1
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
-"ebook file format."
+"e-book file format."
 msgstr "Uppsättning med namn som aldrig får tas bort från behållaren. Beror på e-bokformat."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -350,7 +355,7 @@ msgstr "Uppsättning med namn som aldrig får tas bort från behållaren. Beror 
 #: calibre.ebooks.oeb.polish.container.Container.names_that_need_not_be_manifested:1
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
-"the ebook file format."
+"the e-book file format."
 msgstr "Uppsättning av namn som får saknas i manifestet. Beror på e-bokformat."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
@@ -435,7 +440,7 @@ msgid ""
 "Remove the specified items (by canonical name) from the spine. If "
 "``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
 "the book, not just from the spine."
-msgstr "Ta bort de angivna objekten (av kanoniskt namn) från ryggraden. Om ``remove_if_no_longer_in_spine`` är True, tas även objekten bort från boken, inte bara från bokryggen."
+msgstr "Ta bort de angivna objekten (av kanoniskt namn) från ryggen. Om ``remove_if_no_longer_in_spine`` är True, tas även objekten bort från boken, inte bara från ryggen."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
@@ -450,7 +455,7 @@ msgid ""
 "Remove the item identified by name from this container. This removes all "
 "references to the item in the OPF manifest, guide and spine as well as from "
 "any internal caches."
-msgstr "Ta bort objektet identifierat med namn från denna behållare. Detta tar bort alla referenser till objektet i OPF manifestet, guide och bokrygg samt från eventuella interna buffertar."
+msgstr "Ta bort objektet identifierat med namn från denna behållare. Detta tar bort alla referenser till objektet i OPF manifestet, guide och rygg samt från eventuella interna buffertar."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
@@ -568,7 +573,7 @@ msgid ""
 "recommendation is based on where the majority of files of the same type are "
 "located in the container. If no files of a particular type are present, the "
 "recommended folder is assumed to be the folder containing the OPF file."
-msgstr "Återge katalogerna som rekommenderas för de givna filnamnen. Rekommendationen är baserad på var majoriteten av filer av samma typ finns i behållaren. Om inga filer av en viss typ är närvarande, antas den rekommenderade mappen vara den mapp som innehåller OPF-filen."
+msgstr "Återge mapparna som rekommenderas för de givna filnamnen. Rekommendationen är baserad på var majoriteten av filer av samma typ finns i behållaren. Om inga filer av en viss typ är närvarande, antas den rekommenderade mappen vara den mapp som innehåller OPF-filen."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
@@ -612,7 +617,7 @@ msgstr "Fin utskrift för alla HTML/CSS/XML-filer i behållaren"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:65
 msgid "Managing book jackets"
-msgstr "Hantera bok skal"
+msgstr "Hantera bokomslag"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.remove_jacket:1
@@ -626,7 +631,7 @@ msgstr "Ta bort ett befintligt skal, om något. Återger False om inget befintli
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta en befintligt skal. Återger True om ett befintligt skal ersattes."
+msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta en befintligt skal. Återger True om ett befintligt omslag ersattes."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
@@ -758,7 +763,7 @@ msgid ""
 "the font family in stylesheets, style tags and style attributes. If the "
 "old_name refers to an embedded font, it is removed. You can set new_name to "
 "None to remove the font family instead of changing it."
-msgstr "Ändra ett typsnitt familj från old_name att NEW_NAME. Ändrar alla förekomster av typsnitt i utformningsmallar, formatetiketter och a<tilattribut. Om old_name avser ett inbäddat typsnitt, tas det bort. Du kan ställa NEW_NAME till None för att ta bort typsnittet istället för att ändra det."
+msgstr "Ändra en typsnittsfamilj från old_name att NEW_NAME. Ändrar alla förekomster av typsnitt i utformningsmallar, formatetiketter och a<tilattribut. Om old_name avser ett inbäddat typsnitt, tas det bort. Du kan ställa NEW_NAME till None för att ta bort typsnittet istället för att ändra det."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.remove_unused_css:1
@@ -840,7 +845,7 @@ msgid "The title for this table of contents."
 msgstr "Titel för denna innehållsförteckning."
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:122
-msgid "Edit Book Tool"
+msgid "Edit book tool"
 msgstr "Bokredigeringsverktyg"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
@@ -853,7 +858,7 @@ msgstr "Bas: :class:`object`"
 msgid ""
 "The base class for individual tools in an Edit Book plugin. Useful members "
 "include:"
-msgstr "Basklass för enskilda verktyg i ett bokredigering insticksprogram. Användbara medlemmar är:"
+msgstr "Basklass för enskilda verktyg i ett bokredigering insticksmodul. Användbara medlemmar är:"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool:5
@@ -895,12 +900,12 @@ msgstr "Ändra detta till ett unikt namn det kommer att användas som en nyckel"
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
 msgid "If True the user can choose to place this tool in the plugins toolbar"
-msgstr "Om True användaren kan välja att placera detta verktyg i insticksprogram verktygsfältet"
+msgstr "Om True användaren kan välja att placera detta verktyg i insticksmodul verktygsfältet"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
 msgid "If True the user can choose to place this tool in the plugins menu"
-msgstr "Om True användaren kan välja att placera detta verktyg i insticksprogram menyn"
+msgstr "Om True användaren kan välja att placera detta verktyg i insticksmodul menyn"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
@@ -948,7 +953,7 @@ msgstr "Ett QAction-objekt kommer att utlösas när den anpassade tangentkombina
 msgid ""
 "A unique name for this shortcut/action. It will be used internally, it must "
 "not be shared by any other actions in this plugin."
-msgstr "Ett unikt namn för genvägen/åtgärden. Den kommer att användas internt, får inte delas av några andra åtgärder i detta insticksprogram. "
+msgstr "Ett unikt namn för genvägen/åtgärden. Den kommer att användas internt, får inte delas av några andra åtgärder i detta insticksmodul. "
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
@@ -958,7 +963,7 @@ msgid ""
 "builtin shortcuts or shortcuts from user configuration/other plugins, they "
 "will be ignored. In that case, users will have to configure the shortcuts "
 "manually via Preferences. For example: ``default_keys=('Ctrl+J', 'F9')``."
-msgstr "En lista med standardtangentbordsgenvägarna. Om inget anges kommer inga standardgenvägar att fastställas. Om genväg anges här konflikt med antingen inbyggda genvägar och genvägar från användarkonfigurations/andra insticksprogram, kommer de att ignoreras. I så fall kommer användarna att behöva anpassa snabb manuellt via Inställningar. Till exempel: ``default_keys=('Ctrl+J', 'F9')``."
+msgstr "En lista med standardtangentbordsgenvägarna. Om inget anges kommer inga standardgenvägar att fastställas. Om genväg anges här konflikt med antingen inbyggda genvägar och genvägar från användarkonfigurations/andra insticksmodul, kommer de att ignoreras. I så fall kommer användarna att behöva anpassa snabb manuellt via Inställningar. Till exempel: ``default_keys=('Ctrl+J', 'F9')``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
@@ -979,7 +984,7 @@ msgstr "En valfri längre beskrivning av denna åtgärd, det kommer att använda
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr "Skapa en QAction som kommer att läggas till antingen till insticksprogram verktygsfältet eller insticksprogram meny beroende på ``for_toolbar``. Till exempel::"
+msgstr "Skapa en QAction som kommer att läggas till antingen till insticksmodul verktygsfältet eller insticksmodul meny beroende på ``for_toolbar``. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
@@ -992,10 +997,10 @@ msgstr "Anpassa redigerarens användargränssnitt"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:133
 msgid ""
-"The ebook editor's user interface is controlled by a single global *Boss* "
+"The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
-msgstr "E-bokredigerarens användargränssnitt bestäms av ett enda global *Boss* objekt. Detta har många användbara metoder som kan användas i insticksprogram kod för att utföra vanliga uppgifter."
+msgstr "E-bokredigerarens användargränssnitt bestäms av ett enda global *Boss* objekt. Detta har många användbara metoder som kan användas i insticksmodul kod för att utföra vanliga uppgifter."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
@@ -1056,8 +1061,8 @@ msgstr "En mall för att initiera den öppnade redigeraren med"
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.open_book:1
 msgid ""
-"Open the ebook at ``path`` for editing. Will show an error if the ebook is "
-"not in a supported format or the current book has unsaved changes."
+"Open the e-book at ``path`` for editing. Will show an error if the e-book is"
+" not in a supported format or the current book has unsaved changes."
 msgstr "Öppna e-bok på ``sökväg`` för redigering. Kommer att visa ett fel om e-boken inte är i ett format som stöds eller den aktuella boken har osparade ändringar."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring

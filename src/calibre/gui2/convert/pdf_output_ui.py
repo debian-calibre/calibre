@@ -144,7 +144,7 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.opt_use_profile_size.setText(_("&Use the paper size set in output profile"))
-        self.label.setText(_("&Paper Size:"))
+        self.label.setText(_("&Paper size:"))
         self.label_3.setText(_("&Custom size:"))
         self.label_11.setText(_("&Unit:"))
         self.opt_preserve_cover_aspect_ratio.setText(_("Preserve &aspect ratio of cover"))

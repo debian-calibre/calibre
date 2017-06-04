@@ -41,9 +41,9 @@ def archive_type(stream):
 class ArchiveExtract(FileTypePlugin):
     name = 'Archive Extract'
     author = 'Kovid Goyal'
-    description = _('Extract common e-book formats from archives '
-        '(zip/rar) files. Also try to autodetect if they are actually '
-        'cbz/cbr files.')
+    description = _('Extract common e-book formats from archive files '
+        '(ZIP/RAR). Also try to autodetect if they are actually '
+        'CBZ/CBR files.')
     file_types = set(['zip', 'rar'])
     supported_platforms = ['windows', 'osx', 'linux']
     on_import = True
@@ -175,4 +175,3 @@ def get_comic_metadata(stream, stream_type, series_index='volume'):
                     get_comic_book_info(m[cat], mi, series_index=series_index)
                     break
     return mi
-

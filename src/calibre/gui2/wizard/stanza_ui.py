@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/stanza.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,8 +41,8 @@ class Ui_WizardPage(object):
         WizardPage.setWindowTitle(_("WizardPage"))
         WizardPage.setTitle(_("Welcome to calibre"))
         WizardPage.setSubTitle(_("The one stop solution to all your e-book needs."))
-        self.label.setText(_("<p>If you use the <a href=\"http://www.appstafarian.com/marvin.html\">Marvin</a> e-book reading app (or similar OPDS enabled apps) on your Apple iDevice, you can access your calibre book collection wirelessly, directly on the device. To do this you have to turn on the calibre content server."))
-        self.content_server.setText(_("Turn on the &content server"))
+        self.label.setText(_("<p>If you use the <a href=\"http://www.appstafarian.com/marvin.html\">Marvin</a> e-book reading app (or similar OPDS enabled apps) on your Apple iDevice, you can access your calibre book collection wirelessly, directly on the device. To do this you have to turn on the calibre Content server."))
+        self.content_server.setText(_("Turn on the &Content server"))
         self.instructions.setText(_("<p>Remember to leave calibre running as the server only runs as long as calibre is running.\n"
 "<p>The reader app should see your calibre collection automatically. If not, try adding the URL http://myhostname:8080 as a new catalog in the reader on your iDevice. Here myhostname should be the fully qualified hostname or the IP address of the computer calibre is running on. See <a href=\"%s\">the User Manual</a> for more information."))
 

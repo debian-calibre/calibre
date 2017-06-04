@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -136,8 +136,8 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.groupBox.setTitle(_("Search/Replace Definition Edit"))
-        self.label_4.setText(_("&Replacement Text"))
+        self.groupBox.setTitle(_("Edit search/replace definition"))
+        self.label_4.setText(_("&Replacement text:"))
         self.sr_add.setToolTip(_("Add the current expression to the list of expressions that will be applied"))
         self.sr_add.setText(_("&Add"))
         self.sr_change.setToolTip(_("Edit the currently selected expression"))

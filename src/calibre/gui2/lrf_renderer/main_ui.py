@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,6 +40,7 @@ class Ui_MainWindow(object):
         self.bar_page = QtWidgets.QWidget()
         self.bar_page.setObjectName("bar_page")
         self.vboxlayout1 = QtWidgets.QVBoxLayout(self.bar_page)
+        self.vboxlayout1.setContentsMargins(0, 0, 0, 0)
         self.vboxlayout1.setObjectName("vboxlayout1")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.vboxlayout1.addItem(spacerItem)
@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_("LRF Viewer"))
         self.progress_label.setText(_("Parsing LRF file"))
         self.tool_bar.setWindowTitle(_("LRF Viewer toolbar"))
-        self.action_next_page.setText(_("Next Page"))
+        self.action_next_page.setText(_("Next page"))
         self.action_previous_page.setText(_("Previous Page"))
         self.action_back.setText(_("Back"))
         self.action_forward.setText(_("Forward"))

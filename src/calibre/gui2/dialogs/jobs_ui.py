@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -65,7 +64,7 @@ class Ui_JobsDialog(object):
 
     def retranslateUi(self, JobsDialog):
 
-        JobsDialog.setWindowTitle(_("Active Jobs"))
+        JobsDialog.setWindowTitle(_("Active jobs"))
         self.search_button.setToolTip(_("Find next match"))
         self.search_button.setText(_("&Search"))
         self.clear_button.setToolTip(_("Find previous match"))

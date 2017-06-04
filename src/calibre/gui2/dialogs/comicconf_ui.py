@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/comicconf.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -92,17 +91,17 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_("Dialog"))
         self.title_label.setText(_("&Title:"))
         self.author_label.setText(_("&Author(s):"))
-        self.label_3.setText(_("&Number of Colors:"))
+        self.label_3.setText(_("&Number of colors:"))
         self.label_4.setText(_("&Profile:"))
         self.opt_dont_normalize.setText(_("Disable &normalize"))
         self.opt_keep_aspect_ratio.setText(_("Keep &aspect ratio"))
-        self.opt_dont_sharpen.setText(_("Disable &Sharpening"))
+        self.opt_dont_sharpen.setText(_("Disable &sharpening"))
         self.opt_landscape.setText(_("&Landscape"))
         self.opt_no_sort.setText(_("Don\'t so&rt"))
         self.opt_right2left.setText(_("&Right to left"))
         self.opt_despeckle.setText(_("De&speckle"))
         self.opt_wide.setText(_("&Wide"))
-        self.opt_disable_trim.setText(_("Disable &Trimming"))
+        self.opt_disable_trim.setText(_("Disable &trimming"))
 
 from calibre.gui2.widgets import EnLineEdit
 

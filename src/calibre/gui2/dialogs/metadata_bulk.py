@@ -304,7 +304,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                     }
 
     s_r_match_modes = [_('Character match'),
-                            _('Regular Expression'),
+                            _('Regular expression'),
                       ]
 
     s_r_replace_modes = [_('Replace field'),
@@ -512,7 +512,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
         self.regexp_heading = _(
                  'In regular expression mode, the search text is an '
-                 'arbitrary python-compatible regular expression. The '
+                 'arbitrary Python-compatible regular expression. The '
                  'replacement text can contain backreferences to parenthesized '
                  'expressions in the pattern. The search is not anchored, '
                  'and can match and replace multiple times on the same string. '
@@ -521,8 +521,8 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                  'The destination box specifies the field where the result after '
                  'matching and replacement is to be assigned. You can replace '
                  'the text in the field, or prepend or append the matched text. '
-                 'See <a href="https://docs.python.org/library/re.html"> '
-                 'this reference</a> for more information on python\'s regular '
+                 'See <a href="https://docs.python.org/library/re.html">'
+                 'this reference</a> for more information on Python\'s regular '
                  'expressions, and in particular the \'sub\' function.'
                  )
 

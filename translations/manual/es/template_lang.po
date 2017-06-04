@@ -5,16 +5,16 @@
 # Translators:
 # dario hereñu <magallania@gmail.com>, 2014-2015
 # David Martínez <jokerdm@gmail.com>, 2015
-# David Ruiz <daruc20@gmail.com>, 2015
-# Jellby <jellby@yahoo.com>, 2014-2016
+# david ruiz <daruc20@gmail.com>, 2015
+# Jellby <jellby@yahoo.com>, 2014-2017
 # Jose Antonio Mireles <jantoniomjr.91@gmail.com>, 2015
 # Qualified Projects <drako.cjs@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-16 07:34+0530\n"
-"PO-Revision-Date: 2016-09-16 07:53+0000\n"
+"POT-Creation-Date: 2017-05-01 16:52+0530\n"
+"PO-Revision-Date: 2017-04-26 17:11+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "El lenguaje de plantillas de calibre"
 msgid ""
 "The calibre template language is used in various places. It is used to "
 "control the folder structure and file name when saving files from the "
-"calibre library to the disk or eBook reader. It is also used to define "
+"calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
 msgstr "El lenguaje de plantillas de calibre se usa en varios lugares. Se usa para controlar la estructura de carpetas y el nombre del archivo cuando se guardan archivos de la biblioteca de calibre en el disco o en un lector. También se usa para definir columnas «virtuales» que contienen datos de otras columnas, etcétera."
 
@@ -177,11 +177,11 @@ msgstr "Si quiere sólo las dos primeras letras de los datos, use::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:87
 msgid ""
-"The calibre template language comes from python and for more details on the "
+"The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "El lenguaje de plantillas de calibre proviene de python, para obtener más detalles sobre la sintaxis de estas operaciones de formato avanzadas, vea la `documentación de Python <https://docs.python.org/2/library/string.html#format-string-syntax>`_ (en inglés)."
+msgstr "El lenguaje de plantillas de calibre proviene de Python, para obtener más detalles sobre la sintaxis de estas operaciones de formato avanzadas, vea la `documentación de Python <https://docs.python.org/2/library/string.html#format-string-syntax>`_ (en inglés)."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -315,12 +315,12 @@ msgstr "``count(separador)`` -- interpreta el valor como una lista de elementos 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
-"that number using a python formatting template such as \"{0:5.2f}\" or "
+"that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
 "0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"python documentation for more examples. Returns the empty string if "
+"Python documentation for more examples. Returns the empty string if "
 "formatting fails."
-msgstr "``format_number(plantilla)`` -- interpreta el valor como un número y le da formato usando una plantilla de formato de python como «{0:5.2f}» o «{0:,d}» o «${0:5,.2f}». El nombre del campo dentro de la plantilla debe ser un 0 (cero) (el «{0:» en los ejemplos anteriores). Véase la documentación del lenguaje de plantillas y de python para más ejemplos. Devuelve un texto vacío si el formato falla."
+msgstr "``format_number(plantilla)`` -- interpreta el valor como un número y le da formato usando una plantilla de formato de Python como «{0:5.2f}» o «{0:,d}» o «${0:5,.2f}». El nombre del campo dentro de la plantilla debe ser un 0 (cero) (el «{0:» en los ejemplos anteriores). Véase la documentación del lenguaje de plantillas y de Python para más ejemplos. Devuelve un texto vacío si el formato falla."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:125
 msgid ""
@@ -380,8 +380,8 @@ msgstr "``lookup(patrón, campo, patrón, campo, ..., otro_campo)`` -- como ``sw
 msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
-"in all of calibre, these are python-compatible regular expressions."
-msgstr "``re(patrón, sustitución)`` -- devuelve el campo después de aplicar la expresión regular. Todas las veces que aparezca `patrón` se sustituirá por `sustitución`. Como en todo calibre, se trata de expresiones regulares compatibles con python."
+"in all of calibre, these are Python-compatible regular expressions."
+msgstr "``re(patrón, sustitución)`` -- devuelve el campo después de aplicar la expresión regular. Todas las veces que aparezca `patrón` se sustituirá por `sustitución`. Como en todo calibre, se trata de expresiones regulares compatibles con Python."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:133
 msgid ""
@@ -433,7 +433,7 @@ msgstr "``subitems(val, índice_inicio, índice_fin)`` -- Esta función se usa p
 msgid ""
 "``sublist(val, start_index, end_index, separator)`` -- interpret the value "
 "as a list of items separated by `separator`, returning a new list made from "
-"the items from `start_index`to `end_index`. The first item is number zero. "
+"the items from `start_index` to `end_index`. The first item is number zero. "
 "If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list. "
 "Examples assuming that the tags column (which is comma-separated) contains "
@@ -1142,16 +1142,16 @@ msgid ""
 msgstr "Sería posible hacer lo anterior sin columnas personalizadas, poniendo el programa en el cuadro de plantilla del panel de conexiones. Sin embargo, para hacerlo, habría que eliminar todos los comentarios, puesto que el cuadro de texto del panel de conexiones no admite varias líneas. Es discutible si el beneficio de no tener una columna personalizada compensa el gran incremento de dificultad creado por tener el programa en una única y enorme línea."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:442
-msgid "User-defined Template Functions"
+msgid "User-defined template functions"
 msgstr "Funciones de plantilla definidas por el usuario"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:444
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
-" written in python, and can be used in any of the three template programming"
+" written in Python, and can be used in any of the three template programming"
 " modes. The functions are added by going to Preferences -> Advanced -> "
-"Template Functions. Instructions are shown in that dialog."
-msgstr "Puede añadir funciones propias al procesador de plantillas. Dichas funciones están escritas en python y pueden usarse en cualquiera de los tres modos de programación de plantillas. Las funciones se añaden en :guilabel:`Preferencias > Avanzado > Funciones de plantilla`. Las instrucciones se muestran en el correspondiente cuadro de diálogo."
+"Template functions. Instructions are shown in that dialog."
+msgstr "Puede añadir funciones propias al procesador de plantillas. Dichas funciones están escritas en Python y pueden usarse en cualquiera de los tres modos de programación de plantillas. Las funciones se añaden en :guilabel:`Preferencias > Avanzado > Funciones de plantilla`. Las instrucciones se muestran en el correspondiente cuadro de diálogo."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:447
 msgid "Special notes for save/send templates"
@@ -1216,7 +1216,7 @@ msgid ""
 msgstr "Establecemos la plantilla de guardado en ``{series:lookup(.,#AA,#BB)}``. Esta plantilla elige el campo compuesto #AA si la serie no está vacía y el campo compuesto #BB si la serie está vacía. Obtenemos por lo tanto dos rutas de guardado completamente diferentes según el campo `series` esté o no vacío."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
-msgid "Templates and Plugboards"
+msgid "Templates and plugboards"
 msgstr "Plantillas y controles de metadatos"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:467
@@ -1243,7 +1243,7 @@ msgstr "Cuando cree un panel de conexiones, especifique el formato y dispositivo
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:471
 msgid ""
-"When a plugboard might apply (content server, save to disk, or send to "
+"When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
@@ -1304,7 +1304,7 @@ msgid ""
 msgstr "Los paneles de conexiones afectan a los metadatos escritos en el libro cuando se guarda en disco o se escribe en un dispositivo. Los paneles de conexiones no afectan a los metadatos usados por las funciones :guilabel:`Guardar en el disco` :guilabel:`Enviar al dispositivo` para crear los nombres de archivo. En lugar de ello, los nombres de archivo se construyen usando las plantillas introducidas en la ventana de preferencias correspondiente."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
-msgid "Helpful Tips"
+msgid "Helpful tips"
 msgstr "Consejos útiles"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:487

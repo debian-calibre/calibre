@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -21,7 +21,6 @@ class Ui_Form(object):
         self.tab1 = QtWidgets.QWidget()
         self.tab1.setObjectName("tab1")
         self.formLayout = QtWidgets.QFormLayout(self.tab1)
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setObjectName("formLayout")
         self.label_18 = QtWidgets.QLabel(self.tab1)
         self.label_18.setObjectName("label_18")
@@ -95,7 +94,6 @@ class Ui_Form(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.formLayout_2 = QtWidgets.QFormLayout(self.tab)
-        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.formLayout_2.setObjectName("formLayout_2")
         self.opt_input_encoding = EncodingComboBox(self.tab)
         self.opt_input_encoding.setEditable(True)
@@ -123,7 +121,6 @@ class Ui_Form(object):
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.gridLayout = QtWidgets.QGridLayout(self.tab_2)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.label_7 = QtWidgets.QLabel(self.tab_2)
         self.label_7.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
@@ -158,7 +155,6 @@ class Ui_Form(object):
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.tab_3)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox = QtWidgets.QGroupBox(self.tab_3)
         self.groupBox.setObjectName("groupBox")
@@ -252,13 +248,13 @@ class Ui_Form(object):
         self.opt_expand_css.setText(_("E&xpand CSS"))
         self.opt_keep_ligatures.setText(_("Keep &ligatures"))
         self.opt_disable_font_rescaling.setText(_("&Disable font size rescaling"))
-        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab1), _("Fonts"))
+        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab1), _("&Fonts"))
         self.label_5.setText(_("Text &justification:"))
         self.opt_smarten_punctuation.setText(_("Smarten &punctuation"))
         self.opt_unsmarten_punctuation.setText(_("&UnSmarten punctuation"))
         self.opt_asciiize.setText(_("&Transliterate unicode characters to ASCII"))
         self.label_3.setText(_("I&nput character encoding:"))
-        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab), _("Text"))
+        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab), _("T&ext"))
         self.label_7.setText(_("&Line size:"))
         self.opt_remove_paragraph_spacing_indent_size.setToolTip(_("<p>When calibre removes inter paragraph spacing, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent."))
         self.opt_remove_paragraph_spacing_indent_size.setSpecialValueText(_("No change"))
@@ -284,8 +280,8 @@ class Ui_Form(object):
         self.filter_css_colors.setText(_("&Colors"))
         self.label_9.setText(_("Other CSS Propert&ies:"))
         self.filter_css_others.setToolTip(_("Comma separated list of CSS properties to remove. For example: display, color, font-family"))
-        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_3), _("Styling"))
-        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_4), _("Transform styles"))
+        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_3), _("&Styling"))
+        self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_4), _("&Transform styles"))
 
 from calibre.gui2.css_transform_rules import RulesWidget
 from calibre.gui2.font_family_chooser import FontFamilyChooser

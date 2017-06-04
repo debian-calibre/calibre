@@ -567,9 +567,9 @@ class Ui_MetadataBulkDialog(object):
 
     def retranslateUi(self, MetadataBulkDialog):
 
-        MetadataBulkDialog.setWindowTitle(_("Edit Meta information"))
+        MetadataBulkDialog.setWindowTitle(_("Edit meta information"))
         self.refresh_book_list.setToolTip(_("If enabled, the book list will be re-sorted and any existing\n"
-"search or Virtual Library will be refreshed after the edit\n"
+"search or Virtual library will be refreshed after the edit\n"
 "is completed. This can be slow on large libraries."))
         self.refresh_book_list.setText(_("&Refresh book list after edit"))
         self.label_10.setText(_("&Date:"))
@@ -643,7 +643,7 @@ class Ui_MetadataBulkDialog(object):
 " from the edges of cover images. This can sometimes remove too\n"
 " much, so use with care."))
         self.cover_trim.setText(_("&Trim cover (DANGEROUS)"))
-        self.cover_from_fmt.setText(_("Set from &ebook file(s)"))
+        self.cover_from_fmt.setText(_("Set from &e-book file(s)"))
         self.cover_clone.setToolTip(_("Set the covers of all selected books to be the same\n"
 "as that of the first selected book."))
         self.cover_clone.setText(_("&Clone covers"))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/heuristics.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -107,7 +107,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.help_label.setText(_("<b>Heuristic processing</b> means that calibre will scan your book for common patterns and fix them. As the name implies, this involves guesswork, which means that it could end up worsening the result of a conversion, if calibre guesses wrong. Therefore, it is disabled by default. Often, if a conversion does not turn out as you expect, turning on heuristics can improve matters. Read more about the various heuristic processing options in the <a href=\"%s\">User Manual</a>."))
         self.opt_enable_heuristics.setText(_("Enable &heuristic processing"))
-        self.heuristic_options.setTitle(_("Heuristic Processing"))
+        self.heuristic_options.setTitle(_("Heuristic processing"))
         self.opt_unwrap_lines.setText(_("Unwrap lines"))
         self.huf_label.setText(_("Line &un-wrap factor:"))
         self.opt_markup_chapter_headings.setText(_("Detect and markup unformatted chapter headings and sub headings"))

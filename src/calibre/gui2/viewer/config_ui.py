@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/viewer/config.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -509,7 +509,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
 
-        Dialog.setWindowTitle(_("Configure Ebook viewer"))
+        Dialog.setWindowTitle(_("Configure E-book viewer"))
         self.label.setText(_("Se&rif family:"))
         self.label_2.setText(_("&Sans family:"))
         self.label_3.setText(_("&Monospace family:"))
@@ -530,17 +530,17 @@ class Ui_Dialog(object):
         self.minimum_font_size.setSuffix(_(" px"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page), _("&Font options"))
         self.label_8.setText(_("<p>These options only apply in \"paged\" mode, where the text is broken up into pages, as in a paper book. To get into this mode, use the button with the yellow scroll icon in the top right corner of the viewer window."))
-        self.label_27.setText(_("In &Portrait orientation:"))
+        self.label_27.setText(_("In &portrait orientation:"))
         self.opt_cols_per_screen_portrait.setToolTip(_("Controls the number of pages on the screen when the viewer window\'s width is less than its height"))
         self.opt_override_book_margins.setText(_("&Override the page margin settings specified in the book"))
-        self.label_18.setText(_("&Top margin"))
+        self.label_18.setText(_("&Top margin:"))
         self.opt_top_margin.setSuffix(_(" px"))
-        self.label_19.setText(_("&Side margin"))
+        self.label_19.setText(_("&Side margin:"))
         self.opt_side_margin.setSuffix(_(" px"))
-        self.label_17.setText(_("&Bottom margin"))
+        self.label_17.setText(_("&Bottom margin:"))
         self.opt_bottom_margin.setSuffix(_(" px"))
         self.label_13.setText(_("The number of pages of text to show on screen "))
-        self.label_28.setText(_("In &Landscape orientation: "))
+        self.label_28.setText(_("In &landscape orientation: "))
         self.opt_cols_per_screen_landscape.setToolTip(_("Controls the number of pages on the screen when the viewer window\'s height is less than its width"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_5), _("Text &layout in paged mode"))
         self.label_7.setText(_("Maximum text width in &fullscreen:"))
@@ -577,7 +577,7 @@ class Ui_Dialog(object):
         self.opt_tap_flips_pages.setText(_("&Tapping on the page flips pages"))
         self.opt_wheel_flips_pages.setText(_("Mouse &wheel flips pages"))
         self.opt_line_scrolling_stops_on_pagebreaks.setText(_("Line &scrolling stops at page breaks"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), _("Page Fl&ip/Scrolling options"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), _("Page fl&ip/scrolling options"))
         self.hyphenate.setText(_("H&yphenate (break line in the middle of large words)"))
         self.hyphenate_label.setText(_("Default &language for hyphenation:"))
         self.hyphenate_default_lang.setToolTip(_("The default language to use for hyphenation rules. If the book does not specify a language, this will be used."))
@@ -588,8 +588,8 @@ class Ui_Dialog(object):
 "{text}, which will be replaced by the selected text."))
         self.opt_remember_window_size.setText(_("Remember last used &window size and layout"))
         self.opt_remember_current_page.setText(_("Remember the &current page when quitting"))
-        self.opt_copy_bookmarks_to_file.setToolTip(_("Keep a copy of all bookmarks/current page information inside the ebook file, so that you can share them by simply sending the ebook file itself. Currently only works with ebooks in the EPUB format."))
-        self.opt_copy_bookmarks_to_file.setText(_("Keep a copy of &bookmarks/current page inside the ebook file, for easy sharing"))
+        self.opt_copy_bookmarks_to_file.setToolTip(_("Keep a copy of all bookmarks/current page information inside the e-book file, so that you can share them by simply sending the e-book file itself. Currently only works with e-books in the EPUB format."))
+        self.opt_copy_bookmarks_to_file.setText(_("Keep a copy of &bookmarks/current page inside the e-book file, for easy sharing"))
         self.opt_singleinstance.setToolTip(_("Normally, you can view multiple books in calibre, each in its own viewer window. With this option, if you attempt to view a second book, it will replace the previously opened book instead of using a new window."))
         self.opt_singleinstance.setText(_("Allow only a &single book to be viewed at a time (needs restart)"))
         self.opt_fit_images.setText(_("&Resize images larger than the viewer window (needs restart)"))
@@ -599,7 +599,7 @@ class Ui_Dialog(object):
         self.label_9.setText(_("Double click to change a keyboard shortcut"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_2), _("&Keyboard shortcuts"))
         self.label_10.setText(_("<p>A CSS stylesheet that can be used to control the look and feel of books. For examples, click <a href=\"https://www.mobileread.com/forums/showthread.php?t=51500\">here</a>."))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_3), _("User &Stylesheet"))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_3), _("User &stylesheet"))
         self.label_23.setText(_("You can save and load the viewer settings as <i>themes</i>"))
         self.label_15.setText(_("Save current settings as a theme:"))
         self.save_theme_button.setText(_("&Save"))

@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -72,6 +71,6 @@ class Ui_Dialog(object):
         self.search_button.setText(_("Search"))
         self.label_2.setText(_("Books:"))
         self.total.setText(_("0"))
-        self.close_button.setText(_("Close"))
+        self.close_button.setText(_("&Close"))
 
 from calibre.gui2.widgets import HistoryLineEdit

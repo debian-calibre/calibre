@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -73,10 +72,10 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.label.setText(_("Bib file encoding:"))
         self.label_5.setText(_("Fields to include in output:"))
-        self.label_2.setText(_("Encoding configuration (change if you have errors) :"))
+        self.label_2.setText(_("Encoding configuration (change if you have errors):"))
         self.label_6.setText(_("BibTeX entry type:"))
         self.impcit.setText(_("Create a citation tag?"))
-        self.addfiles.setText(_("Add files path with formats?"))
+        self.addfiles.setText(_("Add file paths with formats?"))
         self.label_3.setText(_("Expression to form the BibTeX citation tag:"))
         self.label_4.setText(_("Some explanation about this template:\n"
 " -The fields availables are \'author_sort\', \'authors\', \'id\',\n"

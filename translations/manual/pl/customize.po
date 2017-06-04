@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-13 09:08+0530\n"
-"PO-Revision-Date: 2017-01-13 03:39+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 06:01+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Polish (http://www.transifex.com/calibre/calibre/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
@@ -111,7 +111,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/manual/customize.rst:37
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
-"registering the filetypes it is capable of handling with windows."
+"registering the filetypes it is capable of handling with Windows."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:38
@@ -124,11 +124,11 @@ msgstr "``http_proxy`` - używana na Linuksie do określenia proxy HTTP"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:41
 msgid ""
-"See `How to set environment variables in windows "
+"See `How to set environment variables in Windows "
 "<http://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
 "environment variables in OS X <http://www.dowdandassociates.com/blog/content"
 "/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
-msgstr "Zobacz `Jak ustawić zmienne środowiskowe w Windowsie <http://www.computerhope.com/issues/ch000549.htm>`_ lub `Jak ustawić zmienne środowiskowe w OS X <http://www.dowdandassociates.com/blog/content/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:45
 msgid "Tweaks"
@@ -150,11 +150,12 @@ msgstr "Własne ikony, szablony itp."
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
-":guilabel:`Preferences->Look & Feel->Change Icon theme`. The icon themes use"
-" the same mechanism as described below for overriding static resources."
+":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon"
+" themes use the same mechanism as described below for overriding static "
+"resources."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:62
+#: ../../home/kovid/work/calibre/manual/customize.rst:61
 msgid ""
 "calibre allows you to override the static resources, like icons, javascript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -167,7 +168,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre umożliwia zmianę stałych elementów takich jak ikony, javascript, szablony metryczki, foldery itp. Wszystkie stałe elementy są umieszczone w odpowiednich folderach, w miejscu instalacji calibre. W Windows jest to domyślnie:  :file:`C:/Program Files/Calibre2/resources`. W OS X, :file:`/Applications/calibre.app/Contents/Resources/resources/`. W Linuksie, jeśli użyto binarnego instalatora ze strony calibre, folderem tym jest  :file:`/opt/calibre/resources`. Ścieżki te mogą się zmienić w zależności od tego jak wybrano je przy instalacji calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:71
+#: ../../home/kovid/work/calibre/manual/customize.rst:70
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -179,7 +180,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Nie należy zmieniać plików w tym folderze ponieważ zostaną one nadpisane plikami pochodzącymi z aktualizacji. Miejsca, w których można umieszczać swoje pliki można sprawdzić, przechodząc do :guilabel:`Ustawienia->Zaawansowane->Różne` i klikając :guilabel:`Otwórz folder konfiguracji calibre`. W tym folderze należy utworzyć podfolder o nazwie resources i tam umieścić pliki, które mają zastąpić oryginalne. Pliki należy umieszczać w odpowiednich folderach, np. obrazy w :file:`resources/images` itp. calibre automatycznie użyje tych plików po restarcie."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:80
+#: ../../home/kovid/work/calibre/manual/customize.rst:79
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -190,11 +191,11 @@ msgid ""
 "interface are in :file:`resources/images` and its sub-folders."
 msgstr "Na przykład jeśli chcesz zamienić ikonę polecenia :guilabel:`Usuń książki` musisz najpierw zajrzeć do folderu wbudowanych zasobów, by stwierdzić, że odnoszący się do niego plik to :file:`resources/images/trash.png`.  Zakładając, że masz swoją ikonę w pliku o nazwie  :file:`mytrash.png` musisz zapisać ją jako :file:`resources/images/trash.png`. Wszystkie ikony używane przez calibre w głównym interfejscie są umieszczone w folderze :file:`resources/images` i jego podfolderach."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:89
+#: ../../home/kovid/work/calibre/manual/customize.rst:88
 msgid "Creating your own icon theme for calibre"
 msgstr "Tworzenie własnego motywu ikon dla calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:91
+#: ../../home/kovid/work/calibre/manual/customize.rst:90
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -202,27 +203,27 @@ msgid ""
 ":guilabel:`Preferences->Miscellaneous->Create icon theme`, select the folder"
 " where you have put your icons (usually the :file:`resources/images` folder "
 "in the calibre config directory, as described above). Then fill up the theme"
-" metadata and click OK.  This will result in a zip file containing the theme"
+" metadata and click OK.  This will result in a ZIP file containing the theme"
 " icons. You can upload that to the calibre forum at `Mobileread "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ and then I will"
 " make your theme available via calibre's builtin icon theme system."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:104
+#: ../../home/kovid/work/calibre/manual/customize.rst:103
 msgid "Customizing calibre with plugins"
 msgstr "Dostosowywanie calibre za pomoca wtyczek"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:106
+#: ../../home/kovid/work/calibre/manual/customize.rst:105
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
 "news (though these are called recipes), for various components of the user "
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
-"plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr "calibre ma budowę dużym stopniu modularną. Niemal wszystkie funkcje w calibre są dostarczane w postaci wtyczek. Wtyczki są używane do konwersji, pobierania wiadomości, do różnych komponentów interfejsu, łączenia z różnymi urządzeniami, przetwarzania plików podczas dodawania ich do calibre itp. Pełną listę wbudowanych wtyczek można uzyskać w :guilabel:`Preferences->Plugins`."
+"plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:108
+#: ../../home/kovid/work/calibre/manual/customize.rst:107
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

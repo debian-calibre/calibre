@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-12 07:41+0530\n"
-"PO-Revision-Date: 2017-02-10 03:12+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-06 07:18+0000\n"
+"Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,9 +62,9 @@ msgid ""
 "Similarly, adding support for new conversion formats involves writing "
 "input/output format plugins. Another example of the modular design is the "
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
-"designed to add features to calibre, see the `plugin index "
+"designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr "Modulární návrh Calibre je vyjádřen prostřednictvím ``Modulů``. K dispozici je :ref:`kurz <customize>` psaní modulů Calibre . Například přidání podpory pro nové zařízení do Calibre typicky zahrnuje napsání méně než 100 řádků kódu v podobě modulu ovladače zařízení. `Vestavěné ovladače <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_ můžete procházet. Podobně přidání podpory pro nové formáty převodu zahrnuje napsání modulu vstupně-výstupního formátu. Dalším příkladem modulárního návrhu je :ref:`systém předpisů <news>` pro načítání zpráv. Pro více příkladů modulů navržených pro přidání funkcí do Calibre se podívejte na `rejstřík modulů <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_.."
+msgstr "Modulární návrh Calibre je vyjádřen prostřednictvím ``Modulů``. K dispozici je :ref:`kurz <customize>` psaní modulů Calibre . Například přidání podpory pro nové zařízení do Calibre typicky zahrnuje napsání méně než 100 řádků kódu v podobě modulu ovladače zařízení. `Vestavěné ovladače <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_ můžete procházet. Podobně přidání podpory pro nové formáty převodu zahrnuje napsání modulu vstupně-výstupního formátu. Dalším příkladem modulárního návrhu je :ref:`systém předpisů <news>` pro načítání zpráv. Pro více příkladů modulů navržených pro přidání funkcí do Calibre se podívejte na `Rejstřík modulů <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_.."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -92,8 +92,8 @@ msgstr "Pro podrobnosti se podívejte na ``devices.interface``, které definuje 
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:43
 msgid ""
-"ebooks  - All the ebook conversion/metadata code. A good starting point is "
-"``calibre.ebooks.conversion.cli`` which is the module powering the :command"
+"e-books  - All the e-book conversion/metadata code. A good starting point is"
+" ``calibre.ebooks.conversion.cli`` which is the module powering the :command"
 ":`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
@@ -110,7 +110,7 @@ msgid ""
 ":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
 "various transforms and an output plugin. The code that constructs and drives"
 " the pipeline is in :file:`plumber.py`. The pipeline works on a "
-"representation of an ebook that is like an unzipped epub, with manifest, "
+"representation of an e-book that is like an unzipped epub, with manifest, "
 "spine, toc, guide, html content, etc. The class that manages this "
 "representation is OEBBook in ``ebooks.oeb.base``. The various "
 "transformations that are applied to the book during conversions live in "
@@ -120,7 +120,7 @@ msgstr "Převod probíhá v řetězci, pro strukturu řetězce se podívejte na 
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:58
 msgid ""
-"Ebook editing happens using a different container object. It is documented "
+"E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
 msgstr "Úprava e-knihy se odehrává pomocí různých objektů kontejneru. To je zdokumentováno v :ref:`polish_api`."
 
@@ -131,15 +131,15 @@ msgid ""
 msgstr "db – Serverová část databáze. Pro rozhraní do knihovny Calibre se podívejte na :ref:`db_api`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:63
-msgid "content server: ``library.server`` is the calibre Content Server."
-msgstr "server s obsahem: ``library.server`` je server s obsahem Calibre."
+msgid "Content server: ``library.server`` is the calibre Content server."
+msgstr "Server s obsahem: ``library.server`` je server s obsahem Calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
-"``gui2.main`` and ``gui2.ui``. The ebook-viewer is in ``gui2.viewer``. The "
-"ebook editor is in ``gui2.tweak_book``."
-msgstr "gui2 – Grafické uživatelské rozhraní (GUI). Inicializace GUI se odehrává v ``gui2.main`` a ``gui2.ui``. Prohlížeč e-knih je v ``gui2.viewer``. Editor e-knih je v ``gui2.tweak_book`."
+"``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
+"e-book editor is in ``gui2.tweak_book``."
+msgstr "gui2 – Grafické uživatelské rozhraní. Inicializace grafického rozhraní se odehrává v ``gui2.main`` a ``gui2.ui``. Prohlížeč e-knih je v ``gui2.viewer``. Editor e-knih je v ``gui2.tweak_book`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:67
 msgid ""
@@ -496,21 +496,21 @@ msgid ""
 msgstr "Toto je Kovidův oblíbený způsob ladění. Jednoduše vložte příkazy tisku do nejdůležitějších bodů a spusťte program v terminálu. Grafické rozhraní můžete spustit z terminálu například takto::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:289
-msgid "Similarly, you can start the ebook-viewer as::"
+msgid "Similarly, you can start the e-book-viewer as::"
 msgstr "Podobně můžete spustit prohlížeč e-knih takto::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:293
-msgid "The ebook-editor can be started as::"
+msgid "The e-book-editor can be started as::"
 msgstr "Editor e-knih může být spuštěn takto::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:298
-msgid "Using an interactive python interpreter"
+msgid "Using an interactive Python interpreter"
 msgstr "Používání interaktivního překladače Pythonu"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:300
 msgid ""
 "You can insert the following two lines of code to start an interactive "
-"python session at that point::"
+"Python session at that point::"
 msgstr "Můžete vložit následující dva řádky kódu pro spuštění interaktivní relace Pythonu v tomto bodě::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:305
@@ -523,12 +523,12 @@ msgid ""
 msgstr "Při spuštění z příkazového řádku toto spustí interaktivní překladač Pythonu s přístupem ke všem místně definovaným proměnným (proměnné v místním rozsahu). Interaktivní výzva má dokonce dokončení TAB pro vlastnosti objektů a můžete použít různé vybavení Pythonu pro introspekci, například :func:`dir`, :func:`type`, :func:`repr`, atd."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:311
-msgid "Using the python debugger as a remote debugger"
+msgid "Using the Python debugger as a remote debugger"
 msgstr "Používání ladicího programu Pythonu jako vzdáleného ladicího programu"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:313
 msgid ""
-"You can use the builtin python debugger (pdb) as a remote debugger from the "
+"You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
 msgstr "Můžete použít vestavěný ladicí program Pythonu (pdb) jako vzdálený ladicí program z příkazového řádku. Nejdříve takto spusťte vzdálený ladicí program v místě v kódu Calibre, které vás zajímá::"
@@ -548,7 +548,7 @@ msgstr "Nyní otevřete terminálu nebo příkazový řádek a použijte násled
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:329
 msgid ""
-"You can read about how to use the python debugger in the `python stdlib docs"
+"You can read about how to use the Python debugger in the `Python stdlib docs"
 " for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-"
 "commands>`_."
 msgstr "Jak používat ladicí program Pythonu, si můžete přečíst v `dokumentaci stdlib Pythonu pro modul pdb <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
@@ -563,17 +563,17 @@ msgstr "Ve výchozím nastavení se vzdálený ladicí program pokusí připojit
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:339
 msgid ""
-"The python debugger cannot handle multiple threads, so you have to call "
+"The Python debugger cannot handle multiple threads, so you have to call "
 "set_trace once per thread, each time with a different port number."
 msgstr "Ladicí program Pythonu nemůže zpracovat více vláken, takže musíte volat set_trace pro každé vlákno, pokaždé s jiným číslem portu."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:343
-msgid "Using the debugger in your favorite python IDE"
+msgid "Using the debugger in your favorite Python IDE"
 msgstr "Používání ladicího programu ve vašem oblíbeném IDE Pythonu"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:345
 msgid ""
-"It is possible to use the builtin debugger in your favorite python IDE, if "
+"It is possible to use the builtin debugger in your favorite Python IDE, if "
 "it supports remote debugging. The first step is to add the calibre src "
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the directory "
 "you set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the "
@@ -590,7 +590,7 @@ msgid ""
 msgstr "Pak umístěte modul vzdáleného ladicího programu IDE do podadresáře :file:`src` rezervační složky zdrojového kódu Calibre. Přidejte jakýkoliv potřebný kód pro spuštění vzdáleného ladicího programu do Calibre v důležitém místě, například do hlavní funkce. Pak spusťte Calibre jako normálně. Váš IDE by nyní měl být schopný se připojit ke vzdálenému ladicímu programu běžícímu uvnitř Calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:357
-msgid "Executing arbitrary scripts in the calibre python environment"
+msgid "Executing arbitrary scripts in the calibre Python environment"
 msgstr "Provádění libovolných skriptů uvnitř prostření Pythonu Calibre "
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:359
@@ -602,7 +602,7 @@ msgstr "Příkaz :command:`calibre-debug` poskytuje několik šikovných přepí
 #: ../../home/kovid/work/calibre/manual/develop.rst:364
 msgid ""
 "is great for testing a little snippet of code on the command line. It works "
-"in the same way as the -c switch to the python interpreter::"
+"in the same way as the -c switch to the Python interpreter::"
 msgstr "je skvělý pro testování malého fragmentu kódu na příkazovém řádku. Funguje to stejným způsobem jako přepínač -c pro překladač Pythonu::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:368

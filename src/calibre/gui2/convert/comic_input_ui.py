@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/comic_input.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,16 +11,17 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(599, 398)
+        Form.resize(599, 415)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.label_3 = QtWidgets.QLabel(Form)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 3, 0, 1, 1)
         self.opt_colors = QtWidgets.QSpinBox(Form)
-        self.opt_colors.setMinimum(8)
-        self.opt_colors.setMaximum(32000000)
+        self.opt_colors.setMinimum(0)
+        self.opt_colors.setMaximum(256)
         self.opt_colors.setSingleStep(8)
+        self.opt_colors.setProperty("value", 0)
         self.opt_colors.setObjectName("opt_colors")
         self.gridLayout.addWidget(self.opt_colors, 3, 1, 1, 1)
         self.opt_dont_normalize = QtWidgets.QCheckBox(Form)
@@ -97,6 +98,7 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.label_3.setText(_("&Number of Colors:"))
+        self.opt_colors.setSpecialValueText(_("off"))
         self.opt_dont_normalize.setText(_("Disable &normalize"))
         self.opt_keep_aspect_ratio.setText(_("Keep &aspect ratio"))
         self.opt_dont_sharpen.setText(_("Disable &Sharpening"))

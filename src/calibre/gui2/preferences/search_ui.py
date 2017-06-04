@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -186,11 +186,11 @@ class Ui_Form(object):
         self.label_222.setText(_("Similar series: "))
         self.label_223.setText(_("Similar tags: "))
         self.label_224.setText(_("Similar publishers: "))
-        self.clear_history_button.setToolTip(_("Clear search histories from all over calibre. Including the book list, e-book viewer, fetch news dialog, etc."))
+        self.clear_history_button.setToolTip(_("Clear search histories from all over calibre. Including the book list, E-book viewer, fetch news dialog, etc."))
         self.clear_history_button.setText(_("Clear search &histories"))
         self.opt_search_as_you_type.setText(_("Search as you &type"))
         self.opt_highlight_search_matches.setText(_("&Highlight search results instead of restricting the book list to the results"))
-        self.groupBox_2.setTitle(_("Grouped Search Terms"))
+        self.groupBox_2.setTitle(_("Grouped search terms"))
         self.la10.setText(_("&Names:"))
         self.gst_names.setToolTip(_("Contains the names of the currently-defined group search terms.\n"
 "Create a new name by entering it into the empty box, then\n"
@@ -208,8 +208,8 @@ class Ui_Form(object):
 "to be shown as user categories"))
         self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
         self.opt_show_highlight_toggle_button.setText(_("Show a quick &toggle button to switch between highlighting and restricting results next to the searchbar"))
-        self.opt_case_sensitive.setText(_("Case sensitive searching"))
-        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match accented characters"))
+        self.opt_case_sensitive.setText(_("Case &sensitive searching"))
+        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
 
 from calibre.gui2.complete2 import EditWithComplete
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -19,7 +19,6 @@ class Ui_Form(object):
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.tab_3)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -80,7 +79,6 @@ class Ui_Form(object):
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.tab_4)
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.opt_auto_add_everything = QtWidgets.QCheckBox(self.tab_4)
         self.opt_auto_add_everything.setObjectName("opt_auto_add_everything")
@@ -166,17 +164,17 @@ class Ui_Form(object):
 "\n"
 "Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact."))
         self.opt_add_formats_to_existing.setText(_("&Automerge added books if they already exist in the calibre library:"))
-        self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to Library\" action check for &duplicates with the same title and author"))
+        self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to library\" action check for &duplicates with the same title and author"))
         self.opt_auto_convert_same_fmt.setToolTip(_("This will force an automatic conversion even if the file being added is the same format as the output format. For example, if you set your output format to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."))
         self.opt_auto_convert_same_fmt.setText(_("When autoconverting, convert even if the format being added is the &same as the output format"))
         self.tag_map_rules_button.setToolTip(_("Create rules that can filter or transform tags on added books automatically as soon as they are added. "))
         self.tag_map_rules_button.setText(_("Create &rules to filter/transform tags"))
         self.add_filter_rules_button.setText(_("Rules to &filter added files"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _("The Add &Process"))
-        self.opt_auto_add_everything.setToolTip(_("By default, calibre will auto-add only known ebook files. \n"
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _("The add &process"))
+        self.opt_auto_add_everything.setToolTip(_("By default, calibre will auto-add only known e-book files. \n"
 "This option tells calibre to add all file types, except those\n"
 "that have been explicitly ignored below."))
-        self.opt_auto_add_everything.setText(_("Auto add files of &all types (not just ebooks)"))
+        self.opt_auto_add_everything.setText(_("Auto add files of &all types (not just e-books)"))
         self.opt_auto_add_path.setPlaceholderText(_("Folder to auto-add files from"))
         self.auto_add_browse_button.setToolTip(_("Browse for folder"))
         self.auto_add_browse_button.setText(_("..."))
@@ -189,6 +187,6 @@ class Ui_Form(object):
 " If it is, a message will pop up asking you whether\n"
 " you want to add it anyway."))
         self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when auto-adding files"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic Adding"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic adding"))
 
 

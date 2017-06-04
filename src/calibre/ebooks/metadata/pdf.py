@@ -165,6 +165,7 @@ def get_metadata(stream, cover=True):
         mi.cover_data = ('jpeg', cdata)
     return mi
 
+
 get_quick_metadata = partial(get_metadata, cover=False)
 
 from calibre.utils.podofo import set_metadata as podofo_set_metadata
@@ -173,5 +174,3 @@ from calibre.utils.podofo import set_metadata as podofo_set_metadata
 def set_metadata(stream, mi):
     stream.seek(0)
     return podofo_set_metadata(stream, mi)
-
-
