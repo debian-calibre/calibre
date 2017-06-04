@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-16 07:34+0530\n"
-"PO-Revision-Date: 2016-09-16 02:05+0000\n"
+"POT-Creation-Date: 2017-05-01 16:52+0530\n"
+"PO-Revision-Date: 2017-04-26 03:34+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Polish (http://www.transifex.com/calibre/calibre/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:4
 msgid "The calibre template language"
@@ -27,7 +27,7 @@ msgstr "Język szablonów calibre"
 msgid ""
 "The calibre template language is used in various places. It is used to "
 "control the folder structure and file name when saving files from the "
-"calibre library to the disk or eBook reader. It is also used to define "
+"calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
 msgstr ""
 
@@ -173,7 +173,7 @@ msgstr "Jeśli chcesz uzyskać tylko pierwsze dwie litery danych, użyj:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:87
 msgid ""
-"The calibre template language comes from python and for more details on the "
+"The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
@@ -311,10 +311,10 @@ msgstr ""
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
-"that number using a python formatting template such as \"{0:5.2f}\" or "
+"that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
 "0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"python documentation for more examples. Returns the empty string if "
+"Python documentation for more examples. Returns the empty string if "
 "formatting fails."
 msgstr ""
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
-"in all of calibre, these are python-compatible regular expressions."
+"in all of calibre, these are Python-compatible regular expressions."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:133
@@ -429,7 +429,7 @@ msgstr ""
 msgid ""
 "``sublist(val, start_index, end_index, separator)`` -- interpret the value "
 "as a list of items separated by `separator`, returning a new list made from "
-"the items from `start_index`to `end_index`. The first item is number zero. "
+"the items from `start_index` to `end_index`. The first item is number zero. "
 "If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list. "
 "Examples assuming that the tags column (which is comma-separated) contains "
@@ -1138,15 +1138,15 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:442
-msgid "User-defined Template Functions"
+msgid "User-defined template functions"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:444
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
-" written in python, and can be used in any of the three template programming"
+" written in Python, and can be used in any of the three template programming"
 " modes. The functions are added by going to Preferences -> Advanced -> "
-"Template Functions. Instructions are shown in that dialog."
+"Template functions. Instructions are shown in that dialog."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:447
@@ -1212,8 +1212,8 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
-msgid "Templates and Plugboards"
-msgstr "Szablony i wtyczki"
+msgid "Templates and plugboards"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:467
 msgid ""
@@ -1239,7 +1239,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:471
 msgid ""
-"When a plugboard might apply (content server, save to disk, or send to "
+"When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
@@ -1300,8 +1300,8 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
-msgid "Helpful Tips"
-msgstr "Przydatne sztuczki"
+msgid "Helpful tips"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:487
 msgid "You might find the following tips useful."

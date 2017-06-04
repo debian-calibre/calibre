@@ -1,13 +1,13 @@
 .. _metadata:
 
-Editing Ebook Metadata
+Editing e-book metadata
 ========================
 
 .. contents:: Contents
   :depth: 2
   :local:
 
-Ebooks come in all shapes and sizes and more often than not, their metadata (things like title/author/series/publisher) is incomplete or incorrect.
+E-books come in all shapes and sizes and more often than not, their metadata (things like title/author/series/publisher) is incomplete or incorrect.
 The simplest way to change metadata in calibre is to simply double click on an entry and type in the correct replacement.
 For more sophisticated, "power editing" use the edit metadata tools discussed below.
 
@@ -47,12 +47,12 @@ Editing the metadata of many books at a time
 
 First select the books you want to edit by holding Ctrl or Shift and clicking on them. If you select more than one book, clicking the :guilabel:`Edit metadata` button will cause a new *Bulk* metadata edit dialog to open. Using this dialog, you can quickly set the author/publisher/rating/tags/series etc of a bunch of books to the same value. This is particularly useful if you have just imported a number of books that have some metadata in common. This dialog is very powerful, for example, it has a Search and Replace tab that you can use to perform bulk operations on metadata and even copy metadata from one column to another.
 
-The normal edit metadata dialog also has Next and Previous buttons that you can use to edit the metadata of several books one after the other. 
+The normal edit metadata dialog also has :guilabel:`Next` and :guilabel:`Previous` buttons that you can use to edit the metadata of several books one after the other. 
 
 Search and replace
 ^^^^^^^^^^^^^^^^^^^^
 
-The Bulk metadata edit dialog allows you to perform arbitrarily powerful search and replace operations on the selected books. By default it uses a simple text search and replace, but it also support *regular expressions*. For more on regular expressions, see :ref:`regexptutorial`.
+The :guilabel:`Bulk metadata edit` dialog allows you to perform arbitrarily powerful search and replace operations on the selected books. By default it uses a simple text search and replace, but it also support *regular expressions*. For more on regular expressions, see :ref:`regexptutorial`.
 
 As noted above, there are two search and replace modes: character match and regular expression. Character match will look in the `Search field` you choose for the characters you type in the `search for` box and replace those characters with what you type in the `replace with` box. Each occurance of the search characters in the field will be replaced. For example, assume the field being searched contains `a bad cat`. If you search for `a` to be replaced with `HELLO`, then the result will be `HELLO bHELLOd cHELLOt`.
 

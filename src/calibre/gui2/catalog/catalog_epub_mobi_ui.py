@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -366,14 +365,14 @@ class Ui_Form(object):
         self.regex_results_label.setText(_("Results of regex:"))
         self.exclude_genre_results.setToolTip(_("Tags that will be excluded as genres"))
         self.otherOptions.setTitle(_("Other options"))
-        self.merge_source_field.setToolTip(_("Custom column containing additional content to be merged with Comments metadata in Descriptions section."))
-        self.merge_before.setToolTip(_("Merge additional content before Comments in Descriptions section."))
+        self.merge_source_field.setToolTip(_("Custom column containing additional content to be merged with comments metadata in the descriptions section."))
+        self.merge_before.setToolTip(_("Merge additional content before comments in descriptions section."))
         self.merge_before.setText(_("&Before"))
-        self.merge_after.setToolTip(_("Merge additional content after Comments in Descriptions section."))
+        self.merge_after.setToolTip(_("Merge additional content after comments in descriptions section."))
         self.merge_after.setText(_("&After"))
-        self.include_hr.setToolTip(_("Separate Comments metadata and additional content with a horizontal rule in Descriptions section."))
-        self.include_hr.setText(_("Include &Separator"))
-        self.label_9.setText(_("&Merge with Comments:"))
+        self.include_hr.setToolTip(_("Separate comments metadata and additional content with a horizontal rule in the descriptions section."))
+        self.include_hr.setText(_("Include &separator"))
+        self.label_9.setText(_("&Merge with comments:"))
         self.label_4.setText(_("Catalog cover:"))
         self.generate_new_cover.setText(_("Generate new cover"))
         self.use_existing_cover.setText(_("Use existing cover"))

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-10 18:25+0000\n"
+"POT-Creation-Date: 2017-05-01 16:52+0530\n"
+"PO-Revision-Date: 2017-04-26 17:08+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -26,21 +26,21 @@ msgstr "Modo de función para buscar y sustituir en el editor"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:4
 msgid ""
-"The Search & Replace tool in the editor support a *function mode*. In this "
-"mode, you can combine regular expressions (see :doc:`regexp`) with "
-"arbitrarily powerful python functions to do all sorts of advanced text "
-"processing."
-msgstr "La herramienta de buscar y sustituir en el editor admite un *modo de función*. En este modo se pueden combinar expresiones regulares (ver :doc:`regexp`) con funciones de complejidad arbitraria para realizar todo tipo de procesamiento de texto avanzado."
+"The :guilabel:`Search & replace` tool in the editor support a *function "
+"mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
+" with arbitrarily powerful Python functions to do all sorts of advanced text"
+" processing."
+msgstr "La herramienta :guilabel:`Buscar y sustituir` en el editor admite un *modo de función*. En este modo se pueden combinar expresiones regulares (ver :doc:`regexp`) con funciones Python de complejidad arbitraria para realizar todo tipo de procesamiento de texto avanzado."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:9
 msgid ""
 "In the standard *regexp* mode for search and replace, you specify both a "
 "regular expression to search for as well as a template that is used to "
 "replace all found matches. In function mode, instead of using a fixed "
-"template, you specify an arbitrary function, in the `python programming "
+"template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org/2.7/>`_. This allows you to do lots of "
 "things that are not possible with simple templates."
-msgstr "En el modo estándar de *expresiones regulares* para buscar y sustituir, se especifica una expresión regular para buscar y una plantilla que se usa para sustituir todas las coincidencias. En el modo de función, en lugar de usar una sola plantilla, se especifica una función arbitraria en el `lenguaje de programación python <https://docs.python.org/2.7/>`_. Esto le permite hacer muchas cosas que no son posibles sólo con plantillas."
+msgstr "En el modo estándar de *expresiones regulares* para buscar y sustituir, se especifica una expresión regular para buscar y una plantilla que se usa para sustituir todas las coincidencias. En el modo de función, en lugar de usar una sola plantilla, se especifica una función arbitraria en el `lenguaje de programación Python <https://docs.python.org/2.7/>`_. Esto le permite hacer muchas cosas que no son posibles sólo con plantillas."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:16
 msgid ""
@@ -82,22 +82,23 @@ msgstr "La verdadera potencia del modo de función procede de la posibilidad de 
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:47
 msgid ""
-"To create a new function, simply click the Create/Edit button to create a "
-"new function and copy the python code from below."
-msgstr "Para crear una nueva función, simplemente pulse en el botón :guilabel:`Crear o modificar` y copie el código python siguiente."
+"To create a new function, simply click the :guilabel:`Create/edit` button to"
+" create a new function and copy the Python code from below."
+msgstr "Para crear una nueva función, simplemente pulse en el botón :guilabel:`Crear o modificar` y copie el código Python siguiente."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:55
 msgid ""
-"Every Search & Replace custom function must have a unique name and consist "
-"of a python function named replace, that accepts all the arguments shown "
-"above. For the moment, we wont worry about all the different arguments to "
-"``replace()`` function. Just focus on the ``match`` argument. It represents "
-"a match when running a search and replace. Its full documentation in "
-"available `here <https://docs.python.org/2.7/library/re.html#match-"
-"objects>`_. ``match.group()`` simply returns all the matched text and all we"
-" do is replace hyphens in that text with em-dashes, first replacing double "
-"hyphens and then single hyphens."
-msgstr "Toda función personalizada de buscar y sustituir debe tener un nombre único y consister en una función python llamada «replace», que acepte todos los argumentos mostrados arriba. Por ahora no vamos a preocuparnos de los diferentes argumentos de la función ``replace()``. Fíjese sólo en el argumento ``match``. Representa una coincidencia al realizar una búsqueda y sustitución. La documentación completa se encuentra `aquí <https://docs.python.org/2.7/library/re.html#match-objects>`_. ``match.group()`` devuelve todo el texto de la coincidencia y todo lo que hacemos es sustituir los guiones del texto por rayas, sustituyendo primero los guiones dobles y luego los sencillos."
+"Every :guilabel:`Search & replace` custom function must have a unique name "
+"and consist of a Python function named replace, that accepts all the "
+"arguments shown above. For the moment, we wont worry about all the different"
+" arguments to ``replace()`` function. Just focus on the ``match`` argument. "
+"It represents a match when running a search and replace. Its full "
+"documentation in available `here "
+"<https://docs.python.org/2.7/library/re.html#match-objects>`_. "
+"``match.group()`` simply returns all the matched text and all we do is "
+"replace hyphens in that text with em-dashes, first replacing double hyphens "
+"and then single hyphens."
+msgstr "Toda función personalizada de :guilabel:`Buscar y sustituir` debe tener un nombre único y consister en una función Python llamada «replace», que acepte todos los argumentos mostrados arriba. Por ahora no vamos a preocuparnos de los diferentes argumentos de la función ``replace()``. Fíjese sólo en el argumento ``match``. Representa una coincidencia al realizar una búsqueda y sustitución. La documentación completa se encuentra `aquí <https://docs.python.org/2.7/library/re.html#match-objects>`_. ``match.group()`` devuelve todo el texto de la coincidencia y todo lo que hacemos es sustituir los guiones del texto por rayas, sustituyendo primero los guiones dobles y luego los sencillos."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
@@ -117,7 +118,7 @@ msgstr "La potencia del modo de función: usar un diccionario para corregir pala
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:76
 msgid ""
-"Often, ebooks created from scans of printed books contain mis-hyphenated "
+"Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
 msgstr "A menudo, los libros electrónicos creados a partir de imágenes de libros impresos contienen palabras mal divididas por guiones: palabras que estaban divididas al final de un renglón en la página impresa. Vamos a escribir una función sencilla para encontrar y corregir automáticamente estas palabras."
@@ -200,7 +201,7 @@ msgstr "Y úselo con la expresión de búsqueda::"
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
-" window will popup with \"Debug Output from your function\" which will have "
+" window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
 msgstr "Ejecutamos la búsqueda sobre :guilabel:`Todos los archivos de texto` y al final de la búsqueda se abrirá una ventana con «Salida de depuración de la función», que contendrá el índice HTML, listo par copiarlo en :file:`toc.html`."
 
@@ -208,10 +209,10 @@ msgstr "Ejecutamos la búsqueda sobre :guilabel:`Todos los archivos de texto` y 
 msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
-"``replace()`` function, the ``data`` object. The ``data`` object is a python"
+"``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dict* that persists between all successive invocations of ``replace()`` "
 "during a single :guilabel:`Replace All` operation."
-msgstr "La función de arriba está muy comentada, así que debe ser fácil de seguir. La principal nueva característica es el uso de un argumento adicional de la función ``replace()``, el objeto ``data``. El objeto ``data`` es un *diccionario* python que sobrevive entre sucesivas llamadas a la función ``replace()`` durante una única operación :guilabel:`Sustituir todo`."
+msgstr "La función de arriba está muy comentada, así que debe ser fácil de seguir. La principal nueva característica es el uso de un argumento adicional de la función ``replace()``, el objeto ``data``. El objeto ``data`` es un *diccionario* Python que sobrevive entre sucesivas llamadas a la función ``replace()`` durante una única operación :guilabel:`Sustituir todo`."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:213
 msgid ""
@@ -235,9 +236,9 @@ msgstr "La API para el modo de función"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:226
 msgid ""
-"All function mode functions must be python functions named replace, with the"
+"All function mode functions must be Python functions named replace, with the"
 " following signature::"
-msgstr "Todas las funciones del modo función deben ser funciones python con el nombre «replace» y con la siguiente firma::"
+msgstr "Todas las funciones del modo función deben ser funciones Python con el nombre «replace» y con la siguiente firma::"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:232
 msgid ""
@@ -254,12 +255,12 @@ msgstr "El argumento ``match``"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:241
 msgid ""
-"The ``match`` argument represents the currently found match. It is a `python"
+"The ``match`` argument represents the currently found match. It is a `Python"
 " Match object <https://docs.python.org/2.7/library/re.html#match-objects>`_."
 " Its most useful method is ``group()`` which can be used to get the matched "
 "text corresponding to individual capture groups in the search regular "
 "expression."
-msgstr "El argumento ``match`` representa la coincidencia actual. Es un `objeto Match de python <https://docs.python.org/2.7/library/re.html#match-objects>`_. Su método más útil es ``group()``, que puede emplearse para obtener el texto correspondiente a los grupos de captura individuales en la expresión regular de búsqueda."
+msgstr "El argumento ``match`` representa la coincidencia actual. Es un `objeto Match de Python <https://docs.python.org/2.7/library/re.html#match-objects>`_. Su método más útil es ``group()``, que puede emplearse para obtener el texto correspondiente a los grupos de captura individuales en la expresión regular de búsqueda."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
@@ -315,11 +316,11 @@ msgstr "El argumento ``data``"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:281
 msgid ""
-"This a simple python ``dict``. When you run :guilabel:`Replace All`, every "
+"This a simple Python ``dict``. When you run :guilabel:`Replace All`, every "
 "successive match will cause ``replace()`` to be called with the same "
 "``dict`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace All` operation."
-msgstr "Esto es un diccionario de python sencillo. Al ejecutar :guilabel:`Sustituir todo`, cada coincidencia sucesiva da lugar a una ejecución de ``replace()`` con el mismo ``data``. Por lo tanto puede usarlo para almacenar datos arbitrarios entre ejecuciones de ``replace()`` durante una operación de :guilabel:`Sustituir todo`."
+msgstr "Esto es un diccionario de Python sencillo. Al ejecutar :guilabel:`Sustituir todo`, cada coincidencia sucesiva da lugar a una ejecución de ``replace()`` con el mismo ``data``. Por lo tanto puede usarlo para almacenar datos arbitrarios entre ejecuciones de ``replace()`` durante una operación de :guilabel:`Sustituir todo`."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
@@ -355,10 +356,10 @@ msgstr "Depurar las funciones propias"
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:333
 msgid ""
 "You can debug the functions you create by using the standard ``print()`` "
-"function from python. The output of print will be displayed in a popup "
+"function from Python. The output of print will be displayed in a popup "
 "window after the Find/replace has completed. You saw an example of using "
 "``print()`` to output an entire table of contents above."
-msgstr "Puede depurar las funciones que cree con la función estándar de python ``print()``. La salida de ``print()`` se mostrará en una ventana emergente cuando la búsqueda y sustitución se haya completado. Ya hemos visto anteriormente un ejemplo del uso de ``print()`` para mostrar un índice completo."
+msgstr "Puede depurar las funciones que cree con la función estándar de Python ``print()``. La salida de ``print()`` se mostrará en una ventana emergente cuando la búsqueda y sustitución se haya completado. Ya hemos visto anteriormente un ejemplo del uso de ``print()`` para mostrar un índice completo."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"

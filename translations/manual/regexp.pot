@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 2.83.0\n"
+"Project-Id-Version: calibre 2.85.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-15 08:08+0530\n"
+"POT-Creation-Date: 2017-05-13 09:24+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgid "All about using regular expressions in calibre"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:6
-msgid "Regular expressions are features used in many places in calibre to perform sophisticated manipulation of ebook content and metadata. This tutorial is a gentle introduction to getting you started with using regular expressions in calibre."
+msgid "Regular expressions are features used in many places in calibre to perform sophisticated manipulation of e-book content and metadata. This tutorial is a gentle introduction to getting you started with using regular expressions in calibre."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:14
@@ -65,7 +65,7 @@ msgid "That doesn't sound too bad. What's next?"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:42
-msgid "Next is the beginning of the really good stuff. Remember where I said that regular expressions can match multiple strings? This is where it gets a little more complicated. Say, as a somewhat more practical exercise, the ebook you wanted to convert had a nasty footer counting the pages, like \"Page 5 of 423\". Obviously the page number would rise from 1 to 423, thus you'd have to match 423 different strings, right? Wrong, actually: regular expressions allow you to define sets of characters that are matched: To define a set, you put all the characters you want to be in the set into square brackets. So, for example, the set ``[abc]`` would match either the character \"a\", \"b\" or \"c\". *Sets will always only match one of the characters in the set*. They \"understand\" character ranges, that is, if you wanted to match all the lower case characters, you'd use the set ``[a-z]`` for lower- and uppercase characters you'd use ``[a-zA-Z]`` and so on. Got the idea? So, obviously, using the expression ``Page [0-9] of 423`` you'd be able to match the first 9 pages, thus reducing the expressions needed to three: The second expression ``Page [0-9][0-9] of 423`` would match all two-digit page numbers, and I'm sure you can guess what the third expression would look like. Yes, go ahead. Write it down."
+msgid "Next is the beginning of the really good stuff. Remember where I said that regular expressions can match multiple strings? This is where it gets a little more complicated. Say, as a somewhat more practical exercise, the e-book you wanted to convert had a nasty footer counting the pages, like \"Page 5 of 423\". Obviously the page number would rise from 1 to 423, thus you'd have to match 423 different strings, right? Wrong, actually: regular expressions allow you to define sets of characters that are matched: To define a set, you put all the characters you want to be in the set into square brackets. So, for example, the set ``[abc]`` would match either the character \"a\", \"b\" or \"c\". *Sets will always only match one of the characters in the set*. They \"understand\" character ranges, that is, if you wanted to match all the lower case characters, you'd use the set ``[a-z]`` for lower- and uppercase characters you'd use ``[a-zA-Z]`` and so on. Got the idea? So, obviously, using the expression ``Page [0-9] of 423`` you'd be able to match the first 9 pages, thus reducing the expressions needed to three: The second expression ``Page [0-9][0-9] of 423`` would match all two-digit page numbers, and I'm sure you can guess what the third expression would look like. Yes, go ahead. Write it down."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:45
@@ -109,7 +109,7 @@ msgid "But if I had a few varying strings I wanted to match, things get complica
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:75
-msgid "Fear not, life still is good and easy. Consider this example: The book you're converting has \"Title\" written on every odd page and \"Author\" written on every even page. Looks great in print, right? But in ebooks, it's annoying. You can group whole expressions in normal parentheses, and the character ``\"|\"`` will let you match *either* the expression to its right *or* the one to its left. Combine those and you're done. Too fast for you? Okay, first off, we group the expressions for odd and even pages, thus getting ``(Title)(Author)`` as our two needed expressions. Now we make things simpler by using the vertical bar (``\"|\"`` is called the vertical bar character): If you use the expression ``(Title|Author)`` you'll either get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on the even pages). Well, wasn't that easy?"
+msgid "Fear not, life still is good and easy. Consider this example: The book you're converting has \"Title\" written on every odd page and \"Author\" written on every even page. Looks great in print, right? But in e-books, it's annoying. You can group whole expressions in normal parentheses, and the character ``\"|\"`` will let you match *either* the expression to its right *or* the one to its left. Combine those and you're done. Too fast for you? Okay, first off, we group the expressions for odd and even pages, thus getting ``(Title)(Author)`` as our two needed expressions. Now we make things simpler by using the vertical bar (``\"|\"`` is called the vertical bar character): If you use the expression ``(Title|Author)`` you'll either get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on the even pages). Well, wasn't that easy?"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:77

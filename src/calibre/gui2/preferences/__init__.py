@@ -36,7 +36,7 @@ class ConfigWidgetInterface(object):
     #: Set to True iff the :meth:`restore_to_defaults` method is implemented.
     supports_restoring_to_defaults = True
 
-    #: The tooltip for the Restore to defaults button
+    #: The tooltip for the "Restore defaults" button
     restore_defaults_desc = _('Restore settings to default values. '
             'You have to click Apply to actually save the default settings.')
 
@@ -349,7 +349,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     d.resize(750, 550)
     conf_name = 'config_widget_dialog_geometry_%s_%s'%(category, name)
     geom = gprefs.get(conf_name, None)
-    d.setWindowTitle(_('Configure ') + name)
+    d.setWindowTitle(_('Configure ') + pl.gui_name)
     d.setWindowIcon(QIcon(I('config.png')))
     bb = QDialogButtonBox(d)
     bb.setStandardButtons(bb.Apply|bb.Cancel|bb.RestoreDefaults)
@@ -408,8 +408,7 @@ def test_all():
         test_widget(plugin.category, plugin.name, gui=gui)
     gui.shutdown()
 
+
 if __name__ == '__main__':
     test_all()
 # }}}
-
-

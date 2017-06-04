@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/txt_input.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -90,13 +90,13 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.groupBox_3.setTitle(_("Structure"))
-        self.label_2.setText(_("Paragraph style:"))
-        self.label_3.setText(_("Formatting style:"))
+        self.label_2.setText(_("&Paragraph style:"))
+        self.label_3.setText(_("&Formatting style:"))
         self.groupBox_2.setTitle(_("Common"))
         self.opt_preserve_spaces.setText(_("Preserve &spaces"))
-        self.opt_txt_in_remove_indents.setText(_("Remove indents at the beginning of lines"))
+        self.opt_txt_in_remove_indents.setText(_("Remove &indents at the beginning of lines"))
         self.markdown_box.setTitle(_("Markdown"))
-        self.label.setText(_("<p>Markdown is a simple markup language for text files, that allows for advanced formatting. To learn more visit <a href=\"https://daringfireball.net/projects/markdown\">markdown</a>."))
-        self.label_4.setText(_("You can optionally enable various extensions to the base markdown syntax, below."))
-        self.label_5.setText(_("More information on <a href=\"https://pythonhosted.org/Markdown/extensions/index.html\">markdown extensions</a>"))
+        self.label.setText(_("<p>Markdown is a simple markup language for text files, that allows for advanced formatting. To learn more visit <a href=\"https://daringfireball.net/projects/markdown\">Markdown</a>."))
+        self.label_4.setText(_("You can optionally enable various extensions to the base Markdown syntax, below."))
+        self.label_5.setText(_("More information on <a href=\"https://pythonhosted.org/Markdown/extensions/index.html\">Markdown extensions</a>"))
 

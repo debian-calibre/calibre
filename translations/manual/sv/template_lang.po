@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-13 17:51+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-09 07:20+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -27,9 +27,9 @@ msgstr "calibre-mallspråket"
 msgid ""
 "The calibre template language is used in various places. It is used to "
 "control the folder structure and file name when saving files from the "
-"calibre library to the disk or eBook reader. It is also used to define "
+"calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
-msgstr "calibre-mallspråket används på olika ställen. Den används för att anpassa katalogstruktur och filnamn när du sparar filer från calibre-biblioteket till hårddisken eller e-bok läsare. Det används också för att definiera \"virtuella\" kolumner som innehåller data från andra kolumner och så vidare."
+msgstr "calibre-mallspråket används på olika ställen. Den används för att anpassa mappstruktur och filnamn när du sparar filer från calibre-biblioteket till hårddisken eller e-bokläsplattan. Det används också för att definiera \"virtuella\" kolumner som innehåller data från andra kolumner och så vidare."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:9
 msgid ""
@@ -173,11 +173,11 @@ msgstr "Om du vill bara ha de två första bokstäverna i uppgifterna, använd:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:87
 msgid ""
-"The calibre template language comes from python and for more details on the "
+"The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "calibre-mallspråket kommer från python och för mer information om syntaxen för dessa avancerade formaterings operationer, titta på `Python dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
+msgstr "calibre-mallspråket kommer från Python och för mer information om syntaxen för dessa avancerade formaterings operationer, titta på `Python dokumentation <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -311,12 +311,12 @@ msgstr "``count(separator)`` -- tolkar värde som en lista med objekt åtskilda 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
-"that number using a python formatting template such as \"{0:5.2f}\" or "
+"that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
 "0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"python documentation for more examples. Returns the empty string if "
+"Python documentation for more examples. Returns the empty string if "
 "formatting fails."
-msgstr "``format_number(template)`` -- tolkar värdet som ett tal och formatera det numret med hjälp av en python formateringsmall som \"{0:5.2f}\" eller \"{0:,d}\" eller \"${0:5,.2f}\". FIELD_NAME del av mallen måste vara en 0 (noll) (den \"{0:\" i ovanstående exempel). Se mallspråk och python-dokumentation för fler exempel. Återger tom sträng om formatering misslyckas."
+msgstr "``format_number(template)`` -- tolkar värdet som ett tal och formatera det numret med hjälp av en Python formateringsmall som \"{0:5.2f}\" eller \"{0:,d}\" eller \"${0:5,.2f}\". FIELD_NAME del av mallen måste vara en 0 (noll) (den \"{0:\" i ovanstående exempel). Se mallpråk och python-dokumentation för fler exempel. Återger tom sträng om formatering misslyckas."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:125
 msgid ""
@@ -376,8 +376,8 @@ msgstr "``lookup(pattern, field, pattern, field, ..., else_field)`` -- som switc
 msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
-"in all of calibre, these are python-compatible regular expressions."
-msgstr "``re(pattern, replacement)`` -- återger fältet efter applicering av reguljära uttryck. Alla förekomster av `pattern` ersätts med `replacement`. Som i alla calibre, är dessa python-kompatibla reguljära uttryck."
+"in all of calibre, these are Python-compatible regular expressions."
+msgstr "``re(pattern, replacement)`` -- återger fältet efter applicering av reguljära uttryck. Alla förekomster av `pattern` ersätts med `replacement`. Som i alla calibre, är dessa Python-kompatibla reguljära uttryck."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:133
 msgid ""
@@ -429,12 +429,12 @@ msgstr "``subitems(val, start_index, end_index)`` -- Denna funktion används fö
 msgid ""
 "``sublist(val, start_index, end_index, separator)`` -- interpret the value "
 "as a list of items separated by `separator`, returning a new list made from "
-"the items from `start_index`to `end_index`. The first item is number zero. "
+"the items from `start_index` to `end_index`. The first item is number zero. "
 "If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list. "
 "Examples assuming that the tags column (which is comma-separated) contains "
 "\"A, B ,C\"::"
-msgstr "``sublist(val, start_index, end_index, separator)`` -- tolkar värde som en lista med objekt åtskilda med `separator`, återvänder en ny lista gjord av objekten från `start_index`till `end_index`. Den första punkten är siffran noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett specialfall är en END_INDEX av noll antas vara längden av listan. Exempel om man antar att etikettkolumnen (som är kommaseparerade) innehåller \"A, B ,C\"::"
+msgstr "``sublist(val, start_index, end_index, separator)`` -- tolkar värde som en lista med objekt åtskilda med `separator`, återvänder en ny lista gjord av objekten från `start_index` till `end_index`. Den första punkten är siffran noll. Om ett index är negativ, så det räknas från slutet av listan. Som ett specialfall är en END_INDEX av noll antas vara längden av listan. Exempel om man antar att etikettkolumnen (som är kommaseparerade) innehåller \"A, B ,C\"::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:152
 msgid ""
@@ -693,7 +693,7 @@ msgid ""
 "``and(value, value, ...)`` -- returns the string \"1\" if all values are not"
 " empty, otherwise returns the empty string. This function works well with "
 "test or first_non_empty. You can have as many values as you want."
-msgstr "``and(value, value, ...)`` -- återger strängen \"1\" om alla värdena är inte tomma, annars återges en tom sträng. Den här funktionen fungerar bra med testet eller first_non_empty. Du kan ha så många värden som du önskar."
+msgstr "``and(value, value, ...)`` -- återger strängen \"1\" om alla värdena inte är tomma, annars återges tomma strängen. Den här funktionen fungerar bra med testet eller first_non_empty. Du kan ha så många värden som du önskar."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:239
 msgid ""
@@ -751,7 +751,7 @@ msgid ""
 "``cmp(x, y, lt, eq, gt)`` -- compares x and y after converting both to "
 "numbers. Returns ``lt`` if x < y. Returns ``eq`` if x == y. Otherwise "
 "returns ``gt``."
-msgstr "``cmp(x, y, lt, eq, gt)`` -- jämför x och y efter konvertering både siffror. Återger ``lt`` om x < y. Återger ``eq`` om x == y. Annars återges ``gt``."
+msgstr "``cmp(x, y, lt, eq, gt)`` -- jämför x och y efter konverterat både till siffror. Återger ``lt`` om x < y. Återger ``eq`` om x == y. Annars återges ``gt``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:246
 msgid ""
@@ -773,13 +773,13 @@ msgid ""
 "``date1`` and ``date2``. The number is positive if ``date1`` is greater than"
 " ``date2``, otherwise negative. If either ``date1`` or ``date2`` are not "
 "dates, the function returns the empty string."
-msgstr "``days_between(date1, date2)`` -- återge antalet dagar mellan ``date1`` och ``date2``. Numret är positivt om ``date1`` är större än ``date2``, annars negativt. Om någon ``date1`` eller ``date2`` inte datum, återger funktionen en tom sträng."
+msgstr "``days_between(date1, date2)`` -- återge antalet dagar mellan ``date1`` och ``date2``. Numret är positivt om ``date1`` är större än ``date2``, annars negativt. Om någon ``date1`` eller ``date2`` inte är datum, återger funktionen tomma strängen."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:249
 msgid ""
 "``divide(x, y)`` -- returns x / y. Throws an exception if either x or y are "
 "not numbers."
-msgstr "``divide(x, y)`` -- återger x / y. Ger ett undantag om någon x eller y inte är tal."
+msgstr "``divide(x, y)`` -- återger x / y. Ger ett undantag om antingen x eller y inte är siffror."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:250
 msgid ""
@@ -790,11 +790,11 @@ msgid ""
 " `]]` for the '}' character; they are converted automatically. Note also "
 "that prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in "
 "the argument to this function when using template program mode."
-msgstr "``eval(string)`` -- utvärderar strängen som ett program, som skickar de lokala variabler (de ``assign`` ade till). Detta gör det möjligt att använda mallprocessorn för att konstruera komplexa resultat från lokala variabler. Eftersom `{` och `}` tecken är speciella, måste du använda `[[` för `{` tecken och `]] 'för'} 'tecken; de konverteras automatiskt. Observera också att prefix och suffix (det så kallade | prefixet | suffix` syntax) inte kan användas i argumentet till funktionen när du använder mallprogramläge."
+msgstr "``eval(string)`` -- utvärderar strängen som ett program, som skickar de lokala variabler (de ``assign`` ade till). Detta gör det möjligt att använda mallprocessorn för att konstruera komplexa resultat från lokala variabler. Eftersom `{-` och `}`-tecken är speciella, måste du använda `[[` för `{`-tecknet och `]]` för '}'-tecknet; de konverteras automatiskt. Observera också att prefix och suffix (`|prefix|suffix` syntax) inte kan användas i argumentet till funktionen när du använder mallprogramläge."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:251
 msgid "``field(name)`` -- returns the metadata field named by ``name``."
-msgstr "``field(name)`` -- återger metatdatafältet med namn ``name``."
+msgstr "``field(name)`` -- återger metatdatafältet med nämnt efter ``name``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:252
 msgid ""
@@ -802,7 +802,7 @@ msgid ""
 "compares ``val < cmpN`` in sequence, returning resultN for the first "
 "comparison that succeeds. Returns else_result if no comparison succeeds. "
 "Example::"
-msgstr "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- jämför \"val < cmpN\" i sekvens, återger resultN för första jämförelsen som lyckas. Återger else_result om ingen jämförelse lyckas. Till exempel::"
+msgstr "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- jämför ``val < cmpN`` i sekvens, återger resultN för första jämförelsen som lyckas. Återger else_result om ingen jämförelse lyckas. Exempel::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:257
 msgid ""
@@ -842,7 +842,7 @@ msgid ""
 " :ref:`general program mode <general_mode>` (see below) to take advantage of"
 " GPM template compilation. For example, the following program produces the "
 "same output as the above template::"
-msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- tillämpa format, prefix och suffix till ett värde på samma sätt som görs i en mall som ``{series_index:05.2f| - |- }``. Denna funktion finns för att underlätta konverteringen av komplexa enkelfunktions- eller mallprogrammods mallar till :ref:`allmänna programläge <general_mode>` (se nedan) för att dra nytta av GPM-mallskompilering. Till exempel ger följande program på samma utdata som ovanstående mall::"
+msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- tillämpa format, prefix och suffix till ett värde på samma sätt som görs i en mall som ``{series_index:05.2f| - |- }``. Denna funktion finns för att underlätta konverteringen av komplexa enkelfunktions- eller mallprogrammods mallar till :ref:`allmänna programläge <general_mode>` (se nedan) för att dra nytta av GPM-mallkompilering. Till exempel ger följande program på samma utdata som ovanstående mall::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:299
 msgid ""
@@ -881,14 +881,14 @@ msgstr "``formats_sizes()`` -- återger en kommaseparerad lista med kolonseparer
 msgid ""
 "``has_cover()`` -- return ``Yes`` if the book has a cover, otherwise return "
 "the empty string"
-msgstr "``has_cover()`` -- återger ``Yes`` om boken har ett omslag annars återges tomma strängen"
+msgstr "``has_cover()`` -- återger ``Yes`` om boken har ett omslag annars återges tom sträng"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:312
 msgid ""
 "``not(value)`` -- returns the string \"1\" if the value is empty, otherwise "
 "returns the empty string. This function works well with test or "
 "first_non_empty."
-msgstr "``not(value)``  -- återger strängen \"1\" om något värde inte är tomt, annars återges en tom sträng. Denna funktion fungerar bra med test eller first_non_empty. "
+msgstr "``not(value)``  -- återger strängen \"1\" om värdet är tomt, annars återges tomma strängen. Denna funktion fungerar bra med test eller first_non_empty."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:313
 msgid ""
@@ -980,7 +980,7 @@ msgstr "``print(a, b, ...)`` -- skriver ut argument till standard ut. Såvida du
 msgid ""
 "``raw_field(name)`` -- returns the metadata field named by name without "
 "applying any formatting."
-msgstr "``raw_field(name)`` -- återger metadatafält med namnet med 'name' utan att tillämpa någon formatering."
+msgstr "``raw_field(name)`` -- återger metadatafält nämnt efter name utan att tillämpa någon formatering."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:325
 msgid ""
@@ -999,7 +999,7 @@ msgid ""
 "mode, like for the template and the eval functions, you use [[ for { and ]] "
 "for }. The following example in template program mode looks for series with "
 "more than one word and uppercases the first word::"
-msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` --  återger en sträng med användande av reqular uttrycksmönstret för val och ersätter varje matchande instans med strängen beräknad genom att ersätta varje matchande grupp med värdet som återges av motsvarande mall. Det ursprungliga matchande värdet för gruppen finns som $. I mallprogramläge, som till mallen och de eval funktioner använder du  [[för {och]] för}. Följande exempel på mallprogramläge letar efter serie med mer än ett ord och sätter det första ordet till versaler::"
+msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` --  återger en sträng med användande av reqular uttrycksmönstret för val och ersätter varje matchande instans med strängen beräknad genom att ersätta varje matchande grupp med värdet som återges av motsvarande mall. Det ursprungliga matchande värdet för gruppen finns som $. I mallprogramläge, som till mallen och de eval funktioner använder du  [[ för { och ]] för }. Följande exempel på mallprogramläge letar efter serie med mer än ett ord och sätter det första ordet till versaler::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:330
 msgid "``series_sort()`` -- returns the series sort value."
@@ -1026,7 +1026,7 @@ msgid ""
 "``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive comparison x and y "
 "as strings. Returns ``lt`` if x < y. Returns ``eq`` if x == y. Otherwise "
 "returns ``gt``."
-msgstr "``strcmp(x, y, lt, eq, gt)`` -- gör en skiftlägesokänslig jämförelse x och y som strängar. Återger ``lt`` om x <y. Retur ``eq`` om x == y. Annars återges ''gt``."
+msgstr "``strcmp(x, y, lt, eq, gt)`` -- gör en skiftlägesokänslig jämförelse x och y som strängar. Återger ``lt`` om x < y. Återge ``eq`` om x == y. Annars återge ``gt``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:334
 msgid ""
@@ -1066,7 +1066,7 @@ msgid ""
 "evaluate the template ``{title_sort}`` and return its value. Note also that "
 "prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the "
 "argument to this function when using template program mode."
-msgstr "``template(x)`` -- utvärderar x som mall. Bedömningen görs i en egen kontext, vilket innebär att variabler inte delas mellan den som anropar och utvärderingsmallen. Eftersom `{` och `}` tecken är speciella, måste du använda `[[` för `{` tecken och `]] 'för'} 'tecken; de konverteras automatiskt. Till exempel, ``mall(\"[[title_sort]] ') kommer att utvärdera mallen ``{title_sort}``och återge dess värde. Observera också att prefix och suffix (det så kallade `|prefix|suffix` syntax) inte kan användas i argumentet till funktionen när du använder mallprogramläge."
+msgstr "``template(x)`` -- utvärderar x som mall. Bedömningen görs i en egen kontext, vilket innebär att variabler inte delas mellan den som anropar och utvärderingsmallen. Eftersom `{`- och `}`-tecken är speciella, måste du använda `[[` för `{`-tecknet och `]]` för '}'-tecknet; de konverteras automatiskt. Till exempel, ``template('[[title_sort]]') kommer att utvärdera mallen ``{title_sort}`` och återge dess värde. Observera också att prefix och suffix (det så kallade `|prefix|suffix` syntax) inte kan användas i argumentet till funktionen när du använder mallprogramläge."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:343
 msgid "Function classification"
@@ -1138,16 +1138,16 @@ msgid ""
 msgstr "Det skulle vara möjligt att göra ovanstående utan extra kolumner genom att sätta programmet i mallen av kontrollpanel. Men för att göra det, måste alla kommentarer tas bort på grund av att kontrlpanelens textrutan inte stöder redigering över flera rader. Det kan diskuteras om vinsten av att inte ha den anpassade kolumnen är värd den stora ökningen i svårigheter på grund av det program som en gigantisk rad."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:442
-msgid "User-defined Template Functions"
+msgid "User-defined template functions"
 msgstr "Användardefinierade mallfunktioner"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:444
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
-" written in python, and can be used in any of the three template programming"
+" written in Python, and can be used in any of the three template programming"
 " modes. The functions are added by going to Preferences -> Advanced -> "
-"Template Functions. Instructions are shown in that dialog."
-msgstr "Du kan lägga till egna funktioner till mallprocessorn. Sådana funktioner är skrivna i python, och kan användas i någon av de tre mallprogrammeringslägena. Funktionerna läggs  till genom att gå till Inställningar->Avancerat->Mallfunktioner. Instruktioner visas i denna dialog."
+"Template functions. Instructions are shown in that dialog."
+msgstr "Du kan lägga till egna funktioner till mallprocessorn. Sådana funktioner är skrivna i Python, och kan användas i någon av de tre mallprogrammeringslägena. Funktionerna läggs till genom att gå till Inställningar->Avancerat->Mallfunktioner. Instruktioner visas i denna dialog."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:447
 msgid "Special notes for save/send templates"
@@ -1162,14 +1162,14 @@ msgid ""
 "However, slashes are not changed in prefix or suffix strings, so slashes in "
 "these strings will cause folders to be created. Because of this, you can "
 "create variable-depth folder structure."
-msgstr "Särskilda bearbetning appliceras när en mall används i en 'spara på disk` eller `skicka till enhet` produkt mall. Värdena på fälten städas, ersätter tecken som är speciella till filsystem med streck, inklusive snedstreck. Detta innebär att textfältet inte kan användas för att skapa kataloger. Men snedstreck inte förändrats prefix eller suffix strängar, så snedstreck i dessa strängar kommer att orsaka mappar skapas. På grund av detta kan du skapa mappstruktur variabelt djup."
+msgstr "Särskilda bearbetning appliceras när en mall används i en 'spara på disk` eller `skicka till enhet` produkt mall. Värdena på fälten städas, ersätter tecken som är speciella till filsystem med streck, inklusive snedstreck. Detta innebär att textfältet inte kan användas för att skapa mappar. Men snedstreck inte förändrats prefix eller suffix strängar, så snedstreck i dessa strängar kommer att orsaka mappar skapas. På grund av detta kan du skapa mappstruktur variabelt djup."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:451
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
-msgstr "Antag till exempel att vi vill ha katalogstrukturen  `series/series_index - title`, med förbehållet att om serien inte existerar, så bör titeln vara i topp-mappen. Mallen för att göra detta är::"
+msgstr "Antag till exempel att vi vill ha mappstrukturen  `series/series_index - title`, med förbehållet att om serien inte existerar, så bör titeln vara i topp-mappen. Mallen för att göra detta är::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:455
 msgid "The slash and the hyphen appear only if series is not empty."
@@ -1183,7 +1183,7 @@ msgid ""
 "we want the folder structure `genre/author_sort/title.fmt`. If the book has "
 "no genre, we want to use 'Unknown'. We want two completely different paths, "
 "depending on the value of series."
-msgstr "Uppslagsfunktionen låter oss göra ännu snyggare bearbetning. Antag till exempel att om en bok har en serie, så vi vill att mappstrukturen `series/series index - title.fmt`. Om boken inte har en serie, så vi vill att katalogstrukturen `genre/author_sort/title.fmt`. Om boken inte har någon genre, vill vi använda \"Unknown\"(Okänd). Vi vill två helt olika vägar, beroende på värdet av serien."
+msgstr "Uppslagsfunktionen låter oss göra ännu snyggare bearbetning. Antag till exempel att om en bok har en serie, så vi vill att mappstrukturen `series/series index - title.fmt`. Om boken inte har en serie, så vi vill att mappstrukturen `genre/author_sort/title.fmt`. Om boken inte har någon genre, vill vi använda 'Okänd'. Vi vill två helt olika vägar, beroende på värdet av serien."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid "To accomplish this, we:"
@@ -1212,7 +1212,7 @@ msgid ""
 msgstr "Ändra spara mallen till  ``{series:lookup(.,#AA,#BB)}``.  Denna mall väljer sammansatta fält #AA om serien inte är tom, och sammansatta fält #BB om serien är tom. Vi har alltså två helt olika sparvägar, beroende på om eller inte `series` är tom."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
-msgid "Templates and Plugboards"
+msgid "Templates and plugboards"
 msgstr "Mallar och kontrollpaneler"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:467
@@ -1239,12 +1239,12 @@ msgstr "När du skapar en kontrollpanel anger du format och enheten för vilken 
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:471
 msgid ""
-"When a plugboard might apply (content server, save to disk, or send to "
+"When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr "När en kontrollpanel kan gälla (mediaserver, spara till disk, eller skicka till enhet), söker calibre de definierade kontrollpaneler att välja den rätta för givet format och enhet. Till exempel, för att hitta rätt kontrollpanel för en EPUB-bok som skickas till en Android-enhet, söker calibre dessa kontrollpaneler enligt följande sökordning:"
+msgstr "När en kontrollpanel kan gälla (Mediaserver, spara till disk, eller skicka till enhet), söker calibre de definierade kontrollpaneler att välja den rätta för givet format och enhet. Till exempel, för att hitta rätt kontrollpanel för en EPUB-bok som skickas till en Android-enhet, söker calibre dessa kontrollpaneler enligt följande sökordning:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:473
 msgid ""
@@ -1300,7 +1300,7 @@ msgid ""
 msgstr "Kontrollpaneler påverkar metadata som skrivs in i boken när den sparas till disk eller skrivs till enheten. Kontrollpaneler påverkar inte metadata som används av ``spara till disk`` och ``skicka till enhet`` för att skapa filnamnen. Istället konstrueras filnamn med hjälp av mallar som anges i lämpliga inställningsfönster."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
-msgid "Helpful Tips"
+msgid "Helpful tips"
 msgstr "Användbara tips"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:487

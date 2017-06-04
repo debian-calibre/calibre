@@ -49,7 +49,7 @@ class BasicNewsRecipe(Recipe):
     to creating recipes, see :doc:`news`.
     '''
 
-    #: The title to use for the ebook
+    #: The title to use for the e-book
     title                  = _('Unknown News Source')
 
     #: A couple of lines that describe the content this recipe downloads.
@@ -106,7 +106,7 @@ class BasicNewsRecipe(Recipe):
 
     #: Convenient flag to disable loading of stylesheets for websites
     #: that have overly complex stylesheets unsuitable for conversion
-    #: to ebooks formats.
+    #: to e-book formats.
     #: If True stylesheets are not downloaded and processed
     no_stylesheets         = False
 
@@ -321,7 +321,7 @@ class BasicNewsRecipe(Recipe):
     #: cover_margins = (10, 15, '#ffffff') pads the cover with a white margin
     #: 10px on the left and right, 15px on the top and bottom.
     #: Color names defined at https://www.imagemagick.org/script/color.php
-    #: Note that for some reason, white does not always work on windows. Use
+    #: Note that for some reason, white does not always work in Windows. Use
     #: #ffffff instead
     cover_margins = (0, 0, '#ffffff')
 
@@ -405,7 +405,7 @@ class BasicNewsRecipe(Recipe):
         ignore it.
 
         :param url: The URL to be followed
-        :param tag: The Tag from which the URL was derived
+        :param tag: The tag from which the URL was derived
         '''
         raise NotImplementedError
 
@@ -471,6 +471,14 @@ class BasicNewsRecipe(Recipe):
         dynamically generated images, etc.) and return the precessed URL.
         '''
         return url
+
+    def preprocess_image(self, img_data, image_url):
+        '''
+        Perform some processing on downloaded image data. This is called on the raw
+        data before any resizing is done. Must return the processed raw data. Return
+        None to skip the image.
+        '''
+        return img_data
 
     def get_browser(self, *args, **kwargs):
         '''
@@ -853,7 +861,7 @@ class BasicNewsRecipe(Recipe):
         '''
         Initialize the recipe.
         :param options: Parsed commandline options
-        :param parser:  Command line option parser. Used to intelligently merge options.
+        :param log:  Logging object
         :param progress_reporter: A Callable that takes two arguments: progress (a number between 0 and 1) and a string message. The message should be optional.
         '''
         self.log = ThreadSafeWrapper(log)
@@ -929,6 +937,7 @@ class BasicNewsRecipe(Recipe):
             setattr(self.web2disk_options, extra, getattr(self, extra))
 
         self.web2disk_options.postprocess_html = self._postprocess_html
+        self.web2disk_options.preprocess_image = self.preprocess_image
         self.web2disk_options.encoding = self.encoding
         self.web2disk_options.preprocess_raw_html = self.preprocess_raw_html_
 
@@ -1500,7 +1509,7 @@ class BasicNewsRecipe(Recipe):
                     for curl in self.canonicalize_internal_url(a.orig_url, is_link=False):
                         aumap[curl].add(arelpath)
                     parent.add_item(arelpath, None,
-                            a.title if a.title else _('Untitled Article'),
+                            a.title if a.title else _('Untitled article'),
                             play_order=po, author=auth,
                             description=desc, toc_thumbnail=tt)
                     last = os.path.join(self.output_dir, ('%sindex.html'%adir).replace('/', os.sep))

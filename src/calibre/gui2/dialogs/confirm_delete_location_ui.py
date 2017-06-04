@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/confirm_delete_location.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -72,6 +71,6 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_("Where do you want to delete from?"))
         self.button_lib.setText(_("Library"))
         self.button_device.setText(_("Device"))
-        self.button_both.setText(_("Library and Device"))
+        self.button_both.setText(_("Library and device"))
 
 

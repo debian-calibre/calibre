@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-10 04:04+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-10 03:27+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:4
-msgid "Ebook Conversion"
+msgid "E-book conversion"
 msgstr "Conversión de libros"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:6
@@ -34,14 +34,14 @@ msgid ""
 "Normally, you just add a book to calibre, click convert and calibre will try"
 " hard to generate output that is as close as possible to the input. However,"
 " calibre accepts a very large number of input formats, not all of which are "
-"as suitable as others for conversion to ebooks. In the case of such input "
+"as suitable as others for conversion to e-books. In the case of such input "
 "formats, or if you just want greater control over the conversion system, "
 "calibre has a lot of options to fine tune the conversion process. Note "
 "however that calibre's conversion system is not a substitute for a full "
-"blown ebook editor. To edit ebooks, I recommend first converting them to "
-"EPUB or AZW3 using calibre and then using the Edit Book feature to get them "
-"into perfect shape. You can then use the edited ebook as input for "
-"conversion into other formats in calibre."
+"blown e-book editor. To edit e-books, I recommend first converting them to "
+"EPUB or AZW3 using calibre and then using the :guilabel:`Edit book` feature "
+"to get them into perfect shape. You can then use the edited e-book as input "
+"for conversion into other formats in calibre."
 msgstr "calibre tiene un sistema de conversión diseñado para que sea fácil de usar. Normalmente no tiene más que añadir un libro a calibre, pulsar en convertir y calibre intentará generar una salida tan parecida como sea posible a la entrada. Sin embargo, calibre acepta un gran número de formatos de entrada, y no todos son tan adecuados como otros para convertirse a otros formatos. En el caso de los formatos menos adecuados, o si simplemente desea tener mayor control sobre el sistema de conversión, calibre tiene muchas opciones para ajustar los detalles del sistema de conversion. Tenga en cuenta que el sistema de conversión de calibre no es un sustituto para un editor completo de libros electrónicos. Para modificar libros le recomiendo que los convierta primero a EPUB o AZW3 con cailbre y luego use la función :guilabel:`Modificar libro` para darle la forma perfecta. Después puede usar el libro modificado como entrada para otros formatos en calibre."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:18
@@ -67,8 +67,8 @@ msgstr "Lo primero que debe comprender sobre el sistema de conversión es que es
 msgid ""
 "The input format is first converted to XHTML by the appropriate *Input "
 "Plugin*. This HTML is then *transformed*. In the last step, the processed "
-"XHTML is converted to the specified output format by the appropriate *Output"
-" Plugin*. The results of the conversion can vary greatly, based on the input"
+"XHTML is converted to the specified output format by the appropriate *output"
+" plugin*. The results of the conversion can vary greatly, based on the input"
 " format. Some formats convert much better than others. A list of the best "
 "source formats for conversion is available :ref:`here <best-source-"
 "formats>`."
@@ -84,7 +84,7 @@ msgid ""
 "by the *Input Plugin*, not on the input file itself. So, for example, if you"
 " ask calibre to convert an RTF file to EPUB, it will first be converted to "
 "XHTML internally, the various transforms will be applied to the XHTML and "
-"then the *Output Plugin* will create the EPUB file, automatically generating"
+"then the *output plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
 msgstr "Todo el trabajo tiene lugar en las transformaciones que operan sobre la salida XHTML. Hay varias transformaciones, por ejemplo, para insertar los metadatos del libro en una página al inicio del libro, para detectar encabezados de capítulo y crear un índice automáticamente, para ajustar los tamaños de letra proporcionalmente, etc. Es importante recordar que todas las transformaciones actúan sobre el XHTML creado por el *complemento de entrada*, no sobre el archivo de entrada en sí. Así, por ejemplo, si pide a calibre que convierta un archivo RTF a EPUB, primero lo convertirá a XHTML internamente, se aplicarán las distintas transformaciones sobre el XHTML y después el *complemento de salida* creará el archivo EPUB, generando automáticamente todos los metadatos, índice, etc."
 
@@ -145,35 +145,35 @@ msgstr "processed"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:78
 msgid ""
-"Just before the ebook is passed to the output plugin. Use to debug the "
-"Output Plugin."
+"Just before the e-book is passed to the output plugin. Use to debug the "
+"output plugin."
 msgstr "Justo antes de que el libro pase al complemento de salida. Úselo para depurar el complemento de salida"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:81
 msgid ""
 "If you want to edit the input document a little before having calibre "
 "convert it, the best thing to do is edit the files in the :file:`input` sub-"
-"directory, then zip it up, and use the zip file as the input format for "
+"directory, then zip it up, and use the ZIP file as the input format for "
 "subsequent conversions. To do this use the :guilabel:`Edit meta information`"
-" dialog to add the zip file as a format for the book and then, in the top "
+" dialog to add the ZIP file as a format for the book and then, in the top "
 "left corner of the conversion dialog, select ZIP as the input format."
-msgstr "Si desea modificar el documento de salida antes de que calibre lo convierta, lo mejor es modificar los archivos en el subdirectorio :file:`input`, comprimirlos en un archivo zip y usar éste como formato de entrada para las subsiguientes conversiones. Para hacer esto use el cuadro de diálogo :guilabel:`Modificar metadatos` para añadir el zip como formato para el libro y entonces, en la esquina superior izquierda del cuadro de diálogo de conversión, seleccione ZIP como formato de entrada."
+msgstr "Si desea modificar el documento de salida antes de que calibre lo convierta, lo mejor es modificar los archivos en el subdirectorio :file:`input`, comprimirlos en un archivo ZIP y usar éste como formato de entrada para las subsiguientes conversiones. Para hacer esto use el cuadro de diálogo :guilabel:`Modificar metadatos` para añadir el ZIP como formato para el libro y entonces, en la esquina superior izquierda del cuadro de diálogo de conversión, seleccione ZIP como formato de entrada."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:87
 msgid ""
 "This document will deal mainly with the various transforms that operate on "
 "the intermediate XHTML and how to control them. At the end are some tips "
-"specific to each Input/Output format."
+"specific to each input/output format."
 msgstr "Este documento se ocupará principalmente de las distintas transformaciones que operan sobre el XHTML intermedio y cómo controlarlas. Al final hay algunos consejos específicos para cada formato de entrada o salida."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:91
-msgid "Look & Feel"
+msgid "Look & feel"
 msgstr "Apariencia"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:97
 msgid ""
 "This group of options controls various aspects of the look and feel of the "
-"converted ebook."
+"converted e-book."
 msgstr "Las opciones de este grupo controlan varios aspectos del aspecto del libro electrónico convertido."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:102
@@ -204,7 +204,7 @@ msgstr "El tamaño de letra base de un documento es el tamaño de letra más com
 #: ../../home/kovid/work/calibre/manual/conversion.rst:117
 msgid ""
 "Normally, calibre will automatically choose a base font size appropriate to "
-"the Output Profile you have chosen (see :ref:`page-setup`). However, you can"
+"the output profile you have chosen (see :ref:`page-setup`). However, you can"
 " override this here in case the default is not suitable for you."
 msgstr "Normalmente calibre elegirá automáticamente un tamaño de letra base adecuado para el perfil de salida que haya seleccionado (ver :ref:`page-setup`). Si el tamaño predeterminado no le satisface, puede especificar otro aquí."
 
@@ -342,7 +342,7 @@ msgstr ":guilabel:`Sin justificación de texto`"
 #: ../../home/kovid/work/calibre/manual/conversion.rst:212
 msgid ""
 "Normally, if the output format supports it, calibre will force the output "
-"ebook to have *justified* text (i.e., a smooth right margin). This option "
+"e-book to have *justified* text (i.e., a smooth right margin). This option "
 "will turn off this behavior, in which case whatever justification is "
 "specified in the input document will be used instead."
 msgstr "Normalmente, si el formato de salida lo soporta, calibre hará que el libro de salida tenga el texto *justificado* (es decir, un margen derecho uniforme). Esta opción deshabilitará este comportamiento, en cuyo caso se usará la justificación especificada en el documento de entrada."
@@ -373,8 +373,8 @@ msgid ""
 "that in cases where there are multiple representations of a character "
 "(characters shared by Chinese and Japanese for instance) the representation "
 "used by the largest number of people will be used (Chinese in the previous "
-"example). This option is mainly useful if you are going to view the ebook on"
-" a device that does not have support for unicode."
+"example). This option is mainly useful if you are going to view the e-book "
+"on a device that does not have support for unicode."
 msgstr "Translitera caracteres unicode a una representación ASCII. Úselo con precaución debido a que reemplazará caracteres unicode con ASCII. Por ejemplo, sustituirá «Михаил Горбачёв» por «Mikhail Gorbachiov». Además, en algunos casos donde existen múltiples representacion de un carácter (caracteres compartidos por los idiomas chino y japonés, por ejemplo) se elegirá la representación utilizada por mayor número de personas (chino, en este caso). Esta opción es principalmente útil si va a visualizar el libro electrónico en un dispositivo que no admite caracteres unicode."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:240
@@ -388,23 +388,24 @@ msgid ""
 "like smart quotes being corrupted. calibre tries to auto-detect the "
 "character encoding of the source document, but it does not always succeed. "
 "You can force it to assume a particular character encoding by using this "
-"setting. `cp1252` is a common encoding for documents produced using windows "
+"setting. `cp1252` is a common encoding for documents produced using Windows "
 "software. You should also read :ref:`char-encoding-faq` for more on encoding"
 " issues."
 msgstr "Los documentos antiguos a veces no especifican su codificación de caracteres. Al convertirlos, esto puede resultar en errores en los caracteres no ingleses o en caracteres especiales como las comillas curvas. calibre intenta detectar automáticamente la codificación de caracteres del documento de origen, pero no siempre lo consigue. Puede forzarlo a que suponga una codificación particular utilizando esta configuración. `cp1252` es una codificación usual para documentos generados por programas del sistema operativo Windows. Debería leer también :ref:`char-encoding-faq` para más información sobre temas de codificación."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:245
-msgid "Page Setup"
+msgid "Page setup"
 msgstr "Configuración de página"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:247
 msgid ""
-"The Page Setup options are for controlling screen layout, like margins and "
-"screen sizes. There are options to setup page margins, which will be used by"
-" the Output Plugin, if the selected Output Format supports page margins. In "
-"addition, you should choose an Input profile and an Output profile. Both "
-"sets of profiles basically deal with how to interpret measurements in the "
-"input/output documents, screen sizes and default font rescaling keys."
+"The :guilabel:`Page setup` options are for controlling screen layout, like "
+"margins and screen sizes. There are options to setup page margins, which "
+"will be used by the output plugin, if the selected output format supports "
+"page margins. In addition, you should choose an Input profile and an output "
+"profile. Both sets of profiles basically deal with how to interpret "
+"measurements in the input/output documents, screen sizes and default font "
+"rescaling keys."
 msgstr "Las opciones de configuración de página son para controlar la disposición en la pantalla, como márgenes y tamaño de pantalla. Hay opciones para establecer márgenes de página, que usará el complemento de salida si el formato de salida especificado admite márgenes de página. Además, debería seleccionar un perfil de entrada y un perfil de salida. Ambos perfiles se encargan básicamente de interpretar las dimensiones en los documentos de entrada o salida, los tamaños de pantalla y las claves predeterminadas de tamaño de letra."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:253
@@ -413,7 +414,7 @@ msgid ""
 "particular device/software platform, choose the corresponding input profile,"
 " otherwise just choose the default input profile. If you know the files you "
 "are producing are meant for a particular device type, choose the "
-"corresponding Output profile. In particular, for MOBI Output files, you "
+"corresponding output profile. In particular, for MOBI output files, you "
 "should choose the Kindle, for LIT the Microsoft Reader and for EPUB the Sony"
 " Reader. In the case of EPUB, the Sony Reader profile will result in EPUB "
 "files that will work everywhere. However, it has some side effects, like "
@@ -427,19 +428,19 @@ msgstr "Si sabe que el archivo concreto que va a convertir está pensado para un
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid ""
-"The Output profile also controls the screen size. This will cause, for "
+"The output profile also controls the screen size. This will cause, for "
 "example, images to be auto-resized to be fit to the screen in some output "
 "formats. So choose a profile of a device that has a screen size similar to "
 "your device."
 msgstr "El perfil de salida también controla el tamaño de pantalla. Esto causará, por ejemplo, que las imágenes se redimensionen automáticamente para adaptarse a la pantalla en algunos formatos de salida. Por lo tanto elija el perfil de un dispositivo que tenga una pantalla de tamaño similar a su dispositivo."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:262
-msgid "Heuristic Processing"
+msgid "Heuristic processing"
 msgstr "Procesado heurístico"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:264
 msgid ""
-"Heuristic Processing provides a variety of functions which can be used to "
+"Heuristic processing provides a variety of functions which can be used to "
 "try and detect and correct common problems in poorly formatted input "
 "documents.  Use these functions if your input document suffers from poor "
 "formatting. Because these functions rely on common patterns, be aware that "
@@ -454,10 +455,10 @@ msgstr ":guilabel:`Activar el procesado heurístico`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:271
 msgid ""
-"This option activates calibre's Heuristic Processing stage of the conversion"
-" pipeline. This must be enabled in order for various sub-functions to be "
-"applied"
-msgstr "Esta opción activa la etapa de procesamiento heurístico de calibre en el proceso de conversión. Debe estar habilitada para que se apliquen varias subfunciones."
+"This option activates calibre's :guilabel:`Heuristic processing` stage of "
+"the conversion pipeline. This must be enabled in order for various sub-"
+"functions to be applied"
+msgstr "Esta opción activa la etapa de :guilabel:`procesado heurístico` de calibre en el proceso de conversión. Debe estar habilitada para que se apliquen varias subfunciones."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:278
 msgid ":guilabel:`Unwrap lines`"
@@ -505,9 +506,9 @@ msgstr "Si el documento no posee cabeceras de capítulo y títulos con un format
 msgid ""
 "This function will not create a TOC, but in many cases it will cause "
 "calibre's default chapter detection settings to correctly detect chapters "
-"and build a TOC.  Adjust the XPath under Structure Detection if a TOC is not"
+"and build a TOC.  Adjust the XPath under Structure detection if a TOC is not"
 " automatically created.  If there are no other headings used in the document"
-" then setting \"//h:h2\" under Structure Detection would be the easiest way "
+" then setting \"//h:h2\" under Structure detection would be the easiest way "
 "to create a TOC for the document."
 msgstr "Esta función no creará un índice, pero en muchos casos hará que la detección automática de capítulos predeterminada de calibre detecte los capítulos correctamente y cree un índice. Ajuste la expresión XPath en :guilabel:`Detección de estructura` si no se crea automáticamente un índice. Si no se usan otras cabeceras en el documento, especificar ``//h:h2`` como expresión XPath será la forma más fácil de crear un índice para el documento."
 
@@ -571,14 +572,14 @@ msgstr "Si esta opción está activada, calibre sustituirá los marcadores de ca
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:322
 msgid ""
-"In general you should avoid using html tags, calibre will discard any tags "
+"In general you should avoid using HTML tags, calibre will discard any tags "
 "and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> "
 "tags are exceptions.  Horizontal rules can optionally be specified with "
 "styles, if you choose to add your own style be sure to include the 'width' "
 "setting, otherwise the style information will be discarded.  Image tags can "
 "used, but calibre does not provide the ability to add the image during "
-"conversion, this must be done after the fact using the 'Edit Book' feature."
-msgstr "En general, debería evitar usar etiquetas HTML, calibre ignorará cualquier etiqueta y usará marcas predefinidas. Las etiquetas <hr/> (líneas horizontales) e <img> son excepciones. Las líneas horizontales pueden especificarse también con estilos, si decide incluir un estilo, asegurése de que tenga la opción «width», en caso contrario la información de estilo será ignorada. Las etiquetas de imagen pueden usarse, pero calibre no ofrece la posibilidad de añadir imágenes durante la conversión, esto debe hacerse posteriormente usando la función :guilabel:`Modificar libro`."
+"conversion, this must be done after the fact using the 'Edit book' feature."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:329
 msgid ""
@@ -661,15 +662,15 @@ msgstr "Estas opciónes son útiles principalmente para la conversión de docume
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:363
 msgid ""
-"The search works by using a python regular expression. All matched text is "
+"The search works by using a Python regular expression. All matched text is "
 "simply removed from the document or replaced using the replacement pattern. "
 "The replacement pattern is optional, if left blank then text matching the "
 "search pattern will be deleted from the document.  You can learn more about "
 "regular expressions and their syntax at :ref:`regexptutorial`."
-msgstr "La búsqueda funciona utilizando una expresión regular python. Todo el texto de la coincidencia se elimina del documento o se stituye utilizando el patrón de sustitución. El patrón de sustitución es opcional, si se deja en blanco el texto de la coincidencia se borrará del documento. Puede aprender más acerca de las expresiones regulares y su sintaxis en :ref:`regexptutorial`."
+msgstr "La búsqueda funciona utilizando una expresión regular Python. Todo el texto de la coincidencia se elimina del documento o se stituye utilizando el patrón de sustitución. El patrón de sustitución es opcional, si se deja en blanco el texto de la coincidencia se borrará del documento. Puede aprender más acerca de las expresiones regulares y su sintaxis en :ref:`regexptutorial`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:371
-msgid "Structure Detection"
+msgid "Structure detection"
 msgstr "Detección de estructura"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:373
@@ -703,7 +704,7 @@ msgid ""
 "calibre uses *XPath*, a powerful language to allow the user to specify "
 "chapter boundaries/page breaks. XPath can seem a little daunting to use at "
 "first, fortunately, there is a :ref:`XPath tutorial <xpath-tutorial>` in the"
-" User Manual. Remember that Structure Detection operates on the intermediate"
+" User Manual. Remember that Structure detection operates on the intermediate"
 " XHTML produced by the conversion pipeline. Use the debug option described "
 "in the :ref:`conversion-introduction` to figure out the appropriate settings"
 " for your book. There is also a button for a XPath wizard to help with the "
@@ -757,7 +758,7 @@ msgid ""
 "One of the great things about calibre is that it allows you to maintain very"
 " complete metadata about all of your books, for example, a rating, tags, "
 "comments, etc. This option will create a single page with all this metadata "
-"and insert it into the converted ebook, typically just after the cover. "
+"and insert it into the converted e-book, typically just after the cover. "
 "Think of it as a way to create your own customised book jacket."
 msgstr "Uno de los mejores detalles de calibre es que permite mantener metadatos muy completos en todos los libros, por ejemplo, una calificación, etiquetas, comentarios, etc. Esta opción creará una página con todos estos metadatos y la insertará en el libro electrónico convertido, normalmente después de la portada. Piénse en ello como una forma de crear una sobrecubierta personalizada."
 
@@ -784,7 +785,7 @@ msgid ""
 "will just use that. However, a number of older formats either do not support"
 " a metadata based Table of Contents, or individual documents do not have "
 "one. In these cases, the options in this section can help you automatically "
-"generate a Table of Contents in the converted ebook, based on the actual "
+"generate a Table of Contents in the converted e-book, based on the actual "
 "content in the input document."
 msgstr "Cuando el documento de entrada tiene un índice en los metadatos, calibre lo usará sin más. Sin embargo, algunos formatos antiguos no admiten índices basados en metadatos y algunos documentos no lo contienen. En estos casos, las opciones de esta sección pueden ayudarle a generar un índice automáticamente en el libro convertido, basado en el contenido del documento de entrada."
 
@@ -798,10 +799,10 @@ msgid ""
 "Editor tool after the conversion. It allows you to create entries in the "
 "Table of Contents by simply clicking the place in the book where you want "
 "the entry to point. You can also use the ToC Editor by itself, without doing"
-" a conversion. Go to :guilabel:`Preferences->Toolbars` and add the ToC "
-"Editor to the main toolbar. Then just select the book you want to edit and "
-"click the ToC Editor button."
-msgstr "Puede ser un poco complicado obtener exactamente el resultado correcto con estas opciones. Si prefiere crear o modificar el índice a mano, convierta el libro al formato EPUB o AZW3 y marque la casilla en la parte inferior de la sección Índice del cuadro de dialogo de conversión que dice :guilabel:`Ajustar manualmente el índice al finalizar la conversión`. Esto ejecutará la herramienta de modificación de índice después de la conversión. Esta herramienta le permite crear entradas en el índice sin más que pulsar en la ubicación del libro adonde quiere que apunte la entrada. También puede usar el Editor del índice sin realizar ninguna conversión. Vaya a :guilabel:`Preferencias > Barras de herramientas` y añada :guilabel:`Modificar el índice` a la barra de herramientas principal. Despues seleccione el libro que quiera modificar y pulse en el botón del Editor del índice."
+" a conversion. Go to :guilabel:`Preferences->Interface->Toolbars` and add "
+"the :guilabel:`ToC Editor` to the main toolbar. Then just select the book "
+"you want to edit and click the :guilabel:`ToC Editor` button."
+msgstr "Puede ser un poco complicado obtener exactamente el resultado correcto con estas opciones. Si prefiere crear o modificar el índice a mano, convierta el libro al formato EPUB o AZW3 y marque la casilla en la parte inferior de la sección Índice del cuadro de dialogo de conversión que dice :guilabel:`Ajustar manualmente el índice al finalizar la conversión`. Esto ejecutará la herramienta de modificación de índice después de la conversión. Esta herramienta le permite crear entradas en el índice sin más que pulsar en la ubicación del libro adonde quiere que apunte la entrada. También puede usar el Editor del índice sin realizar ninguna conversión. Vaya a :guilabel:`Preferencias > Interfaz > Barras de herramientas` y añada :guilabel:`Modificar el índice` a la barra de herramientas principal. Despues seleccione el libro que quiera modificar y pulse en el botón :guilabel:`Modificar el índice`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:449
 msgid ""
@@ -873,7 +874,7 @@ msgstr "Esto dará lugar a un índice de dos niveles generado automáticamente q
 #: ../../home/kovid/work/calibre/manual/conversion.rst:515
 msgid ""
 "Not all output formats support a multi level Table of Contents. You should "
-"first try with EPUB Output. If that works, then try your format of choice."
+"first try with EPUB output. If that works, then try your format of choice."
 msgstr "No todos los formatos de salida admiten un índice con varios niveles. Pruebe primer con el formato de salida EPUB. Si funciona, intente con su formato de elección."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:519
@@ -932,37 +933,37 @@ msgid ""
 "You can also change settings in the conversion dialog for each book "
 "conversion. When you convert a book, calibre remembers the settings you used"
 " for that book, so that if you convert it again, the saved settings for the "
-"individual book will take precedence over the defaults set in Preferences. "
-"You can restore the individual settings to defaults by using the Restore to "
-"defaults button in the individual book conversion dialog. You can remove the"
-" saved settings for a group of books by selecting all the books and then "
-"clicking the edit metadata button to bring up the bulk metadata edit dialog,"
-" near the bottom of the dialog is an option to remove stored conversion "
-"settings."
-msgstr "También puede modificar la configuración en el cuadro de diálogo de conversión para cada libro. Cuando convierte un libro, calibre recuerda la configuración que usó para ese libro, de manera que si vuelve a convertirlo, la configuración almacenada tendrá prioridad sobre la predeterminada en las Preferencias. Puede restablecer la configuración individual a la predeterminada usando el botón :guilabel:`Restaurar valores predeterminados` en el cuadro de diálogo de conversión individual. Puede eliminar las configuraciones almacenadas para un grupo de libros seleccionando los libros y pulsando el botón de modificar metadatos para mostrar el cuadro de diálogo de modificar metadatos en masa, en la parte inferior hay una opción para eliminar las configuraciones de conversión guardadas."
+"individual book will take precedence over the defaults set in "
+":guilabel:`Preferences`. You can restore the individual settings to defaults"
+" by using the :guilabel:`Restore defaults` button in the individual book "
+"conversion dialog. You can remove the saved settings for a group of books by"
+" selecting all the books and then clicking the :guilabel:`Edit metadata` "
+"button to bring up the bulk metadata edit dialog, near the bottom of the "
+"dialog is an option to remove stored conversion settings."
+msgstr "También puede modificar la configuración en el cuadro de diálogo de conversión para cada libro. Cuando convierte un libro, calibre recuerda la configuración que usó para ese libro, de manera que si vuelve a convertirlo, la configuración almacenada tendrá prioridad sobre la predeterminada en las :guilabel:`Preferencias`. Puede restablecer la configuración individual a la predeterminada usando el botón :guilabel:`Restaurar valores predeterminados` en el cuadro de diálogo de conversión individual. Puede eliminar las configuraciones almacenadas para un grupo de libros seleccionando los libros y pulsando el botón :guilabel:`Modificar metadatos` para mostrar el cuadro de diálogo de modificar metadatos en masa, en la parte inferior hay una opción para eliminar las configuraciones de conversión guardadas."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:579
+#: ../../home/kovid/work/calibre/manual/conversion.rst:580
 msgid ""
 "When you Bulk Convert a set of books, settings are taken in the following "
 "order (last one wins):"
 msgstr "Al convertir en masa un conjunto de libros, las configuraciones se toman en el siguiente orden (el último prevalece):"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:581
+#: ../../home/kovid/work/calibre/manual/conversion.rst:582
 msgid "From the defaults set in Preferences->Conversion"
 msgstr "De la configuración predeterminada en :guilabel:`Preferencias > Conversión`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:583
+#: ../../home/kovid/work/calibre/manual/conversion.rst:584
 msgid ""
 "From the saved conversion settings for each book being converted (if any). "
 "This can be turned off by the option in the top left corner of the Bulk "
 "Conversion dialog."
 msgstr "A partir de las opciones de conversión guardadas para cada libro que se convierte (si existen). Esto puede desactivarse con la opción en la parte superior izquierda del cuadro de diálogo de conversión en masa."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:587
+#: ../../home/kovid/work/calibre/manual/conversion.rst:588
 msgid "From the settings set in the Bulk conversion dialog"
 msgstr "De la configuración establecida en el cuadro de diálogo :guilabel:`Convertir en masa`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:589
+#: ../../home/kovid/work/calibre/manual/conversion.rst:590
 msgid ""
 "Note that the final settings for each book in a Bulk Conversion will be "
 "saved and re-used if the book is converted again. Since the highest priority"
@@ -974,7 +975,7 @@ msgid ""
 "from book specific settings (if any) or the defaults."
 msgstr "Tenga en cuenta que las configuraciones finales para cada libro en una conversión en masa se guardarán y se volverán a usar si el libro se convierte de nuevo. Puesto que en una conversión en masa se da máxima prioridad a las configuraciones especificadas en el cuadro de diálogo, éstas reemplazaran cualquier configuración específica de un libro. Las excepciones son los metadatos y las configuraciones específicas de formatos de entrada. El cuadro de diálogo de conversión en masa no tiene configuraciones para estas dos categorías, así que se tomarán de las configuraciones específicas de cada libro (si existen) o de las predeterminadas."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:600
+#: ../../home/kovid/work/calibre/manual/conversion.rst:601
 msgid ""
 "You can see the actual settings used during any conversion by clicking the "
 "rotating icon in the lower right corner and then double clicking the "
@@ -982,23 +983,23 @@ msgid ""
 "contain the actual settings used, near the top."
 msgstr "Puede ver las opciones usadas realmente en la conversión pulsando sobre el icono rotatorio en la esquina inferior derecha y luego pulsando dos veces sobre cada tarea de conversión. Esto mostrará un registro de conversión que contiene las opciones usadas finalmente, en la parte superior."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:605
+#: ../../home/kovid/work/calibre/manual/conversion.rst:606
 msgid "Format specific tips"
 msgstr "Consejos para formatos específicos"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:607
+#: ../../home/kovid/work/calibre/manual/conversion.rst:608
 msgid ""
 "Here you will find tips specific to the conversion of particular formats. "
 "Options specific to particular format, whether input or output are available"
-" in the conversion dialog under their own section, for example `TXT Input` "
-"or `EPUB Output`."
+" in the conversion dialog under their own section, for example `TXT input` "
+"or `EPUB output`."
 msgstr "Aquí encontrará consejos específicos para la conversión de formatos particulares. En el cuadro de diálogo de conversión hay opciones específicas para cada formato, ya sea de entrada o salida, en su propia sección, por ejemplo `Entrada TXT` o `Salida EPUB`."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:612
+#: ../../home/kovid/work/calibre/manual/conversion.rst:613
 msgid "Convert Microsoft Word documents"
 msgstr "Convertir documentos de Microsoft Word"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:614
+#: ../../home/kovid/work/calibre/manual/conversion.rst:615
 msgid ""
 "calibre can automatically convert ``.docx`` files created by Microsoft Word "
 "2007 and newer. Just add the file to calibre and click convert (make sure "
@@ -1006,7 +1007,7 @@ msgid ""
 " is very new)."
 msgstr "calibre puede convertir automáticamente archivos ``.docx`` creados por Microsoft Word 2007 y versiones posteriores. Sólo tiene que añadir el archivo a calibre y pulsar en Convertir (asegúrese de que está ejecutando la última versión de calibre, ya que la compatibilidad con los archivos ``.docx`` es muy reciente)."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:619
+#: ../../home/kovid/work/calibre/manual/conversion.rst:620
 msgid ""
 "There is a `demo .docx file <https://calibre-"
 "ebook.com/downloads/demos/demo.docx>`_ that demonstrates the capabilities of"
@@ -1014,19 +1015,20 @@ msgid ""
 "AZW3 to see what calibre can do."
 msgstr "Hay un archivo `.docx de demostración <https://calibre-ebook.com/downloads/demos/demo.docx>`_ que muestra las capacidades del motor de conversión de calibre. Descárguelo y conviértalo a EPUB o AZW3 para ver lo que calibre puede hacer."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:623
+#: ../../home/kovid/work/calibre/manual/conversion.rst:624
 msgid ""
 "calibre will automatically generate a Table of Contents based on headings if"
 " you mark your headings with the ``Heading 1``, ``Heading 2``, etc. styles "
-"in Word. Open the output ebook in the calibre viewer and click the Table of "
-"Contents button to view the generated Table of Contents."
-msgstr "calibre generará automáticamente un índice basado en las cabeceras si éstas están marcadas con los estilo de Word ``Título 1``, ``Título 2``, etc. Abra el libro resultante en el visor de calibre y pulse el botón de índice para ver el índice generado."
+"in Microsoft Word. Open the output e-book in the calibre E-book viewer and "
+"click the :guilabel:`Table of Contents` button to view the generated Table "
+"of Contents."
+msgstr "calibre generará automáticamente un índice basado en las cabeceras si éstas están marcadas con los estilos de Microsoft Word ``Título 1``, ``Título 2``, etc. Abra el libro resultante en el visor de calibre y pulse el botón de :guilabel:`Índice` para ver el índice generado."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:629
+#: ../../home/kovid/work/calibre/manual/conversion.rst:630
 msgid "Older .doc files"
 msgstr "Archivos .doc antiguos"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:631
+#: ../../home/kovid/work/calibre/manual/conversion.rst:632
 msgid ""
 "For older .doc files, you can save the document as HTML with Microsoft Word "
 "and then convert the resulting HTML file with calibre. When saving as HTML, "
@@ -1036,18 +1038,18 @@ msgid ""
 " newer version of Word available, you can directly save it as docx as well."
 msgstr "Para los archivos .doc más antiguos, puede guardar el documento como HTML con Microsoft Word y luego convertir el HTML resultante con calibre. Al guardar como HTML, asegúrese de usar la opción «Guardar como página web, filtrada», ya que esto producirá un HTML más limpio que se convertirá mejor. Tenga en cuenta que Word produce un HTML realmente intrincado, y convertirlo puede llevar tiempo, así que sea paciente. Si tiene disponible una versión de Word más reciente, también puede guardarlo directamente como docx."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:638
+#: ../../home/kovid/work/calibre/manual/conversion.rst:639
 msgid ""
 "Another alternative is to use the free OpenOffice. Open your .doc file in "
 "OpenOffice and save it in OpenOffice's format .odt. calibre can directly "
 "convert .odt files."
 msgstr "Otra posibilidad es utilizar el paquete ofimático libre OpenOffice. Abra el archivo .doc en OpenOffice y guárdelo en el formato nativo de OpenOffice .odt. calibre puede convertir directamente archivos .odt."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:643
+#: ../../home/kovid/work/calibre/manual/conversion.rst:644
 msgid "Convert TXT documents"
 msgstr "Convertir documentos TXT"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:645
+#: ../../home/kovid/work/calibre/manual/conversion.rst:646
 msgid ""
 "TXT documents have no well defined way to specify formatting like bold, "
 "italics, etc, or document structure like paragraphs, headings, sections and "
@@ -1056,86 +1058,86 @@ msgid ""
 "based on those conventions."
 msgstr "Los documentos TXT no tienen una manera definida de especificar formato como cursiva, negrita, etc., o estructura del documento com párrafos, cabeceras, secciones y demás, pero existen varias convenciones usadas normalmente. De manera predeterminada calibre intenta detectar automáticamente el formato y marcado correcto basándose en estas convenciones."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:650
+#: ../../home/kovid/work/calibre/manual/conversion.rst:651
 msgid ""
 "TXT input supports a number of options to differentiate how paragraphs are "
 "detected."
 msgstr "La entrada TXT admite una serie de opciones para distinguir cómo se detectan los párrafos."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:654
-msgid ":guilabel:`Paragraph Style: Auto`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:655
+msgid ":guilabel:`Paragraph style: Auto`"
 msgstr ":guilabel:`Estilo de párrafo: auto`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:653
+#: ../../home/kovid/work/calibre/manual/conversion.rst:654
 msgid ""
 "Analyzes the text file and attempts to automatically determine how "
 "paragraphs are defined.  This option will generally work fine, if you "
 "achieve undesirable results try one of the manual options."
 msgstr "Analiza el archivo de texto e intenta determinar automáticamente cómo están definidos los párrafos. Esta opción generalmente funcionará bien, si no obtiene resultados satisfactorios pruebe con las opciones manuales."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:662
-msgid ":guilabel:`Paragraph Style: Block`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:663
+msgid ":guilabel:`Paragraph style: Block`"
 msgstr ":guilabel:`Estilo de párrafo: block`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:657
+#: ../../home/kovid/work/calibre/manual/conversion.rst:658
 msgid "Assumes one or more blank lines are a paragraph boundary::"
 msgstr "Asume que los párrafos están separados por una o más líneas en blanco::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:669
-msgid ":guilabel:`Paragraph Style: Single`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:670
+msgid ":guilabel:`Paragraph style: Single`"
 msgstr ":guilabel:`Estilo de párrafo: single`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:665
+#: ../../home/kovid/work/calibre/manual/conversion.rst:666
 msgid "Assumes that every line is a paragraph::"
 msgstr "Asume que cada línea es un párrafo::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:680
-msgid ":guilabel:`Paragraph Style: Print`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:681
+msgid ":guilabel:`Paragraph style: Print`"
 msgstr ":guilabel:`Estilo de párrafo: print`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:672
+#: ../../home/kovid/work/calibre/manual/conversion.rst:673
 msgid ""
 "Assumes that every paragraph starts with an indent (either a tab or 2+ "
 "spaces). Paragraphs end when the next line that starts with an indent is "
 "reached::"
 msgstr "Asume que cada párrafo se inicia con una sangría (ya sea una tabulación o más de un espacio). Los párrafos terminan cuando se alcanza la siguiente línea que empieza con una sangría::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:684
-msgid ":guilabel:`Paragraph Style: Unformatted`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:685
+msgid ":guilabel:`Paragraph style: Unformatted`"
 msgstr ":guilabel:`Estilo de párrafo: unformatted`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:683
+#: ../../home/kovid/work/calibre/manual/conversion.rst:684
 msgid ""
 "Assumes that the document has no formatting, but does use hard line breaks."
 "  Punctuation and median line length are used to attempt to re-create "
 "paragraphs."
 msgstr "Asume que el documento no posee formato, pero usa saltos de línea forzados. La puntuación y la mediana de la longitud de renglón se emplean para intentar restaurr los párrafos."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:688
-msgid ":guilabel:`Formatting Style: Auto`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:689
+msgid ":guilabel:`Formatting style: Auto`"
 msgstr ":guilabel:`Estilo de formato: auto`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:687
+#: ../../home/kovid/work/calibre/manual/conversion.rst:688
 msgid ""
 "Attempts to detect the type of formatting markup being used.  If no markup "
 "is used then heuristic formatting will be applied."
 msgstr "Intenta detectar el tipo de marcado de formato que se emplea. Si no se encuentra uno, se aplicará el formato heurístico."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:692
-msgid ":guilabel:`Formatting Style: Heuristic`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:693
+msgid ":guilabel:`Formatting style: Heuristic`"
 msgstr ":guilabel:`Estilo de formato: heuristic`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:691
+#: ../../home/kovid/work/calibre/manual/conversion.rst:692
 msgid ""
 "Analyzes the document for common chapter headings, scene breaks, and "
-"italicized words and applies the appropriate html markup during conversion."
-msgstr "Analiza el documento para detectar cabeceras de capítulo comunes, cambios de escena y palabras en cursiva, y aplica las etiquetas HTML adecuadas durante la conversión."
+"italicized words and applies the appropriate HTML markup during conversion."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:699
-msgid ":guilabel:`Formatting Style: Markdown`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:700
+msgid ":guilabel:`Formatting style: Markdown`"
 msgstr ":guilabel:`Estilo de formato: markdown`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:695
+#: ../../home/kovid/work/calibre/manual/conversion.rst:696
 msgid ""
 "calibre also supports running TXT input though a transformation preprocessor"
 " known as markdown. Markdown allows for basic formatting to be added to TXT "
@@ -1147,21 +1149,21 @@ msgid ""
 "<https://daringfireball.net/projects/markdown/syntax>`_."
 msgstr "calibre también admite pasar la entrada TXT por un preprocesador llamado markdown. Markdown permite añadir formato básico a documentos TXT, como negritas, cursivas, encadezados de secciones, tablas, listas, índice, etc. La manera más sencilla de obtener un índice a partir de un documento TXT es marcar las cabeceras de capítulo con «#» y establecer la expresión XPath para detección de capítulos en «//h:h1». Puede aprender más sobre la sintaxis markdown en `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:702
-msgid ":guilabel:`Formatting Style: None`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:703
+msgid ":guilabel:`Formatting style: None`"
 msgstr ":guilabel:`Estilo de formato: none`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:702
+#: ../../home/kovid/work/calibre/manual/conversion.rst:703
 msgid ""
-"Applies no special formatting to the text, the document is converted to html"
+"Applies no special formatting to the text, the document is converted to HTML"
 " with no other changes."
-msgstr "No aplica ningún formato especial al texto, el documento se convierte a html sin ningún otro cambio."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:707
+#: ../../home/kovid/work/calibre/manual/conversion.rst:708
 msgid "Convert PDF documents"
 msgstr "Convertir documentos PDF"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:709
+#: ../../home/kovid/work/calibre/manual/conversion.rst:710
 msgid ""
 "PDF documents are one of the worst formats to convert from. They are a fixed"
 " page size and text placement format. Meaning, it is very difficult to "
@@ -1174,7 +1176,7 @@ msgid ""
 "conversion settings under :guilabel:`PDF Input`."
 msgstr "Los documentos PDF son uno de los peores orígenes para la conversión. Se trata de un formato con tamaño de página y posición de texto fijos. Esto significa que es muy difícil determinar dónde acaba un párrafo y empieza el siguiente. calibre intentará unir los párrafos usando un :guilabel:`Factor de unión de líneas` configurable. Esto es una escala usada para determinar la longitud requerida para unir los renglones. Los valores válidos son decimales entre 0 y 1. El valor predeterminado es 0,45, algo por debajo de la longitud de renglón mediana. Reduzca el valor para incluir más texto en la unión, auméntelo para incluir menos. Puede ajustar este valor en las opciones de conversión bajo :guilabel:`Entrada PDF`"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:716
+#: ../../home/kovid/work/calibre/manual/conversion.rst:717
 msgid ""
 "Also, they often have headers and footers as part of the document that will "
 "become included with the text. Use the Search and Replace panel to remove "
@@ -1184,85 +1186,85 @@ msgid ""
 ":ref:`regexptutorial`."
 msgstr "Además, muchas veces tienen encabezados y pies de página como parte del documento, que aparece incluido con el texto. Use el panel de búsqueda y sustitución para eliminar encabezados y pies de página y solucionar este problema. Si los encabezados y pies de página no se eliminan del texto pueden afectar a la unión de párrafos. Para aprender cómo usar las opciones de eliminación de encabezados y pies de página, vea :ref:`regexptutorial`."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:721
+#: ../../home/kovid/work/calibre/manual/conversion.rst:722
 msgid "Some limitations of PDF input are:"
 msgstr "Algunas limitaciones de la entrada de PDF son:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:723
+#: ../../home/kovid/work/calibre/manual/conversion.rst:724
 msgid "Complex, multi-column, and image based documents are not supported."
 msgstr "No soporta documentos complejos, con columnas múltiples o basados en imágenes."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:724
+#: ../../home/kovid/work/calibre/manual/conversion.rst:725
 msgid ""
 "Extraction of vector images and tables from within the document is also not "
 "supported."
 msgstr "Tampoco soporta la extracción de imágenes vectoriales y tablas incluidos en el documento."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:725
+#: ../../home/kovid/work/calibre/manual/conversion.rst:726
 msgid ""
 "Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
 " these may or may not work depending on just how they are represented "
 "internally in the PDF."
 msgstr "Algunos PDF usan glifos especiales para representar «ll», «ff», «fi», etc. La conversión de éstos puede o no funcionar dependiendo de cómo se representant internamente en el PDF. "
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:726
+#: ../../home/kovid/work/calibre/manual/conversion.rst:727
 msgid "Links and Tables of Contents are not supported"
 msgstr "No soporta enlaces e índices"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:727
+#: ../../home/kovid/work/calibre/manual/conversion.rst:728
 msgid ""
 "PDFs that use embedded non-unicode fonts to represent non-English characters"
 " will result in garbled output for those characters"
 msgstr "Los PDF que utilizan fuentes incrustadas que no son unicode para representar caracteres no ingleses darán un resultado incorrecto para dichos caracteres."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:728
+#: ../../home/kovid/work/calibre/manual/conversion.rst:729
 msgid ""
 "Some PDFs are made up of photographs of the page with OCRed text behind "
 "them. In such cases calibre uses the OCRed text, which can be very different"
 " from what you see when you view the PDF file"
 msgstr "Algunos PDF están hechos de fotografías de la página con el texto resultante del OCR (reconocimiento óptico de caracteres) oculto tras la imagen. En tales casos calibre utiliza el texto del OCR, que puede ser muy diferente de lo que se ve al visualizar el archivo PDF."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:729
+#: ../../home/kovid/work/calibre/manual/conversion.rst:730
 msgid ""
 "PDFs that are used to display complex text, like right to left languages and"
 " math typesetting will not convert correctly"
 msgstr "Los PDF usados para mostrar texto complejo, como idiomas que se leen de derecha a izquierda y expresiones matemáticas, no se convertirán correctamente."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:731
+#: ../../home/kovid/work/calibre/manual/conversion.rst:732
 msgid ""
 "To re-iterate **PDF is a really, really bad** format to use as input. If you"
 " absolutely must use PDF, then be prepared for an output ranging anywhere "
 "from decent to unusable, depending on the input PDF."
 msgstr "Insisto, **PDF es un formato muy, muy malo** para usarlo como entrada. Si de todas formas tiene que usar PDF, esté preparado para obtener una salida entre decente e inservible, según cómo sea el PDF de entrada."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:735
-msgid "Comic Book Collections"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:736
+msgid "Comic book collections"
 msgstr "Colecciones de libros de historietas"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:737
+#: ../../home/kovid/work/calibre/manual/conversion.rst:738
 msgid ""
-"A comic book collection is a .cbc file. A .cbc file is a zip file that "
+"A comic book collection is a .cbc file. A .cbc file is a ZIP file that "
 "contains other CBZ/CBR files. In addition the .cbc file must contain a "
 "simple text file called comics.txt, encoded in UTF-8. The comics.txt file "
 "must contain a list of the comics files inside the .cbc file, in the form "
 "filename:title, as shown below::"
-msgstr "Una colección de libros de historietas es un archivo .cbc. Un archivo .cbc es un archivo zip que contiene otros archivos CBZ o CBR. Además el archivo .cbc debe contener un archivo de texto llamado comics.txt, codificado en UTF-8. El archivo comics.txt debe contener un listado de los archivos de historieta dentro del archivo .cbc, de la forma nombredearchivo:titulo, como se muestra a continuación::"
+msgstr "Una colección de libros de historietas es un archivo .cbc. Un archivo .cbc es un archivo ZIP que contiene otros archivos CBZ o CBR. Además el archivo .cbc debe contener un archivo de texto llamado comics.txt, codificado en UTF-8. El archivo comics.txt debe contener un listado de los archivos de historieta dentro del archivo .cbc, de la forma nombredearchivo:titulo, como se muestra a continuación::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:745
+#: ../../home/kovid/work/calibre/manual/conversion.rst:746
 msgid "The .cbc file will then contain::"
 msgstr "El archivo .cbc contendrá::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:752
+#: ../../home/kovid/work/calibre/manual/conversion.rst:753
 msgid ""
-"calibre will automatically convert this .cbc file into a ebook with a Table "
-"of Contents pointing to each entry in comics.txt."
+"calibre will automatically convert this .cbc file into a e-book with a Table"
+" of Contents pointing to each entry in comics.txt."
 msgstr "calibre convertirá automáticamente este archivo .cbc en un libro electrónico con un índice que apunta a cada entrada en comicx.txt."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:756
+#: ../../home/kovid/work/calibre/manual/conversion.rst:757
 msgid "EPUB advanced formatting demo"
 msgstr "EPUB de demostración de formato avanzado"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:758
+#: ../../home/kovid/work/calibre/manual/conversion.rst:759
 msgid ""
 "Various advanced formatting for EPUB files is demonstrated in this `demo "
 "file <https://calibre-ebook.com/downloads/demos/demo.epub>`_. The file was "
@@ -1270,25 +1272,25 @@ msgid ""
 "template for your own EPUB creation efforts."
 msgstr "Algunos formatos avanzados para archivos EPUB se muestran en este `archivo de demostración <https://calibre-ebook.com/downloads/demos/demo.epub>`_. Este archivo ha sido creado a partir de HTML codificado manualmente con calibre, y está destinado a servir como plantilla para crear otros EPUB."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:761
+#: ../../home/kovid/work/calibre/manual/conversion.rst:762
 msgid ""
 "The source HTML it was created from is available `demo.zip <https://calibre-"
 "ebook.com/downloads/demos/demo.zip>`_. The settings used to create the EPUB "
 "from the ZIP file are::"
 msgstr "El archivo HTML que se usó par crearlo está disponible `demo.zip <https://calibre-ebook.com/downloads/demos/demo.zip>`_. La configuración usada para crear el EPUB a partir del archivo ZIP es::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:766
+#: ../../home/kovid/work/calibre/manual/conversion.rst:767
 msgid ""
 "Note that because this file explores the potential of EPUB, most of the "
 "advanced formatting is not going to work on readers less capable than "
 "calibre's built-in EPUB viewer."
 msgstr "Tenga en cuenta que debido a que este archivo explora el potencial del formato EPUB, la mayor parte del formato avanzado no va a funcionar en lectores menos capacitados que el visor incorporado de calibre. "
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:770
+#: ../../home/kovid/work/calibre/manual/conversion.rst:771
 msgid "Convert ODT documents"
 msgstr "Convertir documentos ODT"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:772
+#: ../../home/kovid/work/calibre/manual/conversion.rst:773
 msgid ""
 "calibre can directly convert ODT (OpenDocument Text) files. You should use "
 "styles to format your document and minimize the use of direct formatting. "
@@ -1297,7 +1299,7 @@ msgid ""
 "conversion."
 msgstr "calibre puede convertir directamente archivos ODT (OpenDocument Text). Es recomendable que use estilos para dar formato al documento, manteniendo al mínimo el uso de formato directo. Al insertar imágenes en el documento debe anclarlas al párrafo. Las imágenes ancladas a la página acabarán todas al inicio de la conversión."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:775
+#: ../../home/kovid/work/calibre/manual/conversion.rst:776
 msgid ""
 "To enable automatic detection of chapters, you need to mark them with the "
 "build-in styles called 'Heading 1', 'Heading 2', ..., 'Heading 6' ('Heading "
@@ -1306,13 +1308,13 @@ msgid ""
 "box. Example:"
 msgstr "Para permitir la detección automática de capítulos, debe marcarlos con los estilos incorporados llamados «Encabezado 1», «Encabezado 2», ..., «Encabezado 6» («Encabezado 1» equivale a la etiqueta HTML <h1>, «Encabezado 2» a <h2>, etc.). Cuando convierta en calibre puede indicar qué estilo ha usado en el cuadro :guilabel:`Detectar capítulos en`. Ejemplo:"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:777
+#: ../../home/kovid/work/calibre/manual/conversion.rst:778
 msgid ""
 "If you mark Chapters with style 'Heading 2', you have to set the 'Detect "
 "chapters at' box to ``//h:h2``"
 msgstr "Si ha marcado los capítulos con estilo «Encabezado 2», debe establecer «Detectar capítulos en» como ``//h:h2``."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:778
+#: ../../home/kovid/work/calibre/manual/conversion.rst:779
 msgid ""
 "For a nested TOC with Sections marked with 'Heading 2' and the Chapters "
 "marked with 'Heading 3' you need to enter ``//h:h2|//h:h3``. On the Convert "
@@ -1320,14 +1322,14 @@ msgid ""
 " to ``//h:h3``."
 msgstr "Para obtener un índice anidado con las secciones marcadas con «Encabezado 2» y los capítulos con «Encabezado 3», tendrá que introducir ``/h:h2|//h:h3``. En el apartado Índice del cuadro de diálogo de conversión ponga ``//h:h2`` en :guilabel:`Índice de nivel 1` y ``//h:h3`` en :guilabel:`Índice de nivel 2`."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:780
+#: ../../home/kovid/work/calibre/manual/conversion.rst:781
 msgid ""
 "Well-known document properties (Title, Keywords, Description, Creator) are "
 "recognized and calibre will use the first image (not to small, and with good"
 " aspect-ratio) as the cover image."
 msgstr "Las propiedades del documento más comunes (título, palabras clave, descripción, creador) son reconocidas y calibre utilizará la primera imagen (no demasiado pequeña y con proporciones adecuadas) como imagen de portada."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:782
+#: ../../home/kovid/work/calibre/manual/conversion.rst:783
 msgid ""
 "There is also an advanced property conversion mode, which is activated by "
 "setting the custom property ``opf.metadata`` ('Yes or No' type) to Yes in "
@@ -1336,7 +1338,7 @@ msgid ""
 "(``opf.authors`` overrides document creator)::"
 msgstr "También hay modo avanzado de conversión de propiedades, que se activa estableciendo la propiedad personalizada ``opf.metadata`` (de tipo «Sí o no») en ``Sí`` en el documento ODT (Archivo > Propiedades > Propiedades personalizadas). Si calibre detecta esta popiedad, se reconocen las siguientes propiedades personalizadas (``opf.authors`` sustituye al creador del documento)::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:795
+#: ../../home/kovid/work/calibre/manual/conversion.rst:796
 msgid ""
 "In addition to this, you can specify the picture to use as the cover by "
 "naming it ``opf.cover`` (right click, Picture->Options->Name) in the ODT. If"
@@ -1346,33 +1348,33 @@ msgid ""
 "from the document. But this works only with the named picture!"
 msgstr "Además de esto, puede especificar la imagen que se usará como portada dándole el nombre ``opf.cover`` (pulse con el botón derecho, Imagen > Opciones > Nombre) en el ODT. Si no se encuentra una imagen con este nombre, se usa el método «inteligente». Como la detección de portada puede dar lugar a doble portada en algunos formatos, el proceso eliminará el párrafo (sólo si su único contenido es la imagen) del documento. ¡Pero esto sólo funciona con la imagen con nombre!"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:802
+#: ../../home/kovid/work/calibre/manual/conversion.rst:803
 msgid ""
 "To disable cover detection you can set the custom property ``opf.nocover`` "
 "('Yes or No' type) to Yes in advanced mode."
 msgstr "Para deshabilitar la detección de portadas puede establecer la propiedad personalizada ``opf.nocover`` (de tipo «sí o no») en ``Yes`` en el modo avanzado."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:805
+#: ../../home/kovid/work/calibre/manual/conversion.rst:806
 msgid "Converting to PDF"
 msgstr "Convertir a PDF"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:807
+#: ../../home/kovid/work/calibre/manual/conversion.rst:808
 msgid ""
 "The first, most important, setting to decide on when converting to PDF is "
-"the page size. By default, calibre uses a page size defined by the current "
-":guilabel:`Output profile`. So if your output profile is set to Kindle, "
-"calibre will create a PDF with page size suitable for viewing on the small "
-"kindle screen. However, if you view this PDF file on a computer screen, then"
-" it will appear to have too large fonts. To create \"normal\" sized PDFs, "
-"use the :guilabel:`Override page size` option under :guilabel:`PDF Output` "
-"in the conversion dialog."
-msgstr "La primera configuración, y la más importante, para determinar al convertir a PDF es el tamaño de la página. De manera predeterminada, calibre usa un tamaño de página definido por el :guilabel:`Perfil de salida` actual. Así, si el perfil de salida es Kindle, calibre creará un PDF con un tamaño de página adecuado para la pequeña pantalla del Kindle. Sin embargo, si visualiza este archivo PDF en una pantalla mayor, el tamaño de letra parecerá demasiado grande. Para crear archivos PDF con tamaño «normal», use la opción :guilabel:`Forzar tamaño de página` en la sección :guilabel:`Salida PDF` del cuadro de diálogo de conversión."
+"the page size. By default, calibre uses a page size of \"U.S. Letter\". You "
+"can change this to another standard page size or a completely custom size in"
+" the :guilabel:`PDF Output` section of the conversion dialog. If you are "
+"generating a PDF to be used on a specific device, you can turn on the option"
+" to use the page size from the :guilabel:`output profile` instead. So if "
+"your output profile is set to Kindle, calibre will create a PDF with page "
+"size suitable for viewing on the small kindle screen."
+msgstr "La primera y más importante decisión al convertir a PDF es el tamaño de página. De manera predeterminada, calibre usa una página de tamaño «carta norteamericana». Puede cambiarlo a cualquier otro tamaño usual o personalizado en la sección :guilabel:`Salida PDF` del cuadro de diálogo de conversión. Si va a generar un PDF para usarlo en un dispositivo específico, puede activar la opción para usar el tamaño de página del :guilabel:`perfil de salida` en su lugar. De esta forma, si el perfil de salida es Kindle, calibre creará un PDF con un tamaño de página adecuado para una pantalla de Kindle."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:816
+#: ../../home/kovid/work/calibre/manual/conversion.rst:818
 msgid "Headers and Footers"
 msgstr "Encabezados y pies de página"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:817
+#: ../../home/kovid/work/calibre/manual/conversion.rst:819
 msgid ""
 "You can insert arbitrary headers and footers on each page of the PDF by "
 "specifying header and footer templates. Templates are just snippets of HTML "
@@ -1381,7 +1383,7 @@ msgid ""
 " following footer template::"
 msgstr "Puede insertar encabezados y pies de página arbitrarios en cada página del PDF especificando plantillas de encabezado y pie de página. Las plantillas son fragmentos de código HTML que aparecen en las ubicaciones de los encabezados y pies de página. Por ejemplo, para mostrar los números de página centrados en la parte inferior de cada página, en verde, utilice la siguiente plantilla::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:825
+#: ../../home/kovid/work/calibre/manual/conversion.rst:827
 msgid ""
 "calibre will automatically replace _PAGENUM_ with the current page number. "
 "You can even put different content on even and odd pages, for example the "
@@ -1389,7 +1391,7 @@ msgid ""
 " even pages::"
 msgstr "calibre sustituirá automáticamente ``_PAGENUM_`` por el número de página actual. Puede incluso disponer diferente contenido en las páginas pares e impares, por ejemplo, la siguiente plantilla de cabecera mostrará el título en las páginas impares y el autor en las pares::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:831
+#: ../../home/kovid/work/calibre/manual/conversion.rst:833
 msgid ""
 "calibre will automatically replace _TITLE_ and _AUTHOR_ with the title and "
 "author of the document being converted.  You can also display text at the "
@@ -1397,17 +1399,17 @@ msgid ""
 "header template::"
 msgstr "calibre sustituirá automáticamente ``_TITLE_`` y ``_AUTHOR_`` por el título y el autor del documento que se está convirtiendo. También puede mostrar texto en los bordes izquierdo y derecho y cambiar el tamaño de letra, como se ve en esta plantilla de cabecera::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:838
+#: ../../home/kovid/work/calibre/manual/conversion.rst:840
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr "Esto dispondrá el título a la izquierda y el autor a la derecha, en una letra más pequeña que el texto principal."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:841
+#: ../../home/kovid/work/calibre/manual/conversion.rst:843
 msgid "You can also use the current section in templates, as shown below::"
 msgstr "También puede usar la sección actual en plantillas, como se muestra a continuación::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:845
+#: ../../home/kovid/work/calibre/manual/conversion.rst:847
 msgid ""
 "_SECTION_ is replaced by whatever the name of the current section is. These "
 "names are taken from the metadata Table of Contents in the document (the PDF"
@@ -1418,25 +1420,25 @@ msgid ""
 "level section."
 msgstr "``_SECTION_`` se sustituye por el nombre que tenga la sección actual. El nombre se extrae del índice de metadatos (la guía PDF). Si el documento no tiene índice, se sustituirá por texto vacío. Si una página PDF tiene varias secciones, se usará la primera de ellas. Igualmente, hay una variable llamada``_TOP_LEVEL_SECTION_`` que puede usarse para obtener el nombre de la sección actual de nivel superior."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:852
+#: ../../home/kovid/work/calibre/manual/conversion.rst:854
 msgid ""
 "You can even use javascript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
 msgstr "Puede incluso utilizar código javascript dentro de las plantillas de encabezado y pie de página, por ejemplo, la siguiente plantilla hará que los números de página comiencen por4 en lugar de 1::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:858
+#: ../../home/kovid/work/calibre/manual/conversion.rst:860
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
-"margins to large enough values, under the Page Setup section of the "
+"margins to large enough values, under the Page setup section of the "
 "conversion dialog."
 msgstr "Si añade encabezados y pies de página, asegúrese de que establece los márgenes superior e inferior con una dimensión suficiente, en la sección :guilabel:`Configuración de página` del cuadro de diálogo de conversión."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:863
+#: ../../home/kovid/work/calibre/manual/conversion.rst:865
 msgid "Printable Table of Contents"
 msgstr "Índice imprimible"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:865
+#: ../../home/kovid/work/calibre/manual/conversion.rst:867
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1445,10 +1447,10 @@ msgid ""
 " default."
 msgstr "También puede incluir un índice imprimible al final del PDF que muestra los números de página de cada sección. Esto es muy útil si va a imprir el PDF en papel. Si va a usar el PDF en un dispositivo electrónico, el Esquema del PDF cumple esta función y se genera de manera predeterminada."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:870
+#: ../../home/kovid/work/calibre/manual/conversion.rst:872
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
-"Extra CSS conversion setting under the Look & Feel part of the conversion "
+"Extra CSS conversion setting under the Look & feel part of the conversion "
 "dialog. The default css used is listed below, simply copy it and make "
 "whatever changes you like."
 msgstr "Se puede personalizar el aspecto de los índices generados usando la opción :guilabel:`CSS adicional` en la sección Apariencia del cuadro de diálogo de conversión. El código CSS usado de manera predeterminada se muestra debajo, cópielo y modifíquelo a su gusto."

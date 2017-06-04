@@ -170,7 +170,7 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
 
     def __init__(self, parent, device):
         super(BookUploadsGroupBox, self).__init__(parent, device)
-        self.setTitle(_("Book Uploading"))
+        self.setTitle(_("Book uploading"))
 
         self.options_layout = QGridLayout()
         self.options_layout.setObjectName("options_layout")
@@ -179,7 +179,7 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
         self.modify_css_checkbox = create_checkbox(
                 _("Modify CSS"),
                 _('This allows addition of user CSS rules and removal of some CSS. '
-                'When sending a book, the driver adds the contents of {0} to all stylesheets in the ePub. '
+                'When sending a book, the driver adds the contents of {0} to all stylesheets in the EPUB. '
                 'This file is searched for in the root directory of the main memory of the device. '
                 'As well as this, if the file contains settings for the "orphans" or "widows", '
                 'these are removed for all styles in the original stylesheet.').format(device.KOBO_EXTRA_CSSFILE),
@@ -226,7 +226,7 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
                          device.get_pref('delete_empty_collections')
                          )
 
-        self.ignore_collections_names_label = QLabel(_('Ignore Collections:'))
+        self.ignore_collections_names_label = QLabel(_('Ignore collections:'))
         self.ignore_collections_names_edit = QLineEdit(self)
         self.ignore_collections_names_edit.setToolTip(_('List the names of collections to be ignored by ' +
                 'the collection management. The collections listed ' +
@@ -316,7 +316,7 @@ class DeviceListGroupBox(DeviceOptionsGroupBox):
         self.setLayout(self.options_layout)
 
         self.show_recommendations_checkbox = create_checkbox(
-                             _("Show Recommendations"),
+                             _("Show recommendations"),
                              _('Kobo shows recommendations on the device.  In some cases these have '
                                'files but in other cases they are just pointers to the web site to buy. '
                                'Enable if you wish to see/delete them.'),
@@ -331,7 +331,7 @@ class DeviceListGroupBox(DeviceOptionsGroupBox):
                              )
 
         self.show_previews_checkbox = create_checkbox(
-                             _('Show Previews'),
+                             _('Show previews'),
                              _('Kobo previews are included on the Touch and some other versions'
                                ' by default they are no longer displayed as there is no good reason to '
                                'see them.  Enable if you wish to see/delete them.'),
@@ -359,7 +359,7 @@ class DeviceListGroupBox(DeviceOptionsGroupBox):
 class AdvancedGroupBox(DeviceOptionsGroupBox):
 
     def __init__(self, parent, device):
-        super(AdvancedGroupBox, self).__init__(parent, device, _("Advanced Options"))
+        super(AdvancedGroupBox, self).__init__(parent, device, _("Advanced options"))
 #         self.setTitle(_("Advanced Options"))
 
         self.options_layout = QGridLayout()
@@ -369,7 +369,7 @@ class AdvancedGroupBox(DeviceOptionsGroupBox):
         self.support_newer_firmware_checkbox = create_checkbox(
                             _("Attempt to support newer firmware"),
                             _('Kobo routinely updates the firmware and the '
-                              'database version.  With this option Calibre will attempt '
+                              'database version. With this option calibre will attempt '
                               'to perform full read-write functionality - Here be Dragons!! '
                               'Enable only if you are comfortable with restoring your kobo '
                               'to factory defaults and testing software. '
@@ -422,7 +422,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                                'Be careful when doing this as it will take time and could make the initial connection take a long time.')))
 
         self.update_series_checkbox = create_checkbox(
-                             _("Set Series information"),
+                             _("Set series information"),
                              _('The book lists on the Kobo devices can display series information. '
                                'This is not read by the device from the sideloaded books. '
                                'Series information can only be added to the device after the book has been processed by the device. '

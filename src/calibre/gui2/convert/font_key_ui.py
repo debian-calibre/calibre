@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/font_key.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -98,8 +98,8 @@ class Ui_Dialog(object):
 
         Dialog.setWindowTitle(_("Font rescaling wizard"))
         self.wh_label.setText(_("<p>This wizard will help you choose an appropriate font size key for your needs. Just enter the base font size of the input document and then enter an input font size. The wizard will display what font size it will be mapped to, by the font rescaling algorithm. You can adjust the algorithm by adjusting the output base font size and font key below. When you find values suitable for you, click OK.</p>\n"
-"<p>By default, if the output base font size is zero and/or no font size key is specified, calibre will use the values from the current Output Profile. </p>\n"
-"<p>See the <a href=\"%s\">User Manual</a> for a discussion of how font size rescaling works.</p>"))
+"<p>By default, if the output base font size is zero and/or no font size key is specified, calibre will use the values from the current Output profile. </p>\n"
+"<p>See the <a href=\"%s\">User Manual</a> for an explanation of how font size rescaling works.</p>"))
         self.groupBox_2.setTitle(_("&Output document"))
         self.label_3.setText(_("&Base font size:"))
         self.label_4.setText(_("Font size &key:"))

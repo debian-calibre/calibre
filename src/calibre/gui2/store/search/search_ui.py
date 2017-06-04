@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/search/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -162,7 +162,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
 
-        Dialog.setWindowTitle(_("Get Books"))
+        Dialog.setWindowTitle(_("Get books"))
         self.search_title.setPlaceholderText(_("Search by title"))
         self.label_3.setText(_("&Author:"))
         self.search_author.setPlaceholderText(_("Search by author"))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -106,7 +106,7 @@ class Ui_Form(object):
         self.previous_button.setText(_("&Previous"))
         self.user_installed_plugins.setToolTip(_("Show only those plugins that have been installed by you"))
         self.user_installed_plugins.setText(_("Show only &user installed plugins"))
-        self.toggle_plugin_button.setText(_("Enable/&Disable plugin"))
+        self.toggle_plugin_button.setText(_("Enable/&disable plugin"))
         self.customize_plugin_button.setText(_("&Customize plugin"))
         self.remove_plugin_button.setText(_("&Remove plugin"))
         self.button_plugin_new.setText(_("Get &new plugins"))

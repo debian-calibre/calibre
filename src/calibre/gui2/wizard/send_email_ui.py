@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.ui'
 #
-# Created: Sun Nov 16 11:58:00 2014
-#      by: PyQt5 UI code generator 5.3.2
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -123,7 +122,7 @@ class Ui_Form(object):
         self.groupBox_5.setTitle(_("Mail &Server"))
         self.label_16.setText(_("calibre can <b>optionally</b> use a server to send mail"))
         self.label_17.setText(_("&Hostname:"))
-        self.relay_host.setToolTip(_("The hostname of your mail server. For e.g. smtp.gmail.com"))
+        self.relay_host.setToolTip(_("The hostname of your mail server. For example, smtp.gmail.com"))
         self.label_18.setText(_("&Port:"))
         self.relay_port.setToolTip(_("The port your mail server listens for connections on. The default is 25"))
         self.label_19.setText(_("&Username:"))
@@ -138,8 +137,8 @@ class Ui_Form(object):
         self.relay_ssl.setText(_("&SSL"))
         self.relay_none.setToolTip(_("WARNING: Using no encryption is highly insecure"))
         self.relay_none.setText(_("&None"))
-        self.relay_use_gmx.setText(_("Use GMX"))
-        self.relay_use_hotmail.setText(_("Use Hotmail"))
+        self.relay_use_gmx.setText(_("Use &GMX"))
+        self.relay_use_hotmail.setText(_("Use &Hotmail"))
         self.test_email_button.setText(_("&Test email"))
 
 

@@ -132,7 +132,7 @@ class Category(QWidget):  # {{{
         self.actions = []
         for p in plugins:
             target = partial(self.triggered, p)
-            ac = self.bar.addAction(QIcon(p.icon), p.gui_name, target)
+            ac = self.bar.addAction(QIcon(p.icon), p.gui_name.replace('&', '&&'), target)
             ac.setToolTip(textwrap.fill(p.description))
             ac.setWhatsThis(textwrap.fill(p.description))
             ac.setStatusTip(p.description)
@@ -238,7 +238,7 @@ class Preferences(QDialog):
         self.bb.button(self.bb.Discard).clicked.connect(self.reject)
         self.bb.button(self.bb.RestoreDefaults).setIcon(QIcon(I('clear_left.png')))
         self.bb.button(self.bb.RestoreDefaults).clicked.connect(self.restore_defaults)
-        self.wizard_button = self.bb.addButton(_('Run welcome wizard'), self.bb.ActionRole)
+        self.wizard_button = self.bb.addButton(_('Run welcome &wizard'), self.bb.ActionRole)
         self.wizard_button.setIcon(QIcon(I('wizard.png')))
         self.wizard_button.clicked.connect(self.run_wizard, type=Qt.QueuedConnection)
         self.wizard_button.setAutoDefault(False)
@@ -319,6 +319,7 @@ class Preferences(QDialog):
         self.bb.button(self.bb.RestoreDefaults).setToolTip(
             self.showing_widget.restore_defaults_desc if self.showing_widget.supports_restoring_to_defaults else
             (_('Restoring to defaults not supported for') + ' ' + plugin.gui_name))
+        self.bb.button(self.bb.RestoreDefaults).setText(_('Restore &defaults'))
         self.showing_widget.changed_signal.connect(self.changed_signal)
 
     def changed_signal(self):
@@ -408,6 +409,7 @@ class Preferences(QDialog):
             self.on_shutdown()
             return QDialog.reject(self)
         self.hide_plugin()
+
 
 if __name__ == '__main__':
     from calibre.gui_launch import init_dbus

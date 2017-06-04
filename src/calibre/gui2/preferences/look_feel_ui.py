@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -19,7 +19,6 @@ class Ui_Form(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.tab)
-        self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_9.setObjectName("gridLayout_9")
         self.label_4 = QtWidgets.QLabel(self.tab)
         self.label_4.setObjectName("label_4")
@@ -114,7 +113,6 @@ class Ui_Form(object):
         self.cover_grid_tab = QtWidgets.QWidget()
         self.cover_grid_tab.setObjectName("cover_grid_tab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.cover_grid_tab)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.tabWidget_2 = QtWidgets.QTabWidget(self.cover_grid_tab)
         self.tabWidget_2.setTabPosition(QtWidgets.QTabWidget.West)
@@ -122,7 +120,6 @@ class Ui_Form(object):
         self.tab_5 = QtWidgets.QWidget()
         self.tab_5.setObjectName("tab_5")
         self.formLayout_2 = QtWidgets.QFormLayout(self.tab_5)
-        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.formLayout_2.setObjectName("formLayout_2")
         self.label_19 = QtWidgets.QLabel(self.tab_5)
         self.label_19.setWordWrap(True)
@@ -217,7 +214,6 @@ class Ui_Form(object):
         self.tab_6 = QtWidgets.QWidget()
         self.tab_6.setObjectName("tab_6")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.tab_6)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.groupBox_3 = QtWidgets.QGroupBox(self.tab_6)
         self.groupBox_3.setObjectName("groupBox_3")
@@ -268,7 +264,6 @@ class Ui_Form(object):
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.tab_4)
-        self.gridLayout_12.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.label_3 = QtWidgets.QLabel(self.tab_4)
         self.label_3.setWordWrap(True)
@@ -312,21 +307,17 @@ class Ui_Form(object):
         spacerItem7 = QtWidgets.QSpacerItem(20, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.hboxlayout.addItem(spacerItem7)
         self.gridLayout_12.addLayout(self.hboxlayout, 1, 0, 1, 2)
-        self.hboxlayout1 = QtWidgets.QHBoxLayout()
-        self.hboxlayout1.setObjectName("hboxlayout1")
-        self.label = QtWidgets.QLabel(self.tab_4)
-        self.label.setObjectName("label")
-        self.hboxlayout1.addWidget(self.label)
-        self.opt_default_author_link = QtWidgets.QLineEdit(self.tab_4)
-        self.opt_default_author_link.setObjectName("opt_default_author_link")
-        self.hboxlayout1.addWidget(self.opt_default_author_link)
-        self.search_library_for_author_button = QtWidgets.QPushButton(self.tab_4)
-        self.search_library_for_author_button.setObjectName("search_library_for_author_button")
-        self.hboxlayout1.addWidget(self.search_library_for_author_button)
-        self.gridLayout_12.addLayout(self.hboxlayout1, 0, 0, 1, 2)
         self.id_links_button = QtWidgets.QPushButton(self.tab_4)
         self.id_links_button.setObjectName("id_links_button")
         self.gridLayout_12.addWidget(self.id_links_button, 2, 0, 1, 2)
+        self.default_author_link_container = QtWidgets.QWidget(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.default_author_link_container.sizePolicy().hasHeightForWidth())
+        self.default_author_link_container.setSizePolicy(sizePolicy)
+        self.default_author_link_container.setObjectName("default_author_link_container")
+        self.gridLayout_12.addWidget(self.default_author_link_container, 0, 0, 1, 2)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(I("book.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tab_4, icon6, "")
@@ -334,7 +325,6 @@ class Ui_Form(object):
         self.tab_2.setObjectName("tab_2")
         self.formLayout = QtWidgets.QFormLayout(self.tab_2)
         self.formLayout.setFieldGrowthPolicy(QtWidgets.QFormLayout.ExpandingFieldsGrow)
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setObjectName("formLayout")
         self.label_10 = QtWidgets.QLabel(self.tab_2)
         self.label_10.setObjectName("label_10")
@@ -390,7 +380,6 @@ class Ui_Form(object):
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.tab_3)
-        self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_11.setObjectName("gridLayout_11")
         self.opt_cover_browser_title_template = QtWidgets.QLineEdit(self.tab_3)
         self.opt_cover_browser_title_template.setObjectName("opt_cover_browser_title_template")
@@ -450,7 +439,7 @@ class Ui_Form(object):
         self.label_21.setBuddy(self.opt_emblem_size)
         self.label_22.setBuddy(self.opt_emblem_position)
         self.label_15.setBuddy(self.opt_cover_grid_cache_size_multiple)
-        self.label.setBuddy(self.opt_default_author_link)
+        self.label_18.setBuddy(self.opt_cover_grid_disk_cache_size)
         self.label_10.setBuddy(self.opt_tags_browser_collapse_at)
         self.label_8111.setBuddy(self.opt_tag_browser_dont_collapse)
         self.label_81.setBuddy(self.opt_categories_using_hierarchy)
@@ -486,24 +475,24 @@ class Ui_Form(object):
         self.opt_show_splash_screen.setText(_("Show &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Main Interface"))
-        self.label_19.setText(_("Control the cover grid view. You can enable this view by clicking the grid button in the bottom right corner of the main calibre window."))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("&Main interface"))
+        self.label_19.setText(_("Control the Cover grid view. You can enable this view by clicking the \"Cover grid\" button in the bottom right corner of the main calibre window."))
         self.label_14.setText(_("Field to show &under the covers:"))
         self.label_16.setText(_("&Spacing between covers:"))
         self.opt_cover_grid_spacing.setToolTip(_("The spacing between covers. A value of zero means calculate automatically based on cover size."))
         self.opt_cover_grid_spacing.setSpecialValueText(_("Automatic"))
         self.opt_cover_grid_spacing.setSuffix(_(" cm"))
-        self.cg_background_box.setTitle(_("Background for the cover grid"))
+        self.cg_background_box.setTitle(_("Background for the Cover grid"))
         self.groupBox_4.setTitle(_("Cover size"))
         self.label_20.setText(_("By default, calibre chooses a cover size based on your computer\'s screen size. You can change the cover size here:"))
-        self.label_11.setText(_("Cover &Width: "))
+        self.label_11.setText(_("Cover &width: "))
         self.opt_cover_grid_width.setToolTip(_("The width of displayed covers.\n"
 "A value of zero means calculate automatically."))
         self.opt_cover_grid_width.setSpecialValueText(_("Automatic"))
         self.opt_cover_grid_width.setSuffix(_(" cm"))
         self.cover_grid_larger_cover.setToolTip(_("Make the covers larger, maintaining current aspect ratio."))
         self.cover_grid_larger_cover.setText(_("&Larger covers"))
-        self.label_12.setText(_("Cover &Height: "))
+        self.label_12.setText(_("Cover &height: "))
         self.opt_cover_grid_height.setToolTip(_("The height of displayed covers.\n"
 "A value of zero means calculate automatically."))
         self.opt_cover_grid_height.setSpecialValueText(_("Automatic"))
@@ -516,39 +505,31 @@ class Ui_Form(object):
         self.label_21.setText(_("Size of the emblems (if any) shown &next to the covers: "))
         self.opt_cover_grid_show_title.setText(_("Show a field (such as title) &under the covers"))
         self.label_22.setText(_("&Location of the emblems shown next to the covers:"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_5), _("Layout"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.emblems_tab), _("Emblems"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_5), _("&Layout"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.emblems_tab), _("&Emblems"))
         self.groupBox_3.setTitle(_("Caching of covers for improved performance"))
         self.opt_cover_grid_disk_cache_size.setSpecialValueText(_("Disable"))
         self.opt_cover_grid_disk_cache_size.setSuffix(_(" MB"))
-        self.cover_grid_open_cache.setText(_("Open cache directory"))
+        self.cover_grid_open_cache.setText(_("&Open cache directory"))
         self.label_13.setText(_("There are two kinds of caches that calibre uses to improve performance when rendering covers in the grid view. A disk cache that is kept on your hard disk and stores the cover thumbnails and an in memory cache used to ensure flicker free rendering of covers. For best results, keep the memory cache small and the disk cache large, unless you have a lot of extra RAM in your computer and don\'t mind it being used by the memory cache."))
         self.label_15.setText(_("Number of screenfulls of covers to cache in &memory (keep this small):"))
-        self.label_18.setText(_("Maximum amount of disk space to use for caching thumbnails: "))
-        self.cover_grid_empty_cache.setText(_("Empty disk cache"))
+        self.label_18.setText(_("Maximum amount of &disk space to use for caching thumbnails: "))
+        self.cover_grid_empty_cache.setText(_("&Empty disk cache"))
         self.opt_cover_grid_cache_size_multiple.setToolTip(_("The maximum number of screenfulls of thumbnails to keep in memory. Increasing this will make rendering faster, at the cost of more memory usage. Note that regardless of this setting, a minimum of one hundred thumbnails are always kept in memory, to ensure flicker free rendering."))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_6), _("Performance"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_grid_tab), _("Cover Grid"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_6), _("&Performance"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_grid_tab), _("Cover &grid"))
         self.label_3.setText(_("Note that <b>comments</b> will always be displayed at the end, regardless of the position you assign here."))
         self.groupBox.setTitle(_("Select displayed metadata"))
         self.df_up_button.setToolTip(_("Move up"))
         self.df_down_button.setToolTip(_("Move down"))
-        self.opt_bd_show_cover.setText(_("Show &cover in the book details panel"))
+        self.opt_bd_show_cover.setText(_("Show &cover in the Book details panel"))
         self.opt_bd_overlay_cover_size.setToolTip(_("Show the size of the book\'s cover in pixels"))
         self.opt_bd_overlay_cover_size.setText(_("Show cover &size"))
         self.opt_use_roman_numerals_for_series_number.setText(_("Use &Roman numerals for series"))
-        self.label.setText(_("Default author &link template:"))
-        self.opt_default_author_link.setToolTip(_("<p>Enter a template to be used to create a link for\n"
-"an author in the books information dialog. This template will\n"
-"be used when no link has been provided for the author using\n"
-"Manage Authors. You can use the values {author} and\n"
-"{author_sort}, and any template function."))
-        self.search_library_for_author_button.setToolTip(_("Search the calibre library for the author, instead of opening a link"))
-        self.search_library_for_author_button.setText(_("Search &calibre library for author"))
         self.id_links_button.setText(_("Create rules to convert &identifiers into links"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("Book Details"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Book details"))
         self.label_10.setText(_("Co&llapse when more items than:"))
-        self.opt_tags_browser_collapse_at.setToolTip(_("If a Tag Browser category has more than this number of items, it is divided\n"
+        self.opt_tags_browser_collapse_at.setToolTip(_("If a Tag browser category has more than this number of items, it is divided\n"
 "up into subcategories. If the partition method is set to disable, this value is ignored."))
         self.label_8111.setText(_("Categories &not to partition:"))
         self.opt_tag_browser_dont_collapse.setToolTip(_("A comma-separated list of categories that are not to\n"
@@ -563,37 +544,37 @@ class Ui_Form(object):
 "and \'Mystery.Thriller\' will be displayed with English and Thriller\n"
 "both under \'Mystery\'. If \'tags\' is not in this box,\n"
 "then the tags will be displayed each on their own line."))
-        self.opt_tag_browser_old_look.setText(_("Use &alternating row colors in the Tag Browser"))
+        self.opt_tag_browser_old_look.setText(_("Use &alternating row colors in the Tag browser"))
         self.opt_tag_browser_hide_empty_categories.setToolTip(_("When checked, calibre will automatically hide any category\n"
 " (a column, custom or standard) that has no items to show. For example, some\n"
 " categories might not have values when using virtual libraries. Checking this\n"
 " box will cause these empty categories to be hidden."))
-        self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns) in the tag browser"))
-        self.opt_tags_browser_partition_method.setToolTip(_("Choose how tag browser subcategories are displayed when\n"
+        self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns) in the Tag browser"))
+        self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
 "there are more items than the limit. Select by first\n"
 "letter to see an A, B, C list. Choose partitioned to\n"
 "have a list of fixed-sized groups. Set to disabled\n"
 "if you never want subcategories"))
-        self.label_9.setText(_("&Tags browser category partitioning method:"))
-        self.opt_show_avg_rating.setText(_("Show &average ratings in the tags browser"))
-        self.opt_tag_browser_show_counts.setToolTip(_("Show counts for items in the Tag Browser. Such as the number of books\n"
+        self.label_9.setText(_("&Tag browser category partitioning method:"))
+        self.opt_show_avg_rating.setText(_("Show &average ratings in the Tag browser"))
+        self.opt_tag_browser_show_counts.setToolTip(_("Show counts for items in the Tag browser. Such as the number of books\n"
 "by each author, the number of authors, etc. If you turn it off, you can still\n"
 "see the counts by hovering your mouse over any item."))
-        self.opt_tag_browser_show_counts.setText(_("Show &counts in the Tag Browser"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("Tag Browser"))
+        self.opt_tag_browser_show_counts.setText(_("Show &counts in the Tag browser"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _("&Tag browser"))
         self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))
         self.label_23.setText(_("&Template for caption:"))
-        self.cover_browser_title_template_button.setText(_("Template editor"))
-        self.opt_cb_fullscreen.setText(_("When showing cover browser in separate window, show it &fullscreen"))
-        self.opt_separate_cover_flow.setText(_("Show cover &browser in a separate window (needs restart)"))
+        self.cover_browser_title_template_button.setText(_("Template &editor"))
+        self.opt_cb_fullscreen.setText(_("When showing the Cover browser in a separate window, show it &fullscreen"))
+        self.opt_separate_cover_flow.setText(_("Show Cover &browser in a separate window (needs restart)"))
         self.opt_cb_preserve_aspect_ratio.setToolTip(_("Show covers in their original aspect ratio instead of resizing\n"
 "them to all have the same width and height"))
-        self.opt_cb_preserve_aspect_ratio.setText(_("Preserve &aspect ratio of covers displayed in the cover browser"))
-        self.opt_cover_browser_reflections.setText(_("Show &reflections in the cover browser"))
+        self.opt_cb_preserve_aspect_ratio.setText(_("Preserve &aspect ratio of covers displayed in the Cover browser"))
+        self.opt_cover_browser_reflections.setText(_("Show &reflections in the Cover browser"))
         self.fs_help_msg.setText(_("You can press the %s keys to toggle full screen mode."))
         self.label_24.setText(_("Fie&ld for sub-title:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _("Cover Browser"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _("Cover &browser"))
 
 from calibre.gui2.complete2 import EditWithComplete
 

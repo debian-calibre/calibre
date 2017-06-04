@@ -6,14 +6,14 @@
 # Xotes <alois.glibert@gmail.com>, 2015
 # Ptit Prince <leporello1791@gmail.com>, 2014-2016
 # Ptit Prince <leporello1791@gmail.com>, 2014
-# Ptit Prince <leporello1791@gmail.com>, 2016
+# Ptit Prince <leporello1791@gmail.com>, 2016-2017
 # sengian <sengian1@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 09:27+0530\n"
-"PO-Revision-Date: 2016-10-23 15:46+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 16:05+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Le langage de modèle calibre"
 msgid ""
 "The calibre template language is used in various places. It is used to "
 "control the folder structure and file name when saving files from the "
-"calibre library to the disk or eBook reader. It is also used to define "
+"calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
 msgstr "Le langage de modèle de calibre est utilisé dans divers endroits. Il est utilisé pour contrôler la structure des dossiers et le nom des fichiers lors de la sauvegarde des fichiers de la bibliothèque calibre sur le disque ou sur votre dispositif de lecture. Il est également utilisé pour définir les colonnes «virtuelles» qui contiennent des données provenant d'autres colonnes et ainsi de suite."
 
@@ -176,11 +176,11 @@ msgstr "Si vous ne voulez que les deux premières lettres de la donnée, utilise
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:87
 msgid ""
-"The calibre template language comes from python and for more details on the "
+"The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
 "documentation <https://docs.python.org/2/library/string.html#format-string-"
 "syntax>`_."
-msgstr "Le langage de modèle de calibre vient de python et pour plus de détails sur la syntaxe de ces opérations de mise en forme avancée, reportez-vous à la `Documentation Python <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
+msgstr "Le langage de modèle de calibre vient de Python et pour plus de détails sur la syntaxe de ces opérations de mise en forme avancée, reportez-vous à la `Documentation Python <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -314,12 +314,12 @@ msgstr "``count(separator)`` -- interprète la valeur comme une liste d’articl
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
-"that number using a python formatting template such as \"{0:5.2f}\" or "
+"that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
 "0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"python documentation for more examples. Returns the empty string if "
+"Python documentation for more examples. Returns the empty string if "
 "formatting fails."
-msgstr "``format_number(template)`` -- interprète la valeur comme un nombre et formate ce nombre en utilisant un modèle de formatage python comme \"{0:5.2f}\" ou \"{0:,d}\" ou \"${0:5,.2f}\". Le partie field_name du modèle doit être un 0 (zéro) (le \"{0:\" dans les exemples ci-dessus). Regardez le langage des modèles et la documentation python pour plus d’exemples. Retourne une chaîne vide si le formatage échoue."
+msgstr "``format_number(template)`` -- interprète la valeur comme un nombre et formate ce nombre en utilisant un modèle de formatage Python comme \"{0:5.2f}\" ou \"{0:,d}\" ou \"${0:5,.2f}\". La partie field_name du modèle doit être un 0 (zéro) (le \"{0:\" dans les exemples ci-dessus). Regardez le langage des modèles et la documentation Python pour plus d’exemples. Retourne une chaîne vide si le formatage échoue."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:125
 msgid ""
@@ -379,8 +379,8 @@ msgstr "``lookup(pattern, field, pattern, field, ..., else_field)`` -- lcomme sw
 msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
-"in all of calibre, these are python-compatible regular expressions."
-msgstr "``re(pattern, replacement)`` -- renvoie le champ après avoir appliquer l’expression régulière. Toutes les instances de `pattern seront remplacées par `replacement`. Comme tout dans calibre, celles-ci sont des expressions régulières python-compatible."
+"in all of calibre, these are Python-compatible regular expressions."
+msgstr "``re(pattern, replacement)`` -- renvoie le champ après avoir appliquer l’expression régulière. Toutes les instances de `pattern` seront remplacées par `replacement`. Comme tout dans calibre, celles-ci sont des expressions régulières Python-compatibles."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:133
 msgid ""
@@ -432,12 +432,12 @@ msgstr "``subitems(val, start_index, end_index)`` -- Cette fonction est utilisé
 msgid ""
 "``sublist(val, start_index, end_index, separator)`` -- interpret the value "
 "as a list of items separated by `separator`, returning a new list made from "
-"the items from `start_index`to `end_index`. The first item is number zero. "
+"the items from `start_index` to `end_index`. The first item is number zero. "
 "If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list. "
 "Examples assuming that the tags column (which is comma-separated) contains "
 "\"A, B ,C\"::"
-msgstr "``sublist(val, start_index, end_index, separator) -- interprète la valeur comme une liste d’éléments séparés par `separator`, retournant une nouvelle liste composée des éléments compris entre `start_index` et `fin_index`. Le premier élément est le numéro 0. Si un index est négatif, alors il part de la fin de la liste. Comme cas spécial, un fin_index de zéro est considéré comme étant la longueur de la liste. Des exemples supposant que la colonne des étiquettes (qui sont séparées par des virgules) contient \"A, B, C\"::"
+msgstr "``sublist(val, start_index, end_index, separator) -- interprète la valeur comme une liste d’éléments séparés par `separator`, retournant une nouvelle liste composée des éléments compris entre `start_index` et `end_index`. Le premier élément est le numéro 0. Si un index est négatif, alors il part de la fin de la liste. Comme cas spécial, un end_index de zéro est considéré comme étant la longueur de la liste. Des exemples supposant que la colonne des étiquettes (qui sont séparées par des virgules) contient \"A, B, C\"::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:152
 msgid ""
@@ -1141,16 +1141,16 @@ msgid ""
 msgstr "Il serait possible de faire ce qu'il y a ci-dessus sans colonnes personnalisées en mettant le programme dans la case modèle du tableau de connexion. Cependant, pour faire cela,tous les commentaires doivent être supprimés car la case de texte du tableau de connexion ne supporte pas l'édition multi-lignes. C'est discutable si le gain de ne pas avoir la colonne personnalisée vaille la vaste augmentation en difficulté provoquée par le fait que le programme soit une ligne géante."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:442
-msgid "User-defined Template Functions"
+msgid "User-defined template functions"
 msgstr "Modèles de fonctions définies par l'utilisateur"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:444
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
-" written in python, and can be used in any of the three template programming"
+" written in Python, and can be used in any of the three template programming"
 " modes. The functions are added by going to Preferences -> Advanced -> "
-"Template Functions. Instructions are shown in that dialog."
-msgstr "Vous pouvez ajouter vos propres fonctions au traitement des modèles. Ces fonctions s'écrivent en python, et peuvent être utilisées dans n'importe lequel des trois modes de programmation de modèle. Les fonctions sont ajoutées en allant dans Préférences->Avancé->Modèles de fonction. Les instructions sont affichées dans cette boite de dialogue."
+"Template functions. Instructions are shown in that dialog."
+msgstr "Vous pouvez ajouter vos propres fonctions au traitement des modèles. Ces fonctions s'écrivent en Python, et peuvent être utilisées dans n'importe lequel des trois modes de programmation de modèle. Les fonctions sont ajoutées en allant dans Préférences->Avancé->Modèles de fonctions. Les instructions sont affichées dans cette boite de dialogue."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:447
 msgid "Special notes for save/send templates"
@@ -1215,8 +1215,8 @@ msgid ""
 msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,#AA,#BB)}``. Ce modèle choisit le champ composite #AA si série n'est pas vide, et le champ composite #BB si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:465
-msgid "Templates and Plugboards"
-msgstr "Modèles et Tableaux de connexions"
+msgid "Templates and plugboards"
+msgstr "Modèles et tableaux de connexions"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:467
 msgid ""
@@ -1242,12 +1242,12 @@ msgstr "Lorsque vous créez un tableau de connexion, vous spécifiez le format e
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:471
 msgid ""
-"When a plugboard might apply (content server, save to disk, or send to "
+"When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr "Quand un tableau de connexion doit s'appliquer (serveur de contenu, sauvegarde sur disque ou envoyer au périphérique), calibre recherche les tableau de connexions définis et celui qui est correct pour le format donné et le périphérique. Par exemple, pour trouver le tableau de connexion approprié pour un livre EPUB envoyé à un périphérique ANDROID, calibre recherche dans les tableaux de connexion dans l'ordre de recherche suivant :"
+msgstr "Quand un tableau de connexion doit s'appliquer (Serveur de contenu, sauvegarde sur disque ou envoyer au périphérique), calibre recherche les tableau de connexions définis et celui qui est correct pour le format donné et le périphérique. Par exemple, pour trouver le tableau de connexion approprié pour un livre EPUB envoyé à un périphérique ANDROID, calibre recherche dans les tableaux de connexion dans l'ordre de recherche suivant :"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:473
 msgid ""
@@ -1303,7 +1303,7 @@ msgid ""
 msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au dispositif ``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
-msgid "Helpful Tips"
+msgid "Helpful tips"
 msgstr "Astuces utiles"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:487

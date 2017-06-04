@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/saving.ui'
 #
-# Created: Wed Nov  5 09:01:07 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -64,7 +63,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label.setText(_("Here you can control how calibre will save your books when you click the Save to Disk button:"))
+        self.label.setText(_("Here you can control how calibre will save your books when you click the \"Save to disk\" button:"))
         self.opt_save_cover.setText(_("Save &cover separately"))
         self.opt_replace_whitespace.setText(_("Replace space with &underscores"))
         self.opt_update_metadata.setText(_("Update &metadata in saved copies"))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/metadata.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -152,7 +152,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.groupBox_4.setTitle(_("Book Cover"))
+        self.groupBox_4.setTitle(_("Book cover"))
         self.label_5.setText(_("Change &cover image:"))
         self.cover_button.setToolTip(_("Browse for an image to use as the cover of this book."))
         self.cover_button.setText(_("..."))
@@ -160,7 +160,7 @@ class Ui_Form(object):
         self.label.setText(_("&Title: "))
         self.title.setToolTip(_("Change the title of this book"))
         self.label_2.setText(_("&Author(s): "))
-        self.label_6.setText(_("Author So&rt:"))
+        self.label_6.setText(_("Author so&rt:"))
         self.author_sort.setToolTip(_("Change the author(s) of this book. Multiple authors should be separated by a comma"))
         self.label_3.setText(_("&Publisher: "))
         self.label_4.setText(_("Ta&gs: "))

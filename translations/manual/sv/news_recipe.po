@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 09:38+0530\n"
-"PO-Revision-Date: 2017-03-21 06:57+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-09 07:20+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../home/kovid/work/calibre/manual/news_recipe.rst:4
-msgid "API Documentation for recipes"
+msgid "API documentation for recipes"
 msgstr "API-dokumentation för recept"
 
 #: ../../home/kovid/work/calibre/manual/news_recipe.rst:9
@@ -60,7 +60,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr "Kalla detta från populate_article_metadata med attributet src för en <img> etikett från artikeln som är lämplig att använda som miniatyrbild representerar artikeln i innehållsförteckningen. Huruvida ikonen faktiskt används är beroende av enhet (för närvarande endast används av Kindle-läsare). Observera att den refererade bilden måste vara en som framgångsrikt hämtats ner, annars kommer det att ignoreras."
+msgstr "Kalla detta från populate_article_metadata med attributet src för en <img> etikett från artikeln som är lämplig att använda som miniatyrbild representerar artikeln i innehållsförteckningen. Huruvida ikonen faktiskt används är beroende av enhet (för närvarande endast används av Kindle-läsplattor). Observera att den refererade bilden måste vara en som framgångsrikt hämtats ner, annars kommer det att ignoreras."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -268,8 +268,8 @@ msgstr "Webbadressen som ska följas"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
-msgid "The Tag from which the URL was derived"
-msgstr "Ettiketen för vilken URL erhölls"
+msgid "The tag from which the URL was derived"
+msgstr "Etiketten för vilken URL erhölls"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
@@ -397,6 +397,14 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "instance containing the downloaded :term:`HTML`."
 msgstr "`soup`: En `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ instans innehållande hämtad :term:`HTML`."
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
+msgid ""
+"Perform some processing on downloaded image data. This is called on the raw "
+"data before any resizing is done. Must return the processed raw data. Return"
+" None to skip the image."
+msgstr "Utföra vissa behandling på nedladdade bilddata. Detta kallas rå data innan någon storlek ändras. Måste återge de bearbetad rå data. Återge None för att hoppa över bilden."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -548,7 +556,7 @@ msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
 "into an e-book. These will override any user or plugin specified values, so "
 "only use if absolutely necessary. For example::"
-msgstr "Receptspecifika alternativ för att anpassa konvertering av hämtat innehåll in i en e-bok. Dessa kommer åsidosätta alla användare eller insticksprogram specifika värden, så använd bara om det är absolut nödvändigt. Till exempel::"
+msgstr "Receptspecifika alternativ för att anpassa konvertering av hämtat innehåll in i en e-bok. Dessa kommer åsidosätta alla användare eller insticksmodul specifika värden, så använd bara om det är absolut nödvändigt. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
@@ -560,8 +568,8 @@ msgid ""
 "'#ffffff') pads the cover with a white margin 10px on the left and right, "
 "15px on the top and bottom. Color names defined at "
 "https://www.imagemagick.org/script/color.php Note that for some reason, "
-"white does not always work on windows. Use #ffffff instead"
-msgstr "Som standard återges omslagsbild av get_cover_url () och kommer att användas som omslag för tidskriften. Överridning av detta i ditt recept instruerar calibre att anpassa det hämtade omslaget i en ram vars bredd och höjd uttrycks som en procentandel av den hämtade omslaget. cover_margins = (10, 15, \"#ffffff\") fyller omslaget med en vit marginal 10 pixlar på vänster och höger, 15 pixlar på toppen och botten. Färgnamn som fastställts på https://www.imagemagick.org/script/color.php Observera att av någon anledning, vitt fungerar inte alltid på fönster. Använd #ffffff istället"
+"white does not always work in Windows. Use #ffffff instead"
+msgstr "Som standard återges omslagsbild av get_cover_url () och kommer att användas som omslag för tidskriften. Åsidosätta detta i ditt recept instruerar calibre att anpassa det hämtade omslaget i en ram vars bredd och höjd uttrycks som en procentandel av den hämtade omslaget. cover_margins = (10, 15, \"#ffffff\") fyller omslaget med en vit marginal 10 pixlar på vänster och höger, 15 pixlar på toppen och botten. Färgnamn som fastställts på https://www.imagemagick.org/script/color.php Observera att av någon anledning, vitt fungerar inte alltid i Windows. Använd #ffffff istället"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -714,7 +722,7 @@ msgstr "Om True kommer gränssnittet att be användaren om ett användarnamn och
 #: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
 msgid ""
 "Convenient flag to disable loading of stylesheets for websites that have "
-"overly complex stylesheets unsuitable for conversion to ebooks formats. If "
+"overly complex stylesheets unsuitable for conversion to e-book formats. If "
 "True stylesheets are not downloaded and processed"
 msgstr "Bekväm flagga för att avaktivera laddning av utformningsmallar för webbplatser som har alltför komplexa mallar som är olämpliga för konvertering till e-bokformat. Om True hämtas inte mallar och bearbetas"
 
@@ -893,8 +901,8 @@ msgstr "Tidsbegränsning för hämta filer från servern i sekunder"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1
-msgid "The title to use for the ebook"
-msgstr "Titel att använda för e-bok"
+msgid "The title to use for the e-book"
+msgstr "Titel att använda för e-boken"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1

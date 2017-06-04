@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/sending.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -61,9 +61,9 @@ class Ui_Form(object):
         self.opt_manage_device_metadata.setItemText(0, _("Manual management"))
         self.opt_manage_device_metadata.setItemText(1, _("Only on send"))
         self.opt_manage_device_metadata.setItemText(2, _("Automatic management"))
-        self.label_41.setText(_("<li><b>Manual management</b>: Calibre updates the metadata and adds collections only when a book is sent. With this option, calibre will never remove a collection.</li>\n"
-"<li><b>Only on send</b>: Calibre updates metadata and adds/removes collections for a book only when it is sent to the device. </li>\n"
-"<li><b>Automatic management</b>: Calibre automatically keeps metadata on the device in sync with the calibre library, on every connect</li></ul>"))
+        self.label_41.setText(_("<li><b>Manual management</b>: calibre updates the metadata and adds collections only when a book is sent. With this option, calibre will never remove a collection.</li>\n"
+"<li><b>Only on send</b>: calibre updates metadata and adds/removes collections for a book only when it is sent to the device. </li>\n"
+"<li><b>Automatic management</b>: calibre automatically keeps metadata on the device in sync with the calibre library, on every connect</li></ul>"))
         self.label_2.setText(_("Format &dates as:"))
 
 from calibre.gui2.preferences.save_template import SaveTemplate

@@ -9,7 +9,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 import re
 from collections import Counter
 
-from calibre.ebooks.docx.writer.container import create_skeleton, page_size
+from calibre.ebooks.docx.writer.container import create_skeleton, page_size, page_effective_area
 from calibre.ebooks.docx.writer.styles import StylesManager, FloatSpec
 from calibre.ebooks.docx.writer.links import LinksManager
 from calibre.ebooks.docx.writer.images import ImagesManager
@@ -135,7 +135,7 @@ class TextRun(object):
 
 class Block(object):
 
-    def __init__(self, namespace, styles_manager, links_manager, html_block, style, is_table_cell=False, float_spec=None, is_list_item=False):
+    def __init__(self, namespace, styles_manager, links_manager, html_block, style, is_table_cell=False, float_spec=None, is_list_item=False, parent_bg=None):
         self.namespace = namespace
         self.bookmarks = set()
         self.list_tag = (html_block, style) if is_list_item else None
@@ -148,7 +148,7 @@ class Block(object):
         if float_spec is not None:
             float_spec.blocks.append(self)
         self.html_style = style
-        self.style = styles_manager.create_block_style(style, html_block, is_table_cell=is_table_cell)
+        self.style = styles_manager.create_block_style(style, html_block, is_table_cell=is_table_cell, parent_bg=parent_bg)
         self.styles_manager, self.links_manager = styles_manager, links_manager
         self.keep_next = False
         self.runs = []
@@ -278,10 +278,19 @@ class Blocks(object):
         self.current_block = None
 
     def start_new_block(self, html_block, style, is_table_cell=False, float_spec=None, is_list_item=False):
+        parent_bg = None
+        if html_block is not None:
+            p = html_block.getparent()
+            b = self.html_tag_start_blocks.get(p)
+            if b is not None:
+                ps = self.styles_manager.styles_for_html_blocks.get(p)
+                if ps is not None and ps.background_color is not None:
+                    parent_bg = ps.background_color
         self.end_current_block()
         self.current_block = Block(
             self.namespace, self.styles_manager, self.links_manager, html_block, style,
-            is_table_cell=is_table_cell, float_spec=float_spec, is_list_item=is_list_item)
+            is_table_cell=is_table_cell, float_spec=float_spec, is_list_item=is_list_item,
+            parent_bg=parent_bg)
         self.html_tag_start_blocks[html_block] = self.current_block
         self.open_html_blocks.add(html_block)
         return self.current_block
@@ -404,6 +413,8 @@ class Convert(object):
         self.log, self.opts = docx.log, docx.opts
         self.mi = mi
         self.cover_img = None
+        p = self.opts.output_profile
+        p.width_pts, p.height_pts = page_effective_area(self.opts)
 
     def __call__(self):
         from calibre.ebooks.oeb.transforms.rasterize import SVGRasterizer
@@ -412,7 +423,7 @@ class Convert(object):
 
         self.styles_manager = StylesManager(self.docx.namespace, self.log, self.mi.language)
         self.links_manager = LinksManager(self.docx.namespace, self.docx.document_relationships, self.log)
-        self.images_manager = ImagesManager(self.oeb, self.docx.document_relationships)
+        self.images_manager = ImagesManager(self.oeb, self.docx.document_relationships, self.opts)
         self.lists_manager = ListsManager(self.docx)
         self.fonts_manager = FontsManager(self.docx.namespace, self.oeb, self.opts)
         self.blocks = Blocks(self.docx.namespace, self.styles_manager, self.links_manager)
@@ -455,7 +466,7 @@ class Convert(object):
         self.current_item = item
         stylizer = self.svg_rasterizer.stylizer_cache.get(item)
         if stylizer is None:
-            stylizer = Stylizer(item.data, item.href, self.oeb, self.opts, self.opts.output_profile, base_css=self.base_css)
+            stylizer = Stylizer(item.data, item.href, self.oeb, self.opts, profile=self.opts.output_profile, base_css=self.base_css)
         self.abshref = self.images_manager.abshref = item.abshref
 
         self.current_lang = lang_for_tag(item.data) or self.styles_manager.document_lang
@@ -568,6 +579,9 @@ class Convert(object):
             if html_tag.text:
                 block = self.create_block_from_parent(html_tag, stylizer)
                 block.add_text(html_tag.text, tag_style, is_parent_style=False, bookmark=bmark, link=self.current_link, lang=self.current_lang)
+            elif bmark:
+                block = self.create_block_from_parent(html_tag, stylizer)
+                block.add_text('', tag_style, is_parent_style=False, bookmark=bmark, link=self.current_link, lang=self.current_lang)
 
     def bookmark_for_anchor(self, anchor, html_tag):
         return self.links_manager.bookmark_for_anchor(anchor, self.current_item, html_tag)

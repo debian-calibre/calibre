@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 09:38+0530\n"
-"PO-Revision-Date: 2017-03-21 07:34+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 10:59+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:4
-msgid "API Documentation for plugins"
+msgid "API documentation for plugins"
 msgstr "Документація з програмного інтерфейсу для роботи з додатками"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:9
@@ -42,8 +42,8 @@ msgstr "Додаток до calibre. Корисні учасники:"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
-msgid "``self.plugin_path``: Stores path to the zip file that contains"
-msgstr "``self.plugin_path``: Зберігає шлях до файла zip, який містить"
+msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
+msgstr "``self.plugin_path``: Зберігає шлях до файла ZIP, шо містить"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
@@ -128,7 +128,7 @@ msgstr "Автор цього додатка"
 #: calibre.customize.Plugin.priority:1
 msgid ""
 "When more than one plugin exists for a filetype, the plugins are run in "
-"order of decreasing priority i.e. plugins with higher priority will be run "
+"order of decreasing priority. Plugins with higher priority will be run "
 "first. The highest possible priority is ``sys.maxint``. Default priority is "
 "1."
 msgstr "Якщо для обробки певного типу файлів передбачено декілька додатків, додатки будуть запускатися за зменшенням пріоритетності, тобто першими буде запущено додатки з вищою пріоритетністю. Найвищою можливою пріоритетністю є ``sys.maxint``. Типовою пріоритетністю є 1."
@@ -162,9 +162,9 @@ msgstr "Викликається один раз під час ініціалі�
 #: calibre.customize.Plugin.initialize:6
 msgid ""
 "Perform any plugin specific initialization here, such as extracting "
-"resources from the plugin zip file. The path to the zip file is available as"
+"resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
-msgstr "Тут виконується будь-яка специфічна для додатків ініціалізація, зокрема видобування ресурсів з файла zip додатка. Шлях до файла zip доступний як ``self.plugin_path``."
+msgstr "Тут виконується будь-яка специфічна для додатків ініціалізація, зокрема видобування ресурсів з файла ZIP додатка. Шлях до файла ZIP доступний як ``self.plugin_path``."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:10
@@ -306,8 +306,8 @@ msgstr "Наприклад, для завантаження зображення
 #: calibre.customize.Plugin.load_resources:10
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:10
-msgid "List of paths to resources in the zip file using / as separator"
-msgstr "Список шляхів до ресурсів у файлі zip з використанням роздільника /"
+msgid "List of paths to resources in the ZIP file using / as separator"
+msgstr "Список шляхів до ресурсів у файлі ZIP з використанням роздільника /"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:0
@@ -340,8 +340,8 @@ msgstr "Повертає"
 #: calibre.customize.Plugin.load_resources:12
 msgid ""
 "A dictionary of the form ``{name: file_contents}``. Any names that were not "
-"found in the zip file will not be present in the dictionary."
-msgstr "Словник у формі ``{назва: вміст_файла}``. Усі назви, які не було знайдено у файлі zip, не буде включено до словника."
+"found in the ZIP file will not be present in the dictionary."
+msgstr "Словник у формі ``{назва: вміст_файла}``. Усі назви, які не було знайдено у файлі ZIP, не буде включено до словника."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:1
@@ -462,29 +462,29 @@ msgstr "Якщо True, цей додаток запускається після
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
-"whatever modifications are required on the ebook and return the absolute "
-"path to the modified ebook. If no modifications are needed, it should return"
-" the path to the original ebook. If an error is encountered it should raise "
-"an Exception. The default implementation simply return the path to the "
-"original ebook. Note that the path to the original file (before any file "
-"type plugins are run, is available as self.original_path_to_file)."
+"whatever modifications are required on the e-book and return the absolute "
+"path to the modified e-book. If no modifications are needed, it should "
+"return the path to the original e-book. If an error is encountered it should"
+" raise an Exception. The default implementation simply return the path to "
+"the original e-book. Note that the path to the original file (before any "
+"file type plugins are run, is available as self.original_path_to_file)."
 msgstr "Запустити додаток. Має бути реалізовано у підкласах. Має вносити усі потрібні зміни до електронної книги і повертати абсолютний шлях до файла зміненої книги. Якщо вносити зміни не потрібно. Якщо станеться помилка, має повідомляти про виключення (Exception). Типова реалізація просто повертає шлях до початкового файла електронної книги. Зауважте, що шлях до початкового файла (до запуску будь-яких додатків), доступний як self.original_path_to_file."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:11
 msgid ""
-"The modified ebook file should be created with the :meth:`temporary_file` "
+"The modified e-book file should be created with the :meth:`temporary_file` "
 "method."
 msgstr "Змінений файл електронної книги має бути створено за допомогою методу :meth:`temporary_file`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:14
-msgid "Absolute path to the ebook."
+msgid "Absolute path to the e-book."
 msgstr "Повний шлях до електронної книги."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:16
-msgid "Absolute path to the modified ebook."
+msgid "Absolute path to the modified e-book."
 msgstr "Повний шлях до зміненої електронної книги."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -555,7 +555,7 @@ msgstr "Додаток, який реалізує читання метадан�
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin.file_types:1
 msgid ""
-"Set of file types for which this plugin should be run For example: "
+"Set of file types for which this plugin should be run. For example: "
 "``set(['lit', 'mobi', 'prc'])``"
 msgstr "Набір типів файлів, для яких слід запускати додаток. Приклад: ``set(['lit', 'mobi', 'prc'])``"
 
@@ -602,8 +602,8 @@ msgstr "Додаток, який реалізує засіб створення 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.file_types:1
 msgid ""
-"Output file type for which this plugin should be run For example: 'epub' or "
-"'xml'"
+"Output file type for which this plugin should be run. For example: 'epub' or"
+" 'xml'"
 msgstr "Вивести тип файлів, для яких слід запускати додаток. Приклад: 'epub' або 'xml'"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -616,9 +616,9 @@ msgstr "Параметри обробки інтерфейсу командно�
 #: calibre.customize.CatalogPlugin.initialize:1
 msgid ""
 "If plugin is not a built-in, copy the plugin's .ui and .py files from the "
-"zip file to $TMPDIR. Tab will be dynamically generated and added to the "
+"ZIP file to $TMPDIR. Tab will be dynamically generated and added to the "
 "Catalog Options dialog in calibre.gui2.dialogs.catalog.py:Catalog"
-msgstr "Якщо додаток не є вбудованим, копіює файли .ui і .py з файла zip до $TMPDIR. Вкладку буде створено динамічно і додано до діалогового вікна параметрів каталогу у calibre.gui2.dialogs.catalog.py:Catalog"
+msgstr "Якщо додаток не є вбудованим, копіює файли .ui і .py з файла ZIP до $TMPDIR. Вкладку буде створено динамічно і додано до діалогового вікна параметрів каталогу у calibre.gui2.dialogs.catalog.py:Catalog"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:1
@@ -1162,7 +1162,7 @@ msgstr "Викликається для створення віджета, як�
 #: of calibre.customize.conversion.OutputFormatPlugin:1
 msgid ""
 "OutputFormatPlugins are responsible for converting an OEB document "
-"(OPF+HTML) into an output ebook."
+"(OPF+HTML) into an output e-book."
 msgstr "OutputFormatPlugins відповідають за перетворення документа OEB (OPF+HTML) на остаточну електронну книгу."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
@@ -1243,7 +1243,7 @@ msgid ""
 msgstr "Викликається для створення віджета, який використовується для налаштовування цього додатка у графічному інтерфейсі calibre. Віджет має бути екземпляром класу PluginWidget. Приклади можна знайти у вбудованих додатках для виведення даних."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:91
-msgid "Device Drivers"
+msgid "Device drivers"
 msgstr "Драйвери пристроїв"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:95
@@ -1258,7 +1258,7 @@ msgstr "Базовим класом для всіх драйверів прис�
 #: calibre.devices.interface.DevicePlugin:1
 msgid ""
 "Defines the interface that should be implemented by backends that "
-"communicate with an ebook reader."
+"communicate with an e-book reader."
 msgstr "Визначає інтерфейс, який має бути реалізовано модулями обробки, які обмінюються даними з пристроєм для читання електронних книг."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
@@ -1489,9 +1489,9 @@ msgid ""
 "is capable of handling it. If it is not it should return False. This method "
 "is only called after the vendor, product ids and the bcd have matched, so it"
 " can do some relatively time intensive checks. The default implementation "
-"returns True. This method is called only on windows. See also "
+"returns True. This method is called only on Windows. See also "
 ":meth:`can_handle`."
-msgstr "Необов’язковий метод для виконання подальших перевірок для пристрою з метою переконатися, що цей драйвер може з ним працювати. Якщо це не так, має повертати False. Цей метод викликається лише після встановлення відповідності виробника, ідентифікаторів продукту та bcd, отже він може виконувати доволі тривалі за часом перевірки. Типова реалізація завжди повертає True. Цей метод викликається лише у windows. Див. також :meth:`can_handle`."
+msgstr "Необов’язковий метод для виконання подальших перевірок для пристрою з метою переконатися, що цей драйвер може з ним працювати. Якщо це не так, має повертати False. Цей метод викликається лише після встановлення відповідності виробника, ідентифікаторів продукту та bcd, отже він може виконувати доволі тривалі за часом перевірки. Типова реалізація завжди повертає True. Цей метод викликається лише у Windows. Див. також :meth:`can_handle`."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle_windows:8
@@ -1662,14 +1662,14 @@ msgstr "Триелементних список із вільним об’єм�
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:1
-msgid "Return a list of ebooks on the device."
+msgid "Return a list of e-books on the device."
 msgstr "Повертає список електронних книг на пристрої."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:3
 msgid ""
-"If 'carda' or 'cardb' return a list of ebooks on the specific storage card, "
-"otherwise return list of ebooks in main memory of device. If a card is "
+"If 'carda' or 'cardb' return a list of e-books on the specific storage card,"
+" otherwise return list of e-books in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
 msgstr "Якщо «carda» або «cardb», повертає список електронних книг на вказаній картці пам’яті. Якщо інше значення, повертає список електронних книг у основній пам’яті пристрою. Якщо вказано картку, але на картці немає книг, повертає порожній список."
 
@@ -2266,7 +2266,7 @@ msgstr "метадані, що стосуються книги. Скориста
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:7
-msgid "The full path to the ebook file"
+msgid "The full path to the e-book file"
 msgstr "Шлях до файла електронної книги повністю."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
@@ -2280,11 +2280,11 @@ msgstr "Дії інтерфейсу користувача"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:157
 msgid ""
-"If you are adding your own plugin in a zip file, you should subclass both "
+"If you are adding your own plugin in a ZIP file, you should subclass both "
 "InterfaceActionBase and InterfaceAction. The :meth:`load_actual_plugin` "
 "method of your InterfaceActionBase subclass must return an instantiated "
 "object of your InterfaceBase subclass."
-msgstr "Якщо ви додаєте власний додаток у файлі zip, вам слід створити підкласи для InterfaceActionBase і для InterfaceAction. Метод :meth:`load_actual_plugin` вашого підкласу InterfaceActionBase має повертати створений екземпляр об’єкта вашого підкласу InterfaceBase."
+msgstr "Якщо ви додаєте власний додаток у файлі ZIP, вам слід створити підкласи для InterfaceActionBase і для InterfaceAction. Метод :meth:`load_actual_plugin` вашого підкласу InterfaceActionBase має повертати створений екземпляр об’єкта вашого підкласу InterfaceBase."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:1
@@ -2510,8 +2510,8 @@ msgstr "Текстове повідомлення, яке буде показа�
 #: of calibre.gui2.actions.InterfaceAction.load_resources:12
 msgid ""
 "A dictionary of the form ``{name : file_contents}``. Any names that were not"
-" found in the zip file will not be present in the dictionary."
-msgstr "Словник у формі ``{назва: вміст_файла}``. Усі назви, які не було знайдено у файлі zip, не буде включено до словника."
+" found in the ZIP file will not be present in the dictionary."
+msgstr "Словник у формі ``{назва: вміст_файла}``. Усі назви, які не було знайдено у файлі ZIP, не буде включено до словника."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.genesis:1
@@ -2580,7 +2580,7 @@ msgid "This method must return the actual interface action plugin object."
 msgstr "Цей метод має повертати поточний інтерфейс об’єкта додатка дії."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:172
-msgid "Preferences Plugins"
+msgid "Preferences plugins"
 msgstr "Додатки налаштувань"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -2679,8 +2679,8 @@ msgstr "Встановіть значення True тоді і лише тоді
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
-msgid "The tooltip for the Restore to defaults button"
-msgstr "Підказка для кнопки «Відновити типові значення»."
+msgid "The tooltip for the \"Restore defaults\" button"
+msgstr "Підказка для кнопки «Відновити типові значення»"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.restart_critical:1
@@ -2797,7 +2797,8 @@ msgstr "Додатки засобу перегляду"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.type:1
-msgid "These plugins are used to add functionality to the calibre viewer."
+msgid ""
+"These plugins are used to add functionality to the calibre E-book viewer."
 msgstr "Ці додатки використовуються для розширення функціональних можливостей програми для перегляду книг у calibre."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of

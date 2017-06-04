@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -148,7 +148,7 @@ class Ui_Form(object):
         self.opt_bools_are_tristate.setToolTip(_("If checked, Yes/No custom columns values can be Yes, No, or Unknown.\n"
 "If not checked, the values can be Yes or No."))
         self.opt_bools_are_tristate.setText(_("Yes/No columns have three values (needs restart)"))
-        self.opt_upload_news_to_device.setText(_("Automatically send downloaded &news to ebook reader"))
+        self.opt_upload_news_to_device.setText(_("Automatically send downloaded &news to e-book reader"))
         self.opt_delete_news_from_library_on_upload.setText(_("&Delete news from library when it is automatically sent to reader"))
         self.label_23.setText(_("Preferred &output format:"))
         self.label_2.setText(_("Default network &timeout:"))
@@ -158,9 +158,9 @@ class Ui_Form(object):
         self.opt_worker_process_priority.setItemText(0, _("Normal"))
         self.opt_worker_process_priority.setItemText(1, _("High"))
         self.opt_worker_process_priority.setItemText(2, _("Low"))
-        self.label_170.setText(_("Virtual library to apply when the current library is opened:"))
+        self.label_170.setText(_("Virtual library to apply when the current &library is opened:"))
         self.opt_virtual_lib_on_startup.setToolTip(_("Use this virtual library on calibre startup if the current library is being used. Also applied when switching to this library. Note that this setting is per library. "))
-        self.edit_metadata_single_label.setText(_("Edit metadata (single) layout:"))
+        self.edit_metadata_single_label.setText(_("Edit metadata (single) &layout:"))
         self.opt_edit_metadata_single_layout.setToolTip(_("Choose a different layout for the Edit Metadata dialog. The compact metadata layout favors editing custom metadata over changing covers and formats."))
         self.groupBox_5.setTitle(_("Preferred &input format order:"))
         self.input_up_button.setText(_("..."))

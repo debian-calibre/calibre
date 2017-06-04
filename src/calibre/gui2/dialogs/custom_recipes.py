@@ -390,7 +390,7 @@ class BasicRecipe(QWidget):  # {{{
             self.feed_title.clear()
             self.feed_url.clear()
             if src is None:
-                self.title.setText(_('My News Source'))
+                self.title.setText(_('My news source'))
                 self.oldest_article.setValue(7)
                 self.max_articles.setValue(100)
             else:
@@ -494,7 +494,7 @@ class CustomRecipes(Dialog):
         else:
             bb.setStandardButtons(bb.Cancel | bb.Save)
             if self.stack.currentIndex() == 1:
-                text = _('S&witch to Advanced mode')
+                text = _('S&witch to advanced mode')
                 tooltip = _('Edit this recipe in advanced mode')
                 receiver = self.switch_to_advanced
                 b = bb.addButton(text, bb.ActionRole)

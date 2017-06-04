@@ -15,11 +15,13 @@ from PyQt5.Qt import (
     QApplication, QFont, QFontInfo, QFontDialog, QColorDialog, QPainter,
     QAbstractListModel, Qt, QIcon, QKeySequence, QColor, pyqtSignal, QCursor,
     QWidget, QSizePolicy, QBrush, QPixmap, QSize, QPushButton, QVBoxLayout,
-    QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit
+    QTableWidget, QTableWidgetItem, QLabel, QFormLayout, QLineEdit, QComboBox
 )
 
 from calibre import human_readable
+from calibre.ebooks.metadata.book.render import DEFAULT_AUTHOR_LINK
 from calibre.ebooks.metadata.sources.prefs import msprefs
+from calibre.gui2 import default_author_link
 from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget, CommaSeparatedList
 from calibre.gui2.preferences.look_feel_ui import Ui_Form
@@ -41,6 +43,59 @@ class BusyCursor(object):
 
     def __exit__(self, *args):
         QApplication.restoreOverrideCursor()
+
+
+class DefaultAuthorLink(QWidget):  # {{{
+
+    changed_signal = pyqtSignal()
+
+    def __init__(self, parent):
+        QWidget.__init__(self, parent)
+        l = QVBoxLayout(parent)
+        l.addWidget(self)
+        l.setContentsMargins(0, 0, 0, 0)
+        l = QFormLayout(self)
+        l.setContentsMargins(0, 0, 0, 0)
+        l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
+        self.choices = c = QComboBox()
+        c.setMinimumContentsLength(30)
+        for text, data in [
+                (_('Search for the author on Goodreads'), 'search-goodreads'),
+                (_('Search for the author in your calibre library'), 'search-calibre'),
+                (_('Search for the author on Wikipedia'), 'search-wikipedia'),
+                (_('Search for the author on Google Books'), 'search-google'),
+                (_('Search for the book on Goodreads'), 'search-goodreads-book'),
+                (_('Search for the book on Google Books'), 'search-google-book'),
+                (_('Use a custom search URL'), 'url'),
+        ]:
+            c.addItem(text, data)
+        l.addRow(_('Clicking on &author names should:'), c)
+        self.custom_url = u = QLineEdit(self)
+        u.setPlaceholderText(_('Enter the URL'))
+        c.currentIndexChanged.connect(self.current_changed)
+        l.addRow(u)
+        self.current_changed()
+        c.currentIndexChanged.connect(self.changed_signal)
+
+    @property
+    def value(self):
+        k = self.choices.currentData()
+        if k == 'url':
+            return self.custom_url.text()
+        return k if k != DEFAULT_AUTHOR_LINK else None
+
+    @value.setter
+    def value(self, val):
+        i = self.choices.findData(val)
+        if i < 0:
+            i = self.choices.findData('url')
+            self.custom_url.setText(val)
+        self.choices.setCurrentIndex(i)
+
+    def current_changed(self):
+        k = self.choices.currentData()
+        self.custom_url.setVisible(k == 'url')
+# }}}
 
 # IdLinksEditor {{{
 
@@ -64,7 +119,7 @@ class IdLinksRuleEdit(Dialog):
         self.key = k = QLineEdit(self)
         l.addRow(_('&Key:'), k)
         l.addRow(QLabel(_(
-            'The name that will appear in the book details panel')))
+            'The name that will appear in the Book details panel')))
         self.nw = n = QLineEdit(self)
         l.addRow(_('&Name:'), n)
         la = QLabel(_(
@@ -280,8 +335,10 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.icon_theme.setText(_('Icon theme: <b>%s</b>') % self.icon_theme_title)
         self.commit_icon_theme = None
         self.icon_theme_button.clicked.connect(self.choose_icon_theme)
+        self.default_author_link = DefaultAuthorLink(self.default_author_link_container)
+        self.default_author_link.changed_signal.connect(self.changed_signal)
         r('gui_layout', config, restart_required=True, choices=[(_('Wide'), 'wide'), (_('Narrow'), 'narrow')])
-        r('ui_style', gprefs, restart_required=True, choices=[(_('System default'), 'system'), (_('Calibre style'),
+        r('ui_style', gprefs, restart_required=True, choices=[(_('System default'), 'system'), (_('calibre style'),
                     'calibre')])
         r('book_list_tooltips', gprefs)
         r('row_numbers_in_book_list', gprefs)
@@ -351,11 +408,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                    (_('Partitioned'), 'partition')]
         r('tags_browser_partition_method', gprefs, choices=choices)
         r('tags_browser_collapse_at', gprefs)
-        r('default_author_link', gprefs)
         r('tag_browser_dont_collapse', gprefs, setting=CommaSeparatedList)
-
-        self.search_library_for_author_button.clicked.connect(
-            lambda : self.opt_default_author_link.setText('search-calibre'))
 
         choices = set([k for k in db.field_metadata.all_field_keys()
                 if (db.field_metadata[k]['is_category'] and
@@ -387,12 +440,12 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.edit_rules = EditRules(self.tabWidget)
         self.edit_rules.changed.connect(self.changed_signal)
         self.tabWidget.addTab(self.edit_rules,
-                QIcon(I('format-fill-color.png')), _('Column coloring'))
+                QIcon(I('format-fill-color.png')), _('Column &coloring'))
 
         self.icon_rules = EditRules(self.tabWidget)
         self.icon_rules.changed.connect(self.changed_signal)
         self.tabWidget.addTab(self.icon_rules,
-                QIcon(I('icon_choose.png')), _('Column icons'))
+                QIcon(I('icon_choose.png')), _('Column &icons'))
 
         self.grid_rules = EditRules(self.emblems_tab)
         self.grid_rules.changed.connect(self.changed_signal)
@@ -483,6 +536,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def initialize(self):
         ConfigWidgetBase.initialize(self)
+        self.default_author_link.value = default_author_link()
         font = gprefs['font']
         if font is not None:
             font = list(font)
@@ -536,6 +590,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def restore_defaults(self):
         ConfigWidgetBase.restore_defaults(self)
+        self.default_author_link.value = DEFAULT_AUTHOR_LINK
         ofont = self.current_font
         self.current_font = None
         if ofont is not None:
@@ -551,7 +606,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def change_cover_grid_color(self):
         col = QColorDialog.getColor(self.cg_bg_widget.bcol,
-                              self.gui, _('Choose background color for cover grid'))
+                              self.gui, _('Choose background color for the Cover grid'))
         if col.isValid():
             col = tuple(col.getRgb())[:3]
             self.set_cg_color(col)
@@ -637,6 +692,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             if self.commit_icon_theme is not None:
                 self.commit_icon_theme()
                 rr = True
+            gprefs['default_author_link'] = self.default_author_link.value
         return rr
 
     def refresh_gui(self, gui):

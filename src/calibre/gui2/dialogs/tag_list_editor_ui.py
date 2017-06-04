@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -74,7 +74,7 @@ class Ui_TagListEditor(object):
 
     def retranslateUi(self, TagListEditor):
 
-        TagListEditor.setWindowTitle(_("Category Editor"))
+        TagListEditor.setWindowTitle(_("Category editor"))
         self.label.setText(_("&Search for:"))
         self.search_box.setToolTip(_("Search for an item in the Tag column"))
         self.search_button.setText(_("&Find"))

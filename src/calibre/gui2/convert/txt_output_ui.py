@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/txt_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -82,12 +81,12 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.groupBox.setTitle(_("General"))
-        self.label_3.setText(_("Output &Encoding:"))
+        self.label_3.setText(_("Output &encoding:"))
         self.label.setText(_("&Line ending style:"))
         self.label_4.setText(_("&Formatting:"))
         self.groupBox_2.setTitle(_("Plain"))
         self.label_2.setText(_("&Maximum line length:"))
-        self.opt_force_max_line_length.setText(_("Force maximum line length"))
+        self.opt_force_max_line_length.setText(_("Force maximum line &length"))
         self.opt_inline_toc.setText(_("&Inline TOC"))
         self.groupBox_3.setTitle(_("Markdown, Textile"))
         self.opt_keep_links.setText(_("Do not remove links (<a> tags) before processing"))

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:50+0530\n"
-"PO-Revision-Date: 2017-03-10 11:41+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 14:01+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -33,8 +33,8 @@ msgid ""
 "news (though these are called recipes), for various components of the user "
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
-"plugins in calibre by going to :guilabel:`Preferences->Plugins`."
-msgstr "calibre a un design hautement modulaire. Presque toutes les fonctionnalités dans calibre viennent sous la forme d'extensions. Les extensions sont utilisées pour la conversion, pour télécharger des actualités (bien que celles-ci s'appellent des recettes), pour divers composants de l'interface utilisateur, pour connecter différents dispositifs, pour traiter les fichiers lorsque vous les ajouter à calibre. Vous pouvez obtenir une liste complète de toutes les extensions intégrées dans calibre en allant à :guilabel:`Préférences->Extensions`."
+"plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
+msgstr "calibre a un design hautement modulaire. Presque toutes les fonctionnalités dans calibre viennent sous la forme d'extensions. Les extensions sont utilisées pour la conversion, pour télécharger des actualités (bien que celles-ci s'appellent des recettes), pour divers composants de l'interface utilisateur, pour connecter différents dispositifs, pour traiter les fichiers lorsque vous les ajouter à calibre. Vous pouvez obtenir une liste complète de toutes les extensions intégrées dans calibre en allant à :guilabel:`Préférences->Avancé->Extensions`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
 msgid ""
@@ -52,10 +52,10 @@ msgstr "Anatomie d'une extension calibre"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
 msgid ""
-"A calibre plugin is very simple, it's just a zip file that contains some "
-"python code and any other resources like image files needed by the plugin. "
+"A calibre plugin is very simple, it's just a ZIP file that contains some "
+"Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr "Une extension calibre est très simple, c'est juste un fichier zip qui contient un peu de code python et toutes les autres ressources comme les fichiers images nécessaires à l'extension. Sans plus tarder, voyons un exemple basique."
+msgstr "Une extension calibre est très simple, c'est juste un fichier ZIP qui contient un peu de code Python et toutes les autres ressources comme les fichiers images nécessaires à l'extension. Sans plus tarder, voyons un exemple basique."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -102,10 +102,10 @@ msgstr "Une extension d'Interface Utilisateur"
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
-"zip file, allow users to configure your plugin, how to create elements in "
+"ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr "Cette extension sera répartie sur quelques fichiers (pour maintenir le code propre). Il vous montrera comment obtenir des ressources (des fichiers d'images ou de données) à partir du fichier extension zip, permettra à des utilisateurs de configurer votre extension, comment créer des éléments dans l'Interface Utilisateur de calibre et comment accéder et questionner la base de données de livres de calibre."
+msgstr "Cette extension sera répartie sur quelques fichiers (pour maintenir le code propre). Il vous montrera comment obtenir des ressources (des fichiers d'images ou de données) à partir du fichier extension ZIP, permettra à des utilisateurs de configurer votre extension, comment créer des éléments dans l'Interface Utilisateur de calibre et comment accéder et questionner la base de données de livres de calibre."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
 msgid ""
@@ -115,10 +115,10 @@ msgstr "Vous pouvez télécharger cette extension depuis `interface_demo_plugin.
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
 msgid ""
-"The first thing to note is that this zip file has a lot more files in it, "
+"The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr "La première chose à noter est que le fichier zip contient beaucoup plus de fichiers, expliqué ci-dessous, prêtez particulièrement attention à ``plugin-import-name-interface_demo.txt``."
+msgstr "La première chose à noter est que le fichier ZIP contient beaucoup plus de fichiers, expliqués ci-dessous, prêtez particulièrement attention à ``plugin-import-name-interface_demo.txt``."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
@@ -128,28 +128,29 @@ msgstr "**plugin-import-name-interface_demo.txt**"
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
-" empty and its filename must be of the form: plugin-import-"
-"name-**some_name**.txt The presence of this file allows you to import code "
-"from the .py files present inside the zip file, using a statement like::"
-msgstr "Un fichier texte vide utilisé pour activer la magie de l'extension multi fichiers. Ce fichier doit être présent dans toutes les extensions qui utilisent plus d'un fichier .py. Il devra être vide et son nom de fichier doit être de la forme : plugin-import-name-**un_nom**.txt. La présence de ce fichier vous permet d'importer du code  à partir de fichiers .py présents à l'intérieur du fichier zip, utilisant une déclaration comme::"
+" empty and its filename must be of the form: ``plugin-import-"
+"name-**some_name**.txt``. The presence of this file allows you to import "
+"code from the .py files present inside the ZIP file, using a statement "
+"like::"
+msgstr "Un fichier texte vide utilisé pour activer la magie de l'extension multi fichiers. Ce fichier doit être présent dans toutes les extensions qui utilisent plus d'un fichier .py. Il devra être vide et son nom de fichier doit être de la forme : plugin-import-name-**un_nom**.txt. La présence de ce fichier vous permet d'importer du code  à partir de fichiers .py présents à l'intérieur du fichier ZIP, utilisant une déclaration comme::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
 "from the filename of the empty text file. ``some_module`` refers to  "
-":file:`some_module.py` file inside the zip file. Note that this importing is"
-" just as powerful as regular python imports. You can create packages and "
-"subpackages of .py modules inside the zip file, just like you would normally"
-" (by defining __init__.py in each sub-directory), and everything should Just"
-" Work."
-msgstr "Le préfixe ``calibre_plugins`` doit toujours être présent. ``some_name`` provient du nom de fichier du fichier texte vide. ``some_module`` se réfère au fichier :file:`some_module.py` dans le fichier zip. Notez que cette importation est tout aussi puissante que les importations python régulières. Vous pouvez créer des paquets et des sous paquets de modules .py à l'intérieur du fichier zip, tout comme vous le feriez normalement (en définissant __init__.py dans chaque sous répertoire), et tout devrait Fonctionner Correctement."
+":file:`some_module.py` file inside the ZIP file. Note that this importing is"
+" just as powerful as regular Python imports. You can create packages and "
+"subpackages of .py modules inside the ZIP file, just like you would normally"
+" (by defining __init__.py in each sub-directory), and everything should "
+"\"just work\"."
+msgstr "Le préfixe ``calibre_plugins`` doit toujours être présent. ``some_name`` provient du nom de fichier du fichier texte vide. ``some_module`` se réfère au fichier :file:`some_module.py` dans le fichier ZIP. Notez que cette importation est tout aussi puissante que les importations Python régulières. Vous pouvez créer des paquets et des sous paquets de modules .py à l'intérieur du fichier ZIP, tout comme vous le feriez normalement (en définissant __init__.py dans chaque sous répertoire), et tout devrait \"fonctionner correctement\"."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
-"a valid python identifier (only alphabets, numbers and the underscore)."
-msgstr "Le nom que vous utilisez pour ``un_nom`` introduit un espace de nom global partagé par toutes les extensions. **Aussi rendez le aussi unique que possible**. Mais rappelez-vous qu'il doit être un identifiant python valide(uniquement des lettres, des nombres et le tiret bas)."
+"a valid Python identifier (only alphabets, numbers and the underscore)."
+msgstr "Le nom que vous utilisez pour ``un_nom`` introduit un espace de nom global partagé par toutes les extensions. **Aussi rendez le aussi unique que possible**. Mais rappelez-vous qu'il doit être un identifiant Python valide(uniquement des lettres, des nombres et le tiret bas)."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
@@ -219,15 +220,15 @@ msgid ""
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
 "should not load any GUI libraries in __init__.py. The actual_plugin field "
 "does this for you, by telling calibre that the actual plugin is to be found "
-"in another file inside your zip archive, which will only be loaded in a GUI "
+"in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "La seule caractéristique remarquable est le champ :attr:`actual_plugin`. Depuis que calibre a la ligne de commande et les interfaces de GUI, les extensions avec  GUI comme celle-ci ne devrait charger aucune bibliothèques de GUI dans __init__.py. Le champ actual_plugin fait ceci pour vous, en disant à calibre que l'extension actuelle doit être trouvée dans un autre fichier à l'intérieur de votre archive zip, qui seront seulement chargées dans un contexte GUI."
+msgstr "La seule caractéristique remarquable est le champ :attr:`actual_plugin`. Depuis que calibre a la ligne de commande et les interfaces de GUI, les extensions avec GUI comme celle-ci ne devrait charger aucune bibliothèques de GUI dans __init__.py. Le champ actual_plugin fait ceci pour vous, en disant à calibre que l'extension actuelle doit être trouvée dans un autre fichier à l'intérieur de votre archive ZIP, qui seront seulement chargées dans un contexte GUI."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
-"some_name.txt file in your plugin zip file, as discussed above."
-msgstr "Rappelez-vous que pour que cela fonctionne, vous devez avoir un fichier plugin-import-name-un_nom.txt dans le fichier zip de votre extension, comme discuté plus haut."
+"some_name.txt file in your plugin ZIP file, as discussed above."
+msgstr "Rappelez-vous que pour que cela fonctionne, vous devez avoir un fichier plugin-import-name-un_nom.txt dans le fichier ZIP de votre extension, comme discuté plus haut."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
 msgid ""
@@ -255,14 +256,14 @@ msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr "La logique actuelle pour mettre en application le dialogue de démo de l'interface de l'extension."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
-msgid "Getting resources from the plugin zip file"
-msgstr "Obtention des ressources à partir du fichier zip de l'extension"
+msgid "Getting resources from the plugin ZIP file"
+msgstr "Obtention des ressources à partir du fichier ZIP de l'extension"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
-"allow you to conveniently get files from the plugin zip file."
-msgstr "Le système de chargement d'une extension calibre définit quelques fonctions intégrées qui permettent d'obtenir confortablement des fichiers à  partir du fichier zip de l'extension."
+"allow you to conveniently get files from the plugin ZIP file."
+msgstr "Le système de chargement d'une extension calibre définit quelques fonctions intégrées qui permettent d'obtenir confortablement des fichiers à  partir du fichier ZIP de l'extension."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -270,15 +271,15 @@ msgstr "**get_resources(name_or_list_of_names)**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:141
 msgid ""
-"This function should be called with a list of paths to files inside the zip "
+"This function should be called with a list of paths to files inside the ZIP "
 "file. For example to access the file icon.png in the directory images in the"
-" zip file, you would use: ``images/icon.png``. Always use a forward slash as"
+" ZIP file, you would use: ``images/icon.png``. Always use a forward slash as"
 " the path separator, even on windows. When you pass in a single name, the "
 "function will return the raw bytes of that file or None if the name was not "
-"found in the zip file. If you pass in more than one name then it returns a "
+"found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr "Cette fonction devra être appelée avec une liste de chemins vers les fichiers à l'intérieur du fichier zip. Par exemple pour accéder au fichier icon.png dans le répertoires images dans le fichier zip, vous devriez utiliser : ``images/icon.png``. Toujours utiliser une barre oblique comme séparateur de chemin, même sur windows. Quand vous analysez un nom seul, la fonction retournera les octets bruts ou Aucun si le nom n'est pas trouvé dans le fichier zip.  Si vous analysez plus d'un nom alors il renvoie un dict mappant les noms aux octets. Si un nom n'est pas trouvé, il ne sera pas présent dans le dict retourné."
+msgstr "Cette fonction devra être appelée avec une liste de chemins vers les fichiers à l'intérieur du fichier ZIP. Par exemple pour accéder au fichier icon.png dans le répertoires images dans le fichier ZIP, vous devriez utiliser : ``images/icon.png``. Toujours utiliser une barre oblique comme séparateur de chemin, même sur windows. Quand vous analysez un nom seul, la fonction retournera les octets bruts ou Aucun si le nom n'est pas trouvé dans le fichier ZIP.  Si vous analysez plus d'un nom alors il renvoie un dict mappant les noms aux octets. Si un nom n'est pas trouvé, il ne sera pas présent dans le dict retourné."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -287,9 +288,9 @@ msgstr "**get_icons(nom_ou_liste_de_noms)**"
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
 msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
-"the raw bytes returned by get_resources. If a name is not found in the zip "
+"the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
-msgstr "Une délivrance commode pour get_resources() qui crée des objets QIcon  à partir des octets bruts retournés par get_resources. Si un nom n'est pas trouvé dans le fichier zip QIcon correspondant sera nul."
+msgstr "Une délivrance commode pour get_resources() qui crée des objets QIcon  à partir des octets bruts retournés par get_resources. Si un nom n'est pas trouvé dans le fichier ZIP le QIcon correspondant sera nul."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
@@ -325,7 +326,7 @@ msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr "Vous pouvez voir l'objet ``prefs`` en cours d'utilisation dans main.py :"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
-msgid "Edit Book plugins"
+msgid "Edit book plugins"
 msgstr "Extensions d'édition de livre"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:186
@@ -465,9 +466,9 @@ msgstr "La dernière étape est de simplement appeler la fonction `load_translat
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
-" language in calibre under Preferences->Look & Feel or by running calibre "
-"like this::"
-msgstr "Vous pouvez tester les traductions de vos extensions en changeant la langue de l'interface utilisateur dans calibre dans Préférences->Apparence ou en exécutant calibre comme ceci::"
+" language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
+"or by running calibre like this::"
+msgstr "Vous pouvez tester les traductions de vos extensions en changeant la langue de l'interface utilisateur dans calibre dans Préférences->Interface->Apparence et présentation ou en exécutant calibre comme ceci::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
 msgid ""
@@ -505,9 +506,9 @@ msgstr "Tout d'abord, l'étape la plus importante est d'exécuter calibre en mod
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
 msgid ""
-"Or from within calibre by right-clicking the preferences button or using the"
-" `Ctrl+Shift+R` keyboard shortcut."
-msgstr "Ou dans calibre en faisant un clic droit sur le bouton préférences ou en utilisant le raccourci clavier `Ctrl+Shift+R`."
+"Or from within calibre by right-clicking the :guilabel:`Preferences` button "
+"or using the `Ctrl+Shift+R` keyboard shortcut."
+msgstr "Ou dans calibre en faisant un clic droit sur le bouton :guilabel:`Préférences` ou en utilisant le raccourci clavier `Ctrl+Shift+R`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
@@ -518,10 +519,10 @@ msgstr "Lors de l'exécution en ligne de commande, la sortie de dépannage sera 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
-"output in debug mode. Remember, this is python, you really shouldn't need "
+"output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr "Vous pouvez insérer des déclarations n'importe où dans votre code d'extension, elles seront reprises dans le mode dépannage. Rappelez-vous, ceci est python, vous ne devriez n'avoir vraiment  besoin de rien de plus que les déclarations pour corriger ;) j'ai développé entièrement calibre en utilisant juste cette technique d'élimination des imperfections."
+msgstr "Vous pouvez insérer des déclarations n'importe où dans votre code d'extension, elles seront reprises dans le mode dépannage. Rappelez-vous, ceci est du Python, vous ne devriez n'avoir vraiment  besoin de rien de plus que les déclarations pour corriger ;) J'ai développé entièrement calibre en utilisant juste cette technique d'élimination des imperfections."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
 msgid ""

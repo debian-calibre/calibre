@@ -658,9 +658,7 @@ class FileList(QTreeWidget):
     def selectedIndexes(self):
         ans = QTreeWidget.selectedIndexes(self)
         if self.ordered_selected_indexes:
-            # The reverse is needed because Qt's implementation of dropEvent
-            # reverses the selectedIndexes when dropping.
-            ans = list(sorted(ans, key=lambda idx:idx.row(), reverse=True))
+            ans = list(sorted(ans, key=lambda idx:idx.row()))
         return ans
 
     def dropEvent(self, event):
@@ -741,7 +739,7 @@ class FileList(QTreeWidget):
         filters = [oext]
         fname = _('Files')
         if mt in OEB_DOCS:
-            fname = _('HTML Files')
+            fname = _('HTML files')
             filters = 'html htm xhtm xhtml shtml'.split()
         elif is_raster_image(mt):
             fname = _('Images')

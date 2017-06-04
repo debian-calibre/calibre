@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/mobi_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -73,16 +72,16 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_no_inline_toc.setText(_("Do not add Table of Contents to book"))
+        self.opt_no_inline_toc.setText(_("Do not add &Table of Contents to book"))
         self.label.setText(_("&Title for Table of Contents:"))
         self.opt_mobi_toc_at_start.setText(_("Put generated Table of Contents at &start of book instead of end"))
         self.opt_mobi_ignore_margins.setText(_("Ignore &margins"))
         self.opt_prefer_author_sort.setText(_("Use author &sort for author"))
         self.opt_mobi_keep_original_images.setText(_("Do not convert all images to &JPEG (may result in images not working in older viewers)"))
-        self.opt_dont_compress.setText(_("Disable compression of the file contents"))
+        self.opt_dont_compress.setText(_("Disable &compression of the file contents"))
         self.groupBox.setTitle(_("Kindle options"))
         self.label_2.setText(_("MOBI file &type:"))
         self.label_3.setText(_("Personal Doc tag:"))
-        self.opt_share_not_sync.setText(_("Enable sharing of book content via Facebook, etc. WARNING: Disables last read syncing"))
+        self.opt_share_not_sync.setText(_("Enable &sharing of book content via Facebook, etc. WARNING: Disables last read syncing"))
         self.label_4.setText(_("<b>WARNING:</b> Various Kindle devices have trouble displaying the new or both MOBI filetypes. If you wish to use the new format on your device, convert to AZW3 instead of MOBI."))
 

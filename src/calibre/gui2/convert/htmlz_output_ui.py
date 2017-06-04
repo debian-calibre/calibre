@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/htmlz_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,7 +40,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label.setText(_("How to handle CSS"))
-        self.label_2.setText(_("How to handle class based CSS"))
+        self.label.setText(_("How to handle &CSS"))
+        self.label_2.setText(_("How to handle class &based CSS"))
         self.opt_htmlz_title_filename.setText(_("Use book &title as the filename for the HTML file inside the archive"))
 

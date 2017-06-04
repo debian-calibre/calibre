@@ -353,7 +353,7 @@ class TagsView(QTreeView):  # {{{
             if action == 'set_icon':
                 try:
                     path = choose_files(self, 'choose_category_icon',
-                                _('Change Icon for: %s')%key, filters=[
+                                _('Change icon for: %s')%key, filters=[
                                 ('Images', ['png', 'gif', 'jpg', 'jpeg'])],
                             all_files=False, select_only_single_file=True)
                     if path:
@@ -634,7 +634,7 @@ class TagsView(QTreeView):  # {{{
                     self.context_menu.addAction(_('Manage %s')%category,
                             partial(self.context_menu_handler, action='edit_author_sort'))
                 elif key == 'search':
-                    self.context_menu.addAction(_('Manage Saved Searches'),
+                    self.context_menu.addAction(_('Manage Saved searches'),
                         partial(self.context_menu_handler, action='manage_searches',
                                 category=tag.name if tag else None))
 

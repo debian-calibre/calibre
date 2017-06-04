@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/filename_pattern.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -59,6 +59,7 @@ class Ui_Form(object):
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 301, 284))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.label_3 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.label_3.setObjectName("label_3")
@@ -129,7 +130,7 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.help_label.setText(_("<div style=\"font-size:10pt;\">\n"
-"<p>Set a regular expression pattern to use when trying to guess ebook metadata from filenames. </p>\n"
+"<p>Set a regular expression pattern to use when trying to guess e-book metadata from filenames. </p>\n"
 "<p>A <a href=\"%s\">tutorial</a> on using regular expressions is available.</p>\n"
 "<p>Use the <b>Test</b> functionality below to test your regular expression on a few sample filenames (remember to include the file extension). The group names for the various metadata entries are documented in tooltips. Note that underscores in filenames are auto-replaced by spaces.</p></div>"))
         self.groupBox.setTitle(_("Regular &expression"))

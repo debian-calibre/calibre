@@ -80,11 +80,11 @@ class MetadataSingleDialogBase(QDialog):
         self.button_box = bb = QDialogButtonBox(self)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-        self.next_button = QPushButton(QIcon(I('forward.png')), _('Next'),
+        self.next_button = QPushButton(QIcon(I('forward.png')), _('&Next'),
                 self)
         self.next_button.setShortcut(QKeySequence('Alt+Right'))
         self.next_button.clicked.connect(self.next_clicked)
-        self.prev_button = QPushButton(QIcon(I('back.png')), _('Previous'),
+        self.prev_button = QPushButton(QIcon(I('back.png')), _('&Previous'),
                 self)
         self.prev_button.setShortcut(QKeySequence('Alt+Left'))
 
@@ -589,8 +589,8 @@ class MetadataSingleDialogBase(QDialog):
                           'There are still {} more books to edit in this set.', num).format(num)
             if not question_dialog(
                     self, _('Are you sure?'), pm + _(
-                      ' Are you sure you want to stop? Use the Next button'
-                      ' instead of the OK button to move through books in the set.'),
+                      ' Are you sure you want to stop? Use the "Next" button'
+                      ' instead of the "OK" button to move through books in the set.'),
                     yes_text=_('&Stop editing'), no_text=_('&Continue editing'),
                     yes_icon='dot_red.png', no_icon='dot_green.png',
                     default_yes=False, skip_dialog_name='edit-metadata-single-confirm-ok-on-multiple'):

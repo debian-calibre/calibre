@@ -108,7 +108,6 @@ def create_defs():
     defs['tags_browser_collapse_at'] = 100
     defs['tag_browser_dont_collapse'] = []
     defs['edit_metadata_single_layout'] = 'default'
-    defs['default_author_link'] = 'https://en.wikipedia.org/w/index.php?search={author}'
     defs['preserve_date_on_ctl'] = True
     defs['manual_add_auto_convert'] = False
     defs['auto_convert_same_fmt'] = False
@@ -182,14 +181,14 @@ def _config():  # {{{
     c.add_opt('LRF_conversion_defaults', default=[],
               help=_('Defaults for conversion to LRF'))
     c.add_opt('LRF_ebook_viewer_options', default=None,
-              help=_('Options for the LRF ebook viewer'))
+              help=_('Options for the LRF e-book viewer'))
     c.add_opt('internally_viewed_formats', default=['LRF', 'EPUB', 'LIT',
         'MOBI', 'PRC', 'POBI', 'AZW', 'AZW3', 'HTML', 'FB2', 'PDB', 'RB',
         'SNB', 'HTMLZ', 'KEPUB'], help=_(
             'Formats that are viewed using the internal viewer'))
     c.add_opt('column_map', default=ALL_COLUMNS,
               help=_('Columns to be displayed in the book list'))
-    c.add_opt('autolaunch_server', default=False, help=_('Automatically launch content server on application startup'))
+    c.add_opt('autolaunch_server', default=False, help=_('Automatically launch Content server on application startup'))
     c.add_opt('oldest_news', default=60, help=_('Oldest news kept in database'))
     c.add_opt('systray_icon', default=False, help=_('Show system tray icon'))
     c.add_opt('upload_news_to_device', default=True,
@@ -201,7 +200,7 @@ def _config():  # {{{
     c.add_opt('disable_tray_notification', default=False,
               help=_('Disable notifications from the system tray icon'))
     c.add_opt('default_send_to_device_action', default=None,
-            help=_('Default action to perform when send to device button is '
+            help=_('Default action to perform when the "Send to device" button is '
                 'clicked'))
     c.add_opt('asked_library_thing_password', default=False,
             help='Asked library thing password at least once.')
@@ -219,9 +218,9 @@ def _config():  # {{{
     c.add_opt('main_search_history', default=[],
         help='Search history for the main GUI')
     c.add_opt('viewer_search_history', default=[],
-        help='Search history for the ebook viewer')
+        help='Search history for the e-book viewer')
     c.add_opt('viewer_toc_search_history', default=[],
-        help='Search history for the ToC in the ebook viewer')
+        help='Search history for the ToC in the e-book viewer')
     c.add_opt('lrf_viewer_search_history', default=[],
         help='Search history for the LRF viewer')
     c.add_opt('scheduler_search_history', default=[],
@@ -248,10 +247,10 @@ def _config():  # {{{
             help=_('Limit max simultaneous jobs to number of CPUs'))
     c.add_opt('gui_layout', choices=['wide', 'narrow'],
             help=_('The layout of the user interface. Wide has the '
-                'book details panel on the right and narrow has '
+                'Book details panel on the right and narrow has '
                 'it at the bottom.'), default='wide')
     c.add_opt('show_avg_rating', default=True,
-            help=_('Show the average rating per item indication in the tag browser'))
+            help=_('Show the average rating per item indication in the Tag browser'))
     c.add_opt('disable_animations', default=False,
             help=_('Disable UI animations'))
 
@@ -271,6 +270,15 @@ config = _config()
 QSettings.setPath(QSettings.IniFormat, QSettings.UserScope, config_dir)
 QSettings.setPath(QSettings.IniFormat, QSettings.SystemScope, config_dir)
 QSettings.setDefaultFormat(QSettings.IniFormat)
+
+
+def default_author_link():
+    from calibre.ebooks.metadata.book.render import DEFAULT_AUTHOR_LINK
+    ans = gprefs.get('default_author_link')
+    if ans == 'https://en.wikipedia.org/w/index.php?search={author}':
+        # The old default value for this setting
+        ans = DEFAULT_AUTHOR_LINK
+    return ans or DEFAULT_AUTHOR_LINK
 
 
 def available_heights():
@@ -403,7 +411,7 @@ def info_dialog(parent, title, msg, det_msg='', show=False,
 def show_restart_warning(msg, parent=None):
     d = warning_dialog(parent, _('Restart needed'), msg,
             show_copy_button=False)
-    b = d.bb.addButton(_('Restart calibre now'), d.bb.AcceptRole)
+    b = d.bb.addButton(_('&Restart calibre now'), d.bb.AcceptRole)
     b.setIcon(QIcon(I('lt.png')))
     d.do_restart = False
 
@@ -903,7 +911,7 @@ def load_builtin_fonts():
 def setup_gui_option_parser(parser):
     if islinux:
         parser.add_option('--detach', default=False, action='store_true',
-                          help=_('Detach from the controlling terminal, if any (linux only)'))
+                          help=_('Detach from the controlling terminal, if any (Linux only)'))
 
 
 def show_temp_dir_error(err):

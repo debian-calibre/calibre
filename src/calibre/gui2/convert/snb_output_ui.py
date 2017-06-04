@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/snb_output.ui'
 #
-# Created: Wed Nov  5 09:01:06 2014
-#      by: PyQt5 UI code generator 5.3.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -36,8 +35,8 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_snb_hide_chapter_name.setText(_("Hide chapter name"))
-        self.opt_snb_dont_indent_first_line.setText(_("Don\'t indent the first line for each paragraph"))
-        self.opt_snb_insert_empty_line.setText(_("Insert empty line between paragraphs"))
-        self.opt_snb_full_screen.setText(_("Optimize for full-sceen view "))
+        self.opt_snb_hide_chapter_name.setText(_("Hide &chapter name"))
+        self.opt_snb_dont_indent_first_line.setText(_("Don\'t indent the &first line for each paragraph"))
+        self.opt_snb_insert_empty_line.setText(_("Insert &empty line between paragraphs"))
+        self.opt_snb_full_screen.setText(_("Optimize for full-&screen view "))
 

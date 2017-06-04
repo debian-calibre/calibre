@@ -33,9 +33,8 @@ from calibre.gui2.tweak_book.function_replace import (
 from calibre.gui2.tweak_book.widgets import BusyCursor
 from calibre.gui2.widgets2 import FlowLayout, HistoryComboBox
 from calibre.utils.icu import primary_contains
+from calibre.ebooks.conversion.search_replace import REGEX_FLAGS, compile_regular_expression
 
-
-REGEX_FLAGS = regex.VERSION1 | regex.WORD | regex.FULLCASE | regex.MULTILINE | regex.UNICODE
 
 # The search panel {{{
 
@@ -138,7 +137,7 @@ class WhereBox(QComboBox):
             <dt><b>All style files</b></dt>
             <dd>Search in all style (CSS) files</dd>
             <dt><b>Selected files</b></dt>
-            <dd>Search in the files currently selected in the File Browser</dd>
+            <dd>Search in the files currently selected in the File browser</dd>
             <dt><b>Open files</b></dt>
             <dd>Search in the files currently open in the editor</dd>
             <dt><b>Marked text</b></dt>
@@ -203,7 +202,7 @@ class ModeBox(QComboBox):
 
     def __init__(self, parent):
         QComboBox.__init__(self, parent)
-        self.addItems([_('Normal'), _('Regex'), _('Regex-Function')])
+        self.addItems([_('Normal'), _('Regex'), _('Regex-function')])
         self.setToolTip('<style>dd {margin-bottom: 1.5ex}</style>' + _(
             '''Select how the search expression is interpreted
             <dl>
@@ -211,8 +210,8 @@ class ModeBox(QComboBox):
             <dd>The search expression is treated as normal text, calibre will look for the exact text.</dd>
             <dt><b>Regex</b></dt>
             <dd>The search expression is interpreted as a regular expression. See the User Manual for more help on using regular expressions.</dd>
-            <dt><b>Regex-Function</b></dt>
-            <dd>The search expression is interpreted as a regular expression. The replace expression is an arbitrarily powerful python function.</dd>
+            <dt><b>Regex-function</b></dt>
+            <dd>The search expression is interpreted as a regular expression. The replace expression is an arbitrarily powerful Python function.</dd>
             </dl>'''))
 
     @dynamic_property
@@ -452,9 +451,6 @@ class SearchWidget(QWidget):
         self.find_text.lineEdit().setSelection(0, len(text)+10)
 
 # }}}
-
-
-regex_cache = {}
 
 
 class SearchPanel(QWidget):  # {{{
@@ -1002,8 +998,8 @@ class SavedSearches(QWidget):
         self.eb2 = b = pb(_('E&xport'), _('Export saved searches'))
         v.addWidget(b)
         self.em = m = QMenu(_('Export'))
-        m.addAction(_('Export All'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=True)))
-        m.addAction(_('Export Selected'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=False)))
+        m.addAction(_('Export all'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=True)))
+        m.addAction(_('Export selected'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=False)))
         b.setMenu(m)
 
         self.searches.setFocus(Qt.OtherFocusReason)
@@ -1264,7 +1260,7 @@ def validate_search_request(name, searchable_names, has_marked_text, state, gui_
     if name is None and where in {'current', 'selected-text'}:
         err = _('No file is being edited.')
     elif where == 'selected' and not searchable_names['selected']:
-        err = _('No files are selected in the File Browser')
+        err = _('No files are selected in the File browser')
     elif where == 'selected-text' and not has_marked_text:
         err = _('No text is marked. First select some text, and then use'
                 ' The "Mark selected text" action in the Search menu to mark it.')
@@ -1295,12 +1291,10 @@ def get_search_regex(state):
         flags |= regex.DOTALL
     if state['direction'] == 'up':
         flags |= regex.REVERSE
-    ans = regex_cache.get((flags, raw), None)
-    if ans is None:
-        try:
-            ans = regex_cache[(flags, raw)] = regex.compile(raw, flags=flags)
-        except regex.error as e:
-            raise InvalidRegex(raw, e)
+    try:
+        ans = compile_regular_expression(raw, flags=flags)
+    except regex.error as e:
+        raise InvalidRegex(raw, e)
 
     return ans
 
@@ -1439,7 +1433,7 @@ def run_search(
             prefix += ' '
         error_dialog(
             gui_parent, _('Cannot replace'), prefix + _(
-            'You must first click Find, before trying to replace'), show=True)
+            'You must first click "Find", before trying to replace'), show=True)
         return False
 
     def do_replace():

@@ -11,9 +11,9 @@ from calibre.customize import Plugin
 class DevicePlugin(Plugin):
     """
     Defines the interface that should be implemented by backends that
-    communicate with an ebook reader.
+    communicate with an e-book reader.
     """
-    type = _('Device Interface')
+    type = _('Device interface')
 
     #: Ordered list of supported formats
     FORMATS     = ["lrf", "rtf", "pdf", "txt"]
@@ -230,7 +230,7 @@ class DevicePlugin(Plugin):
         is capable of handling it. If it is not it should return False. This method
         is only called after the vendor, product ids and the bcd have matched, so
         it can do some relatively time intensive checks. The default implementation
-        returns True. This method is called only on windows. See also
+        returns True. This method is called only on Windows. See also
         :meth:`can_handle`.
 
         Note that for devices based on USBMS this method by default delegates
@@ -371,10 +371,10 @@ class DevicePlugin(Plugin):
 
     def books(self, oncard=None, end_session=True):
         """
-        Return a list of ebooks on the device.
+        Return a list of e-books on the device.
 
-        :param oncard:  If 'carda' or 'cardb' return a list of ebooks on the
-                        specific storage card, otherwise return list of ebooks
+        :param oncard:  If 'carda' or 'cardb' return a list of e-books on the
+                        specific storage card, otherwise return list of e-books
                         in main memory of device. If a card is specified and no
                         books are on the card return empty list.
 

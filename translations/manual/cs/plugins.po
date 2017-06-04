@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 09:38+0530\n"
-"PO-Revision-Date: 2017-03-21 03:53+0000\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 06:01+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:4
-msgid "API Documentation for plugins"
-msgstr "Dokumentace API pro doplňky"
+msgid "API documentation for plugins"
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:9
 msgid ""
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
-msgid "``self.plugin_path``: Stores path to the zip file that contains"
+msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -125,7 +125,7 @@ msgstr "Autor doplňku"
 #: calibre.customize.Plugin.priority:1
 msgid ""
 "When more than one plugin exists for a filetype, the plugins are run in "
-"order of decreasing priority i.e. plugins with higher priority will be run "
+"order of decreasing priority. Plugins with higher priority will be run "
 "first. The highest possible priority is ``sys.maxint``. Default priority is "
 "1."
 msgstr ""
@@ -159,7 +159,7 @@ msgstr ""
 #: calibre.customize.Plugin.initialize:6
 msgid ""
 "Perform any plugin specific initialization here, such as extracting "
-"resources from the plugin zip file. The path to the zip file is available as"
+"resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 #: calibre.customize.Plugin.load_resources:10
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:10
-msgid "List of paths to resources in the zip file using / as separator"
+msgid "List of paths to resources in the ZIP file using / as separator"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -337,7 +337,7 @@ msgstr ""
 #: calibre.customize.Plugin.load_resources:12
 msgid ""
 "A dictionary of the form ``{name: file_contents}``. Any names that were not "
-"found in the zip file will not be present in the dictionary."
+"found in the ZIP file will not be present in the dictionary."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -459,29 +459,29 @@ msgstr ""
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
-"whatever modifications are required on the ebook and return the absolute "
-"path to the modified ebook. If no modifications are needed, it should return"
-" the path to the original ebook. If an error is encountered it should raise "
-"an Exception. The default implementation simply return the path to the "
-"original ebook. Note that the path to the original file (before any file "
-"type plugins are run, is available as self.original_path_to_file)."
+"whatever modifications are required on the e-book and return the absolute "
+"path to the modified e-book. If no modifications are needed, it should "
+"return the path to the original e-book. If an error is encountered it should"
+" raise an Exception. The default implementation simply return the path to "
+"the original e-book. Note that the path to the original file (before any "
+"file type plugins are run, is available as self.original_path_to_file)."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:11
 msgid ""
-"The modified ebook file should be created with the :meth:`temporary_file` "
+"The modified e-book file should be created with the :meth:`temporary_file` "
 "method."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:14
-msgid "Absolute path to the ebook."
+msgid "Absolute path to the e-book."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:16
-msgid "Absolute path to the modified ebook."
+msgid "Absolute path to the modified e-book."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -552,7 +552,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin.file_types:1
 msgid ""
-"Set of file types for which this plugin should be run For example: "
+"Set of file types for which this plugin should be run. For example: "
 "``set(['lit', 'mobi', 'prc'])``"
 msgstr ""
 
@@ -599,8 +599,8 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.file_types:1
 msgid ""
-"Output file type for which this plugin should be run For example: 'epub' or "
-"'xml'"
+"Output file type for which this plugin should be run. For example: 'epub' or"
+" 'xml'"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -613,7 +613,7 @@ msgstr ""
 #: calibre.customize.CatalogPlugin.initialize:1
 msgid ""
 "If plugin is not a built-in, copy the plugin's .ui and .py files from the "
-"zip file to $TMPDIR. Tab will be dynamically generated and added to the "
+"ZIP file to $TMPDIR. Tab will be dynamically generated and added to the "
 "Catalog Options dialog in calibre.gui2.dialogs.catalog.py:Catalog"
 msgstr ""
 
@@ -1159,7 +1159,7 @@ msgstr ""
 #: of calibre.customize.conversion.OutputFormatPlugin:1
 msgid ""
 "OutputFormatPlugins are responsible for converting an OEB document "
-"(OPF+HTML) into an output ebook."
+"(OPF+HTML) into an output e-book."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
@@ -1240,7 +1240,7 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:91
-msgid "Device Drivers"
+msgid "Device drivers"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:95
@@ -1255,7 +1255,7 @@ msgstr ""
 #: calibre.devices.interface.DevicePlugin:1
 msgid ""
 "Defines the interface that should be implemented by backends that "
-"communicate with an ebook reader."
+"communicate with an e-book reader."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
@@ -1486,7 +1486,7 @@ msgid ""
 "is capable of handling it. If it is not it should return False. This method "
 "is only called after the vendor, product ids and the bcd have matched, so it"
 " can do some relatively time intensive checks. The default implementation "
-"returns True. This method is called only on windows. See also "
+"returns True. This method is called only on Windows. See also "
 ":meth:`can_handle`."
 msgstr ""
 
@@ -1659,14 +1659,14 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:1
-msgid "Return a list of ebooks on the device."
+msgid "Return a list of e-books on the device."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:3
 msgid ""
-"If 'carda' or 'cardb' return a list of ebooks on the specific storage card, "
-"otherwise return list of ebooks in main memory of device. If a card is "
+"If 'carda' or 'cardb' return a list of e-books on the specific storage card,"
+" otherwise return list of e-books in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
 msgstr ""
 
@@ -2263,7 +2263,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:7
-msgid "The full path to the ebook file"
+msgid "The full path to the e-book file"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
@@ -2277,7 +2277,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:157
 msgid ""
-"If you are adding your own plugin in a zip file, you should subclass both "
+"If you are adding your own plugin in a ZIP file, you should subclass both "
 "InterfaceActionBase and InterfaceAction. The :meth:`load_actual_plugin` "
 "method of your InterfaceActionBase subclass must return an instantiated "
 "object of your InterfaceBase subclass."
@@ -2507,7 +2507,7 @@ msgstr ""
 #: of calibre.gui2.actions.InterfaceAction.load_resources:12
 msgid ""
 "A dictionary of the form ``{name : file_contents}``. Any names that were not"
-" found in the zip file will not be present in the dictionary."
+" found in the ZIP file will not be present in the dictionary."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
@@ -2577,7 +2577,7 @@ msgid "This method must return the actual interface action plugin object."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:172
-msgid "Preferences Plugins"
+msgid "Preferences plugins"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
@@ -2676,7 +2676,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
-msgid "The tooltip for the Restore to defaults button"
+msgid "The tooltip for the \"Restore defaults\" button"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
@@ -2794,7 +2794,8 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.type:1
-msgid "These plugins are used to add functionality to the calibre viewer."
+msgid ""
+"These plugins are used to add functionality to the calibre E-book viewer."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of

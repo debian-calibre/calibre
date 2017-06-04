@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-12 07:41+0530\n"
-"PO-Revision-Date: 2017-02-10 03:12+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-05-10 08:55+0530\n"
+"PO-Revision-Date: 2017-05-07 10:34+0000\n"
+"Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,9 +63,9 @@ msgid ""
 "Similarly, adding support for new conversion formats involves writing "
 "input/output format plugins. Another example of the modular design is the "
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
-"designed to add features to calibre, see the `plugin index "
+"designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr "La conception modulaire de calibre est exprimée par l'intermédiaire des ``Extensions``. Il y a un :ref:`tutoriel <customize>` sur l'écriture d'extensions calibre. Par exemple, ajouter le support d'un nouveau dispositif à calibre implique typiquement d'écrire moins de 100 lignes de code sous forme d'une extension pilote de périphérique. Vous pouvez parcourir les `pilotes intégrés <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. Similairement, ajouter le support pour de nouveaux formats de conversion implique l'écriture de nouvelles extensions de format entrée/sortie. Un autre exemple de la conception modulaire est le :ref:`système de recette <news>` pour récupérer des actualités. Pour plus d'exemples d'extensions conçues pour pour ajouter des fonctionnalités à calibre, voir l'`index des extensions <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
+msgstr "La conception modulaire de calibre est exprimée par l'intermédiaire des ``Extensions``. Il y a un :ref:`tutoriel <customize>` sur l'écriture d'extensions calibre. Par exemple, ajouter le support d'un nouveau dispositif à calibre implique typiquement d'écrire moins de 100 lignes de code sous forme d'une extension pilote de périphérique. Vous pouvez parcourir les `pilotes intégrés <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. Similairement, ajouter le support pour de nouveaux formats de conversion implique l'écriture de nouvelles extensions de format entrée/sortie. Un autre exemple de la conception modulaire est le :ref:`système de recette <news>` pour récupérer des actualités. Pour plus d'exemples d'extensions conçues pour ajouter des fonctionnalités à calibre, voir l'`Index des extensions <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -93,8 +93,8 @@ msgstr "Pour plus de détails, voir : ``devices.interface`` qui définit l'inter
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:43
 msgid ""
-"ebooks  - All the ebook conversion/metadata code. A good starting point is "
-"``calibre.ebooks.conversion.cli`` which is the module powering the :command"
+"e-books  - All the e-book conversion/metadata code. A good starting point is"
+" ``calibre.ebooks.conversion.cli`` which is the module powering the :command"
 ":`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
@@ -111,17 +111,17 @@ msgid ""
 ":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
 "various transforms and an output plugin. The code that constructs and drives"
 " the pipeline is in :file:`plumber.py`. The pipeline works on a "
-"representation of an ebook that is like an unzipped epub, with manifest, "
+"representation of an e-book that is like an unzipped epub, with manifest, "
 "spine, toc, guide, html content, etc. The class that manages this "
 "representation is OEBBook in ``ebooks.oeb.base``. The various "
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr "La conversion se produit dans un pipeline, pour la structure du pipeline, voir :ref:`conversion-introduction`. Le pipeline consiste en une extension d'entrée, différentes transformations et une extension de sortie. Le code qui construit et pilote le pipeline est dans :file:`plumber.py`. Le pipeline fonctionne sur une représentation d'un livre numérique qui est comme epub décompressé, avec le manifeste, la structure organisationnelle, la TdM, le guide, le contenu html, etc. La classe qui gère cette représentation est OEBBook dans ``ebooks.oeb.base``. Les diverses transformations qui sont appliquées au livre durant la conversion se situent dans :file:`oeb/transforms/*.py`. Et les extensions d'origines et de sortie se situent dans :file:`conversion/plugins/*.py`."
+msgstr "La conversion se produit dans un pipeline, pour la structure du pipeline, voir :ref:`conversion-introduction`. Le pipeline consiste en une extension d'entrée, différentes transformations et une extension de sortie. Le code qui construit et pilote le pipeline est dans :file:`plumber.py`. Le pipeline fonctionne sur une représentation d'un livre numérique qui est comme un epub décompressé, avec le manifeste, la structure organisationnelle, la TdM, le guide, le contenu html, etc. La classe qui gère cette représentation est OEBBook dans ``ebooks.oeb.base``. Les diverses transformations qui sont appliquées au livre durant la conversion se situent dans :file:`oeb/transforms/*.py`. Et les extensions d'origines et de sortie se situent dans :file:`conversion/plugins/*.py`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:58
 msgid ""
-"Ebook editing happens using a different container object. It is documented "
+"E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
 msgstr "L'édition de livre numérique se produit en utilisant un objet conteneur différent. Il est documenté dans :ref:`polish_api`."
 
@@ -132,14 +132,14 @@ msgid ""
 msgstr "db - Le back-end de la base de données. Voir :ref:`db_api` pour l'interface à la bibliothèque calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:63
-msgid "content server: ``library.server`` is the calibre Content Server."
-msgstr "serveur de contenu : ``library.server`` est le Serveur de Contenu calibre."
+msgid "Content server: ``library.server`` is the calibre Content server."
+msgstr "serveur de contenu : ``library.server`` est le Serveur de contenu calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
-"``gui2.main`` and ``gui2.ui``. The ebook-viewer is in ``gui2.viewer``. The "
-"ebook editor is in ``gui2.tweak_book``."
+"``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
+"e-book editor is in ``gui2.tweak_book``."
 msgstr "gui2 - L'Interface Graphique Utilisateur. L'initialisation du GUI se produit dans ``gui2.main`` et ``gui2.ui``. La visionneuse de livre numérique dans ``gui2.viewer``. L'éditeur de livre numérique dans ``gui2.tweak_book``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:67
@@ -497,22 +497,22 @@ msgid ""
 msgstr "C'est la manière favorite de Kovid pour dépanner. Insérez simplement des déclarations d'impression aux points d'intérêt et exécuter votre programme dans le terminal. Par exemple : vous pouvez démarrer le GUI à partir du terminal comme::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:289
-msgid "Similarly, you can start the ebook-viewer as::"
+msgid "Similarly, you can start the e-book-viewer as::"
 msgstr "Similairement, vous pouvez démarrer la visionneuse de livre numérique comme::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:293
-msgid "The ebook-editor can be started as::"
+msgid "The e-book-editor can be started as::"
 msgstr "L'éditeur de livre numérique peut être démarré comme::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:298
-msgid "Using an interactive python interpreter"
-msgstr "Utilisation d'un interpréte python interactif"
+msgid "Using an interactive Python interpreter"
+msgstr "Utilisation d'un interpréte Python interactif"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:300
 msgid ""
 "You can insert the following two lines of code to start an interactive "
-"python session at that point::"
-msgstr "Vous pouvez insérer les deux lignes de code suivantes pour démarrer la session interactive python à cet endroit::"
+"Python session at that point::"
+msgstr "Vous pouvez insérer les deux lignes de code suivantes pour démarrer la session interactive Python à cet endroit::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:305
 msgid ""
@@ -524,15 +524,15 @@ msgid ""
 msgstr "Lors de l'exécution à partir de la ligne de commande, cela démarrera l'interpréteur python interactif avec accès à toutes les variables définies localement (variables dans la portée locale). L'invite interactive a même une complétion TAB pour les propriétés d'objet et vous pouvez utiliser les diverses facilités Python pour l'introspection, telles que :func:`dir`, :func:`type`, :func:`repr`, etc."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:311
-msgid "Using the python debugger as a remote debugger"
-msgstr "Utiliser le débogueur de python comme débogueur à distance"
+msgid "Using the Python debugger as a remote debugger"
+msgstr "Utiliser le débogueur de Python comme débogueur à distance"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:313
 msgid ""
-"You can use the builtin python debugger (pdb) as a remote debugger from the "
+"You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
-msgstr "Vous pouvez utiliser le débogueur intégré de python (pdb) comme débogueur à distance à partir de la ligne de commande. D'abord, démarrez le débogueur à distance au point qui vous intéresse dans le code de calibre, comme ceci::"
+msgstr "Vous pouvez utiliser le débogueur intégré de Python (pdb) comme débogueur à distance en ligne de commande. D'abord, démarrez le débogueur à distance au point qui vous intéresse dans le code de calibre, comme ceci::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:320
 msgid ""
@@ -549,10 +549,10 @@ msgstr "Ouvrez maintenant un terminal ou une invite de commande et utilisez la c
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:329
 msgid ""
-"You can read about how to use the python debugger in the `python stdlib docs"
+"You can read about how to use the Python debugger in the `Python stdlib docs"
 " for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-"
 "commands>`_."
-msgstr "Vous pouvez lire à propose de comment utiliser le débogueur python dans le `python stdlib docs for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
+msgstr "Vous pouvez lire à propos de comment utiliser le débogueur Python dans `Python stdlib docs for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:333
 msgid ""
@@ -564,22 +564,22 @@ msgstr "Par défaut, le débogueur à distance essaiera de se connecter sur le p
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:339
 msgid ""
-"The python debugger cannot handle multiple threads, so you have to call "
+"The Python debugger cannot handle multiple threads, so you have to call "
 "set_trace once per thread, each time with a different port number."
-msgstr "Le débogueur de python ne peut pas manipuler des fils multiples, aussi vous devez appeler le set_trace une fois par fil, chaque fois avec un numéro de port différent."
+msgstr "Le débogueur de Python ne peut pas manipuler des fils multiples, aussi vous devez appeler le set_trace une fois par fil, chaque fois avec un numéro de port différent."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:343
-msgid "Using the debugger in your favorite python IDE"
-msgstr "Utiliser le débogueur dans votre IDE python préféré"
+msgid "Using the debugger in your favorite Python IDE"
+msgstr "Utiliser le débogueur dans votre IDE Python préféré"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:345
 msgid ""
-"It is possible to use the builtin debugger in your favorite python IDE, if "
+"It is possible to use the builtin debugger in your favorite Python IDE, if "
 "it supports remote debugging. The first step is to add the calibre src "
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the directory "
 "you set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the "
 "``PYTHONPATH`` of your IDE."
-msgstr "Il est possible d'utiliser le débogueur intégré dans votre IDE python préféré, s'il supporte le débogage à distance. La première étape est d'ajouter la src vérifiée calibre au ``PYTHONPATH`` dans votre IDE. En d'autres mots, le répertoire que vous avec paramétré plus haut comme ``CALIBRE_DEVELOP_FROM``, doit aussi être dans le ``PYTHONPATH`` de votre IDE."
+msgstr "Il est possible d'utiliser le débogueur intégré dans votre IDE Python préféré, s'il supporte le débogage à distance. La première étape est d'ajouter la src vérifiée calibre au ``PYTHONPATH`` dans votre IDE. En d'autres mots, le répertoire que vous avec paramétré plus haut comme ``CALIBRE_DEVELOP_FROM``, doit aussi être dans le ``PYTHONPATH`` de votre IDE."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:350
 msgid ""
@@ -591,8 +591,8 @@ msgid ""
 msgstr "Placez alors me module IDE de débogage à distance dans le sous-répertoire :file:`src` du code source vérifié calibre. Ajoutez ni'importe quel nécessaire pour lancer le débogueur à distance sur calibre au point d'intérêt, par exemple dans la fonction principale. Exécutez alors calibre comme normalement. Votre IDE devrait être capable de se connecter au débogueur à distance s'exécutant dans calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:357
-msgid "Executing arbitrary scripts in the calibre python environment"
-msgstr "Exécuter des scripts quelconques dans l'environnement python calibre"
+msgid "Executing arbitrary scripts in the calibre Python environment"
+msgstr "Exécuter des scripts quelconques dans l'environnement Python calibre"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:359
 msgid ""
@@ -603,8 +603,8 @@ msgstr "La commande :command:`calibre-debug` fournit quelques commutateurs prati
 #: ../../home/kovid/work/calibre/manual/develop.rst:364
 msgid ""
 "is great for testing a little snippet of code on the command line. It works "
-"in the same way as the -c switch to the python interpreter::"
-msgstr "est bien pour examiner un petit extrait de code sur la ligne de commande. Cela fonctionne de la même manière que le commutateur -c de l’interpréteur de python::"
+"in the same way as the -c switch to the Python interpreter::"
+msgstr "est bien pour examiner un petit extrait de code sur la ligne de commande. Cela fonctionne de la même manière que le commutateur -c de l’interpréteur Python::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:368
 msgid ""

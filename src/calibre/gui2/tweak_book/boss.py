@@ -252,7 +252,7 @@ class Boss(QObject):
 
     def open_book(self, path=None, edit_file=None, clear_notify_data=True, open_folder=False):
         '''
-        Open the ebook at ``path`` for editing. Will show an error if the ebook is not in a supported format or the current book has unsaved changes.
+        Open the e-book at ``path`` for editing. Will show an error if the e-book is not in a supported format or the current book has unsaved changes.
 
         :param edit_file: The name of a file inside the newly opened book to start editing. Can also be a list of names.
         '''
@@ -316,7 +316,7 @@ class Boss(QObject):
                     ' Do an EPUB to EPUB conversion before trying to edit this book.'), show=True)
 
             return error_dialog(self.gui, _('Failed to open book'),
-                    _('Failed to open book, click Show details for more information.'),
+                    _('Failed to open book, click "Show details" for more information.'),
                                 det_msg=job.traceback, show=True)
         if cn:
             self.save_manager.clear_notify_data()
@@ -661,7 +661,7 @@ class Boss(QObject):
                 _('The name you have chosen {0} contains special characters, internally'
                   ' it will look like: {1}Try to use only the English alphabet [a-z], numbers [0-9],'
                   ' hyphens and underscores for file names. Other characters can cause problems for '
-                  ' different ebook viewers. Are you sure you want to proceed?').format(
+                  ' different e-book viewers. Are you sure you want to proceed?').format(
                       '<pre>%s</pre>'%newname, '<pre>%s</pre>' % urlnormalize(newname)),
                 'confirm-urlunsafe-change', parent=self.gui, title=_('Are you sure?'), config_set=tprefs):
                 return
@@ -1141,9 +1141,9 @@ class Boss(QObject):
             self.abort_terminal_save()
         self.set_modified()
         error_dialog(self.gui, _('Could not save'),
-                     _('Saving of the book failed. Click "Show Details"'
+                     _('Saving of the book failed. Click "Show details"'
                        ' for more information. You can try to save a copy'
-                       ' to a different location, via File->Save a Copy'), det_msg=tb, show=True)
+                       ' to a different location, via File->Save a copy'), det_msg=tb, show=True)
 
     def go_to_line_number(self):
         ed = self.gui.central.current_editor
