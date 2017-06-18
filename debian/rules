@@ -88,20 +88,6 @@ get-orig-source:
 	mkdir -p debian/orig; cd debian/orig; \
 	wget -O - http://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
 	\
-	wget -O - https://github.com/ehynds/jquery-ui-multiselect-widget/archive/1.5.tar.gz | tar zx; \
-	\
-	cp jquery-ui-multiselect-widget-1.5/src/jquery.multiselect.js `ls -d calibre*`/resources/content_server/; \
-	rm -rf 1.5.tar.gz jquery-ui-multiselect-widget-1.5; \
-	\
-	wget https://jqueryui.com/resources/download/jquery-ui-1.8.5.zip && unzip jquery-ui-1.8.5.zip; \
-	cp jquery-ui-1.8.5/ui/jquery-ui.js `ls -d calibre*`/resources/content_server/jquery_ui/js/jquery-ui-1.8.5.custom.js.orig; \
-	rm -rf jquery-ui-1.8.5; \
-	rm jquery-ui-1.8.5.zip; \
-	\
-	wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/datejs/Datejs-all-Alpha1.zip; unzip Datejs-all-Alpha1.zip; \
-	(cd Datejs-all*/src; cat globalization/en-US.js core-debug.js sugarpak-debug.js parser-debug.js) > `ls -d calibre*`/resources/content_server/date.js.orig; \
-	rm -rf Datejs-all*; \
-	\
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
 	rm -rf calibre*/src/unrar; \
 	rm -rf calibre*/resources/viewer/mathjax; \
