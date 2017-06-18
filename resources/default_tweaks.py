@@ -185,8 +185,10 @@ gui_last_modified_display_format = 'dd MMM yyyy'
 # book will sort under 'T'.
 # This flag affects calibre's library display. It has no effect on devices. In
 # addition, titles for books added before changing the flag will retain their
-# order until the title is edited. Double-clicking on a title and hitting return
-# without changing anything is sufficient to change the sort.
+# order until the title is edited. Editing a title and hitting return
+# without changing anything is sufficient to change the sort. Or you can use
+# the 'Update title sort' action in the Bulk metadata edit dialog to update
+# it for many books at once.
 title_series_sorting = 'library_order'
 
 #: Control formatting of title and series when used in templates
@@ -350,10 +352,9 @@ sony_collection_sorting_rules = []
 # a book' are added when copying books to another library
 add_new_book_tags_when_importing_books = False
 
-#: Set the maximum number of tags to show per book in the Content server
-max_content_server_tags_shown=5
-
 #: Set custom metadata fields that the Content server will or will not display.
+# Controls what fields are displayed when clicking the "Search" button in the
+# browser to search your calibre library.
 # content_server_will_display is a list of custom fields to be displayed.
 # content_server_wont_display is a list of custom fields not to be displayed.
 # wont_display has priority over will_display.
@@ -457,14 +458,6 @@ maximum_cover_size = (1650, 2200)
 # the files will be sent to the location with the most free space.
 send_news_to_device_location = "main"
 
-#: What interfaces should the Content server listen on
-# By default, the calibre Content server listens on '0.0.0.0' which means that it
-# accepts IPv4 connections on all interfaces. You can change this to, for
-# example, '127.0.0.1' to only listen for connections from the local machine, or
-# to '::' to listen to all incoming IPv6 and IPv4 connections (this may not
-# work on all operating systems)
-server_listen_on = '0.0.0.0'
-
 #: Unified toolbar on OS X
 # If you enable this option and restart calibre, the toolbar will be 'unified'
 # with the titlebar as is normal for OS X applications. However, doing this has
@@ -493,16 +486,6 @@ gui_view_history_size = 15
 # comments are rendered in the metadata edit dialog. Set it to a positive or
 # negative number to increase or decrease the font size.
 change_book_details_font_size_by = 0
-
-#: Compile general program mode templates to Python
-# Compiled general program mode templates are significantly faster than
-# interpreted templates. Setting this tweak to True causes calibre to compile
-# (in most cases) general program mode templates. Setting it to False causes
-# calibre to use the old behavior -- interpreting the templates. Set the tweak
-# to False if some compiled templates produce incorrect values.
-# Default:    compile_gpm_templates = True
-# No compile: compile_gpm_templates = False
-compile_gpm_templates = True
 
 #: What format to default to when using the "Unpack book" feature
 # The "Unpack book" feature of calibre allows direct editing of a book format.
@@ -542,17 +525,11 @@ completion_mode = 'prefix'
 numeric_collation = False
 
 #: Sort the list of libraries alphabetically
-# The list of libraries in the Copy to Library and Quick Switch menus are
+# The list of libraries in the Copy to library and Quick switch menus are
 # normally sorted by most used. However, if there are more than a certain
 # number of such libraries, the sorting becomes alphabetic. You can set that
 # number here. The default is ten libraries.
 many_libraries = 10
-
-#: Highlight the virtual library name when using a Virtual library
-# The virtual library name next to the Virtual library button is highlighted in
-# yellow when using a Virtual library. You can choose the color used for the
-# highlight with this tweak. Set it to 'transparent' to disable highlighting.
-highlight_virtual_library = 'yellow'
 
 #: Choose available output formats for conversion
 # Restrict the list of available output formats in the conversion dialogs.
@@ -576,3 +553,9 @@ content_server_thumbnail_compression_quality = 75
 # Examples:
 #    cover_drop_exclude = {'tiff', 'webp'}
 cover_drop_exclude = ()
+
+#: Show the Saved searches box in the search bar
+# In newer version of calibre, only a button that allows you to add a new Saved
+# search is shown in the search bar. If you would like to have the old
+# Saved searches box with its two buttons back, set this tweak to True.
+show_saved_search_box = False

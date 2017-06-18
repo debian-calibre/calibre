@@ -357,13 +357,13 @@ class Main(MainWindow):
         group = _('Editor actions')
         self.action_editor_undo = reg('edit-undo.png', _('&Undo'), self.boss.do_editor_undo, 'editor-undo', 'Ctrl+Z',
                                       _('Undo typing'))
-        self.action_editor_redo = reg('edit-redo.png', _('&Redo'), self.boss.do_editor_redo, 'editor-redo', 'Ctrl+Y',
+        self.action_editor_redo = reg('edit-redo.png', _('R&edo'), self.boss.do_editor_redo, 'editor-redo', 'Ctrl+Y',
                                       _('Redo typing'))
-        self.action_editor_cut = reg('edit-cut.png', _('C&ut text'), self.boss.do_editor_cut, 'editor-cut', ('Ctrl+X', 'Shift+Delete', ),
+        self.action_editor_cut = reg('edit-cut.png', _('Cut &text'), self.boss.do_editor_cut, 'editor-cut', ('Ctrl+X', 'Shift+Delete', ),
                                       _('Cut text'))
         self.action_editor_copy = reg('edit-copy.png', _('&Copy to clipboard'), self.boss.do_editor_copy, 'editor-copy', ('Ctrl+C', 'Ctrl+Insert'),
                                       _('Copy to clipboard'))
-        self.action_editor_paste = reg('edit-paste.png', _('&Paste from clipboard'), self.boss.do_editor_paste, 'editor-paste', ('Ctrl+V', 'Shift+Insert', ),
+        self.action_editor_paste = reg('edit-paste.png', _('P&aste from clipboard'), self.boss.do_editor_paste, 'editor-paste', ('Ctrl+V', 'Shift+Insert', ),
                                       _('Paste from clipboard'))
         self.action_editor_cut.setEnabled(False)
         self.action_editor_copy.setEnabled(False)
@@ -391,13 +391,13 @@ class Main(MainWindow):
                                         _('Set semantics'))
         self.action_filter_css = treg('filter.png', _('&Filter style information'), self.boss.filter_css, 'filter-css', (),
                                      _('Filter style information'))
-        self.action_manage_fonts = treg('font.png', _('Manage &fonts'), self.boss.manage_fonts, 'manage-fonts', (), _('Manage fonts in the book'))
+        self.action_manage_fonts = treg('font.png', _('&Manage fonts'), self.boss.manage_fonts, 'manage-fonts', (), _('Manage fonts in the book'))
         self.action_add_cover = treg('default_cover.png', _('Add &cover'), self.boss.add_cover, 'add-cover', (), _('Add a cover to the book'))
         self.action_reports = treg(
             'reports.png', _('&Reports'), self.boss.show_reports, 'show-reports', ('Ctrl+Shift+R',), _('Show a report on various aspects of the book'))
         self.action_check_external_links = treg('insert-link.png', _('Check &external links'), self.boss.check_external_links, 'check-external-links', (), _(
             'Check external links in the book'))
-        self.action_compress_images = treg('compress-image.png', _('Compress &images losslessly'), self.boss.compress_images, 'compress-images', (), _(
+        self.action_compress_images = treg('compress-image.png', _('C&ompress images losslessly'), self.boss.compress_images, 'compress-images', (), _(
             'Compress images losslessly'))
         self.action_transform_styles = treg('wizard.png', _('Transform &styles'), self.boss.transform_styles, 'transform-styles', (), _(
             'Transform styles used in the book'))
@@ -497,7 +497,7 @@ class Main(MainWindow):
         self.action_multiple_split = treg(
             'document-split.png', _('&Split at multiple locations'), self.boss.multisplit, 'multisplit', (), _(
                 'Split HTML file at multiple locations'))
-        self.action_compare_book = treg('diff.png', _('&Compare to another book'), self.boss.compare_book, 'compare-book', (), _(
+        self.action_compare_book = treg('diff.png', _('Compare to &another book'), self.boss.compare_book, 'compare-book', (), _(
             'Compare to another book'))
         self.action_manage_snippets = treg(
             'snippets.png', _('Manage &Snippets'), self.boss.manage_snippets, 'manage-snippets', (), _(

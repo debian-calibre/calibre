@@ -5,23 +5,42 @@ from __python__ import hash_literals
 from gettext import gettext as _
 
 import initialize  # noqa: unused-import
-from ajax import ajax
+from ajax import ajax, console_print
 from autoreload import create_auto_reload_watcher
 from book_list.globals import main_js
 from book_list.main import main
 from read_book.iframe import init
 
 is_running_in_iframe = False  # Changed before script is loaded in the iframe
+autoreload_enabled = False
+asked_appcache_update = False
+AUTO_UPDATE_THRESHOLD = 1000  # millisecs
 
 if is_running_in_iframe:
     init()
 else:
-    window.applicationCache.addEventListener('updateready', def():
+    start_time = window.performance.now()
+
+    on_appcache_ready = def ():
+        nonlocal asked_appcache_update
+        if asked_appcache_update:
+            return
         if window.applicationCache.status is window.applicationCache.UPDATEREADY:
-            window.applicationCache.swapCache()
-            if window.confirm(_('The calibre web application has been updated. Do you want reload the site?')):
-                window.location.reload()
-    , False)
+            asked_appcache_update = True
+            try:
+                window.applicationCache.swapCache()
+                time_since_start = window.performance.now() - start_time
+                if time_since_start <= AUTO_UPDATE_THRESHOLD or autoreload_enabled or window.confirm(_(
+                    'The calibre web application has been updated. Do you want reload the site?')):
+                    window.location.reload()
+            except Exception as e:
+                # For some reason swapCache occasionally fails even though status is UPDATEREADY
+                print('WARNING: failed to swap applicationCache')
+                console.log(e)
+
+    window.applicationCache.addEventListener('updateready', on_appcache_ready)
+    if window.applicationCache.status is window.applicationCache.UPDATEREADY:
+        on_appcache_ready()
     script = document.currentScript or document.scripts[0]
     main_js(script.textContent)
     script.parentNode.removeChild(script) # save some memory
@@ -32,8 +51,16 @@ else:
     window.addEventListener('load', main)
 
     ajax('auto-reload-port', def(end_type, xhr, event):
+        nonlocal autoreload_enabled
         if end_type is 'load':
             port = parseInt(xhr.responseText)
             if not isNaN(port) and port > 0:
+                autoreload_enabled = True
                 create_auto_reload_watcher(port)
     ).send()  # We must bypass cache as otherwise we could get stale port info
+    ajax('allow-console-print', def(end_type, xhr, event):
+         nonlocal print
+         if end_type is 'load':
+            if xhr.responseText == 'y':
+                print = console_print
+    ).send()

@@ -60,7 +60,7 @@ All the calibre python code is in the ``calibre`` package. This package contains
 
     * db - The database back-end. See :ref:`db_api` for the interface to the calibre library. 
 
-    * Content server: ``library.server`` is the calibre Content server.
+    * Content server: ``srv`` is the calibre Content server.
 
     * gui2 - The Graphical User Interface. GUI initialization happens in ``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The e-book editor is in ``gui2.tweak_book``.
 
@@ -94,6 +94,8 @@ always available as an `archive <https://calibre-ebook.com/dist/src>`_.
 To update a branch to the latest code, use the command::
 
     git pull --no-edit
+    
+You can also browse the code at `GitHub <https://github.com/kovidgoyal/calibre>`_.
 
 Submitting your changes to be included
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -122,7 +124,7 @@ commits::
 Be careful to not include merges when using ``HEAD~n``.
 
 If you plan to do a lot of development on calibre, then the best method is to create a
-`GitHub <https://github.com>`_ account. Below is a basic guide to setting up
+`GitHub <https://github.com>`__ account. Below is a basic guide to setting up
 your own fork of calibre in a way that will allow you to submit pull requests
 for inclusion into the main calibre repository:
 

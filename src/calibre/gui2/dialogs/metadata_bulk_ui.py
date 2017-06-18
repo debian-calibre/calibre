@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -49,7 +49,6 @@ class Ui_MetadataBulkDialog(object):
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
         self.gridLayout = QtWidgets.QGridLayout(self.tabWidgetPage1)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.label_10 = QtWidgets.QLabel(self.tabWidgetPage1)
         self.label_10.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
@@ -277,7 +276,6 @@ class Ui_MetadataBulkDialog(object):
         self.tabWidgetPage3.setObjectName("tabWidgetPage3")
         self.vargrid = QtWidgets.QGridLayout(self.tabWidgetPage3)
         self.vargrid.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
-        self.vargrid.setContentsMargins(0, 0, 0, 0)
         self.vargrid.setObjectName("vargrid")
         self.s_r_heading = QtWidgets.QLabel(self.tabWidgetPage3)
         self.s_r_heading.setWordWrap(True)
@@ -575,8 +573,8 @@ class Ui_MetadataBulkDialog(object):
         self.label_10.setText(_("&Date:"))
         self.apply_adddate.setText(_("&Apply date"))
         self.label_9.setText(_("P&ublished:"))
-        self.tag_editor_button.setToolTip(_("Open Tag Editor"))
-        self.tag_editor_button.setText(_("Open Tag Editor"))
+        self.tag_editor_button.setToolTip(_("Open Tag editor"))
+        self.tag_editor_button.setText(_("Open Tag editor"))
         self.auto_author_sort.setToolTip(_("This will cause the author sort field to be automatically updated\n"
 " based on the authors field for each selected book. Note that if\n"
 " you use the control above to set authors in bulk, the author sort\n"
@@ -695,7 +693,7 @@ class Ui_MetadataBulkDialog(object):
         self.multiple_separator.setToolTip(_("Used when displaying test results to separate values in multiple-valued fields"))
         self.xlabel_3.setText(_("Test text"))
         self.xlabel_31.setText(_("Test result"))
-        self.label_31.setText(_("Your test:"))
+        self.label_31.setText(_("Your &test:"))
         self.central_widget.setTabText(self.central_widget.indexOf(self.tabWidgetPage3), _("&Search and replace"))
 
 from calibre.gui2.complete2 import EditWithComplete

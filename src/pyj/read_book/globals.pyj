@@ -39,12 +39,18 @@ messenger = Messenger()
 iframe_id = 'read-book-iframe'
 uid = 'calibre-' + hexlify(random_bytes(12))
 
+def viewport_mode_changer(val):
+    if val:
+        viewport_mode_changer.val = val
+    return viewport_mode_changer.val
+
 def current_layout_mode():
     return current_layout_mode.value
 current_layout_mode.value = 'flow'
 
 def set_layout_mode(val):
     current_layout_mode.value = val
+    viewport_mode_changer()(val)
 
 def current_spine_item():
     return current_spine_item.value

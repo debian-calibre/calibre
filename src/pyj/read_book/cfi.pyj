@@ -21,6 +21,7 @@ from __python__ import hash_literals
 #    scroll_to(cfi): which scrolls the browser to a point corresponding to the
 #                    given cfi, and returns the x and y co-ordinates of the point.
 
+from read_book.viewport import scroll_viewport
 
 # CFI escaping {{{
 escape_pat = /[\[\],^();~@!-]/g
@@ -447,7 +448,8 @@ def scroll_to(cfi, callback, doc):  # {{{
         span = ndoc.createElement('span')
         span.setAttribute('style', 'border-width: 0; padding: 0; margin: 0')
         r.surroundContents(span)
-        span.scrollIntoView()
+        scroll_viewport.scroll_into_view(span)
+        scroll_viewport.reset_transforms()  # needed for viewport_to_document()
         fn = def():
             # Remove the span and get the new position now that scrolling
             # has (hopefully) completed
@@ -481,7 +483,8 @@ def scroll_to(cfi, callback, doc):  # {{{
                 callback(x, y)
     else:
         node = point_.node
-        node.scrollIntoView()
+        scroll_viewport.scroll_into_view(node)
+        scroll_viewport.reset_transforms()  # needed for viewport_to_document()
 
         fn = def():
             r = node.getBoundingClientRect()
@@ -490,7 +493,7 @@ def scroll_to(cfi, callback, doc):  # {{{
                 x += (point_.x*node.offsetWidth)/100
             if jstype(point_.y) is 'number' and node.offsetHeight:
                 y += (point_.y*node.offsetHeight)/100
-            window.scrollTo(x, y)
+            scroll_viewport.scroll_to(x, y)
             if callback:
                 callback(x, y)
 
@@ -539,7 +542,7 @@ def at_point(ox, oy):  # {{{
 
 def at_current():  # {{{
     winx, winy = window_scroll_pos()
-    winw, winh = window.innerWidth, window.innerHeight
+    winw, winh = scroll_viewport.width(), scroll_viewport.height()
     winw = max(winw, 400)
     winh = max(winh, 600)
     deltay = Math.floor(winh/50)

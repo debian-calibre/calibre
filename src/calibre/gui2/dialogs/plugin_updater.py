@@ -276,7 +276,7 @@ class DisplayPluginModel(QAbstractTableModel):
     def __init__(self, display_plugins):
         QAbstractTableModel.__init__(self)
         self.display_plugins = display_plugins
-        self.headers = map(unicode, [_('Plugin Name'), _('Donate'), _('Status'), _('Installed'),
+        self.headers = map(unicode, [_('Plugin name'), _('Donate'), _('Status'), _('Installed'),
                                       _('Available'), _('Released'), _('calibre'), _('Author')])
 
     def rowCount(self, *args):
@@ -467,7 +467,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         layout = QVBoxLayout(self)
         self.setLayout(layout)
         title_layout = ImageTitleLayout(self, 'plugins/plugin_updater.png',
-                _('User Plugins'))
+                _('User plugins'))
         layout.addLayout(title_layout)
 
         header_layout = QHBoxLayout()
@@ -475,13 +475,17 @@ class PluginUpdaterDialog(SizePersistedDialog):
         self.filter_combo = PluginFilterComboBox(self)
         self.filter_combo.setMinimumContentsLength(20)
         self.filter_combo.currentIndexChanged[int].connect(self._filter_combo_changed)
-        header_layout.addWidget(QLabel(_('Filter list of plugins')+':', self))
+        la = QLabel(_('Filter list of &plugins')+':', self)
+        la.setBuddy(self.filter_combo)
+        header_layout.addWidget(la)
         header_layout.addWidget(self.filter_combo)
         header_layout.addStretch(10)
 
         # filter plugins by name
-        header_layout.addWidget(QLabel(_('Filter by name')+':', self))
+        la = QLabel(_('Filter by &name')+':', self)
+        header_layout.addWidget(la)
         self.filter_by_name_lineedit = QLineEdit(self)
+        la.setBuddy(self.filter_by_name_lineedit)
         self.filter_by_name_lineedit.setText("")
         self.filter_by_name_lineedit.textChanged.connect(self._filter_name_lineedit_changed)
 

@@ -13,6 +13,7 @@ from operator import attrgetter
 
 from calibre.srv.errors import HTTPSimpleResponse, HTTPNotFound, RouteError
 from calibre.srv.utils import http_date
+from calibre.utils.serialize import msgpack_dumps, json_dumps, MSGPACK_MIME
 
 default_methods = frozenset(('HEAD', 'GET'))
 
@@ -22,10 +23,26 @@ def json(ctx, rd, endpoint, output):
     if isinstance(output, bytes) or hasattr(output, 'fileno'):
         ans = output  # Assume output is already UTF-8 encoded json
     else:
-        ans = jsonlib.dumps(output, ensure_ascii=False)
-        if not isinstance(ans, bytes):
-            ans = ans.encode('utf-8')
+        ans = json_dumps(output)
     return ans
+
+
+def msgpack(ctx, rd, endpoint, output):
+    rd.outheaders.set('Content-Type', MSGPACK_MIME, replace_all=True)
+    if isinstance(output, bytes) or hasattr(output, 'fileno'):
+        ans = output  # Assume output is already msgpack encoded
+    else:
+        ans = msgpack_dumps(output)
+    return ans
+
+
+def msgpack_or_json(ctx, rd, endpoint, output):
+    accept = rd.inheaders.get('Accept', all=True)
+    func = msgpack if MSGPACK_MIME in accept else json
+    return func(ctx, rd, endpoint, output)
+
+
+json.loads, json.dumps = jsonlib.loads, jsonlib.dumps
 
 
 def route_key(route):
@@ -199,7 +216,12 @@ class Router(object):
 
     def __init__(self, endpoints=None, ctx=None, url_prefix=None, auth_controller=None):
         self.routes = {}
-        self.url_prefix = url_prefix or ''
+        self.url_prefix = (url_prefix or '').rstrip('/')
+        self.strip_path = None
+        if self.url_prefix:
+            if not self.url_prefix.startswith('/'):
+                self.url_prefix = '/' + self.url_prefix
+            self.strip_path = tuple(self.url_prefix[1:].split('/'))
         self.ctx = ctx
         self.auth_controller = auth_controller
         self.init_session = getattr(ctx, 'init_session', lambda ep, data:None)
@@ -236,6 +258,8 @@ class Router(object):
         self.soak_routes = sorted(frozenset(r for r in self if r.soak_up_extra), key=attrgetter('min_size'), reverse=True)
 
     def find_route(self, path):
+        if self.strip_path is not None and path[:len(self.strip_path)] == self.strip_path:
+            path = path[len(self.strip_path):]
         size = len(path)
         # routes for which min_size <= size <= max_size
         routes = self.max_size_map.get(size, set()) & self.min_size_map.get(size, set())

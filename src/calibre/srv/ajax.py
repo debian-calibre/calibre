@@ -15,7 +15,7 @@ from calibre.library.field_metadata import category_icon_map
 from calibre.db.view import sanitize_sort_field_name
 from calibre.ebooks.metadata import title_sort
 from calibre.ebooks.metadata.book.json_codec import JsonCodec
-from calibre.srv.errors import HTTPNotFound
+from calibre.srv.errors import HTTPNotFound, BookNotFound
 from calibre.srv.routes import endpoint, json
 from calibre.srv.content import get as get_content, icon as get_icon
 from calibre.srv.utils import http_date, custom_fields_to_display, encode_name, decode_name, get_db
@@ -168,8 +168,8 @@ def book(ctx, rd, book_id, library_id):
                     book_id = None
             except Exception:
                 book_id = None
-        if book_id is None or book_id not in ctx.allowed_book_ids(rd, db):
-            raise HTTPNotFound('Book with id %r does not exist' % oid)
+        if book_id is None or not ctx.has_id(rd, db, book_id):
+            raise BookNotFound(oid, db)
         category_urls = rd.query.get('category_urls', 'true').lower()
         device_compatible = rd.query.get('device_compatible', 'false').lower()
         device_for_template = rd.query.get('device_for_template', None)
@@ -216,9 +216,9 @@ def books(ctx, rd, library_id):
         device_compatible = rd.query.get('device_compatible', 'false').lower() == 'true'
         device_for_template = rd.query.get('device_for_template', None)
         ans = {}
-        restricted_to = ctx.allowed_book_ids(rd, db)
+        allowed_book_ids = ctx.allowed_book_ids(rd, db)
         for book_id in ids:
-            if book_id not in restricted_to:
+            if book_id not in allowed_book_ids:
                 ans[book_id] = None
                 continue
             data, lm = book_to_json(
@@ -251,7 +251,7 @@ def categories(ctx, rd, library_id):
     db = get_db(ctx, rd, library_id)
     with db.safe_read_lock:
         ans = {}
-        categories = ctx.get_categories(rd, db)
+        categories = ctx.get_categories(rd, db, vl=rd.query.get('vl') or '')
         category_meta = db.field_metadata
         library_id = db.server_library_id
 
@@ -498,7 +498,7 @@ def books_in(ctx, rd, encoded_category, encoded_item, library_id):
 
             if dname == 'news':
                 dname = 'tags'
-            ids = db.get_books_for_category(dname, cid).intersection(ctx.allowed_book_ids(rd, db))
+            ids = db.get_books_for_category(dname, cid) & ctx.allowed_book_ids(rd, db)
 
         ids = db.multisort(fields=[(sfield, sort_order == 'asc')], ids_to_sort=ids)
         total_num = len(ids)
@@ -528,7 +528,7 @@ def books_in(ctx, rd, encoded_category, encoded_item, library_id):
 # Search {{{
 
 
-def search_result(ctx, rd, db, query, num, offset, sort, sort_order):
+def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
     multisort = [(sanitize_sort_field_name(db.field_metadata, s), ensure_val(o, 'asc', 'desc') == 'asc')
                  for s, o in zip(sort.split(','), cycle(sort_order.split(',')))]
     skeys = db.field_metadata.sortable_field_keys()
@@ -536,35 +536,36 @@ def search_result(ctx, rd, db, query, num, offset, sort, sort_order):
         if sfield not in skeys:
             raise HTTPNotFound('%s is not a valid sort field'%sort)
 
-    if not query:
-        ids = ctx.allowed_book_ids(rd, db)
-    else:
-        ids = ctx.search(rd, db, query)
+    ids = ctx.search(rd, db, query, vl=vl)
     ids = db.multisort(fields=multisort, ids_to_sort=ids)
     total_num = len(ids)
     ids = ids[offset:offset+num]
     return {
-            'total_num': total_num, 'sort_order':sort_order,
-            'offset':offset, 'num':len(ids), 'sort':sort,
-            'base_url':ctx.url_for(search, library_id=db.server_library_id),
-            'query': query,
-            'library_id': db.server_library_id,
-            'book_ids':ids
+        'total_num': total_num, 'sort_order':sort_order,
+        'offset':offset, 'num':len(ids), 'sort':sort,
+        'base_url':ctx.url_for(search, library_id=db.server_library_id),
+        'query': query,
+        'library_id': db.server_library_id,
+        'book_ids':ids,
+        'vl': vl,
     }
 
 
 @endpoint('/ajax/search/{library_id=None}', postprocess=json)
 def search(ctx, rd, library_id):
     '''
-    Return the books (as list of ids) matching the specified search query.
+    Return the books matching the specified search query.
+    The returned object is a dict with the field book_ids which
+    is a list of matched book ids. For all the other fields in the object, see
+    :func:`search_result`.
 
-    Optional: ?num=100&offset=0&sort=title&sort_order=asc&query=
+    Optional: ?num=100&offset=0&sort=title&sort_order=asc&query=&vl=
     '''
     db = get_db(ctx, rd, library_id)
     query = rd.query.get('query')
     num, offset = get_pagination(rd.query)
     with db.safe_read_lock:
-        return search_result(ctx, rd, db, query, num, offset, rd.query.get('sort', 'title'), rd.query.get('sort_order', 'asc'))
+        return search_result(ctx, rd, db, query, num, offset, rd.query.get('sort', 'title'), rd.query.get('sort_order', 'asc'), rd.query.get('vl') or '')
 
 # }}}
 

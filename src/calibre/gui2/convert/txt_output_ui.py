@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(392, 346)
+        Form.resize(392, 378)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.groupBox = QtWidgets.QGroupBox(Form)
@@ -69,6 +69,8 @@ class Ui_Form(object):
         self.opt_keep_color.setObjectName("opt_keep_color")
         self.verticalLayout.addWidget(self.opt_keep_color)
         self.verticalLayout_2.addWidget(self.groupBox_3)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem)
         self.label_3.setBuddy(self.opt_txt_output_encoding)
         self.label.setBuddy(self.opt_newline)
         self.label_4.setBuddy(self.opt_txt_output_formatting)
@@ -90,7 +92,7 @@ class Ui_Form(object):
         self.opt_inline_toc.setText(_("&Inline TOC"))
         self.groupBox_3.setTitle(_("Markdown, Textile"))
         self.opt_keep_links.setText(_("Do not remove links (<a> tags) before processing"))
-        self.opt_keep_image_references.setText(_("Do not remove image references before processing"))
-        self.opt_keep_color.setText(_("Keep text color, when possible"))
+        self.opt_keep_image_references.setText(_("Do not remove image &references before processing"))
+        self.opt_keep_color.setText(_("Keep text &color, when possible"))
 
 from calibre.gui2.widgets import EncodingComboBox

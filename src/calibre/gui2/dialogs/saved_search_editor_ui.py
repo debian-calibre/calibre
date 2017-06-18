@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/saved_search_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -87,7 +87,7 @@ class Ui_SavedSearchEditor(object):
     def retranslateUi(self, SavedSearchEditor):
 
         SavedSearchEditor.setWindowTitle(_("Saved search editor"))
-        self.label_3.setText(_("Saved search: "))
+        self.label_3.setText(_("&Saved search: "))
         self.search_name_box.setToolTip(_("Select a saved search to edit"))
         self.delete_search_button.setToolTip(_("Delete this selected saved search"))
         self.delete_search_button.setText(_("..."))

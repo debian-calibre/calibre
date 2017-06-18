@@ -33,6 +33,7 @@ class Ui_Form(object):
         self.opt_htmlz_title_filename.setObjectName("opt_htmlz_title_filename")
         self.gridLayout.addWidget(self.opt_htmlz_title_filename, 2, 0, 1, 2)
         self.label.setBuddy(self.opt_htmlz_css_type)
+        self.label_2.setBuddy(self.opt_htmlz_class_style)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

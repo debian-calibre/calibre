@@ -227,6 +227,8 @@ def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=
             if not mi.languages:
                 continue
             names = filter(None, map(calibre_langcode_to_name, mi.languages))
+            names = ['<a href="%s" title="%s">%s</a>' % (search_href('languages', n), _(
+                'Search calibre for books with the language: {}').format(n), n) for n in names]
             ans.append((field, row % (name, u', '.join(names))))
         elif field == 'publisher':
             if not mi.publisher:
@@ -310,4 +312,6 @@ def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=
     # print '\n'.join(ans)
     direction = 'rtl' if rtl else 'ltr'
     margin = 'left' if rtl else 'right'
-    return u'<table class="fields" style="direction: %s; margin-%s:auto">%s</table>'%(direction, margin, u'\n'.join(ans)), comment_fields
+    return u'<style>table.fields td { vertical-align:middle}</style>' + \
+           u'<table class="fields" style="direction: %s; margin-%s:auto">%s</table>'%(
+               direction, margin, u'\n'.join(ans)), comment_fields

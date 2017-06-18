@@ -246,7 +246,7 @@ class SearchWidget(QWidget):
 
         self.fl = fl = QLabel(_('&Find:'))
         fl.setAlignment(Qt.AlignRight | Qt.AlignCenter)
-        self.find_text = ft = HistoryBox(self, _('Clear search history'))
+        self.find_text = ft = HistoryBox(self, _('Clear search &history'))
         ft.save_search.connect(self.save_search)
         ft.show_saved_searches.connect(self.show_saved_searches)
         ft.initialize('tweak_book_find_edit')
@@ -258,7 +258,7 @@ class SearchWidget(QWidget):
 
         self.rl = rl = QLabel(_('&Replace:'))
         rl.setAlignment(Qt.AlignRight | Qt.AlignCenter)
-        self.replace_text = rt = HistoryBox(self, _('Clear replace history'))
+        self.replace_text = rt = HistoryBox(self, _('Clear replace &history'))
         rt.save_search.connect(self.save_search)
         rt.show_saved_searches.connect(self.show_saved_searches)
         rt.initialize('tweak_book_replace_edit')
@@ -1203,7 +1203,7 @@ class SavedSearches(QWidget):
 
     def import_searches(self):
         path = choose_files(self, 'import_saved_searches', _('Choose file'), filters=[
-            (_('Saved Searches'), ['json'])], all_files=False, select_only_single_file=True)
+            (_('Saved searches'), ['json'])], all_files=False, select_only_single_file=True)
         if path:
             with open(path[0], 'rb') as f:
                 obj = json.loads(f.read())
@@ -1245,7 +1245,7 @@ class SavedSearches(QWidget):
                     'No searches selected'), show=True)
         [s.__setitem__('mode', s.get('mode', 'regex')) for s in searches]
         path = choose_save_file(self, 'export-saved-searches', _('Choose file'), filters=[
-            (_('Saved Searches'), ['json'])], all_files=False)
+            (_('Saved searches'), ['json'])], all_files=False)
         if path:
             if not path.lower().endswith('.json'):
                 path += '.json'

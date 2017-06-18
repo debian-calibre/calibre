@@ -204,6 +204,10 @@ class Cache(object):
         self.formatter_template_cache = {}
 
     @write_api
+    def set_user_template_functions(self, user_template_functions):
+        self.backend.set_user_template_functions(user_template_functions)
+
+    @write_api
     def clear_composite_caches(self, book_ids=None):
         for field in self.composites.itervalues():
             field.clear_caches(book_ids=book_ids)
@@ -351,12 +355,14 @@ class Cache(object):
             bools_are_tristate = self.backend.prefs['bools_are_tristate']
 
             for field, table in self.backend.tables.iteritems():
-                self.fields[field] = create_field(field, table, bools_are_tristate)
+                self.fields[field] = create_field(field, table, bools_are_tristate,
+                                          self.backend.get_template_functions)
                 if table.metadata['datatype'] == 'composite':
                     self.composites[field] = self.fields[field]
 
             self.fields['ondevice'] = create_field('ondevice',
-                    VirtualTable('ondevice'), bools_are_tristate)
+                    VirtualTable('ondevice'), bools_are_tristate,
+                    self.backend.get_template_functions)
 
             for name, field in self.fields.iteritems():
                 if name[0] == '#' and name.endswith('_index'):
@@ -981,6 +987,19 @@ class Cache(object):
         '''
         return self._search_api(self, query, restriction, virtual_fields=virtual_fields, book_ids=book_ids)
 
+    @read_api
+    def books_in_virtual_library(self, vl, search_restriction=None):
+        ' Return the set of books in the specified virtual library '
+        vl = self._pref('virtual_libraries', {}).get(vl) if vl else None
+        if not vl and not search_restriction:
+            return self.all_book_ids()
+        # We utilize the search restriction cache to speed this up
+        if vl:
+            if search_restriction:
+                return frozenset(self._search('', vl) & self._search('', search_restriction))
+            return frozenset(self._search('', vl))
+        return frozenset(self._search('', search_restriction))
+
     @api
     def get_categories(self, sort='name', book_ids=None, already_fixed=None,
                        first_letter_sort=False):
@@ -1236,6 +1255,7 @@ class Cache(object):
         provided, but are never deleted. Also note that force_changes has no
         effect on setting title or authors.
         '''
+        dirtied = set()
 
         try:
             # Handle code passing in an OPF object instead of a Metadata object
@@ -1244,7 +1264,7 @@ class Cache(object):
             pass
 
         def set_field(name, val):
-            self._set_field(name, {book_id:val}, do_path_update=False, allow_case_change=allow_case_change)
+            dirtied.update(self._set_field(name, {book_id:val}, do_path_update=False, allow_case_change=allow_case_change))
 
         path_changed = False
         if set_title and mi.title:
@@ -1334,6 +1354,7 @@ class Cache(object):
             # the db and Cache are in sync
             self._reload_from_db()
             raise
+        return dirtied
 
     def _do_add_format(self, book_id, fmt, stream, name=None, mtime=None):
         path = self._field_for('path', book_id)
@@ -1583,7 +1604,7 @@ class Cache(object):
     def remove_books(self, book_ids, permanent=False):
         ''' Remove the books specified by the book_ids from the database and delete
         their format files. If ``permanent`` is False, then the format files
-        are not deleted. '''
+        are placed in the recycle bin. '''
         path_map = {}
         for book_id in book_ids:
             try:

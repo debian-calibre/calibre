@@ -36,14 +36,22 @@ def get_error_details(event):
         desc = desc.error.toString()
     elif desc.errorCode:
         desc = desc.errorCode
+    elif desc.error:
+        desc = desc.error
+        if desc.name is 'QuotaExceededError':
+            desc = _('Offline storage quota exceeded! Try deleting some stored books first.')
+        elif desc.name:
+            desc = desc.name
+    return desc or 'Unknown Error'
 
-DB_NAME = 'calibre-books-db-testingx3'  # TODO: Remove test suffix and change version back to 1
+DB_NAME = 'calibre'
 DB_VERSION = 1
 
 class DB:
 
     def __init__(self, callback, show_read_book_error):
         self.initialized = False
+        self.is_ok = False
         self.initialize_error_msg = None
         self.callback = callback
         self.show_read_book_error = show_read_book_error
@@ -57,9 +65,12 @@ class DB:
 
     def initialize_stage1(self):
         if not window.indexedDB:
-            self.initialize_error_msg = _('Your browser does not support IndexedDB. Cannot read books. Consider using a modern browser, such as Firefox, Chrome or Edge.')
+            self.initialize_error_msg = _('Your browser does not support IndexedDB. Cannot read books. Consider using a modern browser, such as Chrome or Firefox.')
             self.initialized = True
-            self.callback()
+            # Callers assume __init__ has finished before the callback is
+            # called, since we are called in __init__, only callback after
+            # event loop ticks over
+            window.setTimeout(self.callback, 0)
             return
 
         request = window.indexedDB.open(DB_NAME, DB_VERSION)
@@ -70,29 +81,35 @@ class DB:
         request.onblocked = def(event):
             self.initialize_error_msg = _('Please close all other browser tabs with calibre open')
             self.initialized = True
+            console.log(event)
             self.callback()
 
         request.onerror = def(event):
             self.initialize_error_msg = _('You must allow calibre to use IndexedDB storage in your browser to read books')
             self.initialized = True
+            console.log(event)
             self.callback()
 
         request.onsuccess = def(event):
             blob = Blob(['test'], {'type':"text/plain"})
             idb = event.target.result
+            store = idb.transaction(['files'], 'readwrite').objectStore('files')
             try:
-                req = idb.transaction(['files'], 'readwrite').objectStore('files').put(blob, ':-test-blob-:')
-            except Exception:
+                req = store.put(blob, ':-test-blob-:')
+            except:
                 self.initialize_stage2(idb, False)
             req.onsuccess = def(event):
                 self.initialize_stage2(idb, True)
             req.onerror = def(event):
-                self.initialize_stage2(idb, False)
+                # We use setTimeout as otherwise the idb.onerror handler is
+                # called with this error on Safari
+                setTimeout(self.initialize_stage2.bind(None, idb, False), 0)
 
     def initialize_stage2(self, idb, supports_blobs):
         self.idb = idb
         self.supports_blobs = supports_blobs
         self.initialized = True
+        self.is_ok = True
         if not supports_blobs:
             print('WARNING: browser does not support blob storage, calibre falling back to base64 encoding')
 
@@ -122,7 +139,19 @@ class DB:
         store = store or stores[0]
         if op is 'get':
             transaction = self.idb.transaction(stores)
-            req = transaction.objectStore(store).get(data)
+            # Microsoft Edge currently does not support complex keys so the
+            # next line will throw a DataError in Edge when data is an
+            # object key like an array.
+            # https://gist.github.com/nolanlawson/a841ee23436410f37168
+            try:
+                req = transaction.objectStore(store).get(data)
+            except:
+                if /Edge\/\d+/.test(window.navigator.userAgent):
+                    self.show_error(_('Cannot read book'), _(
+                        'Reading of books is not supported on Microsoft Edge. Use a better'
+                        ' browser such as Google Chrome or Mozilla Firefox'))
+                    return
+                raise
             req.onsuccess = def(event): proceed(req.result)
         elif op is 'put':
             transaction = self.idb.transaction(stores, 'readwrite')
@@ -330,5 +359,5 @@ class DB:
 
 def get_db(callback, show_read_book_error):
     if not get_db.ans:
-        get_db.ans = DB(callback)
+        get_db.ans = DB(callback, show_read_book_error)
     return get_db.ans

@@ -19,6 +19,7 @@ from threading import Thread, local
 
 from calibre import force_unicode
 from calibre.constants import __appname__, __version__, cache_dir
+from calibre.utils.filenames import atomic_rename
 from calibre.utils.terminal import ANSIStream
 from duktape import Context, JSError, to_python
 from lzma.xz import compress, decompress
@@ -193,9 +194,13 @@ def create_manifest(html):
         h.hexdigest(), manifest).encode('utf-8')
 
 
-def compile_srv():
+def base_dir():
     d = os.path.dirname
-    base = d(d(d(d(os.path.abspath(__file__)))))
+    return d(d(d(d(os.path.abspath(__file__)))))
+
+
+def compile_srv():
+    base = base_dir()
     iconf = os.path.join(base, 'imgsrc', 'srv', 'generate.py')
     g = {'__file__': iconf}
     execfile(iconf, g)
@@ -212,18 +217,27 @@ def compile_srv():
         if e.errno != errno.ENOENT:
             raise
         mathjax_version = '0'
-    base = P('content-server', allow_user_override=False)
+    base = os.path.join(base, 'resources', 'content-server')
     fname = os.path.join(rapydscript_dir, 'srv.pyj')
     with lopen(fname, 'rb') as f:
-        js = compile_fast(f.read(), fname).replace('__RENDER_VERSION__', rv, 1).replace('__MATHJAX_VERSION__', mathjax_version, 1).encode('utf-8')
+        js = compile_fast(f.read(), fname).replace(
+            '__RENDER_VERSION__', rv, 1).replace(
+            '__MATHJAX_VERSION__', mathjax_version, 1).replace(
+            '__CALIBRE_VERSION__', __version__, 1).encode('utf-8')
     with lopen(os.path.join(base, 'index.html'), 'rb') as f:
         html = f.read().replace(b'RESET_STYLES', reset, 1).replace(b'ICONS', icons, 1).replace(b'MAIN_JS', js, 1)
 
     manifest = create_manifest(html)
-    with lopen(os.path.join(base, 'index-generated.html'), 'wb') as f:
-        f.write(html)
-    with lopen(os.path.join(base, 'calibre.appcache'), 'wb') as f:
-        f.write(manifest)
+
+    def atomic_write(name, content):
+        name = os.path.join(base, name)
+        tname = name + '.tmp'
+        with lopen(tname, 'wb') as f:
+            f.write(content)
+        atomic_rename(tname, name)
+
+    atomic_write('index-generated.html', html)
+    atomic_write('calibre.appcache', manifest)
 
 # }}}
 

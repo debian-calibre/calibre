@@ -7,7 +7,7 @@ from PyQt5.Qt import (Qt, QDialog, QTableWidgetItem, QAbstractItemView, QIcon,
                   QDialogButtonBox, QFrame, QLabel, QTimer, QMenu, QApplication,
                   QByteArray)
 
-from calibre.ebooks.metadata import author_to_author_sort
+from calibre.ebooks.metadata import author_to_author_sort, string_to_authors
 from calibre.gui2 import error_dialog, gprefs
 from calibre.gui2.dialogs.edit_authors_dialog_ui import Ui_EditAuthorsDialog
 from calibre.utils.icu import sort_key
@@ -163,11 +163,11 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
 
     def show_context_menu(self, point):
         self.context_item = self.table.itemAt(point)
-        case_menu = QMenu(_('Change Case'))
-        action_upper_case = case_menu.addAction(_('Upper Case'))
-        action_lower_case = case_menu.addAction(_('Lower Case'))
-        action_swap_case = case_menu.addAction(_('Swap Case'))
-        action_title_case = case_menu.addAction(_('Title Case'))
+        case_menu = QMenu(_('Change case'))
+        action_upper_case = case_menu.addAction(_('Upper case'))
+        action_lower_case = case_menu.addAction(_('Lower case'))
+        action_swap_case = case_menu.addAction(_('Swap case'))
+        action_title_case = case_menu.addAction(_('Title case'))
         action_capitalize = case_menu.addAction(_('Capitalize'))
 
         action_upper_case.triggered.connect(self.upper_case)
@@ -314,11 +314,11 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
         if col == 0:
             item = self.table.item(row, 0)
             aut  = unicode(item.text()).strip()
-            amper = aut.find('&')
-            if amper >= 0:
+            aut_list = string_to_authors(aut)
+            if len(aut_list) != 1:
                 error_dialog(self.parent(), _('Invalid author name'),
-                        _('Author names cannot contain & characters.')).exec_()
-                aut = aut.replace('&', '%')
+                        _('You cannot change an author to multiple authors.')).exec_()
+                aut = ' % '.join(aut_list)
                 self.table.item(row, 0).setText(aut)
             c = self.table.item(row, 1)
             c.setText(author_to_author_sort(aut))

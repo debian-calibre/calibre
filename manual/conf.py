@@ -12,6 +12,7 @@
 # serve to show the default value.
 
 import sys, os
+from datetime import date
 
 # If your extensions are in another directory, add it here.
 sys.path.append(os.path.abspath('.'))
@@ -110,11 +111,23 @@ pygments_style = 'sphinx'
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
-html_theme = 'default'
-html_theme_options = {'stickysidebar':'true', 'relbarbgcolor':'black'}
-# Put the quick search box on top
+html_theme = 'alabaster'
 html_sidebars = {
-        '**' : ['searchbox.html', 'localtoc.html', 'relations.html']
+    '**': [
+        'about.html',
+        'donate.html',
+        'searchbox.html',
+        'localtoc.html',
+        'relations.html',
+    ]
+}
+html_theme_options = {
+    'logo': 'logo.png',
+    'show_powered_by': False,
+    'fixed_sidebar': True,
+    'sidebar_collapse': True,
+    'analytics_id': 'UA-20736318-1',
+    'github_button': False,
 }
 
 # The favicon
@@ -129,33 +142,34 @@ html_static_path = ['resources', '../icons/favicon.ico']
 # using the given strftime format.
 html_last_updated_fmt = '%b %d, %Y'
 
-# If true, SmartyPants will be used to convert quotes and dashes to
-# typographically correct entities.
-html_use_smartypants = True
-
 # Overall title of the documentation
-html_title       = title
-html_short_title = 'Start'
-html_logo        = 'resources/logo.png'
+# html_title       = title
+html_short_title = _('Start')
 
 from calibre.utils.localization import get_language
 html_context = {}
 html_context['other_languages'] = [
     (lc, get_language(lc)) for lc in os.environ.get('ALL_USER_MANUAL_LANGUAGES', '').split() if lc != language]
+
+
 def sort_languages(x):
     from calibre.utils.icu import sort_key
     lc, name = x
     if lc == language:
         return ''
     return sort_key(unicode(name))
+
+
 html_context['other_languages'].sort(key=sort_languages)
 del sort_languages, get_language
 
-epub_author      = 'Kovid Goyal'
-epub_publisher   = 'Kovid Goyal'
-epub_identifier  = 'https://manual.calibre-ebook.com'
-epub_scheme      = 'url'
-epub_uid         = 'S54a88f8e9d42455e9c6db000e989225f'
+epub_author      = u'Kovid Goyal'
+epub_publisher   = u'Kovid Goyal'
+epub_copyright   = u'© {} Kovid Goyal'.format(date.today().year)
+epub_description = u'Comprehensive documentation for calibre'
+epub_identifier  = u'https://manual.calibre-ebook.com'
+epub_scheme      = u'url'
+epub_uid         = u'S54a88f8e9d42455e9c6db000e989225f'
 epub_tocdepth    = 4
 epub_tocdup      = True
 epub_cover       = ('epub_cover.jpg', 'epub_cover_template.html')

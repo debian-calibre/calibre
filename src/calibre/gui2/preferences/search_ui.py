@@ -162,6 +162,10 @@ class Ui_Form(object):
         self.opt_use_primary_find_in_search.setObjectName("opt_use_primary_find_in_search")
         self.gridLayout.addWidget(self.opt_use_primary_find_in_search, 3, 1, 1, 1)
         self.label_2.setBuddy(self.opt_limit_search_columns_to)
+        self.label_221.setBuddy(self.similar_authors_search_key)
+        self.label_222.setBuddy(self.similar_series_search_key)
+        self.label_223.setBuddy(self.similar_tags_search_key)
+        self.label_224.setBuddy(self.similar_publisher_search_key)
         self.la10.setBuddy(self.gst_names)
         self.l11.setBuddy(self.opt_grouped_search_make_user_categories)
 
@@ -182,10 +186,10 @@ class Ui_Form(object):
 "         calibre constructs a search using the column lookup names specified below.\n"
 "         By changing the lookup name to a grouped search term you can\n"
 "         search multiple columns at once.</p>"))
-        self.label_221.setText(_("Similar authors: "))
-        self.label_222.setText(_("Similar series: "))
-        self.label_223.setText(_("Similar tags: "))
-        self.label_224.setText(_("Similar publishers: "))
+        self.label_221.setText(_("Similar auth&ors: "))
+        self.label_222.setText(_("Similar s&eries: "))
+        self.label_223.setText(_("Similar ta&gs: "))
+        self.label_224.setText(_("Similar &publishers: "))
         self.clear_history_button.setToolTip(_("Clear search histories from all over calibre. Including the book list, E-book viewer, fetch news dialog, etc."))
         self.clear_history_button.setText(_("Clear search &histories"))
         self.opt_search_as_you_type.setText(_("Search as you &type"))
@@ -207,7 +211,7 @@ class Ui_Form(object):
         self.opt_grouped_search_make_user_categories.setToolTip(_("Enter the names of any grouped search terms you wish\n"
 "to be shown as user categories"))
         self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
-        self.opt_show_highlight_toggle_button.setText(_("Show a quick &toggle button to switch between highlighting and restricting results next to the searchbar"))
+        self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the searchbar"))
         self.opt_case_sensitive.setText(_("Case &sensitive searching"))
         self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
 

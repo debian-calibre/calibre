@@ -12,7 +12,6 @@ from functools import partial
 from threading import Lock
 from urllib import quote
 
-from calibre import prepare_string_for_xml
 from calibre.constants import config_dir
 from calibre.db.categories import Tag
 from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
@@ -39,7 +38,9 @@ def encode_datetime(dateval):
         return None
     return isoformat(dateval)
 
+
 empty_val = ((), '', {})
+passthrough_comment_types = {'long-text', 'short-text'}
 
 
 def add_field(field, db, book_id, ans, field_metadata):
@@ -55,11 +56,7 @@ def add_field(field, db, book_id, ans, field_metadata):
                 ctype = field_metadata.get('display', {}).get('interpret_as', 'html')
                 if ctype == 'markdown':
                     val = markdown(val)
-                elif ctype == 'long-text':
-                    val = '<pre style="white-space:pre-wrap">%s</pre>' % prepare_string_for_xml(val)
-                elif ctype == 'short-text':
-                    val = '<span">%s</span>' % prepare_string_for_xml(val)
-                else:
+                elif ctype not in passthrough_comment_types:
                     val = comments_to_html(val)
             elif datatype == 'composite' and field_metadata['display'].get('contains_html'):
                 val = comments_to_html(val)
@@ -83,6 +80,7 @@ def book_as_json(db, book_id):
         if langs:
             ans['lang_names'] = {l:calibre_langcode_to_name(l) for l in langs}
     return ans
+
 
 _include_fields = frozenset(Tag.__slots__) - frozenset({
     'state', 'is_editable', 'is_searchable', 'original_name', 'use_sort_as_name', 'is_hierarchical'
@@ -133,6 +131,7 @@ def category_item_as_json(x, clear_rating=False):
         del ans['avg_rating']
     return ans
 
+
 CategoriesSettings = namedtuple(
     'CategoriesSettings', 'dont_collapse collapse_model collapse_at sort_by'
     ' template using_hierarchy grouped_search_terms hidden_categories hide_empty_categories')
@@ -161,6 +160,7 @@ class GroupedSearchTerms(object):
             return self.keys == other.keys
         except AttributeError:
             return False
+
 
 _icon_map = None
 _icon_map_lock = Lock()
@@ -288,6 +288,7 @@ def build_first_letter_list(category_items):
             last_ordnum = ordnum
         cl_list[idx] = last_c
     return cl_list
+
 
 categories_with_ratings = {'authors', 'series', 'publisher', 'tags'}
 
@@ -528,9 +529,8 @@ def render_categories(opts, db, category_data):
     return {'root':root, 'item_map': items}
 
 
-def categories_as_json(ctx, rd, db):
-    opts = categories_settings(rd.query, db)
-    return ctx.get_tag_browser(rd, db, opts, partial(render_categories, opts))
+def categories_as_json(ctx, rd, db, opts, vl):
+    return ctx.get_tag_browser(rd, db, opts, partial(render_categories, opts), vl=vl)
 
 # Test tag browser {{{
 

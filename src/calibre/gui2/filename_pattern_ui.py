@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/filename_pattern.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -134,9 +134,9 @@ class Ui_Form(object):
 "<p>A <a href=\"%s\">tutorial</a> on using regular expressions is available.</p>\n"
 "<p>Use the <b>Test</b> functionality below to test your regular expression on a few sample filenames (remember to include the file extension). The group names for the various metadata entries are documented in tooltips. Note that underscores in filenames are auto-replaced by spaces.</p></div>"))
         self.groupBox.setTitle(_("Regular &expression"))
-        self.groupBox_2.setTitle(_("&Test"))
+        self.groupBox_2.setTitle(_("Test"))
         self.label_2.setText(_("File &name:"))
-        self.test_button.setText(_("Test"))
+        self.test_button.setText(_("&Test"))
         self.label_3.setText(_("Title:"))
         self.title.setToolTip(_("Regular expression (?P&lt;title&gt;)"))
         self.title.setText(_("No match"))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -141,7 +141,7 @@ class Ui_TagEditor(object):
 
     def retranslateUi(self, TagEditor):
 
-        TagEditor.setWindowTitle(_("Tag Editor"))
+        TagEditor.setWindowTitle(_("Tag editor"))
         self.label_3.setText(_("&Add tag:"))
         self.add_tag_input.setToolTip(_("If the tag you want is not in the available list, you can add it here. Accepts a comma separated list of tags."))
         self.add_tag_button.setToolTip(_("Add tag to available tags and apply it to current book"))
@@ -150,14 +150,14 @@ class Ui_TagEditor(object):
         self.available_filter_input.setPlaceholderText(_("Filter the available tags"))
         self.available_filter_input_clear_btn.setToolTip(_("Clear the available tags filter input field"))
         self.delete_button.setToolTip(_("Delete tag from database. This will unapply the tag from all books and then remove it from the database."))
-        self.delete_button.setText(_("Delete tag"))
+        self.delete_button.setText(_("&Delete tag"))
         self.apply_button.setToolTip(_("Apply tag to current book"))
         self.apply_button.setText(_("..."))
         self.label_2.setText(_("A&pplied tags"))
         self.applied_filter_input.setPlaceholderText(_("Filter the applied tags"))
         self.applied_filter_input_clear_btn.setToolTip(_("Clear the applied tags filter input field"))
         self.unapply_button.setToolTip(_("Unapply (remove) tag from current book"))
-        self.unapply_button.setText(_("Unapply tag"))
+        self.unapply_button.setText(_("&Unapply tag"))
 
 from calibre.gui2.widgets import EnLineEdit
 

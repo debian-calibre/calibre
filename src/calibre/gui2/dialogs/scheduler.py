@@ -234,10 +234,7 @@ class SchedulerDialog(QDialog):
         self.go_button = b = QToolButton(self)
         b.setText(_("Go"))
         b.clicked.connect(self.search.do_search)
-        self.clear_search_button = cb = QToolButton(self)
-        self.clear_search_button.clicked.connect(self.search.clear_clicked)
-        cb.setIcon(QIcon(I('clear_left.png')))
-        h.addWidget(s), h.addWidget(b), h.addWidget(cb)
+        h.addWidget(s), h.addWidget(b)
         self.recipes = RecipesView(self)
         l.addWidget(self.recipes, 1, 0, 1, 1)
         self.recipe_model = recipe_model
@@ -366,7 +363,7 @@ class SchedulerDialog(QDialog):
         b.setToolTip(_("Download all scheduled news sources at once"))
         b.clicked.connect(self.download_all_clicked)
         self.l.addWidget(b, 3, 0, 1, 1)
-        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Save, self)
+        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Save | QDialogButtonBox.Cancel, self)
         bb.accepted.connect(self.accept), bb.rejected.connect(self.reject)
         self.download_button = b = bb.addButton(_('&Download now'), bb.ActionRole)
         b.setIcon(QIcon(I('arrow-down.png'))), b.setVisible(False)
@@ -597,7 +594,7 @@ class Scheduler(QObject):
         self.scheduler_action = QAction(QIcon(I('scheduler.png')), _('Schedule news download'), self)
         self.news_menu.addAction(self.scheduler_action)
         self.scheduler_action.triggered[bool].connect(self.show_dialog)
-        self.cac = QAction(QIcon(I('user_profile.png')), _('Add a custom news source'), self)
+        self.cac = QAction(QIcon(I('user_profile.png')), _('Add or edit a custom news source'), self)
         self.cac.triggered[bool].connect(self.customize_feeds)
         self.news_menu.addAction(self.cac)
         self.news_menu.addSeparator()
@@ -734,10 +731,10 @@ class Scheduler(QObject):
                 # No internet connection, we will try again in a minute
                 break
 
+
 if __name__ == '__main__':
     from PyQt5.Qt import QApplication
     app = QApplication([])
     d = SchedulerDialog(RecipeModel())
     d.exec_()
     del app
-

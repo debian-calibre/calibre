@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Çağla Turhan, 2016
+# tarakbumba <tarakbumba@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-01 16:52+0530\n"
-"PO-Revision-Date: 2017-04-25 05:10+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-05-26 00:09+0530\n"
+"PO-Revision-Date: 2017-05-22 03:13+0000\n"
+"Last-Translator: tarakbumba <tarakbumba@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
-msgstr ""
+msgstr "Veri tabanı arayüzü için API belgelendirmesi"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:9
 msgid ""
@@ -103,7 +104,7 @@ msgstr "Belirtilen kitaba bir biçim ekle. Biçim başarıyla eklendiyse True d�
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parametreler"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
@@ -179,6 +180,11 @@ msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
 msgstr "Döndürülen değer kitap id'leri kümesi, veya öğe veya alan mevcut değilse boş bir kümedir."
+
+#: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.books_in_virtual_library:1
+msgid "Return the set of books in the specified virtual library"
+msgstr "Belirlenen sanal kitaplıktaki kitap setini döndürür"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -311,7 +317,7 @@ msgstr "Mi'deki yazarların üst setine sahip ve aynı başlıklı (başlıklard
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
-msgstr ""
+msgstr "E-kitap biçimini bytestring olarak ya da biçim mevcut değilse, veya e-kitap dosyasına yazmaya yetkimiz yoksa `None` olarak döndür."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -319,7 +325,7 @@ msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr ""
+msgstr "True ise e-kitap biçimi dosya nesnesi olarak döndürülür. Dosya nesnesinin SpooledTemporaryFile olduğunu not edin, yani biçimi başka bir dosyaya kopyalamak istiyorsanız performans için bunun yerine :meth:`copy_format_to` kullanın. "
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
@@ -341,7 +347,7 @@ msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
 "almost never use this, as it breaks the threadsafe promise of this API. "
 "Instead use, :meth:`copy_format_to`."
-msgstr ""
+msgstr "`format` biçimindeki e-kitap için mutlak yolu döndür. API'nin iş ipi güvenliğini kırdığından bunu hemen hemen hiç kullanmamalısınız. Bunun yerine :meth:`copy_format_to` kullanın."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
@@ -385,7 +391,7 @@ msgstr "``True`` ise zuladaki değerler kullanılır, aksi halde yavaş bir dosy
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
-msgstr ""
+msgstr "``True`` ise veri tabanındaki max_size alanı bu kitap için güncellenmiştir."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
@@ -532,9 +538,9 @@ msgstr "Kitap için OPF metadata yedeğini bytestring olarak veya böyle bir bac
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
-"their format files. If ``permanent`` is False, then the format files are not"
-" deleted."
-msgstr "book_ids ile belirtilen kitapları veri tabanından sil ve biçim dosyalarını sil. ``permanent`` False ise, biçim dosyaları silinmez."
+"their format files. If ``permanent`` is False, then the format files are "
+"placed in the recycle bin."
+msgstr "book_ids ile belirtilen kitapları veri tabanından biçim dosyalarıyla birlikte sil. ``permanent`` False ise, biçim dosyaları geri dönüşüm kutusuna yerleştirilir."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -705,7 +711,7 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr ""
+msgstr "force_changes=True ayarı mi boş değerler içerse de set_metadata'nın alanları güncellemesine yol açar. Bu durumda 'None' 'boş'dan ayrılmış olur. mi.XXX None ise, XXX yer değiştirilmez, aksi durumda değiştirilir. Etiketler, tanımlayıcılar, ve kapak öznitelikleri özel durumlardır. Etiketler ve tanımlayıcılar None olamayacağından force_changes true ise her zaman yer değiştirilirler. Mi'nin kitapta olmasını istediğiniz değerleri içerdiğinden emin olmalısınız. Kapaklar yeni bir kapak sağlanmışsa hep değiştirilir, ama asla silinmezler. force_changes'in başlık veya yazar ayarlarında etkisi olmadığını da unutmayın."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

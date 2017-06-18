@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import errno, socket, select, os
+import errno, socket, select, os, time
 from Cookie import SimpleCookie
 from contextlib import closing
 from urlparse import parse_qs
@@ -113,6 +113,7 @@ def error_codes(*errnames):
     ans = {getattr(errno, x, None) for x in errnames}
     ans.discard(None)
     return ans
+
 
 socket_errors_eintr = error_codes("EINTR", "WSAEINTR")
 
@@ -464,10 +465,12 @@ def get_db(ctx, rd, library_id):
     return db
 
 
-def get_library_data(ctx, rd):
+def get_library_data(ctx, rd, strict_library_id=False):
     library_id = rd.query.get('library_id')
     library_map, default_library = ctx.library_info(rd)
     if library_id not in library_map:
+        if strict_library_id and library_id:
+            raise HTTPNotFound('No library with id: {}'.format(library_id))
         library_id = default_library
     db = get_db(ctx, rd, library_id)
     return db, library_id, library_map, default_library
@@ -495,6 +498,7 @@ class Offsets(object):
         if self.last_offset < 0:
             self.last_offset = 0
 
+
 _use_roman = None
 
 
@@ -504,3 +508,12 @@ def get_use_roman():
         from calibre.gui2 import config
         _use_roman = config['use_roman_numerals_for_series_number']
     return _use_roman
+
+
+if iswindows:
+    def fast_now_strftime(fmt):
+        fmt = fmt.encode('mbcs')
+        return time.strftime(fmt).decode('mbcs', 'replace')
+else:
+    def fast_now_strftime(fmt):
+        return time.strftime(fmt).decode('utf-8', 'replace')

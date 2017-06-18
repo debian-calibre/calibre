@@ -15,10 +15,13 @@ from calibre.linux import entry_points, cli_index_strings
 from epub import EPUBHelpBuilder
 from latex import LaTeXHelpBuilder
 
+
 def substitute(app, doctree):
     pass
 
+
 include_pat = re.compile(r'^.. include:: (\S+.rst)', re.M)
+
 
 def source_read_handler(app, docname, source):
     src = source[0]
@@ -31,6 +34,7 @@ def source_read_handler(app, docname, source):
         source_read_handler(app, included_doc_name.partition('.')[0], ss)
         src = src[:m.start()] + ss[0] + src[m.end():]
     source[0] = src
+
 
 CLI_INDEX='''
 .. _cli:
@@ -62,6 +66,10 @@ CLI_INDEX='''
 CLI_PREAMBLE='''\
 .. _{cmdref}:
 
+.. raw:: html
+
+    <style>code {{font-size: 1em; background-color: transparent; font-family: sans-serif }}</style>
+
 ``{cmd}``
 ===================================================================
 
@@ -72,21 +80,49 @@ CLI_PREAMBLE='''\
 {usage}
 '''
 
+
 def titlecase(app, x):
     if x and app.config.language == 'en':
         from calibre.utils.titlecase import titlecase as tc
         x = tc(x)
     return x
 
+
 def generate_calibredb_help(preamble, app):
-    from calibre.library.cli import COMMANDS, get_parser
-    import calibre.library.cli as cli
+    from calibre.db.cli.main import COMMANDS, option_parser_for, get_parser
     preamble = preamble[:preamble.find('\n\n\n', preamble.find('code-block'))]
     preamble += textwrap.dedent('''
 
     :command:`calibredb` is the command line interface to the calibre database. It has
-    several sub-commands, documented below:
+    several sub-commands, documented below.
 
+    :command:`calibredb` can be used to manipulate either a calibre database
+    specified by path or a calibre :guilabel:`Content server` running either on
+    the local machine or over the internet. You can start a calibre
+    :guilabel:`Content server` using either the :command:`calibre-server`
+    program or in the main calibre program click :guilabel:`Connect/share ->
+    Start Content server`. Since :command:`calibredb` can make changes to your
+    calibre libraries, you must setup authentication on the server first. There
+    are two ways to do that:
+
+        * If you plan to connect only to a server running on the same computer,
+          you can simply use the ``--enable-local-write`` option of the
+          content server, to allow any program, including calibredb, running on
+          the local computer to make changes to your calibre data. When running
+          the server from the main calibre program, this option is in
+          :guilabel:`Preferences->Sharing over the net->Advanced`.
+
+        * If you want to enable access over the internet, then you should setup
+          user accounts on the server and use the :option:`--username` and :option:`--password`
+          options to :command:`calibredb` to give it access. You can setup
+          user authentication for :command:`calibre-server` by using the ``--enable-auth``
+          option and using ``--manage-users`` to create the user accounts.
+          If you are running the server from the main calibre program, use
+          :guilabel:`Preferences->Sharing over the net->Require username/password`.
+
+    To connect to a running Content server, pass the URL of the server to the
+    :option:`--with-library` option, see the documentation of that option for
+    details and examples.
     ''')
 
     global_parser = get_parser('')
@@ -98,12 +134,7 @@ def generate_calibredb_help(preamble, app):
 
     lines = []
     for cmd in COMMANDS:
-        args = []
-        if cmd == 'catalog':
-            args = [['doc.xml', '-h']]
-        parser = getattr(cli, cmd+'_option_parser')(*args)
-        if cmd == 'catalog':
-            parser = parser[0]
+        parser = option_parser_for(cmd)()
         lines += ['.. _calibredb-%s-%s:' % (app.config.language, cmd), '']
         lines += [cmd, '~'*20, '']
         usage = parser.usage.strip()
@@ -125,6 +156,7 @@ def generate_calibredb_help(preamble, app):
 
     raw = preamble + '\n\n'+'.. contents::\n  :local:'+ '\n\n' + global_options+'\n\n'+'\n'.join(lines)
     update_cli_doc('calibredb', raw, app)
+
 
 def generate_ebook_convert_help(preamble, app):
     from calibre.ebooks.conversion.cli import create_option_parser, manual_index_strings
@@ -161,6 +193,7 @@ def generate_ebook_convert_help(preamble, app):
 
     update_cli_doc('ebook-convert', raw, app)
 
+
 def update_cli_doc(name, raw, app):
     if isinstance(raw, unicode):
         raw = raw.encode('utf-8')
@@ -180,6 +213,7 @@ def update_cli_doc(name, raw, app):
             os.makedirs(p)
         open(path, 'wb').write(raw)
 
+
 def render_options(cmd, groups, options_header=True, add_program=True, header_level='~'):
     lines = ['']
     if options_header:
@@ -192,30 +226,32 @@ def render_options(cmd, groups, options_header=True, add_program=True, header_le
             lines.append('')
         if desc:
             lines.extend([desc, ''])
-        for opt in sorted(options, cmp=lambda x, y:cmp(x.get_opt_string(),
-                y.get_opt_string())):
-            help = opt.help if opt.help else ''
+        for opt in sorted(options, key=lambda x: x.get_opt_string()):
+            help = opt.help or ''
             help = help.replace('\n', ' ').replace('*', '\\*').replace('%default', str(opt.default))
             help = help.replace('"', r'\ ``"``\ ')
             help = help.replace("'", r"\ ``'``\ ")
             help = mark_options(help)
-            opt = opt.get_opt_string() + ((', '+', '.join(opt._short_opts)) if opt._short_opts else '')
-            opt = '.. option:: '+opt
+            opt_strings = (x.strip() for x in tuple(opt._long_opts or ()) + tuple(opt._short_opts or ()))
+            opt = '.. option:: ' + ', '.join(opt_strings)
             lines.extend([opt, '', '    '+help, ''])
     return lines
 
+
 def mark_options(raw):
-    raw = re.sub(r'(\s+)--(\s+)', r'\1``--``\2', raw)
+    raw = re.sub(r'(\s+)--(\s+)', ur'\1-\u200b-\2', raw)
+
     def sub(m):
         opt = m.group()
         a, b = opt.partition('=')[::2]
         if a in ('--option1', '--option2'):
-            return m.group()
+            return '``' + m.group() + '``'
         a = ':option:`' + a + '`'
         b = (' = ``' + b + '``') if b else ''
         return a + b
     raw = re.sub(r'(--[|()a-zA-Z0-9_=,-]+)', sub, raw)
     return raw
+
 
 def cli_docs(app):
     info = app.builder.info
@@ -269,14 +305,17 @@ def cli_docs(app):
             raw += '\n'+'\n'.join(lines)
             update_cli_doc(cmd, raw, app)
 
+
 def generate_docs(app):
     cli_docs(app)
     template_docs(app)
+
 
 def template_docs(app):
     from template_ref_generate import generate_template_language_help
     raw = generate_template_language_help(app.config.language)
     update_cli_doc('template_ref', raw, app)
+
 
 def localized_path(app, langcode, pagename):
     href = app.builder.get_target_uri(pagename)
@@ -286,11 +325,21 @@ def localized_path(app, langcode, pagename):
         prefix += langcode + '/'
     return prefix + href
 
+
 def add_html_context(app, pagename, templatename, context, *args):
     context['localized_path'] = partial(localized_path, app)
     context['change_language_text'] = cli_index_strings()[5]
+    context['search_box_text'] = cli_index_strings()[6]
+
+
+def guilabel_role(typ, rawtext, text, *args, **kwargs):
+    from sphinx.roles import menusel_role
+    text = text.replace(u'->', u'\N{THIN SPACE}\N{RIGHTWARDS ARROW}\N{THIN SPACE}')
+    return menusel_role(typ, rawtext, text, *args, **kwargs)
+
 
 def setup(app):
+    from docutils.parsers.rst import roles
     app.add_builder(EPUBHelpBuilder)
     app.add_builder(LaTeXHelpBuilder)
     app.connect('source-read', source_read_handler)
@@ -298,8 +347,8 @@ def setup(app):
     app.connect('builder-inited', generate_docs)
     app.connect('html-page-context', add_html_context)
     app.connect('build-finished', finished)
+    roles.register_local_role('guilabel', guilabel_role)
+
 
 def finished(app, exception):
     pass
-
-

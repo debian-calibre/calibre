@@ -271,6 +271,8 @@ class Convert(object):
                 cname[-1] = defname
                 if self.docx.exists('/'.join(cname)):
                     name = name
+            if name and name.startswith('word/word') and not self.docx.exists(name):
+                name = name.partition('/')[2]
             return name
 
         nname = get_name(self.namespace.names['NUMBERING'], 'numbering.xml')
@@ -331,6 +333,7 @@ class Convert(object):
             else:
                 self.theme(fromstring(raw))
 
+        styles_loaded = False
         if sname is not None:
             try:
                 raw = self.docx.read(sname)
@@ -338,6 +341,9 @@ class Convert(object):
                 self.log.warn('Styles %s do not exist' % sname)
             else:
                 self.styles(fromstring(raw), fonts, self.theme)
+                styles_loaded = True
+        if not styles_loaded:
+            self.styles(None, fonts, self.theme)
 
         if nname is not None:
             try:

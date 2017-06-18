@@ -13,7 +13,7 @@ from PyQt5.Qt import (
     QApplication, QDialog, QUrl, QFont, QFontDatabase, QLocale, QFontInfo)
 
 from calibre import prints
-from calibre.constants import (islinux, iswindows, isbsd, isfrozen, isosx,
+from calibre.constants import (islinux, iswindows, isbsd, isfrozen, isosx, is_running_from_develop,
         plugins, config_dir, filesystem_encoding, isxp, DEBUG, __version__, __appname__ as APP_UID)
 from calibre.ptempfile import base_dir
 from calibre.utils.config import Config, ConfigProxy, dynamic, JSONConfig
@@ -148,6 +148,7 @@ def create_defs():
     defs['metadata_diff_mark_rejected'] = False
     defs['tag_browser_show_counts'] = True
     defs['row_numbers_in_book_list'] = True
+    defs['hidpi'] = 'auto'
 
 
 create_defs()
@@ -302,15 +303,6 @@ def min_available_height():
 def available_width():
     desktop       = QCoreApplication.instance().desktop()
     return desktop.availableGeometry().width()
-
-
-def get_windows_color_depth():
-    import win32gui, win32con, win32print
-    hwin = win32gui.GetDesktopWindow()
-    hwindc = win32gui.GetWindowDC(hwin)
-    ans = win32print.GetDeviceCaps(hwindc, win32con.BITSPIXEL)
-    win32gui.ReleaseDC(hwin, hwindc)
-    return ans
 
 
 def get_screen_dpi():
@@ -817,10 +809,19 @@ def choose_osx_app(window, name, title, default_dir='/Applications'):
         return app
 
 
-def pixmap_to_data(pixmap, format='JPEG', quality=90):
+def pixmap_to_data(pixmap, format='JPEG', quality=None):
     '''
     Return the QPixmap pixmap as a string saved in the specified format.
     '''
+    if quality is None:
+        if format.upper() == "PNG":
+            # For some reason on windows with Qt 5.6 using a quality of 90
+            # generates invalid PNG data. Many other quality values work
+            # but we use -1 for the default quality which is most likely to
+            # work
+            quality = -1
+        else:
+            quality = 90
     ba = QByteArray()
     buf = QBuffer(ba)
     buf.open(QBuffer.WriteOnly)
@@ -923,6 +924,29 @@ def show_temp_dir_error(err):
         'Could not create temporary directory, calibre cannot start.') + ' ' + extra, det_msg=traceback.format_exc(), show=True)
 
 
+def setup_hidpi():
+    # This requires Qt >= 5.6
+    has_env_setting = False
+    env_vars = ('QT_AUTO_SCREEN_SCALE_FACTOR', 'QT_SCALE_FACTOR', 'QT_SCREEN_SCALE_FACTORS', 'QT_DEVICE_PIXEL_RATIO')
+    for v in env_vars:
+        if os.environ.get(v):
+            has_env_setting = True
+            break
+    hidpi = gprefs['hidpi']
+    if hidpi == 'on' or (hidpi == 'auto' and not has_env_setting):
+        if DEBUG:
+            prints('Turning on automatic hidpi scaling')
+        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    elif hidpi == 'off':
+        if DEBUG:
+            prints('Turning off automatic hidpi scaling')
+        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, False)
+        for p in env_vars:
+            os.environ.pop(p, None)
+    elif DEBUG:
+        prints('Not controlling automatic hidpi scaling')
+
+
 class Application(QApplication):
 
     shutdown_signal_received = pyqtSignal()
@@ -938,17 +962,9 @@ class Application(QApplication):
         self.headless = headless
         qargs = [i.encode('utf-8') if isinstance(i, unicode) else i for i in args]
         self.pi = plugins['progress_indicator'][0]
-        if not isosx and not headless and hasattr(Qt, 'AA_EnableHighDpiScaling'):
+        if not isosx and not headless:
             # On OS X high dpi scaling is turned on automatically by the OS, so we dont need to set it explicitly
-            # This requires Qt >= 5.6
-            for v in ('QT_AUTO_SCREEN_SCALE_FACTOR', 'QT_SCALE_FACTOR', 'QT_SCREEN_SCALE_FACTORS', 'QT_DEVICE_PIXEL_RATIO'):
-                if os.environ.get(v):
-                    break
-            else:
-                # Should probably make a preference to allow the user to
-                # control this, if needed.
-                # Could have options: auto, off, 1.25, 1.5, 1.75, 2, 2.25, 2.5
-                QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+            setup_hidpi()
         QApplication.setOrganizationName('calibre-ebook.com')
         QApplication.setOrganizationDomain(QApplication.organizationName())
         QApplication.setApplicationVersion(__version__)
@@ -972,12 +988,7 @@ class Application(QApplication):
         if islinux or isbsd:
             self.setAttribute(Qt.AA_DontUseNativeMenuBar, 'CALIBRE_NO_NATIVE_MENUBAR' in os.environ)
         self.setup_styles(force_calibre_style)
-        f = QFont(QApplication.font())
-        if (f.family(), f.pointSize()) == ('Sans Serif', 9):  # Hard coded Qt settings, no user preference detected
-            f.setPointSize(10)
-            QApplication.setFont(f)
-        f = QFontInfo(f)
-        self.original_font = (f.family(), f.pointSize(), f.weight(), f.italic(), 100)
+        self.setup_ui_font()
         if not self.using_calibre_style and self.style().objectName() == 'fusion':
             # Since Qt is using the fusion style anyway, specialize it
             self.load_calibre_style()
@@ -1029,11 +1040,28 @@ class Application(QApplication):
             # Qt 5 bug: https://bugreports.qt-project.org/browse/QTBUG-41125
             self.aboutToQuit.connect(self.flush_clipboard)
 
+    def setup_ui_font(self):
+        f = QFont(QApplication.font())
+        q = (f.family(), f.pointSize())
+        if iswindows:
+            if q == ('MS Shell Dlg 2', 8):  # Qt default setting
+                # Microsoft recommends the default font be Segoe UI at 9 pt
+                # https://msdn.microsoft.com/en-us/library/windows/desktop/dn742483(v=vs.85).aspx
+                f.setFamily('Segoe UI')
+                f.setPointSize(9)
+                QApplication.setFont(f)
+        else:
+            if q == ('Sans Serif', 9):  # Hard coded Qt settings, no user preference detected
+                f.setPointSize(10)
+                QApplication.setFont(f)
+        f = QFontInfo(f)
+        self.original_font = (f.family(), f.pointSize(), f.weight(), f.italic(), 100)
+
     def flush_clipboard(self):
         try:
             if self.clipboard().ownsClipboard():
                 import ctypes
-                ctypes.WinDLL('ole32.dll').OleFlushClipboard()
+                ctypes.WinDLL(b'ole32.dll').OleFlushClipboard()
         except Exception:
             import traceback
             traceback.print_exc()
@@ -1047,20 +1075,15 @@ class Application(QApplication):
         load_builtin_fonts()
 
     def setup_styles(self, force_calibre_style):
-        depth_ok = True
-        if iswindows:
-            # There are some people that still run 16 bit winxp installs. The
-            # new style does not render well on 16bit machines.
-            try:
-                depth_ok = get_windows_color_depth() >= 32
-            except:
-                import traceback
-                traceback.print_exc()
-            if not depth_ok:
-                prints('Color depth is less than 32 bits disabling modern look')
-
-        self.using_calibre_style = force_calibre_style or 'CALIBRE_IGNORE_SYSTEM_THEME' in os.environ or (
-            depth_ok and gprefs['ui_style'] != 'system')
+        if iswindows or isosx:
+            using_calibre_style = gprefs['ui_style'] != 'system'
+        else:
+            using_calibre_style = 'CALIBRE_USE_SYSTEM_THEME' not in os.environ
+        if force_calibre_style:
+            using_calibre_style = True
+        self.using_calibre_style = using_calibre_style
+        if DEBUG:
+            prints('Using calibre Qt style:', self.using_calibre_style)
         if self.using_calibre_style:
             self.load_calibre_style()
 
@@ -1397,9 +1420,8 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
         gprefs.set('migrated_forms_to_qt5', True)
 
 
-_df = os.environ.get('CALIBRE_DEVELOP_FROM', None)
-if _df and os.path.exists(_df):
-    build_forms(_df, check_for_migration=True)
+if is_running_from_develop:
+    build_forms(os.environ['CALIBRE_DEVELOP_FROM'], check_for_migration=True)
 
 
 def event_type_name(ev_or_etype):

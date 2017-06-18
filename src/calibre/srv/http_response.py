@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, httplib, hashlib, uuid, struct, repr as reprlib, time
+import os, httplib, hashlib, uuid, struct, repr as reprlib
 from collections import namedtuple
 from io import BytesIO, DEFAULT_BUFFER_SIZE
 from itertools import chain, repeat, izip_longest
@@ -22,7 +22,7 @@ from calibre.srv.http_request import HTTPRequest, read_headers
 from calibre.srv.sendfile import file_metadata, sendfile_to_socket_async, CannotSendfile, SendfileInterrupted
 from calibre.srv.utils import (
     MultiDict, http_date, HTTP1, HTTP11, socket_errors_socket_closed,
-    sort_q_values, get_translator_for_lang, Cookie)
+    sort_q_values, get_translator_for_lang, Cookie, fast_now_strftime)
 from calibre.utils.speedups import ReadOnlyFileBuffer
 from calibre.utils.monotonic import monotonic
 
@@ -210,21 +210,20 @@ class RequestData(object):  # {{{
     username = None
 
     def __init__(self, method, path, query, inheaders, request_body_file, outheaders, response_protocol,
-                 static_cache, opts, remote_addr, remote_port, translator_cache, tdir):
+                 static_cache, opts, remote_addr, remote_port, is_local_connection, translator_cache, tdir):
 
         (self.method, self.path, self.query, self.inheaders, self.request_body_file, self.outheaders,
          self.response_protocol, self.static_cache, self.translator_cache) = (
             method, path, query, inheaders, request_body_file, outheaders,
             response_protocol, static_cache, translator_cache
         )
-        self.remote_addr, self.remote_port = remote_addr, remote_port
+        self.remote_addr, self.remote_port, self.is_local_connection = remote_addr, remote_port, is_local_connection
         self.opts = opts
         self.status_code = httplib.OK
         self.outcookie = Cookie()
         self.lang_code = self.gettext_func = self.ngettext_func = None
         self.set_translator(self.get_preferred_language())
         self.tdir = tdir
-        self.allowed_book_ids = {}
 
     def generate_static_output(self, name, generator, content_type='text/html; charset=UTF-8'):
         ans = self.static_cache.get(name)
@@ -431,7 +430,8 @@ class HTTPConnection(HTTPRequest):
         data = RequestData(
             self.method, self.path, self.query, inheaders, request_body_file,
             outheaders, self.response_protocol, self.static_cache, self.opts,
-            self.remote_addr, self.remote_port, self.translator_cache, self.tdir
+            self.remote_addr, self.remote_port, self.is_local_connection,
+            self.translator_cache, self.tdir
         )
         self.queue_job(self.run_request_handler, data)
 
@@ -526,7 +526,7 @@ class HTTPConnection(HTTPRequest):
             return
         line = '%s port-%s %s %s "%s" %s %s' % (
             self.remote_addr, self.remote_port, username or '-',
-            time.strftime('%d/%b/%Y:%H:%M:%S %z'),
+            fast_now_strftime('%d/%b/%Y:%H:%M:%S %z'),
             force_unicode(self.request_line or '', 'utf-8'),
             status_code, ('-' if response_size is None else response_size))
         self.access_log(line)

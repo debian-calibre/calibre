@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -345,11 +345,11 @@ class Ui_Form(object):
         self.generate_titles.setText(_("&Titles"))
         self.generate_series.setToolTip(_("List of series books, sorted by Series"))
         self.generate_series.setText(_("&Series"))
-        self.generate_genres.setToolTip(_("List of books, sorted by Genre"))
+        self.generate_genres.setToolTip(_("List of books, sorted by genre"))
         self.generate_genres.setText(_("&Genres"))
-        self.genre_source_field.setToolTip(_("Field containing Genres"))
+        self.genre_source_field.setToolTip(_("Field containing genres"))
         self.generate_recently_added.setToolTip(_("List of books, sorted by date added to calibre"))
-        self.generate_recently_added.setText(_("&Recently Added"))
+        self.generate_recently_added.setText(_("&Recently added"))
         self.generate_descriptions.setToolTip(_("Individual descriptions of books with cover thumbs, sorted by author"))
         self.generate_descriptions.setText(_("&Descriptions"))
         self.prefix_rules_gb.setToolTip(_("The first matching prefix rule applies a prefix to book listings in the generated catalog."))

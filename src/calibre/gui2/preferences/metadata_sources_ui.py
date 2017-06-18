@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -118,7 +118,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_find_first_edition_date.setText(_("Use published date of \"first edition\" (from worldcat.org)"))
+        self.opt_find_first_edition_date.setText(_("Use &published date of \"first edition\" (from worldcat.org)"))
         self.label_3.setText(_("Max. &time to wait after first match is found:"))
         self.label_4.setText(_("Max. time to wait after first &cover is found:"))
         self.opt_wait_after_first_cover_result.setSuffix(_(" secs"))
@@ -126,7 +126,7 @@ class Ui_Form(object):
 "<p>Note that this option will only make a practical difference if one of the metadata sources has a genre like tag set for the book you are searching for. Most often, they all have large tag sets."))
         self.opt_fewer_tags.setStatusTip(_("Prefer smaller tag sets when picking tags from different metadata sources"))
         self.opt_fewer_tags.setText(_("Prefer &fewer tags"))
-        self.opt_swap_author_names.setText(_("Swap author names from FN LN to LN, FN"))
+        self.opt_swap_author_names.setText(_("Swap &author names from FN LN to LN, FN"))
         self.groupBox_2.setTitle(_("Downloaded metadata fields"))
         self.fields_view.setToolTip(_("If you uncheck any fields, metadata for those fields will not be downloaded"))
         self.select_all_button.setText(_("&Select all"))
@@ -142,10 +142,10 @@ class Ui_Form(object):
         self.label.setText(_("Disable any metadata sources you do not want by unchecking them. You can also set the cover priority. Covers from sources that have a higher (smaller) priority will be preferred when bulk downloading metadata.\n"
 ""))
         self.label_5.setText(_("Sources with a red X next to their names must be configured before they will be used. "))
-        self.configure_plugin_button.setText(_("Configure selected source"))
+        self.configure_plugin_button.setText(_("C&onfigure selected source"))
         self.opt_append_comments.setToolTip(_("<p>When downloading comments, append the downloaded comments to any existing comment, instead of overwriting them."))
         self.opt_append_comments.setStatusTip(_("When downloading comments, append the downloaded comments to any existing comment, instead of overwriting them."))
-        self.opt_append_comments.setText(_("Append &comments to existing"))
+        self.opt_append_comments.setText(_("Append comments to &existing"))
         self.tag_map_rules_button.setText(_("Create &rules to filter/transform tags"))
 
 

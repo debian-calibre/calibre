@@ -97,7 +97,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label_3.setText(_("&Number of Colors:"))
+        self.label_3.setText(_("&Number of colors:"))
         self.opt_colors.setSpecialValueText(_("off"))
         self.opt_dont_normalize.setText(_("Disable &normalize"))
         self.opt_keep_aspect_ratio.setText(_("Keep &aspect ratio"))

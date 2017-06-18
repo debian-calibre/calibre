@@ -14,8 +14,10 @@ from calibre.web.feeds.news import BasicNewsRecipe
 
 class PrivateEyeRecipe(BasicNewsRecipe):
     title = 'Private Eye Online'
+    title_with_date = 'Private Eye Online'
     title_author = 'Private Eye'
     __author__ = 'Sophist at sodalis.co.uk'
+    issue_no = ''
     description = '''Private Eye is a fortnightly British satirical news and current affairs magazine,\
  edited by Ian Hislop, offering a unique blend of humour, social and political observations and\
  investigative journalism. This e-book is a download of the online-edition. The full edition is\
@@ -103,6 +105,7 @@ class PrivateEyeRecipe(BasicNewsRecipe):
 
     # Process the Index page to get the content for the ebook
     def parse_index(self):
+        self.log.info('Private Eye: Parse Index: %s' % self.INDEX)
         self.page_index = []
 
         soup = self.index_to_soup(self.INDEX)
@@ -124,13 +127,12 @@ class PrivateEyeRecipe(BasicNewsRecipe):
                 self.cover_url = self.DOMAIN + img['src']
                 filename = img['src'].split('/')[-1]
                 self.issue_no = filename.replace('_big.jpg', '')
-                self.conversion_options['series_index'] = self.issue_no
                 self.log.debug('Cover image found. Issue: %s' % self.issue_no)
                 break
         else:
             self.log.warning('Cover image NOT found')
 
-        # Get publication date as 14 days before next publication date
+        # Get publication cover date as 12 days before next publication date
         for tag in soup.findAll('span', {'class': 'only-smallest'}):
             tag_contents = tag.contents
             if tag_contents[0].string.lower().split()[:2] == ["next", "issue"]:
@@ -141,13 +143,13 @@ class PrivateEyeRecipe(BasicNewsRecipe):
                         " ".join((day, month, year)),
                         "%d %B %Y"
                     )
-                    date = date - timedelta(14)
+                    date = date - timedelta(12)
                     self.publication_date = datetime.strftime(
                         date,
                         "%d %B %Y"
                         ).lstrip("0")
                     self.log.debug("Publication date: %s" % self.publication_date)
-                    self.title += " " + datetime.strftime(date, "%Y-%m-%d")
+                    self.title_with_date = self.title + datetime.strftime(date, " %Y-%m-%d")
                     break
                 except:
                     self.log.warning(
@@ -229,4 +231,19 @@ It offers a unique blend of humour, social and political observations and invest
             date="")
         self.page_index_append("About Private Eye")
 
+        self.log.info('Private Eye: Parse Index complete')
+
         return self.page_index
+
+    def postprocess_book(self, oeb, opts, log):
+        m = oeb.metadata
+        m.clear('title')
+        m.add('title', self.title_with_date)
+        m.clear('authors')
+        m.add('authors', self.title_author)
+        m.clear('author_sort')
+        m.add('author_sort', self.title_author)
+        m.clear('series')
+        m.add('series', self.title)
+        m.clear('series_index')
+        m.add('series_index', self.issue_no)

@@ -21,8 +21,8 @@ from read_book.prefs.font_size import change_font_size_by
 from read_book.touch import set_left_margin_handler, set_right_margin_handler
 from read_book.toc import update_visible_toc_nodes
 from read_book.goto import get_next_section
-from book_list.theme import get_color
-from utils import parse_url_params, username_key
+from book_list.theme import get_color, get_font_family
+from utils import parse_url_params, username_key, is_ios
 
 LOADING_DOC = '''
 <!DOCTYPE html>
@@ -34,8 +34,8 @@ LOADING_DOC = '''
 __SCRIPT__
 end_script
 </head>
-<body>
-<div style="font-family: sans-serif; font-size:larger; font-weight: bold; margin-top:48vh; text-align:center">
+<body style="font-family: __FONT__">
+<div style="font-size:larger; font-weight: bold; margin-top:48vh; text-align:center">
 __BS__
 </div>
 </body>
@@ -47,9 +47,29 @@ add_extra_css(def():
     sel = '.book-side-margin'
     ans = build_rule(sel, cursor='pointer', color='rgba(0, 0, 0, 0)', text_align='center', height='100vh', user_select='none', display='flex', align_items='center', justify_content='center')
     ans += build_rule(sel + ':hover', background_color=get_color('window-background') + ' !important', color=get_color('window-foreground') + ' !important')
-    ans += build_rule(sel + ':active > svg', color='red', transform='scale(2)')
+    ans += build_rule(sel + ':active > svg', color=get_color('window-hover-foreground'), transform='scale(2)')
     return ans
 )
+
+
+def margin_elem(sd, which, id, onclick):
+    sz = sd.get(which, 20)
+    fsz = min(max(0, sz - 6), 12)
+    ans = E.div(
+        style=f'height:{sz}px; overflow: hidden; font-size:{fsz}px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center',
+        id=id,
+        E.div(), E.div()
+    )
+    if onclick:
+        ans.addEventListener('click', onclick)
+    if is_ios and which is 'margin_bottom' and not window.navigator.standalone and not /CriOS\//.test(window.navigator.userAgent):
+        # On iOS Safari 100vh includes the size of the navbar and there is no way to
+        # go fullscreen, so to make the bottom bar visible we add a margin to
+        # the bottom bar. CriOS is for Chrome on iOS. And in standalone
+        # (web-app mode) there is no nav bar.
+        ans.style.marginBottom = '25px'
+    return ans
+
 
 class View:
 
@@ -62,14 +82,14 @@ class View:
         right_margin = E.div(svgicon('caret-right'), style='width:{}px;'.format(sd.get('margin_right', 20)), class_='book-side-margin', id='book-right-margin', onclick=self.right_margin_clicked)
         set_right_margin_handler(right_margin)
         container.appendChild(
-            E.div(style='width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch',  # container for horizontally aligned panels
-                  E.div(style='display: flex; flex-direction: column; align-items: stretch; flex-grow:2',  # container for iframe and any other panels in the same column
-                    E.div(style='flex-grow: 2; display:flex; align-items: stretch',  # container for iframe and its overlay
+            E.div(style='max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch',  # container for horizontally aligned panels
+                  E.div(style='max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2',  # container for iframe and any other panels in the same column
+                    E.div(style='max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch',  # container for iframe and its overlay
                         left_margin,
                         E.div(style='flex-grow:2; display:flex; align-items:stretch; flex-direction: column', # container for top and bottom margins
-                            E.div(style='height:{}px; width:100%; padding: 0; cursor: pointer'.format(sd.get('margin_top', 20)), id='book-top-margin', onclick=self.top_margin_clicked),
-                            E.iframe(id=iframe_id, seamless=True, sandbox='allow-popups allow-scripts', style='flex-grow: 2'),
-                            E.div(style='height:{}px; width:100%; padding: 0'.format(sd.get('margin_bottom', 20)), id='book-bottom-margin'),
+                            margin_elem(sd, 'margin_top', 'book-top-margin', self.top_margin_clicked),
+                            E.iframe(id=iframe_id, seamless=True, sandbox='allow-popups allow-scripts', style='flex-grow: 2', allowfullscreen='true'),
+                            margin_elem(sd, 'margin_bottom', 'book-bottom-margin'),
                         ),
                         right_margin,
                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
@@ -99,6 +119,8 @@ class View:
             'show_chrome': self.show_chrome,
             'bump_font_size': self.bump_font_size,
             'find_in_spine': self.on_find_in_spine,
+            'request_size': self.on_request_size,
+            'print': self.on_print,
         }
         self.currently_showing = {}
 
@@ -123,6 +145,23 @@ class View:
 
     def forward_gesture(self, gesture):
         self.send_message('gesture_from_margin', gesture=gesture)
+
+    def iframe_size(self):
+        iframe = self.iframe
+        l, r = document.getElementById('book-left-margin'), document.getElementById('book-right-margin')
+        w = r.offsetLeft - l.offsetLeft - iframe.offsetLeft
+        t, b = document.getElementById('book-top-margin'), document.getElementById('book-bottom-margin')
+        h = b.offsetTop - t.offsetTop - iframe.offsetTop
+        return w, h
+
+    def on_request_size(self, data):
+        # On iOS/Safari window.innerWidth/Height are incorrect inside an iframe
+        window.scrollTo(0, 0)  # ensure the window is at 0 because otherwise it sometimes moves down a bit on mobile thanks to the disappearing nav bar
+        w, h = self.iframe_size()
+        self.send_message('window_size', width=w, height=h)
+
+    def on_print(self, data):
+        print(data.string)
 
     def find(self, text, backwards):
         self.send_message('find', text=text, backwards=backwards, searched_in_spine=False)
@@ -200,7 +239,8 @@ class View:
         main_js(None)
         self.src_doc = LOADING_DOC.replace(
             '__BS__', _('Bootstrapping book reader...')).replace(
-            '__SCRIPT__', iframe_script)
+            '__SCRIPT__', iframe_script).replace(
+            '__FONT__', get_font_family().replace('"', '&quot;'))
 
     def init_iframe(self, iframe_script):
         self.encrypted_communications = False
@@ -232,7 +272,8 @@ class View:
 
     def on_iframe_ready(self, data):
         messenger.reset()
-        self.send_message('initialize', secret=messenger.secret, translations=get_translations())
+        w, h = self.iframe_size()
+        self.send_message('initialize', secret=messenger.secret, translations=get_translations(), width=w, height=h)
         self.encrypted_communications = True
         self.iframe_ready = True
         self.do_pending_load()
@@ -250,10 +291,12 @@ class View:
         ans = resolve_color_scheme()
         if apply_to_margins:
             for which in 'left top right bottom'.split(' '):
-                s = document.getElementById('book-{}-margin'.format(which)).style
+                m = document.getElementById('book-{}-margin'.format(which))
+                s = m.style
                 if which is 'top' or which is 'bottom':
                     s.color = ans.foreground  # Setting a color for the side margins causes the hover arrow to become visible
                 s.backgroundColor = ans.background
+            m.parentNode.style.backgroundColor = ans.background  # this is needed on iOS where the bottom margin has its own margin, so we dont want the body background color to bleed through
         return ans
 
     def on_resize(self):
@@ -308,6 +351,11 @@ class View:
             name = cfiname
             pos.type, pos.cfi = 'cfi', internal_cfi
         self.show_name(name, initial_position=pos)
+        sd = get_session_data()
+        c = sd.get('controls_help_shown_count', 0)
+        if c < 1:
+            self.overlay.show_controls_help()
+            sd.set('controls_help_shown_count', c + 1)
 
     def redisplay_book(self):
         self.display_book(self.book)
@@ -382,6 +430,13 @@ class View:
             self.goto_named_destination(toc_node.dest, toc_node.frag)
 
     def on_update_cfi(self, data):
+        if self.overlay.is_visible or self.search_overlay.is_visible:
+            # Chrome on Android stupidly resizes the viewport when the on
+            # screen keyboard is displayed. This means that the push_state()
+            # below causes the overlay to be closed, making it impossible to
+            # type anything into text boxes.
+            # See https://bugs.chromium.org/p/chromium/issues/detail?id=404315
+            return
         self.currently_showing.bookpos = data.cfi
         push_state(self.ui.url_data, replace=data.replace_history, mode=read_book_mode)
         username = get_interface_data().username
@@ -391,6 +446,7 @@ class View:
         self.book.last_read_position[unkey] = data.cfi
         self.ui.db.update_last_read_time(self.book)
         lrd = {'device':get_device_uuid(), 'cfi':data.cfi, 'pos_frac':data.progress_frac}
+        self.update_read_percent(data.progress_frac)
         key = self.book.key
         if username:
             ajax_send('book-set-last-read-position/{library_id}/{book_id}/{fmt}'.format(
@@ -398,6 +454,18 @@ class View:
                     if end_type is not 'load':
                         print('Failed to update last read position, AJAX call did not succeed')
             )
+
+    def update_read_percent(self, pos_frac):
+        sd = get_session_data()
+        div = document.getElementById('book-bottom-margin')
+        if not div:
+            return
+        pcelem = div.lastChild
+        percent = min(100, max(Math.round(pos_frac * 100), 0))
+        text = percent + '%'
+        if text is not pcelem.textContent:
+            pcelem.textContent = text
+        pcelem.style.display = 'block' if sd.get('margin_bottom', 20) > 5 else 'none'
 
     def on_update_toc_position(self, data):
         update_visible_toc_nodes(data.visible_anchors)
@@ -422,9 +490,11 @@ class View:
         )
         self.encrypted_communications = True
 
-    def on_content_loaded(self):
+    def on_content_loaded(self, data):
         self.hide_loading()
-        # self.overlay.show()
+        frac = data.progress_frac or 0
+        self.update_read_percent(frac)
+        window.scrollTo(0, 0)  # ensure window is at 0 on mobile where the navbar causes issues
 
     def update_font_size(self):
         self.send_message('change_font_size', base_font_size=get_session_data().get('base_font_size'))
