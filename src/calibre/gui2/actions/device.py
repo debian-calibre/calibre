@@ -13,8 +13,6 @@ from calibre.constants import get_osx_version, isosx, iswindows
 from calibre.gui2 import info_dialog, question_dialog
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.smartdevice import SmartdeviceDialog
-from calibre.library.server import server_config as content_server_config
-from calibre.utils.config import tweaks
 from calibre.utils.icu import primary_sort_key
 from calibre.utils.smtp import config as email_config
 
@@ -78,13 +76,13 @@ class ShareConnMenu(QMenu):  # {{{
         from calibre.utils.mdns import get_external_ip, verify_ipV4_address
         text = _('Start Content server')
         if running:
-            listen_on = (verify_ipV4_address(tweaks['server_listen_on']) or
-                    get_external_ip())
-            try :
-                cs_port = content_server_config().parse().port
-                ip_text = _(' [%(ip)s, port %(port)d]')%dict(ip=listen_on,
-                        port=cs_port)
-            except:
+            from calibre.srv.opts import server_config
+            opts = server_config()
+            listen_on = verify_ipV4_address(opts.listen_on) or get_external_ip()
+            try:
+                ip_text = _(' [%(ip)s, port %(port)d]')%dict(
+                    ip=listen_on, port=opts.port)
+            except Exception:
                 ip_text = ' [%s]'%listen_on
             text = _('Stop Content server') + ip_text
         self.toggle_server_action.setText(text)
@@ -224,7 +222,7 @@ class ConnectShareAction(InterfaceAction):
         if self.gui.content_server is None:
             self.gui.start_content_server()
         else:
-            self.gui.content_server.threaded_exit()
+            self.gui.content_server.stop()
             self.stopping_msg = info_dialog(self.gui, _('Stopping'),
                     _('Stopping server, this could take up to a minute, please wait...'),
                     show_copy_button=False)

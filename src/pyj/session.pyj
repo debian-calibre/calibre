@@ -12,6 +12,7 @@ defaults = {
     'view_mode': 'cover_grid',
     'sort': 'timestamp.desc',  # comma separated list of items of the form: field.order
     'last_sort_order': {},
+    'show_all_metadata': False, # show all metadata fields in the book details panel
 
     # Tag Browser settings
     'partition_method': 'first letter',  # other choices: 'disable', 'partition'
@@ -33,6 +34,7 @@ defaults = {
     'current_color_scheme': 'white',
     'user_color_schemes': {},
     'base_font_size': 16,
+    'controls_help_shown_count': 0,
 }
 
 is_local_setting = {
@@ -46,6 +48,7 @@ is_local_setting = {
     'columns_per_screen': True,
     'current_color_scheme': True,
     'base_font_size': True,
+    'controls_help_shown_count': True,
 }
 
 
@@ -158,7 +161,6 @@ default_interface_data = {
     'gui_timestamp_display_format': 'dd MMM yyyy',
     'gui_last_modified_display_format': 'dd MMM yyyy',
     'use_roman_numerals_for_series_number': True,
-    'allow_console_print':False,
     'default_library_id': None,
     'library_map': None,
     'icon_map': {},

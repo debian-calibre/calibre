@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
+# Jonatan Nyberg, 2016-2017
 # Merarom <merarom@yahoo.es>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 08:55+0530\n"
-"PO-Revision-Date: 2017-05-11 11:59+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
+"POT-Creation-Date: 2017-05-30 13:15+0530\n"
+"PO-Revision-Date: 2017-06-01 06:17+0000\n"
+"Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +41,7 @@ msgstr "En calibre insticksmodul. Användbara medlemmar inkluderar:"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
-msgstr "``self.plugin_path``: Lagrar sökvägen till ZIP-filen som innehåller"
+msgstr "``self.plugin_path``: Lagrar sökväg till ZIP-filen som innehåller"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
@@ -430,7 +430,7 @@ msgstr "En insticksmodul som är associerad med en viss uppsättning filtyper."
 msgid ""
 "Set of file types for which this plugin should be run. Use '*' for all file "
 "types. For example: ``{'lit', 'mobi', 'prc'}``"
-msgstr "Uppsättning av filtyper som denna insticksmodul ska köra. Använd '*' för alla filtyper. Till exempel: ``{'lit', 'mobi', 'prc'}``"
+msgstr "Uppsättning av filtyper som denna insticksmodul ska köra. Använd \"*\" för alla filtyper. Till exempel: ``{'lit', 'mobi', 'prc'}``"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.on_import:1
@@ -1031,9 +1031,9 @@ msgstr "Om True, denna indata insticksmodul genererar en samling bilder, en per 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.core_usage:1
 msgid ""
-"Number of CPU cores used by this plugin A value of -1 means that it uses all"
-" available cores"
-msgstr "Antal CPU-kärnor används av detta insticksmodul Ett värde av -1 betyder att den använder alla tillgängliga kärnor"
+"Number of CPU cores used by this plugin. A value of -1 means that it uses "
+"all available cores"
+msgstr "Antal CPU-kärnor som används av denna insticksmodul. Ett värde av -1 betyder att den använder alla tillgängliga kärnor"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.for_viewer:1
@@ -2018,9 +2018,9 @@ msgid ""
 "than to later retrieve the extension, the name is ignored in cases where the"
 " device uses a template to generate the file name, which most do. The second"
 " value in the returned tuple indicated whether the format is future-dated. "
-"Return True if it is, otherwise return False. Calibre will display a dialog "
+"Return True if it is, otherwise return False. calibre will display a dialog "
 "to the user listing all future dated books."
-msgstr "Det andra värdet är i sig en 2-värdes tupel. Det första värdet i tupeln anger om ett bokformat ska skickas till enheten. Avsikten är att möjliggöra kontroll av att boken på enheten är densamma som boken i calibre. Värdet måste vara None om ingen bok ska skickas, annars återges basfilnamnet på enheten (en sträng som foobar.epub). Var noga med att inkludera en förlängning i namnet. Enhets delsystem kommer att bygga ett send_books jobb för alla böcker med inte- None återgivna värden. Observera: annat än att senare hämta filtyp, är namnet ignoreras i de fall där enheten använder en mall för att generera filnamnet, vilket de flesta gör. Det andra värdet i den återgivna tupeln anges om formatet är framtidsdaterad. Återge True om det är, annars återge False. calibre visar en dialogruta där användaren listar alla framtida daterade böcker."
+msgstr "Det andra värdet är i sig ett 2-värde tupel. Det första värdet i tupeln anger om ett bokformat ska skickas till enheten. Avsikten är att verifiera att boken på enheten är densamma som boken i calibre. Detta värde måste vara 'None' om ingen bok ska skickas, annars returnera basfilnamnet på enheten (en sträng som foobar.epub). Var noga med att inkludera förlängningen i namnet. Enhetsdelsystemet kommer att konstruera ett send_books-jobb för alla böcker med 'not-None' återförda värden. Obs! Annat än att senare hämta tillägget ignoreras namnet i de fall där enheten använder en mall för att generera filnamnet, vilket de flesta gör. Det andra värdet i den returnerade tupeln angav om formatet är framtida daterat. Återvänd True om det är, annars returnera False. calibre kommer att visa en dialogruta för användaren som listar alla framtida daterade böcker."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:27
@@ -2531,7 +2531,7 @@ msgstr "Anropas när boken listan som visas i calibre förändringas. För närv
 msgid ""
 "This method should enable/disable this action and its sub actions as "
 "appropriate for the location."
-msgstr "Denna metod bör aktivera/avaktivera denna åtgärd och dess underåtgärder som är lämpliga för platsen."
+msgstr "Denna metod bör aktivera/inaktivera denna åtgärd och dess underåtgärder som är lämpliga för platsen."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_changed:1
@@ -2826,7 +2826,7 @@ msgid ""
 "This method is called once when the viewer is created. Use it to make any "
 "customizations you want to the viewer's user interface. For example, you can"
 " modify the toolbars via ui.tool_bar and ui.tool_bar2."
-msgstr "Denna metod anropas en gång när visaren skapas. Använd den för att göra några anpassningar som du vill till tittarens användargränssnitt. Till exempel kan du ändra verktygsfältet via ui.tool_bar och ui.tool_bar2."
+msgstr "Denna metod anropas en gång när visaren skapas. Använd den för att göra några justeringar till visarens användargränssnitt. Till exempel kan du ändra verktygsfältet via ui.tool_bar och ui.tool_bar2."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.customize_context_menu:1

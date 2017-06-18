@@ -22,11 +22,11 @@ entry_points = {
              'ebook-polish         = calibre.ebooks.oeb.polish.main:main',
              'markdown-calibre     = calibre.ebooks.markdown.__main__:run',
              'web2disk             = calibre.web.fetch.simple:main',
-             'calibre-server       = calibre.library.server.main:main',
+             'calibre-server       = calibre.srv.standalone:main',
              'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
              'lrs2lrf              = calibre.ebooks.lrf.lrs.convert_from:main',
              'calibre-debug        = calibre.debug:main',
-             'calibredb            = calibre.library.cli:main',
+             'calibredb            = calibre.db.cli.main:main',
              'calibre-parallel     = calibre.utils.ipc.worker:main',
              'calibre-customize    = calibre.customize.ui:main',
              'calibre-complete     = calibre.utils.complete:main',
@@ -402,15 +402,11 @@ _ebook_edit() {
 ''' % (opt_lines, '|'.join(tweakable_fmts)) + '\n\n').encode('utf-8'))
 
     def do_calibredb(self, f):
-        import calibre.library.cli as cli
+        from calibre.db.cli.main import COMMANDS, option_parser_for
         from calibre.customize.ui import available_catalog_formats
         parsers, descs = {}, {}
-        for command in cli.COMMANDS:
-            op = getattr(cli, '%s_option_parser'%command)
-            args = [['t.epub']] if command == 'catalog' else []
-            p = op(*args)
-            if isinstance(p, tuple):
-                p = p[0]
+        for command in COMMANDS:
+            p = option_parser_for(command)()
             parsers[command] = p
             lines = [x.strip().partition('.')[0] for x in p.usage.splitlines() if x.strip() and
                      not x.strip().startswith('%prog')]
@@ -515,7 +511,7 @@ def write_completion(bash_comp_dest, zsh):
     from calibre.ebooks.metadata.sources.cli import option_parser as fem_op
     from calibre.gui2.main import option_parser as guiop
     from calibre.utils.smtp import option_parser as smtp_op
-    from calibre.library.server.main import option_parser as serv_op
+    from calibre.srv.standalone import create_option_parser as serv_op
     from calibre.ebooks.oeb.polish.main import option_parser as polish_op, SUPPORTED
     from calibre.ebooks.oeb.polish.import_book import IMPORTABLE
     from calibre.debug import option_parser as debug_op
@@ -936,15 +932,17 @@ complete -F _'''%(opts, words) + fname + ' ' + name +"\n\n").encode('utf-8')
 
 
 pics = {'jpg', 'jpeg', 'gif', 'png', 'bmp'}
+pics = list(sorted(pics))  # for reproducability
 
 
 def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(),
                   file_map={}):
     opts = ' '.join(options(op))
     exts.extend([i.upper() for i in exts])
-    exts='|'.join(exts)
+    exts='|'.join(sorted(exts))
     fname = name.replace('-', '_')
-    spics = '|'.join(tuple(pics) + tuple(x.upper() for x in pics))
+    spics = pics + [i.upper() for i in pics]
+    spics = '|'.join(sorted(spics))
     special_exts_template = '''\
       %s )
            _filedir %s
@@ -954,7 +952,7 @@ def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(),
     extras = []
     for eopts, eexts in ((cover_opts, "${pics}"), (opf_opts, "'@(opf)'")):
         for opt in eopts:
-            extras.append(special_exts_template%(opt, sorted(eexts)))
+            extras.append(special_exts_template%(opt, eexts))
     extras = '\n'.join(extras)
 
     return '_'+fname+'()'+\
@@ -985,7 +983,7 @@ def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(),
 
 }
 complete -o filenames -F _'''%dict(pics=spics,
-    opts=opts, extras=extras, exts=sorted(exts)) + fname + ' ' + name +"\n\n"
+    opts=opts, extras=extras, exts=exts) + fname + ' ' + name +"\n\n"
 
 
 VIEWER = '''\
@@ -1146,7 +1144,7 @@ def cli_index_strings():
     ' are in :file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`.'), _(
         'Documented commands'), _('Undocumented commands'), _(
         'You can see usage for undocumented commands by executing them without arguments in a terminal.'), _(
-            'Change language')
+            'Change language'), _('Search')
 
 
 if __name__ == '__main__':

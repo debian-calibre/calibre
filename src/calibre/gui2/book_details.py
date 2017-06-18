@@ -2,7 +2,7 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
-import cPickle
+import cPickle, re
 from binascii import unhexlify
 from collections import namedtuple
 from functools import partial
@@ -40,9 +40,10 @@ InternetSearch = namedtuple('InternetSearch', 'author where')
 def css():
     global _css
     if _css is None:
-        _css = P('templates/book_details.css', data=True).decode('utf-8')
+        val = P('templates/book_details.css', data=True).decode('utf-8')
         col = QApplication.instance().palette().color(QPalette.Link).name()
-        _css = _css.replace('LINK_COLOR', col)
+        val = val.replace('LINK_COLOR', col)
+        _css = re.sub(ur'/\*.*?\*/', '', val, flags=re.DOTALL)
     return _css
 
 
@@ -220,7 +221,7 @@ def details_context_menu_event(view, ev, book_info):  # {{{
             data = el.attribute('data-item')
             author = el.toPlainText() if unicode(el.attribute('calibre-data')) == u'authors' else None
             if url and not url.startswith('search:'):
-                for a, t in [('copy', _('&Copy Link')),
+                for a, t in [('copy', _('&Copy link')),
                 ]:
                     ac = getattr(book_info, '%s_link_action'%a)
                     ac.current_url = url
@@ -237,6 +238,9 @@ def details_context_menu_event(view, ev, book_info):  # {{{
                     menu.sia = sia = create_search_internet_menu(book_info.search_internet, author)
                     menu.addMenu(sia)
                     search_internet_added = True
+                if hasattr(book_info, 'search_requested'):
+                    menu.addAction(_('Search calibre for %s') % author,
+                                   lambda : book_info.search_requested('authors:"={}"'.format(author.replace('"', r'\"'))))
             if data:
                 try:
                     field, value, book_id = cPickle.loads(unhexlify(data))
@@ -366,10 +370,10 @@ class CoverView(QWidget):  # {{{
     def contextMenuEvent(self, ev):
         from calibre.gui2.open_with import populate_menu, edit_programs
         cm = QMenu(self)
-        paste = cm.addAction(_('Paste Cover'))
-        copy = cm.addAction(_('Copy Cover'))
-        remove = cm.addAction(_('Remove Cover'))
-        gc = cm.addAction(_('Generate Cover from metadata'))
+        paste = cm.addAction(_('Paste cover'))
+        copy = cm.addAction(_('Copy cover'))
+        remove = cm.addAction(_('Remove cover'))
+        gc = cm.addAction(_('Generate cover from metadata'))
         cm.addSeparator()
         if not QApplication.instance().clipboard().mimeData().hasImage():
             paste.setEnabled(False)
@@ -385,7 +389,7 @@ class CoverView(QWidget):  # {{{
         else:
             m.addSeparator()
             m.addAction(_('Add another application to open cover...'), self.choose_open_with)
-            m.addAction(_('Edit Open With applications...'), partial(edit_programs, 'cover_image', self))
+            m.addAction(_('Edit Open with applications...'), partial(edit_programs, 'cover_image', self))
             cm.ocw = m
             cm.addMenu(m)
         cm.si = m = create_search_internet_menu(self.search_internet.emit)
@@ -757,6 +761,7 @@ class BookDetails(QWidget):  # {{{
         self._layout.addWidget(self.cover_view)
         self.book_info = BookInfo(vertical, self)
         self.book_info.search_internet = self.search_internet
+        self.book_info.search_requested = self.search_requested.emit
         self._layout.addWidget(self.book_info)
         self.book_info.link_clicked.connect(self.handle_click)
         self.book_info.remove_format.connect(self.remove_specific_format)

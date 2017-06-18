@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 08:55+0530\n"
-"PO-Revision-Date: 2017-05-07 16:05+0000\n"
+"POT-Creation-Date: 2017-05-30 13:15+0530\n"
+"PO-Revision-Date: 2017-06-02 13:15+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid ""
 "control the folder structure and file name when saving files from the "
 "calibre library to the disk or e-book reader. It is also used to define "
 "\"virtual\" columns that contain data from other columns and so on."
-msgstr "Le langage de modèle de calibre est utilisé dans divers endroits. Il est utilisé pour contrôler la structure des dossiers et le nom des fichiers lors de la sauvegarde des fichiers de la bibliothèque calibre sur le disque ou sur votre dispositif de lecture. Il est également utilisé pour définir les colonnes «virtuelles» qui contiennent des données provenant d'autres colonnes et ainsi de suite."
+msgstr "Le langage de modèle de calibre est utilisé dans divers endroits. Il est utilisé pour contrôler la structure des dossiers et le nom des fichiers lors de la sauvegarde des fichiers de la bibliothèque calibre sur le disque ou sur votre périphérique de lecture. Il est également utilisé pour définir les colonnes «virtuelles» qui contiennent des données provenant d'autres colonnes et ainsi de suite."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:9
 msgid ""
@@ -41,7 +41,7 @@ msgid ""
 "curly brackets that are then replaced by the corresponding metadata from the"
 " book being processed. So, for example, the default template used for saving"
 " books to device in calibre is::"
-msgstr "Le langage de modèle de base est très simple, mais dispose de fonctionnalités avancées très puissantes. L'idée de base est que le modèle se compose de texte et de noms entre accolades qui sont ensuite remplacés par les métadonnées correspondantes de l'ouvrage en cours de traitement. Ainsi, par exemple, le modèle par défaut utilisé dans calibre pour l'enregistrement des livres sur un appareil est::"
+msgstr "Le langage de modèle de base est très simple, mais dispose de fonctionnalités avancées très puissantes. L'idée de base est que le modèle se compose de texte et de noms entre accolades qui sont ensuite remplacés par les métadonnées correspondantes de l'ouvrage en cours de traitement. Ainsi, par exemple, le modèle par défaut utilisé dans calibre pour l'enregistrement des livres sur un périphérique est::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:13
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:21
@@ -316,10 +316,11 @@ msgid ""
 "``format_number(template)`` -- interprets the value as a number and format "
 "that number using a Python formatting template such as \"{0:5.2f}\" or "
 "\"{0:,d}\" or \"${0:5,.2f}\". The field_name part of the template must be a "
-"0 (zero) (the \"{0:\" in the above examples). See the template language and "
-"Python documentation for more examples. Returns the empty string if "
-"formatting fails."
-msgstr "``format_number(template)`` -- interprète la valeur comme un nombre et formate ce nombre en utilisant un modèle de formatage Python comme \"{0:5.2f}\" ou \"{0:,d}\" ou \"${0:5,.2f}\". La partie field_name du modèle doit être un 0 (zéro) (le \"{0:\" dans les exemples ci-dessus). Regardez le langage des modèles et la documentation Python pour plus d’exemples. Retourne une chaîne vide si le formatage échoue."
+"0 (zero) (the \"{0:\" in the above examples). You can leave off the leading "
+"\"{0:\" and trailing \"}\" if the template contains only a format. See the "
+"template language and Python documentation for more examples. Returns the "
+"empty string if formatting fails."
+msgstr "``format_number(template)`` -- interprète la valeur comme un nombre et formate ce nombre en utilisant un modèle de formatage Python comme \"{0:5.2f}\" ou \"{0:,d}\" ou \"${0:5,.2f}\". La partie field_name du modèle doit être un 0 (zéro) (le \"{0:\" dans les exemples ci-dessus). Vous pouvez cesser la conduite \"{0:\"et ce qui suit\"}\" si le modèle contient seulement un format. Regardez le langage des modèles et la documentation Python pour plus d’exemples. Retourne une chaîne vide si le formatage échoue."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:125
 msgid ""
@@ -1165,7 +1166,7 @@ msgid ""
 "However, slashes are not changed in prefix or suffix strings, so slashes in "
 "these strings will cause folders to be created. Because of this, you can "
 "create variable-depth folder structure."
-msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au dispositif`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
+msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au périphérique`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:451
 msgid ""
@@ -1259,7 +1260,7 @@ msgstr "un tableau de connexion avec une correspondance exacte sur le format et 
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
-msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel dispositif``, par ex., ``EPUB`` et ``n'importe quel dispositif``"
+msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel périphérique``, par ex., ``EPUB`` et ``n'importe quel périphérique``"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:475
 msgid ""
@@ -1269,7 +1270,7 @@ msgstr "un tableau de connexion avec le choix spécial ``n'importe quel format``
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:476
 msgid "a plugboard with ``any format`` and ``any device``"
-msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel dispositif``"
+msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel périphérique``"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:478
 msgid ""
@@ -1300,7 +1301,7 @@ msgid ""
 " ``save to disk`` and ``send to device`` to create the file names. Instead, "
 "file names are constructed using the templates entered on the appropriate "
 "preferences window."
-msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au dispositif ``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
+msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au périphérique``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:485
 msgid "Helpful tips"

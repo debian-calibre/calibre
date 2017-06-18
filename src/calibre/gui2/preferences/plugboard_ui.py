@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -99,6 +99,9 @@ class Ui_Form(object):
         self.horizontalLayout.addItem(spacerItem4)
         self.fields_layout.addLayout(self.horizontalLayout, 19, 0, 1, 1)
         self.gridLayout.addLayout(self.fields_layout, 4, 1, 1, 1)
+        self.label_5.setBuddy(self.new_format)
+        self.label_4.setBuddy(self.edit_format)
+        self.label_41.setBuddy(self.existing_plugboards)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -115,11 +118,11 @@ class Ui_Form(object):
 "One possible use for a plugboard is to alter the title to contain series information. Another would be to change the author sort, something that mobi users might do to force it to use the \';\' that the kindle requires. A third would be to specify the language."))
         self.label_6.setText(_("Format (choose first)"))
         self.label_7.setText(_("Device (choose second)"))
-        self.label_5.setText(_("Add new plugboard:"))
-        self.label_4.setText(_("Edit existing plugboard:"))
-        self.label_41.setText(_("Existing plugboards:"))
+        self.label_5.setText(_("Add &new plugboard:"))
+        self.label_4.setText(_("Edit &existing plugboard:"))
+        self.label_41.setText(_("Existing &plugboards:"))
         self.label_2.setText(_("Source template"))
         self.label_3.setText(_("Destination field"))
-        self.ok_button.setText(_("Save plugboard"))
-        self.del_button.setText(_("Delete plugboard"))
+        self.ok_button.setText(_("&Save plugboard"))
+        self.del_button.setText(_("&Delete plugboard"))
 

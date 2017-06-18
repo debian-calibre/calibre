@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -82,14 +82,14 @@ class Ui_EditAuthorsDialog(object):
         EditAuthorsDialog.setWindowTitle(_("Manage authors"))
         self.label.setText(_("&Search for:"))
         self.find_button.setText(_("F&ind"))
-        self.sort_by_author.setText(_("Sort by author"))
-        self.sort_by_author_sort.setText(_("Sort by author sort"))
+        self.sort_by_author.setText(_("Sort by &author"))
+        self.sort_by_author_sort.setText(_("Sort by author &sort"))
         self.recalc_author_sort.setToolTip(_("Reset all the author sort values to a value automatically\n"
 "generated from the author. Exactly how this value is automatically\n"
 "generated can be controlled via Preferences->Advanced->Tweaks"))
-        self.recalc_author_sort.setText(_("Recalculate all author sort values"))
+        self.recalc_author_sort.setText(_("&Recalculate all author sort values"))
         self.auth_sort_to_author.setToolTip(_("Copy author sort to author for every author. You typically use this button\n"
 "after changing Preferences->Advanced->Tweaks->Author sort name algorithm"))
-        self.auth_sort_to_author.setText(_("Copy all author sort values to author"))
+        self.auth_sort_to_author.setText(_("&Copy all author sort values to author"))
 
 from calibre.gui2.widgets import HistoryLineEdit

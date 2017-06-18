@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -25,12 +25,6 @@ class Ui_JobsDialog(object):
         self.search_button = QtWidgets.QToolButton(JobsDialog)
         self.search_button.setObjectName("search_button")
         self.horizontalLayout.addWidget(self.search_button)
-        self.clear_button = QtWidgets.QToolButton(JobsDialog)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(I("clear_left.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.clear_button.setIcon(icon1)
-        self.clear_button.setObjectName("clear_button")
-        self.horizontalLayout.addWidget(self.clear_button)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 2)
         self.jobs_view = QtWidgets.QTableView(JobsDialog)
         self.jobs_view.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
@@ -67,7 +61,6 @@ class Ui_JobsDialog(object):
         JobsDialog.setWindowTitle(_("Active jobs"))
         self.search_button.setToolTip(_("Find next match"))
         self.search_button.setText(_("&Search"))
-        self.clear_button.setToolTip(_("Find previous match"))
         self.kill_button.setText(_("&Stop selected jobs"))
         self.hide_button.setText(_("&Hide selected jobs"))
         self.details_button.setText(_("Show job &details"))

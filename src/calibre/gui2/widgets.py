@@ -108,9 +108,9 @@ class FilenamePattern(QWidget, Ui_Form):  # {{{
         fname = unicode(self.filename.text())
         ext = os.path.splitext(fname)[1][1:].lower()
         if ext not in BOOK_EXTENSIONS:
-            return warning_dialog(self, _('Test name invalid'),
-                    _('The name <b>%s</b> does not appear to end with a'
-                        ' file extension. The name must end with a file '
+            return warning_dialog(self, _('Test file name invalid'),
+                    _('The file name <b>%s</b> does not appear to end with a'
+                        ' file extension. It must end with a file '
                         ' extension like .epub or .mobi')%fname, show=True)
 
         try:
@@ -959,6 +959,7 @@ class LayoutButton(QToolButton):
         self.label = text
         self.setIcon(QIcon(icon))
         self.setCheckable(True)
+        self.icname = os.path.basename(icon).rpartition('.')[0]
 
         self.splitter = splitter
         if splitter is not None:
@@ -970,14 +971,13 @@ class LayoutButton(QToolButton):
 
     def set_state_to_show(self, *args):
         self.setChecked(False)
-        self.setText(_('Show %(label)s [%(shortcut)s]')%dict(label=self.label, shortcut=self.shortcut))
+        self.setText(_('Show {}'.format(self.label) + '\t' + self.shortcut))
         self.setToolTip(self.text())
         self.setStatusTip(self.text())
 
     def set_state_to_hide(self, *args):
         self.setChecked(True)
-        self.setText(_('Hide %(label)s [%(shortcut)s]')%dict(
-            label=self.label, shortcut=self.shortcut))
+        self.setText(_('Hide {}'.format(self.label) + '\t' + self.shortcut))
         self.setToolTip(self.text())
         self.setStatusTip(self.text())
 
@@ -987,6 +987,22 @@ class LayoutButton(QToolButton):
         else:
             self.set_state_to_hide()
 
+    def mouseReleaseEvent(self, ev):
+        if ev.button() == Qt.RightButton:
+            from calibre.gui2.ui import get_gui
+            gui = get_gui()
+            if self.icname == 'search':
+                gui.iactions['Preferences'].do_config(initial_plugin=('Interface', 'Search'), close_after_initial=True)
+                ev.accept()
+                return
+            tab_name = {'book':'book_details', 'grid':'cover_grid', 'cover_flow':'cover_browser', 'tags':'tag_browser'}.get(self.icname)
+            if tab_name:
+                if gui is not None:
+                    gui.iactions['Preferences'].do_config(initial_plugin=('Interface', 'Look & Feel', tab_name+'_tab'), close_after_initial=True)
+                    ev.accept()
+                    return
+        return QToolButton.mouseReleaseEvent(self, ev)
+
 
 class Splitter(QSplitter):
 
@@ -994,8 +1010,12 @@ class Splitter(QSplitter):
 
     def __init__(self, name, label, icon, initial_show=True,
             initial_side_size=120, connect_button=True,
-            orientation=Qt.Horizontal, side_index=0, parent=None, shortcut=None):
+            orientation=Qt.Horizontal, side_index=0, parent=None,
+            shortcut=None, hide_handle_on_single_panel=True):
         QSplitter.__init__(self, parent)
+        if hide_handle_on_single_panel:
+            self.state_changed.connect(self.update_handle_width)
+        self.original_handle_width = self.handleWidth()
         self.resize_timer = QTimer(self)
         self.resize_timer.setSingleShot(True)
         self.desired_side_size = initial_side_size
@@ -1044,6 +1064,9 @@ class Splitter(QSplitter):
     def splitter_moved(self, *args):
         self.desired_side_size = self.side_index_size
         self.state_changed.emit(not self.is_side_index_hidden)
+
+    def update_handle_width(self, not_one_panel):
+        self.setHandleWidth(self.original_handle_width if not_one_panel else 0)
 
     @property
     def is_side_index_hidden(self):

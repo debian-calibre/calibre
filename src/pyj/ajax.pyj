@@ -15,20 +15,20 @@ def encode_query_component(x):
     ans = ans.replace(/%3[aA]/g, ':')
     return ans
 
-def encode_query(query):
+def encode_query(query, qchar):
     if not query:
         return ''
-    keys = Object.keys(query)
-    has_query = False
-    path = ''
+    qchar = qchar or '?'
+    keys = Object.keys(query).sort()
+    ans = ''
     if keys.length:
         for k in keys:
             val = query[k]
-            if val is undefined or val is None:
+            if val is undefined or val is None or val is '':
                 continue
-            path += ('&' if has_query else '?') + encodeURIComponent(k) + '=' + encode_query_component(val.toString())
-            has_query = True
-    return path
+            ans += qchar + encodeURIComponent(k) + '=' + encode_query_component(val.toString())
+            qchar = '&'
+    return ans
 
 def ajax(path, on_complete, on_progress=None, bypass_cache=True, method='GET', query=None, timeout=30*1000, ok_code=200, progress_totals_needed=True):
     # Run an AJAX request. on_complete must be a function that accepts three
@@ -50,8 +50,10 @@ def ajax(path, on_complete, on_progress=None, bypass_cache=True, method='GET', q
     xhr.request_path = path
     xhr.error_html = ''
 
-    def set_error(event):
-        if event is 'timeout':
+    def set_error(event, is_network_error):
+        if is_network_error:
+            xhr.error_html = str.format(_('Failed to communicate with "{}", network error, is the server running and accessible?'), xhr.request_path)
+        elif event is 'timeout':
             xhr.error_html = str.format(_('Failed to communicate with "{}", timed out after: {} seconds'), xhr.request_path, timeout/1000)
         elif event is 'abort':
             xhr.error_html = str.format(_('Failed to communicate with "{}", aborted'), xhr.request_path)
@@ -75,10 +77,11 @@ def ajax(path, on_complete, on_progress=None, bypass_cache=True, method='GET', q
                 on_progress(ev.loaded, ul, xhr)
 
     def complete_callback(end_type, ev):
+        is_network_error = ev if end_type is 'error' else False
         if xhr.status is not ok_code and end_type is 'load':
             end_type = 'error'
         if end_type is not 'load':
-            set_error(end_type)
+            set_error(end_type, is_network_error)
         on_complete(end_type, xhr, ev)
 
     if on_progress:
@@ -100,18 +103,11 @@ def ajax_send(path, data, on_complete, on_progress=None, query=None, timeout=30*
     return xhr
 
 
-allow_console_print = False
-
-def set_allow_console_print(val):
-    nonlocal allow_console_print
-    allow_console_print = bool(val)
-
 def console_print(*args):
-    print(*args)
-    if allow_console_print:
-        data = ' '.join(map(str, args)) + '\n'
-        xhr = ajax('console-print', def():pass;, method='POST', progress_totals_needed=False)
-        xhr.send(data)
+    ρσ_print(*args)  # noqa: undef
+    data = ' '.join(map(str, args)) + '\n'
+    xhr = ajax('console-print', def():pass;, method='POST', progress_totals_needed=False)
+    xhr.send(data)
 
 # TODO: Implement AJAX based switch user by:
 # 1) POST to a logout URL with an incorrect username and password

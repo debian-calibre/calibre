@@ -105,7 +105,7 @@ class KOBO(USBMS):
                 ' e-book file itself. With this option, calibre will send a '
                 'separate cover image to the reader, useful if you '
                 'have modified the cover.'),
-        _('Upload Black and White Covers'),
+        _('Upload black and white covers'),
         _('Show expired books') +
         ':::'+_('A bug in an earlier version left non kepubs book records'
                 ' in the database.  With this option calibre will show the '
@@ -1348,6 +1348,8 @@ class KOBOTOUCH(KOBO):
     EXTRA_CUSTOMIZATION_MESSAGE = []
     EXTRA_CUSTOMIZATION_DEFAULT = []
 
+    OSX_MAIN_MEM_VOL_PAT = re.compile(r'/KOBOeReader')
+
     opts = None
 
     TIMESTAMP_STRING = "%Y-%m-%dT%H:%M:%SZ"
@@ -1450,6 +1452,28 @@ class KOBOTOUCH(KOBO):
     def open_linux(self):
         super(KOBOTOUCH, self).open_linux()
 
+        self.swap_drives_if_needed()
+
+    def open_osx(self):
+        # Just dump some info to the logs.
+        super(KOBOTOUCH, self).open_osx()
+
+        # Wrap some debugging output in a try/except so that it unlikely to break things completely.
+        try:
+            if DEBUG:
+                from calibre.constants import plugins
+                usbobserver, usbobserver_err = plugins['usbobserver']
+                mount_map = usbobserver.get_mounted_filesystems()
+                debug_print('KoboTouch::open_osx - mount_map=', mount_map)
+                debug_print('KoboTouch::open_osx - self._main_prefix=', self._main_prefix)
+                debug_print('KoboTouch::open_osx - self._card_a_prefix=', self._card_a_prefix)
+                debug_print('KoboTouch::open_osx - self._card_b_prefix=', self._card_b_prefix)
+        except:
+            pass
+
+        self.swap_drives_if_needed()
+
+    def swap_drives_if_needed(self):
         # Check the drives have been mounted as expected and swap if needed.
         if self._card_a_prefix is None:
             return
@@ -1458,9 +1482,6 @@ class KOBOTOUCH(KOBO):
             temp_prefix = self._main_prefix
             self._main_prefix = self._card_a_prefix
             self._card_a_prefix = temp_prefix
-
-    def osx_sort_names(self, names):
-        return self.sort_drives(names)
 
     def windows_sort_drives(self, drives):
         return self.sort_drives(drives)
@@ -1471,13 +1492,13 @@ class KOBOTOUCH(KOBO):
         main = drives.get('main', None)
         carda = drives.get('carda', None)
         if main and carda and not self.is_main_drive(main):
-            debug_print('KoboTouch::windows_sort_drives - main=%s, carda=%s' % (main, carda))
             drives['main'] = carda
             drives['carda'] = main
+            debug_print('KoboTouch::sort_drives - swapped drives - main=%s, carda=%s' % (drives['main'], drives['carda']))
         return drives
 
     def is_main_drive(self, drive):
-        debug_print('KoboTouch::is_main_drive - main_drive=%s, path=%s' % (drive, os.path.join(drive, '.kobo')))
+        debug_print('KoboTouch::is_main_drive - drive=%s, path=%s' % (drive, os.path.join(drive, '.kobo')))
         return os.path.exists(self.normalize_path(os.path.join(drive, '.kobo')))
 
     def books(self, oncard=None, end_session=True):
@@ -3052,7 +3073,12 @@ class KOBOTOUCH(KOBO):
 
     @property
     def collections_columns(self):
-        return self.get_pref('collections_columns')
+        return self.get_pref('collections_columns') if self.manage_collections else ''
+
+    def get_collections_attributes(self):
+        collections_str = self.collections_columns
+        collections = [x.lower().strip() for x in collections_str.split(',')] if collections_str else []
+        return collections
 
     @property
     def delete_empty_collections(self):

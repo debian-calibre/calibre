@@ -28,7 +28,7 @@ from calibre.library.coloring import (Rule, conditionable_columns,
 from calibre.utils.localization import lang_map
 from calibre.utils.icu import lower
 
-all_columns_string = _('All Columns')
+all_columns_string = _('All columns')
 
 icon_rule_kinds = [(_('icon with text'), 'icon'),
                    (_('icon with no text'), 'icon_only'),
@@ -371,7 +371,7 @@ class RuleEditor(QDialog):  # {{{
             create_filename_box()
 
             vb = QVBoxLayout()
-            self.multiple_icon_cb = QCheckBox(_('Choose more than one icon'))
+            self.multiple_icon_cb = QCheckBox(_('Choose &more than one icon'))
             vb.addWidget(self.multiple_icon_cb)
             self.update_filename_box()
             self.multiple_icon_cb.clicked.connect(self.multiple_box_clicked)
@@ -395,7 +395,7 @@ class RuleEditor(QDialog):  # {{{
         l.addWidget(sa, 4, 0, 1, 8)
 
         self.add_button = b = QPushButton(QIcon(I('plus.png')),
-                _('Add another condition'))
+                _('Add &another condition'))
         l.addWidget(b, 5, 0, 1, 8)
         b.clicked.connect(self.add_blank_condition)
 
@@ -409,9 +409,10 @@ class RuleEditor(QDialog):  # {{{
         bb.rejected.connect(self.reject)
         l.addWidget(bb, 7, 0, 1, 8)
         if self.rule_kind != 'color':
-            self.remove_button = b = bb.addButton(_('Remove image'), bb.ActionRole)
+            self.remove_button = b = bb.addButton(_('&Remove icon'), bb.ActionRole)
             b.setIcon(QIcon(I('minus.png')))
             b.setMenu(QMenu())
+            b.setToolTip('<p>' + _('Remove a previously added icon. Note that doing so will cause rules that use it to stop working.'))
             self.update_remove_button()
 
         self.conditions_widget = QWidget(self)

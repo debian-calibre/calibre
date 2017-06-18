@@ -6,7 +6,7 @@ from future_builtins import map
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = u'calibre'
-numeric_version = (2, 85, 1)
+numeric_version = (3, 0, 0)
 __version__   = u'.'.join(map(unicode, numeric_version))
 __author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
 
@@ -29,7 +29,11 @@ isfrozen  = hasattr(sys, 'frozen')
 isunix = isosx or islinux or ishaiku
 isportable = os.environ.get('CALIBRE_PORTABLE_BUILD', None) is not None
 ispy3 = sys.version_info.major > 2
-isxp = iswindows and sys.getwindowsversion().major < 6
+isxp = isoldvista = False
+if iswindows:
+    wver = sys.getwindowsversion()
+    isxp = wver.major < 6
+    isoldvista = wver.build < 6002
 is64bit = sys.maxsize > (1 << 32)
 isworker = 'CALIBRE_WORKER' in os.environ or 'CALIBRE_SIMPLE_WORKER' in os.environ
 if isworker:
@@ -83,7 +87,7 @@ else:
         filesystem_encoding = 'utf-8'
 
 
-DEBUG = False
+DEBUG = b'CALIBRE_DEBUG' in os.environ
 
 
 def debug():
@@ -157,14 +161,12 @@ class Plugins(collections.Mapping):
                 'unrar',
                 'imageops',
                 'qt_hack',
-                '_regex',
                 'hunspell',
                 '_patiencediff_c',
                 'bzzdec',
                 'matcher',
                 'tokenizer',
                 'certgen',
-                'dukpy',
                 'lzma_binding',
             ]
         if iswindows:
@@ -255,13 +257,17 @@ else:
 # }}}
 
 
+dv = os.environ.get('CALIBRE_DEVELOP_FROM')
+is_running_from_develop = bool(getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path)
+del dv
+
+
 def get_version():
     '''Return version string for display to user '''
-    dv = os.environ.get('CALIBRE_DEVELOP_FROM', None)
     v = __version__
     if numeric_version[-1] == 0:
         v = v[:-2]
-    if getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path:
+    if is_running_from_develop:
         v += '*'
     if iswindows and is64bit:
         v += ' [64bit]'

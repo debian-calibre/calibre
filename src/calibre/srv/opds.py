@@ -56,6 +56,7 @@ def format_tag_string(tags, sep, joinval=', '):
     tlist.sort(key=sort_key)
     return joinval.join(tlist) if tlist else ''
 
+
 # Vocabulary for building OPDS feeds {{{
 DC_NS = 'http://purl.org/dc/terms/'
 E = ElementMaker(namespace='http://www.w3.org/2005/Atom',
@@ -75,6 +76,7 @@ ICON    = E.icon
 def UPDATED(dt, *args, **kwargs):
     return E.updated(as_utc(dt).strftime('%Y-%m-%dT%H:%M:%S+00:00'), *args, **kwargs)
 
+
 LINK = partial(E.link, type='application/atom+xml')
 NAVLINK = partial(E.link,
         type='application/atom+xml;type=feed;profile=opds-catalog')
@@ -93,6 +95,7 @@ def AUTHOR(name, uri=None):
         args.append(E.uri(uri))
     return E.author(*args)
 
+
 SUBTITLE = E.subtitle
 
 
@@ -106,6 +109,7 @@ def NAVCATALOG_ENTRY(url_for, updated, title, description, query):
         E.content(description, type='text'),
         NAVLINK(href=href)
     )
+
 
 START_LINK = partial(NAVLINK, rel='start')
 UP_LINK = partial(NAVLINK, rel='up')

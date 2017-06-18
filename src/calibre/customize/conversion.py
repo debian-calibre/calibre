@@ -134,7 +134,7 @@ class InputFormatPlugin(Plugin):
     The main action happens in :meth:`convert`.
     '''
 
-    type = _('Conversion Input')
+    type = _('Conversion input')
     can_be_disabled = False
     supported_platforms = ['windows', 'osx', 'linux']
 
@@ -149,7 +149,7 @@ class InputFormatPlugin(Plugin):
     #: a list of images.
     is_image_collection = False
 
-    #: Number of CPU cores used by this plugin
+    #: Number of CPU cores used by this plugin.
     #: A value of -1 means that it uses all available cores
     core_usage = 1
 

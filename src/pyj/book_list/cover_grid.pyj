@@ -11,17 +11,23 @@ COVER_GRID_CLASS = 'book-list-cover-grid'
 THUMBNAIL_MAX_WIDTH = 300
 THUMBNAIL_MAX_HEIGHT = 400
 BORDER_RADIUS = 10
+DESCRIPTION = _('A grid of book covers')
 
 def cover_grid_css():
     sel = '.' + COVER_GRID_CLASS
-    ans = build_rule(sel, display='flex', flex_wrap='wrap', justify_content='space-around', align_items='flex-end', align_content='flex-start', user_select='none', overflow='hidden')
+    margin, margin_unit = 10, 'px'
+    ans = build_rule(sel, display='flex', flex_wrap='wrap', justify_content='space-around', align_items='flex-end',
+                     align_content='flex-start', user_select='none', overflow='hidden', margin_top=f'{margin / 2}{margin_unit}')
 
     # Container for an individual cover
     sel += ' > div'
     ans += build_rule(
-        sel, margin='10px', display='flex', align_content='flex-end', align_items='flex-end', justify_content='space-around',
-        width='21vw', height='28vw', max_width=THUMBNAIL_MAX_WIDTH+'px', max_height=THUMBNAIL_MAX_HEIGHT+'px', cursor='pointer',
+        sel, margin=f'{margin}{margin_unit}', display='flex', align_content='flex-end', align_items='flex-end', justify_content='space-around',
+        max_width=THUMBNAIL_MAX_WIDTH+'px', max_height=THUMBNAIL_MAX_HEIGHT+'px', cursor='pointer',
         min_width=f'{THUMBNAIL_MAX_WIDTH // 2}px', min_height=f'{THUMBNAIL_MAX_HEIGHT // 2}px')
+    mq =  '@media all and (orientation: {orient}) {{ {sel} {{ width: 21{dim}; height: 28{dim} }} }}\n'
+    for dim in 'vw', 'vh':
+        ans += mq.format(sel=sel, dim=dim, orient='portrait' if dim is 'vw' else 'landscape')
     ans += build_rule(f'{sel}:hover', transform='scale(1.2)')
     ans += build_rule(f'{sel}:active', transform='scale(2)')
     ans += build_rule(sel + '.cover-grid-filler', height='0', max_height='0', min_height='0')
@@ -58,7 +64,7 @@ def create_item(book_id, metadata, create_image, show_book_details):
     img = create_image(book_id, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, on_img_load)
     img.setAttribute('alt', _('{} by {}').format(metadata.title, authors))
     img.dataset.title, img.dataset.authors = metadata.title, authors
-    ans = E.div(img, data_book_id=str(book_id), onclick=show_book_details)
+    ans = E.div(img, onclick=show_book_details)
     return ans
 
 def append_item(container, item):

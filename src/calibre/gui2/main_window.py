@@ -8,7 +8,7 @@ __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 import StringIO, traceback, sys, gc, weakref
 
 from PyQt5.Qt import (QMainWindow, QTimer, QAction, QMenu, QMenuBar, QIcon,
-                      pyqtSignal, QObject)
+                      QObject)
 from calibre.utils.config import OptionParser
 from calibre.gui2 import error_dialog
 from calibre import prints
@@ -90,10 +90,6 @@ class MainWindow(QMainWindow):
     ___menu     = None
     __actions   = []
 
-    # See https://bugreports.qt-project.org/browse/QTBUG-42281
-    window_blocked = pyqtSignal()
-    window_unblocked = pyqtSignal()
-
     @classmethod
     def create_application_menubar(cls):
         if not cls.__actions:
@@ -156,15 +152,6 @@ class MainWindow(QMainWindow):
         except:
             pass
 
-    def event(self, ev):
-        # See https://bugreports.qt-project.org/browse/QTBUG-42281
-        etype = ev.type()
-        if etype == ev.WindowBlocked:
-            self.window_blocked.emit()
-        elif etype == ev.WindowUnblocked:
-            self.window_unblocked.emit()
-        return QMainWindow.event(self, ev)
-
 
 def clone_menu(menu):
     # This is needed to workaround a bug in Qt 5.5+ and Unity. When the same
@@ -178,7 +165,10 @@ def clone_menu(menu):
             return ans
         sc = ac.shortcut()
         sc = '' if sc.isEmpty() else sc.toString(sc.NativeText)
-        ans = QAction(ac.icon(), ac.text() + '\t' + sc, parent)
+        text = ac.text()
+        if '\t' not in text:
+            text += '\t' + sc
+        ans = QAction(ac.icon(), text, parent)
         ans.triggered.connect(ac.trigger)
         ans.setEnabled(ac.isEnabled())
         ans.setStatusTip(ac.statusTip())

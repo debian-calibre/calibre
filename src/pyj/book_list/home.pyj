@@ -7,13 +7,14 @@ from gettext import gettext as _
 
 from book_list.cover_grid import BORDER_RADIUS
 from book_list.globals import get_db
-from book_list.library_data import sync_library_books
+from book_list.library_data import last_virtual_library_for, sync_library_books
 from book_list.router import open_book, update_window_title
-from book_list.top_bar import create_top_bar
+from book_list.top_bar import add_button, create_top_bar
 from book_list.ui import set_default_panel_handler, show_panel
 from dom import add_extra_css, build_rule, ensure_id
+from modals import create_custom_dialog
 from session import get_device_uuid, get_interface_data
-from utils import conditional_timeout, username_key
+from utils import conditional_timeout, username_key, safe_set_inner_html
 from widgets import create_button
 
 CLASS_NAME = 'home-page'
@@ -23,7 +24,7 @@ add_extra_css(def():
     sel = f'.{CLASS_NAME} '
     ans += build_rule(f'{sel} h2', padding='1rem', font_size='1.5em')
     sel += '.recently-read img'
-    ans += build_rule(sel, max_width='25vw', height='auto', border_radius=f'{BORDER_RADIUS}px')
+    ans += build_rule(sel, max_width='25vw', max_height='40vh', height='auto', border_radius=f'{BORDER_RADIUS}px')
     ans += build_rule(f'{sel}:hover', transform='scale(1.2)')
     ans += build_rule(f'{sel}:active', transform='scale(2)')
     return ans
@@ -120,7 +121,7 @@ def show_recent_stage2(books):
         start_sync(to_sync)
     container.appendChild(E.div(style='margin: 1rem 1rem',
         create_button(
-            _('Browse all previously downloaded books…'),
+            _('Browse all downloaded books…'),
             action=def():
                 show_panel('local_books')
     )))
@@ -132,7 +133,28 @@ def show_recent():
     if not db.initialized:
         conditional_timeout(container.id, 5, show_recent)
         return
-    db.get_recently_read_books(show_recent_stage2.bind(container.id))
+    if db.is_ok:
+        db.get_recently_read_books(show_recent_stage2.bind(container.id))
+    else:
+        print(db.initialize_error_msg)
+
+
+def show_user_details():
+    interface_data = get_interface_data()
+    create_custom_dialog(_('Logged in as {}').format(interface_data.username), def(parent, close_modal):
+            msg = E.div()
+            safe_set_inner_html(msg, _(
+                'You are logged in as the user <b>{}</b>. To log in '
+                'as a different user, you will have to restart the browser.').format(interface_data.username))
+            parent.appendChild(msg)
+            parent.appendChild(
+                E.div(class_='button-box',
+                    create_button(_('Close'), None, close_modal),
+                )
+            )
+    )
+
+
 
 
 def init(container_id):
@@ -141,6 +163,8 @@ def init(container_id):
     container.classList.add(CLASS_NAME)
     create_top_bar(container, run_animation=True)
     interface_data = get_interface_data()
+    if interface_data.username:
+        add_button(container, 'user', show_user_details, _('Logged in as {}').format(interface_data.username))
 
     # Recent books
     recent = E.div(style='display:none', class_='recently-read')
@@ -150,7 +174,7 @@ def init(container_id):
 
     # Choose library
     container.appendChild(E.h2(_('Choose the calibre library to browse…')))
-    container.appendChild(E.div(style='display: flex'))
+    container.appendChild(E.div(style='display: flex; flex-wrap: wrap'))
     cl = container.lastChild
     lids = sorted(interface_data.library_map, key=def(x): return interface_data.library_map[x];)
     for library_id in lids:
@@ -159,9 +183,14 @@ def init(container_id):
             cl.appendChild(
                 create_button(library_name, icon='library', action=def(ev):
                     lib_id = ev.currentTarget.dataset.lid
-                    show_panel('book_list', {'library_id': lib_id})
+                    q = {'library_id': lib_id}
+                    vlid = last_virtual_library_for(lib_id)
+                    if vlid:
+                        q.vl = vlid
+                    show_panel('book_list', q)
             ))
             cl.lastChild.style.margin = '1ex 1rem'
+            cl.lastChild.dataset.lid = library_id
 
 
 set_default_panel_handler(init)

@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os
+import os, errno
 from binascii import hexlify
 from io import BytesIO
 from threading import Lock
@@ -21,7 +21,7 @@ from calibre.ebooks.metadata import authors_to_string
 from calibre.ebooks.metadata.meta import set_metadata
 from calibre.ebooks.metadata.opf2 import metadata_to_opf
 from calibre.library.save_to_disk import find_plugboard
-from calibre.srv.errors import HTTPNotFound
+from calibre.srv.errors import HTTPNotFound, BookNotFound
 from calibre.srv.routes import endpoint, json
 from calibre.srv.utils import http_date, get_db, get_use_roman
 from calibre.utils.config_base import tweaks
@@ -41,6 +41,21 @@ lock = Lock()
 # have only one second precision for mtimes
 mtimes = {}
 rename_counter = 0
+
+
+def reset_caches():
+    mtimes.clear()
+
+
+def open_for_write(fname):
+    try:
+        return share_open(fname, 'w+b')
+    except EnvironmentError:
+        try:
+            os.makedirs(os.path.dirname(fname))
+        except EnvironmentError:
+            pass
+    return share_open(fname, 'w+b')
 
 
 def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func, extra_etag_data=''):
@@ -78,20 +93,21 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
                     os.remove(dname)
                 else:
                     os.remove(fname)
-            try:
-                ans = share_open(fname, 'w+b')
-            except EnvironmentError:
-                try:
-                    os.makedirs(base)
-                except EnvironmentError:
-                    pass
-                ans = share_open(fname, 'w+b')
+            ans = open_for_write(fname)
             mtimes[bname] = mtime
             copy_func(ans)
             ans.seek(0)
         else:
-            ans = share_open(fname, 'rb')
-            used_cache = 'yes'
+            try:
+                ans = share_open(fname, 'rb')
+                used_cache = 'yes'
+            except EnvironmentError as err:
+                if err.errno != errno.ENOENT:
+                    raise
+                ans = open_for_write(fname)
+                mtimes[bname] = mtime
+                copy_func(ans)
+                ans.seek(0)
         if ctx.testing:
             rd.outheaders['Used-Cache'] = used_cache
             rd.outheaders['Tempfile'] = hexlify(fname.encode('utf-8'))
@@ -140,6 +156,17 @@ def cover(ctx, rd, library_id, db, book_id, width=None, height=None):
     return create_file_copy(ctx, rd, prefix, library_id, book_id, 'jpg', mtime, copy_func)
 
 
+def book_filename(rd, book_id, mi, fmt):
+    au = authors_to_string(mi.authors or [_('Unknown')])
+    title = mi.title or _('Unknown')
+    ext = (fmt or '').lower()
+    if ext == 'kepub' and 'Kobo Touch' in rd.inheaders.get('User-Agent', ''):
+        ext = 'kepub.epub'
+    fname = '%s - %s_%s.%s' % (title[:30], au[:30], book_id, ext)
+    fname = ascii_filename(fname).replace('"', '_')
+    return fname
+
+
 def book_fmt(ctx, rd, library_id, db, book_id, fmt):
     mdata = db.format_metadata(book_id, fmt)
     if not mdata:
@@ -151,7 +178,7 @@ def book_fmt(ctx, rd, library_id, db, book_id, fmt):
     if update_metadata:
         mi = db.get_metadata(book_id)
         mtime = max(mtime, mi.last_modified)
-        # Get any plugboards for the content server
+        # Get any plugboards for the Content server
         plugboards = db.pref('plugboards')
         if plugboards:
             cpb = find_plugboard(plugboard_content_server_value, fmt, plugboards)
@@ -170,14 +197,7 @@ def book_fmt(ctx, rd, library_id, db, book_id, fmt):
             set_metadata(dest, mi, fmt)
             dest.seek(0)
 
-    au = authors_to_string(mi.authors or [_('Unknown')])
-    title = mi.title or _('Unknown')
-    ext = fmt
-    if ext == 'kepub' and 'Kobo Touch' in rd.inheaders.get('User-Agent', ''):
-        ext = 'kepub.epub'
-    fname = '%s - %s_%s.%s' % (title[:30], au[:30], book_id, ext)
-    fname = ascii_filename(fname).replace('"', '_')
-    rd.outheaders['Content-Disposition'] = 'attachment; filename="%s"' % fname
+    rd.outheaders['Content-Disposition'] = 'attachment; filename="%s"' % book_filename(rd, book_id, mi, fmt)
 
     return create_file_copy(ctx, rd, 'fmt', library_id, book_id, fmt, mtime, copy_func, extra_etag_data=extra_etag_data)
 # }}}
@@ -202,6 +222,11 @@ def static(ctx, rd, what):
 @endpoint('/favicon.png', auth_required=False, cache_control=24)
 def favicon(ctx, rd):
     return share_open(I('lt.png'), 'rb')
+
+
+@endpoint('/apple-touch-icon.png', auth_required=False, cache_control=24)
+def apple_touch_icon(ctx, rd):
+    return share_open(I('apple-touch-icon.png'), 'rb')
 
 
 @endpoint('/icon/{+which}', auth_required=False, cache_control=24)
@@ -232,8 +257,7 @@ def icon(ctx, rd, which):
         except EnvironmentError:
             raise HTTPNotFound()
     with lock:
-        tdir = os.path.join(rd.tdir, 'icons')
-        cached = os.path.join(tdir, '%d-%s.png' % (sz, which))
+        cached = os.path.join(rd.tdir, 'icons', '%d-%s.png' % (sz, which))
         try:
             return share_open(cached, 'rb')
         except EnvironmentError:
@@ -248,20 +272,13 @@ def icon(ctx, rd, which):
         scaled, width, height = fit_image(img.width(), img.height(), sz, sz)
         if scaled:
             idata = scale_image(img, width, height, as_png=True)[-1]
-        try:
-            ans = share_open(cached, 'w+b')
-        except EnvironmentError:
-            try:
-                os.mkdir(tdir)
-            except EnvironmentError:
-                pass
-            ans = share_open(cached, 'w+b')
+        ans = open_for_write(cached)
         ans.write(idata)
         ans.seek(0)
         return ans
 
 
-@endpoint('/get/{what}/{book_id}/{library_id=None}')
+@endpoint('/get/{what}/{book_id}/{library_id=None}', android_workaround=True)
 def get(ctx, rd, what, book_id, library_id):
     book_id, rest = book_id.partition('_')[::2]
     try:
@@ -272,8 +289,8 @@ def get(ctx, rd, what, book_id, library_id):
     if db is None:
         raise HTTPNotFound('Library %r not found' % library_id)
     with db.safe_read_lock:
-        if book_id not in ctx.allowed_book_ids(rd, db):
-            raise HTTPNotFound('Book with id %r does not exist' % book_id)
+        if not ctx.has_id(rd, db, book_id):
+            raise BookNotFound(book_id, db)
         library_id = db.server_library_id  # in case library_id was None
         if what == 'thumb':
             sz = rd.query.get('sz')

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -90,12 +90,12 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.label_2.setText(_("&Function:"))
         self.function_name.setToolTip(_("Enter the name of the function to create."))
-        self.label_3.setText(_("Arg &count:"))
+        self.label_3.setText(_("Argument &count:"))
         self.argument_count.setToolTip(_("Set this to -1 if the function takes a variable number of arguments"))
         self.label_4.setText(_("&Documentation:"))
         self.clear_button.setText(_("&Clear"))
         self.delete_button.setText(_("&Delete"))
         self.replace_button.setText(_("&Replace"))
         self.create_button.setText(_("C&reate"))
-        self.label_41.setText(_("&Program code: (be sure to follow Python indenting rules)"))
+        self.label_41.setText(_("&Program code (Follow Python indenting rules):"))
 

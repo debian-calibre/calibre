@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 08:55+0530\n"
-"PO-Revision-Date: 2017-05-07 10:31+0000\n"
+"POT-Creation-Date: 2017-05-26 00:09+0530\n"
+"PO-Revision-Date: 2017-05-21 10:57+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -97,33 +97,35 @@ msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` — наказує calibre не створ
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:35
 msgid ""
-"``CALIBRE_IGNORE_SYSTEM_THEME`` - Causes calibre to ignore any system Qt "
-"style plugins and use its builtin style plugin instead. Useful to workaround"
-" crashes caused by the system Qt plugin being incompatible with the version "
-"of Qt shipped with calibre."
-msgstr "``CALIBRE_IGNORE_SYSTEM_THEME`` — наказує calibre ігнорувати усі стильові додатки Qt у системі і використовувати вбудований додаток стилів. Корисно для усування аварійних завершень, які спричинено несумісністю загальносистемного додатка Qt з версією Qt, яка постачається разом із calibre."
+"``CALIBRE_USE_SYSTEM_THEME`` - By default, on Linux, calibre uses its own "
+"builtin Qt style. This is to avoid crashes and hangs caused by "
+"incompatibilities between the version of Qt calibre is built against and the"
+" system Qt. The downside is that calibre may not follow the system look and "
+"feel. If you set this environment variable on Linux, it will cause calibre "
+"to use the system theme -- beware of crashes and hangs."
+msgstr "``CALIBRE_USE_SYSTEM_THEME`` — типово, у Linux calibre використовує власний вбудований стиль Qt. Так зроблено, щоб уникнути аварійних завершень роботи і зависань, які спричинено несумісностями з версією Qt, за допомогою якої зібрано calibre, і версією Qt, яку встановлено у системі. Небажаним наслідком такого підходу є те, що calibre може не використовувати загальносистемні параметри вигляду та поведінки. Якщо ви встановите цю змінну середовища у Linux, calibre використовуватиме загальносистемні параметри теми. Це може призвести, як ми вже зауважували, до аварійних завершень роботи програми та повисань."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:36
+#: ../../home/kovid/work/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` — наказує calibre виводити попередження щодо застарілості певних функцій до стандартного виведення (stdout). Корисно для розробників calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:37
+#: ../../home/kovid/work/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` — забороняє calibre автоматично реєструвати типи файлів, які може обробляти програма, у Windows."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:38
+#: ../../home/kovid/work/calibre/manual/customize.rst:43
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` — використовується, якщо sysfs змонтовано кудись, окрім /sys"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:39
+#: ../../home/kovid/work/calibre/manual/customize.rst:44
 msgid "``http_proxy`` - Used on linux to specify an HTTP proxy"
 msgstr "``http_proxy`` — використовується у linux для визначення проксі-сервера HTTP"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:41
+#: ../../home/kovid/work/calibre/manual/customize.rst:46
 msgid ""
 "See `How to set environment variables in Windows "
 "<http://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
@@ -131,11 +133,11 @@ msgid ""
 "/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
 msgstr "Див. `Як налаштувати змінні середовища у Windows <http://www.computerhope.com/issues/ch000549.htm>`_ або `Як налаштувати змінні середовища у OS X <http://www.dowdandassociates.com/blog/content/howto-set-an-environment-variable-in-mac-os-x-launchd-plist/>`_."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:45
+#: ../../home/kovid/work/calibre/manual/customize.rst:50
 msgid "Tweaks"
 msgstr "Коригування"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:47
+#: ../../home/kovid/work/calibre/manual/customize.rst:52
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -143,11 +145,11 @@ msgid ""
 "reproduced below"
 msgstr "Коригування — незначні зміни, якими можна керувати різними аспектами роботи calibre. Ви можете внести їх за допомогою пункту меню Налаштування -> Додатково -> Коригування. Типові значення коригувань наведено нижче"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:54
+#: ../../home/kovid/work/calibre/manual/customize.rst:59
 msgid "Overriding icons, templates, et cetera"
 msgstr "Перевизначення піктограм, шаблонів тощо"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:57
+#: ../../home/kovid/work/calibre/manual/customize.rst:62
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -156,7 +158,7 @@ msgid ""
 "resources."
 msgstr "У calibre передбачено безпосередню підтримку тем піктограм. У типовому пакунку програми є декілька таких тем. Змінити тему можна за допомогою пункту :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд -> Змінити тему піктограм`. У темах піктограм використовується той самий механізм, який нижче обговорено у частині, яку присвячено перевизначенню статичних ресурсів."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:61
+#: ../../home/kovid/work/calibre/manual/customize.rst:66
 msgid ""
 "calibre allows you to override the static resources, like icons, javascript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -169,7 +171,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "У calibre передбачено можливість перевизначити статичні ресурси програми, зокрема піктограми, скрипти javascript та шаблони для панелі метаданих, каталогів тощо, скориставшись налаштованими вами відповідним чином версіями. Усі статичні ресурси зберігаються у підтеці resources теки, до якої було встановлено calibre. У Windows це, зазвичай, :file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. У OS X це :file:`/Applications/calibre.app/Contents/Resources/resources/`. У linux, якщо ви використовуєте бінарний пакунок з сайта calibre, це :file:`/opt/calibre/resources`. Шлях у вашій системі, звичайно ж, залежатиме від каталогу до якого ви встановили calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:70
+#: ../../home/kovid/work/calibre/manual/customize.rst:75
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -181,7 +183,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Вам не варто безпосередньо змінювати файли у теці ресурсів, оскільки внесені вами зміни буде перезаписано новими версіями файлів під час оновлення calibre. Замість цього, відкрийте сторінку :guilabel:`Налаштування -> Додатково -> Різне` і натисніть кнопку :guilabel:`Відкрити каталог налаштувань calibre`. У каталозі налаштувань створіть підтеку із назвою «resources» і розташуйте у ній файли, які слід перевизначити у типовому наборі. Файли слід розташовувати у відповідних підтеках. Наприклад, зображення мають зберігатися у :file:`resources/images` тощо. calibre автоматично надаватиме пріоритет вашому нетиповому файлу перед вбудованим до пакунка під час наступного завантаження програми."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:79
+#: ../../home/kovid/work/calibre/manual/customize.rst:84
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -192,11 +194,11 @@ msgid ""
 "interface are in :file:`resources/images` and its sub-folders."
 msgstr "Наприклад, якщо ви хочете змінити піктограму для кнопки :guilabel:`Вилучити книги`, вам слід спочатку зазирнути до теки resources пакунка і знайти відповідний файл — :file:`resources/images/trash.png`. Нехай тепер у вас є альтернативний варіант піктограми у форматі PNG із назвою :file:`mytrash.png`. Його слід зберегти до каталогу налаштувань як :file:`resources/images/trash.png`. Усі піктограми, які calibre використовує у інтерфейсі користувача, зберігаються у каталозі :file:`resources/images` та його підкаталогах."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:88
+#: ../../home/kovid/work/calibre/manual/customize.rst:93
 msgid "Creating your own icon theme for calibre"
 msgstr "Створення власної теми піктограм для calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:90
+#: ../../home/kovid/work/calibre/manual/customize.rst:95
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -210,11 +212,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr "Якщо вами було створено красивий набір піктограм, і ви хочете поділитися ним із іншими користувачами calibre, додавши його до набору вбудованих тем піктограм calibre, ви можете запакувати ваші піктограми у власну тему. Для цього відкрийте сторінку :guilabel:`Налаштування -> Різне -> Створити тему піктограм`, виберіть теку, у якій ви зберегли ваші піктограми (зазвичай теку :file:`resources/images` у каталозі налаштувань calibre, як ми це описували вище). Далі, вкажіть метадані теми і натисніть кнопку «Гаразд». Програма створить файл архіву ZIP із піктограмами теми. Ви можете розмістити його на форумі calibre на `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_, а вже згодом розробник програми додасть її до списку вбудованих тем піктограм calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:103
+#: ../../home/kovid/work/calibre/manual/customize.rst:108
 msgid "Customizing calibre with plugins"
 msgstr "Налаштовування calibre за допомогою додатків"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:105
+#: ../../home/kovid/work/calibre/manual/customize.rst:110
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -224,7 +226,7 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "У calibre дуже багато модулів. Майже усі функціональні можливості calibre реалізовано у формі додатків. Додатки використовуються для перетворення даних, для отримання новин (у формі так званих рецептів), для різноманітних компонентів інтерфейсу користувача, для встановлення з’єднання з різними пристроями, для обробки файлів під час додавання їх до бібліотеки calibre тощо. Із повним списком вбудованих додатків calibre можна ознайомитися на сторінці :guilabel:`Налаштування -> Додатково -> Додатки`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:107
+#: ../../home/kovid/work/calibre/manual/customize.rst:112
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

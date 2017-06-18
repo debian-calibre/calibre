@@ -44,6 +44,20 @@ class BuildTest(unittest.TestCase):
         import regex
         self.assertEqual(regex.findall(r'(?i)(a)(b)', 'ab cd AB 1a1b'), [('a', 'b'), ('A', 'B')])
 
+    def test_chardet(self):
+        from chardet import detect
+        raw = 'mūsi Füße'.encode('utf-8')
+        data = detect(raw)
+        self.assertEqual(data['encoding'], 'utf-8')
+        self.assertGreater(data['confidence'], 0.5)
+        # The following is used by html5lib
+        from chardet.universaldetector import UniversalDetector
+        detector = UniversalDetector()
+        self.assertTrue(hasattr(detector, 'done'))
+        detector.feed(raw)
+        detector.close()
+        self.assertEqual(detector.result['encoding'], 'utf-8')
+
     def test_lzma(self):
         from lzma.xz import test_lzma2
         test_lzma2()
@@ -54,6 +68,10 @@ class BuildTest(unittest.TestCase):
         # Test that we are using the calibre version of html5lib
         from calibre.ebooks.oeb.polish.parsing import parse_html5
         parse_html5('<p>xxx')
+
+    def test_html5_parser(self):
+        from html5_parser import parse
+        parse('<p>xxx')
 
     def test_plugins(self):
         exclusions = set()
@@ -89,6 +107,13 @@ class BuildTest(unittest.TestCase):
         from calibre.utils.certgen import create_key_pair
         create_key_pair()
 
+    def test_msgpack(self):
+        from calibre.utils.serialize import msgpack_dumps, msgpack_loads
+        from calibre.utils.date import utcnow
+        for obj in ({1:1}, utcnow()):
+            s = msgpack_dumps(obj)
+            self.assertEqual(obj, msgpack_loads(s))
+
     @unittest.skipUnless(isosx, 'FSEvents only present on OS X')
     def test_fsevents(self):
         from fsevents import Observer, Stream
@@ -112,6 +137,7 @@ class BuildTest(unittest.TestCase):
         conn = apsw.Connection(':memory:')
         conn.close()
 
+    @unittest.skipIf('SKIP_QT_BUILD_TEST' in os.environ, 'Skipping Qt build test as it causes crashes in the macOS VM')
     def test_qt(self):
         from PyQt5.Qt import QImageReader, QNetworkAccessManager, QFontDatabase
         from calibre.utils.img import image_from_data, image_to_data, test
@@ -163,7 +189,7 @@ class BuildTest(unittest.TestCase):
         i = Image.open(I('lt.png', allow_user_override=False))
         self.assertGreaterEqual(i.size, (20, 20))
 
-    @unittest.skipUnless(iswindows, 'File dialog helper only used on windows')
+    @unittest.skipUnless(iswindows and not is_ci, 'File dialog helper only used on windows (non-continuous-itegration)')
     def test_file_dialog_helper(self):
         from calibre.gui2.win_file_dialogs import test
         test()

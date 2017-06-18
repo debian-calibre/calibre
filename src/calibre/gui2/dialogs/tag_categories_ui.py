@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_TagCategories(object):
     def setupUi(self, TagCategories):
         TagCategories.setObjectName("TagCategories")
-        TagCategories.resize(588, 482)
+        TagCategories.resize(628, 482)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(I("chapters.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         TagCategories.setWindowIcon(icon)
@@ -151,6 +151,7 @@ class Ui_TagCategories(object):
         self.buttonBox.setObjectName("buttonBox")
         self.gridlayout.addWidget(self.buttonBox, 4, 0, 1, 4)
         self.label_3.setBuddy(self.category_box)
+        self.label_5.setBuddy(self.category_filter_box)
         self.label.setBuddy(self.available_items_box)
         self.label_2.setBuddy(self.applied_items_box)
 
@@ -162,7 +163,7 @@ class Ui_TagCategories(object):
     def retranslateUi(self, TagCategories):
 
         TagCategories.setWindowTitle(_("User Categories Editor"))
-        self.label_3.setText(_("Category name: "))
+        self.label_3.setText(_("Category &name: "))
         self.category_box.setToolTip(_("Select a category to edit"))
         self.delete_category_button.setToolTip(_("Delete this selected tag category"))
         self.delete_category_button.setText(_("..."))
@@ -171,16 +172,17 @@ class Ui_TagCategories(object):
         self.add_category_button.setText(_("..."))
         self.rename_category_button.setToolTip(_("Rename the current category to what is in the box"))
         self.rename_category_button.setText(_("..."))
-        self.label_5.setText(_("Category filter: "))
+        self.label_5.setText(_("Category &filter: "))
         self.category_filter_box.setToolTip(_("Select the content kind of the new category"))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
 "      current virtual library. Applied items not in the VL will be marked\n"
 "      \"not on any book\".</p>"))
-        self.apply_vl_checkbox.setText(_("Show only available items in current virtual library"))
+        self.apply_vl_checkbox.setText(_("&Show only available items in current virtual library"))
         self.label.setText(_("A&vailable items"))
         self.apply_button.setToolTip(_("Apply tags to current tag category"))
         self.apply_button.setText(_("..."))
         self.label_2.setText(_("A&pplied items"))
         self.unapply_button.setToolTip(_("Unapply (remove) tag from current tag category"))
         self.unapply_button.setText(_("..."))
+
 

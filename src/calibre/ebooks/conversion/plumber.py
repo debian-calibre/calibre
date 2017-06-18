@@ -380,7 +380,7 @@ OptionRecommendation(name='expand_css',
             recommended_value=False, level=OptionRecommendation.LOW,
             help=_(
                 'By default, calibre will use the shorthand form for various'
-                ' css properties such as margin, padding, border, etc. This'
+                ' CSS properties such as margin, padding, border, etc. This'
                 ' option will cause it to use the full expanded form instead.'
                 ' Note that CSS is always expanded when generating EPUB files'
                 ' with the output profile set to one of the Nook profiles'
@@ -860,7 +860,7 @@ OptionRecommendation(name='search_replace',
         '''
 
         def eq(name, a, b):
-            if name in {'sr1_search', 'sr1_replace', 'sr2_search', 'sr2_replace', 'sr3_search', 'sr3_replace', 'filter_css'}:
+            if name in {'sr1_search', 'sr1_replace', 'sr2_search', 'sr2_replace', 'sr3_search', 'sr3_replace', 'filter_css', 'comments'}:
                 if not a and not b:
                     return True
             if name in {'transform_css_rules', 'search_replace'}:

@@ -1,14 +1,16 @@
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
-from __python__ import hash_literals, bound_methods
+from __python__ import bound_methods, hash_literals
 
 from dom import set_css
-from read_book.globals import get_boss
 from keycodes import get_key
+from read_book.globals import get_boss
+from read_book.viewport import scroll_viewport
 from utils import document_height, document_width, viewport_to_document
 
+
 def flow_to_scroll_fraction(frac):
-    window.scrollTo(0, document_height() * frac)
+    scroll_viewport.scroll_to(0, document_height() * frac)
 
 def check_for_scroll_end(func):
     return def ():
@@ -31,14 +33,14 @@ def flow_onwheel(evt):
         elif evt.deltaMode is evt.DOM_DELTA_LINE:
             dy = 15 * evt.deltaY
         if evt.deltaMode is evt.DOM_DELTA_PAGE:
-            dy = (window.innerHeight - 30) * evt.deltaY
+            dy = (scroll_viewport.height() - 30) * evt.deltaY
     if evt.deltaX:
         if evt.deltaMode is evt.DOM_DELTA_PIXEL:
             dx = evt.deltaX
         elif evt.deltaMode is evt.DOM_DELTA_LINE:
             dx = 15 * evt.deltaX
         else:
-            dx = (window.innerWidth - 30) * evt.deltaX
+            dx = (scroll_viewport.width() - 30) * evt.deltaX
     if dx:
         window.scrollBy(dx, 0)
     elif dy:
@@ -59,11 +61,11 @@ def smooth_y_scroll(up):
 
 @check_for_scroll_end
 def goto_boundary(y):
-    window.scrollTo(window.pageXOffset, 0)
+    scroll_viewport.scroll_to(window.pageXOffset, 0)
 
 @check_for_scroll_end
 def scroll_by_page(backward):
-    h = window.innerHeight - 10
+    h = scroll_viewport.height() - 10
     window.scrollBy(0, -h if backward else h)
 
 def flow_onkeydown(evt):
@@ -78,7 +80,7 @@ def flow_onkeydown(evt):
     elif (key is 'left' or key is 'right') and not evt.altKey:
         handled = True
         if evt.ctrlKey:
-            window.scrollTo(0 if key is 'left' else document_width(), window.pageYOffset)
+            scroll_viewport.scroll_to(0 if key is 'left' else document_width(), window.pageYOffset)
         else:
             window.scrollBy(-15 if key is 'left' else 15, 0)
     elif key is 'home' or key is 'end':
@@ -87,9 +89,9 @@ def flow_onkeydown(evt):
             get_boss().send_message('goto_doc_boundary', start=key is 'home')
         else:
             if key is 'home':
-                window.scrollTo(window.pageXOffset, 0)
+                scroll_viewport.scroll_to(window.pageXOffset, 0)
             else:
-                window.scrollTo(window.pageXOffset, document_height())
+                scroll_viewport.scroll_to(window.pageXOffset, document_height())
     elif key is 'pageup' or key is 'pagedown' or key is 'space':
         handled = True
         scroll_by_page(key is 'pageup')
@@ -175,10 +177,10 @@ anchor_funcs = {
         y, x = pos
         if y < window.pageYOffset:
             return -1
-        if y < window.pageYOffset + window.innerHeight:
+        if y < window.pageYOffset + scroll_viewport.height():
             if x < window.pageXOffset:
                 return -1
-            if x < window.pageXOffset + window.innerWidth:
+            if x < window.pageXOffset + scroll_viewport.width():
                 return 0
         return 1
     ,

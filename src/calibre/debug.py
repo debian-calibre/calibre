@@ -12,6 +12,29 @@ from calibre.constants import iswindows
 from calibre import prints
 
 
+def get_debug_executable():
+    if hasattr(sys, 'frameworks_dir'):
+        base = os.path.dirname(sys.frameworks_dir)
+        if 'calibre-debug.app' not in base:
+            base = os.path.join(base, 'calibre-debug.app', 'Contents')
+        return os.path.join(base, 'MacOS', 'calibre-debug')
+    if getattr(sys, 'frozen', False):
+        return os.path.join(os.path.dirname(os.path.abspath(sys.executable)), 'calibre-debug' + ('.exe' if iswindows else ''))
+    return 'calibre-debug'
+
+
+def run_calibre_debug(*args, **kw):
+    import subprocess
+    creationflags = 0
+    if iswindows:
+        import win32process
+        creationflags = win32process.CREATE_NO_WINDOW
+    exe = get_debug_executable()
+    cmd = [exe] + list(args)
+    kw['creationflags'] = creationflags
+    return subprocess.Popen(cmd, **kw)
+
+
 def option_parser():
     parser = OptionParser(usage=_('''\
 {0}
@@ -85,8 +108,6 @@ Everything after the -- is passed to the script.
         'calibre-debug --diff file1 file2'))
     parser.add_option('--default-programs', default=None, choices=['register', 'unregister'],
                           help=_('(Un)register calibre from Windows Default Programs.') + ' --default-programs=(register|unregister)')
-    parser.add_option('--new-server', action='store_true',
-        help='Run the new calibre content server. Any options specified after a -- will be passed to the server.')
 
     return parser
 
@@ -229,8 +250,7 @@ def main(args=sys.argv):
     opts, args = option_parser().parse_args(args)
     if opts.gui:
         from calibre.gui_launch import calibre
-        print_basic_debug_info()
-        calibre(['calibre'])
+        calibre(['calibre'] + args[1:])
     elif opts.gui_debug is not None:
         run_debug_gui(opts.gui_debug)
     elif opts.viewer:
@@ -288,9 +308,6 @@ def main(args=sys.argv):
             from calibre.utils.winreg.default_programs import unregister as func
         print 'Running', func.__name__, '...'
         func()
-    elif opts.new_server:
-        from calibre.srv.standalone import main
-        main(args)
     elif opts.export_all_calibre_data:
         from calibre.utils.exim import run_exporter
         run_exporter()

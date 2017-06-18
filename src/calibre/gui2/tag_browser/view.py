@@ -209,7 +209,13 @@ class TagsView(QTreeView):  # {{{
     def get_state(self):
         state_map = {}
         expanded_categories = []
-        for row, category in enumerate(self._model.category_nodes):
+        row = -1
+        hide_empty_categories = self.model().prefs['tag_browser_hide_empty_categories']
+        for category in self._model.category_nodes:
+            if (category.category_key in self.hidden_categories or
+                    (hide_empty_categories and len(category.child_tags()) == 0)):
+                continue
+            row += 1
             if self.isExpanded(self._model.index(row, 0, QModelIndex())):
                 expanded_categories.append(category.category_key)
             states = [c.tag.state for c in category.child_tags()]
@@ -648,11 +654,11 @@ class TagsView(QTreeView):  # {{{
                 self.context_menu.addSeparator()
                 if key.startswith('@') and \
                         key[1:] in self.db.prefs.get('user_categories', {}).keys():
-                    self.context_menu.addAction(_('Manage User Categories'),
+                    self.context_menu.addAction(_('Manage User categories'),
                             partial(self.context_menu_handler, action='manage_categories',
                                     category=key[1:]))
                 else:
-                    self.context_menu.addAction(_('Manage User Categories'),
+                    self.context_menu.addAction(_('Manage User categories'),
                             partial(self.context_menu_handler, action='manage_categories',
                                     category=None))
 
@@ -691,6 +697,8 @@ class TagsView(QTreeView):  # {{{
         if index.isValid() and self.model().rowCount(index) > 0:
             self.context_menu.addSeparator()
             self.context_menu.addAction(_('E&xpand all children'), partial(self.expand_node_and_descendants, index))
+
+        self.context_menu.addAction(_('Collapse all levels'), self.collapseAll)
 
         if not self.context_menu.isEmpty():
             self.context_menu.popup(self.mapToGlobal(point))
@@ -768,7 +776,7 @@ class TagsView(QTreeView):  # {{{
         ci = self.currentIndex()
         if not ci.isValid():
             ci = self.indexAt(QPoint(10, 10))
-        path = self.model().path_for_index(ci) if self.is_visible(ci) else None
+        path = self.model().named_path_for_index(ci) if self.is_visible(ci) else None
         expanded_categories, state_map = self.get_state()
         self._model.rebuild_node_tree(state_map=state_map)
         self.blockSignals(True)
@@ -776,7 +784,10 @@ class TagsView(QTreeView):  # {{{
             idx = self._model.index_for_category(category)
             if idx is not None and idx.isValid():
                 self.expand(idx)
-        self.show_item_at_path(path)
+        if path is not None:
+            index = self._model.index_for_named_path(path)
+            if index.isValid():
+                self.show_item_at_index(index)
         self.blockSignals(False)
 
     def show_item_at_path(self, path, box=False,
