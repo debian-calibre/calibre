@@ -93,9 +93,8 @@ get-orig-source:
 	wget -O - http://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
 	\
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
-	rm -rf calibre*/src/unrar; \
-	rm -rf calibre*/resources/viewer/mathjax; \
-	rm -rf calibre*/resources/coffee-script.js; \
-	rm -rf calibre*/src/calibre/ebooks/markdown; \
+	rm -r calibre*/resources/viewer/mathjax; \
+	rm -r calibre*/resources/coffee-script.js; \
+	rm -r calibre*/src/calibre/ebooks/markdown; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
 	cd ../..; rm -r debian/orig
