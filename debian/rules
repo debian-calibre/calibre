@@ -27,12 +27,6 @@ common-install-arch common-install-indep:: debian/tmp
 debian/tmp:
 	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
-	# remove bundled python libraries which are provided by system
-	# packages
-	rm -r debian/tmp/usr/lib/calibre/cherrypy
-	rm -r debian/tmp/usr/lib/calibre/routes
-	rm -r debian/tmp/usr/lib/calibre/chardet
-
 	rm debian/tmp/usr/lib/calibre/calibre/web/feeds/feedparser.py
 	find debian/tmp/ -name '*.py' | xargs sed -i 's/calibre.utils.pyparsing/pyparsing/g'
 	find debian/tmp/ -name '*.py' -o -name "markdown-calibre" | xargs sed -i 's/calibre.ebooks.markdown/markdown/g'
