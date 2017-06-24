@@ -4751,6 +4751,18 @@ return parser;
             __argnames__ : {value: ["query", "qchar"]}
         });
 
+        function absolute_path(path) {
+            var slash;
+            if (path[0] !== "/") {
+                slash = ((ρσ_expr_temp = window.location.pathname)[ρσ_expr_temp.length-1] === "/") ? "" : "/";
+                path = window.location.pathname + slash + path;
+            }
+            return path;
+        };
+        if (!absolute_path.__argnames__) Object.defineProperties(absolute_path, {
+            __argnames__ : {value: ["path"]}
+        });
+
         function ajax() {
             var path = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var on_complete = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
@@ -4789,7 +4801,7 @@ return parser;
             xhr = new XMLHttpRequest;
             eq = encode_query(query);
             has_query = eq.length > 0;
-            path += eq;
+            path = absolute_path(path) + eq;
             if (bypass_cache) {
                 path += ((has_query) ? "&" : "?") + (new Date).getTime();
             }
@@ -4955,6 +4967,7 @@ return parser;
 
         ρσ_modules.ajax.encode_query_component = encode_query_component;
         ρσ_modules.ajax.encode_query = encode_query;
+        ρσ_modules.ajax.absolute_path = absolute_path;
         ρσ_modules.ajax.ajax = ajax;
         ρσ_modules.ajax.ajax_send = ajax_send;
         ρσ_modules.ajax.console_print = console_print;
@@ -4992,7 +5005,21 @@ return parser;
         Watcher.__handles_kwarg_interpolation__ = Watcher.prototype.__init__.__handles_kwarg_interpolation__;
         Watcher.prototype.reconnect = function reconnect() {
             var self = this;
-            self.ws = new WebSocket(self.url);
+            try {
+                self.ws = new WebSocket(self.url);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                if (ρσ_Exception instanceof DOMException) {
+                    var e = ρσ_Exception;
+                    if ((e.name === "SecurityError" || typeof e.name === "object" && ρσ_equals(e.name, "SecurityError"))) {
+                        console.log("Not allowed to connect to auto-reload watcher, probably because using a self-signed, or otherwise invalid SSL certificate");
+                        return;
+                    }
+                    throw ρσ_Exception;
+                } else {
+                    throw ρσ_Exception;
+                }
+            }
             self.ws.onopen = (function() {
                 var ρσ_anonfunc = function (event) {
                     self.retries = 0;
@@ -8361,6 +8388,7 @@ return this.__repr__();
         var __name__ = "book_list.library_data";
         var load_status, library_data, thumbnail_cache;
         var ajax = ρσ_modules.ajax.ajax;
+        var absolute_path = ρσ_modules.ajax.absolute_path;
 
         var LRUCache = ρσ_modules.lru_cache.LRUCache;
 
@@ -8522,7 +8550,7 @@ return this.__repr__();
         };
 
         function thumbnail_url(book_id, width, height) {
-            return "get/thumb/{}/{}?sz={}x{}".format(book_id, loaded_books_query().library_id, Math.ceil(width * window.devicePixelRatio), Math.ceil(height * window.devicePixelRatio));
+            return absolute_path("get/thumb/{}/{}?sz={}x{}".format(book_id, loaded_books_query().library_id, Math.ceil(width * window.devicePixelRatio), Math.ceil(height * window.devicePixelRatio)));
         };
         if (!thumbnail_url.__argnames__) Object.defineProperties(thumbnail_url, {
             __argnames__ : {value: ["book_id", "width", "height"]}
@@ -8531,7 +8559,7 @@ return this.__repr__();
         function cover_url(book_id) {
             var lid;
             lid = current_library_id();
-            return "get/cover/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", lid) + "";
+            return absolute_path("get/cover/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", lid) + "");
         };
         if (!cover_url.__argnames__) Object.defineProperties(cover_url, {
             __argnames__ : {value: ["book_id"]}
@@ -8540,7 +8568,7 @@ return this.__repr__();
         function download_url(book_id, fmt) {
             var lid;
             lid = current_library_id();
-            return "get/" + ρσ_str.format("{}", fmt) + "/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", lid) + "";
+            return absolute_path("get/" + ρσ_str.format("{}", fmt) + "/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", lid) + "");
         };
         if (!download_url.__argnames__) Object.defineProperties(download_url, {
             __argnames__ : {value: ["book_id", "fmt"]}
@@ -18577,6 +18605,7 @@ return this.__repr__();
         var __name__ = "book_list.search";
         var apply_search, sp_counter, CLASS_NAME, state;
         var ajax = ρσ_modules.ajax.ajax;
+        var absolute_path = ρσ_modules.ajax.absolute_path;
 
         var create_search_bar = ρσ_modules.complete.create_search_bar;
 
@@ -18657,7 +18686,7 @@ return this.__repr__();
             var interface_data, ans;
             interface_data = get_interface_data();
             ans = (ρσ_expr_temp = interface_data.icon_map)[ρσ_bound_index(node.data.category, ρσ_expr_temp)] || "column.png";
-            return interface_data.icon_path + "/" + ans;
+            return absolute_path(interface_data.icon_path + "/" + ans);
         };
         if (!icon_for_node.__argnames__) Object.defineProperties(icon_for_node, {
             __argnames__ : {value: ["node"]}
@@ -18871,7 +18900,7 @@ return this.__repr__();
                     ρσ_unpack = ρσ_Iter3[ρσ_Index3];
                     text = ρσ_unpack[0];
                     search_type = ρσ_unpack[1];
-                    li = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: "{}/{}.png".format(interface_data.icon_path, search_type), style: "max-height: 2.5ex"})]), E.span(" " + text)].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center; margin-bottom:0.5ex; padding: 0.5ex; cursor:pointer"})]));
+                    li = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: absolute_path("{}/{}.png".format(interface_data.icon_path, search_type)), style: "max-height: 2.5ex"})]), E.span(" " + text)].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center; margin-bottom:0.5ex; padding: 0.5ex; cursor:pointer"})]));
                     li.addEventListener("click", add_to_search.bind(null, node, search_type));
                     li.addEventListener("click", hide_modal);
                     ul.appendChild(li);
@@ -19453,16 +19482,7 @@ return this.__repr__();
             __argnames__ : {value: ["book_ids"]}
         });
 
-        function apply_view_mode() {
-            var mode = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? apply_view_mode.__defaults__.mode : arguments[0];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "mode")){
-                mode = ρσ_kwargs_obj.mode;
-            }
-            if (book_list_data.mode === mode) {
-                return;
-            }
+        function setup_view_mode(mode, book_list_data) {
             if (!(ρσ_in(mode, ALLOWED_MODES))) {
                 mode = DEFAULT_MODE;
             }
@@ -19476,6 +19496,23 @@ return this.__repr__();
                 book_list_data.init_grid = init_details_list;
                 book_list_data.append_item = details_list_append_item;
             }
+            return mode;
+        };
+        if (!setup_view_mode.__argnames__) Object.defineProperties(setup_view_mode, {
+            __argnames__ : {value: ["mode", "book_list_data"]}
+        });
+
+        function apply_view_mode() {
+            var mode = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? apply_view_mode.__defaults__.mode : arguments[0];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "mode")){
+                mode = ρσ_kwargs_obj.mode;
+            }
+            if (book_list_data.mode === mode) {
+                return;
+            }
+            setup_view_mode(mode, book_list_data);
             clear_grid();
             render_ids();
         };
@@ -19488,6 +19525,9 @@ return this.__repr__();
         function update_fetching_status() {
             var more;
             more = component("more_button");
+            if (!more) {
+                return;
+            }
             if (book_list_data.fetching_more_books) {
                 more.firstChild.style.display = "none";
                 more.lastChild.style.display = "block";
@@ -19914,6 +19954,7 @@ return this.__repr__();
         ρσ_modules["book_list.views"].create_image = create_image;
         ρσ_modules["book_list.views"].render_id = render_id;
         ρσ_modules["book_list.views"].render_ids = render_ids;
+        ρσ_modules["book_list.views"].setup_view_mode = setup_view_mode;
         ρσ_modules["book_list.views"].apply_view_mode = apply_view_mode;
         ρσ_modules["book_list.views"].update_fetching_status = update_fetching_status;
         ρσ_modules["book_list.views"].abort_get_more_books = abort_get_more_books;
@@ -19941,10 +19982,6 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
-        var cover_grid_append_item = ρσ_modules["book_list.cover_grid"].append_item;
-        var create_cover_grid_item = ρσ_modules["book_list.cover_grid"].create_item;
-        var init_cover_grid = ρσ_modules["book_list.cover_grid"].init;
-
         var get_db = ρσ_modules["book_list.globals"].get_db;
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
@@ -19955,13 +19992,13 @@ return this.__repr__();
 
         var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
 
-        var ALLOWED_MODES = ρσ_modules["book_list.views"].ALLOWED_MODES;
+        var setup_view_mode = ρσ_modules["book_list.views"].setup_view_mode;
         var DEFAULT_MODE = ρσ_modules["book_list.views"].DEFAULT_MODE;
-
-        var error_dialog = ρσ_modules.modals.error_dialog;
 
         var clear = ρσ_modules.dom.clear;
         var ensure_id = ρσ_modules.dom.ensure_id;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
 
         var conditional_timeout = ρσ_modules.utils.conditional_timeout;
 
@@ -20063,31 +20100,16 @@ return this.__repr__();
             __argnames__ : {value: ["books"]}
         });
 
-        function apply_view_mode() {
-            var mode = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? apply_view_mode.__defaults__.mode : arguments[0];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "mode")){
-                mode = ρσ_kwargs_obj.mode;
-            }
+        function apply_view_mode(mode) {
+            mode = mode || DEFAULT_MODE;
             if (book_list_data.mode === mode) {
                 return;
             }
-            if (!(ρσ_in(mode, ALLOWED_MODES))) {
-                mode = DEFAULT_MODE;
-            }
-            book_list_data.mode = mode;
-            if (mode === "cover_grid") {
-                book_list_data.render_book = create_cover_grid_item;
-                book_list_data.init_grid = init_cover_grid;
-                book_list_data.append_item = cover_grid_append_item;
-            }
+            setup_view_mode(mode, book_list_data);
             clear_grid();
             render_books();
         };
-        if (!apply_view_mode.__defaults__) Object.defineProperties(apply_view_mode, {
-            __defaults__ : {value: {mode:DEFAULT_MODE}},
-            __handles_kwarg_interpolation__ : {value: true},
+        if (!apply_view_mode.__argnames__) Object.defineProperties(apply_view_mode, {
             __argnames__ : {value: ["mode"]}
         });
 
@@ -23775,7 +23797,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.0.0";
+        CALIBRE_VERSION = "3.1.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");

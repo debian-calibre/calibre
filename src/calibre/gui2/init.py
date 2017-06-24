@@ -12,7 +12,7 @@ from PyQt5.Qt import (Qt, QApplication, QStackedWidget, QMenu, QTimer,
         QVBoxLayout, QWidget, QSplitter, QToolButton, QIcon, QPainter, QStyleOption)
 
 from calibre.utils.config import prefs
-from calibre.utils.icu import sort_key, primary_sort_key
+from calibre.utils.icu import sort_key
 from calibre.constants import (isosx, __appname__, preferred_encoding,
     get_version)
 from calibre.gui2 import config, is_widescreen, gprefs, error_dialog, open_url
@@ -22,6 +22,7 @@ from calibre.gui2.widgets import Splitter, LayoutButton
 from calibre.gui2.tag_browser.ui import TagBrowserWidget
 from calibre.gui2.book_details import BookDetails
 from calibre.gui2.notify import get_notifier
+from calibre.gui2.layout_menu import LayoutMenu
 
 _keep_refs = []
 
@@ -303,7 +304,7 @@ class StatusBar(QStatusBar):  # {{{
         if self.library_total != self.total:
             base = _('{0}, {1} total').format(base, self.library_total)
 
-        self.defmsg.setText(u'%s\xa0\xa0\xa0\xa0[%s]' % (msg, base))
+        self.defmsg.setText(u'\xa0%s\xa0\xa0\xa0\xa0[%s]' % (msg, base))
         self.clearMessage()
 
     def device_disconnected(self):
@@ -329,7 +330,7 @@ class StatusBar(QStatusBar):  # {{{
 class GridViewButton(LayoutButton):  # {{{
 
     def __init__(self, gui):
-        sc = 'Shift+Alt+G'
+        sc = 'Alt+Shift+G'
         LayoutButton.__init__(self, I('grid.png'), _('Cover grid'), parent=gui, shortcut=sc)
         self.set_state_to_show()
         self.action_toggle = QAction(self.icon(), _('Toggle') + ' ' + self.label, self)
@@ -337,6 +338,7 @@ class GridViewButton(LayoutButton):  # {{{
         gui.keyboard.register_shortcut('grid view toggle' + self.label, unicode(self.action_toggle.text()),
                                     default_keys=(sc,), action=self.action_toggle)
         self.action_toggle.triggered.connect(self.toggle)
+        self.action_toggle.changed.connect(self.update_shortcut)
         self.toggled.connect(self.update_state)
 
     def update_state(self, checked):
@@ -358,7 +360,7 @@ class GridViewButton(LayoutButton):  # {{{
 class SearchBarButton(LayoutButton):  # {{{
 
     def __init__(self, gui):
-        sc = 'Shift+Alt+F'
+        sc = 'Alt+Shift+F'
         LayoutButton.__init__(self, I('search.png'), _('Search bar'), parent=gui, shortcut=sc)
         self.set_state_to_show()
         self.action_toggle = QAction(self.icon(), _('Toggle') + ' ' + self.label, self)
@@ -366,6 +368,7 @@ class SearchBarButton(LayoutButton):  # {{{
         gui.keyboard.register_shortcut('search bar toggle' + self.label, unicode(self.action_toggle.text()),
                                     default_keys=(sc,), action=self.action_toggle)
         self.action_toggle.triggered.connect(self.toggle)
+        self.action_toggle.changed.connect(self.update_shortcut)
         self.toggled.connect(self.update_state)
 
     def update_state(self, checked):
@@ -586,25 +589,23 @@ class LayoutMixin(object):  # {{{
                         QToolButton:checked { background: rgba(0, 0, 0, 25%); }
                 ''')
             self.status_bar.addPermanentWidget(button)
-        self.layout_button = b = QToolButton(self)
-        b.setAutoRaise(True), b.setCursor(Qt.PointingHandCursor)
-        b.setPopupMode(b.InstantPopup)
-        b.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        b.setText(_('Layout')), b.setIcon(QIcon(I('config.png')))
-        b.setMenu(QMenu()), b.menu().aboutToShow.connect(self.populate_layout_menu)
-        b.setToolTip(_(
-            'Show and hide various parts of the calibre main window'))
-        self.status_bar.addPermanentWidget(b)
+        if gprefs['show_layout_buttons']:
+            for b in self.layout_buttons:
+                b.setVisible(True)
+                self.status_bar.addPermanentWidget(b)
+        else:
+            self.layout_button = b = QToolButton(self)
+            b.setAutoRaise(True), b.setCursor(Qt.PointingHandCursor)
+            b.setPopupMode(b.InstantPopup)
+            b.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+            b.setText(_('Layout')), b.setIcon(QIcon(I('config.png')))
+            b.setMenu(LayoutMenu(self))
+            b.setToolTip(_(
+                'Show and hide various parts of the calibre main window'))
+            self.status_bar.addPermanentWidget(b)
         self.status_bar.addPermanentWidget(self.jobs_button)
         self.setStatusBar(self.status_bar)
         self.status_bar.update_label.linkActivated.connect(self.update_link_clicked)
-
-    def populate_layout_menu(self):
-        m = self.layout_button.menu()
-        m.clear()
-        buttons = sorted(self.layout_buttons, key=lambda b:primary_sort_key(b.label))
-        for b in buttons:
-            m.addAction(b.icon(), b.text(), b.click)
 
     def finalize_layout(self):
         self.status_bar.initialize(self.system_tray_icon)

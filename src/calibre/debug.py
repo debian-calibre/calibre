@@ -181,6 +181,7 @@ def print_basic_debug_info(out=None):
     import platform
     from calibre.constants import (__appname__, get_version, isportable, isosx,
                                    isfrozen, is64bit)
+    from calibre.utils.localization import set_translators
     out(__appname__, get_version(), 'Portable' if isportable else '',
         'embedded-python:', isfrozen, 'is64bit:', is64bit)
     out(platform.platform(), platform.system(), platform.architecture())
@@ -203,6 +204,7 @@ def print_basic_debug_info(out=None):
             out('Linux:', platform.linux_distribution())
     except:
         pass
+    out('Interface language:', type(u'')(set_translators.lang))
     from calibre.customize.ui import has_external_plugins, initialized_plugins
     if has_external_plugins():
         names = ('{0} {1}'.format(p.name, p.version) for p in initialized_plugins() if getattr(p, 'plugin_path', None) is not None)

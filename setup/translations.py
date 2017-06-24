@@ -11,7 +11,7 @@ from collections import defaultdict
 from locale import normalize as normalize_locale
 from functools import partial
 
-from setup import Command, __appname__, __version__, require_git_master, build_cache_dir
+from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file
 from setup.parallel_build import parallel_check_output
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -51,7 +51,7 @@ class POT(Command):  # {{{
         self.tx(['push', '-r', 'calibre.'+resource, '-s'], cwd=self.TRANSLATIONS)
 
     def source_files(self):
-        ans = [self.a(self.j(self.d(self.SRC), 'manual', 'custom.py'))]
+        ans = [self.a(self.j(self.MANUAL, x)) for x in ('custom.py', 'conf.py')]
         for root, _, files in os.walk(self.j(self.SRC, __appname__)):
             for name in files:
                 if name.endswith('.py'):
@@ -511,15 +511,27 @@ class GetTranslations(Translations):  # {{{
     def is_modified(self):
         return bool(subprocess.check_output('git status --porcelain'.split(), cwd=self.TRANSLATIONS))
 
+    def add_options(self, parser):
+        parser.add_option('-e', '--check-for-errors', default=False, action='store_true',
+                          help='Check for errors in .po files')
+
     def run(self, opts):
         require_git_master()
+        if opts.check_for_errors:
+            self.check_all()
+            return
         self.tx('pull -a')
+        if not self.is_modified:
+            self.info('No translations were updated')
+            return
+        self.upload_to_vcs()
+        self.check_all()
+
+    def check_all(self):
+        self.check_for_errors()
+        self.check_for_user_manual_errors()
         if self.is_modified:
-            self.check_for_errors()
-            self.check_for_user_manual_errors()
-            self.upload_to_vcs()
-        else:
-            print ('No translations were updated')
+            self.upload_to_vcs('Fixed translations')
 
     def check_for_user_manual_errors(self):
         self.info('Checking user manual translations...')
@@ -551,22 +563,54 @@ class GetTranslations(Translations):  # {{{
             self.tx('push -r calibre.%s -t -l %s' % (slug, ','.join(languages)))
 
     def check_for_errors(self):
+        self.info('Checking for errors in .po files...')
+        groups = 'calibre content-server website'.split()
+        for group in groups:
+            self.check_group(group)
+        self.check_website()
+        for group in groups:
+            self.push_fixes(group)
+
+    def push_fixes(self, group):
+        languages = set()
+        for line in subprocess.check_output('git status --porcelain'.split(), cwd=self.TRANSLATIONS).decode('utf-8').splitlines():
+            parts = line.strip().split()
+            if len(parts) > 1 and 'M' in parts[0] and parts[-1].startswith(group + '/') and parts[-1].endswith('.po'):
+                languages.add(os.path.basename(parts[-1]).partition('.')[0])
+        if languages:
+            pot = 'main' if group == 'calibre' else group.replace('-', '_')
+            print('Pushing fixes for %s.pot languages: %s' % (pot, ', '.join(languages)))
+            self.tx('push -r calibre.{} -t -l '.format(pot) + ','.join(languages))
+
+    def check_group(self, group):
+        files = glob.glob(os.path.join(self.TRANSLATIONS, group, '*.po'))
+        cmd = ['msgfmt', '-o', os.devnull, '--check-format']
+        # Disabled because too many such errors, and not that critical anyway
+        # if group == 'calibre':
+        #     cmd += ['--check-accelerators=&']
+
+        def check(f):
+            p = subprocess.Popen(cmd + [f], stderr=subprocess.PIPE)
+            errs = p.stderr.read()
+            p.wait()
+            return errs
+
+        for f in files:
+            errs = check(f)
+            if errs:
+                print(f)
+                print(errs)
+                edit_file(f)
+                if check(f):
+                    raise SystemExit('Aborting as not all errors were fixed')
+
+    def check_website(self):
         errors = os.path.join(tempfile.gettempdir(), 'calibre-translation-errors')
         if os.path.exists(errors):
             shutil.rmtree(errors)
         os.mkdir(errors)
-        tpath = self.j(self.TRANSLATIONS, __appname__)
-        pofilter = ('pofilter', '-i', tpath, '-o', errors,
-                '-t', 'accelerators', '-t', 'escapes', '-t', 'variables',
-                # '-t', 'xmltags',
-                # '-t', 'brackets',
-                # '-t', 'emails',
-                # '-t', 'doublequoting',
-                # '-t', 'filepaths',
-                # '-t', 'numbers',
-                '-t', 'options',
-                # '-t', 'urls',
-                '-t', 'printf')
+        tpath = self.j(self.TRANSLATIONS, 'website')
+        pofilter = ('pofilter', '-i', tpath, '-o', errors, '-t', 'xmltags')
         subprocess.check_call(pofilter)
         errfiles = glob.glob(errors+os.sep+'*.po')
         if errfiles:
@@ -580,21 +624,12 @@ class GetTranslations(Translations):  # {{{
                     f.write(raw)
 
             subprocess.check_call(['pomerge', '-t', tpath, '-i', errors, '-o', tpath])
-            languages = []
-            for f in glob.glob(self.j(errors, '*.po')):
-                lc = os.path.basename(f).rpartition('.')[0]
-                languages.append(lc)
-            if languages:
-                print('Pushing fixes for languages: %s' % (', '.join(languages)))
-                self.tx('push -r calibre.main -t -l ' + ','.join(languages))
-            return True
-        return False
 
-    def upload_to_vcs(self):
-        print ('Uploading updated translations to version control')
+    def upload_to_vcs(self, msg=None):
+        self.info('Uploading updated translations to version control')
         cc = partial(subprocess.check_call, cwd=self.TRANSLATIONS)
         cc('git add */*.po'.split())
-        cc('git commit -am'.split() + ['Updated translations'])
+        cc('git commit -am'.split() + [msg or 'Updated translations'])
         cc('git push'.split())
 
 # }}}

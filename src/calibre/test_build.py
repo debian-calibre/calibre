@@ -43,6 +43,11 @@ class BuildTest(unittest.TestCase):
     def test_regex(self):
         import regex
         self.assertEqual(regex.findall(r'(?i)(a)(b)', 'ab cd AB 1a1b'), [('a', 'b'), ('A', 'B')])
+        self.assertEqual(regex.escape('a b', literal_spaces=True), 'a b')
+
+    def test_imobiledevice(self):
+        from calibre.devices.idevice.libimobiledevice import load_library
+        load_library()
 
     def test_chardet(self):
         from chardet import detect

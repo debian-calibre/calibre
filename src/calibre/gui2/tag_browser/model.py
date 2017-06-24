@@ -297,6 +297,7 @@ class TagsModel(QAbstractItemModel):  # {{{
 
     def __init__(self, parent, prefs=gprefs):
         QAbstractItemModel.__init__(self, parent)
+        self.use_position_based_index_on_next_recount = False
         self.prefs = prefs
         self.node_map = {}
         self.category_nodes = []
@@ -400,7 +401,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         self.user_category_node_tree = {}
 
         # We build the node tree including categories that might later not be
-        # displayed because their items might be in user categories. The resulting
+        # displayed because their items might be in User categories. The resulting
         # nodes will be reordered later.
         for i, key in enumerate(self.categories):
             is_gst = False
@@ -604,8 +605,8 @@ class TagsModel(QAbstractItemModel):  # {{{
                     node_parent = category
 
                 # category display order is important here. The following works
-                # only if all the non-user categories are displayed before the
-                # user categories
+                # only if all the non-User categories are displayed before the
+                # User categories
                 if category_is_hierarchical or tag.is_hierarchical:
                     components = get_name_components(tag.original_name)
                 else:
@@ -672,7 +673,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         # }}}
 
         # Build the entire node tree. Note that category_nodes is in field
-        # metadata order so the user categories will be at the end
+        # metadata order so the User categories will be at the end
         with self.db.new_api.safe_read_lock:  # needed as we read from book_value_map
             for category in self.category_nodes:
                 process_one_node(category, collapse_model, self.db.new_api.fields['rating'].book_value_map,
@@ -784,7 +785,7 @@ class TagsModel(QAbstractItemModel):  # {{{
             copied = False
             src_name = idx.tag.original_name
             src_cat = idx.tag.category
-            # delete the item if the source is a user category and action is move
+            # delete the item if the source is a User category and action is move
             if is_uc and not src_parent_is_gst and src_parent in user_cats and \
                                     action == Qt.MoveAction:
                 new_cat = []
@@ -796,7 +797,7 @@ class TagsModel(QAbstractItemModel):  # {{{
             else:
                 copied = True
 
-            # Now add the item to the destination user category
+            # Now add the item to the destination User category
             add_it = True
             if not is_uc and src_cat == 'news':
                 src_cat = 'tags'
@@ -1073,9 +1074,9 @@ class TagsModel(QAbstractItemModel):  # {{{
         item = self.get_node(index)
         if item.type == TagTreeItem.CATEGORY and item.category_key.startswith('@'):
             if val.find('.') >= 0:
-                error_dialog(self.gui_parent, _('Rename user category'),
+                error_dialog(self.gui_parent, _('Rename User category'),
                     _('You cannot use periods in the name when '
-                      'renaming user categories'), show=True)
+                      'renaming User categories'), show=True)
                 return False
 
             user_cats = self.db.prefs.get('user_categories', {})
@@ -1090,6 +1091,7 @@ class TagsModel(QAbstractItemModel):  # {{{
             nkey_lower = icu_lower(nkey)
 
             if ckey == nkey:
+                self.use_position_based_index_on_next_recount = True
                 return True
 
             for c in sorted(user_cats.keys(), key=sort_key):
@@ -1097,7 +1099,7 @@ class TagsModel(QAbstractItemModel):  # {{{
                     if len(c) == len(ckey):
                         if strcmp(ckey, nkey) != 0 and \
                                 nkey_lower in user_cat_keys_lower:
-                            error_dialog(self.gui_parent, _('Rename user category'),
+                            error_dialog(self.gui_parent, _('Rename User category'),
                                 _('The name %s is already used')%nkey, show=True)
                             return False
                         user_cats[nkey] = user_cats[ckey]
@@ -1106,12 +1108,13 @@ class TagsModel(QAbstractItemModel):  # {{{
                         rest = c[len(ckey):]
                         if strcmp(ckey, nkey) != 0 and \
                                     icu_lower(nkey + rest) in user_cat_keys_lower:
-                            error_dialog(self.gui_parent, _('Rename user category'),
+                            error_dialog(self.gui_parent, _('Rename User category'),
                                 _('The name %s is already used')%(nkey+rest), show=True)
                             return False
                         user_cats[nkey + rest] = user_cats[ckey + rest]
                         del user_cats[ckey + rest]
             self.user_categories_edited.emit(user_cats, nkey)  # Does a refresh
+            self.use_position_based_index_on_next_recount = True
             return True
 
         key = item.tag.category
@@ -1129,10 +1132,12 @@ class TagsModel(QAbstractItemModel):  # {{{
                 error_dialog(self.gui_parent, _('Duplicate search name'),
                     _('The saved search name %s is already used.')%val).exec_()
                 return False
+            self.use_position_based_index_on_next_recount = True
             self.db.saved_search_rename(unicode(item.data(role) or ''), val)
             item.tag.name = val
             self.search_item_renamed.emit()  # Does a refresh
         else:
+            self.use_position_based_index_on_next_recount = True
             restrict_to_book_ids=self.get_book_ids_to_use() if item.use_vl else None
             self.db.new_api.rename_items(key, {item.tag.id: val},
                                          restrict_to_book_ids=restrict_to_book_ids)
@@ -1146,7 +1151,7 @@ class TagsModel(QAbstractItemModel):  # {{{
 
     def rename_item_in_all_user_categories(self, item_name, item_category, new_name):
         '''
-        Search all user categories for items named item_name with category
+        Search all User categories for items named item_name with category
         item_category and rename them to new_name. The caller must arrange to
         redisplay the tree as appropriate.
         '''
@@ -1163,7 +1168,7 @@ class TagsModel(QAbstractItemModel):  # {{{
 
     def delete_item_from_all_user_categories(self, item_name, item_category):
         '''
-        Search all user categories for items named item_name with category
+        Search all User categories for items named item_name with category
         item_category and delete them. The caller must arrange to redisplay the
         tree as appropriate.
         '''
@@ -1346,7 +1351,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         # not shared, which can lead to the possibility of searching twice for
         # the same tag. The tags_seen set helps us prevent that
         tags_seen = set()
-        # Tag nodes are in their own category and possibly in user categories.
+        # Tag nodes are in their own category and possibly in User categories.
         # They will be 'checked' in both places, but we want to put the node
         # into the search string only once. The nodes_seen set helps us do that
         nodes_seen = set()
