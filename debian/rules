@@ -50,6 +50,10 @@ debian/tmp:
 	rm -rf debian/tmp/usr/share/calibre/viewer/mathjax
 	ln -s /usr/share/javascript/mathjax debian/tmp/usr/share/calibre/viewer/mathjax
 
+	# use system coffee-script
+	rm -rf debian/tmp/usr/share/calibre/coffee-script.js
+	ln -s /usr/share/javascript/coffeescript/coffee-script.min.js debian/tmp/usr/share/calibre/coffee-script.js
+
 	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
@@ -91,6 +95,7 @@ get-orig-source:
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
 	rm -rf calibre*/src/unrar; \
 	rm -rf calibre*/resources/viewer/mathjax; \
+	rm -rf calibre*/resources/coffee-script.js; \
 	rm -rf calibre*/src/calibre/ebooks/markdown; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
 	cd ../..; rm -r debian/orig
