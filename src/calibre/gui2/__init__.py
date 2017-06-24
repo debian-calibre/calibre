@@ -123,6 +123,7 @@ def create_defs():
     defs['tag_browser_old_look'] = False
     defs['tag_browser_hide_empty_categories'] = False
     defs['book_list_tooltips'] = True
+    defs['show_layout_buttons'] = False
     defs['bd_show_cover'] = True
     defs['bd_overlay_cover_size'] = False
     defs['tags_browser_category_icons'] = {}
@@ -149,6 +150,8 @@ def create_defs():
     defs['tag_browser_show_counts'] = True
     defs['row_numbers_in_book_list'] = True
     defs['hidpi'] = 'auto'
+    defs['tag_browser_item_padding'] = 0.5
+    defs['paste_isbn_prefixes'] = ['isbn', 'url', 'amazon', 'google']
 
 
 create_defs()

@@ -31,8 +31,9 @@ class SplashScreen(QSplashScreen):
         self.body_font = f = QFont()
         f.setPointSize(self.BODY_SIZE)
         self.line_height = QFontMetrics(f).lineSpacing()
+        self.total_height = max(self.LOGO_SIZE, self.title_height + 3 * self.line_height)
         self.num_font = f = QFont()
-        f.setPixelSize(self.LOGO_SIZE)
+        f.setPixelSize(self.total_height)
         f.setItalic(True), f.setBold(True)
         f = QFontMetrics(f)
         self.num_ch = str(max(3, numeric_version[0]))
@@ -56,7 +57,8 @@ class SplashScreen(QSplashScreen):
         painter.save()
         painter.setRenderHint(painter.TextAntialiasing, True)
         painter.setRenderHint(painter.Antialiasing, True)
-        pw = height = self.LOGO_SIZE
+        pw = self.LOGO_SIZE
+        height = max(pw, self.total_height)
         width = self.width()
 
         # Draw frame
@@ -65,7 +67,8 @@ class SplashScreen(QSplashScreen):
         painter.fillRect(0, y, width, height, self.light_brush)
         painter.fillRect(0, y, width, self.title_height, self.dark_brush)
         painter.fillRect(0, y, pw, height, self.dark_brush)
-        painter.drawPixmap(0, y, self.pmap)
+        dy = (height - self.LOGO_SIZE) // 2
+        painter.drawPixmap(0, y + dy, self.pmap)
 
         # Draw number
         painter.setFont(self.num_font)
@@ -84,14 +87,16 @@ class SplashScreen(QSplashScreen):
         y += self.title_height + 5
         painter.setPen(QPen(self.dark_brush.color()))
         painter.setFont(self.body_font)
-        painter.drawText(x, y, width, self.line_height, Qt.AlignLeft | Qt.AlignVCenter | Qt.TextSingleLine, _(
+        br = painter.drawText(x, y, width, self.line_height, Qt.AlignLeft | Qt.AlignVCenter | Qt.TextSingleLine, _(
             'Starting up, please wait...'))
+        starting_up_bottom = br.bottom()
 
         # Draw footer
         m = self.message()
         if m and m.strip():
             painter.setFont(self.footer_font)
-            painter.drawText(x, bottom - self.line_height, width, self.line_height, Qt.AlignLeft | Qt.AlignTop | Qt.TextSingleLine, m)
+            b = max(starting_up_bottom + 5, bottom - self.line_height)
+            painter.drawText(x, b, width, self.line_height, Qt.AlignLeft | Qt.AlignTop | Qt.TextSingleLine, m)
 
         painter.restore()
 

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-14 13:47+0530\n"
-"PO-Revision-Date: 2017-06-11 06:16+0000\n"
-"Last-Translator: Jonatan Nyberg\n"
+"POT-Creation-Date: 2017-06-21 20:39+0530\n"
+"PO-Revision-Date: 2017-06-21 15:10+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -321,10 +321,48 @@ msgid ""
 msgstr "Om du använder en viss gammal eller begränsad webbläsare eller om du inte gillar att köra JavaScript kan du använda *mobil* -vyn genom att helt enkelt lägga till ``/mobile`` till serveradressen."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:211
+msgid ""
+"On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
+"Safari are all actually the same browser under the hood. The new server "
+"interface requires iOS 10.3.2 or newer. On Android, the server has been "
+"tested with Chrome version 58 and newer."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:217
+msgid "Managing user accounts from the command-line only"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:219
+msgid ""
+"The calibre program has a nice section in :guilabel:`Preferences` to allow "
+"you to manage user accounts for the server. However, if you want to run the "
+"standalone server and cannot run the main calibre program on the same "
+"computer/user account, you can also manage users using just the command-"
+"line."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:224
+msgid ""
+"You can manage user accounts using the ``--manage-users`` option to the "
+"standalone ``calibre-server`` program. Suppose you want to store the user "
+"database in the directory ``/srv/calibre``, then you create it by running::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:231
+msgid ""
+"Just follow the prompts to create user accounts, set their permission, etc. "
+"Once you are done, you can run the server as::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:236
+msgid "It will use the user accounts you created in the previous step."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:240
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Integrera calibre-Innehållsservern med andra servrar"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:213
+#: ../../home/kovid/work/calibre/manual/server.rst:242
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL. The "
@@ -332,7 +370,7 @@ msgid ""
 " from the main server."
 msgstr "Här, kommer vi att visa hur du integrerar calibre mediaserver med en annan server. Den vanligaste orsaken för detta är att använda sig av SSL. Den grundläggande tekniken är att köra calibre-servern och konfigurera en reverse proxy till den från huvudservern."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:218
+#: ../../home/kovid/work/calibre/manual/server.rst:247
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -342,36 +380,36 @@ msgid ""
 " systems your main server has in place."
 msgstr "En reverse proxy är när din vanliga server accepterar inkommande förfrågningar och skickar dem till calibre-servern. Den läser sedan svaret från calibre-servern och vidarebefordrar det till klienten. Det betyder att du enkelt kan köra calibre-servern som vanligt utan att försöka integrera den nära din huvudserver och du kan utnyttja alla autentiseringssystem som din huvudserver har på plats."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:226
+#: ../../home/kovid/work/calibre/manual/server.rst:255
 msgid "Using a full virtual host"
 msgstr "Använda en fullständig virtuell värd"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:228
+#: ../../home/kovid/work/calibre/manual/server.rst:257
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "Den enklaste konfigurationen är att ägna en fullständig virtuell värd till calibre-servern. Kör i så fall calibre-servern som::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:233
+#: ../../home/kovid/work/calibre/manual/server.rst:262
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Ställ nu in den virtuella värden på din huvudserver, till exempel för nginx::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:244
+#: ../../home/kovid/work/calibre/manual/server.rst:273
 msgid "Or, for Apache::"
 msgstr "Eller för Apache::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:258
+#: ../../home/kovid/work/calibre/manual/server.rst:287
 msgid "Using a URL prefix"
 msgstr "Använd ett URL-prefix"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:260
+#: ../../home/kovid/work/calibre/manual/server.rst:289
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Om du inte vill ägna en fullständig virtuell värd till calibre kan du få den att använda ett URL-prefix. Starta calibre-servern som::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:265
+#: ../../home/kovid/work/calibre/manual/server.rst:294
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by calibre. To see this in action, visit "
@@ -379,13 +417,13 @@ msgid ""
 " Content server website, but now it will run under /calibre."
 msgstr "Nyckelparametern här är ``--url-prefix /calibre``. Detta gör att Innehållsservern kan betjäna alla webbadresser som prefixas av calibre. För att se detta i åtgärd, besök ``http://localhost:8080/calibre`` i din webbläsare. Du borde se den normala innehållsserverwebbplatsen, men nu kör den under /calibre."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:267
+#: ../../home/kovid/work/calibre/manual/server.rst:296
 msgid ""
 "Now suppose you are using Apache as your main server. First enable the proxy"
 " modules in Apache, by adding the following to :file:`httpd.conf`::"
 msgstr "Antag nu att du använder Apache som din huvudserver. Först aktivera proxy-modulerna i Apache, genom att lägga till följande till  :file:`httpd.conf`::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:272
+#: ../../home/kovid/work/calibre/manual/server.rst:301
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -393,7 +431,7 @@ msgid ""
 " file for the virtual host in question)::"
 msgstr "Den exakta tekniken för att möjliggöra proxymoduler varierar beroende på din Apache-installation. När du aktiverar proxymodulerna, lägg till följande regler till httpd.conf (eller om du använder virtuella värdar till conf-filen för den virtuella värden i fråga)::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:278
+#: ../../home/kovid/work/calibre/manual/server.rst:307
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the /calibre URL in your Apache server. The above rules pass all requests "

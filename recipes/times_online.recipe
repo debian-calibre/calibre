@@ -45,6 +45,23 @@ class TimesOnline(BasicNewsRecipe):
         'comment': description, 'tags': category, 'publisher': publisher, 'language': language
     }
 
+    def get_cover_url(self):
+        from datetime import date
+        cover = 'http://img.kiosko.net/' + str(
+            date.today().year) + '/' + date.today().strftime('%m') + '/' + date.today().strftime('%d') + '/uk/the_times.750.jpg'
+        br = BasicNewsRecipe.get_browser(self)
+        try:
+            br.open(cover)
+        except:
+            index = 'http://en.kiosko.net/uk/np/the_times.html'
+            soup = self.index_to_soup(index)
+            for image in soup.findAll('img', src=True):
+                if image['src'].endswith('750.jpg'):
+                    return image['src']
+            self.log("\nCover unavailable")
+            cover = None
+        return cover
+
     def get_browser(self):
         br = BasicNewsRecipe.get_browser(self)
         br.open('http://www.thetimes.co.uk/')
@@ -63,8 +80,8 @@ class TimesOnline(BasicNewsRecipe):
     ]
     remove_attributes = ['lang']
     keep_only_tags = [
-        dict(attrs={'class': 'Article Article--default'}
-             ), dict(attrs={'class': 'f-author'}), dict(attrs={'id': 'bodycopy'})
+        {'attrs': {'id': ['article-main','bodycopy']}},
+        {'attrs': {'class': ['Article Article--default','f-author']}}
     ]
     remove_tags_after = dict(attrs={'class': 'Article-content'})
 

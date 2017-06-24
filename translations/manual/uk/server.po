@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-14 13:47+0530\n"
-"PO-Revision-Date: 2017-06-11 07:47+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2017-06-21 20:39+0530\n"
+"PO-Revision-Date: 2017-06-21 15:10+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -323,10 +323,48 @@ msgid ""
 msgstr "Якщо ви користуєтеся застарілою програмою для перегляду інтернету, програмою із обмеженими можливостями або не хочете користуватися JavaScript, ви можете скористатися *мобільним* режимом перегляду, просто додавши ``/mobile`` до адреси сервера."
 
 #: ../../home/kovid/work/calibre/manual/server.rst:211
+msgid ""
+"On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
+"Safari are all actually the same browser under the hood. The new server "
+"interface requires iOS 10.3.2 or newer. On Android, the server has been "
+"tested with Chrome version 58 and newer."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:217
+msgid "Managing user accounts from the command-line only"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:219
+msgid ""
+"The calibre program has a nice section in :guilabel:`Preferences` to allow "
+"you to manage user accounts for the server. However, if you want to run the "
+"standalone server and cannot run the main calibre program on the same "
+"computer/user account, you can also manage users using just the command-"
+"line."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:224
+msgid ""
+"You can manage user accounts using the ``--manage-users`` option to the "
+"standalone ``calibre-server`` program. Suppose you want to store the user "
+"database in the directory ``/srv/calibre``, then you create it by running::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:231
+msgid ""
+"Just follow the prompts to create user accounts, set their permission, etc. "
+"Once you are done, you can run the server as::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:236
+msgid "It will use the user accounts you created in the previous step."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:240
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Інтегрування сервера даних calibre в інші сервери"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:213
+#: ../../home/kovid/work/calibre/manual/server.rst:242
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL. The "
@@ -334,7 +372,7 @@ msgid ""
 " from the main server."
 msgstr "Тут описано спосіб інтеграції сервера даних calibre до іншого сервера. Найпоширенішою причиною для такої інтеграції є використання SSL. Основною методикою є запуск сервера calibre і налаштовування на основному сервері зворотного проксі-сервера до сервера даних."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:218
+#: ../../home/kovid/work/calibre/manual/server.rst:247
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -344,36 +382,36 @@ msgid ""
 " systems your main server has in place."
 msgstr "Зворотною називається схема проксі-сервера, коли ваш звичайний сервер приймає вхідні запити і передає їх серверу calibre. Далі він читає відповідь від сервера calibre і переспрямовує її клієнту. Це означає, що ви можете просто запустити сервер calibre як звичайно, без спроб тісно інтегрувати його зі вашим основним сервером, і ви можете скористатися перевагами систем розпізнавання, налаштованих на вашому основному сервері."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:226
+#: ../../home/kovid/work/calibre/manual/server.rst:255
 msgid "Using a full virtual host"
 msgstr "Використання повного віртуального вузла"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:228
+#: ../../home/kovid/work/calibre/manual/server.rst:257
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "Найпростішою є конфігурація із використанням повного віртуального вузла для роботи сервера calibre. У цьому випадку сервер calibre запускається так::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:233
+#: ../../home/kovid/work/calibre/manual/server.rst:262
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Далі, слід налаштувати віртуальний вузол на вашому основному сервері. Приклад для nginx::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:244
+#: ../../home/kovid/work/calibre/manual/server.rst:273
 msgid "Or, for Apache::"
 msgstr "Або для Apache::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:258
+#: ../../home/kovid/work/calibre/manual/server.rst:287
 msgid "Using a URL prefix"
 msgstr "Використання префікса адреси"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:260
+#: ../../home/kovid/work/calibre/manual/server.rst:289
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Якщо ви не хочете використовувати окремий віртуальний вузол для calibre, ви можете налаштувати систему з використанням префікса адреси. Запустіть сервер calibre так::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:265
+#: ../../home/kovid/work/calibre/manual/server.rst:294
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by calibre. To see this in action, visit "
@@ -381,13 +419,13 @@ msgid ""
 " Content server website, but now it will run under /calibre."
 msgstr "Ключовим параметром тут є ``--url-prefix /calibre``. Цей параметр наказує серверу даних обслуговувати усі адреси із префіксом calibre. Щоб побачити як це праціює, відкрийте сторінку з адресою ``http://localhost:8080/calibre`` у вашій програмі для перегляду інтернету. Ви маєте побачити звичайний сайт сервера даних, але тепер він працюватиме у теці /calibre."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:267
+#: ../../home/kovid/work/calibre/manual/server.rst:296
 msgid ""
 "Now suppose you are using Apache as your main server. First enable the proxy"
 " modules in Apache, by adding the following to :file:`httpd.conf`::"
 msgstr "Тепер, припустімо, що ви використовуєте як основний сервер сервер Apache. Спочатку увімкніть проксі-модулі у Apache, додаванням вказаного нижче фрагмента до :file:`httpd.conf`::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:272
+#: ../../home/kovid/work/calibre/manual/server.rst:301
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -395,7 +433,7 @@ msgid ""
 " file for the virtual host in question)::"
 msgstr "Точна методика вмикання модулів проксі залежить від встановленого варіанта Apache. Щойно модулі проксі буде увімкнено, додайте такі правила до httpd.conf (або якщо ви використовуєте віртуальні вузли, до файла налаштувань віртуального вузла)::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:278
+#: ../../home/kovid/work/calibre/manual/server.rst:307
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the /calibre URL in your Apache server. The above rules pass all requests "

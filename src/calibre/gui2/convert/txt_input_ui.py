@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(588, 378)
+        Form.resize(588, 399)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox_3 = QtWidgets.QGroupBox(Form)
@@ -82,6 +82,8 @@ class Ui_Form(object):
         self.label_5.setObjectName("label_5")
         self.verticalLayout.addWidget(self.label_5)
         self.verticalLayout_3.addWidget(self.markdown_box)
+        self.label_2.setBuddy(self.opt_paragraph_type)
+        self.label_3.setBuddy(self.opt_formatting_type)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

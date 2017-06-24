@@ -127,7 +127,7 @@ class Ui_Form(object):
         self.opt_fewer_tags.setStatusTip(_("Prefer smaller tag sets when picking tags from different metadata sources"))
         self.opt_fewer_tags.setText(_("Prefer &fewer tags"))
         self.opt_swap_author_names.setText(_("Swap &author names from FN LN to LN, FN"))
-        self.groupBox_2.setTitle(_("Downloaded metadata fields"))
+        self.groupBox_2.setTitle(_("Metadata fields to download"))
         self.fields_view.setToolTip(_("If you uncheck any fields, metadata for those fields will not be downloaded"))
         self.select_all_button.setText(_("&Select all"))
         self.clear_all_button.setText(_("&Clear all"))

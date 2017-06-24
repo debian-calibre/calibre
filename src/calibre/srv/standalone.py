@@ -10,7 +10,7 @@ import sys, os, signal
 from functools import partial
 
 from calibre import as_unicode, prints
-from calibre.constants import plugins, iswindows, preferred_encoding, is_running_from_develop
+from calibre.constants import plugins, iswindows, preferred_encoding, is_running_from_develop, isosx
 from calibre.srv.loop import ServerLoop
 from calibre.srv.library_broker import load_gui_libraries
 from calibre.srv.bonjour import BonJour
@@ -19,6 +19,7 @@ from calibre.srv.http_response import create_http_handler
 from calibre.srv.handler import Handler
 from calibre.srv.utils import RotatingLog
 from calibre.utils.config import prefs
+from calibre.utils.localization import localize_user_manual_link
 from calibre.utils.lock import singleinstance
 from calibre.db.legacy import LibraryDatabase
 
@@ -47,15 +48,7 @@ def daemonize():  # {{{
         raise SystemExit('fork #2 failed: %s' % as_unicode(e))
 
     # Redirect standard file descriptors.
-    try:
-        plugins['speedup'][0].detach(os.devnull)
-    except AttributeError:  # people running from source without updated binaries
-        si = os.open(os.devnull, os.O_RDONLY)
-        so = os.open(os.devnull, os.O_WRONLY)
-        se = os.open(os.devnull, os.O_WRONLY)
-        os.dup2(si, sys.stdin.fileno())
-        os.dup2(so, sys.stdout.fileno())
-        os.dup2(se, sys.stderr.fileno())
+    plugins['speedup'][0].detach(os.devnull)
 # }}}
 
 
@@ -281,8 +274,10 @@ libraries that the main calibre program knows about will be used.
         help=_('Path to the access log file. This log contains information'
                ' about clients connecting to the server and making requests. By'
                ' default no access logging is done.'))
-    parser.add_option('--daemonize', default=False, action='store_true',
-        help=_('Run process in background as a daemon. No effect on Windows.'))
+    if not iswindows and not isosx:
+        # Does not work on OS X because we dont have a headless Qt backend
+        parser.add_option('--daemonize', default=False, action='store_true',
+            help=_('Run process in background as a daemon.'))
     parser.add_option('--pidfile', default=None,
         help=_('Write process PID to the specified file'))
     parser.add_option(
@@ -294,6 +289,13 @@ libraries that the main calibre program knows about will be used.
         '--manage-users', default=False, action='store_true',
         help=_('Manage the database of users allowed to connect to this server.'
                ' See also the %s option.') % '--userdb')
+    parser.get_option('--userdb').help = _(
+        'Path to the user database to use for authentication. The database'
+        ' is a SQLite file. To create it use {0}. You can read more'
+        ' about managing users at: {1}').format(
+            '--manage-users', localize_user_manual_link(
+                'https://manual.calibre-ebook.com/server.html#managing-user-accounts-from-the-command-line-only'
+    ))
 
     return parser
 
@@ -333,7 +335,7 @@ def main(args=sys.argv):
         libraries=[prefs['library_path']]
 
     if opts.auto_reload:
-        if opts.daemonize:
+        if getattr(opts, 'daemonize', False):
             raise SystemExit('Cannot specify --auto-reload and --daemonize at the same time')
         from calibre.srv.auto_reload import auto_reload, NoAutoReload
         try:
@@ -344,7 +346,7 @@ def main(args=sys.argv):
     opts.auto_reload_port=int(os.environ.get('CALIBRE_AUTORELOAD_PORT', 0))
     opts.allow_console_print = 'CALIBRE_ALLOW_CONSOLE_PRINT' in os.environ
     server=Server(libraries, opts)
-    if opts.daemonize:
+    if getattr(opts, 'daemonize', False):
         if not opts.log and not iswindows:
             raise SystemExit('In order to daemonize you must specify a log file, you can use /dev/stdout to log to screen even as a daemon')
         daemonize()
@@ -352,7 +354,7 @@ def main(args=sys.argv):
         with lopen(opts.pidfile, 'wb') as f:
             f.write(str(os.getpid()))
     signal.signal(signal.SIGTERM, lambda s,f: server.stop())
-    if not opts.daemonize and not iswindows:
+    if not getattr(opts, 'daemonize', False) and not iswindows:
         signal.signal(signal.SIGHUP, lambda s,f: server.stop())
     # Needed for dynamic cover generation, which uses Qt for drawing
     from calibre.gui2 import ensure_app, load_builtin_fonts

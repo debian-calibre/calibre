@@ -965,21 +965,30 @@ class LayoutButton(QToolButton):
         if splitter is not None:
             splitter.state_changed.connect(self.update_state)
         self.setCursor(Qt.PointingHandCursor)
-        self.shortcut = ''
-        if shortcut:
-            self.shortcut = shortcut
+        self.shortcut = shortcut or ''
+
+    def update_shortcut(self, action_toggle=None):
+        action_toggle = action_toggle or getattr(self, 'action_toggle', None)
+        if action_toggle:
+            sc = ', '.join(sc.toString(sc.NativeText)
+                                for sc in action_toggle.shortcuts())
+            self.shortcut = sc or ''
+            self.update_text()
+
+    def update_text(self):
+        t = _('Hide {}') if self.isChecked() else _('Show {}')
+        t = t.format(self.label)
+        if self.shortcut:
+            t += ' [{}]'.format(self.shortcut)
+        self.setText(t), self.setToolTip(t), self.setStatusTip(t)
 
     def set_state_to_show(self, *args):
         self.setChecked(False)
-        self.setText(_('Show {}'.format(self.label) + '\t' + self.shortcut))
-        self.setToolTip(self.text())
-        self.setStatusTip(self.text())
+        self.update_text()
 
     def set_state_to_hide(self, *args):
         self.setChecked(True)
-        self.setText(_('Hide {}'.format(self.label) + '\t' + self.shortcut))
-        self.setToolTip(self.text())
-        self.setStatusTip(self.text())
+        self.update_text()
 
     def update_state(self, *args):
         if self.splitter.is_side_index_hidden:
@@ -1036,6 +1045,7 @@ class Splitter(QSplitter):
         if shortcut is not None:
             self.action_toggle = QAction(QIcon(icon), _('Toggle') + ' ' + label,
                     self)
+            self.action_toggle.changed.connect(self.update_shortcut)
             self.action_toggle.triggered.connect(self.toggle_triggered)
             if parent is not None:
                 parent.addAction(self.action_toggle)
@@ -1047,6 +1057,9 @@ class Splitter(QSplitter):
                     self.action_toggle.setShortcut(shortcut)
             else:
                 self.action_toggle.setShortcut(shortcut)
+
+    def update_shortcut(self):
+        self.button.update_shortcut(self.action_toggle)
 
     def toggle_triggered(self, *args):
         self.toggle_side_pane()

@@ -30,6 +30,7 @@ class Ui_Form(object):
         self.opt_fb2_genre.setObjectName("opt_fb2_genre")
         self.gridLayout.addWidget(self.opt_fb2_genre, 1, 1, 1, 1)
         self.label.setBuddy(self.opt_sectionize)
+        self.label_2.setBuddy(self.opt_fb2_genre)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

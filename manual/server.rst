@@ -207,6 +207,35 @@ If you are using a particular old or limited browser or you don't like to run
 JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` to the
 the server address.
 
+.. note:: 
+    On iOS, Apple allows only a single browser engine, so Firefox, Chrome and
+    Safari are all actually the same browser under the hood. The new server
+    interface requires iOS 10.3.2 or newer. On Android, the server has been 
+    tested with Chrome version 58 and newer.
+
+Managing user accounts from the command-line only
+-----------------------------------------------------
+
+The calibre program has a nice section in :guilabel:`Preferences` to allow you
+to manage user accounts for the server. However, if you want to run the
+standalone server and cannot run the main calibre program on the same
+computer/user account, you can also manage users using just the command-line.
+
+You can manage user accounts using the ``--manage-users`` option
+to the standalone ``calibre-server`` program. Suppose you want to store
+the user database in the directory ``/srv/calibre``, then you create it
+by running::
+
+    calibre-server --userdb /srv/calibre/users.sqlite --manage-users
+
+Just follow the prompts to create user accounts, set their permission, etc.
+Once you are done, you can run the server as::
+
+    calibre-server --userdb /srv/calibre/users.sqlite --enable-auth 
+
+It will use the user accounts you created in the previous step.
+
+
 Integrating the calibre Content server into other servers
 ------------------------------------------------------------
 
