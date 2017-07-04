@@ -1,0 +1,36 @@
+From: Norbert Preining <norbert@preining.info>
+Date: Mon, 17 Jul 2017 14:29:16 +0200
+Subject: Fix desktop integration installation
+
+Don't use xdg-mime and xdg-desktop-menu because they hard-code
+gnome_app_dir etc which cannot be overriden, and replace with install calls.
+---
+ src/calibre/linux.py | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index f54c5c0..4383457 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -854,17 +854,18 @@ class PostInstall:
+                     translators = dict(get_all_translators())
+ 
+                 APPDATA = get_appdata()
++                xdgdir = os.environ.get('XDG_DATA_DIRS')
+                 for x in des:
+-                    cmd = ['xdg-desktop-menu', 'install', '--noupdate', './'+x]
++                    cmd = ['install', '-o', 'root', '-g', 'root', '-m', '0644', './'+x, xdgdir + '/applications']
+                     cc(' '.join(cmd), shell=True)
+                     self.menu_resources.append(x)
+                     ak = x.partition('.')[0]
+                     if ak in APPDATA and os.access(appdata, os.W_OK):
+                         self.appdata_resources.append(write_appdata(ak, APPDATA[ak], appdata, translators))
+-                cc(['xdg-desktop-menu', 'forceupdate'])
+                 MIME = P('calibre-mimetypes.xml')
+                 self.mime_resources.append(MIME)
+-                cc(['xdg-mime', 'install', MIME])
++                cc(['install', '-o', 'root', '-g', 'root', '-m', '0644', MIME, xdgdir + '/mime/packages'])
++
+         except Exception:
+             if self.opts.fatal_errors:
+                 raise

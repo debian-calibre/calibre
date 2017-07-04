@@ -25,7 +25,10 @@ common-install-arch common-install-indep:: debian/tmp
 	dh_sip
 
 debian/tmp:
-	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
+	mkdir -p  debian/tmp/usr/share/icons/hicolor
+	mkdir -p  debian/tmp/usr/share/applications
+	mkdir -p  debian/tmp/usr/share/mime/packages
+	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
 	rm debian/tmp/usr/lib/calibre/calibre/web/feeds/feedparser.py
 	find debian/tmp/ -name '*.py' | xargs sed -i 's/calibre.utils.pyparsing/pyparsing/g'
@@ -52,13 +55,6 @@ debian/tmp:
 	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
 
-	# add icon
-	mkdir -p debian/tmp/usr/share/pixmaps/
-	cp manual/resources/logo.png debian/tmp/usr/share/pixmaps/calibre-gui.png
-
-	# remove bogus files on KFreeBSD installation
-	rm -rf debian/tmp/config
-
 	# fix "env python2" style hashbangs
 	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
 
@@ -69,7 +65,6 @@ install/calibre::
 clean::
 	rm -rf debian/orig
 	[ ! -d build ] || $(SETUP) build -c
-	$(MAKE) -C debian/man clean
 	find . -name *.pyc -delete
 	find . -name *.so -delete
 	find . -name *.qrc -delete
