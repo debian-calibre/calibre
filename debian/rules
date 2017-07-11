@@ -60,7 +60,8 @@ debian/tmp:
 
 install/calibre::
 	# Create and install some of the man pages
-	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES $(MAKE) -C debian/man VERSION="$(MAIN_VERSION)"
+	dh_installman man-pages/man1/*.1
+	for i in man-pages/?? man-pages/??_?? ; do ll=`basename $$i`; dh_installman --language $$ll $$i/man1/*.1 ; done
 
 clean::
 	rm -rf debian/orig
