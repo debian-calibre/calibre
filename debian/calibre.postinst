@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+if [ "$1" = configure ]; then
+    # clean up in case someone runs calibre as root
+    find /usr/lib/calibre/ -name '*.pyc' -delete || true
+fi
