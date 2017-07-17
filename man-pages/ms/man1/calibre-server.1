@@ -1,0 +1,231 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-SERVER" "1" "Julai 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-server [options] [path to library folder...]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Start the calibre Content server. The calibre Content server exposes your
+calibre libraries over the internet. You can specify the path to the library
+folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
+libraries that the main calibre program knows about will be used.
+.sp
+Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH [PILIHAN]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Laluan ke fail log capaian. Log ini mengandungi maklumat berkenaan klien yang menyambung ke pelayan dan membuat permintaan. Secara lalai tiada pengelogan capaian dibuat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+Pilih jenis pengesahihan yang digunakan.    Tetapkan mod pengesahihan HTTP yang digunakan oleh pelayan. Tetapkan ke \fB"\fPbasic\fB"\fP jika anda mahu letak pelayan ini disebalik proksi SSL. Jika tidak, biarkannya sebagai \fB"\fPauto\fB"\fP, yang mana akan gunakan \fB"\fPbasic\fB"\fP jika SSL dikonfigur jika sebaliknya ia akan gunakan \fB"\fPdigest\fB"\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Muat semula pelayan secara automatik bila kod sumber berubah. Berguna untuk pembangunan. Anda patut juga nyatakan nilai kecil untuk had masa tamat dimatikan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Saiz minimum yang membalas penggunaan mampatan data (dalam bait).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Run process in background as a daemon (Linux only).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Jatuh\-balik ke antaramuka auto\-dikesan.     Jika atas beberapa sebab pelayan tidak dapat mengikat ke antaramuka yang dinyatakan dalam pilihan listen_on, maka ia akan cuba mengesan satu antaramuka yang bersamnung ke dunia luar yang mengikatnya. By default, this option is enabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+Iklankan suapan OPDS melalui BonJour.       Iklankan suapan OPDS melalui perkhidmatan BonJour, supaya apl bacaan berasaskan OPDS dapat mengesan dan sambung ke pelayan secara automatik. By default, this option is enabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Zero copy file transfers for increased performance.         Ia akan gunakan pemindahan dalam\-kernel bersalinan\-sifar bila menghantar fail menerusi rangkaian, yang dapat meningkatkan prestasi. Walaubagaimanapun, ia boleh menyebabkan pemindahan fail rosak pada beberapa sistem fail bermasalah. Jika anda menghadapi pemindahan fail rosak, matikannya. By default, this option is enabled.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+tunjuk mesej bantuan ini dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+Medan data meta ditakrif\-pengguna yang diabaikan.   Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+Antaramuka yang didengari untuk penyambungan.       Lalainya ialah mendengar pada semua antaramuka yang ada. Anda boleh ubah ia, contohnya, \fB\(aq\fP127.0.0.1\fB\(aq\fP untuk hanya dengar sambungan dari mesin setempat, atau ke \fB\(aq\fP::\fB\(aq\fP untuk dengar semua sambungan IPv6 dan IPv4 masuk.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Laluan ke fail log untuk log pelayan. Log ini mengandungi maklumat dan ralat pelayan, bukan log capaian. Secara lalai ia ditulis ke stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Urus pangkalan data pengguna yang dibenarkan untuk sambung ke pelayan ini. Lihat juga pilihan \fI\%\-\-userdb\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+Saiz maksimum bagi pengepala HTTP (dalam KB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Masa maksimum untuk proses pekerja.         Amaun masa maksimum proses pekerja dibenarkan untuk berjalan (dalam minit). Tetapkan pada sifar untuk tanpa had.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Bilangan maksimum proses pekerja.   Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+Saiz fail log maks. (dalam MB).     Saiz maksimum fail log, dijana oleh pelayan. Bila log menjadi lebih besar berbanding saiz ini, ia diputarkan secara automatik. Tetapkan ke sifar untuk lumpuhkan putaran log.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+Jumlah maksimum buku dalam suapan OPDS.     Bilangan maksimum buku yang mana pelayan akan kembalikan dalam satu suapan permerolehan OPDS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Jumlah maksimum item tidak dikelompok dalam suapan OPDS.    Kelompok item dalam kategori seperti pengarang/tag mengikut huruf pertama yang mana lebih dari bilangan item ini. Tetapkan pada sifar untuk lumpuhkan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Saiz maksimum dibenarkan untuk memuat naik fail ke dalam pelayan (dalam MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Tulis PID proses ke fail tertentu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Port yang didengari untuk penyambungan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Jumlah masa dalam saat untuk menunggu penutupan bersih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+Laluan ke fail sijil SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Laluan ke fail kunci persendirian SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Masa (dalam saat) selepas sambungan melahu ditutup.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+Awalan untuk ditambah kepada semua URL.     Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+tunjuk nombor versi program dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Bilangan bebenang pekerja yang digunakan untuk memproses permintaan.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

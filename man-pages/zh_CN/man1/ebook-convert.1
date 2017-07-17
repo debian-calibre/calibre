@@ -1,0 +1,601 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "七月 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an “open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+.sp
+选项以及选项的默认值都取决于输入
+和输出格式，所以你应该经常检查
+.sp
+ebook\-convert myfile.input_format myfile.output_format \-h
+.sp
+以下是一些常见转化的选项，接着
+是特定输入输出的选项
+.INDENT 0.0
+.IP \(bu 2
+\fI\%输入格式选项\fP
+.IP \(bu 2
+\fI\%输出格式选项\fP
+.IP \(bu 2
+\fI\%界面外观\fP
+.IP \(bu 2
+\fI\%启发式处理\fP
+.IP \(bu 2
+\fI\%查找并替换\fP
+.IP \(bu 2
+\fI\%结构检测\fP
+.IP \(bu 2
+\fI\%目录\fP
+.IP \(bu 2
+\fI\%元数据\fP
+.IP \(bu 2
+\fI\%调试\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+显示此帮助信息并退出
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+设置输入配置文件。此配置文件让程序了解如何解析输入文件并进行转换。例如页面分辨率(i.e. 以像素为单位)。可选项有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+设置输出配置文件。输出配置文件可以让转换系统针对指定的设备优化文档（例如通过根据设备屏幕大小缩放图片）。在某些情况下，可以用输出配置文件对特定设备优化输出，但几乎没有必要。可选项有：cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+显示程序版本号并退出
+.UNINDENT
+.SH 输入格式选项
+.sp
+处理输入文件 mobi 的选项设置
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+指定输入文件的编码格式。该设置将覆盖文档声明的编码格式。该设置对于未声明编码格式和错误编码格式的输入文件处理十分有用。
+.UNINDENT
+.SH 输出格式选项
+.sp
+处理输出 epub 的选项设置
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+仅在您需要使用 FBReaderJ 阅读 EPUB 文件时使用本选项。启用本选项会消除 EPUB 文件中的目录结构，把所有文件放到同一层目录中。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+插入的一个内嵌内容的表格会作为图书主内容的一部分出现。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+在书籍的末尾插入内嵌目录，而不是书开头。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+解压EPUB文件的内容到指定文件夹。请注意该文件夹会先被清空。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+将大于该大小 (以KB为单位) 的HTML文件切分。由于很多EPUB阅读器无法打开巨大的文件，故此功能十分有用。默认值 260KB 是Adobe Digital Editions 的文件大小要求。设置为0来禁用大小为基准的切分。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+正常情况下，如导入的文件无封面并且您也未指定，则会生成一张带有书名、作者等信息的默认封面。选定此选项可以禁止生成默认封面。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+请不要使用 SVG 作为书籍封面。如果您打算将 EPUB 文件用到不支持 SVG 格式的设备(像 iPhone 或 JetBook Lite)上的话，请使用该选项。不选中此选项的话，这类设备将只能显示封面为一个空白页。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+当使用 SVG 封面时，该选项会导致封面平铺满有效的屏幕区字段，但仍会保持它的纵宽比(宽度和高度的比例)。意思就是说，这可能会在图像顶边或底边处产生空白边界，但是图像本身不会被扭曲变形。不选该选项的话，图像可能会产生轻微的扭曲变形，但优点是不会出现空白边界。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+如果开启本选项，输出插件将尽量生成可读的输出内容。对于某些输出插件本选项可能不起作用。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+生成的行内目录标题。
+.UNINDENT
+.SH 界面外观
+.sp
+输出的界面外观选项设置
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+把 Unicode 字符转换为 ASCII 表达型式。请谨慎使用这个功能，因为它会把所有的 Unicode 字符转换为 ASCII 字符。比如：它会把 \fB"\fPМихаил Горбачёв\fB"\fP 替换为 \fB"\fPMikhail Gorbachiov\fB"\fP。并且当一个字符可能有多种表示方式时（比如中文和日文中一些共用的字符）， Calibre 会根据当前设置的界面语言类型决定如何去转换这类字符。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+基准字体尺寸(pts)。所有输出文件中的文字将以此为基准进行缩放。选择一个较大的基准字体可以将所有文字相应放大，反之亦然。在默认情况下，程序根据您选择的输出配置文件来设定基准字体尺寸。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+更改文本对齐方式。 使用值\fB"\fPleft\fB"\fP 将转换资源中所有的文本为左对齐。 (如：未对齐) 使用值\fB"\fPjustify\fB"\fP 将转换资源中所有的未对齐的文本为对齐。使用值\fB"\fPoriginal\fB"\fP(默认)则不更改源文件的对齐方式。请注意，仅部分输出格式支持对齐方式。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+关闭字体缩放功能。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+嵌入输入文档中引用到但未嵌入的字体。软件会在你的系统中查找这些字体，找到了就嵌入。字体嵌入只有当你的目的格式支持才有用，例如 EPUB、AZW3、DOCX 和 PDF。请保证你拥有在文档中嵌入字体的合适授权。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+在书中嵌入指定字体。这指定了书中使用的“基础”字体。如果输入文件自己指定了字体，就有可能覆盖这个基础字体。你可以使用过滤样式信息的选项来去除输入文件的字体。注意，字体嵌入只在一些输出格式中有用，主要是 EPUB、AZW3 和 DOCX。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源文件的样式规则中，它可以覆盖输入文件中已定义的相同样式。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+以逗号分隔的 CSS 属性列表，将移除所有 CSS 样式规则。这是非常有用的，如果存在的一些样式信息，防止覆盖您的的设备上的样式信息。例如：字体系列，颜色，左边距，右边距
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+将CSS字体名称映射为以pts为单位的字体大小. 例如12,12,14,16,18,20,22,24. 这些设置是从xx\-small到xx\-large的对应映射, 最后的大小作为做对应的最大字体的映射. 程序用这些尺寸进行只能文字字体缩放. 程序默认使用输出配置文件中指定的映射关系.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+在章节之间插入空行. 如果源文件不使用章节标记 (<p> 或 <div> 标记) 本选项将不起作用。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+设置插入的空白行的高度（单位：em）。段落间的空行高度会是两倍于这个设置值。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+保留输入文档中的“印刷连字”。所谓“印刷连字”是指对于ff, fi, fl之类的字母组合的一种特殊的展示方式。大部分阅读器在使用默认字体时无法支持“印刷连字”，所以常常无法正常显示。默认情况下，Calibre会把“印刷连字”转换成对应的字母组合。本选项用于选择保留“印刷连字”。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素。大多数情况下，最小行高值更加有用。默认不进行行高操控。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+一些布局不佳的源文件使用表格来设置页面布局可能会导致输出文件中的正文超过页面范围。本选项设定程序将内容从表格中提取出并以线型布局排列输出。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+最小行高，元素字体计算值的百分比。Calibre 将保证行中所有元素至少有此高度，无论输入文档如何定义。设为零即禁用。默认 120%。首选项中也有此设定，请注意。否则可能出现双倍行高，达 240%。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+移除段落之间的空行. 同时设置段落缩进为1.5em. 如果源文件不使用段落标记 (<p>或者<div>标签)程序将不执行段落空行移除.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+当 Calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果您将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 Calibre 不进行缩进处理。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+嵌入所有字体中用到的字。每种嵌入字体缩减到只包含文档中用到的字型。这能减小字体文件的体积。在嵌入某个特别大的，包含大量未使用字的字体时有用(如中文)。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+转换各种形式的引号、破折号和省略号到它们的标准形式。
+.UNINDENT
+.SH 启发式处理
+.sp
+使用常见模式修改文档内容与结构。默认禁用。使用 –enable\-heuristics 启用该功能。具体选项可以通过 –disable\-* 参数禁用。
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+分析文档中带有连字符的单词。这个文档本身被作为一个词典来确定连字符应该被保留还是被删除。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+移除文档中每个段落间的空白段落。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+把多个空格构成的段落缩进转换为 CSS 控制的缩进。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+对齐左对齐的小节分节符。把多个空白行表示小节分节符替换为水平横线。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+寻找用于表示斜体的常见的词语或模式并把它转换为斜体。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+检测未格式化的章节标题和子标题。把它们从二级标题 (<h2>) 标签转换为三级标题 (<h3>) 标签。这个选项不会创建目录，但可以与文档结构检测功能一起使用并创建目录。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+查找顺次出现的<h1>或<h2>标签。这些标签被重新编号以防止在章节头部中间断开。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+决定某行是否为段落内的换行时，使用标点符号和其它格式做为线索。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+启用智能处理。在需要使用任何智能处理选项时都必须先启用这个选项。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+决定一行字符是否能成为一个新的段落的因子，有效值为 0 到 1 之间的小数，默认值是 0.4，即略小于半行的长度。如果文档中只有很少的行需要消除段落内换行，应当减小这个设置值。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+把小节分节符替换为指定的文本。在默认情况下，会使用输入文档中的文本。
+.UNINDENT
+.SH 查找并替换
+.sp
+以用户预定义的模式修改文档内容和结构。
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+第一项搜索的替换文本。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+第一项要被替换的搜索模式（正则表达式）
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+第二项搜索的替换文本。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+第二项要被替换的搜索模式（正则表达式）<
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+第三项搜索的替换文本。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+第三项要被替换的搜索模式（正则表达式）<
+.UNINDENT
+.SH 结构检测
+.sp
+设置自动检测文档结构。
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+设置标注章节的模式. \fB"\fPpagebreak\fB"\fP模式会在章节前插入下一页控制符. \fB"\fPrule\fB"\fP模式会在章节前插入空行. \fB"\fPnone\fB"\fP模式不会在章节前插入控制. \fB"\fPboth\fB"\fP模式会在章节前插入下一页控制符和空行.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+有些文档通过在每一页上指定左右页边距来指定页面边框大小。 Calibre 会尝试检测并移除这些页边距。有时候 Calibre 会错误的移除不应该移除的页边距，在这种情况下，您可以禁用这项功能。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath表达式。在指定的元素之前插入分页符。禁止使用表达式: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+使用从源文件中检测到的封面文件.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH 目录
+.sp
+设置自动生成目录。默认情况下若源文件有目录，它将被首选自动创建。
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+在基于输入文档中的链接创建目录时，允许创建重复项。即在目录中允许出现名称重复的项，但它们指向文档中不同的位置。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+指定应添加到目录级别1的所有标签的 XPath 表达式。如果指定此项，它会优先于其他自动检测形式。可查阅 Calibre 用户手册中的 XPath 向导。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath 表达式指定所有标签应添加在二级目录表。每个条目加入到一级目录条目下。请参阅 Calibre 用户手册中 XPath 教程的例子。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath 表达式指定所有标签应添加在三级目录表。每个条目加入到二级目录条目下。请参阅 Calibre 用户手册中 XPath 教程的例子。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+输出文件目录中的最多链接项数量。设置为 0 表示关闭。默认值：50。只有在检测到的章节数量小于该阈值时这些链接项才会被添加到目录中。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+不将自动检测到的章节添加到文件目录。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+从目录中移除匹配该证则表达式的链接项, 它们的子项也会被同时移除M.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+如果少于默认上限的章节数被检测到, 这些章节的链接将被添加到文件目录. 默认值; 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+通常情况下，程序会引用源文件中已有的目录。打开本选项来强制使用自动生成的目录。
+.UNINDENT
+.SH 元数据
+.sp
+设定输出的元数据选项
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+用以进行按作者排序的关键字符串。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+设置作者。多个作者之间请使用 & 符号分割。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+设置书籍制作人。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+设置封面为指定文件或 URL
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+设置书籍的 ISBN。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+设置书籍语言。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+设置评分。评荐值为 1 到 5 之间的数字。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+从指定 OPF 文件中读元数据。读取的元数据将覆盖源文件中定义的其他元数据。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+设置书籍在丛书中的索引位置。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+设置书籍的标签。多个标签之间请用逗号隔开。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+设置书籍时间戳(已不再使用)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+设置标题。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+用作排序的书籍标题序列数字。
+.UNINDENT
+.SH 调试
+.sp
+用于调试转换的选项
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+在转换过程的不同阶段分别保存输出到指定目录。如果您不确定在哪个阶段出了问题，这个选项非常实用。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+详细程度。指定多次来提高详细程度：指定两次是最详细，一次是中等，零次是最简略。
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

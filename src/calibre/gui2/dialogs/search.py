@@ -72,7 +72,7 @@ def create_match_kind(self):
 
 def create_button_box(self):
     self.bb = bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-    self.clear_button = bb.addButton(_('Clear'), QDialogButtonBox.ResetRole)
+    self.clear_button = bb.addButton(_('&Clear'), QDialogButtonBox.ResetRole)
     self.clear_button.clicked.connect(self.clear_button_pushed)
     bb.accepted.connect(self.accept)
     bb.rejected.connect(self.reject)
@@ -84,7 +84,7 @@ def create_adv_tab(self):
     self.tab_widget.addTab(w, _("A&dvanced search"))
 
     w.g1 = QGroupBox(_("Find entries that have..."), w)
-    w.g2 = QGroupBox(("But don't show entries that have..."), w)
+    w.g2 = QGroupBox(_("But don't show entries that have..."), w)
     w.l = l = QVBoxLayout(w)
     l.addWidget(w.g1), l.addWidget(w.g2), l.addStretch(10)
 
@@ -106,7 +106,7 @@ def create_adv_tab(self):
 
 def create_simple_tab(self, db):
     self.simple_tab = w = QWidget(self.tab_widget)
-    self.tab_widget.addTab(w, ("Titl&e/author/series..."))
+    self.tab_widget.addTab(w, _("Titl&e/author/series..."))
 
     w.l = l = QFormLayout(w)
     l.setFieldGrowthPolicy(l.AllNonFixedFieldsGrow)
@@ -155,7 +155,7 @@ def create_simple_tab(self, db):
 
 def create_date_tab(self, db):
     self.date_tab = w = QWidget(self.tab_widget)
-    self.tab_widget.addTab(w, ("&Date searches"))
+    self.tab_widget.addTab(w, _("&Date searches"))
     w.l = l = QVBoxLayout(w)
 
     def a(w):

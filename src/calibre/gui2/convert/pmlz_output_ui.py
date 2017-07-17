@@ -32,6 +32,7 @@ class Ui_Form(object):
         self.opt_pml_output_encoding.setObjectName("opt_pml_output_encoding")
         self.horizontalLayout.addWidget(self.opt_pml_output_encoding)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
+        self.label.setBuddy(self.opt_pml_output_encoding)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

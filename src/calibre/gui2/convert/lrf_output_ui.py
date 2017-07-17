@@ -113,7 +113,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_autorotation.setText(_("Enable &autorotation of wide images"))
+        self.opt_autorotation.setText(_("Enable &auto-rotation of wide images"))
         self.label.setText(_("&Wordspace:"))
         self.opt_wordspace.setSuffix(_(" pt"))
         self.label_2.setText(_("Minimum para. &indent:"))

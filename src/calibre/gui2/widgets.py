@@ -15,7 +15,7 @@ from PyQt5.Qt import (QIcon, QFont, QLabel, QListWidget, QAction,
 from calibre.gui2 import (error_dialog, pixmap_to_data, gprefs,
         warning_dialog)
 from calibre.gui2.filename_pattern_ui import Ui_Form
-from calibre import fit_image, strftime
+from calibre import fit_image, strftime, force_unicode
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.utils.config import prefs, XMLConfig
 from calibre.gui2.progress_indicator import ProgressIndicator as _ProgressIndicator
@@ -674,7 +674,15 @@ class HistoryLineEdit(QComboBox):  # {{{
         self.addItems(items)
         self.setEditText(ct)
         self.blockSignals(False)
-        history.set(self.store_name, items)
+        try:
+            history.set(self.store_name, items)
+        except ValueError:
+            from calibre.utils.cleantext import clean_ascii_chars
+            items = [clean_ascii_chars(force_unicode(x)) for x in items]
+            try:
+                history.set(self.store_name, items)
+            except ValueError:
+                pass
 
     def setText(self, t):
         self.setEditText(t)
@@ -1004,7 +1012,8 @@ class LayoutButton(QToolButton):
                 gui.iactions['Preferences'].do_config(initial_plugin=('Interface', 'Search'), close_after_initial=True)
                 ev.accept()
                 return
-            tab_name = {'book':'book_details', 'grid':'cover_grid', 'cover_flow':'cover_browser', 'tags':'tag_browser'}.get(self.icname)
+            tab_name = {'book':'book_details', 'grid':'cover_grid', 'cover_flow':'cover_browser',
+                        'tags':'tag_browser', 'quickview':'quickview'}.get(self.icname)
             if tab_name:
                 if gui is not None:
                     gui.iactions['Preferences'].do_config(initial_plugin=('Interface', 'Look & Feel', tab_name+'_tab'), close_after_initial=True)

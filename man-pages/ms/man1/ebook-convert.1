@@ -1,0 +1,613 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "Julai 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.sp
+Pilihan dan nilai lalai bagi perubahan pilihan bergantung pada kedua\-dua
+format input dan output, jadi anda seharusnya sentiasa semak dengan:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Dibawah merupakan pilihan umum untuk semua penukaran, diikuti dengan
+pilihan khusus untuk setiap format input dan output.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%PILIHAN INPUT\fP
+.IP \(bu 2
+\fI\%PILIHAN OUTPUT\fP
+.IP \(bu 2
+\fI\%PENAMPILAN\fP
+.IP \(bu 2
+\fI\%PEMPROSESAN HEURISTIK\fP
+.IP \(bu 2
+\fI\%GELINTAR DAN GANTI\fP
+.IP \(bu 2
+\fI\%PENGESANAN STRUKTUR\fP
+.IP \(bu 2
+\fI\%ISI KANDUNGAN\fP
+.IP \(bu 2
+\fI\%DATA META\fP
+.IP \(bu 2
+\fI\%NYAHPEPIJAT\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+tunjuk mesej bantuan ini dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Nyatakan profil input. Profil input memberikan maklumat sistem penukaran bagaimana hendak tafsir pelbagai maklumat di dalam dokumen input. Sebagai contoh resolusi bergantung pada panjang (iaitu panjang dalam piksel). Pilihan adalah:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Nyatakan profil output. Profil output memberitahu sisten penukaran bagaimana hendak optimumkan dokumen yang dihasilkan untuk peranti tertentu (seperti saizkan semula imej untuk saiz skrin peranti). Dalam sesetengah situasi, satu profil output boleh digunakan untuk optimumkan output bagi peranti tersebut, tetapi ia jarang berlaku. Pilihan adalah:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+tunjuk nombor versi program dan keluar
+.UNINDENT
+.SH PILIHAN INPUT
+.sp
+Pilihan untuk mengawal pemprosesan fail input mobi
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Tentukan pengkodan aksara bagi dokumen yang di inputkan. Jika di setkan, pilihan ini akan membatalkan sebarang pengkodan yang diinyatakan oleh dokumen itu sendiri. Ia sangat berguna bagi dokumen\-dokumen yang tidak menyatakan pengkodannya atau yang mempunyai kesilapan pernyataan pengkodan.
+.UNINDENT
+.SH PILIHAN OUTPUT
+.sp
+Pilihan untuk mengawal pemprosesan fail output epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Pilihan ini hanya diperlukan jika anda berniat untuk guna EPUB dengan FBReaderJ. Ia akan ratakan sistem fail yang ada di dalam EPUB, meletakkan semua fail dalam aras tertinggi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Sisip Isi Kandunagan dalaman yang akan muncul sebagai sebahagian dari kandungan buku utama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Letak Isi Kandungan dalam garis dipenghujung buku selain di permulaan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Ekstrak kandungan fail EPUB yang dijana ke direktori yang dinyatakan. Kandungan direktori adalah mula\-mula dipadamkan, oleh itu hati\-hati.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Pisah semua fail HTML yang lebih besar dari saiz ini (dalam KB). Ia perlu kerana kebanyakan pembaca EPUB tidak dapat kendalikan saiz fail besar. Lalai 260KB adalah saiz yang diperlukan untuk Adobe Digital Editions. Tetapkan pada 0 untuk lumpuhkan pembahagian berasaskan saiz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Biasanya jika fail input tidak mempunyai kulit luar dan anda tidak nyatakan, kulit lalai dijana dengan tajuk, pengarang, dll. Pilihan ini lumpuhkan penjanaan kulit buku ini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Jangan guna SVG untuk kulit buku. Guna pilihan ini jika EPUB anda akan diguna dalam peranti yang tidak menyokong format SVG, seperti iPhone atau JetBook Lite. Tanpa pilihan ini, peranti tersebut akan paparkan kulit buku sebagai muka kosong.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Bila menggunakan kulit hadapan SVG, pilihan ini akan menyebabkan kulit hadapan diskalakan untuk meliputi kawasan skrin yang ada, tetapi masih mengekalkan nisbah bidangnya (nisbah lebar terhadap tinggi). Ini bermaksud akan wujud sempadan putih disisi atau atas dan bawah imej, tetapi imej tidak akan diherotkan. Tanpa pilihan ini imej akan menjadi sedikit herot, tetapi sempadan tidak akan wujud.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Jika dinyatakan, pemalam output akan cuba cipta output yang boleh dibaca manusia. Mungkin tidak memberi kesan kepada beberapa pemalam output.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Tajuk bagi mana\-mana isi kandungan dalaman yang terjana.
+.UNINDENT
+.SH PENAMPILAN
+.sp
+Pilihan untuk mengawal penampilan output
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transliterasi aksara unikod menjadi perwakilan ASCII. Guna dengan hati\-hati kerana ia akan menggantikan aksara unikod dengan ASCII. Contohnya ia akan ganti \fB"\fPМихаил Горбачёв\fB"\fP dengan \fB"\fPMikhail Gorbachiov\fB"\fP\&. Dan juga, dalam kes terdapat perwakilan berbilang aksarar (aksara yang dikongsi oleh bahasa Cina dan Jepun) perwakilan berasaskan bahasa antaramuka calibre semasa akan digunakan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Nyatakan saiz fon dasar dalam pts. Semua saiz fon dalam buku yang dihasilkan akan diskalakan berdasarkan saiz ini. Dengan memilih saiz lebih besar anda boleh jadikan fon yang lebih besar dan sebaliknya juga boleh berlaku. Secara lalai, saiz fon dasar dipilih berdasarkan pada profil output yang anda pilih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Ubah kewajaran teks. Nilai \fB"\fPkiri\fB"\fP tukar semua teks terwajar di dalam sumber menjadi teks terjajar kiri (iaitu. tidak terwajar). Nilai \fB"\fPwajar\fB"\fP tukar semua teks tidak terwajar menjadi terwajar. Nilai \fB"\fPasal\fB"\fP (lalai) tidak mengubah kewajaran fail sumber. Perhatian hanya beberapa format output menyokong kewajaran.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Lumpuhkan semua penskalaan semula saiz fon.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Benamkan setiap fon yang dirujuk dalam dokumen input tetapi sebenarnya tidak dibenam. Ia akan menggelintar fon tersebut dalam sistem anda, dan jika temui, ia akan dibenamkan. Pembenaman hanya berlaku jika format yang anda tukar menyokong fon terbenam, seperti EPUB, AZW3, DOCX atau PDF. Sila pastikan anda mempunyai lesen untuk membenamkan fon tersebut untuk digunakan dalam dokumen ini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Benamkan keluarga fon tertentu ke dalam buku. Ini menyatakan fon \fB"\fPdasar\fB"\fP yang digunakan untuk buku. Jika dokumen input menyatakan fonnya sendiri, ia mungkin membatalkan fon dasar ini. Anda boleh guna pilihan maklumat gaya penapis untuk membuang fon dari dokumen input. Perhatian pembenaman fon hanya berfungsi dengan beberapa format output, biasanya EPUB, AZW3 dan DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Sama ada laluan ke lembaran gaya CSS atau CSS mentah. CSS ini akan ditambah ke peraturan gaya dari fail sumber, supaya ia boleh digunakan untuk batalkan peraturan tersebut.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+Satu senarai dipisah tanda koma sifat CSS akan dibuang dari semua peraturan gaya CSS. Ia berguna jika kehadiran beberapa maklumat gaya menghalang ia dari dibatalkan oleh peranti anda. Contohnya: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Pemetaan dari nama fon CSS ke saiz fon dalam pt. Contoh penetapan ialah 12,12,14,16,18,20,22,24. Ini merupakan pemetaan untuk saiz xx\-small sehinggalah xx\-large, dengan saiz akhir merupakan fon amat besar. Algoritma penskalaan semula fon gunakan saiz ini untuk skalakan semula fon secara pintar. Lalai ialah guna pemetaan berdasarkan pada profil output yang anda pilih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Sisip baris kosong diantara perenggan. Tidak akan berfungsi jika fail sumber tidak guna perenggan (tag <p> atau <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Tetapkan tinggi baris kosong yang disisip (dalam em). Tinggi baris diantara perenggan akan menjadi dua kali ganda nilai yang ditetapkan di sini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Kekalkan ligatur yang hadir di dalam dokumen input. Ligatur ialah penerapan khas bagi pasangan aksara seperti ff, fi, fl dan lain\-lain. Kebanyakan pembaca tidak mempunyai sokongan bagi ligatur di dalam fon lalai mereka, jadi mereka tidak dapat diterap dengan betul. Secara lalai, calibre akan jadikan ligatur dalam bentu pasangan aksara biasa berkenaan. Pilihan ini akan dikekalkan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Tinggi baris dalam pt. Kawal jarak diantara baris berturutan teks. Hanya laksana pada unsur yang tidak takrif tinggi baris mereka sendiri. Dalam kebanyakan kes, pilihan tinggi baris minimum adalah lebih berguna. Secara lalai tiada manipulasi tinggi baris dibuat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Sesetengah dokumen direka teruk dengan jadual yang mana ia mengawal bentangan teks dalam halaman. Bila menukar dokumen ini biasanya teks terkeluar dari halaman dan ada artifak lain. Pilihan ini akan mengekstrak kandungan dari jadual dan persembahkannya dalam fesyen linear.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Tetapkan margin bawah dalam pts. Lalai ialah 5.0. Tetapan ini adalah kurang dari sifar yang akan menyebabkan tiada margin ditetapkan (tetapan margin dalam dokumen asal akan dikekalkan). Perhatian: Format berorientasikan halmaan seperti PDF dan DOCX mempunyai tetapan margin mereka masing\-masing.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Tetapkan margin kiri dalam pts. Lalai ialah 5.0. Tetapan ini adalah kurang dari sifar yang akan menyebabkan tiada margin ditetapkan (tetapan margin dalam dokumen asal akan dikekalkan). Perhatian: Format berorientasikan halmaan seperti PDF dan DOCX mempunyai tetapan margin mereka masing\-masing.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Tetapkan margin kanan dalam pts. Lalai ialah 5.0. Tetapan ini adalah kurang dari sifar yang akan menyebabkan tiada margin ditetapkan (tetapan margin dalam dokumen asal akan dikekalkan). Perhatian: Format berorientasikan halmaan seperti PDF dan DOCX mempunyai tetapan margin mereka masing\-masing.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Tetapkan margin atas dalam pts. Lalai ialah 5.0. Tetapan ini adalah kurang dari sifar yang akan menyebabkan tiada margin ditetapkan (tetapan margin dalam dokumen asal akan dikekalkan). Perhatian: Format berorientasikan halmaan seperti PDF dan DOCX mempunyai tetapan margin mereka masing\-masing.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Tinggi baris minimum, sebagai peratus unsur saiz fon yang dikira. calibre akan pastikan yang mana setiap  unsur mempunyai tinggi baris sekurang\-kurangnya ikut tetapan ini, tidak menuruti apakah input dokumen tentukan. Tetapkan sifar untuk lumpuhkan. Lalai ialah 120%. Guna tetapan ini dalam keutamaan ke spesifikasi tinggi baru, melainkan anda tahu apa yang anda buat. Contohnya, anda boleh dapat teks \fB"\fPberjarak ganda dua\fB"\fP dengan menetapkannya menjadi 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Buang penjarakan diantara perenggan. Juga tetapkan inden pada perenggan sebanyak 1.5em. Pembuangan penjarakan tidak berfungsi jika fail sumber tidak guna perenggan (tag <p> atau <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Bila calibre membuang baris kosong diantara perenggan, ia tetapkan inden perenggan secara automatik untuk memastikan perenggan mudah dikenalpasti. Pilihan ini mengawal lebar inden tersebut (dalam em). Jika anda tetapkan nilainya negatif, maka inden yang dinyatakan dalam dokumen input akan digunakan, iaitu calibre tidak mengubah indentasinya.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Tukar petikan, sengkang dan elipsis biasa pada yang setara setepatnya secara tipografi. Untuk perincian, sila rujuk \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Sebset semua fon terbenam. Setiap fon terbenam dikurangkan hanya untuk mengandungi glif yang diguna dalam dokumen ini. Ia kurangkan saiz fail fon. Berguna jika anda membenamkan fon besar tertentu yang mengandungi banyak glif yang tidak perlu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Tukar petikan, sengkang dan elipsis yang pelik mengikut format piawainya.
+.UNINDENT
+.SH PEMPROSESAN HEURISTIK
+.sp
+Ubah suai teks dan struktur dokumen menggunakan corak umum. Dilumpuhkan secara lalai. Guna –enable\-heuristics untuk dibenarkan. Tindakan individu boleh dilumpuhkan dengan pilihan –disable\-
+.nf
+*
+.fi
+\&.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analisis perkataan bersempang menyeluruhi dokumen. Dokumen itu sendiri digunakan sebagai kamus untuk tentukan sama ada tanda sempang seharusnya dikekalkan atau dibuang.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Buang perenggan kosong dari dokumen bila ia wujud diantara setiap perenggan lain
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Hidupkan identasi yang dicipta dari entiti jarak tidak\-henti berbilang ke dalam inden CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Penanda hentian adegan terjajar kiri adalah dijajar tengah. Ganti hentian adegan lembut yang guna baris kosong berbilang dengan peratusan mengufuk.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Cari perkataan dan corak umum yang diwakili dengan condong dan kecondongan mereka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Kesan pengepala dan sub pengepala bab. Ubah ia menjadi tag h2 dan h3. Tetapan ini tidak akan hasilkan TOC, tetapi boleh digunakan di dalam konjuksi dengan pengesanan struktur jika mahu membinanya.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Cari kemunculan jujukan tag <h1> atau <h2>. Tag dinombor semula untuk menghindari pemisahan ditengah\-tengah pengepala bab.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Nyahlilit baris menggunakan tanda baca dan lain\-lain tanda pemformatan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Benarkan pemprosesan heuristik. Pilihan ini mesti ditetapkan untuk mana\-mana pemprosesan heuristik untuk dijalankan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Skala yang digunakan untuk menentukan panjang yang mana baris patut tidak dililit. Nilai yang sah adalah desimal diantara 0 hingga 1. Lalai ialah 0.4, sedikit dibawah panjang baris median. Jika hanya beberapa baris di dalam dokumen memerlukan penyahlilitaan, nilai ini patut dikurangkan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Ganti hentian adegan dengan teks yang dinyatakan. Secara lalai, teks dari dokumen input digunakan.
+.UNINDENT
+.SH GELINTAR DAN GANTI
+.sp
+Ubahsuai teks dan struktur dokumen menggunakan corak ditakrif pengguna.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Penggantian untuk ganti teks yang ditemui dengan sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Gelintar corak (ungkapan nalar) yang diganti dengan sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Penggantian untuk ganti teks yang ditemui dengan sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Gelintar corak (ungkapan nalar) yang diganti dengan sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Penggantian untuk ganti teks yang ditemui dengan sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Gelintar corak (ungkapan nalar) yang diganti dengan sr3\-replace.
+.UNINDENT
+.SH PENGESANAN STRUKTUR
+.sp
+Kawal pengesanan\-automatik struktur dokumen.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+Ungkapan XPath untuk mengesan tajuk bab. Lalai ialah dengan menganggap tag <h1> atau <h2> yang mengandungi perkataan \fB"\fPchapter\fB"\fP,\fB"\fPbook\fB"\fP,\fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, atau \fB"\fPpart\fB"\fP sebahagian dari tajuk bab serta mana\-mana tag yang mempunyai class=\fB"\fPchapter\fB"\fP\&. Ungkapan digunakan mesti menilai senarai unsur. Untuk lumpuhkan pengesanan bab, guna ungkapan \fB"\fP/\fB"\fP\&. Sila rujuk Tutorial XPath di dalam Panduan Pengguna calibre untuk bantuan lanjut berkenaan penggunaan fitur ini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Nyatakan bagaimana hendak tanda bab yang dikesan. Nilai \fB"\fPpagebreak\fB"\fP akan menyisip hentian halaman sebelum bab. Nilai \fB"\fPrule\fB"\fP akan menyisip satu baris sebelum bab. Nilai \fB"\fPnone\fB"\fP akan lumpuhkan penandaan bab dan nilai \fB"\fPboth\fB"\fP akan guna kedua\-dua hentian halaman dan baris untuk menanda bab.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Sesetengah dokumen nyatakan margin halaman dengan menyatakan margin kiri dan kanan pada setiap perenggan secara individu. Calibre akan cuba mengesan dan membuang margin ini. Kadangkala, ia menyebabkan pembuangan margin yang tidak sepatutnya dibuang. Dalam situasi ini anda boleh lumpuhkan pembuangan tersebut.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+Ungkapan XPath. Hentian halaman disisip sebelum unsur yang dinyatakan. Untuk lumpuhkan penggunaan ungkapan: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Guna kulit hadapan yang dikesan dari fail sumber dalam keutamaan ke kulit hadapan yang dinyatakan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH ISI KANDUNGAN
+.sp
+Kawal penjanaan automatik Isi Kandungan. Secara lalai, jika fail sumber mempunyai Isi Kandungan, ia akan digunakan dalam keutamaan ke yang terjana secara automatik.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Bila mencipta TOC dari pautan dalam dokumen input, benarkan masukan berganda, iaitu benarkan lebih dari satu masukan dengan teks yang sama, yang mana ia menuju ke lokasi yang berbeza.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+Ungkapan XPath yang menyatakan semua tag perlu ditambah ke dalam Senarai Kandungan pada aras satu. Jika ia dinyatakan, ia mendahului lain\-lain bentuk auto\-pengesanan. Sila rujuk Tutorial XPath dalam Panduan Pengguna calibre untuk lihat contoh.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+Ungkapan XPath yang menyatakan semua tag perlu ditambah ke dalam Senarai Kandungan pada aras dua. Setiap masukan ditambah di bawah masukan aras satu sebelum ini. Sila rujuk Tutorial XPath dalam Panduan Pengguna calibre untuk lihat contoh.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+Ungkapan XPath yang menyatakan semua tag perlu ditambah ke dalam Senarai Kandungan pada aras tiga. Setiap masukan ditambah di bawah masukan aras dua sebelum ini. Sila rujuk Tutorial XPath dalam Panduan Pengguna calibre untuk lihat contoh.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Bilangan pautan maksimum disisip ke dalam TOC. Tetapkan 0 untuk lumpuhkan. Lalai ialah: 50. Pautan hanya ditambah ke TOC jika kurang dari ambang bilangan bab telah dikesan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Jangan tambah bab dikesan\-sendiri ke Isi Kandungan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Buang masukan dari Isi Kandungan yang mana tajuk sepadan dengan ungkapan nalar yang dinyatakan. Masukan yang sepadan dan semua anaknya akan dibuang.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Jika lebih sedikit berbanding bilangan bab ini dikesan, maka pautan ditambah ke Isi Kandungan. Lalai: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Biasanya, jika fail sumber sudah mempunyai Senarai Kandungan, ia digunakan dalam keutamaan untuk auto\-jana. Dengan pilihan ini, auto\-jana sentiasa digunakan.
+.UNINDENT
+.SH DATA META
+.sp
+Pilihan untuk tetapkan data meta dalam output
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Rentetan yang digunakan bila mengisih ikut pengarang.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Tetapkan pengarang. Pengarang berbilang seharusnya dipisah dengan tanda ampersand.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Tetapkan pengeluar buku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Tetapkan keterangan e\-buku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Tetapkan kulit hadapan fail atau URL yang dinyatakan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Tetapkan ISBN buku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Tetapkan bahasa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Tetapkan penerbit e\-buku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Tetapkan penarafan. Seharusnya nombor diantara 1 hingga 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Baca data meta dari fail OPF yang dinyatakan. Data meta dibaca dari fail ini akan membatalkan mana\-mana data meta dalam fail sumber.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Tetapkan siri e\-buku ini berasal.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Tetapkan indeks buku dalam siri ini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Tetapkan tag untuk buku. Seharusnya senarai dipisah dengan tanda koma.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Tetapkan setem masa buku (tiada lagi digunakan)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Tetapkan tajuk.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Versi tajuk yang digunakan untuk pengisihan.
+.UNINDENT
+.SH NYAHPEPIJAT
+.sp
+Pilihan untuk bantu dengan menyahpepijat pertukaran
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Simpan output dari tahap berlainan bagi penukaran talian paip ke direktori yang dinyatakan. Berguna jika anda tidak pasti pada tahap manakah proses penukaran yang mana berlakunya pepijat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Aras kejelaan. Nyatakan berapa kali untuk lebih kejelaan. Menyatakan dua kali akan hasilkan kejelaan penuh, sekali kejelaan sederhana dan sifar paling kurang kejelaan.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

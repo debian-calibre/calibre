@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -443,6 +443,47 @@ class Ui_Form(object):
         icon8 = QtGui.QIcon()
         icon8.addPixmap(QtGui.QPixmap(I("cover_flow.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.cover_browser_tab, icon8, "")
+        self.quickview_tab = QtWidgets.QWidget()
+        self.quickview_tab.setObjectName("quickview_tab")
+        self.gridLayout_122 = QtWidgets.QGridLayout(self.quickview_tab)
+        self.gridLayout_122.setObjectName("gridLayout_122")
+        self.gridLayout_1221 = QtWidgets.QGridLayout()
+        self.gridLayout_1221.setObjectName("gridLayout_1221")
+        self.opt_qv_respects_vls = QtWidgets.QCheckBox(self.quickview_tab)
+        self.opt_qv_respects_vls.setObjectName("opt_qv_respects_vls")
+        self.gridLayout_1221.addWidget(self.opt_qv_respects_vls, 2, 0, 1, 1)
+        self.opt_qv_follows_column = QtWidgets.QCheckBox(self.quickview_tab)
+        self.opt_qv_follows_column.setObjectName("opt_qv_follows_column")
+        self.gridLayout_1221.addWidget(self.opt_qv_follows_column, 2, 1, 1, 1)
+        self.opt_qv_retkey_changes_column = QtWidgets.QCheckBox(self.quickview_tab)
+        self.opt_qv_retkey_changes_column.setObjectName("opt_qv_retkey_changes_column")
+        self.gridLayout_1221.addWidget(self.opt_qv_retkey_changes_column, 1, 0, 1, 1)
+        self.opt_qv_dclick_changes_column = QtWidgets.QCheckBox(self.quickview_tab)
+        self.opt_qv_dclick_changes_column.setObjectName("opt_qv_dclick_changes_column")
+        self.gridLayout_1221.addWidget(self.opt_qv_dclick_changes_column, 1, 1, 1, 1)
+        self.gridLayout_122.addLayout(self.gridLayout_1221, 1, 0, 1, 2)
+        self.groupBox1 = QtWidgets.QGroupBox(self.quickview_tab)
+        self.groupBox1.setObjectName("groupBox1")
+        self.gridLayout_32 = QtWidgets.QGridLayout(self.groupBox1)
+        self.gridLayout_32.setObjectName("gridLayout_32")
+        self.qv_up_button = QtWidgets.QToolButton(self.groupBox1)
+        self.qv_up_button.setIcon(icon4)
+        self.qv_up_button.setObjectName("qv_up_button")
+        self.gridLayout_32.addWidget(self.qv_up_button, 0, 1, 1, 1)
+        self.qv_down_button = QtWidgets.QToolButton(self.groupBox1)
+        self.qv_down_button.setIcon(icon5)
+        self.qv_down_button.setObjectName("qv_down_button")
+        self.gridLayout_32.addWidget(self.qv_down_button, 2, 1, 1, 1)
+        self.qv_display_order = QtWidgets.QListView(self.groupBox1)
+        self.qv_display_order.setAlternatingRowColors(True)
+        self.qv_display_order.setObjectName("qv_display_order")
+        self.gridLayout_32.addWidget(self.qv_display_order, 0, 0, 3, 1)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_32.addItem(spacerItem9, 1, 1, 1, 1)
+        self.gridLayout_122.addWidget(self.groupBox1, 3, 0, 2, 1)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(I("quickview.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tabWidget.addTab(self.quickview_tab, icon9, "")
         self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
         self.label_17.setBuddy(self.opt_gui_layout)
         self.label_4.setBuddy(self.opt_book_list_extra_row_spacing)
@@ -610,6 +651,23 @@ class Ui_Form(object):
         self.fs_help_msg.setText(_("You can press the %s keys to toggle full screen mode."))
         self.label_24.setText(_("Fie&ld for sub-title:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))
+        self.opt_qv_respects_vls.setText(_("&Apply virtual libraries in Quickview panel"))
+        self.opt_qv_respects_vls.setToolTip(_("Check this box to make Quickview show books only in the\n"
+"current virtual library. If unchecked, Quickview ignores virtual libraries. If\n"
+"unchecked then only row changes are taken into account."))
+        self.opt_qv_follows_column.setText(_("&Change QV item when book list column changes"))
+        self.opt_qv_follows_column.setToolTip(_("Check this box to make Quickview change the column being examined\n"
+"when the column in the book list is changed using the cursor arrow keys"))
+        self.opt_qv_retkey_changes_column.setToolTip(_("Pressing return in a cell changes both the book and the\n"
+"column being examined (the left-hand pane)"))
+        self.opt_qv_retkey_changes_column.setText(_("&Pressing \'return\' changes examined column"))
+        self.opt_qv_dclick_changes_column.setToolTip(_("Double-clicking in a cell changes both the book and the\n"
+"column being examined (the left-hand pane)"))
+        self.opt_qv_dclick_changes_column.setText(_("&Doubleclick changes examined column"))
+        self.groupBox1.setTitle(_("Select columns to display"))
+        self.qv_up_button.setToolTip(_("Move up"))
+        self.qv_down_button.setToolTip(_("Move down"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.quickview_tab), _("&Quickview"))
 
 from calibre.gui2.complete2 import EditWithComplete
 

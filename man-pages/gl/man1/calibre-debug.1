@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "xullo 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+.SH [OPCIÓNS]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Engada un engadido simple (por exemplo un engadido que consista nun só ficheiro .py), indicando a ruta ao ficheiro py que contén o código do engadido.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Run Python code.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Depurar a detección de dispositivos
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Un)register calibre from Windows Default Programs. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Executar a ferramenta diff de calibre. Por exemplo: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Run the Python code in file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Explode the book (exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools, and then rebuilds the file from the edited HTML. Makes no additional changes to the HTML, unlike a full calibre conversion).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Export all calibre data (books/settings/plugins)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Executar a GUI con depuración habilitada. A saída da depuración envíase a stdout e stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Executar a GUI con unha consola de depuración, rexistrando na ruta indicada. Só para uso interno, utilizar a opción \-g para executar a GUI en modo depuración
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Import previously exported calibre data
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Analizar o ficheiro(s) MOBI na ruta(s) indicada
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Mostrar as rutas necesarias para instalar o entorno de calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Reiniciar a base de datos sqlite de calibre na ruta indicada. Útil para recuperar se se estraga a base de datos.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Executar un engadido que fornece unha interface para a liña de ordes. Por exemplo: calibre\-debug \-r \fB"\fPEngadir libros\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Todo o que vaia despois de \fB\-\-\fP pásaselle ao engadido como argumentos.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Apagar unha instancia do Calibre en execución, de existir. Teña en conta que, se existen traballos en execución, estes cancelaranse en silencio, así que hai que utilizala con coidado.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Probar os módulos binarios na compilación
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

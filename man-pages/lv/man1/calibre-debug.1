@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "jūlijs 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+.SH [OPTIONS]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Pievienot vienkāršu spraudni (tas ir spraudnis, kas sastāv tikai no .py datnes), norādot ceļu uz .py datni ar spraudņa kodu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Run Python code.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Atkļūdot iekārtu noteikšanu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(de)reģistrēt calibre no Windows noklusētajām programmām \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Palaist calibre salīdzināšanas rīku. Piemēram: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Run the Python code in file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Izjaukt grāmatu (eksportē grāmatu kā HTML datņu un metadatu kolekciju, kurus varat labot, izmantojot standarta HTML labošanas rīkus, un pēc tam atjauno datnes no rediģētā HTML. Neizdara nekādas papildu HTML izmaiņas, atšķirībā no pilna mēroga pārveidošanas) .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Export all calibre data (books/settings/plugins)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Palaist grafisko saskarni atkļūdošanas režīmā. Atkļūdošanas informācija tiek izvadīta uz stdout ierīcēm stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Palaist grafisko saskarni ar atkļūdošanas konsoli, rakstot atkļūdošanas žurnālu norādītajā mapē. Tikai iekšējai lietošanai; izmantojiet \-g papildiespēju, lai palaistu grafisko saskarni atkļūdošanas režīmā.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+parādīt šo palīdzības paziņojumu un iziet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Import previously exported calibre data
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Pārbaudīt MOBI datni(es) norādītajā(s) mapē(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Izvades ceļi vajadzīgi, lai iestatītu Calibre vidi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Atkārtoti izveidot Calibre SQLite datubāzi norādītajā ceļā. Noderīgi, lai atjaunotu sabojātas datubāzes gadījumā.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Palaist spraudni, kas nodrošina komandrindas saskarni. Piemēram: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Viss, kas atrodas aiz \fB\-\-\fP tiks nodots spraudnim kā argumenti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Izsauc darbojošās Calibre procesa, ja tāds pastāv, apturēšanu. Ņemiet vērā \- ja notiek darbu izpilde, tie tiks pārtraukti bez paziņojuma, tādēļ lietojiet ar piesardzību.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Iegult norādītā fonta apakškopu. Izmantojiet \fB\-\-\fP pēc šī papildiespējas, lai nodotu to tālāk apakškopu veidojošajai lietonei.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Pārbaudīt bināros moduļus laidienā
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+parādīt programmas versijas numuru un iziet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

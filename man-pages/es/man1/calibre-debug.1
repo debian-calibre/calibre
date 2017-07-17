@@ -1,0 +1,171 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "julio 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [opciones]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Diversas interfaces de línea de órdenes útiles para depurar calibre. Sin opciones, esta orden inicia un intérprete de Python incrustado. También se pueden iniciar la interfaz gráfica principal de calibre, el visor de calibre y el editor de calibre en modo de depuración.
+.sp
+También contiene interfaces para distintos aspectos de calibre que no tienen herramientas de línea de órdenes específicas, como la reducción de caracteres de tipos de letra, la herramienta de comparación de libros, etc.
+.sp
+Se puede usar también \fBcalibre\-debug\fP para ejecutar scripts independientes. Para ello se usa de esta manera:
+.sp
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.sp
+Todo lo que se ponga después de \fB\-\-\fP se pasará al script.
+.sp
+Cuando alguno de los argumentos de \fBcalibre\-debug\fP contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+.SH [OPCIONES]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Añadir un complemento sencillo (un complemento que conste de un único archivo .py) especificando la ruta al archivo .py que contiene el código del complemento.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Ejecutar código Python.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Depurar detección de dispositivos
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Des)registrar calibre como programa predeterminado de Windows \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Ejecutar la herramienta de comparación de calibre. Por ejemplo: calibre\-debug \fI\%\-\-diff\fP archivo1 archivo2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Ejecutar la herramienta para modificar libros de calibre en modo de depuración.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Ejecutar el código Python en el archivo.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Expandir el libro (el libro se exporta como una colección de archivos HTML y metadatos, que pueden modificarse con las herramientas habituales para HTML, y luego vuelve a generar el archivo a partir de los archivos HTML modificados. No se hacen cambios adicionales al código HTML, al contrario que con una conversión completa de calibre).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Exportar todos los datos de calibre (libros, configuraciones, complementos)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Ejecutar la interfaz gráfica en modo de depuración. La salida de depuración se imprime en los flujos de salida y error estándar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Ejecutar la interfaz gráfica con consola de depuración, con registro en la ruta especificada. Para uso interno, use la opción \-g para ejecutar la interfaz gráfica en modo de depuración.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+mostrar este mensaje de ayuda y terminar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Importar datos de calibre previamente exportados
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Inspeccionar los archivos MOBI en las rutas especificadas
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Mostrar las rutas necesarias para configurar el entorno de calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Volver a crear la base de datos de calibre en la ubicación especificada. Útil para recuperar una base de datos corrupta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Ejecutar un complemento que proporciona una interfaz de línea de órdenes. Por ejemplo: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP archivo1 \fB\-\-option1\fP Todo lo que aparezca después de \fB\-\-\fP se pasará al complemento como argumentos.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Cierra una sesión de calibre que pueda estar abierta. Tenga cuidado, porque si hay tareas en ejecución serán abortadas, úselo con precaución.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Reducir el tipo de letra especificado. Use \fB\-\-\fP después de esta opción para pasar opciones al programa de reducción de tipos de letra.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Probar módulos binarios incluidos
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+mostrar el número de versión del programa y terminar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Ejecutar el visor de libros en modo de depuración
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

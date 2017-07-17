@@ -1,0 +1,123 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-POLISH" "1" "de juliol 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-polish \- ebook-polish
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-polish [options] input_file [output_file]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Polishing books is all about putting the shine of perfection onto
+your carefully crafted e\-books.
+.sp
+Polishing tries to minimize the changes to the internal code of your e\-book.
+Unlike conversion, it does not flatten CSS, rename files, change font
+sizes, adjust margins, etc. Every action performs only the minimum set of
+changes needed for the desired effect.
+.sp
+You should use this tool as the last step in your e\-book creation process.
+.sp
+Note that polishing only works on files in the AZW3 o EPUB formats.
+.sp
+Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+.SH [OPCIONS]
+.INDENT 0.0
+.TP
+.B \-\-compress\-images, \-i
+Losslessly compress images in the book, to reduce the filesize, without affecting image quality.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-fonts, \-e
+Incrusta totes les lletres referenciades al document que encara no ho estan. S\fB\(aq\fPescanejarà l\fB\(aq\fPordinador cercant les lletres i, si es troben, s\fB\(aq\fPincrustaran al document. Assegureu\-vos que teniu una llicència adequada per incrustar les lletres que s\fB\(aq\fPutilitzen en aquest document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+mostra aquest missatge d\fB\(aq\fPajut i surt
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-jacket, \-j
+Inserció d\fB\(aq\fPuna pàgina de «sobrecoberta» al començament del llibre que en contingui totes les metadades com el títol, etiquetes, autors, sèrie, comentaris… Se substituirà qualsevol sobrecoberta anterior.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-opf, \-o
+Camí a un fitxer OPF. Les metadades del llibre s\fB\(aq\fPactualitzen des del fitxer OPF.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-jacket
+Suprimeix una pàgina de sobrecoberta inserida prèviament.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-unused\-css, \-u
+Suprimeix totes les regles CSS que no s\fB\(aq\fPutilitzen dels fulls d\fB\(aq\fPestil i etiquetes <style>. Alguns llibres creats a partir de plantilles de producció poden contenir un gran nombre de regles CSS addicionals que no coincideixen amb cap contingut real. Aquestes regles addicionals poden alentir els lectors que necessiten analitzar\-les totes.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation, \-p
+Converteix els guions, punts suspensius, cometes, guions múltiples… de text net en els equivalents tipogràfics correctes. Tingueu en compte que l\fB\(aq\fPalgorisme pot generar algun cop resultats incorrectes, especialment quan hi ha cometes senzilles al començament de contraccions.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-fonts, \-f
+Fer un subconjunt de lletres significa que es redueix una lletra incrustada perquè només contingui els caràcters utilitzats de la lletra al llibre. Això redueix molt la mida dels fitxers de les lletres (normalment redueix la mida del fitxer de la lletra a la meitat. Per exemple, si el llibre utilitza una lletra específica per als encapçalaments, si en fem un subconjunt això reduirà la lletra perquè contingui els caràcters que hi ha als encapçalaments del llibre. O bé, si el llibre conté les versions en negreta i en cursiva d\fB\(aq\fPuna lletra però els textos en negreta o cursiva són poc freqüents o absents, les lletres en negreta o cursiva es poden reduir a només uns quants caràcters o es poden suprimir completament. L\fB\(aq\fPúnic inconvenient dels subconjunts de lletres és que si més tard decidiu afegir més text als llibres, el text que s\fB\(aq\fPafegeixi podria no estar cobert pel subconjunt de la lletra.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose
+Dóna una sortida més detallada, útil per depurar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+mostra el número de versió del programa i surt
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

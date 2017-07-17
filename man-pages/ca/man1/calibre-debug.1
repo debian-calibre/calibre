@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "de juliol 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [opcions]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+.SH [OPCIONS]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Afegiu un connector simple (per exemple, un connector que consisteixi de només un fitxer .py) quan especifiqueu el camí al fitxer py que conté el codi del connector.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Executa el codi Python.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Depura la detecció del dispositiu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Des)registra calibre dels programes predeterminats de Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Executa l\fB\(aq\fPeina diff de calibre. Per exemple: calibre\-debug \fI\%\-\-diff\fP fitxer1 fitxer2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Inicia l\fB\(aq\fPeina d\fB\(aq\fPedició de llibres de calibre en mode de depuració.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Executa el codi Python del fitxer.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Exploteu el llibre (exporta el llibre com una col·lecció de fitxers HTML i metadades, els quals podeu editar utilitzant les eines estàndard d\fB\(aq\fPedició d\fB\(aq\fPHTML, i després reconstrueix  el fitxer des de l\fB\(aq\fPHTML editat.  No fa cap canvi addicional a l\fB\(aq\fPHTML, a diferència d\fB\(aq\fPuna conversió completa de calibre).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Exporta totes les dades de calibre (llibres/ajusts/connectors)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Executa la interfície gràfica amb la depuració habilitada. La informació del depurador sortirà per stdout i stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Executa la interfície gràfica amb una consola de depuració i amb enregistrament al camí especificat. Només és per a ús intern, utilitzeu l\fB\(aq\fPopció \-g per a executar la interfície gràfica en mode de depuració
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+mostra aquest missatge d\fB\(aq\fPajut i surt
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Importa dades de calibre prèviament exportades
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Inspecciona els fitxers MOBI als camins especificats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Sortida dels camins necessaris per configurar l\fB\(aq\fPentorn de calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Torna a inicialitzar la base de dades sqlite de calibre al camí especificat. És útil per recuperar\-se de la corrupció de la base de dades.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Executa un connector que proporciona una interfície de línia d\fB\(aq\fPordres. Per exemple: calibre\-debug \-r \fB"\fPAfegeix llibres\fB"\fP \fB\-\-\fP fitxer1 \fB\-\-option1\fP Tot el que hi hagi després de \fB\-\-\fP es passarà al connector com a argument.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Fa que es tanqui qualsevol instància de calibre, si n\fB\(aq\fPhi ha alguna. Vigileu, ja que si hi ha treballs en execució s\fB\(aq\fPavortaran sense cap confirmació.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subconjunt de la lletra especificada. Utilitzeu \fB\-\-\fP després d\fB\(aq\fPaquesta opció per a passar l\fB\(aq\fPopció al programa de subconjunts de lletres.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Prova els mòduls binaris a la construcció
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+mostra el número de versió del programa i surt
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

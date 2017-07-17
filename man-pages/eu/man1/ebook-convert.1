@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "uztailak 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an «open e\-book» (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%INPUT (SORBURU) AUKERAK\fP
+.IP \(bu 2
+\fI\%OUTPUT (HELBURU) AUKERAK\fP
+.IP \(bu 2
+\fI\%Itxura aldatu\fP
+.IP \(bu 2
+\fI\%PROZESAMENDU HEURISTIKOA\fP
+.IP \(bu 2
+\fI\%BILATU ETA ORDEZTU\fP
+.IP \(bu 2
+\fI\%EGITURA ANTZEMAN\fP
+.IP \(bu 2
+\fI\%AURKIBIDEA\fP
+.IP \(bu 2
+\fI\%METADATUAK\fP
+.IP \(bu 2
+\fI\%ARAZTU\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+Erakutsi laguntza mezu hau eta irten
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Zehaztu input profila. Input profilak ematen dizu bihurketa sistemari buruzko informazioa jakiteko nola interpretatu hainbat informazio sorburu dokumentuan. Adibidez neurriaren araberako erresoluzioa (pixeletan neurtua). Aukerak hauek dira:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+Erakutsi programaren bertsioa zein den eta irten
+.UNINDENT
+.SH INPUT (SORBURU) AUKERAK
+.sp
+Input mobi fitxategiaren prozesamendua kontrolatzeko aukerak
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Zehaztu karaktereen kodea sorburu dokumentuan. Aukera hau ezartzen bada, dokumentu berak ekar ditzakeen karaktere\-kodeketa adierazpen guztien gainetik geratuko da. Bereziki lagungarria kodeketa bat zehazten ez duten edota okerreko kodeketa adierazten duten dokumentuetan.
+.UNINDENT
+.SH OUTPUT (HELBURU) AUKERAK
+.sp
+Output epub fitxategiaren prozesamendua kontrolatzeko aukerak
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Aukera hau beharrezkoa izango da EPUB formatuko fitxategia FBReaderJ gailu batekin erabiltzeko asmoa baldin baduzu. Aukera honekin barneko EPUB fitxategi sistema sinplifikatu egingo da, fitxategi guztiak goiko mailan jarriz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Liburuaren barnean agertuko den aurkibidea gehitu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Gehitutako aurkibidea liburuaren amaieran kokatu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Normalean, sorburu fitxategiak ez badauka liburu\-azalik eta zeuk ez baduzu azal bat zehaztu, lehenetsitako azal bat sortuko da izenburuarekin, egileen izenekin eta abar. Aukera honek desgaitu egiten du liburu\-azalaren sortzea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Ez erabili SVG formatua \fB\-\-Scalable\fP Vector Graphics (SVG)– liburuaren azala egiteko. Erabil ezazu aukera hau baldin eta zure ePUB fitxategian erabiliko bada SVG formaturik \fB\-\-Scalable\fP Vector Graphics (SVG)– formatu horri eusten ez dion irakurgailu batean. Horrela gertatzen da, ez dute SVG onartzen, esaterako, iPhone eta JetBook Lite irakurgailuek. Aukera hau erabili gabe, irakurgailu batzuk liburu\-azala zuriz erakutsiko lukete.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+SVG formatuko azala erabiltzen denean, \fB\-\-Scalable\fP Vector Graphics (SVG):option:\fI–,\fP aukera honek eragingo du gure irudiak pantaila osoko azalera estaltzea baina hori bai, bere itxura aldatu gabe, hau da, bere luze\-zabal proportzioa aldatu gabe. Honek esan nahi du egon daitezkeela bazterreko zuri\-guneak bai ezker\-eskuin bai goian eta bai behean. Baina irudiaren proportzioak gorde egingo dira. Aukera hau erabili gabe irudiaren proportzioak alda daitezke apurtxo bat baina ez da bazterrik sortuko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Zehaztuz gero, irteerako gehigarria gizaki batek ahalik eta hoberen irakurtzeko moduko outputa ekoizten saiatuko da. Irteerako gehigarri, helburu gehigarri batzuetan efekturik ez izatea gerta liteke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Bertoko lanabesei esker sortu den edozein aurkibidetarako izenburua.
+.UNINDENT
+.SH ITXURA ALDATU
+.sp
+Outputaren, irteerako emaitzaren, itxura osoa kontrolatzeko aukerak
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transkribatu Unicode karaktereak ASCII\-ra. Kontuz erabili ezarpen hau Unicode karaktere guztiak ordeztuko ditu eta. Adibidez \fB"\fPМихаил Горбачёв\fB"\fP karakterea \fB"\fPMikhail Gorbachiov\fB"\fP hitzegatik ordeztuko du. Kontuan izan, baita ere, adierazpen bat baino gehiagoko karaktereekin (Txineraz eta Japonieraz partekatzen diren karaktereekin, adibidez) Calibreko interfazean ezarrita dagoen hizkuntzaren adierazpena erabiliko dela.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Oinarrizko letra\-tipoaren tamaina puntuetan dago ezarrita. Liburuan dauden letra\-tipo guztien tamainak eskalatuko dira berriro hautatutako oinarrizko tamainaren arabera. Letra\-tipoaren tamaina handiagoa aukeratuz gero, zure irteera letra\-tipoko neurria handiagoa izango da. Alderantziz berdin. Lehenetsita zera dago, oinarrizko letra\-tipoaren neurria berez aukeratu egingo da zuk aukeratu duzun irteera profilaren arabera.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Alda ezazu testuaren lerrokadura, justifikazioa.  Erabiltzen baduzu \fB"\fPleft\fB"\fP, \fB"\fPezkerretara\fB"\fP, sorburuko testu osoa ezkerretara lerrokatuko dizu, esate baterako, justifikatu gabeko testu bat. \fB"\fPjustify\fB"\fP adierazpenak, hau da \fB"\fPjustifikatu\fB"\fP, justifikatu gabe zegoen testua ondo lerrokatuko dizu. \fB"\fPoriginal\fB"\fP adierazpenak, lehenetsita zetorren \fB"\fPjatorrizkoa\fB"\fP, sorburuak zekarren lerrokadura, bere horretan utziko dizu, aldaketarik gabe. Oharra: irteera formatu batzuk bakarrik eusten diote justifikazioari.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Desgaituta dago edozein letra\-tipo tamaina berri batera aldatzea
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Bai CSS estilo orrirako bidea edo CSS lerroa. CSS hau jatorrizko iturri\-fitxategiaren estilo arauen gainean erantsiko da, beraz, erabil daiteke arau horiek baliogabetzeko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+CSS estilo arau guztietatik kenduko diren komaz bereizitako CSS propietateen zerrenda. Onuragarria gailuak estiloak gainidatz ez ditzan informazioa agertzen baldin bada. Adibidez: font\-family, color, margin\-left, margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Aldaketak egiten CSS letra\-tipoen izenetatik letra\-tipoen tamainara, puntuetan neurtuta beti ere. Adibidez, ezarpen bat izan liteke, 10,12,14,16,18,20,22,24. Ezarpen horrekin letra\-tipo txikietatik (xx\-small) letra\-tipo handienetara (xx\-large) egiten duzu eta azken letrak oso handiak dira.  Letra\-tipoak bere neurrira eramateko erabiltzen ari garen algoritmoak letra\-tipoen tamaina erabiltzen dun letra\-tipoen neurriak zentzuz doitzeko. Lehenetsita dagoen aukera hauxe da, erabiltzen da doitze sistema bat zuk aukeratutako irteera profilaren araberakoa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Txertatu ezazu lerro zuri bat paragrafoen artean. Aukera hau ez da ibiliko baldin eta sorburu fitxategiek ez badute paragraforik erabiltzen (<p> edo <div> etiketak).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Txertatutako lerro zurien altuera (em\-etan) ezarri. Paragrafoen arteko marren altuera, hemen ezarritakoaren bikoitza izango da.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Gorde ondo sorburu dokumentuan zeuden letra\-loturak. Letra\-loturak zera dira, askotan ematen diren eta izaera berezia duten letra\-lotura batzuk, esaterako  ll, ts, tt, tx, tz… Irakurgailu gehienek ez daukate lotura horietarako euskarri egokirik bere lehenetsitako letra\-iturrietan eta agian lotura horiek ez dira batzuetan behar bezala ikusiko (lerro jauzietan eta). Calibrek, berez, lehenetsitako aukera bezala, letra\-lotura horiek lotura bakartzat hartu beharrean bi karaktere lokabetzat hartuko ditu. Baina aukera hau lehenetsiko bazenu letra\-lotura horiek ondo babestuko zenituzke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Lerroaren altuera puntuetan. Kontrola ezazu elkarren ondoan dauden lerroen arteko espazioa. Bere altuera lerroetan adierazten ez duten elementuei aplikatuko zaie, ez besteei. Gehienetan, lerroaren altuera minimoa da erabilgarriena. Lehenetsita hauxe: ez da da lerroen altuera aldaketarik egingo.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Txarto diseinaturiko hainbat dokumentuk taulak erabiltzen dituzte testuaren diseinua eta orrialdearen maketazioa kontrolatzeko. Dokumentu horiek bihurtzerakoan gerta daiteke testua orrialdeko bazterretatik kanpo geratzea eta antzeko problemak.  Aukera honek testuaren edukia aterako du tauletatik eta aurkeztuko ditu eduki horiek modu lineal batean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Lerroaren altuera minimoa, elementu kalkulatuaren letra\-tipoaren tamainaren ehunekoa bezala kalkulatua. calibrek ziurtatuko du elementu bakoitzak gutxienez hemen ezarritako lerro altuera izango duela, sorburu dokumentuak zehazten duena alboratuz beharrezkoa bada. Aukera hau bertan behera uzteko, hautatu 0 balioa. Lehenetsita 120%. Erabil ezazu ezarpen hau eta ez lerroaren altuera zehazteko aukera, egiten ari zarenaz oso ziur ez bazaude. Esate baterako, lerroen arteko espazio bikoitza erraz lor dezakezu 240 balioa hautatuz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Ezabatu ezazu paragrafoen arteko espazioa. Honek ere ezartzen du paragrafoan 1.5cm\-ko koska. Espazio zuriak ezabatzeko aukera ez da ibiliko baldin eta sorburu fitxategiek ez badute paragraforik erabiltzen (<p> edo <div> etiketak).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Paragrafoen arteko lerro zuriak ezabatzerakoan, Calibrek zuzenean jartzen ditu paragrafo\-koskak paragrafoen arteko ezberdintasuna argi adierazteko. Aukera honek koska horien zabalera kontrolatzen ditu (em\-etan neurtua). Balorea negatiboan ezarriz, dokumentuaren berezko paragrafo\-koska erabiltzen da.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Txertatutako letra\-tipoen azpimultzoa. Dokumentuan erabiltzen diren letra\-tipoaren ikurrak baino ez dira gordetzen letra\-tipoen fitxategien tamaina gutxitze aldera. Onuragarria sarri erabiltzen ez diren ikurrak dituen letra\-tipo bereziki nagusi bat txertatu nahi baldin bada.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Bihurtu kakotxoak, komatxoak, marratxoak eta eten puntuak bere testu arrunteko kideetara.
+.UNINDENT
+.SH PROZESAMENDU HEURISTIKOA
+.sp
+Eraldatu testu dokumentua eta egituratu ohiko konfigurazioak erabiliz. Berariaz desgaituta.Erabili –enable\-heuristics gaitzeko. Banakako ekintzak desgaitu daitezke –disable\-* aukeren bitartez.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analizatu dokumentuan zehar dauden gidoidun hitzak. Dokumentua bera erabiliko da erreferentzia hiztegi bezala erabakitzeko ea gidoiak mantenduko diren edo ezabatuko diren.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Ezabatu dokumentutik hutsik dauden paragrafoak  baldin badaude beste paragrafoen artean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Bihurtu espazio zurrun anitzetako koskak CSS koska.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Ezkerrera lerrokatutako eszena aldaketa adierazleak zentrora lerrokatu dira. Aldatu lerro zuriak erabiltzen duten eszena aldaketa adierazleak arau horizontalengatik.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Bilatu normalean letra etzanarekin dauden hitzak eta patroiak. Gero, jar itzazu hitz horiek letra etzanez.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Detektatu formaturik gabeko kapituluen izenburuak eta azpi\-izenburuak. Alda itzazu h2 eta h3 etiketetara. Doiketa hauek ez dute aurkibide bat sortuko baina erabil daitezke estruktura detekzio batekin batera aurkibide bat sortzeko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Bilatu <h1> edo <h2> etiketa sekuentzialen errepikapenak. Etiketak berriro zenbakitzen dira kapituluen izenburuen erdiko zatiketak saihesteko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Batu lerroak puntuazio eta formatu aztarnei esker.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Baimendu prozesamendu heuristikoa. Aukera hau ezarri beharko da edozein prezesamendu heuristiko bideratzeko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Lerro\-jauzia sortzeko lerroaren luzera zehazten duen eskala. Onartutako baloreak 0 eta 1 arteko dezimalak dira. Lehenetsia 0,4 da, lerro luzeraren medianaren azpitik. Lerro\-jauziak dokumentuaren lerro gutxi batzuetan baino ez badira ezarri behar, balorea murriztu egin beharko litzateke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Ordeztu eszena apurketak behar den testuarekin. Lehenetsita, sorburuko dokumentuko testua erabiliko da.
+.UNINDENT
+.SH BILATU ETA ORDEZTU
+.sp
+Aldatu dokumentuaren testua eta estruktura patroi zehatzak erabiliz.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Ordezkaketa sr1\-bilaketa horrekin bilatutako testua ordezkatzeko
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+sr1\-ordeztu\-rekin ordezkatuko den bilaketa patroia (adierazpen erregularra).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Ordezkaketa sr2\-bilaketa horrekin bilatutako testua ordezkatzeko
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+sr2\-ordeztu\-rekin ordezkatuko den bilaketa patroia (adierazpen erregularra).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Ordezkaketa sr3\-bilaketa horrekin bilatutako testua ordezkatzeko
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+sr3\-ordeztu\-rekin ordezkatuko den bilaketa patroia (adierazpen erregularra).
+.UNINDENT
+.SH EGITURA ANTZEMAN
+.sp
+Dokumentuaren estrukturaren detektatze automatikoaren kontrola.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Zehaztu nola markatu detektaturiko kapituluak. \fB"\fPOrri\-jauzia\fB"\fP koska bat txertatu egingo da kapituluen hasieraren aurrean. \fB"\fPrule\fB"\fP adierazpenak, hau da \fB"\fPtrazatu\fB"\fP adierazpenak lerro bat sartuko du  kapitulu bakoitzaren aurrean. \fB"\fPnone\fB"\fP adierazpenak, hau da \fB"\fPezer ez\fB"\fP adierazpenak kapituluak zehaztearen aukera bertan behera utziko du eta  \fB"\fPboth\fB"\fP adierazpenak, hau da \fB"\fPbiak batera\fB"\fP adierazpenak, aldi berean orrialde jauzia eta lerroak erabiliko ditu kapituluak markatzeko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Dokumentu batzuen orrien marjinak paragrafo bakoitzean zehaztutako ezker\-eskuma marjinetatik zehaztuta datoz. Calibrek marjina hauek antzeman eta ezabatzen saiatuko da. Batzuetan, ezabatu behar ez ziren marjinen ezabatzea erator liteke honetatik. Ezabatzea ezgaitzeko aukera dago.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+Orri\-jauziak antzemateko XPath adierazpena. Zehaztutako elementuen aurrean jartzen dira orri\-jauziak. Orri\-jauzien antzematea ezgaitzeko \fB"\fP/\fB"\fP adierazpena erabili.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Erabil ezazu  sorburu fitxategitik detektatu den liburu\-azala, zehaztutako liburu\-azala erabili beharrean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH AURKIBIDEA
+.sp
+Kontrola ezazu aurkibidearen sortze automatikoa. Lehenetsita, baldin eta sorburu fitxategiak dagoeneko badu aurkibidea, orduan horixe erabiliko da automatikoki sor zitekeenaren ordez.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Sarrera dokumentuko loturak erabiliz aurkibidea sortzerakoan, bikoiztutako sarrerak onartu, hau da, testu bera duten baina gune ezberdinetara daramaten sarrerak onartu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+Aurkibidearen lehenengo mailan agertuko diren etiketak zehazten dituen XPath adierazpena. Beste auto\-detekzio aukera guztien gainetik gauzatzen da. Adibideak Calibre erabiltzailearen eskuliburuan, XPath tutorial atalean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+Aurkibidearen bigarren mailan agertuko diren etiketak zehazten dituen XPath adierazpena. Sarrera bakoitza, aurreko lehenengo mailako sarreraren menpean gehitzen da. Adibideak Calibre erabiltzailearen eskuliburuan, XPath tutorial atalean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+Aurkibidearen hirugarren mailan agertuko diren etiketak zehazten dituen XPath adierazpena. Sarrera bakoitza, aurreko bigarrengo mailako sarreraren menpean gehitzen da. Adibideak Calibre erabiltzailearen eskuliburuan, XPath tutorial atalean.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Aurkibidean txerta daitekeen esteka kopuru maximoa. Ezarri ezazu 0 desgaitzeko. Lehenetsia dagoena: 50. Aurkibidera estekak gehituko dira baldin eta muga legez ezarri den kopurutik behera gabiltzala detektatzen bada.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Aurkibidean ez gehitu berez detektatu diren kapituluak .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Ezaba itzazu aurkibideko atalak baldin eta bere izenburuek eta zehaztutako adierazpen arruntek bat egiten badute. Bat egiten duten aurkibideko sarrera guztiak eta sarrera horien adar guztiak ezabatu egin dira.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Kapitulu kopuru hau baino txikiagoa den kopurua detektatu egiten bada, orduan esteka batzuk gehituko dira aurkibidera. Lehenetsita: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Normalean, sorburu fitxategiak baldin badauka dagoeneko bere aurkibidea, hori erabiliko da berez sistemak sor dezakeenaren aurretik.  Aukera honekin, ordea, sistemak berez sortuko duen aurkibidea ezarriko da beti.
+.UNINDENT
+.SH METADATUAK
+.sp
+Metadatuak outputean, helburuan, ezartzeko aukerak
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Egilearen izenaren arabera sailkatzen denean erabiliko den testu\-katea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Egileak ezarri. Hainbat egile. Bere izenak ampersand ikurrarekin ( hau da & ikurrarekin) bereiziko dira.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Ezarri ezazu liburuaren ekoizlea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+ezarri iezaiozu liburu\-azala zehaztutako fitxategiari edo zehaztutako URL\-ari.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Liburuaren ISBN\-a jarri.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Ezarri hizkuntza.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Ezarri balorazioa. 1 eta 5 artean dagoen zenbakia izan beharko.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Irakur itzazu metadatuak zehaztutako OPF fitxategietatik Fitxategi honetatik irakurritako edozein metadatu sorburu fitxategiko edozein metadaturen gainetik gailenduko dira.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Liburu\-sail hauetan ezarri ezazu liburuaren aurkibidea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Ezarri liburuaren etiketak. Komen bidez bereizitako elementuen zerrenda bat izan beharko luke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Ezarri liburuaren data (aspaldi honetan erabiltzeari utzi zaio)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Izenburua ezarri.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Sailkatzeko erabiliko den liburuaren izenburuaren bertsioa.
+.UNINDENT
+.SH ARAZTU
+.sp
+Bihurketaren arazketarekin laguntzeko aukerak
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Gorde itzazu zehaztutako direktorioan bihurketa prozesuaren atal guztien outputak, irteera\-emaitzak. Erabilgarria ez badakizu prozesuaren zein unetan gertatu egiten den errorea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

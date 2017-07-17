@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "tháng 7 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%TUỲ CHỌN NHẬP\fP
+.IP \(bu 2
+\fI\%TUỲ CHỌN XUẤT\fP
+.IP \(bu 2
+\fI\%LOOK AND FEEL\fP
+.IP \(bu 2
+\fI\%HEURISTIC PROCESSING\fP
+.IP \(bu 2
+\fI\%SEARCH AND REPLACE\fP
+.IP \(bu 2
+\fI\%STRUCTURE DETECTION\fP
+.IP \(bu 2
+\fI\%TABLE OF CONTENTS\fP
+.IP \(bu 2
+\fI\%METADATA\fP
+.IP \(bu 2
+\fI\%DEBUG\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Xác định hồ sơ nhập. Hồ sơ nhập cung cấp cho hệ thống chuyển đổi định dạng thông tin để suy luận các thông tin khác nhau trong tài liệu được nhập vào. Ví dụ chiều dài phụ thuộc vào độ phân giải (Chiều dài tính theo số điểm ảnh). Các lựa chọn bao gồm:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.SH TUỲ CHỌN NHẬP
+.sp
+Các tuỳ chọn điều chỉnh xử lý của tập tin nhập mobi
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Xác định bảng mã của tập tin được nhập vào. Nếu được thiết lập, tuỳ chọn này sẽ ghi đè mọi bảng mã được khai trong chính tập tin đó. Thích hợp cho các tập tin không nêu rõ bảng mã hoặc gặp lỗi trong quá trình xác định bảng mã.
+.UNINDENT
+.SH TUỲ CHỌN XUẤT
+.sp
+Các tuỳ chọn điều chỉnh xử lý của tập tin xuất epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+This option is needed only if you intend to use the EPUB with FBReaderJ. It will flatten the file system inside the EPUB, putting all files into the top level.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Insert an inline Table of Contents that will appear as part of the main book content.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Put the inserted inline Table of Contents at the end of the book instead of the start.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Thông thường, nếu các tập tin nguồn không có bìa sách và bạn không chỉ định trước, một bìa mặc định được tạo ra với tiêu đề, tác giả,…Chọn để vô hiệu hóa chức năng này.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Không sử dụng SVG cho bìa sách. Chọn nếu EPUB của bạn sẽ được sử dụng trên một thiết bị không hỗ trợ SVG, như iPhone hay JetBook Lite. Nếu không chọn, những thiết bị trên sẽ hiển thị bìa như là một trang trắng.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+When using an SVG cover, this option will cause the cover to scale to cover the available screen area, but still preserve its aspect ratio (ratio of width to height). That means there may be white borders at the sides or top and bottom of the image, but the image will never be distorted. Without this option the image may be slightly distorted, but there will be no borders.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Nếu được thiết lập, plugin xuất dữ liệu sẽ tạo tập tin xuất dễ đọc nhất có thể. Có thể không có hiệu lực với một số plugin xuất dữ liệu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Title for any generated in\-line table of contents.
+.UNINDENT
+.SH LOOK AND FEEL
+.sp
+Các tuỳ chọn điều chỉnh theo trải nghiệm cho tập tin xuất
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, the base font size is chosen based on the output profile you chose.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Thay đổi cách canh lề chữ. Giá trị \fB"\fPleft\fB"\fP: canh lề trái. Giá trị \fB"\fPjustify\fB"\fP: canh đều. Giá trị \fB"\fPoriginal\fB"\fP (mặc định) giữ nguyên lề tài liệu trong tập tin đầu vào. Chú ý: Chức năng canh lề chỉ có trong một vài định dạng xuất.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Không tự đổi cỡ font
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Either the path to a CSS stylesheet or raw CSS. This CSS will be appended to the style rules from the source file, so it can be used to override those rules.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Mapping from CSS font names to font sizes in pts. An example setting is 12,12,14,16,18,20,22,24. These are the mappings for the sizes xx\-small to xx\-large, with the final size being for huge fonts. The font rescaling algorithm uses these sizes to intelligently rescale fonts. The default is to use a mapping based on the output profile you chose.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Chèn một dòng trắng giữa các đoạn tài liệu. Không có tác dụng nếu tập tin đầu vào không sử dụng đoạn (thẻ <p> hoặc <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Set the height of the inserted blank lines (in em). The height of the lines between paragraphs will be twice the value set here.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Preserve ligatures present in the input document. A ligature is a special rendering of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. This option will preserve them instead.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Một số tài liệu được làm cẩu thả dùng bảng để điều chỉnh vị trí chữ trên trang. Khi chuyển đổi sang định dạng khác, các tài liệu này thường có chữ nằm ngoài trang và các lỗi khác. Tuỳ chọn này sẽ tách nội dung trong các bảng đó và sắp xếp dưới dạng liệt kê.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB"\fPdouble spaced\fB"\fP text by setting this to 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Xóa khoảng trắng giữa các đoạn tài liệu. Đồng thời thụt vào đầu đoạn một khoảng 1.5em. Nếu tập tin đầu vào không sử dụng đoạn (thẻ <p> hoặc <div>), phần mềm không thể xóa khoảng trắng.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+When calibre removes blank lines between paragraphs, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent (in em). If you set this value negative, then the indent specified in the input document is used, that is, calibre does not change the indentation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+.UNINDENT
+.SH HEURISTIC PROCESSING
+.sp
+Modify the document text and structure using common patterns. Disabled by default. Use –enable\-heuristics to enable.  Individual actions can be disabled with the –disable\-* options.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analyze hyphenated words throughout the document.  The document itself is used as a dictionary to determine whether hyphens should be retained or removed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Remove empty paragraphs from the document when they exist between every other paragraph
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Turn indentation created from multiple non\-breaking space entities into CSS indents.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Look for common words and patterns that denote italics and italicize them.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Looks for occurrences of sequential <h1> or <h2> tags. The tags are renumbered to prevent splitting in the middle of chapter headings.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Unwrap lines using punctuation and other formatting clues.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Enable heuristic processing. This option must be set for any heuristic processing to take place.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Scale used to determine the length at which a line should be unwrapped. Valid values are a decimal between 0 and 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Replace scene breaks with the specified text. By default, the text from the input document is used.
+.UNINDENT
+.SH SEARCH AND REPLACE
+.sp
+Modify the document text and structure using user defined patterns.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Replacement to replace the text found with sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Search pattern (regular expression) to be replaced with sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Replacement to replace the text found with sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Search pattern (regular expression) to be replaced with sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Replacement to replace the text found with sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Search pattern (regular expression) to be replaced with sr3\-replace.
+.UNINDENT
+.SH STRUCTURE DETECTION
+.sp
+Điều chỉnh tự động nhận dạng cấu trúc văn bản.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Chỉ ra cách đánh dấu chương sách. Giá trị \fB"\fPpagebreak\fB"\fP sẽ chèn ngắt trang trước mỗi chương. Giá trị \fB"\fPrule\fB"\fP sẽ chèn một đường kẻ trước mỗi chương. Giá trị \fB"\fPnone\fB"\fP vô hiệu hóa việc đánh dấu chương, giá trị \fB"\fPboth\fB"\fP chèn cả ngắt trang và đường kẻ để đánh dấu chương.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Some documents specify page margins by specifying a left and right margin on each individual paragraph. calibre will try to detect and remove these margins. Sometimes, this can cause the removal of margins that should not have been removed. In this case you can disable the removal.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Ưu tiên sử dụng bìa sách được tìm ra từ tập tin đầu vào hơn là bìa đã được định trước.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH TABLE OF CONTENTS
+.sp
+Điều chỉnh quá trình tự tạo Mục Lục. Mặc định, nếu tập tin nguồn đã có sẵn Mục Lục, nó sẽ được sử dụng thay vì tự động tạo Mục Lục mới.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+When creating a TOC from links in the input document, allow duplicate entries, i.e. allow more than one entry with the same text, provided that they point to a different location.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Số liên kết được chèn vào Mục Lục. Gán 0 để vô hiệu hóa. Mặc định: 50. Liên kết chỉ được thêm vào Mục Lục nếu số chương được tìm ra nhỏ hơn ngưỡng bạn đã chọn.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Không thêm những chương được phần mềm tự tìm ra vào Mục Lục.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Remove entries from the Table of Contents whose titles match the specified regular expression. Matching entries and all their children are removed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Nếu số chương được tìm ra nhỏ hơn ngưỡng này, các liên kết sẽ được thêm vào Mục Lục. Mặc định: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Thông thường, nếu tập tin nguồn đã có sẵ Mục Lục, nó sẽ được sử dụng thay cho Mục Lục tự tạo. Tuỳ chọn này sẽ khiến phần mềm luôn sử dụng Mục Lục tự tạo.
+.UNINDENT
+.SH METADATA
+.sp
+Tuỳ chọn để gán thông tin mô tả cho tập tin xuất
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+String to be used when sorting by author.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Gán tác giả. Tên các tác giả phải được ngăn cách bằng ký hiệu và (&).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Set the book producer.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Gán bìa sách từ tập tin hoặc URL được chỉ định
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Gán ISBN
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Gán ngôn ngữ
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Gán điểm số. Phài là một số từ 1 đến 5
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Đọc thông tin mô tả từ tập tin OPF được chỉ định. Thông tin mô tả được đọc từ tập tin này sẽ ghi đè thông tin mô tả trong tập tin đầu vào.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Gán thứ tự trong bộ sách
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Gán thẻ cho sách. Giữa các thẻ phải có dấu phẩy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Set the book timestamp (no longer used anywhere)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Gán Tựa sách
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+The version of the title to be used for sorting.
+.UNINDENT
+.SH DEBUG
+.sp
+Tùy chọn giúp gỡ lỗi cho việc chuyển đổi
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Lưu dữ liệu xuất từ từng giai đoạn chuyển đổi vào thư mục được chỉ định. Hữu ích nếu bạn không rõ quá trình chuyển đổi bị lỗi ở giai đoạn nào.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

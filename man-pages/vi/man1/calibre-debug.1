@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "tháng 7 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH [TÙY CHỌN]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Thêm một plugin đơn giản (vd như một plugin có một file .py duy nhất) bằng cách trỏ đường dẫn đến file py chứa code cho plugin.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Run Python code.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Gỡ lỗi cho quá trình tìm thiết bị
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Un)register calibre from Windows Default Programs. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Chạy công cụ calibre diff. Ví dụ: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Run the Python code in file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+(Xuất sách theo dạng một tập hợp các file HTML và metadata. Bạn có thể chỉnh sửa dữ liệu này bằng các công cụ chỉnh sửa HTML tiêu chuẩn và build lại file từ file HTML đã được chỉnh sửa. File HTML này không có thay đổi gì so với file ban đầu, so với việc chuyển đổi hoàn toàn bằng calibre)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Xuất tất cả dữ liệu của calibre (sách/cài đặt/plugin)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Chạy GUI trong khi đang bật sửa lỗi. Đầu ra sửa lỗi được chuyển đến stdout và stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Chạy chương trình với debug console và ghi log vào một đường dẫn nhất định. Chỉ dùng cho  nội bộ. Dùng cú pháp \-g để chạy chương trình trong chế độ sửa lỗi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Nhập dữ liệu calibre đã xuất trước đó
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Kiểm tra file MOBI tại các đường dẫn đã định
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Tạo đầu ra các đường dẫn cần để thiết lập calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Tái thiết lập cơ sở dũ liệu sqlite của calibre tại đường dẫn đã được định. Hứu ích trong trường hợp hồi phục từ hư hại cơ sở dữ liệu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Thực thi một tiện ích cung cấp chế độ điều khiển bằng dòng lệnh. Thí dụ: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Khiến bản calibre đang thực thi có thể kết thúc. Lưu ý rằng nếu có tác vụ đang thực thi, chúng sẽ được âm thầm hủy bỏ , do đó, sử dụng cẩn thận.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset font đã định. Bạn có thể dùng \fB\-\-\fP sau tùynày để một chương trình subset font chữ khác có thể nhận được tùy chọn từ calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Thử nghiệm các module nhị phân
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "júla 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+.SH MOŽNOSTI
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Vložiť jednoduchý doplnok (napr. doplnok obsahujúci len .py súbor) zadaním cesty ku súboru py, ktorý obsahuje kód doplnku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Run Python code.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Analyzovať chyby pri identifikácii zariadenia
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Od)registrovať Calibre vo východzích programoch Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Spustiť rozdielový nástroj Calibre. Napríklad: calibre\-debug \fI\%\-\-diff\fP súbor1 súbor2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Run the Python code in file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Rozložiť knihu (exportuje knihu ako súbor HTML súborov a metadát, ktoré môžete upraviť pomocou štandardných nástrojov úpravy HTML a následne opäť zostaví súbor z upraveného HTML. Nerobí žiadne dodatočné zmeny v HTML na rozdiel od úplnej konverzie Calibre).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Exportovať všetky dáta Calibre (knihy/nastavenia/doplnky)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Spustiť grafické rozhranie GUI so zapnutou diagnostikou. Výstup diagnostiky je vytlačený do stdout a stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Spustiť diagnostiku grafického rozhrania v terminále a zaznamenať výsledky na určené miesto. Len pre interné účely použite možnosť \-g, na diagnostiku grafického rozhrania.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+zobraziť túto nápovedu a skončiť
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Importovať predtým exportované dáta Calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Skontrolovať súbor (súbory) MOBI zo zadanej cesty (zadaných ciest)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Výstup ciest potrebných pre nastavenie prostredia Calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Znovu inicializovať SQLite databázu Calibre zo zadanej cesty. Užitočné pri obnovení po poškodení databázy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Spustiť doplnok, ktorý poskytuje rozhranie príkazového riadku. Napríklad: calibre\-debug \-r \fB"\fPPridať knihy\fB"\fP \fB\-\-\fP súbor1 \fB\-\-option1\fP Všetko po \fB\-\-\fP bude dané doplnku ako parametre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Spôsobí, že akákoľvek bežiaca inštancia bude ukončená. Uvedomte si, že ak sa práve spracúvajú úlohy, budú potichu prerušené, takže používajte opatrne.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Redukovať zadané písmo. Použite \fB\-\-\fP po tejto voľbe pre predanie možnosti programu pre čiastočné vkladanie písma.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Testovať binárne moduly v zostavovaní
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+zobraziť verziu programu a skončiť
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

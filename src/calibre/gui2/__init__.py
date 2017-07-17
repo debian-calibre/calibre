@@ -152,6 +152,10 @@ def create_defs():
     defs['hidpi'] = 'auto'
     defs['tag_browser_item_padding'] = 0.5
     defs['paste_isbn_prefixes'] = ['isbn', 'url', 'amazon', 'google']
+    defs['qv_respects_vls'] = True
+    defs['qv_dclick_changes_column'] = True
+    defs['qv_retkey_changes_column'] = True
+    defs['qv_follows_column'] = False
 
 
 create_defs()
@@ -1282,10 +1286,11 @@ def ensure_app(headless=True):
     with _ea_lock:
         if _store_app is None and QApplication.instance() is None:
             args = sys.argv[:1]
-            if headless and (islinux or isbsd):
+            has_headless = isosx or islinux or isbsd
+            if headless and has_headless:
                 args += ['-platformpluginpath', sys.extensions_location, '-platform', 'headless']
             _store_app = QApplication(args)
-            if headless and (islinux or isbsd):
+            if headless and has_headless:
                 _store_app.headless = True
             import traceback
             # This is needed because as of PyQt 5.4 if sys.execpthook ==

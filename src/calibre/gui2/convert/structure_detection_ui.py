@@ -56,7 +56,7 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.opt_remove_fake_margins.setText(_("Remove &fake margins"))
-        self.label_2.setText(_("The header and footer removal options have been replaced by the Search & Replace options. Click the Search & Replace category in the bar to the left to use these options. Leave the replace field blank and enter your header/footer removal regexps into the search field."))
+        self.label_2.setText(_("The header and footer removal options have been replaced by the Search & replace options. Click the Search & replace category in the bar to the left to use these options. Leave the replace field blank and enter your header/footer removal regexps into the search field."))
         self.opt_insert_metadata.setText(_("Insert &metadata as page at start of book"))
         self.label.setText(_("Chapter &mark:"))
         self.opt_remove_first_image.setText(_("Remove first &image"))

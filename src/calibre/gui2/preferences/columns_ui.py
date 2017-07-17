@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/columns.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -38,7 +38,7 @@ class Ui_Form(object):
         self.verticalLayout_3.addItem(spacerItem)
         self.del_custcol_button = QtWidgets.QToolButton(Form)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(I("trash.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(I("minus.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.del_custcol_button.setIcon(icon1)
         self.del_custcol_button.setIconSize(QtCore.QSize(32, 32))
         self.del_custcol_button.setObjectName("del_custcol_button")
@@ -72,6 +72,7 @@ class Ui_Form(object):
         self.verticalLayout_3.addWidget(self.column_down)
         self.gridLayout.addLayout(self.verticalLayout_3, 1, 1, 1, 1)
         self.add_col_button = QtWidgets.QPushButton(Form)
+        self.add_col_button.setIcon(icon2)
         self.add_col_button.setObjectName("add_col_button")
         self.gridLayout.addWidget(self.add_col_button, 2, 0, 1, 2)
 

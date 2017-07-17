@@ -1,0 +1,940 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBREDB" "1" "juli 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibredb \- calibredb
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb kommando [alternativ] [argument]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
+.sp
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%GLOBALA ALTERNATIV\fP
+.IP \(bu 2
+\fI\%list\fP
+.IP \(bu 2
+\fI\%add\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%LÄGGER TILL FRÅN KATALOGER\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%remove\fP
+.IP \(bu 2
+\fI\%add_format\fP
+.IP \(bu 2
+\fI\%remove_format\fP
+.IP \(bu 2
+\fI\%show_metadata\fP
+.IP \(bu 2
+\fI\%set_metadata\fP
+.IP \(bu 2
+\fI\%export\fP
+.IP \(bu 2
+\fI\%catalog\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%EPUB ALTERNATIV\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%saved_searches\fP
+.IP \(bu 2
+\fI\%add_custom_column\fP
+.IP \(bu 2
+\fI\%custom_columns\fP
+.IP \(bu 2
+\fI\%remove_custom_column\fP
+.IP \(bu 2
+\fI\%set_custom\fP
+.IP \(bu 2
+\fI\%restore_database\fP
+.IP \(bu 2
+\fI\%check_library\fP
+.IP \(bu 2
+\fI\%list_categories\fP
+.IP \(bu 2
+\fI\%backup_metadata\fP
+.IP \(bu 2
+\fI\%clone\fP
+.IP \(bu 2
+\fI\%embed_metadata\fP
+.IP \(bu 2
+\fI\%search\fP
+.UNINDENT
+.SH GLOBALA ALTERNATIV
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+visa denna hjälptext och avsluta
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-library\-path, \-\-with\-library
+Sökägen till calibre\-biblioteket. Som standard är att använda sökvägen som lagrats i inställningarna. Du kan också ansluta till en calibre Innehållsserver för att utföra åtgärder på fjärrbibliotek. För att göra så använd en URL på formatet : \fI\%http://hostname:port/#library_id\fP till exempel \fI\%http://localhost:8080/#mylibrary\fP\&. Library_id är bibliotekets ID för biblioteket du vill ansluta till på Innehållsservern. Du kan använda det speciella library_id\-värdet av \- för att få en lista över bibliotekets identiteter som är tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsservern finns i \fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password
+Lösenord för anslutning till en calibre Innehållsserver. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file>.)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username
+Användarnamn för anslutning till en calibre\-Innehållsserver
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+visar programmets versionsnummer och avsluta
+.UNINDENT
+.SH LIST
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb lista [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Lista de böcker som finns i calibre\-databasen.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-ascending
+Sortera resultaten i stigande ordning
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fields, \-f
+Fälten som ska visas när du listar böcker i databasen. Bör vara en kommaseparerad lista över fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: title,authors. Det särskilda fältet \fB"\fPalla\fB"\fP kan användas för att markera alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generera utdata i JSON\-format, vilket är mer lämpat för maskintolkning. Resulterar i radbredd och avskiljaralternativ att ignorera.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-limit
+Maximalt antal resultat att visa. Standard: alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-width, \-w
+Den maximala bredden på en enskild rad i utdata. Som standard används den detekterade skärmstorleken.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix
+Prefixet för alla sökvägar. Standard är den absoluta sökvägen till biblioteksmappen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtrera sökningens resultat. För information om sökformatet, se sökrelaterade dokumentation i användarhandboken. Som standard filtreras sökningen ej.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-separator
+Sträng som används för att separera fält. Standard är mellanslag.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sort\-by
+Fältet av för att sortera resultat. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: id
+.UNINDENT
+.SH ADD
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add [options] fil1 fil2 fil3 ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Lägg till de angivna filerna som böcker till databasen. Du kan även ange kataloger, se
+katalog\-relaterade alternativ nedan.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Ange författarna för tillagda boken/böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Vägen till omslaget för att använda för extra bok
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-duplicates, \-d
+Lägg till böcker till databasen även om de redan finns. Jämförelsen görs utifrån boktitlarna.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-empty, \-e
+Lägg till en tom bok (en bok utan format)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Ange identifierare för den här boken, för t.ex. \-I asin:XXX \-I isbn:YYY
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+Ange ISBN för tillagda boken/böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-languages, \-l
+En kommaseparerad lista med språk (bäst att använda ISO639 språkkoder, även om vissa språknamn kan också användas)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Ange serier för tillagda boken/böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index, \-S
+Ange serienummer för tillagda boken/böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags, \-T
+Ställ in markeringar i den tillsatta boken/böckerna
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Ange namn på tillsatta boken/böckerna
+.UNINDENT
+.SS LÄGGER TILL FRÅN KATALOGER
+.sp
+Alternativ för att anpassa tilläggningen av böcker från kataloger. Som standard läggs endast filer som har ändelser av kända e\-bokfiltyper till.
+.INDENT 0.0
+.TP
+.B \-\-add
+Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid genomsökning av kataloger efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore
+Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid genomsökning av kataloger efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf ignorerar alla pdf\-filer
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-one\-book\-per\-directory, \-1
+Antag att varje katalog bara har en enda logisk bok och att alla filer i den är samma e\-bok i olika format
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-recurse, \-r
+Sök igenom kataloger rekursivt
+.UNINDENT
+.SH REMOVE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove ids
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Ta bort böcker som identifierats av id från databasen. id ska vara en kommaseparerad lista med ID\-nummer (du kan få id\-nummer med sökkommandot). Till exempel, 23,34,57\-85 (när du anger ett intervall, det sista numret i intervallet inkluderas inte).
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Använd inte papperskorgen
+.UNINDENT
+.SH ADD_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_format [options] id ebook_file
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Lägg e\-boken i ebook_file till tillgängliga format för logiska boken identifieras med hjälp av id. Du kan få id med sökkommandot. Om formatet redan existerar, ersätts, såvida inte ersätta alternativet anges.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-dont\-replace
+Ersätt inte formatet om det redan existerar
+.UNINDENT
+.SH REMOVE_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_format [alternativ] id fmt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Ta bort format fmt från den logiska boken identifierad med hjälp av id. Du kan få id med sökkommandot. FMT bör vara en filändelse som LRF eller TXT eller EPUB. Om den logiska boken inte har FMT tillgänglig, gör inget.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.SH SHOW_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb show_metadata [options] id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Visa metadata som lagras i calibre\-databasen för boken identifierat av id.
+id är ett id\-nummer från sökningskommando.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-as\-opf
+Skriv metadata i OPF\-form (XML)
+.UNINDENT
+.SH SET_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_metadata [options] id [/path/to/metadata.opf]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Uppsättning av metadata lagras i calibre\-databas för boken identifieras av id
+från OPF\-filen metadata.opf. id är ett id\-nummer från sökkommandot. Du
+kan få en snabb känsla för OPF\-format med hjälp av –as\-opf valet till
+show_metadata kommando. Du kan också ställa in metadata för enskilda fält med
+den –field alternativ. Om du använder –field alternativ, finns det inget behov att specificera
+en OPF\-fil.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-field, \-f
+Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP etiketter: etikett1, etikett2. Använd \fI\%\-\-list\-fields\fP för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639 språkkoder (t.ex. EN för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-fields, \-l
+Ange namn på metadatafälten som kan användas med \fI\%\-\-field\fP option
+.UNINDENT
+.SH EXPORT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb export [options] id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Exportera böckerna som anges av id (en kommaseparerad lista) till filsystemet.
+Export operation sparar alla format av boken, omslaget och metadata (in
+en OPF\-fil). Du kan få id\-nummer från sökkommandot.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-all
+Exportera alla böcker i databasen och ignorera ID\-listan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-asciiize
+Normalt kommer calibre att konvertera alla icke\-engelska i filnamnet till engelska motsvarigheter. VARNING: Om du stänga av denna funktion kan det uppstå fel vid sparande, beroende på hur väl filsystemet du sparar till stöder Unicode. Om denna växel aktiveras, kommer detta beteende att stängas av.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-cover
+Normalt sparar calibre omslaget i en separat fil tillsammans med själva e\-bokfilerna. Om denna växel aktiveras, kommer detta beteende att stängas av.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-update\-metadata
+Normalt kommer calibre att uppdatera metadata i de sparade filerna utifrån det som finns i calibre\-biblioteket. Detta gör att filerna sparas långsammare till disken. Om denna växel aktiveras, kommer detta beteende att stängas av.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-write\-opf
+Normalt kommer calibre skriva metadata i en separat OPF\-fil tillsammans med själva e\-bokfilerna. Om denna växel aktiveras, kommer detta beteende att stängas av.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Kommaseparerad lista med format att spara för varje bok. Som standard sparas alla tillgängliga format.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-whitespace
+Ersätt blanktecken med understreck.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-single\-dir
+Exportera alla böcker till en enda katalog
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Mallen styr filnamnet och katalogstrukturen för sparade filer. Grundinställning är \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP som kommer spara böcker i en per\-författare underkatalog med filnamn bestående av titel och författare. Tillgängliga val är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timefmt
+Format för datumvisning. %d \- dag, %b \- månad, %m \- månadsnummer, %Y \- år. Grundinställning är: %b, %Y
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-dir
+Exportera böcker till den angivna katalogen. Standard är .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-lowercase
+Konvertera sökvägar till gemener.
+.UNINDENT
+.SH CATALOG
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb sökväg /path/to/destination.(csv|epub|mobi|xml...) [alternativ]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Exportera en sökväg i format specificerat med path/to/destination tillägg.
+Alternativ hur uppslag visas i genererad utdata.
+Observera att olika katalogformat stöder olika uppsättningar av alternativ.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-ids, \-i
+Kommaseparerad lista med databas\-ID till katalogen. Om de deklareras, ignoreras \fI\%\-\-search\fP\&. Standard: alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtrera sökningens resultat. Se sökrelaterad dokumentation i användarhandboken för information om sökformatet. Standard: Ingen filtrering
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Visa detaljerad utdatainformation. Användbart för felsökning
+.UNINDENT
+.SS EPUB ALTERNATIV
+.INDENT 0.0
+.TP
+.B \-\-catalog\-title
+Titel på den genererade katalogen som används som titel i metadata. Standard: \fB\(aq\fPMy Books\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cross\-reference\-authors
+Skapa korsreferenser i författarsektionen för böcker med flera författare. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline
+Spara utdata från olika stadier av konverteringen till den angivna katalogen. Användbart om du är osäker på i vilket stadium av konverteringsprocessen ett fel sker. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclude\-genre
+Regex beskriver etiketter för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentesetiketter, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-etikett för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclusion\-rules
+Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPEtiketter\fB"\fP,\fB\(aq\fP<komma\-separerad lista med etiketter>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-authors
+Inkludera \fB\(aq\fPFörfattar\fB\(aq\fP sektion i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-descriptions
+Inkludera sektionen \fB\(aq\fPBeskrivningar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-genres
+Inkludera sektionen \fB\(aq\fPGenrer\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-recently\-added
+Inkludera sektioen \fB\(aq\fPSenaste tillagda\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-series
+Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-titles
+Inkludera sektionen \fB\(aq\fPTitlar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-genre\-source\-field
+Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPEtiketter\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-header\-note\-source\-field
+Anpassat fält innehåller anmärkning text att infoga i beskrivningsrubrik. Standard: \fB\(aq\fP\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-merge\-comments\-rule
+#<custom field>:[before|after]:[True|False] anger: <custom field> Anpassat fält innehåller anteckningar att sammanfoga med kommentarer [before|after] Placering av noteringar med avseende på kommentarer [True|False] \- En horisontell linje infogas mellan noteringar och Kommentarer Standard: \fB\(aq\fP::\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Anger utdataprofilen. I vissa fall krävs en utdataprofil för att optimera katalogen för enheten. Till exempel skapar \fB"\fPkindle\fB"\fP eller \fB"\fPkindle_dx\fB"\fP en strukturerad innehållsförteckning med avsnitt och artiklar. Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix\-rules
+Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preset
+Använd en namngiven förinställning skapas med GUI Catalog Builder.  En förinställning specificerar alla inställningar för att bygga en katalog.  Standard: \fB\(aq\fPNone\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-thumb\-width
+Storleksråd (i tum) för bokomslag i katalog. Intervall: 1.0 \- 2.0 Standard: \fB\(aq\fP1.0\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-existing\-cover
+Ersätt befintliga omslag när du skapar katalog.  Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+.UNINDENT
+.SH SAVED_SEARCHES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb saved_searches [alternativ] (list|add|remove)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Hantera sparade sökningar I denna databas.
+Om du försöker lägga till en fråga med ett namn som redan finns, kommer det att
+ersättas.
+.sp
+Syntax för att lägga till:
+.sp
+calibredb sparade sökningar lägg till söknamn sökuttryck
+.sp
+Syntax för att ta bort:
+.sp
+calibredb sparade sökningar avlägsna söknamn
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.SH ADD_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_custom_column [alternativ] label name datatype
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Skapa en egen kolumn. Kolumnamn är det maskinvänliga namnet på kolumnen. Bör
+inte innehålla blanksteg eller kolon. Namn är det människovänliga namnet på kolumnen.
+Datatypen är en av: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-display
+En ordbok med alternativ för att anpassa hur data i denna kolumn ska tolkas. Detta är en JSON\-sträng. För uppräknings kolumner, använd \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Det finns många alternativ som kan gå in i visningsalternativ variabel. Alternativ för kolumn typ är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på säkerhetskopian OPF för en bok (se till att en ny OPF har skapats sedan kolumn lades). Du kommer att se JSON för \fB"\fPdisplay\fB"\fP för den nya kolumnen i OPF.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-is\-multiple
+Denna kolumn lagrar etiketter som data (d.v.s. flera kommaseparerade värden). Gäller endast om datatypen är text.
+.UNINDENT
+.SH CUSTOM_COLUMNS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb custom_columns [flaggor]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Lista anpassade kolumner. Visar kolumnnamn och ID:n.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-details, \-d
+Visa detaljer för varje kolumn.
+.UNINDENT
+.SH REMOVE_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_custom_column [flaggor] kolumnetikett
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Ta bort den anpassade kolumnen som identifieras med etikett. Du kan se
+tillgängliga kolumner med kommandot custom_columns.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-force, \-f
+Fråga inte efter bekräftelse
+.UNINDENT
+.SH SET_CUSTOM
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_custom [alternativ] kolumn id value
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Sätt värdet på en anpassad kolumn boken identifieras av id.
+Du kan få en lista med id genom använda sökkommando.
+Du kan få en lista med anpassade kolumnnamn med hjälp av custom_columns
+kommando.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-append, \-a
+Om kolumnen lagrar flera värden, lägg angivna värden till de redan befintliga, istället för att ersätta dem.
+.UNINDENT
+.SH RESTORE_DATABASE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb restore_database [alternativ]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Återställ databasen från metadata lagrat i OPF\-filer i varje katalog av
+calibre\-biblioteket. Detta är användbart om din metadata.db\-fil
+har blivit skadad.
+.sp
+VARNING: Detta kommando återskapar helt databasen. Du kommer att förlora
+alla sparade sökningar, användarkategorier, kontrollpaneler, lagra\-per\-bok konverteringsinställningar och anpassade recept. Återställd metadata kommer
+bara vara så korrekta som vad finns i OPF\-filer.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-really\-do\-it, \-r
+Verkligen gör återställningen. Kommandot kommer inte köras om detta alternativ har angetts.
+.UNINDENT
+.SH CHECK_LIBRARY
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb check_library [alternativ]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Utföra vissa kontroller av filsystemet som representerar ett bibliotek. Rapporter är invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Utdata i CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_extensions, \-e
+Kommaseparerad lista med tillägg att ignorera. Standard: alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_names, \-n
+Kommaseparerad lista med namn att ignorera. Standard: Alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-report, \-r
+Kommaseparerad lista med rapporter. Standard: Alla
+.UNINDENT
+.SH LIST_CATEGORIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list_categories [flaggor]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Ta fram en rapport i kategorin information i databasen. Den
+informationen motsvarar det som visas i markeringsrutan.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-categories, \-r
+Kommaseparerad lista med kategoriuppslagsnamn. Standard: Alla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Utdata i CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dialect
+Den typ av CSV\-fil som ska produceras. Val: excel, excel\-tab
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-item_count, \-i
+Skriv ut endast antalet objekt i en kategori istället för räkna per post inom kategorin
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-width, \-w
+Den maximala bredden på en enskild rad i utdata. Som standard används den detekterade skärmstorleken.
+.UNINDENT
+.SH BACKUP_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb backup_metadata [alternativ]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Säkerhetskopierat metadata lagras i databasen i individuella OPF\-filer i varje
+boks katalog. Detta sker normalt automatiskt, men du kan köra det här
+kommando för att tvinga ny generering av OPF\-filer med –all alternativet.
+.sp
+Observera att det är normalt ingen anledning att göra detta, eftersom de OPF\-filer säkerhetskopieras
+automatiskt, varje gång metadata ändras.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-all
+Normalt fungerar detta kommando endast på böcker som har inaktuella OPF\-filer. Det här alternativet gör att det fungerar på alla böcker.
+.UNINDENT
+.SH CLONE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb clone path/to/new/library
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Skapa en klon av det aktuella biblioteket. Detta skapar ett nytt, tomt bibliotek som har alla
+samma anpassade kolumner, virtuella bibliotek och andra inställningar som det aktuella biblioteket.
+.sp
+Den klonade biblioteket innehåller inga böcker. Om du vill skapa ett komplett duplikat, inklusive alla böcker, sedan helt enkelt använda dina filsystemsverktyg för att kopiera biblioteksmappen.
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.SH EMBED_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb embed_metadata [alternativ] book_id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Uppdatera metadata i själva bokfilerna som lagras i calibre\-biblioteket från
+metadata i calibre\-databasen. Normalt är metadata uppdateras endast när
+filer exporteras från calibre, detta kommando är användbart om du vill att filerna ska
+uppdateras på plats. Observera att olika filformat stödjer olika mängder
+av metadata. Du kan använda det speciella värdet ’alla’ för book_id för att uppdatera metadata i alla böcker. Du kan också ange flera böckers id åtskilda av mellanslag och id områden separeras genom bindestreck. Till exempel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-only\-formats, \-f
+Uppdatera bara metadata i filer för ett särskilt format. Specificera det flera gånger för flera format. Som standard kommer alla format uppdateras.
+.UNINDENT
+.SH SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb sök [alternativ] sökuttryck
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Sök i biblioteket för den angivna söktermen, återvänder ett kommatecken separerad
+lista med bokidentifierare matchar sökuttrycket. Utdataformatet är användbart
+att mata in andra kommandon som accepterar en lista med identifierare som indata.
+.sp
+Sökningsuttryck kan vara allt från calibres kraftfulla sökfrågnings
+språk, till exempel: author:asimov title:robot
+.sp
+När du skickar argument till calibredb som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.INDENT 0.0
+.TP
+.B \-\-limit, \-l
+Det maximala antalet resultat att returnera. Standard är alla resultat.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "juli 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [indstillinger]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: »/some path/with spaces«
+.SH [INDSTILLINGER]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Tilføj et simpelt udvidelsesmodul (dvs. et udvidelsesmodul som kun består af en .py\-fil), ved at specificere stien til py\-filen, der indeholder koden for udvidelsesmodulet.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Run Python code.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Fejlfind enhedsdetektion
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Af)registrer Calibre fra Windows\fB\(aq\fP standardprogrammer. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Kør Calibres forskelsværktøj. For eksempel: calibre\-debug \fI\%\-\-diff\fP fil1 fil2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Run the Python code in file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Opdel bogen (eksporterer bogen som en samling af HTML\-filer og metadata, som du kan redigere med standardværktøjer til HTML\-redigering, og genbyg så filen fra den redigerede HTML. Laver ingen yderligere ændringer til HTML\fB\(aq\fPen, til forskel fra en fuld Calibrekonvertering).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Eksporter alle Calibre\-data (bøger/indstillinger/udvidelsesmoduler)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Kør den grafiske brugerflade med fejlsøgning aktiveret. Fejlsøgningsuddata vises på standardud eller standardfejl.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Kør den grafiske brugerflade med en fejlsøgningskonsol, log til den angivne sti. Kun for intern brug, brug tilvalget \-g for at køre den grafiske brugerflade i fejlsøgningstilstand
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Importer tidligere eksporterede Calibre\-data
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Inspicer MOBI\-filerne på de angivne stier
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Vis stierne nødvendige for at opsætte Calibremiljøet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Indstil Calibre SQLite databasen på den angivne sti igen. Kan være nyttigt hvis databasen er beskadiget.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Kør et udvidelsesmodul, som giver en kommandolinjegrænseflade. For eksempel: calibre\-debug \-r \fB"\fPTilføj bøger\fB"\fP \fB\-\-\fP fil1 \fB\-\-option1\fP Alt efter \fB\-\-\fP vil blive overført til udvidelsesmodulet som parametre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Får en, hvis nogen, kørende instans af Calibra til at stoppe. Bemærk at hvis der er igangværende opgaver, så vil de blive afsluttet i stilhed, så brug med forsigtighed
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Test binære moduler i bygning
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Run the E\-book viewer in debug mode
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

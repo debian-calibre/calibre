@@ -19,9 +19,6 @@ class Ui_Form(object):
         self.label = QtWidgets.QLabel(Form)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.adv_search_builder = QtWidgets.QToolButton(Form)
-        self.adv_search_builder.setObjectName("adv_search_builder")
-        self.horizontalLayout.addWidget(self.adv_search_builder)
         self.query = HistoryLineEdit(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -71,12 +68,11 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.label.setText(_("Query:"))
-        self.adv_search_builder.setText(_("..."))
         self.search.setText(_("Search"))
         self.label_2.setText(_("Enable"))
-        self.enable_all.setText(_("All"))
-        self.enable_none.setText(_("None"))
-        self.enable_invert.setText(_("Invert"))
+        self.enable_all.setText(_("&All"))
+        self.enable_none.setText(_("&None"))
+        self.enable_invert.setText(_("&Invert"))
 
 from calibre.gui2.widgets import HistoryLineEdit
 from results_view import ResultsView

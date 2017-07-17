@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "7月 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an 「open e\-book」 (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%輸入選項\fP
+.IP \(bu 2
+\fI\%輸出選項\fP
+.IP \(bu 2
+\fI\%介面外觀\fP
+.IP \(bu 2
+\fI\%探索式處理\fP
+.IP \(bu 2
+\fI\%搜尋與取代\fP
+.IP \(bu 2
+\fI\%結構偵測\fP
+.IP \(bu 2
+\fI\%目錄\fP
+.IP \(bu 2
+\fI\%詮釋資料\fP
+.IP \(bu 2
+\fI\%除錯\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+顯示此幫助信息並退出
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+指定輸入設定檔。輸入設定檔會提供轉換系統關於如何轉譯輸入文件中各類資訊的方式。例如關係解析度的長度（以像素計的長度）。選擇有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+顯示程序版本號並退出
+.UNINDENT
+.SH 輸入選項
+.sp
+用來控制輸入 mobi 檔案處理的選項
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+指定輸入文件的字元編碼。如果設定這個選項就會覆蓋任何由文件本身宣告的編碼。尤其當文件沒有宣告任何編碼或文件所宣告的編碼有誤時會很有幫助。
+.UNINDENT
+.SH 輸出選項
+.sp
+用來控制輸出 epub 處理的選項
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+這個選項只有在您想把 EPUB 檔案用在 FBReaderJ 上時才需要。它會將 EPUB 內的檔案系統扁平化，將所有的檔案放在最上層。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+插入行內目錄，會成為主要書籍內容的一部分。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+將插入的行內目錄放置在書籍結尾而非開頭。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+正常情況下，如果輸入檔案沒有封面，您也未指定，會產生一個帶有標題、作者等信息的預設封面。選定此選項可以禁止生成預設封面。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+不使用 SVG 做為書籍封面。這個選項是用在您的 EPUB 要用在不支援 SVG 的裝置上時，像是 iPhone 或 JetBook Lite。沒有這個選項，在前述裝置上會以空白頁面來顯示封面。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+當使用 SVG 封面時，該選項會導致封面平鋪滿有效的屏幕區字段，但仍會保持它的縱寬比(寬度和高度的比例)。意思就是說，這可能會在圖像頂邊或底邊處產生空白邊界，但是圖像本身不會被扭曲變形。不選該選項的話，圖像可能會產生輕微的扭曲變形，但優點是不會出現空白邊界。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+如果開啟本選項，輸出外掛將盡量輸出人類可讀的內容。這個選項對於一些輸出外掛可能不起作用。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+用於任何產生的行內目錄頁的標題。
+.UNINDENT
+.SH 介面外觀
+.sp
+用來控制介面外觀輸出之選項
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+把 Unicode 字元轉換爲 ASCII 表達型式。請謹慎使用這個功能，因爲它會把所有的 Unicode 字元轉換爲 ASCII 字元。比如：它會把 \fB"\fPМихаил Горбачёв\fB"\fP 替換爲 \fB"\fPMikhail Gorbachiov\fB"\fP。並且當一個字元可能有多種表示方式時（比如中文和日文中一些共用的字元）， calibre 會根據當前設定的界面語言類型決定如何去轉換這類字元。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+以 pts 計算的基礎字型大小。在產生的電子書中所有的字型大小都會以這個大小為基礎來縮放。選擇較大的字型會使輸出的文件字型變大，反之亦然。預設的情形下，基礎字型大小是以您所選擇的輸出設定檔為準。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+更改文本對齊方式。 使用值\fB"\fPleft\fB"\fP 將轉換資源中所有的文本爲左對齊。 (如：未對齊) 使用值\fB"\fPjustify\fB"\fP 將轉換資源中所有的未對齊的文本爲對齊。使用值\fB"\fPoriginal\fB"\fP(默認)則不更改源文件的對齊方式。請注意，僅部分輸出格式支持對齊方式。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+關閉字體縮放功能。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+CSS 樣式表或原生 CSS 的路徑。這個 CSS 會添加到來源檔案的樣式規則中，因此可以用來覆蓋那些規則。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+以逗號分隔的 CSS 屬性列表，將移除所有 CSS 樣式規則。這是非常有用的，如果存在的一些樣式信息，防止覆蓋您的的設備上的樣式信息。例如：字體系列，顏色，左邊距，右邊距
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+將 CSS 字型名稱映射到字型大小（以 pts 計）。舉例來說您可以設為 12,12,14,16,18,20,22,24。這些設定值的對應會從 xx\-small 到 xx\-large，最後一個大小就會是最大的字型。字型縮放演算法會使用這些大小來適當的縮放字型。預設使用的映射方式是以您所選擇的輸出設定檔為準。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+在章節之間插入空行. 如果來源檔案不使用章節標記 (<p> 或 <div> 標記) 本選項將不起作用。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+設定插入的空白列高度 (以 em 計)。在段落之間的高度會是這裡設定的兩倍。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+保留輸入文檔中的「印刷連字」。所謂「印刷連字」是指對於ff, fi, fl之類的字母組合的一種特殊的展示方式。大部分閱讀器在使用默認字體時無法支持「印刷連字」，所以常常無法正常顯示。默認情況下，calibre會把「印刷連字」轉換成對應的字母組合。本選項用於選擇保留「印刷連字」。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素。大多數情況下，最小行高值更加有用。默認不進行行高操控。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+有些設計不良的文件會使用表格來控制頁面文字的排版。在轉換這些文件時常會發生文字超出頁面的問題。這個選項會將表格的內容讀取出來，並重新以直線的方式呈現它。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+最小行高，元素字體計算值的百分比。calibre 將保證行中所有元素至少有此高度，無論輸入文檔如何定義。設爲零即禁用。默認 120%。首選項中也有此設定，請注意。否則可能出現雙倍行高，達 240%。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+移除段落之間的空行. 同時設定段落縮進爲1.5em. 如果源文件不使用段落標記 (<p>或者<div>標籤)程序將不執行段落空行移除.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+當 calibre 移除段落間的空白列時，它會自動設定段落縮排，以確保能容易的辨別段落。這個選項控制了縮排的寬度 (以 em 計)。如果您將這個數值設定為負值，則會使用輸入文件中所指定的縮排，亦即，calibre 不會改變文件的縮排。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+嵌入所有字體中用到的字。每種嵌入字體縮減到只包含文檔中用到的字型。這能減小字體文件的體積。在嵌入某個特別大的，包含大量未使用字的字體時有用(如中文)。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+轉換各種形式的引號、破折號和省略號到它們的標准形式。
+.UNINDENT
+.SH 探索式處理
+.sp
+使用一般樣式修改文件文字與結構。預設為停用。使用 –enable\-heuristics 啟用。個別動作可以 –disable\-* 選項停用。
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+分析整份文件的連字符。會使用文件本身做為字典以便判斷連字符應該保留或刪除。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+當每個段落之間存在空白段落時將它們從文件中移除
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+將以多個不中斷空白字元組成的縮排轉換為 CSS 縮排。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+對齊左對齊的小節分節符。把多個空白行表示小節分節符替換爲水平橫線。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+尋找代表斜體的一般文字和圖案並將它們斜體化。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+檢測未格式化的章節標題和子標題。把它們從二級標題 (<h2>) 標籤轉換爲三級標題 (<h3>) 標籤。這個選項不會創建目錄，但可以與文檔結構檢測功能一起使用並創建目錄。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+查找順次出現的<h1>或<h2>標籤。這些標籤被重新編號以防止在章節頭部中間斷開。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+決定某行是否爲段落內的換行時，使用標點符號和其它格式做爲線索。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+啟用探索式處理。在需要使用任何探索式處理選項時都必須先啟用這個選項。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+決定一行字元是否能成爲一個新的段落的因子，有效值爲 0 到 1 之間的小數，預設值是 0.4，即略小於半行的長度。如果文檔中只有很少的行需要消除段落內換行，應當減小這個設定值。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+把小節分節符替換爲指定的文本。在默認情況下，會使用輸入文檔中的文本。
+.UNINDENT
+.SH 搜尋與取代
+.sp
+以使用者定義的形式修改文件文字與結構。
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+用來取代以 sr1\-search 找到的文字。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+要以 sr1\-replace 取代的搜尋模式 (正規表示式)。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+用來取代以 sr2\-search 找到的文字。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+要以 sr2\-replace 取代的搜尋模式 (正規表示式)。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+用來取代以 sr3\-search 找到的文字。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+要以 sr3\-replace 取代的搜尋模式 (正規表示式)。
+.UNINDENT
+.SH 結構偵測
+.sp
+控制文件結構的自動偵測。
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+指定如何標記偵測到的章節。「pagebreak」(分頁)會在每個章節前插入分頁符號。「rule」(水平線)會在每個章節前插入水平線。「none」(沒有)會停用章節的標記。「both」(兩者)則會同時加入分頁符號及水平線來標記章節。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+有些文檔通過在每一頁上指定左右頁邊距來指定頁面邊框大小。 Calibre 會嘗試檢測並移除這些頁邊距。有時候 Calibre 會錯誤的移除不應該移除的頁邊距，在這種情況下，您可以禁用這項功能。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath 表示式。換頁符號要插入在指定元素之前。要停用則使用表示式：/
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+使用從來源檔案中檢測到的封面文件.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH 目錄
+.sp
+控制目錄頁的自動產生過程。預設情況下，如果來源檔案有目錄頁，它會優先使用而不自動產生。
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+在基於輸入文檔中的鏈接創建目錄時，允許創建重復項。即在目錄中允許出現名稱重復的項，但它們指向文檔中不同的位置。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+指定應添加到目錄級別1的所有標籤的 XPath 表達式。如果指定此項，它會優先於其他自動檢測形式。可查閱 calibre 用戶手冊中的 XPath 向導。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath 表達式指定所有標籤應添加在二級目錄表。每個條目加入到一級目錄條目下。請參閱 calibre 用戶手冊中 XPath 教學的例子。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加入到二級目錄條目下。請參閱 calibre 用戶手冊中 XPath 教學的例子。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+插入目錄頁的連結最大數量。設定為 0 代表停用。預設值：50。只有在偵測到的章節數目少於這個臨界值時才會把連結加入目錄頁中。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+不將自動偵測到的章節增加到文件目錄。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+將標題符合指定正規表示式的項目自目錄頁中移除。符合的項目以及它們的子項目都會一起被移除。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+如果偵測到的章節少於這個數目，就會把連結加到目錄頁中。預設值：6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+一般而言，如果來源檔案已經有目錄，它會被優先用於自動產生的目錄中。使用這個選項，則會強制使用自動產生的目錄。
+.UNINDENT
+.SH 詮釋資料
+.sp
+設定輸出的詮釋資料選項
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+當以作者來排序會用這個字串來排序.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+設定作者。多個作者應以半形＆分隔。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+設定書籍的出版商。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+設定封面為指定的檔案或 URL
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+設定這本書的 ISBN。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+設定語言。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+設定評等。應該為從 1 到 5 的數字。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+從指定的 OPF 檔案讀取詮釋資料。從這個檔案讀取的詮釋資料會覆蓋來源檔案中的任何詮釋資料。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+這個書本在系列裡的索引。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+設定書籍的標籤。多個標籤之間請用逗號隔開。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+設定書籍時刻戳記 (已不在任何地方使用)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+設定書名。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+用來排序的書名版本。
+.UNINDENT
+.SH 除錯
+.sp
+轉換至偵錯模式的相關選項
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+將轉換過程管線的各個階段的輸出儲存到指定的目錄。如果您不確定轉換程序的哪個階段發生錯誤時會很有幫助。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

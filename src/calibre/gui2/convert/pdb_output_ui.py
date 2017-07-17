@@ -33,6 +33,7 @@ class Ui_Form(object):
         self.opt_pdb_output_encoding.setObjectName("opt_pdb_output_encoding")
         self.gridLayout.addWidget(self.opt_pdb_output_encoding, 1, 1, 1, 1)
         self.label.setBuddy(self.opt_format)
+        self.label_2.setBuddy(self.opt_pdb_output_encoding)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

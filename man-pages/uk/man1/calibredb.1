@@ -1,0 +1,958 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBREDB" "1" "липня 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibredb \- calibredb
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb команда [параметри] [аргументи]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
+.sp
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%ЗАГАЛЬНІ ПАРАМЕТРИ\fP
+.IP \(bu 2
+\fI\%list\fP
+.IP \(bu 2
+\fI\%add\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%ДОДАВАННЯ З КАТАЛОГІВ\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%remove\fP
+.IP \(bu 2
+\fI\%add_format\fP
+.IP \(bu 2
+\fI\%remove_format\fP
+.IP \(bu 2
+\fI\%show_metadata\fP
+.IP \(bu 2
+\fI\%set_metadata\fP
+.IP \(bu 2
+\fI\%export\fP
+.IP \(bu 2
+\fI\%catalog\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%ПАРАМЕТРИ EPUB\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%saved_searches\fP
+.IP \(bu 2
+\fI\%add_custom_column\fP
+.IP \(bu 2
+\fI\%custom_columns\fP
+.IP \(bu 2
+\fI\%remove_custom_column\fP
+.IP \(bu 2
+\fI\%set_custom\fP
+.IP \(bu 2
+\fI\%restore_database\fP
+.IP \(bu 2
+\fI\%check_library\fP
+.IP \(bu 2
+\fI\%list_categories\fP
+.IP \(bu 2
+\fI\%backup_metadata\fP
+.IP \(bu 2
+\fI\%clone\fP
+.IP \(bu 2
+\fI\%embed_metadata\fP
+.IP \(bu 2
+\fI\%search\fP
+.UNINDENT
+.SH ЗАГАЛЬНІ ПАРАМЕТРИ
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+показати це довідкове повідомлення і завершити роботу
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-library\-path, \-\-with\-library
+Шлях до бібліотеки calibre. Типово, використовується шлях, який збережено у параметрах роботи програми. В також можете встановити з’єднання із сервером даних calibre для виконання дій із віддаленими бібліотеками. Для цього скористайтеся адресою у такому форматі: \fI\%http:/\fP/назва_вузла:порт/#ідентифікатор_бібліотеки, наприклад, \fI\%http://localhost:8080/#mylibrary\fP\&. Ідентифікатором бібліотеки є ідентифікатор бібліотеки на сервері даних. Ви можете скористатися спеціальним значенням параметра ідентифікатор_бібліотеки, «\-», щоб отримати список ідентифікаторів бібліотек на сервері. Докладний опис налаштовування доступу за допомогою сервера даних можна знайти у розділі \fI\%https://manual.calibre\-ebook.com/uk/generated/uk/calibredb.html\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password
+Пароль для встановлення з’єднання із сервером даних calibre. Щоб пароль було прочитано із стандартного джерела введення, скористайтеся спеціальним значеннямв: <stdin>. Щоб пароль було прочитано з файла, скористайтеся такою конструкцією: <f:/path/to/file>.)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username
+Ім’я користувача для встановлення з’єднання із сервером даних calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+показати дані щодо версії програми і завершити роботу
+.UNINDENT
+.SH LIST
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Показати список книг у базі даних calibre.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-ascending
+Впорядкувати дані за зростанням
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fields, \-f
+Поля, які слід показувати у списку книг бази даних. Поля у списку слід відокремлювати комами. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Типовий список: title,authors. Особливим значенням «all» можна скористатися для вибору всіх полів. Крім вбудованих полів, назви яких наведено вище, можна скористатися нетиповими полями, доступ до яких здійснюється у форматі *назва_поля, наприклад, для нетипового поля #rating, слід скористатися назвою *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Вивести дані у форматі JSON, який є придатнішим для обробки комп’ютером. Призводить до ігнорування параметрів ширини рядків та роздільників.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-limit
+Максимальна кількість показаних результатів. Типове значення: всі результати.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-width, \-w
+Максимальна ширина окремого рядка виведених даних. Типове значення визначається на основі розмірів екрана.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix
+Префікс всіх шляхів до файлів. Типовим є абсолютний шлях до теки бібліотеки.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Фільтрувати результати за запитом щодо пошуку. Настанови щодо форматування запитів для пошуку наведено у підручнику користувача. Типово не виконується жодного фільтрування.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-separator
+Рядок, який відокремлюватиме поля. Типовим є пробіл.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sort\-by
+Поле, за яким буде виконано впорядковування результатів. Можливі поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Типове значення: id
+.UNINDENT
+.SH ADD
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add [параметри] файл1 файл2 файл3 ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Додати вказані файли як книги до бази даних. Ви також можете вказати каталоги.
+Докладніший опис параметрів, пов’язаних з каталогами, наведено нижче.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Встановити авторів для доданих книг
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Шлях до зображення обкладинки, яке слід використати для доданої книги
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-duplicates, \-d
+Додати записи книг до бази даних, навіть якщо такі записи у цій базі вже створено. Порівняння виконуватиметься за назвами книг.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-empty, \-e
+Додати порожню книгу (книгу без формату)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Встановити ідентифікатори для цієї книги, наприклад \-I asin:XXX \-I isbn:YYY
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+Встановити ISBN для доданих книг
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-languages, \-l
+Список мов, відокремлених комами (варто користуватися кодами мов ISO639, втім, передбачено розпізнавання і деяких повних назв мов)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Встановити цикл для доданих книг
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index, \-S
+Встановити номер у циклі для доданих книг
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags, \-T
+Встановити мітки для доданих книг
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Встановити заголовки для доданих книг
+.UNINDENT
+.SS ДОДАВАННЯ З КАТАЛОГІВ
+.sp
+Параметри, які керують додаванням книг з каталогів. Типово, програма додаватиме лише файли книг, суфікси назв яких є відомими як суфікси назв файлів електронних книг.
+.INDENT 0.0
+.TP
+.B \-\-add
+Взірець (загальний) назви файла. Файли, назви яких відповідатимуть взірцеві буде додано під час пошуку файлів у каталогах, навіть якщо суфікс назви не належить до відомого програмі набору суфіксів назв файлів електронних книг. Можна вказати декілька взірців.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore
+Взірець (загальний) назви файла. Файли, назви яких відповідатимуть взірцеві буде проігноровано під час пошуку файлів у каталогах. Можна вказати декілька взірців. Якщо, наприклад, вказати взірець *.pdf, буде проігноровано усі файли pdf.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-one\-book\-per\-directory, \-1
+Припускати, що у кожному каталозі міститься лише одна книга, всі файли у цьому каталозі є цією книгою, записаною у різних форматах
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-recurse, \-r
+Обробляти каталоги рекурсивно
+.UNINDENT
+.SH REMOVE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove ідентифікатори
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Вилучити книги, визначені ідентифікаторами з бази даних. Ідентифікатори у списку слід відокремлювати комами. Отримати номери ідентифікаторів можна за допомогою команди search. Приклад: 23,34,57\-85 (у діапазон ідентифікаторів не включатиметься запис діапазону, у нашому прикладі 85).
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Не використовувати теку смітника
+.UNINDENT
+.SH ADD_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_format [параметри] ідентифікатор файл_книги
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Додати книгу з файла файл_книги до доступних форматів для логічної книги, визначеної ідентифікатором. Ідентифікатор може бути визначено за допомогою команди search. Якщо запис формату вже існує, його буде замінено, якщо не вказано параметр вимикання такої заміни.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-dont\-replace
+Не замінювати формат, якщо файл у цьому форматі вже існує
+.UNINDENT
+.SH REMOVE_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_format [параметри] ідентифікатор формат
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Вилучити формат з запису логічної книги, визначеної ідентифікатором. Визначити ідентифікатор можна за допомогою команди search. Формат має бути визначено суфіксом назви файла, наприклад LRF, TXT або EPUB. Якщо у записі логічної книги не міститиметься запису формату, ніяких дій не буде виконано.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.SH SHOW_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb show_metadata [параметри] ідентифікатор
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Показати метадані, що зберігаються у базі даних calibre для книги з ідентифікатором «ідентифікатор».
+«ідентифікатор» є ідентифікатором, який повертає команда search.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-as\-opf
+Вивести метадані у форматі OPF (XML)
+.UNINDENT
+.SH SET_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_metadata [параметри] ідентифікатор [/шлях/до/метадані.opf]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Встановити у базі метаданих calibre  для книги, вказаної за
+ідентифікатором, метадані з файла OPF метадані.opf. ідентифікатором
+має бути значення зі списку, який надається командою search. Коротку
+довідку щодо формату OPF можна отримати за допомогою
+ключа –as\-opf, доданого до команди show_metadata.
+Крім того, можна встановлювати метадані для окремих полів за
+допомогою параметра –field. Якщо використовується параметр –field,
+вказувати файл OPF не потрібно.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-field, \-f
+Поле, значення якого слід встановити. Формат визначення поля такий: назва_поля:значення. Приклад: \fI\%\-\-field\fP tags:tag1,tag2. Скористайтеся \fB\-\-list\-fields,\fP щоб отримати список всіх назв полів. Цей параметр можна використовувати декілька разів з метою встановлення значень для декількох полів. Зауваження: для полів мов слід використовувати коди мов ISO639 (наприклад en для англійської, uk для української тощо). Синтаксис ідентифікаторів: \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Для булевих полів (полів «так/ ні») слід використовувати значення true та false або yes та no.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-fields, \-l
+Показати список назв полів метаданих, які може бути використано з параметром \fI\%\-\-field\fP
+.UNINDENT
+.SH EXPORT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb export [параметри] ідентифікатори
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Експортувати книги, вказані за допомогою ідентифікаторів (розділених
+у списку комами) до файлової системи.
+Під час дії з експортування зберігаються всі формати книги, зображення
+обкладинки книги і метадані (у форматі файла opf). Визначити номери
+ідентифікаторів можна за допомогою книги search.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-all
+Експортувати всі книги у бібліотеці з ігноруванням списку ідентифікаторів.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-asciiize
+Типово calibre перетворити всі нелатинські символи у назвах файлів на їхні латинські відповідники. ПОПЕРЕДЖЕННЯ: якщо ви вимкнете це перетворення, можливі різноманітні помилки під час збереження даних, пов’язані з недоліками у підтримці Unicode вашою операційною системою. Визначення цього перемикача вимкне вказану поведінку.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-cover
+Зазвичай calibre зберігатиме зображення обкладинки у окремому файлі разом з файлами електронної книги. Визначення цього перемикача вимкне вказану поведінку.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-update\-metadata
+Зазвичай calibre оновлює метадані у збережених файлах на основі даних бібліотеки calibre. Уповільнює запис на диск. Визначення цього перемикача вимкне вказану поведінку.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-write\-opf
+Зазвичай calibre записуватиме метадані до окремого файла OPF разом з файлами електронної книги. Визначення цього перемикача вимкне вказану поведінку.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Відокремлений комами список форматів, у яких слід зберігати кожну книгу. Типово книга зберігатиметься у всіх форматах.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-whitespace
+Замінити пробіли підкреслюваннями.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-single\-dir
+Експортувати всі книги до одного каталогу
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Шаблон для керування назвами файлів та структурою каталогів збережених файлів. Типовим є шаблон «{author_sort}/{title}/{title} \- {authors}», у разі використання якого книги буде збережено до окремих підкаталогів за авторами, назви файлів міститимуть назви книг і імена авторів. Доступні можливості керування: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timefmt
+Формат, у якому слід показувати дати. %d — день, %b — місяць, %m — номер місяця, %Y — рік. Типовим форматом є %b, %Y
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-dir
+Експортувати книги до вказаної категорії. Типовою категорією є .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-lowercase
+Перетворити символи шляхів на нижній регістр.
+.UNINDENT
+.SH CATALOG
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb catalog /шлях/до/призначення.(csv|epub|mobi|xml...) [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Експортувати каталог у форматі, вказаної параметром «шлях/до/призначення.суфікс_назви».
+Параметри керують способом показу у виведених даних каталогу.
+Зауважте, що у різних форматах каталогів передбачено підтримку різних наборів параметрів.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-ids, \-i
+Список значень ідентифікаторів бази даних, відокремлених комами, для каталогізації. Якщо визначено, \fI\%\-\-search\fP буде проігноровано. Типове значення: всі значення (all)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Фільтрувати результати за запитом щодо пошуку. Настанови щодо форматування запитів для пошуку наведено у підручнику користувача. Типово не виконується жодного фільтрування
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Показувати докладні виведені дані. Корисно для діагностики.
+.UNINDENT
+.SS ПАРАМЕТРИ EPUB
+.INDENT 0.0
+.TP
+.B \-\-catalog\-title
+Заголовок створеного каталогу, використаний як заголовок у метаданих. Типове значення: «My Books» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cross\-reference\-authors
+Створювати перехресні посилання у розділі авторів для книг з декількома авторами. Типове значення: «False» Застосовується до таких форматів виведення даних: AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline
+Зберігати виведені дані на різних кроків у вказаному каталозі. Корисно, якщо  ви не впевнені, на якому кроці сталася помилка. Типове значення: «None» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclude\-genre
+Формальний вираз, що описує мітки для виключення жанрів. Типове значення: «[.+]|^+$» виключає мітки у квадратних дужках, наприклад «[Project Gutenberg]», та «+», типову мітку прочитаних книг. Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclusion\-rules
+Визначає правила виключення книг зі створеного каталогу. Модель правила виключення записується у форматі (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<список міток, відокремлених комами>\fB\(aq\fP) або (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<нетиповий стовпчик>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP). Приклад: ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  ((\fB\(aq\fPАрхівовані книги\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) виключить книги зі значенням «Archived» у нетиповому стовпчику «status». Якщо визначено декілька правил, буде застосовано всі з них. Типове значення:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-authors
+Включення розділу «Автори» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-descriptions
+Включення розділу «Описи» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-genres
+Включення розділу «Жанри» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-recently\-added
+Включення розділу «Нещодавно додані» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-series
+Включення розділу «Цикли» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-titles
+Включення розділу «Заголовки» до каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-genre\-source\-field
+Поле джерела даних для розділу жанру. Типове значення: «Теґи» Стосується таких форматів виведення даних: AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-header\-note\-source\-field
+Нетипове поле, що містить текст нотатки для додавання до заголовка опису. Типове значення: «» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-merge\-comments\-rule
+#<нетипове поле>:[before|after]:[True|False] визначає:  <нетипове поле> — нетипове поле, що містить нотатки, які має бути додано до коментарів  [before|after] — розташування нотаток відносно коментарів  [True|False] — визначає чи слід додавати горизонтальну лінію між нотатками  і коментарями Типове значення: «::» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Визначає профіль виведення даних. Іноді профіль виведення даних потрібен для оптимізації каталогу для пристрою. Наприклад, профілі «kindle» і «kindle_dx» створюють структурований зміст з розділами і статтями. Типове значення: «None» Формати: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix\-rules
+Визначає правила, використані для включення префіксів, що позначають прочитані книги, пункти списку бажаних книг та інші визначені користувачами префікси. Модель правила префіксів є такою: (\fB\(aq\fP<назва правила>\fB\(aq\fP,\fB\(aq\fP<поле джерела>\fB\(aq\fP,\fB\(aq\fP<шаблон>\fB\(aq\fP,\fB\(aq\fP<префікс>\fB\(aq\fP). Якщо буде визначено декілька правил, застосовуватиметься лише перше відповідне з них. Типове значення: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Застосовується до форматів результатів AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preset
+Використовувати вказаний за назвою шаблон, створений за допомогою графічних інструментів збирання каталогу. У такому шаблоні визначено всі параметри збирання каталогу. Типове значення: \fB\(aq\fPNone\fB\(aq\fP Застосування: формати виведення результатів AZW3, EPUB, MOBI.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-thumb\-width
+Основний розмір (у дюймах) для зображень обкладинок у каталозі. Діапазон: 1.0 — 2.0 Типове значення: «1.0» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-existing\-cover
+Замінювати зображення обкладинок під час створення каталогу. Типове значення: «False» Застосування: формати виведення AZW3, EPUB, MOBI
+.UNINDENT
+.SH SAVED_SEARCHES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb збережені_пошуки [параметри] (list|add|remove)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Керування збереженими записами пошуків, що зберігаються у цій базі даних.
+Якщо ви спробуєте додати запит з назвою, яку вже записано до бази даних,
+попередній запис буде замінено новим.
+.sp
+Синтаксис для додавання:
+.sp
+calibredb збережені_пошуки add назва_пошуку вираз_пошуку
+.sp
+Синтаксис для вилучення:
+.sp
+calibredb збережені_пошуки remove назва_пошуку
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.SH ADD_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_custom_column [параметри] мітка назва тип_даних
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Створити нетиповий стовпчик. «мітка» — комп’ютерна назва стовпчика. Мітка
+не повинна містити пробілів і двокрапок. «назва» — зручна для читання назва
+стовпчика. «тип_даних» має бути одним з таких значень: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-display
+Набір параметрів для налаштовування обробки даних у цьому стовпчику. Має бути рядком JSON. Для стовпчиків нумерації скористайтеся \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPзначення1\e \fB"\fP, \e \fB"\fPзначення2\e \fB"\fP]}\fB"\fP Передбачено багато варіантів передавання значень показаній змінній. Серед варіантів за типами стовпчиків: мішаний тип: composite_template, composite_sort, make_category,contains_html, use_decorations дата і час: date_format нумерація: enum_values, enum_colors, use_decorations ціле, десятковий дріб: number_format текст: is_names, use_decorations  Найкращим способом визначення відповідних комбінацій є створення нетипового стовпчика відповідного типу за допомогою графічного інтерфейсу з наступним вивченням резервної копії OPF книги (переконайтеся, що новий OPF було створено після додавання стовпчика). У такому OPF можна знайти JSON для показу (\fB"\fPdisplay\fB"\fP) нового стовпчика.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-is\-multiple
+У цьому стовпчику зберігаються дані, подібні до міток (тобто значення, відокремлені комами). Застосовується, лише якщо типом даних є «text».
+.UNINDENT
+.SH CUSTOM_COLUMNS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb custom_columns [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Показати доступні нетипові стовпчики. Виводить мітки та ідентифікатори стовпчиків.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-details, \-d
+Показати параметри кожного стовпчика.
+.UNINDENT
+.SH REMOVE_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_custom_column [параметри] мітка
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Вилучити нетиповий стовпчик, визначений міткою. Переглянути список
+доступних стовпчиків можна за допомогою команди custom_columns.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-force, \-f
+Не питати про підтвердження
+.UNINDENT
+.SH SET_CUSTOM
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_custom [параметри] стовпчик ідентифікатор значення
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Встановити значення у нетиповому стовпчику для книги, визначеної ідентифікатором.
+Список ідентифікаторів можна отримати за допомогою команди search.
+Отримати список назв нетипових стовпчиків можна отримати за допомогою
+.INDENT 0.0
+.INDENT 3.5
+команди custom_columns.
+.UNINDENT
+.UNINDENT
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-append, \-a
+Якщо у стовпчику зберігається декілька значень, дописати вказані значення до вже записаних замість заміни цих значень.
+.UNINDENT
+.SH RESTORE_DATABASE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb restore_database [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Відновити цю базу даних на основі метаданих, що зберігаються у файлах OPF
+кожного з каталогів бібліотеки calibre. Корисно, якщо ваш файл metadata.db
+пошкоджено.
+.sp
+ПОПЕРЕДЖЕННЯ: у результаті виконання цієї команди вашу базу даних буде створено
+з нуля. Ви втратите всі збережені дані пошуку, категорії користувача, засоби
+обробки, збережені параметри перетворення окремих книг та нетипові рецепти.
+Відновлені метадані будуть настільки точними, наскільки точними є дані,
+збережені у файлах OPF.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-really\-do\-it, \-r
+Виконати відновлення. Команду не буде виконано, якщо не буде вказано цього параметра.
+.UNINDENT
+.SH CHECK_LIBRARY
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb бібліотека_для_перевірки [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Виконати деякі перевірки у файловій системі бібліотеки. Звіти буде invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Виведення у форматі CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_extensions, \-e
+Список суфіксів назв, які слід ігнорувати, відокремлений комами. Типове значення: всі (all)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_names, \-n
+Список назв, які слід ігнорувати, відокремлений комами. Типове значення: всі (all)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-report, \-r
+Список звітів, відокремлених комами. Типове значення: всі (all)
+.UNINDENT
+.SH LIST_CATEGORIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list_categories [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Створити звіт щодо даних категорій у базі даних. Отримані дані
+еквівалентні до даних, показаних на панелі міток.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-categories, \-r
+Список назв фільтрів категорій, відокремлених комами. Типове значення: всі (all)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Виведення у форматі CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dialect
+Тип файл CSV, який слід створити. Варіанти: excel, excel\-tab
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-item_count, \-i
+Виводити лише кількість пунктів у категорії замість кількостей елементів у пункті категорії
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-width, \-w
+Максимальна ширина окремого рядка виведених даних. Типове значення визначається на основі розмірів екрана.
+.UNINDENT
+.SH BACKUP_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb backup_metadata [параметри]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Створити резервну копію метаданих, що зберігаються у базі даних
+у окремих файла OPF у кожному з каталогів книг. Зазвичай, така
+дія виконується автоматично, але ви можете наказати програмі
+виконати примусове повторне створення файлів OPF, якщо
+вкажете параметр –all.
+.sp
+Зауважте, що зазвичай потреби у цій команді немає, оскільки
+резервні копії файлів OPF створюються автоматично у разі
+внесення змін до метаданих.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-all
+Зазвичай, ця програма обробляє лише ті книги, файли OPF яких застаріли. За допомогою цього параметра ви можете наказати програмі обробляти всі файли книг.
+.UNINDENT
+.SH CLONE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb clone шлях/до/нової/бібліотеки
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Створити клон поточної бібліотеки. За допомогою цієї програми можна створити
+нову порожню бібліотеку з тими самими нетиповими стовпчиками, віртуальними
+бібліотеками та іншими параметрами, що і у поточній бібліотеці.
+.sp
+У клонованій бібліотеці не буде жодної книги. Якщо вам потрібно створити
+дублікати бібліотеки з усіма книгами, просто скористайтеся інструментами
+для керування файлами і скопіюйте теку бібліотеки.
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.SH EMBED_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb embed_metadata [параметри] ідентифікатор_книги
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Оновити метадані файлів книги, що зберігаються у бібліотеці calibre на основі
+метаданих з бази даних calibre. Зазвичай, метадані оновлюються лише під
+час експортування файлів з calibre. Ця команда корисна, якщо ви хочете
+оновити файли на місці. Зауважте, що у файлах різних форматів передбачено зберігання
+різних наборів метаданих. Щоб оновити метадані у всіх книгах, скористайтеся
+спеціальним значенням ідентифікатора — «all». Крім того, можна вказати декілька ідентифікаторів
+книг, відокремивши їх пробілами, або діапазони ідентифікаторів з межами,
+відокремленими дефісами. Приклад: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-only\-formats, \-f
+Оновити метадані лише у файлах вказаного формату. Можна вказувати декілька таких параметрів, якщо потрібно обробити файли декількох форматів. Якщо параметр не вказано, програма оновлює усі формати.
+.UNINDENT
+.SH SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb search [параметри] вираз для пошуку
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Шукати у бібліотеці записи із вказаним ключем для пошуку. Повертає список ідентифікаторів
+відповідних книг, відокремлених комами. Формат виведення даних корисний
+для передавання іншим командам, які приймають вхідні дані у форматі списку ідентифікаторів.
+.sp
+Виразом для пошуку може бути будь\-який запис потужною мовою запитів calibre. Приклад author:asimov title:robot
+.sp
+Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
+.INDENT 0.0
+.TP
+.B \-\-limit, \-l
+Максимальна кількість повернутих результатів. Типово буде повернуто усі результати.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,177 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "Juli 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [Optionen]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Verschiedene Befehlszeilenschnittstellen zur Fehlerdiagnose von Calibre.
+Ohne Optionen startet der Befehl einen integrierten Python\-Interpreter.
+Sie können ebenfalls Calibres grafische Benutzeroberfläche, den eBook\-Betrachter und
+den Editor im Fehlerdiagnosemodus ausführen.
+.sp
+Es enthält auch Schnittstellen zu verschiedenen Teilen von Calibre, die über keine
+eigenen Befehlszeilenwerkzeuge verfügen, wie z. B. die Reduzierung eingebetteter
+Schriftarten, das Programm zum Buchvergleich usw.
+.sp
+Mit \fBcalibre\-debug\fP können auch eigenständige Skripte wie nachfolgend beschrieben ausgeführt
+werden:
+.sp
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.sp
+Alles nach dem \fB\-\-\fP wird an das Skript übergeben.
+.sp
+Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-debug\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+.SH [OPTIONEN]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Eine einfache Erweiterung (d. h. eine nur aus einer *.py\-Datei bestehende Erweiterung) hinzufügen durch Angabe des Pfads zur *.py\-Datei, die den Erweiterungscode enthält.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Python\-Code ausführen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Fehlerdiagnose bei Geräteerkennung
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+Calibre in Windows als Standardprogramm festlegen bzw. entfernen. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Calibre\-Dateivergleichswerkzeug ausführen. Beispiel: calibre\-debug \fI\%\-\-diff\fP Datei1 Datei2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Bucheditor im Fehlerdiagnosemodus starten.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Python\-Code in der Datei ausführen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Zerlegt ein Buch (exportiert das Buch als eine Sammlung von HTML\-Dateien und Metadaten, die mit Standard\-HTML\-Editorwerkzeugen bearbeitet werden können. Danach wird die Datei aus dem bearbeiteten HTML neu erstellt. Im Gegensatz zu einer vollständigen Calibre\-Konvertierung werden keine weiteren Änderungen am HTML\-Code durchgeführt).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Alle Calibre\-Daten exportieren (Bücher, Einstellungen, Erweiterungen)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Ausführen der grafischen Benutzeroberfläche im Fehlerdiagnosemodus. Die Diagnoseausgabe wird an Stdout und Stderr ausgegeben.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Grafische Benutzeroberfläche mit einer Fehlerdiagnosekonsole ausführen und im angegebenen Verzeichnis protokollieren. Nur zur internen Verwendung. Verwenden Sie die Option \fB"\fP\-g\fB"\fP, um die Benutzeroberfläche im Fehlerdiagnosemodus auszuführen
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+Diesen Hilfetext anzeigen und beenden.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Zuvor exportierte Calibre\-Daten importieren
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+MOBI\-Datei(en) im/in den angegebenen Verzeichnis(sen) untersuchen
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Ausgabe der für die Einrichtung von Calibres Umgebungsvariablen notwendigen Verzeichnispfade
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Neuinitialisierung der SQLite\-Calibre\-Datenbank im angegebenen Verzeichnis. Hilfreich zur Wiederherstellung einer defekten Datenbank.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Eine Erweiterung ausführen, die eine Befehlszeilenschnittstelle bereitstellt. Zum Beispiel: calibre\-debug \-r \fB"\fPBücher hinzufügen\fB"\fP \fB\-\-\fP Datei1 \fB\-\-option1\fP Alles nach \fB\-\-\fP wird der Erweiterung als Argumente übergeben.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Eine laufende Calibre\-Instanz \- falls vorhanden \- beenden. Beachten Sie, dass dabei ggf. laufende Aufträge ohne Rückfrage abgebrochen werden. Also bitte mit Vorsicht verwenden.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Angegebene eingebettete Schriftart reduzieren. Verwenden Sie \fB\-\-\fP nach dieser Option, um Optionen an das Programm für die Schriftartreduzierung zu übergeben.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Binäre Module des Builds überprüfen
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+Programmversion anzeigen und beenden
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+eBook\-Betrachter im Fehlerdiagnosemodus ausführen
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.
