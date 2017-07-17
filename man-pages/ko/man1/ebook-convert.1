@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "7월 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%입력 옵션\fP
+.IP \(bu 2
+\fI\%출력 옵션\fP
+.IP \(bu 2
+\fI\%모양새\fP
+.IP \(bu 2
+\fI\%합리적 추측에 의한(Heuristic) 처리\fP
+.IP \(bu 2
+\fI\%검색과 치환\fP
+.IP \(bu 2
+\fI\%구조 탐지\fP
+.IP \(bu 2
+\fI\%목차\fP
+.IP \(bu 2
+\fI\%책 정보\fP
+.IP \(bu 2
+\fI\%디버그\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+이 도움말 메시지를 표시한 후 종료
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+입력 프로파일을 지정하세요. 입력 프로파일은 변환 시스템에 입력 문서의 다양한 정보를 어떻게 해석할 것인지에 관한 정보를 줍니다. 예를 들어, 해상도는 길이에 영향을 받습니다(즉, 픽셀 단위의 길이를 말함). 선택 가능한 값은 다음과 같습니다:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+내장 레시피 이름을 나열합니다. 다음과 같은 방법으로 내장 레시피에서 eBook을 생성할 수 있습니다: ebook\-convert \fB"\fP레시피 이름.recipe\fB"\fP 출력.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+프로그램의 버전을 표시한 후 종료합니다.
+.UNINDENT
+.SH 입력 옵션
+.sp
+mobi 파일 입력의 처리를 제어하는 옵션입니다.
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+입력 문서의 문자 인코딩을 지정합니다. 이 옵션이 설정되면 문서 자체에 선언된 인코딩은 무시됩니다. 인코딩 선언이 없거나 인코딩 선언에 오류가 있는 문서에서 특히 유용합니다.
+.UNINDENT
+.SH 출력 옵션
+.sp
+epub 출력의 처리를 제어하는 옵션입니다.
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+쪽 넘김에서 분할하기 기능을 끕니다. 보통은 입력 파일은 두 개의 파일 내의 쪽 넘김마다 자동으로 분할합니다. 이것은 출력하는 책에 더 빠르게 분석하고 적은 자원을 사용할 수 있게 합니다. 하지만, 분할하기는 느리며 원본 파일이 매우 큰 쪽 넘김 번호를 담고 있다면 쪽 넘김시 분할하기를 꺼야 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+이 옵션은 EPUB을 FBReaderJ에서 사용하기 원하는 경우에만 필요합니다. 이 옵션은 EPUB 내부의 파일 시스템 구조를 단순화시켜, 모든 파일을 최상위 레벨에 위치시킵니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+책 내용의 일부분으로 나타나게 될 인라인 목차를 삽입합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+삽입된 인라인 목차를 책의 첫 부분 대신 끝 부분에 넣습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+지정된 디렉토리에 생성된 EPUB 파일의 내용들을 추출합니다. 해당 디렉토리의 내용들은 먼저 삭제가 되니 주의하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+보통은, 입력 파일에 표지가 없고 이 옵션을 선택하지 않을 경우, 기본 표지는 제목, 저자 등과 함께 생성됩니다. 이 옵션을 비활성화하면 표지를 생성하지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+책 표지에 SVG를 사용하지 않습니다. EPUB가 iPhone이나 JetBook Lite처럼 SVG를 지원하지 않는 기기에 사용할 예정이면 이 옵션을 사용하세요. 이 옵션을 사용하지 않으면, 앞에서 명시한 기기들은 표지를 빈 면으로 표시하게 됩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+SVG 표지를 사용할 때, 이 옵션은 표지가 허용되는 화면 영역을 덮도록 크기가 조정되지만 가로/세로 비율이 유지되도록 합니다. 따라서, 이미지의 양 옆이나 아래/위에 흰 여백이 생길 수 있지만 이미지는 왜곡되지 않게 됩니다. 이 옵션을 끄면 테두리 여백은 없어지지만, 이미지가 다소 왜곡될 수 있습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+지정된 경우에, 출력 플러그인은 사람이 읽을 수 있는 결과물을 생성합니다. 일부 출력 플러그인에는 영향을 미치지 않을 수 있습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+생성된 인라인 목차에 사용될 제목입니다.
+.UNINDENT
+.SH 모양새
+.sp
+출력의 모양새를 제어하는 옵션입니다
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+유니코드 문자들을 ASCII 표현 형태로 바꾸어 씁니다. 이 기능은 유니코드 문자들을 ASCII로 대체하기 때문에 주의해서 사용하여야 합니다. 예를 들어 \fB"\fPМихаил Горбачёв\fB"\fP를 \fB"\fPMikhail Grbachiov\fB"\fP로 대체하게 됩니다. 또한, 해당 문자에 대하여 여러 형태가 가능하다면 (예를 들어, 중국어와 일본어 사이에 공유되는 문자) 현재 사용되는 캘리버의 인터페이스 언어를 근거로 결정된 형태를 사용하게 된다는 점에 유의하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+기본 글꼴 크기이며 pts 단위입니다. 생산되는 책의 모든 글꼴 크기는 이 크기를 기반으로 재계산되어집니다. 더 큰 크기를 선택하는것으로 더 큰 출력의 글자들을 만들 수 있습니다. 기본값으로 기본 글꼴 크기는 사용자가 선택한 출력 프로파일에 기반하여 선택됩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+텍스트 맞춤 방식을 변경합니다. \fB"\fP왼쪽 정렬\fB"\fP은 원본의 모든 양쪽 정렬된 본문을 왼쪽 정렬로 변환합니다. \fB"\fP양쪽 정렬\fB"\fP는 모든 정렬이 안된 본문을 양쪽 정렬하도록 변환합니다. \fB"\fP원본\fB"\fP(기본값)은 원본 파일의 맞춤 방식을 바꾸지 않습니다. 일부 출력 형식만 텍스트 맞춤을 지원한다는 점을 유의하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+모든 \fB"\fP글꼴 크기 비율 재조정 기능\fB"\fP을 사용하지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+입력 문서에서 참조된 모든 글꼴 중 이미 내장되어있지 않은 모든 글꼴을 내장합니다. 이 옵션을 켜면 사용자의 시스템에서 해당 글꼴을 검색하게 되고, 발견된 글꼴은 출력 문서에 내장됩니다.  글꼴 내장 옵션은 변환하려는 형식이 EPUB, AZW3, DOCX, PDF 처럼 글꼴 내장 기능을 지원하는 경우에만 동작합니다. 이 문서에 사용된 글꼴들에 대하여 글꼴 내장에 필요한 적절한 라이센스를 사용자가 보유하고 있는지 확인하시기 바랍니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+지정된 글꼴 패밀리를 책 안에 내장(embed)합니다. 이 옵션은 책에서 사용될 \fB"\fP기본\fB"\fP 글꼴을 지정합니다. 만일 입력 문서가 자신만의 글꼴을 명시적으로 지정해놓은 경우에는 이 기본 글꼴 설정을 덮어써버릴 수 있습니다. 이런 경우 스타일 정보 필터링 기능을 사용하여 입력문서에서 글꼴 설정들을 제거할 수 있습니다. 글꼴 내장 기능은 EPUB, AZW3, DOCX와 같은 몇몇 출력 형식에서만 동작한다는 점을 유의하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+CSS 스타일시트로의 경로나 직접 입력된 CSS 텍스트. 이 CSS는 원본 파일의 스타일 규칙에 덧붙여지게 됩니다. 따라서, 이 기능을 그 규칙들을 덮어쓰는데 사용할 수 있습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+CSS 스타일 규칙에서 제외시킬, 쉼표로 구분된, CSS 속성들 목록. 사용자의 기기에서 기존의 특정 스타일 정보를 덮어쓰는 것이 막혀져 있는 경우에 유용합니다. 예시: font\-family, color, margin\-left, margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+CSS 글꼴 크기 명칭을 pts 단위의 글꼴크기로 맵핑합니다. 설정 예를 들면, 12,12,14,16,18,20,22,24와 같습니다. 이 값들은 xx\-small 부터 xx\-large까지의 크기에 대한 맵핑에, 추가로 마지막 값은 huge font에 대한 크기입니다. 글꼴 비율 재조정 알고리즘은 지능적으로 글꼴 크기의 비율을 재조정하기 위하여 이 값들을 사용합니다. 기본값으로는 사용자가 선택한 출력 프로파일에 근거한 맵핑을 사용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+문단 사이에 빈 줄을 삽입합니다. 원본 파일이 문단(<p>, <div> 태그)을 사용하지 않으면 작동하지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+삽입될 빈줄의 높이(em 단위). 문단 사이의 줄 간격은 여기에 지정된 값의 두배가 됩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+입력문서에 있는 합자(Ligature)들을 보존합니다. 합자란, ff, fi, fl 등과 같은, 두 문자가 합쳐진 형태의 특별한 렌더링을 뜻합니다. 대부분 기기의 기본 글꼴에서는 이 합자를 지원하지 않기 때문에 이 합자들이 제대로 렌더링되지 않을 가능성이 큽니다. 기본값으로 캘리버는 이 합자들을 해당하는 두 일반 문자 쌍으로 전환합니다. 이 옵션을 켜면, 전환하는 대신 이 합자들을 그냥 보존하게 됩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+pt 단위의 줄 간격 높이입니다. 자신들의 줄 간격을 직접 지정하지 않는 요소들에만 적용됩니다. 대부분의 경우, 최소 줄 간격 옵션이 더 유용합니다. 기본값으로, 이 줄 간격 처리는 수행되지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+몇몇 잘못 디자인된 문서들은 페이지 안의 텍스트 배치를 조정하기 위하여 표를 사용합니다. 이러한 문서들을 변환하였을 때, 때때로 텍스트가 페이지를 벗어나거나 다른 영역을 침범하기도 합니다. 이 옵션은 표 안의 내용들을 추출한 뒤 일직선으로 늘어 놓아져 있는 형태로 만듭니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+아래 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+왼쪽 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+오른쪽 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+위 여백을 pt 단위로 설정합니다. 기본값은 5.0입니다. 0보다 작게 설정하면 여백이 아예 지정되지 않습니다(원본 문서의 여백 설정이 보존됨). 참고: PDF나 DOCX와 같은 페이지 기반 양식들은 자신들이 갖고 있는 여백 설정이 우선합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+해당 요소의 계산되어진 글꼴 크기의 퍼센트 단위로 된 줄 간격의 최소 크기입니다. 캘리버는 모든 요소들이 입력 문서에서 지정된 사항과 상관없이 최소한 이 설정에 지정된 줄 간격 값을 가지도록 시도합니다. 비활성화하려면 0으로 지정하세요. 기본값은 120% 입니다. 어떤 기능인지 잘 모를 경우에는 설정에서 이 기본값을 사용하세요. 예시: \fB"\fP두배 높이의 줄 간격\fB"\fP으로 이루어진 텍스트를 얻으려면 이 설정에 240을 지정하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+문단 사이에 공백을 지웁니다. 또한 문단에 1.5em의 들여쓰기를 지정합니다. 공백 지우기는 원본 파일이 문단(<p>, <div> 태그)을 사용하지 않으면 작동하지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+캘리버가 문단 사이의 빈 줄들을 제거할 때, 문단끼리 쉽게 구분되도록 하기 위하여 자동으로 단락에 들여쓰기를 지정합니다. 이 옵션은 그 들여쓰기의 너비를 (em 단위로) 조정합니다. 이 값을 음수로 지정하게 되면, 입력 문서에서 지정된 들여쓰기가 사용됩니다(즉, 캘리버가 들여쓰기를 변경하지 않음).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+모든 내장된 글꼴(embedded font)에 대하여 실제 사용된 문자만 취합니다. 내장된 모든 글꼴은 이 문서에서 사용된 문자들만 포함하도록 글꼴 파일 크기가 줄어들게 됩니다. 사용되지 않은 문자가 많으면서 파일의 크기가 큰 글꼴을 내장하는 경우 특히 유용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+꾸밈 따옴표, 대시, 생략부호들을 그것들의 평이한 형태로 대체하여 변환합니다.
+.UNINDENT
+.SH 합리적 추측에 의한(HEURISTIC) 처리
+.sp
+문서의 텍스트와 구조를 일반 패턴을 사용하여 변경합니다. 기본값으로 꺼져있습니다. 활성화하려면 –enable\-heuristics 를 사용하세요. 개별 동작은 –disable\-* 를 사용하여 비활성화할 수 있습니다.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+문서 전반에 걸쳐 하이픈 처리된 단어들을 분석합니다. 하이픈이 유지되어야 할지 제거되어야 할지를 결정하기 위한 사전으로 문서 그 자체를 사용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+다른 단락들 사이에 빈 단락이 있는 경우 문서에서 이 빈 단락들을 삭제합니다
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+여러 개의 공란으로 처리된 들여쓰기를 CSS 들여쓰기로 바꾸어 처리합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+왼쪽 정렬된 장면 구분 표식을 중앙 정렬합니다. 여러 행의 빈 줄을 사용한 약식의 장면 구분 표시를 가로 구분선으로 대체합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+기울임체를 나타내는 패턴과 일반 용어를 찾아 기울임체 처리를 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+서식이 지정되지 않은 장(章)제목과 부제목들을 탐지하고 h2와 h3 태그로 바꿉니다. 이 설정이 목차를 생성하지는 않지만, 생성하기 위해서 \fB"\fP구조 탐지\fB"\fP 옵션과 같이 사용될 수 있습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+연달아 있는 <h1> 또는 <h2> 태그를 찾습니다. 이러한 태그들은 장 제목의 중간에서 분리되는 것을 막기 위하여 다시 번호 매겨집니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+구두점과 다른 형식요소들을 근거로 줄바꿈을 합칩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+합리적 추측에 의한 처리를 활성화합니다. 어떤 합리적 추측에 의한 처리가 발생하려면 반드시 이 옵션이 켜져 있어야 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+행 길이의 어느 지점에서 줄바꿈을 합쳐야 할지 결정하는데 사용되는 스케일. 유요한 값은 0과 1사이의 십진수 값입니다. 기본값은 0.4이며, 행 길의 중간에서 약간 아래입니다. 문서에서 단지 몇몇 줄만 줄바꿈 합치기가 필요한 경우라면 이 값이 더 작아져야 합니다
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+장면 구분 표시를 지정된 텍스트로 교체합니다. 기본값으로, 입력 문서에 사용된 텍스트가 사용됩니다.
+.UNINDENT
+.SH 검색과 치환
+.sp
+문서의 텍스트와 구조를 사용자 정의 패턴을 사용하여 변경합니다.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Replacement to replace the text found with sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Search pattern (regular expression) to be replaced with sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Replacement to replace the text found with sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Search pattern (regular expression) to be replaced with sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Replacement to replace the text found with sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Search pattern (regular expression) to be replaced with sr3\-replace.
+.UNINDENT
+.SH 구조 탐지
+.sp
+문서 구조의 자동 검출을 제어합니다.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+장(章)제목을 탐지하기 위한 XPath 표현식. 기본값은 \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, 또는 \fB"\fPpart\fB"\fP란 단어를 장 제목으로 포함하는 <h1> 또는 <h2> 태그와 class=\fB"\fPchapter\fB"\fP 속성을 가지고 있는 태그들입니다. 사용된 표현식은 요소들의 목록을 평가할 수 있어야 합니다. 장 탐지를 비활성화 하려면 표현식 \fB"\fP/\fB"\fP을 사용하세요. 이 기능에 대한 더 자세한 도움말을 보려면 캘리버 사용 설명서의 XPath 입문 설명서를 참조하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+탐지한 장을 표시할 방법을 지정합니다. \fB"\fPpagebreak\fB"\fP 값은 장 이전에 쪽 넘김을 삽입합니다. \fB"\fPrule\fB"\fP 값은 장 이전에 줄을 삽입합니다. \fB"\fPnone\fB"\fP 값은 장 표시를 하지 않고, \fB"\fPboth\fB"\fP 값은 쪽 넘김과 줄을 함께 사용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+어떤 문서들은 쪽 여백을 지정하기 위해 각 단락마다 매번 좌우 여백을 지정하는 경우가 있습니다. 캘리버는 이러한 여백을 탐지하여 제거하려고 시도합니다. 어떤 경우에는 제거되지 말아야할 여백이 제거되는 경우가 있습니다. 그런 경우에는 이 옵션을 비활성화 하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+책의 시작 부분에 책 책정보를 삽입합니다. 전자책 리더가 책정보를 직접적으로 표시/검색하기를 지원하지 않을 경우 유용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath 표현식. 지정된 요소의 앞에 쪽 넘김이 삽입됩니다. 비활성화하려면 다음 표현식을 사용하세요: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+지정한 표지보다 우선하여 원본 파일에서 발견된 표지를 사용합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+입력 eBook에서의 첫번째 이미지를 제거합니다. 입력 문서가 실제 표지가 아닌 표지 이미지를 가지고 있는 경우 유용합니다. 이런 경우, 이 옵션을 지정하지 않은 상태에서 캘리버에서 표지를 지정해놓으면 출력 문서는 두개의 표지 이미지를 가지게 되어버립니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+문서에서의 읽기 시작 지점을 탐지하기 위한 XPath 표현식. 몇몇 프로그램(대표적으로 Kindle)은 책을 열 때 이 위치를 사용합니다. 이 기능을 사용하는데 대한 더 많은 도움말은 캘리버 사용 설명서의 XPath 입문 설명서를 참고하세요.
+.UNINDENT
+.SH 목차
+.sp
+목차의 자동 생성을 제어합니다. 기본값으로 원본 파일이 목차를 가지고 있다면, 자동으로 생성된 목차를 우선적으로 사용할 것입니다.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+입력 문서 안의 링크에서 목차를 생성할 때, 중복된 항목을 허용합니다. 즉, 링크들이 서로 다른 위치를 가리키기만 한다면, 같은 텍스트로 된 하나 이상의 항목을 허용한다는 의미입니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+목차의 1단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 이 칸이 지정되어있다면, 다른 형태의 자동감지를 우선합니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+목차의 2단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 1단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+목차의 3단계에 추가되어야할 모든 태그를 지정하는 XPath 표현식. 각 항목은 이전의 2단계 항목 아래에 추가됩니다. 예시를 보려면 캘리버 사용 설명서 안의 XPath 입문 설명서를 참조하세요.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+목차에 삽입할 링크의 최대 개수입니다. 비활성화하려면 0을 지정합니다. 기본값: 50. 챕터의 한계치보다 적게 발견할 경우만 링크들을 목차에 추가합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+자동 감지된 장(章)들을 목차에 추가하지 않습니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+지정한 정규 표현식과 일치하는 제목을 항목을 목차에서 삭제합니다. 일치하는 항목과 모든 자식(하위) 항목을 삭제합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+발견된 장(章)의 갯수가 이 숫자보다 적으면, 링크들을 목차에 추가합니다. 기본값: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+일반적으로 원본 파일이 이미 목차를 가지고 있다면, 자동으로 생성된 것보다 우선적으로 사용합니다. 이 옵션을 사용하면, 자동으로 생성된 것을 항상 사용합니다.
+.UNINDENT
+.SH 책 정보
+.sp
+출력의 책 정보를 지정하는 옵션입니다.
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+저자 순으로 정렬할 때 사용되어질 문자열입니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+저자를 지정합니다. 다수의 저자들은 && 기호로 구분해야 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+책 제작자를 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+전자책의 설명을 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+표지에 지정한 파일 또는 URL을 설정합니다
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+책의 ISBN을 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+언어를 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+책의 출판사를 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+별점을 지정합니다. 1과 5 사이의 숫자여야 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+지정한 OPF 파일에서 책 정보를 읽어옵니다. 이 파일에서 읽는 책 정보는 원본 파일의 모든 책 정보를 무시합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+이 책이 속하게 될 시리즈를 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+이 시리즈에서 책의 색인을 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+책의 태그를 지정합니다. 쉼표(,)로 구분된 목록이어야 합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Set the book timestamp (no longer used anywhere)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+제목을 지정합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+정렬을 위해 사용될 제목의 형태입니다.
+.UNINDENT
+.SH 디버그
+.sp
+변환 작업에 대한 디버깅을 돕기 위한 옵션입니다
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

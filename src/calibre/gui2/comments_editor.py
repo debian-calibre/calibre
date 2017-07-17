@@ -163,9 +163,13 @@ class EditorWidget(QWebView):  # {{{
 
         self.action_insert_link = QAction(QIcon(I('insert-link.png')),
                 _('Insert link or image'), self)
+        self.action_insert_hr = QAction(QIcon(I('format-text-hr.png')),
+                _('Insert separator'), self)
         self.action_insert_link.triggered.connect(self.insert_link)
+        self.action_insert_hr.triggered.connect(self.insert_hr)
         self.pageAction(QWebPage.ToggleBold).changed.connect(self.update_link_action)
         self.action_insert_link.setEnabled(False)
+        self.action_insert_hr.setEnabled(False)
         self.action_clear = QAction(QIcon(I('trash.png')), _('Clear'), self)
         self.action_clear.triggered.connect(self.clear_text)
 
@@ -177,8 +181,9 @@ class EditorWidget(QWebView):  # {{{
         self.set_readonly(False)
 
     def update_link_action(self):
-        wac = self.pageAction(QWebPage.ToggleBold)
-        self.action_insert_link.setEnabled(wac.isEnabled())
+        wac = self.pageAction(QWebPage.ToggleBold).isEnabled()
+        self.action_insert_link.setEnabled(wac)
+        self.action_insert_hr.setEnabled(wac)
 
     def set_readonly(self, what):
         self.readonly = what
@@ -208,6 +213,9 @@ class EditorWidget(QWebView):  # {{{
                 _('Choose background color'), QColorDialog.ShowAlphaChannel)
         if col.isValid():
             self.exec_command('hiliteColor', unicode(col.name()))
+
+    def insert_hr(self, *args):
+        self.exec_command('insertHTML', '<hr>')
 
     def insert_link(self, *args):
         link, name, is_image = self.ask_link()
@@ -702,8 +710,10 @@ class Editor(QWidget):  # {{{
 
         self.toolbar2.addAction(self.editor.action_block_style)
         w = self.toolbar2.widgetForAction(self.editor.action_block_style)
-        w.setPopupMode(w.InstantPopup)
+        if hasattr(w, 'setPopupMode'):
+            w.setPopupMode(w.InstantPopup)
         self.toolbar2.addAction(self.editor.action_insert_link)
+        self.toolbar2.addAction(self.editor.action_insert_hr)
         # }}}
 
         # toolbar3 {{{

@@ -1,0 +1,945 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBREDB" "1" "července 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibredb \- calibredb
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb command [options] [arguments]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
+.sp
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%GLOBÁLNÍ VOLBY\fP
+.IP \(bu 2
+\fI\%list\fP
+.IP \(bu 2
+\fI\%add\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%PŘIDÁVÁNÍ Z ADRESÁŘŮ\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%remove\fP
+.IP \(bu 2
+\fI\%add_format\fP
+.IP \(bu 2
+\fI\%remove_format\fP
+.IP \(bu 2
+\fI\%show_metadata\fP
+.IP \(bu 2
+\fI\%set_metadata\fP
+.IP \(bu 2
+\fI\%export\fP
+.IP \(bu 2
+\fI\%catalog\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%VOLBY EPUB\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%saved_searches\fP
+.IP \(bu 2
+\fI\%add_custom_column\fP
+.IP \(bu 2
+\fI\%custom_columns\fP
+.IP \(bu 2
+\fI\%remove_custom_column\fP
+.IP \(bu 2
+\fI\%set_custom\fP
+.IP \(bu 2
+\fI\%restore_database\fP
+.IP \(bu 2
+\fI\%check_library\fP
+.IP \(bu 2
+\fI\%list_categories\fP
+.IP \(bu 2
+\fI\%backup_metadata\fP
+.IP \(bu 2
+\fI\%clone\fP
+.IP \(bu 2
+\fI\%embed_metadata\fP
+.IP \(bu 2
+\fI\%search\fP
+.UNINDENT
+.SH GLOBÁLNÍ VOLBY
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+zobrazit tuto zprávu nápovědy a ukončit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-library\-path, \-\-with\-library
+Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních. Pro provádění akce na vzdálených knihovnách se můžete také připojit k Serveru s obsahem Calibre. Abyste to udělali, použijte URL ve formě: \fI\%http://hostitel:port/#id_knihovny\fP, například \fI\%http://localhost:8080/#mojeknihovna\fP\&. id_knihovny je identifikátor knihovny, ke které se chcete připojit na Serveru s obsahem. Pomocí speciální hodnoty id_knihovny \- můžete získat seznam identifikátorů knihoven dostupných na serveru. Pro podrobnosti o nastavení přístupu prostřednictvím Serveru s obsahem navštivte \fI\%https://manual.calibre\-ebook.com/cs/generated/cs/calibredb.html\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password
+Heslo pro připojení k Serveru s obsahem Calibre. Pro přečtení hesla ze standardního vstupu použijte speciální hodnotu: <stdin>. Pro přečtení hesla ze souboru použijte: <f:/path/to/file>.)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username
+Uživatelské jméno pro připojení k Serveru s obsahem Calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+zobrazit číslo verze programu a ukončit
+.UNINDENT
+.SH LIST
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vypsat knihy dostupné v databázi Calibre.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-ascending
+Seřadit výsledky ve vzestupném pořadí
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fields, \-f
+Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: title,authors. Pro výběr všech polí může být použito speciální pole \fB"\fPall\fB"\fP\&. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generovat výstup ve formátu JSON, který je vhodnější pro strojní analýzu. Způsobí, že šířka řádku a volby oddělovače budou ignorovány.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-limit
+Maximální počet výsledků k zobrazení. Výchozí: vše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-width, \-w
+Maximální šířka jednoho řádku ve výstupu. Výchozí nastavení pro rozpoznání velikosti obrazovky.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix
+Předpona pro všechny cesty k souborům. Výchozí je absolutní cesta do složky knihovny.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtrovat výsledky podle vyhledávacího dotazu. Pro formát vyhledávacího dotazu se podívejte do dokumentace související s hledáním v uživatelské příručce. Výchozí je neprovádět žádné filtrování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-separator
+Řetězec použitý pro oddělení polí. Výchozí je mezera.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sort\-by
+Pole, podle kterého řadit výsledky. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: id
+.UNINDENT
+.SH ADD
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add [options] file1 file2 file3...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Přidat zadané soubory jako knihy do databáze. Můžete také zadat adresáře, podívejte se na volby související s následujícím adresářem.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Nastavit autory přidaných knih
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Nastavit použitou obálku pro přidanou knihu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-duplicates, \-d
+Přidat knihy do databáze, i když již existují. Porovnání je prováděno na základě názvů knih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-empty, \-e
+Přidat prázdnou knihu (kniha bez formátů)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Nastavit identifikátory pro tuto knihu, např. \-I asin:XXX \-I isbn:YYY
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+Nastavit ISBN přidaných knih
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-languages, \-l
+Čárkami oddělený seznam jazyků (nejlepší je použít kódy jazyka ISO639, i když mohou být rozpoznány také některé názvy jazyků)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Nastavit série přidaných knih
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index, \-S
+Nastavit číslo série přidaných knih
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags, \-T
+Nastavit štítky přidaných knih
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Nastavit název přidaných knih
+.UNINDENT
+.SS PŘIDÁVÁNÍ Z ADRESÁŘŮ
+.sp
+Volby pro ovládání přidávání knih z adresářů. Ve výchozím nastavení jsou přidávány pouze soubory, které mají příponu známých typů souborů e\-knih.
+.INDENT 0.0
+.TP
+.B \-\-add
+Vzor názvu souboru (glob), soubory odpovídající tomuto vzoru budou přidány při prohledávání souborů v adresářích, dokonce i když nejsou známého typu souboru e\-knihy. Může být zadáno vícekrát pro více vzorů.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore
+Vzor názvu souboru (glob), soubory odpovídající tomuto vzoru budou ignorovány při prohledávání souborů v adresářích. Může být zadáno vícekrát pro více vzorů: Např.: *.pdf bude ignorovat všechny soubory pdf
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-one\-book\-per\-directory, \-1
+Předpokládat, že každý adresář má pouze jednu logickou knihu, a že všechny soubory v něm jsou různé formáty e\-knih této knihy
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-recurse, \-r
+Zpracovat adresáře rekurzivně
+.UNINDENT
+.SH REMOVE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove ids
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Odebrat knihy identifikované identifikátory z databáze. Identifikátory by měly být čárkami oddělený seznam identifikačních čísel (identifikační čísla můžete získat pomocí příkazu search). Například 23,34,57\-85 (když zadáváte rozsah, poslední číslo rozsahu není zahrnuto).
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Nepoužívat koš
+.UNINDENT
+.SH ADD_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_format [options] id ebook_file
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Přidat e\-knihu v ebook_file do dostupných formátů pro logickou knihu identifikovanou identifikátorem. Identifikátor můžete získat pomocí příkazu search. Pokud formát již existuje, je nahrazen, pokud není zadána volba nenahrazovat.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-dont\-replace
+Nenahrazovat formát, pokud již existuje
+.UNINDENT
+.SH REMOVE_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_format [options] id fmt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Odebrat formát fmt z logické knihy identifikované identifikátorem. Identifikátor můžete získat pomocí příkazu search. fmt by měla být přípona souboru, jako je LRF, TXT nebo EPUB. Pokud logická kniha nemá dostupné fmt, nedělat nic.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.SH SHOW_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb show_metadata [options] id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Zobrazit metadata uložená v databázi Calibre pro knihu identifikovanou identifikátorem.
+Identifikátor je identifikační číslo z příkazu search.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-as\-opf
+Vypsat metadata v podobě OPF (XML)
+.UNINDENT
+.SH SET_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_metadata [options] id [/path/to/metadata.opf]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Nastavit metadata uložená v databázi Calibre pro knihu identifikovanou
+identifikátorem ze souboru OPF metadata.opf. Identifikátor je identifikační
+číslo z příkazu search. Můžete získat rychlé chování pro formát OPF pomocí
+přepínače –as\-opf příkazu show_metadata. Můžete také nastavit metadata
+jednotlivých polí pomocí volby –field. Pokud použijete volbu –field,
+není potřeba zadávat soubor OPF.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-field, \-f
+Pole k nastavení. Formát je field_name:value, například : \fI\%\-\-field\fP tags:tag1,tag2. Použijte \fI\%\-\-list\-fields\fP pro získání seznamu všech názvů polí. Tuto volbu můžete zadat vícekrát pro nastavení více polí. Poznámka: Pro jazyky musíte použít kódy jazyka ISO639 (např. cs pro češtinu, en pro angličtinu, fr pro francouzštinu atd.). Pro identifikátory je syntaxe \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Pro pole logických hodnot (ano/ne) použijte pravda a nepravda nebo ano a ne.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-fields, \-l
+Vypsat názvy polí metadat, která mohou být použita s volbou \fI\%\-\-field\fP
+.UNINDENT
+.SH EXPORT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb export [options] ids
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Exportovat knihy zadané identifikátory (čárkami oddělený seznam) do systému souborů.
+Operace exportu ukládá všechny formáty knihy, její obálku a metadata (do souboru opf).
+Identifikační čísla můžete získat z příkazu search.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-all
+Exportovat všechny knihy v databázi, ignorovat seznam identifikátorů.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-asciiize
+Obyčejně Calibre převede všechny neanglické znaky na anglické ekvivalenty pro názvy souborů. VAROVÁNÍ: Pokud toto vypnete, můžete zažít chyby při ukládání v závislosti na tom, jak dobře systém souborů, do kterého ukládáte, podporuje unicode. Zadání tohoto přepínače vypne toto chování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-cover
+Obyčejně Calibre uloží obálku do samostatného souboru společně se skutečnými soubory e\-knih. Zadání tohoto přepínače vypne toto chování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-update\-metadata
+Obyčejně Calibre aktualizuje metadata v uložených souborech z toho, co je v knihovně Calibre. Zpomalí ukládání na disk. Zadání tohoto přepínače vypne toto chování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-write\-opf
+Obyčejně Calibre zapíše metadata do samostatného souboru OPF společně se skutečnými soubory e\-knih. Zadání tohoto přepínače vypne toto chování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Čárkami oddělený seznam formátů pro uložení pro každou knihu. Ve výchozím nastavení jsou ukládány všechny dostupné formáty.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-whitespace
+Nahradit prázdné znaky podtržítky.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-single\-dir
+Exportovat všechny knihy do jednoho adresáře
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Šablona pro ovládání názvu souboru a adresářové struktury ukládaných souborů. Výchozí je \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, což uloží knihy do podadresáře podle autora s názvy souborů obsahujícími název a autora. Dostupné ovládací prvky jsou: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timefmt
+Formát, ve kterém zobrazovat data. %d \- den, %b \- měsíc, %m \- číslo měsíce, %Y \- rok. Výchozí je: %b, %Y
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-dir
+Exportovat knihy do zadaného adresáře. Výchozí je .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-lowercase
+Převést cesty na malá písmena.
+.UNINDENT
+.SH CATALOG
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Exportovat katalog ve formátu zadaném rozšířením path/to/destination.
+Volby řídí, jak jsou položky v generovaném výstupním katalogu zobrazeny.
+Pamatujte, že různé formáty katalogu podporují různé sady voleb.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-ids, \-i
+Čárkami oddělený seznam identifikátorů databáze pro katalog. Pokud je deklarováno, \fI\%\-\-search\fP je ignorováno. Výchozí: vše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtrovat výsledky podle vyhledávacího dotazu. Pro formát vyhledávacího dotazu se podívejte do dokumentace související s hledáním v uživatelské příručce. Výchozí: žádné filtrování
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Zobrazit podrobné výstupní informace. Užitečné pro ladění
+.UNINDENT
+.SS VOLBY EPUB
+.INDENT 0.0
+.TP
+.B \-\-catalog\-title
+Název generovaného katalogu použitý jako název v metadatech. Výchozí: \fB\(aq\fPMy Books\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cross\-reference\-authors
+Vytvořit křížové odkazy v oddílu Autoři pro knihy s více autory. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline
+Uložit výstup z různých stavů převodního řetězce do zadaného adresáře. Užitečné, pokud si nejste jisti, ve kterém stavu procesu převodu se objevuje chyba. Výchozí: \fB\(aq\fPNone\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclude\-genre
+Regulární výraz popisující štítky, které vyloučit jako žánry. Výchozí: \fB\(aq\fP[.+]|^+$\fB\(aq\fP vylučuje štítky v hranatých závorkách, např. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP a \fB\(aq\fP+\fB\(aq\fP, výchozí štítek pro přečtené knihy. Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclusion\-rules
+Určuje pravidla použitá pro vyloučení knih z generovaného katalogu. Model pro pravidlo vyloučení je buď (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<čárkami oddělený seznam štítků>\fB\(aq\fP) nebo (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fP<vlastní sloupec>\fB\(aq\fP,\fB\(aq\fP<vzor>\fB\(aq\fP). Například: ((\fB\(aq\fPArchivované knihy\fB\(aq\fP,\fB\(aq\fP#stav\fB\(aq\fP,\fB\(aq\fPArchivováno\fB\(aq\fP),) vyloučí knihu s hodnotou \fB\(aq\fPArchivováno\fB\(aq\fP ve vlastním sloupci \fB\(aq\fPstav\fB\(aq\fP\&. Pokud je definováno více pravidel, budou použita všechna pravidla. Výchozí:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-authors
+Zahrnout oddíl \fB\(aq\fPAutoři\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-descriptions
+Zahrnout oddíl \fB\(aq\fPPopisy\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-genres
+Zahrnout oddíl \fB\(aq\fPŽánry\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-recently\-added
+Zahrnout oddíl \fB\(aq\fPNedávno přidané\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-series
+Zahrnout oddíl \fB\(aq\fPSérie\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-titles
+Zahrnout oddíl \fB\(aq\fPNázvy\fB\(aq\fP do katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-genre\-source\-field
+Zdrojové pole pro oddíl ‚Žánry. Výchozí: \fB\(aq\fPŠtítky\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-header\-note\-source\-field
+Vlastní pole obsahující text poznámky k vložení do záhlaví Popisu. Výchozí: \fB\(aq\fP\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-merge\-comments\-rule
+#<custom field>:[before|after]:[True|False] určující: <custom field>Vlastní pole obsahující poznámky ke sloučení s Komentáři [before|after] Umístění poznámek vzhledem ke Kometářům [True|False] \- Mezi poznámky a Komentáře je vložena vodorovná čára Výchozí: \fB\(aq\fP::\fB\(aq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Určuje výstupní profil. V některých případech je vyžadován výstupní profil pro optimalizaci katalogu pro zařízení. Například \fB\(aq\fPkindle\fB\(aq\fP nebo \fB\(aq\fPkindle_dx\fB\(aq\fP vytvoří strukturovaný obsah s Oddíly a Články. Výchozí: \fB\(aq\fPNone\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix\-rules
+Určuje pravidla použitá pro zahrnutí předpon označujících přečtené knihy, seznam přání a jiné předpony zadané uživatelem. Model pro pravidlo předpony je (\fB\(aq\fP<název pravidla>\fB\(aq\fP,\fB\(aq\fP<zdrojové pole>\fB\(aq\fP,\fB\(aq\fP<vzor>\fB\(aq\fP,\fB\(aq\fP<předpona>\fB\(aq\fP). Pokud je definováno více pravidel, bude použito první odpovídající pravidlo. Výchozí: \fB\(aq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(aq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preset
+Použít pojmenovanou předvolbu vytvořenou Nástrojem pro sestavení katalogu v grafickém rozhraní. Předvolba určuje všechna nastavení pro sestavení katalogu. Výchozí: \fB\(aq\fPNone\fB\(aq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-thumb\-width
+Nápověda velikosti (v palcích) pro obálky knih v katalogu. Rozsah: 1,0 \- 2,0 Výchozí: \fB\(aq\fP1.0\fB\(aq\fP Použije se na výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-existing\-cover
+Nahradit existující obálku při generování katalogu. Výchozí: \fB\(aq\fPFalse\fB\(aq\fP Použije se na: výstupní formáty AZW3, EPUB, MOBI
+.UNINDENT
+.SH SAVED_SEARCHES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb saved_searches [options] (list|add|remove)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Spravovat uložená hledání umístěná v této databázi.
+Pokud se pokusíte přidat dotaz s názvem, který již existuje,
+bude nahrazen.
+.sp
+Syntaxe pro přidání:
+.sp
+calibredb \fBsaved_searches\fP add search_name search_expression
+.sp
+Syntaxe pro odebrání:
+.sp
+calibredb \fBsaved_searches\fP remove search_name
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.SH ADD_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_custom_column [options] label name datatype
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vytvořit vlastní sloupec. label je název sloupce vhodný pro stroje. Neměl by
+obsahovat mezery nebo dvojtečky. name je název sloupce vhodný pro lidi.
+datatype je jeden z: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-display
+Slovník voleb pro přizpůsobení, jak budou data v tomto sloupci interpretována. Toto je řetězec JSON. Pro sloupce výčtu použijte \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Je mnoho voleb, které mohou přijít do proměnné display. Volby podle typu sloupce jsou: složené: composite_template, composite_sort, make_category,contains_html, use_decorations datum a čas: date_format výčet: enum_values, enum_colors, use_decorations celá část, plovoucí: number_format text: is_names, use_decorations  Nejlepší způsob jak najít zákonité kombinace, je vytvořit v grafickém rozhraní vlastní sloupec vhodného typu, pak vyhledat v záložním OPF knihu (ujistěte se, že byl vytvořen nový OPF od přidání sloupce). Uvidíte JSON pro \fB"\fPdisplay\fB"\fP pro nový sloupec v OPF.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-is\-multiple
+Tento sloupec ukládá štítky jako data (tj. více čárkami oddělených hodnot). Použije se, pouze pokud je datový typ text.
+.UNINDENT
+.SH CUSTOM_COLUMNS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb custom_columns [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vypsat dostupné vlastní sloupce. Zobrazí popisky sloupců a identifikátory.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-details, \-d
+Zobrazit podrobnosti pro každý sloupec.
+.UNINDENT
+.SH REMOVE_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_custom_column [options] label
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Odebrat vlastní sloupec identifikovaný popiskem. Dostupné
+sloupce můžete zobrazit příkazem custom_columns.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-force, \-f
+Nepožadovat potvrzení
+.UNINDENT
+.SH SET_CUSTOM
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_custom [options] column id value
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Nastavit hodnotu vlastního sloupce pro knihu identifikovanou identifikátorem.
+Seznam identifikátorů můžete získat pomocí příkazu search.
+Seznam názvů vlastních sloupců můžete získat pomocí příkazu custom_columns.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-append, \-a
+Pokud sloupec ukládá více hodnot, přidat zadané hodnoty k existujícím, namísto jejich nahrazení.
+.UNINDENT
+.SH RESTORE_DATABASE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb restore_database [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Obnovit tuto databázi z metadat uložených v souborech OPF v každém
+adresáři knihovny Calibre. To je užitečné, pokud byl váš soubor
+meatadata.db poškozen.
+.sp
+VAROVÁNÍ: Tento příkaz znovu úplně vygeneruje vaši databázi. Ztratíte
+všechna uložená hledání, uživatelské katalogy, zásuvné panely, uložená
+nastavení převodu pro knihu a vlastní předpisy. Obnovená metadata budou
+pouze tak přesná, jako to, co je nalezeno v souborech OPF.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-really\-do\-it, \-r
+Opravdu provést obnovení. Příkaz nebude spuštěn, pokud není zadána tato volba.
+.UNINDENT
+.SH CHECK_LIBRARY
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb check_library [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Provést některé kontroly souborového systému představujícího knihovnu.
+Hlášení jsou invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Výstup v CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_extensions, \-e
+Čárkami oddělený seznam ignorovaných přípon. Výchozí: vše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_names, \-n
+Čárkami oddělený seznam ignorovaných názvů. Výchozí: vše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-report, \-r
+Čárkami oddělený seznam hlášení. Výchozí: vše
+.UNINDENT
+.SH LIST_CATEGORIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list_categories [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vytvořit hlášení informací o kategoriích v databázi. Informace
+je ekvivalentem toho, co je zobrazeno v podokně štítků.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-categories, \-r
+Čárkami oddělený seznam kategorií názvů vyhledávání. Výchozí: vše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Výstup v CSV
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dialect
+Typ souboru CSV, který vytvářet. Možnosti: excel, excel\-tab
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-item_count, \-i
+Výstupem je pouze počet položek v kategorii namísto počtů na položku v kategorii.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-width, \-w
+Maximální šířka jednoho řádku ve výstupu. Výchozí nastavení pro rozpoznání velikosti obrazovky.
+.UNINDENT
+.SH BACKUP_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb backup_metadata [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Zálohovat metadata uložená v databázi do jednotlivých souborů OPF v každém
+adresáři knih. Toto se normálně děje automaticky, ale můžete tento příkaz spustit
+s volbou –all, abyste vynutili opětovné vygenerování souborů OPF.
+.sp
+Pamatujte, že normálně není vůbec potřeba toto dělat, protože soubory OPF
+jsou zálohovány automaticky pokaždé, když se změní metadata.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-all
+Normálně tento příkaz pracuje pouze nad knihami, které mají zastaralé soubory OPF. Pomocí této volby pracuje nad všemi knihami.
+.UNINDENT
+.SH CLONE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb clone path/to/new/library
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vytvořit klon aktuální knihovny. Toto vytvoří novou, prázdnou knihovnu, která má
+stejné vlastní sloupce, virtuální knihovny a jiná nastavení jako aktuální knihovna.
+.sp
+Klonovaná knihovna nebude obsahovat žádné knihy. Pokud chcete vytvořit úplný
+duplikát včetně všech knih, pak jednoduše použijte nástroje vašeho systému souborů
+ke zkopírování složky knihovny.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.SH EMBED_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb embed_metadata [options] book_id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Aktualizovat metadata ve skutečných souborech knih uložená v knihovně Calibre
+z metadat v databázi Calibre. Normálně jsou metadata aktualizována pouze při
+exportování souborů z Calibre, tento příkaz je užitečný, pokud chcete, aby
+byla metadata aktualizována na místě. Pamatujte, že různé formáty souborů
+podporují různá množství metadat. K aktualizaci metadat ve všech knihách
+můžete pro book_id použít speciální hodnotu ‚all‘. Můžete také zadat mnoho
+identifikátorů knih oddělených mezerami a rozsahů identifikátorů oddělených
+spojovníky. Například: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-only\-formats, \-f
+Aktualizovat metadata pouze  v souborech zadaného formátu. Zadejte vícekrát pro více formátů. Ve výchozím nastavení jsou aktualizovány všechny formáty.
+.UNINDENT
+.SH SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb search [options] search expression
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Vyhledat v knihovně zadaný hledaný výraz vracející čárkami oddělený seznam
+identifikátorů knih odpovídající hledanému výrazu.Výstupní formát je užitečný
+pro zásobení jiných příkazů, které přijímají seznam identifikátorů jako vstup.
+.sp
+Hledaný výraz může být cokoliv z výkonného jazyka vyhledávacích dotazů Calibre,
+například: author:asimov title:robot
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-limit, \-l
+Maximální počet výsledků k navrácení. Výchozí je všechny výsledky.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

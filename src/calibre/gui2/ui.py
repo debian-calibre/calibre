@@ -426,6 +426,14 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         if self.system_tray_icon is not None and self.system_tray_icon.isVisible() and opts.start_in_tray:
             self.hide_windows()
         self.auto_adder = AutoAdder(gprefs['auto_add_path'], self)
+
+        # Now that the gui is initialized we can restore the quickview state
+        # The same thing will be true for any action-based operation with a
+        # layout button
+        from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
+        qv = get_quickview_action_plugin()
+        if qv:
+            qv.qv_button.restore_state()
         self.save_layout_state()
 
         # Collect cycles now

@@ -1,0 +1,231 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-SERVER" "1" "července 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-server [options] [path to library folder ...]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Spustit Server s obsahem Calibre. Server s obsahem Calibre vystaví
+vaše knihovny Calibre na internet. Můžete zadat cestu ke složkám
+knihoven jako parametry do \fBcalibre\-server\fP\&. Pokud nezadáte žádné cesty,
+budou použity všechny knihovny, o kterých hlavní program Calibre ví.
+.sp
+Kdykoliv předáváte parametry pro \fBcalibre\-server\fP, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.SH [VOLBY]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Cesta k souboru protokolů přístupu. Tento protokol obsahuje informace o připojení klientů k serveru a vytváření požadavků. Ve výchozím nastavení není prováděno žádné protokolování přístupu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+Zvolte typ použitého ověřování.     Nastavte režim ověřování HTTP používaný serverem. Nastavte na \fB"\fPzákladní\fB"\fP, pokud je tento server za SSL proxy. Jinak ponechte jako \fB"\fPautomaticky\fB"\fP, což použije \fB"\fPzákladní\fB"\fP, pokud je nakonfigurováno SSL, jinak použije \fB"\fPdigest\fB"\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Automaticky znovu načíst server, když se změní zdrojový kód. Užitečné pro vývoj. Měli byste také zadat malou hodnotu pro časový limit vypnutí.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Minimální velikost, pro kterou odpovědi použijí kompresi dat (v bajtech).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Spustit proces na pozadí jako démon (pouze Linux).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Omezit zobrazená uživatelem definovaná pole.        Čárkami oddělený seznam uživatelem definovaných polí metadat, která budou zobrazena Serverem s obsahem v zobrazeních /opds a /mobilní. Pokud zadáte tuto volbu, nebudou zobrazena žádná pole, která nejsou v tomto seznamu. Například: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Předpřidělení soketu, například  při aktivaci soketu systemd. Ve výchozím nastavení je tato volba povolena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Ověřování na základě hesla pro přístup k serveru.   Obyčejně je server neomezený, umožňuje přístup každému. Pomocí této volby můžete omezit přístup na předdefinované uživatele. Ve výchozím nastavení je tato volba zakázána.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Záloha pro automatické rozpoznání rozhraní.         Pokud se server není z nějakého důvodu schopen připojit k rozhraní zadanému ve volbě listen_on, pak se bude snažit rozpoznat rozhraní, které se připojuje k vnějšímu světu a připojit se k němu. Ve výchozím nastavení je tato volba povolena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Povolit neověřeným místním připojením provádět změny.       Obyčejně, pokud nezapnete ověřování, server pracuje v režimu pouze pro čtení, aby neumožnil anonymním uživatelům provádět změny ve vašich knihovnách Calibre. Tato volba umožňuje provádět změny komukoliv připojenému ze stejného počítače, na kterém je spuštěn server. To je užitečné, pokud chcete spustit server bez ověřování, ale stále používáte calibredb k provádění změn ve vašich knihovnách Calibre. Pamatujte, že zapnutí této volby znamená, že jakýkoliv program spuštěný v počítači může provádět změny ve vašich knihovnách Calibre. Ve výchozím nastavení je tato volba zakázána.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+Protokolovat požadavky HTTP 404 (nenalezeno).       Obyčejně server zaznamenává všechny požadavky HTTP na zdroje, které nejsou nalezeny. To může generovat velké množství protokolového spamu, pokud je váš server cílem botů. Použijte tuto volbu pro vypnutí. Ve výchozím nastavení je tato volba povolena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+Inzerovat informační kanály OPDS prostřednictvím BonJour.   Inzerovat informační kanály OPDS prostřednictvím služby BonJour, aby aplikace založené na čtení OPDS mohly automaticky rozpoznat a připojit k serveru. Ve výchozím nastavení je tato volba povolena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Přenosy nulových kopií souborů pro zvýšení výkonu.  Toto použije přenosy nulových kopií v jádru při odesílání souborů přes síť, zvýšení výkonu. Může to však způsobit poškozené přenosy souborů u některých poškozených systémů souborů. Pokud narazíte na poškozené přenosy souborů, vypněte to. Ve výchozím nastavení je tato volba povolena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+zobrazit tuto zprávu nápovědy a ukončit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+Ignorovaná uživatelem definovaná pole metadat.      Čárkami oddělený seznam uživatelem definovaných polí metadat, která nebudou zobrazena Serverem s obsahem v zobrazeních /opds a /mobilní. Například: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+Rozhraní, na kterém naslouchat pro připojení.       Výchozí je naslouchat na všech dostupných rozhraních. Můžete to změnit, například na \fB"\fP127.0.0.1\fB"\fP pro naslouchání pouze pro připojení z místního počítače, nebo na \fB"\fP::\fB"\fP pro naslouchání pro všechna příchozí připojení IPv6 a IPv4.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Cesta k souboru protokolu pro protokol serveru. Tento protokol obsahuje informace a chyby, ne protokoly přístupu. Ve výchozím nastavení je zapsán do stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Spravovat databázi uživatelů, kteří mají povoleno připojovat se k tomuto serveru. Podívejte se také na volbu \fI\%\-\-userdb\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+Max. velikost jednoduchého záhlaví HTTP (v KB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Maximální čas pro pracovní procesy.         Maximální množství času, který mají pracovní procesy povoleno být spuštěny (v minutách). Nastavte na nulu pro žádné omezení.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Maximální počet pracovních procesů.         Pracovní procesy jsou spouštěny podle potřeby a použity pro velké úlohy, jako jsou příprava knihy pro zobrazení, přidávání knih, převod atd. Obyčejně je max. počet takových procesů založen na počtu jader procesoru. Můžete to ovládat tímto nastavením.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+Max. velikost souboru protokolu (v MB).     Maximální velikost souborů protokolu generovaných serverem. Když bude protokol větší než tato velikost, je automaticky vyměněn. Nastavte na nulu pro zakázání výměny protokolu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+Maximální počet knih v informačních kanálech OPDS.  Maximální počet knih, které server vrátí v jednom získaném informačním kanálu OPDS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Maximální počet neseskupených položek v informačních kanálech OPDS.         Seskupit položky do kategorií jako jsou autor nebo štítek podle prvního písmene, když je více než tento počet položek. Nastavte na nula pro zakázání.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Max. povolená velikost pro soubory odesílané na server (v MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Zapsat kód PID procesu do zadaného souboru
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Port, na kterém naslouchat pro připojení.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Celkový čas v sekundách, který čekat na čisté vypnutí.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+Cesta k souboru certifikátu SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Cesta k souboru soukromého klíče SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Čas (v sekundách), po kterém je nečinné připojení uzavřeno.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+Předpona, kterou předřadit všem URL.        Užitečné, pokud si přejete spustit tento server za reverzní proxy. Například použijte /calibre jako předponu URL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Cesta k uživatelské databázi použité pro ověřování. Databáze je soubor SQLite. Pro jeho vytvoření použijte \fI\%\-\-manage\-users\fP\&. Více o správě uživatelů si můžete přečíst v: \fI\%https://manual.calibre\-ebook.com/cs/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+zobrazit číslo verze programu a ukončit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Počet pracovních vláken použitých pro zpracování požadavků.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

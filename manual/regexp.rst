@@ -18,9 +18,9 @@ This is, inevitably, going to be somewhat technical- after all, regular expressi
 Where in calibre can you use regular expressions?
 ---------------------------------------------------
 
-There are a few places calibre uses regular expressions. There's the Search &
-Replace in conversion options, metadata detection from filenames in the import
-settings and Search & Replace when editing the metadata of books in bulk. The
+There are a few places calibre uses regular expressions. There's the
+:guilabel:`Search & replace` in conversion options, metadata detection from filenames in the import
+settings and Search & replace when editing the metadata of books in bulk. The
 calibre book editor can also use regular expressions in its search and replace
 feature.
 
@@ -29,7 +29,7 @@ What on earth *is* a regular expression?
 
 A regular expression is a way to describe sets of strings. A single regular expression can *match* a number of different strings. This is what makes regular expression so powerful -- they are a concise way of describing a potentially large number of variations.
 
-.. note:: I'm using string here in the sense it is used in programming languages: a string of one or more characters, characters including actual characters, numbers, punctuation and so-called whitespace (linebreaks, tabulators etc.). Please note that generally, uppercase and lowercase characters are not considered the same, thus "a" being a different character from "A" and so forth. In calibre, regular expressions are case insensitive in the search bar, but not in the conversion options. There's a way to make every regular expression case insensitive, but we'll discuss that later. It gets complicated because regular expressions allow for variations in the strings it matches, so one expression can match multiple strings, which is why people bother using them at all. More on that in a bit.
+.. note:: I'm using string here in the sense it is used in programming languages: a string of one or more characters, characters including actual characters, numbers, punctuation and so-called whitespace (linebreaks, tabulators etc.). Please note that generally, uppercase and lowercase characters are not considered the same, thus "a" being a different character from "A" and so forth. In calibre, regular expressions are case insensitive in the Search bar, but not in the conversion options. There's a way to make every regular expression case insensitive, but we'll discuss that later. It gets complicated because regular expressions allow for variations in the strings it matches, so one expression can match multiple strings, which is why people bother using them at all. More on that in a bit.
 
 Care to explain?
 --------------------
@@ -95,7 +95,7 @@ I think I'm beginning to understand these regular expressions now... how do I us
 Conversions
 ^^^^^^^^^^^^^^
 
-Let's begin with the conversion settings, which is really neat. In the Search and Replace part, you can input a regexp (short for regular expression) that describes the string that will be replaced during the conversion. The neat part is the wizard. Click on the wizard staff and you get a preview of what calibre "sees" during the conversion process. Scroll down to the string you want to remove, select and copy it, paste it into the regexp field on top of the window. If there are variable parts, like page numbers or so, use sets and quantifiers to cover those, and while you're at it, remember to escape special characters, if there are some. Hit the button labeled :guilabel:`Test` and calibre highlights the parts it would replace were you to use the regexp. Once you're satisfied, hit OK and convert. Be careful if your conversion source has tags like this example::
+Let's begin with the conversion settings, which is really neat. In the :guilabel:`Search & replace` part, you can input a regexp (short for regular expression) that describes the string that will be replaced during the conversion. The neat part is the wizard. Click on the wizard staff and you get a preview of what calibre "sees" during the conversion process. Scroll down to the string you want to remove, select and copy it, paste it into the regexp field on top of the window. If there are variable parts, like page numbers or so, use sets and quantifiers to cover those, and while you're at it, remember to escape special characters, if there are some. Hit the button labeled :guilabel:`Test` and calibre highlights the parts it would replace were you to use the regexp. Once you're satisfied, hit OK and convert. Be careful if your conversion source has tags like this example::
 
     Maybe, but the cops feel like you do, Anita. What's one more dead vampire?
     New laws don't change that. </p>

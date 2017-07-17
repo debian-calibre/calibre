@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "július 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces”
+.SH [BEÁLLÍTÁSOK]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Egyszerű bővítmény (azaz csupán egy .py fájlból álló bővítmény) hozzáadása a bővítménykódot tartalmazó py fájl elérési útjának megadásával.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Python kód futtatása.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Eszközfelismerés hibakereső módban
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+A Calibre (ki)regisztrálása a Windows alapértelmezett programok listájába/ból. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+A Calibre diff eszközének futtatása. Például: calibre\-debug \fI\%\-\-diff\fP fájl1 fájl2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+A Calibre könyvszerkesztő futtatása hibakereső módban.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Python kód futtatása a fájlon.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+A könyv kicsomagolása (HTML fájlokból és metaadatokból álló összeállításként exportálja a könyvet, amelyet HTML\-szerkesztő eszközökkel szerkeszthet, majd a szerkesztett HTML\-ből újraépíti a fájlt. A teljes Calibre konvertálástól eltérően nem eszközöl további változtatásokat a HTML\-ben).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+A Calibre összes adatának exportálása (könyvek/beállítások/bővítmények)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+GUI futtatása hibakeresési módban. A hibakeresési információk az stdout és stderr\-ben jelenítődnek meg.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+GUI futtatása hibakeresési ablakkal, a megadott elérési útvonalra történő a naplózással. Csak belső használat esetén a \-g kapcsolóval futtatható a GUI hibakeresési módban.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+ennek a súgónak a megjelenítése és kilépés
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Előzőleg exportált Calibre adatok importálása
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Az adott útvonalon elérhető MOBI fájl(ok) elemzése.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Kiírja a Calibre környezet beállításához szükséges elérési utakat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+A megadott elérési útvonallal rendelkező sqlite Calibre adatbázis újrainicializálása. Adatbázis\-hiba helyreállításánál hasznos.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Parancssori felületet nyújtó bővítmény futtatása. Például: calibre\-debug \-2 \fB"\fPAdd Books\fB"\fP \fB\-\-\fP fájl1 \fB\-\-option1\fP  A \fB\-\-\fP után található részt a program továbbítja a bővítmény felé mint kapcsoló.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Egy futó Calibre példány bezárása. Ha vannak futó műveletek, akkor azok minden figyelmeztetés nélkül meg lesznek szakítva, ezért óvatosan használja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Bináris modulok tesztelése a jelenlegi verzióban.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+program verziójának megjelenítése és kilépés
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Az olvasóprogram indítása hibakereső módban
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

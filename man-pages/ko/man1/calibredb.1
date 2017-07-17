@@ -1,0 +1,944 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBREDB" "1" "7월 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibredb \- calibredb
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb command [options] [arguments]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
+.sp
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fI\%\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%GLOBAL OPTIONS\fP
+.IP \(bu 2
+\fI\%list\fP
+.IP \(bu 2
+\fI\%add\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%ADDING FROM DIRECTORIES\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%remove\fP
+.IP \(bu 2
+\fI\%add_format\fP
+.IP \(bu 2
+\fI\%remove_format\fP
+.IP \(bu 2
+\fI\%show_metadata\fP
+.IP \(bu 2
+\fI\%set_metadata\fP
+.IP \(bu 2
+\fI\%export\fP
+.IP \(bu 2
+\fI\%catalog\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%EPUB 옵션\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%saved_searches\fP
+.IP \(bu 2
+\fI\%add_custom_column\fP
+.IP \(bu 2
+\fI\%custom_columns\fP
+.IP \(bu 2
+\fI\%remove_custom_column\fP
+.IP \(bu 2
+\fI\%set_custom\fP
+.IP \(bu 2
+\fI\%restore_database\fP
+.IP \(bu 2
+\fI\%check_library\fP
+.IP \(bu 2
+\fI\%list_categories\fP
+.IP \(bu 2
+\fI\%backup_metadata\fP
+.IP \(bu 2
+\fI\%clone\fP
+.IP \(bu 2
+\fI\%embed_metadata\fP
+.IP \(bu 2
+\fI\%search\fP
+.UNINDENT
+.SH GLOBAL OPTIONS
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+이 도움말 메시지를 표시한 후 종료
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-library\-path, \-\-with\-library
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username
+Username for connecting to a calibre Content server
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+프로그램의 버전을 표시한 후 종료합니다.
+.UNINDENT
+.SH LIST
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+캘리버 데이터베이스에 등록되어 있는 책들의 목록을 표시합니다.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-ascending
+오름차순의 결과로 정렬합니다
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fields, \-f
+The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-limit
+The maximum number of results to display. Default: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-width, \-w
+The maximum width of a single line in the output. Defaults to detecting screen size.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix
+The prefix for all file paths. Default is the absolute path to the library folder.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filter the results by the search query. For the format of the search query, please see the search related documentation in the User Manual. Default is to do no filtering.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-separator
+문자열은 필드를 구분하는데 사용됩니다. 기본값은 공백입니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sort\-by
+The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+.UNINDENT
+.SH ADD
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add [options] file1 file2 file3 ...
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Add the specified files as books to the database. You can also specify directories, see
+the directory related options below.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Set the authors of the added book(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Path to the cover to use for the added book
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-duplicates, \-d
+이미 DB에 책이 있어도 책을 추가합니다. 책의 이름을 기반으로 비교합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-empty, \-e
+비어있는 책 추가 (형식이 없는 책)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+Set the ISBN of the added book(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-languages, \-l
+A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Set the series of the added book(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index, \-S
+Set the series number of the added book(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags, \-T
+Set the tags of the added book(s)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Set the title of the added book(s)
+.UNINDENT
+.SS ADDING FROM DIRECTORIES
+.sp
+Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+.INDENT 0.0
+.TP
+.B \-\-add
+A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore
+A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-one\-book\-per\-directory, \-1
+Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-recurse, \-r
+Process directories recursively
+.UNINDENT
+.SH REMOVE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove ids
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Do not use the recycle bin
+.UNINDENT
+.SH ADD_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_format [options] id ebook_file
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-dont\-replace
+Do not replace the format if it already exists
+.UNINDENT
+.SH REMOVE_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_format [options] id fmt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH SHOW_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb show_metadata [options] id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Show the metadata stored in the calibre database for the book identified by id.
+id is an id number from the search command.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-as\-opf
+OPF 양식(XML)에서 책 정보를 인쇄합니다
+.UNINDENT
+.SH SET_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_metadata [options] id [/path/to/metadata.opf]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Set the metadata stored in the calibre database for the book identified by id
+from the OPF file metadata.opf. id is an id number from the search command. You
+can get a quick feel for the OPF format by using the –as\-opf switch to the
+show_metadata command. You can also set the metadata of individual fields with
+the –field option. If you use the –field option, there is no need to specify
+an OPF file.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-field, \-f
+The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-fields, \-l
+List the metadata field names that can be used with the \fI\%\-\-field\fP option
+.UNINDENT
+.SH EXPORT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb export [options] ids
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Export the books specified by ids (a comma separated list) to the filesystem.
+The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
+an opf file). You can get id numbers from the search command.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-all
+데이터베이스의 모든 책을 내보냅니다. ID 목록은 무시합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-asciiize
+보통, 캘리버는 파일명에 대한 모든 비영어권 문자를 대응하는 영문자로 변환합니다. 경고: 이 기능을 끄면, 저장할 때 파일 시스템이 유니코드를 얼마나 잘 지원하는지에 따라 오류가 발생할 수도 있습니다. Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-cover
+Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-update\-metadata
+캘리버가 캘리버 서재에 있는 책 정보를 가져와 저장된 파일의 책 정보를 업데이트합니다. 디스크에 저장하는 시간이 더 걸리게 됩니다. Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-write\-opf
+보통, 캘리버는 실제 eBook 파일과 함께 분리된 OPF 파일 내에 책 정보를 기록합니다. Specifying this switch will turn this behavior off.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+책마다 저장할 형식의 목록이며 쉼표로 구분합니다. 기본값으로 모든(all) 이용가능한 형식으로 저장됩니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-whitespace
+공백 문자를 밑줄로 교체합니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-single\-dir
+모든 책들을 하나의 디렉토리에 내보냅니다
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+저장되는 파일의 파일명과 디렉토리 구조를 제어하는 템플릿입니다. 기본값은 \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP이고, 제목과 저자명을 포함하는 파일명으로 저자별 하위 디렉토리에 저장하게 됩니다. 사용가능한 필드: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timefmt
+날짜를 표시하는 양식. %d \- 일, %b \- 월, %m \- 월(숫자), %Y \- 년도. 기본값: %b, %Y
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-dir
+Export books to the specified directory. Default is .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-lowercase
+경로를 소문자로 변환합니다.
+.UNINDENT
+.SH CATALOG
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Export a \fBcatalog\fP in format specified by path/to/destination extension.
+Options control how entries are displayed in the generated \fBcatalog\fP output.
+Note that different \fBcatalog\fP formats support different sets of options.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-ids, \-i
+Comma\-separated list of database IDs to catalog. If declared, \fI\%\-\-search\fP is ignored. Default: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filter the results by the search query. For the format of the search query, please see the search\-related documentation in the User Manual. Default: no filtering
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+상세한 출력 정보를 표시합니다. 디버깅 시에 유용합니다.
+.UNINDENT
+.SS EPUB 옵션
+.INDENT 0.0
+.TP
+.B \-\-catalog\-title
+Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cross\-reference\-authors
+Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline
+Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclude\-genre
+Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclusion\-rules
+Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-authors
+\fB\(aq\fP저자\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-descriptions
+\fB\(aq\fP책 설명\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-genres
+\fB\(aq\fP장르\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-recently\-added
+\fB\(aq\fP최근 추가된 항목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-series
+\fB\(aq\fP시리즈\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-titles
+\fB\(aq\fP제목\fB\(aq\fP 섹션을 카탈로그에 포함합니다. 기본값: \fB\(aq\fPFalse\fB\(aq\fP 적용 대상 형식: AZW3, EPUB, MOBI 출력 형식
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-genre\-source\-field
+Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fP태그\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-header\-note\-source\-field
+Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-merge\-comments\-rule
+#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with Comments  [before|after] Placement of notes with respect to Comments  [True|False] \- A horizontal rule is inserted between notes and Comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix\-rules
+Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preset
+Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-thumb\-width
+Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-existing\-cover
+Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+.UNINDENT
+.SH SAVED_SEARCHES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb saved_searches [options] (list|add|remove)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Manage the saved searches stored in this database.
+If you try to add a query with a name that already exists, it will be
+replaced.
+.sp
+Syntax for adding:
+.sp
+calibredb \fBsaved_searches\fP add search_name search_expression
+.sp
+Syntax for removing:
+.sp
+calibredb \fBsaved_searches\fP remove search_name
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH ADD_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb add_custom_column [options] label name datatype
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Create a custom column. label is the machine friendly name of the column. Should
+not contain spaces or colons. name is the human friendly name of the column.
+datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-display
+A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-is\-multiple
+This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+.UNINDENT
+.SH CUSTOM_COLUMNS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb custom_columns [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+List available custom columns. Shows column labels and ids.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-details, \-d
+각 열에 대한 상세 정보를 표시합니다.
+.UNINDENT
+.SH REMOVE_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb remove_custom_column [options] label
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Remove the custom column identified by label. You can see available
+columns with the custom_columns command.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-force, \-f
+확인을 다시 묻지 않음
+.UNINDENT
+.SH SET_CUSTOM
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb set_custom [options] column id value
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Set the value of a custom column for the book identified by id.
+You can get a list of ids using the search command.
+You can get a list of custom column names using the custom_columns
+command.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-append, \-a
+If the column stores multiple values, append the specified values to the existing ones, instead of replacing them.
+.UNINDENT
+.SH RESTORE_DATABASE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb restore_database [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Restore this database from the metadata stored in OPF files in each
+directory of the calibre library. This is useful if your metadata.db file
+has been corrupted.
+.sp
+WARNING: This command completely regenerates your database. You will lose
+all saved searches, user categories, plugboards, stored per\-book conversion
+settings, and custom recipes. Restored metadata will only be as accurate as
+what is found in the OPF files.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-really\-do\-it, \-r
+Really do the recovery. The command will not run unless this option is specified.
+.UNINDENT
+.SH CHECK_LIBRARY
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb check_library [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+CSV로 출력
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_extensions, \-e
+Comma\-separated list of extensions to ignore. Default: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_names, \-n
+Comma\-separated list of names to ignore. Default: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-report, \-r
+Comma\-separated list of reports. Default: all
+.UNINDENT
+.SH LIST_CATEGORIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb list_categories [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Produce a report of the category information in the database. The
+information is the equivalent of what is shown in the tags pane.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-categories, \-r
+Comma\-separated list of category lookup names. Default: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+CSV로 출력
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dialect
+The type of CSV file to produce. Choices: excel, excel\-tab
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-item_count, \-i
+Output only the number of items in a category instead of the counts per item within the category
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-width, \-w
+The maximum width of a single line in the output. Defaults to detecting screen size.
+.UNINDENT
+.SH BACKUP_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb backup_metadata [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Backup the metadata stored in the database into individual OPF files in each
+books directory. This normally happens automatically, but you can run this
+command to force re\-generation of the OPF files, with the –all option.
+.sp
+Note that there is normally no need to do this, as the OPF files are backed up
+automatically, every time metadata is changed.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-all
+Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+.UNINDENT
+.SH CLONE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb clone path/to/new/library
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
+same custom columns, virtual libraries and other settings as the current library.
+.sp
+The cloned library will contain no books. If you want to create a full duplicate, including
+all books, then simply use your filesystem tools to copy the library folder.
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH EMBED_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb embed_metadata [options] book_id
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Update the metadata in the actual book files stored in the calibre library from
+the metadata in the calibre database.  Normally, metadata is updated only when
+exporting files from calibre, this command is useful if you want the files to
+be updated in place. Note that different file formats support different amounts
+of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
+in all books. You can also specify many book ids separated by spaces and id ranges
+separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-only\-formats, \-f
+Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+.UNINDENT
+.SH SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibredb search [options] search expression
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Search the library for the specified \fBsearch\fP term, returning a comma separated
+list of book ids matching the \fBsearch\fP expression. The output format is useful
+to feed into other commands that accept a list of ids as input.
+.sp
+The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
+language, for example: author:asimov title:robot
+.sp
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.INDENT 0.0
+.TP
+.B \-\-limit, \-l
+리턴할 결과의 최대 갯수. 기본값은 모든 결과입니다.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

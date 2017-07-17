@@ -3,14 +3,11 @@
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
-import sys, os, re, textwrap
+import os, re, textwrap
 from functools import partial
-import init_calibre
-del init_calibre
 
 from sphinx.util.console import bold
 
-sys.path.append(os.path.abspath('../../../'))
 from calibre.linux import entry_points, cli_index_strings
 from epub import EPUBHelpBuilder
 from latex import LaTeXHelpBuilder
@@ -239,7 +236,7 @@ def render_options(cmd, groups, options_header=True, add_program=True, header_le
 
 
 def mark_options(raw):
-    raw = re.sub(r'(\s+)--(\s+)', ur'\1-\u200b-\2', raw)
+    raw = re.sub(r'(\s+)--(\s+)', ur'\1``--``\2', raw)
 
     def sub(m):
         opt = m.group()
@@ -253,12 +250,9 @@ def mark_options(raw):
     return raw
 
 
-def cli_docs(app):
-    info = app.builder.info
-    info(bold('creating CLI documentation...'))
+def get_cli_docs():
     documented_cmds = []
     undocumented_cmds = []
-
     for script in entry_points['console_scripts'] + entry_points['gui_scripts']:
         module = script[script.index('=')+1:script.index(':')].strip()
         cmd = script[:script.index('=')].strip()
@@ -272,6 +266,13 @@ def cli_docs(app):
                 documented_cmds.append((cmd, getattr(module, 'option_parser')(cmd)))
         else:
             undocumented_cmds.append(cmd)
+    return documented_cmds, undocumented_cmds
+
+
+def cli_docs(app):
+    info = app.builder.info
+    info(bold('creating CLI documentation...'))
+    documented_cmds, undocumented_cmds = get_cli_docs()
 
     documented_cmds.sort(cmp=lambda x, y: cmp(x[0], y[0]))
     undocumented_cmds.sort()
@@ -338,8 +339,20 @@ def guilabel_role(typ, rawtext, text, *args, **kwargs):
     return menusel_role(typ, rawtext, text, *args, **kwargs)
 
 
+def setup_man_pages(app):
+    documented_cmds = get_cli_docs()[0]
+    man_pages = []
+    for cmd, option_parser in documented_cmds:
+        path = 'generated/%s/%s' % (app.config.language, cmd)
+        man_pages.append((
+            path, cmd, cmd, 'Kovid Goyal', 1
+        ))
+    app.config['man_pages'] = man_pages
+
+
 def setup(app):
     from docutils.parsers.rst import roles
+    setup_man_pages(app)
     app.add_builder(EPUBHelpBuilder)
     app.add_builder(LaTeXHelpBuilder)
     app.connect('source-read', source_read_handler)

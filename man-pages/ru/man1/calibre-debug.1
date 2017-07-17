@@ -1,0 +1,176 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "июля 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Различные интерфейсы командной строки полезны для отладки calibre.
+Без опций эта команда запустит встроенный интерпретатор Python. Также можно запустить
+основной графический интерфейс calibre, его просмотрщик или редактор в режиме отладки.
+.INDENT 0.0
+.INDENT 3.5
+Он также содержит интерфейсы для различных возможностей calibre, которые не имеют
+выделенных инструментов командной строки, например выделение подмножества шрифтов,
+.UNINDENT
+.UNINDENT
+.sp
+инструмент для выделения разницы в электронных книгах и т.п.
+Также можно использовать% prog для запуска автономных скриптов. Пример запуска:    \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.sp
+Всё после  \fB\-\-\fP пропускается скриптом.
+.sp
+Всякий раз, когда вы передаете аргументы% prog, в которых есть пробелы, заключите аргументы в кавычки. Например:  «/some path/with spaces»
+.SH [ПАРАМЕТРЫ]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Добавить простой плагин (т.е. плагин, который состоит только из .py файла), указав путь к .py файлу, содержащему код плагина.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Запустить Python код
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Отладка обнаружения устройства
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+Добавить (убрать) Calibre в список программ по умолчанию Windows \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Запустить инструмент сравнения. Например: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Запустите инструмент \fB"\fPРедактировать книгу\fB"\fP в режиме отладки.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Запустить Python код в файле.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Преобразовать книгу (экспортировать книгу в коллекцию HTML\-файлов и метаданных, с возможностью их дальнейшего редактирования при помощи стандартных инструментов редактирования HTML, и затем дальнейшего ее восстановления из отредактированного HTML. Не вносит никаких дополнительных изменений в HTML, в отличие от полного преобразования calibre).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Экспортировать все данные Calibre (книги, настройки, плагины)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Запустить графический интерфейс с включенной отладкой. Отладочная информация будет выводиться в потоки stdout и stderr
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Запустить графический интерфейс с отладочной консолью, фиксируя указанный путь. Только для внутреннего использования. Используйте ключ \-g чтобы запустить графический интерфейс в отладочном режиме.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+показать это сообщение и выйти
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Импорт ранее экспортированных данных Calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Посмотреть MOBI файл(файлы) по указанному пути(путях)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Вывести пути, необходимые для установки рабочего окружения для Calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Перезапустить базу данных calibre по указанному пути. Может быть полезно для восстановления повреждённых БД.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Запустить плагин, обеспечивающий интерфейс командной строки. Например: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Всё после \fB\-\-\fP будет передано плагину в качестве параметров.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Если calibre уже запущен, то он будет остановлен. Помните, если имеются запущенные задания, то они будут тихо прекращены, поэтому используйте с осторожностью.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Разбить указанный шрифт. Добавьте \fB\-\-\fP после параметра, чтобы передать параметр программе разбивки шрифта.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Тест бинарных модулей в сборке
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+показать версию программы и выйти
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Запустить читалку в режиме отладки
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

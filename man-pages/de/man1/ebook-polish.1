@@ -1,0 +1,120 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-POLISH" "1" "Juli 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-polish \- ebook-polish
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-polish [Optionen] Quelldatei [Ausgabedatei]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Bei Bücher perfektionieren dreht sich alles um den Feinschliff und die Perfektionierung des sorgfältig gestalteten Buches.
+.sp
+Perfektionieren verändert den Code im Buch nur minimal. Im Gegensatz zur Konvertierung findet hierbei keine Änderung von CSS\-Struktur, Dateinamen, Schriftgrößen, Rändern usw. statt.
+Jede Aktion führt nur ein Mindestmaß  an Korrekturen für den gewünschten Effekt aus
+.sp
+Dieses Werkzeug sollte als letzter Schritt bei der Erstellung Ihres eBooks eingesetzt werden.
+.sp
+„Bücher perfektionieren“ funktioniert nur bei Büchern in den Formaten AZW3 oder EPUB.
+.sp
+Wann immer Sie Argumente mit Leerzeichen an \fBebook\-polish\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+.SH [OPTIONEN]
+.INDENT 0.0
+.TP
+.B \-\-compress\-images, \-i
+Komprimieren Sie verlustfrei die Bilder im Buch, um die Dateigröße zu reduzieren, ohne die Bildqualität zu beeinflussen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Pfad zu einem Titelbild. Ändert das im eBook festgelegte Titelbild. Falls kein Titelbild vorhanden oder dieses nicht korrekt identifiziert ist, wird ein neues Titelbild eingefügt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-fonts, \-e
+Alle Schriftarten einbetten, die im Dokument referenziert, aber bisher noch nicht eingebettet sind.  Hierbei werden Schriftarten auf Ihrem System gesucht und im Dokument eingebettet, wenn sie gefunden werden. Bitte stellen Sie sicher, dass Sie über die richtige Lizenz für die Einbettung dieser Schriftarten verfügen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+Diesen Hilfetext anzeigen und beenden.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-jacket, \-j
+\fB"\fPBuchumschlag\fB"\fP als erste Seite des Buches einfügen, welche alle Metadaten des Buches wie Titel, Schlagwörter, Autoren, Serie, Kommentare usw. beinhaltet. Jeder bisherige Buchumschlag wird ersetzt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-opf, \-o
+Pfad zu einer OPF\-Datei. Die Metadaten in dem Buch werden aus der OPF\-Datei aktualisiert.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-jacket
+Zuvor eingefügte Buchumschlagseite entfernen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-unused\-css, \-u
+Alle unbenutzten CSS\-Regeln aus Stylesheets und <style>\-Tags entfernen. Manche aus Produktionsvorlagen erstellte Bücher können zahlreiche zusätzliche CSS\-Regeln besitzen, die keinem tatsächlichen Inhalt entsprechen. Diese zusätzlichen Regeln können Lesegeräte verlangsamen, die sämtliche Regeln analysieren müssen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation, \-p
+Gewöhnliche Gedankenstriche, Auslassungspunkte, Anführungszeichen, mehrere Bindestriche in Folge usw. in ihre typografisch korrekten Entsprechungen umwandeln. Beachten Sie, dass der Algorithmus manchmal zu falschen Ergebnissen führen kann, insbesondere dann, wenn einfache Anführungszeichen am Beginn von Kontraktionen verwendet werden.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-fonts, \-f
+Eine \fB"\fPSchrift reduzieren\fB"\fP heißt, eine eingebettete Schrift auf die Buchstaben zu reduzieren, welche im Buch tatsächlich verwendet werden. Diese Option vermindert die Größe der Schriftartendatei enorm (die Dateigröße zu halbieren ist fast immer möglich). Wenn ein Buch zum Beispiel eine spezielle Schrift für Überschriften benutzt, dann wird \fB"\fPSchrift reduzieren\fB"\fP nur die Buchstaben in die eingebettete Schrift übernehmen, die tatsächlich in den Überschriften verwendet werden.  Genau so wird, wenn die Schrift auch kursive oder fette Buchstaben enthält, diese aber selten oder gar nicht verwendet werden, diese Schrift auf die wirklich benutzten Zeichen reduziert oder sogar komplett entfernt werden. Der einzige Nachteil von \fB"\fPSchrift reduzieren\fB"\fP ist,  dass ein nachträglich hinzugefügter Text möglicherweise nicht ganz durch die reduzierte Schrift abgedeckt wird.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose
+Umfangreichere Ausgabe erzeugen. Nützlich für die Fehlerdiagnose.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+Programmversion anzeigen und beenden
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

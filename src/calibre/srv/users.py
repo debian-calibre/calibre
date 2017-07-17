@@ -54,6 +54,8 @@ def validate_username(username):
 
 
 def validate_password(pw):
+    if not pw:
+        return _('Empty passwords are not allowed')
     try:
         pw = pw.encode('ascii', 'strict')
     except ValueError:
@@ -80,7 +82,9 @@ class UserManager(object):
                     uv = next(c.execute('PRAGMA user_version'))[0]
                     if uv == 0:
                         # We have to store the unhashed password, since the digest
-                        # auth scheme requires it.
+                        # auth scheme requires it. (Technically, one can store
+                        # a MD5 hash of the username+realm+password, but it has to be
+                        # without salt so it is trivially brute-forceable, anyway)
                         # timestamp stores the ISO 8601 creation timestamp in UTC.
                         c.execute('''
                         CREATE TABLE users (

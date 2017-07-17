@@ -318,15 +318,15 @@ class BooksView(QTableView):  # {{{
             alignment = action.partition('_')[-1]
             self._model.change_alignment(column, alignment)
         elif action == 'quickview':
-            from calibre.customize.ui import find_plugin
-            qv = find_plugin('Show Quickview')
+            from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
+            qv = get_quickview_action_plugin()
             if qv:
                 rows = self.selectionModel().selectedRows()
                 if len(rows) > 0:
                     current_row = rows[0].row()
                     current_col = self.column_map.index(column)
                     index = self.model().index(current_row, current_col)
-                    qv.actual_plugin_.change_quickview_column(index)
+                    qv.change_quickview_column(index)
 
         self.save_state()
 
@@ -920,6 +920,15 @@ class BooksView(QTableView):  # {{{
                 if select:
                     sm = self.selectionModel()
                     sm.select(index, sm.ClearAndSelect|sm.Rows)
+
+    def select_cell(self, row_number=0, logical_column=0):
+        if row_number > -1 and row_number < self.model().rowCount(QModelIndex()):
+            index = self.model().index(row_number, logical_column)
+            self.setCurrentIndex(index)
+            sm = self.selectionModel()
+            sm.select(index, sm.ClearAndSelect|sm.Rows)
+            sm.select(index, sm.Current)
+            self.clicked.emit(index)
 
     def row_at_top(self):
         pos = 0

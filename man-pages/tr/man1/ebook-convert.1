@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "Temmuz 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an “open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+.sp
+Seçenekler ve seçeneklerin varsayılan değerleri girdi ve çıktı biçimlerine göre
+değişiklik gösterir, her zaman şu şekilde kontrol etmelisiniz:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Aşağıda tüm dönüştürmeler için ortak seçenekler ve her girdi ve çıktıya özel
+seçenekler bulunabilir.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%GİRDİ AYARLARI\fP
+.IP \(bu 2
+\fI\%ÇIKTI AYARLARI\fP
+.IP \(bu 2
+\fI\%GÖR ve HİSSET\fP
+.IP \(bu 2
+\fI\%SEZGİSEL İŞLEME\fP
+.IP \(bu 2
+\fI\%BUL ve DEĞİŞTİR\fP
+.IP \(bu 2
+\fI\%YAPI ALGILAMA\fP
+.IP \(bu 2
+\fI\%İÇİNDEKİLER\fP
+.IP \(bu 2
+\fI\%METADATA\fP
+.IP \(bu 2
+\fI\%HATA AYIKLA\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+bu yardım iletisini göster ve çık
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Girdi profilini belirleyin. Bu profil dönüştürme sistemine girdi dosyasındaki çeşitli bilgileri nasıl kullanacağı bilgisini verir. örneğin çözüünürlüğe bağlı uzunluk( yani piksel cinsinden uzunluk) Seçimler şunlar:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Çıktı profilini belirtin. Çıktı profili dönüştürme sistemine oluşturulan belgenin belirtilen aygıta göre nasıl en iyi hale getirileceğini söyler. Çıktı profili (çıktıyı belli bir aygıt için en iyi hale getirmek gibi) bazı durumlarda  için kullanılabilir, ama bu genellikle gereksizdir. Seçenekler şunlardır:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+programın sürüm numarasını göster ve çık
+.UNINDENT
+.SH GİRDİ AYARLARI
+.sp
+Girdi dosyası mobi ‘iın işlenme sürecinin kontrol seçenekleri
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Girdi dökümanındaki dil kodlamasını belirtin. Belirtilirse, bu seçenek dökümanın kendisinde belirtilmiş herhangi bir kodlamanın üzerine yazar. Bilhassa kodlama belirtmeyen veya hatalı kodlama belirtilmiş dökümanlar için kullanışlıdır.
+.UNINDENT
+.SH ÇIKTI AYARLARI
+.sp
+Çıktı dosyası epub ‘nın işlenme sürecinin kontrol seçenekleri
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+EPUB dosyasını FBReaderJ ile kullanmayı düşünüyorsanız bu özellik gereklidir. Böylece tüm dosyaları, dosya sisteminin en üst seviyesine koyarak düz bir dosya sistemi yaratır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Ana kitap içeriğinin parçası olarak görünecek bir satır arası İçindekiler ekle.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Eklenen satır arası içindekileri kitabın başı yerine sonuna koy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Üretilmiş EPUB dosyasının içeriğini belirtilen klasöre çıkar. Klasörün içeriği önce silindiğinden dikkatli olmalı.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Bu boyutttan büyük bütün HTML dosyalarını küçük parçalara böl (KB olarak). Çoğu EPUB okuyucu büyük boyuttaki dosyaları okuyamadığı için bu gereklidir.  Öntanımlı 260KB boyutu Adobe Digital Edition\fB\(aq\fPlar için gereklidir. Boyut temelli bölmeyi devre dışı bırakmak için 0 olarak ayarlayın.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Normalde, kitap kapağı yoksa ve sizde bir tane belirtmediyseniz, başlık yazarlar vb. bilgilerden öntanımlı bir kapak oluşturulur. Bu özellikli kapak oluşturmayı kapatur.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Kitap kapağı için SVG kullanma. Bu seçeneği yalnızca EPUB\fB\(aq\fPınızı iPhone ya da JetBook Lite gibi SVG desteklemeyen bir cihazda kullanacaksanız seçin. Bu seçenek seçili değilse, bu cihazlar kitap kapağı yerine boş bir sayfa görüntüleyecektir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Kitap kapağı olarak SVG kullandığınızda bu seçenek, kitap kapağının müsait ekran alanına en/boy oranının korunarak ölçeklenmesini sağlar. Yani bazı durumlarda resmin kenarlarında beyaz alanlar bulunabilir ancak resim asla bozulmaz. Bu seçenek seçili değilse resim bir miktar bozulabilir ama kenarlarda beyaz alanlar olmaz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Eğer belirtilirse, çıktı ektentisi en okunabilir şekilde bir çıktı yaratmaya çalışacaktır. Bazı çıktı eklentilerinde hiç bir etkisi olmayabilir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Oluşturulan İçindekiler (TOC) bölümü için başlık.
+.UNINDENT
+.SH GÖR VE HİSSET
+.sp
+Çıktı dosyasının görünümünü ayarlamak için kullanılabilecek ayarlar
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Unicode karakterleri ASCII karakterlerle değiştirin. Bu seçenek unicode karakterleri ASCII karaktelerle değiştireceğinden dikkatli kullanın. Örneğin \fB\(aq\fPМихаил Горбачёв\fB\(aq\fP ifadesini \fB\(aq\fPMichael Gorbachiov\fB\(aq\fPla değiştirecektir. Eğer Japonca ve Çincenin ortak karakterleri gibi birden fazla anlamı olan bir karakter bulunursa bu durumda değiştirme işleminde Calibre\fB\(aq\fPnin arayüz dili esas alınacaktır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Pts değeri olarak temel font büyüklüğü. Üretilen kitaptaki tüm font büyüklükleri bu büyüklük temelinde ölçeklendirelecektir. Büyük sayı ayarlayarak çıktıdaki fontları büyütebilir ya da küçük sayı ile çıktıdaki fontları küçültebilirsiniz. Varsayılan sizin seçtiğiniz çıktı profiline dayanan font büyüklüğüdür.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Metnin yaslama ayarlarını değiştir. \fB"\fPleft\fB"\fP değeri tüm çift tarafa da dayalı (justified) yazıyı sola dayalı yapar. \fB"\fPjustify\fB"\fP ise çift tarafa dayalı olmayan yazıları çift tarafa dayalı yapar. \fB"\fPoriginal\fB"\fP değeri ise kaynak dosyadaki değeri korur. Tüm çıktı formatlarının çift tarafa dayalı formatı desteklemediiğini unutmayın.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Tüm yazı tiplerinin yeniden boyutlandırılmasını etkisizleştir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Henüz gömülmemiş ama girdi belgesinde başvurulan tüm yazı tiplerini göm. Bu sisteminizi yazı tipleri için arar, ve bulursa, bulunanlar gömülür. Gömme yalnızca dönüştürdüğünüz yazı tipi gömülü yazı tiplerini destekliyorsa çalışır, örneğin EPUB, AZW3, DOCX veya PDF. Lütfen bu belgede kullanılan gömülü yazı tiplerini kullanmak için gerekli izinleriniz olduğundan emin olun.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Belirtilen yazı tipi ailesini kitaba göm. Bu kitap için kullanılan \fB"\fPtemel\fB"\fP yazı tipini belirtir. Girdi belgesi kendi yazı tiplerini belirtmişse, bu temel yazı tipini ezebilir. Filtre biçim bilgisi seçeneğini kullanarak yazı tiplerini girdi belgesinden çıkarabilirsiniz. Yazı tipi gömmenin yalnızca bazı çıktı formatlarında çalıştığını unutmayın, özellikle EPUB, AZW3 ve DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+CSS biçim sayfasına veya ham CSS\fB\(aq\fPye olan yol. Bu CSS, kaynak dosyadaki biçim kurallarına eklenecek, bu sayede bu kuralların yerine kullanılabilecektir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+Tüm CSS biçim kurallarından çıkarılacak CSS özelliklerinin virgülle ayrılmış listesi. Bazı biçim bilgisinin varlığının aygıtınızda üzerine yazılmasını engellediği durumlarda kullanışlıdır. Örneğin: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+CSS yazı tipi isimlerinden yazı tipi boyutlarına nokta olarak haritalama. Örnek bir ayar şu şekildedir 12,12,14,16,18,20,22,24. Bunlar xx\-small\fB\(aq\fPdan xx\-large\fB\(aq\fPa boyutların haritasıdır, son boyut dev yazı tipleri içindir. Yazı tipi yeniden ölçekleme algoritması bu boyutları kullanarak yazı tiplerini akıllıca yeniden boyutlandırır. Varsayılan seçtiğiniz çıktı profiline göre bir haritalama kullanmaktır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Paragraflar arasına boş satır ekle. Eğer kaynak dosyası paragraf (<p> or <div> etiketlerini) içermiyorsa çalışmaz
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Eklenen boşlukların yüksekliğini \fB"\fPem\fB"\fP cinsinden ayarlayın. Parağraf arası boşluklar ise buradaki değerin iki katı olarak ayarlanacaktır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Girdi belgesinde mevcut olan bağları koru. Bir bağ, ff, fi, fl vs. gibi bir çift karakterin özel olarak gerçeklenmesine denir. Çoğu okuyucu varsayılan yazı tiplerinde bağları desteklemezler, yani doğru gerçeklemeleri beklenmez. Varsayılan olarak, calibre bir bağı karşılık gelen normal karakter çiftine çevirir. Bu seçenek ise korunmalarını sağlar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Sayı olarak satır yüksekliği. Ardı ardına gelen satırlar arasındaki boşluğu kontrol eder. Kendi satır yüksekliğini belirlemeyen unsurlara uygulanır. Çoğu durumda minimum satır aralığı tercihi daha kullanışlıdır. Varsayılan olarak herhangi bir satır yüksekliği işlemi yapılmaz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Bazı kötü dizayn edilmiş dökümanlar sayfadaki metinin düzenlemesini kontrol için tablo kullanırlar. Bu sayfalar dönüştürüldüğünde sıklıkla metin sayfadan ve taşıyor ve başka hatalar çıkıyor. Bu seçenek içeriği tablodan çıkaracak ve onu bildiğimiz şekilde sunacak.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Unsurların hesaplanmış font büyüklüğünün yüzdesi olarak, minimum satır yüksekliği. Calibre bu ayar ile girdi dokümanının ne belirttiğinden bağımsız olarak her unsura bir satır yüksekliği atayacaktır. Devre dışı bırakmak için sıfıra ayarlayın. Varsayılan 120%. Ne yaptığınızı bilmiyorsanız, doğrudan satır yüksekliği belirmek yerine bu ayarı kullanın. Örneğin, bunu 240\fB\(aq\fPa ayarlayarak \fB"\fP2 kat satır aralıklı\fB"\fP metin elde edebilirsiniz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Paragraflar arası boşlukları kaldır. Ayrıca paragrafların girintilerini 1,5em olarak ayarla. Eğer kaynak dosyası paragraları(<p> or <div> etiketleri) kullanmamışsa boşluk kaldırma çalışmayacaktır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Calibre paragraflar arasındaki boş satırları kaldırdığında, paragrafların kolayca ayırt edilebilmesi için otomatik olarak bir paragraf girintisi yapar. Bu seçenek, o girintinin genişliğini (em cinsinden) kontrol eder. Bu değeri negatif olarak ayarlarsanız girdi belgesinde belirlenen paragraf girintisi kullanılır. Yani calibre paragraf girintisini değiştirmez.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Tüm gömülü yazı tiplerini alt kümeye al. Gömülü tüm yazı tipleri yalnızca bu belgede kullanılan oymaları içerecek şekilde eksiltilir. Bu yazı tipi dosyalarının boyutunu küçültür. Kullanılmayan oymalara sahip büyük bir yazı tipi kullanıyorsanız faydalıdır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Süslü tırnak, tire ve üç nokta işaretlerini düz versiyonlarına çevir.
+.UNINDENT
+.SH SEZGİSEL İŞLEME
+.sp
+Genel tanımlı motifleri kullanarak dökümanın yazılarını ve yapısını değiştirin. Default olarak pasif durumdadır. Aktifleştirmek için –enable\-heuristics kullanın.  Komutları tek tek pasifleştirmek için  –disable\-* ayarını kullanabilirsiniz.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Belgedeki tirelenmiş kelimeleri analiz et.  Belge tirelerin kalması veya gitmesi gerekliliğini belirlemek için sözlük olarak kullanılır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Eğer tüm paragraflar arasında boş paragraflar varsa dökümandan bunları çıkar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Birden çok kesintisiz boşluk girdilerinden oluşan girintiyi CSS girintilerine çevir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Sola dayalı sahne bitiş işaretçileri ortalanır. Birden çok boş satır kullanan yumuşak sahne kesicileri yatay kurallarla değiştir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+İtalik olacak ortak kelimelere ve modellere bak, ve bunları italikleştir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Biçimlendirilmemiş bölüm başlıklarını ve altbaşlıklarını algıla. Onları h2 ve h3 etiketlerine çevir. Bu ayar içindekiler yaratmayacak ama oluşturulurken yapı algılama ile bağlantılı kullanılabilecek.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Ardarda gelen <h1> veya <h2> etiketleri olup olmadığına bakar. Etiketler bölüm başlıklarının ortasında parçalanmanın önüne geçmek için yeniden numaralandırılır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Noktalama işaretleri ve diğer biçim işaretlerini kullanırken satırları bölme
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Heuristic işlemeyi etkinleştir. Bu seçenek gerçekleşecek herhangi bir heurostic işleme için ayarlanmalıdır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Bir satırın erişmesi gereken uzunluğa karar verme ölçeği. Geçerli değerler 0 ila 1 arası ondalık sayılardır. Varsayılan değer 0.4 olup, ortalama satır uzunluğunun biraz altındadır. Eğer bir dökümanda bir iki satır sarkıyorsa, bu değer düşürülmelidir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Sahne kesicileri belirtilen metinle değiştir. Varsayılan olarak, girdi belgesindeki metin kullanılır.
+.UNINDENT
+.SH BUL VE DEĞİŞTİR
+.sp
+Kullanıcı tanımlı motifleri kullanarak dökümanın yazılarını ve yapısını değiştir.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+sr1\-search aramasıyle bulunan metin için yeni değer
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+sr1\-replace araması ile değiştirmek için arama şablonu (regular expression\- regex).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+sr2\-search araması ile bulunan metin için yeni değer.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+sr2\-replace araması ile değiştirmek için arama şablonu (regular expression\- regex).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+sr3\-search aramasıyle bulunan metin için yeni değer.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+sr3\-replace araması ile değiştirmek için arama şablonu (regular expression\- regex).
+.UNINDENT
+.SH YAPI ALGILAMA
+.sp
+dosya yapısının otomatik farkınıa varma kontrolü
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Tesbit edilen bölümlerin nasıl işaretleneceğini belirleyin. \fB"\fPpagebreak\fB"\fP değeri bölümlerden önce sayfa sonu ekler. \fB"\fPrule\fB"\fP değeri bölümlerden önce bir çizgi ekler. \fB"\fPnone\fB"\fP değeri bölüm işaretlemeyi pasifleştirir ve \fB"\fPboth\fB"\fP değeri ise bölümlerden önce hem çizgi hem sayfa sonu ekler.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Bazı dökümanlar sayfa kenar boşluklarını (margin) her bir paragraf için sağ ve sol boşlukları belirleyerek ayarlar. Calibre bu ayarları bulup iptal etmeye çalışır. Bu bazen kaldırılmaması gereken boşluk ayarlarının da kaldırılmasına neden olur. Böyle bir durumda bu boşlukların kaldırılması işlemini iptal edebilirsiniz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+Bir XPath ifadesi. Sayfa kesmeleri belirtilen ögelerden önce yerleştirilir. İfadenin kullanımını kapatmak için bunu kullanın: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Belirtilen kapak yerine kaynak dosyasındaki algılanan kapağı kullan
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH İÇİNDEKİLER
+.sp
+İçindekiler(TOC)’un otomatik oluşturulma ayarını düzenleyin. Eğer kaynak içindekiler(TOC)’e sahipse varsayılan olarak o kullanılacaktır.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Girdideki linklerden içindekiler(TOC) oluştururken maddelerin birden fazla kopyasına izin ver. Yani farklı yerlere işaret etmesi şartıyla aynı yazıya sahip birden fazla maddeye izin ver.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+Birinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Eğer bu belirtilirse, diğer otomatik algılama biçimleri üzerinde öncelik alır. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+İkinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki birinci seviye girdinin altına eklenir. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+Üçüncü seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki ikinci seviye girdinin altına eklenir. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+İçindekilere eklenecek maksimum link sayısı. Devre dışı bırakmak için 0\fB\(aq\fPa ayarlayın. Varsayılan 50. Eğer eşik sayısından az bölüm algılanırsa linkler sadece içindekilere eklenir
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Otomatik algılanmış bölümleri İçindekiler kısmına ekleme
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Belirtilen kurallı ifadeyle eşleşen İçindekiler başlıklarını, İçindekilerden çıkarır. Eşleşen girdiler ve onların alt girdilerinin tümü çıkartılır.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Eğer bu sayıdan daha az bölüm algılanırsa linkler İçindekiler kısmına eklenir. Varsayılan: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Normalde kaynak içindekiler bilgisine sahipse otomatik üretilene tercihen bu bilgi kullanılır. Bu seçenek ile her zaman otomatik üretilen kullanılır
+.UNINDENT
+.SH METADATA
+.sp
+Çıkış almak için metadata seçeneklerini kaydet.
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Yazar\fB\(aq\fPa göre sıralamada kullanılacak metin
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Yazarları ayarla. Birden fazla yazar varsa ampersand (&) işareti ile ayrılmalı.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Kitap üreticisini ata.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Kapağı belirli bir dosya veya URL\fB\(aq\fPye ayarla
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Kitabın ISBN\fB\(aq\fPini ayarla.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Dili ayarla.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Derecelendirmesini ayarla. 1 ve 5 arasında bir sayı olmalı.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Metaveriyi seçili OPF dosyasından oku. Bu dosyadan okunacak metaveri, kaynak dosyadaki herhangi bir metaverinin yerine geçecektir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Kitabın serideki indeksini ayarla.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Kitap için etiketleri ayarla. Virgül ile ayrılmış liste olmalı.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Kitap zamandamgasını tanımla(Artık kullanılmıyor)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Başlığı ayarla.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Başlık sürümü sıralama için kullanılır.
+.UNINDENT
+.SH HATA AYIKLA
+.sp
+Dönüştürme  hatalarını bulmak için yardım seçenekleri
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Dönüştürme adımlarının değişik noktalarındaki sonuşları kaydet. Eğer hatanın hangi aşamadan kaynaklanadığını bilmiyorsanız faydalı olabilr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Ayrıntı seviyesi. Daha fazla ayrıntı için birden fazla belirtin. İki kere belirtmek tam ayrıntıya sebep olur, bir kere belirtmen orta seviye ayrıntı ve hiç belirtmemek en az ayrıntıya.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

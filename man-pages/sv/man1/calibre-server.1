@@ -1,0 +1,232 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-SERVER" "1" "juli 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-server [alternativ] [sökväg till biblioteket mapp...]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Starta calibre Innehållsserver. calibre Innehållsservern exponerar
+dina calibre\-bibliotek över internet. Du kan ange sökvägen
+till biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte
+anger några vägar, kommer alla biblioteken som i calibre\-
+huvudprogrammet känner till att användas.
+.sp
+När du skickar argument till \fBcalibre\-server\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+.SH [ALTERNATIV]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Sökväg till tillgångs loggfil. Denna loggfil innehåller information om klienter som ansluter till servern och gör efterfrågningar. Som standard görs ingen åtkomstloggning.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+Välj typen av autentisering att användas.   Ställ in HTTP\-autentiseringsläge som används av servern. Ställ in på \fB"\fPgrundläggande\fB"\fP om du sätter denna server bakom en SSL\-proxy. Annars lämna den som \fB"\fPauto\fB"\fP, som kommer att använda \fB"\fPgrundläggande\fB"\fP om SSL är konfigurerad annars kommer \fB"\fPnedbrytning\fB"\fP att användas.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Starta automatiskt om servern när källkoden ändras. Användbar för utveckling. Du bör också ange ett lågt värde för stänga av tidsbegränsning.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Minsta storlek för svar att använda vid datakomprimering (i bytes).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Kör process i bakgrunden som en demon (endast Linux).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Begränsa användardefinieradefält som ska visas.     Kommaseparerad lista med användardefinierade metadatafält som ska visas av Innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet, kommer alla fält som inte finns i denna lista inte att visas. Till exempel: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Förallokering av socket\-anslutning, till exempel med systemd socket aktivering. Som standard är detta alternativ aktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Lösenordsbaserad autentisering för att komma åt servern.    Normalt är servern obegränsad, så att alla kan få tillgång till den. Du kan begränsa åtkomsten till fördefinierade användare med det här alternativet. Som standard är detta alternativ inaktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Återgång till att automatiskt upptäcka gränssnitt.  Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är detta alternativ aktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Tillåt ej autentiserade lokala anslutningar att göra ändringar.     Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+Log HTTP 404 (Inte Hittad) förfrågningar.   Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+Annonsera OPDS\-flöden via BonJour.  Annonsera OPDS\-flöden via BonJour\-tjänsten så att OPDS\-baserade läsappar kan upptäcka och ansluta till servern automatiskt. Som standard är detta alternativ aktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Noll\-kopieringsfilöverföringar för att öka prestanda.       Detta kommer att använda noll\-kopiering för överföringar i kärnan när du skickar filer via nätverket, vilket ökar prestanda. Det kan dock leda till skadade filöverföringar på några trasiga filsystem. Om du upplever skadade filöverföringar, stänga av den. Som standard är detta alternativ aktiverat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+visa denna hjälptext och avsluta
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+Ignorera användardefinierade metadatafält.  Kommaseparerad lista med användardefinierade metadatafält som inte kommer att visas av Innehållsservern i /opds\- och /mobila\-vyer. Till exempel: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+Gränssnittet för att lyssna efter anslutningar.     Standardinställningen är att lyssna på alla tillgängliga gränssnitt. Du kan ändra detta med till exempel, \fB"\fP127.0.0.1\fB"\fP som bara lyssnar efter anslutningar från den lokala datorn, eller att \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6 och IPv4\-anslutningar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Sökväg till loggfil för servern. Denna loggfil innehåller serverinformation och fel, inte åtkomstloggar. Som standard skrivs den till stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Hantera databasen av användare tillåtna att ansluta till denna server. Se också alternativet \fI\%\-\-userdb\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+Max. storlek på enskild HTTP\-rubrik (i KB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Maximal tid för arbetarprocesser.   Maximala tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Maximalt antal arbetarprocesser.    Arbetsprocesser lanseras allt efter de behövs och används för stora jobb som förbereder en bok för visning, läggs till för böcker, konvertering, o.s.v. Normalt, är maximalt antal sådana processer baserad på antalet CPU\-kärnor. Du kan anpassa den med den här inställningen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+Max. loggfilstorlek (i MB).         Den maximala storleken på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+Maximalt antal böcker i OPDS\-flöden.        Maximala antalet böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Maximala antalet ogrupperade objekt i OPDS\-flöden.  Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Max. tillåten storlek för uppladdade filer till servern (i MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Skriv process\-PID till angiven fil
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Port att lyssna på för anslutningar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Total tid i sekunder att vänta för välutförd avstängning.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+Sökväg till SSL certifikat fil.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Sökväg till SSL privat nyckel fil.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Tid (i sekunder) efter en inaktiv anslutning stängs.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+Ett prefix att infogas alla webbadresser.   Användbart om du vill köra den här servern bakom en reverse proxy. Till exempel använd /calibre som URL\-prefix.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Sökväg till användardatabasen att använda för autentisering. Databasen är en SQLite\-fil. För att skapa den använder du \fI\%\-\-manage\-users\fP\&. Du kan läsa mer om hantering av användare på: \fI\%https://manual.calibre\-ebook.com/sv/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+visar programmets versionsnummer och avsluta
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Antal arbetartrådar för att användas vid processförfrågningar.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

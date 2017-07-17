@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "7月 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an 「open e\-book」 (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+.sp
+指定できるオプションとデフォルト値は、入力フォーマットと出力フォーマットの
+両方に依存するので、以下で確認するようにしてください:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+下記のオプションは、ますすべての変換に共通するオプション、続いて
+入力フォーマットと出力フォーマットに固有のオプションです。
+.INDENT 0.0
+.IP \(bu 2
+\fI\%入力オプション\fP
+.IP \(bu 2
+\fI\%出力オプション\fP
+.IP \(bu 2
+\fI\%外観\fP
+.IP \(bu 2
+\fI\%ヒューリスティック処理\fP
+.IP \(bu 2
+\fI\%検索と置換\fP
+.IP \(bu 2
+\fI\%構造の検出\fP
+.IP \(bu 2
+\fI\%目次\fP
+.IP \(bu 2
+\fI\%書誌情報\fP
+.IP \(bu 2
+\fI\%デバッグ\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+このヘルプメッセージを表示して終了
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+入力プロファイルを指定する。入力プロファイルは、変換のためのシステム情報を提供し、様々な入力文書の情報をどのように解釈するかを指定する。たとえば、解像度に依存する長さ（つまり、ピクセルごとの長さ）などがあります。選択肢:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+出力プロファイルを指定します。出力プロファイルは変換システムに、指定したデバイス毎のドキュメントの最適化(例えば画面サイズに合わせた画像のリサイズなど)を指定します。特定のデバイス用の最適化を行うことも可能ですが、普通はそこまで必要にはならないでしょう。選択肢:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+プログラムのバージョン番号を表示して終了
+.UNINDENT
+.SH 入力オプション
+.sp
+入力ファイル mobi の処理制御オプション
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+入力された文書の文字エンコーディングを指定します。このオプションを設定した場合、文書内で宣言されるエンコーディングは無視されます。特に、文書がエンコーディング宣言を行っていない場合や、エンコーディング宣言に問題がある場合に有効です。
+.UNINDENT
+.SH 出力オプション
+.sp
+epub出力処理をコントロールするためのオプション
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+このオプションはFBReaderJでEPUBを見る場合のみに必要になります。EPUB内のファイルのレイアウトをフラットにし、すべてのファイルをトップレベルに配置します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+インラインの目次を本の本文の一部として挿入します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+本の最初ではなく最後にインラインの目次を挿入します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+生成した EPUB ファイルの内容を指定したディレクトリーに展開する。最初にディレクトリの内容が消されるので、注意してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+指定した容量(KB)以上のHTMLファイルを分割します。大抵のEPUBリーダーは大きなファイルサイズを扱えないのでこのオプションは重要です。デフォルトの 260KBは Adobe Digital Editions 向けのサイズです。0を設定すると分割を無効にします。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+通常、入力ファイルに表紙がなく指定しなかった場合、タイトルや著者などからデフォルトの表紙が作成されます。このオプションでは表紙の生成を無効にします。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+SVGを本の表紙に使用しない。このオプションはiPhoneや JetBook LiteのようなSVGをサポートしないデバイスで使用する場合に使ってください。指定しないと、それらのデバイスでは表紙が白紙になってしまいます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+SVGの表紙を使う場合、このオプションはアスペクト比（縦横の比率）を保ったまま、表紙を画面のサイズに広げます。これにより表紙の両端や上下に白い部分ができる事がありますが、表紙は歪みません。このオプションを使わないと表紙がいくらか歪みますが白い部分はできません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+指定した場合は、出力プラグインはできる限り人が読めるような出力を生成しようとします。一部の出力プラグインには、なにも効果がない可能性があります。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+すべての生成されたインラインの目次に使われるタイトル。
+.UNINDENT
+.SH 外観
+.sp
+出力の外観を調整するためのオプション
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+ユニコード文字をASCII表記に変換します。注意して使ってください。例えば\fB"\fPMikhail Gorbachiov\fB"\fPの\fB"\fPМихаил Горбачёв\fB"\fPが変換されます。それと、文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のCalibreのインターフェース言語が使われます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+基本フォントサイズ(ポイント)です。本の生成時に使用されるすべてのフォントサイズは、このサイズを基本に計算されます。大きなサイズを選ぶと出力のフォントも大きめになります。デフォルトでは、基本フォントサイズは出力プロファイルによって決定されます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+テキスト揃えを変更します。「左」に設定すると揃えるべきすべてのテキストを左寄せにします。「揃える」にすると揃っていないすべてのテキストを揃えます。「オリジナル」（デフォルト）にすると元ファイルの揃えを変えません。注: 一部のフォーマットのみで揃えがサポートされている事に注意してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+すべてのフォントサイズの拡大縮小を止める
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+入力ドキュメントから参照されているフォントで、まだ埋め込まれていないフォントをすべて埋め込みます。この機能は、システム上のフォントを検索し、見つかればそれを埋め込みます。フォントの埋め込みは、変換先のフォーマットが埋め込みをサポートしている場合、例えば EPUB, AZW3, DOCX, PDF の場合にしか機能しません。ドキュメントにフォントを埋め込むための、適切なライセンスを所有していることを確認してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+書籍に指定したフォントを埋め込みます。これは書籍に使われる「ベース」フォントを指定します。もし入力ドキュメントがフォントを指定していた場合には、それがベースフォントより優先されます。（そうしたくない場合には、スタイル情報フィルタを使って、入力ドキュメントからフォントを取り除いてください）。注意：フォント埋め込みはEPUB, AZW3, DOCX のようないくつかのフォーマットでしか機能しません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+CSSスタイルシートへのパスかCSS自身を指定します。このCSSは入力ファイルのスタイル･ルールに追加されるので、既存のルールをオーバーライドすることもできます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+CSSスタイルルールから削除する、すべてのCSSプロパティのカンマ区切りのリスト。一部のスタイル情報があるとデバイスが受け付けない場合に便利です。例：font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+CSSフォント名からポイントでのフォントサイズへのマッピング。（例：12,12,14,16,18,20,22,24）xx\-small から xx\-largeまでのマッピングで、最後のサイズになると巨大なフォントになります。フォントの再変換アルゴリズムはこれらのサイズを賢く変換します。デフォルトでは、選択した出力プロファイルに基づいたマッピングが使用されます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+段落の間に空行を挿入します。入力ファイルが段落（<p>や<div>タグ）を使っていない場合は動作しません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+挿入される空行の高さを設定（単位em）。段落の間の行高さはこの設定値の倍の高さになります。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+入力ドキュメント内の合字をそのままにします。合字とは2つの文字を組み合わせて表現する特別な文字です。（例：ff,fi,fl等）大半のリーダーは標準のフォントで合字をサポートしないので、これらが正しく表示される可能性は低いです。デフォルトではCalibreは合字を2つの通常文字に変換します。このオプションはそれらをそのままにします。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+ポイントでの行の高さ。連続するテキストの行と行の間のスペースを調整します。行の高さ情報のないエレメントにのみ適用されます。たいていの場合には最低の行の高さの設定のほうが便利でしょう。デフォルトではこの行の高さの設定はありません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+一部のデザインの良くない文書では、ページのテキストレイアウトにテーブルを使用しているものがあります。こういった文書を変換すると、ページがはみ出したり乱れることがよくあります。このオプションを使うと、テーブルから内容を抜き出して直線的な配置に置き換えます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+計算されたフォントサイズのパーセントに基づく、最小の行の高さです。入力文章の指定にかかわらず、Calibreはすべてのエレメントで最低限この行の高さになることを保障します。ゼロにすると無効になります。デフォルトは120％です。この意味がよくわかっている場合にのみ、設定からこの行の高さの設定を直接指定してください。例えば、「2倍の高さ」を指定する場合には設定を240にしてください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+段落の間の空白を取り除く。同時に段落のインデントを1.5emにします。この機能は入力ファイルが段落（<p>や<div>タグ）をサポートしない場合には動作しません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Calibreがパラグラフ間の空白行を削除する時に、パラグラフを見えやすくするために自動的にパラグラフのインデントを設定します。このオプションはそのインデントの幅をコントロールします。（単位em）もしこの値を負にした場合、入力されたドキュメントで指定されたインデントを使います。つまりCalibreはインデントを変えません。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+引用記号、ダッシュ、省略記号を印刷上の正しいものに変換します。詳しくは \fI\%https://daringfireball.net/projects/smartypants\fP を参照してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+すべての埋め込みフォントをサブセット化する。すべての埋め込みフォントはこのドキュメントで使用された文字のみに縮小され、フォントファイルのサイズを減らすことができます。使用していない文字が多い、大きなフォントを埋め込むときに便利でしょう。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+ファンシークオート、ダッシュ、省略記号をそれぞれの標準的に対応する物に変換する。
+.UNINDENT
+.SH ヒューリスティック処理
+.sp
+共通のパターンを使ってドキュメントのテキストと構造を変更します。デフォルトでは無効になっています。 –enable\-heuristicsを使って有効にします。個々のアクションは、–disable\-* オプションで無効にすることができます。
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+ドキュメント中のハイフネーションされた単語を分析します。ドキュメント自身を辞書として使い、ハイフンをそのままにするか取り除くかを決定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+2つの段落に挟まれた、空白の段落を取り除きます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+複数の（改行しない）スペースで作られたインデントを、CSSのインデントへ変換します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+左寄せのシーン区切りマーカーを中央にします。複数行からなるソフト･シーン区切りを水平区切り線にします。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+イタリック体で表示したり変換したりする常用句やパターンを検索します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+フォーマットされていない章タイトルやサブタイトルを見つけます。それらはh2とh3タグに変換されます。この設定だけでは目次を作りませんが、目次作成の機能と同時に使用することができます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+連続する<h1>や<h2>タグがあるか探します。タグは章のヘッダーの途中で分割されないように、再番号づけされます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+句読点やその他のフォーマット要素によって、行折り返しを解除します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+ヒューリスティック処理を有効にします。このオプションはヒューリスティック処理を行う場合に設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+行の折り返しをしない長さを決めるための比率。有効な値は０～１まです。デフォルトは0.4で、真ん中より少し小さいあたりです。もし少しの行しか折り返しする必要が無い場合にはこの値を下げてください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+シーン区切りを指定したテキストで置き換えます。デフォルトでは入力ドキュメントからのテキストが使われます。
+.UNINDENT
+.SH 検索と置換
+.sp
+ユーザー定義のパターンを使って文章や構造を変更します。
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+検索1\-検索パターンから置き換わる、置換文字列
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+検索1\-置換文字列と置き換えられる、検索パターン（正規表現）
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+検索2\-検索パターンから置き換わる、置換文字列
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+検索2\-置換文字列と置き換えられる、検索パターン（正規表現）
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+検索3\-検索パターンから置き換わる、置換文字列
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+検索3\-置換文字列と置き換えられる、検索パターン（正規表現）
+.UNINDENT
+.SH 構造の検出
+.sp
+ドキュメント構造の自動判別を制御
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+見つかった章をどのようにマーキングするか指定します。「改ページ」を選ぶと章の前に改ページを挿入します。「ルール」を選ぶと章の前に行を挿入します。「なし」を選ぶとマーキングを行いません。「両方」を選ぶと改ページと行の両方を挿入します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+いくつかの文章は、各段落に左右のマージンを指定することで、ページのマージンを指定しています。Calibreはそれらのマージンを見つけて削除しようとしますが、たまに、これが原因でマージン全体がなくなってしまうことがあります。そのような場合、削除を無効にすることができます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath式を指定します。XPathで指定された要素の直前にページブレークが挿入されます。無効にするには、式: / を使用してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+指定した表紙よりもソースファイルから検知した表紙を優先して使います。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH 目次
+.sp
+目次の自動生成をコントロールします。デフォルトでは、入力ファイルに目次があった場合に優先的に自動生成されます。
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+もし目次を入力ドキュメントのリンクから作成する場合、重複するエントリーを許す。例えば、1つ以上のリンクが同じテキストで、違う場所を指している場合など。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+目次のレベル 1 に追加するタグをすべて指定するXPath式です。これが指定された場合、他の目次の自動検出により優先されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+目次のレベル 2 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 1 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+目次のレベル 3 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 2 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+目次に入れられる最大のリンク数。0にすると無限になります。デフォルト: 50 。リンクは、最低の章の数の設定以下の場合にのみ、追加されるます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+目次に自動判定された章を追加しない
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+目次から削除する項目を指定するための正規表現による指定。マッチした項目とその子項目は削除されます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+この数以下の章が見つかった場合、目次にリンクが追加されます。デフォルト: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+元のファイルに目次がある場合、通常、設定に従い自動生成されます。このオプションは常に自動生成を行います。
+.UNINDENT
+.SH 書誌情報
+.sp
+出力の書誌情報の設定オプション
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+著者で並び替える時に使う文字列。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+著者を設定します。複数の著者はアンド記号でつなげてください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+本の製作者を設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+表紙を指定したファイルまたはURLに設定する
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+本のISBNコードを設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+言語を設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+１～５の番号で、評価を設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+指定したOPFファイルから書誌情報を読み込む。このファイルから読み込んだ書誌情報は、ソースファイルの書誌情報を上書きします。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+このシリーズの本の巻数を設定します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+本にタグを設定します。カンマ区切りのリストである必要があります。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+本のタイムスタンプを設定（他では一切使われません）
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+タイトルの設定
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+タイトルのバージョンを並び替えに使う。
+.UNINDENT
+.SH デバッグ
+.sp
+変換をデバッグする補助用のオプション
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+指定したディレクトリに変換の各ステージでの出力を保存します。変換プロセスのどのステージでバグが起こっているのか確信がない場合に便利です。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+デバッグ出力の量のレベル指定します。複数回指定すると、出力量が増えます。2回指定すると出力量が最大になります。1回が中程度の出力量で、指定しなければ一番少ない出力量になります。
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

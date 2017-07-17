@@ -1,0 +1,605 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "července 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Převeďte e\-knihu z jednoho formátu do jiného.
+.sp
+input_file je vstup a output_file je výstup. Oba musí být zadány jako první dva parametry příkazu.
+.sp
+Výstupní formát e\-knihy je odhadnut z příponou output_file. output_file může být také speciálního formátu .EXT, kde EXT je přípona výstupního souboru. V tomto případě je název výstupního souboru odvozen od názvu vstupního souboru. Pamatujte, že názvy souborů nesmí začínat pomlčkou. A konečně, pokud output_file nemá žádnou příponu, pak je s ním zacházeno jako s adresářem a do tohoto adresáře je zapsána „otevřená e\-kniha“ (OEB) sestávající ze souborů HTML. Tyto soubory jsou soubory, které by obyčejně byly předány výstupnímu modulu.
+.sp
+Po zadání vstupního a výstupního souboru můžete přizpůsobit převod zadáním různých voleb. Dostupné volby závisí na typech vstupních a výstupních souborů. Pro získání nápovědy k nim zadejte vstupní a výstupní soubor a použijte volbu \-h.
+.sp
+Úplnou dokumentaci systému převodu najdete na
+conversion
+.sp
+Kdykoliv předáváte parametry pro \fBebook\-convert\fP, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.sp
+Volby a výchozí hodnoty pro změnu voleb závisí na vstupním i výstupním
+formátu, takže byste je měli vždy zkontrolovat pomocí:
+.sp
+ebook\-convert myfile.input_format myfile.output_format \-h
+.sp
+Níže jsou volby, které jsou společné pro všechny převody, následované
+volbami konkrétními pro každý vstupní a výstupní formát.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%VOLBY VSTUPU\fP
+.IP \(bu 2
+\fI\%VOLBY VÝSTUPU\fP
+.IP \(bu 2
+\fI\%VZHLED\fP
+.IP \(bu 2
+\fI\%HEURISTICKÉ ZPRACOVÁNÍ\fP
+.IP \(bu 2
+\fI\%NAJÍT A NAHRADIT\fP
+.IP \(bu 2
+\fI\%ROZPOZNÁVÁNÍ STRUKTURY\fP
+.IP \(bu 2
+\fI\%OBSAH\fP
+.IP \(bu 2
+\fI\%METADATA\fP
+.IP \(bu 2
+\fI\%LADĚNÍ\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+zobrazit tuto zprávu nápovědy a ukončit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Zadejte vstupní profil. Vstupní profil dává převodnímu systému informaci, jak interpretovat různé informace ve vstupním dokumentu. Například délky závislé na rozlišení (t.j. délky v pixelech). Možnosti jsou:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+Seznam vestavěných názvů předpisů. Z vestavěného předpisu můžete vytvořit e\-knihu takto: ebook\-convert \fB"\fPNazev Predpisu.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Zadejte výstupní profil. Výstupní profil říká převodnímu systému, jak optimalizovat vytvořený dokument pro zadané zařízení (jako je změna velikosti obrázků pro velikost obrazovky zařízení). V některých případech může být výstupní profil použit pro optimalizaci výstupu pro konkrétní zařízení, ale je to zřídka potřeba. Možnosti jsou:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+zobrazit číslo verze programu a ukončit
+.UNINDENT
+.SH VOLBY VSTUPU
+.sp
+Volby pro ovládání zpracování vstupního souboru mobi
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Zadejte kódování znaků vstupního dokumentu. Pokud je tato volba nastavena, přepíše jakékoliv kódování deklarované samotným dokumentem. Zvláště užitečné pro dokumenty, které nedeklarují kódování nebo mají nesprávně deklarované kódování.
+.UNINDENT
+.SH VOLBY VÝSTUPU
+.sp
+Volby pro ovládání zpracování výstupního souboru epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Vypnout rozdělování na koncích stránek. Vstupní soubory jsou obyčejně automaticky rozděleny na každém konci stránky na dva soubory. Tak vznikne e\-kniha, která může být analyzována rychleji a za použití méně prostředků. Rozdělování je však pomalé, a pokud váš zdrojový soubor obsahuje velmi velké množství konců stránek, měli byste rozdělování na koncích stránek vypnout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Tato volba je nutná, pouze pokud máte v úmyslu použít EPUB v FBReaderJ. Urovná to souborový systém uvnitř EPUB, všechny soubory dá na nejvyšší úroveň.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Vložit vložený obsah, který se objeví jako část hlavního obsahu knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Dát vložený obsah na konec knihy místo na začátek.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Rozbalit obsah vygenerovaného souboru EPUB do zadaného adresáře. Obsah adresáře je nejdříve odstraněn, takže buďte opatrní.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Rozdělit všechny soubory HTML větší než tato velikost (v KB). Je to nezbytné, protože většina čteček EPUB neumí zpracovat velké soubory. Výchozí hodnota 260KB je velikost požadovaná pro Adobe Digital Editions. Nastavte na 0 pro zakázání rozdělování na základě velikosti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Pokud vstupní soubor nemá žádnou obálku a vy jste žádnou nezadali, je obyčejně vygenerována výchozí obálka s názvem, autorem atd. Tato volba zakáže generování této obálky.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Nepoužívat SVG pro obálku knihy. Tuto volbu použijte, pokud vaše soubory EPUB budou používány v zařízení, které nepodporuje SVG, jako je iPhone nebo JetBook Lite. Bez této volby budou taková zařízení zobrazovat obálku jako prázdnou stránku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Při použití obálky SVG tato volba způsobí změnu velikosti obálky, aby pokryla dostupné oblasti obrazovky, ale přesto zachová její poměr stran (poměr šířky k výšce). To znamená, že mohou být vidět bílé okraje po stranách nebo v horní a dolní části obrázku, ale obrázek nebude nikdy zdeformovaný. Bez této volby může být obrázek mírně deformovaný, ale nebudou vidět žádné okraje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Pokud je zadáno, výstupní modul se pokusí vytvořit výstup, který je co nejvíce čitelný pro člověka. Nemusí to mít žádný vliv na některé výstupní moduly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Název pro vygenerovaný vložený obsah.
+.UNINDENT
+.SH VZHLED
+.sp
+Volby pro ovládání vzheldu a chování výstupu
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Překódovat znaky unicode do ASCII. Používejte opatrně, protože to nahradí znaky unicode za ASCII. Například to nahradí \fB"\fPМихаил Горбачёв\fB"\fP za \fB"\fPMichail Gorbačov\fB"\fP\&. Také pamatujte, že v případech, kdy je více zastoupení znaku (například znaky společné pro čínštinu a japonštinu), bude použito zastoupení podle aktuálního jazyku rozhraní Calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Základní velikost písma v bodech. Všechny velikosti písma ve vytvořené knize budou mít upravené měřítko na základě této velikosti. Výběrem větší velikosti můžete zvětšit písma ve výstupu a naopak. Ve výchozím nastavení je základní velikost písma zvolena na základě vámi zvoleného výstupního profilu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Změnit zarovnání textu. Hodnota \fB"\fPdoleva\fB"\fP převede všechen text zarovnaný do bloku ve zdroji na text zarovnaný vlevo (tj. nezarovnaný). Hodnota \fB"\fPdo bloku\fB"\fP převede všechen nezarovnaný text na zarovnaný. Hodnota \fB"\fPpůvodní\fB"\fP (výchozí) nezmění zarovnání ve zdrojovém souboru. Pamatujte, že pouze některé výstupní formáty podporují zarovnání.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Zakázat všechny úpravy měřítka velikostí písma.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Vložit každé písmo, na které se odkazuje ve vstupním dokumentu, ale ještě není vloženo. Vyhledá písma ve vašem systému, a pokud je nalezen, budou vložena. Vkládání bude fungovat, pouze pokud formát, do kterého převádíte, podporuje vložená písma, jako jsou EPUB, AZW3, DOCX nebo PDF. Ujistěte se, že máte správnou licenci pro vkládání písem použitých v tomto dokumentu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Vložit zadanou rodinu písem do knihy. To určuje \fB"\fPzákladní\fB"\fP písmo použité pro knihu. Pokud vstupní dokument určuje svá vlastní písma, mohou přepsat toto základní písmo. Můžete použít volbu filtrování stylu informací pro odebrání písem ze vstupního dokumentu. Pamatujte, že vkládání písem funguje pouze u některých výstupních formátů, hlavně EPUB a AZW3 a DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+Ve výchozím nastavení použije calibre zjednodušený formulář pro různé vlastnosti CSS, jako jsou okraje, odsazení, rámeček atd. Tato volba způsobí, že se místo toho použije rozšířený formulář. Pamatujte, že CSS je vždy rozšířené při generování souborů EPUB s výstupním profilem nastaveným na jeden z profilů Nook, protože Nook neovládá zjednodušené CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Buď cesta k šabloně stylů CSS nebo nezpracované CSS. Toto CSS bude připojeno k pravidlům stylu ze zdrojového souboru, takže může být použito k přepsání těchto pravidel.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+Čárkami oddělený seznam vlastností CSS, které budou odebrány ze všech pravidel stylů CSS. To je užitečné, pokud přítomnost některých informací o stylu zabraňuje přepsání ve vašem zařízení. Například: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Mapování z názvů písem CSS na velikosti písem v bodech. Příklad nastavení je 12,12,14,16,18,20,22,24. Toto jsou mapování pro velikosti od xx\-small do xx\-large, s poslední velikostí pro velice velká písma. Algoritmus úpravy měřítka písma používá tyto velikosti pro chytrou úpravu měřítka písem. Výchozí je použití mapování na základě vámi zvoleného výstupního profilu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Vložit prázdný řádek mezi odstavce. Nebude fungovat, pokud zdrojový soubor nepoužívá odstavce (značky <p> nebo <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Nastavit výšku vložených prázdných řádků (v em). Výška řádků mezi odstavci bude dvojnásobek zde nastavené hodnoty.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Zachovat ligatury přítomné ve vstupním dokumentu. Ligatura je speciální vykreslení páru znaků, jako ff, fi, fl atd. Většina čteček nemá podporu pro ligatury ve svých základních písmech, takže je nepravděpodobné, že je správně vykreslí. Ve výchozím nastavení Calibre změní ligaturu na odpovídající pár normálních znaků. Tato volba je namísto toho ponechá.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Výška řádku v bodech. Určuje mezery mezi za sebou následujícími řádky textu. Platí pouze pro prvky, které nedefinují svou vlastní výšku řádku. Ve většině případů je užitečnější volba minimální výška řádku. Ve výchozím nastavení se neprovádí žádné zpracování výšky řádku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Některé chybně navržené dokumenty používají tabulky pro ovládání rozložení textu na stránce. Při převodu mají tyto dokumenty často text, který vybíhá mimo stránku a jiné artefakty. Tato volba extrahuje obsah z tabulek a zobrazí ho v linární tvaru.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Nastavit dolní okraj v bodech. Výchozí je 5.0. Nastavení na hodnotu menší než nula způsobí, že se nenastaví žádné okraje (bude zachováno nastavení okrajů v původním dokumentu). Poznámka: Formáty orientované na stránky, jako je PDF a DOCX, mají vlastní nastavení okrajů, které má přednost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Nastavit levý okraj v bodech. Výchozí je 5.0. Nastavení na hodnotu menší než nula způsobí, že se nenastaví žádné okraje (bude zachováno nastavení okrajů v původním dokumentu). Poznámka: Formáty orientované na stránky, jako je PDF a DOCX, mají vlastní nastavení okrajů, které má přednost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Nastavit pravý okraj v bodech. Výchozí je 5.0. Nastavení na hodnotu menší než nula způsobí, že se nenastaví žádné okraje (bude zachováno nastavení okrajů v původním dokumentu). Poznámka: Formáty orientované na stránky, jako je PDF a DOCX, mají vlastní nastavení okrajů, které má přednost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Nastavit horní okraj v bodech. Výchozí je 5.0. Nastavení na hodnotu menší než nula způsobí, že se nenastaví žádné okraje (bude zachováno nastavení okrajů v původním dokumentu). Poznámka: Formáty orientované na stránky, jako je PDF a DOCX, mají vlastní nastavení okrajů, které má přednost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Minimální výška řádku jako procento vypočítané velikosti písma prvku. Calibre zajistí, že každý prvek bude mít výšku řádku alespoň podle tohoto nastavení bez ohledu na to, co určuje vstupní dokument. Nastavte na nulu pro zakázání. Výchozí je 120 %. Použijte toto nastavení přednostně pro přímé určení výšky řádku, pokud nevíte, co děláte. Například můžete dosáhnout textu s dvojitým řádkováním nastavením na 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Odebrat mezery mezi odstavci. Také nastaví odsazení odstavce na 1,5 em. Odebrání mezer nebude fungovat, pokud zdrojový soubor nepoužívá odstavce (značky <p> nebo <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Když Calibre odebírá prázdné řádky mezi odstavci, automaticky nastaví odsazení odstavce, aby bylo zajištěno snadné rozlišení odstavců. Tato volba určuje šířku tohoto odsazení (v em). Pokud nastavíte zápornou hodnotu, pak bude použito odsazení zadané ve vstupním dokumentu, to znamená, že Calibre nezmění odsazení.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Převést jednoduché uvozovky, pomlčky a trojtečky na jejich typograficky správnéh ekvivalenty. Pro podrobnosti přejděte na \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Podmnožina všech vložených písem. Každé vložené písmo je zmenšeno, aby obsahovalo pouze glyfy použité v tomto dokumentu. To zmenšuje velikost souborů písem. Užitečné, pokud vkládáte obzvlášť velké písmo se spoustou nevyužitých glyfů.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Cesta k souboru obsahujícímu pravidla pro převod stylů CSS v této knize. Nejsnadnější způsob, jak vytvořit takový soubor, je použít průvodce pro vytváření pravidel v grafickém rozhraní Calibre. Přístup k němu získáte v oddílu \fB"\fPVzhled a chování\->Převod stylů\fB"\fP v dialogovém okně převodu. Jakmile vytvoříte pravidla, můžete použít tlačítko Exportovat pro jejich uložení do souboru.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Převést ozdobné uvozovky, pomlčky a tři tečky na jejich prosté ekvivalenty.
+.UNINDENT
+.SH HEURISTICKÉ ZPRACOVÁNÍ
+.sp
+Změnit text a strukturu dokumentu pomocí běžných vzorů. Ve výchozím nastavení zakázáno. Použijte –enable\-heuristics pro povolení. Jednotlivé akce mohou být zakázány pomocí voleb –disable\-
+.nf
+*
+.fi
+\&.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analyzovat rozdělená slova v celém dokumentu. Samotný dokument je použitý jako slovník pro určení, zda by měly být pomlčky zachovány nebo odebrány.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Odebrat z dokumentu prázdné odstavce, pokud se vyskytují mezi všemi ostatními odstavci
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Změnit odsazení vytvořená z více entit pevné mezery na odsazení CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Vlevo zarovnané značky přerušení příběhu jsou zarovnané na střed. Nahradit měkká přerušení příběhu, která používají více prázdných řádků, vodorovnými čárami.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Hledat běžná slova a vzory, které označují kurzívu a převést je na kurzívu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Rozpoznat neformátované nadpisy a podnadpisy kapitol. Změnit je na značky h2 a h3. Toto nastavení nevytvoří obsah, ale může být použito společně s rozpoznáním struktury pro jeho vytvoření.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Hledá výskyty po sobě následujících značek <h1> nebo <h2>. Značky jsou přečíslovány, aby se zabránilo rozdělení uprostřed nadpisů kapitol.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Zrušit zalomení řádků pomocí interpunkce a jiných vodítek formátování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Povolit heuristické zpracování. Tato volba musí být nastavena, aby se provedlo jakékoliv heuristické zpracování.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Měřítko použité k určení délky, při které by mělo být řádku zrušeno zalomení. Platné hodnoty jsou desetinná čísla mezi 0 a 1. Výchozí je 0,4, těsně pod mediánem délky řádku. Pokud by pouze pár řádků v dokumentu vyžadovalo zrušení zalomení, měla by být tato hodnota zmenšena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Nahradit přerušení příběhu zadaným textem. Ve výchozím nastavení je použit text ze vstupního dokumentu.
+.UNINDENT
+.SH NAJÍT A NAHRADIT
+.sp
+Změnit text a strukturu dokumentu pomocí vzorů definovaných uživatelem.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Cesta k souboru obsahující regulární výrazy hledávání a nahrazování. Soubor musí obsahovat střídavě řádky regulárního výrazu následované vzorem nahrazení (což může být prázdný řádek). Regulární výraz musí mít syntaxi regulárního výrazu Pythonu a soubor musí mít kódování UTF\-8.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Nahrazení, které má nahradit text nalezený pomocí sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Hledaný vzor (regulární výraz), který má být nahrazen pomocí sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Nahrazení, které má nahradit text nalezený pomocí sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Hledaný vzor (regulární výraz), který má být nahrazen pomocí sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Nahrazení, které má nahradit text nalezený pomocí sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Hledaný vzor (regulární výraz), který má být nahrazen pomocí sr3\-replace.
+.UNINDENT
+.SH ROZPOZNÁVÁNÍ STRUKTURY
+.sp
+Nastavení automatického rozpoznávání struktury dokumentu.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+Výraz XPath pro rozpoznání nadpisů kapitol. Výchozí nastavení je považovat tagy <h1> nebo <h2> obsahující slova \fB"\fPchapter\fB"\fP (kapitola), \fB"\fPbook\fB"\fP (kniha), \fB"\fPsection\fB"\fP (oddíl), \fB"\fPprologue\fB"\fP (prolog), \fB"\fPepilogue\fB"\fP (epilog) nebo \fB"\fPpart\fB"\fP (část) za nadpisy kapitol, stejně jako jakékoliv tagy s class=\fB"\fPchapter\fB"\fP (třída kapitola). Použitý výraz musí vyhodnotit seznam prvků. Pro zakázání rozpoznávání kapitol použijte výraz \fB"\fP/\fB"\fP\&. Viz XPath Tutorial v ráži uživatelské příručce pro další pomoc pro použití této funkce.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Zadejte, jak označit rozpoznané kapitoly. Hodnota \fB"\fPkonecstránky\fB"\fP vloží před kapitoly konce stránek. Hodnota \fB"\fPčára\fB"\fP vloží před kapitoly čáru. Hodnota \fB"\fPžádné\fB"\fP zakáže označování kapitol a hodnota \fB"\fPobojí\fB"\fP použije pro označení kapitol jak konce stránek, tak čáry.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Některé dokumenty zadávají okraje stránek zadáním levého a pravého okraje každému jednotlivému odstavci. Calibre se pokusí rozpoznat a odebrat tyto okraje. Někdy to může způsobit odebírání okrajů, které neměly být odebrány. V tomto případě můžete zakázat odebírání.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Vložit metadata knihy na její začátek. Užitečné v případě, že vaše čtečka e\-knih nepodporuje zobrazení nebo vyhledávání metadat přímo.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+Výraz XPath. Konce stránek jsou vloženy před zadané prvky. Pro zakázání použijte výraz: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Použít obálku rozpoznanou ve zdrojovém souboru přednostně před zadanou obálkou.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Odebrat první obrázek ze vstupní e\-knihy. Užitečné, pokud má vstupní dokument obrázek obálky, který není identifikován jako obálka. Pokud v tomto případě nastavíte obálku v Calibre, výstupní dokument bude mít dva obrázky obálky, pokud nezadáte tuto volbu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+Výraz XPath pro rozpoznání místa v dokumentu, na kterém začít číst. Některé programy pro čtení e\-knih (hlavně Kindle) používají toto místo jako pozici, na které se otevře kniha. Další nápovědu k používání této funkce naleznete v kurzu XPath v uživatelské příručce Calibre.
+.UNINDENT
+.SH OBSAH
+.sp
+Nastavení automatického generování obsahu. Pokud má zdrojový soubor obsah, bude ve výchozím nastavení použit přednostně před automaticky generovaným.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Při vytváření obsah z odkazů ve vstupním dokumentu povolit duplicitní položky, tj. povolit více než jednu položku se stejným textem, za předpokladu že směřují na rozdílná umístění.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+Výraz XPath, který určuje všechny značky, které by měly být přidány do obsahu na první úroveň. Pokud je toto zadáno, má to přednost před jinými formami automatického rozpoznávání. Příklady naleznete v kurzu XPath v uživatelské příručce Calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+Výraz XPath, který určuje všechny značky, které by měly být přidány do obsahu na druhou úroveň. Každá položka je přidána pod předchozí položku první úrovně. Příklady naleznete v kurzu XPath v uživatelské příručce Calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+Výraz XPath, který určuje všechny značky, které by měly být přidány do obsahu na třetí úroveň. Každá položka je přidána pod předchozí položku druhé úrovně. Příklady naleznete v kurzu XPath v uživatelské příručce Calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Maximální počet odkazů vložených do obsahu. Nastavte 0 pro zakázání. Výchozí je: 50. Odkazy jsou přidány do obsahu, pouze pokud bylo rozpoznáno méně kapitol, než je mezní hodnota.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Nepřidávat automaticky rozpoznané kapitoly do obsahu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Odebrat z obsahu položky, jejichž názvy odpovídají zadanému regulárnímu výrazu.  Odpovídající položky a všechny jejich podřízené položky budou odebrány.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Pokud je rozpoznáno méně než tento počet kapitol, budou odkazy přidány do obsahu. Výchozí: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Pokud má již zdrojový soubor obsah, je obyčejně použit přednostně před automaticky generovaným. Pomocí této volby je vždy použit ten automaticky generovaný.
+.UNINDENT
+.SH METADATA
+.sp
+Volby pro nastavení metadat ve výstupu
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Řetězec použitý při řazení podle autora.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Nastavit autory. Více autorů by mělo být odděleno znaky \fB"\fP&\fB"\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Nastavit nakladatele knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Nastavit popis e\-knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Nastavit obálku na zadaný soubor nebo URL
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Nastavit ISBN knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Nastavit jazyk.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Nastavit vydavatele e\-knihy.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Nastavit hodnocení. Mělo by to být číslo mezi 1 a 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Číst metadata ze zadaného souboru OPF. Metadata načtená z tohoto souboru přepíší jakákoliv metadata ve zdrojovém souboru.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Nastavit sérii, do které tato e\-kniha patří.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Nastavit pořadí knihy v této sérii.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Nastavit štítky pro knihu. Měl by to být seznam oddělený čárkami.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Nastavit časové razítko knihy (nikde se již nepoužívá)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Nastavit název.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Verze názvu použitá při řazení.
+.UNINDENT
+.SH LADĚNÍ
+.sp
+Volby pro pomoc s laděním převodu
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Uložit výstup z rozdílných fází převodního řetězce do zadaného adresáře. Užitečné, pokud si nejste jisti, v jaké fázi zpracování převodu se objevuje chyba.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Úroveň podrobnosti. Zadejte vícekrát pro větší podrobnost. Zadání dvakrát bude mít za následek úplnou podrobnost, jednou střední podrobnost a nulakrát nejmenší podrobnost.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

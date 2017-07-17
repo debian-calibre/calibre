@@ -1,0 +1,613 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "iulie 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an „open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces”
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%OPŢIUNI DE INTRATE\fP
+.IP \(bu 2
+\fI\%OPȚIUNI DE IEȘIRE\fP
+.IP \(bu 2
+\fI\%ASPECT ŞI FUNCŢIONALITATE\fP
+.IP \(bu 2
+\fI\%HEURISTIC PROCESSING\fP
+.IP \(bu 2
+\fI\%CĂUTARE ȘI ÎNLOCUIRE\fP
+.IP \(bu 2
+\fI\%STRUCTURE DETECTION\fP
+.IP \(bu 2
+\fI\%CUPRINS\fP
+.IP \(bu 2
+\fI\%METADATA\fP
+.IP \(bu 2
+\fI\%DEBUG\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Specificați profilul de intrare. Profilul de intrare dă sistemului de conversie informații asupra cum se interpretează diferite informații din documentul de intrare. De exemplu lungimile dependente de rezoluție (ex. lungimile în pixeli). Variantele sunt:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.SH OPŢIUNI DE INTRATE
+.sp
+Opțiuni pentru controlul prelucrării fișierului de intrare mobi
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Precizarea codificării caracterelor documentului sursă. Selectarea acestei opţiuni va suprascrie orice opţiune de codificare prezentă în document. Este utilă în special pentru documentele care nu declară o codificare sau care au declaraţii eronate de codare.
+.UNINDENT
+.SH OPȚIUNI DE IEȘIRE
+.sp
+Opțiuni pentru controlul prelucrării fișierului de ieșire epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Această opţiune este necesară doar daca doriţi să utilizaţi EPUB cu FBReaderJ. Va aplatiza sistemul de fişiere din interiorul EPUB, aşezând toate fişierele pe nivelul superior.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Inserează un Cuprins ce va apărea ca parte a conținutului cărții.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Pune Cuprinsul inserat la sfârșitul cărții, în loc de început.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+În mod normal, dacă fişierele intrate nu au nici o copertă şi dumneavoastră nu specificaţi una, o copertă aleatoare va fi generată cu titlu, autor, etc. Aceasta opţiune dezactivează generarea acestei coperţi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Nu utilizaţi SVG pentru coperta cărţii. Utilizaţi această opţiune daca EPUB\-ul dumneavoastră urmează să fie utilizat pe un dispozitiv care nu suportă SVG, asemenea iPhone\-ului sau JetBook Lite. Făra această opţiune, asemenea dispozitive vor afişa coperta ca o pagină albă.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Când utilizaţi o copertă SVG, această opţiune va determina coperta să încadreze spaţiul disponibil al ecranului, dar să\-i păstreze încă aspectul (raportul dintre lăţime şi înalţime). Înseamnă că pot rămne margini albe la capetele de sus sau de jos, dar imaginea nu va fi niciodată distrusă. Fără această opţiune imaginea poate fi uşor distrusă, dar nu vor exista margini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Dacă este specificat, plugin\-ul de ieșire va încerca să creeze un document cât mai uşor de citit de către utilizator. Este posibil să nu aibă niciun rezultat în cazul anumitor conectoare.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Titlu pentru orice linie generata a tabelului
+.UNINDENT
+.SH ASPECT ŞI FUNCŢIONALITATE
+.sp
+Opțiuni pentru controlul aspectului și comportamentului ieșirii
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transpuneți caractere de tip Unicode într\-o reprezentare ASCII. Folosiţi cu grijă, deoarece aceasta va înlocui caracterele Unicode cu ASCII. De exemplu, va înlocui \fB"\fPМихаил Горбачёв\fB"\fP cu \fB"\fPMihail Gorbaciov\fB"\fP\&. De asemenea, reţineţi că, în cazurile în care există mai multe reprezentări ale unui caracter (caractere împărtăşite de către chinezi şi japonezi, de exemplu) va fi folosită reprezentarea bazată pe limbajul curent a interfeței calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Mărimea de bază a fontului în pts (puncte). Toate mărimile fontului în cărțile produse vor fi redimensionate conform acestei mărimi. Alegând o mărime mai mare, dumneavoastră puteți face ca fonturi mai mari la ieșire și viceversa. Implicit mărimea de bază a fontului este aleasă pe baza profilului de ieșire pe care l\-ați ales.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Schimbă alinierea textului. Valoarea \fB"\fPleft\fB"\fP convertește toate textele aliniate stânga\-dreapta în sursă la text aliniat la stânga (ex. nealiniat stânga\-dreapta). Valoarea \fB"\fPjustify\fB"\fP convertește textul nealiniat stânga\-dreapta în text aliniat stânga\-dreapta. Valoarea \fB"\fPoriginal\fB"\fP (implicită) nu schimbă alinierea din fișierul sursă. Observați ca doar anumite formate suporta aliniere stânga\-dreapta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Dezactivează scalarea mărimii fonturilor
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Fie calea spre o foaie de stiluri CSS, fie CSS brut. Acest CSS va fi adăugat la regulile de stil din fişierul sursă, astfel încât poate fi folosit pentru a suprascrie acele reguli.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Punerea în legătură a numelor de fonturi CSS cu mărimile în pts ale fonturilor. Un exemplu de configurare este: 12,12,14,16,18,20,22,24. Acestea sunt corespondențele mărimilor de la xx\-mic la xx\-mare, mărimea finală fiind utilizată pentru fonturi foarte mari. Algoritmul de redimensionare a fontului folosește aceste mărimi pentru a redimensiona in mod inteligent fonturile. Implicit se folosește corespondența bazată pe profilul de ieșire pe care l\-ați ales.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Introduce o linie liberă între paragrafe. Nu va funcționa dacă fișierul sursă nu folosește paragrafe (etichetele <p> sau <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Stabileşte dimensiunea (înălţimea) rândurilor goale introduse. Înălţimea rândurilor dintre paragrafe va fi dublul valorii introduse aici.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Păstrează \fB"\fPligaturile\fB"\fP în documentul de origine. O \fB"\fPligatura\fB"\fP este o pereche de caractere precum oe, ae etc. Majoritatea cititoarelor nu suportă ligaturile şi drept urmare este posibil să nu le afişeze corect. În mod implicit calibre va schimba o ligatură în perechea de litere normale corespunzătoare. Această opţiune va păstra ligaturile.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Înălțimea liniei exprimată în puncte. Controlează spațierea dintre liniile de text consecutive. Se aplică doar elementelor care nu iși definesc propria înălțime a liniei. În majoritatea cazurilor, alegearea înălțimii minime a liniei este mai utilă. În mod implicit nu sunt efectuate modificări ale înălțimii liniei.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Câteva documente rău proiectate folosesc tabele pentru a controla poziția textului în pagină. Când sunt convertite aceste documente, adesea textul iese din pagină sau alte componente. Această opțiune va extrage conținutul din tabele și îl va prezenta în mod liniar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Înălţimea minimă a liniei, ca un procent din dimensiunea fontului elementului calculat, calibre se va asigura că fiecare element are o înălţime de linie cel puţin egală cu această valoare, indiferent de ceea ce documentul de intrare specifică. Setați la zero pentru a dezactiva. Implicit este 120%. Utilizaţi această setare în preferinţa specificării înălţimii liniei directe, cu excepţia cazului în care ştiţi ce faceţi. De exemplu, puteţi obţine text \fB"\fPdublu spațiat\fB"\fP dacă folosiți valoarea 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Șterge spațiile dintre paragrafe. De asemenea fixează indentarea pe paragrafe la 1.5em. Ștergerea spațiilor nu va funcționa dacă fișierul sursă nu folosește paragrafe (etichetele <p> sau <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Atunci când calibre elimină liniile goale dintre paragrafe, setează automat un alineat la paragraf pentru a asigura o distincţie cât mai uşoară între paragrafe. Această opţiune controlează mărimea alineatului. Dacă setaţi aceasta ca şi valoare negativă, atunci alineatul din documentul de intrare este folosit, ceea ce înseamnă că nu se schimbă alineatul.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Converteşte ghilimelele extravagante, liniile de pauză şi elipsele în echivalentul lor simplu.
+.UNINDENT
+.SH HEURISTIC PROCESSING
+.sp
+Modifică textul şi structura documentului folosind modele comune. Această opţiune este dezactivată în mod implicit. Folosiţi –enable\-heuristics pentru a o activa. Acţiuni individuale pot fi dezactivate cu opţiunile –disable\-
+.nf
+*
+.fi
+\&.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analizaţi cuvintele despărţite în silabe din întregul document. Documentul în sine este folosit ca un dicţionar pentru a determina dacă cratimele ar trebui să fie păstrate sau eliminate.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Elimină paragrafele goale din document atunci când acestea există între fiecare alte paragrafe.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Schimbă indentaţia creată din multiple entități de spațiu neintrerupte în paragrafe CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Separatorii de text aliniaţi la stânga vor fi aliniaţi la centru. Înlocuiţi separatorii de text care folosesc linii goale multiple cu reguli orizontale.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Caută cuvinte comune şi tipare care denotă caractere cursive şi tipărește\-le cursiv.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Detectează titlurile și sub\-titlurile neformatate. Modifică\-le în etichete de tip h2 și h3. Această setare nu va crea un cuprins, dar poate fi folosită împreună cu detectarea structurii pentru a crea unul.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Caută evenimente secvenţale ale etichetelor <h1> sau <h2>. Etichetele sunt renumerotate pentru a preveni scindarea în mijlocul capitolului.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Desfășoară liniile folosind semne de punctuație și alte indicii de formatare.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Activați procesarea euristică. Această opțiune trebuie sa fie activată pentru ca orice procesare euristică să aibă loc.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Scara utilizată pentru a determina lungimea la care o linie ar trebui să fie desfășurată. Valorile valide sunt zecimale între 0 și 1. Valoarea implicită este de 0,4 , tocmai sub lungimea mediană a liniei. În cazul în care doar câteva linii în document necesită desfășurare această valoare ar trebui să fie redusă
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Înlocuieşte separatorii textului cu textul specificat. Împlicit, textul din documentul iniţial este utilizat.
+.UNINDENT
+.SH CĂUTARE ȘI ÎNLOCUIRE
+.sp
+Modifică textul și structura documentului folosind tipare definite de către utilizator.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Înlocuieşte textul găsit prin căutarea sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Modelul de căutare (expresia regulată) va fi înlocuit cu sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Înlocuieşte textul găsit prin căutarea sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Modelul de căutare (expresia regulată) va fi înlocuit cu sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Înlocuieşte textul găsit prin căutarea sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Modelul de căutare (expresia regulată) va fi înlocuit cu sr3\-replace.
+.UNINDENT
+.SH STRUCTURE DETECTION
+.sp
+Controlează auto\-detecţia structurii documentului
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Specificați cum să marcați capitolele detectate. Valoarea \fB"\fPpagebreak\fB"\fP va introduce sfârșituri de pagină înaintea capitolelor. Valoarea  \fB"\fPrule\fB"\fP va introduce o linie înainte de capitole. Valoarea \fB"\fPnone\fB"\fP va dezactiva marcarea capitolului și valoarea \fB"\fPboth\fB"\fP va folosi atât sfârșiturile de pagină cât și liniile pentru marcarea capitolelor.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Unele documente specifică bordura paginii prin specificarea marginilor drepte şi stângi pe fiecare paragraf în parte. calibre va incerca să identifice şi să înlăture aceste margini. Uneori, această acţiune poate cauza îndepărtarea unor margini care nu trebuiau scoase. În acest caz, puteţi dezactiva scoaterea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Preferă utilizarea coperţii detectate în fişierul sursă in loc de coperta specificată.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH CUPRINS
+.sp
+Controlul generării automate a cuprinsului. Implicit, dacă fișierul sursă are un cuprins, acesta va fi folosit de regulă pentru cuprinsul celui generat automat.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Atunci când creaţi cuprinsul folosind legăturile din documentul sursă, permiteţi duplicate. De exemplu: permiteţi două sau mai multe rubrici cu acelaşi text, doar dacă acestea fac legătura către locaţii diferite.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Numărul maxim de legături de introdus în cuprins. Puneți 0 pentru a\-l dezactiva. Implicit este: 50. Legăturile sunt adăugate la cuprins dacă numărul\-prag de capitole detectate nu a fost atins.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Nu adăuga capitolele auto\-detectate la cuprins.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Şterge intrările din cuprins ale căror titluri corespund expresiilor regulate specifice. Intrările corespondente şi toţi fiii lor sunt şterse.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Dacă sunt detectate mai puţine capitole decât numărul acesta, atunci se adaugă legături la cuprins. Implicit: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+În mod normal dacă fişierul sursă are deja un cuprins acesta este preferat faţă de cel generat automat. Cu această opţiune cel generat automat este folosit întotdeauna.
+.UNINDENT
+.SH METADATA
+.sp
+Opțiuni pentru precizarea metadatelor la ieșire
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Şir de caractere care trebuie utilizat la sortarea după autor.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Introduceţi autorii. Autorii multipli trebuie separaţi prin \fB"\fP&\fB"\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Indicați producătorul cărții.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Setează coperta către fişierul sau URL specificat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Indicați numărul ISBN al cărții.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Setaţi limba.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Stabiliţi evaluarea personală a cărţii. Ar trebui să fie un număr între 1 şi 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Citeşte metadatele din fişierul OPF specificat. Metadatele citite din acest fişier vor suprascrie orice metadată din fişierul sursă.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Setaţi indexul cărtii în această serie
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Introduceți etichetele pentru carte. Ar trebui să fie o listă separată prin virgule.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Set the book timestamp (no longer used anywhere)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Stabileşte titul.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Versiunea titlului de folosit pentru sortare.
+.UNINDENT
+.SH DEBUG
+.sp
+Opțiuni pentru asistarea depanării conversiei
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Salvaţi ieşirea etapelor diferite ale procesului de conversie în folderul specificat. Se foloseşte dacă dumneavoastră nu se ştie cu siguranţă la care etapă a procesului de conversie a apărut eroarea.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

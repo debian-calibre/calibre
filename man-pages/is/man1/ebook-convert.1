@@ -1,0 +1,601 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "júlí 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an „open e\-book“ (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+.sp
+Valkostir og sjálfgefnir valkostir breytast eftir sniði á hvoru tveggja inntaki
+og úttaki, þannig að best er að skoða ávallt með:
+.sp
+ebook\-convert myfile.input_format myfile.output_format \-h
+.sp
+Hér fyrir neðan eru valkostir sem eru sameiginlegir í öllum umbreytingum
+og þar á eftir eru valkostir sem eru sértækir fyrir hvert inntaks\- og úttakssnið.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%INNTAK VALKOSTIR\fP
+.IP \(bu 2
+\fI\%ÚTTAK VALKOSTIR\fP
+.IP \(bu 2
+\fI\%ÚTLIT OG VIÐMÓT\fP
+.IP \(bu 2
+\fI\%TILGÁTUVINNSLA\fP
+.IP \(bu 2
+\fI\%LEITA OG SKIPTA ÚT\fP
+.IP \(bu 2
+\fI\%FINNA UPPBYGGINGU\fP
+.IP \(bu 2
+\fI\%EFNISYFIRLIT\fP
+.IP \(bu 2
+\fI\%LÝSIGÖGN\fP
+.IP \(bu 2
+\fI\%VILLULEIT\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+sýna þessi hjálparskilaboð og hætta
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Tilgreina intaksforstillingu. Inntaksforstilling veitir umbreytingarferlinu upplýsingar um hvernig skal túlka ýmsar upplýsingar í inntakssjalinu. Til dæmis upplausnarháðar lengdir (þ.e. lengd í myndeindum). Val er um:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+sýna útgáfunúmer forrits og hætta
+.UNINDENT
+.SH INNTAK VALKOSTIR
+.sp
+Stillingar á vinnslu inntaks mobi skrárinnar
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Tilgreina stafakóðun í inntaksskjalinu. Virkjun þessarar aðgerðar mun yfirprenta kóðanir sem tilgreindar eru í skjalinu sjálfu. Mjög gott að nota á skjöl sem ekki tilgreina kóðun eða hafa rangar kóðunarskilgreiningar.
+.UNINDENT
+.SH ÚTTAK VALKOSTIR
+.sp
+Stillingar á vinnslu úttaks epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Þessarar aðgerðar er einungis þörf ef nota á EPUB skrána í FBReaderJ. Hún mun fjarlægja allar undirmöppur í EPUB skránni þannig að skrárnar verða allar í efsta lagi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Bæta við innvöfðu efnisyfirliti sem mun birtast sem hluti af megin innihaldi bókar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Setja innvafið efnisyfirlit aftast í bókina í stað fremst.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Setja innihaldið í tilbúnu EPUB skránni í tilgreinda möppu. Farið varlega, því innihald möppunnar er fyrst fjarlægt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Skipta öllum HTML skrár stærri en þetta (í kB). Þetta er nauðsynlegt því flestir EPUB lesarar ráða ekki við stórar skrár. Sjálfgefna gildið 260KB er stærðarmörk Adobe Digital Editions. Veldu gildið 0 til að gera stærðarskiptingu óvirka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Venjulega, ef inntaksskrár hafa enga forsíðu og hún er ekki tligreind, þá er forsíða útbúin með titli, höfundi o.s.frv. Hér er þessi forsíðutilbúningur gerður óvirkur.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Ekki nota SVG sem forsíðu. Notið þessa stillingu ef EPUB skrá verður notuð í tæki sem styður ekki SVG snið, svo sem iPhone og JetBook Lite. Án þessarar stillingar þá munu slík tæki birta auða forsíðu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Þegar SVG forsíða er notuð þá mun þessi aðgerð valda því að forsíðan skalast svo hún fyllir laust skjásvæði en heldur sínum hlutföllum (hlutföll breiddar og hæðar). Það þýðir að það gætu komið hvítar spássíur til hliðar eða ofan og neðan við myndina en hún aflagast ekki. Án þessarar aðgerðar þá gæti myndin aflagast eitthvað en verður án spássíu (hvítra jaðra).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Ef tilgreind, þá mun úttaksviðbótin reyna að skapa úttak sem er eins mannvænt til aflestrar og hægt er. Sumar úttaksviðbætur eru ónæmar fyrir þessu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Titill á öllum innvöfðum efnisyfirlitum.
+.UNINDENT
+.SH ÚTLIT OG VIÐMÓT
+.sp
+Stillingar á útliti og framsetningu úttaks
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Punktastærð grunnleturs. Allar leturstærðir í nýtilbúinni bók verða endurkvarðaðar út frá þessari stærð. Ef t.d. stærri leturgerð er valin þá verður letrið í úttakinu stærra. Sjálfgefið er að grunnleturstærðin sé valin í samræmi við virkt úttakssnið.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Breyta textajöfnun. Gildið \fB"\fPvinstri\fB"\fP breytir öllum jöfnuðum texta í frumskránni þannig að hann jafnast vinstra megin (þ.e. ójafnaður). Gildið \fB"\fPjafna\fB"\fP breytir öllum ójöfnuðum texta í jafnaðan. Gildið \fB"\fPupprunalegt\fB"\fP (sjálfgefið) breytir ekki jöfnun í frumskránni. Takið eftir að einungis sum úttakssnið styðja jöfnun.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Gera alla endurkvörðun leturstærða óvirka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Ívefja stafagerð sem notuð er í innsettri skrá ef hún er ekki nú þegar ívafin. Þessi aðgerð leitar að umbeðnum stafagerðum og ef þær finnast, þá verða þær ívafðar. Ívafning mun einugis virka ef sniðið sem þú ert að breyta í styður ívafðar stafagerðir, svo sem EPUB, AZW3, DOCX eða PDF. Vinsamlegast tryggðu að þú hafir réttu leyfin til að ívefja þær stafagerðir sem notaðar eru í skránni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Ívefja tiltekna leturgerð inn í bókina. Þannig er \fB"\fPgrunn\fB"\fP leturgerð bókarinnar tilgreind. Ef innflutta skráin tilgreinir eigin leturgerð, þá gæti hún yfirprentað þessa grunnleturgerð. Þú getur notað leturgerðarsíu til að fjarlægja leturgerðir úr innfluttum skrám. Takið eftir að ívafning virkar einungis í vissum gerðum úttaksskráa, aðallega EPUB, AZW3 og DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Annað hvort slóðin á CSS stílblað eða hrátt CSS. Þetta CSS mun bætast við stílsreglurnar í frumskránni, til að skrifa yfir þær reglur.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+CSS eigindalisti, aðskilin með kommum, sem verða fjarlægð úr öllum CSS stílum. Þetta er notadrjúgt ef tilvist einhverra stílsupplýsinga kemur í veg fyrir að hægt sé að skrifa yfir þær í tækinu þínu. Til dæmis: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Vörpun úr CSS\-leturheitum yfir í leturstærð í punktum. Dæmigerð uppsetning er 12,12,14,16,18,20,22,24. Þetta er vörpun stærða frá xx\-smátt upp í xx\-stórt, þar sem lokastærðin er afar stór leturgerð. Þessi gildi eru svo notuð til að endurkvarða leturgerðirnar á skynsaman hátt. Sjálfgefið er að nota vörpun byggða á völdu úttakssniði.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Setja inn auða línu á milli málsgreina. Þetta virkar ekki ef frumskráin notar ekki málsgreinar (<p> eða <div> tög).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Tilgreindu hæð auðra lína (í em einingum) sem settar eru inn. Hæð lína milli málsgreina verður tvöföld þetta gildi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Preserve ligatures present in the input document. A ligature is a special rendering of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. This option will preserve them instead.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Punktafjöldi línuhæðar. Ræður stærð bils milli aðliggjandi lína í texta. Á einungis við um einingar sem ekki skilgreina sína eigin línuhæð. Í flestum tilvikum er val um lágmarkshæð línu gagnlegri. Sjálfgefið er að engar breytingar á línuhæð er framkvæmd.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Sum illa uppsett skjöl nota töflur til að ákvarða útlit texta á síðu. Við umbreytingu hafa sum slík skjöl texta sem hleypur af síðum eða öðrum bókarhlutum. Þetta val mun ná í innihald úr töflunum og birta með línulegum hætti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Lágmarks hæð línu, sem hlutfall af útreiknaðri leturstærð einingarinnar. Calibre mun tryggja að allar einingar fái línuhæð sem er að lágmarki þetta gildi, óháð því sem tilgreint er í inntaksskránni. Gildið núll gerir þetta óvirkt. Sjálfgefið er 120%. Notið það val í kjörstillingum til að tilgreina línuhæð, nema afleiðingar breytinga séu vel þekktar. Til dæmis, þá er hægt að hafa \fB"\fPtvöfalt línubil\fB"\fP með því að velja hér 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Fjarlægja bil á milli málsgreina. Setur einnig 1,5em inndrátt á málsgreinar. Bil verða ekki fjarlægð ef engar málsgreinar (<p> eða <div> tög) eru í frumskránni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Þegar calibre fjarlægir auðar línur á milli málsgreina þá er inndráttur á málsgreinar settur sjálfkrafa til að tryggja að málsgreinar séu auðveldlega aðskiljanlegar. Þessi aðgerð stýrir breidd þess inndráttar (í em einingum). Ef gildið er neikvætt, þá ræður sá inndráttur sem notaður er í inntaksskjalinu, þ.e. calibre mun ekki breyta inndrætti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Setja alla ífafðar stafagerðir í undirmengi. Allar ívafðar stafagerðir eru minnkaðar svo þær innihalda aðeins þau stafbrigði sem notuð eru í þessari skrá. Þannig smækka stafagerðaskrárnar. Notadrjúgt ef þú ert að ívefja óvenju stóra stafagerð með fjölda ónotaðra stafbrigða.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+.UNINDENT
+.SH TILGÁTUVINNSLA
+.sp
+Hagræða skráartextanum og byggingu hans með almennu mynstri. Ekki sjálfgefin stilling. Notið –enable\-heuristics til að virkja.  Slökkva má á einstaka aðgerðum með –disable\-* valkosti.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analyze hyphenated words throughout the document.  The document itself is used as a dictionary to determine whether hyphens should be retained or removed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Remove empty paragraphs from the document when they exist between every other paragraph
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Breyta inndrætti sem búinn er til með mörgum samfelldum bilum í CSS inndrátt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Look for common words and patterns that denote italics and italicize them.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Looks for occurrences of sequential <h1> or <h2> tags. The tags are renumbered to prevent splitting in the middle of chapter headings.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Unwrap lines using punctuation and other formatting clues.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Enable heuristic processing. This option must be set for any heuristic processing to take place.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Scale used to determine the length at which a line should be unwrapped. Valid values are a decimal between 0 and 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Replace scene breaks with the specified text. By default, the text from the input document is used.
+.UNINDENT
+.SH LEITA OG SKIPTA ÚT
+.sp
+Hagræða skráartextanum og byggingu hans með mynstri skilgreint af notanda.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Replacement to replace the text found with sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Search pattern (regular expression) to be replaced with sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Replacement to replace the text found with sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Search pattern (regular expression) to be replaced with sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Replacement to replace the text found with sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Search pattern (regular expression) to be replaced with sr3\-replace.
+.UNINDENT
+.SH FINNA UPPBYGGINGU
+.sp
+Stilla sjálfvirka greiningu á byggingu skráa.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Tilgreina hvernig á að merkja við kafla sem fundust. Gildið \fB"\fPsíðuskil\fB"\fP mun hafa síðuskil á undan köflum. Gildið \fB"\fPlína\fB"\fP mun setja línu á undan köflum. Gildið \fB"\fPekkert\fB"\fP mun gera kaflamerkingar óvirkar og gildið \fB"\fPhvoru tveggja\fB"\fP mun nota hvoru tveggja línuskil og línur til að marka kafla.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Í sumum skjölum eru vinstri og hægri spássíur tilgreindar í hverri málsgrein. Calibre mun reyna að finna og fjarlægja þessar spássíur. Stundum hverfa þá spássíur sem ekki áttu að fara. Ef svo er þá er hér hægt að koma í veg fyrir það.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath skipun. Línuskil er höfð á undan tilgreindum einingum. Notið eftirfarandi skipun til að gera óvirkt: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Nota forsíðu sem fannst í frumskránni frekar en tilgreinda forsíðu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH EFNISYFIRLIT
+.sp
+Stilla sjálfvirka gerð efnisyfirlits. Sjálfgefið er að ef frumskráin hefur efnisyfirlit þá verður það notað framyfir það sem er sjálfkrafa búið til.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Þegar efnisyfirlit er búið til úr tenglum í inntaksskjalinu, þá skal leyfa tvíteknar færslur, þ.e. leyfa fleiri en eina færslu með sama texta, svo framarlega sem tenglarnir eru mismunandi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+XPath skipun sem tilgreinir öll tög sem bæta á við sem meginefni í efnisyfirlitinu. Ef þetta er tilgreint þá er þessi aðgerð tekin umfram allar aðrar skjálfkrafa efnisaðgerðir. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath skipun sem skilgreinir öll tög sem bæta á við sem fyrsta undirefni í efnisyfirlitinu. Færslunum er bætt við undir hvert meginefni. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath skipun sem tilgreinir öll tög sem bæta á við sem annað undirefni í efnisyfirlitinu. Færslunum er bætt við undir hvert fyrsta undirefni. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Hámarks fjöldi tengla sem bætt er við í efnisyfirlit. Veljið 0 til að gera óvirkt. Sjálfgefið er: 50. Tenglum er einungis bætt við efnisyfirlitið ef minni en þessi þröskuldsfjöldi af köflum greinist.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Ekki bæta þeim köflum við í efnisyfirlitið sem fundust sjálfkrafa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Fjarlægja færslur úr efnisyfirliti sem hafa heiti sem passar við tilgreinda reglulega segð. Færslur sem passa við og öll afsprengi þeirra eru fjarlægð.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Ef færri en þessi kaflafjöldi greinist, þá er tenglum bætt við í efnisyfirlitið. Sjálfgefið: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Venjulega, ef frumskráin hefur efnisyfirlit, þá er það notað í stað þess sem er sjálfkrafa búið til. Ef þetta er valið þá er sjálfgerða efnisyfirlitið alltaf notað.
+.UNINDENT
+.SH LÝSIGÖGN
+.sp
+Stillingar á lýsigögnum í úttaki
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+String to be used when sorting by author.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Set the authors. Multiple authors should be separated by ampersands.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Settu framleiðanda bókarinnar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Settu lýsingu á rafbókinni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Set the cover to the specified file or URL
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Settu ISBN rafbókarinnar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Settu tungumálið.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Settu útgefanda rafbókarinnar.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Settu einkunn. Hún ætti að vera tala á milli 1 og 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Lesa lýsigögn úr tilgreindri OPF skrá. Lýsigögn sem lesin eru úr þessari skrá munu koma í stað þeirra sem eru í frumskjalinu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Settu ritröðina sem þessi rafbók tilheyrir.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Set the index of the book in this series.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Set the tags for the book. Should be a comma separated list.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Set the book timestamp (no longer used anywhere)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Veldu titilinn.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+The version of the title to be used for sorting.
+.UNINDENT
+.SH VILLULEIT
+.sp
+Stillingar vegna kembunar á umbreytingunni
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Vista úttakið á mismunandi stigum við umbreytingu í tilgreinda möppu. Notadrjúgt ef óvissa ríkir um hvar villa á sér stað í umbreytingarferlinu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Umfang orðnotkunar. Tilgreindu orðnotkunarstuðul. Stuðullinn tveir veldur orðagljáfri, einn meðal orðnotkun og núll er knapport.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

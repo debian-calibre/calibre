@@ -23,6 +23,7 @@ from calibre.gui2.tag_browser.ui import TagBrowserWidget
 from calibre.gui2.book_details import BookDetails
 from calibre.gui2.notify import get_notifier
 from calibre.gui2.layout_menu import LayoutMenu
+from calibre.customize.ui import find_plugin
 
 _keep_refs = []
 
@@ -164,7 +165,9 @@ class LibraryWidget(Splitter):  # {{{
         av.add_view('grid', parent.grid_view)
         parent.quickview_splitter.addWidget(stack)
 
-        quickview_widget.setLayout(QVBoxLayout())
+        l = QVBoxLayout()
+        l.setContentsMargins(4, 0, 0, 0)
+        quickview_widget.setLayout(l)
         parent.quickview_splitter.addWidget(quickview_widget)
         parent.quickview_splitter.hide_quickview_widget()
 
@@ -550,7 +553,7 @@ class LayoutMixin(object):  # {{{
             self.bd_splitter.addWidget(self.book_details)
             self.bd_splitter.setCollapsible(self.bd_splitter.other_index, False)
             self.centralwidget.layout().addWidget(self.bd_splitter)
-            button_order = ('sb', 'tb', 'bd', 'gv', 'cb')
+            button_order = ('sb', 'tb', 'bd', 'gv', 'cb', 'qv')
         # }}}
         else:  # wide {{{
             self.bd_splitter = Splitter('book_details_splitter',
@@ -565,8 +568,14 @@ class LayoutMixin(object):  # {{{
             self.bd_splitter.setSizePolicy(QSizePolicy(QSizePolicy.Expanding,
                 QSizePolicy.Expanding))
             self.centralwidget.layout().addWidget(self.bd_splitter)
-            button_order = ('sb', 'tb', 'cb', 'gv', 'bd')
+            button_order = ('sb', 'tb', 'cb', 'gv', 'qv', 'bd')
         # }}}
+
+        # This must use the base method to find the plugin because it hasn't
+        # been fully initialized yet
+        self.qv = find_plugin('Quickview')
+        if self.qv and self.qv.actual_plugin_:
+            self.qv = self.qv.actual_plugin_
 
         self.status_bar = StatusBar(self)
         stylename = unicode(self.style().objectName())
@@ -580,7 +589,14 @@ class LayoutMixin(object):  # {{{
             if hasattr(self, x + '_splitter'):
                 button = getattr(self, x + '_splitter').button
             else:
-                button = self.grid_view_button if x == 'gv' else self.search_bar_button
+                if x == 'gv':
+                    button = self.grid_view_button
+                elif x == 'qv':
+                    if self.qv is None:
+                        continue
+                    button = self.qv.qv_button
+                else:
+                    button = self.search_bar_button
             self.layout_buttons.append(button)
             button.setVisible(False)
             if isosx and stylename != u'Calibre':
@@ -720,6 +736,8 @@ class LayoutMixin(object):  # {{{
             s.save_state()
         self.grid_view_button.save_state()
         self.search_bar_button.save_state()
+        if self.qv:
+            self.qv.qv_button.save_state()
 
     def read_layout_settings(self):
         # View states are restored automatically when set_database is called
@@ -727,6 +745,7 @@ class LayoutMixin(object):  # {{{
             getattr(self, x+'_splitter').restore_state()
         self.grid_view_button.restore_state()
         self.search_bar_button.restore_state()
+        # Can't do quickview here because the gui isn't totally set up. Do it in ui
 
     def update_status_bar(self, *args):
         v = self.current_view()

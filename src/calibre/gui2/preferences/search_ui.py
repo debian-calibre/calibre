@@ -220,8 +220,8 @@ class Ui_Form(object):
         self.l11.setText(_("Make &user categories from:"))
         self.opt_grouped_search_make_user_categories.setToolTip(_("Enter the names of any grouped search terms you wish\n"
 "to be shown as user categories"))
-        self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
-        self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the searchbar"))
+        self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the Search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
+        self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the Search bar"))
         self.opt_case_sensitive.setText(_("Case &sensitive searching"))
         self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
 

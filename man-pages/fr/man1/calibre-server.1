@@ -1,0 +1,231 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-SERVER" "1" "juillet 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-server [options] [path to library folder...]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Démarre le Serveur de contenu calibre. Le Serveur de contenu calibre
+expose vos bibliothèques calibre sur internet. Vous pouvez spécifier
+le chemin vers les répertoires de bibliothèque comme argument à \fBcalibre\-server\fP\&. Si vous ne
+spécifiez aucun chemin, toutes les bibliothèques connues par calibre seront utilisées.
+.sp
+Chaque fois que vous passez à \fBcalibre\-server\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+.SH [OPTIONS]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Chemin vers le fichier journal d\fB\(aq\fPaccès. Ce journal contient des informations au sujet des clients se connectant au serveur et faisant des requêtes. Par défaut aucun accès connecté n\fB\(aq\fPest fini.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+Choisir le type d\fB\(aq\fPauthentification utilisé.         Paramétrer le mode d\fB\(aq\fPauthentification HTTP utilisé par le serveur. Paramétrer à \fB"\fPbasic\fB"\fP si vous mettez le serveur derrière un proxy SSL. Autrement, laisser à \fB"\fPauto\fB"\fP, lequel utilisera \fB"\fPbasic\fB"\fP si SSL est configuré sinon il utilisera \fB"\fPdigest\fB"\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Recharge automatiquement le serveur lors de changements du code source. Utile pour le développement. Vous devriez aussi spécifier une valeur basse pour la temporisation d\fB\(aq\fParrêt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Taille minimale pour laquelle les réponses utilisent la compression de données (en bytes).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Exécute le processus en tâche de fond comme un daemon (Linux uniquement)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Restreindre l\fB\(aq\fPaffichage des champs définis par l\fB\(aq\fPutilisateur.       Liste de champs de métadonnées définis par l\fB\(aq\fPutilisateur séparée par des virgules qui seront montrés par le Serveur de contenu dans les affichages /opds et /mobile. Si vous spécifiez cette option, tous les champs qui ne sont pas dans cette liste ne seront pas affichés. Par exemple : my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Pré\-allocation d\fB\(aq\fPun socket, par exemple, avec activation du socket systemd. Par défaut, cette option est activée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Authentification basée sur un mot de passe pour accéder au serveur.         Normalement, le serveur est sans restriction, permettant à n\fB\(aq\fPimporte qui d\fB\(aq\fPy accéder. Vous pouvez restreindre l\fB\(aq\fPaccès à des utilisateurs prédéfinis avec cette option. Par défaut, cette option est désactivée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Retour à l\fB\(aq\fPauto\-détection de l\fB\(aq\fPinterface.   Si pour une raison quelconque le serveur est incapable de se lier à l\fB\(aq\fPinterface dans l\fB\(aq\fPoption listen_on, alors il essayera de détecter une interface qui se connecte avec le monde extérieur et se liera à celle\-là. Par défaut, cette option est activée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Autoriser les connexions locales non authentifiées à apporter des modifications.    Normalement, si vous n\fB\(aq\fPactivez pas l\fB\(aq\fPauthentification, le serveur fonctionne en mode lecture seule afin d’empêcher les utilisateurs anonymes d\fB\(aq\fPapporter des modifications à vos bibliothèques calibre. Cette option permet aux utilisateurs se connectant à partir de l\fB\(aq\fPordinateur où le serveur s\fB\(aq\fPexécute d\fB\(aq\fPeffectuer des modifications. Ceci permet d\fB\(aq\fPexécuter le serveur sans authentification tout en utilisant calibredb pour apporter des modifications à vos bibliothèques calibre. Notez que l\fB\(aq\fPactivation de cette option signifie que tout programme exécuté sur l\fB\(aq\fPordinateur peut modifier vos bibliothèques calibre. Par défaut, cette option est désactivée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+Enregistrer les requêtes HTTP 404 (Not Found).      Normallement, le serveur inscrit toutes les requêtes HTTP pour les ressources qui ne sont pas trouvées. Ceci peut occasionné des inscriptions indésirables, si votre serveur est ciblé par des robots, Utiliser cette option pour l\fB\(aq\fParrêter. Par défaut, cette option est activée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+Annoncer les flux OPDS via BonJour.         Annoncer les flux OPDS via le service BonJour, faisant que les applications de lecture basées OPDS puissent détecter et se connecter automatiquement au serveur. Par défaut, cette option est activée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Zéro copie de fichiers de transfert pour augmenter la performance.  Ceci utilisera zero\-copy dans les transferts in\-kernel lors de l\fB\(aq\fPenvoi de fichiers sur le réseau, augmentant les performances. Cependant, il peut causer la corruption de transferts de fichiers sur certains systèmes de fichier endommagés. Si vous faites l\fB\(aq\fPexpérience de transferts de fichiers corrompus, désactivez\-le. Par défaut, cette option est activée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+affiche ce message d\fB\(aq\fPaide et quitte
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+Champs de métadonnées définis par l\fB\(aq\fPutilisateur ignorés.    Liste de champs de métadonnées définis par l\fB\(aq\fPutilisateur séparés par des virgules qui ne seront pas montrés par le Serveur de contenu dans les affichages /opds et /mobile. Par exemple : my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+L\fB\(aq\fPinterface sur laquelle écouter pour les connexions.       Le comportement par défaut est d\fB\(aq\fPécouter sur toutes les interfaces disponibles. Vous pouvez changer cela en, par exemple, \fB"\fP127.0.0.1\fB"\fP pour écouter uniquement après des connections à partir de la machine locale, ou en \fB"\fP::\fB"\fP pour toutes les connexions IPv6 et IPv4 entrantes.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Chemin vers le fichier journal pour le journal du serveur. Ce journal contient les informations et les erreurs serveur, pas les journaux d\fB\(aq\fPaccès. Il est écrit par défaut sur stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Gérer la base de données des utilisateurs autorisés à se connecter à ce serveur. Voir aussi l\fB\(aq\fPoption \fI\%\-\-userdb\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+Taille max. d\fB\(aq\fPune seule en\-tête HTTP (en KB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Temps maximum pour les processus de travail.        Quantité maximale de temps que les processus de travail sont autorisés à s\fB\(aq\fPexécuter (en minutes). Régler à zéro pour aucune limite.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Nombre maximum de processus de travail.     Les processus de travail sont lancés en cas d\fB\(aq\fPutilité et utilisés pour de volumineux travaux comme préparer un livre à la visualisation, ajouter des livres, convertir, etc. Normalement, le nombre maximal de tels processus est basé sur le nombre de cœurs du CPU. Vous pouvez le contrôler par ce réglage.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+Taille max. du fichier journal (en MB).     La taille maximale des fichiers journaux, générés par le serveur. Quand le journal devient plus grand que cette taille, il est automatiquement remplacé. Régler à zéro pour désactiver la rotation de journal.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+Nombre maximum de livres dans les flux OPDS.        Le nombre maximum de livres que serveur renverra dans un seul flux d\fB\(aq\fPacquisition OPDS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Le nombre maximum d\fB\(aq\fPéléments dégroupés dans les flux OPDS.  Groupe les éléments en catégories telles que auteur/étiquettes à l’aide de la première lettre quand il y a plus que ce nombre d’articles. Réglez à zéro pour désactiver.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Taille max. allouée pour les fichiers téléchargés sur le serveur (en MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Écrire le PID du processus dans le fichier spécifié
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Le port sur lequel écouter pour les connexions.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Temps total en secondes à attendre pour un arrêt approprié.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+Chemin vers le fichier de certificat SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Chemin vers le fichier de clé privée SSL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Temps (en secondes) après lequel une connexion inactive est fermée.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+Un préfixe à ajouter à toutes les URLs.     Utile si vous souhaitez exécuter ce serveur derrière un proxy inversé. Par exemple, utilisez /calibre comme préfixe d\fB\(aq\fPURL.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Chemin vers la base de données utilisateur à utiliser pour l\fB\(aq\fPauthentification. La base de données est un fichier SQLite. Pour le créer utilisez \fI\%\-\-manage\-users\fP\&. Vous pouvez en lire plus à propos de la gestion des utilisateurs sur : \fI\%https://manual.calibre\-ebook.com/fr/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+affiche le numéro de version du logiciel et quitte
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Nombre de processus de travail utilisés pour effectuer les requêtes.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

@@ -629,6 +629,7 @@ Now coming to author name sorting:
 Note that you can set an individual author's sort value to whatever you want using :guilabel:`Manage authors`. This is useful when dealing with names that calibre will not get right, such as complex multi-part names like Miguel de Cervantes Saavedra or when dealing with Asian names like Sun Tzu.
 
 With all this flexibility, it is possible to have calibre manage your author names however you like. For example, one common request is to have calibre display author names LN, FN. To do this, and if the note below does not apply to you, then:
+
     * Set the ``author_sort_copy_method`` tweak to ``copy`` as described above.
     * Restart calibre. Do not change any book metadata before doing the remaining steps.
     * Change all author names to LN, FN using the Manage authors dialog.
@@ -1089,18 +1090,19 @@ A portable version of calibre is available `here <https://calibre-ebook.com/down
 How do I run parts of calibre like news download and the Content server on my own linux server?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, you must install calibre onto your linux server. If your server is using
-a modern linux distro, you should have no problems installing calibre onto it.
+First, you must install calibre onto your Linux server. If your server is using
+a modern Linux distribution, you should have no problems installing calibre onto it.
 
 .. note::
-    calibre needs GLIBC >= 2.13 and libstdc++ >= 6.0.17. If you have an older
+    calibre needs GLIBC >= 2.17 and libstdc++ >= 6.0.17. If you have an older
     server, you will either need to compile these from source, or use calibre
-    1.48 which requires only GLIBC >= 2.10. In addition, although the calibre
-    command line utilities do not need a running X server, some of them do
-    require the X server libraries to be installed on your system. This is
-    because of Qt (which is used for various image processing tasks), and
-    links against these libraries. If you get an ImportError about some Qt
-    modules, you are likely missing some X libraries.
+    2.85.1 which requires GLIBC >= 2.13 or calibre 1.48 which requires only
+    GLIBC >= 2.10. In addition, although the calibre command line utilities do
+    not need a running X server, some of them do require the X server libraries
+    to be installed on your system. This is because of Qt, which is used for
+    various image processing tasks, and links against these libraries. If you
+    get an ImportError about some Qt modules, you are likely missing some X
+    libraries.
 
 You can run the calibre server via the command::
 
@@ -1122,4 +1124,4 @@ Finally, you can add downloaded news to the calibre library with::
 
    /opt/calibre/calibredb add --with-library /path/to/library outfile.epub
 
-Remember to read the command line documentation section of the calibre User Manual to learn more about these, and other commands.
+Remember to read the :ref:`cli` section of the calibre User Manual to learn more about these, and other commands.

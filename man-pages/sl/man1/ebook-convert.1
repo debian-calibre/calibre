@@ -1,0 +1,609 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "EBOOK-CONVERT" "1" "julij 14, 2017" "3.4.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert input_file output_file [options]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Convert an e\-book from one format to another.
+.sp
+input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+.sp
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an „open e\-book“ (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+.sp
+After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+.sp
+For full documentation of the conversion system see
+conversion
+.sp
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+.sp
+The options and default values for the options change depending on both the
+input and output formats, so you should always check with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ebook\-convert myfile.input_format myfile.output_format \-h
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Below are the options that are common to all conversion, followed by the
+options specific to every input and output format.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%VHODNE MOŽNOSTI\fP
+.IP \(bu 2
+\fI\%IZHODNE MOŽNOSTI\fP
+.IP \(bu 2
+\fI\%VIDEZ IN OBČUTEK\fP
+.IP \(bu 2
+\fI\%HEVRISTIČNA OBDELAVA\fP
+.IP \(bu 2
+\fI\%NAJDI IN ZAMENJAJ\fP
+.IP \(bu 2
+\fI\%ZAZNAVA STRUKTURE\fP
+.IP \(bu 2
+\fI\%KAZALO VSEBINE\fP
+.IP \(bu 2
+\fI\%METAPODATKI\fP
+.IP \(bu 2
+\fI\%RAZHROŠČEVANJE\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+show this help message and exit
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Določite vhodni profil. Vhodni profil poda sistemsko informacijo pretvorbe, kako interpretirati različne podatke v vhodnem dokumentu. Primer: ločljivost, odvisna od dolžine (dolžina v slikovnih točkah). Izbire so:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+show program\fB\(aq\fPs version number and exit
+.UNINDENT
+.SH VHODNE MOŽNOSTI
+.sp
+Možnosti za nadzor obdelave vhodne datoteke mobi
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Določite kodiranje znakov vhodnega dokumenta. Če je ta možnost izbrana, osnovno kodiranje dokumenta ne bo veljalo. Ta možnost je koristna za dokumente, ki nimajo določenega kodiranja ali pa imajo kodiranje navedeno napačno.
+.UNINDENT
+.SH IZHODNE MOŽNOSTI
+.sp
+Možnosti za nadzor obdelave izhodne datoteke epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+This option is needed only if you intend to use the EPUB with FBReaderJ. It will flatten the file system inside the EPUB, putting all files into the top level.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Insert an inline Table of Contents that will appear as part of the main book content.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Vstavljeno kazalo vsebine postavi na konec knjige namesto na začetek
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Normally, if the input file has no cover and you don\fB\(aq\fPt specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Do not use SVG for the book cover. Use this option if your EPUB is going to be used on a device that does not support SVG, like the iPhone or the JetBook Lite. Without this option, such devices will display the cover as a blank page.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+When using an SVG cover, this option will cause the cover to scale to cover the available screen area, but still preserve its aspect ratio (ratio of width to height). That means there may be white borders at the sides or top and bottom of the image, but the image will never be distorted. Without this option the image may be slightly distorted, but there will be no borders.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Če je tako nastavljeno, bo izhodni vtičnik poskusil prilagoditi izpis, da bo čim bolj berljiv . Pri nekaterih vtičnikih morda ne bo imel učinka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Naslov za vsako ustvarjeno vdelano kazalo vsebine.
+.UNINDENT
+.SH VIDEZ IN OBČUTEK
+.sp
+Možnosti za nadzor videza in občutka izhoda
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Osnovna velikost pisave v točkah. Pisava vseh velikosti v ustvarjeni knjig bo imela spremenjeno merilo glede na to velikost. Z izbiro večjih velikosti lahko povečate pisave v izhodni datoteki ali obratno. Običajno je osnovna pisava izbrana glede na izbrani izhodni profil.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Change text justification. A value of \fB"\fPleft\fB"\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB"\fPjustify\fB"\fP converts all unjustified text to justified. A value of \fB"\fPoriginal\fB"\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Izključite spreminjanje velikosti pisav.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Ali pot k oblikovni predlogi CSS ali surovi CSS. Ta CSS bo dodan pravilom sloga izvorne datoteke in ga lahko uporabimo za njihovo razveljavitev (izvorni slog).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Mapiranje iz CSS imen fonta v velikosti fonta v pts. Na primer, da je  nastavitev 12,12,14,16,18,20,22,24.  To je mapiranje velikosti  za xx\-majhna do xx\-velika, tako da je končna velikost veliki  fonti. Običajno je mapiranje izbrano glede na izbrani izhodni profil.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Vstavi prazno vrstico med odstavke. Ne deluje, če vhodna datoteka ne uporablja odstavkov (označb <p> ali <div>).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Set the height of the inserted blank lines (in em). The height of the lines between paragraphs will be twice the value set here.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Preserve ligatures present in the input document. A ligature is a special rendering of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. This option will preserve them instead.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Nekateri slabo oblikovani dokumenti uporabljajo tabele za nadzor izgleda  teksta na strani. Po pretvorbi imajo taki dokumenti tekst, ki uhaja iz strani in podobno. Ta opcija bo izbrala vsebino iz tabel in jo predstavila v linearnem načinu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB"\fPdouble spaced\fB"\fP text by setting this to 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Remove spacing between paragraphs. Also sets an indent on paragraphs of 1.5em. Spacing removal will not work if the source file does not use paragraphs (<p> or <div> tags).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+When calibre removes blank lines between paragraphs, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent (in em). If you set this value negative, then the indent specified in the input document is used, that is, calibre does not change the indentation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+.UNINDENT
+.SH HEVRISTIČNA OBDELAVA
+.sp
+Modify the document text and structure using common patterns. Disabled by default. Use –enable\-heuristics to enable.  Individual actions can be disabled with the –disable\-* options.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analiziraj deljene besede v dokumentu. Sam dokument služi kot slovar za določanje, ali naj bodo vezaji ohranjeni ali odstranjeni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Odstrani prazne odstavke iz dokumenta, če obstajajo med vsakim drugim odstavkom.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Pretvori odmike, ustvarjene z več neprelomnimi presledki, v odmike CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Išči pogoste besede in vzorce, ki označujejo ležečo pisavo, in postavi besedilo v ležečo lego.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Poišče pojavitve zaporednih značk <h1> ali <h2>. Značke se preštevilčijo, s čimer je preprečena delitev na sredi naslova poglavij.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Odstrani prelom vrstic z upoštevanjem ločil in drugih namigov.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Omogoči hevristično procesiranje. Če želite uporabiti hevristično procesiranje, morate omogočiti to možnost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Scale used to determine the length at which a line should be unwrapped. Valid values are a decimal between 0 and 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Nadomesti prelome prizorov z navedenim besedilom. Privzeto je uproabljeno besedilo iz vhodnega dokumenta.
+.UNINDENT
+.SH NAJDI IN ZAMENJAJ
+.sp
+Spremeni besedilo in strukturo dokumenta z rabo uporabniško določenih vzorcev.
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Zamenjava za besedilo, najdeno z sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Iskalni vzorec (regularni izraz), ki bo zamenjan z sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Zamenjava za besedilo, najdeno z sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Iskalni vzorec (regularni izraz), ki bo zamenjan z sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Zamenjava za besedilo, najdeno z sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Iskalni vzorec (regularni izraz), ki bo zamenjan z sr3\-replace.
+.UNINDENT
+.SH ZAZNAVA STRUKTURE
+.sp
+Nadzor samodejnega zaznavanja strukture dokumenta.
+.INDENT 0.0
+.TP
+.B \-\-chapter
+An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Določite označbe zaznanih poglavij. Vrednost \fB"\fPprelom strani\fB"\fP bo vstavila prelom pred poglavji. Vrednost \fB"\fPčrta\fB"\fP bo vstavila vrstico pred poglavji. Vrednost \fB"\fPnič\fB"\fP bo izključila označevanje poglavja in vrednost \fB"\fPoboje\fB"\fP bo uporabila prelom in vrstico za označbo poglavij.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Some documents specify page margins by specifying a left and right margin on each individual paragraph. calibre will try to detect and remove these margins. Sometimes, this can cause the removal of margins that should not have been removed. In this case you can disable the removal.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Uporabi naslovnico zaznano v izvorni datoteki namesto v nastavitvah specificirane naslovnice.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+.UNINDENT
+.SH KAZALO VSEBINE
+.sp
+Nadzor samodejnega tvorjenja kazala vsebine. Glede na osnovno nastavitev, če ima vir kazalo vsebine, bo le\-to uporabljeno pri samodejnem tvorjenju.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+When creating a TOC from links in the input document, allow duplicate entries, i.e. allow more than one entry with the same text, provided that they point to a different location.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Največje število povezav za vnos v kazalo vsebine. Nastavite 0 za izključitev. Privzeto je: 50. Povezave so dodane v kazalo vsebine samo, če je ugotovljeno število poglavij manjše od mejne vrednosti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Samodejno zaznanih poglavij ne dodaj v kazalo.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Odstranitev tistih vnosov iz kazala vsebine, ki ustrezajo navedenemu regularnemu izrazu. Ustrezajoči vnosi in vsi njihovi nasledniki so odstranjeni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Če je ugotovljenoštevilo poglavij manjše od te številke, se povezave dodajo v Kazalo vsebine\- Privzeto: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Če izvorna datoteka že vsebuje Kazalo vsebine, se to običajno uporabi prednostno. Z vključitvijo te opcije, se vedno uporabi samodejno generiranje.
+.UNINDENT
+.SH METAPODATKI
+.sp
+Možnosti nastavitve metapodatkov v izhodu
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Niz, uporabljen za razvrščanje po avtorjih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Določite avtorje. Avtorje ločite z znakom &.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Določite producenta knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Set the e\-book description.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Določite naslovnico z navedeno datoteko ali URL\-jem.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Določite številko ISBN knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Določite jezik.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Set the e\-book publisher.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Določite oceno. Dovoljene so številke med 1 in 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Preberi metapodatke z navedene datoteke OPF. Iz te datoteke prebrani metapodatki bodo preglasili vse podatke iz izvorne datoteke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Set the series this e\-book belongs to.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Določite indeks knjige v tej zbirki ali nizu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Določite značke za knjigo. Zapis v z vejicami ločenem seznamu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Set the book timestamp (no longer used anywhere)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Določite naslov.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Različica naslova, ki bo uporabljena pri razvrščanju.
+.UNINDENT
+.SH RAZHROŠČEVANJE
+.sp
+Možnosti pomoči pri razhroščevanju pretvorbe
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Shranjevanje izhoda na posameznih stopnjah pretvorbe v specifično mapo. Koristno je v primeru, če ne veste na kateri točki procesa  pretvorbe se je zgodila napaka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

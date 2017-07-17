@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -204,14 +204,14 @@ class Ui_Form(object):
         self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to library\" action check for &duplicates with the same title and author"))
         self.opt_manual_add_auto_convert.setText(_("Automatically &convert added books to the current output format"))
         self.opt_auto_convert_same_fmt.setToolTip(_("This will force an automatic conversion even if the file being added is the same format as the output format. For example, if you set your output format to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."))
-        self.opt_auto_convert_same_fmt.setText(_("When autoconverting, convert even if the format being added is the &same as the output format"))
-        self.opt_add_formats_to_existing.setToolTip(_("Automerge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
+        self.opt_auto_convert_same_fmt.setText(_("When auto-converting, convert even if the format being added is the &same as the output format"))
+        self.opt_add_formats_to_existing.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
 "existing book records. The box to the right controls what happens when an existing record already has\n"
 "the incoming format. Note that this option also affects the Copy to library action.\n"
 "\n"
 "Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact."))
-        self.opt_add_formats_to_existing.setText(_("&Automerge added books if they already exist:"))
-        self.opt_automerge.setToolTip(_("Automerge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
+        self.opt_add_formats_to_existing.setText(_("&Auto-merge added books if they already exist:"))
+        self.opt_automerge.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
 "existing book records. This box controls what happens when an existing record already has\n"
 "the incoming format: \n"
 "\n"
@@ -230,11 +230,11 @@ class Ui_Form(object):
         self.add_filter_rules_button.setToolTip(_("<p>You can specify rules to add/ignore files here. These will be used when recursively adding books from directories."))
         self.add_filter_rules_button.setText(_("Rules to filter added &files"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.actions_tab), _("Adding &actions"))
-        self.opt_auto_add_everything.setToolTip(_("By default, calibre will auto-add only known e-book files. \n"
+        self.opt_auto_add_everything.setToolTip(_("By default, calibre will automatically add only known e-book files. \n"
 "This option tells calibre to add all file types, except those\n"
 "that have been explicitly ignored below."))
-        self.opt_auto_add_everything.setText(_("Auto add files of &all types (not just e-books)"))
-        self.opt_auto_add_path.setPlaceholderText(_("Folder to auto-add files from"))
+        self.opt_auto_add_everything.setText(_("Automatically add files of &all types (not just e-books)"))
+        self.opt_auto_add_path.setPlaceholderText(_("Folder to automatically add files from"))
         self.auto_add_browse_button.setToolTip(_("Browse for folder"))
         self.auto_add_browse_button.setText(_("..."))
         self.opt_auto_add_auto_convert.setText(_("Automatically &convert added files to the current output format"))
@@ -242,10 +242,10 @@ class Ui_Form(object):
         self.label.setText(_("Specify a &folder. Any files you put into this folder will be automatically added to calibre (restart required)."))
         self.label_2.setText(_("<b>WARNING:</b> Files in the above folder will be deleted after being added to calibre."))
         self.opt_auto_add_check_for_duplicates.setToolTip(_("If set, this option will cause calibre to check if a file\n"
-" being auto-added is already in the calibre library.\n"
+" being automatically added is already in the calibre library.\n"
 " If it is, a message will pop up asking you whether\n"
 " you want to add it anyway."))
-        self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when auto-adding files"))
+        self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when automatically adding files"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic adding"))
 
 

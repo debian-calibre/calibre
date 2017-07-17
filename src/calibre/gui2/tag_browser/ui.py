@@ -436,8 +436,6 @@ class TagBrowserBar(QWidget):  # {{{
     def update_searchbar_state(self):
         find_shown = self.toggle_search_button.isChecked()
         self.toggle_search_button.setVisible(not find_shown)
-        self.search_button.setVisible(find_shown)
-        self.item_search.setVisible(find_shown)
         l = self.layout()
         items = [l.itemAt(i) for i in range(l.count())]
         tuple(map(l.removeItem, items))
@@ -447,12 +445,18 @@ class TagBrowserBar(QWidget):  # {{{
             l.addWidget(self.item_search, 10)
             l.addWidget(self.search_button)
             self.item_search.setFocus(Qt.OtherFocusReason)
+            self.toggle_search_button.setVisible(False)
+            self.search_button.setVisible(True)
+            self.item_search.setVisible(True)
         else:
             l.addWidget(self.alter_tb)
             self.alter_tb.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
             l.addStretch(10)
             l.addStretch(10)
             l.addWidget(self.toggle_search_button)
+            self.toggle_search_button.setVisible(True)
+            self.search_button.setVisible(False)
+            self.item_search.setVisible(False)
 # }}}
 
 

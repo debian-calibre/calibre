@@ -363,7 +363,7 @@ class HTTPConnection(HTTPRequest):
             end = buf.tell()
             buf.seek(pos)
         limit = end - pos
-        if limit == 0:
+        if limit <= 0:
             return True
         if self.use_sendfile and not isinstance(buf, (BytesIO, ReadOnlyFileBuffer)):
             try:
@@ -386,9 +386,10 @@ class HTTPConnection(HTTPRequest):
                 self.use_sendfile = self.ready = False
                 raise IOError('sendfile() failed to write any bytes to the socket')
         else:
-            sent = self.send(buf.read(min(limit, self.send_bufsize)))
+            data = buf.read(min(limit, self.send_bufsize))
+            sent = self.send(data)
         buf.seek(pos + sent)
-        return buf.tell() == end
+        return buf.tell() >= end
 
     def simple_response(self, status_code, msg='', close_after_response=True, extra_headers=None):
         if self.response_protocol is HTTP1:
@@ -524,8 +525,11 @@ class HTTPConnection(HTTPRequest):
             return
         if not self.opts.log_not_found and status_code == httplib.NOT_FOUND:
             return
-        line = '%s port-%s %s %s "%s" %s %s' % (
-            self.remote_addr, self.remote_port, username or '-',
+        ff = self.forwarded_for
+        if ff:
+            ff = '[%s] ' % ff
+        line = '%s port-%s %s%s %s "%s" %s %s' % (
+            self.remote_addr, self.remote_port, ff or '', username or '-',
             fast_now_strftime('%d/%b/%Y:%H:%M:%S %z'),
             force_unicode(self.request_line or '', 'utf-8'),
             status_code, ('-' if response_size is None else response_size))
@@ -607,9 +611,9 @@ class HTTPConnection(HTTPRequest):
 
     def reset_state(self):
         ready = not self.close_after_response
+        self.end_send_optimization()
         self.connection_ready()
         self.ready = ready
-        self.end_send_optimization()
 
     def report_unhandled_exception(self, e, formatted_traceback):
         self.simple_response(httplib.INTERNAL_SERVER_ERROR)

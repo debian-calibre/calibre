@@ -181,6 +181,7 @@ class SearchBar(QFrame):  # {{{
 
         x = parent.virtual_library = QToolButton(self)
         x.setCursor(Qt.PointingHandCursor)
+        x.setPopupMode(x.InstantPopup)
         x.setText(_('Virtual library'))
         x.setAutoRaise(True)
         x.setIcon(QIcon(I('lt.png')))
@@ -228,6 +229,7 @@ class SearchBar(QFrame):  # {{{
 
         parent.advanced_search_toggle_action = ac = parent.search.add_action('gear.png', QLineEdit.LeadingPosition)
         parent.addAction(ac)
+        ac.setToolTip(_('Advanced search'))
         parent.keyboard.register_shortcut('advanced search toggle',
                 _('Advanced search'), default_keys=("Shift+Ctrl+F",),
                 action=ac)

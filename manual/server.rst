@@ -138,7 +138,7 @@ is as follows.
     You can either do so directly in the server by providing the path to
     the HTTPS certificate to use in the advanced configuration options for
     the server, or you can setup a reverse proxy as described below, to use
-    an existing https setup.
+    an existing HTTPS setup.
 
 
 The server interface
@@ -240,16 +240,15 @@ Integrating the calibre Content server into other servers
 ------------------------------------------------------------
 
 Here, we will show you how to integrate the calibre Content server into another
-server. The most common reason for this is to make use of SSL. The basic
-technique is to run the calibre server and setup a reverse proxy to it from the
-main server.
+server. The most common reason for this is to make use of SSL or to serve the
+calibre library as part of a larger site. The basic technique is to run the
+calibre server and setup a reverse proxy to it from the main server.
 
 A reverse proxy is when your normal server accepts incoming requests and passes
 them onto the calibre server. It then reads the response from the calibre
 server and forwards it to the client. This means that you can simply run the
 calibre server as normal without trying to integrate it closely with your main
-server, and you can take advantage of whatever authentication systems your main
-server has in place. 
+server. 
 
 Using a full virtual host
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -266,7 +265,7 @@ Now setup the virtual host in your main server, for example, for nginx::
         server_name myserver.example.com;
 
         location / {
-            proxy_pass http://localhost:8080;
+            proxy_pass http://127.0.0.1:8080;
         }
     }
 
@@ -277,6 +276,7 @@ Or, for Apache::
 
     <VirtualHost *:80>
         ServerName myserver.example.com
+        AllowEncodedSlashes On
         ProxyPreserveHost On
         ProxyPass "/"  "http://localhost:8080"
     </VirtualHost>
@@ -291,20 +291,100 @@ use a URL prefix. Start the calibre server as::
 
     calibre-server --url-prefix /calibre --port 8080 
 
-The key parameter here is ``--url-prefix /calibre``. This causes the Content server to serve all URLs prefixed by calibre. To see this in action, visit ``http://localhost:8080/calibre`` in your browser. You should see the normal Content server website, but now it will run under /calibre.
+The key parameter here is ``--url-prefix /calibre``. This causes the Content server to serve all URLs prefixed by ``/calibre``. To see this in action, visit ``http://localhost:8080/calibre`` in your browser. You should see the normal Content server website, but now it will run under ``/calibre``.
 
-Now suppose you are using Apache as your main server. First enable the proxy modules in Apache, by adding the following to :file:`httpd.conf`::
+With nginx, the required configuration is::
+
+    proxy_set_header X-Forwarded-For $remote_addr;
+    location /calibre/ {
+        proxy_buffering off;
+        proxy_pass http://127.0.0.1:8080$request_uri;
+    }
+    location /calibre {
+        # we need a trailing slash for the Application Cache to work
+        rewrite /calibre /calibre/ permanent;
+    }
+
+
+For Apache, first enable the proxy modules in Apache, by adding the following to :file:`httpd.conf`::
 
     LoadModule proxy_module modules/mod_proxy.so
     LoadModule proxy_http_module modules/mod_proxy_http.so
 
-The exact technique for enabling the proxy modules will vary depending on your Apache installation. Once you have the proxy modules enabled, add the following rules to httpd.conf (or if you are using virtual hosts to the conf file for the virtual host in question)::
+The exact technique for enabling the proxy modules will vary depending on your Apache installation. Once you have the proxy modules enabled, add the following rules to :file:`httpd.conf` (or if you are using virtual hosts to the conf file for the virtual host in question)::
 
+    AllowEncodedSlashes On
     RewriteEngine on
-    RewriteRule ^/calibre/(.*) http://localhost:8080/calibre/$1 [proxy]
-    RewriteRule ^/calibre http://localhost:8080 [proxy]
+    RewriteRule ^/calibre/(.*) http://127.0.0.1:8080/calibre/$1 [proxy]
+    RedirectMatch permanent ^/calibre$ /calibre/
 
-That's all, you will now be able to access the calibre Content server under the /calibre URL in your Apache server. The above rules pass all requests under /calibre to the calibre server running on port 8080 and thanks to the --url-prefix option above, the calibre server handles them transparently.
+That's all, you will now be able to access the calibre Content server under the ``/calibre`` URL in your main server. The above rules pass all requests under ``/calibre`` to the calibre server running on port 8080 and thanks to the ``--url-prefix`` option above, the calibre server handles them transparently.
 
+
+.. note::
+
+    When using a reverse proxy, you should tell the calibre Content server to
+    only listen on localhost, by using ``--listen-on 127.0.0.1``. That way,
+    the server will only listen for connections coming from the same computer,
+    i.e. from the reverse proxy.
+
+.. note:: 
+
+    If you have setup SSL for your main server, you should tell the calibre
+    server to use basic authentication instead of digest authentication, as it
+    is faster. To do so, pass the ``--auth-mode=basic`` option to
+    ``calibre-server``.
 
 .. _calibre user forums: https://www.mobileread.com/forums/forumdisplay.php?f=166
+
+
+Creating a service for the calibre server on a modern Linux system
+--------------------------------------------------------------------
+
+You can easily create a service to run calibre at boot on a modern 
+(`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_)
+based Linux system. Just create the file
+``/etc/systemd/system/calibre-server.service`` with the contents shown below::
+
+    [Unit]
+    Description=calibre content server
+    After=network.target 
+
+    [Service]
+    Type=simple
+    User=mylinuxuser
+    Group=mylinuxgroup
+    ExecStart=/opt/calibre/calibre-server "/path/to/calibre library directory"
+
+    [Install]
+    WantedBy=multi-user.target
+
+
+Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you want
+the server to run as. This should be the same user and group that own the files
+in the calibre library directory. Note that it is generally not a good idea to
+run the server as root. Also change the path to the calibre library
+directory to suit your system. You can add multiple libraries if needed. See
+the help for the ``calibre-server`` command.
+
+Now run::
+
+    sudo systemctl start calibre-server
+
+to start the server. Check its status with::
+
+    sudo systemctl status calibre-server
+
+To make it start at boot, run::
+
+    sudo systemctl enable calibre-server
+
+.. note::
+
+    The calibre server *does not* need a running X server, but it does need
+    the X libraries installed as some components it uses link against them.
+
+.. note:: 
+    
+    The calibre server also supports systemd socket activation, so you can use
+    that, if needed, as well.

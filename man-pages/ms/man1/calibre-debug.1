@@ -1,0 +1,178 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "Julai 14, 2017" "3.4.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [pilihan]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH [PILIHAN]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Tambah pemalam mudah (iaitu pemalam yang mengandungi fail .py sahaja), dengan menyatakan laluan ke fail py yang mengandungi kod pemalam.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Jalankan kod Python.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Nyahpepijat pengesanan peranti
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+(Nyah)daftar calibre dari Program Lalai Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Jalankan alat diff calibre. Contohnya: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Lancarkan alat \fB"\fPSunting buku\fB"\fP dalam mod nyahpepijat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Jalankan kod Python dalam fail.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Pecahkan buku (eksport buku sebagai satu koleksi fail dan data meta HTML, yang anda boleh sunting menggunakan alat penyuntingan HTML piawai, kemudian bina semula fail dari HTML yang disunting. Tiada perubahan tambahan pada HTML, tidak seperti penukaran calibre penuh).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Eksport semua data calibre (buku/tetapan/pemalam)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Jalankan GUI dengan penyahpepijatan dibenarkan. Output nyahpepijat dicetak ke stdout dan stderr.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Jalankan GUI dengan konsol nyahpepijat, mengelog ke laluan yang dinyatakan. Untuk kegunaan dalaman sahaja, guna pilihan \-g untuk jalankan GUI dalam mod nyahpepijat
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+tunjuk mesej bantuan ini dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Import data calibre diimport sebelum ini
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Periksa fail MOBI pada laluan yang dinyatakan
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Outputkan laluan yang perlu untuk pasang persekitaran calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Awalkan\-semula pangkalan data calibre sqlite pada laluan yang dinyatakan. Berguna untuk pulih dari kerosakan db.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Jalankan pemalam yang menyediakan antaramuka baris perintah.  Contohnya calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP Segalanya selepas \fB\-\-\fP akan dilepasi ke pemalam sebagai argumen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Menyebabkan calibre sedang dijalankan, jika ada, akan ditutup. Perhatian jika terdapat kerja berjalan, ia akan dihenti paksa secara senyap, oleh itu guna dengan hati\-hati.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset fon yang dinyatakan. Guna \fB\-\-\fP selepas pilihan ini untuk melepaskan pilihan ke program subsetting fon.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Uji modul binari dalam binaan
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+tunjuk nombor versi program dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Jalankan pelihat E\-buku dalam mod nyahpepijat
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.
