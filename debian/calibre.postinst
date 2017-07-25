@@ -1,7 +1,10 @@
 #!/bin/sh
+
 set -eu
 
-if [ "$1" = configure ]; then
-    # clean up in case someone runs calibre as root
-    find /usr/lib/calibre/ -name '*.pyc' -delete || true
+if which pycompile >/dev/null 2>&1; then
+  pycompile -p calibre /usr/lib/calibre -V 2.7-2.9
 fi
+
+#DEBHELPER#
+

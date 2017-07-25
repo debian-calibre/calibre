@@ -1,0 +1,7 @@
+#! /bin/sh
+set -e
+
+if [ "$1" = rtupdate ]; then
+	pyclean -p calibre /usr/lib/calibre
+	pycompile -p calibre -V 2.7-2.9 /usr/lib/calibre
+fi
