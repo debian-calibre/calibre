@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "luglio 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "luglio 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -98,7 +98,7 @@ Esegui codice Python nel file.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Esplode il libro (esporta il libro come collezione di file HML e metadata, che possono essere modificati usando strumenti standard per l\fB\(aq\fPediting HTML, e ricostruisce il libro con i file HTML modificati. Non fa cambiamenti aggiuntivi all\fB\(aq\fPHTML a differenza della conversione completa)
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,6 +119,11 @@ Avvia l\fB\(aq\fPinterfaccia con una console di debug, registrando i log in un p
 .TP
 .B \-\-help, \-h
 mostra questo messaggio di aiuto ed esci
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP

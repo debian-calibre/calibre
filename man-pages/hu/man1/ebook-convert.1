@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "július 14, 2017" "3.4.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "július 28, 2017" "3.5.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -71,7 +71,7 @@ Below are the options that are common to all conversion, followed by the
 options specific to every input and output format.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%BEMENETI BEÁLLÍTÁSOK\fP
+\fI\%FORRÁS BEÁLLÍTÁSOK\fP
 .IP \(bu 2
 \fI\%KIMENETI BEÁLLÍTÁSOK\fP
 .IP \(bu 2
@@ -97,7 +97,7 @@ ennek a súgónak a megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Bemeneti profil megadása. Ez a konvertáláshoz szükséges adatokat is beállítja. Például felbontásfüggő hossz (hossz pixelben). A lehetőségek:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Forrás profil megadása. Ez a konvertáláshoz szükséges adatokat is beállítja. Például felbontásfüggő hossz (hossz pixelben). A lehetőségek: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -114,13 +114,13 @@ Specify the output profile. The output profile tells the conversion system how t
 .B \-\-version
 program verziójának megjelenítése és kilépés
 .UNINDENT
-.SH BEMENETI BEÁLLÍTÁSOK
+.SH FORRÁS BEÁLLÍTÁSOK
 .sp
-A bemeneti mobi fájlon végzett műveletek beállítása
+A forrás mobi fájlon végzett műveletek beállítása
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
-A bemeneti dokumentum karakterkódolásának meghatározása. Ez felülírja a dokumentum eredetei beállításait. Különösen hasznos olyan dokumentumoknál, ahol nincs, vagy hibásan van beállítva a karakterkódolás.
+A forrás dokumentum karakterkódolásának meghatározása. Ez felülírja a dokumentum eredetei beállításait. Különösen hasznos olyan dokumentumoknál, ahol nincs, vagy hibásan van beállítva a karakterkódolás.
 .UNINDENT
 .SH KIMENETI BEÁLLÍTÁSOK
 .sp
@@ -158,7 +158,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Alapesetben, ha a bemeneti fájl nem tartalmaz borítót, és Ön nem ad meg egyet, akkor egy generált borító készül a könyvhöz a címmel, szerzővel stb. Ez az opció letiltja ezt az automatikusan generált borítót.
+Alapesetben, ha a forrás fájl nem tartalmaz borítót, és Ön nem ad meg egyet, akkor egy generált borító készül a könyvhöz a címmel, szerzővel stb. Ez az opció letiltja ezt az automatikusan generált borítót.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +186,7 @@ A kimeneti formátum megjelenítésének beállításai
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Unicode karakterek ASCII kódolása. Óvatosan használja, mert az uncode karaktereket ASCII\-val helyettesíti. Például a \fB"\fPМихаил Горбачёв\fB"\fP helyett „Mikhail Gorbachiov” lesz. Megjegyzendő, hogy ahol egy betűnek több megfelelője lehet (például kínai és japán betűknél), ott a calibre felületének megfelelő reprezentáció lesz használva.
+Unicode karakterek ASCII kódolása. Óvatosan használja, mert az unicode karaktereket ASCII\-val helyettesíti. Például a \fB"\fPМихаил Горбачёв\fB"\fP helyett „Mikhail Gorbachiov” lesz. Megjegyzendő, hogy ahol egy betűnek több megfelelője lehet (például kínai és japán betűknél), ott a Calibre felületének megfelelő lesz használva.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -231,7 +231,7 @@ A minden CSS szabályból eltávolítani kívánt CSS tulajdonságok vesszővel 
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-CSS betűnevek megfeleltetése betűméret pontoknak. Vegyük például a 12,12,14,16,18,20,22,24 méreteket. Ezek fognak megfelelni az xx\-small\-tól az xx\-large méreteknek. <br/>A betű átméretező algoritmus intelligensen behelyettesíti a megfelelő méreteket. Alapértelmezett: a kimeneti profilban beállított értékek.
+CSS betűnevek megfeleltetése betűméret pontoknak. Vegyük például a 12,12,14,16,18,20,22,24 méreteket. Ezek fognak megfelelni az xx\-small\-tól az xx\-large méreteknek. A betű átméretező algoritmus intelligensen behelyettesíti a megfelelő méreteket. Alapértelmezett: a kimeneti profilban beállított értékek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,17 +241,17 @@ Egy üres sor beszúrása a bekezdések közé. Nem működik, ha a forrásfájl
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-A beszúrandó üres sorok magassága (em\-ben). A bekezdések között ennek az értéknek a kétszerese lesz, mert előttük és utánuk is beszúrásra kerül.
+A beszúrandó üres sorok magassága (em\-ben). A bekezdések között ennek az értéknek a kétszerese lesz, mert eléjük és utánuk is beszúrásra kerül.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Ligatúrák megőrzése a bementi dokumentumban. A ligatúra egy betűpár különleges megjelenése, például: ff, fi, fl, stb. A legtöbb olvasó nem támogatja a ligatúrákat az alap betűtípusaikban, így nem valószínű, hogy helyesen jelennének meg. Alapból a Calibre a ligatúrákat normál betűpárra cseréli. Ez az opció megtartja őket.
+Ligatúrák megőrzése a forrás dokumentumban. A ligatúra egy betűpár különleges megjelenése, például: ff, fi, fl, stb. A legtöbb olvasó nem támogatja a ligatúrákat az alap betűtípusaikban, így nem valószínű, hogy helyesen jelennének meg. Alapból a Calibre a ligatúrákat normál betűpárra cseréli. Ez az opció megtartja őket.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-Sormagasság pontban. megadja az egymást követő sorok közti távolságot. Csak azokra az elemekre vonatkozik, amik nem adják meg a sormagasságot. Legtöbb esetben a minimális sormagasság használata célszerűbb. Alapból nincs sormagasság módosítás.
+Sormagasság pontban. Megadja az egymást követő sorok közti távolságot. Csak azokra az elemekre vonatkozik, amik nem adják meg a sormagasságot. Legtöbb esetben a minimális sormagasság használata célszerűbb. Alapból nincs sormagasság módosítás.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,27 +261,27 @@ Néhány rosszul megtervezett dokumentumban szükségtelenül alkalmaznak tábl�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Az alsó margó beállítása pontokban. Alapértelmezés 5.0, Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+A bal oldali margó beállítása pontokban. Alapértelmezés %ddefault. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+A jobb oldali margó beállítása pontokban. Alapértelmezés %ddefault. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+A felső margó beállítása pontokban. Alapértelmezés 5.0. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Minimális sormagasság, az elem számolt betűméretének százaléka. A Calibre biztosítja, hogy minden elem, legalább az itt megadott érték legyen, a bemenő dokumentumban megadottól függetlenül. Állítsa 0\-ra a kikapcsoláshoz. Alapérték: 120%. Közvetlen sormagasság megadására is használható. Duplán széthúzott szöveg érhető el például 240\-re állítva az értéket.
+Minimális sormagasság, az elem számolt betűméretének százaléka. A Calibre biztosítja, hogy minden elem, legalább az itt megadott érték legyen, a forrás dokumentumban megadottól függetlenül. Állítsa 0\-ra a kikapcsoláshoz. Alapérték: 120%. Közvetlen sormagasság megadására is használható. Duplán széthúzott szöveg érhető el például 240\-re állítva az értéket.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +296,7 @@ Amikor a Calibre eltávolítja az üres sorokat, automatikusan behúzással lát
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Sima idézőjelek, ívelt karakterek konvertálása tipográfiai megfelelőjükre. További részletek: \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,7 +373,7 @@ Arány meghatározása, ahonnan egy sor tördelése megszüntetendő. Az érvén
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
-Fejezet elválasztók cseréje a kiválasztott szövegre. Alapértelmezettként a dokumentumban szereplő kerül alkalmazásra.
+Fejezet elválasztók cseréje a kiválasztott szövegre. Alapértelmezettként a forrás dokumentumban szereplő kerül alkalmazásra.
 .UNINDENT
 .SH KERESÉS ÉS CSERE
 .sp
@@ -424,7 +424,7 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-A felismert fejezetekre alkalmazandó formázás. A lehetséges értékek: „pagebreak” \- sortörés beillesztése minden fejezet előtt; „rule” \- egy vízszintes vonal beillesztése minden fejezet előtt; „none” \- egyiket se alkalmazza; „both” \- sortörés és vonal alkalmazása egyszerre.
+A felismert fejezetekre alkalmazandó formázás. A lehetséges értékek: „pagebreak” \- sortörés beillesztése minden fejezet elé; „rule” \- egy vízszintes vonal beillesztése minden fejezet elé; „none” \- egyiket se alkalmazza; „both” \- sortörés és vonal alkalmazása egyszerre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -434,12 +434,12 @@ Egyes dokumentumok a bal és jobb margót minden bekezdésnél külön adják me
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Beilleszti a könyv metaadatait a könyv elejére. Ez akkor hasznos, ha az e\-könyv olvasója nem támogatja a metaadatok közvetlen megjelenítését/keresését.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-Egy XPath kifejezés. A megadott elem elé oldaltörés lesz beszúrva. A tiltásához használja a következőt: /
+Egy XPath kifejezés. A megadott elem elé oldaltörés lesz beszúrva. A tiltásához használja a következő kifejezést: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,7 +449,7 @@ Inkább a forrásfájlban található borítót használja a beállított borít
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Távolítsa el az első képet a forrás e\-könyvből. Hasznos, ha a forrás dokumentum borítója nem megfelelő. Ha a borítót a Calibre\-vel állítja be, a kimeneti dokumentum két borítót tartalmazna, e lehetőség hiányában.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,22 +467,22 @@ Többszörös bejegyzések engedélyezése. Pl. ha egy könyv több azonos Tarta
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath kifejezés, amely megadja azokat a „tag”\-eket, melyek a Tartalomjegyzék első szintjére kerülnek. Tanulmányozza az XPath oktatóanyagot a Calibre Felhasználói készikönyvében  további információkért.
+XPath kifejezés, amely megadja azokat a „címkéket” (tags), melyek a Tartalomjegyzék első szintjére kerülnek. Tanulmányozza az XPath oktatóanyagot a Calibre Felhasználói kézikönyvében  további információkért.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath kifejezés, amely megadja azokat a „tag”\-eket, melyek a Tartalomjegyzék második szintjére kerülnek. Tanulmányozza az XPath iktatóanyagot a Calibre Felhasználói készikönyvében a további információkért.
+XPath kifejezés, amely megadja azokat a „címkéket” (tags), melyek a Tartalomjegyzék második szintjére kerülnek. Tanulmányozza az XPath oktatóanyagot a Calibre Felhasználói kézikönyvében a további információkért.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath kifejezés, amely megadja azokat a „tag”\-eket, melyek a Tartalomjegyzék harmadik szintjére kerülnek. Tanulmányozza az XPath oktatóanyagot a Calibre Felhasználói készikönyvében a további információkért.
+XPath kifejezés, amely megadja azokat a „címkéket” (tags), melyek a Tartalomjegyzék harmadik szintjére kerülnek. Tanulmányozza az XPath oktatóanyagot a Calibre Felhasználói kézikönyvében a további információkért.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-A tartalomjegyzékbe beszúrandó linkek maximális száma. Állítsa 0\-ra a letiltáshoz. Alapértelmezett: 50. Csak akkor lesznek beszúrva a linkek, ha a számuk kisebb a beállítottnál.
+A tartalomjegyzékbe beszúrható linkek maximális száma. Állítsa 0\-ra a letiltáshoz. Alapértelmezett: 50. Csak akkor lesznek beszúrva a linkek, ha a számuk kisebb a beállítottnál.
 .UNINDENT
 .INDENT 0.0
 .TP

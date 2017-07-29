@@ -663,7 +663,7 @@ class Ui_Form(object):
         self.opt_qv_retkey_changes_column.setText(_("&Pressing \'return\' changes examined column"))
         self.opt_qv_dclick_changes_column.setToolTip(_("Double-clicking in a cell changes both the book and the\n"
 "column being examined (the left-hand pane)"))
-        self.opt_qv_dclick_changes_column.setText(_("&Doubleclick changes examined column"))
+        self.opt_qv_dclick_changes_column.setText(_("&Double click changes examined column"))
         self.groupBox1.setTitle(_("Select columns to display"))
         self.qv_up_button.setToolTip(_("Move up"))
         self.qv_down_button.setToolTip(_("Move down"))

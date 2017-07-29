@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "липня 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "липня 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -66,8 +66,23 @@ calibre\-server [параметри] [шлях до теки бібліотек�
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-ban\-after
+Number of login failures for ban.   The number of login failures after which an IP address is banned
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ban\-for
+Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-compress\-min\-size
 Мінімальний розмір для використання стискання даних у відповідях (у байтах).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-custom\-list\-template
+Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
 .UNINDENT
 .INDENT 0.0
 .TP

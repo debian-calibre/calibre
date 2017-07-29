@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "七月 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "七月 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -98,7 +98,7 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-解压图书 (将书输出为HTML文件与元数据的组合，以便您用标准的HTML编辑器编辑，然后由此组合重新构建图书。与 Calibre 中的转换不同，解压对于HTML文件没有额外的改变)
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,6 +119,11 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .TP
 .B \-\-help, \-h
 显示此帮助信息并退出
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP

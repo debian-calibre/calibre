@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "julho 14, 2017" "3.4.0" "calibre"
+.TH "CALIBREDB" "1" "julho 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -178,7 +178,7 @@ Ordenar resultados em ordem ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Campos que serão exibidos ao listar livros no banco de dados. Deve ser uma lista de campos separada por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Padrão: title,authors. O campo especial \fB"\fPall\fB"\fP pode ser usado para selecionar todos os campos. Em complemento aos campos acima, campos personalizados também estão disponíveis como *field_name. Por exemplo, para um campo personalizado #rating, use o nome: *rating.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Opções para controlar a adição de livros a partir de diretórios. Por padrã
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Um padrão de nome de arquivo (glob), arquivos que correspondam a este padrão serão adicionados ao varrer diretórios por arquivos, mesmo se forem de um tipo de e\-book desconhecido. Pode ser especificado múltiplas vezes para múltiplos padrões.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -320,7 +320,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Remove os livros identificados por IDs do banco de dados. IDs devem ser uma lista de números id separados por vírgulas (você pode pegar os números de ids utilizando o comando de busca). Por exemplo, 23 ,34,57\-85 (quando especificar um alcance, o último número não é incluído).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -340,7 +340,7 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Adiciona o livro em ebook_file para os formatos disponíveis de livro lógico identificados por id. Você pode pegar um id usando o comando de busca. Se o formato já existe, ele é substituído, a menos que a opção de não substituir seja marcada.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -503,9 +503,9 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Exporta um catálogo em formato especificado pela extensão path/to/destination.
+Opções controlam como as entradas são exibidas no catálogo gerado.
+Note que formatos de catálogos diferentes suportam diferentes conjuntos de opções.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -683,7 +683,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Lista colunas personalizadas disponíveis. Exibe os nomes dos campos e seus IDs.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
