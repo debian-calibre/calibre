@@ -189,7 +189,7 @@ class PDFWriter(QObject):
                              xdpi=xdpi, ydpi=ydpi, errors=self.log.error,
                              debug=self.log.debug, compress=not
                              opts.uncompressed_pdf, opts=opts,
-                             mark_links=opts.pdf_mark_links)
+                             mark_links=opts.pdf_mark_links, page_margins=(ml, mr, mt, mb))
         self.footer = opts.pdf_footer_template
         if self.footer:
             self.footer = self.footer.strip()
@@ -443,7 +443,6 @@ class ImagePDFWriter(object):
                               tags=pdf_metadata.tags, mi=pdf_metadata.mi)
         self.doc_title = pdf_metadata.title
         self.doc_author = pdf_metadata.author
-        page_rect = QRect(*self.doc.full_page_rect)
 
         for imgpath in items:
             self.log.debug('Processing %s...' % imgpath)
@@ -452,7 +451,7 @@ class ImagePDFWriter(object):
             with lopen(imgpath, 'rb') as f:
                 if not p.loadFromData(f.read()):
                     raise ValueError('Could not read image from: {}'.format(imgpath))
-            draw_image_page(page_rect,
+            draw_image_page(QRect(*self.doc.full_page_rect),
                     self.painter, p,
                     preserve_aspect_ratio=True)
             self.doc.end_page()

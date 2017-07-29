@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-04 22:50+0530\n"
-"PO-Revision-Date: 2017-06-30 12:28+0000\n"
+"POT-Creation-Date: 2017-07-14 08:46+0530\n"
+"PO-Revision-Date: 2017-07-14 16:29+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -462,3 +462,49 @@ msgid ""
 "is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-"
 "server``."
 msgstr "Si vous avez configuré SSL pour votre serveur principal, vous devrez dire au serveur calibre d'utiliser l'authentification basique au lieu de l'authentification digest, plus rapide. Pour faire cela, transmettez l'option ``--auth-mode=basic`` à ``calibre-server``."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:342
+msgid "Creating a service for the calibre server on a modern Linux system"
+msgstr "Créer un service pour le serveur calibre sur un système Linux moderne"
+
+#: ../../home/kovid/work/calibre/manual/server.rst:344
+msgid ""
+"You can easily create a service to run calibre at boot on a modern (`systemd"
+" <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
+" Just create the file ``/etc/systemd/system/calibre-server.service`` with "
+"the contents shown below::"
+msgstr "Vous pouvez aisément créer un service pour exécuter le serveur calibre sur sur un système moderne (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) basé sur Linux. Il faut seulement créer le fichier ``/etc/systemd/system/calibre-server.service`` avec le contenu afficher ci-dessous :: "
+
+#: ../../home/kovid/work/calibre/manual/server.rst:363
+msgid ""
+"Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
+"want the server to run as. This should be the same user and group that own "
+"the files in the calibre library directory. Note that it is generally not a "
+"good idea to run the server as root. Also change the path to the calibre "
+"library directory to suit your system. You can add multiple libraries if "
+"needed. See the help for the ``calibre-server`` command."
+msgstr "Changer ``mylinuxuser`` et ``mylinuxgroup`` en n'importe quel utilisateur et groupe sous lesquels vous désirez que le serveur tourne. Ceci devrait être le même utilisateur et groupe que ceux qui possèdent les fichiers dans le répertoire de la bibliothèque calibre. Notez que ce n'est généralement pas une bonne idée d'exécuter le serveur en tant que root. Changer également le chemin vers le répertoire de la bibliothèque calibre pour qu'il convienne à votre système. Vous pouvez ajouter de multiples bibliothèques si nécessaire. Voir l'aide pour la commande ``calibre-server``."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:370
+msgid "Now run::"
+msgstr "Maintenant exécutez :: "
+
+#: ../../home/kovid/work/calibre/manual/server.rst:374
+msgid "to start the server. Check its status with::"
+msgstr "pour démarrer le serveur. Vérifiez son statut avec :: "
+
+#: ../../home/kovid/work/calibre/manual/server.rst:378
+msgid "To make it start at boot, run::"
+msgstr "Pour le faire démarrer au boot, exécutez :: "
+
+#: ../../home/kovid/work/calibre/manual/server.rst:384
+msgid ""
+"The calibre server *does not* need a running X server, but it does need the "
+"X libraries installed as some components it uses link against them."
+msgstr "Le serveur calibre ne nécessite pas un serveur X en cours d'exécution, mais il nécessite que les librairies X soient installées."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:389
+msgid ""
+"The calibre server also supports systemd socket activation, so you can use "
+"that, if needed, as well."
+msgstr "Le serveur calibre supporte également l'activation du socket systemd, vous pouvez donc l'utiliser, si nécessaire, bien sûr."

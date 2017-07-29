@@ -3999,11 +3999,12 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.top_bar"] = {};
     ρσ_modules["book_list.home"] = {};
     ρσ_modules["book_list.details_list"] = {};
+    ρσ_modules.date = {};
+    ρσ_modules["book_list.custom_list"] = {};
     ρσ_modules["book_list.prefs"] = {};
     ρσ_modules["book_list.search"] = {};
     ρσ_modules["book_list.views"] = {};
     ρσ_modules["book_list.local_books"] = {};
-    ρσ_modules.date = {};
     ρσ_modules["book_list.book_details"] = {};
     ρσ_modules["book_list.main"] = {};
     ρσ_modules["read_book.cfi"] = {};
@@ -8032,6 +8033,7 @@ return parser;
             ρσ_d["library_map"] = null;
             ρσ_d["icon_map"] = Object.create(null);
             ρσ_d["icon_path"] = "";
+            ρσ_d["custom_list_template"] = null;
             return ρσ_d;
         }).call(this);
         function get_interface_data() {
@@ -9376,6 +9378,7 @@ return this.__repr__();
                         ρσ_last_exception = ρσ_Exception;
                         {
                             self.initialize_stage2(idb, false);
+                            return;
                         } 
                     }
                     req.onsuccess = (function() {
@@ -18108,6 +18111,8 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
         var build_rule = ρσ_modules.dom.build_rule;
         var clear = ρσ_modules.dom.clear;
         var set_css = ρσ_modules.dom.set_css;
@@ -18116,8 +18121,8 @@ return this.__repr__();
         var get_interface_data = ρσ_modules.session.get_interface_data;
 
         var fmt_sidx = ρσ_modules.utils.fmt_sidx;
-        var sandboxed_html = ρσ_modules.utils.sandboxed_html;
         var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
+        var sandboxed_html = ρσ_modules.utils.sandboxed_html;
 
         DETAILS_LIST_CLASS = "book-list-details-list";
         ITEM_CLASS = DETAILS_LIST_CLASS + "-item";
@@ -18172,6 +18177,13 @@ return this.__repr__();
             __argnames__ : {value: ["img", "load_type"]}
         });
 
+        function sandbox_css() {
+            if (!sandbox_css.ans) {
+                sandbox_css.ans = "html {{ overflow: hidden; color: {} }}".format(get_color("window-foreground"));
+            }
+            return sandbox_css.ans;
+        };
+
         function create_item(book_id, metadata, create_image, show_book_details) {
             var authors, img, ρσ_unpack, img_div, extra_data, comments, interface_data, stars, i, ival, right, ans;
             authors = (metadata.authors) ? metadata.authors.join(" & ") : _("Unknown");
@@ -18182,7 +18194,7 @@ return this.__repr__();
             img.dataset.authors = ρσ_unpack[1];
             img_div = ρσ_interpolate_kwargs.call(E, E.div, [img].concat([ρσ_desugar_kwargs({class_: "details-list-left"})]));
             extra_data = E.div();
-            comments = sandboxed_html(metadata.comments, "html { overflow: hidden }");
+            comments = sandboxed_html(metadata.comments, sandbox_css());
             if (!metadata.comments) {
                 comments.style.display = "none";
             }
@@ -18236,8 +18248,741 @@ return this.__repr__();
         ρσ_modules["book_list.details_list"].details_list_css = details_list_css;
         ρσ_modules["book_list.details_list"].init = init;
         ρσ_modules["book_list.details_list"].on_img_load = on_img_load;
+        ρσ_modules["book_list.details_list"].sandbox_css = sandbox_css;
         ρσ_modules["book_list.details_list"].create_item = create_item;
         ρσ_modules["book_list.details_list"].append_item = append_item;
+    })();
+
+    (function(){
+        var __name__ = "date";
+        var UNDEFINED_DATE, lcdata, supports_locales, _fmt_date_pat, fd_function_index;
+        UNDEFINED_DATE = new Date("0101-01-01T00:00:00+00:00");
+        function is_date_undefined(date) {
+            var ρσ_unpack, dy, uy;
+            ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
+            dy = ρσ_unpack[0];
+            uy = ρσ_unpack[1];
+            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() === UNDEFINED_DATE.getUTCDate();
+        };
+        if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
+            __argnames__ : {value: ["date"]}
+        });
+
+        lcdata = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["abday"] = ρσ_list_decorate([ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]);
+            ρσ_d["abmon"] = ρσ_list_decorate([ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]);
+            ρσ_d["day"] = ρσ_list_decorate([ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]);
+            ρσ_d["mon"] = ρσ_list_decorate([ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]);
+            return ρσ_d;
+        }).call(this);
+        supports_locales = false;
+        try {
+            (new Date).toLocaleString("dfkjghdfkgj");
+        } catch (ρσ_Exception) {
+            ρσ_last_exception = ρσ_Exception;
+            if (ρσ_Exception instanceof RangeError) {
+                supports_locales = true;
+            } else {
+            } 
+        }
+        _fmt_date_pat = null;
+        function fmt_date_pat() {
+            if (!_fmt_date_pat) {
+                _fmt_date_pat = /(s{1,2})|(m{1,2})|(h{1,2})|(ap)|(AP)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
+            }
+            return _fmt_date_pat;
+        };
+
+        function fd_format_hour(dt, ampm, hr, as_utc) {
+            var h;
+            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
+            if (ampm) {
+                h = h % 12;
+            }
+            return (hr.length === 1) ? h.toString() : str.format("{:02d}", h);
+        };
+        if (!fd_format_hour.__argnames__) Object.defineProperties(fd_format_hour, {
+            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]}
+        });
+
+        function fd_format_minute(dt, ampm, min, as_utc) {
+            var m;
+            m = (as_utc) ? dt.getUTCMinutes() : dt.getMinutes();
+            return (min.length === 1) ? m.toString() : str.format("{:02d}", m);
+        };
+        if (!fd_format_minute.__argnames__) Object.defineProperties(fd_format_minute, {
+            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]}
+        });
+
+        function fd_format_second(dt, ampm, min, as_utc) {
+            var s;
+            s = (as_utc) ? dt.getUTCSeconds() : dt.getSeconds();
+            return (min.length === 1) ? s.toString() : str.format("{:02d}", s);
+        };
+        if (!fd_format_second.__argnames__) Object.defineProperties(fd_format_second, {
+            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]}
+        });
+
+        function fd_format_ampm(dt, ampm, ap, as_utc) {
+            var h, ans;
+            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
+            ans = (h < 12) ? "am" : "pm";
+            return (ap === "ap") ? ans : ans.toUpperCase();
+        };
+        if (!fd_format_ampm.__argnames__) Object.defineProperties(fd_format_ampm, {
+            __argnames__ : {value: ["dt", "ampm", "ap", "as_utc"]}
+        });
+
+        function fd_format_day(dt, ampm, dy, as_utc) {
+            var d, options, w;
+            d = (as_utc) ? dt.getUTCDate() : dt.getDate();
+            if (dy.length === 1) {
+                return d.toString();
+            }
+            if (dy.length === 2) {
+                return str.format("{:02d}", d);
+            }
+            if (supports_locales) {
+                options = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["weekday"] = (dy.length === 3) ? "short" : "long";
+                    return ρσ_d;
+                }).call(this);
+                if (as_utc) {
+                    options["timeZone"] = "UTC";
+                }
+                return dt.toLocaleString(window.navigator.language, options);
+            }
+            w = (as_utc) ? dt.getUTCDay() : dt.getDay();
+            return (ρσ_expr_temp = lcdata[ρσ_bound_index((dy.length === 3) ? "abday" : "day", lcdata)])[ρσ_bound_index((w + 1) % 7, ρσ_expr_temp)];
+        };
+        if (!fd_format_day.__argnames__) Object.defineProperties(fd_format_day, {
+            __argnames__ : {value: ["dt", "ampm", "dy", "as_utc"]}
+        });
+
+        function fd_format_month(dt, ampm, mo, as_utc) {
+            var m, options;
+            m = (as_utc) ? dt.getUTCMonth() : dt.getMonth();
+            if (mo.length === 1) {
+                return (m + 1).toString();
+            }
+            if (mo.length === 2) {
+                return str.format("{:02d}", m + 1);
+            }
+            if (supports_locales) {
+                options = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["month"] = (ρσ_expr_temp = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d[1] = "numeric";
+                        ρσ_d[2] = "2-digit";
+                        ρσ_d[3] = "short";
+                        ρσ_d[4] = "long";
+                        return ρσ_d;
+                    }).call(this))[ρσ_bound_index(mo.length, ρσ_expr_temp)] || "long";
+                    return ρσ_d;
+                }).call(this);
+                if (as_utc) {
+                    options["timeZone"] = "UTC";
+                }
+                return dt.toLocaleString(window.navigator.language, options);
+            }
+            return (ρσ_expr_temp = lcdata[ρσ_bound_index((mo.length === 3) ? "abmon" : "mon", lcdata)])[(typeof m === "number" && m < 0) ? ρσ_expr_temp.length + m : m];
+        };
+        if (!fd_format_month.__argnames__) Object.defineProperties(fd_format_month, {
+            __argnames__ : {value: ["dt", "ampm", "mo", "as_utc"]}
+        });
+
+        function fd_format_year(dt, ampm, yr, as_utc) {
+            var y;
+            y = (as_utc) ? dt.getUTCFullYear() : dt.getFullYear();
+            if (yr.length === 2) {
+                return str.format("{:02d}", y % 100);
+            }
+            return str.format("{:04d}", y);
+        };
+        if (!fd_format_year.__argnames__) Object.defineProperties(fd_format_year, {
+            __argnames__ : {value: ["dt", "ampm", "yr", "as_utc"]}
+        });
+
+        fd_function_index = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["d"] = fd_format_day;
+            ρσ_d["M"] = fd_format_month;
+            ρσ_d["y"] = fd_format_year;
+            ρσ_d["h"] = fd_format_hour;
+            ρσ_d["m"] = fd_format_minute;
+            ρσ_d["s"] = fd_format_second;
+            ρσ_d["a"] = fd_format_ampm;
+            ρσ_d["A"] = fd_format_ampm;
+            return ρσ_d;
+        }).call(this);
+        function test_fd(date, fmt, ans) {
+            var q;
+            q = ρσ_interpolate_kwargs.call(this, format_date, [date, fmt].concat([ρσ_desugar_kwargs({as_utc: true})]));
+            if (q !== ans) {
+                throw new Exception(str.format("Failed to format {} with {}: {} is not {}", date, fmt, q, ans));
+            }
+        };
+        if (!test_fd.__argnames__) Object.defineProperties(test_fd, {
+            __argnames__ : {value: ["date", "fmt", "ans"]}
+        });
+
+        function format_date() {
+            var date = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.date : arguments[0];
+            var fmt = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.fmt : arguments[1];
+            var as_utc = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.as_utc : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "date")){
+                date = ρσ_kwargs_obj.date;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "fmt")){
+                fmt = ρσ_kwargs_obj.fmt;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "as_utc")){
+                as_utc = ρσ_kwargs_obj.as_utc;
+            }
+            var ampm;
+            fmt = fmt || "dd MMM yyyy";
+            ampm = ρσ_in("ap", fmt.toLowerCase());
+            if (typeof date === "string") {
+                date = new Date(date);
+            }
+            date = date || new Date;
+            if (is_date_undefined(date)) {
+                return "";
+            }
+            return fmt.replace(fmt_date_pat(), (function() {
+                var ρσ_anonfunc = function (match) {
+                    if (!match) {
+                        return "";
+                    }
+                    try {
+                        return fd_function_index[ρσ_bound_index(match[0], fd_function_index)](date, ampm, match, as_utc);
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        if (ρσ_Exception instanceof Error) {
+                            print(str.format("Failed to format date with format: {} and match: {}", fmt, match));
+                            return "";
+                        } else {
+                            throw ρσ_Exception;
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["match"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!format_date.__defaults__) Object.defineProperties(format_date, {
+            __defaults__ : {value: {date:null, fmt:"dd MMM yyyy", as_utc:false}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["date", "fmt", "as_utc"]}
+        });
+
+        if (__name__ === "__main__") {
+            test_fd("1101-01-01T09:00:00+00:00", "hh h", "09 9");
+            test_fd("1101-01-01T09:05:01+00:00", "hh h mm m ss s ap AP yy yyyy", "09 9 05 5 01 1 am AM 01 1101");
+            test_fd("2001-01-02T09:00:00+00:00", "M MM MMM MMMM", "1 01 Jan January");
+            test_fd("2001-01-01T12:00:00+00:00", "d dd ddd dddd", "1 01 Mon Monday");
+        }
+        ρσ_modules.date.UNDEFINED_DATE = UNDEFINED_DATE;
+        ρσ_modules.date.lcdata = lcdata;
+        ρσ_modules.date.supports_locales = supports_locales;
+        ρσ_modules.date._fmt_date_pat = _fmt_date_pat;
+        ρσ_modules.date.fd_function_index = fd_function_index;
+        ρσ_modules.date.is_date_undefined = is_date_undefined;
+        ρσ_modules.date.fmt_date_pat = fmt_date_pat;
+        ρσ_modules.date.fd_format_hour = fd_format_hour;
+        ρσ_modules.date.fd_format_minute = fd_format_minute;
+        ρσ_modules.date.fd_format_second = fd_format_second;
+        ρσ_modules.date.fd_format_ampm = fd_format_ampm;
+        ρσ_modules.date.fd_format_day = fd_format_day;
+        ρσ_modules.date.fd_format_month = fd_format_month;
+        ρσ_modules.date.fd_format_year = fd_format_year;
+        ρσ_modules.date.test_fd = test_fd;
+        ρσ_modules.date.format_date = format_date;
+    })();
+
+    (function(){
+        var __name__ = "book_list.custom_list";
+        var CUSTOM_LIST_CLASS, ITEM_CLASS, DESCRIPTION;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var sandbox_css = ρσ_modules["book_list.details_list"].sandbox_css;
+        var BORDER_RADIUS = ρσ_modules["book_list.details_list"].BORDER_RADIUS;
+
+        var library_data = ρσ_modules["book_list.library_data"].library_data;
+
+        var format_date = ρσ_modules.date.format_date;
+
+        var build_rule = ρσ_modules.dom.build_rule;
+        var clear = ρσ_modules.dom.clear;
+        var set_css = ρσ_modules.dom.set_css;
+        var svgicon = ρσ_modules.dom.svgicon;
+
+        var get_interface_data = ρσ_modules.session.get_interface_data;
+
+        var fmt_sidx = ρσ_modules.utils.fmt_sidx;
+        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
+        var sandboxed_html = ρσ_modules.utils.sandboxed_html;
+
+        CUSTOM_LIST_CLASS = "book-list-custom-list";
+        ITEM_CLASS = CUSTOM_LIST_CLASS + "-item";
+        DESCRIPTION = _("A customizable list (see Preferences->Sharing over the net->Book list template)");
+        function custom_list_css() {
+            var ans, sel, s;
+            ans = "";
+            sel = "." + CUSTOM_LIST_CLASS;
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", user_select: "none"})]));
+            sel += " ." + ITEM_CLASS;
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1ex 1em", padding_bottom: "1ex", border_bottom: "solid 1px currentColor"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":hover .custom-list-left"].concat([ρσ_desugar_kwargs({transform: "scale(1.2)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":active .custom-list-left"].concat([ρσ_desugar_kwargs({transform: "scale(2)"})]));
+            s = sel + " .custom-list-left";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s].concat([ρσ_desugar_kwargs({margin_right: "1em"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s + " > img"].concat([ρσ_desugar_kwargs({border_radius: BORDER_RADIUS + "px"})]));
+            sel += " iframe";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({flex_grow: "10", cursor: "pointer", pointer_events: "none"})]));
+            return ans;
+        };
+
+        function default_template() {
+            if (!default_template.ans) {
+                default_template.ans = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["thumbnail"] = true;
+                    ρσ_d["thumbnail_height"] = 140;
+                    ρσ_d["height"] = "auto";
+                    ρσ_d["comments_fields"] = ['comments'];
+                    ρσ_d["lines"] = ρσ_list_decorate([ _("<b>{title}</b> by {authors}"), _("{series_index} of <i>{series}</i>") + "|||{rating}", "{tags}", _("Date: {timestamp}") + "|||" + _("Published: {pubdate}") + "|||" + _("Publisher: {publisher}"), "" ]);
+                    return ρσ_d;
+                }).call(this);
+            }
+            return default_template.ans;
+        };
+
+        function render_field(field, mi, book_id) {
+            var field_metadata, fm, val, interface_data, name, datatype, func, ans, join, fmt;
+            field_metadata = library_data.field_metadata;
+            fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
+            if (!fm) {
+                return;
+            }
+            val = mi[(typeof field === "number" && field < 0) ? mi.length + field : field];
+            if (val === undefined || val === null) {
+                return;
+            }
+            interface_data = get_interface_data();
+            function add_val() {
+                var val = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+                var is_html = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_val.__defaults__.is_html : arguments[1];
+                var join = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? add_val.__defaults__.join : arguments[2];
+                var ρσ_kwargs_obj = arguments[arguments.length-1];
+                if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+                if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "is_html")){
+                    is_html = ρσ_kwargs_obj.is_html;
+                }
+                if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "join")){
+                    join = ρσ_kwargs_obj.join;
+                }
+                if (is_html && /[<>]/.test(val + "")) {
+                    return safe_set_inner_html(E.span(), val);
+                }
+                if (join) {
+                    val = val.join(join);
+                } else {
+                    val += "";
+                }
+                return val;
+            };
+            if (!add_val.__defaults__) Object.defineProperties(add_val, {
+                __defaults__ : {value: {is_html:false, join:null}},
+                __handles_kwarg_interpolation__ : {value: true},
+                __argnames__ : {value: ["val", "is_html", "join"]}
+            });
+
+            function process_composite(field, fm, name, val) {
+                var all_vals;
+                if (fm.display && fm.display.contains_html) {
+                    return ρσ_interpolate_kwargs.call(this, add_val, [val].concat([ρσ_desugar_kwargs({is_html: true})]));
+                }
+                if (fm.is_multiple && fm.is_multiple.list_to_ui) {
+                    all_vals = filter(null, map(str.strip, val.split(fm.is_multiple.list_to_ui)));
+                    return ρσ_interpolate_kwargs.call(this, add_val, [all_vals].concat([ρσ_desugar_kwargs({join: fm.is_multiple.list_to_ui})]));
+                }
+                return add_val(val);
+            };
+            if (!process_composite.__argnames__) Object.defineProperties(process_composite, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_authors(field, fm, name, val) {
+                return ρσ_interpolate_kwargs.call(this, add_val, [val].concat([ρσ_desugar_kwargs({join: " & "})]));
+            };
+            if (!process_authors.__argnames__) Object.defineProperties(process_authors, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_publisher(field, fm, name, val) {
+                return add_val(val);
+            };
+            if (!process_publisher.__argnames__) Object.defineProperties(process_publisher, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_formats(field, fm, name, val) {
+                return ρσ_interpolate_kwargs.call(this, add_val, [val].concat([ρσ_desugar_kwargs({join: ", "})]));
+            };
+            if (!process_formats.__argnames__) Object.defineProperties(process_formats, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_rating(field, fm, name, val) {
+                var stars, i;
+                stars = E.span();
+                val = int(val || 0);
+                if (val > 0) {
+                    for (var ρσ_Index0 = 0; ρσ_Index0 < Math.floor(val / 2); ρσ_Index0++) {
+                        i = ρσ_Index0;
+                        stars.appendChild(svgicon("star"));
+                    }
+                    if (fm.display.allow_half_stars && val % 2) {
+                        stars.appendChild(svgicon("star-half"));
+                    }
+                    return stars;
+                }
+            };
+            if (!process_rating.__argnames__) Object.defineProperties(process_rating, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_identifiers(field, fm, name, val) {
+                var keys, ans, key;
+                if (val) {
+                    keys = Object.keys(val);
+                    if (keys.length) {
+                        ans = [];
+                        var ρσ_Iter1 = ρσ_Iterable(keys);
+                        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                            key = ρσ_Iter1[ρσ_Index1];
+                            ans.push(key + ":" + val[(typeof key === "number" && key < 0) ? val.length + key : key]);
+                        }
+                        return ρσ_interpolate_kwargs.call(this, add_val, [ans].concat([ρσ_desugar_kwargs({join: ", "})]));
+                    }
+                }
+            };
+            if (!process_identifiers.__argnames__) Object.defineProperties(process_identifiers, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_languages(field, fm, name, val) {
+                var langs, k;
+                if (val && val.length) {
+                    langs = (function() {
+                        var ρσ_Iter = ρσ_Iterable(val), ρσ_Result = [], k;
+                        for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                            k = ρσ_Iter[ρσ_Index];
+                            ρσ_Result.push((ρσ_expr_temp = mi.lang_names)[(typeof k === "number" && k < 0) ? ρσ_expr_temp.length + k : k]);
+                        }
+                        ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                        return ρσ_Result;
+                    })();
+                    return ρσ_interpolate_kwargs.call(this, add_val, [langs].concat([ρσ_desugar_kwargs({join: ", "})]));
+                }
+            };
+            if (!process_languages.__argnames__) Object.defineProperties(process_languages, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_datetime(field, fm, name, val) {
+                var fmt;
+                if (val) {
+                    fmt = interface_data[ρσ_bound_index("gui_" + field + "_display_format", interface_data)] || (fm["display"] || Object.create(null)).date_format;
+                    return add_val(format_date(val, fmt));
+                }
+            };
+            if (!process_datetime.__argnames__) Object.defineProperties(process_datetime, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_series(field, fm, name, val) {
+                if (val) {
+                    return add_val(val);
+                }
+            };
+            if (!process_series.__argnames__) Object.defineProperties(process_series, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            function process_series_index(field, fm, name, val) {
+                var sval;
+                sval = mi[ρσ_bound_index(field.slice(0, -6), mi)];
+                if (sval) {
+                    return ρσ_interpolate_kwargs.call(this, fmt_sidx, [val || 1].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
+                }
+            };
+            if (!process_series_index.__argnames__) Object.defineProperties(process_series_index, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
+            name = fm.name || field;
+            datatype = fm.datatype;
+            if (field === "comments" || datatype === "comments") {
+                return;
+            }
+            func = null;
+            if (datatype === "composite") {
+                func = process_composite;
+            } else if (field === "formats") {
+                func = process_formats;
+            } else if (datatype === "rating") {
+                func = process_rating;
+            } else if (field === "identifiers") {
+                func = process_identifiers;
+            } else if (field === "authors") {
+                func = process_authors;
+            } else if (field === "publisher") {
+                func = process_publisher;
+            } else if (field === "languages") {
+                func = process_languages;
+            } else if (datatype === "datetime") {
+                func = process_datetime;
+            } else if (datatype === "series") {
+                func = process_series;
+            } else if (field.endswith("_index")) {
+                func = process_series_index;
+            }
+            ans = null;
+            if (func) {
+                ans = func(field, fm, name, val);
+            } else {
+                if (datatype === "text" || datatype === "enumeration") {
+                    if (val !== undefined && val !== null) {
+                        join = (fm.is_multiple) ? fm.is_multiple.list_to_ui : null;
+                        ans = ρσ_interpolate_kwargs.call(this, add_val, [val].concat([ρσ_desugar_kwargs({join: join})]));
+                    }
+                } else if (datatype === "bool") {
+                    ans = add_val((val) ? _("Yes") : _("No"));
+                } else if (datatype === "int" || datatype === "float") {
+                    if (val !== undefined && val !== null) {
+                        fmt = (fm.display || Object.create(null)).number_format;
+                        if (fmt) {
+                            val = fmt.format(val);
+                        } else {
+                            val += "";
+                        }
+                        ans = add_val(val);
+                    }
+                }
+            }
+            return ans;
+        };
+        if (!render_field.__argnames__) Object.defineProperties(render_field, {
+            __argnames__ : {value: ["field", "mi", "book_id"]}
+        });
+
+        function render_part(part, template, book_id, metadata) {
+            var count, rendered_count, ans, walk, replacements, n, rendered, val, field, ρσ_unpack, new_child, old_child;
+            count = rendered_count = 0;
+            ans = E.div();
+            ans.innerHTML = part;
+            walk = document.createTreeWalker(ans, NodeFilter.SHOW_TEXT, null, false);
+            replacements = [];
+            while (true) {
+                n = walk.nextNode();
+                if (!n) {
+                    break;
+                }
+                rendered = E.span();
+                var ρσ_Iter2 = ρσ_Iterable(n.nodeValue.split(/({#?[_a-z0-9]+})/));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    field = ρσ_Iter2[ρσ_Index2];
+                    if (field[0] === "{" && field[field.length-1] === "}") {
+                        count += 1;
+                        val = render_field(field.slice(1, -1), metadata, book_id);
+                        if (val) {
+                            rendered_count += 1;
+                            if (typeof val === "string") {
+                                val = document.createTextNode(val);
+                            }
+                            rendered.appendChild(val);
+                        }
+                    } else {
+                        rendered.appendChild(document.createTextNode(field));
+                    }
+                }
+                replacements.push([rendered, n]);
+            }
+            var ρσ_Iter3 = ρσ_Iterable(replacements);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+                new_child = ρσ_unpack[0];
+                old_child = ρσ_unpack[1];
+                old_child.parentNode.replaceChild(new_child, old_child);
+            }
+            if (count && !rendered_count) {
+                return;
+            }
+            return ans;
+        };
+        if (!render_part.__argnames__) Object.defineProperties(render_part, {
+            __argnames__ : {value: ["part", "template", "book_id", "metadata"]}
+        });
+
+        function render_line(line, template, book_id, metadata) {
+            var parts, part, p, ans;
+            parts = [];
+            line = line || " ";
+            var ρσ_Iter4 = ρσ_Iterable(line.split(/\|\|\|/));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                p = ρσ_Iter4[ρσ_Index4];
+                part = render_part(p, template, book_id, metadata);
+                if (part) {
+                    parts.push(part);
+                }
+            }
+            if (!parts.length) {
+                return;
+            }
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "custom-line"})]);
+            var ρσ_Iter5 = ρσ_Iterable(parts);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                p = ρσ_Iter5[ρσ_Index5];
+                ans.appendChild(p);
+            }
+            if (parts.length > 1) {
+                ρσ_interpolate_kwargs.call(this, set_css, [ans].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between"})]));
+            }
+            return ans;
+        };
+        if (!render_line.__argnames__) Object.defineProperties(render_line, {
+            __argnames__ : {value: ["line", "template", "book_id", "metadata"]}
+        });
+
+        function render_template_text(template, book_id, metadata) {
+            var ans, ldiv, line, html, val, f, comments;
+            ans = E.div();
+            var ρσ_Iter6 = ρσ_Iterable(template.lines);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                line = ρσ_Iter6[ρσ_Index6];
+                ldiv = render_line(line, template, book_id, metadata);
+                if (ldiv) {
+                    ans.appendChild(ldiv);
+                }
+            }
+            if (template.comments_fields.length) {
+                html = "";
+                var ρσ_Iter7 = ρσ_Iterable(template.comments_fields);
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    f = ρσ_Iter7[ρσ_Index7];
+                    val = metadata[(typeof f === "number" && f < 0) ? metadata.length + f : f];
+                    if (val) {
+                        html += "<div style=\"margin-bottom:1.5ex\">" + ρσ_str.format("{}", val) + "</div>";
+                    }
+                }
+                if (html) {
+                    comments = sandboxed_html(html, sandbox_css());
+                    ans.appendChild(comments);
+                }
+            }
+            return ans;
+        };
+        if (!render_template_text.__argnames__) Object.defineProperties(render_template_text, {
+            __argnames__ : {value: ["template", "book_id", "metadata"]}
+        });
+
+        function init(container) {
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: CUSTOM_LIST_CLASS})]));
+        };
+        if (!init.__argnames__) Object.defineProperties(init, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        function on_img_load(img, load_type) {
+            var div;
+            div = img.parentNode;
+            if (!div) {
+                return;
+            }
+            if (load_type !== "load") {
+                clear(div);
+                div.appendChild(E.div(ρσ_interpolate_kwargs.call(E, E.h2, [img.dataset.title].concat([ρσ_desugar_kwargs({style: "text-align:center; font-size:larger; font-weight: bold"})])), ρσ_interpolate_kwargs.call(E, E.div, [_("by")].concat([ρσ_desugar_kwargs({style: "text-align: center"})])), ρσ_interpolate_kwargs.call(E, E.h2, [img.dataset.authors].concat([ρσ_desugar_kwargs({style: "text-align:center; font-size:larger; font-weight: bold"})]))));
+                ρσ_interpolate_kwargs.call(this, set_css, [div].concat([ρσ_desugar_kwargs({border: "dashed 1px currentColor", border_radius: BORDER_RADIUS + "px"})]));
+            }
+        };
+        if (!on_img_load.__argnames__) Object.defineProperties(on_img_load, {
+            __argnames__ : {value: ["img", "load_type"]}
+        });
+
+        function create_item(book_id, metadata, create_image, show_book_details) {
+            var template, text_data, height, extra, ans, h, w, img, authors, ρσ_unpack, img_div;
+            template = get_interface_data().custom_list_template || default_template();
+            text_data = render_template_text(template, book_id, metadata);
+            text_data.style.flexGrow = "10";
+            text_data.style.overflow = "hidden";
+            if (template.thumbnail) {
+                height = "" + ρσ_str.format("{}", template.thumbnail_height) + "px";
+            } else {
+                if (template.height === "auto") {
+                    extra = (template.comments_fields.length) ? 5 : 1;
+                    height = template.lines.length * 2.5 + extra + "ex";
+                } else {
+                    height = template.height;
+                    if (typeof height === "number") {
+                        height += "px";
+                    }
+                }
+            }
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", height) + "; display: flex", class_: ITEM_CLASS})]);
+            if (template.thumbnail) {
+                h = template.thumbnail_height;
+                w = int(.75 * h);
+                img = create_image(book_id, w, h, on_img_load);
+                authors = (metadata.authors) ? metadata.authors.join(" & ") : _("Unknown");
+                img.setAttribute("alt", _("{} by {}").format(metadata.title, authors));
+                ρσ_unpack = [metadata.title, authors];
+                img.dataset.title = ρσ_unpack[0];
+                img.dataset.authors = ρσ_unpack[1];
+                img.style.maxWidth = w + "px";
+                img.style.maxHeight = h + "px";
+                img_div = ρσ_interpolate_kwargs.call(E, E.div, [img].concat([ρσ_desugar_kwargs({class_: "custom-list-left", style: "min-width: " + ρσ_str.format("{}", w) + "px"})]));
+                ans.appendChild(img_div);
+            }
+            ans.appendChild(text_data);
+            ans.addEventListener("click", show_book_details, true);
+            return ans;
+        };
+        if (!create_item.__argnames__) Object.defineProperties(create_item, {
+            __argnames__ : {value: ["book_id", "metadata", "create_image", "show_book_details"]}
+        });
+
+        function append_item(container, item) {
+            container.lastChild.appendChild(item);
+        };
+        if (!append_item.__argnames__) Object.defineProperties(append_item, {
+            __argnames__ : {value: ["container", "item"]}
+        });
+
+        ρσ_modules["book_list.custom_list"].CUSTOM_LIST_CLASS = CUSTOM_LIST_CLASS;
+        ρσ_modules["book_list.custom_list"].ITEM_CLASS = ITEM_CLASS;
+        ρσ_modules["book_list.custom_list"].DESCRIPTION = DESCRIPTION;
+        ρσ_modules["book_list.custom_list"].custom_list_css = custom_list_css;
+        ρσ_modules["book_list.custom_list"].default_template = default_template;
+        ρσ_modules["book_list.custom_list"].render_field = render_field;
+        ρσ_modules["book_list.custom_list"].render_part = render_part;
+        ρσ_modules["book_list.custom_list"].render_line = render_line;
+        ρσ_modules["book_list.custom_list"].render_template_text = render_template_text;
+        ρσ_modules["book_list.custom_list"].init = init;
+        ρσ_modules["book_list.custom_list"].on_img_load = on_img_load;
+        ρσ_modules["book_list.custom_list"].create_item = create_item;
+        ρσ_modules["book_list.custom_list"].append_item = append_item;
     })();
 
     (function(){
@@ -19413,6 +20158,12 @@ return this.__repr__();
         var create_cover_grid_item = ρσ_modules["book_list.cover_grid"].create_item;
         var init_cover_grid = ρσ_modules["book_list.cover_grid"].init;
 
+        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].DESCRIPTION;
+        var custom_list_append_item = ρσ_modules["book_list.custom_list"].append_item;
+        var create_custom_list_item = ρσ_modules["book_list.custom_list"].create_item;
+        var custom_list_css = ρσ_modules["book_list.custom_list"].custom_list_css;
+        var init_custom_list = ρσ_modules["book_list.custom_list"].init;
+
         var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].DESCRIPTION;
         var details_list_append_item = ρσ_modules["book_list.details_list"].append_item;
         var create_details_list_item = ρσ_modules["book_list.details_list"].create_item;
@@ -19424,8 +20175,10 @@ return this.__repr__();
         var create_item = ρσ_modules["book_list.item_list"].create_item;
         var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
 
+        var add_more_books = ρσ_modules["book_list.library_data"].add_more_books;
         var all_virtual_libraries = ρσ_modules["book_list.library_data"].all_virtual_libraries;
         var book_metadata = ρσ_modules["book_list.library_data"].book_metadata;
+        var current_book_ids = ρσ_modules["book_list.library_data"].current_book_ids;
         var current_sorted_field = ρσ_modules["book_list.library_data"].current_sorted_field;
         var ensure_current_library_data = ρσ_modules["book_list.library_data"].ensure_current_library_data;
         var library_data = ρσ_modules["book_list.library_data"].library_data;
@@ -19433,8 +20186,6 @@ return this.__repr__();
         var loaded_books_query = ρσ_modules["book_list.library_data"].loaded_books_query;
         var thumbnail_cache = ρσ_modules["book_list.library_data"].thumbnail_cache;
         var url_books_query = ρσ_modules["book_list.library_data"].url_books_query;
-        var add_more_books = ρσ_modules["book_list.library_data"].add_more_books;
-        var current_book_ids = ρσ_modules["book_list.library_data"].current_book_ids;
 
         var back = ρσ_modules["book_list.router"].back;
         var home = ρσ_modules["book_list.router"].home;
@@ -19474,6 +20225,7 @@ return this.__repr__();
             var s = ρσ_set();
             s.jsset.add("cover_grid");
             s.jsset.add("details_list");
+            s.jsset.add("custom_list");
             return s;
         })();
         DEFAULT_MODE = "cover_grid";
@@ -19483,6 +20235,7 @@ return this.__repr__();
             ans = ρσ_interpolate_kwargs.call(this, build_rule, [sel + "[data-component=\"top_message\"]"].concat([ρσ_desugar_kwargs({margin: "1ex 1em"})]));
             ans += cover_grid_css();
             ans += details_list_css();
+            ans += custom_list_css();
             return ans;
         });
         book_list_data = (function(){
@@ -19633,6 +20386,10 @@ return this.__repr__();
                 book_list_data.render_book = create_details_list_item;
                 book_list_data.init_grid = init_details_list;
                 book_list_data.append_item = details_list_append_item;
+            } else if (mode === "custom_list") {
+                book_list_data.render_book = create_custom_list_item;
+                book_list_data.init_grid = init_custom_list;
+                book_list_data.append_item = custom_list_append_item;
             }
             return mode;
         };
@@ -20031,6 +20788,7 @@ return this.__repr__();
 
             ci(_("Cover grid"), COVER_GRID_DESCRIPTION, "cover_grid");
             ci(_("Detailed list"), DETAILS_LIST_DESCRIPTION, "details_list");
+            ci(_("Custom list"), CUSTOM_LIST_DESCRIPTION, "custom_list");
             container.appendChild(E.div());
             create_item_list(container.lastChild, items, _("Choose a display mode for the list of books from below"));
         };
@@ -20334,260 +21092,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "date";
-        var UNDEFINED_DATE, lcdata, supports_locales, _fmt_date_pat, fd_function_index;
-        UNDEFINED_DATE = new Date("0101-01-01T00:00:00+00:00");
-        function is_date_undefined(date) {
-            var ρσ_unpack, dy, uy;
-            ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
-            dy = ρσ_unpack[0];
-            uy = ρσ_unpack[1];
-            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() === UNDEFINED_DATE.getUTCDate();
-        };
-        if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
-            __argnames__ : {value: ["date"]}
-        });
-
-        lcdata = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["abday"] = ρσ_list_decorate([ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]);
-            ρσ_d["abmon"] = ρσ_list_decorate([ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]);
-            ρσ_d["day"] = ρσ_list_decorate([ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]);
-            ρσ_d["mon"] = ρσ_list_decorate([ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]);
-            return ρσ_d;
-        }).call(this);
-        supports_locales = false;
-        try {
-            (new Date).toLocaleString("dfkjghdfkgj");
-        } catch (ρσ_Exception) {
-            ρσ_last_exception = ρσ_Exception;
-            if (ρσ_Exception instanceof RangeError) {
-                supports_locales = true;
-            } else {
-            } 
-        }
-        _fmt_date_pat = null;
-        function fmt_date_pat() {
-            if (!_fmt_date_pat) {
-                _fmt_date_pat = /(s{1,2})|(m{1,2})|(h{1,2})|(ap)|(AP)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
-            }
-            return _fmt_date_pat;
-        };
-
-        function fd_format_hour(dt, ampm, hr, as_utc) {
-            var h;
-            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
-            if (ampm) {
-                h = h % 12;
-            }
-            return (hr.length === 1) ? h.toString() : str.format("{:02d}", h);
-        };
-        if (!fd_format_hour.__argnames__) Object.defineProperties(fd_format_hour, {
-            __argnames__ : {value: ["dt", "ampm", "hr", "as_utc"]}
-        });
-
-        function fd_format_minute(dt, ampm, min, as_utc) {
-            var m;
-            m = (as_utc) ? dt.getUTCMinutes() : dt.getMinutes();
-            return (min.length === 1) ? m.toString() : str.format("{:02d}", m);
-        };
-        if (!fd_format_minute.__argnames__) Object.defineProperties(fd_format_minute, {
-            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]}
-        });
-
-        function fd_format_second(dt, ampm, min, as_utc) {
-            var s;
-            s = (as_utc) ? dt.getUTCSeconds() : dt.getSeconds();
-            return (min.length === 1) ? s.toString() : str.format("{:02d}", s);
-        };
-        if (!fd_format_second.__argnames__) Object.defineProperties(fd_format_second, {
-            __argnames__ : {value: ["dt", "ampm", "min", "as_utc"]}
-        });
-
-        function fd_format_ampm(dt, ampm, ap, as_utc) {
-            var h, ans;
-            h = (as_utc) ? dt.getUTCHours() : dt.getHours();
-            ans = (h < 12) ? "am" : "pm";
-            return (ap === "ap") ? ans : ans.toUpperCase();
-        };
-        if (!fd_format_ampm.__argnames__) Object.defineProperties(fd_format_ampm, {
-            __argnames__ : {value: ["dt", "ampm", "ap", "as_utc"]}
-        });
-
-        function fd_format_day(dt, ampm, dy, as_utc) {
-            var d, options, w;
-            d = (as_utc) ? dt.getUTCDate() : dt.getDate();
-            if (dy.length === 1) {
-                return d.toString();
-            }
-            if (dy.length === 2) {
-                return str.format("{:02d}", d);
-            }
-            if (supports_locales) {
-                options = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["weekday"] = (dy.length === 3) ? "short" : "long";
-                    return ρσ_d;
-                }).call(this);
-                if (as_utc) {
-                    options["timeZone"] = "UTC";
-                }
-                return dt.toLocaleString(window.navigator.language, options);
-            }
-            w = (as_utc) ? dt.getUTCDay() : dt.getDay();
-            return (ρσ_expr_temp = lcdata[ρσ_bound_index((dy.length === 3) ? "abday" : "day", lcdata)])[ρσ_bound_index((w + 1) % 7, ρσ_expr_temp)];
-        };
-        if (!fd_format_day.__argnames__) Object.defineProperties(fd_format_day, {
-            __argnames__ : {value: ["dt", "ampm", "dy", "as_utc"]}
-        });
-
-        function fd_format_month(dt, ampm, mo, as_utc) {
-            var m, options;
-            m = (as_utc) ? dt.getUTCMonth() : dt.getMonth();
-            if (mo.length === 1) {
-                return (m + 1).toString();
-            }
-            if (mo.length === 2) {
-                return str.format("{:02d}", m + 1);
-            }
-            if (supports_locales) {
-                options = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["month"] = (ρσ_expr_temp = (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d[1] = "numeric";
-                        ρσ_d[2] = "2-digit";
-                        ρσ_d[3] = "short";
-                        ρσ_d[4] = "long";
-                        return ρσ_d;
-                    }).call(this))[ρσ_bound_index(mo.length, ρσ_expr_temp)] || "long";
-                    return ρσ_d;
-                }).call(this);
-                if (as_utc) {
-                    options["timeZone"] = "UTC";
-                }
-                return dt.toLocaleString(window.navigator.language, options);
-            }
-            return (ρσ_expr_temp = lcdata[ρσ_bound_index((mo.length === 3) ? "abmon" : "mon", lcdata)])[(typeof m === "number" && m < 0) ? ρσ_expr_temp.length + m : m];
-        };
-        if (!fd_format_month.__argnames__) Object.defineProperties(fd_format_month, {
-            __argnames__ : {value: ["dt", "ampm", "mo", "as_utc"]}
-        });
-
-        function fd_format_year(dt, ampm, yr, as_utc) {
-            var y;
-            y = (as_utc) ? dt.getUTCFullYear() : dt.getFullYear();
-            if (yr.length === 2) {
-                return str.format("{:02d}", y % 100);
-            }
-            return str.format("{:04d}", y);
-        };
-        if (!fd_format_year.__argnames__) Object.defineProperties(fd_format_year, {
-            __argnames__ : {value: ["dt", "ampm", "yr", "as_utc"]}
-        });
-
-        fd_function_index = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["d"] = fd_format_day;
-            ρσ_d["M"] = fd_format_month;
-            ρσ_d["y"] = fd_format_year;
-            ρσ_d["h"] = fd_format_hour;
-            ρσ_d["m"] = fd_format_minute;
-            ρσ_d["s"] = fd_format_second;
-            ρσ_d["a"] = fd_format_ampm;
-            ρσ_d["A"] = fd_format_ampm;
-            return ρσ_d;
-        }).call(this);
-        function test_fd(date, fmt, ans) {
-            var q;
-            q = ρσ_interpolate_kwargs.call(this, format_date, [date, fmt].concat([ρσ_desugar_kwargs({as_utc: true})]));
-            if (q !== ans) {
-                throw new Exception(str.format("Failed to format {} with {}: {} is not {}", date, fmt, q, ans));
-            }
-        };
-        if (!test_fd.__argnames__) Object.defineProperties(test_fd, {
-            __argnames__ : {value: ["date", "fmt", "ans"]}
-        });
-
-        function format_date() {
-            var date = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.date : arguments[0];
-            var fmt = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.fmt : arguments[1];
-            var as_utc = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? format_date.__defaults__.as_utc : arguments[2];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "date")){
-                date = ρσ_kwargs_obj.date;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "fmt")){
-                fmt = ρσ_kwargs_obj.fmt;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "as_utc")){
-                as_utc = ρσ_kwargs_obj.as_utc;
-            }
-            var ampm;
-            fmt = fmt || "dd MMM yyyy";
-            ampm = ρσ_in("ap", fmt.toLowerCase());
-            if (typeof date === "string") {
-                date = new Date(date);
-            }
-            date = date || new Date;
-            if (is_date_undefined(date)) {
-                return "";
-            }
-            return fmt.replace(fmt_date_pat(), (function() {
-                var ρσ_anonfunc = function (match) {
-                    if (!match) {
-                        return "";
-                    }
-                    try {
-                        return fd_function_index[ρσ_bound_index(match[0], fd_function_index)](date, ampm, match, as_utc);
-                    } catch (ρσ_Exception) {
-                        ρσ_last_exception = ρσ_Exception;
-                        if (ρσ_Exception instanceof Error) {
-                            print(str.format("Failed to format date with format: {} and match: {}", fmt, match));
-                            return "";
-                        } else {
-                            throw ρσ_Exception;
-                        }
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["match"]}
-                });
-                return ρσ_anonfunc;
-            })());
-        };
-        if (!format_date.__defaults__) Object.defineProperties(format_date, {
-            __defaults__ : {value: {date:null, fmt:"dd MMM yyyy", as_utc:false}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["date", "fmt", "as_utc"]}
-        });
-
-        if (__name__ === "__main__") {
-            test_fd("1101-01-01T09:00:00+00:00", "hh h", "09 9");
-            test_fd("1101-01-01T09:05:01+00:00", "hh h mm m ss s ap AP yy yyyy", "09 9 05 5 01 1 am AM 01 1101");
-            test_fd("2001-01-02T09:00:00+00:00", "M MM MMM MMMM", "1 01 Jan January");
-            test_fd("2001-01-01T12:00:00+00:00", "d dd ddd dddd", "1 01 Mon Monday");
-        }
-        ρσ_modules.date.UNDEFINED_DATE = UNDEFINED_DATE;
-        ρσ_modules.date.lcdata = lcdata;
-        ρσ_modules.date.supports_locales = supports_locales;
-        ρσ_modules.date._fmt_date_pat = _fmt_date_pat;
-        ρσ_modules.date.fd_function_index = fd_function_index;
-        ρσ_modules.date.is_date_undefined = is_date_undefined;
-        ρσ_modules.date.fmt_date_pat = fmt_date_pat;
-        ρσ_modules.date.fd_format_hour = fd_format_hour;
-        ρσ_modules.date.fd_format_minute = fd_format_minute;
-        ρσ_modules.date.fd_format_second = fd_format_second;
-        ρσ_modules.date.fd_format_ampm = fd_format_ampm;
-        ρσ_modules.date.fd_format_day = fd_format_day;
-        ρσ_modules.date.fd_format_month = fd_format_month;
-        ρσ_modules.date.fd_format_year = fd_format_year;
-        ρσ_modules.date.test_fd = test_fd;
-        ρσ_modules.date.format_date = format_date;
-    })();
-
-    (function(){
         var __name__ = "book_list.book_details";
         var bd_counter, CLASS_NAME, SEARCH_INTERNET_CLASS, FORMAT_PRIORITIES, IGNORED_FIELDS, default_sort, ρσ_unpack, i, f, current_fetch;
         var traceback = ρσ_modules.traceback;
@@ -20804,8 +21308,9 @@ return this.__repr__();
 
         window.addEventListener("resize", debounce(adjust_all_iframes, 250));
         function adjusting_sandboxed_html(html) {
-            var ans;
-            ans = sandboxed_html(html, "html, body { overflow: hidden }", "allow-same-origin");
+            var css, ans;
+            css = "html, body {{ overflow: hidden; color: {} }}".format(get_color("window-foreground"));
+            ans = sandboxed_html(html, css, "allow-same-origin");
             ans.addEventListener("load", (function() {
                 var ρσ_anonfunc = function (ev) {
                     adjust_iframe_height(ev.target);
@@ -23932,7 +24437,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.4.0";
+        CALIBRE_VERSION = "3.5.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");

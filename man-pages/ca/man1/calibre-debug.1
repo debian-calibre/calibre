@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "de juliol 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "de juliol 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -98,7 +98,7 @@ Executa el codi Python del fitxer.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Exploteu el llibre (exporta el llibre com una col·lecció de fitxers HTML i metadades, els quals podeu editar utilitzant les eines estàndard d\fB\(aq\fPedició d\fB\(aq\fPHTML, i després reconstrueix  el fitxer des de l\fB\(aq\fPHTML editat.  No fa cap canvi addicional a l\fB\(aq\fPHTML, a diferència d\fB\(aq\fPuna conversió completa de calibre).
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,6 +119,11 @@ Executa la interfície gràfica amb una consola de depuració i amb enregistrame
 .TP
 .B \-\-help, \-h
 mostra aquest missatge d\fB\(aq\fPajut i surt
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP

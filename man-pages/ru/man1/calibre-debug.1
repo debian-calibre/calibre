@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "июля 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "июля 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -96,7 +96,7 @@ calibre\-debug [options]
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Преобразовать книгу (экспортировать книгу в коллекцию HTML\-файлов и метаданных, с возможностью их дальнейшего редактирования при помощи стандартных инструментов редактирования HTML, и затем дальнейшего ее восстановления из отредактированного HTML. Не вносит никаких дополнительных изменений в HTML, в отличие от полного преобразования calibre).
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -117,6 +117,11 @@ calibre\-debug [options]
 .TP
 .B \-\-help, \-h
 показать это сообщение и выйти
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP

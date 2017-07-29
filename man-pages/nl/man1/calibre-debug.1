@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "juli 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "juli 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -68,7 +68,7 @@ Voeg een eenvoudige plug\-in toe (b.v. een plug\-in die één .py bestand bevat)
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Run Python code.
+Python code uitvoeren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -93,12 +93,12 @@ Start het calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
 .INDENT 0.0
 .TP
 .B \-\-exec\-file, \-e
-Run the Python code in file.
+Python code in het bestand uitvoeren.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explodeer het boek (exporteert het boek als een collectie HTML\-bestanden en metadata, welke bewerkt kan worden met een standaard HTML\-editor en dan het bestand opnieuw opbouwt van de bewerkte HTML\fB\(aq\fPs. Het maakt geen aanvullende veranderingen aan het HTML\-bestand in tegenstelling een volledige calibre conversie).
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,6 +119,11 @@ Start de GUI met de probleemoplosser console, logging naar het gespecificeerd pa
 .TP
 .B \-\-help, \-h
 toon dit helpbericht en stop
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -168,7 +173,7 @@ toon programmaversie en stop
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode
+E\-boek leesvenster in debug modus uitvoeren
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -1366,24 +1366,6 @@ class StoreAmazonKindleStore(StoreBase):
     affiliate = False
 
 
-class StoreSonyStore(StoreBase):
-    name = 'SONY Reader Store'
-    description = u'SONY Reader books.'
-    author = 'Kovid Goyal'
-    actual_plugin = 'calibre.gui2.store.stores.sony_plugin:SonyStore'
-
-    headquarters = 'US'
-    formats = ['SONY']
-    affiliate = False
-
-
-class StoreSonyAUStore(StoreSonyStore):
-    name = 'SONY Reader (Australia) Store'
-    description = u'SONY Reader books (Australia).'
-    actual_plugin = 'calibre.gui2.store.stores.sony_au_plugin:SonyStore'
-    headquarters = 'AU'
-
-
 class StoreAmazonAUKindleStore(StoreBase):
     name = 'Amazon AU Kindle'
     author = u'Kovid Goyal'
@@ -1758,16 +1740,6 @@ class StoreNextoStore(StoreBase):
     affiliate = True
 
 
-class StoreNookUKStore(StoreBase):
-    name = 'Nook UK'
-    author = 'Charles Haley'
-    description = u'Barnes & Noble S.A.R.L, a subsidiary of Barnes & Noble, Inc., a leading retailer of content, digital media and educational products, is proud to bring the award-winning NOOK reading experience and a leading digital bookstore to the UK.'  # noqa
-    actual_plugin = 'calibre.gui2.store.stores.nook_uk_plugin:NookUKStore'
-
-    headquarters = 'UK'
-    formats = ['NOOK']
-
-
 class StoreOpenBooksStore(StoreBase):
     name = 'Open Books'
     description = u'Comprehensive listing of DRM free e-books from a variety of sources provided by users of calibre.'
@@ -1841,17 +1813,6 @@ class StoreVirtualoStore(StoreBase):
     headquarters = 'PL'
     formats = ['EPUB', 'MOBI', 'PDF']
     affiliate = True
-
-
-class StoreWaterstonesUKStore(StoreBase):
-    name = 'Waterstones UK'
-    author = 'Charles Haley'
-    description = u'Waterstone\'s mission is to be the leading Bookseller on the High Street and online providing customers the widest choice, great value and expert advice from a team passionate about Bookselling.'  # noqa
-    actual_plugin = 'calibre.gui2.store.stores.waterstones_uk_plugin:WaterstonesUKStore'
-
-    headquarters = 'UK'
-    formats = ['EPUB', 'PDF']
-    affiliate = False
 
 
 class StoreWeightlessBooksStore(StoreBase):
@@ -1941,16 +1902,13 @@ plugins += [
     StoreMillsBoonUKStore,
     StoreMobileReadStore,
     StoreNextoStore,
-    StoreNookUKStore,
     StoreOpenBooksStore,
     StoreOzonRUStore,
     StorePragmaticBookshelfStore,
     StorePublioStore,
     StoreRW2010Store,
     StoreSmashwordsStore,
-    StoreSonyStore, StoreSonyAUStore,
     StoreVirtualoStore,
-    StoreWaterstonesUKStore,
     StoreWeightlessBooksStore,
     StoreWHSmithUKStore,
     StoreWolneLekturyStore,

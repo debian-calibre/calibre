@@ -66,9 +66,6 @@ class BuildTest(unittest.TestCase):
     def test_html5lib(self):
         import html5lib.html5parser  # noqa
         from html5lib import parse  # noqa
-        # Test that we are using the calibre version of html5lib
-        from calibre.ebooks.oeb.polish.parsing import parse_html5
-        parse_html5('<p>xxx')
 
     def test_html5_parser(self):
         from html5_parser import parse
@@ -247,8 +244,8 @@ class BuildTest(unittest.TestCase):
     def test_markdown(self):
         from calibre.ebooks.markdown import Markdown
         Markdown(extensions=['extra'])
-        from calibre.library.comments import sanitize_html
-        sanitize_html(b'''<script>moo</script>xxx<img src="http://moo.com/x.jpg">''')
+        from calibre.library.comments import sanitize_comments_html
+        sanitize_comments_html(b'''<script>moo</script>xxx<img src="http://moo.com/x.jpg">''')
 
     def test_openssl(self):
         import ssl

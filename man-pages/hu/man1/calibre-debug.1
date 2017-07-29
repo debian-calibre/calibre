@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "július 14, 2017" "3.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "július 28, 2017" "3.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -98,7 +98,7 @@ Python kód futtatása a fájlon.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-A könyv kicsomagolása (HTML fájlokból és metaadatokból álló összeállításként exportálja a könyvet, amelyet HTML\-szerkesztő eszközökkel szerkeszthet, majd a szerkesztett HTML\-ből újraépíti a fájlt. A teljes Calibre konvertálástól eltérően nem eszközöl további változtatásokat a HTML\-ben).
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,6 +119,11 @@ GUI futtatása hibakeresési ablakkal, a megadott elérési útvonalra történ�
 .TP
 .B \-\-help, \-h
 ennek a súgónak a megjelenítése és kilépés
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP
