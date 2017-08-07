@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -129,7 +129,7 @@ class Ui_MainWindow(object):
         self.action_back.setText(_("Back"))
         self.action_forward.setText(_("Forward"))
         self.action_next_match.setText(_("Next match"))
-        self.action_open_ebook.setText(_("Open ebook"))
+        self.action_open_ebook.setText(_("Open e-book"))
         self.action_configure.setText(_("Configure"))
 
 from bookview import BookView

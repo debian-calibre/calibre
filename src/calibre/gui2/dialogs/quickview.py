@@ -13,7 +13,9 @@ from PyQt5.Qt import (
 from calibre.customize.ui import find_plugin
 from calibre.gui2 import gprefs
 from calibre.gui2.dialogs.quickview_ui import Ui_Quickview
+from calibre.utils.date import timestampfromdt
 from calibre.utils.icu import sort_key
+from calibre.utils.iso8601 import UNDEFINED_DATE
 
 
 class TableItem(QTableWidgetItem):
@@ -29,6 +31,16 @@ class TableItem(QTableWidgetItem):
         self.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable)
 
     def __ge__(self, other):
+        if self.sort is None:
+            if other.sort is None:
+                # None == None therefore >=
+                return True
+            # self is None, other is not None therefore self < other
+            return False
+        if other.sort is None:
+            # self is not None and other is None therefore self >= other
+            return True
+
         if isinstance(self.sort, (str, unicode)):
             l = sort_key(self.sort)
             r = sort_key(other.sort)
@@ -42,6 +54,16 @@ class TableItem(QTableWidgetItem):
         return 0
 
     def __lt__(self, other):
+        if self.sort is None:
+            if other.sort is None:
+                # None == None therefore not <
+                return False
+            # self is None, other is not None therefore self < other
+            return True
+        if other.sort is None:
+            # self is not None therefore self > other
+            return False
+
         if isinstance(self.sort, (str, unicode)):
             l = sort_key(self.sort)
             r = sort_key(other.sort)
@@ -171,9 +193,11 @@ class Quickview(QDialog, Ui_Quickview):
         self.books_table.installEventFilter(focus_filter)
 
         self.close_button.clicked.connect(self.close_button_clicked)
+        self.refresh_button.clicked.connect(self.refill)
 
         self.tab_order_widgets = [self.items, self.books_table, self.lock_qv,
-                          self.dock_button, self.search_button, self.close_button]
+                          self.dock_button, self.search_button, self.refresh_button,
+                          self.close_button]
         for idx,widget in enumerate(self.tab_order_widgets):
             widget.installEventFilter(WidgetTabFilter(widget, idx, self.tab_pressed_signal))
 
@@ -217,8 +241,10 @@ class Quickview(QDialog, Ui_Quickview):
             self.dock_button.setText(_('Undock'))
             self.dock_button.setToolTip(_('Pop up the quickview panel into its own floating window'))
             self.dock_button.setIcon(QIcon(I('arrow-up.png')))
+            # Remove the ampersands from the buttons because shortcuts exist.
             self.lock_qv.setText(_('Lock Quickview contents'))
             self.search_button.setText(_('Search'))
+            self.refresh_button.setText(_('Refresh'))
             self.gui.quickview_splitter.add_quickview_dialog(self)
             self.close_button.setVisible(False)
         else:
@@ -229,6 +255,13 @@ class Quickview(QDialog, Ui_Quickview):
         self.books_table.horizontalHeader().sectionResized.connect(self.section_resized)
         self.dock_button.clicked.connect(self.show_as_pane_changed)
         self.gui.search.cleared.connect(self.indicate_no_items)
+
+        # Enable the refresh button only when QV is locked
+        self.refresh_button.setEnabled(False)
+        self.lock_qv.stateChanged.connect(self.lock_qv_changed)
+
+    def lock_qv_changed(self, state):
+        self.refresh_button.setEnabled(state)
 
     def add_columns_to_widget(self):
         '''
@@ -245,7 +278,7 @@ class Quickview(QDialog, Ui_Quickview):
 
     def refill(self):
         '''
-            Refill the table in case the book data changes
+            Refill the table in case the columns displayed changes
         '''
         self.add_columns_to_widget()
         self._refresh(self.current_book_id, self.current_key)
@@ -349,7 +382,7 @@ class Quickview(QDialog, Ui_Quickview):
         # operation if we get an exception. The "close" will come
         # eventually.
         try:
-            self._refresh(mi.get('id'), self.current_key)
+            self.refresh(self.view.model().index(self.db.row(mi.id), self.current_column))
         except:
             pass
 
@@ -463,7 +496,7 @@ class Quickview(QDialog, Ui_Quickview):
         tt = ('<p>' +
             _('Double click on a book to change the selection in the library view or '
               'change the column shown in the left-hand pane. '
-              'Shift- or control-double-click to edit the metadata of a book, '
+              'Shift- or Control- double click to edit the metadata of a book, '
               'which also changes the selected book.'
               ) + '</p>')
         for row, b in enumerate(books):
@@ -487,9 +520,10 @@ class Quickview(QDialog, Ui_Quickview):
                         a = TableItem(v, mi.get(col), mi.get(col+'_index'))
                     elif self.fm[col]['datatype'] == 'datetime':
                         v = mi.format_field(col)[1]
-                        from calibre.utils.date import timestampfromdt
-                        sv = timestampfromdt(mi.get(col))
-                        a = TableItem(v, sv)
+                        d = mi.get(col)
+                        if d is None:
+                            d = UNDEFINED_DATE
+                        a = TableItem(v, timestampfromdt(d))
                     elif self.fm[col]['datatype'] in ('float', 'int'):
                         v = mi.format_field(col)[1]
                         sv = mi.get(col)
