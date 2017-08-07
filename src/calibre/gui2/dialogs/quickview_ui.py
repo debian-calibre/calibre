@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -64,12 +64,18 @@ class Ui_Quickview(object):
         self.hboxlayout.addWidget(self.search_button)
         spacerItem3 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.hboxlayout.addItem(spacerItem3)
+        self.refresh_button = QtWidgets.QPushButton(Quickview)
+        self.refresh_button.setAutoDefault(False)
+        self.refresh_button.setObjectName("refresh_button")
+        self.hboxlayout.addWidget(self.refresh_button)
+        spacerItem4 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.hboxlayout.addItem(spacerItem4)
         self.close_button = QtWidgets.QPushButton(Quickview)
         self.close_button.setAutoDefault(False)
         self.close_button.setObjectName("close_button")
         self.hboxlayout.addWidget(self.close_button)
-        spacerItem4 = QtWidgets.QSpacerItem(200, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.hboxlayout.addItem(spacerItem4)
+        spacerItem5 = QtWidgets.QSpacerItem(200, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.hboxlayout.addItem(spacerItem5)
         self.main_grid_layout.addLayout(self.hboxlayout, 3, 0, 1, 2)
         self.items_label.setBuddy(self.items)
         self.books_label.setBuddy(self.books_table)
@@ -85,5 +91,7 @@ class Ui_Quickview(object):
         self.dock_button.setText(_("&Dock"))
         self.search_button.setText(_("&Search"))
         self.search_button.setToolTip(_("Search in the library view for the currently highlighted selection"))
+        self.refresh_button.setText(_("&Refresh"))
+        self.refresh_button.setToolTip(_("When Quickview is locked, refresh the window using the last selected book and that book\'s value in the last selected column."))
         self.close_button.setText(_("&Close"))
 

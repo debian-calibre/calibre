@@ -14463,7 +14463,7 @@ return this.__repr__();
                 __argnames__ : {value: ["txt"]}
             });
 
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap for controls"))].concat([ρσ_desugar_kwargs({style: "height: 25vh; display:flex; align-items: center; border-bottom: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn back"))].concat([ρσ_desugar_kwargs({style: "width: 25vw; display:flex; align-items: center; border-right: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn page"))].concat([ρσ_desugar_kwargs({style: "width: 75vw; display:flex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: stretch; flex-grow: 10"})]))].concat([ρσ_desugar_kwargs({style: "overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "display:flex; flex-direction: column; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap (or right click) for controls"))].concat([ρσ_desugar_kwargs({style: "height: 25vh; display:flex; align-items: center; border-bottom: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn back"))].concat([ρσ_desugar_kwargs({style: "width: 25vw; display:flex; align-items: center; border-right: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn page"))].concat([ρσ_desugar_kwargs({style: "width: 75vw; display:flex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: stretch; flex-grow: 10"})]))].concat([ρσ_desugar_kwargs({style: "overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "display:flex; flex-direction: column; align-items: stretch"})])));
         };
         if (!ControlsOverlay.prototype.show.__argnames__) Object.defineProperties(ControlsOverlay.prototype.show, {
             __argnames__ : {value: ["container"]}
@@ -20876,22 +20876,25 @@ return this.__repr__();
         var get_db = ρσ_modules["book_list.globals"].get_db;
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
-        var back = ρσ_modules["book_list.router"].back;
+        var home = ρσ_modules["book_list.router"].home;
         var open_book = ρσ_modules["book_list.router"].open_book;
 
         var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
 
         var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
 
-        var setup_view_mode = ρσ_modules["book_list.views"].setup_view_mode;
         var DEFAULT_MODE = ρσ_modules["book_list.views"].DEFAULT_MODE;
+        var setup_view_mode = ρσ_modules["book_list.views"].setup_view_mode;
 
         var clear = ρσ_modules.dom.clear;
         var ensure_id = ρσ_modules.dom.ensure_id;
 
+        var create_custom_dialog = ρσ_modules.modals.create_custom_dialog;
         var error_dialog = ρσ_modules.modals.error_dialog;
 
         var conditional_timeout = ρσ_modules.utils.conditional_timeout;
+
+        var create_button = ρσ_modules.widgets.create_button;
 
         CLASS_NAME = "local-books-list";
         book_list_data = Object.create(null);
@@ -20912,9 +20915,9 @@ return this.__repr__();
             book_list_data.init_grid(bl);
         };
 
-        function read_book(key) {
+        function read_book(book, book_idx) {
             var ρσ_unpack, library_id, book_id, fmt;
-            ρσ_unpack = key;
+            ρσ_unpack = book.key;
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
             library_id = ρσ_unpack[0];
             book_id = ρσ_unpack[1];
@@ -20922,7 +20925,65 @@ return this.__repr__();
             open_book(book_id, fmt, library_id);
         };
         if (!read_book.__argnames__) Object.defineProperties(read_book, {
-            __argnames__ : {value: ["key"]}
+            __argnames__ : {value: ["book", "book_idx"]}
+        });
+
+        function delete_book(book, book_idx) {
+            var db;
+            db = get_db();
+            db.delete_book(book, (function() {
+                var ρσ_anonfunc = function (book, err_string) {
+                    var books, i;
+                    if (err_string) {
+                        error_dialog(_("Failed to delete book"), err_string);
+                        return;
+                    }
+                    books = (function() {
+                        var ρσ_Iter = ρσ_Iterable(book_list_data.books), ρσ_Result = [], i;
+                        for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                            i = ρσ_Iter[ρσ_Index];
+                            if (i !== book_idx) {
+                                ρσ_Result.push((ρσ_expr_temp = book_list_data.book_data)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i]);
+                            }
+                        }
+                        ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                        return ρσ_Result;
+                    })();
+                    show_recent_stage2.call(book_list_data.container_id, books);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["book", "err_string"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!delete_book.__argnames__) Object.defineProperties(delete_book, {
+            __argnames__ : {value: ["book", "book_idx"]}
+        });
+
+        function on_select(book, book_idx) {
+            var title;
+            title = this;
+            create_custom_dialog(title, (function() {
+                var ρσ_anonfunc = function (parent, close_modal) {
+                    function action(which) {
+                        close_modal();
+                        which(book, book_idx);
+                    };
+                    if (!action.__argnames__) Object.defineProperties(action, {
+                        __argnames__ : {value: ["which"]}
+                    });
+
+                    parent.appendChild(E.div(E.div(_("What would you like to do with this book?")), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Read"), "book", action.bind(null, read_book)), " ", create_button(_("Delete"), "trash", action.bind(null, delete_book))].concat([ρσ_desugar_kwargs({class_: "button-box"})]))));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["parent", "close_modal"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!on_select.__argnames__) Object.defineProperties(on_select, {
+            __argnames__ : {value: ["book", "book_idx"]}
         });
 
         function show_cover(blob, name, mt, book) {
@@ -20969,7 +21030,7 @@ return this.__repr__();
         function render_book(book_idx) {
             var book;
             book = (ρσ_expr_temp = book_list_data.book_data)[(typeof book_idx === "number" && book_idx < 0) ? ρσ_expr_temp.length + book_idx : book_idx];
-            return book_list_data.render_book(book_idx, book.metadata, create_image, read_book.bind(null, book.key));
+            return book_list_data.render_book(book_idx, book.metadata, create_image, on_select.bind(book.metadata.title, book, book_idx));
         };
         if (!render_book.__argnames__) Object.defineProperties(render_book, {
             __argnames__ : {value: ["book_idx"]}
@@ -21063,7 +21124,7 @@ return this.__repr__();
         function init(container_id) {
             var container, recent, recent_container_id;
             container = document.getElementById(container_id);
-            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Downloaded books"), action: back, icon: "home"})]));
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Downloaded books"), action: home, icon: "home"})]));
             recent = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: CLASS_NAME})]);
             recent_container_id = ensure_id(recent);
             container.appendChild(recent);
@@ -21080,6 +21141,8 @@ return this.__repr__();
         ρσ_modules["book_list.local_books"].component = component;
         ρσ_modules["book_list.local_books"].clear_grid = clear_grid;
         ρσ_modules["book_list.local_books"].read_book = read_book;
+        ρσ_modules["book_list.local_books"].delete_book = delete_book;
+        ρσ_modules["book_list.local_books"].on_select = on_select;
         ρσ_modules["book_list.local_books"].show_cover = show_cover;
         ρσ_modules["book_list.local_books"].create_image = create_image;
         ρσ_modules["book_list.local_books"].render_book = render_book;
@@ -23906,7 +23969,7 @@ return this.__repr__();
             }
             data = check_column_widths();
             if (data) {
-                print("WARNING: column layout broken", data);
+                print("WARNING: column layout broken, probably because there is some non-reflowable content in the book that is wider than the column width", data);
             }
             _in_paged_mode = true;
             fit_images();
@@ -24437,7 +24500,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.5.0";
+        CALIBRE_VERSION = "3.6.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
