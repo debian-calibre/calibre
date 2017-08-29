@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,18 +41,18 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Konvertēt e\-grāmatu no viena formāta uz citu.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file ir ievades un output_file ir izvades fails. Abi ir jānorāda kā komanda pirmajiem diviem argumentiem.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an „open e\-book“ (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+E\-grāmatas izvades formātu var atminēt no output_file faila paplašinājuma. Output_file var būt ar īpašu formātu. EXT, kur EXT ir izvades faila paplašinājums. Šajā gadījumā izejas faila nosaukums ir atvasināts no ievades faila nosaukuma. Ievērojiet, ka failu nosaukumus nedrīkst sākt ar pārnesuma zīmi. Visbeidzot, ja output_file nav paplašinājuma, tad tas tiek uzskatīts par direktoriju un „atvērto e\-grāmatu“ (OEB), kas sastāv no HTML failiem, kas ir rakstīti šajā direktorijā. Šie faili ir faili, kas parasti tika nodoti izvades spraudnim.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Pēc tam, kad norādīts ievades un izvades fails, norādot dažādas opcijas var pielāgot pārveidošanu. Pieejamās opcijas ir atkarīgas no ievades un izvades failu tipa. Lai saņemtu palīdzību par tiem norādiet ievades un izvades failu un pēc tam izmantojiet \-h opciju.
 .sp
-For full documentation of the conversion system see
+Visu dokumentāciju par konversijas sistēmu skat.
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus \fBebook\-convert\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .sp
 Papildiespējas un papildiespēju standartvērtības mainās atkarībā no
 ievades un izvades formāta, tāpēc jums vienmēr vajadzētu pārbaudīt ar:
@@ -102,12 +102,12 @@ Norādiet ievades profilu. Ievades profils nodrošina pārvēršanas sistēmu ar
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Saraksts ar iebūvēto recepšu nosaukumiem. Jūs varat izveidot e\-grāmatu no iebūvētas receptes šādā veidā: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Norādiet izvades profilu. Izvades profils pastāsta konversijas sistēmai, kā optimizēt izveidoto dokumentu norādītajai ierīcei (piemēram, mainot attēlus ierīces ekrāna izmērā). Dažos gadījumos produkcijas profilu var izmantot, lai optimizētu izeju konkrētai ierīcei, bet tas reti ir nepieciešams. Izvēles ir šādas:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Papildiestatījumi, kas pārvalda izvaddatnes epub apstrādi
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Izslēdziet lapu pārtraukumu sadalīšanu. Parasti ievades faili tiek automātiski sadalīti katrā lappusē divos failos. Tas nodrošina izvades e\-grāmatu, kuru var analizēt ātrāk un ar mazākiem resursiem. Tomēr sadalīšana ir lēna, un, ja jūsu avota fails satur ļoti lielu lappušu pārtraukumu skaitu, lapas izslēgšana jāizslēdz.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,12 +148,12 @@ Novietot pievienoto iekļauto satura rādītāju grāmatas beigās, nevis sākum
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+Iegūt izveidotā EPUB faila saturu norādītajā direktorijā. Kataloga saturs vispirms tiek izdzēsts, tāpēc esiet piesardzīgs.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Sadalīt visus HTML failus, kas lielāki par šo lielumu (KB). Tas ir nepieciešams, jo vairums EPUB lasītāju nevar apstrādāt lielus failu izmērus. Noklusējuma izmērs ir 260KB, kas nepieciešams Adobe Digital Editions. Iestatīt 0, lai atspējotu sadalījumu pēc lieluma.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +186,7 @@ Papildiestatījumi, kas pārvalda rezultāta izskatu
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Pārveidot unicode rakstzīmes uz ASCII. Izmantojiet uzmanīgi, jo tas aizstās unicode rakstzīmes ar ASCII. Piemēram, tas aizstās \fB"\fPМихаил Горбачёв\fB"\fP ar \fB"\fPMikhail Gorbachiov\fB"\fP\&. Tāpat ņemiet vērā, ka gadījumos, kad pastāv vairākas rakstzīmes (piemēram, ķīniešu un japāņu rakstzīmes), tiks izmantota nomaiņa, kas balstīta uz pašreizējo calibre interfeisa valodu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Iegult norādīto fontu saimi grāmatā, tādējādi nosakot grāmatā izmantoto
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Pēc noklusējuma, calibre izmantos stenogrāfijas formu dažādām CSS īpašībām, piemēram kā margin, padding, border, utt. Šī opcija ļaus tā vietā izmantot pilnu paplašināto formu. Ņemiet vērā, ka CSS vienmēr tiek paplašināts, ģenerējot EPUB failus, kuru izejas profils ir iestatīts uz kādu no Nook profiliem, jo ​​Nooks nevar apstrādāt stenogrāfijas CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,22 +261,22 @@ Dažos nemākulīgi veidotos dokumentos teksta izkārtošanai tiek izmantotas ta
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Iestatīt apakšējās piemales pst. Noklusējums ir 5.0. Ja iestatīsit to mazāk par nulli, netiks iestatīta piemales vērtība (oriģinālā dokumenta piemales iestatījums tiks saglabāts). Piezīme. Orientējošiem formātiem, piemēram, PDF un DOCX, ir savi prioritātes iestatījumi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Iestatīt kreisās piemales pts. Noklusējums ir 5.0. Ja iestatīsit to mazāk par nulli, netiks iestatīta piemales vērtība (oriģinālā dokumenta piemales iestatījums tiks saglabāts). Piezīme. Orientējošiem formātiem, piemēram, PDF un DOCX, ir savi prioritātes iestatījumi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Iestatīt labās piemales pts. Noklusējums ir 5.0. Ja iestatīsit to mazāk par nulli, netiks iestatīta piemales vērtība (oriģinālā dokumenta piemales iestatījums tiks saglabāts). Piezīme. Orientējošiem formātiem, piemēram, PDF un DOCX, ir savi prioritātes iestatījumi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Iestatīt augšējo piemali pts. Noklusējums ir 5.0. Ja iestatīsit to mazāk par nulli, netiks iestatīta piemales vērtība (oriģinālā dokumenta piemales iestatījums tiks saglabāts). Piezīme. Orientējošiem formātiem, piemēram, PDF un DOCX, ir savi prioritātes iestatījumi.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +296,7 @@ calibre aizvācot tukšās rindas starp rindkopām automātiski pievieno rindkop
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Konvertēt vienkāršās pēdiņas, domuzīmes un daudzpunktus uz tipogrāfiski pareiziem ekvivalentiem. Plašāku informāciju sk.https://daringfireball.net/projects/smartypants
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +306,7 @@ Izveidot iegulto fontu apakškopas. Ikviens iegultais fonts tiks samazināts lī
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Ceļš uz failu, kurā ir noteikumi, lai pārveidotu CSS stilus šajā grāmatā. Vieglākais veids, kā izveidot šādu failu, ir izmantot vedni, lai izveidotu noteikumus calibre GUI. Piekļūstiet dialogam sadaļā \fB"\fPIzskats\-> Pārveidot stilu\fB"\fP\&. Kad jūs izveidojat noteikumus, varat izmantot pogu \fB"\fPEksportēt\fB"\fP, lai tos saglabātu failā.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -334,7 +334,7 @@ Pārveidot no vairākām tukšām vietām veidotas atkāpes par CSS atkāpēm.
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+Līdzinātie pa kreisi ainas pārtraukumu marķieri ir līdzināti uz centru. Nomainiet mīkstos ainas pārtraukumus, kas izmanto vairākas tukšas rindiņas ar horizontāliem noteikumiem.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -364,7 +364,7 @@ Iespējot heiristisko apstrādi. Šim iestatījuma jābūt iespējotam, lai būt
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Scale used to determine the length at which a line should be unwrapped. Valid values are a decimal between 0 and 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+Mērogs, ko izmanto, lai noteiktu rindas garumu. Derīgās vērtības ir decimāldaļas no 0 līdz 1. Noklusējums ir 0,4, mazliet zem vidējās rindas garuma. Ja dokumentā ir jāievieto tikai dažas rindiņas, šī vērtība ir jāsamazina
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -377,7 +377,7 @@ Izmaina dokumenta tekstu un struktūru, izmantojot lietotāja definētus šablon
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Ceļš uz failu, kas satur meklēšanu, un aizstāj regulāras izteiksmes. Fails satur regulāras izteiksmes maiņas rindas, kam seko rezerves modelis (kas var būt tukša rinda). Regulārajai izteiksmei jābūt Python regex sintaksē, un failam jābūt kodētā UTF\-8 formātā.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -415,7 +415,7 @@ Pārvalda dokumenta struktūras automātisku noteikšanu.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath izteiksme, lai noteiktu nodaļu virsrakstus. Pēc noklusējuma ir jāņem vērā <h1>vai <h2>birkas, kas satur vārdu \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP vai \fB"\fPpart\fB"\fP, kā nodaļu virsraksts arī kā visas birkas kas ir klase = \fB"\fPchapter\fB"\fP\&. Izteiksme, ko izmanto, jāizvērtē elementu saraksts. Lai atspējotu nodaļas noteikšanu, izmantojiet izteiksmi \fB"\fP/\fB"\fP\&. Skatiet calibre \fB"\fPXPath Tutorial\fB"\fP lietotāja rokasgrāmatu, par turpmāku palīdzību šīs funkcijas izmantošanai.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -430,7 +430,7 @@ Dažos dokumentos lapas malu informācija tiek pievienota katrai rindkopai. Cali
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Grāmatas sākumā ievietot grāmatas metadatus. Tas ir noderīgi, ja jūsu e\-grāmatu lasītājs neatbalsta tiešu metadatu rādīšanu/meklēšanu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -445,12 +445,12 @@ Dot priekšroku izejas datnē atrastam vākam pret norādīto.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Noņemt pirmo attēlu no ievades e\-grāmatas. Noderīgi, ja ievades dokumentam ir attēls, kas nav identificēts kā vāka attēls. Šajā gadījumā, ja jūs iestatāt vāciņu calibre, izejas dokuments beigsies ar diviem vāka attēliem, ja neesat norādījis šo opciju.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+XPath izteiksme, lai noteiktu atrašanās vietu dokumentā, no kuras jāsāk lasīt. Dažas e\-grāmatu lasīšanas programmas (pirmkārt Kindle) šo vietu izmanto, lai atvērtu grāmatu. Lai iegūtu papildu palīdzību šīs funkcijas izmantošanai, skatiet calibre lietotāja rokasgrāmatā \fB"\fPXPath\fB"\fP sniegto pamācību.
 .UNINDENT
 .SH SATURA RĀDĪITĀJS
 .sp
@@ -521,7 +521,7 @@ Ievadiet grāmatas ražotāju.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+Ievadiet e\-grāmatu aprakstu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -541,12 +541,12 @@ Ievadiet valodu.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Ievadiet publicēšanas datumu (tiek pieņemts, ka tas atrodas vietējā laika joslā, ja vien laika josla nav skaidri norādīta)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+Ievadiet e\-grāmatu izdevēju.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +561,7 @@ Lasīt metadatus no norādītās OPF datnes. No šīs datnes nolasītajiem metad
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+Ievadiet šīs e\-grāmatas sēriju.
 .UNINDENT
 .INDENT 0.0
 .TP

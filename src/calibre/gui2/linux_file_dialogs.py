@@ -114,8 +114,19 @@ def run(cmd):
 
 
 # KDE {{{
+
+def kdialog_supports_desktopfile():
+    ans = getattr(kdialog_supports_desktopfile, 'ans', None)
+    if ans is None:
+        raw = subprocess.check_output(['kdialog', '--help'])
+        ans = kdialog_supports_desktopfile.ans = b'--desktopfile' in raw
+    return ans
+
+
 def kde_cmd(window, title, *rest):
-    ans = ['kdialog', '--desktopfile', 'calibre-gui', '--title', title]
+    ans = ['kdialog', '--title', title]
+    if kdialog_supports_desktopfile():
+        ans += ['--desktopfile', 'calibre-gui']
     winid = get_winid(window)
     if winid is not None:
         ans += ['--attach', str(int(winid))]
@@ -141,16 +152,12 @@ def kdialog_choose_dir(window, name, title, default_dir='~', no_save_dir=False):
 
 
 def kdialog_filters(filters, all_files=True):
-    # Currently kdialog has no way to specify multiple filters
-    if all_files or not filters:
-        return '*'
-    if len(filters) == 1:
-        text, exts = filters[0]
-        return '{} ({})'.format(text, ' '.join('*.' + x for x in exts))
-    ans = set()
-    for text, exts in filters:
-        ans |= set(exts)
-    return ' '.join('*.' + x for x in ans)
+    ans = []
+    for name, exts in filters:
+        ans.append('{} ({})'.format(name, ' '.join('*.' + x for x in exts)))
+    if all_files:
+        ans.append(_('All files') + ' (*)')
+    return '\n'.join(ans)
 
 
 def kdialog_choose_files(
@@ -333,9 +340,9 @@ def check_for_linux_native_dialogs():
 
 
 if __name__ == '__main__':
-    print(repr(kdialog_choose_dir(None, 'testkddcd', 'Testing choose dir...')))
-    # print(repr(kdialog_choose_files(None, 'testkddcf', 'Testing choose files...', select_only_single_file=True, filters=[
-    #     ('moo', 'epub png'.split()), ('boo', 'docx'.split())], all_files=False)))
+    # print(repr(kdialog_choose_dir(None, 'testkddcd', 'Testing choose dir...')))
+    print(repr(kdialog_choose_files(None, 'testkddcf', 'Testing choose files...', select_only_single_file=True, filters=[
+        ('moo', 'epub png'.split()), ('boo', 'docx'.split())], all_files=True)))
     # print(repr(kdialog_choose_images(None, 'testkddci', 'Testing choose images...')))
     # print(repr(kdialog_choose_save_file(None, 'testkddcs', 'Testing choose save file...', initial_filename='moo.x')))
     # print(repr(zenity_choose_dir(None, 'testzcd', 'Testing choose dir...')))

@@ -276,6 +276,7 @@ class Translations(POT):  # {{{
         self.compile_content_server_translations()
         self.freeze_locales()
         self.compile_user_manual_translations()
+        self.compile_website_translations()
 
     def compile_group(self, files, handle_stats=None, file_ok=None, action_per_file=None):
         from calibre.constants import islinux
@@ -449,6 +450,61 @@ class Translations(POT):  # {{{
     @property
     def stats(self):
         return self.j(self.d(self.DEST), 'stats.pickle')
+
+    def compile_website_translations(self):
+        from calibre.utils.zipfile import ZipFile, ZipInfo, ZIP_STORED
+        from calibre.ptempfile import TemporaryDirectory
+        from calibre.utils.localization import get_iso639_translator, get_language, get_iso_language
+        self.info('Compiling website translations...')
+        srcbase = self.j(self.d(self.SRC), 'translations', 'website')
+        fmap = {}
+        files = []
+        stats = {}
+        done = []
+
+        def handle_stats(src, nums):
+            locale = fmap[src]
+            trans = nums[0]
+            total = trans if len(nums) == 1 else (trans + nums[1])
+            stats[locale] = int(round(100 * trans / total))
+
+        with TemporaryDirectory() as tdir, ZipFile(self.j(srcbase, 'locales.zip'), 'w', ZIP_STORED) as zf:
+            for f in os.listdir(srcbase):
+                if f.endswith('.po'):
+                    l = f.partition('.')[0]
+                    pf = l.split('_')[0]
+                    if pf in {'en'}:
+                        continue
+                    d = os.path.join(tdir, l + '.mo')
+                    f = os.path.join(srcbase, f)
+                    fmap[f] = l
+                    files.append((f, d))
+            self.compile_group(files, handle_stats=handle_stats)
+
+            for locale, translated in stats.iteritems():
+                if translated >= 20:
+                    with open(os.path.join(tdir, locale + '.mo'), 'rb') as f:
+                        raw = f.read()
+                    zi = ZipInfo(os.path.basename(f.name))
+                    zi.compress_type = ZIP_STORED
+                    zf.writestr(zi, raw)
+                    done.append(locale)
+            dl = done + ['en']
+
+            lang_names = {}
+            for l in dl:
+                if l == 'en':
+                    t = get_language
+                else:
+                    t = get_iso639_translator(l).ugettext
+                    t = partial(get_iso_language, t)
+                lang_names[l] = {x: t(x) for x in dl}
+            zi = ZipInfo('lang-names.json')
+            zi.compress_type = ZIP_STORED
+            zf.writestr(zi, json.dumps(lang_names, ensure_ascii=False).encode('utf-8'))
+        dest = self.j(self.d(self.stats), 'website-languages.txt')
+        with open(dest, 'wb') as f:
+            f.write(' '.join(sorted(done)))
 
     def compile_user_manual_translations(self):
         self.info('Compiling user manual translations...')

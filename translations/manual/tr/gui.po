@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 08:11+0530\n"
-"PO-Revision-Date: 2017-07-07 04:25+0000\n"
+"POT-Creation-Date: 2017-08-24 00:01+0530\n"
+"PO-Revision-Date: 2017-08-23 18:32+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,7 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:119
-#: ../../home/kovid/work/calibre/manual/gui.rst:686
+#: ../../home/kovid/work/calibre/manual/gui.rst:692
 msgid "View"
 msgstr "Görünüm"
 
@@ -274,7 +274,7 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:134
-#: ../../home/kovid/work/calibre/manual/gui.rst:662
+#: ../../home/kovid/work/calibre/manual/gui.rst:668
 msgid "Send to device"
 msgstr "Cihaza gönder"
 
@@ -476,7 +476,7 @@ msgid ""
 msgstr "|dvi| :guilabel:`Aygıt` eylemi aygıtınızın ana belleği ya da depolama kartlarındaki kitapları görüntülemenizi, veya aygıtı çıkarmanızı sağlar (calibre'den ayırmanızı). Desteklenen bir aygıt taktığınızda bu simge calibre ana araç çubuğunda otomatik olarak çıkar. Üzerine tıklayarak cihazınızdaki kitapları görebilirsiniz. Ayrıca calibre kitaplığınızdaki kitapları sürükleyip simge üzerine bırakarak cihazınıza aktarabilirsiniz. Aynı şekilde, aygıtınızdan kitapları sürükleyip araç çubuğundaki kitaplık simgesine bırakarak aygıtınızdan calibre'ye aktarım yapabilirsiniz."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:204
-#: ../../home/kovid/work/calibre/manual/gui.rst:682
+#: ../../home/kovid/work/calibre/manual/gui.rst:688
 msgid "Save to disk"
 msgstr "Diske kaydet"
 
@@ -840,11 +840,11 @@ msgstr ""
 msgid ""
 "Available fields for searching are: ``tag, title, author, publisher, series,"
 " series_index, rating, cover, comments, format, identifiers, date, pubdate, "
-"search, size`` and custom columns. If a device is plugged in, the "
+"search, size, vl`` and custom columns. If a device is plugged in, the "
 "``ondevice`` field becomes available, when searching the calibre library "
 "view. To find the search name (actually called the `lookup name`) for a "
 "custom column, hover your mouse over the column header in the library view."
-msgstr "Aramalar için kullanılabilir alanlar: ``etiket, başlık, yazar, editör, seriler, seri_indisi, oy, kapak, yorumlar, biçim, tanımlayıcılar, tarih, basımtarihi, arama, boyut`` ve özel sütunlardır. Bir aygıt takılmışsa, calibre kitaplık görünümünde ``aygıt üzerinde`` alanı kullanılabilir olur. Özel bir sütun için arama ismi bulmak için (aslında `lookup name` denir), farenizi kitaplık görünümünde sütun başlığı üzerine getirin."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:364
 msgid "The syntax for searching for dates is::"
@@ -912,11 +912,21 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:403
 msgid ""
+"The special field ``vl`` is used to search for books in a virtual library. "
+"For example, ``vl:Read`` will find all the books in the *Read* virtual "
+"library. The search ``vl:Read and vl:\"Science Fiction\"`` will find all the"
+" books that are in both the *Read* and *Science Fiction* virtual libraries. "
+"The value following ``vl:`` must be the name of a virtual library. If the "
+"virtual library name contains spaces then surround it with quotes."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/gui.rst:409
+msgid ""
 "You can search for the absence or presence of a field using the special "
 "\"true\" and \"false\" values. For example::"
 msgstr "Bir alanın varlığını ya da yokluğunu özel \"true\" ve \"false\" değerleriyle bulabilirsiniz. Örneğin::"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:410
+#: ../../home/kovid/work/calibre/manual/gui.rst:416
 msgid ""
 "Yes/no custom columns are searchable. Searching for ``false``, ``empty``, or"
 " ``blank`` will find all books with undefined values in the column. "
@@ -930,7 +940,7 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "Evet/hayır özel sütunları da aranabilirdir. ``false``, ``boş``, veya ``ifadesiz`` aramaları sütunda belirtilmemiş değerlere sahip tüm kitapları bulur. ``true`` araması sütunda belirtilmemiş değeri olmayan kitapların hepsini bulur. ``evet`` veya ``işaretli`` araması sütunda ``Evet`` olan tüm kitapları bulur. ``hayır`` veya ``işaretlenmemiş`` araması sütunda ``Hayır`` olan tüm kitapları bulur. ``evet``, ``hayır``, ``ifadesiz``, ``boş``, ``işaretli`` ve ``işaretlenmemiş`` çevrilebilirdir; İngilizcelerini ya da mevcut dildeki eşlenik kelimeleri kullanabilirsiniz. ``true`` ve ``false`` kelimeleri ve özel değerler ``_yes``, ``_no``, ve ``_empty`` çevrilmez."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:415
+#: ../../home/kovid/work/calibre/manual/gui.rst:421
 msgid ""
 "Hierarchical items (e.g. A.B.C) use an extended syntax to match initial "
 "parts of the hierarchy. This is done by adding a period between the exact "
@@ -940,7 +950,7 @@ msgid ""
 "`A`."
 msgstr "Sıralı dizili öğeler (örn. A.B.C) sıralı dizimin ilk kısımlarını eşleştirmek için genişletilmiş bir söz dizimi kullanırlar. Bu da tam eşleşme operatörü (=) ile metin arasına bir nokta koyarak yapılır. Örneğin, ``tags:=.A`` sorgusu `A` ve `A.B` etiketlerini bulur, ama `AA` ya da `AA.B` etiketlerini bulmaz. ``tags:=.A.B`` sorgusu `A.B` ve `A.B.C` etiketlerini bulur, ama `A` etiketini bulmaz."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:417
+#: ../../home/kovid/work/calibre/manual/gui.rst:423
 msgid ""
 "Identifiers (e.g., isbn, doi, lccn etc) also use an extended syntax. First, "
 "note that an identifier has the form ``type:value``, as in "
@@ -950,64 +960,64 @@ msgid ""
 "Examples:"
 msgstr "Tanımlayıcılar (örn., isbn, doi, lccn vs) de genişletilmiş söz dizimi kullanır. Önce, bir tanımlayıcının ``tür:değer`` biçimi olduğunu hatırlayın, ``isbn:123456789`` gibi. Genişletilmiş söz dizimi bağımsız olarak hangi tür ve değeri arayacağınızı belirtmenize izin verir. Sorgunun hem tür hem değer kısımları `eşitlik`, `içerir`, veya `düzenli ifade` eşleşmelerini kullanabilir. Örneğin:"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:419
+#: ../../home/kovid/work/calibre/manual/gui.rst:425
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "``tanımlayıcılar:true`` herhangi bir tanımlayıcısı olan kitapları bulur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:420
+#: ../../home/kovid/work/calibre/manual/gui.rst:426
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "``tanımlayıcılar:false`` herhangi bir tanımlayıcısı olmayan kitapları bulur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:421
+#: ../../home/kovid/work/calibre/manual/gui.rst:427
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "``tanımlayıcılar:123`` herhangi türü `123` değerini içeren kitapları arar."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:422
+#: ../../home/kovid/work/calibre/manual/gui.rst:428
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "``tanımlayıcılar:=123456789`` herhangi türü `123456789` değerine eşit kitapları arar."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:423
+#: ../../home/kovid/work/calibre/manual/gui.rst:429
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to isbn having any value"
 msgstr "``tanımlayıcılar:=isbn:`` ve ``tanımlayıcılar:isbn:true`` herhangi bir değer alan isbn'e eşit türde kitapları bulur"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:424
+#: ../../home/kovid/work/calibre/manual/gui.rst:430
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to isbn."
 msgstr "``tanımlayıcılar:=isbn:false`` isbn'e eşit türü olmayan tüm kitapları bulur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:425
+#: ../../home/kovid/work/calibre/manual/gui.rst:431
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to isbn having a"
 " value containing `123`."
 msgstr "``tanımlayıcılar:=isbn:123`` isbn'i `123` içeren değere eşit türde kitapları bulur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:426
+#: ../../home/kovid/work/calibre/manual/gui.rst:432
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to isbn "
 "having a value equal to `123456789`."
 msgstr "``tanımlayıcılar:=isbn:=123456789`` isbn'i `123456789`a eşit değere eşit türde tüm kitapları bulur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:427
+#: ../../home/kovid/work/calibre/manual/gui.rst:433
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "``tanımlayıcılar:i:1`` `1` değeri içeren `i` içeren türdeki tüm kitapları arar."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:436
+#: ../../home/kovid/work/calibre/manual/gui.rst:442
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:441
+#: ../../home/kovid/work/calibre/manual/gui.rst:447
 msgid "Saving searches"
 msgstr "Aramaları kaydetmek"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:443
+#: ../../home/kovid/work/calibre/manual/gui.rst:449
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1017,18 +1027,18 @@ msgid ""
 "save the search."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:445
+#: ../../home/kovid/work/calibre/manual/gui.rst:451
 msgid ""
 "Now you can access your saved search in the Tag browser under \"Searches\". "
 "A single click will allow you to reuse any arbitrarily complex search "
 "easily, without needing to re-create it."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:448
+#: ../../home/kovid/work/calibre/manual/gui.rst:454
 msgid "Virtual libraries"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:450
+#: ../../home/kovid/work/calibre/manual/gui.rst:456
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1037,11 +1047,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:459
+#: ../../home/kovid/work/calibre/manual/gui.rst:465
 msgid "Guessing metadata from file names"
 msgstr "Metadata'nın dosya isimlerinden tahmini"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:461
+#: ../../home/kovid/work/calibre/manual/gui.rst:467
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1049,7 +1059,7 @@ msgid ""
 " contents`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:465
+#: ../../home/kovid/work/calibre/manual/gui.rst:471
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`).  In the :guilabel:`Adding Books` section of"
@@ -1058,30 +1068,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:473
+#: ../../home/kovid/work/calibre/manual/gui.rst:479
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "bu, ilk ``-`` işaretine kadar tüm karakterlerin kitap başlığını, takip eden karakterlerin de kitap yazarını oluşturduğunu varsayar. Örneğin, dosya ismi::"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:479
+#: ../../home/kovid/work/calibre/manual/gui.rst:485
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "başlık: Foundation and Earth ve yazar: Isaac Asimov olarak yorumlanır"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:482
+#: ../../home/kovid/work/calibre/manual/gui.rst:488
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Dosya ismi bir tire içermezse, yukarıdaki düzenli ifade başarısız olur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:488
+#: ../../home/kovid/work/calibre/manual/gui.rst:494
 msgid "Book details"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:492
+#: ../../home/kovid/work/calibre/manual/gui.rst:498
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1091,51 +1101,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:499
+#: ../../home/kovid/work/calibre/manual/gui.rst:505
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "amazon, worldcat, etc. from where the metadata was downloaded."
 msgstr "Benzer şekilde, kitap için metadata indirirseniz, Kitap detayları paneli otomatik olarak kitabın amazon, worldcat, vs. gibi metadata'nın indirildiği yerlerden bağlantılarını gösterir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:503
+#: ../../home/kovid/work/calibre/manual/gui.rst:509
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:507
+#: ../../home/kovid/work/calibre/manual/gui.rst:513
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:511
+#: ../../home/kovid/work/calibre/manual/gui.rst:517
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:514
+#: ../../home/kovid/work/calibre/manual/gui.rst:520
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:517
+#: ../../home/kovid/work/calibre/manual/gui.rst:523
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:527
+#: ../../home/kovid/work/calibre/manual/gui.rst:533
 msgid "Tag browser"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:531
+#: ../../home/kovid/work/calibre/manual/gui.rst:537
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1145,7 +1155,7 @@ msgid ""
 " series."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:533
+#: ../../home/kovid/work/calibre/manual/gui.rst:539
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1163,7 +1173,7 @@ msgid ""
 "construct basic search expressions."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:535
+#: ../../home/kovid/work/calibre/manual/gui.rst:541
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1172,7 +1182,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:537
+#: ../../home/kovid/work/calibre/manual/gui.rst:543
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1191,38 +1201,38 @@ msgid ""
 "Favorites example above."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:543
+#: ../../home/kovid/work/calibre/manual/gui.rst:549
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:540
+#: ../../home/kovid/work/calibre/manual/gui.rst:546
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "\"kategorideki öğeyle eşleşen herşey\" tek yeşil bir artı işareti ile gösterilir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:541
+#: ../../home/kovid/work/calibre/manual/gui.rst:547
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"kategori veya alt kategorideki öğeyle eşleşen herşey\" iki yeşil artı işareti ile gösterilir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:542
+#: ../../home/kovid/work/calibre/manual/gui.rst:548
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "\"kategorideki öğeyle eşleşmeyen herşey\" tek kırmızı bir eksi işareti ile gösterilir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:543
+#: ../../home/kovid/work/calibre/manual/gui.rst:549
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "\"kategori veya alt kategorideki öğeyle eşleşmeyen herşey\" iki kırmızı eksi işareti ile gösterilir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:545
+#: ../../home/kovid/work/calibre/manual/gui.rst:551
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1239,14 +1249,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:547
+#: ../../home/kovid/work/calibre/manual/gui.rst:553
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:549
+#: ../../home/kovid/work/calibre/manual/gui.rst:555
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the shift "
@@ -1258,7 +1268,7 @@ msgid ""
 "tag History to the book's tags."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:551
+#: ../../home/kovid/work/calibre/manual/gui.rst:557
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1268,7 +1278,7 @@ msgid ""
 "authors and control how their names are sorted."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:553
+#: ../../home/kovid/work/calibre/manual/gui.rst:559
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1277,11 +1287,11 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:560
+#: ../../home/kovid/work/calibre/manual/gui.rst:566
 msgid "Cover grid"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:565
+#: ../../home/kovid/work/calibre/manual/gui.rst:571
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -1293,11 +1303,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:575
+#: ../../home/kovid/work/calibre/manual/gui.rst:581
 msgid "Cover browser"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:580
+#: ../../home/kovid/work/calibre/manual/gui.rst:586
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in the single row. This is activated via the "
@@ -1307,11 +1317,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:587
+#: ../../home/kovid/work/calibre/manual/gui.rst:593
 msgid "Quickview"
 msgstr "Hızlıgörünüm"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:589
+#: ../../home/kovid/work/calibre/manual/gui.rst:595
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -1326,53 +1336,53 @@ msgid ""
 "and all the books by the selected author on the right."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:596
+#: ../../home/kovid/work/calibre/manual/gui.rst:602
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Bazı örnek Hızlıgörünüm kullanımları: diğer kitaplarla ilgili hızlıca bilgi almak için:"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:592
+#: ../../home/kovid/work/calibre/manual/gui.rst:598
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:593
+#: ../../home/kovid/work/calibre/manual/gui.rst:599
 msgid "are in the same series as the current book"
 msgstr "mevcut kitapla aynı seride olan"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:594
+#: ../../home/kovid/work/calibre/manual/gui.rst:600
 msgid "have the same values in a custom column as the current book"
 msgstr "bir özel sütunda mevcut kitapla aynı değerlere sahip olan"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:595
+#: ../../home/kovid/work/calibre/manual/gui.rst:601
 msgid "are written by one of the same authors of the current book"
 msgstr "mevcut kitaptaki yazarların biriyle yazılmış olan"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:596
+#: ../../home/kovid/work/calibre/manual/gui.rst:602
 msgid "share values in a custom column"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:598
+#: ../../home/kovid/work/calibre/manual/gui.rst:604
 msgid "There are two choices for where the Quickview information appears:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:600
+#: ../../home/kovid/work/calibre/manual/gui.rst:606
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:601
+#: ../../home/kovid/work/calibre/manual/gui.rst:607
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:603
+#: ../../home/kovid/work/calibre/manual/gui.rst:609
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:605
+#: ../../home/kovid/work/calibre/manual/gui.rst:611
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -1385,21 +1395,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:607
+#: ../../home/kovid/work/calibre/manual/gui.rst:613
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:609
+#: ../../home/kovid/work/calibre/manual/gui.rst:615
 msgid ""
 "``Shift-`` or ``Ctrl-`` double-click on a book in the Quickview window to "
 "open the edit metadata dialog on that book in the calibre window. The edited"
 " book will be Quickview'ed when you close the edit metadata dialog."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:611
+#: ../../home/kovid/work/calibre/manual/gui.rst:617
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -1408,47 +1418,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Bur sütunun Hızlıgörünümde gösterilip gösterilemeyeceğini farenizi sütun başlığı üstüne getirip bu başlık için açılan araç ipucuna bakarak görebilirsiniz. Ayrıca sütun başlığına sağ tıklayarak \"Hızlıgörünüm\" seçeneğinin menüde gösterilip gösterilmediğine de bakabilirsiniz, bu durumda Hızlıgörünüm seçeneğini seçmek mevcut hücrede 'Q' tuşlamakla aynıdır."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:613
+#: ../../home/kovid/work/calibre/manual/gui.rst:619
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:615
+#: ../../home/kovid/work/calibre/manual/gui.rst:621
 msgid ""
 "Respect (or not) the current virtual library. If checked then Quickview "
 "shows only books in the current virtual library. Default: respect virtual "
 "libraries"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:616
+#: ../../home/kovid/work/calibre/manual/gui.rst:622
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:617
+#: ../../home/kovid/work/calibre/manual/gui.rst:623
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:618
+#: ../../home/kovid/work/calibre/manual/gui.rst:624
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:619
+#: ../../home/kovid/work/calibre/manual/gui.rst:625
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:628
+#: ../../home/kovid/work/calibre/manual/gui.rst:634
 msgid "Jobs"
 msgstr "Görevler"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:632
+#: ../../home/kovid/work/calibre/manual/gui.rst:638
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -1458,11 +1468,11 @@ msgid ""
 "have completed successfully."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:639
+#: ../../home/kovid/work/calibre/manual/gui.rst:645
 msgid "Keyboard shortcuts"
 msgstr "Klavye kısayolları"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:641
+#: ../../home/kovid/work/calibre/manual/gui.rst:647
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -1471,390 +1481,390 @@ msgid ""
 "customised by clicking the :guilabel:`Preferences` button in the viewer."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:645
+#: ../../home/kovid/work/calibre/manual/gui.rst:651
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:647
+#: ../../home/kovid/work/calibre/manual/gui.rst:653
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:651
+#: ../../home/kovid/work/calibre/manual/gui.rst:657
 msgid "Keyboard shortcut"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:652
+#: ../../home/kovid/work/calibre/manual/gui.rst:658
 msgid "Action"
 msgstr "Eylem"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:653
+#: ../../home/kovid/work/calibre/manual/gui.rst:659
 msgid ":kbd:`F2 (Enter in macOS)`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:654
+#: ../../home/kovid/work/calibre/manual/gui.rst:660
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Mevcut seçili alanın metadata'sını kitap listesinde düzenle."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:655
+#: ../../home/kovid/work/calibre/manual/gui.rst:661
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:656
+#: ../../home/kovid/work/calibre/manual/gui.rst:662
 msgid "Add Books"
 msgstr "Kitap Ekle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:657
+#: ../../home/kovid/work/calibre/manual/gui.rst:663
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:658
+#: ../../home/kovid/work/calibre/manual/gui.rst:664
 msgid "Add Formats to the selected books"
 msgstr "Seçili kitaplara Biçimler ekle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:659
+#: ../../home/kovid/work/calibre/manual/gui.rst:665
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:660
+#: ../../home/kovid/work/calibre/manual/gui.rst:666
 msgid "Convert selected Books"
 msgstr "Seçili Kitapları dönüştür"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:661
+#: ../../home/kovid/work/calibre/manual/gui.rst:667
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:663
+#: ../../home/kovid/work/calibre/manual/gui.rst:669
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:664
+#: ../../home/kovid/work/calibre/manual/gui.rst:670
 msgid "Remove selected Books"
 msgstr "Seçili kitapları sil"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:665
+#: ../../home/kovid/work/calibre/manual/gui.rst:671
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:666
+#: ../../home/kovid/work/calibre/manual/gui.rst:672
 msgid "Edit metadata of selected books"
 msgstr "Seçili kitapların metadata'sını düzenle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:667
+#: ../../home/kovid/work/calibre/manual/gui.rst:673
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:668
+#: ../../home/kovid/work/calibre/manual/gui.rst:674
 msgid "Get books"
 msgstr "Kitap al"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:669
+#: ../../home/kovid/work/calibre/manual/gui.rst:675
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:670
+#: ../../home/kovid/work/calibre/manual/gui.rst:676
 msgid "Show Book details"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:671
+#: ../../home/kovid/work/calibre/manual/gui.rst:677
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:672
+#: ../../home/kovid/work/calibre/manual/gui.rst:678
 msgid "Edit Table of Contents"
 msgstr "İçindekileri Düzenle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:673
+#: ../../home/kovid/work/calibre/manual/gui.rst:679
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:674
+#: ../../home/kovid/work/calibre/manual/gui.rst:680
 msgid "Merge selected records"
 msgstr "Seçili kayıtları birleştir"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:675
+#: ../../home/kovid/work/calibre/manual/gui.rst:681
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:676
+#: ../../home/kovid/work/calibre/manual/gui.rst:682
 msgid "Merge selected records, keeping originals"
 msgstr "Seçili kayıtları birleştir, asıllarını koru"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:677
+#: ../../home/kovid/work/calibre/manual/gui.rst:683
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:678
+#: ../../home/kovid/work/calibre/manual/gui.rst:684
 msgid "Open containing folder"
 msgstr "İçeren dizini aç"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:679
+#: ../../home/kovid/work/calibre/manual/gui.rst:685
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:680
+#: ../../home/kovid/work/calibre/manual/gui.rst:686
 msgid "Polish books"
 msgstr "Kitapları cilala"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:681
+#: ../../home/kovid/work/calibre/manual/gui.rst:687
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:683
+#: ../../home/kovid/work/calibre/manual/gui.rst:689
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:684
+#: ../../home/kovid/work/calibre/manual/gui.rst:690
 msgid "Edit book"
 msgstr "Kitabı düzenle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:685
+#: ../../home/kovid/work/calibre/manual/gui.rst:691
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:687
+#: ../../home/kovid/work/calibre/manual/gui.rst:693
 msgid ":kbd:`Alt+V/Cmd+V in macOS`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:688
+#: ../../home/kovid/work/calibre/manual/gui.rst:694
 msgid "View specific format"
 msgstr "Belli bir formatı görüntüle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:689
+#: ../../home/kovid/work/calibre/manual/gui.rst:695
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:690
+#: ../../home/kovid/work/calibre/manual/gui.rst:696
 msgid "Toggle jobs list"
 msgstr "Görev listesini tetikle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:691
+#: ../../home/kovid/work/calibre/manual/gui.rst:697
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:692
+#: ../../home/kovid/work/calibre/manual/gui.rst:698
 msgid "Toggle Cover browser"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:693
+#: ../../home/kovid/work/calibre/manual/gui.rst:699
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:694
+#: ../../home/kovid/work/calibre/manual/gui.rst:700
 msgid "Toggle Book details panel"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:695
+#: ../../home/kovid/work/calibre/manual/gui.rst:701
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:696
+#: ../../home/kovid/work/calibre/manual/gui.rst:702
 msgid "Toggle Tag browser"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:697
+#: ../../home/kovid/work/calibre/manual/gui.rst:703
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:698
+#: ../../home/kovid/work/calibre/manual/gui.rst:704
 msgid "Toggle Cover grid"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:699
+#: ../../home/kovid/work/calibre/manual/gui.rst:705
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:700
+#: ../../home/kovid/work/calibre/manual/gui.rst:706
 msgid "Show books by the same author as the current book"
 msgstr "Mevcut kitapla aynı yazara sahip kitapları göster"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:701
+#: ../../home/kovid/work/calibre/manual/gui.rst:707
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:702
+#: ../../home/kovid/work/calibre/manual/gui.rst:708
 msgid "Show books with the same tags as current book"
 msgstr "Mevcut kitapla aynı etikete sahip kitapları göster"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:703
+#: ../../home/kovid/work/calibre/manual/gui.rst:709
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:704
+#: ../../home/kovid/work/calibre/manual/gui.rst:710
 msgid "Show books by the same publisher as current book"
 msgstr "Mevcut kitapla aynı yayımcıya sahip kitapları göster"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:705
+#: ../../home/kovid/work/calibre/manual/gui.rst:711
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:706
+#: ../../home/kovid/work/calibre/manual/gui.rst:712
 msgid "Show books in the same series as current book"
 msgstr "Mevcut kitapla aynı serideki kitapları göster"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:707
+#: ../../home/kovid/work/calibre/manual/gui.rst:713
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:708
+#: ../../home/kovid/work/calibre/manual/gui.rst:714
 msgid "Focus the Search bar"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:709
+#: ../../home/kovid/work/calibre/manual/gui.rst:715
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr "Arama çubuğuna odaklan"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:710
+#: ../../home/kovid/work/calibre/manual/gui.rst:716
 msgid "Open the advanced search dialog"
 msgstr "Gelişmiş arama penceresini aç"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:711
+#: ../../home/kovid/work/calibre/manual/gui.rst:717
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:712
+#: ../../home/kovid/work/calibre/manual/gui.rst:718
 msgid "Clear the current search"
 msgstr "Mevcut aramayı temizle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:713
+#: ../../home/kovid/work/calibre/manual/gui.rst:719
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:714
+#: ../../home/kovid/work/calibre/manual/gui.rst:720
 msgid "Focus the book list"
 msgstr "Kitap listesine odaklan"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:715
+#: ../../home/kovid/work/calibre/manual/gui.rst:721
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:716
+#: ../../home/kovid/work/calibre/manual/gui.rst:722
 msgid "Clear the virtual library"
 msgstr "Sanal kitaplığı temizle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:717
+#: ../../home/kovid/work/calibre/manual/gui.rst:723
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:718
+#: ../../home/kovid/work/calibre/manual/gui.rst:724
 msgid "Clear the additional restriction"
 msgstr "Ek kısıtlamaları temizle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:719
+#: ../../home/kovid/work/calibre/manual/gui.rst:725
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:720
+#: ../../home/kovid/work/calibre/manual/gui.rst:726
 msgid "Create a temporary virtual library based on the current search"
 msgstr "Mevcut aramayı temel alan bir geçici sanal kitaplık oluştur"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:721
+#: ../../home/kovid/work/calibre/manual/gui.rst:727
 msgid ":kbd:`Ctrl+Right`"
 msgstr ":kbd:`Ctrl+Right`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:722
+#: ../../home/kovid/work/calibre/manual/gui.rst:728
 msgid "Select the next virtual library tab"
 msgstr "Sonraki sanal kitaplık sekmesini seçin"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:723
+#: ../../home/kovid/work/calibre/manual/gui.rst:729
 msgid ":kbd:`Ctrl+Left`"
 msgstr ":kbd:`Ctrl+Left`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:724
+#: ../../home/kovid/work/calibre/manual/gui.rst:730
 msgid "Select the previous virtual library tab"
 msgstr "Önceki sanal kitaplık sekmesini seçin"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:725
+#: ../../home/kovid/work/calibre/manual/gui.rst:731
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N veya F3`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:726
+#: ../../home/kovid/work/calibre/manual/gui.rst:732
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Güncel aramayla eşleşen sıradaki kitabı bul (sadece arama tercihlerinde arama vurgulaması açıksa çalışır)"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:727
+#: ../../home/kovid/work/calibre/manual/gui.rst:733
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N veya Shift+F3`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:728
+#: ../../home/kovid/work/calibre/manual/gui.rst:734
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Güncel aramayla eşleşen önceki kitabı bul (sadece arama tercihlerinde arama vurgulaması açıksa çalışır)"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:729
+#: ../../home/kovid/work/calibre/manual/gui.rst:735
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:730
+#: ../../home/kovid/work/calibre/manual/gui.rst:736
 msgid "Download metadata and covers"
 msgstr "Metaveriyi ve kapakları indir."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:731
+#: ../../home/kovid/work/calibre/manual/gui.rst:737
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:732
+#: ../../home/kovid/work/calibre/manual/gui.rst:738
 msgid "Restart calibre"
 msgstr "Calibre'yi yeniden başlatın"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:733
+#: ../../home/kovid/work/calibre/manual/gui.rst:739
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:734
+#: ../../home/kovid/work/calibre/manual/gui.rst:740
 msgid "Restart calibre in debug mode"
 msgstr "Calibre'yi hata ayıklama kipinde yeniden başlat"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:735
+#: ../../home/kovid/work/calibre/manual/gui.rst:741
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:736
+#: ../../home/kovid/work/calibre/manual/gui.rst:742
 msgid "Add empty books to calibre"
 msgstr "Calibre'ye boş kitaplar ekle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:737
+#: ../../home/kovid/work/calibre/manual/gui.rst:743
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:738
+#: ../../home/kovid/work/calibre/manual/gui.rst:744
 msgid "Toggle mark/unmarked status on selected books"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:739
+#: ../../home/kovid/work/calibre/manual/gui.rst:745
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:740
+#: ../../home/kovid/work/calibre/manual/gui.rst:746
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "İlişkili seriler/etiketler/vs. içindeki kitapları görüntülemek için Hızlı Görünüm penceresini aç"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:741
+#: ../../home/kovid/work/calibre/manual/gui.rst:747
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:742
+#: ../../home/kovid/work/calibre/manual/gui.rst:748
 msgid "Focus the opened Quick View panel"
 msgstr "Açılan Hızlı Görünüm paneline odaklan."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:743
+#: ../../home/kovid/work/calibre/manual/gui.rst:749
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:744
+#: ../../home/kovid/work/calibre/manual/gui.rst:750
 msgid "Perform a search in the Quick View panel"
 msgstr "Hızlı Görünüm panelinde bir arama yapın"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:745
+#: ../../home/kovid/work/calibre/manual/gui.rst:751
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:746
+#: ../../home/kovid/work/calibre/manual/gui.rst:752
 msgid "Quit calibre"
 msgstr "Calibre'den Çık"

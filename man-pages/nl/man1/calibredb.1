@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "augustus 04, 2017" "3.6.0" "calibre"
+.TH "CALIBREDB" "1" "augustus 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Pad naar calibrebibliotheek. Standaard wordt het pad gebruikt dat is opgeslagen 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Paswoord om te connecteren met de Content server.\  Om de\ waarde van het paswoord vanuit de standaard invoer\ te lezen, gebruik de speciale waarde: <stdin>. Om het paswoord vanuit een bestand te lezen, gebruik: <f:/path/to/file>.)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Sorteer resultaten in oplopende volgorde
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+De velden die zichtbaar zijn bij het opzoeken van boeken in de database. Dit is een lijst met komma\-gescheiden waarden. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standaard: title,authors. Het speciale veld ‘all’ kan worden gebruikt om alle velden te selecteren. Heeft alleen een resultaat in txt\-uitvoerformaat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -294,12 +294,12 @@ Opties voor het instellen van boeken uit mappen. Standaard worden alleen bestand
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Een zoekpatroon ( vb: *.xml ), bestanden die voldoen aan dit patroon, worden toegevoegd bij het scannen van de bestanden, ook al zijn ze niet bekend met een bekende bestandstype. Kan voor meerdere patronen opgegeven worden
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Een zoekpatroon (glob of wildcards), bestanden die voldoen aan de voorwaarden van het patroon, worden genegeerd bij het scannen van bestanden. Kan meerdere keren worden opgegeven voor meerdere patronen. Bijvoorbeeld: *.pdf zal alle pdf\-bestanden negeren
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -317,13 +317,13 @@ Mappen recursief verwerken
 .sp
 .nf
 .ft C
-calibredb remove ids
+calibredb verwijder ID\(aqs
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Verwijder de boek indentificatioren van de database. ID’s is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -343,7 +343,7 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Voeg het e\-boek toe aan de ebook_file, in de beschikbare formaten voor het logische boek, dat door het id geïdentificeerd is. U kunt het id verkrijgen met behulp van het zoek commando. Als het formaat al bestaat, wordt het vervangen, tenzij de optie “niet vervangen” is opgegeven.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -500,15 +500,15 @@ Paden naar kleine letters omzetten.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalog /path/naar/bestemming.(csv|epub|mobi|xml...) [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Exporteer een\ catalogus in een\ door\ path/naar/bestemming gespecifieerde\ extentie.
+Opties bepalen hoe de invoer in de gegenereerde catalogusuitvoer wordt weergegeven.
+Merk op dat verschillende catalogusformaten\ andere\ opties ondersteunen.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -634,15 +634,15 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Beheer de opgeslagen zoekopdrachten in\ deze database.
+Als u een zoekopdracht met dezelfde naam wil opslaan, dan zal de
+oude\ vervangen worden.
 .sp
-Syntax for adding:
+Syntax om toe te voegen:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Syntax om te verwijderen:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -685,7 +685,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Lijst van beschikbare\ aangepaste kolommen. Geeft kolommen en ID’s weer.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -705,8 +705,7 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Verwijder de door het label geïdentificeerde aangepaste kolom. Je kan de beschikbare kolommen bekijken door het\ custom_columns commando te gebruiken.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -726,10 +725,9 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Stel de waarde van de aangepaste kolom in voor het boek,\ die\ geïdentificeerd is op ID.
+U kunt een lijst van ids krijgen met behulp van het zoek commando.
+U kunt een lijst met aangepaste kolomnamen krijgen met behulp van\ het custom_columns commando.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
@@ -817,7 +815,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+Kommagescheiden lijst van categorie\-opzoeknamen. Standaard: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -827,7 +825,7 @@ Uitvoer naar CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Het type CSV bestand te maken.  Keuzes excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP

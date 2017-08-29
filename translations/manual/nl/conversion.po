@@ -6,6 +6,7 @@
 # Anne Mügge <info@numijneigenwebsite.nl>, 2016
 # erkfuizfeuadjfjzefzfuzeff gbhygsregfges <erkfuizfeuadjfjzefzfuzeff@gmail.com>, 2017
 # Mar, 2015
+# Mario Moens <marimo.it4u@gmail.com>, 2017
 # Mar, 2015
 # Rodolfo_Jadon, 2014-2015
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-14 08:46+0530\n"
-"PO-Revision-Date: 2017-07-14 08:31+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-08-24 00:01+0530\n"
+"PO-Revision-Date: 2017-08-22 14:04+0000\n"
+"Last-Translator: Mario Moens <marimo.it4u@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:4
 msgid "E-book conversion"
-msgstr ""
+msgstr "E-book convertie"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:6
 msgid ""
@@ -41,7 +42,7 @@ msgid ""
 "EPUB or AZW3 using calibre and then using the :guilabel:`Edit book` feature "
 "to get them into perfect shape. You can then use the edited e-book as input "
 "for conversion into other formats in calibre."
-msgstr ""
+msgstr "Calibre heeft een conversiesysteem dat is ontworpen dat zeer gebruiksvriendelijk is. Normaal gesproken voeg je gewoon een boek toe aan Calibre, klik op converteren en Calibre zal zeer hard proberen om een output te genereren die zo dicht mogelijk aanleunt bij de invoer. Calibre accepteert echter een zeer groot aantal invoerformaten, die niet allemaal zo geschikt zijn als andere voor conversie naar e-boeken. In het geval van dergelijke invoerformaten, of als u alleen meer controle over het conversiesysteem wilt hebben, heeft calibre veel opties om het conversieproces fijner af te stemmen. Houd er rekening mee dat het conversiesysteem van Calibre geen vervanging is voor een professionele e-book editor. Om e-books te bewerken, adviseer ik eerst om eerst te converteren naar EPUB of AZW3 met behulp van Calibre,  en gebruik dan de: guilabel: `Edit book`-functie om ze in perfecte vorm te krijgen. U kunt dan het bewerkte e-boek gebruiken als input voor conversie in andere formaten in Calibre."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:18
 msgid ""
@@ -71,7 +72,7 @@ msgid ""
 " format. Some formats convert much better than others. A list of the best "
 "source formats for conversion is available :ref:`here <best-source-"
 "formats>`."
-msgstr ""
+msgstr "Het invoerformaat wordt eerst geconverteerd naar XHTML door de juiste * Invoer Plugin *. Deze HTML wordt dan * getransformeerd *. In de laatste stap wordt de verwerkte XHTML omgezet naar het opgegeven uitvoerformaat door de juiste * uitvoer plugin *. De resultaten van de conversie kunnen sterk variëren, gebaseerd op het invoerformaat. Sommige formaten converteren veel beter dan anderen. Een lijst met de beste bronformaten voor conversie is beschikbaar: ref: `hier 1`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:56
 msgid ""
@@ -85,7 +86,7 @@ msgid ""
 "XHTML internally, the various transforms will be applied to the XHTML and "
 "then the *output plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
-msgstr ""
+msgstr "Het meeste werk gebeurt bij de aanpassingen die op de XHTML-uitvoer worden uitgevoerd. Er zijn verschillende transformaties, bijvoorbeeld om boekmetadata als een beginpagina toe te voegen aan het boek, hoofdstukken op te sporen en automatisch een inhoudsopgave te maken, om lettergrootte aan te passen, enzovoort. Het is belangrijk te begrijpen dat alle transformaties worden uitgevoerd op de XHTML-uitvoer via de * Input Plugin *, niet op het invoerbestand zelf. Dus, als u bijvoorbeeld Calibre vraagt om een RTF-bestand te converteren naar EPUB, wordt het eerst omgezet naar XHTML, de verschillende transformaties worden toegepast op de XHTML en dan zal de * output plugin * het EPUB-bestand maken, en automatisch alle metadata, inhoudsopgave, enzovoort genereren."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:65
 msgid ""
@@ -146,7 +147,7 @@ msgstr "verwerkt"
 msgid ""
 "Just before the e-book is passed to the output plugin. Use to debug the "
 "output plugin."
-msgstr ""
+msgstr "Net voor het e-boek wordt doorgegeven aan de output plugin. Gebruik om de output plugin te debuggen"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:81
 msgid ""
@@ -156,14 +157,14 @@ msgid ""
 "subsequent conversions. To do this use the :guilabel:`Edit meta information`"
 " dialog to add the ZIP file as a format for the book and then, in the top "
 "left corner of the conversion dialog, select ZIP as the input format."
-msgstr ""
+msgstr "Als je de inhoud van het document nog wil aanpassen alvorens te converteren in Calibre, is het beter om dit in de  :file:`input` submap te doen, dan het om te zetten naar een ZIP bestand, en dit ZIP bestand gebruiken als het invoerformaat voor de volgende conversies. Om dit te doen gebruik je best de :guilabel:`Edit meta information` dialoogvenster om het ZIP bestand toe te voegen als het formaat voor het boek en dan, en selecteer linksboven in het dialoogvenster ZIP als invoerformaat."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:87
 msgid ""
 "This document will deal mainly with the various transforms that operate on "
 "the intermediate XHTML and how to control them. At the end are some tips "
 "specific to each input/output format."
-msgstr ""
+msgstr "Dit document behandeld hoofdzakelijk de verschillende transformaties op de tussenliggende XHTML hoe ze te controleren. Op het einde zijn er tips beschikbaar specifiek voor elk type invoer/uitvoer formaat."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:91
 msgid "Look & feel"
@@ -173,7 +174,7 @@ msgstr "Uitstraling & gevoel"
 msgid ""
 "This group of options controls various aspects of the look and feel of the "
 "converted e-book."
-msgstr ""
+msgstr "Deze groep van opties controleert de verschillende aspecten van het uitzicht van het geconverteerde e-book."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:102
 msgid "Font size rescaling"
@@ -205,7 +206,7 @@ msgid ""
 "Normally, calibre will automatically choose a base font size appropriate to "
 "the output profile you have chosen (see :ref:`page-setup`). However, you can"
 " override this here in case the default is not suitable for you."
-msgstr ""
+msgstr "Normaal gezien zal Calibre een basis fontgrootte kiezen voor het uitvoer profiel dat je gekozen hebt (zie :ref:`page-setup`). Je kan dit echter overschrijven indien de opgegeven standaard niet geschikt is voor u."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:121
 msgid ""
@@ -344,11 +345,11 @@ msgid ""
 "e-book to have *justified* text (i.e., a smooth right margin). This option "
 "will turn off this behavior, in which case whatever justification is "
 "specified in the input document will be used instead."
-msgstr ""
+msgstr "Normaal gesproken, als het uitvoerformaat het ondersteunt, zal Calibre zichzelf dwingen om in het uitgevoerde e-boek * gerechtvaardigde * tekst (dwz een soepele rechtermarge) te hebben. Deze optie schakelt dit gedrag uit, waardoor elke gespecifieerde aanpassing dat werd opgegeven in het invoerdocument, wordt gebruikt in plaats daarvan."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:222
 msgid ":guilabel:`Linearize tables`"
-msgstr ""
+msgstr ":guilabel:`Linearizering van tabellen`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:218
 msgid ""
@@ -358,7 +359,7 @@ msgid ""
 "tables and present it in a linear fashion. Note that this option linearizes "
 "*all* tables, so only use it if you are sure the input document does not use"
 " tables for legitimate purposes, like presenting tabular information."
-msgstr ""
+msgstr "Sommige slecht ontworpen documenten gebruiken tabellen om de lay-out van de tekst op de pagina te beïnvloeden.Bij deze conversies hebben deze documenten vaak tekst die van de pagina afloopt en andere objecten. Deze optie zal de inhoud uit de tabellen halen en ze op een lineaire manier presenteren op de pagina.Houd er rekening mee dat deze optie * alle * tabellen lineariseert, dus gebruik het alleen als u er zeker van bent dat het invoerdocument geen tabellen gebruikt voor legitieme doeleinden, zoals het presenteren van tabulaire informatie."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:231
 msgid ":guilabel:`Transliterate unicode characters`"
@@ -378,7 +379,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:240
 msgid ":guilabel:`Input character encoding`"
-msgstr ""
+msgstr ":guilabel:`tekencodering invoeren`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:234
 msgid ""
@@ -394,7 +395,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:245
 msgid "Page setup"
-msgstr ""
+msgstr "Pagina opmaak"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:247
 msgid ""
@@ -435,7 +436,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:262
 msgid "Heuristic processing"
-msgstr ""
+msgstr "Heuristische verwerking"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:264
 msgid ""

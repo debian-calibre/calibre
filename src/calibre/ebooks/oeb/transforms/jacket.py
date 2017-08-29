@@ -15,7 +15,7 @@ from lxml import etree
 from calibre import guess_type, strftime
 from calibre.constants import iswindows
 from calibre.ebooks.BeautifulSoup import BeautifulSoup
-from calibre.ebooks.oeb.base import XPath, XHTML_NS, XHTML, xml2text, urldefrag
+from calibre.ebooks.oeb.base import XPath, XHTML_NS, XHTML, xml2text, urldefrag, urlnormalize
 from calibre.library.comments import comments_to_html
 from calibre.utils.date import is_date_undefined, as_local_time
 from calibre.utils.icu import sort_key
@@ -43,7 +43,10 @@ class Base(object):
             if removed >= limit:
                 break
             href  = item.abshref(img.get('src'))
-            image = self.oeb.manifest.hrefs.get(href, None)
+            image = self.oeb.manifest.hrefs.get(href)
+            if image is None:
+                href = urlnormalize(href)
+                image = self.oeb.manifest.hrefs.get(href)
             if image is not None:
                 self.oeb.manifest.remove(image)
                 self.oeb.guide.remove_by_href(href)
@@ -71,6 +74,8 @@ class RemoveFirstImage(Base):
                         self.oeb.manifest.remove(item)
                         deleted_item = item
                 break
+        else:
+            self.log.warn('Could not find first image to remove')
         if deleted_item is not None:
             for item in list(self.oeb.toc):
                 href = urldefrag(item.href)[0]

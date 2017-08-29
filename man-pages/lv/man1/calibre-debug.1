@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,25 +41,21 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Dažādas komandrindas saskarnes noderīgas calibre atkļūdošanai. Bez opcijas
+šī komanda palaiž iegulto Python tulku. Indeksēšanai jūs varat arī palaist galveno
+calibre GUI, skatītāju un redaktoru atkļūdošanas režīmā.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+Tas ietver arī saskarnes ar dažādām calibre iespējām, kur nav
+savu komandrindas rīku, piemēram, fontu apakškopa, e\-grāmatu diferencēšanas rīku u.t.t
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
-.UNINDENT
-.UNINDENT
+Varat arī izmantot % prog, lai palaistu atsevišķus skriptus. Lai to izdarītu, izmantojiet to šādi:
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+\ \ \ \ \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
-.SH [OPTIONS]
+Viss pēc tam \- tiek nodots skriptam.
+.sp
+Katru reizi, kad jūs nododat argumentus \fBcalibre\-debug\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+.SH [OPCIJAS]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
@@ -68,7 +64,7 @@ Pievienot vienkāršu spraudni (tas ir spraudnis, kas sastāv tikai no .py datne
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Run Python code.
+Palaist Python kodu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -88,22 +84,22 @@ Palaist calibre salīdzināšanas rīku. Piemēram: calibre\-debug \fI\%\-\-diff
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+Palaist calibre rīku \fB"\fPRediģēt grāmatu\fB"\fP atkļūdošanas režīmā.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exec\-file, \-e
-Run the Python code in file.
+Palaist Python kodu failā.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Atvērt grāmatu norādītajā direktorijā. Izmantot: \-x file.epub output_dir Eksportēt grāmatu un metadatu kolekciju kā HTML failu, ko jūs varat rediģēt, izmantojot standarta HTML rediģēšanas rīkus. Strādā ar EPUB, AZW3, HTMLZ un DOCX failiem.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins)
+Eksportēt visus calibre datus (grāmatas/iestatījumus/spraudņus)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,12 +119,12 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Izlabot iepriekš atvērto grāmatu. Izmanto: \-i output_dir file.epub Importēt grāmatu no output_dir failiem, kas, iespējams, ir izveidoti, izmantojot iepriekšējo izsaukumu \fI\%\-\-explode\-book\fP\&. Noteikti norādiet to pašu faila tipu, kāds tika izmantots atverot.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Import previously exported calibre data
+Impotēt iepriekš eksportētos calibre datus
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +169,7 @@ parādīt programmas versijas numuru un iziet
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode
+Palaist e\-grāmatu lasītāju atkļūdošanas režīmā
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,23 +41,23 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Nosūtīt pastu, izmantojot SMTP protokolu. % prog ir divi režīmi. Programmā
+norādiet uz režīmu un teksta sastādīšanu un tie tiek izmantoti, lai izveidotu un
+nosūtītu e\-pasta ziņojumu. Filtrēšanas režīms \fBcalibre\-smtp\fP nolasa pilnu e\-pasta
+ziņu no STDIN un nosūta to.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+teksts ir e\-pasta ziņojuma pamattekstā.
+Ja teksts nav norādīts, no STDIN tiek lasīta pilna e\-pasta ziņa.
+No ir sūtītāja e\-pasta adrese un kam ir saņēmēja e\-pasta adrese.
+Kad tiek lasīts pilnīgs e\-pasts no STDIN, no un uz
+tiek izmantots vienīgi SMTP protokols, ziņu galvenes netiek modificētas.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
-.SH [OPTIONS]
+Katru reizi, kad jūs nododat argumentus \fBcalibre\-smtp\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+.SH [OPCIJAS]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Atdalīšana un ziņojuma piegāde fonā. Ja izmantojat šo opciju, jums arī jāizmanto \fB\-\-outbox,\fP lai apstrādātu piegādes kļūmes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,12 +67,12 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Vietējā hostinga saimniekdatora nosaukums. Izmanto, pieslēdzoties SMTP serverim.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Ceļš uz pasta mapi, kur glabāt nesaņemtos e\-pasta ziņojumus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -104,11 +104,11 @@ E\-pasta temats
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless –relay is specified.
+Opcijas nosūtīt pastu lietojot SMTP pārraides serveri. calibre mēģinās nosūtīt e\-pastu tieši, ja nav norādīts –relay.
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Šifrēšanas metode, ko izmantot, veidojot savienojumu ar vietni. Izvēle ir TLS, SSL, un NONE. Noklusējums ir TLS. Brīdinājums: NONE izvēle ir ļoti nedroša
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,7 +118,7 @@ Parole retranslatoram
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Savienojums ar pārraides servera portu. Noklusējums ir 465, ja šifrēšanas metode ir SSL un 25, ja citādi.
 .UNINDENT
 .INDENT 0.0
 .TP

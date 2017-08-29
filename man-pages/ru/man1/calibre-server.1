@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "августа 04, 2017" "3.6.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "августа 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -70,12 +70,12 @@ calibre\-server [options] [path to library folder...]
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Количество неудачных попыток входа в систему.       Количество неудач входа, после которых IP\-адрес запрещается
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Запретить IP\-адреса с повторными ошибками входа.    Временно запрещает доступ для IP\-адресов с повторными ошибками входа в течение указанного количества минут. Полезно для предотвращения попыток подбора паролей. Если установлено в ноль, запрет не выполняется.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -85,7 +85,7 @@ Ban IP addresses that have repeated login failures.         Temporarily bans acc
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Путь к файлу JSON, содержащему шаблон для режима списка пользовательских книг.Самый простой способ создать такой файл шаблона \- перейти в Настройки\-> Общий доступ к шаблону списка\-> Создать список в calibre, создать шаблон и экспортировать его.
 .UNINDENT
 .INDENT 0.0
 .TP

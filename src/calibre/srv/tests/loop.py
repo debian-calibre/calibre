@@ -84,7 +84,7 @@ class LoopTest(BaseTest):
             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
         # Test shutdown with hung worker
         block = Event()
-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.01, timeout=0.01) as server:
+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.01) as server:
             pool = server.loop.pool
             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
             conn = server.connect()
@@ -283,6 +283,7 @@ class LoopTest(BaseTest):
         status, result, tb, was_aborted = jm.job_status(job_id)
         self.assertEqual(status, 'finished')
         self.assertFalse(was_aborted)
-        self.assertTrue(tb), self.assertIn('a testing error', tb)
+        self.assertTrue(tb)
+        self.assertIn('a testing error', tb)
         jm.start_job('simple test', 'calibre.srv.jobs', 'sleep_test', args=(1.0,))
         jm.shutdown(), jm.wait_for_shutdown(monotonic() + 1)

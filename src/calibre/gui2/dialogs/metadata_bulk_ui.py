@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -39,7 +39,7 @@ class Ui_MetadataBulkDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 944, 600))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 930, 603))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -449,7 +449,7 @@ class Ui_MetadataBulkDialog(object):
         self.scrollArea11.setWidgetResizable(True)
         self.scrollArea11.setObjectName("scrollArea11")
         self.gridLayoutWidget_2 = QtWidgets.QWidget()
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 922, 268))
+        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 908, 253))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
         self.testgrid = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
         self.testgrid.setContentsMargins(0, 0, 0, 0)
@@ -501,6 +501,7 @@ class Ui_MetadataBulkDialog(object):
         self.xlabel_412.setBuddy(self.results_count)
         self.xlabel_4121.setBuddy(self.starting_from)
         self.xlabel_41.setBuddy(self.multiple_separator)
+        self.label_31.setBuddy(self.test_text)
 
         self.retranslateUi(MetadataBulkDialog)
         self.central_widget.setCurrentIndex(0)
@@ -599,7 +600,7 @@ class Ui_MetadataBulkDialog(object):
         self.label.setText(_("&Remove tags:"))
         self.label_4.setText(_("Add ta&gs: "))
         self.label_8.setText(_("Author s&ort: "))
-        self.label_7.setText(_("&Series:"))
+        self.label_7.setText(_("Ser&ies:"))
         self.label_11.setText(_("&Languages:"))
         self.clear_languages.setText(_("Remove &all"))
         self.label_3.setText(_("&Publisher: "))
@@ -650,7 +651,7 @@ class Ui_MetadataBulkDialog(object):
         self.comments_button.setText(_("Set the co&mments for all selected books"))
         self.central_widget.setTabText(self.central_widget.indexOf(self.tabWidgetPage1), _("&Basic metadata"))
         self.central_widget.setTabText(self.central_widget.indexOf(self.tab), _("&Custom metadata"))
-        self.xlabel_22.setText(_("Load searc&h/replace:"))
+        self.xlabel_22.setText(_("&Load search/replace:"))
         self.query_field.setToolTip(_("Select saved search/replace to load."))
         self.save_button.setToolTip(_("Save current search/replace"))
         self.save_button.setText(_("Sa&ve"))
@@ -660,9 +661,9 @@ class Ui_MetadataBulkDialog(object):
         self.search_field.setToolTip(_("The name of the field that you want to search"))
         self.xlabel_24.setText(_("Search &mode:"))
         self.search_mode.setToolTip(_("Choose whether to use basic text matching or advanced regular expression matching"))
-        self.s_r_src_ident_label.setText(_("Identifier type:"))
+        self.s_r_src_ident_label.setText(_("&Identifier type:"))
         self.s_r_src_ident.setToolTip(_("Choose which identifier type to operate upon"))
-        self.template_label.setText(_("Te&mplate:"))
+        self.template_label.setText(_("&Template:"))
         self.s_r_template.setToolTip(_("Enter a template to be used as the source for the search/replace"))
         self.xlabel_2.setText(_("&Search for:"))
         self.search_for.setToolTip(_("Enter what you are looking for, either plain text or a regular expression, depending on the mode"))
