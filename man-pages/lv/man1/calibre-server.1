@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -41,22 +41,22 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Startēt calibre Satura serveri. calibre Satura serveris pakļauj jūsu
+calibre bibliotēkas internetam. Jūs varat norādīt ceļu uz bibliotēku
+Mapes kā arguments \fBcalibre\-server\fP\&. Ja jūs neesat norādījis nevienu ceļu,
+tiks izmantotas visas bibliotēkas, par kurām zina galvenā calibre programma.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
-.SH [OPTIONS]
+Katru reizi, kad jūs nododat argumentus \fBcalibre\-server\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+.SH [OPCIJAS]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Ceļš uz piekļuves žurnāla failu. Šajā žurnālā ir informācija par klientiem, kuri pieslēdzas serverim un veic pieprasījumus. Pēc noklusējuma neviena pieejas reģistrēšana netiek veikta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Izvēlieties, kāda veida autentifikāciju izmantot.   Iestatiet HTTP autentifikācijas režīmu, ko izmanto serveris. Iestatīt uz \fB"\fPbasic\fB"\fP, ja jūs ievietojat šo serveri aiz SSL starpniekservera. Pretējā gadījumā atstājiet to kā \fB"\fPauto\fB"\fP, kas izmantos \fB"\fPbasic\fB"\fP, ja SSL konfigurēts citādi, tas izmantos \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,67 +66,67 @@ Automātiski pārstartēt serveri, ja mainās izejas kods. Noderīgs izstrādes 
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Pieteikšanās kļūdu skaits aizliegumam.      Pieteikšanās kļūdu skaits, pēc kura IP adrese tiek aizliegta
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Aizliegt IP adreses, kurās ir atkārtotas pieteikšanās kļūmes.       Uz laiku tiek aizliegta piekļuve IP adresēm, kurām atkārtota pieteikšanās kļūda norādītajā minūtes laikā. Noderīgi, lai novērstu mēģinājumus uzzināt paroles. Ja iestatīts uz nulli, aizliegšana netiek veikta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Minimālais izmērs, atbildēm izmantojot datu kompresiju (baitos).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Ceļš uz JSON failu, kurā ir šablons pasūtīto grāmatu saraksta režīmā. Vieglākais veids, kā izveidot šādu šablona failu, ir nokļūt sadaļā Uzstādījumi\-> Koplietošana tīklā\-> Grāmatu saraksta calibre šablons, izveidot šablonu un eksportēt to.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Palaist procesu fonā kā daemon (tikai Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Ierobežot norādītos lietotāja definētos laukus.     Ar komatu atdalīts saraksts ar lietotāja definētiem metadatu laukiem, kurus Satura serveris parādīs opciju/opds un/mobile skatos. Ja norādāt šo opciju, visi lauki, kas nav šajā sarakstā, netiks rādīti. Piemēram: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Ligzdas rezervēšana, piemēram, ar systemd ligzdu aktivizēšanu. Pēc noklusējuma šī opcija ir iespējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Paroles autentifikācija, lai piekļūtu serverim.     Parasti serveris ir neierobežots, ļaujot ikvienam tam piekļūt. Ar šo iespēju varat ierobežot piekļuvi iepriekš definētiem lietotājiem. Pēc noklusējuma šī opcija ir atspējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Atkāpties no automātiski noteiktās saskarnes.       Ja kāda iemesla dēļ serveris nevar piesaistīt opciju listen_on norādītajai saskarnei, tas mēģinās atklāt saskarni, kas savieno ar ārpasauli un saistās ar to. Pēc noklusējuma šī opcija ir iespējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Atļaujiet vietnei, kas nav apstiprinājusi autentifikāciju, veikt izmaiņas.  Parasti, ja neieslēdzat autentifikāciju, serveris darbojas tikai lasīšanas režīmā, lai neļautu anonīmiem lietotājiem veikt izmaiņas jūsu calibre bibliotēkās. Šī opcija ļauj ikvienam, kas pieslēdzas no tā paša datora, kad darbojas serveris, lai veiktu izmaiņas. Tas ir noderīgi, ja vēlaties palaist serveri bez autentifikācijas, bet joprojām izmantojiet calibre datu bāzi, lai veiktu izmaiņas savās calibre bibliotēkās. Ņemiet vērā, ka ieslēdzot šo opciju, ka jebkura programma, kas darbojas datorā, var veikt izmaiņas calibre bibliotēkās. Pēc noklusējuma šī opcija ir atspējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+Žurnāla HTTP 404 (nav atrasts) pieprasījumus.       Parasti serveris reģistrē visus HTTP pieprasījumus par resursiem, kas nav atrasti. Tas var radīt daudz žurnāla surogātpastu, ja jūsu serveris ir vērsts ar robotprogrammatūru. Izmantojiet šo opciju, lai to izslēgtu. Pēc noklusējuma šī opcija ir iespējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Reklamējiet OPDS plūsmas, izmantojot BonJour.       Reklamējiet OPDS plūsmas, izmantojot BonJour pakalpojumu, lai uz OPDS balstītas lasīšanas lietotnes varētu automātiski noteikt serveri un izveidot savienojumu ar to. Pēc noklusējuma šī opcija ir iespējota.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Nulles kopiju failu pārsūtīšana, lai uzlabotu veiktspēju.   Izmantojot nulles kopiju, kodola pārsūtīšanas laikā, nosūtot failus tīklā, palielinot veiktspēju. Tomēr tas var izraisīt bojātu failu pārsūtīšanu uz dažām bojātajām failu sistēmām. Ja jums ir bojāti failu pārsūtīšanas gadījumi, to izslēdziet. Pēc noklusējuma šī opcija ir iespējota.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,57 +136,57 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ignorēt lietotāja definētus metadatu laukus.        Ar komatu atdalīts saraksts, ar lietotāja definētiem metadatu laukiem, kurus Satura serveris neredzēs/opds un/mobile skatos. Piemēram: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Saskarnes, lai klausītos ienākošos savienojumus.    Noklusējums ir klausīties visas pieejamās saskarnes. To varat mainīt, piemēram, uz \fB"\fP127.0.0.1\fB"\fP, lai klausītos tikai vietējās ierīces savienojumus vai \fB"\fP::\fB"\fP, lai klausītos visus ienākošos IPv6 un IPv4 savienojumus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Ceļš pie servera žurnāla faila. Šajā žurnālā ir ietverta informācija par serveri un kļūdas, un nevis pieejami žurnāli. Pēc noklusējuma tas ir rakstīts stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. See also the \fI\%\-\-userdb\fP option.
+Pārvaldiet lietotāju datu bāzi, kuriem atļauts izveidot savienojumu ar šo serveri. Skatiet arī \fI\%\-\-userdb\fP opciju.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Maks. izmērs vienā HTTP galvenē (KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Darba procesa maksimālais laiks.    Maksimālā laika darba procesu ir atļauts rādīt (minūtēs). Iestatiet uz nulli bez ierobežojuma.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maksimālais darba procesu skaits.   Darba procesi tiek veikti pēc nepieciešamības un tiek izmantoti lielām darbiem, piemēram, grāmatas sagatavošanai apskatei, grāmatu pievienošanai, konvertēšanai utt. Parasti maks. šādu procesu skaits ir balstīts uz CPU kodolu skaitu. Jūs varat to kontrolēt, izmantojot šo iestatījumu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Maks. žurnāla faila lielums (MB).   Maksimālais žurnālu skaits, ko ģenerējis serveris. Ja žurnāls kļūst lielāks par šo izmēru, tas tiek automātiski pagriezts. Noregulējiet nulli, lai atspējotu žurnālu rotāciju.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Maksimālais grāmatu skaits OPDS plūsmā.     Maksimālais grāmatu skaits, kuru serveris atgriezīs vienā OPDS ieguves plūsmā.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Maksimālais negrupēto vienību skaits OPDS plūsmā.   Grupēt vienumus tādās kategorijās kā autors/birkas pēc pirmā burta, ja ir vairāk nekā šo vienumu skaits. Iestatīt nulli, lai atspējotu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Maks. pieļaujamais lielums failus augšupielādējot serverī (MB).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,37 +196,37 @@ Ierakstīt procesa PID norādītajā datnē
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+Portu pieslēgums ienākošajiem savienojumiem.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Kopējais gaidīšanas laiks, \fB"\fPtīrai izslēgšanai\fB"\fP sekundēs.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+SSL sertifikāta faila ceļš.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Ceļš uz SSL privātās atslēgas failu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Laiks (sekundēs), pēc kura gaidīšanas savienojums tiek aizvērts.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Prefikss, kas jāpievieno visiem vietrāžiem URL.     Noderīgi, ja vēlaties palaist šo serveri aiz apgrieztā proxy serveri. Piemēram, izmantojiet/calibre kā URL prefiksu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Ceļš uz lietotāja datu bāzi, kuru izmantot autentifikācijai. Datu bāze ir SQLite fails. Lai to izveidotu, izmantojiet \fI\%\-\-manage\-users\fP\&. Plašāku informāciju par lietotāju pārvaldīšanu varat lasīt: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ parādīt programmas versijas numuru un iziet
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Darba procesu skaits, pieprasījumu apstrādei.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

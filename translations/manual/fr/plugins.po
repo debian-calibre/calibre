@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 08:11+0530\n"
-"PO-Revision-Date: 2017-07-07 19:40+0000\n"
+"POT-Creation-Date: 2017-08-24 00:01+0530\n"
+"PO-Revision-Date: 2017-08-07 12:16+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Une extension calibre. Les membres utiles incluent:"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
-msgstr "``self.plugin_path``: Enregistre le chemin vers le fichjer ZIP le contenant"
+msgstr "``self.plugin_path`` : Enregistre le chemin vers le fichier ZIP le contenant"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
@@ -133,7 +133,7 @@ msgid ""
 "order of decreasing priority. Plugins with higher priority will be run "
 "first. The highest possible priority is ``sys.maxint``. Default priority is "
 "1."
-msgstr "Quand plus d'une extension existe pour un type de fichier, les extensions sont exécutées dans l'ordre de priorité décroissant. Les extensions avec la priorité la plus haute seront exécutées en premièr. La priorité la plus haute possible est ``sys.maxint``. La priorité par défaut est de 1"
+msgstr "Quand plus d'une extension existe pour un type de fichier, les extensions sont exécutées dans l'ordre de priorité décroissant. Les extensions avec la priorité la plus haute seront exécutées en premières. La priorité la plus haute possible est ``sys.maxint``. La priorité par défaut est de 1"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.minimum_calibre_version:1
@@ -166,13 +166,13 @@ msgid ""
 "Perform any plugin specific initialization here, such as extracting "
 "resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
-msgstr "Effectuer n'importe quel initialisation spécifique ici, comme l'extraction de ressource à partir du fichier ZIP de l'extension. Le chemin vers le ZIP est disponible comme ``self.plugin_path``."
+msgstr "Effectuer n'importe quel initialisation spécifique d'extension ici, comme l'extraction de ressource à partir du fichier ZIP de l'extension. Le chemin vers le ZIP est disponible comme ``self.plugin_path``."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:10
 msgid ""
 "Note that ``self.site_customization`` is **not** available at this point."
-msgstr "Noter que ``self.site_customization`` n'est **pas** disponible à ce point-ci."
+msgstr "Notez que ``self.site_customization`` n'est **pas** disponible à ce point-ci."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:1
@@ -180,7 +180,7 @@ msgid ""
 "Implement this method and :meth:`save_settings` in your plugin to use a "
 "custom configuration dialog, rather then relying on the simple string based "
 "default customization."
-msgstr "Implémenter cette méthode et :meth:`save_settings` dans votre extension pour utiliser une boîte de dialogue de configuration personnalisée, plutôt que d'utilisé la simple personnalisation par ligne par défaut."
+msgstr "Implémenter cette méthode et :meth:`save_settings` dans votre extension pour utiliser une boîte de dialogue de configuration personnalisée, plutôt que d'utiliser la simple personnalisation par ligne par défaut."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:5
@@ -189,7 +189,7 @@ msgid ""
 "optional method validate() that takes no arguments and is called immediately"
 " after the user clicks OK. Changes are applied if and only if the method "
 "returns True."
-msgstr "Cete méthode, si implémentée, doit rentourner un QWidget. Le widget peut avoir une méthode optionelle validate() qui ne prend pas d'argument et qui est appelée dès que l'utilisateur clique sur OK.  Les changements sont appliqués si et seulement si la méhode retourne True."
+msgstr "Cette méthode, si implémentée, doit retourner un QWidget. Le widget peut avoir une méthode optionnelle validate() qui ne prend pas d'argument et qui est appelée dès que l'utilisateur clique sur OK.  Les changements sont appliqués si et seulement si la méthode retourne True."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:10
@@ -279,14 +279,14 @@ msgstr "Paramètres"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.save_settings:3
 msgid "The widget returned by :meth:`config_widget`."
-msgstr "Le widget rendu par :meth:`config_widget`."
+msgstr "Le widget renvoyé par :meth:`config_widget`."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.do_user_config:1
 msgid ""
 "This method shows a configuration dialog for this plugin. It returns True if"
 " the user clicks OK, False otherwise. The changes are automatically applied."
-msgstr "Cette méthode montre une boîte de dialogue de configuration pour cette extension. Elle renvoye True si l'utilisateur clique OK, sinon False. Les changements sont appliqués automatiquement."
+msgstr "Cette méthode montre une boîte de dialogue de configuration pour cette extension. Elle renvoie True si l'utilisateur clique OK, sinon False. Les changements sont appliqués automatiquement."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:1
@@ -302,14 +302,14 @@ msgstr "Si cette extension est donnée dans un fichier ZIP (extension ajoutée p
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:4
 msgid "For example to load an image::"
-msgstr "Par exemple pour charge une image::"
+msgstr "Par exemple pour charger une image ::"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:10
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:10
 msgid "List of paths to resources in the ZIP file using / as separator"
-msgstr "List de chemins vers les ressources dans le ZIP utilisant / comme séparateur"
+msgstr "Liste de chemins vers les ressources dans le ZIP utilisant / comme séparateur"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:0
@@ -351,7 +351,7 @@ msgid ""
 "Return a string giving help on how to customize this plugin. By default "
 "raise a :class:`NotImplementedError`, which indicates that the plugin does "
 "not require customization."
-msgstr "Retourne une chaine offrant de l'aide sur comment personnalisé cette extension. Par défaut avance un :class:`ErreurPasImplémenté`, qui indique que l'extension ne nécessite pas de personnalisation."
+msgstr "Retourne une chaîne offrant de l'aide sur comment personnalisé cette extension. Par défaut avance un :class:`NotImplementedError`, qui indique que l'extension ne nécessite pas de personnalisation."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:5
@@ -359,7 +359,7 @@ msgid ""
 "If you re-implement this method in your subclass, the user will be asked to "
 "enter a string as customization for this plugin. The customization string "
 "will be available as ``self.site_customization``."
-msgstr "Si vous ré-implémentez cette méthode dans votre sous-classe, il sera demandé à l'utilisateur d'entrer une chaine pour personnalisé cete extension. La chaine de personnalisation sera disponnible comme ``self.site_customization``."
+msgstr "Si vous ré-implémentez cette méthode dans votre sous-classe, il sera demandé à l'utilisateur d'entrer une chaîne pour personnalisé cette extension. La chaîne de personnalisation sera disponible comme ``self.site_customization``."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:10
@@ -380,7 +380,7 @@ msgid ""
 "file will remain available even after being closed and will only be removed "
 "on interpreter shutdown. Use the ``name`` member of the returned object to "
 "access the full path to the created temporary file."
-msgstr "Renvoie un objet ressemblant à un fichier qui est un fichier temporaire dans les fichiers systèmes. Ce fichier reste disponible après avoir été fermé et sera supprimé uniquement après l'éteinte par l'utilisateur. Utilisé le membre ``name`` de l'objet renvoyé pour accéder au chemin complet vers le fichier temporaire créer."
+msgstr "Renvoie un objet ressemblant à un fichier qui est un fichier temporaire dans les fichiers systèmes. Ce fichier reste disponible après avoir été fermé et sera supprimé uniquement après l'extinction de l'interpréteur. Utilisé le membre ``name`` de l'objet renvoyé pour accéder au chemin complet vers le fichier temporaire créé."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.temporary_file:6
@@ -393,11 +393,11 @@ msgid ""
 "This method is the main entry point for your plugins command line interface."
 " It is called when the user does: calibre-debug -r \"Plugin Name\". Any "
 "arguments passed are present in the args variable."
-msgstr "Cette méthode est le point d'entrée principale pour les interfaces d'extensions en ligne de commande. Elle est appelée lorsque l'utilisateur fait: calibre-debug -r \"Nom de l'Extension\".Tous les arguments sont présents dans les variable d'arguments."
+msgstr "Cette méthode est le point d'entrée principal pour les interfaces d'extensions en ligne de commande. Elle est appelée lorsque l'utilisateur fait: calibre-debug -r \"Nom de l'Extension\". Tous les arguments sont présents dans les variables args."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:28
 msgid "FileTypePlugin"
-msgstr "ExtensionTypedeFichier"
+msgstr "FileTypePlugin"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin:1
@@ -427,7 +427,7 @@ msgstr "Les bases: :class:`calibre.customize.Plugin`"
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin:1
 msgid "A plugin that is associated with a particular set of file types."
-msgstr "Une extension qui est associée à un ensemble particulier de types de fichier"
+msgstr "Une extension qui est associée à un ensemble particulier de types de fichiers."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.file_types:1

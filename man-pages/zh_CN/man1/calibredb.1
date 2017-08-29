@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "八月 04, 2017" "3.6.0" "calibre"
+.TH "CALIBREDB" "1" "八月 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -215,7 +215,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+排列结果所用字段。 可用字段：author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid 默认：id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -293,12 +293,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+当文件扫描目录时，即使它们不是已知的电子书文件类型，文件名（全局）模式，匹配此模式的文件将被添加。可以多次指定多个模式。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+当文件扫描目录时，文件名（全局）模式，匹配此模式的文件将被忽略。,可以多次指定多个模式。,例如：* .pdf将忽略所有pdf文件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -328,7 +328,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+不使用回收站
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -342,13 +342,13 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+将ebook_file中的电子书添加到由id标识的逻辑书籍的可用格式。您可以使用搜索命令获取ID。如果格式已经存在，它将被替换，除非指定不替换选项。
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+如果该格式已存在则不做替换.
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -664,12 +664,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+用于自定义此列中的数据将如何解释的选项字典。这是一个JSON字符串。对于枚举列，请使用:option:\fI–display\fP =“{”enum_values “：[”val1 “，”val2 “]}” ,有很多选项可以进入显示变量。列类型的选项是： 复合：composite_template，composite_sort，make_category，contains_html，use_decorations ,datetime：date_format ,枚举：enum_values，enum_colors，use_decorations ,int，float：number_format ,text：is_names，use_decorations ,查找合法组合的最佳方式是在GUI中创建适当类型的自定义列，然后查看书的备份OPF（确保从列添加以来已创建新的OPF）。您将看到OPF中新列的“显示”的JSON。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+此列存储类似数据的标签(即多个逗号分隔值)。仅适用于数据类型为文本。
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -785,7 +785,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ignore_extensions, \-e
-Comma\-separated list of extensions to ignore. Default: all
+忽略的扩展使用逗号分隔列表. 默认:全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -795,7 +795,7 @@ Comma\-separated list of names to ignore. Default: all
 .INDENT 0.0
 .TP
 .B \-\-report, \-r
-Comma\-separated list of reports. Default: all
+报告使用逗号分隔列表. 默认:全部
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -826,7 +826,7 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+生成为 CSV 文件类型. 挑选: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -861,7 +861,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+通常，此命令仅对过时的OPF文件的书籍进行操作。该选项会使它在所有的书籍上操作。
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -931,7 +931,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+返回结果显示的最大数目，默认为全部。
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

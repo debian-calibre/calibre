@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "EBOOK-META" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -35,24 +35,24 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-meta ebook_file [options]
+ebook\-meta ebook_file [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Lasīt/Rakstīt metadatus no/uz e\-grāmatu failiem.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Atbalstītie metadatu lasīšanas formāti: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Atbalstītie metadatu rakstīšanas formāti: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Dažādi failu tipi atbalsta dažāda veida metadatus. Ja jūs mēģināt iestatīt
+dažādus metadatu faila tipus, kas to neatbalsta, metadati tiks
+klusi ignorēti.
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
-.SH [OPTIONS]
+Katru reizi, kad jūs nododat argumentus \fBebook\-meta\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+.SH [OPCIJAS]
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -76,7 +76,7 @@ Ievadiet grāmatas kategoriju.
 .INDENT 0.0
 .TP
 .B \-\-comments, \-c
-Set the e\-book description.
+Ievadiet e\-grāmatu aprakstu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,12 +91,12 @@ Ievadiet izdošanas datumu.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Izlasīt metadatus no norādītā OPF faila un izmantot tos metadatu iestatīšanai e\-grāmatā. Metadati, kas norādīti komandrindā ignorēs OPF faila nolasītos metadatus
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+Saņemt vāku no e\-grāmatas un saglabāt to kā norādīto failu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ Norādīt BookID LRF datnēs
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-Set the e\-book publisher.
+Ievadiet e\-grāmatu izdevēju.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +141,7 @@ Ievadiet vērtējumu. Jābūt skaitlim no 1 līdz 5.
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series this e\-book belongs to.
+Ievadiet šīs e\-grāmatas sēriju.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "augustus 04, 2017" "3.6.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "augustus 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,20 @@ calibre\-debug [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Verscheidene commandoregel interfaces nuttig voor debugging calibre. Zonder opties start dit commando een geintegreerde python interpreter. Men kan ook de main
+calibre GUI gebruiken, het calibre leesvenster en de calibre editor in de debug modus.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+Het bevat ook interfaces voor verschillende onderdelen van  calibre die geen specifieke
+commandoregel tools hebben, zoals font subsetting, de E\-boek diff tool enzovoort.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Men kan ook \fBcalibre\-debug\fP gebruiken om op zichzelf staande scripts te draaien. Om dat te doen moet dit zo gebruikt worden:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Alles ná  \fB\-\-\fP wordt doorgegeven aan het script.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .SH [OPTIES]
@@ -98,7 +96,7 @@ Python code in het bestand uitvoeren.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Explodeer het boek (exporteert het boek als een collectie HTML\-bestanden en metadata, welke bewerkt kan worden met een standaard HTML\-editor en dan het bestand opnieuw opbouwt van de bewerkte HTML\fB\(aq\fPs. Het maakt geen aanvullende veranderingen aan het HTML\-bestand in tegenstelling een volledige calibre conversie).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +121,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Opnieuw comprimeren van een eerder gedecomprimeerd boek. Gebruik: \-i output_dir file.epub Importeert\ het boek\ met de bestanden in de\ output_dir die reeds gecreëerd werden bij een vorige uitvoer van het decomprimeren van het boek. Zorg ervoor dat u hetzelfde bestandstype opgeeft dat werd gebruikt\ bij het exploderen.
 .UNINDENT
 .INDENT 0.0
 .TP

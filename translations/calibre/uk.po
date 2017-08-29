@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2017-07-28 09:45+IST\n"
-"PO-Revision-Date: 2017-07-28 07:24+0000\n"
+"POT-Creation-Date: 2017-08-24 00:03+IST\n"
+"PO-Revision-Date: 2017-08-24 17:29+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -189,9 +189,9 @@ msgstr "Не робить абсолютно нічого"
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:332
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/reader.py:156
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/reader.py:163
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:113
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:197
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:208
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:118
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:202
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:213
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/ereader/writer.py:174
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/ereader/writer.py:175
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/palmdoc/writer.py:30
@@ -207,7 +207,7 @@ msgstr "Не робить абсолютно нічого"
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:307
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:358
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:413
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:845
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:844
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/__init__.py:52
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:140
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:159
@@ -268,7 +268,7 @@ msgstr "Не робить абсолютно нічого"
 #: /home/kovid/work/calibre/src/calibre/srv/content.py:161
 #: /home/kovid/work/calibre/src/calibre/srv/tests/http.py:88
 #: /home/kovid/work/calibre/src/calibre/srv/tests/http.py:97
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:290
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:300
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:22
 #: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:47
 #: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:55
@@ -603,7 +603,7 @@ msgid "Change the way calibre behaves"
 msgstr "Змінити спосіб поведінки Calibre"
 
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1110
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:417
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:421
 msgid "Add your own columns"
 msgstr "Додати нетиповий стовпчик"
 
@@ -1898,8 +1898,8 @@ msgstr "Назва поля"
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/models.py:41
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/models.py:23
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:306
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:415
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:477
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:417
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:483
 msgid "Title"
 msgstr "Заголовок"
 
@@ -2162,7 +2162,15 @@ msgstr "порожньо"
 msgid "Invalid boolean query \"{0}\""
 msgstr "Некоректний булевий запит «{0}»"
 
-#: /home/kovid/work/calibre/src/calibre/db/search.py:530
+#: /home/kovid/work/calibre/src/calibre/db/search.py:504
+msgid "No such virtual library: {}"
+msgstr "Цієї віртуальної бібліотеки не існує: {}"
+
+#: /home/kovid/work/calibre/src/calibre/db/search.py:508
+msgid "Virtual library search is recursive: {}"
+msgstr "Пошук віртуальної бібліотеки є рекурсивним: {}"
+
+#: /home/kovid/work/calibre/src/calibre/db/search.py:539
 #: /home/kovid/work/calibre/src/calibre/library/caches.py:665
 #, python-brace-format
 msgid "Recursive query group detected: {0}"
@@ -2607,11 +2615,11 @@ msgid ""
 msgstr "Список каталогів (розділений комами), для надсилання електронних книг на пристрій. Буде використано перший існуючий."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:25
-msgid "Communicate with the Hanvon N520 eBook reader."
-msgstr "Зв’язується з Hanvon N520 eBook reader."
+msgid "Communicate with the Hanvon N520 e-book reader."
+msgstr "Обмін даними із пристроєм для читання ел. книг Hanvon N520."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:52
-msgid "Communicate with the Kibano eBook reader."
+msgid "Communicate with the Kibano e-book reader."
 msgstr "Обмін даними з пристроєм для читання електронних книг Kibano."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:66
@@ -2623,8 +2631,8 @@ msgid "Communicate with the Libre Air reader."
 msgstr "Встановлює з’єднання з пристроєм для читання Libre Air."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:93
-msgid "Communicate with the SpringDesign Alex eBook reader."
-msgstr "Зв’язується з SpringDesign Alex eBook reader."
+msgid "Communicate with the SpringDesign Alex e-book reader."
+msgstr "Обмін даними з пристроєм для читання книг SpringDesign Alex."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:137
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:148
@@ -2642,24 +2650,24 @@ msgid "Communicate with the Azbooka"
 msgstr "Зв’язується з Azbooka."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:175
-msgid "Communicate with the Elonex EB 511 eBook reader."
-msgstr "Зв’язується з Elonex EB 511 eBook reader."
+msgid "Communicate with the Elonex EB 511 e-book reader."
+msgstr "Обмін даними з пристроєм для читання ел. книг Elonex EB 511."
 
 #: /home/kovid/work/calibre/src/calibre/devices/hanvon/driver.py:196
-msgid "Communicate with the Cybook Odyssey eBook reader."
+msgid "Communicate with the Cybook Odyssey e-book reader."
 msgstr "Обмін даними з пристроями для читання книжок Cybook Odyssey."
 
 #: /home/kovid/work/calibre/src/calibre/devices/iliad/driver.py:17
-msgid "Communicate with the IRex Iliad eBook reader."
-msgstr "Зв’язується IRex Iliad eBook reader."
+msgid "Communicate with the IRex Iliad e-book reader."
+msgstr "Обмін даними з пристроєм для читання ел. книг IRex Iliad."
 
 #: /home/kovid/work/calibre/src/calibre/devices/interface.py:61
 msgid "Cannot get files from this device"
 msgstr "Не вдається отримати файли з цього пристрою"
 
 #: /home/kovid/work/calibre/src/calibre/devices/irexdr/driver.py:17
-msgid "Communicate with the IRex Digital Reader 1000 eBook reader."
-msgstr "Зв’язується з IRex Digital Reader 1000 eBook reader."
+msgid "Communicate with the IRex Digital Reader 1000 e-book reader."
+msgstr "Обмін даними з пристроєм для читання книг IRex Digital Reader 1000."
 
 #: /home/kovid/work/calibre/src/calibre/devices/irexdr/driver.py:44
 msgid "Communicate with the IRex Digital Reader 800"
@@ -2670,8 +2678,8 @@ msgid "Communicate with the Iriver Story reader."
 msgstr "Зв’язується з Iriver Story reader."
 
 #: /home/kovid/work/calibre/src/calibre/devices/jetbook/driver.py:21
-msgid "Communicate with the JetBook eBook reader."
-msgstr "Зв’язується з JetBook eBook reader."
+msgid "Communicate with the JetBook e-book reader."
+msgstr "Обмін даними з пристроєм для читання JetBook."
 
 #: /home/kovid/work/calibre/src/calibre/devices/jetbook/driver.py:89
 msgid "Communicate with the MiBuk Wolder reader."
@@ -2695,8 +2703,8 @@ msgid "Could not generate page mapping."
 msgstr "Не вдалося визначити відповідність сторінок."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:46
-msgid "Communicate with the Kindle eBook reader."
-msgstr "Зв’язується з Kindle eBook reader."
+msgid "Communicate with the Kindle e-book reader."
+msgstr "Обмін даними з пристроєм для читання електронних книг Kindle."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:78
 msgid ""
@@ -2735,7 +2743,7 @@ msgstr "<b>Розташування %(dl)d &bull; %(typ)s</b><br />"
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:322
 msgid ""
-"Communicate with the Kindle 2/3/4/Touch/PaperWhite/Voyage eBook reader."
+"Communicate with the Kindle 2/3/4/Touch/PaperWhite/Voyage e-book reader."
 msgstr "Обмін даними з пристроєм для читання електронних книг Kindle 2/3/4/Touch/PaperWhite/Voyage."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:336
@@ -2802,8 +2810,8 @@ msgid ""
 msgstr "Зніміть позначку з цього пункту, щоб зробити файл apnx, що зберігається на пристрої, пріоритетнішим за версію, яку намагається надіслати calibre. Оскільки файли apnx зазвичай вилучаються, коли книгу вилучають з пристрою Kindle, такий варіант роботи здебільшого корисний, якщо на пристрій повторно надсилається книга, яка вже на ньому зберігається (наприклад, після внесення змін)."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:555
-msgid "Communicate with the Kindle DX eBook reader."
-msgstr "Зв’язується з Kindle DX eBook reader."
+msgid "Communicate with the Kindle DX e-book reader."
+msgstr "Обмін даними з пристроєм для читання електронних книг Kindle DX."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:571
 msgid "Communicate with the Kindle Fire"
@@ -3396,17 +3404,17 @@ msgid "The Nook"
 msgstr "The Nook"
 
 #: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:23
-msgid "Communicate with the Nook eBook reader."
-msgstr "Зв’язується з Nook eBook reader."
+msgid "Communicate with the Nook e-book reader."
+msgstr "Обмін даними з пристроєм для читання ел. книг Nook."
 
 #: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:88
 msgid ""
-"Communicate with the Nook Color, TSR, Glowlight and Tablet eBook readers."
+"Communicate with the Nook Color, TSR, Glowlight and Tablet e-book readers."
 msgstr "Обмін даними з пристроями для читання книг Nook Color, TSR, Glowlight та Tablet."
 
 #: /home/kovid/work/calibre/src/calibre/devices/nuut2/driver.py:18
-msgid "Communicate with the Nuut2 eBook reader."
-msgstr "Зв’язується з Nuut2 eBook reader."
+msgid "Communicate with the Nuut2 e-book reader."
+msgstr "Обмін даними з пристроєм для читання ел. книг Nuut2."
 
 #: /home/kovid/work/calibre/src/calibre/devices/paladin/driver.py:31
 msgid "Communicate with the Paladin readers"
@@ -3512,7 +3520,7 @@ msgstr "Вивантажувати окремі мініатюри обклад�
 
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:76
 msgid ""
-"Normally, the SONY readers get the cover image from the ebook file itself. "
+"Normally, the SONY readers get the cover image from the e-book file itself. "
 "With this option, calibre will send a separate cover image to the reader, "
 "useful if you are sending DRMed books in which you cannot change the cover."
 msgstr "Зазвичай пристрої читання SONY визначають зображення обкладинки з самого файла електронної книги. Якщо буде позначено цей пункт, calibre надішле на пристрій читання окреме зображення обкладинки. Корисно, якщо ви надсилаєте книги, захищені DRM, у яких ви не можете змінити зображення обкладинки."
@@ -3725,8 +3733,8 @@ msgid "Failed to allocate a random port"
 msgstr "Не вдалося отримати у користування випадковий порт"
 
 #: /home/kovid/work/calibre/src/calibre/devices/sne/driver.py:18
-msgid "Communicate with the Samsung SNE eBook reader."
-msgstr "Зв’язується з Samsung SNE eBook reader."
+msgid "Communicate with the Samsung SNE e-book reader."
+msgstr "Обмін даними із пристроєм для читання ел. книг Samsung SNE."
 
 #: /home/kovid/work/calibre/src/calibre/devices/teclast/driver.py:12
 msgid "Communicate with the Teclast K3/K5 reader."
@@ -3840,8 +3848,8 @@ msgid "Extra customization"
 msgstr "Додаткове налаштування"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:84
-msgid "Communicate with an eBook reader."
-msgstr "Зв’язуюся з eBook reader."
+msgid "Communicate with an e-book reader."
+msgstr "Обмін даними із пристроєм для читання ел. книг."
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:147
 #, python-format
@@ -5739,7 +5747,7 @@ msgstr "Нотатки"
 msgid "Table of Contents"
 msgstr "Зміст"
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/docx/writer/images.py:197
+#: /home/kovid/work/calibre/src/calibre/ebooks/docx/writer/images.py:203
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/opf2.py:1717
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1370
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/cover.py:398
@@ -6031,7 +6039,7 @@ msgid "Comments"
 msgstr "Коментарі"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:770
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:254
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:259
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:94
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:103
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:109
@@ -6066,7 +6074,7 @@ msgid "Tags"
 msgstr "Теґи"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:772
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:252
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:257
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/match_books.py:89
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.py:69
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.py:275
@@ -6096,7 +6104,7 @@ msgid "Timestamp"
 msgstr "Мітка часу"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:777
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:251
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:256
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:184
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:130
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:236
@@ -7502,9 +7510,9 @@ msgstr "<p><i>Покращення книг</i> — це процедура, п�
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:509
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:172
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:263
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:634
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:638
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:914
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:635
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:639
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:915
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:386
 msgid " or "
 msgstr " або "
@@ -7754,13 +7762,13 @@ msgstr "У розмітці файла %s виявлено помилки. Пе�
 msgid "HTML TOC generation options."
 msgstr "HTML TOC параметри створення."
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:172
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:174
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:177
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:179
 #, python-brace-format
 msgid "{1} of <em>{0}</em>"
 msgstr "{1} з <em>{0}</em>"
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:253
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:258
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:185
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:234
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:161
@@ -7972,48 +7980,32 @@ msgstr "Потрібен перезапуск"
 msgid "&Restart calibre now"
 msgstr "П&ерезапустити calibre зараз"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:629
-msgid "Choose Files"
-msgstr "Виберіть файли"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:801
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:511
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/texture_chooser.py:112
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:276
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:48
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:756
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1297
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:89
-#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:263
-msgid "Images"
-msgstr "Зображення"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:922
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:746
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "Від’єднати від контрольного термінала, якщо такий був (лише Linux)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:927
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:751
 msgid "Click \"Show details\" for more information."
 msgstr "Натисніть кнопку «Показати подробиці», щоб дізнатися більше."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:929
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:753
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "Встановлено значення змінної середовища %s. Намагаємося скасувати встановлення цього значення."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:930
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:754
 msgid "Could not create temporary directory"
 msgstr "Не вдалося створити тимчасовий каталог"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:931
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:755
 msgid "Could not create temporary directory, calibre cannot start."
 msgstr "Не вдалося створити тимчасовий каталог, запуск calibre неможливий."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:1030
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:855
 msgid "Windows XP not supported"
 msgstr "Підтримки Windows XP не передбачено"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:1031
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:856
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -8134,7 +8126,7 @@ msgstr "Керування додаванням книг"
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/annotate.py:122
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/catalog.py:40
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/convert.py:148
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:439
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:482
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:110
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:300
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:387
@@ -8478,7 +8470,7 @@ msgid "Book metadata files remaining to be written: %s"
 msgstr "Файли метаданих книги, які ще не записано: %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:204
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:297
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:338
 msgid "Choose Library"
 msgstr "Вибрати бібліотеку"
 
@@ -8654,7 +8646,7 @@ msgstr "&Гаразд"
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:970
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/toc.py:49
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:358
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:309
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:319
 msgid "&Undo"
 msgstr "&Вернути"
 
@@ -8692,7 +8684,7 @@ msgid ""
 msgstr "У вашій базі даних calibre не було знайдено жодних помилок. Бажаєте, щоб calibre перевірила, чи відповідають дані файли вашої бібліотеки даних у базі даних?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:517
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:561
 #: /home/kovid/work/calibre/src/calibre/gui2/device.py:1029
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/exim.py:134
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1062
@@ -8722,9 +8714,9 @@ msgstr "Файли у вашій бібліотеці відповідають �
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:621
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:626
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:632
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:565
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:608
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/save_to_disk.py:93
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1211
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1215
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/image.py:208
 msgid "Not allowed"
 msgstr "Не дозволено"
@@ -8799,11 +8791,11 @@ msgstr "Порожній файл результату, ймовірно про�
 msgid "completed"
 msgstr "завершено"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:36
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:38
 msgid "Different custom columns"
 msgstr "Різні нетипові стовпчики"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:50
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:52
 #, python-brace-format
 msgid ""
 "The custom columns in the <i>{0}</i> library are different from the custom "
@@ -8811,81 +8803,85 @@ msgid ""
 "copied."
 msgstr "Нетипові стовпчики у бібліотеці <i>{0}</i> відрізняються від нетипових стовпчиків у бібліотеці <i>{1}</i>. Через це деякі з метаданих неможливо скопіювати."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:58
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:60
 msgid ""
 "The following columns are incompatible - they have the same name but "
 "different data types. They will be ignored: "
 msgstr "Вказані нижче стовпчики є несумісними. Вони мають однакові назви, однак містять різні типи даних. Їх буде проігноровано: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:67
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:69
 #, python-brace-format
 msgid ""
 "The following columns are missing in the <i>{0}</i> library. You can choose "
 "to add them automatically below."
 msgstr "У бібліотеці <i>{0}</i> немає вказаних нижче стовпчиків. Ви можете позначити їх для автоматичного додавання нижче."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:73
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:75
 #, python-format
 msgid "Add to the %s library"
 msgstr "Додати до бібліотеки %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:76
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:78
 msgid "This warning is only shown once per library, per session"
 msgstr "Це попередження буде показано лише один раз для однієї бібліотеки протягом одного сеансу"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:230
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:240
 #, python-format
 msgid "%(title)s by %(author)s"
 msgstr "%(title)s, автор — %(author)s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:267
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:274
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.py:61
 msgid "Choose library"
 msgstr "Вибрати бібліотеку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:268
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:297
+msgid "&Sort libraries alphabetically"
+msgstr "&Впорядкувати список бібліотек за абеткою"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:302
 msgid "Library &path:"
 msgstr "&Шлях до бібліотеки:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:276
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:308
 msgid "Browse for library"
 msgstr "Вказати бібліотеку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:283
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:317
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:128
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:304
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:314
 msgid "&Copy"
 msgstr "&Копіювати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:285
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:319
 msgid "Copy to the specified library"
 msgstr "Копіювати до вказаної бібліотеки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:286
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:320
 msgid "&Move"
 msgstr "&Пересунути"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:289
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:323
 msgid "Copy to the specified library and delete from the current library"
 msgstr "Копіювати до вказаної бібліотеки і вилучити з поточної бібліотеки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:313
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:354
 #, python-format
 msgid ""
 "Books with the same title and author as the following already exist in the "
 "library %s. Select which books you want copied anyway."
 msgstr "У бібліотеці %s вже існують записи книг з тим самим значенням автора та назви, що і вказані нижче книги. Позначте пункти книг, які слід скопіювати попри це."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:318
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:359
 msgid "Duplicate books"
 msgstr "Дублікати книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:322
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:363
 #, python-brace-format
 msgid "{0} by {1}"
 msgstr "{0}, {1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:331
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:372
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:132
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/mtp_folder_browser.py:138
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/duplicates.py:54
@@ -8895,7 +8891,7 @@ msgstr "{0}, {1}"
 msgid "Select &all"
 msgstr "&Позначити всі"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:333
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:374
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:134
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/mtp_folder_browser.py:140
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/duplicates.py:56
@@ -8904,7 +8900,7 @@ msgstr "&Позначити всі"
 msgid "Select &none"
 msgstr "З&няти позначення"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:335
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:376
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/duplicates.py:58
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/message_box.py:107
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/message_box.py:377
@@ -8915,73 +8911,73 @@ msgstr "З&няти позначення"
 msgid "&Copy to clipboard"
 msgstr "&Копіювати до буфера"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:368
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:409
 msgid "Copy to library"
 msgstr "Копіювати в бібліотеку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:369
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:410
 msgid "Copy selected books to the specified library"
 msgstr "Копіювати вибрані книжки до вказаної бібліотеки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:400
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:411
-msgid "Choose library by path..."
-msgstr "Вказати шлях до бібліотеки…"
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:441
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:451
+msgid "Choose library..."
+msgstr "Вибрати бібліотеку…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:406
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:447
 msgid "(delete after copy)"
 msgstr "(Вилучення після копіювання)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:426
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:438
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:469
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:481
 msgid "Cannot copy"
 msgstr "Не вдається скопіювати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:427
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:470
 msgid "Cannot copy to current library."
 msgstr "Не можна копіювати до поточної бібліотеки."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:443
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:486
 msgid "No library"
 msgstr "Немає бібліотеки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:444
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:487
 #, python-format
 msgid "No library found at %s"
 msgstr "Не знайдено бібліотеку в %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:490
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:533
 msgid "Copying to"
 msgstr "Копіювання"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:490
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:533
 msgid "Moving to"
 msgstr "Пересування"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:508
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:551
 msgid "The copying process was interrupted. {} books were copied."
 msgstr "Процедуру копіювання було перервано. Скопійовано {} книг."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:510
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:553
 msgid "No books were deleted from this library."
 msgstr "З цієї бібліотеки не було вилучено жодної книги."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:511
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:554
 msgid ""
 "The best way to resume this operation is to re-copy all the books with the "
 "option to \"Check for duplicates when copying to library\" in "
 "Preferences->Import/export->Adding books turned on."
 msgstr "Найкращим способом продовження цієї дії є повторне копіювання книг з позначенням пункту «Шукати дублікати під час копіювання до бібліотеки» у «Налаштування → Імпортування/Експортування → Додавання книг»."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:513
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:556
 msgid "Canceled"
 msgstr "Скасовано"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:561
 msgid "Could not copy books: "
 msgstr "Неможливо скопіювати книги: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:523
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:566
 #, python-brace-format
 msgid "Moved the book to {loc}"
 msgid_plural "Moved {num} books to {loc}"
@@ -8989,7 +8985,7 @@ msgstr[0] "{num} книгу пересунуто до {loc}"
 msgstr[1] "{num} книги пересунуто до {loc}"
 msgstr[2] "{num} книг пересунуто до {loc}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:568
 #, python-brace-format
 msgid "Copied the book to {loc}"
 msgid_plural "Copied {num} books to {loc}"
@@ -8997,11 +8993,11 @@ msgstr[0] "{num} книгу скопійовано до {loc}"
 msgstr[1] "{num} книги скопійовано до {loc}"
 msgstr[2] "{num} книг скопійовано до {loc}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:530
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:573
 msgid "Auto merged"
 msgstr "Об’єднано автоматично"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:531
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:574
 msgid ""
 "Some books were automatically merged into existing records in the target "
 "library. Click \"Show details\" to see which ones. This behavior is "
@@ -9009,37 +9005,37 @@ msgid ""
 "books."
 msgstr "Дані деяких з книг було автоматично об’єднано з вже створеними записами у бібліотеці призначення. Натисніть кнопку «Показати подробиці», щоб переглянути список. Керувати об’єднанням можна за допомогою пункту «Автоматичне об’єднання» у вікні, відкрити яке можна за допомогою пункту меню «Налаштування → Імпортування/Експортування → Додавання книг»."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:553
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:596
 #, python-brace-format
 msgid ""
 "Copying: {0} failed, with error:\n"
 "{1}"
 msgstr "Спроба копіювання {0} завершилася невдало, повідомлення про помилку:\n{1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:554
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:597
 msgid "Could not copy some books, click \"Show Details\" for more information."
 msgstr "Не вдалося скопіювати деякі книги. Натисніть кнопку «Показати подробиці», щоб дізнатися більше."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:554
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:597
 msgid "Failed to copy some books"
 msgstr "Не вдалося скопіювати деякі з книг."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:556
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:599
 msgid "Failed to copy a book, see below for details"
 msgid_plural "Failed to copy {} books, see below for details"
 msgstr[0] "Не вдалося скопіювати {} книгу, нижче наведено подробиці"
 msgstr[1] "Не вдалося скопіювати {} книги, нижче наведено подробиці"
 msgstr[2] "Не вдалося скопіювати {} книг, нижче наведено подробиці"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:603
 msgid "Could not copy any books, click \"Show Details\" for more information."
 msgstr "Не вдалося скопіювати жодної з книг. Натисніть кнопку «Показати подробиці», щоб дізнатися більше."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:603
 msgid "Failed to copy books"
 msgstr "Не вдалося скопіювати книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:566
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:609
 msgid ""
 "You cannot use other libraries while using the environment variable "
 "CALIBRE_OVERRIDE_DATABASE_PATH."
@@ -10183,7 +10179,7 @@ msgstr "Відсутня детальна інформація для книжо
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:22
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:62
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:81
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:87
 msgid "Quickview"
 msgstr "Швидкий перегляд"
 
@@ -10211,19 +10207,27 @@ msgstr "Перенести фокус зі швидкого перегляду �
 msgid "Move the focus from Quickview to the book list"
 msgstr "Перевести фокус із швидкого перегляду на список книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:92
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:93
+msgid "Refresh Quickview"
+msgstr "Оновити швидкий перегляд"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:94
+msgid "Refresh the information shown in the Quickview pane"
+msgstr "Оновити дані, показані на панелі швидкого перегляду"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:101
 msgid "Search from Quickview"
 msgstr "Шукати зі швидкого перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:93
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:102
 msgid "Search for the currently selected Quickview item"
 msgstr "Шукати поточний позначений пункт швидкого перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:122
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:132
 msgid "No quickview available"
 msgstr "Швидкий перегляд недоступний"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:123
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/show_quickview.py:133
 msgid "Quickview is not available for books on the device."
 msgstr "Швидкий перегляд недоступний для книжок на пристрої."
 
@@ -10984,113 +10988,113 @@ msgstr "Шукати цю книгу у інтернеті"
 msgid "Manage %s"
 msgstr "Керування записом «%s»"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:183
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:182
 msgid "Copy &all"
 msgstr "Копіювати &усе"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:201
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:200
 #, python-format
 msgid "Delete the %s format"
 msgstr "Вилучити форматування %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:202
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:201
 #, python-format
 msgid "Save the %s format to disk"
 msgstr "Зберегти у форматі %s на диск"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:203
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:202
 #, python-format
 msgid "Restore the %s format"
 msgstr "Відновити формат %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:205
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:204
 #, python-format
 msgid "Set the book cover from the %s file"
 msgstr "Встановити обкладинку книги з файла %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:211
 #, python-format
 msgid "Compare to the %s format"
 msgstr "Порівняти з форматом %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:221
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:224
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:220
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:223
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:59
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:67
 #, python-format
 msgid "Open %s with..."
 msgstr "Відкрити %s за допомогою…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:227
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:226
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:62
 #, python-format
 msgid "Add other application for %s files..."
 msgstr "Додати іншу програму для файлів %s…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:228
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:227
 msgid "Edit Open With applications..."
 msgstr "Редагувати список програм для перегляду і редагування…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:234
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:233
 msgid "&Copy path to file"
 msgstr "&Копіювати шлях до файла"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:241
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:240
 msgid "&Copy link"
 msgstr "&Копіювати посилання"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:256
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:255
 #, python-format
 msgid "Search calibre for %s"
 msgstr "Шукати у calibre %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:269
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:268
 #, python-format
 msgid "Remove %s from this book"
 msgstr "Вилучити %s з цієї книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:390
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:389
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:272
 msgid "Paste cover"
 msgstr "Вставити обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:391
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:390
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:273
 msgid "Copy cover"
 msgstr "Копіювати обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:392
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:391
 msgid "Remove cover"
 msgstr "Вилучити обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:393
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:392
 msgid "Generate cover from metadata"
 msgstr "Створити обкладинку за метаданими"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:402
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:405
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:401
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:404
 msgid "Open cover with..."
 msgstr "Відкрити обкладинку за допомогою…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:408
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:407
 msgid "Add another application to open cover..."
 msgstr "Додати програму для відкриття обкладинок…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:409
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:408
 msgid "Edit Open with applications..."
 msgstr "Змінити програми «Відкрити за допомогою»…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:480
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:479
 msgid "Double click to open the Book details window"
 msgstr "Двічі клацніть, щоб відкрити вікно параметрів книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:481
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:480
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:82
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:226
 msgid "Path"
 msgstr "Шлях"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:482
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:481
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/book_info.py:189
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1201
@@ -11406,7 +11410,7 @@ msgid "Delete current preset"
 msgstr "Вилучити поточний шаблон"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:339
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:658
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:659
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:130
 msgid "Delete"
 msgstr "Вилучити"
@@ -11520,8 +11524,8 @@ msgstr "Повернутися до типового"
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_library_ui.py:83
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/device_category_editor_ui.py:75
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/device_category_editor_ui.py:77
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:608
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:612
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:609
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:613
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/saved_search_editor_ui.py:93
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/saved_search_editor_ui.py:96
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/saved_search_editor_ui.py:98
@@ -12659,7 +12663,7 @@ msgid "Change the title of this book"
 msgstr "Змінити назву цієї книги"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:162
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:610
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:611
 msgid "&Author(s): "
 msgstr "&Автори: "
 
@@ -12674,7 +12678,7 @@ msgid ""
 msgstr "Змінити авторів цієї книги. Записи декількох авторів слід відокремлювати комами."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:165
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:605
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:606
 msgid "&Publisher: "
 msgstr "Видавець: "
 
@@ -12683,7 +12687,7 @@ msgid "Ta&gs: "
 msgstr "Мі&тки: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:167
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:628
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:629
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1296
 msgid ""
 "Tags categorize the book. This is particularly useful while searching. "
@@ -12691,16 +12695,15 @@ msgid ""
 msgstr "Мітки категорій книги. Такі мітки корисні для полегшення пошуку книги.<br><br>Мітками можуть бути будь-які слова або словосполучення, відокремлені комами."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:168
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:602
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:133
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:134
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:590
 msgid "&Series:"
 msgstr "&Цикл:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:169
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:170
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:597
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:598
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:599
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:589
 msgid "List of known series. You can add new series."
 msgstr "Список відомих циклів. Ви можете додати нові цикли."
@@ -15061,7 +15064,7 @@ msgid "Set options for converting %s"
 msgstr "Встановіть параметри перетворення %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/comicconf_ui.py:92
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:116
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:117
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:222
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:195
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:213
@@ -15116,7 +15119,7 @@ msgstr "Звідки слід виконати вилучення?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/confirm_delete_location_ui.py:72
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:77
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:246
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:247
 msgid "Library"
 msgstr "Бібліотека"
 
@@ -15386,7 +15389,7 @@ msgstr "Розташування"
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:54
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:102
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:296
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:476
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:482
 msgid "Date"
 msgstr "Дата"
 
@@ -15508,7 +15511,7 @@ msgstr "Посилання"
 #: /home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.py:159
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:542
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/diff/view.py:253
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:658
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:659
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toc.py:139
 msgid "No matches found"
 msgstr "Відповідників не знайдено"
@@ -15568,7 +15571,7 @@ msgid "Manage authors"
 msgstr "Керування списком авторів"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog_ui.py:83
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:667
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:668
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:78
 msgid "&Search for:"
 msgstr "&Шукати:"
@@ -15802,7 +15805,7 @@ msgid "Find next match"
 msgstr "Знайти наступний відповідник"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs_ui.py:63
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:86
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search.py:30
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:183
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/char_select.py:762
@@ -15854,7 +15857,7 @@ msgid "You must select a matching book"
 msgstr "Вам слід вибрати книгу-відповідник"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/match_books_ui.py:71
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:221
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:246
 #: /home/kovid/work/calibre/src/calibre/gui2/font_family_chooser.py:233
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:241
 #: /home/kovid/work/calibre/src/calibre/gui2/search_box.py:139
@@ -16056,7 +16059,7 @@ msgid "Search/replace is invalid: %s"
 msgstr "Пошук/Заміна є некоректним: %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1078
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:657
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:658
 msgid "Delete saved search/replace"
 msgstr "Вилучити збережений пошук/заміну"
 
@@ -16080,43 +16083,43 @@ msgid ""
 "sure?"
 msgstr "Запис пошуку або заміни з такою назвою вже існує, його буде перезаписано. Ви справді цього бажаєте?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:568
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:569
 msgid "Edit meta information"
 msgstr "Редагувати мета інформацію"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:569
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:570
 msgid ""
 "If enabled, the book list will be re-sorted and any existing\n"
 "search or Virtual library will be refreshed after the edit\n"
 "is completed. This can be slow on large libraries."
 msgstr "Якщо позначено, після завершення редагування список книг\nбуде перевпорядковано, а всі наявні пошуки або віртуальні\nбібліотеки буде оновлено. У великих бібліотеках виконання\nцієї дії може бути доволі тривалим."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:572
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:573
 msgid "&Refresh book list after edit"
 msgstr "&Оновлювати список книг після редагування"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:573
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:574
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1689
 msgid "&Date:"
 msgstr "&Дата:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:574
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:609
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:575
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:610
 msgid "&Apply date"
 msgstr "З&астосувати дату"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:575
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:576
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1761
 msgid "P&ublished:"
 msgstr "&Опубліковано:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:576
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:577
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:578
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:231
 msgid "Open Tag editor"
 msgstr "Відкрити редактор міток"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:578
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:579
 msgid ""
 "This will cause the author sort field to be automatically updated\n"
 " based on the authors field for each selected book. Note that if\n"
@@ -16124,35 +16127,35 @@ msgid ""
 " field is updated anyway, regardless of the value of this checkbox."
 msgstr "За допомогою цього пункту можна наказати програмі\n автоматично оновлювати вміст поля упорядковування\n за автором на основі вмісту поля авторів для кожної\n позначеної книги. Зауважте, що якщо ви скористаєтеся\n засобом керування, розташованим вище, для пакетного\n встановлення авторів, вміст поля упорядковування за автором\n буде оновлено без врахування того, чи було позначено\n цей пункт."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:582
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:583
 msgid "A&utomatically set author sort"
 msgstr "Ав&томатично встановлювати впорядкування авторів"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:583
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:584
 msgid "S&wap title and author"
 msgstr "По&міняти місцями автора і заголовок"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:584
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:585
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1261
 msgid "&Rating:"
 msgstr "Оцінка:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:585
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:586
 msgid "&Apply rating"
 msgstr "З&астосувати оцінку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:586
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:587
 msgid ""
 "Remove stored conversion settings for the selected books.\n"
 "\n"
 "Future conversion of these books will use the default settings."
 msgstr "Вилучити збережені параметри перетворення для позначених книг.\n\nДля наступних перетворень цих книг буде використано типові параметри."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:589
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:590
 msgid "Remove &stored conversion settings for the selected books"
 msgstr "Вилучити з&бережені параметри перетворення для позначених книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:590
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:591
 msgid ""
 "When doing a same format to same format conversion,\n"
 "for e.g., EPUB to EPUB, calibre saves the original EPUB\n"
@@ -16161,49 +16164,53 @@ msgid ""
 " conversion of a large number of books and something went wrong."
 msgstr "Під час виконання перетворення зі збереженням формату,\nнаприклад з EPUB у EPUB, calibre зберігає початковий файл EPUB\n як ORIGINAL_EPUB. За допомогою цього параметра можна наказати\n calibre відновити EPUB з ORIGINAL_EPUB. Може знадобитися у\n разі невдалого пакетного перетворення багатьох книг одразу."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:595
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:596
 msgid "Restore pre conversion &originals, if available"
 msgstr "Відновити &оригінали до перетворення, якщо можна"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:596
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:597
 msgid "Comma separated list of tags to remove from the books. "
 msgstr "Список міток, відокремлених комами, які слід вилучити з книг. "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:599
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:600
 msgid "&Remove tags:"
 msgstr "&Вилучити мітки:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:600
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:601
 msgid "Add ta&gs: "
 msgstr "&Додати мітки: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:601
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:602
 msgid "Author s&ort: "
 msgstr "Впо&рядкування авторів: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:603
+msgid "Ser&ies:"
+msgstr "&Цикл:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:604
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1362
 msgid "&Languages:"
 msgstr "&Мови:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:604
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:631
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:605
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:632
 msgid "Remove &all"
 msgstr "Вилучити &всі"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:607
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:608
 msgid "Clear published date"
 msgstr "Вилучити дату видання"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:613
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:614
 msgid "If checked, the series will be cleared"
 msgstr "Якщо позначено, цикли буде спорожнено"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:614
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:615
 msgid "&Clear series"
 msgstr "С&порожнити цикли"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:615
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:616
 msgid ""
 "If not checked, the series number for the books will be set to 1.\n"
 "If checked, selected books will be automatically numbered, in the order\n"
@@ -16211,246 +16218,251 @@ msgid ""
 "Book A will have series number 1 and Book B series number 2."
 msgstr "Якщо не позначено, номер у циклі для всіх книг буде встановлено у значення 1.\nЯкщо позначено, програма автоматично виконає нумерацію позначених книг за\nпорядком їхнього позначення. Отже, якщо ви позначили книгу A, а потім книгу B,\nкнига A матиме номер у циклії 1, а книга B — номер 2."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:619
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:620
 msgid "&Automatically number books in this series"
 msgstr "&Автоматично нумерувати книги у цьому циклі"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:620
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:621
 msgid ""
 "Series will normally be renumbered from the highest number in the database\n"
 "for that series. Checking this box will tell calibre to start numbering\n"
 "from the value in the box"
 msgstr "Типово нумерування циклу здійснюватиметься від найбільшого номера у\nбазі даних. Позначення цього пункту призведе до використання у calibre\nпочаткового номера, вказаного у полі."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:623
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:624
 msgid "&Force numbers to start with:"
 msgstr "Зробити, щоб &числа починалися з:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:624
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:625
 msgid ""
 "The amount by which to increment the series number for successive books. "
 "Only applicable when using force series numbers."
 msgstr "Крок збільшення номеру у циклі для послідовних книг. Застосовується, лише якщо номери у циклі задаються у примусовому порядку."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:625
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:626
 msgid "+ "
 msgstr "+ "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:626
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:627
 msgid "If checked, the publisher will be cleared"
 msgstr "Якщо позначено, поле видавця буде спорожнено"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:627
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:628
 msgid "&Clear pub"
 msgstr "Ви&лучити дані щодо видавця"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:629
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:630
 msgid ""
 "Specify how the author(s) of this book should be sorted. For example Charles"
 " Dickens should be sorted as Dickens, Charles."
 msgstr "Вкажіть спосіб впорядковування запису авторів цієї книги. Приклад: запис «Чарлз Діккенс» буде впорядковано так: «Діккенс, Чарлз»."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:630
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:631
 msgid "Check this box to remove all tags from the books."
 msgstr "Позначте цей пункт, щоб вилучити всі мітки з книг."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:632
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:633
 msgid ""
 "Force the title to be in title case. If both this and swap authors are checked,\n"
 "title and author are swapped before the title case is set"
 msgstr "Примусово визначити для заголовка використання великих літер. Якщо позначено цей пункт і пункт зміни порядку у з записах авторів,\nпорядок у записах заголовків та авторів буде змінено до зміни регістру символів у заголовку."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:634
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:635
 msgid "Change title to title &case"
 msgstr "Змінити регістр літер заголовка на &верхній"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:635
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:636
 msgid ""
 "Update title sort based on the current title. This will be applied only "
 "after other changes to title."
 msgstr "Оновити впорядкування заголовка на основі поточного заголовка. Цю дію буде виконано лише після внесення інших змін до заголовка."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:636
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:637
 msgid "Update &title sort"
 msgstr "Оновити в&порядковування за заголовками"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:637
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:638
 msgid "Change &cover"
 msgstr "Змінити &обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:638
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:639
 msgid "&Generate default cover"
 msgstr "С&творити типову обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:639
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:640
 msgid "&Remove cover"
 msgstr "&Вилучити обкладинку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:640
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:641
 msgid ""
 "Try to automatically detect and remove borders and extra space\n"
 " from the edges of cover images. This can sometimes remove too\n"
 " much, so use with care."
 msgstr "Спробувати автоматично визначити і вилучити поля та зайві області\n на краях зображень обкладинок. Іноді може бути обрізано надто\n багато, тому з цією можливістю слід бути обережними."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:643
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:644
 msgid "&Trim cover (DANGEROUS)"
 msgstr "&Обрізати обкладинку (НЕБЕЗПЕЧНО)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:644
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:645
 msgid "Set from &e-book file(s)"
 msgstr "Встановити з файлів &електронних книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:645
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:646
 msgid ""
 "Set the covers of all selected books to be the same\n"
 "as that of the first selected book."
 msgstr "Зробити зображення обкладинок для усіх позначених книг тими самими,\nщо і зображення обкладинки першої з позначених книг."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:647
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:648
 msgid "&Clone covers"
 msgstr "&Клонувати обкладинки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:648
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:649
 msgid "Control how the default generated covers are created"
 msgstr "Керування створенням типових зображень обкладинок"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:649
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:650
 msgid "Configure co&ver generation"
 msgstr "Налаштувати с&творення обкладинок"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:650
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:651
 msgid "Set the co&mments for all selected books"
 msgstr "Визначити &коментарі для усіх позначених книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:651
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:652
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:728
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:898
 msgid "&Basic metadata"
 msgstr "&Базові метадані"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:652
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:653
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:735
 msgid "&Custom metadata"
 msgstr "&Нетипові метадані"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:653
-msgid "Load searc&h/replace:"
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:654
+msgid "&Load search/replace:"
 msgstr "Завантажити по&шук/заміну:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:654
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:655
 msgid "Select saved search/replace to load."
 msgstr "Виберіть збережені параметри пошуку або заміни."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:655
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:656
 msgid "Save current search/replace"
 msgstr "Зберегти поточні параметри пошуку або заміни"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:656
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:657
 msgid "Sa&ve"
 msgstr "Збе&регти"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:659
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:660
 msgid "Search &field:"
 msgstr "П&оле пошуку:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:660
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:661
 msgid "The name of the field that you want to search"
 msgstr "Назва поля, пошук у якому слід виконати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:661
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:662
 msgid "Search &mode:"
 msgstr "&Режим пошуку:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:662
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:663
 msgid ""
 "Choose whether to use basic text matching or advanced regular expression "
 "matching"
 msgstr "Виберіть, використовувати встановлення базової відповідності за текстом чи відповідності за формальним виразом."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:663
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:685
-msgid "Identifier type:"
-msgstr "Тип ідентифікатора:"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:664
+msgid "&Identifier type:"
+msgstr "Тип &ідентифікатора:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:665
 msgid "Choose which identifier type to operate upon"
 msgstr "Виберіть, який тип ідентифікаторів слід обробити"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:665
-msgid "Te&mplate:"
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:666
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:136
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:486
+msgid "&Template:"
 msgstr "&Шаблон:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:666
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:667
 msgid "Enter a template to be used as the source for the search/replace"
 msgstr "Вкажіть шаблон, який слід використовувати як джерело для пошуку і заміни"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:668
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:669
 msgid ""
 "Enter what you are looking for, either plain text or a regular expression, "
 "depending on the mode"
 msgstr "Вкажіть ключові слова пошуку у форматі звичайного тексту або у форматі формального виразу, залежно від режиму"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:669
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:670
 msgid ""
 "Check this box if the search string must match exactly upper and lower case."
 " Uncheck it if case is to be ignored"
 msgstr "Позначте цей пункт, якщо рядок пошуку має відповідати тексту повністю, з врахуванням регістру літер. Зніміть позначку, якщо регістр символів не має значення."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:670
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:671
 msgid "Cas&e sensitive"
 msgstr "З ура&хуванням регістру"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:671
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:672
 msgid "&Replace with:"
 msgstr "&Замінити на:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:672
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:673
 msgid ""
 "The replacement text. The matched search text will be replaced with this "
 "string"
 msgstr "Текст заміни. Знайдені фрагменти тексту буде замінено цим фрагментом тексту."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:673
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:674
 msgid "&Apply function after replace:"
 msgstr "&Застосувати функцію після заміни:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:674
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:675
 msgid ""
 "Specify how the text is to be processed after matching and replacement. In character mode, the entire\n"
 "field is processed. In regular expression mode, only the matched text is processed"
 msgstr "Визначити спосіб обробки фрагментів тексту після встановлення відповідності і заміни. У режимі символів, буде оброблено все поле.\nУ режимі формального виразу оброблятиметься лише фрагмент тексту зі встановленою відповідністю."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:676
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:677
 msgid "&Destination field:"
 msgstr "По&ле призначення:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:677
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:678
 msgid ""
 "The field that the text will be put into after all replacements.\n"
 "If blank, the source field is used if the field is modifiable"
 msgstr "Поле, до якого буде вставлено текст після виконання всіх замін.\nЯкщо поля не вказано, буде використано початкове поле, якщо воно придатне до редагування."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:679
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:680
 msgid "M&ode:"
 msgstr "Ре&жим:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:680
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:681
 msgid "Specify how the text should be copied into the destination."
 msgstr "Вкажіть, у який спосіб текст буде скопійовано до призначення."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:681
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:682
 msgid ""
 "Specifies whether result items should be split into multiple values or\n"
 "left as single values. This option has the most effect when the source field is\n"
 "not multiple and the destination field is multiple"
 msgstr "Визначає, слід розділяти пункти результатів на декілька значень чи\nзализати результати єдиними значеннями. Найкращого ефекту можна досягти, якщо поле\nджерела містить одне значення, а поле призначення містить декілька значень."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:684
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:685
 msgid "Split &result"
 msgstr "Роз&ділити результат"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:686
+msgid "Identifier type:"
+msgstr "Тип ідентифікатора:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:687
 msgid ""
 "<p>Choose which identifier type to operate upon. When the\n"
 "              source field is something other than 'identifiers' you can enter\n"
@@ -16458,37 +16470,37 @@ msgid ""
 "              the result of the search/replace.</p>"
 msgstr "<p>Виберіть тип ідентифікатор для роботи. Якщо у полі джерела міститься\n              запис, відмінний від «identifiers», ви можете вказати\n              «*», якщо хочете замінити весь набір ідентифікаторів на результат\n              виконання дії з пошуку/заміни.</p>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:690
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:691
 msgid "For multiple-valued fields, sho&w"
 msgstr "Для полів з декількома значеннями, по&казати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:691
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:692
 msgid "val&ues starting at"
 msgstr "зна&чення, які починаються з"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:692
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:693
 msgid "with values separated b&y"
 msgstr "зі значеннями, відо&кремленими"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:693
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:694
 msgid ""
 "Used when displaying test results to separate values in multiple-valued "
 "fields"
 msgstr "Використовується під час показу результатів тестування для відокремлення значень полів з декількома значеннями"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:694
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:695
 msgid "Test text"
 msgstr "Текст для тестування"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:695
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:696
 msgid "Test result"
 msgstr "Результат тестування"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:696
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:697
 msgid "Your &test:"
 msgstr "Ваш &тест:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:697
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:698
 msgid "&Search and replace"
 msgstr "П&ошук з заміною"
 
@@ -16904,87 +16916,108 @@ msgstr "Додаток: %s не може бути вимкнено"
 msgid "Aborting..."
 msgstr "Переривання…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:213
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:237
 #, python-brace-format
 msgid "The Quickview shortcut ({0}) shows/hides the Quickview panel"
 msgstr "Скорочення швидкого перегляду ({0}) показує або ховає панель швидкого перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:214
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:87
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:238
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:93
 msgid "Search in the library view for the currently highlighted selection"
 msgstr "Шукати на панелі бібліотеки поточний позначений фрагмент"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:217
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:241
 msgid "Undock"
 msgstr "Відшвартувати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:218
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:242
 msgid "Pop up the quickview panel into its own floating window"
 msgstr "Розмістити панель швидкого перегляду у окремому рухомому вікні"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:220
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:245
 msgid "Lock Quickview contents"
 msgstr "Заблокувати вміст швидкого перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:225
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:247
+msgid "Refresh"
+msgstr "Оновити"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:251
 msgid "Embed the quickview panel into the main calibre window"
 msgstr "Вбудувати панель швидкого перегляду до головного вікна Calibre"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:393
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:426
 #, python-brace-format
 msgid "&Item: {0} ({1})"
 msgstr "&Запис: {0} ({1})"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:434
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:467
 msgid "**No items found**"
 msgstr "** Не знайдено жодного об’єкта **"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:435
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:468
 msgid ""
 "Click in a column  in the library view to see the information for that book"
 msgstr "Натисніть стовпчик на панелі бібліотеки, щоб переглянути інформацію для цієї книги."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:455
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:488
 #, python-brace-format
 msgid "&Books with selected item \"{0}\": {1}"
 msgstr "&Книги з вибраним записом «{0}»: {1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:464
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:497
 msgid ""
 "Double click on a book to change the selection in the library view or change"
-" the column shown in the left-hand pane. Shift- or control-double-click to "
+" the column shown in the left-hand pane. Shift- or Control- double click to "
 "edit the metadata of a book, which also changes the selected book."
 msgstr "Двічі клацніть на пункті книги, щоб змінити позначення на панелі перегляду бібліотеки або змінити стовпчик, показаний на лівій панелі. Комбінаціями Shift-клацання та Ctrl-клацання можна скористатися для редагування метаданих книги. Це також змінити позначену книгу."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:502
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:536
 msgid "Something went wrong while filling in the table"
 msgstr "Під час заповнення таблиці сталися якісь помилки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:556
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:590
 msgid "Quickview: Book not in library view"
 msgstr "Швидкий перегляд: книги немає на панелі перегляду бібліотеки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:557
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.py:591
 msgid ""
 "The book you selected is not currently displayed in the library view, "
 "perhaps because of a search, so Quickview cannot select it."
 msgstr "Позначену вами книгу зараз не показано на панелі показу бібліотеки, можливо, через параметри пошуку, отже Швидкий перегляд не може вибрати її."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:82
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:88
 msgid "&Lock Quickview contents"
 msgstr "За&блокувати вміст пришвидшеного перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:83
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:89
 msgid ""
 "<p>Select to prevent Quickview from changing content when the\n"
 "        selection on the library view is changed</p>"
 msgstr "<p>Позначте, щоб запобігти зміні вмісту панелі пришвидшеного перегляду у відповідь на зміну позначення на панелі бібліотеки.</p>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:85
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:91
 msgid "&Dock"
 msgstr "&Швартувати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:88
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:94
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:237
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/check_links.py:79
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:242
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:262
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1388
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/spell.py:921
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/toc.py:146
+msgid "&Refresh"
+msgstr "&Оновити"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:95
+msgid ""
+"When Quickview is locked, refresh the window using the last selected book "
+"and that book's value in the last selected column."
+msgstr "Якщо швидкий перегляд заблоковано, оновити вікно на основі даних останньої позначеної книги і значення книги у останньому позначеному стовпчику."
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:96
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:181
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:74
 #: /home/kovid/work/calibre/src/calibre/gui2/store/web_store_dialog_ui.py:58
@@ -17180,7 +17213,7 @@ msgid "every hour"
 msgstr "кожної години"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:185
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:205
 msgid "days"
 msgstr "днів"
 
@@ -17452,26 +17485,26 @@ msgstr "&Точно ця фраза:"
 msgid "O&ne or more of these words:"
 msgstr "&Одне або декілька таких слів:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:104
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:105
 #: /home/kovid/work/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:211
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:209
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:173
 msgid "Any of these &unwanted words:"
 msgstr "Будь-яке з цих &небажаних слів:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:109
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:110
 msgid "Titl&e/author/series..."
 msgstr "Наз&ва/Автор/Цикл…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:115
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:116
 msgid "The title to search for"
 msgstr "Назва, яку слід знайти"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:119
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:120
 msgid "The author to search for"
 msgstr "Автор, якого слід знайти"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:125
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:126
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:224
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:215
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:167
@@ -17479,72 +17512,72 @@ msgstr "Автор, якого слід знайти"
 msgid "&Author:"
 msgstr "&Автор:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:128
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:129
 msgid "The series to search for"
 msgstr "Цикл, який слід знайти"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:136
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:137
 msgid "The tags to search for"
 msgstr "Мітки, які слід знайти"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:138
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:139
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1295
 msgid "Ta&gs:"
 msgstr "Мі&тки:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:158
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:159
 msgid "&Date searches"
 msgstr "Пошуки за &датою"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:173
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:174
 msgid "&Search the"
 msgstr "&Шукати"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:178
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:179
 msgid "date column for books whose &date is "
 msgstr "стовпчик дати для книг, &датою яких є "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:186
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:187
 msgid "&year"
 msgstr "&рік"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:190
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:191
 msgid "mo&nth"
 msgstr "міс&яць"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:193
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:194
 msgid "&day"
 msgstr "&день"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:205
 msgid "months"
 msgstr "місяців"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:205
 msgid "weeks"
 msgstr "тижнів"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:205
 msgid "years"
 msgstr "роки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:205
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:206
 msgid "ago"
 msgstr "тому"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:213
 msgid "This month"
 msgstr "Цього місяця"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:213
 msgid "Today"
 msgstr "Сьогодні"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:213
 msgid "Yesterday"
 msgstr "Вчора"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:226
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:227
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:232
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:234
 #: /home/kovid/work/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:201
@@ -18457,16 +18490,6 @@ msgid ""
 " or Public Domain."
 msgstr "Умови ліцензування піктограм з цієї теми. Типовими варіантами є Creative Commons і Public Domain."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:237
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/check_links.py:79
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:242
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:262
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1388
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/spell.py:921
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/toc.py:146
-msgid "&Refresh"
-msgstr "&Оновити"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:279
 #, python-format
 msgid "%d icons missing in this theme"
@@ -18657,7 +18680,7 @@ msgid "%(num)d of %(total)d books"
 msgstr "%(num)d з %(total)d книг"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:304
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:157
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:158
 msgid "one book"
 msgid_plural "{} books"
 msgstr[0] "{} книга"
@@ -18725,7 +18748,7 @@ msgid "Restore hidden tabs"
 msgstr "Відновити приховані вкладки"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:514
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:384
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:385
 msgid "Hide virtual library tabs"
 msgstr "Приховати вкладки віртуальної бібліотеки"
 
@@ -19089,7 +19112,7 @@ msgstr "Клацніть на цьому стовпчику і натисніт�
 
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:994
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:419
-#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:234
+#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:242
 msgid "Description:"
 msgstr "Опис:"
 
@@ -19147,78 +19170,104 @@ msgstr "Двічі клацніть, щоб <b>редагувати</b> мене
 msgid "The lookup/search name is \"{0}\""
 msgstr "Назва пошуку — «{0}»"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:305
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:309
 msgid "Cannot hide all columns"
 msgstr "Неможливо сховати усі стовпчики"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:306
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:310
 msgid "You must not hide all columns"
 msgstr "Вам не слід ховати усі стовпчики"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:345
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:349
 #, python-format
 msgid "Hide column %s"
 msgstr "Сховати стовпчик %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:350
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:354
 #, python-format
 msgid "Sort on %s"
 msgstr "Впорядкувати за %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:351
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:355
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1048
 msgid "Ascending"
 msgstr "зростанням"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:354
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:358
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1048
 msgid "Descending"
 msgstr "спаданням"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:366
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:370
 #, python-format
 msgid "Change text alignment for %s"
 msgstr "Змінити вирівнювання тексту для %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:368
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:372
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:404
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:314
 msgid "Left"
 msgstr "Ліворуч"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:368
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:372
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:404
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:314
 msgid "Right"
 msgstr "Праворуч"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:369
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:373
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:78
 msgid "Center"
 msgstr "За центром"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:379
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:383
 #, python-format
 msgid "Quickview column %s"
 msgstr "Стовпчик швидкого перегляду %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:396
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:400
 msgid "Show column"
 msgstr "Показувати стовпчик"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:407
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:411
 msgid "Shrink column if it is too wide to fit"
 msgstr "Звузити стовпчик, якщо він є занадто широким"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:410
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:414
 msgid "Restore default layout"
 msgstr "Відновити типове компонування"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1212
+#: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1216
 msgid ""
 "Dropping onto a device is not supported. First add the book to the calibre "
 "library."
 msgstr "Підтримки скидання на пристрій не передбачено. Спочатку додайте книгу до бібліотеки calibre."
+
+#: /home/kovid/work/calibre/src/calibre/gui2/linux_file_dialogs.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/linux_file_dialogs.py:237
+#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:173
+#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:251
+#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:277
+msgid "All files"
+msgstr "Усі файли"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/linux_file_dialogs.py:200
+#: /home/kovid/work/calibre/src/calibre/gui2/linux_file_dialogs.py:277
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:511
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/texture_chooser.py:112
+#: /home/kovid/work/calibre/src/calibre/gui2/qt_file_dialogs.py:196
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:276
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:48
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:756
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1297
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:89
+#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:263
+msgid "Images"
+msgstr "Зображення"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/linux_file_dialogs.py:264
+msgid "File name"
+msgstr "Назва файла"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/config_ui.py:47
 msgid "Configure Viewer"
@@ -19314,8 +19363,9 @@ msgid "Next match"
 msgstr "Наступний збіг"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main_ui.py:132
-msgid "Open ebook"
-msgstr "Відкрити ел. книгу"
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:400
+msgid "Open e-book"
+msgstr "Відкрити електронну книгу"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/main.py:40
 msgid ""
@@ -19523,7 +19573,7 @@ msgid "Unhandled exception"
 msgstr "Непридатне до обробки виключення"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:168
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:310
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:320
 msgid "&Redo"
 msgstr "&Повторити"
 
@@ -21835,11 +21885,6 @@ msgid ""
 "will be replaced with the actual identifier value."
 msgstr "Шаблон, використаний для створення посилання. Замінник {id} у шаблоні буде замінено на справжнє значення ідентифікатора."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:136
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:486
-msgid "&Template:"
-msgstr "&Шаблон:"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:143
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:167
 msgid "Key"
@@ -23344,7 +23389,7 @@ msgid ""
 msgstr "Вимога надання імені користувача і пароля запобігає доступу до вашої бібліотеки calibre з боку сторонніх осіб. Також ім’я користувача і пароль потрібні для внесення змін до бібліотеки та синхронізації даних щодо позиції читання та анотацій."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:296
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:185
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:186
 msgid "Change password for {}"
 msgstr "Змінити пароль до {}"
 
@@ -23479,7 +23524,7 @@ msgid ""
 msgstr "Якщо позначено, користувачеві буде дозволено вносити зміни до бібліотеки, зокрема додавати книги, вилучати книги, редагувати метадані тощо."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:610
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:129
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:130
 msgid "{} is currently only allowed to access the libraries named: {}"
 msgstr "{} зараз надано доступ лише до бібліотек із такими назвами: {}"
 
@@ -23488,7 +23533,7 @@ msgid "Change the allowed libraries"
 msgstr "Змінити дозволені бібліотеки"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:615
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:133
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:134
 msgid "{} is currently not allowed to access the libraries named: {}"
 msgstr "{} зараз заборонено доступ до бібліотек із такими назвами: {}"
 
@@ -23984,6 +24029,10 @@ msgstr "Вказані вами коригування є некоректним
 msgid "View log"
 msgstr "Показати журнал"
 
+#: /home/kovid/work/calibre/src/calibre/gui2/qt_file_dialogs.py:29
+msgid "Choose Files"
+msgstr "Виберіть файли"
+
 #: /home/kovid/work/calibre/src/calibre/gui2/save.py:87
 msgid "Collecting metadata..."
 msgstr "Збираємо метадані…"
@@ -24070,7 +24119,7 @@ msgstr "Помилки при збереженні"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_box.py:50
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:129
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:312
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:322
 msgid "&Paste"
 msgstr "В&ставити"
 
@@ -24282,12 +24331,12 @@ msgid "You must provide a search to define the new virtual library"
 msgstr "Вам слід вказати критерій пошуку для визначення нової віртуальної бібліотеки"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:294
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:443
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:444
 msgid "Invalid search"
 msgstr "Некоректний критерій пошуку"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:295
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:444
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:445
 msgid "The search in the search box is not valid"
 msgstr "Критерій пошуку у полі для пошуку є некоректним"
 
@@ -24306,7 +24355,7 @@ msgid "<None>"
 msgstr "<Немає>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:322
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:531
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:532
 msgid "*current search"
 msgstr "*поточний пошук"
 
@@ -24340,23 +24389,23 @@ msgstr "Змінити віртуальну бібліотеку"
 msgid "Remove Virtual library"
 msgstr "Вилучити віртуальну бібліотеку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:372
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:373
 msgid "Create Virtual library"
 msgstr "Створити віртуальну бібліотеку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:386
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:387
 msgid "Show virtual libraries as tabs"
 msgstr "Показувати віртуальні бібліотеки як вкладки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:435
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:436
 msgid "No search"
 msgstr "Немає критеріїв пошуку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:436
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:437
 msgid "There is no current search to use"
 msgstr "Немає поточних критерії пошуку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:486
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:487
 #, python-brace-format
 msgid "Are you sure you want to remove the virtual library <b>{0}</b>?"
 msgstr "Ви справді хочете вилучити віртуальну бібліотеку <b>{0}</b>?"
@@ -24823,7 +24872,7 @@ msgid "Books in this category are unrated"
 msgstr "Книги у цій категорії не мають оцінок"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:213
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:161
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:162
 msgid "Search expression:"
 msgstr "Вираз для пошуку:"
 
@@ -24833,13 +24882,13 @@ msgid "Number of books: %s"
 msgstr "Кількість книг: %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:409
-#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:227
+#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:235
 #, python-brace-format
 msgid "The grouped search term name is \"{0}\""
 msgstr "Назва згрупованого ключа пошуку — «{0}»"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:420
-#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:235
+#: /home/kovid/work/calibre/src/calibre/srv/metadata.py:243
 #, python-brace-format
 msgid "The lookup/search name is \"{0}\"{1}"
 msgstr "Назва фільтра/пошуку — «{0}»{1}"
@@ -28739,7 +28788,7 @@ msgstr "Шрифт-"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:49
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:90
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:317
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:327
 msgid "Fonts"
 msgstr "Шрифти"
 
@@ -32079,7 +32128,7 @@ msgid "Options to customize the e-book viewer"
 msgstr "Параметри вікна перегляду електронної книги"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config.py:35
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1176
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1177
 msgid "Remember last used window size"
 msgstr "Пам’ятати останні використані розміри вікон"
 
@@ -32924,112 +32973,112 @@ msgstr "П&ерезавантажити книгу"
 msgid "Clear list of recently opened books"
 msgstr "Спорожнити список нещодавно відкрити книг"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:427
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:428
 msgid "Failed to use dictionary"
 msgstr "Не вдалося скористатися словником"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:428
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:429
 #, python-format
 msgid ""
 "Failed to use the custom dictionary for language: %s Falling back to default"
 " dictionary."
 msgstr "Не вдалося скористатися нетиповим словником для мови %s Повертаємося до використання типового словника."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:435
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:436
 msgid "No book opened"
 msgstr "Не відкрито жодної книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:436
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:437
 msgid "Cannot print as no book is opened"
 msgstr "Друк неможливий, оскільки не відкрито жодної книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:563
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:564
 msgid "No such location"
 msgstr "Такої адреси немає"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:564
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:565
 msgid "The location pointed to by this item does not exist."
 msgstr "Адреси, на яку вказує цей пункт не існує."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:615
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:616
 msgid "Choose e-book"
 msgstr "Виберіть книгу"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:616
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:617
 msgid "E-books"
 msgstr "Електронні книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:633
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:634
 #, python-format
 msgid "Current magnification: %(mag).1f"
 msgstr "Поточний масштаб: %(mag).1f"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:659
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:660
 #, python-format
 msgid "No matches found for: %s"
 msgstr "Не знайдено збігів для: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:709
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:710
 msgid "Loading flow..."
 msgstr "Завантаження послідовності…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:787
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:788
 #, python-format
 msgid "Laying out %s"
 msgstr "Компонування %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:889
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:890
 #, python-format
 msgid "Bookmark #%d"
 msgstr "Закладка %d"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:893
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:894
 msgid "Add bookmark"
 msgstr "Додати закладку"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:894
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:895
 msgid "Enter title for bookmark:"
 msgstr "Вкажіть назву закладки:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:915
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:916
 #, python-format
 msgid "Bookmark this location [%s]"
 msgstr "Додати у цьому місці закладку [%s]"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:916
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:917
 msgid "Show/hide bookmarks"
 msgstr "Показати або приховати закладки"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:964
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:965
 msgid "Loading e-book..."
 msgstr "Завантажуємо електронну книгу…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:979
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:980
 msgid "Could not open e-book"
 msgstr "Не вдалося відкрити електронну книгу"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:980
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:981
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1163
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1164
 msgid "Options to control the e-book viewer"
 msgstr "Параметри керування переглядом ел. книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1170
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1171
 msgid ""
 "If specified, viewer window will try to come to the front when started."
 msgstr "Якщо вказано, буде виконано спробу перевести вікно перегляду на передній план під час запуску."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1173
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1174
 msgid "If specified, viewer window will try to open full screen when started."
 msgstr "Якщо вказано, буде виконано спробу відкрити вікно перегляду на весь екран під час запуску."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1178
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1179
 msgid "Print javascript alert and console messages to the console"
 msgstr "Вивести попередження javascript та консольні повідомлення до консолі"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1180
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1181
 msgid ""
 "The position at which to open the specified book. The position is a location"
 " as displayed in the top left corner of the viewer. Alternately, you can use"
@@ -33037,37 +33086,37 @@ msgid ""
 "of Contents entry that contains the string \"something\"."
 msgstr "Місце, на якому слід відкрити вказану книгу. Позначка місця визначає розташування у тексті верхнього лівого кута сторінки на панелі перегляду. Крім того, ви можете скористатися формою toc:щось, щоб відкрити місце у першій таблиці змісту, яке містить рядок «щось»."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1185
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1186
 msgid "Continue reading at the previously opened book"
 msgstr "Продовжити читання раніше відкритої книги"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1192
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1193
 msgid ""
 "%prog [options] file\n"
 "\n"
 "View an e-book.\n"
 msgstr "%prog [параметри] файл\n\nПереглянути електронну книгу\n"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1215
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1216
 msgid "Cannot start viewer"
 msgstr "Не вдалося запустити засіб перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1216
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1217
 msgid ""
 "Failed to start viewer, could not insure only a single instance of the "
 "viewer is running. Click \"Show Details\" for more information"
 msgstr "Не вдалося запустити засіб перегляду, оскільки не вдалося переконатися у тому, що запущено лише один екземпляр засобу перегляду. Натисніть кнопку «Показати подробиці», щоб дізнатися більше."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1225
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1226
 msgid "Connect to viewer failed"
 msgstr "Не вдалося зв’язатися із засобом перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1226
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1227
 msgid ""
 "Unable to connect to existing viewer window, try restarting the viewer."
 msgstr "Не вдалося зв’язатися із наявним вікно засобу перегляду, спробуйте його перезапустити."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1291
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/main.py:1292
 msgid "Failed to start viewer"
 msgstr "Не вдалося запустити засіб перегляду"
 
@@ -33240,10 +33289,6 @@ msgstr "Немає тем"
 msgid "You must first create some themes in the viewer preferences"
 msgstr "Вам слід спочатку створити якісь теми у налаштуваннях засобу перегляду"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:400
-msgid "Open e-book"
-msgstr "Відкрити електронну книгу"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:402
 msgid "Increase font size"
 msgstr "Збільшити розмір шрифту"
@@ -33328,29 +33373,23 @@ msgid "Choose a color"
 msgstr "Виберіть колір"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:127
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:311
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:321
 msgid "Cu&t"
 msgstr "Ви&різати"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:134
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:318
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:328
 msgid "&Step up"
 msgstr "&Крок вгору"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:135
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:319
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:329
 msgid "Step &down"
 msgstr "Крок в&низ"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/widgets2.py:204
 msgid "Not rated"
 msgstr "Без оцінки"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:173
-#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:251
-#: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:277
-msgid "All files"
-msgstr "Усі файли"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/__init__.py:593
 #, python-format
@@ -33383,9 +33422,9 @@ msgid "< &Back"
 msgstr "< &Назад"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/__init__.py:849
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:149
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:188
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:213
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:150
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:189
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:214
 #: /usr/src/qt5/qtbase/src/gui/kernel/qplatformtheme.cpp:696
 msgid "Cancel"
 msgstr "Скасувати"
@@ -34239,11 +34278,6 @@ msgstr "НЕКОРЕКТНА УМОВА"
 msgid " (%s books)"
 msgstr " (%s книг)"
 
-#: /home/kovid/work/calibre/src/calibre/library/database2.py:3656
-#, python-format
-msgid "<p>Migrating old database to ebook library in %s<br><center>"
-msgstr "<p>Перенесення старої бази даних до бібліотеки електронних книжок у %s<br><center>"
-
 #: /home/kovid/work/calibre/src/calibre/library/database2.py:3685
 #, python-format
 msgid "Copying <b>%s</b>"
@@ -34500,8 +34534,8 @@ msgid "Change language"
 msgstr "Змінити мову"
 
 #: /home/kovid/work/calibre/src/calibre/srv/ajax.py:287
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:415
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:476
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:417
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:482
 msgid "Newest"
 msgstr "Найновіші"
 
@@ -34587,197 +34621,197 @@ msgid "The username %s does not exist"
 msgstr "Запису користувача %s не існує"
 
 #: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:70
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:92
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:93
 msgid "Enter the username"
 msgstr "Введіть ім’я користувача"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:76
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:77
 #, python-format
 msgid "Enter the new password for %s: "
 msgstr "Введіть новий пароль %s:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:78
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:79
 #: /home/kovid/work/calibre/src/calibre/srv/users.py:58
 msgid "Empty passwords are not allowed"
 msgstr "Не можна використовувати порожні паролі"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:81
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:82
 #, python-format
 msgid "Re-enter the new password for %s, to verify: "
 msgstr "Ще раз введіть новий пароль %s для перевірки:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:84
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:85
 msgid "Passwords do not match"
 msgstr "Паролі не збігаються"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:95
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:96
 #, python-format
 msgid "User %s added successfully!"
 msgstr "Запис користувача %s додано!"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:99
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:100
 #, python-format
 msgid "Are you sure you want to remove the user %s?"
 msgstr "Ви справді хочете вилучити запис користувача %s?"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:103
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:104
 #, python-format
 msgid "User %s successfully removed!"
 msgstr "Запис користувача %s вилучено!"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:108
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:109
 #, python-format
 msgid "Password for %s successfully changed!"
 msgstr "Пароль %s змінено!"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:112
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:113
 #, python-brace-format
 msgid "Current password for {0} is: {1}"
 msgstr "Поточним паролем для {0} є такий: {1}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:117
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:118
 msgid "Allow {} to make changes (i.e. grant write access)?"
 msgstr "Дозволити {} вносити зміни (тобто надати права запису)?"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:119
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:120
 msgid "Prevent {} from making changes (i.e. remove write access)?"
 msgstr "Заборонити {} вносити зміни (тобто відкликати доступ до запису)?"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:137
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:138
 msgid "{} has the following additional per-library restrictions:"
 msgstr "{} має такі додаткові обмеження на рівні окремих бібліотек:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:142
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:143
 msgid "{} has the no additional per-library restrictions"
 msgstr "{} не має додаткових обмежень на рівні окремих бібліотек"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:145
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:146
 msgid "Allow access to all libraries"
 msgstr "Дозволити доступ до усіх бібліотек"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:146
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:147
 msgid "Allow access to only specified libraries"
 msgstr "Дозволити доступ лише до вказаних бібліотек"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:147
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:148
 msgid "Allow access to all, except specified libraries"
 msgstr "Дозволити доступ до усіх бібліотек, окрім вказаних"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:148
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:149
 msgid "Change per-library restrictions"
 msgstr "Змінити права доступу до окремих бібліотек"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:154
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:155
 msgid "Enter the name of the library:"
 msgstr "Вкажіть назву бібліотеки:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:159
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:160
 msgid ""
 "Enter a search expression, access will be granted only to books matching "
 "this expression. An empty expression will grant access to all books."
 msgstr "Вкажіть вираз для пошуку. Доступ буде надано лише до книг, параметри яких відповідатимуть вказаному виразу. Порожнє значення виразу надасть доступ до усіх книг."
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:167
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:168
 msgid "Another restriction?"
 msgstr "Інші обмеження?"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:172
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:173
 msgid "Enter a comma separated list of library names:"
 msgstr "Вкажіть список назв бібліотек, відокремлених комами:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:175
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:176
 msgid "Allowing access only to libraries: {}"
 msgstr "Дозволено доступ лише до таких бібліотек: {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:176
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:177
 msgid "Allowing access to all libraries, except: {}"
 msgstr "Дозволено доступ до усіх бібліотек, окрім таких: {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:184
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:185
 msgid "Show password for {}"
 msgstr "Показати пароль для {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:186
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:187
 msgid "Change read/write permission for {}"
 msgstr "Змінити права читання або запису для {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:187
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:188
 msgid "Change the libraries {} is allowed to access"
 msgstr "Змінити бібліотеки, доступ до яких має {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:189
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:190
 msgid "{} has {} access"
 msgstr "{} має доступ {}"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:191
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:192
 msgid "read-write"
 msgstr "читання-запис"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:191
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:192
 msgid "readonly"
 msgstr "лише читання"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:210
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:211
 msgid "Add a new user"
 msgstr "Додати нового користувача"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:211
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:212
 msgid "Edit an existing user"
 msgstr "Змінити запис наявного користувача"
 
-#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:212
+#: /home/kovid/work/calibre/src/calibre/srv/manage_users_cli.py:213
 msgid "Remove a user"
 msgstr "Вилучити запис користувача"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:179
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:180
 msgid "one item"
 msgid_plural "{} items"
 msgstr[0] "{} запис"
 msgstr[1] "{} записи"
 msgstr[2] "{} записів"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:190
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:191
 #, python-format
 msgid "RATING: %s<br />"
 msgstr "ОЦІНКА: %s<br />"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:192
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:193
 #, python-format
 msgid "TAGS: %s<br />"
 msgstr "МІТКИ: %s<br />"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:194
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:195
 #, python-format
 msgid "SERIES: %(series)s [%(sidx)s]<br />"
 msgstr "ЦИКЛИ: %(series)s [%(sidx)s]<br />"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:290
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:291
 msgid "Books in your library"
 msgstr "Книги у вашій бібліотеці"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:295
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:296
 msgid "By "
 msgstr "Автор — "
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:296
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:297
 msgid "Books sorted by "
 msgstr "Книги, впорядковані за "
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:303
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:304
 msgid "Library:"
 msgstr "Бібліотека:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:306
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:307
 msgid "Change calibre library to:"
 msgstr "Змінити бібліотеку Calibre на:"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:416
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:433
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:418
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:435
 #, python-format
 msgid "By %s"
 msgstr "Автор: %s"
 
-#: /home/kovid/work/calibre/src/calibre/srv/opds.py:593
+#: /home/kovid/work/calibre/src/calibre/srv/opds.py:599
 #, python-brace-format
 msgid "By {0} :: {1}"
 msgstr "{0} :: {1}"
@@ -35120,8 +35154,8 @@ msgstr "Вам слід вказати принаймні одну бібліо�
 #: /home/kovid/work/calibre/src/calibre/srv/users.py:52
 msgid ""
 "For maximum compatibility you should use only the letters A-Z, the numbers "
-"0-9 and spaces or underscores in the username"
-msgstr "Для забезпечення максимальної сумісності у імені користувача вам слід використовувати лише літери від A до Z, цифри від 0 до 9 та пробіли з символами підкреслювання"
+"0-9, spaces, underscores and hyphens in the username"
+msgstr "Для забезпечення максимальної сумісності у імені користувача вам слід використовувати лише літери від A до Z, цифри від 0 до 9 та пробіли з символами підкреслювання і дефісами"
 
 #: /home/kovid/work/calibre/src/calibre/srv/users.py:62
 msgid "The password must contain only ASCII (English) characters and symbols"
@@ -35996,269 +36030,273 @@ msgstr "Зупинено"
 msgid "Working..."
 msgstr "Працюю…"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:238
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:248
 msgid "Brazilian Portuguese"
 msgstr "Бразильська португальська"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:239
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:249
 msgid "English (UK)"
 msgstr "Англійська (Великобританія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:240
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:250
 msgid "Simplified Chinese"
 msgstr "Спрощена китайська"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:241
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:251
 msgid "Traditional Chinese"
 msgstr "Традиційна китайська"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:242
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:252
 msgid "English"
 msgstr "Англійська"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:243
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:253
 msgid "English (United States)"
 msgstr "англійська (США)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:244
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:254
 msgid "English (Argentina)"
 msgstr "Англійська (Аргентина)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:245
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:255
 msgid "English (Australia)"
 msgstr "Англійська (Австралія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:246
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:256
 msgid "English (Japan)"
 msgstr "Англійська (Японія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:247
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:257
 msgid "English (Germany)"
 msgstr "Англійська (Німеччина)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:248
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:258
 msgid "English (Bulgaria)"
 msgstr "Англійська (Болгарія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:249
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:259
 msgid "English (Egypt)"
 msgstr "Англійська (Єгипет)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:250
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:260
 msgid "English (New Zealand)"
 msgstr "Англійська (Нова Зеландія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:251
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:261
 msgid "English (Canada)"
 msgstr "Англійська (Канада)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:252
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:262
 msgid "English (Greece)"
 msgstr "Англійська (Греція)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:253
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:263
 msgid "English (India)"
 msgstr "Англійська (Індія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:254
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:264
 msgid "English (Nepal)"
 msgstr "Англійська (Непал)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:255
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:265
 msgid "English (Thailand)"
 msgstr "Англійська (Таїланд)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:256
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:266
 msgid "English (Turkey)"
 msgstr "Англійська (Туреччина)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:257
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:267
 msgid "English (Cyprus)"
 msgstr "Англійська (Кіпр)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:258
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:268
 msgid "English (Czech Republic)"
 msgstr "Англійська (Чеська Республіка)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:259
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:269
 msgid "English (Philippines)"
 msgstr "Англійська (Філіппіни)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:260
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:270
 msgid "English (Pakistan)"
 msgstr "Англійська (Пакистан)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:261
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:271
 msgid "English (Poland)"
 msgstr "Англійська (Польща)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:262
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:272
 msgid "English (Croatia)"
 msgstr "Англійська (Хорватія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:263
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:273
 msgid "English (Hungary)"
 msgstr "Англійська (Угорщина)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:264
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:274
 msgid "English (Indonesia)"
 msgstr "Англійська (Індонезія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:265
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:275
 msgid "English (Israel)"
 msgstr "Англійська (Ізраїль)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:266
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:276
 msgid "English (Russia)"
 msgstr "Англійська (Росія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:267
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:277
 msgid "English (Singapore)"
 msgstr "Англійська (Сінгапур)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:268
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:278
 msgid "English (Yemen)"
 msgstr "Англійська (Ємен)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:269
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:279
 msgid "English (Ireland)"
 msgstr "Англійська (Ірландія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:270
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:280
 msgid "English (China)"
 msgstr "Англійська (Китай)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:271
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:281
 msgid "English (Taiwan)"
 msgstr "Англійська (Тайвань)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:272
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:282
 msgid "English (South Africa)"
 msgstr "Англійська (ПАР)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:273
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:283
 msgid "Spanish (Paraguay)"
 msgstr "Іспанська (Парагвай)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:274
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:284
 msgid "Spanish (Uruguay)"
 msgstr "Іспанська (Уругвай)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:275
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:285
 msgid "Spanish (Argentina)"
 msgstr "Іспанська (Аргентина)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:276
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:286
 msgid "Spanish (Costa Rica)"
 msgstr "Іспанська (Коста-Рика)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:277
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:287
 msgid "Spanish (Mexico)"
 msgstr "Іспанська (Мексика)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:278
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:288
 msgid "Spanish (Cuba)"
 msgstr "Іспанська (Куба)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:279
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:289
 msgid "Spanish (Chile)"
 msgstr "Іспанська (Чилі)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:280
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:290
 msgid "Spanish (Ecuador)"
 msgstr "Іспанська (Еквадор)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:281
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:291
 msgid "Spanish (Honduras)"
 msgstr "Іспанська (Гондурас)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:282
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:292
 msgid "Spanish (Venezuela)"
 msgstr "Іспанська (Венесуела)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:283
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:293
 msgid "Spanish (Bolivia)"
 msgstr "Іспанська (Болівія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:284
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:294
 msgid "Spanish (Nicaragua)"
 msgstr "Іспанська (Нікарагуа)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:285
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:295
 msgid "Spanish (Colombia)"
 msgstr "Іспанська (Колумбія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:286
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:296
 msgid "German (AT)"
 msgstr "Німецька (Австрія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:287
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:297
 msgid "French (BE)"
 msgstr "Французька (Бельгія)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:288
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:298
 msgid "Dutch (NL)"
 msgstr "Голландська (Нідерланди)"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:289
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:299
 msgid "Dutch (BE)"
 msgstr "Голландська (Бельгія)"
 
 #. NOTE: Ante Meridian (i.e. like 10:00 AM)
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:297
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:307
 msgid "AM"
 msgstr "ранку"
 
 #. NOTE: Post Meridian (i.e. like 10:00 PM)
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:299
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:309
 msgid "PM"
 msgstr "вечора"
 
 #. NOTE: Ante Meridian (i.e. like 10:00 am)
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:301
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:311
 msgid "am"
 msgstr "ранку"
 
 #. NOTE: Post Meridian (i.e. like 10:00 pm)
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:303
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:313
 msgid "pm"
 msgstr "вечора"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:305
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:315
 msgid "Select All"
 msgstr "Позначити все"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:306
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:316
 msgid "Copy Link"
 msgstr "Копіювати посилання"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:307
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:317
 msgid "&Select All"
 msgstr "&Позначити все"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:308
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:318
 msgid "Copy &Link location"
 msgstr "Скопіювати &адресу посилання"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:313
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:323
 msgid "Paste and Match Style"
 msgstr "Вставити і застосувати стиль"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:314
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:324
 msgid "Directions"
 msgstr "Напрямки"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:315
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:325
 msgid "Left to Right"
 msgstr "Зліва праворуч"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:316
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:326
 msgid "Right to Left"
 msgstr "Справа ліворуч"
 
-#: /home/kovid/work/calibre/src/calibre/utils/localization.py:320
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:330
 msgid "Close without Saving"
 msgstr "Закрити без збереження"
+
+#: /home/kovid/work/calibre/src/calibre/utils/localization.py:331
+msgid "Close Tab"
+msgstr "Закрити вкладку"
 
 #: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:200
 msgid "Extra characters at end of search"
@@ -36282,7 +36320,11 @@ msgstr "Не вдалося обробити запит. Перевищено о
 msgid "Recursive saved search: {0}"
 msgstr "Збережені результати рекурсивного пошуку: {0}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:405
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:401
+msgid "Unknown saved search: {}"
+msgstr "Невідомий збережений пошук: {}"
+
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:408
 #, python-brace-format
 msgid "Unknown error in saved search: {0}"
 msgstr "Невідома помилка у збережених результатах пошуку: {0}"
@@ -36564,7 +36606,7 @@ msgid "Main menu"
 msgstr "Головне меню"
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:226
-#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:424
+#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:425
 msgid "Next"
 msgstr "Далі"
 
@@ -36573,16 +36615,16 @@ msgid "Section menu"
 msgstr "Меню розділу"
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:236
-#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:407
+#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:408
 msgid "Previous"
 msgstr "Попередня"
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:321
-#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:416
+#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:322
+#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:417
 msgid "Sections"
 msgstr "Розділи"
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:413
+#: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:414
 msgid "Articles"
 msgstr "Статті"
 

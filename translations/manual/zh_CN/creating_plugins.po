@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# 子昂 李 <alexdialga@hotmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 20:39+0530\n"
-"PO-Revision-Date: 2017-06-18 17:18+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2017-08-24 00:01+0530\n"
+"PO-Revision-Date: 2017-08-20 12:07+0000\n"
+"Last-Translator: 子昂 李 <alexdialga@hotmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr ""
+msgstr "编写您自己的插件来延伸Calibre的功能"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:6
 msgid ""
@@ -29,28 +30,28 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr ""
+msgstr "Calibre是以模块化的形式设计的，其所有功能几乎都以插件的形式实现。这些插件用作于文本转换、新闻（或称之为诀窍）下载，和用户界面的各种组件，来连接到不同的设备，或在将文件添加到Calibre时处理他们等等。您可以在“选项→高级→插件”中完整地得到在Cailbre里已经内建的插件清单。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr ""
+msgstr "在此，我们将会教您如何创造您自己的插件，给Calibre添加新的功能。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
-msgstr ""
+msgstr "此功能仅适用于0.8.60或更高的版本。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr ""
+msgstr "Calibre插件的剖析"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr ""
+msgstr "一个Calibre插件的组成是非常简单的，其只是一个包含了一些Python代码与一些其他资源文件（如插件所需的贴图文件）的ZIP文件。现在，让我们直入主题，看看一个简单的例子。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -60,13 +61,13 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr ""
+msgstr "假设您已安装了Calibre且将电子文件以不同的格式（如.epub和.mobi）自主出版，而您想将所有从Calibre中产生出来的文件设置其出版者为“Hello world”，那么以下就是方法。创造一个名为‘__init__.py’的文件（这是一个特殊的名字，而且其必须为插件的主文件），且在此文件中写入如下的Python代码："
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the directory in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "就是这样了。若要将此代码以插件的形式添加到Calibre中，则只要普通地运行在目录里您所创造的文件‘__init__.py’"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -74,13 +75,13 @@ msgid ""
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in "
 ":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr ""
+msgstr "在mac系统中，Calibre已将命令行工具植入其内。若您把Calibre安装于:file:`/Applications`，您则会在:file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`中寻找到命令行工具。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
-msgstr ""
+msgstr "您可在此链接https://calibre-ebook.com/downloads/helloworld_plugin.zip下载到Hello World插件。"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
 msgid ""

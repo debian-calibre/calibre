@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "augusts 04, 2017" "3.6.0" "calibre"
+.TH "CALIBREDB" "1" "augusts 25, 2017" "3.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -35,7 +35,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibredb command [options] [arguments]
+calibredb komanda [opcijas] [argumenti]
 .ft P
 .fi
 .UNINDENT
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%PIEVIENOT NO DIREKTORIJAS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -140,17 +140,17 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāto ceļu. Lai veiktu darbības attālinātās bibliotēkās, varat arī izveidot savienojumu ar calibre satura serveri. Lai to izdarītu, izmantojiet URL formu: \fI\%http://hostname:port/#library_id\fP, piemēram, \fI\%http://localhost:8080/#mylibrary\fP\&. Library_id ir tās bibliotēkas id, ar kuru vēlaties izveidot savienojumu ar satura serveri. Jūs varat izmantot īpašo library_id vērtību, lai serverī piekļūtu bibliotēkas identifikācijas sarakstam. Sīkāku informāciju, kā iestatīt piekļuvi, izmantojot satura serveri, skatiet sadaļā \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Parole pieslēgšanai calibre satura serverim. Lai lasītu paroli no standarta ievades, izmantojiet īpašo vērtību: <stdin>. Lai lasītu paroli no faila, izmantojiet: <f:/path/to/file>.)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Lietotājvārds, lai izveidotu savienojumu ar calibre satura serveri
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,9 +169,9 @@ calibredb list [options]
 .UNINDENT
 .UNINDENT
 .sp
-List the books available in the calibre database.
+Grāmatu saraksts, kas pieejams calibre datu bāzē.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -180,12 +180,12 @@ Kārtot rezultātus augošā secībā
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Lauki, kas jāuzrāda, iekļaujot grāmatas datu bāzē. Lauku sarakstu jāatdala ar komatu. Pieejamie lauki:author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Noklusējums: title,authors. Īpašo lauku \fB"\fPall\fB"\fP , var izmantot, lai atlasītu visus laukus. Papildus iepriekš minētajiem laukiem, pielāgotie lauki ir pieejami arī kā * field_name, piemēram, pielāgotajam laukam #rating, izmantojiet nosaukumu: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Veido izvadi JSON formātā, kas ir vairāk piemērotas programmas šķirošanai. Ignorē līniju platumu un atdalītāju.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -200,12 +200,12 @@ Maksimālais rindas platums izvadē. Noklusētais \- mēģināt noteikt ekrāna 
 .INDENT 0.0
 .TP
 .B \-\-prefix
-The prefix for all file paths. Default is the absolute path to the library folder.
+Prefikss visiem failu ceļiem. Pēc noklusējuma absolūtais ceļš uz bibliotēkas mapi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search related documentation in the User Manual. Default is to do no filtering.
+Filtrēt rezultātus pēc meklēšanas vaicājuma. Par meklēšanas formātu, lūdzu, skatiet lietotāja rokasgrāmatā pieejamo dokumentāciju. Pēc noklusējuma nefiltrē.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ Teksts, ar kuru atdalīta laukus. Pēc noklusējuma tā ir atstarpe.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Lauks, pēc kura kārtot rezultātus. Pieejamie lauki: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Noklusējums: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -223,16 +223,16 @@ The field by which to sort the results. Available fields: author_sort, authors, 
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb pievienot [options] file1 file2 file3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify directories, see
-the directory related options below.
+Pievienojiet norādītos failus kā grāmatas datu bāzē. Varat arī norādīt direktorijus, skatīt
+ar direktoriju saistītās opcijas zemāk.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -256,7 +256,7 @@ Pievienot tukšu grāmatu (grāmatu bez formātiem)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Ievadīt šīs grāmatas identifikatorus, piem. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Ievadiet pievienotās(\-o) grāmatas(\-u) ISBN
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+Ar komatu atdalīts valodu saraksts (vislabāk izmantot ISO639 valodu kodu, lai gan var būt atpazīti arī daži parasti valodu nosaukumi)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,23 +288,23 @@ Ievadiet pievienotās(\-o) grāmatas(\-u) birkas
 .B \-\-title, \-t
 Ievadiet pievienotās(\-o) grāmatas(\-u) nosaukumu
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS PIEVIENOT NO DIREKTORIJAS
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Opcija, lai kontrolētu, pievienojot grāmatas no katalogiem. Pēc noklusējuma tiek pievienoti tikai faili ar zināmiem e\-grāmatu failu tipu paplašinājumiem.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Faila nosaukuma šablons, faili, kas atbilst šim šablonam, tiks pievienoti skenējot kataloga failiem, pat tad, ja tie nav zināmi e\-grāmatu faila tipi. Var norādīt vairākas reizes vairākus šablonus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Faila nosaukuma šablons, faili, kas atbilst šim šablonam tiks ignorēti, skenējot failu direktoriju. Var norādīt vairākas reizes vairākus šablonus. Par piem: *. pdf, ignorēs visus pdf failus
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+Pieņemt, ka katrā katalogā ir tikai viena loģiskā grāmata, un visi tajā esošie faili ir dažādu e\-grāmatu formātu grāmatas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,13 +323,13 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Izņemt no datubāzes grāmatas ar noteiktu id. Id jābūt ar komatu atdalītiem id numuru sarakstam (id numurus varat iegūt, izmantojot meklēšanas komandu). Piemēram, 23,34,57\-85 (norādot diapazonu, pēdējais diapazona numurs nav iekļauts).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Neizmantot atkritumu grozu
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -343,9 +343,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Pievienojiet e\-grāmatu, ebook_file loģiskai grāmatai, kas identificē pieejamos id formātus. Id var iegūt, izmantojot komandu „Meklēt“. Ja formāts jau pastāv, to aizstāj, ja vien nav norādīta opcija „Neaizstāt“.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -357,31 +357,31 @@ Neaizvietot formātu, ja tāds jau pastāv
 .sp
 .nf
 .ft C
-calibredb remove_format [options] id fmt
+calibredb remove_format [opcijas] id fmt
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+Noņemt formātu fmt no loģiskās grāmatas, kas identificēta ar id. Jūs varat iegūt id, izmantojot meklēšanas komandu. Fmt jābūt faila paplašinājumam, piemēram, LRF vai TXT vai EPUB. Ja loģiskajai grāmatai nav pieejams fmt, nedariet neko.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibredb show_metadata [options] id
+calibredb show_metadata [opcijas] id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Show the metadata stored in the calibre database for the book identified by id.
-id is an id number from the search command.
+Parāda grāmatas metadatus, kas glabājas calibre datu bāzē identificēts ar id.
+id ir id numurs no meklēšanas komandas.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -393,24 +393,24 @@ Drukāt datus OPF formā (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [opcijas] id [/ceļš/uz/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by id
-from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the –as\-opf switch to the
-show_metadata command. You can also set the metadata of individual fields with
-the –field option. If you use the –field option, there is no need to specify
-an OPF file.
+Iestatiet metadatus, kas saglabāti calibre datubāzē grāmatai, kas identificēta ar id
+no OPF faila metadatu.opf. Id ir id numurs no meklēšanas komandas. Jūs
+varat ātri uztvert OPF formātu, izmantojot pārslēgšanos no –as\-opf uz
+show_metadata komandu. Varat arī iestatīt atsevišķu lauku metadatus ar
+–field opciju. Ja izmantojat opciju –field, nav jānorāda
+OPF fails.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+Lauks, kas jāiestata. Formāts ir field_name: vērtība, piemēram: \fI\%\-\-field\fP tags:tag1,tag2. Izmantojiet \fB\-\-list\-fields,\fP lai iegūtu sarakstu ar visiem lauku nosaukumiem. Varat norādīt šo opciju vairākas reizes, lai iestatītu vairākus laukus. Piezīme: Valodai jums jāizmanto ISO639 valodu kods (piemēram, angļu valodā en, franču valodā fr utt.). Id sintakse ir \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Loģiskiem (jā/nē) laukiem tiek izmantoti true un false vai yes un no.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -423,17 +423,17 @@ Ar \fI\%\-\-field\fP papildiespēju izmantojamo metadatu lauku nosaukumu sarakst
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opcijas] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+Eksportē norādītās ar id grāmatas (ar komatu atdalīts saraksts), uz failu sistēmu.
+Eksporta operācija saglabā visus grāmatas formātus, vāciņus un metadatus (opf
+fails). Jūs varat iegūt id numurus no meklēšanas komandas.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -442,22 +442,22 @@ Eksportēt visas datubāzē esošās grāmatas, neņemot vērā id sarakstu,
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Parasti calibre pārvērš ne\-ASCII rakstzīmes datņu nosaukumos to angļu valodas ekvivalentos. UZMANĪBU! Ja Jūs izslēgsiet šo, pastāv iespēja, ka sastapsieties ar sarežģījumiem saglabājot; tas būs atkarīgs vienīgi no tā, cik lielā mērā Jūsu izmantotā operāciju sistēma uztur Unicode. Precizējiet šo slēdzi, šo izslēgšanas darbību.
+Parasti calibre pārvērš ne\-ASCII rakstzīmes datņu nosaukumos to angļu valodas ekvivalentos. UZMANĪBU! Ja Jūs izslēgsiet šo, pastāv iespēja, ka sastapsieties ar sarežģījumiem saglabājot; tas būs atkarīgs vienīgi no tā, cik lielā mērā Jūsu izmantotā operāciju sistēma uztur Unicode. Atzīmējot šo slēdzi, darbība tiks izslēgta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Precizējiet šo slēdzi, šo izslēgšanas darbību.
+Parasti calibre saglabā vāku atsevišķā failā kopā ar faktiskajiem e\-grāmatu failiem. Atzīmējot šo slēdzi, darbība tiks izslēgta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Parasti Calibre atjauninās metadatus saglabātajās datnēs no tā, kas atrodas Calibre bibliotēkā. Padara saglabāšanu uz diska lēnāku. Precizējiet šo slēdzi, šo izslēgšanas darbību.
+Parasti Calibre atjauninās metadatus saglabātajās datnēs no tā, kas atrodas Calibre bibliotēkā. Padara saglabāšanu uz diska lēnāku. Atzīmējot šo slēdzi, darbība tiks izslēgta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Parasti Calibre raksta metadatus atsevišķā OPF datnē kopā ar citām e\-grāmatas datnēm. Precizējiet šo slēdzi, šo izslēgšanas darbību.
+Parasti Calibre raksta metadatus atsevišķā OPF datnē kopā ar citām e\-grāmatas datnēm. Atzīmējot šo slēdzi, darbība tiks izslēgta.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -477,7 +477,7 @@ Eksportēt visas grāmatas vienā mapē
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and directory structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subdirectory with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Šablons, lai kontrolētu saglabāto failu nosaukumu un direktoriju struktūru. Noklusējums ir \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, kas ietaupīs grāmatas katra autora apakšdirektorijā ar faila nosaukumiem, kas satur nosaukumu un autoru. Pieejamā kontrole ir: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,20 +506,24 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Kataloga eksportēšana formātā, kas norādīts ceļā / uz / galamērķa paplašinājumu.
+Opcijas kontrolē, kā ieraksti tiek parādīti ģenerētajā katalogā.
+Ņemiet vērā, ka dažādi kataloga formāti atbalsta dažādas opcijas.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Comma\-separated list of database IDs to catalog. If declared, \fI\%\-\-search\fP is ignored. Default: all
+Ar komatu atdalīts ID saraksts datu bāzes katalogā. Ja uzrādīts, :option:
+.nf
+\(ga
+.fi
+–mekl\(gaēšana tiek ignorēta. Noklusējums: visas
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search\-related documentation in the User Manual. Default: no filtering
+Filtrēt rezultātus pēc meklēšanas vaicājuma. Meklēšanas formātu, skatiet Lietotāja rokasgrāmatā, ar meklēšanu saistīto dokumentāciju. Noklusējums: bez filtrēšanas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -530,97 +534,97 @@ Parādīt detalizētu izejas informāciju. Noderīga atkļūdošanai
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Ģenerētā kataloga nosaukums, kas tiek izmantots kā metadatu virsraksts. Noklusējums: \fB\(aq\fPMy Books\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekšējās atsauces var veidot ar vairāku autoru grāmatām, sadaļā autori. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Saglabājiet izvadi no dažādiem konveijera pārveidošanas posmiem uz norādīto direktoriju. Noderīgi, ja neesat pārliecināts, kurā pārvēršanas procesa posmā rodas kļūda. Noklusējums: \fB\(aq\fPNone\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Regulārā izteiksme apraksta birkas, kuras izslēgt kā žanrus. Noklusējums: \fB\(aq\fP[.+]|^+$\fB\(aq\fP izslēdz iespiestās birkas, piem., \fB"\fP[Project Gutenberg]\fB"\fP un \fB"\fP+\fB"\fP \- noklusējuma birkas lasītām grāmatām. Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Norāda noteikumus, kurus izmanto, lai izslēgtu grāmatas no izveidotā kataloga. Izņēmuma noteikumu modelis ir vai nu (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Piemēram: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) izslēgs grāmatu ar vērtību \fB"\fParhivēts\fB"\fP pielāgotajā slejā \fB"\fPstatuss\fB"\fP\&. Ja ir definēti vairāki noteikumi, tiks piemēroti visi noteikumi. Noklusējums:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sadaļu \fB"\fPAutori\fB"\fP iekļaut katalogā.. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekļaut sadaļu \fB"\fPApraksti\fB"\fP katalogā. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekļaut sadaļu \fB"\fPŽanri\fB"\fP katalogā. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekļaut sadaļu \fB"\fPNesen pievienoti\fB"\fP katalogā. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekļaut sadaļu \fB"\fPSērija\fB"\fP katalogā. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Iekļaut sadaļu \fB"\fPNosaukums\fB"\fP katalogā. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPBirkas\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Avota lauks sadaļā \fB"\fPŽanri\fB"\fP\&. Noklusējums: \fB\(aq\fPBirkas\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Pielāgots lauks, kurā ir piezīmju teksts, lai ievietotu Apraksta virsrakstā. Noklusējums: \fB\(aq\fP\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with Comments  [before|after] Placement of notes with respect to Comments  [True|False] \- A horizontal rule is inserted between notes and Comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] norāda:  <custom field> Pielāgots lauks, kurā ir piezīmes, lai apvienotu ar komentāriem  [before|after] Pielikumu izvietošana attiecībā uz komentāriem  [True|False] \- Horizontāls noteikums tiek ievietots starp piezīmēm un komentāriem Noklusējums: \fB\(aq\fP::\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Norāda izvades profilu. Dažos gadījumos, lai optimizētu ierīces katalogu, ir nepieciešams izvades profils. Piemēram, \fB"\fPkindle\fB"\fP vai \fB"\fPkindle_dx\fB"\fP izveido strukturētu Saturu rādītāju ar sadaļām un rakstiem. Noklusējums: \fB\(aq\fPNone\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Norāda noteikumus, ko lieto, lai iekļautu prefiksus, kas norāda lasīšanas grāmatas, vēlmju sarakstus un citus lietotāja prefiksus. Prefiksa noteikuma modelis ir (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Ja ir noteikti vairāki noteikumi, tiks izmantots pirmais atbilstības noteikums. Noklusējums: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Izmanto nosaukto sākotnējo iestatījumu, kas izveidots ar GUI kataloga veidotāju. Iestatījums nosaka visus kataloga izveides iestatījumus. Noklusējums: \fB\(aq\fPNone\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Izmēra norāde (collas) grāmatu vākiem katalogā.. Diapazons: 1.0 \- 2.0 Noklusējums: \fB\(aq\fP1.0\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Aizstāj esošo vāciņu, kad tiek ģenerēts katalogs. Noklusējums: \fB\(aq\fPFalse\fB\(aq\fP Attiecas uz: AZW3, EPUB, MOBI izejas formātiem
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -634,45 +638,45 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Pārvaldiet šajā datubāzē saglabātos meklējumus.
+Ja mēģināsiet pievienot meklējumu ar jau esošu vārdu, tas tiks
+aizstāts.
 .sp
-Syntax for adding:
+Pievienošanas sintakse:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Noņemšanas sintakse:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibredb add_custom_column [options] label name datatype
+calibredb add_custom_column [opcijas] datu tipa etiķetes nosaukums
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Create a custom column. label is the machine friendly name of the column. Should
-not contain spaces or colons. name is the human friendly name of the column.
-datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Izveido pielāgotu kolonnu. Etiķete ir datora kolonnas nosaukums.
+Nedrīkst saturēt atstarpes vai kolu. Kolonnas nosaukumam jābūt saprotamam.
+datu tips ir viens no: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+Opcija, kas pielāgo, kā tiks šajā slejā interpretēta datu vārdnīca. Tā ir JSON virkne. Par slejas numerāciju, izmantojiet \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Ir daudzas iespējas, kā var parādīt ekrānā mainīgos. Šo sleju tipa opcijas ir šādas: salikts: composite_template, composite_sort, make_category, contains_html, use_decorations datums un laiks: date_format uzskaitījums: enum_values, enum_colors, use_decorations skaitlis vai ar peldošo komatu: number_format teksts: is_names, use_decorations  Labākais veids, kā atrast labāko kombināciju ir izveidot pielāgotu attiecīga GUI tipa sleju, tad apskatīt OPF grāmatas dublējumu (nodrošiniet, ka jaunais OPF ir izveidots pēc slejas pievienošanas). Jūs redzēsiet JSON jauno OPF sleju kā \fB"\fPparādītu\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+Šī sleja saglabā birkas kā datus (piemēram vairākus ar komatiem atdalītas vērtības). Piemēro tikai tad, ja datu tips ir teksts.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -686,9 +690,9 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Pieejamais pielāgoto sleju saraksts. Parāda sleju etiķetes un id.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -706,10 +710,10 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Noņemt pielāgoto sleju identificētās etiķetes. Jūs varat redzēt pieejamās
+slejas ar custom_columns komandu.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -727,16 +731,16 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Iestatiet pielāgotās slejas vērtību grāmatai, kas identificēta ar id.
+Jūs varat iegūt id sarakstu, izmantojot meklēšanas komandu.
+Jūs varat saņemt pielāgoto sleju nosaukumu sarakstu, izmantojot pielāgotās slejas
+komandu.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-If the column stores multiple values, append the specified values to the existing ones, instead of replacing them.
+Ja slejā tiek saglabātas vairākas vērtības, pievienot tām esošās vērtības, nevis aizstāt tās.
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -744,22 +748,22 @@ If the column stores multiple values, append the specified values to the existin
 .sp
 .nf
 .ft C
-calibredb restore_database [options]
+calibredb restore_database [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-directory of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Atjaunojiet šo datubāzi no metadatiem, kas tiek glabāti OPF failos katrā
+calibre bibliotēkas direktorija. Tas ir noderīgi, ja jūsu metadata.db fails
+ir bojāts.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+BRĪDINĀJUMS: šī komanda pilnīgi atjauno jūsu datubāzi. Jūs zaudēsiet
+visus saglabātos meklējumus, lietotāju kategorijas, spraudņus, grāmatas pārveidošanas
+iestatījumus un pielāgotās receptes. Atjaunotie metadati būs tikpat precīzi kā tie
+kas būs atrodami OPF failos.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -771,15 +775,15 @@ Izpildīt atgūšanu. Šī komanda netiks izpildīta, kamēr netiks norādīta �
 .sp
 .nf
 .ft C
-calibredb check_library [options]
+calibredb check_library [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+Veikt dažas pārbaudes, kas pārstāv bibliotēka sistēmu. Ziņojumi ir invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -806,20 +810,20 @@ Ar komatu atdalītu atskaišu saraksts. Noklusētais: visas
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the tags pane.
+Sagatavo atskaiti par kategorijām datubāzē.
+Informācija ir ekvivalenta tai, kas parādīta birku rūtī.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+Ar komatu atdalīts kategoriju nosaukumu meklēšanas saraksts. Noklusējums: visas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -829,12 +833,12 @@ Izvade CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+CSV faila izveidošanas veids. Izvēle: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-Output only the number of items in a category instead of the counts per item within the category
+Izvadīt tikai kategoriju vienību skaitu, nevis skaita vienumu kategorijā
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -847,20 +851,20 @@ Maksimālais rindas platums izvadē. Noklusētais \- mēģināt noteikt ekrāna 
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [opcijas]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books directory. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the –all option.
+Dublē metadatus, kas tiek glabāti datubāzē, atsevišķos OPF failos
+katras grāmatas mapē. Tas parasti notiek automātiski, bet var palaist
+komandu, lai piespiestu atkārtotu OPF failu rašanos opciju –all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Ņemiet vērā, ka parasti nav nepieciešams veikt šo darbību, jo OPF tiek dublēti
+automātiski katru reizi, kad tiek mainīti metadati.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -878,38 +882,38 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, virtual libraries and other settings as the current library.
+Izveido tekošās bibliotēkas klonu. Tā izveido jaunu, tukšu bibliotēku, kurā ir visas
+tās pašas pielāgotās slejas, virtuālās bibliotēkas un citi iestatījumi kā pašreizējā bibliotēkā.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Klonētajā bibliotēkā nebūs grāmatu. Ja vēlaties izveidot pilnu dublikātu, tostarp
+visas grāmatas, tad vienkārši izmantojiet failu sistēmas rīkus, lai kopētu bibliotēkas mapi.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibredb embed_metadata [options] book_id
+calibredb embed_metadata [opcijas] book_id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value ‚all‘ for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Atjaunina faktisko grāmatu failus, kas saglabāti calibre bibliotēkā no
+calibre metadatu bāzes. Parasti metadati tiek atjaunināti tikai tad, kad
+eksportē failus no calibre, šī komanda ir noderīga, ja vēlaties, failus
+atjaunināt savā vietā. Ņemiet vērā, ka dažādi failu formāti atbalsta dažādas
+metadatu summas. Lai atjauninātu metadatus, varat izmantot īpašo vērtību „all“,, lai atjauninātu
+book_id visām grāmatām. Varat arī norādīt vairāku grāmatu id, atdalītus ar atstarpēm un id diapazonus
+atdalītus ar defisēm. Piemēram: % prog \fBembed_metadata\fP 1 2 10 15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Atjaunināt metadatu failus tikai norādītajā formātā. Norādiet to vairākas reizes, vairākiem formātiem. Pēc noklusējuma, tiek atjaunināti visi formāti.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -917,24 +921,24 @@ Only update metadata in files of the specified format. Specify it multiple times
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [opcijas] meklēšanas izteiksme
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Meklēt bibliotēkā norādīto meklēšanas terminu, atgriežot ar komatu atdalītu
+id grāmatu sarakstu, atbilstošu meklēšanas izteiksmei. Izvades formātā ir noderīgas
+ziņas citām komandām, kas pieņem ieejas ID sarakstu.
 .sp
-The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+Meklēšanas izteiksme var būt jebkas, sākot no spēcīgās calibre meklēšanas vaicājumu
+valodas, piemēram: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+Maksimālais atgriezto rezultātu skaits. Pēc noklusējuma \- visi.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

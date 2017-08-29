@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 08:11+0530\n"
-"PO-Revision-Date: 2017-07-07 19:38+0000\n"
+"POT-Creation-Date: 2017-08-24 00:01+0530\n"
+"PO-Revision-Date: 2017-08-23 21:24+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +259,7 @@ msgid ""
 msgstr "**Créer un catalogue des livres de votre bibliothèque calibre** : Vous permet de générer une liste complète des livres dans votre bibliothèque, en y précisant les métadonnées, et ce dans plusieurs formats tels que XML, CSV, BiBTeX, EPUB et MOBI. Le catalogue contiendra tous les livres se trouvant visibles à ce moment dans la vue bibliothèque. Cela vous permet d'utiliser les fonctions de recherche pour limiter les livres à cataloguer. En outre, si vous sélectionnez plusieurs livres avec la souris, seuls les livres sélectionnés seront compris dans le catalogue. Si vous générez le catalogue dans un format de livre numérique comme EPUB, MOBI ou AZW3, la prochaine fois que vous connecterez votre lecteur de livre numérique, le catalogue sera envoyé automatiquement au périphérique. Pour avoir plus d'informations sur comment fonctionne les catalogues lisez :ref:`catalog_tut`."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:119
-#: ../../home/kovid/work/calibre/manual/gui.rst:686
+#: ../../home/kovid/work/calibre/manual/gui.rst:692
 msgid "View"
 msgstr "Visualiser"
 
@@ -275,7 +275,7 @@ msgid ""
 msgstr "|vi| L'action :guilabel:`Visualiser` affiche le livre dans un programme de visualisation de livre numérique. calibre a une visionneuse intégrée qui fonctionne pour de nombreux formats de livre numérique. Pour d'autres formats, il utilise l'application du système d'exploitation par défaut. Vous pouvez configurer les formats qui doivent s’ouvrir avec la visionneuse interne via :guilabel:`Préférences->Intervace->Comportement`. Si un livre a plus d'un format, vous pouvez voir un format particulier en faisant un clic droit sur le bouton."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:134
-#: ../../home/kovid/work/calibre/manual/gui.rst:662
+#: ../../home/kovid/work/calibre/manual/gui.rst:668
 msgid "Send to device"
 msgstr "Envoyer vers le périphérique"
 
@@ -477,7 +477,7 @@ msgid ""
 msgstr "|dvi| L'action :guilabel:`Périphérique` vous permet de consulter les livres de la mémoire principale ou des cartes de stockage de votre périphérique de lecture, ou d’éjecter le périphérique (le détacher de calibre). Cette icône apparaît automatiquement dans la barre d’outils principale de calibre lorsque vous connectez un périphérique pris en charge. Vous pouvez cliquer sur l'icône pour voir les livres qui sont sur votre périphérique. Vous pouvez également faire glisser et déposer des livres de votre bibliothèque calibre sur l'icône Périphérique pour les transférer sur votre liseuse. Inversement, vous pouvez glisser et déposer des livres à partir de votre périphérique sur l'icône de la bibliothèque de la barre d'outils pour transférer des livres à partir de votre périphérique vers la bibliothèque calibre."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:204
-#: ../../home/kovid/work/calibre/manual/gui.rst:682
+#: ../../home/kovid/work/calibre/manual/gui.rst:688
 msgid "Save to disk"
 msgstr "Enregistrer sous..."
 
@@ -841,11 +841,11 @@ msgstr "Vous pouvez créer facilement des requêtes de recherche avancées en ut
 msgid ""
 "Available fields for searching are: ``tag, title, author, publisher, series,"
 " series_index, rating, cover, comments, format, identifiers, date, pubdate, "
-"search, size`` and custom columns. If a device is plugged in, the "
+"search, size, vl`` and custom columns. If a device is plugged in, the "
 "``ondevice`` field becomes available, when searching the calibre library "
 "view. To find the search name (actually called the `lookup name`) for a "
 "custom column, hover your mouse over the column header in the library view."
-msgstr "Les champs disponibles pour la recherche sont : ``tag, title, author, publisher, series, series_index, rating, cover, comments, format, identifiers, date, pubdate, search, size`` et les colonnes personnalisées. Si un périphérique est connecté, le champ ``ondevice`` devient disponible, en recherchant la vue bibliothèque de calibre. Pour trouver le nom de recherche (appelée actuellement la `consultation de nom`) pour une colonne personnalisée, placez votre souris au dessus de l'entête de colonne dans la vue bibliothèque."
+msgstr "Les champs disponibles pour la recherche sont : ``tag, title, author, publisher, series, series_index, rating, cover, comments, format, identifiers, date, pubdate, search, size, vl`` et les colonnes personnalisées. Si un périphérique est connecté, le champ ``ondevice`` devient disponible, en recherchant la vue bibliothèque de calibre. Pour trouver le nom de recherche (appelée actuellement la `consultation de nom`) pour une colonne personnalisée, placez votre souris au dessus de l'entête de colonne dans la vue bibliothèque."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:364
 msgid "The syntax for searching for dates is::"
@@ -913,11 +913,21 @@ msgstr "Le champ spécial ``search`` est utilisé pour les recherches enregistr�
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:403
 msgid ""
+"The special field ``vl`` is used to search for books in a virtual library. "
+"For example, ``vl:Read`` will find all the books in the *Read* virtual "
+"library. The search ``vl:Read and vl:\"Science Fiction\"`` will find all the"
+" books that are in both the *Read* and *Science Fiction* virtual libraries. "
+"The value following ``vl:`` must be the name of a virtual library. If the "
+"virtual library name contains spaces then surround it with quotes."
+msgstr "Le champ spécial ``vl`` est utilisé pour chercher des livres dans une bibliothèque virtuelle. Par exemple, ``vl:Lu`` trouvera tous les livres dans la bibliothèque virtuelle *Lu*. La recherche ``vl:Lu and vl:\"Science Fiction\"`` trouvera tous les livres qui sont tant dans les bibliothèques virtuelles *Lu* que *Science Fiction*. La valeur suivant ``vl:`` doit être le nom d'une bibliothèque virtuelle. Si le nom de la bibliothèque virtuelle contient des espaces entourez-le alors avec des guillemets."
+
+#: ../../home/kovid/work/calibre/manual/gui.rst:409
+msgid ""
 "You can search for the absence or presence of a field using the special "
 "\"true\" and \"false\" values. For example::"
 msgstr "Vous pouvez rechercher une présence ou une absence dans un champ en utilisant les valeurs spéciales \"true\" et \"false\". Par exemple::"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:410
+#: ../../home/kovid/work/calibre/manual/gui.rst:416
 msgid ""
 "Yes/no custom columns are searchable. Searching for ``false``, ``empty``, or"
 " ``blank`` will find all books with undefined values in the column. "
@@ -931,7 +941,7 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "Les colonnes personnalisées oui/non peuvent faire l'objet d'une recherche. Faire une recherche ``false``, ``empty``, ou ``blank`` trouvera tous les livres avec des valeurs indéfinies dans la colonne. Faire une recherche ``true`` trouvera les livres qui n'ont pas de valeurs indéfinies dans la colonne. Faire une recherche ``yes`` ou ``checked`` trouvera tous les livres avec ``Yes`` dans la colonne. Faire une recherche ``no`` ou ``unchecked`` trouvera tous les livres avec ``No`` dans la colonne. Notez que les mots ``yes``, ``no``, ``blank``, ``empty``, ``checked`` et ``unchecked`` sont traduits ; vous pouvez utiliser soit utiliser le mot équivalent dans la langue courante ou le mot anglais. Les mots ``true`` et ``false`` et les valeurs spéciales ``_yes``, ``_no``, et ``_empty`` ne sont pas traduits."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:415
+#: ../../home/kovid/work/calibre/manual/gui.rst:421
 msgid ""
 "Hierarchical items (e.g. A.B.C) use an extended syntax to match initial "
 "parts of the hierarchy. This is done by adding a period between the exact "
@@ -941,7 +951,7 @@ msgid ""
 "`A`."
 msgstr "Les éléments hiérarchiques (par exemple A.B.C) utilisent une syntaxe étendue pour faire correspondre les parties initiales de la hiérarchie. Il faut ajouter un point entre l'indicateur de correspondance d'égalité(=) et le texte. Par exemple, requête ``tags:=.A`` trouvera les étiquettes `A` et ``A.B`, mais pas les étiquettes AA ou AA.B. La requête ``tags:=.A.B`` va trouver les étiquettes `A.B` et `A.B.C`, mais pas l'étiquette `A`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:417
+#: ../../home/kovid/work/calibre/manual/gui.rst:423
 msgid ""
 "Identifiers (e.g., isbn, doi, lccn etc) also use an extended syntax. First, "
 "note that an identifier has the form ``type:value``, as in "
@@ -951,64 +961,64 @@ msgid ""
 "Examples:"
 msgstr "Les identifiants (par exemple, isbn, doi, iccn etc) utilisent également cette syntaxe. Tout d'abord, notez qu'un identifiant à le format ``type:value``, comme dans ``isbn:123456789``. La syntaxe étendue vous permet de spécifier de façon indépendante quel type et quelle valeur rechercher. Le type et la valeur de la requête peuvent utiliser les correspondances `égalité`, `contient`ou `expression régulière`. Exemples :"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:419
+#: ../../home/kovid/work/calibre/manual/gui.rst:425
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "``identifiers:true`` trouvera les livres avec n'importe quel identifiant."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:420
+#: ../../home/kovid/work/calibre/manual/gui.rst:426
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "``identifiers:false`` trouvera les livres sans identifiant."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:421
+#: ../../home/kovid/work/calibre/manual/gui.rst:427
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "``identifiers:123`` recherchera des livres de n'importe quel type qui ont une valeur contenant `123`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:422
+#: ../../home/kovid/work/calibre/manual/gui.rst:428
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "``identifiers:=123456789`` recherchera des livres de n'importe quel type qui ont une valeur égale à `123456789`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:423
+#: ../../home/kovid/work/calibre/manual/gui.rst:429
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to isbn having any value"
 msgstr "``identifiers:=isbn:`` et ``identifiers:isbn:true`` trouvera les livres avec un type égal à isbn et ayant n'importe quelle valeur"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:424
+#: ../../home/kovid/work/calibre/manual/gui.rst:430
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to isbn."
 msgstr "``indentifiers:=isbn:false`` trouvera les livres avec un type n'équivalant pas à isbn."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:425
+#: ../../home/kovid/work/calibre/manual/gui.rst:431
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to isbn having a"
 " value containing `123`."
 msgstr "``identifiers:=isbn:123`` trouvera les livres avec un type égal à isbn ayant une valeur contenant `123`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:426
+#: ../../home/kovid/work/calibre/manual/gui.rst:432
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to isbn "
 "having a value equal to `123456789`."
 msgstr "``identifiers:=isbn:=123456789`` trouvera les livres avec un type égal à isbn et ayant une valeur égale à `123456789`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:427
+#: ../../home/kovid/work/calibre/manual/gui.rst:433
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "``identifiers:i:1`` trouvera les livres avec un type contenant un `i` ayant une valeur contenant un `1`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:436
+#: ../../home/kovid/work/calibre/manual/gui.rst:442
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ":guilabel:`Boîte de dialogue recherche avancée`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:441
+#: ../../home/kovid/work/calibre/manual/gui.rst:447
 msgid "Saving searches"
 msgstr "Recherches sauvegardées"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:443
+#: ../../home/kovid/work/calibre/manual/gui.rst:449
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1018,18 +1028,18 @@ msgid ""
 "save the search."
 msgstr "calibre vous permet de sauvegarder une recherche fréquemment utilisée sous une dénomination spéciale et ensuite de réutiliser cette recherche avec un simple clic. Pour ce faire, créez votre recherche soit en tapant dans la Barre de recherche ou en utilisant le Navigateur d'étiquettes. Ensuite, tapez le nom que vous souhaitez donner à la recherche dans la zone Recherches Sauvegardées, à droite de la Barre de recherche. Cliquez sur l'icône + à côté de la boîte recherches enregistrées pour sauver la recherche."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:445
+#: ../../home/kovid/work/calibre/manual/gui.rst:451
 msgid ""
 "Now you can access your saved search in the Tag browser under \"Searches\". "
 "A single click will allow you to reuse any arbitrarily complex search "
 "easily, without needing to re-create it."
 msgstr "Maintenant, vous pouvez accéder à votre recherche sauvegardée dans le Navigateur d'étiquettes sous la rubrique \"Recherches\". Un simple clic vous permettra de réutiliser facilement toute recherche complexe, sans avoir à la recréer."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:448
+#: ../../home/kovid/work/calibre/manual/gui.rst:454
 msgid "Virtual libraries"
 msgstr "Bibliothèques virtuelles"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:450
+#: ../../home/kovid/work/calibre/manual/gui.rst:456
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1038,11 +1048,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr "Une :guilabel:`Bibliothèque virtuelle` est une manière de prétendre que votre bibliothèque calibre a seulement quelques livres plutôt que sa collection complète. C'est une excellente manière de partitionner votre large collection de livres en des entités plus petites, mieux gérable. Pour apprendre comment créer et utiliser des bibliothèques virtuelles, voir le tutoriel : :ref:`virtual_libraries`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:459
+#: ../../home/kovid/work/calibre/manual/gui.rst:465
 msgid "Guessing metadata from file names"
 msgstr "Deviner les métadonnées à partir des noms de fichier"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:461
+#: ../../home/kovid/work/calibre/manual/gui.rst:467
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1050,7 +1060,7 @@ msgid ""
 " contents`."
 msgstr "Normalement, calibre lit les métadonnées à partir du fichier livre, il peut être configuré pour lire les métadonnées à partir du nom de fichier, via :guilabel:`Préférences->Importer/exporter->Ajouter des livres->Lire les métadonnées à partir du contenu du fichier`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:465
+#: ../../home/kovid/work/calibre/manual/gui.rst:471
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`).  In the :guilabel:`Adding Books` section of"
@@ -1059,30 +1069,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "Vous pouvez aussi contrôler comment les métadonnées sont lues à partir du nom de fichier en utilisant les expressions régulières (voir :doc:`regexp`). Dans la section :guilabel:`Ajouter des Livres` de la boîte de configuration, vous pouvez spécifier une expression régulière que calibre utilisera pour essayer et deviner les métadonnées à partir des noms de fichier des livres numériques que vous ajoutez à votre bibliothèque. L'expression régulière par défaut est::"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:473
+#: ../../home/kovid/work/calibre/manual/gui.rst:479
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "c.-à-d., il suppose que tous les caractères jusqu'au premier `` - `` sont le titre du livre et les caractères suivants sont l'auteur du livre. Par exemple, le nom de fichier ::"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:479
+#: ../../home/kovid/work/calibre/manual/gui.rst:485
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "sera interprété avoir le titre Foundation and Earth et l'auteur : Isaac Asimov"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:482
+#: ../../home/kovid/work/calibre/manual/gui.rst:488
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Si le nom de fichier ne contient pas de trait d'union, l'expression régulière ci-dessus échouera."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:488
+#: ../../home/kovid/work/calibre/manual/gui.rst:494
 msgid "Book details"
 msgstr "Détails du livre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:492
+#: ../../home/kovid/work/calibre/manual/gui.rst:498
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1092,51 +1102,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "L'écran Détails du livre affiche la couverture et toutes les métadonnées pour le livre actuellement sélectionné. Il peut être caché par l'intermédiaire du bouton :guilabel:`Disposition` en bas à droite de la fenêtre principale calibre. Le nom de l'auteur affiché dans le panneau Détail du livre peut être cliqué, il vous mènera vers la page Wikipedia au sujet de l'auteur. Ceci peut être personnalisé en faisant un clic droit sur le nom de l'auteur et en sélectionnant Gérer cet auteur."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:499
+#: ../../home/kovid/work/calibre/manual/gui.rst:505
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "amazon, worldcat, etc. from where the metadata was downloaded."
 msgstr "Similairement, si vous téléchargez des métadonnées pour le livre, panneau Détail du Livre vous affichera des liens pointant vers les pages web du livre sur Amazon, worldcat, etc. depuis où les métadonnées ont été téléchargées."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:503
+#: ../../home/kovid/work/calibre/manual/gui.rst:509
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "Vous pouvez faire un clic droit sur les formats individuels de livre dans le panneau Détail du livre pour les supprimer, les comparer à leurs versions originales, les sauvegarder sur le disque, les ouvrir avec un programme extérieur etc."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:507
+#: ../../home/kovid/work/calibre/manual/gui.rst:513
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "Vous pouvez changer la couverture du livre simplement en glissant et déposant une image sur le panneau Détails du Livre. Si vous voulez utiliser un programme tiers pour éditer l'image de couverture, faites un simple clic droit dessus et choisissez :guilabel:`Ouvrir avec`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:511
+#: ../../home/kovid/work/calibre/manual/gui.rst:517
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "Vous pouvez aussi ajouter des fichiers de livre numérique au livre courant en glissant et déposant les fichiers sur le panneau Détails du livre."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:514
+#: ../../home/kovid/work/calibre/manual/gui.rst:520
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "Double cliquer sur le panneau de Détails de livre l'ouvrira dans une fenêtre distincte."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:517
+#: ../../home/kovid/work/calibre/manual/gui.rst:523
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "Pour finir, vous pouvez personnaliser exactement quelle information est affichée dans le panneau Détails du livre par l'intermédiaire de :guilabel:`Préférences->Apparence->Détails du livre`."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:527
+#: ../../home/kovid/work/calibre/manual/gui.rst:533
 msgid "Tag browser"
 msgstr "Navigateur d’étiquettes"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:531
+#: ../../home/kovid/work/calibre/manual/gui.rst:537
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1146,7 +1156,7 @@ msgid ""
 " series."
 msgstr "Le Navigateur d’étiquettes vous permet de parcourir facilement votre collection par Auteur/Étiquettes/ Série etc. Si vous cliquez sur n'importe quel élément dans le Navigateur d’étiquettes, par exemple sur le nom d'auteur Isaac Asimov, la liste des livres se limitera à l'affichage des livres de cet auteur. Vous pouvez également cliquer sur les catégories. Par exemple, si vous cliquez sur \"Séries\" vous affichera tous les livres de n'importe quelle série."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:533
+#: ../../home/kovid/work/calibre/manual/gui.rst:539
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1164,7 +1174,7 @@ msgid ""
 "construct basic search expressions."
 msgstr "Le premier clic sur un élément permet de limiter la liste des livres à ceux qui contiennent ou correspondent à cet élément. En reprenant l'exemple ci-dessus, en cliquant sur Isaac Asimov vous aurez tous les livres de cet auteur. En cliquant à nouveau sur l'élément, le résultat dépend si l’élément a des sous-éléments ou non (voir les sous-catégories et les éléments hiérarchiques ci-dessous). En continuant l'exemple d'Isaac Asimov en cliquant à nouveau sur Isaac Asimov, vous allez obtenir les livres qui ne sont pas d’Isaac Asimov. Un troisième clic va supprimer la restriction, et vous aurez de nouveau tous les livres. Si vous maintenez enfoncée la touche Ctrl ou Maj et cliquez sur plusieurs éléments, la liste prendra en compte toutes les conditions. Par exemple, vous pourriez maintenir la touche Ctrl et cliquez sur les catégories Histoire et Europe pour trouver des livres sur l'histoire européenne.\nLe Navigateur d’étiquettes fonctionne en construisant des expressions de recherche qui sont entrées automatiquement dans la barre de recherche. En regardant ce que le Navigateur d'étiquettes génère vous pourrez facilement apprendre à construire des expressions de recherche de base."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:535
+#: ../../home/kovid/work/calibre/manual/gui.rst:541
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1173,7 +1183,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "Les éléments du Navigateur d’étiquettes ont leurs icônes partiellement colorées. La quantité de couleur dépend de la note moyenne des livres dans cette catégorie. Ainsi, par exemple si les livres d'Isaac Asimov ont une moyenne de quatre étoiles, l'icône Isaac Asimov dans le Navigateur d'étiquettes sera colorée au 4/5e. Vous pouvez passer votre souris sur l'icône pour voir la note moyenne."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:537
+#: ../../home/kovid/work/calibre/manual/gui.rst:543
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1192,38 +1202,38 @@ msgid ""
 "Favorites example above."
 msgstr "Les articles des niveaux externes dans le :guilabel:`Navigateur d’étiquettes`, comme Auteurs et Séries, sont appelés catégories. Vous pouvez créer vos propres catégories, appelées :guilabel:`Catégories utilisateur`, qui sont utiles pour organiser les éléments. Par exemple, vous pouvez utiliser l':guilabel:`Éditeur de catégories utilisateur` (cliquer le bouton :guilabel:`Configurer` en bas à gauche du :guilabel:`Navigateur d’étiquettes` et choisissez :guilabel:`Gérer les auteurs, séries, etc->Catégories utilisateur``) pour créer une Catégorie utilisateur appelée \"Auteurs favoris\", mettez alors vos éléments favoris dans la catégorie. Les Catégories utilisateur peuvent avoir des sous catégories. Par exemple, la Catégorie utilisateur \"Favoris.Auteurs\" est une sous catégorie de Favoris. Vous pouvez aussi créer \"Favoris.Séries\", dans ce cas il y aura deux sous catégories sous Favoris. Les sous catégories peuvent être créées en faisant un clic droit sur une Catégorie utilisateur, choisir :guilabel:`Ajouter une sous catégorie à ...`, et entrer le nom de la sous catégorie; ou en utilisant l’:guilabel:`Éditeur de catégories utilisateur` et en entrant les noms comme l'exemple des Favoris ci-dessus."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:543
+#: ../../home/kovid/work/calibre/manual/gui.rst:549
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "Vous pouvez rechercher les Catégories utilisateurs de la même manière que les catégories intégrées, en cliquant dessus. Il y a quatre recherches différentes faits un cycle en cliquant sur :"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:540
+#: ../../home/kovid/work/calibre/manual/gui.rst:546
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "\"tout ce qui correspond à l’élément dans la catégorie\" indiquée par un seul signe plus vert."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:541
+#: ../../home/kovid/work/calibre/manual/gui.rst:547
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"tout ce qui correspond à l’élément de la catégorie ou de ses sous-catégories\" indiqué par deux signes plus verts."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:542
+#: ../../home/kovid/work/calibre/manual/gui.rst:548
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "\"tout ce qui ne correspond pas à l’élément dans la catégorie\" indiquée par un seul signe moins rouge."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:543
+#: ../../home/kovid/work/calibre/manual/gui.rst:549
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "\"tout ce qui ne correspond pas à l’élément dans la catégorie ou dans ses sous-catégories\" indiquées par deux signes moins rouges."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:545
+#: ../../home/kovid/work/calibre/manual/gui.rst:551
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1240,14 +1250,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "Il est également possible de créer des hiérarchies à l'intérieur de certaines catégories texte comme les étiquettes, les séries et les colonnes personnalisées. Ces hiérarchies apparaissent avec un petit triangle, permettant aux sous éléments d'être masqués. Pour utiliser les hiérarchies d'éléments dans une catégorie, vous devez vous rendre tout d'abord dans :guilabel:`Préférences->Interface->Apparence->Navigateur d’étiquettes` et entrer le(s) nom(s) de catégorie dans la case \"Catégories avec des articles hiérarchiques\". Une fois que c'est fait, les éléments dans cette catégorie qui contiennent des subdivisions seront affichés en utilisant le petit triangle. Par exemple, présumons que vous créez une colonne personnalisée appelée \"Genre\" et indiquez quelle contient des éléments hiérarchiques. Une fois fait, les éléments tels que Mystère.Thriller et Mystère.Anglais s'afficheront comme Mystère avec le petit triangle à leur suite. Cliquer sur le triangle affichera Thriller et Anglais comme sous éléments. Voir :ref:`Gérer des sous groupes de livres, par exemple \"genre\" <subgroups-tutorial>` pour plus d'information."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:547
+#: ../../home/kovid/work/calibre/manual/gui.rst:553
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "Les éléments hiérarchiques (éléments avec des sous-éléments) utilisent les quatre recherches 'cliquez dessus' identiques à celles des Catégories utilisateurs. Les éléments qui n'ont pas de sous-éléments utilisent deux des recherches : \"tout ce qui correspond\" et \"tout ce qui ne correspond pas\"."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:549
+#: ../../home/kovid/work/calibre/manual/gui.rst:555
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the shift "
@@ -1259,7 +1269,7 @@ msgid ""
 "tag History to the book's tags."
 msgstr "Vous pouvez glisser et déposer des éléments dans le Navigateur d’Étiquettes sur les Catégories d'utilisateurs à ajouter à cette catégorie. Si la source est une Catégorie utilisateur, maintenez la touche Maj tout en déplaçant l'article vers la nouvelle catégorie. Vous pouvez aussi glisser et déposer des livres depuis la liste de livres sur les éléments du Navigateur d’étiquettes; déposer un livre sur des éléments dans le Navigateur d’Étiquettes entraînera que cet élément s'appliquera automatiquement au livre déposé. Par exemple, glisser un livre sur Isaac Asimov  établira l'auteur pour ce livre à Isaac Asimov. Déposer le sur l'étiquette Histoire ajoutera l'étiquette Histoire aux étiquettes du livre."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:551
+#: ../../home/kovid/work/calibre/manual/gui.rst:557
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1269,7 +1279,7 @@ msgid ""
 "authors and control how their names are sorted."
 msgstr "Vous pouvez trouver facilement n'importe quel élément dans le Navigateur d’étiquettes en cliquant le bouton de recherche en bas à droite. En complément, vous pouvez faire un clic droit sur n'importe quel élément et choisir une des diverses opérations. Certains exemples sont de le cacher, de le renommer, ou d'ouvrir une boîte de dialogue \"Gérer x\" qui vous permet de gérer des éléments de ce type. Par exemple, la boîte de dialogue \"Gérer les auteurs\" permet de renommer les auteurs et de contrôler comment leurs noms sont triés."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:553
+#: ../../home/kovid/work/calibre/manual/gui.rst:559
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1278,11 +1288,11 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "Vous pouvez contrôler comment les éléments sont triés dans le Navigateur d’étiquettes par l’intermédiaire du bouton :guilabel:`Configurer` en bas à gauche du Navigateur d’étiquettes. Vous pouvez choisir de trier par nom, note moyenne ou popularité (popularité est le nombre de livres avec un élément dans votre bibliothèque; par exemple, la popularité d'Isaac Asimov est le nombre de livres par Isaac Asimov dans votre bibliothèque)."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:560
+#: ../../home/kovid/work/calibre/manual/gui.rst:566
 msgid "Cover grid"
 msgstr "Grille de couvertures"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:565
+#: ../../home/kovid/work/calibre/manual/gui.rst:571
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -1294,11 +1304,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "calibre peut vous afficher une grille de couvertures à la place de la liste de livres. Si vous préférez plutôt naviguer dans votre collection par couvertures. La :guilabel:`Grille de couvertures` est activée en cliquant sur le bouton :guilabel:`Disposition` grille dans le coin inférieur droit de la fenêtre principale de calibre. Vous pouvez personnaliser la taille des couvertures et l'arrière plan de la :guilabel:`Grille de couvertures` via :guilabel:`Préférences->Interface->Apparence->Grille de couvertures`. calibre peut même afficher n'importe quel champ en dessous des couvertures, comme titre, auteurs ou note ou une colonne personnalisée de votre propre invention."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:575
+#: ../../home/kovid/work/calibre/manual/gui.rst:581
 msgid "Cover browser"
 msgstr "Navigateur de couvertures"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:580
+#: ../../home/kovid/work/calibre/manual/gui.rst:586
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in the single row. This is activated via the "
@@ -1308,11 +1318,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr "En complément de la grille de couvertures décrite plus haut,  calibre peut aussi afficher les couvertures en une simple ligne. Ceci est activé par l'intermédiaire d'un bouton :guilabel:`Disposition` dans le coin inférieur droit de la fenêtre principale. Dans :guilabel:`Préférences->Apparence->Navigateur de couvertures` vous pouvez changer le nombre de couvertures affichées, et même avoir le navigateur de couverture s'afficher dans une fenêtre distincte."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:587
+#: ../../home/kovid/work/calibre/manual/gui.rst:593
 msgid "Quickview"
 msgstr "Affichage rapide"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:589
+#: ../../home/kovid/work/calibre/manual/gui.rst:595
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -1327,53 +1337,53 @@ msgid ""
 "and all the books by the selected author on the right."
 msgstr "Parfois vous voulez sélectionner un livre et rapidement obtenir une liste de livres avec la même valeur dans une certaine catégorie (auteurs, étiquettes, éditeur, séries, etc.) comme le livre actuellement sélectionné, mais sans changer la vue actuelle de votre bibliothèque. Vous pouvez faire cela avec Affichage rapide. Affichage rapide ouvre une deuxième fenêtre affichant la liste des livres correspondants à la valeur intéressée. Par exemple, supposons que vous voulez voir une liste de tous les livres avec un ou plus des auteurs du livre actuellement sélectionné. Cliquer dans la cellule de l'auteur qui vous intéresse et appuyez sur la touche 'Q' ou cliquez sur l'icône Affichage rapide dans la section mise en page de la fenêtre calibre. Une fenêtre ou un panneau s'ouvrira avec tous les auteurs pour ce livre sur la gauche et tous les livres pour l'auteur sélectionné sur la droite."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:596
+#: ../../home/kovid/work/calibre/manual/gui.rst:602
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Quelques exemples des utilisations d'Affichage Rapide : voir rapidement que d'autres livres :"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:592
+#: ../../home/kovid/work/calibre/manual/gui.rst:598
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "ont certaine(s) étiquette(s) appliquée(s) au livre actuellement sélectionné,"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:593
+#: ../../home/kovid/work/calibre/manual/gui.rst:599
 msgid "are in the same series as the current book"
 msgstr "sont dans la même série que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:594
+#: ../../home/kovid/work/calibre/manual/gui.rst:600
 msgid "have the same values in a custom column as the current book"
 msgstr "ont les mêmes valeurs dans une colonne personnalisée que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:595
+#: ../../home/kovid/work/calibre/manual/gui.rst:601
 msgid "are written by one of the same authors of the current book"
 msgstr "sont écrits par l'un des mêmes auteurs que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:596
+#: ../../home/kovid/work/calibre/manual/gui.rst:602
 msgid "share values in a custom column"
 msgstr "partager les valeurs dans une colonne personnalisée"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:598
+#: ../../home/kovid/work/calibre/manual/gui.rst:604
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "Il y deux choix pour où faire apparaître l'information Affichage Rapide :"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:600
+#: ../../home/kovid/work/calibre/manual/gui.rst:606
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "Il peut s'ouvrir \"ancré\" : au dessus de la fenêtre calibre et il restera ouvert jusqu'à ce que vous le fermiez explicitement."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:601
+#: ../../home/kovid/work/calibre/manual/gui.rst:607
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "Il peut s'ouvrir \"désancré\" : comme un panneau dans la section liste de livres de la fenêtre principale de calibre."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:603
+#: ../../home/kovid/work/calibre/manual/gui.rst:609
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "Vous pouvez déplacer comme bon vous semble la fenêtre de verrouillé à déverrouillé en utilisant le bouton \"Ancrer/Désancrer\"."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:605
+#: ../../home/kovid/work/calibre/manual/gui.rst:611
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -1386,21 +1396,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr "La panneau Affichage rapide peut être laissé ouvert en permanence, dans ce cas il suivra les mouvements de la liste de livres. Par exemple, si dans la vue bibliothèque calibre vous cliquez sur une colonne de catégorie (étiquettes, séries, éditeur, auteur, etc.) pour un livre, le contenu de la fenêtre Affichage rapide changera pour vous montrer dans le panneau de gauche les éléments dans cette catégorie pour le livre sélectionné (par exemple, les étiquettes pour ce livre). Le premier élément dans cette liste sera sélectionné, et Affichage rapide vous montrera dans le panneau de droite tous les livres dans votre bibliothèque qui utilisent cet valeur. Cliquer sur une valeur différente dans le panneau de gauche pour voir les livres avec cette valeur différente."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:607
+#: ../../home/kovid/work/calibre/manual/gui.rst:613
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "Double cliquez sur un livre dans la fenêtre Affichage rapide pour sélectionner ce livre dans la vue bibliothèque. Ceci changera aussi les éléments dans la fenêtre Affichage rapide (panneau de gauche) pour montrer les éléments dans le livre nouvellement sélectionné."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:609
+#: ../../home/kovid/work/calibre/manual/gui.rst:615
 msgid ""
 "``Shift-`` or ``Ctrl-`` double-click on a book in the Quickview window to "
 "open the edit metadata dialog on that book in the calibre window. The edited"
 " book will be Quickview'ed when you close the edit metadata dialog."
 msgstr "``Shift-`` ou ``Ctrl-`` double clic sur un livre dans la fenêtre Affichage rapide pour ouvrir la boîte de dialogue modifier les métadonnées de ce livre dans la fenêtre calibre. Le livre modifié sera Affiché rapidement quand vous fermerez la boite de dialogue Modifier les métadonnées."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:611
+#: ../../home/kovid/work/calibre/manual/gui.rst:617
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -1409,47 +1419,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Vous pouvez voir si une colonne peut être Affichée Rapidement en passant votre souris sur l'entête de la colonne et en regardant l'info-bulle pour cet entête. Vous pouvez aussi le savoir en faisant un clic droit sur l'entête de colonne pour voir si l'option \"Affichage rapide\" apparaît dans le menu, dans un tel cas choisir cette option Affichage rapide est équivalent à appuyer 'Q' dans la cellule actuelle."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:613
+#: ../../home/kovid/work/calibre/manual/gui.rst:619
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "Options (dans :guilabel:`Préférences->Apparence et présentation->Affichage rapide) : "
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:615
+#: ../../home/kovid/work/calibre/manual/gui.rst:621
 msgid ""
 "Respect (or not) the current virtual library. If checked then Quickview "
 "shows only books in the current virtual library. Default: respect virtual "
 "libraries"
 msgstr "Affichage rapide respecte (ou non) la bibliothèque virtuelle actuelle. Si coché, alors Affichage rapide montre uniquement les livres dans la bibliothèque virtuelle actuelle. Par défaut : respecte les bibliothèques virtuelles"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:616
+#: ../../home/kovid/work/calibre/manual/gui.rst:622
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "Changer le contenu de la fenêtre Affichage rapide quand la colonne est changée dans la liste de livres en utilisant les touches curseur. Par défaut : ne suit pas les changements effectués avec les touches curseur"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:617
+#: ../../home/kovid/work/calibre/manual/gui.rst:623
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "Changer la colonne qui est \"Affiché rapidement\" quand une cellule dans la fenêtre Affichage rapide est double cliquée. Autrement le livre est changé mais la colonne examinée ne l'est pas. Par défaut : changer la colonne"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:618
+#: ../../home/kovid/work/calibre/manual/gui.rst:624
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "Changer la colonne qui est \"Affichée rapidement\" vers la colonne actuelle quand la touche retour est appuyée dans le panneau Affichage rapide. Autrement le livre est changé mais la colonne qui est examinée ne l'est pas. Par défaut : changer la colonne"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:619
+#: ../../home/kovid/work/calibre/manual/gui.rst:625
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "Choisir quelles colonnes sont affichées dans la/le fenêtre/panneau Affichage rapide"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:628
+#: ../../home/kovid/work/calibre/manual/gui.rst:634
 msgid "Jobs"
 msgstr "Tâches"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:632
+#: ../../home/kovid/work/calibre/manual/gui.rst:638
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -1459,11 +1469,11 @@ msgid ""
 "have completed successfully."
 msgstr "Le panneau des Travaux montre le nombre des tâches en cours. Les travaux sont des tâches qui s'exécutent dans un processus séparé. Ils incluent la conversion de livres numériques et les échanges avec votre liseuse. Vous pouvez cliquer sur le panneau des tâches pour accéder à la liste des tâches. Une fois qu'une tâche est terminée vous pouvez voir un journal détaillé de cette tâche en la double cliquant dans cette liste. Ceci est utile pour dépanner des tâches qui ne se sont pas terminées avec succès."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:639
+#: ../../home/kovid/work/calibre/manual/gui.rst:645
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis clavier"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:641
+#: ../../home/kovid/work/calibre/manual/gui.rst:647
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -1472,390 +1482,390 @@ msgid ""
 "customised by clicking the :guilabel:`Preferences` button in the viewer."
 msgstr "calibre a plusieurs raccourcis clavier pour vous faire gagner du temps et du déplacement de souris. Ces raccourcis sont disponibles depuis la liste des livres (quand vous n'êtes pas occupé à éditer les détails d'un livre particulier), et la plupart d'entre eux affectent le titre que vous avez sélectionné. La visionneuse de livre numérique calibre a ses propres raccourcis qui peuvent être personnalisés en cliquant sur le bouton Préférences dans la visionneuse ."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:645
+#: ../../home/kovid/work/calibre/manual/gui.rst:651
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "Remarque : Les raccourcis clavier calibre ne requièrent pas de touche modificatrice (Command, Option, Control, etc.) sauf si cela est spécialement indiqué. Vous avez seulement besoin d'appuyer la touche de lettre. Par ex. : E pour éditer."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:647
+#: ../../home/kovid/work/calibre/manual/gui.rst:653
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "Raccourcis clavier pour le programme principal de calibre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:651
+#: ../../home/kovid/work/calibre/manual/gui.rst:657
 msgid "Keyboard shortcut"
 msgstr "Raccourci clavier"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:652
+#: ../../home/kovid/work/calibre/manual/gui.rst:658
 msgid "Action"
 msgstr "Action"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:653
+#: ../../home/kovid/work/calibre/manual/gui.rst:659
 msgid ":kbd:`F2 (Enter in macOS)`"
 msgstr ":kbd:`F2 (Enter dans macOS)`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:654
+#: ../../home/kovid/work/calibre/manual/gui.rst:660
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Editer les métadonnées du champ actuellement sélectionné dans la liste de livres."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:655
+#: ../../home/kovid/work/calibre/manual/gui.rst:661
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:656
+#: ../../home/kovid/work/calibre/manual/gui.rst:662
 msgid "Add Books"
 msgstr "Ajouter des livres"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:657
+#: ../../home/kovid/work/calibre/manual/gui.rst:663
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:658
+#: ../../home/kovid/work/calibre/manual/gui.rst:664
 msgid "Add Formats to the selected books"
 msgstr "Ajouter des Formats aux livres sélectionnés"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:659
+#: ../../home/kovid/work/calibre/manual/gui.rst:665
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:660
+#: ../../home/kovid/work/calibre/manual/gui.rst:666
 msgid "Convert selected Books"
 msgstr "Convertir les Livres sélectionnés"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:661
+#: ../../home/kovid/work/calibre/manual/gui.rst:667
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:663
+#: ../../home/kovid/work/calibre/manual/gui.rst:669
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:664
+#: ../../home/kovid/work/calibre/manual/gui.rst:670
 msgid "Remove selected Books"
 msgstr "Supprimer les Livres sélectionnés"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:665
+#: ../../home/kovid/work/calibre/manual/gui.rst:671
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:666
+#: ../../home/kovid/work/calibre/manual/gui.rst:672
 msgid "Edit metadata of selected books"
 msgstr "Editer les métadonnées des livres sélectionnés"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:667
+#: ../../home/kovid/work/calibre/manual/gui.rst:673
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:668
+#: ../../home/kovid/work/calibre/manual/gui.rst:674
 msgid "Get books"
 msgstr "Obtenir des livres"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:669
+#: ../../home/kovid/work/calibre/manual/gui.rst:675
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:670
+#: ../../home/kovid/work/calibre/manual/gui.rst:676
 msgid "Show Book details"
 msgstr "Afficher Détails du livre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:671
+#: ../../home/kovid/work/calibre/manual/gui.rst:677
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:672
+#: ../../home/kovid/work/calibre/manual/gui.rst:678
 msgid "Edit Table of Contents"
 msgstr "Modifier la table des matières"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:673
+#: ../../home/kovid/work/calibre/manual/gui.rst:679
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:674
+#: ../../home/kovid/work/calibre/manual/gui.rst:680
 msgid "Merge selected records"
 msgstr "Fusionner les enregistrements sélectionnés"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:675
+#: ../../home/kovid/work/calibre/manual/gui.rst:681
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:676
+#: ../../home/kovid/work/calibre/manual/gui.rst:682
 msgid "Merge selected records, keeping originals"
 msgstr "Fusionner les enregistrements sélectionnés, garder les originaux"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:677
+#: ../../home/kovid/work/calibre/manual/gui.rst:683
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:678
+#: ../../home/kovid/work/calibre/manual/gui.rst:684
 msgid "Open containing folder"
 msgstr "Ouvrir le répertoire contenant"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:679
+#: ../../home/kovid/work/calibre/manual/gui.rst:685
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:680
+#: ../../home/kovid/work/calibre/manual/gui.rst:686
 msgid "Polish books"
 msgstr "Polir des livres"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:681
+#: ../../home/kovid/work/calibre/manual/gui.rst:687
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:683
+#: ../../home/kovid/work/calibre/manual/gui.rst:689
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:684
+#: ../../home/kovid/work/calibre/manual/gui.rst:690
 msgid "Edit book"
 msgstr "Editer le livre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:685
+#: ../../home/kovid/work/calibre/manual/gui.rst:691
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:687
+#: ../../home/kovid/work/calibre/manual/gui.rst:693
 msgid ":kbd:`Alt+V/Cmd+V in macOS`"
 msgstr ":kbd:`Alt+V/Cmd+V dans macOS`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:688
+#: ../../home/kovid/work/calibre/manual/gui.rst:694
 msgid "View specific format"
 msgstr "Visualiser un format spécifique"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:689
+#: ../../home/kovid/work/calibre/manual/gui.rst:695
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:690
+#: ../../home/kovid/work/calibre/manual/gui.rst:696
 msgid "Toggle jobs list"
 msgstr "Afficher/Masquer la liste des tâches"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:691
+#: ../../home/kovid/work/calibre/manual/gui.rst:697
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:692
+#: ../../home/kovid/work/calibre/manual/gui.rst:698
 msgid "Toggle Cover browser"
 msgstr "Afficher/Masquer le Navigateur de Couvertures"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:693
+#: ../../home/kovid/work/calibre/manual/gui.rst:699
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:694
+#: ../../home/kovid/work/calibre/manual/gui.rst:700
 msgid "Toggle Book details panel"
 msgstr "Afficher/Masquer le panneau des Détails du Livre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:695
+#: ../../home/kovid/work/calibre/manual/gui.rst:701
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:696
+#: ../../home/kovid/work/calibre/manual/gui.rst:702
 msgid "Toggle Tag browser"
 msgstr "Afficher/Masquer Le Navigateur d’Étiquette"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:697
+#: ../../home/kovid/work/calibre/manual/gui.rst:703
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:698
+#: ../../home/kovid/work/calibre/manual/gui.rst:704
 msgid "Toggle Cover grid"
 msgstr "Afficher/Masquer la grille de couvertures"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:699
+#: ../../home/kovid/work/calibre/manual/gui.rst:705
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:700
+#: ../../home/kovid/work/calibre/manual/gui.rst:706
 msgid "Show books by the same author as the current book"
 msgstr "Afficher les livres du même auteur que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:701
+#: ../../home/kovid/work/calibre/manual/gui.rst:707
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:702
+#: ../../home/kovid/work/calibre/manual/gui.rst:708
 msgid "Show books with the same tags as current book"
 msgstr "Afficher des livres avec les mêmes étiquettes que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:703
+#: ../../home/kovid/work/calibre/manual/gui.rst:709
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:704
+#: ../../home/kovid/work/calibre/manual/gui.rst:710
 msgid "Show books by the same publisher as current book"
 msgstr "Afficher des livres avec le même éditeur que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:705
+#: ../../home/kovid/work/calibre/manual/gui.rst:711
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:706
+#: ../../home/kovid/work/calibre/manual/gui.rst:712
 msgid "Show books in the same series as current book"
 msgstr "Afficher des livres dans la même série que le livre actuel"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:707
+#: ../../home/kovid/work/calibre/manual/gui.rst:713
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:708
+#: ../../home/kovid/work/calibre/manual/gui.rst:714
 msgid "Focus the Search bar"
 msgstr "Focalisez la barre de recherche"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:709
+#: ../../home/kovid/work/calibre/manual/gui.rst:715
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Shift+Ctrl+F`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:710
+#: ../../home/kovid/work/calibre/manual/gui.rst:716
 msgid "Open the advanced search dialog"
 msgstr "Ouvrir la boîte de dialogue recherche avancée"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:711
+#: ../../home/kovid/work/calibre/manual/gui.rst:717
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:712
+#: ../../home/kovid/work/calibre/manual/gui.rst:718
 msgid "Clear the current search"
 msgstr "Vider la recherche courante"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:713
+#: ../../home/kovid/work/calibre/manual/gui.rst:719
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:714
+#: ../../home/kovid/work/calibre/manual/gui.rst:720
 msgid "Focus the book list"
 msgstr "Ciblez la liste des livres"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:715
+#: ../../home/kovid/work/calibre/manual/gui.rst:721
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:716
+#: ../../home/kovid/work/calibre/manual/gui.rst:722
 msgid "Clear the virtual library"
 msgstr "Nettoyez la bibliothèque virtuelle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:717
+#: ../../home/kovid/work/calibre/manual/gui.rst:723
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:718
+#: ../../home/kovid/work/calibre/manual/gui.rst:724
 msgid "Clear the additional restriction"
 msgstr "Nettoyez la restriction additionnelle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:719
+#: ../../home/kovid/work/calibre/manual/gui.rst:725
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:720
+#: ../../home/kovid/work/calibre/manual/gui.rst:726
 msgid "Create a temporary virtual library based on the current search"
 msgstr "Créer une bibliothèque virtuelle temporaire basée sur la recherche actuelle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:721
+#: ../../home/kovid/work/calibre/manual/gui.rst:727
 msgid ":kbd:`Ctrl+Right`"
 msgstr ":kbd:`Ctrl+Droit`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:722
+#: ../../home/kovid/work/calibre/manual/gui.rst:728
 msgid "Select the next virtual library tab"
 msgstr "Sélectionne le prochain volet de la bibliothèque virtuelle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:723
+#: ../../home/kovid/work/calibre/manual/gui.rst:729
 msgid ":kbd:`Ctrl+Left`"
 msgstr ":kbd:`Ctrl+Gauche`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:724
+#: ../../home/kovid/work/calibre/manual/gui.rst:730
 msgid "Select the previous virtual library tab"
 msgstr "Sélectionne le volet précédent de la bibliothèque virtuelle"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:725
+#: ../../home/kovid/work/calibre/manual/gui.rst:731
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N ou F3`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:726
+#: ../../home/kovid/work/calibre/manual/gui.rst:732
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Trouver le livre suivant qui correspond à la recherche actuelle (fonctionne uniquement si la la mise en évidence de la recherche est activée dans les préférences de recherche)"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:727
+#: ../../home/kovid/work/calibre/manual/gui.rst:733
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N ou Shift+F3`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:728
+#: ../../home/kovid/work/calibre/manual/gui.rst:734
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Trouver le livre précédent qui correspond à la recherche actuelle (fonctionne uniquement si la la mise en évidence de la recherche est activée dans les préférences de recherche)"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:729
+#: ../../home/kovid/work/calibre/manual/gui.rst:735
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:730
+#: ../../home/kovid/work/calibre/manual/gui.rst:736
 msgid "Download metadata and covers"
 msgstr "Télécharger les métadonnées et les couvertures"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:731
+#: ../../home/kovid/work/calibre/manual/gui.rst:737
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:732
+#: ../../home/kovid/work/calibre/manual/gui.rst:738
 msgid "Restart calibre"
 msgstr "Redémarrer calibre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:733
+#: ../../home/kovid/work/calibre/manual/gui.rst:739
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:734
+#: ../../home/kovid/work/calibre/manual/gui.rst:740
 msgid "Restart calibre in debug mode"
 msgstr "Redémarrer calibre en mode dépannage"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:735
+#: ../../home/kovid/work/calibre/manual/gui.rst:741
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:736
+#: ../../home/kovid/work/calibre/manual/gui.rst:742
 msgid "Add empty books to calibre"
 msgstr "Ajouter des livres à calibre"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:737
+#: ../../home/kovid/work/calibre/manual/gui.rst:743
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:738
+#: ../../home/kovid/work/calibre/manual/gui.rst:744
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "Basculer entre le statut marqués/démarqués sur les livres sélectionnés "
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:739
+#: ../../home/kovid/work/calibre/manual/gui.rst:745
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:740
+#: ../../home/kovid/work/calibre/manual/gui.rst:746
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "Ouvre la fenêtre d'Affichage Rapide pour voir les livres en rapport aux séries/étiquettes/etc."
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:741
+#: ../../home/kovid/work/calibre/manual/gui.rst:747
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:742
+#: ../../home/kovid/work/calibre/manual/gui.rst:748
 msgid "Focus the opened Quick View panel"
 msgstr "Se concentre sur le panneau d'Affichage Rapide ouvert"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:743
+#: ../../home/kovid/work/calibre/manual/gui.rst:749
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:744
+#: ../../home/kovid/work/calibre/manual/gui.rst:750
 msgid "Perform a search in the Quick View panel"
 msgstr "Effectue une recherche dans le panneau d'Affichage Rapide"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:745
+#: ../../home/kovid/work/calibre/manual/gui.rst:751
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../home/kovid/work/calibre/manual/gui.rst:746
+#: ../../home/kovid/work/calibre/manual/gui.rst:752
 msgid "Quit calibre"
 msgstr "Quitter calibre"
