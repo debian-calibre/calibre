@@ -1,0 +1,4728 @@
+---
+ setup/build_environment.py         |    6 
+ setup/extensions.json              |    7 
+ src/calibre/utils/lzx/compressor.c |    3 
+ src/calibre/utils/lzx/lzc.c        |  390 ---------
+ src/calibre/utils/lzx/lzc.h        |   60 -
+ src/calibre/utils/lzx/lzxc.c       | 1284 --------------------------------
+ src/calibre/utils/lzx/lzxc.h       |   46 -
+ src/calibre/utils/lzx/lzxd.c       |  906 ----------------------
+ src/calibre/utils/lzx/lzxd.h       |  168 ----
+ src/calibre/utils/lzx/lzxmodule.c  |    3 
+ src/calibre/utils/lzx/mspack.h     | 1480 -------------------------------------
+ src/calibre/utils/lzx/msstdint.h   |  225 -----
+ src/calibre/utils/lzx/system.h     |   63 -
+ 13 files changed, 12 insertions(+), 4629 deletions(-)
+
+--- calibre-debian.orig/setup/build_environment.py
++++ calibre-debian/setup/build_environment.py
+@@ -108,6 +108,9 @@
+ icu_lib_dirs = []
+ zlib_inc_dirs = []
+ zlib_lib_dirs = []
++mspack_inc_dirs = []
++mspack_lib_dirs = []
++mspack_libs = []
+ openssl_inc_dirs, openssl_lib_dirs = [], []
+ ICU = sw = ''
+ 
+@@ -148,6 +151,9 @@
+     sw = os.environ.get('SW', os.path.expanduser('~/sw'))
+     podofo_inc = '/usr/include/podofo'
+     podofo_lib = '/usr/lib'
++    mspack_inc_dirs = pkgconfig_include_dirs('libmspack', 'MSPACK_INC_DIR', '/usr/include/mspack')
++    mspack_lib_dirs = pkgconfig_lib_dirs('libmspack', 'MSPACK_LIB_DIR', '/usr/lib')
++    mspack_libs = pkgconfig_libs('libmspack', '', '')
+     if not os.path.exists(podofo_inc + '/podofo.h'):
+         podofo_inc = os.path.join(sw, 'include', 'podofo')
+         podofo_lib = os.path.join(sw, 'lib')
+--- calibre-debian.orig/setup/extensions.json
++++ calibre-debian/setup/extensions.json
+@@ -89,9 +89,10 @@
+     },
+     {
+         "name": "lzx",
+-        "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
+-        "inc_dirs": "calibre/utils/lzx",
+-        "headers": "calibre/utils/lzx/msstdint.h calibre/utils/lzx/lzc.h calibre/utils/lzx/lzxmodule.h calibre/utils/lzx/system.h calibre/utils/lzx/lzxc.h calibre/utils/lzx/lzxd.h calibre/utils/lzx/mspack.h"
++        "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c",
++        "inc_dirs": "!mspack_inc_dirs",
++	"lib_dirs": "!mspack_lib_dirs",
++        "headers": "calibre/utils/lzx/lzxmodule.h"
+     },
+     {
+         "name": "freetype",
+--- calibre-debian.orig/src/calibre/utils/lzx/compressor.c
++++ calibre-debian/src/calibre/utils/lzx/compressor.c
+@@ -6,8 +6,7 @@
+ 
+ #include <Python.h>
+ #include <structmember.h>
+-#include <lzxc.h>
+-#include <lzxmodule.h>
++#include "lzxmodule.h"
+ 
+ #define BUFFER_INIT(buffer)                                             \
+     do {                                                                \
+--- calibre-debian.orig/src/calibre/utils/lzx/lzc.c
++++ /dev/null
+@@ -1,390 +0,0 @@
+-/*
+-    File lz_nonslide.c, part of lzxcomp library
+-    Copyright (C) 2002 Matthew T. Russotto
+-
+-    This program is free software; you can redistribute it and/or modify
+-    it under the terms of the GNU Lesser General Public License as published by
+-    the Free Software Foundation; version 2.1 only
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU Lesser General Public License for more details.
+-
+-*/
+-
+-/* Force using (actually working) non-sliding version. */
+-#define NONSLIDE 1
+-#define LZ_ONEBUFFER 1
+-#define LAZY 1
+-
+-/* 
+- * Document here
+- */
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <assert.h>
+-#include <string.h>
+-#ifdef DEBUG_PERF
+-#include <sys/time.h>
+-#include <sys/resource.h>
+-#endif
+-#include "lzc.h"
+-
+-#define MAX_MATCH 253
+-#define MIN_MATCH 2
+-
+-void lz_init(lz_info *lzi, int wsize, int max_dist,
+-	     int max_match, int min_match,
+-	     int frame_size,
+-	     get_chars_t get_chars,
+-	     output_match_t output_match,
+-	     output_literal_t output_literal, void *user_data)
+-{
+-  /* the reason for the separate max_dist value is LZX can't reach the 
+-     first three characters in its nominal window.  But using a smaller
+-     window results in inefficiency when dealing with reset intervals
+-     which are the length of the nominal window */
+-
+-  lzi->wsize = wsize;
+-  if (max_match > wsize)
+-    lzi->max_match = wsize;
+-  else
+-    lzi->max_match = max_match;
+-
+-  lzi->min_match = min_match;
+-  if (lzi->min_match < 3) lzi->min_match = 3;
+-
+-  lzi->max_dist = max_dist; 
+-  lzi->block_buf_size = wsize + lzi->max_dist; 
+-  lzi->block_buf = malloc(lzi->block_buf_size);
+-  lzi->block_bufe = lzi->block_buf + lzi->block_buf_size;
+-  assert(lzi->block_buf != NULL);
+-  
+-  lzi->cur_loc = 0;
+-  lzi->block_loc = 0;
+-  lzi->chars_in_buf = 0;
+-  lzi->eofcount = 0;
+-  lzi->get_chars = get_chars;
+-  lzi->output_match = output_match;
+-  lzi->output_literal = output_literal;
+-  lzi->user_data = user_data;
+-  lzi->frame_size = frame_size;
+-  lzi->lentab = calloc(lzi->block_buf_size + 1, sizeof(int));
+-  lzi->prevtab = calloc(lzi->block_buf_size + 1, sizeof(unsigned char *));
+-  lzi->analysis_valid = 0;
+-}
+-
+-void lz_release(lz_info *lzi)
+-{
+-  free(lzi->block_buf);
+-  free(lzi->lentab);
+-  free(lzi->prevtab);
+-}
+-
+-void lz_reset(lz_info *lzi)
+-{
+-  int residual = lzi->chars_in_buf - lzi->block_loc;
+-  memmove(lzi->block_buf, lzi->block_buf + lzi->block_loc, residual);
+-  lzi->chars_in_buf = residual;
+-  lzi->block_loc = 0;
+-  lzi->analysis_valid = 0;
+-}
+-
+-#ifdef LZNONSLIDE_MAIN
+-typedef struct lz_user_data
+-{
+-  FILE *infile;
+-  FILE *outfile;
+-  int R0, R1, R2;
+-} lz_user_data;
+-
+-int tmp_get_chars(lz_info *lzi, int n, unsigned char *buf)
+-{
+-  lz_user_data *lzud = (lz_user_data *)lzi->user_data;
+-  return fread(buf, 1, n, lzud->infile);
+-}
+-
+-int tmp_output_match(lz_info *lzi, int match_pos, int match_len)
+-{
+-  lz_user_data *lzud = (lz_user_data *)lzi->user_data;
+-  int mod_match_loc;
+-  
+-  mod_match_loc = match_pos;
+-
+-  fprintf(lzud->outfile, "(%d, %d)(%d)\n", match_pos, match_len, mod_match_loc);
+-  return 0;
+-}
+-
+-void tmp_output_literal(lz_info *lzi, unsigned char ch)
+-{
+-  lz_user_data *lzud = (lz_user_data *)lzi->user_data;
+-  fprintf(lzud->outfile, "'%c'", ch);
+-}
+-
+-int main(int argc, char *argv[])
+-{
+-  int wsize = atoi(argv[1]);
+-  lz_info lzi;
+-  lz_user_data lzu = {stdin, stdout, 1, 1, 1};
+-
+-  lz_init(&lzi, wsize, wsize, MAX_MATCH, MIN_MATCH, 8192, tmp_get_chars, tmp_output_match, tmp_output_literal,&lzu);
+-  lz_compress(&lzi);
+-  return 0;
+-}
+-#endif
+-
+-int lz_left_to_process(lz_info *lzi)
+-{
+-  return lzi->chars_in_buf - lzi->block_loc;
+-}
+-
+-static void
+-fill_blockbuf(lz_info *lzi, int maxchars)
+-{
+-  int toread;
+-  unsigned char *readhere;
+-  int nread;
+-
+-  if (lzi->eofcount) return;
+-  maxchars -= lz_left_to_process(lzi);
+-  toread = lzi->block_buf_size - lzi->chars_in_buf;
+-  if (toread > maxchars) toread = maxchars;
+-  readhere = lzi->block_buf + lzi->chars_in_buf;
+-  nread = lzi->get_chars(lzi, toread, readhere);
+-  lzi->chars_in_buf += nread;
+-  if (nread != toread)
+-    lzi->eofcount++;
+-}
+-
+-static void lz_analyze_block(lz_info *lzi)
+-{
+-  int *lentab, *lenp;
+-  unsigned char **prevtab, **prevp;
+-  unsigned char *bbp, *bbe;
+-  unsigned char *chartab[256];
+-  unsigned char *cursor;
+-  int prevlen;
+-  int ch;
+-  int maxlen;
+-  long wasinc;
+-  int max_dist = lzi->max_dist;
+-#ifdef DEBUG_ANALYZE_BLOCK
+-  static short n = 0;
+-#endif
+-#ifdef DEBUG_PERF
+-  struct rusage innerloop;
+-  struct timeval innertime, tmptime;
+-  struct rusage outerloop;
+-  struct timeval outertime;
+-  struct rusage initialloop;
+-  struct timeval initialtime;
+-  struct rusage totalloop;
+-  struct timeval totaltime;
+-#endif
+-
+-#ifdef DEBUG_ANALYZE_BLOCK
+-  fprintf(stderr, "Analyzing block %d, cur_loc = %06x\n", n, lzi->cur_loc);
+-#endif
+-  memset(chartab, 0, sizeof(chartab));
+-  prevtab = prevp = lzi->prevtab;
+-  lentab = lenp = lzi->lentab;
+-  memset(prevtab, 0, sizeof(*prevtab) * lzi->chars_in_buf);
+-  memset(lentab, 0, sizeof(*lentab) * lzi->chars_in_buf);
+-#ifdef DEBUG_PERF
+-  memset(&innertime, 0, sizeof(innertime));
+-  memset(&outertime, 0, sizeof(outertime));
+-  getrusage(RUSAGE_SELF, &initialloop);
+-  totalloop = initialloop;
+-#endif
+-  bbp = lzi->block_buf;
+-  bbe = bbp + lzi->chars_in_buf;
+-  while (bbp < bbe) {
+-    if (chartab[ch = *bbp]) {
+-      *prevp = chartab[ch];
+-      *lenp = 1;
+-    }
+-    chartab[ch] = bbp;
+-    bbp++;
+-    prevp++;
+-    lenp++;
+-  }
+-#ifdef DEBUG_PERF
+-  initialtime = initialloop.ru_utime;
+-  getrusage(RUSAGE_SELF, &initialloop);
+-  timersub(&initialloop.ru_utime, &initialtime, &initialtime);
+-#endif
+-  wasinc = 1;
+-  for (maxlen = 1; wasinc && (maxlen < lzi->max_match); maxlen++) {
+-#ifdef DEBUG_PERF
+-    getrusage(RUSAGE_SELF, &outerloop);
+-#endif
+-    bbp = bbe - maxlen - 1;
+-    lenp = lentab + lzi->chars_in_buf - maxlen - 1;
+-    prevp = prevtab + lzi->chars_in_buf - maxlen - 1;
+-    wasinc = 0;
+-    while (bbp > lzi->block_buf) {
+-      if (*lenp == maxlen) {
+-#ifdef DEBUG_PERF
+-	getrusage(RUSAGE_SELF, &innerloop);
+-#endif
+-	ch = bbp[maxlen];
+-	cursor = *prevp;
+-	while(cursor && ((bbp - cursor) <= max_dist)) {
+-	  prevlen = *(cursor - lzi->block_buf + lentab);
+-	  if (cursor[maxlen] == ch) {
+-	    *prevp = cursor;
+-	    (*lenp)++;
+-	    wasinc++;
+-	    break;
+-	  }
+-	  if (prevlen != maxlen) break;
+-	  cursor = *(cursor - lzi->block_buf + prevtab);
+-	}
+-#ifdef DEBUG_PERF
+-	tmptime = innerloop.ru_utime;
+-	getrusage(RUSAGE_SELF, &innerloop);
+-	timersub(&innerloop.ru_utime, &tmptime, &tmptime);
+-	timeradd(&tmptime, &innertime, &innertime);
+-#endif
+-      }
+-      bbp--;
+-      prevp--;
+-      lenp--;
+-    }
+-#ifdef DEBUG_PERF
+-    tmptime = outerloop.ru_utime;
+-    getrusage(RUSAGE_SELF, &outerloop);
+-    timersub(&outerloop.ru_utime, &tmptime, &tmptime);
+-    timeradd(&tmptime, &outertime, &outertime);
+-#endif
+-    //    fprintf(stderr, "maxlen = %d, wasinc = %ld\n", maxlen, wasinc);
+-  }
+-#ifdef DEBUG_PERF
+-  totaltime = totalloop.ru_utime;
+-  getrusage(RUSAGE_SELF, &totalloop);
+-  timersub(&totalloop.ru_utime, &totaltime, &totaltime);
+-  fprintf(stderr, "Time spend in initial loop = %f\n", initialtime.tv_sec + initialtime.tv_usec/(double)1E6);
+-  fprintf(stderr, "Time spend in outer loop = %f\n", outertime.tv_sec + outertime.tv_usec/(double)1E6);
+-  fprintf(stderr, "Time spend in inner loop = %f\n", innertime.tv_sec + innertime.tv_usec/(double)1E6);
+-  fprintf(stderr, "Time spend in all loops = %f\n", totaltime.tv_sec + totaltime.tv_usec/(double)1E6);
+-#endif
+-  lzi->analysis_valid = 1;
+-#ifdef DEBUG_ANALYZE_BLOCK
+-  fprintf(stderr, "Done analyzing block %d, cur_loc = %06x\n", n++, lzi->cur_loc);
+-#endif
+-}
+-
+-void lz_stop_compressing(lz_info *lzi) 
+-{
+-  lzi->stop = 1;
+-  /*  fprintf(stderr, "Stopping...\n");*/
+-}
+-
+-int lz_compress(lz_info *lzi, int nchars) 
+-{
+-
+-  unsigned char *bbp, *bbe;
+-  int *lenp;
+-  unsigned char **prevp;
+-  int len;
+-  int holdback;
+-  short trimmed;
+-
+-  lzi->stop = 0;
+-  while ((lz_left_to_process(lzi) || !lzi->eofcount) && !lzi->stop && nchars > 0) {
+-#if 1
+-    if (!lzi->analysis_valid ||
+-	(!lzi->eofcount &&
+-	 ((lzi->chars_in_buf- lzi->block_loc) < nchars))) {
+-      int residual = lzi->chars_in_buf - lzi->block_loc;
+-      int bytes_to_move = lzi->max_dist + residual;
+-      if (bytes_to_move > lzi->chars_in_buf)
+-	bytes_to_move = lzi->chars_in_buf;
+-#ifdef DEBUG_ANALYZE_BLOCK
+-      fprintf(stderr, "Moving %06x, chars_in_buf %06x, residual = %06x, nchars= %06x block_loc = %06x\n", bytes_to_move, lzi->chars_in_buf, residual, nchars, lzi->block_loc);
+-#endif
+-      memmove(lzi->block_buf, lzi->block_buf + lzi->chars_in_buf - bytes_to_move,
+-	      bytes_to_move);
+-      
+-      lzi->block_loc = bytes_to_move - residual;
+-      lzi->chars_in_buf = bytes_to_move;
+-#ifdef DEBUG_ANALYZE_BLOCK
+-      fprintf(stderr, "New chars_in_buf %06x,  new block_loc = %06x, eof = %1d\n", lzi->chars_in_buf, lzi->block_loc, lzi->eofcount);
+-#endif
+-      fill_blockbuf(lzi, nchars);
+-#ifdef DEBUG_ANALYZE_BLOCK
+-      fprintf(stderr, "Really new chars_in_buf %06x,  new block_loc = %06x, eof = %1d\n", lzi->chars_in_buf, lzi->block_loc, lzi->eofcount);
+-#endif
+-      lz_analyze_block(lzi);
+-    }
+-#else
+-    if (!lzi->analysis_valid ||
+-	(lzi->block_loc - lzi->chars_in_buf) == 0) {
+-      lzi->block_loc = 0;
+-      lzi->chars_in_buf = 0;
+-      fill_blockbuf(lzi, nchars);
+-      lz_analyze_block(lzi);
+-    }
+-#endif
+-    prevp = lzi->prevtab + lzi->block_loc;
+-    lenp = lzi->lentab + lzi->block_loc;
+-    bbp = lzi->block_buf + lzi->block_loc;
+-    holdback = lzi->max_match;
+-    if (lzi->eofcount) holdback = 0;
+-    if (lzi->chars_in_buf < (nchars + lzi->block_loc))
+-      bbe = lzi->block_buf + lzi->chars_in_buf - holdback;
+-    else
+-      bbe = bbp + nchars;
+-    while ((bbp < bbe) && (!lzi->stop)) {
+-      trimmed = 0;
+-      len = *lenp;
+-      if (lzi->frame_size && (len > (lzi->frame_size - lzi->cur_loc % lzi->frame_size))) {
+-#ifdef DEBUG_TRIMMING
+-	fprintf(stderr, "Trim for framing: %06x %d %d\n", lzi->cur_loc,len, (lzi->frame_size - lzi->cur_loc % lzi->frame_size));
+-#endif
+-	trimmed = 1;
+-	len = (lzi->frame_size - lzi->cur_loc % lzi->frame_size);
+-      }
+-      if (len > nchars) {
+-#ifdef DEBUG_TRIMMING
+-	fprintf(stderr, "Trim for blocking: %06x %d %d\n", lzi->cur_loc,len, nchars);
+-#endif
+-	trimmed = 1;
+-	len = nchars;
+-      }
+-      if (len >= lzi->min_match) {
+-#ifdef LAZY
+-	if ((bbp < bbe -1) && !trimmed &&
+-	    ((lenp[1] > (len + 1)) /* || ((lenp[1] == len) && (prevp[1] > prevp[0])) */)) {
+-	  len = 1;
+-	  /* this is the lazy eval case */
+-	}
+-	else 
+-#endif
+-	  if (lzi->output_match(lzi, (*prevp - lzi->block_buf) - lzi->block_loc,
+-				len) < 0) {
+-	    //	    fprintf(stderr, "Match rejected: %06x %d\n", lzi->cur_loc, len);
+-	    len = 1; /* match rejected */
+-	  }
+-      }
+-      else
+-	len = 1;
+-      
+-      if (len < lzi->min_match) {
+-	assert(len == 1);
+-	lzi->output_literal(lzi, *bbp);
+-      }
+-      //      fprintf(stderr, "len = %3d, *lenp = %3d, cur_loc = %06x, block_loc = %06x\n", len, *lenp, lzi->cur_loc, lzi->block_loc);
+-      bbp += len;
+-      prevp += len;
+-      lenp += len;
+-      lzi->cur_loc += len;
+-      lzi->block_loc += len;
+-      assert(nchars >= len);
+-      nchars -= len;
+-
+-    }
+-  }
+-  return 0;
+-}
+--- calibre-debian.orig/src/calibre/utils/lzx/lzc.h
++++ /dev/null
+@@ -1,60 +0,0 @@
+-/*
+-    File lz_nonslide.h, part of lzxcomp library
+-    Copyright (C) 2002 Matthew T. Russotto
+-
+-    This program is free software; you can redistribute it and/or modify
+-    it under the terms of the GNU Lesser General Public License as published by
+-    the Free Software Foundation; version 2.1 only
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU Lesser General Public License for more details.
+-
+-*/
+-
+-#pragma once
+-
+-typedef struct lz_info lz_info;
+-typedef int (*get_chars_t)(lz_info *lzi, int n, unsigned char *buf);
+-typedef int (*output_match_t)(lz_info *lzi, int match_pos, int match_len);
+-typedef void (*output_literal_t)(lz_info *lzi, unsigned char ch);
+-
+-struct lz_info
+-{
+-  int wsize; /* window size in bytes */
+-  int max_match; /* size of longest match in bytes */
+-  int min_match;
+-  unsigned char *block_buf;
+-  unsigned char *block_bufe;
+-  int block_buf_size;
+-  int chars_in_buf;
+-  int cur_loc;            /* location within stream */
+-  int block_loc;
+-  int frame_size;
+-  int max_dist;
+-  unsigned char **prevtab;
+-  int *lentab;
+-  short eofcount;
+-  short stop;
+-  short analysis_valid;
+-
+-  get_chars_t get_chars;
+-  output_match_t output_match;
+-  output_literal_t output_literal;
+-  void *user_data;
+-};
+-
+-void lz_init(lz_info *lzi, int wsize, int max_dist,
+-	     int max_match, int min_match,
+-	     int frame_size,
+-	     get_chars_t get_chars,
+-	     output_match_t output_match,
+-	     output_literal_t output_literal, void *user_data);
+-
+-void lz_release(lz_info *lzi);
+-
+-void lz_reset(lz_info *lzi);
+-void lz_stop_compressing(lz_info *lzi);
+-int lz_left_to_process(lz_info *lzi); /* returns # chars read in but unprocessed */
+-int lz_compress(lz_info *lzi, int nchars);
+--- calibre-debian.orig/src/calibre/utils/lzx/lzxc.c
++++ /dev/null
+@@ -1,1284 +0,0 @@
+-/*
+-    File lzx_layer.c, part of lzxcomp library
+-    Copyright (C) 2002 Matthew T. Russotto
+-
+-    This program is free software; you can redistribute it and/or modify
+-    it under the terms of the GNU Lesser General Public License as published by
+-    the Free Software Foundation; version 2.1 only
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU Lesser General Public License for more details.
+-
+-*/
+-
+-/* Force using (actually working) non-sliding version. */
+-#define NONSLIDE 1
+-#define LZ_ONEBUFFER 1
+-#define LAZY 1
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#ifdef _MSC_VER
+-# include "msstdint.h"
+-#else /* _MSC_VER */
+-# include <stdint.h>
+-#endif /* _MSC_VER */
+-#include <string.h> /* for memset on Linux */
+-#include <assert.h>
+-#include <math.h>
+-
+-#ifdef BYTE_ORDER
+-# if BYTE_ORDER == BIG_ENDIAN
+-#  define LZX_BIG_ENDIAN
+-# endif /* BYTE_ORDER == BIG_ENDIAN */
+-#endif /* BYTE_ORDER */
+-
+-#ifdef NONSLIDE
+-#include "lzc.h"
+-#else
+-#include "hash_slide.h"
+-#include "lz_slide.h"
+-#endif
+-#include "lzxc.h"
+-
+-/* these named constants are from the Microsoft LZX documentation */
+-#define MIN_MATCH                            2
+-#define MAX_MATCH                          257
+-#define NUM_CHARS                          256
+-#define NUM_PRIMARY_LENGTHS                  7
+-#define NUM_SECONDARY_LENGTHS              249
+-
+-/* the names of these constants are specific to this library */
+-#define LZX_MAX_CODE_LENGTH                 16
+-#define LZX_FRAME_SIZE                   32768
+-#define LZX_PRETREE_SIZE                    20
+-#define LZX_ALIGNED_BITS                     3
+-#define LZX_ALIGNED_SIZE                     8
+-
+-#define LZX_VERBATIM_BLOCK                   1
+-#define LZX_ALIGNED_OFFSET_BLOCK             2
+-
+-/* Debugging defines useful during development.  All add diagnostic output
+-   at various points in the system */
+-
+-/*#define DEBUG_MATCHES       *//* When matches come in from the LZ engine */
+-/*#define DEBUG_MATCHES_2     *//* When matches are being output           */
+-/*#define DEBUG_HUFFMAN       *//* When huffman trees are built            */
+-/*#define DEBUG_ENTROPY       *//* In entropy calculation                  */
+-/*#define DEBUG_LZ            *//* Uncompressed input reconstructed from
+-                                 LZ engine                               */
+-/*#define DEBUG_BITBUF        *//* Raw output to upper layer               */
+-/*#define DEBUG_EXTRA_BITS    *//* Savings due to extra bits huffman tree  */
+-/*#define DEBUG_POSITION_SLOT_LOOKUP */
+-/*#define DEBUG_TREE_COMPRESSION   *//* During RLE compression of trees    */
+-
+-/* number of position slots given window_size-5 */
+-/* as corrected by Caie */
+-short num_position_slots[] = {30, 32, 34, 36, 38, 42, 50};
+-unsigned long position_base[51];
+-unsigned char extra_bits[52];
+-double rloge2;
+-
+-typedef struct ih_elem {
+-  int freq;
+-  short sym;
+-  short pathlength;
+-  struct ih_elem *parent;
+-  struct ih_elem *left;
+-  struct ih_elem *right;
+-} ih_elem;
+-
+-typedef struct h_elem {
+-  int freq;
+-  short sym;
+-  short pathlength;
+-  struct ih_elem *parent;
+-  unsigned short code;
+-} h_elem;
+-
+-typedef struct huff_entry {
+-  short codelength;
+-  unsigned short code;
+-} huff_entry;
+-
+-static int cmp_leaves(const void *in_a, const void *in_b)
+-{
+-  const struct h_elem *a = in_a;
+-  const struct h_elem *b = in_b;
+-  
+-  if (!a->freq && b->freq)
+-    return 1;
+-  if (a->freq && !b->freq)
+-    return -1;
+-  
+-  if (a->freq == b->freq)
+-    return a->sym - b->sym;
+-      
+-  return a->freq - b->freq;
+-}
+-
+-static int
+-cmp_pathlengths(const void *in_a, const void *in_b)
+-{
+-  const struct h_elem *a = in_a;
+-  const struct h_elem *b = in_b;
+-  
+-  if (a->pathlength == b->pathlength)
+-#if 0
+-    return a->sym - b->sym;
+-#else
+-  /* see note on canonical pathlengths */
+-    return b->sym - a->sym;
+-#endif
+-  return b->pathlength - a->pathlength;
+-}
+-
+-/* standard huffman building algorithm */
+-static void 
+-build_huffman_tree(int nelem, int max_code_length, int *freq, huff_entry *tree)
+-{
+-  h_elem *leaves = malloc(nelem * sizeof(h_elem));
+-  ih_elem *inodes;
+-  ih_elem *next_inode;
+-  ih_elem *cur_inode;
+-  h_elem *cur_leaf;
+-  int leaves_left;
+-  int nleaves;
+-  int pathlength;
+-  unsigned short cur_code;
+-  short codes_too_long = 0;
+-  ih_elem *f1, *f2;
+-  int i;
+-
+-  for (i = 0; i < nelem; i++) {
+-    leaves[i].freq = freq[i];
+-    leaves[i].sym = i;
+-    leaves[i].pathlength = 0;
+-  }
+-  qsort(leaves, nelem, sizeof(h_elem), cmp_leaves);
+-  for (leaves_left = 0; leaves_left < nelem; leaves_left++) {
+-#ifdef DEBUG_HUFFMAN
+-    fprintf(stderr, "%3d: %3d '%c'\n", leaves_left, leaves[leaves_left].freq,
+-	    leaves[leaves_left].sym);
+-#endif
+-    if (!leaves[leaves_left].freq) break;
+-  }
+-  nleaves = leaves_left;
+-
+-  if (nleaves >= 2) {
+-    inodes = malloc((nelem-1) * sizeof(ih_elem));
+-    do {
+-      if (codes_too_long) {
+-	for (leaves_left = 0; leaves_left < nelem; leaves_left++) {
+-	  if (!leaves[leaves_left].freq) break;
+-	  if (leaves[leaves_left].freq != 1) {
+-	    leaves[leaves_left].freq >>= 1;
+-	    codes_too_long = 0;
+-	  }
+-	}
+-	assert (!codes_too_long);
+-      }
+-      
+-      cur_leaf = leaves;
+-      next_inode = cur_inode = inodes;
+-      
+-      do {
+-	f1 = f2 = NULL;
+-	if (leaves_left && 
+-	    ((cur_inode == next_inode) ||
+-	     (cur_leaf->freq <= cur_inode->freq))) {
+-	  f1 = (ih_elem *)cur_leaf++;
+-	  leaves_left--;
+-	}
+-	else if (cur_inode != next_inode) {
+-	  f1 = cur_inode++;
+-	}
+-	
+-	if (leaves_left && 
+-	    ((cur_inode == next_inode) ||
+-	     (cur_leaf->freq <= cur_inode->freq))) {
+-	  f2 = (ih_elem *)cur_leaf++;
+-	  leaves_left--;
+-	}
+-	else if (cur_inode != next_inode) {
+-	  f2 = cur_inode++;
+-	}
+-	
+-#ifdef DEBUG_HUFFMAN
+-	fprintf(stderr, "%d %d\n", f1, f2);
+-#endif
+-	if (f1 && f2) {
+-	  next_inode->freq = f1->freq + f2->freq;
+-	  next_inode->sym = -1;
+-	  next_inode->left = f1;
+-	  next_inode->right = f2;
+-	  next_inode->parent = NULL;
+-	  f1->parent = next_inode;
+-	  f2->parent = next_inode;
+-	  if (f1->pathlength > f2->pathlength)
+-	    next_inode->pathlength = f1->pathlength + 1;
+-	  else
+-	    next_inode->pathlength = f2->pathlength + 1;
+-	  if (next_inode->pathlength > max_code_length) {
+-	    codes_too_long = 1;
+-	    break;
+-	  }
+-	  next_inode++;
+-	}
+-      }
+-      while (f1 && f2);
+-    }
+-    while (codes_too_long);
+-    
+-#ifdef DEBUG_HUFFMAN
+-    cur_inode = inodes;
+-    while (cur_inode < next_inode) {
+-      fprintf(stderr, "%d l: %3d%c  r: %3d%c  freq: %8d\n", 
+-	      cur_inode - inodes,
+-	      (cur_inode->left->sym!=-1)?(((struct h_elem *)cur_inode->left)-leaves):(cur_inode->left-inodes),
+-	      (cur_inode->left->sym!=-1)?'l':'i',
+-	      (cur_inode->right->sym!=-1)?(((struct h_elem *)cur_inode->right)-leaves):(cur_inode->right-inodes),
+-	      (cur_inode->right->sym!=-1)?'l':'i',
+-	      (cur_inode->freq)
+-	      );
+-      cur_inode++;
+-    }
+-#endif
+-    
+-    /* now traverse tree depth-first */
+-    cur_inode = next_inode - 1;
+-    pathlength = 0;
+-    cur_inode->pathlength = -1;
+-    do {
+-      /* precondition: at unmarked node*/
+-      if (cur_inode->sym == -1) /*&& (cur_inode->left)*/ {
+-	/* left node of unmarked node is unmarked */
+-	cur_inode = cur_inode->left;
+-	cur_inode->pathlength = -1;
+-	pathlength++;
+-      }
+-      else {
+-	/* mark node */
+-	cur_inode->pathlength = pathlength;
+-#if 0 
+-	if (cur_inode->right) {
+-	  /* right node of previously unmarked node is unmarked */
+-	  cur_inode = cur_inode->right;
+-	  cur_inode->pathlength = -1;
+-	  pathlength++;
+-	}
+-	else 
+-#endif
+-	  {
+-	    
+-	    /* time to come up.  Keep coming up until an unmarked node is reached */
+-	    /* or the tree is exhausted */
+-	    do {
+-	      cur_inode = cur_inode->parent;
+-	      pathlength--;
+-	    }
+-	    while (cur_inode && (cur_inode->pathlength != -1));
+-	    if (cur_inode) {
+-	      /* found unmarked node; mark it and go right */
+-	      cur_inode->pathlength = pathlength;
+-	      cur_inode = cur_inode->right;
+-	      cur_inode->pathlength = -1;
+-	      pathlength++;
+-	      /* would be complex if cur_inode could be null here.  It can't */
+-	    }
+-	  }
+-      }
+-    }
+-    while (cur_inode);
+-    
+-#ifdef DEBUG_HUFFMAN
+-    cur_inode = inodes;
+-    while (cur_inode < next_inode) {
+-      fprintf(stderr, "%d l: %3d%c  r: %3d%c  freq: %8d  pathlength %4d\n", 
+-	      cur_inode - inodes,
+-	      (cur_inode->left->sym!=-1)?(((struct h_elem *)cur_inode->left)-leaves):(cur_inode->left-inodes),
+-	      (cur_inode->left->sym!=-1)?'l':'i',
+-	      (cur_inode->right->sym!=-1)?(((struct h_elem *)cur_inode->right)-leaves):(cur_inode->right-inodes),
+-	      (cur_inode->right->sym!=-1)?'l':'i',	
+-	      (cur_inode->freq),
+-	      (cur_inode->pathlength)
+-	      );
+-      cur_inode++;
+-    }
+-#endif
+-    free(inodes);
+-    
+-    /* the pathlengths are already in order, so this sorts by symbol */
+-    qsort(leaves, nelem, sizeof(h_elem), cmp_pathlengths);
+-    
+-    /** 
+-	Microsoft's second condition on its canonical huffman codes is:
+-
+-	For each level, starting at the deepest level of the tree and then
+-	moving upwards, leaf nodes must start as far left as possible. An
+-	alternative way of stating this constraint is that if any tree node
+-	has children then all tree nodes to the left of it with the same path
+-	length must also have children.
+-	
+-	These 'alternatives' are not equivalent.  The latter alternative gives
+-	the common canonical code where the longest code is all zeros.  The former
+-	gives an opposite code where the longest code is all ones.  Microsoft uses the
+-	former alternative.
+-    **/
+-    
+-#if 0
+-    pathlength = leaves[0].pathlength;
+-    cur_code = 0;
+-    for (i = 0; i < nleaves; i++) {
+-      while (leaves[i].pathlength < pathlength) {
+-	assert(!(cur_code & 1));
+-	cur_code >>= 1;
+-	pathlength--;
+-      }
+-      leaves[i].code = cur_code;
+-      cur_code++;
+-    }
+-#else
+-    pathlength = leaves[nleaves-1].pathlength;
+-    assert(leaves[0].pathlength <= 16); /* this method cannot deal with bigger codes, though
+-					   the other canonical method can in some cases
+-					   (because it starts with zeros ) */
+-    cur_code = 0;
+-    for (i = nleaves - 1; i >= 0; i--) {
+-      while (leaves[i].pathlength > pathlength) {
+-	cur_code <<= 1;
+-	pathlength++;
+-      }
+-      leaves[i].code = cur_code;
+-      cur_code++;
+-    }
+-#endif
+-    
+-#ifdef DEBUG_HUFFMAN
+-    for (i = 0; i < nleaves; i++) {
+-      char code[18];
+-      int j;
+-      
+-      cur_code = leaves[i].code;
+-      code[leaves[i].pathlength] = 0;
+-      for (j = leaves[i].pathlength-1; j >= 0; j--) {
+-	if (cur_code & 1) code[j] = '1';
+-	else code[j] = '0';
+-	cur_code >>= 1;
+-      }
+-      fprintf(stderr, "%3d: %3d %3d %-16.16s '%c'\n", i, leaves[i].freq, leaves[i].pathlength, code,
+-	      leaves[i].sym);
+-    }
+-#endif
+-  }
+-  else if (nleaves == 1) {
+-    /* 0 symbols is OK (not according to doc, but according to Caie) */
+-    /* but if only one symbol is present, two symbols are required */
+-    nleaves = 2;
+-    leaves[0].pathlength = leaves[1].pathlength = 1;
+-    if (leaves[1].sym > leaves[0].sym) {
+-      leaves[1].code = 1;
+-      leaves[0].code = 0;
+-    }
+-    else {
+-      leaves[0].code = 1;
+-      leaves[1].code = 0;
+-    }
+-  }
+-   
+-  memset(tree, 0, nelem * sizeof(huff_entry));
+-  for (i = 0; i < nleaves; i++) {
+-    tree[leaves[i].sym].codelength = leaves[i].pathlength;
+-    tree[leaves[i].sym].code = leaves[i].code;
+-  }
+-  
+-  free(leaves);
+-}
+-  
+-/* from Stuart Caie's code -- I'm hoping this code is too small to encumber
+-   this file.  If not, you could rip it out and hard-code the tables */
+-   
+-static void lzx_init_static(void)
+-{
+-  int i, j;
+-
+-  if (extra_bits[49]) return;
+-
+-  rloge2 = 1.0/log(2);
+-  for (i=0, j=0; i <= 50; i += 2) {
+-    extra_bits[i] = extra_bits[i+1] = j; /* 0,0,0,0,1,1,2,2,3,3... */
+-    if ((i != 0) && (j < 17)) j++; /* 0,0,1,2,3,4...15,16,17,17,17,17... */
+-  }
+-
+-  for (i=0, j=0; i <= 50; i++) {
+-    position_base[i] = j; /* 0,1,2,3,4,6,8,12,16,24,32,... */
+-    j += 1 << extra_bits[i]; /* 1,1,1,1,2,2,4,4,8,8,16,16,32,32,... */
+-  }
+-}
+-
+-struct lzxc_data
+-{
+-  void *in_arg;
+-  void *out_arg;
+-  void *mark_frame_arg;
+-  lzxc_get_bytes_t get_bytes;
+-  lzxc_at_eof_t at_eof;
+-  lzxc_put_bytes_t put_bytes;
+-  lzxc_mark_frame_t mark_frame;
+-  struct lz_info *lzi;
+-  /* a 'frame' is an 0x8000 byte thing.  Called that because otherwise
+-     I'd confuse myself overloading 'block' */
+-  int left_in_frame;
+-  int left_in_block;
+-  int R0, R1, R2;
+-  int num_position_slots;
+-  /* this is the LZX block size */
+-  int block_size;
+-  int *main_freq_table;
+-  int length_freq_table[NUM_SECONDARY_LENGTHS];
+-  int aligned_freq_table[LZX_ALIGNED_SIZE];
+-  uint32_t *block_codes;
+-  uint32_t *block_codesp;
+-  huff_entry *main_tree;
+-  huff_entry length_tree[NUM_SECONDARY_LENGTHS];
+-  huff_entry aligned_tree[LZX_ALIGNED_SIZE];
+-  int main_tree_size;
+-  uint16_t bit_buf;
+-  int bits_in_buf;
+-  double main_entropy;
+-  double last_ratio;
+-  uint8_t *prev_main_treelengths;
+-  uint8_t prev_length_treelengths[NUM_SECONDARY_LENGTHS];
+-  uint32_t len_uncompressed_input;
+-  uint32_t len_compressed_output;
+-  short need_1bit_header;
+-  short subdivide; /* 0 = don't subdivide, 1 = allowed, -1 = requested */
+-};
+-
+-static int
+-lzx_get_chars(lz_info *lzi, int n, unsigned char *buf)
+-{
+-  /* force lz compression to stop after every block */
+-  int chars_read;
+-  int chars_pad;
+-
+-  lzxc_data *lzud = (lzxc_data *)lzi->user_data;
+-#ifdef OLDFRAMING
+-  if (lzud->subdivide < 0) return 0;
+-  if (n > lzud->left_in_frame)
+-    n = lzud->left_in_frame;
+-  if (n > lzud->left_in_block)
+-    n = lzud->left_in_block;
+-#endif
+-  chars_read = lzud->get_bytes(lzud->in_arg, n, buf);
+-#ifdef OLDFRAMING
+-  lzud->left_in_frame -= chars_read;
+-  lzud->left_in_block -= chars_read;
+-#else
+-  lzud->left_in_frame -= chars_read % LZX_FRAME_SIZE;
+-  if (lzud->left_in_frame < 0) 
+-    lzud->left_in_frame += LZX_FRAME_SIZE;
+-#endif
+-  if ((chars_read < n) && (lzud->left_in_frame)) {
+-    chars_pad = n - chars_read;
+-    if (chars_pad > lzud->left_in_frame) chars_pad = lzud->left_in_frame;
+-    /* never emit a full frame of padding.  This prevents silliness when
+-       lzx_compress is called when at EOF but EOF not yet detected */
+-    if (chars_pad == LZX_FRAME_SIZE) chars_pad = 0;
+-#ifdef OLDFRAMING
+-    if (chars_pad > lzud->left_in_block) chars_pad = lzud->left_in_block;
+-#endif
+-    memset(buf + chars_read, 0, chars_pad);
+-    lzud->left_in_frame -= chars_pad;
+-#ifdef OLDFRAMING
+-    lzud->left_in_block -= chars_pad;
+-#endif
+-    chars_read += chars_pad;
+-  }
+-  return chars_read;
+-}
+-
+-#ifdef NONSLIDE
+-static int find_match_at(lz_info *lzi, int loc, int match_len, int *match_locp)
+-{
+-  unsigned char *matchb;
+-  unsigned char *nmatchb;
+-  unsigned char *c1, *c2;
+-  int j;
+-
+-  if (-*match_locp == loc) return -1;
+-  if (loc < match_len) return -1;
+-
+-  matchb = lzi->block_buf + lzi->block_loc + *match_locp;
+-  nmatchb = lzi->block_buf + lzi->block_loc - loc;
+-  c1 = matchb;
+-  c2 = nmatchb;
+-  for (j = 0; j < match_len; j++) {
+-    if (*c1++ != *c2++) break;
+-  }
+-  if (j == match_len) {
+-#ifdef DEBUG_MATCHES
+-    fprintf(stderr, "match found %d, old = %d new = %d len = %d\n", lzi->cur_loc, -*match_locp, loc, match_len);
+-#endif
+-    *match_locp = -loc;
+-    return 0;
+-  }
+-  return -1;
+-}
+-#else
+-static int find_match_at(lz_info *lzi, int loc, int match_len, int *match_locp)
+-{
+-  unsigned char *matchb;
+-  unsigned char *nmatchb;
+-  unsigned char *c1, *c2;
+-  int j;
+-
+-  if (-*match_locp == loc) return -1;
+-  if (loc < match_len) return -1;
+-
+-  matchb = lzi->slide_bufp + *match_locp;
+-  if (matchb < lzi->slide_buf) matchb += lzi->slide_buf_size;
+-  nmatchb = lzi->slide_bufp - loc;
+-  if (nmatchb < lzi->slide_buf) nmatchb += lzi->slide_buf_size;
+-  c1 = matchb;
+-  c2 = nmatchb;
+-  for (j = 0; j < match_len; j++) {
+-    if (*c1++ != *c2++) break;
+-    if (c1 == lzi->slide_bufe) c1 = lzi->slide_buf;
+-    if (c2 == lzi->slide_bufe) c2 = lzi->slide_buf;
+-  }
+-  if (j == match_len) {
+-#ifdef DEBUG_MATCHES
+-    fprintf(stderr, "match found %d, old = %d new = %d len = %d\n", lzi->cur_loc, -*match_locp, loc, match_len);
+-#endif
+-    *match_locp = -loc;
+-    return 0;
+-  }
+-  return -1;
+-}
+-#endif
+-static void check_entropy(lzxc_data *lzud, int main_index) 
+-{
+-  /* entropy = - sum_alphabet P(x) * log2 P(x) */
+-  /* entropy = - sum_alphabet f(x)/N * log2 (f(x)/N) */
+-  /* entropy = - 1/N sum_alphabet f(x) * (log2 f(x) - log2 N) */
+-  /* entropy = - 1/N (sum_alphabet f(x) * log2 f(x)) - sum_alphabet f(x) log2 N */
+-  /* entropy = - 1/N (sum_alphabet f(x) * log2 f(x)) - log2 N sum_alphabet f(x)  */
+-  /* entropy = - 1/N (sum_alphabet f(x) * log2 f(x)) - N * log2 N   */
+-  
+-  /* entropy = - 1/N ((sum_alphabet f(x) * log2 f(x) ) - N * log2 N) */
+-  /* entropy = - 1/N ((sum_alphabet f(x) * ln f(x) * 1/ln 2) - N * ln N * 1/ln 2) */
+-  /* entropy = 1/(N ln 2) (N * ln N - (sum_alphabet f(x) * ln f(x))) */
+-  /* entropy = 1/(N ln 2) (N * ln N + (sum_alphabet -f(x) * ln f(x))) */
+-  
+-  /* entropy = 1/(N ln 2) ( sum_alphabet ln N * f(x) + (sum_alphabet -f(x) * ln f(x))) */
+-  /* entropy = 1/(N ln 2) ( sum_alphabet ln N * f(x) +  (-f(x) * ln f(x))) */
+-  /* entropy = -1/(N ln 2) ( sum_alphabet -ln N * f(x) +  (f(x) * ln f(x))) */
+-  /* entropy = -1/(N ln 2) ( sum_alphabet f(x)(- ln N  + ln f(x))) */
+-  /* entropy = -1/(N ln 2) ( sum_alphabet f(x)(ln f(x)/N)) */
+-  /* entropy = -1/N  ( sum_alphabet (1/(ln 2))f(x)(ln f(x)/N)) */
+-  /* entropy = -1/N  ( sum_alphabet f(x)(log2 f(x)/N)) */
+-  /* entropy = -  ( sum_alphabet f(x)/N(log2 f(x)/N)) */
+-  /* entropy = -  ( sum_alphabet P(x)(log2 P(x))) */
+-  
+-
+-    double freq;
+-    double n_ln_n;
+-    double rn_ln2;
+-    double cur_ratio;
+-    int n;
+-    
+-    /* delete old entropy accumulation */
+-    if (lzud->main_freq_table[main_index] != 1) {
+-      freq = (double)lzud->main_freq_table[main_index]-1;
+-      lzud->main_entropy += freq * log(freq);
+-    }
+-    /* add new entropy accumulation */
+-    freq = (double)lzud->main_freq_table[main_index];
+-    lzud->main_entropy -= freq * log(freq);
+-    n = lzud->block_codesp - lzud->block_codes;
+-
+-    if (((n & 0xFFF) == 0) && (lzud->left_in_block >= 0x1000)) {
+-      n_ln_n = (double)n * log((double)n);
+-      rn_ln2 = rloge2 / (double)n;
+-      cur_ratio = (n * rn_ln2 *(n_ln_n + lzud->main_entropy) + 24 + 3 * 80 + NUM_CHARS + (lzud->main_tree_size-NUM_CHARS)*3 + NUM_SECONDARY_LENGTHS ) / (double)n;
+-#ifdef DEBUG_ENTROPY
+-      fprintf(stderr, "n = %d\n", n);
+-      fprintf(stderr, "main entropy = %f\n", rn_ln2 *(n_ln_n + lzud->main_entropy) );
+-      fprintf(stderr, "compression ratio (raw) = %f\n", 100.0 * rn_ln2 *(n_ln_n + lzud->main_entropy) /9.0 );
+-      fprintf(stderr, "compression ratio (ovh) = %f\n", 100.0 * cur_ratio/9.0);
+-#endif
+-      if (cur_ratio > lzud->last_ratio) {
+-#ifdef DEBUG_ENTROPY
+-	fprintf(stderr, "resetting huffman tables at %d\n", n);
+-#endif
+-	lzud->subdivide = -1;
+-	lz_stop_compressing(lzud->lzi);
+-      }
+-      lzud->last_ratio = cur_ratio;
+-    }
+-}
+-
+-static int
+-lzx_output_match(lz_info *lzi, int match_pos, int match_len)
+-{
+-  lzxc_data *lzud = (lzxc_data *)lzi->user_data;
+-  uint32_t formatted_offset;
+-  uint32_t position_footer;
+-  uint8_t length_footer;
+-  uint8_t length_header;
+-  uint16_t len_pos_header;
+-  int position_slot;
+-  short btdt;
+-
+-#ifdef DEBUG_LZ
+-  {
+-    int i;
+-    int pos;
+-    for (i = 0; i < match_len; i++) {
+-      
+-#ifdef NONSLIDE
+-      pos = match_pos + lzi->block_loc + i;
+-      fprintf(stderr, "%c", lzi->block_buf[pos]);
+-#else
+-      pos = match_pos + lzi->front_offset + i;
+-      if (pos > lzi->slide_buf_size)
+-	pos -= lzi->slide_buf_size;
+-      fprintf(stderr, "%c", lzi->slide_buf[pos]);
+-#endif
+-    }
+-  }
+-#endif
+-  position_footer = 0;
+-  btdt = 0;
+- testforr:
+-  if (match_pos == -lzud->R0) {
+-    match_pos = 0;
+-    formatted_offset = 0;
+-    position_slot = 0;
+-  }
+-  else if (match_pos == -lzud->R1) {
+-    lzud->R1 = lzud->R0;
+-    lzud->R0 = -match_pos;
+-    match_pos = 1;
+-    formatted_offset = 1;
+-    position_slot = 1;
+-  }
+-  else if (match_pos == -lzud->R2) {
+-    lzud->R2 = lzud->R0;
+-    lzud->R0 = -match_pos;
+-    match_pos = 2;
+-    formatted_offset = 2;
+-    position_slot = 2;
+-  }
+-  else {
+-    if (!btdt) {
+-      btdt = 1;
+-      if (find_match_at(lzi, lzud->R0, match_len, &match_pos) == 0)
+-	goto testforr;
+-      if (find_match_at(lzi, lzud->R1, match_len, &match_pos) == 0)
+-	goto testforr;
+-      if (find_match_at(lzi, lzud->R2, match_len, &match_pos) == 0)
+-	goto testforr;
+-    }
+-
+-    formatted_offset = -match_pos + 2;
+-
+-    if ((match_len < 3) ||
+-	((formatted_offset >= 64) && (match_len < 4)) ||
+-	((formatted_offset >= 2048) && (match_len < 5)) ||
+-	((formatted_offset >= 65536) && (match_len < 6))) {
+-      /* reject matches where extra_bits will likely be bigger than just outputting
+-	 literals.  The numbers are basically derived through guessing
+-         and trial and error */
+-      return -1; /* reject the match */
+-    }
+-
+-    lzud->R2 = lzud->R1;
+-    lzud->R1 = lzud->R0;
+-    lzud->R0 = -match_pos;
+-
+-  /* calculate position base using binary search of table; if log2 can be
+-     done in hardware, approximation might work; 
+-     trunc(log2(formatted_offset*formatted_offset)) gets either the proper
+-     position slot or the next one, except for slots 0, 1, and 39-49
+-
+-     Slots 0-1 are handled by the R0-R1 procedures
+-
+-     Slots 36-49 (formatted_offset >= 262144) can be found by 
+-     (formatted_offset/131072) + 34 ==
+-     (formatted_offset >> 17) + 34;
+-  */
+-    if (formatted_offset >= 262144) {
+-      position_slot = (formatted_offset >> 17) + 34;
+-    }
+-    else {
+-      int left, right, mid;
+-
+-      left = 3;
+-      right = lzud->num_position_slots - 1;
+-      position_slot = -1;
+-      while (left <= right) {
+-	mid = (left + right)/2;
+-	if ((position_base[mid] <= formatted_offset) &&
+-	    position_base[mid+1] > formatted_offset) {
+-	  position_slot = mid;
+-	  break;
+-	}
+-#if 0
+-	fprintf(stderr, "BEFORE: %06x %06x %06x %06x\n",
+-		position_base[left], position_base[mid],
+-		formatted_offset, position_base[right]);
+-#endif
+-	if (formatted_offset > position_base[mid])
+-	  /* too low */
+-	  left = mid + 1;
+-	else /* too high */
+-	  right = mid;
+-#if 0
+-	fprintf(stderr, "AFTER : %06x %06x %06x %06x\n",
+-		position_base[left], position_base[mid],
+-		formatted_offset, position_base[right]);
+-#endif
+-      }
+-#ifdef DEBUG_POSITION_SLOT_LOOKUP
+-      if (position_slot < 0) {
+-	fprintf(stderr, "lmr npr: %d %d %d %d\n", left, mid, right, lzud->num_position_slots);
+-	fprintf(stderr, "AFTER : %07d %07d %07d %07d\n",
+-		position_base[left], position_base[mid],
+-		formatted_offset, position_base[right]);
+-	fprintf(stderr, "(%d, %d, %d, %d, %d)\n", match_pos, match_len, formatted_offset, position_slot, position_footer);
+-      }
+-#endif
+-      assert(position_slot >= 0);
+-      /* FIXME precalc extra_mask table */
+-    }
+-    position_footer = ((1UL << extra_bits[position_slot]) - 1) & formatted_offset;
+-  }
+-#ifdef DEBUG_MATCHES
+-#ifdef NONSLIDE
+-  fprintf(stderr, "(%08x, %d, %d, %d, %d, %d)\n", lzud->lzi->cur_loc , match_pos, match_len, formatted_offset, position_slot, position_footer);
+-#else
+-  fprintf(stderr, "(%08x, %d, %d, %d, %d, %d)\n", lzud->lzi->cur_loc - lzud->lzi->chars_in_match , match_pos, match_len, formatted_offset, position_slot, position_footer);
+-#endif
+-#endif
+-  /* match length = 8 bits */
+-  /* position_slot = 6 bits */
+-  /* position_footer = 17 bits */
+-  /* total = 31 bits */
+-  /* plus one to say whether it's a literal or not */
+-  *lzud->block_codesp++ = 0x80000000 | /* bit 31 in intelligent bit ordering */
+-    (position_slot << 25) | /* bits 30-25 */
+-    (position_footer << 8) | /* bits 8-24 */
+-    (match_len - MIN_MATCH); /* bits 0-7 */
+-
+-  if (match_len < (NUM_PRIMARY_LENGTHS + MIN_MATCH)) {
+-    length_header = match_len - MIN_MATCH;
+-    /*    length_footer = 255; */ /* not necessary */
+-  }
+-  else {
+-    length_header = NUM_PRIMARY_LENGTHS;
+-    length_footer = match_len - (NUM_PRIMARY_LENGTHS + MIN_MATCH);
+-    lzud->length_freq_table[length_footer]++;
+-  }
+-  len_pos_header = (position_slot << 3) | length_header;
+-  lzud->main_freq_table[len_pos_header + NUM_CHARS]++;
+-  if (extra_bits[position_slot] >= 3) {
+-    lzud->aligned_freq_table[position_footer & 7]++;
+-  }
+-#ifndef OLDFRAMING
+-  lzud->left_in_block -= match_len;
+-#endif
+-  if (lzud->subdivide)
+-    check_entropy(lzud, len_pos_header + NUM_CHARS);
+-  return 0; /* accept the match */
+-}
+-
+-static void 
+-lzx_output_literal(lz_info *lzi, unsigned char ch)
+-{
+-  lzxc_data *lzud = (lzxc_data *)lzi->user_data;
+-
+-#ifndef OLDFRAMING
+-  lzud->left_in_block--;
+-#endif
+-  *lzud->block_codesp++ = ch;
+-#ifdef DEBUG_LZ
+-  fprintf(stderr, "%c", ch);
+-#endif
+-  lzud->main_freq_table[ch]++;
+-  if (lzud->subdivide)
+-    check_entropy(lzud, ch);
+-}
+-
+-static void lzx_write_bits(lzxc_data *lzxd, int nbits, uint32_t bits)
+-{
+-  int cur_bits;
+-  int shift_bits;
+-  int rshift_bits;
+-  uint16_t mask_bits;
+-
+-#ifdef DEBUG_BITBUF
+-  fprintf(stderr, "WB: %2d %08x\n", nbits, bits);
+-#endif
+-  cur_bits = lzxd->bits_in_buf;
+-  while ((cur_bits + nbits) >= 16) {
+-    shift_bits = 16 - cur_bits;
+-    rshift_bits = nbits - shift_bits;
+-    if (shift_bits == 16) {
+-      lzxd->bit_buf = (bits>>rshift_bits) & 0xFFFF;
+-    }
+-    else {
+-      mask_bits = (1U << shift_bits) - 1;
+-      lzxd->bit_buf <<= shift_bits;
+-      lzxd->bit_buf |= (bits>>rshift_bits) & mask_bits;
+-    }
+-#ifdef DEBUG_BITBUF
+-    fprintf(stderr, "WBB: %04x\n", lzxd->bit_buf);
+-#endif
+-#ifdef LZX_BIG_ENDIAN
+-    lzxd->bit_buf = ((lzxd->bit_buf & 0xFF)<<8) | (lzxd->bit_buf >> 8);
+-#endif
+-    lzxd->put_bytes(lzxd->out_arg, sizeof(lzxd->bit_buf), &lzxd->bit_buf);
+-    lzxd->len_compressed_output += sizeof(lzxd->bit_buf);
+-    lzxd->bit_buf = 0;
+-    nbits -= shift_bits;
+-    cur_bits = 0;
+-  }
+-  /* (cur_bits + nbits) < 16.  If nbits = 0, we're done. 
+-     otherwise move bits in */
+-  shift_bits = nbits;
+-  mask_bits = (1U << shift_bits) - 1;
+-  lzxd->bit_buf <<= shift_bits;
+-  lzxd->bit_buf |= bits & mask_bits;
+-  cur_bits += nbits;
+-
+-#ifdef DEBUG_BITBUF
+-  fprintf(stderr, "OBB: %2d %04x\n", cur_bits, lzxd->bit_buf);
+-#endif
+-  lzxd->bits_in_buf = cur_bits;
+-}
+-
+-static void lzx_align_output(lzxc_data *lzxd)
+-{
+-  if (lzxd->bits_in_buf) {
+-    lzx_write_bits(lzxd, 16 - lzxd->bits_in_buf, 0);
+-  }
+-  if (lzxd->mark_frame)
+-    lzxd->mark_frame(lzxd->mark_frame_arg, lzxd->len_uncompressed_input, lzxd->len_compressed_output);
+-}
+-
+-static void
+-lzx_write_compressed_literals(lzxc_data *lzxd, int block_type)
+-{
+-  uint32_t *cursor = lzxd->block_codes;
+-  uint32_t *endp = lzxd->block_codesp;
+-  uint16_t position_slot;
+-  uint32_t position_footer;
+-  uint32_t match_len_m2; /* match length minus 2, which is MIN_MATCH */
+-  uint32_t verbatim_bits;
+-  uint32_t block_code;
+-  uint16_t length_header;
+-  uint16_t length_footer;
+-  uint16_t len_pos_header;
+-  huff_entry *huffe;
+-  int frame_count = (lzxd->len_uncompressed_input % LZX_FRAME_SIZE);
+-
+-  lzxd->len_uncompressed_input -= frame_count; /* will be added back in later */
+-  while (cursor < endp) {
+-    block_code = *cursor++;
+-    if (block_code & 0x80000000) {
+-      /*
+-       *    0x80000000 |                bit 31 in intelligent bit ordering
+-       * (position_slot << 25) |        bits 30-25
+-       * (position_footer << 8) |       bits 8-24 
+-       * (match_len - MIN_MATCH);       bits 0-7
+-       *
+-       */
+-      
+-      match_len_m2 = block_code & 0xFF; /* 8 bits */
+-      position_footer = (block_code >> 8)& 0x1FFFF; /* 17 bits */
+-      position_slot = (block_code >> 25) & 0x3F; /* 6 bits */
+-
+-#ifdef DEBUG_MATCHES_2
+-      fprintf(stderr, "%08x, %3d %2d %d\n", lzxd->len_uncompressed_input + frame_count, match_len_m2, position_slot, position_footer);
+-#endif      
+-      if (match_len_m2 < NUM_PRIMARY_LENGTHS) {
+-	length_header = match_len_m2;
+-	length_footer = 255; /* personal encoding for NULL */
+-      }
+-      else {
+-	length_header = NUM_PRIMARY_LENGTHS;
+-	length_footer = match_len_m2 - NUM_PRIMARY_LENGTHS;
+-      }
+-      len_pos_header = (position_slot << 3) | length_header;
+-      huffe = &lzxd->main_tree[len_pos_header+NUM_CHARS];
+-      lzx_write_bits(lzxd, huffe->codelength, huffe->code);
+-      if (length_footer != 255) {
+-	huffe = &lzxd->length_tree[length_footer];
+-	lzx_write_bits(lzxd, huffe->codelength, huffe->code);
+-      }
+-      if ((block_type == LZX_ALIGNED_OFFSET_BLOCK) && (extra_bits[position_slot] >= 3)) {
+-	/* aligned offset block and code */
+-	verbatim_bits = position_footer >> 3;
+-	lzx_write_bits(lzxd, extra_bits[position_slot] - 3, verbatim_bits);
+-	huffe = &lzxd->aligned_tree[position_footer&7];
+-	lzx_write_bits(lzxd, huffe->codelength, huffe->code);
+-      }
+-      else {
+-	verbatim_bits = position_footer;
+-	lzx_write_bits(lzxd, extra_bits[position_slot], verbatim_bits);
+-      }
+-      frame_count += match_len_m2 + 2;
+-    }
+-    else {
+-      /* literal */
+-      assert(block_code < NUM_CHARS);
+-      huffe = &lzxd->main_tree[block_code];
+-      lzx_write_bits(lzxd, huffe->codelength, huffe->code);
+-      frame_count++;
+-    }
+-    if (frame_count == LZX_FRAME_SIZE) {
+-      lzxd->len_uncompressed_input += frame_count;
+-      lzx_align_output(lzxd);
+-      frame_count = 0;
+-    }
+-#ifdef DEBUG_MATCHES_2
+-    if (frame_count > LZX_FRAME_SIZE) {
+-      fprintf(stderr, "uncomp_len = %x, frame_count = %x, block_code = %08x, match_len_m2 = %d", lzxd->len_uncompressed_input, frame_count, block_code, match_len_m2);
+-    }
+-#endif
+-    assert (frame_count < LZX_FRAME_SIZE);
+-  }
+-  lzxd->len_uncompressed_input += frame_count;
+-}
+-
+-static int 
+-lzx_write_compressed_tree(struct lzxc_data *lzxd,
+-			  struct huff_entry *tree, uint8_t *prevlengths,
+-			  int treesize)
+-{
+-  unsigned char *codes;
+-  unsigned char *runs;
+-  int freqs[LZX_PRETREE_SIZE];
+-  int cur_run;
+-  int last_len;
+-  huff_entry pretree[20];
+-  unsigned char *codep;
+-  unsigned char *codee;
+-  unsigned char *runp;
+-  int excess;
+-  int i;
+-  int cur_code;
+-
+-  codep = codes = malloc(treesize*sizeof(char));
+-  runp = runs = malloc(treesize*sizeof(char));
+-  memset(freqs, 0, sizeof(freqs));
+-  cur_run = 1;
+-  last_len = tree[0].codelength;
+-  for (i = 1; i <= treesize; i++) {
+-    if ((i == treesize) || (tree[i].codelength != last_len)) {
+-      if (last_len == 0) {
+-	while (cur_run >= 20) {
+-	  excess =  cur_run - 20;
+-	  if (excess > 31) excess = 31;
+-	  *codep++ = 18;
+-	  *runp++ = excess;
+-	  cur_run -= excess + 20;
+-	  freqs[18]++;
+-	}
+-	while (cur_run >= 4) {
+-	  excess =  cur_run - 4;
+-	  if (excess > 15) excess = 15;
+-	  *codep++ = 17;
+-	  *runp++ = excess;
+-	  cur_run -= excess + 4;
+-	  freqs[17]++;
+-	}
+-	while (cur_run > 0) {
+-	  *codep = prevlengths[i - cur_run];
+-	  freqs[*codep++]++;
+-	  *runp++ = 0; /* not necessary */
+-	  cur_run--;
+-	}
+-      }
+-      else {
+-	while (cur_run >= 4) {
+-	  if (cur_run == 4) excess = 0;
+-	  else excess = 1;
+-	  *codep++ = 19;
+-	  *runp++ = excess;
+-	  freqs[19]++;
+-	  /* right, MS lies again.  Code is NOT 
+-	     prev_len + len (mod 17), it's prev_len - len (mod 17)*/
+-	  *codep = prevlengths[i-cur_run] - last_len;
+-	  if (*codep > 16) *codep += 17;
+-	  freqs[*codep++]++;
+-	  *runp++ = 0; /* not necessary */
+-	  cur_run -= excess+4;
+-	}
+-	while (cur_run > 0) {
+-	  *codep = prevlengths[i-cur_run] - last_len;
+-	  if (*codep > 16) *codep += 17;
+-	  *runp++ = 0; /* not necessary */
+-	  cur_run--;
+-	  freqs[*codep++]++;
+-	}
+-      }
+-      if (i != treesize)
+-	last_len = tree[i].codelength;
+-      cur_run = 0;
+-    }
+-    cur_run++;
+-  }
+-  codee = codep;
+-#ifdef DEBUG_TREE_COMPRESSION
+-  *codep++ = 255;
+-  *runp++ = 255;
+-  fprintf(stderr, "num:  len  code  run\n");
+-  for (i = 0; i < treesize; i++) {
+-    fprintf(stderr, "%3d:  %2d   %2d    %2d\n", i, tree[i].codelength, codes[i], runs[i]);
+-  }
+-#endif
+-  /* now create the huffman table and write out the pretree */
+-  build_huffman_tree(LZX_PRETREE_SIZE, 16, freqs, pretree);
+-  for (i = 0; i < LZX_PRETREE_SIZE; i++) {
+-    lzx_write_bits(lzxd, 4, pretree[i].codelength);
+-  }
+-  codep = codes;
+-  runp = runs;
+-  cur_run = 0;
+-  while (codep < codee) {
+-    cur_code = *codep++;
+-    lzx_write_bits(lzxd, pretree[cur_code].codelength, pretree[cur_code].code);
+-    if (cur_code == 17) {
+-      cur_run += *runp + 4;
+-      lzx_write_bits(lzxd, 4, *runp);
+-    }
+-    else if (cur_code == 18) {
+-      cur_run += *runp + 20;
+-      lzx_write_bits(lzxd, 5, *runp);
+-    }
+-    else if (cur_code == 19) {
+-      cur_run += *runp + 4;
+-      lzx_write_bits(lzxd, 1, *runp);
+-      cur_code = *codep++;
+-      lzx_write_bits(lzxd, pretree[cur_code].codelength, pretree[cur_code].code);
+-      runp++;
+-    }
+-    else {
+-      cur_run++;
+-    }
+-    runp++;
+-  }
+-  free(codes);
+-  free(runs);
+-  return 0;
+-}
+-
+-void 
+-lzxc_reset(lzxc_data *lzxd)
+-{
+-  lzxd->need_1bit_header = 1;
+-  lzxd->R0 = lzxd->R1 = lzxd->R2 = 1;
+-  memset(lzxd->prev_main_treelengths, 0, lzxd->main_tree_size * sizeof(uint8_t));
+-  memset(lzxd->prev_length_treelengths, 0, NUM_SECONDARY_LENGTHS * sizeof(uint8_t));
+-  lz_reset(lzxd->lzi);
+-}
+-
+-int lzxc_compress_block(lzxc_data *lzxd, int block_size, int subdivide)
+-{
+-  int i;
+-  uint32_t written_sofar = 0;
+-  int block_type;
+-  long uncomp_bits;
+-  long comp_bits;
+-  long comp_bits_ovh;
+-  long uncomp_length;
+-  
+-  if ((lzxd->block_size != block_size) || (lzxd->block_codes == NULL)) {
+-    if (lzxd->block_codes != NULL) free(lzxd->block_codes);
+-    lzxd->block_size = block_size;
+-    lzxd->block_codes =  malloc(block_size * sizeof(uint32_t));
+-  }
+-  lzxd->subdivide = subdivide?1:0;
+-
+-  lzxd->left_in_block = block_size;
+-  lzxd->left_in_frame = LZX_FRAME_SIZE;
+-  lzxd->main_entropy = 0.0;
+-  lzxd->last_ratio = 9999999.0;
+-  lzxd->block_codesp = lzxd->block_codes;
+-
+-  memset(lzxd->length_freq_table, 0, NUM_SECONDARY_LENGTHS * sizeof(int));
+-  memset(lzxd->main_freq_table, 0, lzxd->main_tree_size * sizeof(int));
+-  memset(lzxd->aligned_freq_table, 0, LZX_ALIGNED_SIZE * sizeof(int));
+-  do {
+-    lz_compress(lzxd->lzi, lzxd->left_in_block);
+-    if (lzxd->left_in_frame == 0)
+-      lzxd->left_in_frame = LZX_FRAME_SIZE;
+-    
+-    if ((lzxd->subdivide<0) || !lzxd->left_in_block || 
+-	(!lz_left_to_process(lzxd->lzi) && lzxd->at_eof(lzxd->in_arg))) {
+-      /* now one block is LZ-analyzed. */
+-      /* time to write it out */
+-      uncomp_length = lzxd->block_size - lzxd->left_in_block - written_sofar;
+-      /* uncomp_length will sometimes be 0 when input length is 
+-	 an exact multiple of frame size */
+-      if (uncomp_length == 0)
+-	  continue;
+-      if (lzxd->subdivide < 0) {
+-#ifdef DEBUG_ENTROPY
+-	fprintf(stderr, "subdivided\n");
+-#endif
+-	lzxd->subdivide = 1;
+-      }
+-      
+-      if (lzxd->need_1bit_header) {
+-	/* one bit Intel preprocessing header */
+-	/* always 0 because this implementation doesn't do Intel preprocessing */
+-	lzx_write_bits(lzxd, 1, 0);
+-	lzxd->need_1bit_header = 0;
+-      }
+-
+-      /* handle extra bits */
+-      uncomp_bits = comp_bits = 0;
+-      build_huffman_tree(LZX_ALIGNED_SIZE, 7, lzxd->aligned_freq_table, lzxd->aligned_tree);
+-      for (i = 0; i < LZX_ALIGNED_SIZE; i++) {
+-	uncomp_bits += lzxd->aligned_freq_table[i]* 3;
+-	comp_bits += lzxd->aligned_freq_table[i]* lzxd->aligned_tree[i].codelength;
+-      }
+-      comp_bits_ovh = comp_bits + LZX_ALIGNED_SIZE * 3;
+-      if (comp_bits_ovh < uncomp_bits)
+-      	block_type = LZX_ALIGNED_OFFSET_BLOCK;
+-      else
+-	block_type = LZX_VERBATIM_BLOCK;
+-
+-#ifdef DEBUG_EXTRA_BITS
+-      fprintf(stderr, "Extra bits uncompressed: %5d  compressed:  %5d  compressed w/overhead %5d gain/loss %5d\n", uncomp_bits, comp_bits, comp_bits_ovh, uncomp_bits - comp_bits_ovh);
+-#endif
+-
+-      /* block type */
+-      lzx_write_bits(lzxd, 3, block_type);
+-      /* uncompressed length */
+-      lzx_write_bits(lzxd, 24, uncomp_length);
+-
+-      written_sofar = lzxd->block_size - lzxd->left_in_block;
+-
+-      /* now write out the aligned offset trees if present */
+-      if (block_type == LZX_ALIGNED_OFFSET_BLOCK) {
+-	for (i = 0; i < LZX_ALIGNED_SIZE; i++) {
+-	  lzx_write_bits(lzxd, 3, lzxd->aligned_tree[i].codelength); 
+-	}
+-      }
+-      /* end extra bits */
+-      build_huffman_tree(lzxd->main_tree_size, LZX_MAX_CODE_LENGTH,
+-			 lzxd->main_freq_table, lzxd->main_tree);
+-      build_huffman_tree(NUM_SECONDARY_LENGTHS, 16, 
+-			 lzxd->length_freq_table, lzxd->length_tree);
+-
+-
+-
+-      /* now write the pre-tree and tree for main 1 */
+-      lzx_write_compressed_tree(lzxd, lzxd->main_tree, lzxd->prev_main_treelengths, NUM_CHARS);
+-    
+-      /* now write the pre-tree and tree for main 2*/
+-      lzx_write_compressed_tree(lzxd, lzxd->main_tree + NUM_CHARS,
+-				lzxd->prev_main_treelengths + NUM_CHARS,
+-				lzxd->main_tree_size - NUM_CHARS);
+-      
+-      /* now write the pre tree and tree for length */
+-      lzx_write_compressed_tree(lzxd, lzxd->length_tree, lzxd->prev_length_treelengths,
+-				NUM_SECONDARY_LENGTHS);
+-      
+-      /* now write literals */
+-      lzx_write_compressed_literals(lzxd, block_type);
+-      
+-      /* copy treelengths somewhere safe to do delta compression */
+-      for (i = 0; i < lzxd->main_tree_size; i++) {
+-	lzxd->prev_main_treelengths[i] = lzxd->main_tree[i].codelength;
+-      }
+-      for (i = 0; i < NUM_SECONDARY_LENGTHS; i++) {
+-	lzxd->prev_length_treelengths[i] = lzxd->length_tree[i].codelength;
+-      }
+-      lzxd->main_entropy = 0.0;
+-      lzxd->last_ratio = 9999999.0;
+-      lzxd->block_codesp = lzxd->block_codes;
+-      
+-      memset(lzxd->length_freq_table, 0, NUM_SECONDARY_LENGTHS * sizeof(int));
+-      memset(lzxd->main_freq_table, 0, lzxd->main_tree_size * sizeof(int));
+-      memset(lzxd->aligned_freq_table, 0, LZX_ALIGNED_SIZE * sizeof(int));
+-    }
+-  }
+-  while (lzxd->left_in_block && (lz_left_to_process(lzxd->lzi) || !lzxd->at_eof(lzxd->in_arg)));
+-  return 0;
+-}
+-
+-int lzxc_init(struct lzxc_data **lzxdp, int wsize_code, 
+-	     lzxc_get_bytes_t get_bytes, void *get_bytes_arg,
+-	     lzxc_at_eof_t at_eof,
+-	     lzxc_put_bytes_t put_bytes, void *put_bytes_arg,
+-	     lzxc_mark_frame_t mark_frame, void *mark_frame_arg)
+-{
+-  int wsize;
+-  struct lzxc_data *lzxd;
+-
+-  if ((wsize_code < 15) || (wsize_code > 21)) {
+-    return -1;
+-  }
+-  lzx_init_static();
+-
+-  *lzxdp = lzxd = malloc(sizeof(*lzxd));
+-  if (lzxd == 0)
+-    return -2;
+-
+-  lzxd->in_arg = get_bytes_arg;
+-  lzxd->out_arg = put_bytes_arg;
+-  lzxd->mark_frame_arg = mark_frame_arg;
+-  lzxd->get_bytes = get_bytes;
+-  lzxd->put_bytes = put_bytes;
+-  lzxd->at_eof = at_eof;
+-  lzxd->mark_frame = mark_frame;
+-
+-  wsize = 1 << (wsize_code);
+-
+-  lzxd->bits_in_buf = 0;
+-  lzxd->block_size = 0;
+-  lzxd->block_codes = NULL;
+-  lzxd->num_position_slots = num_position_slots[wsize_code-15];
+-  lzxd->main_tree_size = (NUM_CHARS + 8 * lzxd->num_position_slots);
+-
+-  lzxd->main_freq_table = malloc(sizeof(int) * lzxd->main_tree_size);
+-  lzxd->main_tree = malloc(sizeof(huff_entry)* lzxd->main_tree_size);
+-  lzxd->prev_main_treelengths = malloc(sizeof(uint8_t)*lzxd->main_tree_size);
+-
+-  lzxd->lzi = malloc(sizeof (*lzxd->lzi));
+-  /* the -3 prevents matches at wsize, wsize-1, wsize-2, all of which are illegal */
+-  lz_init(lzxd->lzi, wsize, wsize - 3, MAX_MATCH, MIN_MATCH, LZX_FRAME_SIZE,
+-	  lzx_get_chars, lzx_output_match, lzx_output_literal,lzxd);
+-  lzxd->len_uncompressed_input = 0;
+-  lzxd->len_compressed_output = 0;
+-  lzxc_reset(lzxd);
+-  return 0;
+-}
+-
+-int lzxc_finish(struct lzxc_data *lzxd, struct lzxc_results *lzxr)
+-{
+-  /*  lzx_align_output(lzxd);  Not needed as long as frame padding is in place */
+-  if (lzxr) {
+-    lzxr->len_compressed_output = lzxd->len_compressed_output;
+-    lzxr->len_uncompressed_input = lzxd->len_uncompressed_input;
+-  }
+-  lz_release(lzxd->lzi);
+-  free(lzxd->lzi);
+-  free(lzxd->prev_main_treelengths);
+-  free(lzxd->main_tree);
+-  free(lzxd->main_freq_table);
+-  if (lzxd->block_codes) {
+-    free(lzxd->block_codes);
+-  }
+-  free(lzxd);
+-  return 0;
+-}
+-
+--- calibre-debian.orig/src/calibre/utils/lzx/lzxc.h
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/*
+-    File lzx_compress.h, part of lzxcomp library
+-    Copyright (C) 2002 Matthew T. Russotto
+-
+-    This program is free software; you can redistribute it and/or modify
+-    it under the terms of the GNU Lesser General Public License as published by
+-    the Free Software Foundation; version 2.1 only
+-
+-    This program is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU Lesser General Public License for more details.
+-
+-*/
+-
+-#pragma once
+-
+-#ifdef _MSC_VER
+-#include "msstdint.h"
+-#endif
+-
+-typedef struct lzxc_data lzxc_data;
+-typedef int (*lzxc_get_bytes_t)(void *arg, int n, void *buf);
+-typedef int (*lzxc_put_bytes_t)(void *arg, int n, void *buf);
+-typedef void (*lzxc_mark_frame_t)(void *arg, uint32_t uncomp, uint32_t comp);
+-typedef int (*lzxc_at_eof_t)(void *arg);
+-
+-typedef struct lzxc_results
+-{
+-  /* add more here? Error codes, # blocks, # frames, etc? */
+-  long len_compressed_output;
+-  long len_uncompressed_input;
+-} lzxc_results;
+-
+-int lzxc_init(struct lzxc_data **lzxdp, int wsize_code, 
+-	     lzxc_get_bytes_t get_bytes, void *get_bytes_arg,
+-	     lzxc_at_eof_t at_eof,
+-	     lzxc_put_bytes_t put_bytes, void *put_bytes_arg,
+-	     lzxc_mark_frame_t mark_frame, void *mark_frame_arg);
+-
+-void lzxc_reset(lzxc_data *lzxd);
+-
+-int lzxc_compress_block(lzxc_data *lzxd, int block_size, int subdivide);
+-
+-int lzxc_finish(struct lzxc_data *lzxd, struct lzxc_results *lzxr);
+-
+--- calibre-debian.orig/src/calibre/utils/lzx/lzxd.c
++++ /dev/null
+@@ -1,906 +0,0 @@
+-/* This file is part of libmspack.
+- * (C) 2003-2004 Stuart Caie.
+- *
+- * The LZX method was created by Jonathan Forbes and Tomi Poutanen, adapted
+- * by Microsoft Corporation.
+- *
+- * libmspack is free software; you can redistribute it and/or modify it under
+- * the terms of the GNU Lesser General Public License (LGPL) version 2.1
+- *
+- * For further details, see the file COPYING.LIB distributed with libmspack
+- */
+-
+-/* LZX decompression implementation */
+-
+-#ifdef HAVE_CONFIG_H
+-#include <config.h>
+-#endif
+-
+-#include <mspack.h>
+-#include <system.h>
+-#include <lzxd.h>
+-
+-/* Microsoft's LZX document and their implementation of the
+- * com.ms.util.cab Java package do not concur.
+- *
+- * In the LZX document, there is a table showing the correlation between
+- * window size and the number of position slots. It states that the 1MB
+- * window = 40 slots and the 2MB window = 42 slots. In the implementation,
+- * 1MB = 42 slots, 2MB = 50 slots. The actual calculation is 'find the
+- * first slot whose position base is equal to or more than the required
+- * window size'. This would explain why other tables in the document refer
+- * to 50 slots rather than 42.
+- *
+- * The constant NUM_PRIMARY_LENGTHS used in the decompression pseudocode
+- * is not defined in the specification.
+- *
+- * The LZX document does not state the uncompressed block has an
+- * uncompressed length field. Where does this length field come from, so
+- * we can know how large the block is? The implementation has it as the 24
+- * bits following after the 3 blocktype bits, before the alignment
+- * padding.
+- *
+- * The LZX document states that aligned offset blocks have their aligned
+- * offset huffman tree AFTER the main and length trees. The implementation
+- * suggests that the aligned offset tree is BEFORE the main and length
+- * trees.
+- *
+- * The LZX document decoding algorithm states that, in an aligned offset
+- * block, if an extra_bits value is 1, 2 or 3, then that number of bits
+- * should be read and the result added to the match offset. This is
+- * correct for 1 and 2, but not 3, where just a huffman symbol (using the
+- * aligned tree) should be read.
+- *
+- * Regarding the E8 preprocessing, the LZX document states 'No translation
+- * may be performed on the last 6 bytes of the input block'. This is
+- * correct.  However, the pseudocode provided checks for the *E8 leader*
+- * up to the last 6 bytes. If the leader appears between -10 and -7 bytes
+- * from the end, this would cause the next four bytes to be modified, at
+- * least one of which would be in the last 6 bytes, which is not allowed
+- * according to the spec.
+- *
+- * The specification states that the huffman trees must always contain at
+- * least one element. However, many CAB files contain blocks where the
+- * length tree is completely empty (because there are no matches), and
+- * this is expected to succeed.
+- */
+-
+-
+-/* LZX decompressor input macros
+- *
+- * STORE_BITS        stores bitstream state in lzxd_stream structure
+- * RESTORE_BITS      restores bitstream state from lzxd_stream structure
+- * READ_BITS(var,n)  takes N bits from the buffer and puts them in var
+- * ENSURE_BITS(n)    ensures there are at least N bits in the bit buffer.
+- * PEEK_BITS(n)      extracts without removing N bits from the bit buffer
+- * REMOVE_BITS(n)    removes N bits from the bit buffer
+- *
+- * These bit access routines work by using the area beyond the MSB and the
+- * LSB as a free source of zeroes when shifting. This avoids having to
+- * mask any bits. So we have to know the bit width of the bit buffer
+- * variable.
+- *
+- * The bit buffer datatype should be at least 32 bits wide: it must be
+- * possible to ENSURE_BITS(16), so it must be possible to add 16 new bits
+- * to the bit buffer when the bit buffer already has 1 to 15 bits left.
+- */
+-
+-#if HAVE_LIMITS_H
+-# include <limits.h>
+-#endif
+-#ifndef CHAR_BIT
+-# define CHAR_BIT (8)
+-#endif
+-#define BITBUF_WIDTH (sizeof(bit_buffer) * CHAR_BIT)
+-
+-#define STORE_BITS do {                                                 \
+-  lzx->i_ptr      = i_ptr;                                              \
+-  lzx->i_end      = i_end;                                              \
+-  lzx->bit_buffer = bit_buffer;                                         \
+-  lzx->bits_left  = bits_left;                                          \
+-} while (0)
+-
+-#define RESTORE_BITS do {                                               \
+-  i_ptr      = lzx->i_ptr;                                              \
+-  i_end      = lzx->i_end;                                              \
+-  bit_buffer = lzx->bit_buffer;                                         \
+-  bits_left  = lzx->bits_left;                                          \
+-} while (0)
+-
+-#define ENSURE_BITS(nbits)                                              \
+-  while (bits_left < (nbits)) {                                         \
+-    if (i_ptr >= i_end) {                                               \
+-      if (lzxd_read_input(lzx)) return lzx->error;                      \
+-      i_ptr = lzx->i_ptr;                                               \
+-      i_end = lzx->i_end;                                               \
+-    }                                                                   \
+-    bit_buffer |= ((i_ptr[1] << 8) | i_ptr[0])                          \
+-                  << (BITBUF_WIDTH - 16 - bits_left);                   \
+-    bits_left  += 16;                                                   \
+-    i_ptr      += 2;                                                    \
+-  }
+-
+-#define PEEK_BITS(nbits) (bit_buffer >> (BITBUF_WIDTH - (nbits)))
+-
+-#define REMOVE_BITS(nbits) ((bit_buffer <<= (nbits)), (bits_left -= (nbits)))
+-
+-#define READ_BITS(val, nbits) do {                                      \
+-  ENSURE_BITS(nbits);                                                   \
+-  (val) = PEEK_BITS(nbits);                                             \
+-  REMOVE_BITS(nbits);                                                   \
+-} while (0)
+-
+-static int lzxd_read_input(struct lzxd_stream *lzx) {
+-  int read = lzx->sys->read(lzx->input, &lzx->inbuf[0], (int)lzx->inbuf_size);
+-  if (read < 0) return lzx->error = MSPACK_ERR_READ;
+-
+-  /* huff decode's ENSURE_BYTES(16) might overrun the input stream, even
+-   * if those bits aren't used, so fake 2 more bytes */
+-  if (read == 0) {
+-    if (lzx->input_end) {
+-      D(("out of input bytes"))
+-      return lzx->error = MSPACK_ERR_READ;
+-    }
+-    else {
+-      read = 2;
+-      lzx->inbuf[0] = lzx->inbuf[1] = 0;
+-      lzx->input_end = 1;
+-    }
+-  }
+-
+-  lzx->i_ptr = &lzx->inbuf[0];
+-  lzx->i_end = &lzx->inbuf[read];
+-
+-  return MSPACK_ERR_OK;
+-}
+-
+-/* Huffman decoding macros */
+-
+-/* READ_HUFFSYM(tablename, var) decodes one huffman symbol from the
+- * bitstream using the stated table and puts it in var.
+- */
+-#define READ_HUFFSYM(tbl, var) do {                                     \
+-  /* huffman symbols can be up to 16 bits long */                       \
+-  ENSURE_BITS(16);                                                      \
+-  /* immediate table lookup of [tablebits] bits of the code */          \
+-  sym = lzx->tbl##_table[PEEK_BITS(LZX_##tbl##_TABLEBITS)];             \
+-  /* is the symbol is longer than [tablebits] bits? (i=node index) */   \
+-  if (sym >= LZX_##tbl##_MAXSYMBOLS) {                                  \
+-    /* decode remaining bits by tree traversal */                       \
+-    i = 1 << (BITBUF_WIDTH - LZX_##tbl##_TABLEBITS);                    \
+-    do {                                                                \
+-      /* one less bit. error if we run out of bits before decode */     \
+-      i >>= 1;                                                          \
+-      if (i == 0) {                                                     \
+-        D(("out of bits in huffman decode"))                            \
+-        return lzx->error = MSPACK_ERR_DECRUNCH;                        \
+-      }                                                                 \
+-      /* double node index and add 0 (left branch) or 1 (right) */      \
+-      sym <<= 1; sym |= (bit_buffer & i) ? 1 : 0;                       \
+-      /* hop to next node index / decoded symbol */                     \
+-      sym = lzx->tbl##_table[sym];                                      \
+-      /* while we are still in node indicies, not decoded symbols */    \
+-    } while (sym >= LZX_##tbl##_MAXSYMBOLS);                            \
+-  }                                                                     \
+-  /* result */                                                          \
+-  (var) = sym;                                                          \
+-  /* look up the code length of that symbol and discard those bits */   \
+-  i = lzx->tbl##_len[sym];                                              \
+-  REMOVE_BITS(i);                                                       \
+-} while (0)
+-
+-/* BUILD_TABLE(tbl) builds a huffman lookup table from code lengths */
+-#define BUILD_TABLE(tbl)                                                \
+-  if (make_decode_table(LZX_##tbl##_MAXSYMBOLS, LZX_##tbl##_TABLEBITS,  \
+-			&lzx->tbl##_len[0], &lzx->tbl##_table[0]))      \
+-  {                                                                     \
+-    D(("failed to build %s table", #tbl))                               \
+-    return lzx->error = MSPACK_ERR_DECRUNCH;                            \
+-  }
+-
+-/* make_decode_table(nsyms, nbits, length[], table[])
+- *
+- * This function was coded by David Tritscher. It builds a fast huffman
+- * decoding table from a canonical huffman code lengths table.
+- *
+- * nsyms  = total number of symbols in this huffman tree.
+- * nbits  = any symbols with a code length of nbits or less can be decoded
+- *          in one lookup of the table.
+- * length = A table to get code lengths from [0 to syms-1]
+- * table  = The table to fill up with decoded symbols and pointers.
+- *
+- * Returns 0 for OK or 1 for error
+- */
+-
+-static int make_decode_table(unsigned int nsyms, unsigned int nbits,
+-			     unsigned char *length, unsigned short *table)
+-{
+-  register unsigned short sym;
+-  register unsigned int leaf, fill;
+-  register unsigned char bit_num;
+-  unsigned int pos         = 0; /* the current position in the decode table */
+-  unsigned int table_mask  = 1 << nbits;
+-  unsigned int bit_mask    = table_mask >> 1; /* don't do 0 length codes */
+-  unsigned int next_symbol = bit_mask; /* base of allocation for long codes */
+-
+-  /* fill entries for codes short enough for a direct mapping */
+-  for (bit_num = 1; bit_num <= nbits; bit_num++) {
+-    for (sym = 0; sym < nsyms; sym++) {
+-      if (length[sym] != bit_num) continue;
+-      leaf = pos;
+-      if((pos += bit_mask) > table_mask) return 1; /* table overrun */
+-      /* fill all possible lookups of this symbol with the symbol itself */
+-      for (fill = bit_mask; fill-- > 0;) table[leaf++] = sym;
+-    }
+-    bit_mask >>= 1;
+-  }
+-
+-  /* full table already? */
+-  if (pos == table_mask) return 0;
+-
+-  /* clear the remainder of the table */
+-  for (sym = pos; sym < table_mask; sym++) table[sym] = 0xFFFF;
+-
+-  /* allow codes to be up to nbits+16 long, instead of nbits */
+-  pos <<= 16;
+-  table_mask <<= 16;
+-  bit_mask = 1 << 15;
+-
+-  for (bit_num = nbits+1; bit_num <= 16; bit_num++) {
+-    for (sym = 0; sym < nsyms; sym++) {
+-      if (length[sym] != bit_num) continue;
+-
+-      leaf = pos >> 16;
+-      for (fill = 0; fill < bit_num - nbits; fill++) {
+-	/* if this path hasn't been taken yet, 'allocate' two entries */
+-	if (table[leaf] == 0xFFFF) {
+-	  table[(next_symbol << 1)] = 0xFFFF;
+-	  table[(next_symbol << 1) + 1] = 0xFFFF;
+-	  table[leaf] = next_symbol++;
+-	}
+-	/* follow the path and select either left or right for next bit */
+-	leaf = table[leaf] << 1;
+-	if ((pos >> (15-fill)) & 1) leaf++;
+-      }
+-      table[leaf] = sym;
+-
+-      if ((pos += bit_mask) > table_mask) return 1; /* table overflow */
+-    }
+-    bit_mask >>= 1;
+-  }
+-
+-  /* full table? */
+-  if (pos == table_mask) return 0;
+-
+-  /* either erroneous table, or all elements are 0 - let's find out. */
+-  for (sym = 0; sym < nsyms; sym++) if (length[sym]) return 1;
+-  return 0;
+-}
+-
+-
+-/* READ_LENGTHS(tablename, first, last) reads in code lengths for symbols
+- * first to last in the given table. The code lengths are stored in their
+- * own special LZX way.
+- */
+-#define READ_LENGTHS(tbl, first, last) do {                            \
+-  STORE_BITS;                                                          \
+-  if (lzxd_read_lens(lzx, &lzx->tbl##_len[0], (first),                 \
+-    (unsigned int)(last))) return lzx->error;                          \
+-  RESTORE_BITS;                                                        \
+-} while (0)
+-
+-static int lzxd_read_lens(struct lzxd_stream *lzx, unsigned char *lens,
+-			  unsigned int first, unsigned int last)
+-{
+-  /* bit buffer and huffman symbol decode variables */
+-  register unsigned int bit_buffer;
+-  register int bits_left, i;
+-  register unsigned short sym;
+-  unsigned char *i_ptr, *i_end;
+-
+-  unsigned int x, y;
+-  int z;
+-
+-  RESTORE_BITS;
+-  
+-  /* read lengths for pretree (20 symbols, lengths stored in fixed 4 bits) */
+-  for (x = 0; x < 20; x++) {
+-    READ_BITS(y, 4);
+-    lzx->PRETREE_len[x] = y;
+-  }
+-  BUILD_TABLE(PRETREE);
+-
+-  for (x = first; x < last; ) {
+-    READ_HUFFSYM(PRETREE, z);
+-    if (z == 17) {
+-      /* code = 17, run of ([read 4 bits]+4) zeros */
+-      READ_BITS(y, 4); y += 4;
+-      while (y--) lens[x++] = 0;
+-    }
+-    else if (z == 18) {
+-      /* code = 18, run of ([read 5 bits]+20) zeros */
+-      READ_BITS(y, 5); y += 20;
+-      while (y--) lens[x++] = 0;
+-    }
+-    else if (z == 19) {
+-      /* code = 19, run of ([read 1 bit]+4) [read huffman symbol] */
+-      READ_BITS(y, 1); y += 4;
+-      READ_HUFFSYM(PRETREE, z);
+-      z = lens[x] - z; if (z < 0) z += 17;
+-      while (y--) lens[x++] = z;
+-    }
+-    else {
+-      /* code = 0 to 16, delta current length entry */
+-      z = lens[x] - z; if (z < 0) z += 17;
+-      lens[x++] = z;
+-    }
+-  }
+-
+-  STORE_BITS;
+-
+-  return MSPACK_ERR_OK;
+-}
+-
+-/* LZX static data tables:
+- *
+- * LZX uses 'position slots' to represent match offsets.  For every match,
+- * a small 'position slot' number and a small offset from that slot are
+- * encoded instead of one large offset.
+- *
+- * position_base[] is an index to the position slot bases
+- *
+- * extra_bits[] states how many bits of offset-from-base data is needed.
+- */
+-static unsigned int  position_base[51];
+-static unsigned char extra_bits[51];
+-
+-static void lzxd_static_init(void) {
+-  int i, j;
+-
+-  for (i = 0, j = 0; i < 50; i += 2) {
+-    extra_bits[i]   = j; /* 0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7... */
+-    extra_bits[i+1] = j;
+-    if ((i != 0) && (j < 17)) j++; /* 0,0,1,2,3,4...15,16,17,17,17,17... */
+-  }
+-  extra_bits[50] = 17;
+-
+-  for (i = 0, j = 0; i < 51; i++) {
+-    position_base[i] = j; /* 0,1,2,3,4,6,8,12,16,24,32,... */
+-    j += 1 << extra_bits[i]; /* 1,1,1,1,2,2,4,4,8,8,16,16,32,32,... */
+-  }
+-}
+-
+-static void lzxd_reset_state(struct lzxd_stream *lzx) {
+-  int i;
+-
+-  lzx->R0              = 1;
+-  lzx->R1              = 1;
+-  lzx->R2              = 1;
+-  lzx->header_read     = 0;
+-  lzx->block_remaining = 0;
+-  lzx->block_type      = LZX_BLOCKTYPE_INVALID;
+-
+-  /* initialise tables to 0 (because deltas will be applied to them) */
+-  for (i = 0; i < LZX_MAINTREE_MAXSYMBOLS; i++) lzx->MAINTREE_len[i] = 0;
+-  for (i = 0; i < LZX_LENGTH_MAXSYMBOLS; i++)   lzx->LENGTH_len[i]   = 0;
+-}
+-
+-/*-------- main LZX code --------*/
+-
+-struct lzxd_stream *lzxd_init(struct mspack_system *system,
+-			      struct mspack_file *input,
+-			      struct mspack_file *output,
+-			      int window_bits,
+-			      int reset_interval,
+-			      int input_buffer_size,
+-			      off_t output_length)
+-{
+-  unsigned int window_size = 1 << window_bits;
+-  struct lzxd_stream *lzx;
+-
+-  if (!system) return NULL;
+-
+-  /* LZX supports window sizes of 2^15 (32Kb) through 2^21 (2Mb) */
+-  if (window_bits < 15 || window_bits > 21) return NULL;
+-
+-  input_buffer_size = (input_buffer_size + 1) & -2;
+-  if (!input_buffer_size) return NULL;
+-
+-  /* initialise static data */
+-  lzxd_static_init();
+-
+-  /* allocate decompression state */
+-  if (!(lzx = system->alloc(system, sizeof(struct lzxd_stream)))) {
+-    return NULL;
+-  }
+-
+-  /* allocate decompression window and input buffer */
+-  lzx->window = system->alloc(system, (size_t) window_size);
+-  lzx->inbuf  = system->alloc(system, (size_t) input_buffer_size);
+-  if (!lzx->window || !lzx->inbuf) {
+-    system->free(lzx->window);
+-    system->free(lzx->inbuf);
+-    system->free(lzx);
+-    return NULL;
+-  }
+-
+-  /* initialise decompression state */
+-  lzx->sys             = system;
+-  lzx->input           = input;
+-  lzx->output          = output;
+-  lzx->offset          = 0;
+-  lzx->length          = output_length;
+-
+-  lzx->inbuf_size      = input_buffer_size;
+-  lzx->window_size     = 1 << window_bits;
+-  lzx->window_posn     = 0;
+-  lzx->frame_posn      = 0;
+-  lzx->frame           = 0;
+-  lzx->reset_interval  = reset_interval;
+-  lzx->intel_filesize  = 0;
+-  lzx->intel_curpos    = 0;
+-
+-  /* window bits:    15  16  17  18  19  20  21
+-   * position slots: 30  32  34  36  38  42  50  */
+-  lzx->posn_slots      = ((window_bits == 21) ? 50 :
+-			  ((window_bits == 20) ? 42 : (window_bits << 1)));
+-  lzx->intel_started   = 0;
+-  lzx->input_end       = 0;
+-
+-  lzx->error = MSPACK_ERR_OK;
+-
+-  lzx->i_ptr = lzx->i_end = &lzx->inbuf[0];
+-  lzx->o_ptr = lzx->o_end = &lzx->e8_buf[0];
+-  lzx->bit_buffer = lzx->bits_left = 0;
+-
+-  lzxd_reset_state(lzx);
+-  return lzx;
+-}
+-
+-void lzxd_set_output_length(struct lzxd_stream *lzx, off_t out_bytes) {
+-  if (lzx) lzx->length = out_bytes;
+-}
+-
+-int lzxd_decompress(struct lzxd_stream *lzx, off_t out_bytes) {
+-  /* bitstream reading and huffman variables */
+-  register unsigned int bit_buffer;
+-  register int bits_left, i=0;
+-  register unsigned short sym;
+-  unsigned char *i_ptr, *i_end;
+-
+-  int match_length, length_footer, extra, verbatim_bits, bytes_todo;
+-  int this_run, main_element, aligned_bits, j;
+-  unsigned char *window, *runsrc, *rundest, buf[12];
+-  unsigned int frame_size=0, end_frame, match_offset, window_posn;
+-  unsigned int R0, R1, R2;
+-
+-  /* easy answers */
+-  if (!lzx || (out_bytes < 0)) return MSPACK_ERR_ARGS;
+-  if (lzx->error) return lzx->error;
+-
+-  /* flush out any stored-up bytes before we begin */
+-  i = lzx->o_end - lzx->o_ptr;
+-  if ((off_t) i > out_bytes) i = (int) out_bytes;
+-  if (i) {
+-    if (lzx->sys->write(lzx->output, lzx->o_ptr, i) != i) {
+-      return lzx->error = MSPACK_ERR_WRITE;
+-    }
+-    lzx->o_ptr  += i;
+-    lzx->offset += i;
+-    out_bytes   -= i;
+-  }
+-  if (out_bytes == 0) return MSPACK_ERR_OK;
+-
+-  /* restore local state */
+-  RESTORE_BITS;
+-  window = lzx->window;
+-  window_posn = lzx->window_posn;
+-  R0 = lzx->R0;
+-  R1 = lzx->R1;
+-  R2 = lzx->R2;
+-
+-  end_frame = (unsigned int)((lzx->offset + out_bytes) / LZX_FRAME_SIZE) + 1;
+-
+-  while (lzx->frame < end_frame) {
+-    /* have we reached the reset interval? (if there is one?) */
+-    if (lzx->reset_interval && ((lzx->frame % lzx->reset_interval) == 0)) {
+-      if (lzx->block_remaining) {
+-	D(("%d bytes remaining at reset interval", lzx->block_remaining))
+-	return lzx->error = MSPACK_ERR_DECRUNCH;
+-      }
+-
+-      /* re-read the intel header and reset the huffman lengths */
+-      lzxd_reset_state(lzx);
+-    }
+-
+-    /* read header if necessary */
+-    if (!lzx->header_read) {
+-      /* read 1 bit. if bit=0, intel filesize = 0.
+-       * if bit=1, read intel filesize (32 bits) */
+-      j = 0; READ_BITS(i, 1); if (i) { READ_BITS(i, 16); READ_BITS(j, 16); }
+-      lzx->intel_filesize = (i << 16) | j;
+-      lzx->header_read = 1;
+-    } 
+-
+-    /* calculate size of frame: all frames are 32k except the final frame
+-     * which is 32kb or less. this can only be calculated when lzx->length
+-     * has been filled in. */
+-    frame_size = LZX_FRAME_SIZE;
+-    if (lzx->length && (lzx->length - lzx->offset) < (off_t)frame_size) {
+-      frame_size = lzx->length - lzx->offset;
+-    }
+-
+-    /* decode until one more frame is available */
+-    bytes_todo = lzx->frame_posn + frame_size - window_posn;
+-    while (bytes_todo > 0) {
+-      /* initialise new block, if one is needed */
+-      if (lzx->block_remaining == 0) {
+-	/* realign if previous block was an odd-sized UNCOMPRESSED block */
+-	if ((lzx->block_type == LZX_BLOCKTYPE_UNCOMPRESSED) &&
+-	    (lzx->block_length & 1))
+-	{
+-	  if (i_ptr == i_end) {
+-	    if (lzxd_read_input(lzx)) return lzx->error;
+-	    i_ptr = lzx->i_ptr;
+-	    i_end = lzx->i_end;
+-	  }
+-	  i_ptr++;
+-	}
+-
+-	/* read block type (3 bits) and block length (24 bits) */
+-	READ_BITS(lzx->block_type, 3);
+-	READ_BITS(i, 16); READ_BITS(j, 8);
+-	lzx->block_remaining = lzx->block_length = (i << 8) | j;
+-	/*D(("new block t%d len %u", lzx->block_type, lzx->block_length))*/
+-
+-	/* read individual block headers */
+-	switch (lzx->block_type) {
+-	case LZX_BLOCKTYPE_ALIGNED:
+-	  /* read lengths of and build aligned huffman decoding tree */
+-	  for (i = 0; i < 8; i++) { READ_BITS(j, 3); lzx->ALIGNED_len[i] = j; }
+-	  BUILD_TABLE(ALIGNED);
+-	  /* no break -- rest of aligned header is same as verbatim */
+-	case LZX_BLOCKTYPE_VERBATIM:
+-	  /* read lengths of and build main huffman decoding tree */
+-	  READ_LENGTHS(MAINTREE, 0, 256);
+-	  READ_LENGTHS(MAINTREE, 256, LZX_NUM_CHARS + (lzx->posn_slots << 3));
+-	  BUILD_TABLE(MAINTREE);
+-	  /* if the literal 0xE8 is anywhere in the block... */
+-	  if (lzx->MAINTREE_len[0xE8] != 0) lzx->intel_started = 1;
+-	  /* read lengths of and build lengths huffman decoding tree */
+-	  READ_LENGTHS(LENGTH, 0, LZX_NUM_SECONDARY_LENGTHS);
+-	  BUILD_TABLE(LENGTH);
+-	  break;
+-
+-	case LZX_BLOCKTYPE_UNCOMPRESSED:
+-	  /* because we can't assume otherwise */
+-	  lzx->intel_started = 1;
+-
+-	  /* read 1-16 (not 0-15) bits to align to bytes */
+-	  ENSURE_BITS(16);
+-	  if (bits_left > 16) i_ptr -= 2;
+-	  bits_left = 0; bit_buffer = 0;
+-
+-	  /* read 12 bytes of stored R0 / R1 / R2 values */
+-	  for (rundest = &buf[0], i = 0; i < 12; i++) {
+-	    if (i_ptr == i_end) {
+-	      if (lzxd_read_input(lzx)) return lzx->error;
+-	      i_ptr = lzx->i_ptr;
+-	      i_end = lzx->i_end;
+-	    }
+-	    *rundest++ = *i_ptr++;
+-	  }
+-	  R0 = buf[0] | (buf[1] << 8) | (buf[2]  << 16) | (buf[3]  << 24);
+-	  R1 = buf[4] | (buf[5] << 8) | (buf[6]  << 16) | (buf[7]  << 24);
+-	  R2 = buf[8] | (buf[9] << 8) | (buf[10] << 16) | (buf[11] << 24);
+-	  break;
+-
+-	default:
+-	  D(("bad block type"))
+-	  return lzx->error = MSPACK_ERR_DECRUNCH;
+-	}
+-      }
+-
+-      /* decode more of the block:
+-       * run = min(what's available, what's needed) */
+-      this_run = lzx->block_remaining;
+-      if (this_run > bytes_todo) this_run = bytes_todo;
+-
+-      /* assume we decode exactly this_run bytes, for now */
+-      bytes_todo           -= this_run;
+-      lzx->block_remaining -= this_run;
+-
+-      /* decode at least this_run bytes */
+-      switch (lzx->block_type) {
+-      case LZX_BLOCKTYPE_VERBATIM:
+-	while (this_run > 0) {
+-	  READ_HUFFSYM(MAINTREE, main_element);
+-	  if (main_element < LZX_NUM_CHARS) {
+-	    /* literal: 0 to LZX_NUM_CHARS-1 */
+-	    window[window_posn++] = main_element;
+-	    this_run--;
+-	  }
+-	  else {
+-	    /* match: LZX_NUM_CHARS + ((slot<<3) | length_header (3 bits)) */
+-	    main_element -= LZX_NUM_CHARS;
+-
+-	    /* get match length */
+-	    match_length = main_element & LZX_NUM_PRIMARY_LENGTHS;
+-	    if (match_length == LZX_NUM_PRIMARY_LENGTHS) {
+-	      READ_HUFFSYM(LENGTH, length_footer);
+-	      match_length += length_footer;
+-	    }
+-	    match_length += LZX_MIN_MATCH;
+-	  
+-	    /* get match offset */
+-	    switch ((match_offset = (main_element >> 3))) {
+-	    case 0: match_offset = R0;                                  break;
+-	    case 1: match_offset = R1; R1=R0;        R0 = match_offset; break;
+-	    case 2: match_offset = R2; R2=R0;        R0 = match_offset; break;
+-	    case 3: match_offset = 1;  R2=R1; R1=R0; R0 = match_offset; break;
+-	    default:
+-	      extra = extra_bits[match_offset];
+-	      READ_BITS(verbatim_bits, extra);
+-	      match_offset = position_base[match_offset] - 2 + verbatim_bits;
+-	      R2 = R1; R1 = R0; R0 = match_offset;
+-	    }
+-
+-	    if ((window_posn + match_length) > lzx->window_size) {
+-	      D(("match ran over window wrap"))
+-	      return lzx->error = MSPACK_ERR_DECRUNCH;
+-	    }
+-	    
+-	    /* copy match */
+-	    rundest = &window[window_posn];
+-	    i = match_length;
+-	    /* does match offset wrap the window? */
+-	    if (match_offset > window_posn) {
+-	      /* j = length from match offset to end of window */
+-	      j = match_offset - window_posn;
+-	      if (j > (int) lzx->window_size) {
+-		D(("match offset beyond window boundaries"))
+-		return lzx->error = MSPACK_ERR_DECRUNCH;
+-	      }
+-	      runsrc = &window[lzx->window_size - j];
+-	      if (j < i) {
+-		/* if match goes over the window edge, do two copy runs */
+-		i -= j; while (j-- > 0) *rundest++ = *runsrc++;
+-		runsrc = window;
+-	      }
+-	      while (i-- > 0) *rundest++ = *runsrc++;
+-	    }
+-	    else {
+-	      runsrc = rundest - match_offset;
+-	      while (i-- > 0) *rundest++ = *runsrc++;
+-	    }
+-
+-	    this_run    -= match_length;
+-	    window_posn += match_length;
+-	  }
+-	} /* while (this_run > 0) */
+-	break;
+-
+-      case LZX_BLOCKTYPE_ALIGNED:
+-	while (this_run > 0) {
+-	  READ_HUFFSYM(MAINTREE, main_element);
+-	  if (main_element < LZX_NUM_CHARS) {
+-	    /* literal: 0 to LZX_NUM_CHARS-1 */
+-	    window[window_posn++] = main_element;
+-	    this_run--;
+-	  }
+-	  else {
+-	    /* match: LZX_NUM_CHARS + ((slot<<3) | length_header (3 bits)) */
+-	    main_element -= LZX_NUM_CHARS;
+-
+-	    /* get match length */
+-	    match_length = main_element & LZX_NUM_PRIMARY_LENGTHS;
+-	    if (match_length == LZX_NUM_PRIMARY_LENGTHS) {
+-	      READ_HUFFSYM(LENGTH, length_footer);
+-	      match_length += length_footer;
+-	    }
+-	    match_length += LZX_MIN_MATCH;
+-
+-	    /* get match offset */
+-	    switch ((match_offset = (main_element >> 3))) {
+-	    case 0: match_offset = R0;                             break;
+-	    case 1: match_offset = R1; R1 = R0; R0 = match_offset; break;
+-	    case 2: match_offset = R2; R2 = R0; R0 = match_offset; break;
+-	    default:
+-	      extra = extra_bits[match_offset];
+-	      match_offset = position_base[match_offset] - 2;
+-	      if (extra > 3) {
+-		/* verbatim and aligned bits */
+-		extra -= 3;
+-		READ_BITS(verbatim_bits, extra);
+-		match_offset += (verbatim_bits << 3);
+-		READ_HUFFSYM(ALIGNED, aligned_bits);
+-		match_offset += aligned_bits;
+-	      }
+-	      else if (extra == 3) {
+-		/* aligned bits only */
+-		READ_HUFFSYM(ALIGNED, aligned_bits);
+-		match_offset += aligned_bits;
+-	      }
+-	      else if (extra > 0) { /* extra==1, extra==2 */
+-		/* verbatim bits only */
+-		READ_BITS(verbatim_bits, extra);
+-		match_offset += verbatim_bits;
+-	      }
+-	      else /* extra == 0 */ {
+-		/* ??? not defined in LZX specification! */
+-		match_offset = 1;
+-	      }
+-	      /* update repeated offset LRU queue */
+-	      R2 = R1; R1 = R0; R0 = match_offset;
+-	    }
+-
+-	    if ((window_posn + match_length) > lzx->window_size) {
+-	      D(("match ran over window wrap"))
+-	      return lzx->error = MSPACK_ERR_DECRUNCH;
+-	    }
+-
+-	    /* copy match */
+-	    rundest = &window[window_posn];
+-	    i = match_length;
+-	    /* does match offset wrap the window? */
+-	    if (match_offset > window_posn) {
+-	      /* j = length from match offset to end of window */
+-	      j = match_offset - window_posn;
+-	      if (j > (int) lzx->window_size) {
+-		D(("match offset beyond window boundaries"))
+-		return lzx->error = MSPACK_ERR_DECRUNCH;
+-	      }
+-	      runsrc = &window[lzx->window_size - j];
+-	      if (j < i) {
+-		/* if match goes over the window edge, do two copy runs */
+-		i -= j; while (j-- > 0) *rundest++ = *runsrc++;
+-		runsrc = window;
+-	      }
+-	      while (i-- > 0) *rundest++ = *runsrc++;
+-	    }
+-	    else {
+-	      runsrc = rundest - match_offset;
+-	      while (i-- > 0) *rundest++ = *runsrc++;
+-	    }
+-
+-	    this_run    -= match_length;
+-	    window_posn += match_length;
+-	  }
+-	} /* while (this_run > 0) */
+-	break;
+-
+-      case LZX_BLOCKTYPE_UNCOMPRESSED:
+-	/* as this_run is limited not to wrap a frame, this also means it
+-	 * won't wrap the window (as the window is a multiple of 32k) */
+-	rundest = &window[window_posn];
+-	window_posn += this_run;
+-	while (this_run > 0) {
+-	  if ((i = i_end - i_ptr)) {
+-	    if (i > this_run) i = this_run;
+-	    lzx->sys->copy(i_ptr, rundest, (size_t) i);
+-	    rundest  += i;
+-	    i_ptr    += i;
+-	    this_run -= i;
+-	  }
+-	  else {
+-	    if (lzxd_read_input(lzx)) return lzx->error;
+-	    i_ptr = lzx->i_ptr;
+-	    i_end = lzx->i_end;
+-	  }
+-	}
+-	break;
+-
+-      default:
+-        D(("Default Here."));
+-	return lzx->error = MSPACK_ERR_DECRUNCH; /* might as well */
+-      }
+-
+-      /* did the final match overrun our desired this_run length? */
+-      if (this_run < 0) {
+-	if ((unsigned int)(-this_run) > lzx->block_remaining) {
+-	  D(("overrun went past end of block by %d (%d remaining)",
+-	     -this_run, lzx->block_remaining ))
+-	  return lzx->error = MSPACK_ERR_DECRUNCH;
+-	}
+-	lzx->block_remaining -= -this_run;
+-      }
+-    } /* while (bytes_todo > 0) */
+-
+-    /* streams don't extend over frame boundaries */
+-    if ((window_posn - lzx->frame_posn) != frame_size) {
+-      D(("decode beyond output frame limits! %d != %d",
+-	 window_posn - lzx->frame_posn, frame_size))
+-     /* Ignored */
+-#if 0
+-      	return lzx->error = MSPACK_ERR_DECRUNCH; 
+-#endif
+-    }
+-
+-    /* re-align input bitstream */
+-    if (bits_left > 0) ENSURE_BITS(16);
+-    if (bits_left & 15) REMOVE_BITS(bits_left & 15);
+-
+-    /* check that we've used all of the previous frame first */
+-    if (lzx->o_ptr != lzx->o_end) {
+-      D(("%d avail bytes, new %d frame", lzx->o_end-lzx->o_ptr, frame_size))
+-      return lzx->error = MSPACK_ERR_DECRUNCH;
+-    }
+-
+-    /* does this intel block _really_ need decoding? */
+-    if (lzx->intel_started && lzx->intel_filesize &&
+-	(lzx->frame <= 32768) && (frame_size > 10))
+-    {
+-      unsigned char *data    = &lzx->e8_buf[0];
+-      unsigned char *dataend = &lzx->e8_buf[frame_size - 10];
+-      signed int curpos      = lzx->intel_curpos;
+-      signed int filesize    = lzx->intel_filesize;
+-      signed int abs_off, rel_off;
+-
+-      /* copy e8 block to the e8 buffer and tweak if needed */
+-      lzx->o_ptr = data;
+-      lzx->sys->copy(&lzx->window[lzx->frame_posn], data, frame_size);
+-
+-      while (data < dataend) {
+-	if (*data++ != 0xE8) { curpos++; continue; }
+-	abs_off = data[0] | (data[1]<<8) | (data[2]<<16) | (data[3]<<24);
+-	if ((abs_off >= -curpos) && (abs_off < filesize)) {
+-	  rel_off = (abs_off >= 0) ? abs_off - curpos : abs_off + filesize;
+-	  data[0] = (unsigned char) rel_off;
+-	  data[1] = (unsigned char) (rel_off >> 8);
+-	  data[2] = (unsigned char) (rel_off >> 16);
+-	  data[3] = (unsigned char) (rel_off >> 24);
+-	}
+-	data += 4;
+-	curpos += 5;
+-      }
+-      lzx->intel_curpos += frame_size;
+-    }
+-    else {
+-      lzx->o_ptr = &lzx->window[lzx->frame_posn];
+-      if (lzx->intel_filesize) lzx->intel_curpos += frame_size;
+-    }
+-    lzx->o_end = &lzx->o_ptr[frame_size];
+-
+-    /* write a frame */
+-    i = (out_bytes < (off_t)frame_size) ? (unsigned int)out_bytes : frame_size;
+-    if (lzx->sys->write(lzx->output, lzx->o_ptr, i) != i) {
+-      return lzx->error = MSPACK_ERR_WRITE;
+-    }
+-    lzx->o_ptr  += i;
+-    lzx->offset += i;
+-    out_bytes   -= i;
+-
+-    /* advance frame start position */
+-    lzx->frame_posn += frame_size;
+-    lzx->frame++;
+-
+-    /* wrap window / frame position pointers */
+-    if (window_posn == lzx->window_size)     window_posn = 0;
+-    if (lzx->frame_posn == lzx->window_size) lzx->frame_posn = 0;
+-
+-  } /* while (lzx->frame < end_frame) */
+-
+-  if (out_bytes) {
+-    D(("bytes left to output"))
+-    return lzx->error = MSPACK_ERR_DECRUNCH;
+-  }
+-
+-  /* store local state */
+-  STORE_BITS;
+-  lzx->window_posn = window_posn;
+-  lzx->R0 = R0;
+-  lzx->R1 = R1;
+-  lzx->R2 = R2;
+-
+-  return MSPACK_ERR_OK;
+-}
+-
+-void lzxd_free(struct lzxd_stream *lzx) {
+-  struct mspack_system *sys;
+-  if (lzx) {
+-    sys = lzx->sys;
+-    sys->free(lzx->inbuf);
+-    sys->free(lzx->window);
+-    sys->free(lzx);
+-  }
+-}
+--- calibre-debian.orig/src/calibre/utils/lzx/lzxd.h
++++ /dev/null
+@@ -1,168 +0,0 @@
+-/* This file is part of libmspack.
+- * (C) 2003-2004 Stuart Caie.
+- *
+- * The LZX method was created by Jonathan Forbes and Tomi Poutanen, adapted
+- * by Microsoft Corporation.
+- *
+- * libmspack is free software; you can redistribute it and/or modify it under
+- * the terms of the GNU Lesser General Public License (LGPL) version 2.1
+- *
+- * For further details, see the file COPYING.LIB distributed with libmspack
+- */
+-
+-#pragma once
+-
+-#include <sys/types.h>
+-
+-
+-/* LZX compression / decompression definitions */
+-
+-/* some constants defined by the LZX specification */
+-#define LZX_MIN_MATCH                (2)
+-#define LZX_MAX_MATCH                (257)
+-#define LZX_NUM_CHARS                (256)
+-#define LZX_BLOCKTYPE_INVALID        (0)   /* also blocktypes 4-7 invalid */
+-#define LZX_BLOCKTYPE_VERBATIM       (1)
+-#define LZX_BLOCKTYPE_ALIGNED        (2)
+-#define LZX_BLOCKTYPE_UNCOMPRESSED   (3)
+-#define LZX_PRETREE_NUM_ELEMENTS     (20)
+-#define LZX_ALIGNED_NUM_ELEMENTS     (8)   /* aligned offset tree #elements */
+-#define LZX_NUM_PRIMARY_LENGTHS      (7)   /* this one missing from spec! */
+-#define LZX_NUM_SECONDARY_LENGTHS    (249) /* length tree #elements */
+-
+-/* LZX huffman defines: tweak tablebits as desired */
+-#define LZX_PRETREE_MAXSYMBOLS  (LZX_PRETREE_NUM_ELEMENTS)
+-#define LZX_PRETREE_TABLEBITS   (6)
+-#define LZX_MAINTREE_MAXSYMBOLS (LZX_NUM_CHARS + 50*8)
+-#define LZX_MAINTREE_TABLEBITS  (12)
+-#define LZX_LENGTH_MAXSYMBOLS   (LZX_NUM_SECONDARY_LENGTHS+1)
+-#define LZX_LENGTH_TABLEBITS    (12)
+-#define LZX_ALIGNED_MAXSYMBOLS  (LZX_ALIGNED_NUM_ELEMENTS)
+-#define LZX_ALIGNED_TABLEBITS   (7)
+-#define LZX_LENTABLE_SAFETY (64)  /* table decoding overruns are allowed */
+-
+-#define LZX_FRAME_SIZE (32768) /* the size of a frame in LZX */
+-
+-struct lzxd_stream {
+-  struct mspack_system *sys;      /* I/O routines                            */
+-  struct mspack_file   *input;    /* input file handle                       */
+-  struct mspack_file   *output;   /* output file handle                      */
+-
+-  off_t   offset;                 /* number of bytes actually output         */
+-  off_t   length;                 /* overall decompressed length of stream   */
+-
+-  unsigned char *window;          /* decoding window                         */
+-  unsigned int   window_size;     /* window size                             */
+-  unsigned int   window_posn;     /* decompression offset within window      */
+-  unsigned int   frame_posn;      /* current frame offset within in window   */
+-  unsigned int   frame;           /* the number of 32kb frames processed     */
+-  unsigned int   reset_interval;  /* which frame do we reset the compressor? */
+-
+-  unsigned int   R0, R1, R2;      /* for the LRU offset system               */
+-  unsigned int   block_length;    /* uncompressed length of this LZX block   */
+-  unsigned int   block_remaining; /* uncompressed bytes still left to decode */
+-
+-  signed int     intel_filesize;  /* magic header value used for transform   */
+-  signed int     intel_curpos;    /* current offset in transform space       */
+-
+-  unsigned char  intel_started;   /* has intel E8 decoding started?          */
+-  unsigned char  block_type;      /* type of the current block               */
+-  unsigned char  header_read;     /* have we started decoding at all yet?    */
+-  unsigned char  posn_slots;      /* how many posn slots in stream?          */
+-  unsigned char  input_end;       /* have we reached the end of input?       */
+-
+-  int error;
+-
+-  /* I/O buffering */
+-  unsigned char *inbuf, *i_ptr, *i_end, *o_ptr, *o_end;
+-  unsigned int  bit_buffer, bits_left, inbuf_size;
+-
+-  /* huffman code lengths */
+-  unsigned char PRETREE_len  [LZX_PRETREE_MAXSYMBOLS  + LZX_LENTABLE_SAFETY];
+-  unsigned char MAINTREE_len [LZX_MAINTREE_MAXSYMBOLS + LZX_LENTABLE_SAFETY];
+-  unsigned char LENGTH_len   [LZX_LENGTH_MAXSYMBOLS   + LZX_LENTABLE_SAFETY];
+-  unsigned char ALIGNED_len  [LZX_ALIGNED_MAXSYMBOLS  + LZX_LENTABLE_SAFETY];
+-
+-  /* huffman decoding tables */
+-  unsigned short PRETREE_table [(1 << LZX_PRETREE_TABLEBITS) +
+-				(LZX_PRETREE_MAXSYMBOLS * 2)];
+-  unsigned short MAINTREE_table[(1 << LZX_MAINTREE_TABLEBITS) +
+-				(LZX_MAINTREE_MAXSYMBOLS * 2)];
+-  unsigned short LENGTH_table  [(1 << LZX_LENGTH_TABLEBITS) +
+-				(LZX_LENGTH_MAXSYMBOLS * 2)];
+-  unsigned short ALIGNED_table [(1 << LZX_ALIGNED_TABLEBITS) +
+-				(LZX_ALIGNED_MAXSYMBOLS * 2)];
+-
+-  /* this is used purely for doing the intel E8 transform */
+-  unsigned char  e8_buf[LZX_FRAME_SIZE];
+-};
+-
+-/* allocates LZX decompression state for decoding the given stream.
+- *
+- * - returns NULL if window_bits is outwith the range 15 to 21 (inclusive).
+- *
+- * - uses system->alloc() to allocate memory
+- *
+- * - returns NULL if not enough memory
+- *
+- * - window_bits is the size of the LZX window, from 32Kb (15) to 2Mb (21).
+- *
+- * - reset_interval is how often the bitstream is reset, measured in
+- *   multiples of 32Kb bytes output. For CAB LZX streams, this is always 0
+- *   (does not occur).
+- *
+- * - input_buffer_size is how many bytes to use as an input bitstream buffer
+- *
+- * - output_length is the length in bytes of the entirely decompressed
+- *   output stream, if known in advance. It is used to correctly perform
+- *   the Intel E8 transformation, which must stop 6 bytes before the very
+- *   end of the decompressed stream. It is not otherwise used or adhered
+- *   to. If the full decompressed length is known in advance, set it here.
+- *   If it is NOT known, use the value 0, and call lzxd_set_output_length()
+- *   once it is known. If never set, 4 of the final 6 bytes of the output
+- *   stream may be incorrect.
+- */
+-extern struct lzxd_stream *lzxd_init(struct mspack_system *system,
+-				     struct mspack_file *input,
+-				     struct mspack_file *output,
+-				     int window_bits,
+-				     int reset_interval,
+-				     int input_buffer_size,
+-				     off_t output_length);
+-
+-/* see description of output_length in lzxd_init() */
+-extern void lzxd_set_output_length(struct lzxd_stream *lzx,
+-				   off_t output_length);
+-
+-/* decompresses, or decompresses more of, an LZX stream.
+- *
+- * - out_bytes of data will be decompressed and the function will return
+- *   with an MSPACK_ERR_OK return code.
+- *
+- * - decompressing will stop as soon as out_bytes is reached. if the true
+- *   amount of bytes decoded spills over that amount, they will be kept for
+- *   a later invocation of lzxd_decompress().
+- *
+- * - the output bytes will be passed to the system->write() function given in
+- *   lzxd_init(), using the output file handle given in lzxd_init(). More
+- *   than one call may be made to system->write().
+- *
+- * - LZX will read input bytes as necessary using the system->read() function
+- *   given in lzxd_init(), using the input file handle given in lzxd_init().
+- *   This will continue until system->read() returns 0 bytes, or an error.
+- *   input streams should convey an "end of input stream" by refusing to
+- *   supply all the bytes that LZX asks for when they reach the end of the
+- *   stream, rather than return an error code.
+- *
+- * - if an error code other than MSPACK_ERR_OK is returned, the stream should
+- *   be considered unusable and lzxd_decompress() should not be called again
+- *   on this stream.
+- */
+-extern int lzxd_decompress(struct lzxd_stream *lzx, off_t out_bytes);
+-
+-/* frees all state associated with an LZX data stream
+- *
+- * - calls system->free() using the system pointer given in lzxd_init()
+- */
+-void lzxd_free(struct lzxd_stream *lzx);
+-
+--- calibre-debian.orig/src/calibre/utils/lzx/lzxmodule.c
++++ calibre-debian/src/calibre/utils/lzx/lzxmodule.c
+@@ -7,9 +7,8 @@
+ #include <Python.h>
+ 
+ #include <mspack.h>
+-#include <lzxd.h>
+ 
+-#include <lzxmodule.h>
++#include "lzxmodule.h"
+ 
+ static char lzx_doc[] = 
+     "Provide basic LZX compression and decompression using the code from\n"
+--- calibre-debian.orig/src/calibre/utils/lzx/mspack.h
++++ /dev/null
+@@ -1,1480 +0,0 @@
+-/* libmspack -- a library for working with Microsoft compression formats.
+- * (C) 2003-2004 Stuart Caie <kyzer@4u.net>
+- *
+- * libmspack is free software; you can redistribute it and/or modify it under
+- * the terms of the GNU Lesser General Public License (LGPL) version 2.1
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+- */
+-
+-/** \mainpage
+- *
+- * \section intro Introduction
+- *
+- * libmspack is a library which provides compressors and decompressors,
+- * archivers and dearchivers for Microsoft compression formats.
+- *
+- * \section formats Formats supported
+- *
+- * The following file formats are supported:
+- * - SZDD files, which use LZSS compression
+- * - KWAJ files, which use LZSS, LZSS+Huffman or deflate compression
+- * - .HLP (MS Help) files, which use LZSS compression
+- * - .CAB (MS Cabinet) files, which use deflate, LZX or Quantum compression
+- * - .CHM (HTML Help) files, which use LZX compression
+- * - .LIT (MS EBook) files, which use LZX compression and DES encryption
+- *
+- * To determine the capabilities of the library, and the binary
+- * compatibility version of any particular compressor or decompressor, use
+- * the mspack_version() function. The UNIX library interface version is
+- * defined as the highest-versioned library component.
+- *
+- * \section starting Getting started
+- *
+- * The macro MSPACK_SYS_SELFTEST() should be used to ensure the library can
+- * be used. In particular, it checks if the caller is using 32-bit file I/O
+- * when the library is compiled for 64-bit file I/O and vice versa.
+- *
+- * If compiled normally, the library includes basic file I/O and memory
+- * management functionality using the standard C library. This can be
+- * customised and replaced entirely by creating a mspack_system structure.
+- *
+- * A compressor or decompressor for the required format must be
+- * instantiated before it can be used. Each construction function takes
+- * one parameter, which is either a pointer to a custom mspack_system
+- * structure, or NULL to use the default. The instantiation returned, if
+- * not NULL, contains function pointers (methods) to work with the given
+- * file format.
+- * 
+- * For compression:
+- * - mspack_create_cab_compressor() creates a mscab_compressor
+- * - mspack_create_chm_compressor() creates a mschm_compressor
+- * - mspack_create_lit_compressor() creates a mslit_compressor
+- * - mspack_create_hlp_compressor() creates a mshlp_compressor
+- * - mspack_create_szdd_compressor() creates a msszdd_compressor
+- * - mspack_create_kwaj_compressor() creates a mskwaj_compressor
+- *
+- * For decompression:
+- * - mspack_create_cab_decompressor() creates a mscab_decompressor
+- * - mspack_create_chm_decompressor() creates a mschm_decompressor
+- * - mspack_create_lit_decompressor() creates a mslit_decompressor
+- * - mspack_create_hlp_decompressor() creates a mshlp_decompressor
+- * - mspack_create_szdd_decompressor() creates a msszdd_decompressor
+- * - mspack_create_kwaj_decompressor() creates a mskwaj_decompressor
+- *
+- * Once finished working with a format, each kind of
+- * compressor/decompressor has its own specific destructor:
+- * - mspack_destroy_cab_compressor()
+- * - mspack_destroy_cab_decompressor()
+- * - mspack_destroy_chm_compressor()
+- * - mspack_destroy_chm_decompressor()
+- * - mspack_destroy_lit_compressor()
+- * - mspack_destroy_lit_decompressor()
+- * - mspack_destroy_hlp_compressor()
+- * - mspack_destroy_hlp_decompressor()
+- * - mspack_destroy_szdd_compressor()
+- * - mspack_destroy_szdd_decompressor()
+- * - mspack_destroy_kwaj_compressor()
+- * - mspack_destroy_kwaj_decompressor()
+- *
+- * Destroying a compressor or decompressor does not destroy any objects,
+- * structures or handles that have been created using that compressor or
+- * decompressor. Ensure that everything created or opened is destroyed or
+- * closed before compressor/decompressor is itself destroyed.
+- *
+- * \section errors Error codes
+- *
+- * All compressors and decompressors use the same set of error codes. Most
+- * methods return an error code directly. For methods which do not
+- * return error codes directly, the error code can be obtained with the
+- * last_error() method.
+- *
+- * - #MSPACK_ERR_OK is used to indicate success. This error code is defined
+- *   as zero, all other code are non-zero.
+- * - #MSPACK_ERR_ARGS indicates that a method was called with inappropriate
+- *   arguments.
+- * - #MSPACK_ERR_OPEN indicates that mspack_system::open() failed.
+- * - #MSPACK_ERR_READ indicates that mspack_system::read() failed.
+- * - #MSPACK_ERR_WRITE indicates that mspack_system::write() failed.
+- * - #MSPACK_ERR_SEEK indicates that mspack_system::seek() failed.
+- * - #MSPACK_ERR_NOMEMORY indicates that mspack_system::alloc() failed.
+- * - #MSPACK_ERR_SIGNATURE indicates that the file being read does not
+- *   have the correct "signature". It is probably not a valid file for
+- *   whatever format is being read.
+- * - #MSPACK_ERR_DATAFORMAT indicates that the file being used or read
+- *   is corrupt.
+- * - #MSPACK_ERR_CHECKSUM indicates that a data checksum has failed.
+- * - #MSPACK_ERR_CRUNCH indicates an error occured during compression.
+- * - #MSPACK_ERR_DECRUNCH indicates an error occured during decompression.
+- */
+-
+-#pragma once
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-#include <sys/types.h>
+-#ifdef _MSC_VER
+-#include <stdio.h>
+-#else
+-#include <unistd.h>
+-#endif
+-/**
+- * System self-test function, to ensure both library and calling program
+- * can use one another.
+- *
+- * A result of MSPACK_ERR_OK means the library and caller are
+- * compatible. Any other result indicates that the library and caller are
+- * not compatible and should not be used. In particular, a value of
+- * MSPACK_ERR_SEEK means the library and caller use different off_t
+- * datatypes.
+- *
+- * It should be used like so:
+- *
+- * @code
+- * int selftest_result;
+- * MSPACK_SYS_SELFTEST(selftest_result);
+- * if (selftest_result != MSPACK_ERR_OK) {
+- *   fprintf(stderr, "incompatible with this build of libmspack\n");
+- *   exit(0);
+- * }
+- * @endcode
+- *
+- * @param  result   an int variable to store the result of the self-test
+- */
+-#define MSPACK_SYS_SELFTEST(result)  do { \
+-  (result) = mspack_sys_selftest_internal(sizeof(off_t)); \
+-} while (0)
+-
+-/** Part of the MSPACK_SYS_SELFTEST() macro, must not be used directly. */
+-extern int mspack_sys_selftest_internal(int);
+-
+-/**
+- * Enquire about the binary compatibility version of a specific interface in
+- * the library. Currently, the following interfaces are defined:
+- *
+- * - #MSPACK_VER_LIBRARY: the overall library
+- * - #MSPACK_VER_SYSTEM: the mspack_system interface
+- * - #MSPACK_VER_MSCABD: the mscab_decompressor interface
+- * - #MSPACK_VER_MSCABC: the mscab_compressor interface
+- * - #MSPACK_VER_MSCHMD: the mschm_decompressor interface
+- * - #MSPACK_VER_MSCHMC: the mschm_compressor interface
+- * - #MSPACK_VER_MSLITD: the mslit_decompressor interface
+- * - #MSPACK_VER_MSLITC: the mslit_compressor interface
+- * - #MSPACK_VER_MSHLPD: the mshlp_decompressor interface
+- * - #MSPACK_VER_MSHLPC: the mshlp_compressor interface
+- * - #MSPACK_VER_MSSZDDD: the msszdd_decompressor interface
+- * - #MSPACK_VER_MSSZDDC: the msszdd_compressor interface
+- * - #MSPACK_VER_MSKWAJD: the mskwaj_decompressor interface
+- * - #MSPACK_VER_MSKWAJC: the mskwaj_compressor interface
+- *
+- * The result of the function should be interpreted as follows:
+- * - -1: this interface is completely unknown to the library
+- * - 0: this interface is known, but non-functioning
+- * - 1: this interface has all basic functionality
+- * - 2, 3, ...: this interface has additional functionality, clearly marked
+- *   in the documentation as "version 2", "version 3" and so on.
+- *
+- * @param interface the interface to request current version of
+- * @return the version of the requested interface
+- */
+-extern int mspack_version(int interface);
+-
+-/** Pass to mspack_version() to get the overall library version */
+-#define MSPACK_VER_LIBRARY   (0)
+-/** Pass to mspack_version() to get the mspack_system version */
+-#define MSPACK_VER_SYSTEM    (1)
+-/** Pass to mspack_version() to get the mscab_decompressor version */
+-#define MSPACK_VER_MSCABD    (2)
+-/** Pass to mspack_version() to get the mscab_compressor version */
+-#define MSPACK_VER_MSCABC    (3)
+-/** Pass to mspack_version() to get the mschm_decompressor version */
+-#define MSPACK_VER_MSCHMD    (4)
+-/** Pass to mspack_version() to get the mschm_compressor version */
+-#define MSPACK_VER_MSCHMC    (5)
+-/** Pass to mspack_version() to get the mslit_decompressor version */
+-#define MSPACK_VER_MSLITD    (6)
+-/** Pass to mspack_version() to get the mslit_compressor version */
+-#define MSPACK_VER_MSLITC    (7)
+-/** Pass to mspack_version() to get the mshlp_decompressor version */
+-#define MSPACK_VER_MSHLPD    (8)
+-/** Pass to mspack_version() to get the mshlp_compressor version */
+-#define MSPACK_VER_MSHLPC    (9)
+-/** Pass to mspack_version() to get the msszdd_decompressor version */
+-#define MSPACK_VER_MSSZDDD   (10)
+-/** Pass to mspack_version() to get the msszdd_compressor version */
+-#define MSPACK_VER_MSSZDDC   (11)
+-/** Pass to mspack_version() to get the mskwaj_decompressor version */
+-#define MSPACK_VER_MSKWAJD   (12)
+-/** Pass to mspack_version() to get the mskwaj_compressor version */
+-#define MSPACK_VER_MSKWAJC   (13)
+-
+-/* --- file I/O abstraction ------------------------------------------------ */
+-
+-/**
+- * A structure which abstracts file I/O and memory management.
+- *
+- * The library always uses the mspack_system structure for interaction
+- * with the file system and to allocate, free and copy all memory. It also
+- * uses it to send literal messages to the library user.
+- *
+- * When the library is compiled normally, passing NULL to a compressor or
+- * decompressor constructor will result in a default mspack_system being
+- * used, where all methods are implemented with the standard C library.
+- * However, all constructors support being given a custom created
+- * mspack_system structure, with the library user's own methods. This
+- * allows for more abstract interaction, such as reading and writing files
+- * directly to memory, or from a network socket or pipe.
+- *
+- * Implementors of an mspack_system structure should read all
+- * documentation entries for every structure member, and write methods
+- * which conform to those standards.
+- */
+-struct mspack_system {
+-  /**
+-   * Opens a file for reading, writing, appending or updating.
+-   *
+-   * @param this     a self-referential pointer to the mspack_system
+-   *                 structure whose open() method is being called. If
+-   *                 this pointer is required by close(), read(), write(),
+-   *                 seek() or tell(), it should be stored in the result
+-   *                 structure at this time.
+-   * @param filename the file to be opened. It is passed directly from the
+-   *                 library caller without being modified, so it is up to
+-   *                 the caller what this parameter actually represents.
+-   * @param mode     one of #MSPACK_SYS_OPEN_READ (open an existing file
+-   *                 for reading), #MSPACK_SYS_OPEN_WRITE (open a new file
+-   *                 for writing), #MSPACK_SYS_OPEN_UPDATE (open an existing
+-   *                 file for reading/writing from the start of the file) or
+-   *                 #MSPACK_SYS_OPEN_APPEND (open an existing file for
+-   *                 reading/writing from the end of the file)
+-   * @return a pointer to a mspack_file structure. This structure officially
+-   *         contains no members, its true contents are up to the
+-   *         mspack_system implementor. It should contain whatever is needed
+-   *         for other mspack_system methods to operate.
+-   * @see close(), read(), write(), seek(), tell(), message()
+-   */
+-  struct mspack_file * (*open)(struct mspack_system *this,
+-			       char *filename,
+-			       int mode);
+-
+-  /**
+-   * Closes a previously opened file. If any memory was allocated for this
+-   * particular file handle, it should be freed at this time.
+-   * 
+-   * @param file the file to close
+-   * @see open()
+-   */
+-  void (*close)(struct mspack_file *file);
+-
+-  /**
+-   * Reads a given number of bytes from an open file.
+-   *
+-   * @param file    the file to read from
+-   * @param buffer  the location where the read bytes should be stored
+-   * @param bytes   the number of bytes to read from the file.
+-   * @return the number of bytes successfully read (this can be less than
+-   *         the number requested), zero to mark the end of file, or less
+-   *         than zero to indicate an error.
+-   * @see open(), write()
+-   */
+-  int (*read)(struct mspack_file *file,
+-	      void *buffer,
+-	      int bytes);
+-
+-  /**
+-   * Writes a given number of bytes to an open file.
+-   *
+-   * @param file    the file to write to
+-   * @param buffer  the location where the written bytes should be read from
+-   * @param bytes   the number of bytes to write to the file.
+-   * @return the number of bytes successfully written, this can be less
+-   *         than the number requested. Zero or less can indicate an error
+-   *         where no bytes at all could be written. All cases where less
+-   *         bytes were written than requested are considered by the library
+-   *         to be an error.
+-   * @see open(), read()
+-   */
+-  int (*write)(struct mspack_file *file,
+-	       void *buffer,
+-	       int bytes);
+-
+-  /**
+-   * Seeks to a specific file offset within an open file.
+-   *
+-   * Sometimes the library needs to know the length of a file. It does
+-   * this by seeking to the end of the file with seek(file, 0,
+-   * MSPACK_SYS_SEEK_END), then calling tell(). Implementations may want
+-   * to make a special case for this.
+-   *
+-   * Due to the potentially varying 32/64 bit datatype off_t on some
+-   * architectures, the #MSPACK_SYS_SELFTEST macro MUST be used before
+-   * using the library. If not, the error caused by the library passing an
+-   * inappropriate stackframe to seek() is subtle and hard to trace.
+-   *
+-   * @param file   the file to be seeked
+-   * @param offset an offset to seek, measured in bytes
+-   * @param mode   one of #MSPACK_SYS_SEEK_START (the offset should be
+-   *               measured from the start of the file), #MSPACK_SYS_SEEK_CUR
+-   *               (the offset should be measured from the current file offset)
+-   *               or #MSPACK_SYS_SEEK_END (the offset should be measured from
+-   *               the end of the file)
+-   * @return zero for success, non-zero for an error
+-   * @see open(), tell()
+-   */
+-  int (*seek)(struct mspack_file *file,
+-	      off_t offset,
+-	      int mode);
+-
+-  /**
+-   * Returns the current file position (in bytes) of the given file.
+-   *
+-   * @param file the file whose file position is wanted
+-   * @return the current file position of the file
+-   * @see open(), seek()
+-   */
+-  off_t (*tell)(struct mspack_file *file);
+-  
+-  /**
+-   * Used to send messages from the library to the user.
+-   *
+-   * Occasionally, the library generates warnings or other messages in
+-   * plain english to inform the human user. These are informational only
+-   * and can be ignored if not wanted.
+-   *
+-   * @param file   may be a file handle returned from open() if this message
+-   *               pertains to a specific open file, or NULL if not related to
+-   *               a specific file.
+-   * @param format a printf() style format string. It does NOT include a
+-   *               trailing newline.
+-   * @see open()
+-   */
+-  void (*message)(struct mspack_file *file,
+-		  char *format,
+-		  ...);
+-
+-  /**
+-   * Allocates memory.
+-   *
+-   * @param this     a self-referential pointer to the mspack_system
+-   *                 structure whose alloc() method is being called.
+-   * @param bytes    the number of bytes to allocate
+-   * @result a pointer to the requested number of bytes, or NULL if
+-   *         not enough memory is available
+-   * @see free()
+-   */
+-  void * (*alloc)(struct mspack_system *this,
+-		  size_t bytes);
+-  
+-  /**
+-   * Frees memory.
+-   * 
+-   * @param ptr the memory to be freed.
+-   * @see alloc()
+-   */
+-  void (*free)(void *ptr);
+-
+-  /**
+-   * Copies from one region of memory to another.
+-   * 
+-   * The regions of memory are guaranteed not to overlap, are usually less
+-   * than 256 bytes, and may not be aligned. Please note that the source
+-   * parameter comes before the destination parameter, unlike the standard
+-   * C function memcpy().
+-   *
+-   * @param src   the region of memory to copy from
+-   * @param dest  the region of memory to copy to
+-   * @param bytes the size of the memory region, in bytes
+-   */
+-  void (*copy)(void *src,
+-	       void *dest,
+-	       size_t bytes);
+-
+-  /**
+-   * A null pointer to mark the end of mspack_system. It must equal NULL.
+-   *
+-   * Should the mspack_system structure extend in the future, this NULL
+-   * will be seen, rather than have an invalid method pointer called.
+-   */
+-  void *null_ptr;
+-};
+-
+-/** mspack_system::open() mode: open existing file for reading. */
+-#define MSPACK_SYS_OPEN_READ   (0)
+-/** mspack_system::open() mode: open new file for writing */
+-#define MSPACK_SYS_OPEN_WRITE  (1)
+-/** mspack_system::open() mode: open existing file for writing */
+-#define MSPACK_SYS_OPEN_UPDATE (2)
+-/** mspack_system::open() mode: open existing file for writing */
+-#define MSPACK_SYS_OPEN_APPEND (3)
+-
+-/** mspack_system::seek() mode: seek relative to start of file */
+-#define MSPACK_SYS_SEEK_START  (0)
+-/** mspack_system::seek() mode: seek relative to current offset */
+-#define MSPACK_SYS_SEEK_CUR    (1)
+-/** mspack_system::seek() mode: seek relative to end of file */
+-#define MSPACK_SYS_SEEK_END    (2)
+-
+-/** 
+- * A structure which represents an open file handle. The contents of this
+- * structure are determined by the implementation of the
+- * mspack_system::open() method.
+- */
+-struct mspack_file {
+-  int dummy;
+-};
+-
+-/* --- error codes --------------------------------------------------------- */
+-
+-/** Error code: no error */
+-#define MSPACK_ERR_OK          (0)
+-/** Error code: bad arguments to method */
+-#define MSPACK_ERR_ARGS        (1)
+-/** Error code: error opening file */
+-#define MSPACK_ERR_OPEN        (2)
+-/** Error code: error reading file */
+-#define MSPACK_ERR_READ        (3)
+-/** Error code: error writing file */
+-#define MSPACK_ERR_WRITE       (4)
+-/** Error code: seek error */
+-#define MSPACK_ERR_SEEK        (5)
+-/** Error code: out of memory */
+-#define MSPACK_ERR_NOMEMORY    (6)
+-/** Error code: bad "magic id" in file */
+-#define MSPACK_ERR_SIGNATURE   (7)
+-/** Error code: bad or corrupt file format */
+-#define MSPACK_ERR_DATAFORMAT  (8)
+-/** Error code: bad checksum or CRC */
+-#define MSPACK_ERR_CHECKSUM    (9)
+-/** Error code: error during compression */
+-#define MSPACK_ERR_CRUNCH      (10)
+-/** Error code: error during decompression */
+-#define MSPACK_ERR_DECRUNCH    (11)
+-
+-/* --- functions available in library -------------------------------------- */
+-
+-/** Creates a new CAB compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mscab_compressor or NULL
+- */
+-extern struct mscab_compressor *
+-  mspack_create_cab_compressor(struct mspack_system *sys);
+-
+-/** Creates a new CAB decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mscab_decompressor or NULL
+- */
+-extern struct mscab_decompressor *
+-  mspack_create_cab_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing CAB compressor.
+- * @param this the #mscab_compressor to destroy
+- */
+-extern void mspack_destroy_cab_compressor(struct mscab_compressor *this);
+-
+-/** Destroys an existing CAB decompressor.
+- * @param this the #mscab_decompressor to destroy
+- */
+-extern void mspack_destroy_cab_decompressor(struct mscab_decompressor *this);
+-
+-
+-/** Creates a new CHM compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mschm_compressor or NULL
+- */
+-extern struct mschm_compressor *
+-  mspack_create_chm_compressor(struct mspack_system *sys);
+-
+-/** Creates a new CHM decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mschm_decompressor or NULL
+- */
+-extern struct mschm_decompressor *
+-  mspack_create_chm_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing CHM compressor.
+- * @param this the #mschm_compressor to destroy
+- */
+-extern void mspack_destroy_chm_compressor(struct mschm_compressor *this);
+-
+-/** Destroys an existing CHM decompressor.
+- * @param this the #mschm_decompressor to destroy
+- */
+-extern void mspack_destroy_chm_decompressor(struct mschm_decompressor *this);
+-
+-
+-/** Creates a new LIT compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mslit_compressor or NULL
+- */
+-extern struct mslit_compressor *
+-  mspack_create_lit_compressor(struct mspack_system *sys);
+-
+-/** Creates a new LIT decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mslit_decompressor or NULL
+- */
+-extern struct mslit_decompressor *
+-  mspack_create_lit_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing LIT compressor.
+- * @param this the #mslit_compressor to destroy
+- */
+-extern void mspack_destroy_lit_compressor(struct mslit_compressor *this);
+-
+-/** Destroys an existing LIT decompressor.
+- * @param this the #mslit_decompressor to destroy
+- */
+-extern void mspack_destroy_lit_decompressor(struct mslit_decompressor *this);
+-
+-
+-/** Creates a new HLP compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mshlp_compressor or NULL
+- */
+-extern struct mshlp_compressor *
+-  mspack_create_hlp_compressor(struct mspack_system *sys);
+-
+-/** Creates a new HLP decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mshlp_decompressor or NULL
+- */
+-extern struct mshlp_decompressor *
+-  mspack_create_hlp_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing hlp compressor.
+- * @param this the #mshlp_compressor to destroy
+- */
+-extern void mspack_destroy_hlp_compressor(struct mshlp_compressor *this);
+-
+-/** Destroys an existing hlp decompressor.
+- * @param this the #mshlp_decompressor to destroy
+- */
+-extern void mspack_destroy_hlp_decompressor(struct mshlp_decompressor *this);
+-
+-
+-/** Creates a new SZDD compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #msszdd_compressor or NULL
+- */
+-extern struct msszdd_compressor *
+-  mspack_create_szdd_compressor(struct mspack_system *sys);
+-
+-/** Creates a new SZDD decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #msszdd_decompressor or NULL
+- */
+-extern struct msszdd_decompressor *
+-  mspack_create_szdd_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing SZDD compressor.
+- * @param this the #msszdd_compressor to destroy
+- */
+-extern void mspack_destroy_szdd_compressor(struct msszdd_compressor *this);
+-
+-/** Destroys an existing SZDD decompressor.
+- * @param this the #msszdd_decompressor to destroy
+- */
+-extern void mspack_destroy_szdd_decompressor(struct msszdd_decompressor *this);
+-
+-
+-/** Creates a new KWAJ compressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mskwaj_compressor or NULL
+- */
+-extern struct mskwaj_compressor *
+-  mspack_create_kwaj_compressor(struct mspack_system *sys);
+-
+-/** Creates a new KWAJ decompressor.
+- * @param sys a custom mspack_system structure, or NULL to use the default
+- * @return a #mskwaj_decompressor or NULL
+- */
+-extern struct mskwaj_decompressor *
+-  mspack_create_kwaj_decompressor(struct mspack_system *sys);
+-
+-/** Destroys an existing KWAJ compressor.
+- * @param this the #mskwaj_compressor to destroy
+- */
+-extern void mspack_destroy_kwaj_compressor(struct mskwaj_compressor *this);
+-
+-/** Destroys an existing KWAJ decompressor.
+- * @param this the #mskwaj_decompressor to destroy
+- */
+-extern void mspack_destroy_kwaj_decompressor(struct mskwaj_decompressor *this);
+-
+-
+-/* --- support for .CAB (MS Cabinet) file format --------------------------- */
+-
+-/**
+- * A structure which represents a single cabinet file.
+- *
+- * All fields are READ ONLY.
+- *
+- * If this cabinet is part of a merged cabinet set, the #files and #folders
+- * fields are common to all cabinets in the set, and will be identical.
+- *
+- * @see mscab_decompressor::open(), mscab_decompressor::close(),
+- *      mscab_decompressor::search()
+- */
+-struct mscabd_cabinet {
+-  /**
+-   * The next cabinet in a chained list, if this cabinet was opened with
+-   * mscab_decompressor::search(). May be NULL to mark the end of the
+-   * list.
+-   */
+-  struct mscabd_cabinet *next;
+-
+-  /**
+-   * The filename of the cabinet. More correctly, the filename of the
+-   * physical file that the cabinet resides in. This is given by the
+-   * library user and may be in any format.
+-   */
+-  char *filename;
+-  
+-  /** The file offset of cabinet within the physical file it resides in. */
+-  off_t base_offset;
+-
+-  /** The length of the cabinet file in bytes. */
+-  unsigned int length;
+-
+-  /** The previous cabinet in a cabinet set, or NULL. */
+-  struct mscabd_cabinet *prevcab;
+-
+-  /** The next cabinet in a cabinet set, or NULL. */
+-  struct mscabd_cabinet *nextcab;
+-
+-  /** The filename of the previous cabinet in a cabinet set, or NULL. */
+-  char *prevname;
+-
+-  /** The filename of the next cabinet in a cabinet set, or NULL. */
+-  char *nextname;
+-
+-  /** The name of the disk containing the previous cabinet in a cabinet
+-   * set, or NULL.
+-   */
+-  char *previnfo;
+-
+-  /** The name of the disk containing the next cabinet in a cabinet set,
+-   * or NULL.
+-   */
+-  char *nextinfo;
+-
+-  /** A list of all files in the cabinet or cabinet set. */
+-  struct mscabd_file *files;
+-
+-  /** A list of all folders in the cabinet or cabinet set. */
+-  struct mscabd_folder *folders;
+-
+-  /** 
+-   * The set ID of the cabinet. All cabinets in the same set should have
+-   * the same set ID.
+-   */
+-  unsigned short set_id;
+-
+-  /**
+-   * The index number of the cabinet within the set. Numbering should
+-   * start from 0 for the first cabinet in the set, and increment by 1 for
+-   * each following cabinet.
+-   */
+-  unsigned short set_index;
+-
+-  /**
+-   * The number of bytes reserved in the header area of the cabinet.
+-   *
+-   * If this is non-zero and flags has MSCAB_HDR_RESV set, this data can
+-   * be read by the calling application. It is of the given length,
+-   * located at offset (base_offset + MSCAB_HDR_RESV_OFFSET) in the
+-   * cabinet file.
+-   *
+-   * @see flags
+-   */
+-  unsigned short header_resv;
+-
+-  /**
+-   * Header flags.
+-   *
+-   * - MSCAB_HDR_PREVCAB indicates the cabinet is part of a cabinet set, and
+-   *                     has a predecessor cabinet.
+-   * - MSCAB_HDR_NEXTCAB indicates the cabinet is part of a cabinet set, and
+-   *                     has a successor cabinet.
+-   * - MSCAB_HDR_RESV indicates the cabinet has reserved header space.
+-   *
+-   * @see prevname, previnfo, nextname, nextinfo, header_resv
+-   */
+-  int flags;
+-};
+-
+-/** Offset from start of cabinet to the reserved header data (if present). */
+-#define MSCAB_HDR_RESV_OFFSET (0x28)
+-
+-/** Cabinet header flag: cabinet has a predecessor */
+-#define MSCAB_HDR_PREVCAB (0x01)
+-/** Cabinet header flag: cabinet has a successor */
+-#define MSCAB_HDR_NEXTCAB (0x02)
+-/** Cabinet header flag: cabinet has reserved header space */
+-#define MSCAB_HDR_RESV    (0x04)
+-
+-/**
+- * A structure which represents a single folder in a cabinet or cabinet set.
+- *
+- * All fields are READ ONLY.
+- *
+- * A folder is a single compressed stream of data. When uncompressed, it
+- * holds the data of one or more files. A folder may be split across more
+- * than one cabinet.
+- */
+-struct mscabd_folder {
+-  /**
+-   * A pointer to the next folder in this cabinet or cabinet set, or NULL
+-   * if this is the final folder.
+-   */
+-  struct mscabd_folder *next;
+-
+-  /** 
+-   * The compression format used by this folder.
+-   *
+-   * The macro MSCABD_COMP_METHOD() should be used on this field to get
+-   * the algorithm used. The macro MSCABD_COMP_LEVEL() should be used to get
+-   * the "compression level".
+-   *
+-   * @see MSCABD_COMP_METHOD(), MSCABD_COMP_LEVEL()
+-   */
+-  int comp_type;
+-
+-  /**
+-   * The total number of data blocks used by this folder. This includes
+-   * data blocks present in other files, if this folder spans more than
+-   * one cabinet.
+-   */
+-  unsigned int num_blocks;
+-};
+-
+-/**
+- * Returns the compression method used by a folder.
+- *
+- * @param comp_type a mscabd_folder::comp_type value
+- * @return one of #MSCAB_COMP_NONE, #MSCAB_COMP_MSZIP, #MSCAB_COMP_QUANTUM
+- *         or #MSCAB_COMP_LZX
+- */
+-#define MSCABD_COMP_METHOD(comp_type) ((comp_type) & 0x0F)
+-/**
+- * Returns the compression level used by a folder.
+- *
+- * @param comp_type a mscabd_folder::comp_type value
+- * @return the compression level. This is only defined by LZX and Quantum
+- *         compression
+- */
+-#define MSCABD_COMP_LEVEL(comp_type) (((comp_type) >> 8) & 0x1F)
+-
+-/** Compression mode: no compression. */
+-#define MSCAB_COMP_NONE       (0)
+-/** Compression mode: MSZIP (deflate) compression. */
+-#define MSCAB_COMP_MSZIP      (1)
+-/** Compression mode: Quantum compression */
+-#define MSCAB_COMP_QUANTUM    (2)
+-/** Compression mode: LZX compression */
+-#define MSCAB_COMP_LZX        (3)
+-
+-/**
+- * A structure which represents a single file in a cabinet or cabinet set.
+- *
+- * All fields are READ ONLY.
+- */
+-struct mscabd_file {
+-  /**
+-   * The next file in the cabinet or cabinet set, or NULL if this is the
+-   * final file.
+-   */
+-  struct mscabd_file *next;
+-
+-  /**
+-   * The filename of the file.
+-   *
+-   * A null terminated string of up to 255 bytes in length, it may be in
+-   * either ISO-8859-1 or UTF8 format, depending on the file attributes.
+-   *
+-   * @see attribs
+-   */
+-  char *filename;
+-
+-  /** The uncompressed length of the file, in bytes. */
+-  unsigned int length;
+-
+-  /**
+-   * File attributes.
+-   *
+-   * The following attributes are defined:
+-   * - #MSCAB_ATTRIB_RDONLY indicates the file is write protected.
+-   * - #MSCAB_ATTRIB_HIDDEN indicates the file is hidden.
+-   * - #MSCAB_ATTRIB_SYSTEM indicates the file is a operating system file.
+-   * - #MSCAB_ATTRIB_ARCH indicates the file is "archived".
+-   * - #MSCAB_ATTRIB_EXEC indicates the file is an executable program.
+-   * - #MSCAB_ATTRIB_UTF_NAME indicates the filename is in UTF8 format rather
+-   *   than ISO-8859-1.
+-   */
+-  int attribs;
+-
+-  /** File's last modified time, hour field. */
+-  char time_h;
+-  /** File's last modified time, minute field. */
+-  char time_m;
+-  /** File's last modified time, second field. */
+-  char time_s;
+-
+-  /** File's last modified date, day field. */
+-  char date_d;
+-  /** File's last modified date, month field. */
+-  char date_m;
+-  /** File's last modified date, year field. */
+-  int date_y;
+-
+-  /** A pointer to the folder that contains this file. */
+-  struct mscabd_folder *folder;
+-
+-  /** The uncompressed offset of this file in its folder. */
+-  unsigned int offset;
+-};
+-
+-/** mscabd_file::attribs attribute: file is read-only. */
+-#define MSCAB_ATTRIB_RDONLY   (0x01)
+-/** mscabd_file::attribs attribute: file is hidden. */
+-#define MSCAB_ATTRIB_HIDDEN   (0x02)
+-/** mscabd_file::attribs attribute: file is an operating system file. */
+-#define MSCAB_ATTRIB_SYSTEM   (0x04)
+-/** mscabd_file::attribs attribute: file is "archived". */
+-#define MSCAB_ATTRIB_ARCH     (0x20)
+-/** mscabd_file::attribs attribute: file is an executable program. */
+-#define MSCAB_ATTRIB_EXEC     (0x40)
+-/** mscabd_file::attribs attribute: filename is UTF8, not ISO-8859-1. */
+-#define MSCAB_ATTRIB_UTF_NAME (0x80)
+-
+-/** mscab_decompressor::set_param() parameter: search buffer size. */
+-#define MSCABD_PARAM_SEARCHBUF (0)
+-/** mscab_decompressor::set_param() parameter: repair MS-ZIP streams? */
+-#define MSCABD_PARAM_FIXMSZIP  (1)
+-/** mscab_decompressor::set_param() parameter: size of decompression buffer */
+-#define MSCABD_PARAM_DECOMPBUF (2)
+-
+-/** TODO */
+-struct mscab_compressor {
+-  int dummy; 
+-};
+-
+-/**
+- * A decompressor for .CAB (Microsoft Cabinet) files
+- *
+- * All fields are READ ONLY.
+- *
+- * @see mspack_create_cab_decompressor(), mspack_destroy_cab_decompressor()
+- */
+-struct mscab_decompressor {
+-  /**
+-   * Opens a cabinet file and reads its contents.
+-   *
+-   * If the file opened is a valid cabinet file, all headers will be read
+-   * and a mscabd_cabinet structure will be returned, with a full list of
+-   * folders and files.
+-   *
+-   * In the case of an error occuring, NULL is returned and the error code
+-   * is available from last_error().
+-   *
+-   * The filename pointer should be considered "in use" until close() is
+-   * called on the cabinet.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  filename the filename of the cabinet file. This is passed
+-   *                  directly to mspack_system::open().
+-   * @return a pointer to a mscabd_cabinet structure, or NULL on failure
+-   * @see close(), search(), last_error()
+-   */
+-  struct mscabd_cabinet * (*open) (struct mscab_decompressor *this,
+-				   char *filename);
+-
+-  /**
+-   * Closes a previously opened cabinet or cabinet set.
+-   *
+-   * This closes a cabinet, all cabinets associated with it via the
+-   * mscabd_cabinet::next, mscabd_cabinet::prevcab and
+-   * mscabd_cabinet::nextcab pointers, and all folders and files. All
+-   * memory used by these entities is freed.
+-   *
+-   * The cabinet pointer is now invalid and cannot be used again. All
+-   * mscabd_folder and mscabd_file pointers from that cabinet or cabinet
+-   * set are also now invalid, and cannot be used again.
+-   *
+-   * If the cabinet pointer given was created using search(), it MUST be
+-   * the cabinet pointer returned by search() and not one of the later
+-   * cabinet pointers further along the mscabd_cabinet::next chain.
+-
+-   * If extra cabinets have been added using append() or prepend(), these
+-   * will all be freed, even if the cabinet pointer given is not the first
+-   * cabinet in the set. Do NOT close() more than one cabinet in the set.
+-   *
+-   * The mscabd_cabinet::filename is not freed by the library, as it is
+-   * not allocated by the library. The caller should free this itself if
+-   * necessary, before it is lost forever.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  cab      the cabinet to close
+-   * @see open(), search(), append(), prepend()
+-   */
+-  void (*close)(struct mscab_decompressor *this,
+-		struct mscabd_cabinet *cab);
+-
+-  /**
+-   * Searches a regular file for embedded cabinets.
+-   *
+-   * This opens a normal file with the given filename and will search the
+-   * entire file for embedded cabinet files
+-   *
+-   * If any cabinets are found, the equivalent of open() is called on each
+-   * potential cabinet file at the offset it was found. All successfully
+-   * open()ed cabinets are kept in a list.
+-   *
+-   * The first cabinet found will be returned directly as the result of
+-   * this method. Any further cabinets found will be chained in a list
+-   * using the mscabd_cabinet::next field.
+-   *
+-   * In the case of an error occuring anywhere other than the simulated
+-   * open(), NULL is returned and the error code is available from
+-   * last_error().
+-   *
+-   * If no error occurs, but no cabinets can be found in the file, NULL is
+-   * returned and last_error() returns MSPACK_ERR_OK.
+-   *
+-   * The filename pointer should be considered in use until close() is
+-   * called on the cabinet.
+-   *
+-   * close() should only be called on the result of search(), not on any
+-   * subsequent cabinets in the mscabd_cabinet::next chain.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  filename the filename of the file to search for cabinets. This
+-   *                  is passed directly to mspack_system::open().
+-   * @return a pointer to a mscabd_cabinet structure, or NULL
+-   * @see close(), open(), last_error()
+-   */
+-  struct mscabd_cabinet * (*search) (struct mscab_decompressor *this,
+-				     char *filename);
+-
+-  /**
+-   * Appends one mscabd_cabinet to another, forming or extending a cabinet
+-   * set.
+-   *
+-   * This will attempt to append one cabinet to another such that
+-   * <tt>(cab->nextcab == nextcab) && (nextcab->prevcab == cab)</tt> and
+-   * any folders split between the two cabinets are merged.
+-   *
+-   * The cabinets MUST be part of a cabinet set -- a cabinet set is a
+-   * cabinet that spans more than one physical cabinet file on disk -- and
+-   * must be appropriately matched.
+-   *
+-   * It can be determined if a cabinet has further parts to load by
+-   * examining the mscabd_cabinet::flags field:
+-   *
+-   * - if <tt>(flags & MSCAB_HDR_PREVCAB)</tt> is non-zero, there is a
+-   *   predecessor cabinet to open() and prepend(). Its MS-DOS
+-   *   case-insensitive filename is mscabd_cabinet::prevname
+-   * - if <tt>(flags & MSCAB_HDR_NEXTCAB)</tt> is non-zero, there is a
+-   *   successor cabinet to open() and append(). Its MS-DOS case-insensitive
+-   *   filename is mscabd_cabinet::nextname
+-   *
+-   * If the cabinets do not match, an error code will be returned. Neither
+-   * cabinet has been altered, and both should be closed seperately.
+-   *
+-   * Files and folders in a cabinet set are a single entity. All cabinets
+-   * in a set use the same file list, which is updated as cabinets in the
+-   * set are added. All pointers to mscabd_folder and mscabd_file
+-   * structures in either cabinet must be discarded and re-obtained after
+-   * merging.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  cab      the cabinet which will be appended to,
+-   *                  predecessor of nextcab
+-   * @param  nextcab  the cabinet which will be appended,
+-   *                  successor of cab
+-   * @return an error code, or MSPACK_ERR_OK if successful
+-   * @see prepend(), open(), close()
+-   */
+-  int (*append) (struct mscab_decompressor *this,
+-		 struct mscabd_cabinet *cab,
+-		 struct mscabd_cabinet *nextcab);
+-
+-  /**
+-   * Prepends one mscabd_cabinet to another, forming or extending a
+-   * cabinet set.
+-   *
+-   * This will attempt to prepend one cabinet to another, such that
+-   * <tt>(cab->prevcab == prevcab) && (prevcab->nextcab == cab)</tt>. In
+-   * all other respects, it is identical to append(). See append() for the
+-   * full documentation.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  cab      the cabinet which will be prepended to,
+-   *                  successor of prevcab
+-   * @param  prevcab  the cabinet which will be prepended,
+-   *                  predecessor of cab
+-   * @return an error code, or MSPACK_ERR_OK if successful
+-   * @see append(), open(), close()
+-   */
+-  int (*prepend) (struct mscab_decompressor *this,
+-		  struct mscabd_cabinet *cab,
+-		  struct mscabd_cabinet *prevcab);
+-
+-  /**
+-   * Extracts a file from a cabinet or cabinet set.
+-   *
+-   * This extracts a compressed file in a cabinet and writes it to the given
+-   * filename.
+-   *
+-   * The MS-DOS filename of the file, mscabd_file::filename, is NOT USED
+-   * by extract(). The caller must examine this MS-DOS filename, copy and
+-   * change it as necessary, create directories as necessary, and provide
+-   * the correct filename as a parameter, which will be passed unchanged
+-   * to the decompressor's mspack_system::open()
+-   *
+-   * If the file belongs to a split folder in a multi-part cabinet set,
+-   * and not enough parts of the cabinet set have been loaded and appended
+-   * or prepended, an error will be returned immediately.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  file     the file to be decompressed
+-   * @param  filename the filename of the file being written to
+-   * @return an error code, or MSPACK_ERR_OK if successful
+-   */
+-  int (*extract)(struct mscab_decompressor *this,
+-		 struct mscabd_file *file,
+-		 char *filename);
+-
+-  /**
+-   * Sets a CAB decompression engine parameter.
+-   *
+-   * The following parameters are defined:
+-   * - #MSCABD_PARAM_SEARCHBUF: How many bytes should be allocated as a
+-   *   buffer when using search()? The minimum value is 4.  The default
+-   *   value is 32768.
+-   * - #MSCABD_PARAM_FIXMSZIP: If non-zero, extract() will ignore bad
+-   *   checksums and recover from decompression errors in MS-ZIP
+-   *   compressed folders. The default value is 0 (don't recover).
+-   * - #MSCABD_PARAM_DECOMPBUF: How many bytes should be used as an input
+-   *   bit buffer by decompressors? The minimum value is 4. The default
+-   *   value is 4096.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  param    the parameter to set
+-   * @param  value    the value to set the parameter to
+-   * @return MSPACK_ERR_OK if all is OK, or MSPACK_ERR_ARGS if there
+-   *         is a problem with either parameter or value.
+-   * @see search(), extract()
+-   */
+-  int (*set_param)(struct mscab_decompressor *this,
+-		   int param,
+-		   int value);
+-
+-  /**
+-   * Returns the error code set by the most recently called method.
+-   *
+-   * This is useful for open() and search(), which do not return an error
+-   * code directly.
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @return the most recent error code
+-   * @see open(), search()
+-   */
+-  int (*last_error)(struct mscab_decompressor *);
+-};
+-
+-/* --- support for .CHM (HTMLHelp) file format ----------------------------- */
+-
+-/**
+- * A structure which represents a section of a CHM helpfile.
+- *
+- * All fields are READ ONLY.
+- *
+- * Not used directly, but used as a generic base type for
+- * mschmd_sec_uncompressed and mschmd_sec_mscompressed.
+- */
+-struct mschmd_section {
+-  /** A pointer to the CHM helpfile that contains this section. */
+-  struct mschmd_header *chm;
+-
+-  /**
+-   * The section ID. Either 0 for the uncompressed section
+-   * mschmd_sec_uncompressed, or 1 for the LZX compressed section
+-   * mschmd_sec_mscompressed. No other section IDs are known.
+-   */
+-  unsigned int id;
+-};
+-
+-/**
+- * A structure which represents the uncompressed section of a CHM helpfile.
+- * 
+- * All fields are READ ONLY.
+- */
+-struct mschmd_sec_uncompressed {
+-  /** Generic section data. */
+-  struct mschmd_section base;
+-
+-  /** The file offset of where this section begins in the CHM helpfile. */
+-  off_t offset;
+-};
+-
+-/**
+- * A structure which represents the compressed section of a CHM helpfile. 
+- * 
+- * All fields are READ ONLY.
+- */
+-struct mschmd_sec_mscompressed {
+-  /** Generic section data. */
+-  struct mschmd_section base;
+-
+-  /** A pointer to the meta-file which represents all LZX compressed data. */
+-  struct mschmd_file *content;
+-
+-  /** A pointer to the file which contains the LZX control data. */
+-  struct mschmd_file *control;
+-
+-  /** A pointer to the file which contains the LZX reset table. */
+-  struct mschmd_file *rtable;
+-};
+-
+-/**
+- * A structure which represents a CHM helpfile.
+- * 
+- * All fields are READ ONLY.
+- */
+-struct mschmd_header {
+-  /** The version of the CHM file format used in this file. */
+-  unsigned int version;
+-
+-  /**
+-   * The "timestamp" of the CHM helpfile. 
+-   *
+-   * It is the lower 32 bits of a 64-bit value representing the number of
+-   * centiseconds since 1601-01-01 00:00:00 UTC, plus 42. It is not useful
+-   * as a timestamp, but it is useful as a semi-unique ID.
+-   */
+-  unsigned int timestamp;
+-
+-      
+-  /**
+-   * The default Language and Country ID (LCID) of the user who ran the
+-   * HTMLHelp Compiler. This is not the language of the CHM file itself.
+-   */
+-  unsigned int language;
+-
+-  /**
+-   * The filename of the CHM helpfile. This is given by the library user
+-   * and may be in any format.
+-   */
+-  char *filename;
+-
+-  /** The length of the CHM helpfile, in bytes. */
+-  off_t length;
+-
+-  /** A list of all non-system files in the CHM helpfile. */
+-  struct mschmd_file *files;
+-
+-  /**
+-   * A list of all system files in the CHM helpfile.
+-   *
+-   * System files are files which begin with "::". They are meta-files
+-   * generated by the CHM creation process.
+-   */
+-  struct mschmd_file *sysfiles;
+-
+-  /** The section 0 (uncompressed) data in this CHM helpfile. */
+-  struct mschmd_sec_uncompressed sec0;
+-
+-  /** The section 1 (MSCompressed) data in this CHM helpfile. */
+-  struct mschmd_sec_mscompressed sec1;
+-
+-  /** The file offset of the first PMGL/PMGI directory chunk. */
+-  off_t dir_offset;
+-
+-  /** The number of PMGL/PMGI directory chunks in this CHM helpfile. */
+-  unsigned int num_chunks;
+-
+-  /** The size of each PMGL/PMGI chunk, in bytes. */
+-  unsigned int chunk_size;
+-
+-  /** The "density" of the quick-reference section in PMGL/PMGI chunks. */
+-  unsigned int density;
+-
+-  /** The depth of the index tree.
+-   *
+-   * - if 1, there are no PMGI chunks, only PMGL chunks.
+-   * - if 2, there is 1 PMGI chunk. All chunk indices point to PMGL chunks.
+-   * - if 3, the root PMGI chunk points to secondary PMGI chunks, which in
+-   *         turn point to PMGL chunks.
+-   * - and so on...
+-   */
+-  unsigned int depth;
+-
+-  /**
+-   * The number of the root PGMI chunk.
+-   *
+-   * If there is no index in the CHM helpfile, this will be 0xFFFFFFFF.
+-   */
+-  unsigned int index_root;
+-};
+-
+-/**
+- * A structure which represents a file stored in a CHM helpfile.
+- * 
+- * All fields are READ ONLY.
+- */
+-struct mschmd_file {
+-  /**
+-   * A pointer to the next file in the list, or NULL if this is the final
+-   * file.
+-   */
+-  struct mschmd_file *next;
+-
+-  /**
+-   * A pointer to the section that this file is located in. Indirectly,
+-   * it also points to the CHM helpfile the file is located in.
+-   */
+-  struct mschmd_section *section;
+-
+-  /** The offset within the section data that this file is located at. */
+-  off_t offset;
+-
+-  /** The length of this file, in bytes */
+-  off_t length;
+-
+-  /** The filename of this file -- a null terminated string in UTF8. */
+-  char *filename;
+-};
+-
+-/** TODO */
+-struct mschm_compressor {
+-  int dummy;
+-};
+-
+-/**
+- * A decompressor for .CHM (Microsoft HTMLHelp) files
+- *
+- * All fields are READ ONLY.
+- *
+- * @see mspack_create_chm_decompressor(), mspack_destroy_chm_decompressor()
+- */
+-struct mschm_decompressor {
+-  /**
+-   * Opens a CHM helpfile and reads its contents.
+-   *
+-   * If the file opened is a valid CHM helpfile, all headers will be read
+-   * and a mschmd_header structure will be returned, with a full list of
+-   * files.
+-   *
+-   * In the case of an error occuring, NULL is returned and the error code
+-   * is available from last_error().
+-   *
+-   * The filename pointer should be considered "in use" until close() is
+-   * called on the CHM helpfile.
+-   *
+-   * @param  this     a self-referential pointer to the mschm_decompressor
+-   *                  instance being called
+-   * @param  filename the filename of the CHM helpfile. This is passed
+-   *                  directly to mspack_system::open().
+-   * @return a pointer to a mschmd_header structure, or NULL on failure
+-   * @see close()
+-   */
+-  struct mschmd_header *(*open)(struct mschm_decompressor *this,
+-				char *filename);
+-
+-  /**
+-   * Closes a previously opened CHM helpfile.
+-   *
+-   * This closes a CHM helpfile, frees the mschmd_header and all
+-   * mschmd_file structures associated with it (if any). This works on
+-   * both helpfiles opened with open() and helpfiles opened with
+-   * fast_open().
+-   *
+-   * The CHM header pointer is now invalid and cannot be used again. All
+-   * mschmd_file pointers referencing that CHM are also now invalid, and
+-   * cannot be used again.
+-   *
+-   * @param  this     a self-referential pointer to the mschm_decompressor
+-   *                  instance being called
+-   * @param  chm      the CHM helpfile to close
+-   * @see open(), fast_open()
+-   */
+-  void (*close)(struct mschm_decompressor *this,
+-		struct mschmd_header *chm);
+-
+-  /**
+-   * Extracts a file from a CHM helpfile.
+-   *
+-   * This extracts a file from a CHM helpfile and writes it to the given
+-   * filename. The filename of the file, mscabd_file::filename, is not
+-   * used by extract(), but can be used by the caller as a guide for
+-   * constructing an appropriate filename.
+-   *
+-   * This method works both with files found in the mschmd_header::files
+-   * and mschmd_header::sysfiles list and mschmd_file structures generated
+-   * on the fly by fast_find().
+-   *
+-   * @param  this     a self-referential pointer to the mscab_decompressor
+-   *                  instance being called
+-   * @param  file     the file to be decompressed
+-   * @param  filename the filename of the file being written to
+-   * @return an error code, or MSPACK_ERR_OK if successful
+-   */
+-  int (*extract)(struct mschm_decompressor *this,
+-		 struct mschmd_file *file,
+-		 char *filename);
+-
+-  /**
+-   * Returns the error code set by the most recently called method.
+-   *
+-   * This is useful for open() and fast_open(), which do not return an
+-   * error code directly.
+-   *
+-   * @param  this     a self-referential pointer to the mschm_decompressor
+-   *                  instance being called
+-   * @return the most recent error code
+-   * @see open(), search()
+-   */
+-  int (*last_error)(struct mschm_decompressor *this);
+-
+-  /**
+-   * Opens a CHM helpfile quickly.
+-   *
+-   * If the file opened is a valid CHM helpfile, only essential headers
+-   * will be read. A mschmd_header structure will be still be returned, as
+-   * with open(), but the mschmd_header::files field will be NULL. No
+-   * files details will be automatically read.  The fast_find() method
+-   * must be used to obtain file details.
+-   *
+-   * In the case of an error occuring, NULL is returned and the error code
+-   * is available from last_error().
+-   *
+-   * The filename pointer should be considered "in use" until close() is
+-   * called on the CHM helpfile.
+-   *
+-   * @param  this     a self-referential pointer to the mschm_decompressor
+-   *                  instance being called
+-   * @param  filename the filename of the CHM helpfile. This is passed
+-   *                  directly to mspack_system::open().
+-   * @return a pointer to a mschmd_header structure, or NULL on failure
+-   * @see open(), close(), fast_find(), extract()
+-   */
+-  struct mschmd_header *(*fast_open)(struct mschm_decompressor *this,
+-				     char *filename);
+-
+-  /**
+-   * Finds file details quickly.
+-   *
+-   * Instead of reading all CHM helpfile headers and building a list of
+-   * files, fast_open() and fast_find() are intended for finding file
+-   * details only when they are needed. The CHM file format includes an
+-   * on-disk file index to allow this.
+-   *
+-   * Given a case-sensitive filename, fast_find() will search the on-disk
+-   * index for that file.
+-   *
+-   * If the file was found, the caller-provided mschmd_file structure will
+-   * be filled out like so:
+-   * - section: the correct value for the found file
+-   * - offset: the correct value for the found file
+-   * - length: the correct value for the found file
+-   * - all other structure elements: NULL or 0
+-   *
+-   * If the file was not found, MSPACK_ERR_OK will still be returned as the
+-   * result, but the caller-provided structure will be filled out like so:
+-   * - section: NULL
+-   * - offset: 0
+-   * - length: 0
+-   * - all other structure elements: NULL or 0
+-   *
+-   * This method is intended to be used in conjunction with CHM helpfiles
+-   * opened with fast_open(), but it also works with helpfiles opened
+-   * using the regular open().
+-   *
+-   * @param  this     a self-referential pointer to the mschm_decompressor
+-   *                  instance being called
+-   * @param  chm      the CHM helpfile to search for the file
+-   * @param  filename the filename of the file to search for
+-   * @param  f_ptr    a pointer to a caller-provded mschmd_file structure
+-   * @param  f_size   <tt>sizeof(struct mschmd_file)</tt>
+-   * @return MSPACK_ERR_OK, or an error code
+-   * @see open(), close(), fast_find(), extract()
+-   */
+-  int (*fast_find)(struct mschm_decompressor *this,
+-		   struct mschmd_header *chm,
+-		   char *filename,
+-		   struct mschmd_file *f_ptr,
+-		   int f_size);
+-};
+-
+-/* --- support for .LIT (EBook) file format -------------------------------- */
+-
+-/** TODO */
+-struct mslit_compressor {
+-  int dummy; 
+-};
+-
+-/** TODO */
+-struct mslit_decompressor {
+-  int dummy; 
+-};
+-
+-
+-/* --- support for .HLP (MS Help) file format ------------------------------ */
+-
+-/** TODO */
+-struct mshlp_compressor {
+-  int dummy; 
+-};
+-
+-/** TODO */
+-struct mshlp_decompressor {
+-  int dummy; 
+-};
+-
+-
+-/* --- support for SZDD file format ---------------------------------------- */
+-
+-/** TODO */
+-struct msszdd_compressor {
+-  int dummy; 
+-};
+-
+-/** TODO */
+-struct msszdd_decompressor {
+-  int dummy; 
+-};
+-
+-/* --- support for KWAJ file format ---------------------------------------- */
+-
+-/** TODO */
+-struct mskwaj_compressor {
+-  int dummy; 
+-};
+-
+-/** TODO */
+-struct mskwaj_decompressor {
+-  int dummy; 
+-};
+-
+-#ifdef __cplusplus
+-};
+-#endif
+-
+--- calibre-debian.orig/src/calibre/utils/lzx/msstdint.h
++++ /dev/null
+@@ -1,225 +0,0 @@
+-// ISO C9x  compliant stdint.h for Microsoft Visual Studio
+-// Based on ISO/IEC 9899:TC2 Committee draft (May 6, 2005) WG14/N1124 
+-// 
+-//  Copyright (c) 2006-2008 Alexander Chemeris
+-// 
+-// Redistribution and use in source and binary forms, with or without
+-// modification, are permitted provided that the following conditions are met:
+-// 
+-//   1. Redistributions of source code must retain the above copyright notice,
+-//      this list of conditions and the following disclaimer.
+-// 
+-//   2. Redistributions in binary form must reproduce the above copyright
+-//      notice, this list of conditions and the following disclaimer in the
+-//      documentation and/or other materials provided with the distribution.
+-// 
+-//   3. The name of the author may be used to endorse or promote products
+-//      derived from this software without specific prior written permission.
+-// 
+-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-// 
+-///////////////////////////////////////////////////////////////////////////////
+-
+-#pragma once
+-
+-#ifndef _MSC_VER // [
+-#error "Use this header only with Microsoft Visual C++ compilers!"
+-#endif // _MSC_VER ]
+-
+-#include <limits.h>
+-
+-// For Visual Studio 6 in C++ mode wrap <wchar.h> include with 'extern "C++" {}'
+-// or compiler give many errors like this:
+-//   error C2733: second C linkage of overloaded function 'wmemchr' not allowed
+-#if (_MSC_VER < 1300) && defined(__cplusplus)
+-   extern "C++" {
+-#endif 
+-#     include <wchar.h>
+-#if (_MSC_VER < 1300) && defined(__cplusplus)
+-   }
+-#endif
+-
+-// Define _W64 macros to mark types changing their size, like intptr_t.
+-#ifndef _W64
+-#  if !defined(__midl) && (defined(_X86_) || defined(_M_IX86)) && _MSC_VER >= 1300
+-#     define _W64 __w64
+-#  else
+-#     define _W64
+-#  endif
+-#endif
+-
+-
+-// 7.18.1 Integer types
+-
+-// 7.18.1.1 Exact-width integer types
+-typedef __int8            int8_t;
+-typedef __int16           int16_t;
+-typedef __int32           int32_t;
+-typedef __int64           int64_t;
+-typedef unsigned __int8   uint8_t;
+-typedef unsigned __int16  uint16_t;
+-typedef unsigned __int32  uint32_t;
+-typedef unsigned __int64  uint64_t;
+-
+-// 7.18.1.2 Minimum-width integer types
+-typedef int8_t    int_least8_t;
+-typedef int16_t   int_least16_t;
+-typedef int32_t   int_least32_t;
+-typedef int64_t   int_least64_t;
+-typedef uint8_t   uint_least8_t;
+-typedef uint16_t  uint_least16_t;
+-typedef uint32_t  uint_least32_t;
+-typedef uint64_t  uint_least64_t;
+-
+-// 7.18.1.3 Fastest minimum-width integer types
+-typedef int8_t    int_fast8_t;
+-typedef int16_t   int_fast16_t;
+-typedef int32_t   int_fast32_t;
+-typedef int64_t   int_fast64_t;
+-typedef uint8_t   uint_fast8_t;
+-typedef uint16_t  uint_fast16_t;
+-typedef uint32_t  uint_fast32_t;
+-typedef uint64_t  uint_fast64_t;
+-
+-// 7.18.1.4 Integer types capable of holding object pointers
+-#ifdef _WIN64 // [
+-   typedef __int64           intptr_t;
+-   typedef unsigned __int64  uintptr_t;
+-#else // _WIN64 ][
+-   typedef _W64 int               intptr_t;
+-   typedef _W64 unsigned int      uintptr_t;
+-#endif // _WIN64 ]
+-
+-// 7.18.1.5 Greatest-width integer types
+-typedef int64_t   intmax_t;
+-typedef uint64_t  uintmax_t;
+-
+-
+-// 7.18.2 Limits of specified-width integer types
+-
+-#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS) // [   See footnote 220 at page 257 and footnote 221 at page 259
+-
+-// 7.18.2.1 Limits of exact-width integer types
+-#define INT8_MIN     ((int8_t)_I8_MIN)
+-#define INT8_MAX     _I8_MAX
+-#define INT16_MIN    ((int16_t)_I16_MIN)
+-#define INT16_MAX    _I16_MAX
+-#define INT32_MIN    ((int32_t)_I32_MIN)
+-#define INT32_MAX    _I32_MAX
+-#define INT64_MIN    ((int64_t)_I64_MIN)
+-#define INT64_MAX    _I64_MAX
+-#define UINT8_MAX    _UI8_MAX
+-#define UINT16_MAX   _UI16_MAX
+-#define UINT32_MAX   _UI32_MAX
+-#define UINT64_MAX   _UI64_MAX
+-
+-// 7.18.2.2 Limits of minimum-width integer types
+-#define INT_LEAST8_MIN    INT8_MIN
+-#define INT_LEAST8_MAX    INT8_MAX
+-#define INT_LEAST16_MIN   INT16_MIN
+-#define INT_LEAST16_MAX   INT16_MAX
+-#define INT_LEAST32_MIN   INT32_MIN
+-#define INT_LEAST32_MAX   INT32_MAX
+-#define INT_LEAST64_MIN   INT64_MIN
+-#define INT_LEAST64_MAX   INT64_MAX
+-#define UINT_LEAST8_MAX   UINT8_MAX
+-#define UINT_LEAST16_MAX  UINT16_MAX
+-#define UINT_LEAST32_MAX  UINT32_MAX
+-#define UINT_LEAST64_MAX  UINT64_MAX
+-
+-// 7.18.2.3 Limits of fastest minimum-width integer types
+-#define INT_FAST8_MIN    INT8_MIN
+-#define INT_FAST8_MAX    INT8_MAX
+-#define INT_FAST16_MIN   INT16_MIN
+-#define INT_FAST16_MAX   INT16_MAX
+-#define INT_FAST32_MIN   INT32_MIN
+-#define INT_FAST32_MAX   INT32_MAX
+-#define INT_FAST64_MIN   INT64_MIN
+-#define INT_FAST64_MAX   INT64_MAX
+-#define UINT_FAST8_MAX   UINT8_MAX
+-#define UINT_FAST16_MAX  UINT16_MAX
+-#define UINT_FAST32_MAX  UINT32_MAX
+-#define UINT_FAST64_MAX  UINT64_MAX
+-
+-// 7.18.2.4 Limits of integer types capable of holding object pointers
+-#ifdef _WIN64 // [
+-#  define INTPTR_MIN   INT64_MIN
+-#  define INTPTR_MAX   INT64_MAX
+-#  define UINTPTR_MAX  UINT64_MAX
+-#else // _WIN64 ][
+-#  define INTPTR_MIN   INT32_MIN
+-#  define INTPTR_MAX   INT32_MAX
+-#  define UINTPTR_MAX  UINT32_MAX
+-#endif // _WIN64 ]
+-
+-// 7.18.2.5 Limits of greatest-width integer types
+-#define INTMAX_MIN   INT64_MIN
+-#define INTMAX_MAX   INT64_MAX
+-#define UINTMAX_MAX  UINT64_MAX
+-
+-// 7.18.3 Limits of other integer types
+-
+-#ifdef _WIN64 // [
+-#  define PTRDIFF_MIN  _I64_MIN
+-#  define PTRDIFF_MAX  _I64_MAX
+-#else  // _WIN64 ][
+-#  define PTRDIFF_MIN  _I32_MIN
+-#  define PTRDIFF_MAX  _I32_MAX
+-#endif  // _WIN64 ]
+-
+-#define SIG_ATOMIC_MIN  INT_MIN
+-#define SIG_ATOMIC_MAX  INT_MAX
+-
+-#ifndef SIZE_MAX // [
+-#  ifdef _WIN64 // [
+-#     define SIZE_MAX  _UI64_MAX
+-#  else // _WIN64 ][
+-#     define SIZE_MAX  _UI32_MAX
+-#  endif // _WIN64 ]
+-#endif // SIZE_MAX ]
+-
+-// WCHAR_MIN and WCHAR_MAX are also defined in <wchar.h>
+-#ifndef WCHAR_MIN // [
+-#  define WCHAR_MIN  0
+-#endif  // WCHAR_MIN ]
+-#ifndef WCHAR_MAX // [
+-#  define WCHAR_MAX  _UI16_MAX
+-#endif  // WCHAR_MAX ]
+-
+-#define WINT_MIN  0
+-#define WINT_MAX  _UI16_MAX
+-
+-#endif // __STDC_LIMIT_MACROS ]
+-
+-
+-// 7.18.4 Limits of other integer types
+-
+-#if !defined(__cplusplus) || defined(__STDC_CONSTANT_MACROS) // [   See footnote 224 at page 260
+-
+-// 7.18.4.1 Macros for minimum-width integer constants
+-
+-#define INT8_C(val)  val##i8
+-#define INT16_C(val) val##i16
+-#define INT32_C(val) val##i32
+-#define INT64_C(val) val##i64
+-
+-#define UINT8_C(val)  val##ui8
+-#define UINT16_C(val) val##ui16
+-#define UINT32_C(val) val##ui32
+-#define UINT64_C(val) val##ui64
+-
+-// 7.18.4.2 Macros for greatest-width integer constants
+-#define INTMAX_C   INT64_C
+-#define UINTMAX_C  UINT64_C
+-
+-#endif // __STDC_CONSTANT_MACROS ]
+-
+--- calibre-debian.orig/src/calibre/utils/lzx/system.h
++++ /dev/null
+@@ -1,63 +0,0 @@
+-/* This file is part of libmspack.
+- * (C) 2003-2004 Stuart Caie.
+- *
+- * libmspack is free software; you can redistribute it and/or modify it under
+- * the terms of the GNU Lesser General Public License (LGPL) version 2.1
+- *
+- * For further details, see the file COPYING.LIB distributed with libmspack
+- */
+-
+-#pragma once
+-
+-#ifdef _MSC_VER
+-#define inline
+-#endif
+-
+-#ifdef DEBUG
+-# include <stdio.h>
+-# define D(x) do { printf("%s:%d (%s) ",__FILE__, __LINE__, __FUNCTION__); \
+-                   printf x ; fputc('\n', stdout); fflush(stdout);} while (0);
+-#else
+-# define D(x)
+-#endif
+-
+-/* endian-neutral reading of little-endian data */
+-#define __egi32(a,n) ( (((a)[n+3]) << 24) | (((a)[n+2]) << 16) | \
+-		       (((a)[n+1]) <<  8) |  ((a)[n+0])        )
+-#define EndGetI64(a) ((((unsigned long long int) __egi32(a,4)) << 32) | \
+-		      ((unsigned int) __egi32(a,0)))
+-#define EndGetI32(a) __egi32(a,0)
+-#define EndGetI16(a) ((((a)[1])<<8)|((a)[0]))
+-
+-/* endian-neutral reading of big-endian data */
+-#define EndGetM32(a) ((((a)[0])<<24)|(((a)[1])<<16)|(((a)[2])<<8)|((a)[3]))
+-#define EndGetM16(a) ((((a)[0])<<8)|((a)[1]))
+-
+-extern struct mspack_system *mspack_default_system;
+-
+-/* returns the length of a file opened for reading */
+-extern int mspack_sys_filelen(struct mspack_system *system,
+-			      struct mspack_file *file, off_t *length);
+-
+-/* validates a system structure */
+-extern int mspack_valid_system(struct mspack_system *sys);
+-
+-/* Can't redfine intrinsics in Microsoft Visual C */
+-#ifndef _MSC_VER
+-
+-/* inline memcmp() */
+-static inline int memcmp(const void *s1, const void *s2, size_t n) {
+-  unsigned char *c1 = (unsigned char *) s1;
+-  unsigned char *c2 = (unsigned char *) s2;
+-  if (n == 0) return 0;
+-  while (--n && (*c1 == *c2)) c1++, c2++;
+-  return *c1 - *c2;
+-}
+-
+-/* inline strlen() */
+-static inline size_t strlen(const char *s) {
+-  const char *e = s;
+-  while (*e) e++;
+-  return e - s;
+-}
+-#endif
