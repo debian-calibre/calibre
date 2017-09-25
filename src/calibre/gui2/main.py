@@ -15,12 +15,12 @@ from PyQt5.Qt import QCoreApplication, QIcon, QObject, QTimer
 
 from calibre import force_unicode, plugins, prints
 from calibre.constants import (
-    DEBUG, __appname__, filesystem_encoding, get_portable_base, islinux, isosx,
-    iswindows, MAIN_APP_UID
+    DEBUG, MAIN_APP_UID, __appname__, filesystem_encoding, get_portable_base,
+    islinux, isosx, iswindows
 )
 from calibre.gui2 import (
     Application, choose_dir, error_dialog, gprefs, initialize_file_icon_provider,
-    question_dialog, setup_gui_option_parser
+    question_dialog, set_app_uid, setup_gui_option_parser
 )
 from calibre.gui2.main_window import option_parser as _option_parser
 from calibre.gui2.splash_screen import SplashScreen
@@ -112,9 +112,10 @@ def init_qt(args):
     app = Application(args, override_program_name=override)
     app.file_event_hook = EventAccumulator()
     try:
-        from PyQt5.Qt import QX11Info
-        is_x11 = QX11Info.isPlatformX11()
+        is_x11 = app.platformName() == 'xcb'
     except Exception:
+        import traceback
+        traceback.print_exc()
         is_x11 = False
     # Ancient broken VNC servers cannot handle icons of size greater than 256
     # https://www.mobileread.com/forums/showthread.php?t=278447
@@ -521,11 +522,7 @@ def main(args=sys.argv):
         # Ensure that all ebook editor instances are grouped together in the task
         # bar. This prevents them from being grouped with viewer process when
         # launched from within calibre, as both use calibre-parallel.exe
-        import ctypes
-        try:
-            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(MAIN_APP_UID)
-        except Exception:
-            pass  # Only available on windows 7 and newer
+        set_app_uid(MAIN_APP_UID)
 
     try:
         app, opts, args = init_qt(args)

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "CALIBREDB" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%ディレクトリから追加\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB オプション\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -140,17 +140,17 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Calibreライブラリへのpath。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにCalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\fI\%http://hostname:port/#library_id\fP の形式のURLを指定します。例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Calibreコンテンツサーバ接続用パスワード。標準入力からパスワードを読み取るには、特殊文字 <stdin> を使ってください。パスワードをファイルから読み込むには <f:/path/to/file> を使ってください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Calibreコンテンツサーバ接続用ユーザ名
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 Calibreデータベースに存在する本のリスト
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -180,7 +180,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+データベース中の本の一覧を表示するときに表示するフィールド。フィールドをカンマ区切りで指定します。 指定可能なフィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: title,authors  特殊フィールド名 \fB"\fPall\fB"\fP を指定するとすべてのフィールドを選択します。上記のビルトインフィールドの他、カスタムフィールドも *field_name として指定可能です。たとえば、カスタムフィールド #rating を表示させたいときには *rating と指定してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -200,12 +200,12 @@ JSONフォーマットで出力します。JSONはコンピュータでの処理
 .INDENT 0.0
 .TP
 .B \-\-prefix
-すべてのファイルパスのプレフィックス。デフォルトはライブラリフォルダーへの絶対パス。
+すべてのファイルパスのプレフィックス。デフォルトはライブラリフォルダへの絶対パス。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-検索文字列で結果をフィルターする。検索文字列のフォーマットについては、ユーザーマニュアルの検索関連のドキュメントを参照してください。デフォルトは何もフィルターしません。
+検索文字列で結果を絞り込む。検索文字列のフォーマットについては、ユーザマニュアルの検索関連のドキュメントを参照してください。デフォルトでは絞り込みを行いません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ JSONフォーマットで出力します。JSONはコンピュータでの処理
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-ソートに使用するフィールド 使用可能フィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: id
+整列に使用するフィールド 使用可能フィールド: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid デフォルト: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -231,7 +231,7 @@ calibredb add [options] file1 file2 file3 ...
 .sp
 指定したファイルをデータベースに追加する。ディレクトリを追加することもできます。下のディレクトリ関連オプションも参照してください。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -287,18 +287,18 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .B \-\-title, \-t
 追加する本のタイトルを設定
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS ディレクトリから追加
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+ディレクトリからの本の追加方法を設定します。デフォルトでは既知の電子書籍ファイルタイプの拡張子のファイルのみ追加します。
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+ファイル名のglobパターンを指定し、ディレクトリからファイルを読み込むときに、指定パターンに一致したファイルは既知の電子書籍のファイルタイプでなくても追加します。複数のパターンを指定するために、複数回指定可能です。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+ファイル名のglobパターンを指定し、パターンに一致したファイルはディレクトリからファイルを読み込むときに無視します。複数のパターンを指定するために複数回指定可能です。たちとえば、*.pdf と指定するとすべてのPDFファイルを無視します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -322,13 +322,13 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+idsに指定された本をデータベースから削除。idsには数字をカンマ区切りで指定します (本のIDはsearchコマンドで取得できます)。例: 23,34,57\-85 (範囲で指定した場合、範囲の終端は含まれません)
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+ゴミ箱を使用しない
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -342,9 +342,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+ebook_file で指定する電子書籍ファイルを、id で指定された本の利用可能なフォーマットとして追加します。idはsearch コマンドで取得できます。フォーマットがすでに存在する場合は、置換しないオプションを有効にした場合をのぞいて、置換されます。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -364,7 +364,7 @@ calibredb remove_format [options] id fmt
 .sp
 fmt で指定したフォーマットを id で指定した本から削除します。id は search コマンドで取得できます。fmt はLRF, TXT, EPUB のようにファイルの拡張子で指定してください。本に指定したフォーマットがない場合、なにもしません。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -379,7 +379,7 @@ calibredb show_metadata [options] id
 .sp
 id で指定された本の、Calibreのデータベースに保存された書誌情報を表示します。id はsearch コマンドで取得できるID番号です。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -407,7 +407,7 @@ OPF ファイルについて簡単に知りたい場合は、show_metadata コ�
 –field オプションを使用する場合は OPFファイルを指定する必要は
 ありません。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -435,7 +435,7 @@ calibredb export [options] ids
 保存します。
 ID番号は search コマンドで取得できます。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -449,7 +449,7 @@ Calibreは、通常のファイル名にすべての非アルファベット文�
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. このスイッチ指定すると、この挙動をOFFにできます。
+通常、Calibreは表紙を電子書籍ファイルとは別のファイルに保存します。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -508,11 +508,11 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+path/to/destination の拡張子で指定されるフォーマットでカタログをエクスポートします。
+出力されたカタログに表示するエントリはoptionsで制御します。
+カタログのフォーマットにより、サポートするオプションが異なるので注意してください。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -525,108 +525,108 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-結果を検索文字列でフィルターします。検索文字列のフォーマットについては、ユーザーマニュアルの検索関連ドキュメントを参照してください。 デフォルト: フィルターなし
+結果を検索文字列で絞り込みします。検索文字列のフォーマットについては、ユーザマニュアルの検索関連ドキュメントを参照してください。 デフォルト: 絞り込みなし
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
 詳細な出力情報を表示します。デバッグに便利です。
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB オプション
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+書誌情報のタイトルとして使われる、生成されたカタログのタイトル。 デフォルト: \fB\(aq\fPMy Books\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+複数の著者のいる本の著者セクション用にクロスリファレンスを作成。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+指定したディレクトリに変換パイプライン中の異なるステージのアウトプットを保存。変換プロセスのどこでバグが発生しているのかわからないときに有用です。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+ジャンルとして除外するタグを表す正規表現。 デフォルト: \fB\(aq\fP[.+]|^+$\fB\(aq\fP はブラケットで囲まれたタグを除外します。例: \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP と \fB\(aq\fP+\fB\(aq\fP は本を読むデフォルトのタグ。 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+生成したカタログから除外する本を指定するルール。 除外ルールはだいたい次のいずれかのようになります。 (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) または (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). 使用例: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) 上記例では、カスタム列 \fB\(aq\fPstatus\fB\(aq\fP の値が \fB\(aq\fPArchived\fB\(aq\fP の本を除外します。 ルールが複数指定されている場合には、すべて適用されます。 デフォルト: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログに \fB\(aq\fPAuthors\fB\(aq\fP セクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログに \fB\(aq\fPDescription\fB\(aq\fP セクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログに \fB\(aq\fPGenres\fB\(aq\fP セクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログに \fB\(aq\fPRecently Added\fB\(aq\fP セクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログにシリーズセクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログに \fB\(aq\fPTitles\fB\(aq\fP セクションを含める。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPタグ\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+\fB\(aq\fPGenre\fB\(aq\fP セクション用のソースフィールド。 デフォルト: \fB\(aq\fPタグ\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Descriptionヘッダに挿入するノートを格納したカスタムフィールド。 デフォルト: \fB\(aq\fP\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with Comments  [before|after] Placement of notes with respect to Comments  [True|False] \- A horizontal rule is inserted between notes and Comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] の形式で指定。 <custom field> コメントにマージするノートを含むカスタムフィールド [before|after] コメントに関するノートの位置 [True|False] ノートとコメントの間に水平線を挿入するかどうか デフォルト: \fB\(aq\fP::\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+出力プロファイルを指定。場合により、デバイスに合わせてカタログをオプティマイズする際に出力プロファイルが必要になります。例えば、\fB\(aq\fPkindle\fB\(aq\fP または \fB\(aq\fPkindle_dx\fB\(aq\fP は、セクションと記事からなる構造化された目次を精製します。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+既読本を示すプリフィックスや、ウィッシュリスト、その他ユーザ指定のプリフィックスを含めるために使用するルールを指定。 プリフィックスルールは (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP) のように指定します。 複数のルールが指定されている場合には、最初に一致したルールが使用されます。 デフォルト: \fB\(aq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+GUIカタログビルだーで作成された名前つきプリセットを使用。 カタログ作成のすべての設定を指定するためのプリセットです。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログ中の本の表紙のサイズのヒント (インチ指定) 範囲: 1.0 \- 2.0 デフォルト: \fB\(aq\fP1.0\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+カタログ生成時に既存の表紙を上書き。 デフォルト: \fB\(aq\fPFalse\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -640,19 +640,18 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+データベースに格納された保存済み検索条件の管理。
+既存の名称で検索条件を保存しようとした場合には、上書きされます。
 .sp
-Syntax for adding:
+追加の構文:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+削除の構文:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -669,7 +668,7 @@ calibredb add_custom_column [options] label name datatype
 nameは人間に読みやすい列の名前。
 datatypeは以下のいずれか: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -692,9 +691,9 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+利用可能なカスタム列の一覧を表示。列ラベルとIDを表示します。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -712,10 +711,10 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+labelで指定されるカスタム列を削除。
+custom_columns コマンドで存在するカスタム列を見ることができます。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -733,12 +732,11 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+idで指定された本のカスタム列の値を設定します。
+search コマンドでIDのリストが取得できます。
+custom_columns コマンドでカスタム列の名前のリストが取得できます。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -756,12 +754,12 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Calibreライブラリの各フォルダーにあるOPFファイルから書誌情報を読み取り、データベースを再構築します。
+Calibreライブラリの各ディレクトリに保存されているOPFファイルから書誌情報を読み取り、データベースをリストアします。
 これはmetadata.dbファイルが壊れてしまった時に有用です。
 .sp
-注意: このコマンドは完全にデータベースを再生成します。すべての保存された検索、ユーザーカテゴリー、書誌情報変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。再生された書誌情報は、OPFファイルの内容と同様になります。
+注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索条件、ユーザカテゴリ、書誌情報変換ルール、書誌ごとの変換設定、カスタムレシピは失われます。リストアされる書誌情報は、OPFファイルの内容と同等となります。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -781,7 +779,7 @@ calibredb check_library [options]
 .sp
 ライブラリのあるファイルシステムをチェックします。レポート：invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -814,13 +812,13 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-データベース中のカテゴリー情報のレポートを作成します。情報はタグブラウザーに表示されるものと同等です。
+データベース中のカテゴリ情報のレポートを作成します。情報はタグブラウザに表示されるものと同等です。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+カンマ区切りのカテゴリの検索名リスト。デフォルト: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -830,12 +828,12 @@ CSVで出力
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+DSVファイルのタイプ。選択肢: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-カテゴリー内のアイテムのカウント番号ではなく、カテゴリー内のアイテム番号のみを出力します。
+カテゴリ内のアイテムのカウント番号ではなく、カテゴリ内のアイテム番号のみを出力します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -862,7 +860,7 @@ calibredb backup_metadata [options]
 通常は書誌情報を更新する毎にOPFファイルへのバックアップが自動的に
 行われるため、このコマンドを実行する必要はありません。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -885,9 +883,9 @@ calibredb clone path/to/new/library
 ライブラリが作成されます。
 .sp
 複製されたライブラリに本は含まれません。すべての本を含む複製を
-作成したい場合には、単にライブラリのフォルダーをコピーしてください。
+作成したい場合には、単にライブラリのフォルダをコピーしてください。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -911,7 +909,7 @@ book_id に特別な値 『all』 を指定すると、すべての本が更新�
 範囲を指定することができます。
 例: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -935,7 +933,7 @@ calibredb search [options] search expression
 .sp
 以下のようにCalibreの強力な検索用言語が使用できます。例: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

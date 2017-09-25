@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "august 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "september 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -52,7 +52,7 @@ After specifying the input and output file you can customize the conversion by s
 For full documentation of the conversion system see
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile \fBebook\-convert\fP tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .sp
 The options and default values for the options change depending on both the
 input and output formats, so you should always check with:
@@ -102,7 +102,7 @@ Täpsusta sisendprofiil. Sisendprofiil annab teisendussüsteemile teavet, kuidas
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Loetle sisseehitatud retseptide nimesid. Sa saad sisseehitatud retseptist e\-raamatut luua sedasi: ebook\-convert \fB"\fPRetsepti Nimi.recipe\fB"\fP väljund.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,12 +153,12 @@ Extract the contents of the generated EPUB file to the specified directory. The 
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Tükelda kõik HTML\-failid, mis on suuremad sellest suurusest (ühikutes KB). See on vajalik, kuna enamik EPUB\-i lugereid ei suuda käsitleda suuri failisuurusi. Vaikimisi väärtus 260KB on suurus, mis on vajalik programmi Adobe Digital Editions jaoks. Pane väärtuseks 0, kui tahad suurusepõhise tükeldamise keelata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Normally, if the input file has no cover and you don\fB\(aq\fPt specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
+Tavaliselt, kui sisendfailis pole kaant ja sa ei määratle seda, luuakse vaikimisi kaanepilt pealkirja, autorite ja muu sellisega. See säte keelab selle kaane loomise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -324,7 +324,7 @@ Analüüsi poolituskriipsudega sõnu terves dokumendis. Dokumenti ennast kasutat
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-Remove empty paragraphs from the document when they exist between every other paragraph
+Eemalda dokumendist tühjad lõigud, kui need esinevad iga teise lõigu järel
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,7 +373,7 @@ Replace scene breaks with the specified text. By default, the text from the inpu
 .UNINDENT
 .SH OTSING JA ASENDAMINE
 .sp
-Modify the document text and structure using user defined patterns.
+Muuda dokumendi teksti ja struktuuri, kasutades kasutajamääratud mustreid.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
@@ -502,7 +502,7 @@ Normally, if the source file already has a Table of Contents, it is used in pref
 .UNINDENT
 .SH METAANDMED
 .sp
-Options to set metadata in the output
+Suvandid metaandmete määramiseks väljundis
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -541,7 +541,7 @@ Määra keel.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Määra avaldamiskuupäev (eeldatakse olevat kohalikus ajavööndis, kui ajavööndit eraldi ei määrata)
 .UNINDENT
 .INDENT 0.0
 .TP

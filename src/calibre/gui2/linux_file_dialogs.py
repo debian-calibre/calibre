@@ -14,7 +14,7 @@ from threading import Thread
 from PyQt5.Qt import QEventLoop
 
 from calibre import force_unicode
-from calibre.constants import filesystem_encoding, preferred_encoding
+from calibre.constants import filesystem_encoding, preferred_encoding, DEBUG
 from calibre.utils.config import dynamic
 
 
@@ -106,8 +106,14 @@ def decode_output(raw):
 
 def run(cmd):
     from calibre.gui2 import sanitize_env_vars
+    ecmd = list(map(encode_arg, cmd))
+    if DEBUG:
+        try:
+            print(ecmd)
+        except Exception:
+            pass
     with sanitize_env_vars():
-        p = subprocess.Popen(list(map(encode_arg, cmd)), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(ecmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     ret = p.wait()
     return ret, decode_output(stdout), decode_output(stderr)
@@ -169,11 +175,10 @@ def kdialog_choose_files(
     select_only_single_file=False,
     default_dir=u'~'):
     initial_dir = get_initial_dir(name, title, default_dir, False)
-    args = ['--getopenfilename']
+    args = []
     if not select_only_single_file:
         args += '--multiple --separate-output'.split()
-    args.append(initial_dir)
-    args.append(kdialog_filters(filters, all_files))
+    args += ['--getopenfilename', initial_dir, kdialog_filters(filters, all_files)]
     ans = run_kde(kde_cmd(window, title, *args))
     save_initial_dir(name, title, ans[0] if ans else None, False, is_file=True)
     return ans
@@ -341,7 +346,7 @@ def check_for_linux_native_dialogs():
 
 if __name__ == '__main__':
     # print(repr(kdialog_choose_dir(None, 'testkddcd', 'Testing choose dir...')))
-    print(repr(kdialog_choose_files(None, 'testkddcf', 'Testing choose files...', select_only_single_file=True, filters=[
+    print(repr(kdialog_choose_files(None, 'testkddcf', 'Testing choose files...', select_only_single_file=False, filters=[
         ('moo', 'epub png'.split()), ('boo', 'docx'.split())], all_files=True)))
     # print(repr(kdialog_choose_images(None, 'testkddci', 'Testing choose images...')))
     # print(repr(kdialog_choose_save_file(None, 'testkddcs', 'Testing choose save file...', initial_filename='moo.x')))

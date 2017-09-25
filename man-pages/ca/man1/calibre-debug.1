@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "d’agost 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "de setembre 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,24 +41,23 @@ calibre\-debug [opcions]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Diverses interfícies de la línia d’ordres que són útils per depurar calibre.
+Sense opcions, aquesta ordre comença un intèrpret de python incrustat.
+També podeu executar l’IGU principal de calibre, el visualitzador de
+calibre i l’editor de calibre en mode de depuració.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+També conté interfícies per a diverses parts de calibre que no tenen eines
+dedicades de la línia d’ordres, com ara el subconjunt de lletres, l’eina diff
+per comparar llibres electrònics, etcètera.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+També podeu utilitzar \fBcalibre\-debug\fP per a executar scripts independents. Per
+fer\-ho, utilitzeu\-ho així:
+.sp
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Tot el que hi hagi després de \fB\-\-\fP es passarà al script.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a \fBcalibre\-debug\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH [OPCIONS]
 .INDENT 0.0
 .TP
@@ -98,7 +97,7 @@ Executa el codi Python del fitxer.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Expandeix el llibre dins del directori especificat. Ús: \-x fitxer.epub dir_sortida Exporta el llibre com una col·lecció de fitxers HTML i de metadades, els quals podeu editar mitjançant les eines d\fB\(aq\fPedició HTML estàndards. Funciona amb fitxers EPUB, AZW3, HTMLZ i DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,12 +117,12 @@ Executa la interfície gràfica amb una consola de depuració i amb enregistrame
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-mostra aquest missatge d\fB\(aq\fPajut i surt
+mostra aquest missatge d\fB\(aq\fPajuda i surt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Contrau un llibre expandit anteriorment. Ús: \-i dir_sortida fitxer.epub Importa el llibre a partir dels fitxers dins del dir_sortida, els quals han estat creats anteriorment amb la crida \fI\%\-\-explode\-book\fP\&. Assegureu\-vos d\fB\(aq\fPespecificar el mateix tipus de fitxer que es va utilitzar amb l\fB\(aq\fPexpansió.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,12 +147,12 @@ Torna a inicialitzar la base de dades sqlite de calibre al camí especificat. É
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Executa un connector que proporciona una interfície de línia d\fB\(aq\fPordres. Per exemple: calibre\-debug \-r \fB"\fPAfegeix llibres\fB"\fP \fB\-\-\fP fitxer1 \fB\-\-opci\(gaó1 Tot el que hi hagi després de \(ga\fP–\(ga\(ga es passarà al connector com a argument.
+Executa un connector que proporciona una interfície de línia d\fB\(aq\fPordres. Per exemple: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP fitxer1 \fB\-\-opci\(gaó1 Tot el que hi hagi després de \(ga\fP–\(ga\(ga es passarà al connector com a argument.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Fa que es tanqui qualsevol instància de calibre, si n\fB\(aq\fPhi ha alguna. Vigileu, ja que si hi ha treballs en execució s\fB\(aq\fPavortaran sense cap confirmació.
+Fa que es tanqui qualsevol instància de calibre, si n\fB\(aq\fPhi ha alguna. Vigileu, ja que si hi ha treballs en execució, s\fB\(aq\fPavortaran sense cap confirmació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +172,7 @@ mostra el número de versió del programa i surt
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode
+Executa el visualitzador de llibres en mode de depuració
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

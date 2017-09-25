@@ -11,7 +11,7 @@ from PyQt5.Qt import (
     QDesktopServices, QFileDialog, QFileIconProvider, QSettings, QIcon, QStringListModel,
     QApplication, QDialog, QUrl, QFont, QFontDatabase, QLocale, QFontInfo)
 
-from calibre import prints
+from calibre import prints, as_unicode
 from calibre.constants import (islinux, iswindows, isbsd, isfrozen, isosx, is_running_from_develop,
         plugins, config_dir, filesystem_encoding, isxp, DEBUG, __version__, __appname__ as APP_UID)
 from calibre.ptempfile import base_dir
@@ -156,6 +156,7 @@ def create_defs():
     defs['qv_dclick_changes_column'] = True
     defs['qv_retkey_changes_column'] = True
     defs['qv_follows_column'] = False
+    defs['book_details_narrow_comments_layout'] = 'float'
 
 
 create_defs()
@@ -1285,3 +1286,50 @@ def secure_web_page(qwebpage_or_qwebsettings):
 
 empty_model = QStringListModel([''])
 empty_index = empty_model.index(0)
+
+
+def get_app_uid():
+    import ctypes
+    from ctypes import wintypes
+    lpBuffer = wintypes.LPWSTR()
+    try:
+        AppUserModelID = ctypes.windll.shell32.GetCurrentProcessExplicitAppUserModelID
+    except Exception:  # Vista has no app uids
+        return
+    AppUserModelID.argtypes = [wintypes.LPWSTR]
+    AppUserModelID.restype = wintypes.HRESULT
+    try:
+        AppUserModelID(ctypes.cast(ctypes.byref(lpBuffer), wintypes.LPWSTR))
+    except Exception:
+        return
+    appid = lpBuffer.value
+    ctypes.windll.ole32.CoTaskMemFree(lpBuffer)
+    return appid
+
+
+def set_app_uid(val):
+    import ctypes
+    from ctypes import wintypes
+    try:
+        AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
+    except Exception:  # Vista has no app uids
+        return False
+    AppUserModelID.argtypes = [wintypes.LPCWSTR]
+    AppUserModelID.restype = wintypes.HRESULT
+    try:
+        AppUserModelID(unicode(val))
+    except Exception as err:
+        prints(u'Failed to set app uid with error:', as_unicode(err))
+        return False
+    return True
+
+
+def add_to_recent_docs(path):
+    from win32com.shell import shell, shellcon
+    path = unicode(path)
+    app_id = get_app_uid()
+    if app_id is None:
+        shell.SHAddToRecentDocs(shellcon.SHARD_PATHW, path)
+    else:
+        item = shell.SHCreateItemFromParsingName(path, None, shell.IID_IShellItem)
+        shell.SHAddToRecentDocs(shellcon.SHARD_APPIDINFO, (item, app_id))

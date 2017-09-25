@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -35,28 +35,28 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [オプション] [ライブラリフォルダへのpath...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Calibreのコンテンツサーバを開始。コンテンツサーバはCalibreライブラリを
+インターネット上に公開します。\fBcalibre\-server\fP の引数としてライブラリフォルダへのpathを
+指定することができます。pathの指定がない場合には、Calibreプログラムの知っている
+すべてのライブラリが対象となります。
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBcalibre\-server\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH [オプション]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+アクセスログファイルへのpath。このログにはクライアントからサーバへの接続や、要求についての情報が記録されます。デフォルトでは、アクセスログは記録しません。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+使用する認証タイプ.  サーバが使用するHTTP認証モード。SSLプロキシを介してサーバを公開する場合には \fB"\fPbasic\fB"\fP を設定してください。そうでない場合には \fB"\fPauto\fB"\fP にしてください。\fB"\fPauto\fB"\fP は、SSLが設定されている場合には \fB"\fPbasic\fB"\fP を使用し、それ以外の場合には \fB"\fPdigest\fB"\fP を使用します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,22 +66,22 @@ Choose the type of authentication used.     Set the HTTP authentication mode use
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+利用停止するまでのログイン失敗回数.  ログインに何回失敗したらIPアドレスを遮断するかを指定。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+連続してログインに失敗したIPアドレスを遮断する.   繰り返しログインに失敗したIPアドレスを、指定した時間 (分単位) だけ一時的に遮断します。ブルートフォース攻撃への対策として有効です。0 を設定すると、遮断しません。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+応答がデータ圧縮を使用する最小サイズ (バイト単位).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+カスタムな本一覧モードのテンプレートを格納したJSONへのpath。このテンプレートを作成する最も簡単な方法は、Calibreの「設定」→「ネット共有」→「書籍一覧テンプレート」へ行ってテンプレートを作成し、エクスポートすることです。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,42 +91,42 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+表示するユーザ定義フィールドを限定.  コンテンツサーバ /opds および /mobile ビューで表示させるユーザ定義の書誌情報フィールドを、カンマ区切りで指定。このオプションを指定したとき、リストにないフィールドは表示されなくなります。例: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+ソケットの事前割り当て。たとえばsystemdソケットアクティベーションなどと使用する場合。. デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+サーバアクセスにパスワード認証を使用.         通常、サーバへのアクセスには制限を設けず、誰にでもアクセスできるようになっています。このオプションを使うと、アクセスを事前に定義したユーザに限定することができます。 デフォルトでは、このオプションは無効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+自動認識したインタフェースにフォールバックする.    何らかの理由によりlisten_onオプションで指定されたインタフェースにサーバがバインドできない場合、外部に接続するインタフェースを検出してバインドしようと試みます。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+認証されていないローカルコネクションでの変更を許可する.        通常、認証を有効にしていない場合には、匿名ユーザがCalibreライブラリに変更を加えることができないよう、サーバは読み取り専用モードで動作します。このオプションを有効にすると、サーバと同じコンピュータからの接続の場合には、誰でも変更を加えることができるようになります。認証なしでサーバを運用しながら、Calibreライブラリを変更するのにcalibredbを利用する場合に便利です。 デフォルトでは、このオプションは無効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+HTTP 404 (Not Found) 要求をログする.       通常、サーバはリソースが見つからなかったときのHTTP要求をログ保存します。しかしBOTの標的にされた場合には、ログがスパムであふれることになります。ログを止めるためにこのオプションを利用してください。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+BonJour経由でOPDSフィードを公開する.    BonJourサービス経由でOPDSフィードを公開します。これによりOPDSベースのリーダアプリがサーバを自動的に検出して接続できるようになります。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+性能向上のためゼロコピーでファイル転送する.      ネットワーク上でファイルを転送する際、性能向上のためにカーネル内転送にゼロコピーを使用します。ただし、変則的なファイルシステム上では転送されたファイルが破損することがあります。転送ファイルが破損していた場合には、無効に設定してください。 デフォルトでは、このオプションは有効に設定されています。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,57 +136,62 @@ Zero copy file transfers for increased performance.         This will use zero\-
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+無視するユーザ定義書誌情報フィールド.         コンテンツサーバに /opds および /mobile ビューで表示させないユーザ定義の書誌情報フィールドを、カンマ区切りで指定。例: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+接続を待ち受けするインタフェース.   デフォルトでは、すべての利用可能なインタフェースで待ち受けします。これをたとえば \fB"\fP127.0.0.1\fB"\fP に変更するとローカルマシンからの接続に限定し、\fB"\fP::\fB"\fP に変更するとIPv6とIPv4の接続を待ち受けします。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+サーバログファイルへのpath。このログにはサーバ情報とエラーが記録されますが、アクセスログは記録しません。デフォルトでは標準出力に出力されます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-サーバーに接続するユーザーのデータベースを管理。オプション \fI\%\-\-userdb\fP も確認してください。
+サーバーに接続するユーザのデータベースを管理。オプション \fI\%\-\-userdb\fP も確認してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+単一のHTTPヘッダの最大サイズ (KB単位).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+ワーカープロセスの最大時間.      ワーカープロセスの実行を許可する最大時間 (分単位)。制限しない場合にはゼロを指定。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+ワーカープロセスの最大数.       ワーカープロセスは本の閲覧準備/追加/変換などの大きなジョブを扱うために、必要に応じて起動されます。通常、こうしたプロセスの最大数はCPUコア数に基づいて決定します。この設定では、そのプロセス最大数を制御できます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+ログファイルの最大長 (MB単位).  サーバが精製するログファイルの最大サイズ。ログが指定のサイズを超えると、先頭から上書きされます。0を設定すると、上書きしなくなります。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+OPDSフィード中の最大冊数.     サーバが単一のOPDSフィード内に返す本の最大数
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+フィード中でグループ化していないアイテム数のOPDS最大数.      著者やタグなどのカテゴリの1文字目の数がここで指定した数を超えた場合にグループ化します。0を指定するとグループ化しません。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+サーバへのアップロードを許可する最大サイズ (MB単位).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-num\-per\-page
+Number of books to show in a single page.   The number of books to show in a single page in the browser.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,37 +201,41 @@ Max. allowed size for files uploaded to the server (in MB).
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+コネクションの接続待ち用ポート.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+クリーンシャットダウンを行う前の待ち時間 (秒単位).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+SSL認証ファイルへのpath.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+SSLプライベートキーファイルへのpath.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+アイドルな接続を切断するまでの時間 (秒単位).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+すべてのURLに追加するプリフィックス.        リバースプロキシをはさんでサーバを運用する場合に有用です。使用例: URLプリフィックスとして /calibre
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+認証に使用するユーザデータベースへのpath。データベースはSQLiteファイルです。データベース作成には:option:
+.nf
+\(ga
+.fi
+–manage\-users\(gaを使用します。ユーザ管理についての詳細は \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +245,7 @@ Path to the user database to use for authentication. The database is a SQLite fi
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+要求を処理するワーカースレッド数.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

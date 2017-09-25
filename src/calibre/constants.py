@@ -6,7 +6,7 @@ from future_builtins import map
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = u'calibre'
-numeric_version = (3, 7, 0)
+numeric_version = (3, 8, 0)
 __version__   = u'.'.join(map(unicode, numeric_version))
 __author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
 
@@ -39,9 +39,9 @@ isworker = 'CALIBRE_WORKER' in os.environ or 'CALIBRE_SIMPLE_WORKER' in os.envir
 if isworker:
     os.environ.pop('CALIBRE_FORCE_ANSI', None)
 FAKE_PROTOCOL, FAKE_HOST = 'https', 'calibre-internal.invalid'
-VIEWER_APP_UID = 'com.calibre-ebook.viewer'
-EDITOR_APP_UID = 'com.calibre-ebook.edit-book'
-MAIN_APP_UID = 'com.calibre-ebook.main-gui'
+VIEWER_APP_UID = u'com.calibre-ebook.viewer'
+EDITOR_APP_UID = u'com.calibre-ebook.edit-book'
+MAIN_APP_UID = u'com.calibre-ebook.main-gui'
 try:
     preferred_encoding = locale.getpreferredencoding()
     codecs.lookup(preferred_encoding)

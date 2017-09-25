@@ -277,7 +277,7 @@ class Ui_Form(object):
         self.label_3 = QtWidgets.QLabel(self.book_details_tab)
         self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
-        self.gridLayout_12.addWidget(self.label_3, 3, 1, 1, 1)
+        self.gridLayout_12.addWidget(self.label_3, 4, 1, 1, 1)
         self.groupBox = QtWidgets.QGroupBox(self.book_details_tab)
         self.groupBox.setObjectName("groupBox")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox)
@@ -300,7 +300,7 @@ class Ui_Form(object):
         self.gridLayout_3.addWidget(self.field_display_order, 0, 0, 3, 1)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_3.addItem(spacerItem6, 1, 1, 1, 1)
-        self.gridLayout_12.addWidget(self.groupBox, 3, 0, 2, 1)
+        self.gridLayout_12.addWidget(self.groupBox, 4, 0, 2, 1)
         self.hboxlayout = QtWidgets.QHBoxLayout()
         self.hboxlayout.setObjectName("hboxlayout")
         self.opt_bd_show_cover = QtWidgets.QCheckBox(self.book_details_tab)
@@ -318,7 +318,7 @@ class Ui_Form(object):
         self.gridLayout_12.addLayout(self.hboxlayout, 1, 0, 1, 2)
         self.id_links_button = QtWidgets.QPushButton(self.book_details_tab)
         self.id_links_button.setObjectName("id_links_button")
-        self.gridLayout_12.addWidget(self.id_links_button, 2, 0, 1, 2)
+        self.gridLayout_12.addWidget(self.id_links_button, 3, 0, 1, 2)
         self.default_author_link_container = QtWidgets.QWidget(self.book_details_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -327,6 +327,12 @@ class Ui_Form(object):
         self.default_author_link_container.setSizePolicy(sizePolicy)
         self.default_author_link_container.setObjectName("default_author_link_container")
         self.gridLayout_12.addWidget(self.default_author_link_container, 0, 0, 1, 2)
+        self.label_25 = QtWidgets.QLabel(self.book_details_tab)
+        self.label_25.setObjectName("label_25")
+        self.gridLayout_12.addWidget(self.label_25, 2, 0, 1, 1)
+        self.opt_book_details_narrow_comments_layout = QtWidgets.QComboBox(self.book_details_tab)
+        self.opt_book_details_narrow_comments_layout.setObjectName("opt_book_details_narrow_comments_layout")
+        self.gridLayout_12.addWidget(self.opt_book_details_narrow_comments_layout, 2, 1, 1, 1)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(I("book.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.book_details_tab, icon6, "")
@@ -501,6 +507,7 @@ class Ui_Form(object):
         self.label_22.setBuddy(self.opt_emblem_position)
         self.label_15.setBuddy(self.opt_cover_grid_cache_size_multiple)
         self.label_18.setBuddy(self.opt_cover_grid_disk_cache_size)
+        self.label_25.setBuddy(self.opt_book_details_narrow_comments_layout)
         self.label_10.setBuddy(self.opt_tags_browser_collapse_at)
         self.label_8111.setBuddy(self.opt_tag_browser_dont_collapse)
         self.label_81.setBuddy(self.opt_categories_using_hierarchy)
@@ -530,7 +537,7 @@ class Ui_Form(object):
         self.opt_show_layout_buttons.setText(_("Show &layout buttons in the status bar (needs restart)"))
         self.opt_systray_icon.setText(_("Enable s&ystem tray icon (needs restart)"))
         self.label_7.setText(_("Choose &language (needs restart):"))
-        self.label_2.setText(_("Interface font:"))
+        self.label_2.setText(_("&Interface font:"))
         self.opt_disable_tray_notification.setText(_("Disable n&otifications in system tray"))
         self.label_widget_style.setText(_("User interface style (&needs restart):"))
         self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
@@ -538,7 +545,7 @@ class Ui_Form(object):
         self.opt_show_splash_screen.setText(_("Show &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
-        self.label_hidpi.setText(_("Adjust for &high resolution screens (needs restart):"))
+        self.label_hidpi.setText(_("&Adjust for high resolution screens (needs restart):"))
         self.opt_hidpi.setToolTip(_("<p>Whether to automatically adjust the calibre user interface for high resolution (high DPI) monitors. There are three possible values:</p>\n"
 "\n"
 "<ul>\n"
@@ -551,7 +558,7 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.main_interface_tab), _("&Main interface"))
         self.label_19.setText(_("Control the Cover grid view. You can enable this view by clicking the \"Cover grid\" button in the bottom right corner of the main calibre window."))
         self.label_14.setText(_("Field to show &under the covers:"))
-        self.label_16.setText(_("&Spacing between covers:"))
+        self.label_16.setText(_("Spac&ing between covers:"))
         self.opt_cover_grid_spacing.setToolTip(_("The spacing between covers. A value of zero means calculate automatically based on cover size."))
         self.opt_cover_grid_spacing.setSpecialValueText(_("Automatic"))
         self.opt_cover_grid_spacing.setSuffix(_(" cm"))
@@ -600,6 +607,7 @@ class Ui_Form(object):
         self.opt_bd_overlay_cover_size.setText(_("Show cover &size"))
         self.opt_use_roman_numerals_for_series_number.setText(_("Use &Roman numerals for series"))
         self.id_links_button.setText(_("Create rules to convert &identifiers into links"))
+        self.label_25.setText(_("How to display text in the \'Narrow\' &layout:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.book_details_tab), _("&Book details"))
         self.label_10.setText(_("Co&llapse when more items than:"))
         self.opt_tags_browser_collapse_at.setToolTip(_("If a Tag browser category has more than this number of items, it is divided\n"
@@ -610,7 +618,7 @@ class Ui_Form(object):
 "the value shown above. This option can be used to\n"
 "avoid collapsing hierarchical categories that have only\n"
 "a few top-level elements."))
-        self.label_81.setText(_("Categories with &hierarchical items:"))
+        self.label_81.setText(_("C&ategories with hierarchical items:"))
         self.opt_categories_using_hierarchy.setToolTip(_("A comma-separated list of categories in which items containing\n"
 "periods are displayed in the Tag browser trees. For example, if\n"
 "this box contains \'tags\' then tags of the form \'Mystery.English\'\n"
@@ -634,7 +642,7 @@ class Ui_Form(object):
 "by each author, the number of authors, etc. If you turn it off, you can still\n"
 "see the counts by hovering your mouse over any item."))
         self.opt_tag_browser_show_counts.setText(_("Show &counts in the Tag browser"))
-        self.label.setText(_("&Spacing between items:"))
+        self.label.setText(_("Spacing between &items:"))
         self.opt_tag_browser_item_padding.setToolTip(_("The spacing between consecutive items in the Tag browser. In units of (ex) which is the approximate height of the letter \'x\' in the currently used font. "))
         self.opt_tag_browser_item_padding.setSuffix(_(" ex"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
@@ -651,13 +659,13 @@ class Ui_Form(object):
         self.fs_help_msg.setText(_("You can press the %s keys to toggle full screen mode."))
         self.label_24.setText(_("Fie&ld for sub-title:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))
-        self.opt_qv_respects_vls.setText(_("&Apply virtual libraries in Quickview panel"))
         self.opt_qv_respects_vls.setToolTip(_("Check this box to make Quickview show books only in the\n"
 "current virtual library. If unchecked, Quickview ignores virtual libraries. If\n"
 "unchecked then only row changes are taken into account."))
-        self.opt_qv_follows_column.setText(_("&Change QV item when book list column changes"))
+        self.opt_qv_respects_vls.setText(_("&Apply virtual libraries in Quickview panel"))
         self.opt_qv_follows_column.setToolTip(_("Check this box to make Quickview change the column being examined\n"
 "when the column in the book list is changed using the cursor arrow keys"))
+        self.opt_qv_follows_column.setText(_("&Change QV item when book list column changes"))
         self.opt_qv_retkey_changes_column.setToolTip(_("Pressing return in a cell changes both the book and the\n"
 "column being examined (the left-hand pane)"))
         self.opt_qv_retkey_changes_column.setText(_("&Pressing \'return\' changes examined column"))

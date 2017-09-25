@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,9 +52,9 @@ text は電子メールメッセージの本体です。
 text が指定されなかった場合、電子メールメッセージは標準入力から読み込まれます。
 from は送信者のメールアドレスで、to は電子メールの受取人のアドレスです。
 text が標準入力から読み込まれた場合、from と to はSMTP のネゴシエーション
-でのみ使用され、メッセージのヘッダーは変更されません。
+でのみ使用され、メッセージのヘッダは変更されません。
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBcalibre\-smtp\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH [オプション]
 .INDENT 0.0
 .TP
@@ -78,7 +78,7 @@ localhostのホスト名。SMTPサーバとの接続時に使用します。
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-送信に失敗したメッセージを保存する maildir フォルダーのパス
+送信に失敗したメッセージを保存する maildir フォルダのパス
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -134,7 +134,7 @@ localhostのホスト名。SMTPサーバとの接続時に使用します。
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-リレーサーバーのユーザー名
+リレーサーバーのユーザ名
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

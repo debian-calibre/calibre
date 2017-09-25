@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "d’agost 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-POLISH" "1" "de setembre 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -35,45 +35,46 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-polish [options] input_file [output_file]
+ebook\-polish [opcions] input_file [output_file]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+El poliment de llibres consisteix a posar la cirereta al pastís de la perfecció als
+llibres que heu creat amb tanta cura.
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+En polir s’intenta minimitzar els canvis al codi intern del llibre. A diferència de
+la conversió no aplana el CSS, reanomena fitxers, canvia la mida de lletra,
+ajusta els marges… Cada acció fa els canvis mínims necessaris per a l’efecte desitjat.
 .sp
-You should use this tool as the last step in your e\-book creation process.
+Hauríeu d’utilitzar aquesta eina com al darrer pas del procés de creació del
+vostre llibre.
 .sp
-Note that polishing only works on files in the AZW3 o EPUB formats.
+Tingueu en compte que el poliment de llibres només funciona en llibres en
+formats AZW3 o EPUB.
 .sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a \fBebook\-polish\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH [OPCIONS]
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-Losslessly compress images in the book, to reduce the filesize, without affecting image quality.
+Comprimeix sense pèrdua les imatges al llibre, per reduir\-ne la mida, sense afectar la qualitat de la imatge.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+Camí a una imatge de portada. Canvia la portada especificada al llibre electrònic. Si no hi ha cap portada o no està identificada correctament, n\fB\(aq\fPinsereix una de nova.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Incrusta totes les lletres referenciades al document que encara no ho estan. S\fB\(aq\fPescanejarà l\fB\(aq\fPordinador cercant les lletres i, si es troben, s\fB\(aq\fPincrustaran al document. Assegureu\-vos que teniu una llicència adequada per incrustar les lletres que s\fB\(aq\fPutilitzen en aquest document.
+Incrusta totes les lletres referenciades al document que encara no estiguin incrustades. S\fB\(aq\fPexplorarà l\fB\(aq\fPordinador per cercar les lletres i, si es troben, s\fB\(aq\fPincrustaran al document. Assegureu\-vos que teniu la llicència adequada per a la incrustació de les lletres utilitzades en aquest document.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-mostra aquest missatge d\fB\(aq\fPajut i surt
+mostra aquest missatge d\fB\(aq\fPajuda i surt
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,7 +84,7 @@ Inserció d\fB\(aq\fPuna pàgina de «sobrecoberta» al començament del llibre 
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Camí a un fitxer OPF. Les metadades del llibre s\fB\(aq\fPactualitzen des del fitxer OPF.
+Camí a un fitxer OPF. Les metadades del llibre s\fB\(aq\fPactualitzen a partir del fitxer OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,12 +99,12 @@ Suprimeix totes les regles CSS que no s\fB\(aq\fPutilitzen dels fulls d\fB\(aq\f
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Converteix els guions, punts suspensius, cometes, guions múltiples… de text net en els equivalents tipogràfics correctes. Tingueu en compte que l\fB\(aq\fPalgorisme pot generar algun cop resultats incorrectes, especialment quan hi ha cometes senzilles al començament de contraccions.
+Converteix els guions, els punts suspensius, les cometes, els guions múltiples… del text senzill als equivalents tipogràfics correctes. Tingueu en compte que l\fB\(aq\fPalgorisme pot generar algun cop resultats incorrectes, especialment quan hi ha cometes senzilles al començament de contraccions.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Fer un subconjunt de lletres significa que es redueix una lletra incrustada perquè només contingui els caràcters utilitzats de la lletra al llibre. Això redueix molt la mida dels fitxers de les lletres (normalment redueix la mida del fitxer de la lletra a la meitat. Per exemple, si el llibre utilitza una lletra específica per als encapçalaments, si en fem un subconjunt això reduirà la lletra perquè contingui els caràcters que hi ha als encapçalaments del llibre. O bé, si el llibre conté les versions en negreta i en cursiva d\fB\(aq\fPuna lletra però els textos en negreta o cursiva són poc freqüents o absents, les lletres en negreta o cursiva es poden reduir a només uns quants caràcters o es poden suprimir completament. L\fB\(aq\fPúnic inconvenient dels subconjunts de lletres és que si més tard decidiu afegir més text als llibres, el text que s\fB\(aq\fPafegeixi podria no estar cobert pel subconjunt de la lletra.
+Fer un subconjunt de lletres significa que es redueix una lletra incrustada perquè només contingui els caràcters utilitzats de la lletra al llibre. Això redueix molt la mida dels fitxers de les lletres (normalment redueix la mida del fitxer de la lletra a la meitat. Per exemple, si el llibre utilitza una lletra específica per als encapçalaments, si en fem un subconjunt, això reduirà la lletra perquè contingui els caràcters que hi ha als encapçalaments del llibre. O bé, si el llibre conté les versions en negreta i en cursiva d\fB\(aq\fPuna lletra però els textos en negreta o cursiva són poc freqüents o absents, les lletres en negreta o cursiva es poden reduir a només uns quants caràcters o es poden suprimir completament. L\fB\(aq\fPúnic inconvenient dels subconjunts de lletres és que si més tard decidiu afegir més text als llibres, el text que s\fB\(aq\fPafegeixi podria no estar cobert pel subconjunt de la lletra.
 .UNINDENT
 .INDENT 0.0
 .TP

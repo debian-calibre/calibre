@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "august 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "september 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -46,7 +46,7 @@ calibre libraries over the internet. You can specify the path to the library
 folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
 libraries that the main calibre program knows about will be used.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile \fBcalibre\-server\fP tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .SH [SUVANDID]
 .INDENT 0.0
 .TP
@@ -56,7 +56,7 @@ Rada ligipääsu logifailile. See logi sisaldab teavet klientide kohta, kes serv
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Vali kasutatava autentimise tüüp.   Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Socket pre\-allocation, for example, with systemd socket activation. Vaikimisi o
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Vaikimisi on see säte keelatud.
+Paroolipõhine autentimine serverile ligipääsemiseks.        Tavaliselt on server piiramata, lubades ligipääsu kõigile. Selle sättega saad ligipääsu lubada ainult eelnevalt määratud kasutajatele. Vaikimisi on see säte keelatud.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Allow un\-authenticated local connections to make changes.   Normally, if you do
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Vaikimisi on see säte lubatud.
+Logi HTTP 404 (ei leitud) taotlusi.         Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Vaikimisi on see säte lubatud.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,12 +136,12 @@ näita seda veateadet ja välju
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Eiratud kasutajamääratud metaandmete väljad.        Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Liides, millel ühendusi kuulata.    Vaikimisi väärtuseks on kuulata kõigil saadaolevatel liidestel. Sa võid selle muuta näiteks \fB"\fP127.0.0.1\fB"\fP, et kuulata ainult kohaliku arvutist pärit ühendusi; või \fB"\fP::\fB"\fP, et kuulata kõiki sissetulevaid IPv6 ja IPv4 ühendusi.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,12 +166,12 @@ Maximum time for worker processes.  Maximum amount of time worker processes are 
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Töölisprotsesside suurim arv.       Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Logifaili suurim suurus (MB).       The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -190,38 +190,43 @@ Max. allowed size for files uploaded to the server (in MB).
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-num\-per\-page
+Number of books to show in a single page.   The number of books to show in a single page in the browser.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-pidfile
-Write process PID to the specified file
+Kirjuta protsessi PID määratud faili
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+Port, millel ühendusi kuulata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Koguaeg sekundites, mis puhta sulgumise jaoks oodata.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Rada SSL\-sertifikaadi failini.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Rada SSL privaatvõtme failini.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Aeg (sekundites), pärast mida jõude ühendus suletakse.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Eesliide, mis lisada kõigile URLidele.      Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
 .UNINDENT
 .INDENT 0.0
 .TP

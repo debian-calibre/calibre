@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,34 +41,33 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Calibre デバッグ用に有用なコマンドラインインタフェイス。
+オプションなしで実行すると内蔵のPythonインタプリタを起動します。
+ここからCalibreのGUI、ビューア、エディタをデバッグモードで起動できます。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+また、フォントのサブセットや電子書籍の差分比較ツールなど、コマンドラインツールにない
+ちょっとしたインターフェイスが含まれています。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+スタンドアロンスクリプトを実行するには、\fBcalibre\-debug\fP を使用します。使い方はこちら:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+”–” の後に付けるとスクリプトに渡します。
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH [オプション]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
-プラグインのコードを含むpyファイルのパスを指定し、simpleプラグイン(単一の.pyファイルのみで構成されるプラグイン)を追加します。
+プラグインのコードを含むpyファイルのpathを指定し、単純なプラグイン(単一の.pyファイルのみで構成されるプラグイン)を追加
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Run Python code.
+Pythonコードを実行
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,37 +82,37 @@ Windows の既定のプログラムに登録/登録解除 \fI\%\-\-default\-prog
 .INDENT 0.0
 .TP
 .B \-\-diff
-差分ツールを実行します。例: calibre\-debug \fI\%\-\-diff\fP file1 file2
+差分ツールを実行。例: calibre\-debug \fI\%\-\-diff\fP file1 file2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+書籍編集ツールをデバッグモードで起動
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exec\-file, \-e
-Run the Python code in file.
+ファイル中のPythonコードを実行
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+指定されたディレクトリに本を分解。 使用例: \-x file.epub output_dir 本をHTMLファイルと書誌情報のまとまりとしてエクスポートし、標準的なHTML編集ツールで編集できるようにします。EPUB, AZW3, HTMLZ, DOCX に利用可能です。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-すべてのデータ(本・設定・プラグイン)をエクスポートする
+すべてのデータ(本・設定・プラグイン)をエクスポート
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-GUI をデバッグモードで実行しています。デバッグ出力は stdout と stderr に出力されます。
+GUIをデバッグモードで実行。デバッグの出力はstdoutとstderrに出力されます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-デバッグコンソールで GUI を実行します。指定したパスへログを記録します。内部使用のみの場合は \-g オプションを使用してください。
+デバッグコンソールでGUIを実行し、指定されたpathにログを記録。内部での使用に限定し、GUIをデバッグモードで実行するには \-g オプションを使用してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,12 +122,16 @@ GUI をデバッグモードで実行しています。デバッグ出力は std
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+分解された本を連結。 使用例: \-i output_dir file.epub :option:
+.nf
+\(ga
+.fi
+–explode\-book\(gaにより分割されたファイルの置かれた output_dir を読み込んで連結し、本にします。必ず分割したときと同じファイルタイプを指定してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-以前エクスポートしたデータをインポートする
+以前エクスポートしたデータをインポート
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -138,27 +141,27 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-paths
-Calibre環境で出力パスの設定が必要です。
+Calibreの環境設定に必要なpathを出力
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-指定されたパスのsqliteのCalibreデータベースの再初期化を行います。データベースが壊れた場合に有用です。
+指定されたpathのsqliteのCalibreデータベースを再初期化。破損したデータベースを復旧したいときに有用です。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-コマンドラインインターフェースを提供するプラグインを実行します。例: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP 引数の– 以降にあるものは、すべて引数としてプラグインに渡されます。
+コマンドラインインタフェースを提供するプラグインを実行。例: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 以降にあるものは、すべてプラグインに引数として渡されます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-もしCalibreが実行中であっても終了します。注意: ジョブが動作している場合でも、警告なしに終了されますので注意して実行してください。
+実行中のCalibreをシャットダウン。注意: ジョブが動作中であっても警告なしに終了するため、注意して実行してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-指定されたフォントをサブセット化します。このオプションの後に \fB"\fP–\fB"\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
+指定されたフォントをサブセット化。このオプションの後に \fB"\fP–\fB"\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +176,7 @@ Calibre環境で出力パスの設定が必要です。
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode
+電子書籍ビューアをデバッグモードで実行
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
