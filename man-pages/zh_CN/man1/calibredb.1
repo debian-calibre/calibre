@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "八月 25, 2017" "3.7.0" "calibre"
+.TH "CALIBREDB" "1" "九月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -150,7 +150,7 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+连接到 calibre 内容服务器的用户名
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -790,7 +790,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Comma\-separated list of names to ignore. Default: all
+忽略的名称使用逗号分隔列表. 默认:全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -844,15 +844,14 @@ Output only the number of items in a category instead of the counts per item wit
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+calibredb backup_metadata [选项]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books directory. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the –all option.
+单独备份元数据储存到数据库到每个 OPF 文件书库。
+此项默认自动发生,但是你可以运行此命令来重新生成 OPF 文件,还可以用 –all 选项.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.

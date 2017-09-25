@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "d’agost 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "de setembre 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,7 +52,7 @@ from is the email address of the sender and to is the email address
 of the recipient. When a complete email is read from STDIN, from and to
 are only used in the SMTP negotiation, the message headers are not modified.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a \fBcalibre\-smtp\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH [OPCIONS]
 .INDENT 0.0
 .TP
@@ -62,7 +62,7 @@ Fork and deliver message in background. If you use this option, you should also 
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-mostra aquest missatge d\fB\(aq\fPajut i surt
+mostra aquest missatge d\fB\(aq\fPajuda i surt
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,27 +108,27 @@ Opcions per utilitzar un servidor de retransmissió SMTP per enviar correu. cali
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+El mètode de xifrat a utilitzar quan es connecta al retransmissor. Les opcions són TLS, SSL i NONE. El valor per defecte és TLS. AVÍS: Escollir NONE és molt insegur
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Contrasenya per a la retransmissió
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Port per connectar al servidor de retransmissió. El valor per defecte és utilitzar el port 465 si el mètode de xifrat és SSL i 25 altrament.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+Un servidor de retransmissió SMTP per utilitzar per enviar correus electrònics.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Nom d\fB\(aq\fPusuari per a la retransmissió
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

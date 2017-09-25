@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "august 25, 2017" "3.7.0" "calibre"
+.TH "CALIBREDB" "1" "september 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB SÄTTED\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -145,12 +145,12 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Parool calibre Sisuserveriga ühendumiseks. Parooli lugemiseks standard\-sisendist kasuta eriväärtust: <stdin>. Parooli lugemiseks failist kasuta: <f:/path/to/file>.)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Kasutajanimi calibre Sisuserveriga ühendumiseks
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -163,15 +163,15 @@ näita programmi versiooninumbrit ja välju
 .sp
 .nf
 .ft C
-calibredb list [options]
+calibredb list [suvandid]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-List the books available in the calibre database.
+Loetle kõik calibre andmebaasis olevad raamatud.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -200,7 +200,7 @@ The maximum width of a single line in the output. Defaults to detecting screen s
 .INDENT 0.0
 .TP
 .B \-\-prefix
-The prefix for all file paths. Default is the absolute path to the library folder.
+Eesliide kõikidele failiradadele. Vaikimisi sätteks on täielik rada kogu kaustani.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,12 +210,12 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-separator
-The string used to separate fields. Default is a space.
+Sõne, millega väljad eraldada. Vaikimisi on selleks tühik.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Väli, mille põhjal tulemusi järjestada. Saadaovallevad väljad: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Vaikimisi: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -232,7 +232,7 @@ calibredb add [options] file1 file2 file3 ...
 Add the specified files as books to the database. You can also specify directories, see
 the directory related options below.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -241,7 +241,7 @@ Määra lisatud raamatu(te) autorid
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+Rada selle raamatu jaoks kasutatava kaanepildini
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -281,7 +281,7 @@ Määra lisatud raamatu(te) järjenumber sarjas
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-Set the tags of the added book(s)
+Määra lisatud raamatu(te) sildid
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -290,26 +290,26 @@ Määra lisatud raamatu(te) pealkiri
 .UNINDENT
 .SS LISAMINE KAUSTADEST
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Sätted raamatute kaustadest lisamise juhtimiseks. Vaikimisi lisatakse ainult tuntud e\-raamatu failitüübi laiendiga failid.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Failinime (glob) muster, sellele mustrile vastavad failid lisatakse kaustadest failide skannimisel, isegi kui need ei ole tuntud e\-raamatute faili tüübid. Saab mitme mustri jaoks määratleda mitu korda.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Failinime (glob) muster, sellele mustrile vastavaid faile eiratakse kaustadest failide skannimisel. Saab mitme mustri jaoks määratleda mitu korda. Näiteks: *.pdf eirab kõiki pdf\-faile
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+Eelda, et igas kaustas on ainult üks loogiline raamat ja kõik selles olevad failid on tolle raamatu erinevad e\-raamatu formaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+Töötle kaustu rekursiivselt
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -325,11 +325,11 @@ calibredb remove ids
 .sp
 Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Ära kasuta prügikasti
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -345,7 +345,7 @@ calibredb add_format [options] id ebook_file
 .sp
 Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -365,7 +365,7 @@ calibredb remove_format [options] id fmt
 .sp
 Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -381,7 +381,7 @@ calibredb show_metadata [options] id
 Show the metadata stored in the calibre database for the book identified by id.
 id is an id number from the search command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -406,7 +406,7 @@ show_metadata command. You can also set the metadata of individual fields with
 the –field option. If you use the –field option, there is no need to specify
 an OPF file.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -415,7 +415,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+Loetle metaandmete väljanimed, mida saab suvandiga \fI\%\-\-field\fP kasutada
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -433,31 +433,31 @@ Export the books specified by ids (a comma separated list) to the filesystem.
 The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
 an opf file). You can get id numbers from the search command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-all
-Export all books in database, ignoring the list of ids.
+Ekspordi kõik raamatud andmebaasis, eirates id\-de loendit.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normally, calibre will convert all non English characters into English equivalents for the file names. WARNING: If you turn this off, you may experience errors when saving, depending on how well the filesystem you are saving to supports unicode. Specifying this switch will turn this behavior off.
+Normally, calibre will convert all non English characters into English equivalents for the file names. WARNING: If you turn this off, you may experience errors when saving, depending on how well the filesystem you are saving to supports unicode. Selle lüliti määratlemine keelab selle käitumise.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Normally, calibre will save the cover in a separate file along with the actual e\-book files. Selle lüliti määratlemine keelab selle käitumise.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Specifying this switch will turn this behavior off.
+Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Selle lüliti määratlemine keelab selle käitumise.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Selle lüliti määratlemine keelab selle käitumise.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -510,7 +510,7 @@ Export a \fBcatalog\fP in format specified by path/to/destination extension.
 Options control how entries are displayed in the generated \fBcatalog\fP output.
 Note that different \fBcatalog\fP formats support different sets of options.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -524,9 +524,9 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Show detailed output information. Useful for debugging
+Näita üksikasjalikku väljundi teavet. Kasulik veaotsingul
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB SÄTTED
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -555,37 +555,37 @@ Specifies the rules used to exclude books from the generated catalog. The model 
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPAutorid\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPKirjeldused\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPŽanrid\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPHiljuti lisatud\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPSarjad\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kaasa kataloogis sektsioon \fB\(aq\fPPealkirjad\fB\(aq\fP\&. Vaikimisi: \fB\(aq\fPFalse\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPSildid\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sektsiooni \fB\(aq\fPŽanrid\fB\(aq\fP allika väli. Vaikimisi: \fB\(aq\fPSildid\fB\(aq\fP Rakendub: AZW3, EPUB, MOBI väljundformaadid
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -646,7 +646,7 @@ Syntax for removing:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -663,7 +663,7 @@ Create a custom column. label is the machine friendly name of the column. Should
 not contain spaces or colons. name is the human friendly name of the column.
 datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -672,7 +672,7 @@ A dictionary of options to customize how the data in this column will be interpr
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+See veerg talletab sildi\-laadseid andmeid (s.t. mitu komaga eraldatud väärtusi). Kasutatav ainult juhul, kui andmetüüp on tekst.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -680,15 +680,15 @@ This column stores tag like data (i.e. multiple comma separated values). Only ap
 .sp
 .nf
 .ft C
-calibredb custom_columns [options]
+calibredb custom_columns [suvandid]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Loetleb saadaolevad kohandatud veerud. Näitab veeru silte ja id\-sid.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -709,7 +709,7 @@ calibredb remove_custom_column [options] label
 Remove the custom column identified by label. You can see available
 columns with the custom_columns command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -732,7 +732,7 @@ You can get a list of ids using the search command.
 You can get a list of custom column names using the custom_columns
 command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -759,7 +759,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -779,11 +779,11 @@ calibredb check_library [options]
 .sp
 Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Väljund CSV\-s
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -815,7 +815,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the tags pane.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -824,12 +824,12 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Väljund CSV\-s
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Loodava CSV\-faili tüüp. Valikud: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -860,11 +860,11 @@ command to force re\-generation of the OPF files, with the –all option.
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Tavaliselt töötab see käsk ainult vananenud OPF\-failidega raamatutel. See säte paneb selle töötama kõikidel raamatutel.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -884,7 +884,7 @@ same custom columns, virtual libraries and other settings as the current library
 The cloned library will contain no books. If you want to create a full duplicate, including
 all books, then simply use your filesystem tools to copy the library folder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -905,11 +905,11 @@ of metadata. You can use the special value ‚all‘ for book_id to update metad
 in all books. You can also specify many book ids separated by spaces and id ranges
 separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Uuenda metaandmeid ainult määratletud formaatide failides. Mitme formaadi jaoks määratle see mitu korda. Vaikimisi uuendatakse kõiki formaate.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -930,11 +930,11 @@ to feed into other commands that accept a list of ids as input.
 The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
 language, for example: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces“
+Alati kui edastad programmile calibredb tühikuid sisaldavaid argumente, ümbritse argumendid jutumärkidega. Näiteks: „/some path/with spaces“
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+Tagastatavate tulemuste suurim arv. Vaikesätteks on kõik tulemused.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

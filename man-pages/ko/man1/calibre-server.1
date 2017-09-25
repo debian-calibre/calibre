@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "8월 25, 2017" "3.7.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "9월 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -47,7 +47,7 @@ folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths
 libraries that the main calibre program knows about will be used.
 .sp
 Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
-.SH [OPTIONS]
+.SH [설정들]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
@@ -187,6 +187,11 @@ Maximum number of ungrouped items in OPDS feeds.    Group items in categories su
 .TP
 .B \-\-max\-request\-body\-size
 Max. allowed size for files uploaded to the server (in MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-num\-per\-page
+Number of books to show in a single page.   The number of books to show in a single page in the browser.
 .UNINDENT
 .INDENT 0.0
 .TP

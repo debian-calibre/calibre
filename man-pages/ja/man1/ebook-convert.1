@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,24 +35,20 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert 電子書籍のフォーマットを変換します。
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+出力する電子書籍のフォーマットは、出力ファイルの拡張子から推測されます。出力ファイルの拡張子をEXTとして、output_file は特別な形式 .EXT と指定することも可能です。この場合、出力ファイル名の本体部分は、入力ファイル名のものが使用されます。ファイル名の先頭にハイフンは使えませんので注意してください。output_file に拡張子をつけなかった場合、出力ファイル名はディレクトリとして見なされ、HTMLファイルで構成されれる 「open ebook」 (OEB) フォーマットで、指定したディレクトリに出力されます。
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+入力ファイルと出力ファイルを指定した後ろに、変換をカスタマイズするための様々なオプションを指定することができます。使用可能なオプションは、入出力のファイルタイプに依存します。使用可能なオプションとその使い方を見るためには、入出力のファイルを指定した後ろに、\-h オプションを指定してください。
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an 「open e\-book」 (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
-.sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
-.sp
-For full documentation of the conversion system see
+電子書籍変換システムについての完全なドキュメントは下記を参照してください
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBebook\-convert\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .sp
 指定できるオプションとデフォルト値は、入力フォーマットと出力フォーマットの
 両方に依存するので、以下で確認するようにしてください:
@@ -102,7 +98,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+ビルトイン・レシピ名の一覧を表示。以下のようにしてビルトイン・レシピから電子書籍を作成できます。: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +124,7 @@ epub出力処理をコントロールするためのオプション
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+改ページでのファイル分割をしません。通常、入力ファイルは自動的に改ページの部分で2つのファイルに分割されます。これによりパースが速く、使用リソースの少ない電子書籍が出力されます。しかしながら分割作業は遅いので、ファイルに大量の改ページがある場合は改ページでの分割をしないでください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +144,7 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-生成した EPUB ファイルの内容を指定したディレクトリーに展開する。最初にディレクトリの内容が消されるので、注意してください。
+生成した EPUB ファイルの内容を指定したディレクトリに展開する。最初にディレクトリの内容が消されるので、注意してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -186,7 +182,7 @@ SVGの表紙を使う場合、このオプションはアスペクト比（縦�
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-ユニコード文字をASCII表記に変換します。注意して使ってください。例えば\fB"\fPMikhail Gorbachiov\fB"\fPの\fB"\fPМихаил Горбачёв\fB"\fPが変換されます。それと、文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のCalibreのインターフェース言語が使われます。
+Unicode文字をASCII表記に変換します。注意して使ってください。例えば\fB"\fPMikhail Gorbachiov\fB"\fPの\fB"\fPМихаил Горбачёв\fB"\fPが変換されます。それと、文字に複数の表記がある場合（例えば中国語と日本語で共有されている文字）、表記は現在のCalibreのインタフェース言語が使われます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,12 +207,12 @@ SVGの表紙を使う場合、このオプションはアスペクト比（縦�
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-書籍に指定したフォントを埋め込みます。これは書籍に使われる「ベース」フォントを指定します。もし入力ドキュメントがフォントを指定していた場合には、それがベースフォントより優先されます。（そうしたくない場合には、スタイル情報フィルタを使って、入力ドキュメントからフォントを取り除いてください）。注意：フォント埋め込みはEPUB, AZW3, DOCX のようないくつかのフォーマットでしか機能しません。
+書籍に指定したフォントを埋め込みます。これは書籍に使われる「ベース」フォントを指定します。もし入力ドキュメントがフォントを指定していた場合には、それがベースフォントより優先されます。（そうしたくない場合には、スタイル情報絞り込みを使って、入力ドキュメントからフォントを取り除いてください）。注意：フォント埋め込みはEPUB, AZW3, DOCX のようないくつかのフォーマットでしか機能しません。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+デフォルトで Calibre は、CSSのmargin, padding, border, 等を指定する際に、短縮形式を使用します。このオプションを有効にすると、短縮形式の代わりにすべて展開された形式を使用します。NookプロファイルはNookが短縮形式を取り扱えないため、この設定にかかわらず常に展開された形式を使用する設定になっていることに留意ください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,22 +257,22 @@ CSSフォント名からポイントでのフォントサイズへのマッピ�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+下の余白をpt単位で指定。デフォルトは5.0。この値に0以下の数値を指定すると余白を設定しません (オリジナルのドキュメント内に設定された余白を使用します)。注: PDFやDOCXなど固定ページフォーマットでは、そのフォーマットでの指定が優先します。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+左の余白をpt単位で指定。デフォルトは5.0。この値に0以下の数値を指定すると余白を設定しません (オリジナルのドキュメント内に設定された余白を使用します)。注: PDFやDOCXなど固定ページフォーマットでは、そのフォーマットでの指定が優先します。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+右の余白をpt単位で指定。デフォルトは5.0。この値に0以下の数値を指定すると余白を設定しません (オリジナルのドキュメント内に設定された余白を使用します)。注: PDFやDOCXなど固定ページフォーマットでは、そのフォーマットでの指定が優先します。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+上の余白をpt単位で指定。デフォルトは5.0。この値に0以下の数値を指定すると余白を設定しません (オリジナルのドキュメント内に設定された余白を使用します)。注: PDFやDOCXなど固定ページフォーマットでは、そのフォーマットでの指定が優先します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -349,7 +345,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-連続する<h1>や<h2>タグがあるか探します。タグは章のヘッダーの途中で分割されないように、再番号づけされます。
+連続する<h1>や<h2>タグがあるか探します。タグは章のヘッダの途中で分割されないように、再番号づけされます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,11 +369,11 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .UNINDENT
 .SH 検索と置換
 .sp
-ユーザー定義のパターンを使って文章や構造を変更します。
+ユーザ定義のパターンを使って文章や構造を変更します。
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+検索と置換の正規表現を含むファイルのパスを指定します。ファイルの内容は、検索の正規表現の行と、置換パターン(置換パターンは空行も可)の行が交互になるようにしてください。正規表現はPythonの文法に従い、ファイルのエンコーディングは UTF\-8 でなくてはいけません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -415,7 +411,7 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+章タイトルを検出するためのXPathの式。デフォルトでは、<h1> または <h2> タグのうち \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP, \fB"\fPpart\fB"\fP を含むもの、および class=\fB"\fPchapter\fB"\fP のものを章タイトルとします。使用する式は、エレメントのリストを評価するものでなくてはなりません。章の検出を無効にするには、\fB"\fP/\fB"\fP 式を使用します。XPathのチュートリアルは、Calibreのユーザマニュアルを参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -430,7 +426,7 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+本の書誌情報を本の最初に奥付として挿入する。これは電子書籍リーダーが、書誌情報を直接表示したり検索したりといった機能を持たない場合に有効です。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -445,12 +441,12 @@ XPath式を指定します。XPathで指定された要素の直前にページ�
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+入力電子書籍から最初の画像を取り除きます。入力ドキュメントに表紙として認識されない表紙がある場合に有用です。その際、Calibreで表紙を指定すると表紙が2つになってしまうのを、このオプションを指定することで避けることができます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+読書を開始する場所を指定するXPath式です。いくつかの電子書籍リーダー(最も典型的なにはKindle)は、本を開いたときに、ここで指定した場所から開きます。この機能を使用するより詳しい情報は、CalibreのユーザーマニュアルのXPathチュートリアルを参照してください。
 .UNINDENT
 .SH 目次
 .sp
@@ -463,17 +459,17 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-目次のレベル 1 に追加するタグをすべて指定するXPath式です。これが指定された場合、他の目次の自動検出により優先されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+目次のレベル 1 に追加するタグをすべて指定するXPath式です。これが指定された場合、他の目次の自動検出により優先されます。XPathのチュートリアルは、Calibreのユーザマニュアル等を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-目次のレベル 2 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 1 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+目次のレベル 2 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 1 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザマニュアル等を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-目次のレベル 3 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 2 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザーマニュアル等を参照してください。
+目次のレベル 3 に追加するタグをすべて指定するXPath式です。指定された項目は、直前のレベル 2 の項目の下に追加されます。XPathのチュートリアルは、Calibreのユーザマニュアル等を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -521,7 +517,7 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+電子書籍の説明を設定
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -541,12 +537,12 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+発行日を設定 (タイムゾーンが明示的に指定されない限り、ローカルなタイムゾーンとみなします)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+電子書籍の発行者を設定
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +557,7 @@ Set the e\-book publisher.
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+この本のシリーズ名を指定
 .UNINDENT
 .INDENT 0.0
 .TP

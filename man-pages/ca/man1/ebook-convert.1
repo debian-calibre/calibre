@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "d’agost 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de setembre 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,18 +41,18 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Conversió d’un format de llibre a un altre.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file és el fitxer d’entrada i output_file el de sortida. S’han d’especificar els dos com als primers dos arguments de l’ordre.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an «open e\-book» (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+El format de llibre de sortida es dedueix de l’extensió d’output_file. output_file també pot ser del format especial .EXT on EXT és l’extensió del fitxer de sortida. En aquest cas, el nom del fitxer de sortida es deriva del nom del fitxer d’entrada. Tingueu en compte que els noms de fitxer no poden començar amb un guió. Per acabar, si output_file no té extensió, es tracta com una carpeta i es desa un «open book» (OEB) format per fitxers HTML a la carpeta. Aquests fitxers són els que normalment haurien passat al connector de sortida.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Després d’especificar el fitxer d’entrada i de sortida podeu personalitzar la conversió especificant diverses opcions. Les opcions disponibles depenen dels tipus de fitxer d’entrada i de sortida. Per obtenir ajuda d’això, especifiqueu el fitxer d’entrada i de sortida amb l’opció \-h.
 .sp
-For full documentation of the conversion system see
+Per a la documentació completa del sistema de conversió vegeu
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .sp
 The options and default values for the options change depending on both the
 input and output formats, so you should always check with:
@@ -75,7 +75,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%OPCIONS DE SORTIDA\fP
 .IP \(bu 2
-\fI\%ASPECTE I COMPORTAMENT\fP
+\fI\%APARENÇA\fP
 .IP \(bu 2
 \fI\%PROCESSAMENT HEURÍSTIC\fP
 .IP \(bu 2
@@ -92,7 +92,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-mostra aquest missatge d\fB\(aq\fPajut i surt
+mostra aquest missatge d\fB\(aq\fPajuda i surt
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,12 +102,12 @@ Especifica el perfil d\fB\(aq\fPentrada. El perfil d\fB\(aq\fPentrada proporcion
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Llista els noms de les receptes integrades. Podeu crear un llibre electrònic a partir d\fB\(aq\fPuna recepta integrada així: «Nom de la recepta.recipe» sortida.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Especifica el perfil de sortida. El perfil de sortida li diu al sistema de conversió com ha d\fB\(aq\fPoptimitzar el document creat per al dispositiu especificat (com ara amb el canvi de mida de les imatges per a la mida de pantalla del dispositiu). En alguns casos es pot utilitzar un perfil de sortida per optimitzar la sortida per a un dispositiu particular, però no sol ser necessari. Les opcions són:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,12 +128,12 @@ Opcions per a controlar el processament de la sortida epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Desactiva les divisions als salts de línia. Normalment, els fitxers d\fB\(aq\fPentrada es divideixen en dos automàticament a cada salt de pàgina. Així s\fB\(aq\fPobté un llibre electrònic que es pot analitzar més ràpidament i amb menys recursos. La divisió però, és lenta i si el vostre fitxer d\fB\(aq\fPorigen conté un gran nombre de salts de pàgina, hauríeu de desactivar la divisió als salts de pàgina.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-Només es necessita aquesta opció si voleu fer servir l\fB\(aq\fPEPUB amb el FBReaderJ. Aplanarà el sistema de fitxers de dins l\fB\(aq\fPEPUB i posarà tots els fitxers al nivell superior.
+Només es necessita aquesta opció si voleu utilitzar l\fB\(aq\fPEPUB amb FBReaderJ. Aplanarà el sistema de fitxers de dins l\fB\(aq\fPEPUB i posarà tots els fitxers al nivell superior.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,12 +148,12 @@ Posa la taula del contingut en línia inserida al final del llibre en lloc del c
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+Extreu el contingut del fitxer EPUB generat al directori especificat. Compte, abans s\fB\(aq\fPesborrarà el contingut del directori.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Divideix tots els fitxers HTML més grans d\fB\(aq\fPaquesta mida (en KB). Això és necessari, ja que la majoria de lectors EPUB no poden gestionar fitxers grans. El valor per defecte de 260KB, que és la mida requerida per Adobe Digital Editions. Establiu\-ho a 0, per a inhabilitar la divisió en funció de la mida.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -163,30 +163,30 @@ Si el fitxer d\fB\(aq\fPentrada no té portada i no n\fB\(aq\fPespecifiqueu cap,
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-No facis servir una portada SVG. Feu servir aquesta opció si el vostre EPUB es farà servir a un dispositiu que no té suport per a SVG, com l\fB\(aq\fPiPhone o el JetBook Lite. Sense aquesta opció, aquests dispositius mostraran una portada en blanc.
+No utilitzis cap portada SVG. Utilitzeu aquesta opció si el vostre EPUB s\fB\(aq\fPutilitzarà en un dispositiu que no té suport per a SVG, com ara l\fB\(aq\fPiPhone o el JetBook Lite. Sense aquesta opció, aquests dispositius mostraran una portada en blanc.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-Quan s\fB\(aq\fPutilitza una portada SVG, aquesta opció fa que s\fB\(aq\fPescali per cobrir l\fB\(aq\fPàrea de pantalla disponible, però encara conservarà la seva relació d\fB\(aq\fPaspecte (relació entre l\fB\(aq\fPamplada i l\fB\(aq\fPaltura). Això significa que pot haver bores blanques als costats o a la part superior i inferior de la imatge, però la imatge mai es distorsiona. Sense aquesta opció, la imatge pot estar una mica distorsionada, però no hi haurà bores.
+Quan s\fB\(aq\fPutilitza una portada SVG, aquesta opció fa que s\fB\(aq\fPescali per cobrir l\fB\(aq\fPàrea de pantalla disponible, però encara preservarà la seva relació d\fB\(aq\fPaspecte (relació entre l\fB\(aq\fPamplada i l\fB\(aq\fPaltura). Això significa que pot haver bores blanques als costats o a la part superior i inferior de la imatge, però la imatge mai es distorsiona. Sense aquesta opció, la imatge pot estar una mica distorsionada, però no hi haurà bores.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pretty\-print
-Si ho indiqueu, el connector de sortida intentarà generar una sortida que sigui el més llegible possible. Pot ser que no tingui cap efecte en alguns connectors de sortida.
+Si s\fB\(aq\fPespecifica, el connector de sortida intentarà generar una sortida que sigui el més llegible possible. Pot ser que no tingui cap efecte en alguns connectors de sortida.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
 Títol per a qualsevol taula del contingut generada automàticament.
 .UNINDENT
-.SH ASPECTE I COMPORTAMENT
+.SH APARENÇA
 .sp
 Opcions per controlar l’aparença de la sortida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transcriu els caràcters unicode a una representació ASCII. Utilitzeu\-ho amb compte perquè això substituirà els caràcters amb ASCII. Per exemple, substituirà «Михаил Горбачёв» per «Mikhail Gorbachiov». Tingueu també en compte que en casos que hi ha múltiples representacions d\fB\(aq\fPun caràcter (per exemple caràcters compartits pel xinès i el japonès) s\fB\(aq\fPutilitzarà la representació basada en la llengua actual de la interfície de calibre.
+Transcriu els caràcters unicode a una representació ASCII. Utilitzeu\-ho amb compte perquè això substituirà els caràcters amb ASCII. Per exemple, substituirà «Михаил Горбачёв» per «Mikhail Gorbachiov». Tingueu també en compte que en casos que hi ha diverses representacions d\fB\(aq\fPun caràcter (per exemple caràcters compartits pel xinès i el japonès) s\fB\(aq\fPutilitzarà la representació basada en la llengua actual de la interfície de calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,17 +206,17 @@ Inhabilita tots els canvis d\fB\(aq\fPescala de les mides de les lletres.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+Incrusta cadascuna de les lletres referenciades al document d\fB\(aq\fPentrada que encara no estan incrustades. Es farà una cerca de les lletres al sistema i, si es troben, s\fB\(aq\fPincrustaran. La incrustació només funciona si el format que esteu convertint és compatible amb lletres incrustades, com ara EPUB, AZW3 o PDF. Assegureu\-vos que teniu la llicència adequada per a la incrustació de les lletres utilitzades en aquest document.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+Incrusta la família de la lletra especificada al llibre. Això especifica la lletra «base» que s\fB\(aq\fPutilitza per al llibre. Si el document d\fB\(aq\fPentrada especifica les seves pròpies lletres, es poden substituir amb aquesta lletra base. Podeu utilitzar l\fB\(aq\fPopció de la informació del filtre d\fB\(aq\fPestils per suprimir lletres del document d\fB\(aq\fPentrada. Tingueu en compte que la incrustació de lletres només funciona amb alguns formats de sortida, principalment EPUB, AZW3 i DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Per defecte, calibre utilitza la forma abreujada per a diverses propietats CSS, com ara  «margin», «padding», «border», etc. Aquesta opció farà que s\fB\(aq\fPutilitzi la forma estesa. Tingueu en compte que el CSS s\fB\(aq\fPexpandeix sempre quan es generen els fitxers EPUB amb el perfil de sortida establert a un dels perfils Nook, ja que els Nook no poden gestionar el CSS abreujat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Estableix l\fB\(aq\fPalçada de les línies en blanc inserides (en unitats em). 
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Conserva les lligadures presents al document d\fB\(aq\fPentrada. Una lligadura és una renderització especial d\fB\(aq\fPun parell de caràcters com ara ff, fi, fl…. La majoria dels lectors no admeten les lligadures en les seves lletres predeterminades, per aquest motiu és poc probable que les renderitzin correctament. Per defecte, calibre canvia una lligadura pel seu parell corresponent de caràcters normals. Aquesta opció fa que les lligadures en conservin en lloc seu.
+Preserva les lligadures presents al document d\fB\(aq\fPentrada. Una lligadura és una renderització especial d\fB\(aq\fPun parell de caràcters com ara ff, fi, fl…. La majoria dels lectors no admeten les lligadures en les seves lletres predeterminades, per aquest motiu és poc probable que les renderitzin correctament. Per defecte, calibre canvia una lligadura pel seu parell corresponent de caràcters normals. Aquesta opció fa que les lligadures en preservin en lloc seu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,12 +291,12 @@ Elimina l\fB\(aq\fPespaiament entre paràgrafs. També insereix un sagnat als pa
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Quan calibre suprimeix  leslínies en blanc entre paràgrafs, estableix automàticament un sagnat per assegurar\-se que es puguin distingir bé els paràgrafs. Aquesta opció controla l\fB\(aq\fPamplada del sagnat (en unitats em). Si s\fB\(aq\fPestableix un valor negatiu, s\fB\(aq\fPutilitza el sagnat especificat al document d\fB\(aq\fPentrada, és a dir, calibre no canvia el sagnat.
+Quan calibre suprimeix les línies en blanc entre paràgrafs, estableix automàticament un sagnat per assegurar\-se que es puguin distingir bé els paràgrafs. Aquesta opció controla l\fB\(aq\fPamplada del sagnat (en unitats em). Si s\fB\(aq\fPestableix un valor negatiu, s\fB\(aq\fPutilitza el sagnat especificat al document d\fB\(aq\fPentrada, és a dir, calibre no canvia el sagnat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Converteix les cometes, els guions i els punts suspensius als seus equivalents tipogràfics correctes. Vegeu \fI\%https://daringfireball.net/projects/smartypants\fP per a més detalls
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +311,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-Converteix les cometes els guions i els punts suspensius als seus equivalents senzills.
+Converteix les cometes, els guions i els punts suspensius als seus equivalents senzills.
 .UNINDENT
 .SH PROCESSAMENT HEURÍSTIC
 .sp
@@ -323,7 +323,7 @@ Modifica el text i l’estructura del document utilitzant patrons habituals. Inh
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
-Analitza les paraules amb guió de tot el document. Es fa servir el mateix document com a diccionari per determinar si s\fB\(aq\fPha de mantenir o suprimir els guions.
+Analitza les paraules amb guió de tot el document. S\fB\(aq\fPutilitza el mateix document com a diccionari per determinar si s\fB\(aq\fPhan de mantenir o suprimir els guions.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -333,12 +333,12 @@ Suprimeix els paràgrafs buits del document si aquests estan intercalats entre q
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Converteix els sagnats creats amb blocs de múltiples espais seguits en sagnats CSS.
+Converteix els sagnats creats amb blocs de diversos espais seguits en sagnats CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Els marcadors de salt d\fB\(aq\fPescena alineats a l\fB\(aq\fPesquerra se centren. Se suprimeixen els salts d\fB\(aq\fPescena amb múltiples línies en blanc per línies horitzontals.
+Els marcadors de salt d\fB\(aq\fPescena alineats a l\fB\(aq\fPesquerra se centren. Se suprimeixen els salts d\fB\(aq\fPescena amb diverses línies en blanc per línies horitzontals.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -348,7 +348,7 @@ Cerca paraules i patrons que solen estar en cursiva i posar\-los\-hi.
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detecta els encapçalaments i els sub\-encapçalaments sense format dels capítols i canvia\fB\(aq\fPls a etiquetes h2 i h3. Aquest ajust no crearà una taula del contingut però es pot fer servir conjuntament amb la detecció de l\fB\(aq\fPestructura per crear\-ne un.
+Detecta els encapçalaments i els sub\-encapçalaments sense format dels capítols i canvia\fB\(aq\fPls a etiquetes h2 i h3. Aquest ajust no crearà una taula del contingut, però es pot utilitzar conjuntament amb la detecció de l\fB\(aq\fPestructura per crear\-ne una.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -368,7 +368,7 @@ Habilita el processament heurístic. S\fB\(aq\fPha d\fB\(aq\fPactivar aquesta op
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Escala utilitzada per determinar la longitud en què s\fB\(aq\fPha de suprimir el salt de línia. Els valors vàlids són un decimal entre 0 i 1. El valor per defecte és 0.4, just per sota de la longitud mitjana de la línia. Si únicament hi ha molt poques línies al document que requereixin la supressió del salt de línia, aleshores s\fB\(aq\fPhauria de reduir aquest valor.
+Escala utilitzada per determinar la longitud en què s\fB\(aq\fPha de suprimir el salt de línia. Els valors vàlids són un decimal entre 0 i 1. El valor per defecte és 0.4, just per sota de la longitud mitjana de la línia. Si únicament hi ha molt poques línies al document que requereixin la supressió del salt de línia, aleshores s\fB\(aq\fPhauria de reduir aquest valor
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -454,7 +454,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Una expressió XPath per detectar el lloc del document on s\fB\(aq\fPha de començar la lectura. Alguns programes de lectura (el més remarcable el Kindle) utilitzen aquest lloc com a la posició que s\fB\(aq\fPha d\fB\(aq\fPobrir el llibre. Vegeu l\fB\(aq\fPassistent de XPath al manual d\fB\(aq\fPusuari de calibre per a més informació.
 .UNINDENT
 .SH TAULA DEL CONTINGUT
 .sp
@@ -462,12 +462,12 @@ Controla la generació automàtica de la taula del contingut. Si el fitxer d’o
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-Quan es crea una taula del contingut a partir dels enllaços al document d\fB\(aq\fPentrada permet que hi hagin entrades duplicades, és a dir, permet més d\fB\(aq\fPuna entrada amb el mateix text, sempre i quan apuntin a una ubicació diferent.
+Quan es crea una taula del contingut a partir dels enllaços al document d\fB\(aq\fPentrada permet que hi hagin entrades duplicades, és a dir, permet més d\fB\(aq\fPuna entrada amb el mateix text, sempre que apuntin a una ubicació diferent.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expressió XPath que especifica totes les etiquetes s\fB\(aq\fPhan d\fB\(aq\fPafegir al primer nivell de la taula del contingut. Si s\fB\(aq\fPespecifica té prioritat sobre les altres formes de detecció automàtica. Vegeu alguns exemples a la guia d\fB\(aq\fPaprenentatge de XPath del manual d\fB\(aq\fPusuari de calibre.
+Expressió XPath que especifica totes les etiquetes s\fB\(aq\fPhan d\fB\(aq\fPafegir al primer nivell de la taula del contingut. Si s\fB\(aq\fPespecifica, té prioritat sobre les altres formes de detecció automàtica. Vegeu alguns exemples a la guia d\fB\(aq\fPaprenentatge de XPath del manual d\fB\(aq\fPusuari de calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -530,7 +530,7 @@ Estableix la descripció del llibre.
 .INDENT 0.0
 .TP
 .B \-\-cover
-Estableix la portada des del fitxer o URL indicats
+Estableix la portada a partir del fitxer o URL especificat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -560,7 +560,7 @@ Estableix la valoració. Ha de ser un nombre entre 1 i 5.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Llegeix les metadades del fitxer OPF especificat. Les metadades llegides d\fB\(aq\fPaquest fitxer anul·laran les metadades del fitxer d\fB\(aq\fPorigen.
+Llegeix les metadades del fitxer OPF especificat. Les metadades que es llegeixin d\fB\(aq\fPaquest fitxer substituiran les metadades del fitxer d\fB\(aq\fPorigen.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "d’agost 25, 2017" "3.7.0" "calibre"
+.TH "CALIBREDB" "1" "de setembre 22, 2017" "3.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%ADDICIÓ DES DELS DIRECTORIS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB OPCIONS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -135,7 +135,7 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-mostra aquest missatge d\fB\(aq\fPajut i surt
+mostra aquest missatge d\fB\(aq\fPajuda i surt
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,12 +145,12 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Contrasenya per connectar a un servidor de continguts de calibre. Per llegir la contrasenya des de l\fB\(aq\fPentrada estàndard, utilitzeu el valor especial: <stdin>. Per llegir la contrasenya des d\fB\(aq\fPun fitxer, utilitzeu: <f:/path/to/file>.)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Nom d\fB\(aq\fPusuari per connectar a un servidor de continguts de calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [opcions]
 .sp
 Llista dels llibres disponibles a la base de dades de calibre.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -185,7 +185,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Genera la sortida en format JSON, que és més adequada per a l\fB\(aq\fPanàlisi amb autòmats. Provoca que s\fB\(aq\fPignorin les opcions de l\fB\(aq\fPample de línia i del separador.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,12 +210,12 @@ Filtra els resultats amb la consulta de cerca. Per al format de la consulta de c
 .INDENT 0.0
 .TP
 .B \-\-separator
-Cadena que es fa servir per separar els camps. Per defecte és un espai.
+Cadena que s\fB\(aq\fPutilitzarà per separar els camps. Per defecte és un espai.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Camps pels quals s\fB\(aq\fPordenaran els resultats. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -229,10 +229,10 @@ calibredb add [opcions] fitxer1 fitxer2 fitxer3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Afegeix els fitxers indicats com a llibres a la base de dades. Podeu també indicar carpetes, vegeu
-les opcions relacionades amb les carpetes més avall.
+Afegeix els fitxers especificats com a llibres a la base de dades. Podeu  indicar també
+directoris, vegeu les opcions relacionades amb els directoris més avall.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -251,12 +251,12 @@ Afegeix els llibres a la base de dades encara que ja existeixin. La comparació 
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-Afegeix un llibre en blanc (sense formats)
+Afegeix un llibre en blanc (un llibre sense format)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Estableix els identificadors per a aquest llibre, p. ex. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,18 +288,18 @@ Estableix les etiquetes del(s) llibre(s) afegit(s)
 .B \-\-title, \-t
 Estableix el títol del(s) llibre(s) afegit(s)
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS ADDICIÓ DES DELS DIRECTORIS
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Les opcions per controlar l’addició de llibres des dels directoris. De manera predeterminada només s’afegeixen els fitxers que tenen extensions conegudes de tipus de fitxer de llibres electrònics.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Un patró (glob) de nom de fitxer, els fitxers que coincideixin amb aquest patró seran afegits quan s\fB\(aq\fPexplorin els directoris per als fitxers, encara que no siguin d\fB\(aq\fPun tipus de fitxer de llibres electrònics conegut. Es pot especificar diverses vegades per a diversos patrons.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Un patró (glob) de nom de fitxer, els fitxers que coincideixin amb aquest patró seran ignorats quan s\fB\(aq\fPexplorin els directoris per als fitxers. Es pot especificar diverses vegades per a diversos patrons. P. ex.: *.pdf ignorarà tots els fitxers pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -309,7 +309,7 @@ Assumeix que cada directori conté un sol llibre lògic i que tots els fitxers q
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Processa les carpetes de forma recursiva
+Processa els directoris de forma recursiva
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -317,19 +317,19 @@ Processa les carpetes de forma recursiva
 .sp
 .nf
 .ft C
-calibredb remove ids
+calibredb remove IDs
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Suprimeix els llibres identificats amb els identificadors de la base de dades. Els «IDs» han d’indicar\-se en una llista separada per comes amb els nombres dels identificadors (es poden obtenir els nombres dels identificadors mitjançant l’ordre «search»). Per exemple, 23,34,57\-85 (quan s’especifica un interval, no s’inclou l’últim nombre de l’interval).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+No utilitzis la paperera de reciclatge
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -337,15 +337,15 @@ Do not use the recycle bin
 .sp
 .nf
 .ft C
-calibredb add_format [options] id ebook_file
+calibredb add_format [opcions] id fitxer_llibre
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Afegeix el llibre electrònic «fitxer_llibre» als formats disponibles per al llibre lògic identificat per l”«id». Podeu obtenir l”«id» mitjançant l’ordre «search». Si ja existeix el format, se substituirà, a no ser que s’especifiqui l’opció de no substitució.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -357,31 +357,31 @@ No substitueixis el format si ja existeix
 .sp
 .nf
 .ft C
-calibredb remove_format [options] id fmt
+calibredb remove_format [opcions] ID fmt
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+Suprimeix el format «fmt» del llibre lògic identificat per l’ID. Podeu obtenir l’ID mitjançant l’ordre «search». «fmt» ha de ser una extensió de fitxer com ara LRF, TXT o EPUB. Si el llibre lògic no té el disponible el «fmt», no fa res.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-calibredb show_metadata [options] id
+calibredb show_metadata [opcions] ID
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Show the metadata stored in the calibre database for the book identified by id.
-id is an id number from the search command.
+Mostra les metadades emmagatzemades a la base de dades de calibre per al llibre identificat amb l’ID.
+L’ID és un nombre d’identificador de l’ordre «search».
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -393,24 +393,24 @@ Imprimeix les metadades en format OPF (XML)
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [opcions] id [/camí/a/metadata.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by id
-from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the –as\-opf switch to the
-show_metadata command. You can also set the metadata of individual fields with
-the –field option. If you use the –field option, there is no need to specify
-an OPF file.
+Estableix les metadades emmagatzemades a la base de dades de calibre per al llibre
+identificat per l’ID del fitxer OPF «metadata.opf». L’ID és un nombre d’identificador
+de l’ordre «search». Podeu fer\-vos una idea ràpida del format OPF amb l’ús del
+commutador «–as\-opf» a l’ordre «show_metadata». També podeu establir les metadades
+de camps individuals amb l’opció «–field». Si utilitzeu l’opció «–field», no cal especificar
+un fitxer OPF.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camp. Podeu especificar aquesta opció diversos cops per establir múltiples camps. Nota: per a les llengües heu d\fB\(aq\fPutilitzar els codis ISO639 (per exemple «ca» per al català, «en» per a l\fB\(aq\fPanglès…). Per als identificadors la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps booleans (sí/no) utilitzeu «true» i «false» o «yes» i «no».
+El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camp. Podeu especificar aquesta opció diversos cops per establir diversos camps. Nota: per a les llengües heu d\fB\(aq\fPutilitzar els codis ISO639 (per exemple «ca» per al català, «en» per a l\fB\(aq\fPanglès…). Per als identificadors la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps booleans (sí/no) utilitzeu «true» i «false» o «yes» i «no».
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -423,41 +423,41 @@ Mostra una llista dels noms dels camps de metadades que es poden utilitzar amb l
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opcions] IDs
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+Exporta els llibres identificats pels IDs (una llista separada per comes) al sistema de fitxers.
+L’operació d’exportació desa tots els formats del llibre, la portada i les metadades (a un
+fitxer opf). Podeu obtenir els nombres dels IDs de l’ordre «search».
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-all
-Exporta tots els llibres de la base de dades, ignorant la llista d\fB\(aq\fPIDs.
+Exporta tots els llibres de la base de dades, ignorant la llista dels id.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalment calibre convertirà els caràcters no ASCII dels noms de fitxer als seus equivalents ASCII. ATENCIÓ: Si ho desactiveu podeu tenir errors en desar, depenent del suport per a Unicode que hi hagi al vostre sistema de fitxers. Si indiqueu aquesta opció es desactiva aquest comportament.
+Normalment calibre convertirà els caràcters no ASCII dels noms de fitxer als seus equivalents ASCII. ATENCIÓ: Si ho desactiveu podeu tenir errors en desar, depenent del suport per a Unicode que hi hagi al vostre sistema de fitxers. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Si indiqueu aquesta opció es desactiva aquest comportament.
+Normally, calibre will save the cover in a separate file along with the actual e\-book files. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normalment calibre actualitza les metadades als fitxers que es desen a partir del que hi ha a la biblioteca de calibre. Fa que es desi més lentament. Si indiqueu aquesta opció es desactiva aquest comportament.
+Normalment calibre actualitza les metadades als fitxers que es desen a partir del que hi ha a la biblioteca de calibre. Fa que es desi més lentament. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normalment calibre escriurà les metadades a un fitxer OPF separat, junt amb els fitxers reals del llibre electrònic. Si indiqueu aquesta opció es desactiva aquest comportament.
+Normalment calibre escriurà les metadades a un fitxer OPF separat, junt amb els fitxers reals del llibre electrònic. Si s\fB\(aq\fPespecifica aquesta opció, es desactiva aquest comportament.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -477,7 +477,7 @@ Exporta tots els llibres a un únic directori
 .INDENT 0.0
 .TP
 .B \-\-template
-Plantilla per controlar el nom del fitxer i l\fB\(aq\fPestructura de les carpetes dels fitxers desats. Per defecte és «{author_sort}/{title}/{title} \- {authors}», que desa els llibres en una subcarpeta per autor amb noms de fitxer que contenen el títol i l\fB\(aq\fPautor. Es disposa dels controls: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+La plantilla per controlar el nom de fitxer i l\fB\(aq\fPestructura dels directoris dels fitxers desats. Per defecte és «{author_sort}/{title}/{title} \- {authors}», que desa els llibres en un subdirectori per autor amb noms de fitxer que contenen el títol i l\fB\(aq\fPautor. Es disposa dels controls: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -500,17 +500,17 @@ Converteix els camins a minúscules.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalog /camí/a/destinació.(csv|epub|mobi|xml...) [opcions]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Exporta un catàleg amb el format especificat en l’extensió de camí/a/destinació.
+Les opcions controlen com es mostren les entrades a la sortida del catàleg generat.
+Tingueu en compte que diferents formats de catàleg admeten diferents conjunts d’opcions.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -526,101 +526,101 @@ Filtra els resultats segons la consulta de cerca. Per al format de la cerca vege
 .B \-\-verbose, \-v
 Mostra informació de sortida detallada. Útil per a depurar
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB OPCIONS
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Títol del catàleg generat, que s\fB\(aq\fPutilitzarà com a títol a les metadades. Per defecte: «My Books» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Crea referències creuades a la secció dels autors per als llibres amb diversos autors. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified directory. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Desa la sortida de les diferents etapes de la canonada de conversió al directori especificat. És útil si no esteu segur en quina etapa del procés de conversió hi ha un error. Per defecte: «None» S\fB\(aq\fPaplica als formats de sortida: AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Expressió regular que descriu les etiquetes que s\fB\(aq\fPexclouran com a gèneres. Per defecte: «[.+]|^+$» exclou les etiquetes entre claudàtors, per exemple «[Projecte Gutemberg]», i «+», l\fB\(aq\fPetiqueta per defecte per als llibres llegits. S\fB\(aq\fPaplica als formats de sortida: AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Especifica les regles que s\fB\(aq\fPutilitzaran per excloure llibres del catàleg generat. El model per a una regla d\fB\(aq\fPexclusió pot ser (\fB\(aq\fP<nom de la regla>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<llista d\fB\(aq\fPetiquetes separades per comes>\fB\(aq\fP) o bé (\fB\(aq\fP<nom de la regla>\fB\(aq\fP,\fB\(aq\fP<columna personalitzada>\fB\(aq\fP,\fB\(aq\fP<patró>\fB\(aq\fP). Per exemple: ((\fB\(aq\fPLlibres emmagatzemats\fB\(aq\fP,\fB\(aq\fP#estat\fB\(aq\fP,\fB\(aq\fPEmmagatzemat\fB\(aq\fP),) exclourà un llibre amb un valor d\fB\(aq\fP«Emmagatzemat» a la columna personalitzada «estat». Si es defineixen diverses regles, s\fB\(aq\fPapliquen totes les regles. Per defecte:  «((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou la secció «Autors» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou la secció «Descripcions» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou la secció «Gèneres» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou una secció «Afegits recentment» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou la secció «Sèries» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Inclou la secció «Títols» al catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPEtiquetes\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Camp origen de la secció «Gèneres». Per defecte «Etiquetes» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Camp personalitzat que conté una nota de text per inserir a l\fB\(aq\fPencapçalament «Descripció». Per defecte: «» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with Comments  [before|after] Placement of notes with respect to Comments  [True|False] \- A horizontal rule is inserted between notes and Comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<camp personalitzat>:[before|after]:[True|False] per especificar:  <camp personalitzat> Camp personalitzat que conté les notes per fusionar amb «Comentaris»  [before|after] Posició de les notes respecte als comentaris  [True|False] S\fB\(aq\fPinsereix una línia horitzontal entre les notes i els comentaris. Valor predeterminat: «::» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Especifica el perfil de sortida. En alguns casos, cal un perfil de sortida per optimitzar el catàleg per al dispositiu. Per exemple, \fB\(aq\fPkindle\fB\(aq\fP o \fB\(aq\fPkindle_dx\fB\(aq\fP crea una taula del contingut estructurada en seccions i articles. Per defecte: \fB\(aq\fPNone\fB\(aq\fP S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+Especifica les regles que s\fB\(aq\fPutilitzen per incloure prefixos que indiquin els llibres llegits, els ítems de la llista de desitjos i altres prefixos especificats per l\fB\(aq\fPusuari. El model per a una regla de prefix és (\fB\(aq\fP<nom de la regla>\fB\(aq\fP,\fB\(aq\fP<camp d\fB\(aq\fPorigen>\fB\(aq\fP,\fB\(aq\fP<patró>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Si es defineixen diverses regles, s\fB\(aq\fPutilitza la primera que coincideixi. Per defecte: «((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Utilitza una predefinició creada amb la interfície gràfica del constructor de catàlegs. Una predefinició especifica tots els ajusts per a la construcció d\fB\(aq\fPun catàleg. Per defecte: «None» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Mida recomanada (en polzades) per a les portades dels llibres del catàleg. Interval: 1,0 \- 2,0 Per defecte: «1.0» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Substitueix la portada existent quan es genera el catàleg. Per defecte: «False» S\fB\(aq\fPaplica als formats de sortida AZW3, EPUB i MOBI
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -646,7 +646,7 @@ Syntax for removing:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -662,7 +662,7 @@ calibredb add_custom_column [opcions] etiqueta nom tipus_de_dades
 Crea una columna personalitzada. L’etiqueta és el nom intern de la columna. No ha de tenir
 espais ni dos punts. El nom és el nom visible de la columna. El tipus de dades és un de: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -679,15 +679,15 @@ Aquesta columna emmagatzema les etiquetes com a dades (amb valors separats per c
 .sp
 .nf
 .ft C
-calibredb custom_columns [options]
+calibredb custom_columns [opcions]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Llista les columnes personalitzades disponibles. Mostra les etiquetes ies id. de les columnes.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -699,16 +699,16 @@ Mostra els detalls per a cada columna.
 .sp
 .nf
 .ft C
-calibredb remove_custom_column [options] label
+calibredb remove_custom_column [opcions] etiqueta
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Suprimeix la columna personalitzada identificada per l’etiqueta. Podeu veure
+les columnes disponibles amb l’ordre «custom_columns».
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -720,18 +720,17 @@ No demanis confirmació
 .sp
 .nf
 .ft C
-calibredb set_custom [options] column id value
+calibredb set_custom [opcions] columna ID valor
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Estableix el valor d’una columna personalitzada per al llibre identificat per l’ID.
+Podeu obtenir una llista dels ID mitjançant l’ordre «search».
+Podeu obtenir una llista dels noms de les columnes personalitzades mitjançant  l’ordre «custom_columns».
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -757,7 +756,7 @@ dades. Perdreu totes les cerques desades, categories d’usuari, taulers de conn
 ajusts de conversió per a llibres individuals i receptes personalitzades. Les
 metadades que es recuperin seran tan acurades com el que hi hagi als fitxers OPF.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -775,9 +774,9 @@ calibredb check_library [opcions]
 .UNINDENT
 .UNINDENT
 .sp
-Fes algunes comprovacions al sistema de fitxers que hi ha en una biblioteca. Els resultats són invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+Realitza algunes comprovacions al sistema de fitxers que representa una biblioteca. Els informes són invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -813,7 +812,7 @@ calibredb list_categories [opcions]
 Genera un informe de la informació de les categories de la base de dades. La
 informació equival al que es mostra a la subfinestra d’etiquetes.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -827,7 +826,7 @@ Sortida CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+El tipus de fitxer CSV a produir. Opcions: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -852,14 +851,14 @@ calibredb backup_metadata [opcions]
 .UNINDENT
 .sp
 Fa una còpia de seguretat de les metadades de la base de dades en fitxers OPF
-individuals a cada carpeta de llibre. Això normalment es fa automàticament però
+individuals a cada directori del llibre. Això normalment es fa automàticament però
 podeu executar aquesta ordre per forçar que es tornin a regenerar els fitxers
 OPF amb l’opció «–all».
 .sp
 Tingueu en compte que normalment no hi ha necessitat de fer això, ja que es fa
 una còpia de seguretat dels fitxers OPF cada cop que es canvien les metadades.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -885,7 +884,7 @@ La biblioteca clonada no contindrà llibres. Si voleu crear un duplicat complet,
 tots els llibres, només cal que utilitzeu les eines del sistema de fitxers per copiar la
 carpeta de la biblioteca.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -906,11 +905,11 @@ of metadata. You can use the special value “all” for book_id to update metad
 in all books. You can also specify many book ids separated by spaces and id ranges
 separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Només actualitza les metadades als fitxers del format especificat. Especifiqueu\-ho diverses vegades per a diversos formats. Per defecte, s\fB\(aq\fPactualitzen tots els formats.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -918,24 +917,24 @@ Only update metadata in files of the specified format. Specify it multiple times
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb search [opcions] expressió de cerca
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Cerca a la biblioteca el terme de cerca especificat, retornant una llista separada
+per comes dels id. dels llibres que coincideixen amb l’expressió de cerca. El format
+de sortida és útil per alimentar altres ordres que accepten una llista d’id. com a entrada.
 .sp
-The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+L’expressió de cerca pot ser qualsevol de llenguatge de cerca potent de calibre,
+per exemple: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+El nombre màxim de resultats a retornar. Per defecte són tots els resultats.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

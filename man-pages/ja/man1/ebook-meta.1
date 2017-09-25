@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-META" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,22 +41,22 @@ ebook\-meta ebook_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+電子書籍ファイルの書誌情報を読み書きします。
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+書誌情報を読めるフォーマット: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+書誌情報を書けるフォーマット: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+異なるファイル形式は異なる種類の書誌情報をサポートします。
+そのファイル形式がサポートしていない書誌情報を設定しようとすると、
+書誌情報は単純に無視されます。
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBebook\-meta\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH [オプション]
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-著者順にソートする時に使う文字列。もし指定しない場合、著者情報があればそこから自動生成されます。
+著者順に整列する時に使う文字列。もし指定しない場合、著者情報があればそこから自動生成されます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,12 +71,12 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-category
-本のカテゴリーを設定
+本のカテゴリを設定
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-comments, \-c
-Set the e\-book description.
+電子書籍の説明を設定
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,12 +91,12 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+OPFファイルから書誌情報を読み出し、電子書籍に書誌情報として設定。コで指定した書誌情報は、OPFファイルからのものより優先されます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+電子書籍から表紙を取りだし、指定されたファイルに保存
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ BookIDをLRFファイルに設定
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-Set the e\-book publisher.
+電子書籍の発行者を設定
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +141,7 @@ Set the e\-book publisher.
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series this e\-book belongs to.
+この本のシリーズ名を指定
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -156,7 +156,7 @@ Set the series this e\-book belongs to.
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-ソートに使う別タイトル。もし指定しない場合、タイトル情報があればそこから自動生成されます。
+整列に使う別タイトル。指定しない場合、タイトル情報があればそこから自動生成されます。
 .UNINDENT
 .INDENT 0.0
 .TP

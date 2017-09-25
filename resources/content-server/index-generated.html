@@ -2042,9 +2042,6 @@ Exception.prototype.__repr__ = function __repr__() {
     var self = this;
     return self.name + ": " + self.message;
 };
-if (!Exception.prototype.__repr__.__argnames__) Object.defineProperties(Exception.prototype.__repr__, {
-    __argnames__ : {value: []}
-});
 Exception.prototype.__str__ = function __str__ () {
     if(Error.prototype.__str__) return Error.prototype.__str__.call(this);
 return this.__repr__();
@@ -4646,9 +4643,6 @@ return parser;
                 return self.ngettext.apply(self, arguments);
             };
         };
-        if (!Translations.prototype.install.__argnames__) Object.defineProperties(Translations.prototype.install, {
-            __argnames__ : {value: []}
-        });
         Translations.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -5077,9 +5071,6 @@ return parser;
                 return ρσ_anonfunc;
             })();
         };
-        if (!Watcher.prototype.reconnect.__argnames__) Object.defineProperties(Watcher.prototype.reconnect, {
-            __argnames__ : {value: []}
-        });
         Watcher.prototype.reload_app = function reload_app() {
             var self = this;
             var appcache, which;
@@ -5098,9 +5089,6 @@ return parser;
                 } 
             }
         };
-        if (!Watcher.prototype.reload_app.__argnames__) Object.defineProperties(Watcher.prototype.reload_app, {
-            __argnames__ : {value: []}
-        });
         Watcher.prototype.cache_update_done = function cache_update_done() {
             var self = this;
             var appcache;
@@ -5110,9 +5098,6 @@ return parser;
             }
             window.location.reload(true);
         };
-        if (!Watcher.prototype.cache_update_done.__argnames__) Object.defineProperties(Watcher.prototype.cache_update_done, {
-            __argnames__ : {value: []}
-        });
         Watcher.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -6255,9 +6240,6 @@ return parser;
                 c.classList.remove(self.CURRENT_ITEM_CLASS);
             }
         };
-        if (!CompletionPopup.prototype.hide.__argnames__) Object.defineProperties(CompletionPopup.prototype.hide, {
-            __argnames__ : {value: []}
-        });
         CompletionPopup.prototype.handle_keydown = function handle_keydown(key) {
             var self = this;
             if (key === "escape") {
@@ -6343,9 +6325,6 @@ return parser;
             }
             self._render_matches();
         };
-        if (!CompletionPopup.prototype._apply_query.__argnames__) Object.defineProperties(CompletionPopup.prototype._apply_query, {
-            __argnames__ : {value: []}
-        });
         CompletionPopup.prototype._render_matches = function _render_matches() {
             var self = this;
             var c, items, m;
@@ -6361,9 +6340,6 @@ return parser;
                 c.firstChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [m].concat([ρσ_desugar_kwargs({onmouseenter: self.onmouseenter, onclick: self.onclick})])));
             }
         };
-        if (!CompletionPopup.prototype._render_matches.__argnames__) Object.defineProperties(CompletionPopup.prototype._render_matches, {
-            __argnames__ : {value: []}
-        });
         CompletionPopup.prototype.onmouseenter = function onmouseenter(event) {
             var self = this;
             var div;
@@ -7238,9 +7214,6 @@ return parser;
             self.current_modal = null;
             self.hide = self.close_current_modal.bind(self);
         };
-        if (!ModalContainer.prototype.__init__.__argnames__) Object.defineProperties(ModalContainer.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         ModalContainer.__argnames__ = ModalContainer.prototype.__init__.__argnames__;
         ModalContainer.__handles_kwarg_interpolation__ = ModalContainer.prototype.__init__.__handles_kwarg_interpolation__;
         ModalContainer.prototype.show_modal = function show_modal() {
@@ -7313,9 +7286,6 @@ return parser;
                 c.firstChild.lastChild.style.visibility = (self.current_modal.show_close) ? "visible" : "hidden";
             }
         };
-        if (!ModalContainer.prototype.update.__argnames__) Object.defineProperties(ModalContainer.prototype.update, {
-            __argnames__ : {value: []}
-        });
         ModalContainer.prototype.clear_current_modal = function clear_current_modal() {
             var self = this;
             var c;
@@ -7328,9 +7298,6 @@ return parser;
                 self.update();
             }
         };
-        if (!ModalContainer.prototype.clear_current_modal.__argnames__) Object.defineProperties(ModalContainer.prototype.clear_current_modal, {
-            __argnames__ : {value: []}
-        });
         ModalContainer.prototype.close_current_modal = function close_current_modal(event) {
             var self = this;
             if (self.current_modal !== null) {
@@ -7349,9 +7316,6 @@ return parser;
                 self.close_current_modal();
             }
         };
-        if (!ModalContainer.prototype.close_all_modals.__argnames__) Object.defineProperties(ModalContainer.prototype.close_all_modals, {
-            __argnames__ : {value: []}
-        });
         ModalContainer.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -7845,9 +7809,6 @@ return parser;
             var self = this;
             self.data = Object.create(null);
         };
-        if (!FakeStorage.prototype.__init__.__argnames__) Object.defineProperties(FakeStorage.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         FakeStorage.__argnames__ = FakeStorage.prototype.__init__.__argnames__;
         FakeStorage.__handles_kwarg_interpolation__ = FakeStorage.prototype.__init__.__handles_kwarg_interpolation__;
         FakeStorage.prototype.getItem = function getItem(key) {
@@ -7871,9 +7832,6 @@ return parser;
             var self = this;
             self.data = Object.create(null);
         };
-        if (!FakeStorage.prototype.clear.__argnames__) Object.defineProperties(FakeStorage.prototype.clear, {
-            __argnames__ : {value: []}
-        });
         FakeStorage.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -7982,9 +7940,6 @@ return parser;
             self.overflow_storage = Object.create(null);
             self.has_overflow = false;
         };
-        if (!SessionData.prototype.clear.__argnames__) Object.defineProperties(SessionData.prototype.clear, {
-            __argnames__ : {value: []}
-        });
         SessionData.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -8034,6 +7989,7 @@ return parser;
             ρσ_d["icon_map"] = Object.create(null);
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
+            ρσ_d["num_per_page"] = 50;
             return ρσ_d;
         }).call(this);
         function get_interface_data() {
@@ -8210,9 +8166,6 @@ return parser;
                 self.has_changes = false;
             }
         };
-        if (!UserSessionData.prototype.push_to_server.__argnames__) Object.defineProperties(UserSessionData.prototype.push_to_server, {
-            __argnames__ : {value: []}
-        });
         UserSessionData.prototype.__repr__ = function __repr__ () {
             if(SessionData.prototype.__repr__) return SessionData.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -9419,9 +9372,6 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })();
         };
-        if (!DB.prototype.initialize_stage1.__argnames__) Object.defineProperties(DB.prototype.initialize_stage1, {
-            __argnames__ : {value: []}
-        });
         DB.prototype.initialize_stage2 = function initialize_stage2(idb, supports_blobs) {
             var self = this;
             self.idb = idb;
@@ -10752,17 +10702,11 @@ return this.__repr__();
             self.before_index = self.counter_index;
             self.before_counter = new Uint8Array(self.counter_block);
         };
-        if (!CTR.prototype.__enter__.__argnames__) Object.defineProperties(CTR.prototype.__enter__, {
-            __argnames__ : {value: []}
-        });
         CTR.prototype.__exit__ = function __exit__() {
             var self = this;
             self.counter_index = self.before_index;
             self.counter_block = self.before_counter;
         };
-        if (!CTR.prototype.__exit__.__argnames__) Object.defineProperties(CTR.prototype.__exit__, {
-            __argnames__ : {value: []}
-        });
         CTR.prototype.decrypt = function decrypt(output_from_encrypt, tag) {
             var self = this;
             var b, ρσ_with_exception, ρσ_with_suppress, offset, tag_bytes;
@@ -10861,9 +10805,6 @@ return this.__repr__();
                 }
             }
         };
-        if (!GCM.prototype.increment_iv.__argnames__) Object.defineProperties(GCM.prototype.increment_iv, {
-            __argnames__ : {value: []}
-        });
         GCM.prototype._create_j0 = function _create_j0(iv) {
             var self = this;
             var J0, tmp;
@@ -11089,9 +11030,6 @@ return this.__repr__();
             var self = this;
             self.secret = new Uint8Array(64);
         };
-        if (!Messenger.prototype.__init__.__argnames__) Object.defineProperties(Messenger.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         Messenger.__argnames__ = Messenger.prototype.__init__.__argnames__;
         Messenger.__handles_kwarg_interpolation__ = Messenger.prototype.__init__.__handles_kwarg_interpolation__;
         Messenger.prototype.reset = function reset() {
@@ -11100,9 +11038,6 @@ return this.__repr__();
             self.gcm_to_iframe = new GCM(self.secret.subarray(0, 32));
             self.gcm_from_iframe = new GCM(self.secret.subarray(32));
         };
-        if (!Messenger.prototype.reset.__argnames__) Object.defineProperties(Messenger.prototype.reset, {
-            __argnames__ : {value: []}
-        });
         Messenger.prototype.encrypt = function encrypt(data) {
             var self = this;
             return self.gcm_to_iframe.encrypt(JSON.stringify(data));
@@ -11584,7 +11519,7 @@ return this.__repr__();
             __argnames__ : {value: ["src", "elem", "ns_map"]}
         });
 
-        function process_stack(stack, tag_map, ns_map, load_required, onload) {
+        function process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls) {
             var ρσ_unpack, node, parent, src, elem, loadable, attr, a;
             while (stack.length) {
                 ρσ_unpack = stack.pop();
@@ -11598,8 +11533,8 @@ return this.__repr__();
                     elem = document.createElement(src.n);
                 }
                 loadable = false;
-                if (ρσ_in(src.n, resource_tag_names)) {
-                    attr = resource_tag_names[ρσ_bound_index(src.n, resource_tag_names)];
+                attr = resource_tag_names[ρσ_bound_index(src.n, resource_tag_names)];
+                if (attr) {
                     if (ρσ_not_equals(attr.indexOf(":"), -1)) {
                         attr = attr.replace("xlink:", "");
                     }
@@ -11608,6 +11543,7 @@ return this.__repr__();
                         a = ρσ_Iter9[ρσ_Index9];
                         if (a[0] === attr) {
                             loadable = a[1].startswith("blob:");
+                            resource_urls[ρσ_bound_index(a[1], resource_urls)] = true;
                             break;
                         }
                     }
@@ -11635,11 +11571,11 @@ return this.__repr__();
             }
         };
         if (!process_stack.__argnames__) Object.defineProperties(process_stack, {
-            __argnames__ : {value: ["stack", "tag_map", "ns_map", "load_required", "onload"]}
+            __argnames__ : {value: ["stack", "tag_map", "ns_map", "load_required", "onload", "resource_urls"]}
         });
 
         function unserialize_html(serialized_data, proceed) {
-            var tag_map, tree, ns_map, html, ρσ_unpack, head, body, load_required, proceeded, hang_timeout, stack, bnode, ev;
+            var tag_map, tree, ns_map, html, ρσ_unpack, head, body, resource_urls, load_required, proceeded, hang_timeout, stack, bnode, ev;
             tag_map = serialized_data.tag_map;
             tree = serialized_data.tree;
             ns_map = serialized_data.ns_map;
@@ -11649,6 +11585,7 @@ return this.__repr__();
             head = ρσ_unpack[0];
             body = ρσ_unpack[1];
             clear(document.head, document.body);
+            resource_urls = Object.create(null);
             load_required = set();
             proceeded = false;
             hang_timeout = 5;
@@ -11672,7 +11609,7 @@ return this.__repr__();
             for (var i = head.length - 1; i >= 1; i--) {
                 stack.push([head[i], document.head]);
             }
-            process_stack(stack, tag_map, ns_map, load_required, onload);
+            process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls);
             bnode = tag_map[ρσ_bound_index(body[0], tag_map)];
             apply_attributes(bnode, document.body, ns_map);
             if (bnode.x) {
@@ -11681,7 +11618,7 @@ return this.__repr__();
             for (var i = body.length - 1; i >= 1; i--) {
                 stack.push([body[i], document.body]);
             }
-            process_stack(stack, tag_map, ns_map, load_required, onload);
+            process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls);
             ev = document.createEvent("Event");
             ev.initEvent("DOMContentLoaded", true, true);
             document.dispatchEvent(ev);
@@ -11691,6 +11628,7 @@ return this.__repr__();
                 proceeded = true;
                 proceed();
             }
+            return resource_urls;
         };
         if (!unserialize_html.__argnames__) Object.defineProperties(unserialize_html, {
             __argnames__ : {value: ["serialized_data", "proceed"]}
@@ -12082,9 +12020,6 @@ return this.__repr__();
             var self = this;
             self.completion_popup.hide();
         };
-        if (!EditWithComplete.prototype.hide_completion_popup.__argnames__) Object.defineProperties(EditWithComplete.prototype.hide_completion_popup, {
-            __argnames__ : {value: []}
-        });
         EditWithComplete.prototype.add_associated_widget = function add_associated_widget(widget_or_id) {
             var self = this;
             self.completion_popup.add_associated_widget(widget_or_id);
@@ -12316,9 +12251,6 @@ return this.__repr__();
             var self = this;
             clear(self.container);
         };
-        if (!Breadcrumbs.prototype.reset.__argnames__) Object.defineProperties(Breadcrumbs.prototype.reset, {
-            __argnames__ : {value: []}
-        });
         Breadcrumbs.prototype.add_crumb = function add_crumb(callback) {
             var self = this;
             var li;
@@ -12540,9 +12472,6 @@ return this.__repr__();
             self.set_mode("flow");
             self.window_width_from_parent = self.window_height_from_parent = null;
         };
-        if (!ScrollViewport.prototype.__init__.__argnames__) Object.defineProperties(ScrollViewport.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.__argnames__ = ScrollViewport.prototype.__init__.__argnames__;
         ScrollViewport.__handles_kwarg_interpolation__ = ScrollViewport.prototype.__init__.__handles_kwarg_interpolation__;
         ScrollViewport.prototype.set_mode = function set_mode(mode) {
@@ -12562,23 +12491,14 @@ return this.__repr__();
             var self = this;
             return window.pageXOffset;
         };
-        if (!ScrollViewport.prototype.flow_x.__argnames__) Object.defineProperties(ScrollViewport.prototype.flow_x, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.flow_y = function flow_y() {
             var self = this;
             return window.pageYOffset;
         };
-        if (!ScrollViewport.prototype.flow_y.__argnames__) Object.defineProperties(ScrollViewport.prototype.flow_y, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.paged_y = function paged_y() {
             var self = this;
             return 0;
         };
-        if (!ScrollViewport.prototype.paged_y.__argnames__) Object.defineProperties(ScrollViewport.prototype.paged_y, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.flow_scroll_to = function flow_scroll_to(x, y) {
             var self = this;
             window.scrollTo(x, y);
@@ -12596,22 +12516,13 @@ return this.__repr__();
         ScrollViewport.prototype.flow_reset_globals = function flow_reset_globals() {
             var self = this;
         };
-        if (!ScrollViewport.prototype.flow_reset_globals.__argnames__) Object.defineProperties(ScrollViewport.prototype.flow_reset_globals, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.flow_reset_transforms = function flow_reset_transforms() {
             var self = this;
         };
-        if (!ScrollViewport.prototype.flow_reset_transforms.__argnames__) Object.defineProperties(ScrollViewport.prototype.flow_reset_transforms, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.paged_content_width = function paged_content_width() {
             var self = this;
             return document.documentElement.scrollWidth;
         };
-        if (!ScrollViewport.prototype.paged_content_width.__argnames__) Object.defineProperties(ScrollViewport.prototype.paged_content_width, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.update_window_size = function update_window_size(w, h) {
             var self = this;
             self.window_width_from_parent = w;
@@ -12624,16 +12535,10 @@ return this.__repr__();
             var self = this;
             return window.innerWidth;
         };
-        if (!ScrollViewport.prototype.width.__argnames__) Object.defineProperties(ScrollViewport.prototype.width, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.height = function height() {
             var self = this;
             return window.innerHeight;
         };
-        if (!ScrollViewport.prototype.height.__argnames__) Object.defineProperties(ScrollViewport.prototype.height, {
-            __argnames__ : {value: []}
-        });
         ScrollViewport.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -12666,16 +12571,10 @@ return this.__repr__();
             var self = this;
             return self.window_width_from_parent || window.innerWidth;
         };
-        if (!IOSScrollViewport.prototype.width.__argnames__) Object.defineProperties(IOSScrollViewport.prototype.width, {
-            __argnames__ : {value: []}
-        });
         IOSScrollViewport.prototype.height = function height() {
             var self = this;
             return self.window_height_from_parent || window.innerHeight;
         };
-        if (!IOSScrollViewport.prototype.height.__argnames__) Object.defineProperties(IOSScrollViewport.prototype.height, {
-            __argnames__ : {value: []}
-        });
         IOSScrollViewport.prototype._scroll_implementation = function _scroll_implementation(x) {
             var self = this;
             if (x === 0) {
@@ -12715,9 +12614,6 @@ return this.__repr__();
             ans *= -1;
             return ans;
         };
-        if (!IOSScrollViewport.prototype.paged_x.__argnames__) Object.defineProperties(IOSScrollViewport.prototype.paged_x, {
-            __argnames__ : {value: []}
-        });
         IOSScrollViewport.prototype.paged_scroll_into_view = function paged_scroll_into_view(elem) {
             var self = this;
             var left, p;
@@ -12741,16 +12637,10 @@ return this.__repr__();
             var self = this;
             document.documentElement.style.transform = "none";
         };
-        if (!IOSScrollViewport.prototype.paged_reset_transforms.__argnames__) Object.defineProperties(IOSScrollViewport.prototype.paged_reset_transforms, {
-            __argnames__ : {value: []}
-        });
         IOSScrollViewport.prototype.paged_reset_globals = function paged_reset_globals() {
             var self = this;
             self.paged_reset_transforms();
         };
-        if (!IOSScrollViewport.prototype.paged_reset_globals.__argnames__) Object.defineProperties(IOSScrollViewport.prototype.paged_reset_globals, {
-            __argnames__ : {value: []}
-        });
         IOSScrollViewport.prototype.__repr__ = function __repr__ () {
             if(ScrollViewport.prototype.__repr__) return ScrollViewport.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -13911,9 +13801,6 @@ return this.__repr__();
             var self = this;
             self.on_change();
         };
-        if (!Prefs.prototype.onchange.__argnames__) Object.defineProperties(Prefs.prototype.onchange, {
-            __argnames__ : {value: []}
-        });
         Prefs.prototype.onclose = function onclose() {
             var self = this;
             var which, close_func;
@@ -13928,9 +13815,6 @@ return this.__repr__();
                 self.close_func();
             }
         };
-        if (!Prefs.prototype.onclose.__argnames__) Object.defineProperties(Prefs.prototype.onclose, {
-            __argnames__ : {value: []}
-        });
         Prefs.prototype.display_panel = function display_panel(which) {
             var self = this;
             var container;
@@ -13976,9 +13860,6 @@ return this.__repr__();
             var self = this;
             commit_colors(self.onchange, self.container);
         };
-        if (!Prefs.prototype.close_colors.__argnames__) Object.defineProperties(Prefs.prototype.close_colors, {
-            __argnames__ : {value: []}
-        });
         Prefs.prototype.display_layout = function display_layout(container) {
             var self = this;
             document.getElementById(self.title_id).textContent = _("Page layout");
@@ -13991,9 +13872,6 @@ return this.__repr__();
             var self = this;
             commit_layout(self.onchange, self.container);
         };
-        if (!Prefs.prototype.close_layout.__argnames__) Object.defineProperties(Prefs.prototype.close_layout, {
-            __argnames__ : {value: []}
-        });
         Prefs.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -14152,9 +14030,6 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(create_spinner("100px", "100px")), E.h2()].concat([ρσ_desugar_kwargs({style: "text-align:center"})])));
             safe_set_inner_html(container.lastChild.lastChild, _("Deleting local book copy, please wait..."));
         };
-        if (!DeleteBook.prototype.show_working.__argnames__) Object.defineProperties(DeleteBook.prototype.show_working, {
-            __argnames__ : {value: []}
-        });
         DeleteBook.prototype.on_container_click = function on_container_click(evt) {
             var self = this;
         };
@@ -14185,16 +14060,10 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })());
         };
-        if (!DeleteBook.prototype.delete_book.__argnames__) Object.defineProperties(DeleteBook.prototype.delete_book, {
-            __argnames__ : {value: []}
-        });
         DeleteBook.prototype.cancel = function cancel() {
             var self = this;
             self.overlay.hide_current_panel();
         };
-        if (!DeleteBook.prototype.cancel.__argnames__) Object.defineProperties(DeleteBook.prototype.cancel, {
-            __argnames__ : {value: []}
-        });
         DeleteBook.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -14248,9 +14117,6 @@ return this.__repr__();
             self.canceled = true;
             self.overlay.hide_current_panel();
         };
-        if (!SyncBook.prototype.cancel.__argnames__) Object.defineProperties(SyncBook.prototype.cancel, {
-            __argnames__ : {value: []}
-        });
         SyncBook.prototype.sync_data_received = function sync_data_received(library_id, lrmap, load_type, xhr, ev) {
             var self = this;
             var data, book, dev, epoch, ans, ρσ_unpack, book_id, fmt, last_read_positions, d, key, cfi;
@@ -14414,9 +14280,6 @@ return this.__repr__();
                 tm.textContent = self.date_formatter.format(new Date);
             }
         };
-        if (!MainOverlay.prototype.update_time.__argnames__) Object.defineProperties(MainOverlay.prototype.update_time, {
-            __argnames__ : {value: []}
-        });
         MainOverlay.prototype.on_hide = function on_hide() {
             var self = this;
             if (self.timer !== null) {
@@ -14424,23 +14287,14 @@ return this.__repr__();
             }
             self.timer = null;
         };
-        if (!MainOverlay.prototype.on_hide.__argnames__) Object.defineProperties(MainOverlay.prototype.on_hide, {
-            __argnames__ : {value: []}
-        });
         MainOverlay.prototype.back = function back() {
             var self = this;
             window.history.back();
         };
-        if (!MainOverlay.prototype.back.__argnames__) Object.defineProperties(MainOverlay.prototype.back, {
-            __argnames__ : {value: []}
-        });
         MainOverlay.prototype.forward = function forward() {
             var self = this;
             window.history.forward();
         };
-        if (!MainOverlay.prototype.forward.__argnames__) Object.defineProperties(MainOverlay.prototype.forward, {
-            __argnames__ : {value: []}
-        });
         MainOverlay.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -14557,9 +14411,6 @@ return this.__repr__();
                 get_read_ui().redisplay_book();
             }
         };
-        if (!PrefsOverlay.prototype.on_hide.__argnames__) Object.defineProperties(PrefsOverlay.prototype.on_hide, {
-            __argnames__ : {value: []}
-        });
         PrefsOverlay.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -14665,16 +14516,10 @@ return this.__repr__();
             c.style.display = "block";
             return c;
         };
-        if (!Overlay.prototype.clear_container.__argnames__) Object.defineProperties(Overlay.prototype.clear_container, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.update_visibility = function update_visibility() {
             var self = this;
             self.container.style.display = (self.panels.length) ? "block" : "none";
         };
-        if (!Overlay.prototype.update_visibility.__argnames__) Object.defineProperties(Overlay.prototype.update_visibility, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.container_clicked = function container_clicked(evt) {
             var self = this;
             if (self.panels.length && typeof (ρσ_expr_temp = self.panels)[ρσ_expr_temp.length-1].on_container_click === "function") {
@@ -14712,9 +14557,6 @@ return this.__repr__();
             })();
             self.show_current_panel();
         };
-        if (!Overlay.prototype.hide_loading_message.__argnames__) Object.defineProperties(Overlay.prototype.hide_loading_message, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.hide_current_panel = function hide_current_panel() {
             var self = this;
             var p;
@@ -14724,9 +14566,6 @@ return this.__repr__();
             }
             self.show_current_panel();
         };
-        if (!Overlay.prototype.hide_current_panel.__argnames__) Object.defineProperties(Overlay.prototype.hide_current_panel, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_current_panel = function show_current_panel() {
             var self = this;
             var c;
@@ -14736,17 +14575,11 @@ return this.__repr__();
             }
             self.update_visibility();
         };
-        if (!Overlay.prototype.show_current_panel.__argnames__) Object.defineProperties(Overlay.prototype.show_current_panel, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show = function show() {
             var self = this;
             self.panels = ρσ_list_decorate([ new MainOverlay(self) ]);
             self.show_current_panel();
         };
-        if (!Overlay.prototype.show.__argnames__) Object.defineProperties(Overlay.prototype.show, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.hide = function hide() {
             var self = this;
             while (self.panels.length) {
@@ -14754,80 +14587,53 @@ return this.__repr__();
             }
             self.update_visibility();
         };
-        if (!Overlay.prototype.hide.__argnames__) Object.defineProperties(Overlay.prototype.hide, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.delete_book = function delete_book() {
             var self = this;
             self.hide_current_panel();
             self.panels = ρσ_list_decorate([ new DeleteBook(self) ]);
             self.show_current_panel();
         };
-        if (!Overlay.prototype.delete_book.__argnames__) Object.defineProperties(Overlay.prototype.delete_book, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.reload_book = function reload_book() {
             var self = this;
             self.hide_current_panel();
             self.panels = ρσ_list_decorate([ new DeleteBook(self, _("Are you sure you want to reload this book?"), "refresh", _("Reload book"), true) ]);
             self.show_current_panel();
         };
-        if (!Overlay.prototype.reload_book.__argnames__) Object.defineProperties(Overlay.prototype.reload_book, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.sync_book = function sync_book() {
             var self = this;
             self.hide_current_panel();
             self.panels = ρσ_list_decorate([ new SyncBook(self) ]);
             self.show_current_panel();
         };
-        if (!Overlay.prototype.sync_book.__argnames__) Object.defineProperties(Overlay.prototype.sync_book, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_toc = function show_toc() {
             var self = this;
             self.hide_current_panel();
             self.panels.push(new TOCOverlay(self));
             self.show_current_panel();
         };
-        if (!Overlay.prototype.show_toc.__argnames__) Object.defineProperties(Overlay.prototype.show_toc, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_goto = function show_goto() {
             var self = this;
             self.hide_current_panel();
             self.panels.push(new TOCOverlay(self, create_goto_panel, _("Go to…")));
             self.show_current_panel();
         };
-        if (!Overlay.prototype.show_goto.__argnames__) Object.defineProperties(Overlay.prototype.show_goto, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_search = function show_search() {
             var self = this;
             self.hide();
             self.view.show_search();
         };
-        if (!Overlay.prototype.show_search.__argnames__) Object.defineProperties(Overlay.prototype.show_search, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_prefs = function show_prefs() {
             var self = this;
             self.hide_current_panel();
             self.panels.push(new PrefsOverlay(self));
             self.show_current_panel();
         };
-        if (!Overlay.prototype.show_prefs.__argnames__) Object.defineProperties(Overlay.prototype.show_prefs, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.show_font_size_chooser = function show_font_size_chooser() {
             var self = this;
             self.hide_current_panel();
             self.panels.push(new FontSizeOverlay(self));
             self.show_current_panel();
         };
-        if (!Overlay.prototype.show_font_size_chooser.__argnames__) Object.defineProperties(Overlay.prototype.show_font_size_chooser, {
-            __argnames__ : {value: []}
-        });
         Overlay.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -14968,9 +14774,6 @@ return this.__repr__();
             var self = this;
             self.container.style.display = "none";
         };
-        if (!SearchOverlay.prototype.hide.__argnames__) Object.defineProperties(SearchOverlay.prototype.hide, {
-            __argnames__ : {value: []}
-        });
         SearchOverlay.prototype.show = function show() {
             var self = this;
             var c;
@@ -14978,9 +14781,6 @@ return this.__repr__();
             c.style.display = "block";
             c.querySelector("input").focus();
         };
-        if (!SearchOverlay.prototype.show.__argnames__) Object.defineProperties(SearchOverlay.prototype.show, {
-            __argnames__ : {value: []}
-        });
         SearchOverlay.prototype.find = function find(text, backwards) {
             var self = this;
             if (!text) {
@@ -14995,16 +14795,10 @@ return this.__repr__();
             var self = this;
             self.find(self.search_text, false);
         };
-        if (!SearchOverlay.prototype.find_next.__argnames__) Object.defineProperties(SearchOverlay.prototype.find_next, {
-            __argnames__ : {value: []}
-        });
         SearchOverlay.prototype.find_previous = function find_previous() {
             var self = this;
             self.find(self.search_text, true);
         };
-        if (!SearchOverlay.prototype.find_previous.__argnames__) Object.defineProperties(SearchOverlay.prototype.find_previous, {
-            __argnames__ : {value: []}
-        });
         SearchOverlay.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -15291,9 +15085,6 @@ return this.__repr__();
             self.hold_timer = null;
             self.handled_tap_hold = false;
         };
-        if (!TouchHandler.prototype.__init__.__argnames__) Object.defineProperties(TouchHandler.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.__argnames__ = TouchHandler.prototype.__init__.__argnames__;
         TouchHandler.__handles_kwarg_interpolation__ = TouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
         TouchHandler.prototype.prune_expired_touches = function prune_expired_touches() {
@@ -15317,17 +15108,11 @@ return this.__repr__();
                 delete self.ongoing_touches[tid];
             }
         };
-        if (!TouchHandler.prototype.prune_expired_touches.__argnames__) Object.defineProperties(TouchHandler.prototype.prune_expired_touches, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.prototype.start_hold_timer = function start_hold_timer() {
             var self = this;
             self.stop_hold_timer();
             self.hold_timer = window.setTimeout(self.check_for_hold, 100);
         };
-        if (!TouchHandler.prototype.start_hold_timer.__argnames__) Object.defineProperties(TouchHandler.prototype.start_hold_timer, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.prototype.stop_hold_timer = function stop_hold_timer() {
             var self = this;
             if (self.hold_timer !== null) {
@@ -15335,9 +15120,6 @@ return this.__repr__();
                 self.hold_timer = null;
             }
         };
-        if (!TouchHandler.prototype.stop_hold_timer.__argnames__) Object.defineProperties(TouchHandler.prototype.stop_hold_timer, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.prototype.check_for_hold = function check_for_hold() {
             var self = this;
             var now, found_hold, touch, touchid;
@@ -15359,9 +15141,6 @@ return this.__repr__();
                 self.start_hold_timer();
             }
         };
-        if (!TouchHandler.prototype.check_for_hold.__argnames__) Object.defineProperties(TouchHandler.prototype.check_for_hold, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.prototype.handle_touchstart = function handle_touchstart(ev) {
             var self = this;
             var touch;
@@ -15469,9 +15248,6 @@ return this.__repr__();
             }
             self.handle_gesture(gesture);
         };
-        if (!TouchHandler.prototype.dispatch_gesture.__argnames__) Object.defineProperties(TouchHandler.prototype.dispatch_gesture, {
-            __argnames__ : {value: []}
-        });
         TouchHandler.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -15573,9 +15349,6 @@ return this.__repr__();
             var self = this;
             return "BookTouchHandler:for_side_margin:" + self.for_side_margin;
         };
-        if (!BookTouchHandler.prototype.__repr__.__argnames__) Object.defineProperties(BookTouchHandler.prototype.__repr__, {
-            __argnames__ : {value: []}
-        });
         BookTouchHandler.prototype.__str__ = function __str__ () {
             if(TouchHandler.prototype.__str__) return TouchHandler.prototype.__str__.call(this);
 return this.__repr__();
@@ -15910,9 +15683,6 @@ return this.__repr__();
             h = b.offsetTop - t.offsetTop - iframe.offsetTop;
             return [w, h];
         };
-        if (!View.prototype.iframe_size.__argnames__) Object.defineProperties(View.prototype.iframe_size, {
-            __argnames__ : {value: []}
-        });
         View.prototype.on_request_size = function on_request_size(data) {
             var self = this;
             var ρσ_unpack, w, h;
@@ -16001,17 +15771,11 @@ return this.__repr__();
             self.search_overlay.hide();
             self.overlay.show();
         };
-        if (!View.prototype.show_chrome.__argnames__) Object.defineProperties(View.prototype.show_chrome, {
-            __argnames__ : {value: []}
-        });
         View.prototype.show_search = function show_search() {
             var self = this;
             self.overlay.hide();
             self.search_overlay.show();
         };
-        if (!View.prototype.show_search.__argnames__) Object.defineProperties(View.prototype.show_search, {
-            __argnames__ : {value: []}
-        });
         View.prototype.set_margins = function set_margins() {
             var self = this;
             var no_margins, sd, margin_left, margin_right, margin_top, margin_bottom, max_text_height, th, extra, max_text_width, tw;
@@ -16054,9 +15818,6 @@ return this.__repr__();
 
             [side_margin("left", margin_left), side_margin("right", margin_right)];
         };
-        if (!View.prototype.set_margins.__argnames__) Object.defineProperties(View.prototype.set_margins, {
-            __argnames__ : {value: []}
-        });
         View.prototype.create_src_doc = function create_src_doc() {
             var self = this;
             var iframe_script, r;
@@ -16084,9 +15845,6 @@ return this.__repr__();
                 })());
             };
         };
-        if (!View.prototype.create_src_doc.__argnames__) Object.defineProperties(View.prototype.create_src_doc, {
-            __argnames__ : {value: []}
-        });
         View.prototype.init_iframe = function init_iframe(iframe_script) {
             var self = this;
             if (self.main_srcdoc === null) {
@@ -16181,9 +15939,6 @@ return this.__repr__();
                 self.show_spine_item_stage2(data);
             }
         };
-        if (!View.prototype.do_pending_load.__argnames__) Object.defineProperties(View.prototype.do_pending_load, {
-            __argnames__ : {value: []}
-        });
         View.prototype.on_iframe_error = function on_iframe_error(data) {
             var self = this;
             self.ui.show_error(data.title || _("There was an error processing the book"), data.msg, data.details);
@@ -16223,9 +15978,6 @@ return this.__repr__();
                 }
             }
         };
-        if (!View.prototype.on_resize.__argnames__) Object.defineProperties(View.prototype.on_resize, {
-            __argnames__ : {value: []}
-        });
         View.prototype.show_loading = function show_loading() {
             var self = this;
             var title, name;
@@ -16233,16 +15985,10 @@ return this.__repr__();
             name = self.currently_showing.name;
             self.overlay.show_loading_message((ρσ_expr_temp = _("Loading <i>{name}</i> from <i>{title}</i>, please wait..."), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({name: name, title: title})])));
         };
-        if (!View.prototype.show_loading.__argnames__) Object.defineProperties(View.prototype.show_loading, {
-            __argnames__ : {value: []}
-        });
         View.prototype.hide_loading = function hide_loading() {
             var self = this;
             self.overlay.hide_loading_message();
         };
-        if (!View.prototype.hide_loading.__argnames__) Object.defineProperties(View.prototype.hide_loading, {
-            __argnames__ : {value: []}
-        });
         View.prototype.parse_cfi = function parse_cfi(encoded_cfi, book) {
             var self = this;
             var name, cfi, ρσ_unpack, snum, rest;
@@ -16321,9 +16067,6 @@ return this.__repr__();
             var self = this;
             self.display_book(self.book);
         };
-        if (!View.prototype.redisplay_book.__argnames__) Object.defineProperties(View.prototype.redisplay_book, {
-            __argnames__ : {value: []}
-        });
         View.prototype.show_name = function show_name() {
             var self = this;
             var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
@@ -16605,18 +16348,12 @@ return this.__repr__();
             var self = this;
             ρσ_interpolate_kwargs.call(self, self.send_message, ["change_font_size"].concat([ρσ_desugar_kwargs({base_font_size: get_session_data().get("base_font_size")})]));
         };
-        if (!View.prototype.update_font_size.__argnames__) Object.defineProperties(View.prototype.update_font_size, {
-            __argnames__ : {value: []}
-        });
         View.prototype.update_color_scheme = function update_color_scheme() {
             var self = this;
             var cs;
             cs = self.get_color_scheme(true);
             ρσ_interpolate_kwargs.call(self, self.send_message, ["change_color_scheme"].concat([ρσ_desugar_kwargs({color_scheme: cs})]));
         };
-        if (!View.prototype.update_color_scheme.__argnames__) Object.defineProperties(View.prototype.update_color_scheme, {
-            __argnames__ : {value: []}
-        });
         View.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -16720,18 +16457,12 @@ return this.__repr__();
             window.addEventListener("resize", debounce(self.on_resize.bind(self), 250));
             self.db = get_db(self.db_initialized.bind(self), self.show_error.bind(self));
         };
-        if (!ReadUI.prototype.__init__.__argnames__) Object.defineProperties(ReadUI.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         ReadUI.__argnames__ = ReadUI.prototype.__init__.__argnames__;
         ReadUI.__handles_kwarg_interpolation__ = ReadUI.prototype.__init__.__handles_kwarg_interpolation__;
         ReadUI.prototype.on_resize = function on_resize() {
             var self = this;
             self.view.on_resize();
         };
-        if (!ReadUI.prototype.on_resize.__argnames__) Object.defineProperties(ReadUI.prototype.on_resize, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.show_stack = function show_stack(name) {
             var self = this;
             var ans, d, v, w;
@@ -16803,9 +16534,6 @@ return this.__repr__();
             [pr.removeAttribute("value"), pr.removeAttribute("max")];
             div.lastChild.textContent = _("Downloading book manifest...");
         };
-        if (!ReadUI.prototype.init_ui.__argnames__) Object.defineProperties(ReadUI.prototype.init_ui, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.show_progress_message = function show_progress_message(msg) {
             var self = this;
             var div;
@@ -16847,30 +16575,18 @@ return this.__repr__();
             metadata = self.metadata || (ρσ_expr_temp = library_data.metadata)[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id];
             self.load_book(library_id, book_id, fmt, metadata, true);
         };
-        if (!ReadUI.prototype.reload_book.__argnames__) Object.defineProperties(ReadUI.prototype.reload_book, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.redisplay_book = function redisplay_book() {
             var self = this;
             self.view.redisplay_book();
         };
-        if (!ReadUI.prototype.redisplay_book.__argnames__) Object.defineProperties(ReadUI.prototype.redisplay_book, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.update_font_size = function update_font_size() {
             var self = this;
             self.view.update_font_size();
         };
-        if (!ReadUI.prototype.update_font_size.__argnames__) Object.defineProperties(ReadUI.prototype.update_font_size, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.update_color_scheme = function update_color_scheme() {
             var self = this;
             self.view.update_color_scheme();
         };
-        if (!ReadUI.prototype.update_color_scheme.__argnames__) Object.defineProperties(ReadUI.prototype.update_color_scheme, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.db_initialized = function db_initialized() {
             var self = this;
             var ρσ_unpack, pl;
@@ -16889,9 +16605,6 @@ return this.__repr__();
                 }
             }
         };
-        if (!ReadUI.prototype.db_initialized.__argnames__) Object.defineProperties(ReadUI.prototype.db_initialized, {
-            __argnames__ : {value: []}
-        });
         ReadUI.prototype.start_load = function start_load(book_id, fmt, metadata, force_reload) {
             var self = this;
             self.current_book_id = book_id;
@@ -19063,9 +18776,6 @@ return this.__repr__();
             }
             return self;
         };
-        if (!ConfigItem.prototype.initialize.__argnames__) Object.defineProperties(ConfigItem.prototype.initialize, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.from_storage = function from_storage() {
             var self = this;
             var val;
@@ -19075,9 +18785,6 @@ return this.__repr__();
             }
             return val;
         };
-        if (!ConfigItem.prototype.from_storage.__argnames__) Object.defineProperties(ConfigItem.prototype.from_storage, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.to_storage = function to_storage(val) {
             var self = this;
             if (self.item_data.to_storage) {
@@ -19097,9 +18804,6 @@ return this.__repr__();
             }
             return val;
         };
-        if (!ConfigItem.prototype.defval.__argnames__) Object.defineProperties(ConfigItem.prototype.defval, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.ui_value_changed = function ui_value_changed() {
             var self = this;
             if (self.ignore_ui_value_changed) {
@@ -19107,17 +18811,11 @@ return this.__repr__();
             }
             self.to_storage(self.from_ui());
         };
-        if (!ConfigItem.prototype.ui_value_changed.__argnames__) Object.defineProperties(ConfigItem.prototype.ui_value_changed, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.reset_to_default = function reset_to_default() {
             var self = this;
             self.to_ui(self.defval());
             self.ui_value_changed();
         };
-        if (!ConfigItem.prototype.reset_to_default.__argnames__) Object.defineProperties(ConfigItem.prototype.reset_to_default, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.to_ui = function to_ui(val) {
             var self = this;
         };
@@ -19127,9 +18825,6 @@ return this.__repr__();
         ConfigItem.prototype.from_ui = function from_ui() {
             var self = this;
         };
-        if (!ConfigItem.prototype.from_ui.__argnames__) Object.defineProperties(ConfigItem.prototype.from_ui, {
-            __argnames__ : {value: []}
-        });
         ConfigItem.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -19179,9 +18874,6 @@ return this.__repr__();
             var self = this;
             return self.control.value;
         };
-        if (!Choices.prototype.from_ui.__argnames__) Object.defineProperties(Choices.prototype.from_ui, {
-            __argnames__ : {value: []}
-        });
         Choices.prototype.__repr__ = function __repr__ () {
             if(ConfigItem.prototype.__repr__) return ConfigItem.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -19235,17 +18927,11 @@ return this.__repr__();
             var self = this;
             return bool(self.control.checked);
         };
-        if (!CheckBox.prototype.from_ui.__argnames__) Object.defineProperties(CheckBox.prototype.from_ui, {
-            __argnames__ : {value: []}
-        });
         CheckBox.prototype.toggle = function toggle() {
             var self = this;
             self.to_ui(!self.from_ui());
             self.ui_value_changed();
         };
-        if (!CheckBox.prototype.toggle.__argnames__) Object.defineProperties(CheckBox.prototype.toggle, {
-            __argnames__ : {value: []}
-        });
         CheckBox.prototype.__repr__ = function __repr__ () {
             if(ConfigItem.prototype.__repr__) return ConfigItem.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -19297,9 +18983,6 @@ return this.__repr__();
             var self = this;
             return self.control.value;
         };
-        if (!SpinBox.prototype.from_ui.__argnames__) Object.defineProperties(SpinBox.prototype.from_ui, {
-            __argnames__ : {value: []}
-        });
         SpinBox.prototype.__repr__ = function __repr__ () {
             if(ConfigItem.prototype.__repr__) return ConfigItem.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -19342,9 +19025,6 @@ return this.__repr__();
             var self = this;
             return self.control.value || "";
         };
-        if (!LineEdit.prototype.from_ui.__argnames__) Object.defineProperties(LineEdit.prototype.from_ui, {
-            __argnames__ : {value: []}
-        });
         LineEdit.prototype.__repr__ = function __repr__ () {
             if(ConfigItem.prototype.__repr__) return ConfigItem.prototype.__repr__.call(this);
             return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -23385,9 +23065,6 @@ return this.__repr__();
             var self = this;
             self.animation_id = null;
         };
-        if (!FlickAnimator.prototype.__init__.__argnames__) Object.defineProperties(FlickAnimator.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         FlickAnimator.__argnames__ = FlickAnimator.prototype.__init__.__argnames__;
         FlickAnimator.__handles_kwarg_interpolation__ = FlickAnimator.prototype.__init__.__handles_kwarg_interpolation__;
         FlickAnimator.prototype.start = function start(gesture) {
@@ -23452,9 +23129,6 @@ return this.__repr__();
                 self.animation_id = null;
             }
         };
-        if (!FlickAnimator.prototype.stop.__argnames__) Object.defineProperties(FlickAnimator.prototype.stop, {
-            __argnames__ : {value: []}
-        });
         FlickAnimator.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -24518,7 +24192,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.7.0";
+        CALIBRE_VERSION = "3.8.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -24578,16 +24252,10 @@ return this.__repr__();
             var self = this;
             return "{name:" + ρσ_str.format("{}", self.name) + ", version:" + ρσ_str.format("{}", self.version) + ", layoutStyle:" + ρσ_str.format("{}", self.layoutStyle) + "}";
         };
-        if (!EPUBReadingSystem.prototype.__repr__.__argnames__) Object.defineProperties(EPUBReadingSystem.prototype.__repr__, {
-            __argnames__ : {value: []}
-        });
         EPUBReadingSystem.prototype.__str__ = function __str__() {
             var self = this;
             return self.__repr__();
         };
-        if (!EPUBReadingSystem.prototype.__str__.__argnames__) Object.defineProperties(EPUBReadingSystem.prototype.__str__, {
-            __argnames__ : {value: []}
-        });
         Object.defineProperty(EPUBReadingSystem.prototype, "__bases__", {value: []});
         
         
@@ -24639,6 +24307,7 @@ return this.__repr__();
             self.replace_history_on_next_cfi_update = true;
             self.encrypted_communications = false;
             self.blob_url_map = Object.create(null);
+            self.resource_urls = Object.create(null);
             self.content_ready = false;
             self.last_window_width = self.last_window_height = -1;
             window.addEventListener("message", self.handle_message, false);
@@ -24665,9 +24334,6 @@ return this.__repr__();
             self.last_window_ypos = 0;
             self.length_before = null;
         };
-        if (!IframeBoss.prototype.__init__.__argnames__) Object.defineProperties(IframeBoss.prototype.__init__, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.__argnames__ = IframeBoss.prototype.__init__.__argnames__;
         IframeBoss.__handles_kwarg_interpolation__ = IframeBoss.prototype.__init__.__handles_kwarg_interpolation__;
         IframeBoss.prototype.handle_message = function handle_message(event) {
@@ -24746,28 +24412,32 @@ return this.__repr__();
             ρσ_interpolate_kwargs.call(self, self.send_message, ["print"].concat([ρσ_desugar_kwargs({string: " ".join(map(str, args))})]));
         };
         if (!IframeBoss.prototype.print_to_parent.__handles_kwarg_interpolation__) Object.defineProperties(IframeBoss.prototype.print_to_parent, {
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: []}
+            __handles_kwarg_interpolation__ : {value: true}
         });
         IframeBoss.prototype.onerror = function onerror(msg, script_url, line_number, column_number, error_object) {
             var self = this;
-            var fname, details;
+            var is_internal_error, fname, details;
             if (error_object === null) {
                 console.log("Unhandled error from external javascript, ignoring: " + ρσ_str.format("{}", msg) + " " + ρσ_str.format("{}", script_url) + " " + ρσ_str.format("{}", line_number) + "");
                 return;
             }
-            console.log(error_object);
-            try {
-                fname = (ρσ_expr_temp = script_url.rpartition("/"))[ρσ_expr_temp.length-1] || script_url;
-                msg = msg + "<br><span style=\"font-size:smaller\">" + "Error at {}:{}:{}".format(fname, line_number, column_number || "") + "</span>";
-                details = (error_object) ? traceback.format_exception(error_object).join("") : "";
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["error"].concat([ρσ_desugar_kwargs({title: _("Unhandled error"), details: details, msg: msg})]));
-                return true;
-            } catch (ρσ_Exception) {
-                ρσ_last_exception = ρσ_Exception;
-                {
-                    console.log("There was an error in the iframe unhandled exception handler");
-                } 
+            is_internal_error = !(ρσ_expr_temp = self.resource_urls)[(typeof script_url === "number" && script_url < 0) ? ρσ_expr_temp.length + script_url : script_url];
+            if (is_internal_error) {
+                console.log(error_object);
+                try {
+                    fname = (ρσ_expr_temp = script_url.rpartition("/"))[ρσ_expr_temp.length-1] || script_url;
+                    msg = msg + "<br><span style=\"font-size:smaller\">" + "Error at {}:{}:{}".format(fname, line_number, column_number || "") + "</span>";
+                    details = (error_object) ? traceback.format_exception(error_object).join("") : "";
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["error"].concat([ρσ_desugar_kwargs({title: _("Unhandled error"), details: details, msg: msg})]));
+                    return true;
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        console.log("There was an error in the iframe unhandled exception handler");
+                    } 
+                }
+            } else {
+                (console.error || console.log)("There was an error in the JavaScript from within the book");
             }
         };
         if (!IframeBoss.prototype.onerror.__argnames__) Object.defineProperties(IframeBoss.prototype.onerror, {
@@ -24821,7 +24491,7 @@ return this.__repr__();
             root_data = ρσ_unpack[0];
             self.mathjax = ρσ_unpack[1];
             self.blob_url_map = ρσ_unpack[2];
-            unserialize_html(root_data, self.content_loaded);
+            self.resource_urls = unserialize_html(root_data, self.content_loaded);
         };
         if (!IframeBoss.prototype.display.__argnames__) Object.defineProperties(IframeBoss.prototype.display, {
             __argnames__ : {value: ["data"]}
@@ -24876,9 +24546,6 @@ return this.__repr__();
             var self = this;
             document.documentElement.style.fontSize = document.body.style.fontSize = "{}px".format(opts.base_font_size);
         };
-        if (!IframeBoss.prototype.apply_font_size.__argnames__) Object.defineProperties(IframeBoss.prototype.apply_font_size, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.apply_colors = function apply_colors() {
             var self = this;
             var elem;
@@ -24889,9 +24556,6 @@ return this.__repr__();
                 elem.style.backgroundColor = opts.color_scheme.background;
             }
         };
-        if (!IframeBoss.prototype.apply_colors.__argnames__) Object.defineProperties(IframeBoss.prototype.apply_colors, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.change_font_size = function change_font_size(data) {
             var self = this;
             if (ρσ_exists.n(data.base_font_size) && (data.base_font_size !== opts.base_font_size && (typeof data.base_font_size !== "object" || ρσ_not_equals(data.base_font_size, opts.base_font_size)))) {
@@ -24927,9 +24591,6 @@ return this.__repr__();
             }
             self.content_loaded_stage2();
         };
-        if (!IframeBoss.prototype.content_loaded.__argnames__) Object.defineProperties(IframeBoss.prototype.content_loaded, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.content_loaded_stage2 = function content_loaded_stage2() {
             var self = this;
             var csi, ipos, spine, files, current_name, spine_index, si, i;
@@ -24968,9 +24629,6 @@ return this.__repr__();
             self.last_cfi = null;
             window.setTimeout(self.update_cfi, 0);
         };
-        if (!IframeBoss.prototype.content_loaded_stage2.__argnames__) Object.defineProperties(IframeBoss.prototype.content_loaded_stage2, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.calculate_progress_frac = function calculate_progress_frac(current_name, spine_index) {
             var self = this;
             var files, file_length, frac, ans;
@@ -24997,9 +24655,6 @@ return this.__repr__();
             }
             return self.calculate_progress_frac(current_name, index);
         };
-        if (!IframeBoss.prototype.get_progress_frac.__argnames__) Object.defineProperties(IframeBoss.prototype.get_progress_frac, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.update_cfi = function update_cfi() {
             var self = this;
             var cfi, spine, current_name, index;
@@ -25018,18 +24673,12 @@ return this.__repr__();
                 }
             }
         };
-        if (!IframeBoss.prototype.update_cfi.__argnames__) Object.defineProperties(IframeBoss.prototype.update_cfi, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.update_toc_position = function update_toc_position() {
             var self = this;
             var visible_anchors;
             visible_anchors = update_visible_toc_anchors(self.book.manifest.toc_anchor_map, self.anchor_funcs);
             ρσ_interpolate_kwargs.call(self, self.send_message, ["update_toc_position"].concat([ρσ_desugar_kwargs({visible_anchors: visible_anchors})]));
         };
-        if (!IframeBoss.prototype.update_toc_position.__argnames__) Object.defineProperties(IframeBoss.prototype.update_toc_position, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.onscroll = function onscroll() {
             var self = this;
             if (self.content_ready) {
@@ -25037,9 +24686,6 @@ return this.__repr__();
                 self.update_toc_position();
             }
         };
-        if (!IframeBoss.prototype.onscroll.__argnames__) Object.defineProperties(IframeBoss.prototype.onscroll, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.onresize = function onresize() {
             var self = this;
             self.send_message("request_size");
@@ -25050,9 +24696,6 @@ return this.__repr__();
                 self.onresize_stage2();
             }
         };
-        if (!IframeBoss.prototype.onresize.__argnames__) Object.defineProperties(IframeBoss.prototype.onresize, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.onresize_stage2 = function onresize_stage2() {
             var self = this;
             var ρσ_unpack, cfi;
@@ -25074,9 +24717,6 @@ return this.__repr__();
             self.update_cfi();
             self.update_toc_position();
         };
-        if (!IframeBoss.prototype.onresize_stage2.__argnames__) Object.defineProperties(IframeBoss.prototype.onresize_stage2, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.received_window_size = function received_window_size(data) {
             var self = this;
             scroll_viewport.update_window_size(data.width, data.height);
@@ -25142,9 +24782,6 @@ return this.__repr__();
                 a.addEventListener("click", self.link_activated);
             }
         };
-        if (!IframeBoss.prototype.connect_links.__argnames__) Object.defineProperties(IframeBoss.prototype.connect_links, {
-            __argnames__ : {value: []}
-        });
         IframeBoss.prototype.link_activated = function link_activated(evt) {
             var self = this;
             var link_attr, data, ρσ_unpack, name, frag;

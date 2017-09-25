@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "8月 25, 2017" "3.7.0" "calibre"
+.TH "EBOOK-POLISH" "1" "9月 22, 2017" "3.8.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -41,34 +41,29 @@ ebook\-polish [options] input_file [output_file]
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+本の最適化(polishing) とは、要するにあなたが端正こめて作成した電子書籍を、ぴかぴかに磨き上げることです。
+本の最適化は、あなたの電子書籍への変更を最小限にとどめるよう動作します。本の変換と異なり、CSSのフラット化、ファイル名の変更、フォントサイズの変更、余白の調整等を、行いません。求められる効果に対して、最小限の変更のみを行います。
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+本の最適化は、本の作成プロセスの最終段階で使用すべきものです。
 .sp
-You should use this tool as the last step in your e\-book creation process.
+本の最適化は、AZW3 or EPUB フォーマットに対してのみ動作することに留意してください。
 .sp
-Note that polishing only works on files in the AZW3 or EPUB formats.
-.sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+スペースを含む引数を \fBebook\-polish\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
 .SH [オプション]
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-本の中の画像をロスレス圧縮して、画像の品質を損なうことなくフ ァイルサイズを減らします。
+書籍中の画像を可逆圧縮し、画像の品質を損なうことなく ファイルサイズを減らします。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+表紙画像へのパス。電子書籍で指定されている表紙を変更します。表紙がない場合や正しく識別されていない場合は、新しい表紙を挿入してください。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-ドキュメントから参照されているフォントで、まだ埋め込まれていない フォントをすべて埋め込みます。コンピューターをスキャンしてフォントを探し、 見つかった場合はそれをドキュメントに埋め込みます。 ドキュメントにフォントを埋め込むための、適切なライセンスを所有していることを確認してください。
+ドキュメントから参照されているフォントで、まだ埋め込まれていない フォントをすべて埋め込みます。コンピュータをスキャンしてフォントを探し、 見つかった場合はそれをドキュメントに埋め込みます。 ドキュメントにフォントを埋め込むための、適切なライセンスを所有していることを確認してください。
 .UNINDENT
 .INDENT 0.0
 .TP
