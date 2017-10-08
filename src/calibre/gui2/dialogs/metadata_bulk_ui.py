@@ -645,7 +645,7 @@ class Ui_MetadataBulkDialog(object):
 " from the edges of cover images. This can sometimes remove too\n"
 " much, so use with care."))
         self.cover_trim.setText(_("&Trim cover (DANGEROUS)"))
-        self.cover_from_fmt.setText(_("Set from &e-book file(s)"))
+        self.cover_from_fmt.setText(_("Set from &e-book files"))
         self.cover_clone.setToolTip(_("Set the covers of all selected books to be the same\n"
 "as that of the first selected book."))
         self.cover_clone.setText(_("&Clone covers"))

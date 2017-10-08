@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -119,7 +119,7 @@ class Ui_Form(object):
         self.label_15.setText(_("Send email &from:"))
         self.email_from.setToolTip(_("<p>This is what will be present in the From: field of emails sent by calibre.<br> Set it to your email address"))
         self.groupBox_5.setToolTip(_("<p>A mail server is useful if the service you are sending mail to only accepts email from well know mail services."))
-        self.groupBox_5.setTitle(_("Mail server"))
+        self.groupBox_5.setTitle(_("Email server"))
         self.label_16.setText(_("calibre can <b>optionally</b> use a server to send mail"))
         self.label_17.setText(_("&Hostname:"))
         self.relay_host.setToolTip(_("The hostname of your mail server. For example, smtp.gmail.com"))
