@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/saving.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -72,6 +72,6 @@ class Ui_Form(object):
         self.label_3.setText(_("File &formats to save:"))
         self.opt_asciiize.setText(_("Convert non-English characters to &English equivalents"))
         self.opt_write_opf.setText(_("Save metadata in a separate &OPF file"))
-        self.opt_show_files_after_save.setText(_("&Show files in file browser after saving to disk"))
+        self.opt_show_files_after_save.setText(_("&Show files in the file browser after saving to disk"))
 
 from calibre.gui2.preferences.save_template import SaveTemplate

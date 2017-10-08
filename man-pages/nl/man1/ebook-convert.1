@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "september 22, 2017" "3.8.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "oktober 06, 2017" "3.9.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,19 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert input_file output_file [opties]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Converteer een e\-book van het ene naar het andere formaat.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+Het e\-book uitvoerformaat wordt geraden aan de hand van de extensie van het output_file. output_file kan ook van het speciale .EXT formaat zijn, waarbij EXT de extensie is van het uitvoerbestand. In dit geval wordt de naam van het uitvoerbestand die van het invoerbestand. Let op dat de bestandsnaam niet mag beginnen met een koppelteken (\-). Als, tot slot, output_file geen extensie heeft wordt deze gezien als een map en wordt een “open e\-book” (OEB) bestaande uit HTML\-bestanden weggeschreven in die map. Deze bestanden zijn dezelfde die normaal gezien de uitvoer plug\-in  zouden zijn gepasseerd.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an “open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+Na specificatie van het invoer\- en uitvoerbestand kan men de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp kan na het kiezen van het invoer\- en uitvoerbestand de \-h optie worden gebruikt.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
-.sp
-For full documentation of the conversion system see
+Voor de volledige documentatie van het conversiesysteem zie
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
@@ -298,7 +296,7 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Het pad naar een bestand dat regels bevat om de CSS stijlen in dit boek te transformeren… De handigste weg om zo\fB\(aq\fPn bestand aan te maken is de wizard te gebruiken om regels op te stellen. U vindt deze onder de knop \fB"\fPBoeken converteren\fB"\fP onder de rubriek \fB"\fPUiterlijk & gedrag > Transformeer stijlen\fB"\fP Eens u regels heeft aangemaakt gebruikt u de functie \fB"\fPexporteren\fB"\fP om ze op te slaan in een bestand.
 .UNINDENT
 .INDENT 0.0
 .TP
