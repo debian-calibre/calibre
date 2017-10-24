@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -137,7 +137,7 @@ class Ui_TagCategories(object):
         self.vboxlayout3.addItem(spacerItem4)
         self.unapply_button = QtWidgets.QToolButton(TagCategories)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(I("list_remove.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(I("minus.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.unapply_button.setIcon(icon5)
         self.unapply_button.setObjectName("unapply_button")
         self.vboxlayout3.addWidget(self.unapply_button)
@@ -162,7 +162,7 @@ class Ui_TagCategories(object):
 
     def retranslateUi(self, TagCategories):
 
-        TagCategories.setWindowTitle(_("User Categories Editor"))
+        TagCategories.setWindowTitle(_("User categories editor"))
         self.label_3.setText(_("Category &name: "))
         self.category_box.setToolTip(_("Select a category to edit"))
         self.delete_category_button.setToolTip(_("Delete this selected tag category"))
@@ -172,16 +172,16 @@ class Ui_TagCategories(object):
         self.add_category_button.setText(_("..."))
         self.rename_category_button.setToolTip(_("Rename the current category to what is in the box"))
         self.rename_category_button.setText(_("..."))
-        self.label_5.setText(_("Category &filter: "))
+        self.label_5.setText(_("&Category filter: "))
         self.category_filter_box.setToolTip(_("Select the content kind of the new category"))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
 "      current virtual library. Applied items not in the VL will be marked\n"
 "      \"not on any book\".</p>"))
         self.apply_vl_checkbox.setText(_("&Show only available items in current virtual library"))
-        self.label.setText(_("A&vailable items"))
+        self.label.setText(_("&Available items"))
         self.apply_button.setToolTip(_("Apply tags to current tag category"))
         self.apply_button.setText(_("..."))
-        self.label_2.setText(_("A&pplied items"))
+        self.label_2.setText(_("Applied &items"))
         self.unapply_button.setToolTip(_("Unapply (remove) tag from current tag category"))
         self.unapply_button.setText(_("..."))
 

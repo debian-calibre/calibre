@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-CUSTOMIZE" "1" "Ekim 06, 2017" "3.9.0" "calibre"
+.TH "CALIBRE-CUSTOMIZE" "1" "Ekim 20, 2017" "3.10.0" "calibre"
 .SH NAME
 calibre-customize \- calibre-customize
 .
@@ -35,13 +35,13 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-customize Tercihleri
+calibre\-customize seçenekleri
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Harici eklentiler yükleyerek Calibre’ye özelleştirin.
+Harici eklentiler yükleyerek Calibre’ye özelleştir.
 .sp
 Whenever you pass arguments to \fBcalibre\-customize\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .SH [SEÇENEKLER]
@@ -53,12 +53,12 @@ Eklentiyi içeren ZIP dosyasının bulunduğu konumu belirterek eklenti ekleyin.
 .INDENT 0.0
 .TP
 .B \-\-build\-plugin, \-b
-Eklenti geliştiricileri için:
+For plugin developers: Path to the directory where you are developing the plugin. This command will automatically zip up the plugin and update it in calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-customize\-plugin
-Eklentiyi özelleştir. Eklenti ismiyle özelleştirme dizesini virgülle ayırarak belirleyin.
+Eklentiyi özelleştir. Eklentinin ismini ve virgülle ayrılmış özelleştirme metnini belirleyin
 .UNINDENT
 .INDENT 0.0
 .TP

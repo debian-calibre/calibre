@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "outubro 06, 2017" "3.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "outubro 20, 2017" "3.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,21 +35,25 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert ficheiro_ entrada ficheiro_saída [opções]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Converte um formato de livro digital noutro formato
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+
+.nf
+ficheiro_
+.fi
+ entrada é a fonte e o ficheiro_saída é o resultado final. Os dois devem ser especificados como os dois primeiros argumento para o comando.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an «open e\-book» (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+O formato do resultado final é definido através  da extensão do ficheiro do  ficheiro_saída. O ficheiro_saída pode ser também o formato especial .EXT onde EXT é a extensão do resultado final . Neste caso, o nome do formato do  produto final é derivado do nome do ficheiro de matéria. Note que o nome do ficheiro não deve começar com um hífen. Finalmente, se ficheiro_saída não tiver extensão, então será tratado como diretório e um «um livro aberto» (OEB) composto por  ficheiros  HTML é gravado nesse diretório. Estes formatos são os formatos que normalmente serão passados pelo plugin de saída.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Depois de especificar o formato de entrada e o de saída poderá personalizar a conversão através da especificação de várias opções. As opções disponíveis são dependentes  do tipo de formato de entrada e o de saída. Para obter ajuda neste tópico introduza o ficheiro de entrada e de saída seguida da opção \-h .
 .sp
-For full documentation of the conversion system see
+Para obter a documentação completa do sistema de conversão veja
 conversion
 .sp
 Sempre que passar argumentos para o \fBebook\-convert\fP que contenham espaços ponha\-os entre aspas. Por exemplo: «/some path/with spaces»
@@ -541,7 +545,7 @@ Definir idioma.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Definir a data de publicação (esta é assumida como localizada no fuso horário local, a menos que o fuso horário seja explicitamente especificado)
 .UNINDENT
 .INDENT 0.0
 .TP
