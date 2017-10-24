@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "október 06, 2017" "3.9.0" "calibre"
+.TH "CALIBREDB" "1" "október 20, 2017" "3.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%HOZZÁADÁS KÖNYVTÁRAKBÓL\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -245,7 +245,7 @@ A hozzáadott könyv(ek) szerzőjének megadása
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+Hozzáadott könyv borító helye
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -260,7 +260,7 @@ Könyvek hozzáadása az adatbázishoz akkor is, ha már léteznek. Az összehas
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Állítsa be a könyv azonosítóit, pl. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -270,7 +270,7 @@ A hozzáadott könyv(ek) ISBN\-számának megadása
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+A nyelvek vesszővel elválasztott listája (legjobb az ISO639 nyelvi kódok használatához, bár egyes nyelveket is fel lehet ismerni)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -292,9 +292,9 @@ A hozzáadott könyv(ek) címkéinek megadása
 .B \-\-title, \-t
 A hozzáadott könyv(ek) címének megadása
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS HOZZÁADÁS KÖNYVTÁRAKBÓL
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Könyvek könyvtárakból történő hozzáadásának ellenőrzése. Alapértelmezés szerint csak azokat a fájlokat adja hozzá, amelyek kiterjesztése egyezik az ismert e\-könyvek fájltípusaival.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -353,7 +353,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+Ne cserélje ki a formátumot, ha már létezik
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "октября 06, 2017" "3.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "октября 20, 2017" "3.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -85,7 +85,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Укажите профиль ввода. Профиль ввода указывает конвертеру, как интерпретировать различную информацию внутри исходного документа. Например, длина зависит от разрешения (длина в пикселях). Варианты:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Указать профиль ввода. Профиль ввода указывает конвертеру, как интерпретировать различную информацию внутри исходного документа. Например, длина зависит от разрешения (длина в пикселях). Варианты:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -95,7 +95,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Установите выходной профиль. Выходной профиль указывает конвертеру как оптимизировать созданный документ для определённого устройства (например изменяя размер изображений под размер экрана устройства). В некоторых случаях выходной профиль может использоваться для оптимизации результата для конкретного устройства, но это редко необходима. Варианты:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Установить выходной профиль. Выходной профиль указывает конвертеру как оптимизировать созданный документ для определённого устройства (например изменяя размер изображений под размер экрана устройства). В некоторых случаях выходной профиль может использоваться для оптимизации результата для конкретного устройства, но это редко необходимо. Варианты:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -224,7 +224,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Вставлять пустую строку между параграфами. Не будет работать, если в исходном документе параграфы (теги <p> или <div>) не используются.
+Вставить пустую строку между параграфами. Не будет работать, если в исходном документе параграфы (теги <p> или <div>) не используются.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -274,12 +274,12 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Удалять промежутки между параграфами и устанавливать отступ параграфа в 1.5em. Удаление промежутков не будет работать, если в исходном документе параграфы (теги <p> или <div>) не используются.
+Удалить промежутки между параграфами и установить отступ параграфа в 1.5em. Удаление промежутков не будет работать, если в исходном документе параграфы (теги <p> или <div>) не используются.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Когда Calibre удаляет пустые строки между абзацами, она автоматически расставляет красные строки, чтобы абзацы визуально выделялись. Эта опция устанавливает величину отступа (в em). Если установлена отрицательная величина, используется размер отступа, указанный в документе.
+Когда Calibre удаляет пустые строки между абзацами, то автоматически расставляет красные строки, чтобы абзацы визуально выделялись. Эта опция устанавливает величину отступа (в em). Если установлена отрицательная величина, используется размер отступа, указанный в документе.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +412,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Укажите, как помечать найденные главы. Значение \fB"\fPразрыв страницы\fB"\fP (pagebreak) будет вставлять разрывы страниц после глав. Значение \fB"\fPлинейка\fB"\fP (rule) будет вставлять пустую строку перед главами. Значение \fB"\fPнет\fB"\fP (none) отключит разметку глав, а значение \fB"\fPоба\fB"\fP (both) будет вставлять и разрывы страниц, и пустые строки.
+Указать, как помечать найденные главы. Значение \fB"\fPразрыв страницы\fB"\fP (pagebreak) будет вставлять разрывы страниц после глав. Значение \fB"\fPлинейка\fB"\fP (rule) будет вставлять пустую строку перед главами. Значение \fB"\fPнет\fB"\fP (none) отключит разметку глав, а значение \fB"\fPоба\fB"\fP (both) будет вставлять и разрывы страниц, и пустые строки.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -422,7 +422,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Вставьте метаданные книги в начале книги. Это полезно, если ваша читалка не поддерживает отображение/поиск метаданных напрямую.
+Вставить метаданные книги в начале книги. Это полезно, если ваша читалка не поддерживает отображение/поиск метаданных напрямую.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -480,7 +480,7 @@ XPath\-выражение, которое определяет все теги, 
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Удаление записей, названия которых соответствуют указанному регулярному выражению, из содержания. Соответствующие записи и их потомки будут удалены.
+Удалить записи, названия которых соответствуют указанному регулярному выражению, из Содержания. Соответствующие записи и их потомки будут удалены.
 .UNINDENT
 .INDENT 0.0
 .TP

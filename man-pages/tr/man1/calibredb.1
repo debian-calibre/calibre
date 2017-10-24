@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Ekim 06, 2017" "3.9.0" "calibre"
+.TH "CALIBREDB" "1" "Ekim 20, 2017" "3.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -378,7 +378,7 @@ calibredb show_metadata [seçenekler] id
 .UNINDENT
 .UNINDENT
 .sp
-id ile tanımlanan kitap için calibre veri tabanında kayıtlı metadata’yı göster.
+id ile tanımlanan kitap için Calibre veri tabanında kayıtlı metadata’yı göster.
 id, arama komutuyla gelen id numarasıdır.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
@@ -399,7 +399,7 @@ calibredb set_metadata [seçenekler] id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Id ile belirtilen kitap için calibre veri tabanında kayıtlı metadata’yı
+Id ile belirtilen kitap için Calibre veri tabanında kayıtlı metadata’yı
 metadata.opf OPF dosyasından ayarla. id arama komutundaki id numarasıdır.
 show_metadata komutuna –as\-opf anahtarını vererek OPF biçimi ile ilgili
 fikir edinebilirsiniz. Ayrıca –field seçeneği ile değişik alanların metadata’sını
@@ -442,7 +442,7 @@ Kimlik listesine bakmadan tüm kitapları dışa aktar.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normalde, calibre dosya isimleri için İngilizce olmayan tüm karakterleri İngilizce eşleniklerine çevirir. UYARI: Bunu kapatırsanız, kaydettiğiniz dosya sisteminin evrensel kod desteğine bağlı olarak kaydetme sırasında hatalar alabilirsiniz. Bu anahtar bu davranışı kapatacaktır.
+Normalde, Calibre dosya isimleri için İngilizce olmayan tüm karakterleri İngilizce eşleniklerine çevirir. UYARI: Bunu kapatırsanız, kaydettiğiniz dosya sisteminin evrensel kod desteğine bağlı olarak kaydetme sırasında hatalar alabilirsiniz. Bu anahtar bu davranışı kapatacaktır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -452,12 +452,12 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normal olarak calibre üst veriyi calibre kitaplığındaki kaydedilmiş dosyalardan günceller. Diske kaydetmeyi yavaşlatır. Bu anahtar bu davranışı kapatacaktır.
+Normal olarak Calibre üst veriyi Calibre kitaplığındaki kaydedilmiş dosyalardan günceller. Diske kaydetmeyi yavaşlatır. Bu anahtar bu davranışı kapatacaktır.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normal olarak calibre üst veriyi gerçek e\-kitap dosyalarının yanına ayrı bir OPF dosyasına yazar. Bu anahtar bu davranışı kapatacaktır.
+Normal olarak Calibre üst veriyi gerçek e\-kitap dosyalarının yanına ayrı bir OPF dosyasına yazar. Bu anahtar bu davranışı kapatacaktır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -749,7 +749,7 @@ calibredb restore_database [seçenekler]
 .UNINDENT
 .UNINDENT
 .sp
-Bu veri tabanını calibre kitaplığındaki her dizindeki OPF dosyalarında
+Bu veri tabanını Calibre kitaplığındaki her dizindeki OPF dosyalarında
 saklanan metadata’dan geri yükle. Bu, metadata.db dosyanız bozulduysa
 faydalıdır.
 .sp
@@ -877,11 +877,12 @@ calibredb clone yeni/kitaplığın/yolu
 .UNINDENT
 .UNINDENT
 .sp
-Mevcut kitaplığın bir kopyasını oluştur. Bu mevcut kitaplıkla aynı özel sütunları,
-sanal kitaplıkları ve diğer ayarları içeren yeni ve boş bir kitaplık oluşturur.
+Mevcut kitaplığın bir kopyasını oluştur. Bu, mevcut kitaplıkla aynı
+özel sütunları, sanal kitaplıkları ve diğer ayarları içeren
+yeni ve boş bir kitaplık oluşturur.
 .sp
-Kopya kitaplık hiç kitap içermeyecektir. Eğer istediğiniz tüm kitapları da içeren tam bir kopya
-ise sistem araçlarını kullanarak kitaplığın dizinini bir kopyasını oluşturun.
+Kopya kitaplık hiç kitap içermeyecektir. Eğer istediğiniz tüm kitapları da içeren tam bir kopya oluşturmaksa,
+kolayca dosya sistemi araçlarını kullanarak kitaplık klasörünü başka bir yere kopyalayabilirsiniz
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .SH EMBED_METADATA
@@ -896,8 +897,8 @@ calibredb embed_metadata [seçenekler] kitap_kimliği
 .UNINDENT
 .UNINDENT
 .sp
-Calibre kitaplığında saklanan asıl kitap sayfalarını calibre veri tabanındaki metadata
-ile güncelle.  Normalde, metadata yalnızca calibre’den dışa aktarım
+Calibre kitaplığında saklanan asıl kitap sayfalarını Calibre veri tabanındaki metadata
+ile güncelle.  Normalde, metadata yalnızca Calibre’den dışa aktarım
 yapılırken güncellenir, bu komut dosyaları olduğu gibi değiştirmek istiyorsanız
 faydalıdır. Değişik dosya biçimlerinin değişik miktarda metadata desteklediğini
 unutmayın. kitap_kimliği için özel bir değer olan ‘all’ kullanarak tüm kitaplarda
@@ -927,7 +928,7 @@ Kitaplığı belirtilen arama ifadesi için ara, arama ifadesiyle eşleşen kita
 virgülle ayrılmış listesini döndür. Çıktı biçimi girdi olarak id listesi alan diğer
 komutlarda kullanılabilmeleri açısından faydalıdır.
 .sp
-Arama ifadesi calibre’nin güçlü arama sorgu dilinden herhangi bir şey olabilir,
+Arama ifadesi Calibre’nin güçlü arama sorgu dilinden herhangi bir şey olabilir,
 örneğin: author:asimov title:robot
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”

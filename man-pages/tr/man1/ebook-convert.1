@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Ekim 06, 2017" "3.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Ekim 20, 2017" "3.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -85,7 +85,7 @@ seçenekler bulunabilir.
 .IP \(bu 2
 \fI\%İÇİNDEKİLER\fP
 .IP \(bu 2
-\fI\%METADATA\fP
+\fI\%ÜSTBİLGİ\fP
 .IP \(bu 2
 \fI\%HATA AYIKLA\fP
 .UNINDENT
@@ -246,7 +246,7 @@ Eklenen boşlukların yüksekliğini \fB"\fPem\fB"\fP cinsinden ayarlayın. Para
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Girdi belgesinde mevcut olan bağları koru. Bir bağ, ff, fi, fl vs. gibi bir çift karakterin özel olarak gerçeklenmesine denir. Çoğu okuyucu varsayılan yazı tiplerinde bağları desteklemezler, yani doğru gerçeklemeleri beklenmez. Varsayılan olarak, calibre bir bağı karşılık gelen normal karakter çiftine çevirir. Bu seçenek ise korunmalarını sağlar.
+Girdi belgesinde mevcut olan bağları koru. Bir bağ, ff, fi, fl vs. gibi bir çift karakterin özel olarak gerçeklenmesine denir. Çoğu okuyucu varsayılan yazı tiplerinde bağları desteklemezler, yani doğru gerçeklemeleri beklenmez. Varsayılan olarak, Calibre bir bağı karşılık gelen normal karakter çiftine çevirir. Bu seçenek ise korunmalarını sağlar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ Paragraflar arası boşlukları kaldır. Ayrıca paragrafların girintilerini 1,
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Calibre paragraflar arasındaki boş satırları kaldırdığında, paragrafların kolayca ayırt edilebilmesi için otomatik olarak bir paragraf girintisi yapar. Bu seçenek, o girintinin genişliğini (em cinsinden) kontrol eder. Bu değeri negatif olarak ayarlarsanız girdi belgesinde belirlenen paragraf girintisi kullanılır. Yani calibre paragraf girintisini değiştirmez.
+Calibre paragraflar arasındaki boş satırları kaldırdığında, paragrafların kolayca ayırt edilebilmesi için otomatik olarak bir paragraf girintisi yapar. Bu seçenek, o girintinin genişliğini (em cinsinden) kontrol eder. Bu değeri negatif olarak ayarlarsanız girdi belgesinde belirlenen paragraf girintisi kullanılır. Yani Calibre paragraf girintisini değiştirmez.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -463,17 +463,17 @@ Girdideki linklerden içindekiler(TOC) oluştururken maddelerin birden fazla kop
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Birinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Eğer bu belirtilirse, diğer otomatik algılama biçimleri üzerinde öncelik alır. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+Birinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Eğer bu belirtilirse, diğer otomatik algılama biçimleri üzerinde öncelik alır. Örnekler için Calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-İkinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki birinci seviye girdinin altına eklenir. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+İkinci seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki birinci seviye girdinin altına eklenir. Örnekler için Calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Üçüncü seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki ikinci seviye girdinin altına eklenir. Örnekler için calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
+Üçüncü seviyede İçindekilere eklenmesi gereken tüm etiketleri belirten XPath ifadesi. Her girdi önceki ikinci seviye girdinin altına eklenir. Örnekler için Calibre Kullanıcı Kılavuzundaki XPath Rehberine göz atın.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -500,7 +500,7 @@ Eğer bu sayıdan daha az bölüm algılanırsa linkler İçindekiler kısmına 
 .B \-\-use\-auto\-toc
 Normalde kaynak içindekiler bilgisine sahipse otomatik üretilene tercihen bu bilgi kullanılır. Bu seçenek ile her zaman otomatik üretilen kullanılır
 .UNINDENT
-.SH METADATA
+.SH ÜSTBİLGİ
 .sp
 Çıkış almak için metadata seçeneklerini kaydet.
 .INDENT 0.0

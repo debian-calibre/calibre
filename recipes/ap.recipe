@@ -61,7 +61,7 @@ class AssociatedPress(BasicNewsRecipe):
         for card in cards:
             for article in card['contents']:
                 url = article['localLinkUrl']
-                title = article.get('flattenedFirstWords')
+                title = article.get('headline', article.get('flattenedFirstWords'))
                 if not title:
                     continue
                 title = title.split('\u2014')[-1]
