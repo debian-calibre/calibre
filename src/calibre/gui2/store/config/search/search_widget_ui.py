@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/config/search/search_widget.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -92,14 +92,14 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.groupBox.setTitle(_("Time"))
-        self.label.setText(_("Number of seconds to wait for a store to respond"))
-        self.label_2.setText(_("Number of seconds to let a store process results"))
+        self.label.setText(_("Number of seconds to wait for a store to respond:"))
+        self.label_2.setText(_("Number of seconds to let a store process results:"))
         self.groupBox_2.setTitle(_("Display"))
-        self.label_3.setText(_("Maximum number of results to show per store"))
+        self.label_3.setText(_("Maximum number of results to show per store:"))
         self.opt_open_external.setText(_("Open search result in system browser"))
         self.groupBox_3.setTitle(_("Threads"))
-        self.label_4.setText(_("Number of search threads to use"))
-        self.label_5.setText(_("Number of cache update threads to use"))
-        self.label_6.setText(_("Number of cover download threads to use"))
-        self.label_7.setText(_("Number of details threads to use"))
+        self.label_4.setText(_("Number of search threads to use:"))
+        self.label_5.setText(_("Number of cache update threads to use:"))
+        self.label_6.setText(_("Number of cover download threads to use:"))
+        self.label_7.setText(_("Number of details threads to use:"))
 

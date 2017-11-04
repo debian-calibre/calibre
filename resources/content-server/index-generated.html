@@ -3988,6 +3988,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.prefs.font_size"] = {};
     ρσ_modules["read_book.prefs.colors"] = {};
     ρσ_modules["read_book.prefs.layout"] = {};
+    ρσ_modules["read_book.prefs.user_stylesheet"] = {};
     ρσ_modules["read_book.prefs.main"] = {};
     ρσ_modules["read_book.overlay"] = {};
     ρσ_modules["read_book.search"] = {};
@@ -4008,9 +4009,9 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.main"] = {};
     ρσ_modules["read_book.cfi"] = {};
     ρσ_modules["read_book.flow_mode"] = {};
+    ρσ_modules["read_book.settings"] = {};
     ρσ_modules["read_book.footnotes"] = {};
     ρσ_modules["read_book.mathjax"] = {};
-    ρσ_modules["read_book.settings"] = {};
     ρσ_modules["read_book.paged_mode"] = {};
     ρσ_modules["read_book.iframe"] = {};
 
@@ -7771,6 +7772,7 @@ return parser;
                 ρσ_d["landscape"] = 0;
                 return ρσ_d;
             }).call(this);
+            ρσ_d["user_stylesheet"] = "";
             ρσ_d["current_color_scheme"] = "white";
             ρσ_d["user_color_schemes"] = Object.create(null);
             ρσ_d["base_font_size"] = 16;
@@ -7787,6 +7789,7 @@ return parser;
             ρσ_d["max_text_height"] = true;
             ρσ_d["max_text_width"] = true;
             ρσ_d["columns_per_screen"] = true;
+            ρσ_d["user_stylesheet"] = true;
             ρσ_d["current_color_scheme"] = true;
             ρσ_d["base_font_size"] = true;
             ρσ_d["controls_help_shown_count"] = true;
@@ -12156,7 +12159,7 @@ return this.__repr__();
         };
         ContentPopupOverlay.prototype.show_footnote_item_stage2 = function show_footnote_item_stage2(resource_data) {
             var self = this;
-            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_unencrypted_message, ["display"].concat([ρσ_desugar_kwargs({resource_data: resource_data, book: self.view.book, name: self.current_footnote_data.name, frag: self.current_footnote_data.frag})]));
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_unencrypted_message, ["display"].concat([ρσ_desugar_kwargs({resource_data: resource_data, book: self.view.book, name: self.current_footnote_data.name, frag: self.current_footnote_data.frag, settings: self.view.iframe_settings()})]));
         };
         if (!ContentPopupOverlay.prototype.show_footnote_item_stage2.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.show_footnote_item_stage2, {
             __argnames__ : {value: ["resource_data"]}
@@ -14362,6 +14365,68 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.prefs.user_stylesheet";
+        var CONTAINER, develop;
+        var _ = ρσ_modules.gettext.gettext;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var E = ρσ_modules.elementmaker.E;
+
+        CONTAINER = unique_id("reader-us-prefs");
+        add_extra_css(function () {
+            var sel, style;
+            sel = "#" + CONTAINER;
+            style = "";
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " textarea"].concat([ρσ_desugar_kwargs({margin_left: "1em", margin_right: "1em", min_height: "75vh"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .simple-link"].concat([ρσ_desugar_kwargs({color: "blue"})]));
+            return style;
+        });
+        function create_user_stylesheet_panel(container) {
+            var sd, val;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})]));
+            container.firstChild.innerHTML = (ρσ_expr_temp = _("A CSS style sheet that can be used to control the look and feel of books. For examples, click <a class=\"{cls}\" href=\"{url}\" target=\"{target}\" title=\"Examples of user style sheets\">here</a>."), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({url: "https://www.mobileread.com/forums/showthread.php?t=51500", target: "_blank", cls: "simple-link"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({style: "flex-grow: 10"})]));
+            val = sd.get("user_stylesheet");
+            if (val) {
+                container.lastChild.value = val;
+            }
+        };
+        if (!create_user_stylesheet_panel.__argnames__) Object.defineProperties(create_user_stylesheet_panel, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        develop = create_user_stylesheet_panel;
+        function commit_user_stylesheet(onchange, container) {
+            var sd, ta, val, old;
+            sd = get_session_data();
+            ta = document.getElementById(CONTAINER).querySelector("textarea");
+            val = ta.value || "";
+            old = sd.get("user_stylesheet");
+            if (old !== val) {
+                sd.set("user_stylesheet", val);
+                onchange();
+            }
+        };
+        if (!commit_user_stylesheet.__argnames__) Object.defineProperties(commit_user_stylesheet, {
+            __argnames__ : {value: ["onchange", "container"]}
+        });
+
+        ρσ_modules["read_book.prefs.user_stylesheet"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.user_stylesheet"].develop = develop;
+        ρσ_modules["read_book.prefs.user_stylesheet"].create_user_stylesheet_panel = create_user_stylesheet_panel;
+        ρσ_modules["read_book.prefs.user_stylesheet"].commit_user_stylesheet = commit_user_stylesheet;
+    })();
+
+    (function(){
         var __name__ = "read_book.prefs.main";
         var _ = ρσ_modules.gettext.gettext;
 
@@ -14380,6 +14445,9 @@ return this.__repr__();
         var create_layout_panel = ρσ_modules["read_book.prefs.layout"].create_layout_panel;
         var commit_layout = ρσ_modules["read_book.prefs.layout"].commit_layout;
 
+        var create_user_stylesheet_panel = ρσ_modules["read_book.prefs.user_stylesheet"].create_user_stylesheet_panel;
+        var commit_user_stylesheet = ρσ_modules["read_book.prefs.user_stylesheet"].commit_user_stylesheet;
+
         function Prefs() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             Prefs.prototype.__bind_methods__.call(this);
@@ -14395,6 +14463,8 @@ return this.__repr__();
             this.close_colors = Prefs.prototype.close_colors.bind(this);
             this.display_layout = Prefs.prototype.display_layout.bind(this);
             this.close_layout = Prefs.prototype.close_layout.bind(this);
+            this.display_user_stylesheet = Prefs.prototype.display_user_stylesheet.bind(this);
+            this.close_user_stylesheet = Prefs.prototype.close_user_stylesheet.bind(this);
         }});
         Object.defineProperties(Prefs.prototype,  {
             "container": {
@@ -14468,9 +14538,11 @@ return this.__repr__();
             container.appendChild(c);
             build_list(c, ρσ_list_decorate([ create_item(_("Colors"), function () {
                 self.show_panel("colors");
-            }, _("Change the colors of the page and text")), create_item(_("Page layout"), function () {
+            }, _("Colors of the page and text")), create_item(_("Page layout"), function () {
                 self.show_panel("layout");
-            }, _("Change the page margins and number of pages per screen")) ]));
+            }, _("Page margins and number of pages per screen")), create_item(_("User style sheet"), function () {
+                self.show_panel("user_stylesheet");
+            }, _("Style rules for text")) ]));
         };
         if (!Prefs.prototype.display_top.__argnames__) Object.defineProperties(Prefs.prototype.display_top, {
             __argnames__ : {value: ["container"]}
@@ -14498,6 +14570,18 @@ return this.__repr__();
         Prefs.prototype.close_layout = function close_layout() {
             var self = this;
             commit_layout(self.onchange, self.container);
+        };
+        Prefs.prototype.display_user_stylesheet = function display_user_stylesheet(container) {
+            var self = this;
+            document.getElementById(self.title_id).textContent = _("User style sheet");
+            create_user_stylesheet_panel(container);
+        };
+        if (!Prefs.prototype.display_user_stylesheet.__argnames__) Object.defineProperties(Prefs.prototype.display_user_stylesheet, {
+            __argnames__ : {value: ["container"]}
+        });
+        Prefs.prototype.close_user_stylesheet = function close_user_stylesheet() {
+            var self = this;
+            commit_user_stylesheet(self.onchange, self.container);
         };
         Prefs.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -16178,6 +16262,7 @@ return this.__repr__();
             this.parse_cfi = View.prototype.parse_cfi.bind(this);
             this.display_book = View.prototype.display_book.bind(this);
             this.redisplay_book = View.prototype.redisplay_book.bind(this);
+            this.iframe_settings = View.prototype.iframe_settings.bind(this);
             this.show_name = View.prototype.show_name.bind(this);
             this.load_doc = View.prototype.load_doc.bind(this);
             this.goto_doc_boundary = View.prototype.goto_doc_boundary.bind(this);
@@ -16616,6 +16701,25 @@ return this.__repr__();
             var self = this;
             self.display_book(self.book);
         };
+        View.prototype.iframe_settings = function iframe_settings(name) {
+            var self = this;
+            var sd;
+            sd = get_session_data();
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["margin_left"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_left");
+                ρσ_d["margin_right"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_right");
+                ρσ_d["read_mode"] = sd.get("read_mode");
+                ρσ_d["columns_per_screen"] = sd.get("columns_per_screen");
+                ρσ_d["color_scheme"] = self.get_color_scheme(true);
+                ρσ_d["base_font_size"] = sd.get("base_font_size");
+                ρσ_d["user_stylesheet"] = sd.get("user_stylesheet");
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!View.prototype.iframe_settings.__argnames__) Object.defineProperties(View.prototype.iframe_settings, {
+            __argnames__ : {value: ["name"]}
+        });
         View.prototype.show_name = function show_name() {
             var self = this;
             var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
@@ -16625,22 +16729,11 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "initial_position")){
                 initial_position = ρσ_kwargs_obj.initial_position;
             }
-            var sd, settings, spine, idx;
+            var spine, idx;
             if (self.currently_showing.loading) {
                 return;
             }
             self.processing_spine_item_display = false;
-            sd = get_session_data();
-            settings = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["margin_left"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_left");
-                ρσ_d["margin_right"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_right");
-                ρσ_d["read_mode"] = sd.get("read_mode");
-                ρσ_d["columns_per_screen"] = sd.get("columns_per_screen");
-                ρσ_d["color_scheme"] = self.get_color_scheme(true);
-                ρσ_d["base_font_size"] = sd.get("base_font_size");
-                return ρσ_d;
-            }).call(this);
             initial_position = initial_position || (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["replace_history"] = false;
@@ -16649,7 +16742,7 @@ return this.__repr__();
             self.currently_showing = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["name"] = name;
-                ρσ_d["settings"] = settings;
+                ρσ_d["settings"] = self.iframe_settings(name);
                 ρσ_d["initial_position"] = initial_position;
                 ρσ_d["loading"] = true;
                 return ρσ_d;
@@ -22040,7 +22133,7 @@ return this.__repr__();
             var sel, style;
             sel = "." + CLASS_NAME + " ";
             style = "";
-            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td"].concat([ρσ_desugar_kwargs({vertical_align: "middle"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td"].concat([ρσ_desugar_kwargs({vertical_align: "top"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td:first-of-type"].concat([ρσ_desugar_kwargs({font_weight: "bold", padding_right: "1em", white_space: "nowrap"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td:last-of-type"].concat([ρσ_desugar_kwargs({overflow_wrap: "break-word"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata a[href]"].concat([ρσ_desugar_kwargs({color: "blue"})]));
@@ -23800,6 +23893,70 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.settings";
+        var opts;
+        var E = ρσ_modules.elementmaker.E;
+
+        opts = Object.create(null);
+        function update_settings(settings) {
+            settings = settings || Object.create(null);
+            opts.columns_per_screen = settings.columns_per_screen || (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["portrait"] = 0;
+                ρσ_d["landscape"] = 0;
+                return ρσ_d;
+            }).call(this);
+            opts.margin_left = max(0, settings.margin_left || 0);
+            opts.margin_right = max(0, settings.margin_right || 0);
+            opts.color_scheme = settings.color_scheme;
+            opts.base_font_size = max(8, min(settings.base_font_size || 16, 64));
+            opts.user_stylesheet = settings.user_stylesheet || "";
+        };
+        if (!update_settings.__argnames__) Object.defineProperties(update_settings, {
+            __argnames__ : {value: ["settings"]}
+        });
+
+        update_settings();
+        function apply_font_size() {
+            document.documentElement.style.fontSize = document.body.style.fontSize = "{}px".format(opts.base_font_size);
+        };
+
+        function apply_colors() {
+            var elem;
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                elem = ρσ_Iter0[ρσ_Index0];
+                elem.style.color = opts.color_scheme.foreground;
+                elem.style.backgroundColor = opts.color_scheme.background;
+            }
+        };
+
+        function apply_stylesheet() {
+            var sid, style;
+            sid = "calibre-browser-viewer-user-stylesheet";
+            style = document.getElementById(sid);
+            if (!style) {
+                style = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({type: "text/css", id: sid})]);
+                document.body.appendChild(style);
+            }
+            style.textContent = opts.user_stylesheet || "";
+        };
+
+        function apply_settings() {
+            apply_font_size();
+            apply_colors();
+            apply_stylesheet();
+        };
+
+        ρσ_modules["read_book.settings"].opts = opts;
+        ρσ_modules["read_book.settings"].update_settings = update_settings;
+        ρσ_modules["read_book.settings"].apply_font_size = apply_font_size;
+        ρσ_modules["read_book.settings"].apply_colors = apply_colors;
+        ρσ_modules["read_book.settings"].apply_stylesheet = apply_stylesheet;
+        ρσ_modules["read_book.settings"].apply_settings = apply_settings;
+    })();
+
+    (function(){
         var __name__ = "read_book.footnotes";
         var block_names, block_display_styles, ok_list_types;
         var clear = ρσ_modules.dom.clear;
@@ -23808,6 +23965,9 @@ return this.__repr__();
 
         var finalize_resources = ρσ_modules["read_book.resources"].finalize_resources;
         var unserialize_html = ρσ_modules["read_book.resources"].unserialize_html;
+
+        var apply_settings = ρσ_modules["read_book.settings"].apply_settings;
+        var update_settings = ρσ_modules["read_book.settings"].update_settings;
 
         block_names = dict.fromkeys(['p', 'div', 'li', 'td', 'h1', 'h2', 'h2', 'h3', 'h4', 'h5', 'h6', 'body'], true).as_object();
         block_display_styles = dict.fromkeys(['block', 'list-item', 'table-cell', 'table'], true).as_object();
@@ -24144,6 +24304,7 @@ return this.__repr__();
             self.mathjax = ρσ_unpack[1];
             self.blob_url_map = ρσ_unpack[2];
             self.resource_urls = unserialize_html(root_data, self.content_loaded, self.show_only_footnote);
+            update_settings(data.settings);
         };
         if (!PopupIframeBoss.prototype.display.__argnames__) Object.defineProperties(PopupIframeBoss.prototype.display, {
             __argnames__ : {value: ["data"]}
@@ -24178,6 +24339,7 @@ return this.__repr__();
         };
         PopupIframeBoss.prototype.content_loaded = function content_loaded() {
             var self = this;
+            apply_settings();
             ρσ_interpolate_kwargs.call(self.comm, self.comm.send_message, ["content_loaded"].concat([ρσ_desugar_kwargs({height: document.documentElement.scrollHeight + 25})]));
         };
         PopupIframeBoss.prototype.__repr__ = function __repr__ () {
@@ -24316,32 +24478,6 @@ return this.__repr__();
         ρσ_modules["read_book.mathjax"].postprocess = postprocess;
         ρσ_modules["read_book.mathjax"].init_mathjax = init_mathjax;
         ρσ_modules["read_book.mathjax"].apply_mathjax = apply_mathjax;
-    })();
-
-    (function(){
-        var __name__ = "read_book.settings";
-        var opts;
-        opts = Object.create(null);
-        function apply_settings(settings) {
-            settings = settings || Object.create(null);
-            opts.columns_per_screen = settings.columns_per_screen || (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["portrait"] = 0;
-                ρσ_d["landscape"] = 0;
-                return ρσ_d;
-            }).call(this);
-            opts.margin_left = max(0, settings.margin_left || 0);
-            opts.margin_right = max(0, settings.margin_right || 0);
-            opts.color_scheme = settings.color_scheme;
-            opts.base_font_size = max(8, min(settings.base_font_size || 16, 64));
-        };
-        if (!apply_settings.__argnames__) Object.defineProperties(apply_settings, {
-            __argnames__ : {value: ["settings"]}
-        });
-
-        apply_settings();
-        ρσ_modules["read_book.settings"].opts = opts;
-        ρσ_modules["read_book.settings"].apply_settings = apply_settings;
     })();
 
     (function(){
@@ -25123,8 +25259,8 @@ return this.__repr__();
         var flow_layout = ρσ_modules["read_book.flow_mode"].layout;
         var flow_scroll_by_page = ρσ_modules["read_book.flow_mode"].scroll_by_page;
 
-        var is_footnote_link = ρσ_modules["read_book.footnotes"].is_footnote_link;
         var PopupIframeBoss = ρσ_modules["read_book.footnotes"].PopupIframeBoss;
+        var is_footnote_link = ρσ_modules["read_book.footnotes"].is_footnote_link;
 
         var current_book = ρσ_modules["read_book.globals"].current_book;
         var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
@@ -25152,8 +25288,12 @@ return this.__repr__();
         var finalize_resources = ρσ_modules["read_book.resources"].finalize_resources;
         var unserialize_html = ρσ_modules["read_book.resources"].unserialize_html;
 
+        var apply_colors = ρσ_modules["read_book.settings"].apply_colors;
+        var apply_font_size = ρσ_modules["read_book.settings"].apply_font_size;
         var apply_settings = ρσ_modules["read_book.settings"].apply_settings;
+        var apply_stylesheet = ρσ_modules["read_book.settings"].apply_stylesheet;
         var opts = ρσ_modules["read_book.settings"].opts;
+        var update_settings = ρσ_modules["read_book.settings"].update_settings;
 
         var update_visible_toc_anchors = ρσ_modules["read_book.toc"].update_visible_toc_anchors;
 
@@ -25166,7 +25306,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.10.0";
+        CALIBRE_VERSION = "3.11.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25248,9 +25388,8 @@ return this.__repr__();
             this.gesture_from_margin = IframeBoss.prototype.gesture_from_margin.bind(this);
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
             this.on_next_screen = IframeBoss.prototype.on_next_screen.bind(this);
-            this.apply_font_size = IframeBoss.prototype.apply_font_size.bind(this);
-            this.apply_colors = IframeBoss.prototype.apply_colors.bind(this);
             this.change_font_size = IframeBoss.prototype.change_font_size.bind(this);
+            this.change_stylesheet = IframeBoss.prototype.change_stylesheet.bind(this);
             this.change_color_scheme = IframeBoss.prototype.change_color_scheme.bind(this);
             this.content_loaded = IframeBoss.prototype.content_loaded.bind(this);
             this.content_loaded_stage2 = IframeBoss.prototype.content_loaded_stage2.bind(this);
@@ -25374,7 +25513,7 @@ return this.__repr__();
                 self._handle_gesture = paged_handle_gesture;
                 self.anchor_funcs = paged_anchor_funcs;
             }
-            apply_settings(data.settings);
+            update_settings(data.settings);
             set_current_spine_item((function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["name"] = data.name;
@@ -25445,35 +25584,29 @@ return this.__repr__();
         if (!IframeBoss.prototype.on_next_screen.__argnames__) Object.defineProperties(IframeBoss.prototype.on_next_screen, {
             __argnames__ : {value: ["data"]}
         });
-        IframeBoss.prototype.apply_font_size = function apply_font_size() {
-            var self = this;
-            document.documentElement.style.fontSize = document.body.style.fontSize = "{}px".format(opts.base_font_size);
-        };
-        IframeBoss.prototype.apply_colors = function apply_colors() {
-            var self = this;
-            var elem;
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                elem = ρσ_Iter1[ρσ_Index1];
-                elem.style.color = opts.color_scheme.foreground;
-                elem.style.backgroundColor = opts.color_scheme.background;
-            }
-        };
         IframeBoss.prototype.change_font_size = function change_font_size(data) {
             var self = this;
             if (ρσ_exists.n(data.base_font_size) && (data.base_font_size !== opts.base_font_size && (typeof data.base_font_size !== "object" || ρσ_not_equals(data.base_font_size, opts.base_font_size)))) {
                 opts.base_font_size = data.base_font_size;
-                self.apply_font_size();
+                apply_font_size();
             }
         };
         if (!IframeBoss.prototype.change_font_size.__argnames__) Object.defineProperties(IframeBoss.prototype.change_font_size, {
+            __argnames__ : {value: ["data"]}
+        });
+        IframeBoss.prototype.change_stylesheet = function change_stylesheet(data) {
+            var self = this;
+            opts.user_stylesheet = data.sheet || "";
+            apply_stylesheet();
+        };
+        if (!IframeBoss.prototype.change_stylesheet.__argnames__) Object.defineProperties(IframeBoss.prototype.change_stylesheet, {
             __argnames__ : {value: ["data"]}
         });
         IframeBoss.prototype.change_color_scheme = function change_color_scheme(data) {
             var self = this;
             if (data.color_scheme && data.color_scheme.foreground && data.color_scheme.background) {
                 opts.color_scheme = data.color_scheme;
-                self.apply_colors();
+                apply_colors();
             }
         };
         if (!IframeBoss.prototype.change_color_scheme.__argnames__) Object.defineProperties(IframeBoss.prototype.change_color_scheme, {
@@ -25486,8 +25619,7 @@ return this.__repr__();
             ρσ_unpack = [scroll_viewport.width(), scroll_viewport.height()];
             self.last_window_width = ρσ_unpack[0];
             self.last_window_height = ρσ_unpack[1];
-            self.apply_colors();
-            self.apply_font_size();
+            apply_settings();
             self.do_layout();
             if (self.mathjax) {
                 return apply_mathjax(self.mathjax, self.book.manifest.link_uid, self.content_loaded_stage2);
@@ -25519,8 +25651,8 @@ return this.__repr__();
             spine_index = spine.indexOf(current_name);
             self.length_before = 0;
             if (spine_index > -1) {
-                for (var ρσ_Index2 = 0; ρσ_Index2 < spine_index; ρσ_Index2++) {
-                    i = ρσ_Index2;
+                for (var ρσ_Index1 = 0; ρσ_Index1 < spine_index; ρσ_Index1++) {
+                    i = ρσ_Index1;
                     si = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
                     if (si) {
                         self.length_before += ρσ_exists.d(files[(typeof si === "number" && si < 0) ? files.length + si : si]).length || 0;
@@ -25674,9 +25806,9 @@ return this.__repr__();
             var self = this;
             var link_attr, a;
             link_attr = "data-" + self.book.manifest.link_uid;
-            var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("a[{}]".format(link_attr)));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                a = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter2 = ρσ_Iterable(document.body.querySelectorAll("a[{}]".format(link_attr)));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                a = ρσ_Iter2[ρσ_Index2];
                 a.addEventListener("click", self.link_activated);
             }
         };

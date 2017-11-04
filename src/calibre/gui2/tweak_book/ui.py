@@ -271,7 +271,7 @@ class Main(MainWindow):
         self.status_bar.addPermanentWidget(self.boss.save_manager.status_widget)
         self.cursor_position_widget = CursorPositionWidget(self)
         self.status_bar.addPermanentWidget(self.cursor_position_widget)
-        self.status_bar_default_msg = la = QLabel(_('{0} {1} created by {2}').format(__appname__, get_version(), 'Kovid Goyal'))
+        self.status_bar_default_msg = la = QLabel(' ' + _('{0} {1} created by {2}').format(__appname__, get_version(), 'Kovid Goyal'))
         la.base_template = unicode(la.text())
         self.status_bar.addWidget(la)
         f = self.status_bar.font()
@@ -418,8 +418,9 @@ class Main(MainWindow):
             'embed-fonts.png', _('&Embed referenced fonts'), partial(
                 self.boss.polish, 'embed', _('Embed fonts')), 'embed-fonts', (), _('Embed referenced fonts'))
         self.action_smarten_punctuation = treg(
-            'smarten-punctuation.png', _('&Smarten punctuation'), partial(
-                self.boss.polish, 'smarten_punctuation', _('Smarten punctuation')), 'smarten-punctuation', (), _('Smarten punctuation'))
+            'smarten-punctuation.png', _('&Smarten punctuation (works best for English)'), partial(
+                self.boss.polish, 'smarten_punctuation', _('Smarten punctuation')),
+            'smarten-punctuation', (), _('Smarten punctuation'))
         self.action_remove_unused_css = treg(
             'edit-clear.png', _('Remove &unused CSS rules'), partial(
                 self.boss.polish, 'remove_unused_css', _('Remove unused CSS rules')), 'remove-unused-css', (), _('Remove unused CSS rules'))
