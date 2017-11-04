@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -31,22 +31,25 @@ class Ui_TagListEditor(object):
         self.search_box.setObjectName("search_box")
         self.horizontalLayout_11.addWidget(self.search_box)
         self.search_button = QtWidgets.QPushButton(TagListEditor)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(I("search.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.search_button.setIcon(icon1)
         self.search_button.setObjectName("search_button")
         self.horizontalLayout_11.addWidget(self.search_button)
         self.gridlayout.addLayout(self.horizontalLayout_11, 0, 0, 1, 2)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.delete_button = QtWidgets.QToolButton(TagListEditor)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(I("trash.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.delete_button.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(I("trash.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.delete_button.setIcon(icon2)
         self.delete_button.setIconSize(QtCore.QSize(32, 32))
         self.delete_button.setObjectName("delete_button")
         self.verticalLayout_2.addWidget(self.delete_button)
         self.rename_button = QtWidgets.QToolButton(TagListEditor)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(I("edit_input.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.rename_button.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(I("edit_input.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.rename_button.setIcon(icon3)
         self.rename_button.setIconSize(QtCore.QSize(32, 32))
         self.rename_button.setObjectName("rename_button")
         self.verticalLayout_2.addWidget(self.rename_button)
@@ -77,8 +80,8 @@ class Ui_TagListEditor(object):
         TagListEditor.setWindowTitle(_("Category editor"))
         self.label.setText(_("&Search for:"))
         self.search_box.setToolTip(_("Search for an item in the Tag column"))
+        self.search_button.setToolTip(_("Find the first/next matching item"))
         self.search_button.setText(_("&Find"))
-        self.search_button.setToolTip(_("Copy the selected color name to the clipboard"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))
         self.delete_button.setText(_("..."))
         self.rename_button.setToolTip(_("Rename the item in every book where it is used."))
@@ -86,3 +89,4 @@ class Ui_TagListEditor(object):
         self.rename_button.setShortcut(_("Ctrl+S"))
 
 from calibre.gui2.widgets import HistoryLineEdit
+

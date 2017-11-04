@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/config/chooser/chooser_widget.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -25,9 +25,13 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.query.sizePolicy().hasHeightForWidth())
         self.query.setSizePolicy(sizePolicy)
+        self.query.setClearButtonEnabled(True)
         self.query.setObjectName("query")
         self.horizontalLayout.addWidget(self.query)
         self.search = QtWidgets.QPushButton(Form)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(I("search.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.search.setIcon(icon)
         self.search.setObjectName("search")
         self.horizontalLayout.addWidget(self.search)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -69,10 +73,11 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.label.setText(_("Query:"))
         self.search.setText(_("Search"))
-        self.label_2.setText(_("Enable"))
+        self.label_2.setText(_("Enable:"))
         self.enable_all.setText(_("&All"))
         self.enable_none.setText(_("&None"))
         self.enable_invert.setText(_("&Invert"))
 
 from calibre.gui2.widgets import HistoryLineEdit
 from results_view import ResultsView
+

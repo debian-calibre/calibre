@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "oktober 20, 2017" "3.10.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "november 02, 2017" "3.11.1" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -57,7 +57,7 @@ Sökväg till tillgångs loggfil. Denna loggfil innehåller information om klien
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Tid (i sekunder) att vänta på ett svar från servern när förfrågningar görs.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,7 +72,7 @@ Starta automatiskt om servern när källkoden ändras. Användbar för utvecklin
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Antal inloggnings misslyckanden för förbud.         Antal inloggnings misslyckaden, varefter en IP\-adress är förbjuden
+Antal misslyckande inloggningar för förbud.         Antal inloggnings misslyckaden, varefter en IP\-adress är förbjuden
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -122,7 +122,7 @@ Tillåt ej autentiserade lokala anslutningar att göra ändringar.     Normalt, 
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Inte Hittad) förfrågningar.   Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
+Logga HTTP 404 (Not Found) förfrågningar.   Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -232,7 +232,7 @@ Tid (i sekunder) efter en inaktiv anslutning stängs.
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Ett prefix att infogas alla webbadresser.   Användbart om du vill köra den här servern bakom en reverse proxy. Till exempel använd /calibre som URL\-prefix.
+Ett prefix att lägga till i början av alla webbadresser.    Användbart om du vill köra den här servern bakom en reverse proxy. Till exempel använd /calibre som URL\-prefix.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -247,7 +247,7 @@ visar programmets versionsnummer och avsluta
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Antal arbetartrådar för att användas vid processförfrågningar.
+Antal arbetstrådar som används för att behandla förfrågningar.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -23,6 +23,10 @@ class Ui_JobsDialog(object):
         self.search.setObjectName("search")
         self.horizontalLayout.addWidget(self.search)
         self.search_button = QtWidgets.QToolButton(JobsDialog)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(I("search.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.search_button.setIcon(icon1)
+        self.search_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
         self.search_button.setObjectName("search_button")
         self.horizontalLayout.addWidget(self.search_button)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 2)

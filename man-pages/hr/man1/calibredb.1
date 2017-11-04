@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "listopada 20, 2017" "3.10.0" "calibre"
+.TH "CALIBREDB" "1" "studenoga 02, 2017" "3.11.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -79,14 +79,14 @@ To connect to a running Content server, pass the URL of the server to the
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+\fI\%GLOBALNE OPCIJE\fP
 .IP \(bu 2
 \fI\%list\fP
 .IP \(bu 2
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%Dodavanje iz mapa\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -131,11 +131,11 @@ details and examples.
 .IP \(bu 2
 \fI\%search\fP
 .UNINDENT
-.SH GLOBAL OPTIONS
+.SH GLOBALNE OPCIJE
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+prikaži ovu poruku za pomoć i izađi
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -150,12 +150,12 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Korisničko ime za spajanje na calibre Content server
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+prikaži broj verzije programa i izađi
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -246,12 +246,12 @@ Path to the cover to use for the added book
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Dodaj knjige u bazu podataka iako već postoje. Komparacija je pravljena na bazi naslova knjiga.
+Dodaj knjige u bazu podataka iako već postoje. Usporedba je pravljena na bazi naslova knjiga.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-Add an empty book (a book with no formats)
+Dodaj praznu knjigu (knjiga bez ijednog formata)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,11 +286,11 @@ Set the tags of the added book(s)
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-Set the title of the added book(s)
+Napiši naslov dodanoj knjizi
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS Dodavanje iz mapa
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Opcije za kontrolu dodavanja knjiga iz mapa. Osnovna postavka dodaje samo datoteke sa nastavcima poznatih vrsta datoteka e\-knjiga.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -304,12 +304,12 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Predpostavi da svaki direktorij ima samo jednu logičnu knjigu i da su sve datoteke unutar samo različiti ebook formati iste knjige.
+Pretpostavi da svaka mapa ima samo jednu logičnu knjigu i da su sve datoteke unutar samo različiti e\-knjiga formati iste knjige.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Preocesiraj direktorije suvratno
+Procesiraj mape suvratno
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -472,7 +472,7 @@ Zamijeni prazne prostote sa podvlakama.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Izvezi sve knjige u jedan direktorij
+Izvezi sve knjige u jednu mapu
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -487,7 +487,7 @@ The format in which to display dates. %d \- day, %b \- month, %m \- month number
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Izvezi knjige u specificirani direktorij. Standardan je .
+Izvezi knjige u određenu mapu. Standardna je .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -713,7 +713,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
-Do not ask for confirmation
+Ne pitaj za potvrdu
 .UNINDENT
 .SH SET_CUSTOM
 .INDENT 0.0
