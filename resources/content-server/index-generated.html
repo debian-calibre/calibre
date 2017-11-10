@@ -11030,7 +11030,7 @@ return this.__repr__();
 
         var ensure_id = ρσ_modules.dom.ensure_id;
 
-        LOADING_DOC = "\n<!DOCTYPE html>\n<html>\n<head>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<script type=\"text/javascript\" id=\"bootstrap\">\nwindow.iframe_type = '__IFRAME_TYPE__';  // different in different iframes\n__SCRIPT__\nend_script\n</head>\n<body style=\"font-family: __FONT__\">\n<div style=\"font-size:larger; font-weight: bold; margin-top:48vh; text-align:center\">\n__BS__\n</div>\n</body>\n</html>\n".replace("end_script", "<" + "/script>");
+        LOADING_DOC = "\n<!DOCTYPE html>\n<html>\n<head>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<script type=\"text/javascript\" id=\"bootstrap\">\nwindow.iframe_type = '__IFRAME_TYPE__';  // different in different iframes\nwindow.default_font_family = '__FONT__';  // from the theme\n__SCRIPT__\nend_script\n</head>\n<body>\n<div style=\"font-size:larger; font-weight: bold; margin-top:48vh; text-align:center\">\n__BS__\n</div>\n</body>\n</html>\n".replace("end_script", "<" + "/script>");
         function iframe_js() {
             if (!iframe_js.ans) {
                 iframe_js.ans = main_js().replace(/is_running_in_iframe\s*=\s*false/, "is_running_in_iframe = true");
@@ -11426,10 +11426,12 @@ return this.__repr__();
     (function(){
         var __name__ = "read_book.resources";
         var JSON_XHTML_MIMETYPE, mathjax_data, js_types, resource_tag_names, ns_rmap, ns_count;
-        var clear = ρσ_modules.dom.clear;
+        var E = ρσ_modules.elementmaker.E;
 
         var base64decode = ρσ_modules.encodings.base64decode;
         var utf8_decode = ρσ_modules.encodings.utf8_decode;
+
+        var clear = ρσ_modules.dom.clear;
 
         JSON_XHTML_MIMETYPE = "application/calibre+xhtml+json";
         function decode_component(x) {
@@ -11840,6 +11842,7 @@ return this.__repr__();
             head = ρσ_unpack[0];
             body = ρσ_unpack[1];
             clear(document.head, document.body);
+            document.head.appendChild(ρσ_interpolate_kwargs.call(E, E.style, ["html {{ font-family: {} }}".format(window.default_font_family || "sans-serif")].concat([ρσ_desugar_kwargs({type: "text/css"})])));
             resource_urls = Object.create(null);
             load_required = set();
             proceeded = false;
@@ -24298,6 +24301,7 @@ return this.__repr__();
                 name = ρσ_Iter4[ρσ_Index4];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
+            document.body.style.removeProperty("font-family");
             ρσ_unpack = finalize_resources(self.book, data.name, data.resource_data);
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
             root_data = ρσ_unpack[0];
@@ -25306,7 +25310,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.11.1";
+        CALIBRE_VERSION = "3.12.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25528,6 +25532,7 @@ return this.__repr__();
                 name = ρσ_Iter0[ρσ_Index0];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
+            document.body.style.removeProperty("font-family");
             ρσ_unpack = finalize_resources(self.book, data.name, data.resource_data);
 ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
             root_data = ρσ_unpack[0];
