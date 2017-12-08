@@ -5653,6 +5653,7 @@ return parser;
             ρσ_d["animation-direction"] = ['webkit', 'moz', 'o'];
             ρσ_d["animation-fill-mode"] = ['webkit', 'moz', 'o'];
             ρσ_d["animation-play-state"] = ['webkit', 'moz', 'o'];
+            ρσ_d["hyphens"] = ['webkit', 'moz', 'ms'];
             ρσ_d["transform"] = ['webkit', 'ms', 'moz', 'o'];
             ρσ_d["transform-origin"] = ['webkit', 'ms', 'moz', 'o'];
             ρσ_d["transition"] = ['webkit', 'moz', 'o'];
@@ -18083,11 +18084,27 @@ return this.__repr__();
             __argnames__ : {value: ["container", "icon", "action", "tooltip"]}
         });
 
+        function clear_buttons(container) {
+            var bars, right, ρσ_unpack, i, bar;
+            bars = get_bars(container);
+            var ρσ_Iter4 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+                i = ρσ_unpack[0];
+                bar = ρσ_unpack[1];
+                right = bar.firstChild.nextSibling;
+                clear(right);
+            }
+        };
+        if (!clear_buttons.__argnames__) Object.defineProperties(clear_buttons, {
+            __argnames__ : {value: ["container"]}
+        });
+
         function set_button_visibility(container, icon, visible) {
             var right, elem, bar;
-            var ρσ_Iter4 = ρσ_Iterable(get_bars(container));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                bar = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter5 = ρσ_Iterable(get_bars(container));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                bar = ρσ_Iter5[ρσ_Index5];
                 right = bar.firstChild.nextSibling;
                 elem = right.querySelector("[data-button-icon=\"" + ρσ_str.format("{}", icon) + "\"]");
                 if (elem) {
@@ -18110,6 +18127,7 @@ return this.__repr__();
         ρσ_modules["book_list.top_bar"].set_title = set_title;
         ρσ_modules["book_list.top_bar"].create_top_bar = create_top_bar;
         ρσ_modules["book_list.top_bar"].add_button = add_button;
+        ρσ_modules["book_list.top_bar"].clear_buttons = clear_buttons;
         ρσ_modules["book_list.top_bar"].set_button_visibility = set_button_visibility;
     })();
 
@@ -19868,7 +19886,8 @@ return this.__repr__();
         add_extra_css(function () {
             var sel, style;
             sel = "." + CLASS_NAME + " ";
-            style = ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-name:hover"].concat([ρσ_desugar_kwargs({color: get_color("list-hover-foreground"), background_color: get_color("list-hover-background")})]));
+            style = ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-name > span"].concat([ρσ_desugar_kwargs({word_break: "break-all", hyphens: "auto", padding_left: "1ex"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-name:hover"].concat([ρσ_desugar_kwargs({color: get_color("list-hover-foreground"), background_color: get_color("list-hover-background")})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-menu:hover"].concat([ρσ_desugar_kwargs({color: get_color("list-hover-foreground"), background_color: get_color("list-hover-background")})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-name:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.5)"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " div.tag-menu:active"].concat([ρσ_desugar_kwargs({transform: "scale(2)"})]));
@@ -20168,8 +20187,8 @@ return this.__repr__();
                 if (data.avg_rating !== undefined) {
                     tooltip += "\n" + _("Average rating for books in this category: {:.1f}").format(data.avg_rating);
                 }
-                div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon_for_node(node), style: "display:inline-block; max-height:2.5ex"})]), " " + data.name].concat([ρσ_desugar_kwargs({class_: "tag-name", style: "border-right:solid 1px currentColor; padding: 1ex; display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({class_: "tag-menu", style: "padding: 1ex; display:flex; align-items:center"})]))].concat([ρσ_desugar_kwargs({title: tooltip.lstrip(), style: "display:flex; align-items: stretch"})]));
-                ρσ_interpolate_kwargs.call(this, set_css, [div].concat([ρσ_desugar_kwargs({max_width: "45vw", border: "solid 1px currentColor", border_radius: "20px", margin: "0.5rem", cursor: "pointer", overflow: "hidden", user_select: "none"})]));
+                div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon_for_node(node), style: "display:inline-block; max-height:2.5ex"})]), E.span(data.name)].concat([ρσ_desugar_kwargs({class_: "tag-name", style: "border-right:solid 1px currentColor; padding: 1ex; display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({class_: "tag-menu", style: "padding: 1ex; display:flex; align-items:center"})]))].concat([ρσ_desugar_kwargs({title: tooltip.lstrip(), style: "display:flex; align-items: stretch"})]));
+                ρσ_interpolate_kwargs.call(this, set_css, [div].concat([ρσ_desugar_kwargs({max_width: "95vw", border: "solid 1px currentColor", border_radius: "20px", margin: "0.5rem", cursor: "pointer", overflow: "hidden", user_select: "none"})]));
                 div.firstChild.addEventListener("click", node_clicked.bind(null, i));
                 div.lastChild.addEventListener("click", menu_clicked.bind(null, i));
                 container.appendChild(div);
@@ -21539,6 +21558,7 @@ return this.__repr__();
         var add_button = ρσ_modules["book_list.top_bar"].add_button;
         var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
         var set_title = ρσ_modules["book_list.top_bar"].set_title;
+        var clear_buttons = ρσ_modules["book_list.top_bar"].clear_buttons;
 
         var query_as_href = ρσ_modules["book_list.ui"].query_as_href;
         var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
@@ -22247,9 +22267,10 @@ return this.__repr__();
             var container, book_id;
             container = document.getElementById(container_id);
             if (container) {
+                clear_buttons(container);
                 book_id = parse_url_params().book_id;
                 if (book_id === "0") {
-                    add_button(container.parentNode, "random", function () {
+                    add_button(container, "random", function () {
                         fetch_metadata(container_id, 0);
                     });
                 }
@@ -25310,7 +25331,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.12.0";
+        CALIBRE_VERSION = "3.13.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");

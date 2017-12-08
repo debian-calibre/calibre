@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -20,9 +20,6 @@ class Ui_Form(object):
         self.tab.setObjectName("tab")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.tab)
         self.gridLayout_6.setObjectName("gridLayout_6")
-        self.opt_use_primary_find_in_search = QtWidgets.QCheckBox(self.tab)
-        self.opt_use_primary_find_in_search.setObjectName("opt_use_primary_find_in_search")
-        self.gridLayout_6.addWidget(self.opt_use_primary_find_in_search, 3, 1, 1, 1)
         self.clear_history_button = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -30,7 +27,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.clear_history_button.sizePolicy().hasHeightForWidth())
         self.clear_history_button.setSizePolicy(sizePolicy)
         self.clear_history_button.setObjectName("clear_history_button")
-        self.gridLayout_6.addWidget(self.clear_history_button, 5, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.clear_history_button, 6, 0, 1, 1)
         self.groupBox = QtWidgets.QGroupBox(self.tab)
         self.groupBox.setObjectName("groupBox")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox)
@@ -52,7 +49,7 @@ class Ui_Form(object):
         self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
         self.gridLayout_2.addWidget(self.label_3, 5, 0, 1, 2)
-        self.gridLayout_6.addWidget(self.groupBox, 4, 0, 1, 2)
+        self.gridLayout_6.addWidget(self.groupBox, 5, 0, 1, 2)
         self.opt_search_as_you_type = QtWidgets.QCheckBox(self.tab)
         self.opt_search_as_you_type.setObjectName("opt_search_as_you_type")
         self.gridLayout_6.addWidget(self.opt_search_as_you_type, 0, 0, 1, 2)
@@ -66,7 +63,10 @@ class Ui_Form(object):
         self.opt_show_highlight_toggle_button.setObjectName("opt_show_highlight_toggle_button")
         self.gridLayout_6.addWidget(self.opt_show_highlight_toggle_button, 2, 0, 1, 2)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem, 6, 0, 1, 1)
+        self.gridLayout_6.addItem(spacerItem, 7, 0, 1, 1)
+        self.opt_use_primary_find_in_search = QtWidgets.QCheckBox(self.tab)
+        self.opt_use_primary_find_in_search.setObjectName("opt_use_primary_find_in_search")
+        self.gridLayout_6.addWidget(self.opt_use_primary_find_in_search, 4, 0, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -208,7 +208,6 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
         self.clear_history_button.setToolTip(_("Clear search histories from all over calibre. Including the book list, E-book viewer, fetch news dialog, etc."))
         self.clear_history_button.setText(_("Clear search &histories"))
         self.groupBox.setTitle(_("What to search by default"))
@@ -221,6 +220,7 @@ class Ui_Form(object):
         self.opt_highlight_search_matches.setText(_("&Highlight search results instead of restricting the book list to the results"))
         self.opt_show_highlight_toggle_button.setToolTip(_("<p>This option will cause a small button to appear next to the Search bar. Clicking the button will toggle between showing only the search results and showing all books with the search results highlighted."))
         self.opt_show_highlight_toggle_button.setText(_("Show a &quick toggle button to switch between highlighting and restricting results next to the Search bar"))
+        self.opt_use_primary_find_in_search.setText(_("Unaccented characters match &accented characters"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Genera&l"))
         self.groupBox_2.setTitle(_("Grouped search terms"))
         self.la10.setText(_("&Names:"))
