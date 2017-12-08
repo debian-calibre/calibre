@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -201,7 +201,7 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Reading &metadata"))
         self.opt_mark_new_books.setText(_("&Mark newly added books"))
         self.opt_preserve_date_on_ctl.setText(_("When using the  \"&Copy to library\" action to copy books between libraries, preserve the date"))
-        self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to library\" action check for &duplicates with the same title and author"))
+        self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to library\" action check for &duplicates with the same title, author and language"))
         self.opt_manual_add_auto_convert.setText(_("Automatically &convert added books to the current output format"))
         self.opt_auto_convert_same_fmt.setToolTip(_("This will force an automatic conversion even if the file being added is the same format as the output format. For example, if you set your output format to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."))
         self.opt_auto_convert_same_fmt.setText(_("When auto-converting, convert even if the format being added is the &same as the output format"))
@@ -213,7 +213,7 @@ class Ui_Form(object):
         self.opt_add_formats_to_existing.setText(_("&Auto-merge added books if they already exist:"))
         self.opt_automerge.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
 "existing book records. This box controls what happens when an existing record already has\n"
-"the incoming format: \n"
+"the incoming format:\n"
 "\n"
 "Ignore duplicate incoming files - means that existing files in your calibre library will not be replaced\n"
 "Overwrite existing duplicate files - means that existing files in your calibre library will be replaced\n"

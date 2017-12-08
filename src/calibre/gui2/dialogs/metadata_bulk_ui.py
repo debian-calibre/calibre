@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -193,14 +193,15 @@ class Ui_MetadataBulkDialog(object):
         self.HLayout_3.addWidget(self.series_numbering_restarts)
         self.series_start_number = QtWidgets.QDoubleSpinBox(self.tabWidgetPage1)
         self.series_start_number.setEnabled(False)
-        self.series_start_number.setMinimum(1.0)
+        self.series_start_number.setMinimum(0.0)
         self.series_start_number.setMaximum(99000000.0)
         self.series_start_number.setProperty("value", 1.0)
         self.series_start_number.setObjectName("series_start_number")
         self.HLayout_3.addWidget(self.series_start_number)
         self.series_increment = QtWidgets.QDoubleSpinBox(self.tabWidgetPage1)
         self.series_increment.setEnabled(False)
-        self.series_increment.setMinimum(0.01)
+        self.series_increment.setMinimum(0.0)
+        self.series_increment.setMaximum(99999.0)
         self.series_increment.setProperty("value", 1.0)
         self.series_increment.setObjectName("series_increment")
         self.HLayout_3.addWidget(self.series_increment)
@@ -455,7 +456,6 @@ class Ui_MetadataBulkDialog(object):
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 203, 70))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
         self.testgrid = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
-        self.testgrid.setContentsMargins(0, 0, 0, 0)
         self.testgrid.setObjectName("testgrid")
         self.xlabel_3 = QtWidgets.QLabel(self.gridLayoutWidget_2)
         self.xlabel_3.setObjectName("xlabel_3")
