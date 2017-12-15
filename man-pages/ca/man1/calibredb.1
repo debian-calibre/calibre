@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de novembre 02, 2017" "3.11.1" "calibre"
+.TH "CALIBREDB" "1" "de desembre 15, 2017" "3.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ mostra aquest missatge d\fB\(aq\fPajuda i surt
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Camí a la biblioteca de calibre. Per defecte, s\fB\(aq\fPutilitza el camí emmagatzemat als ajusts. També és possible connectar\-se a un servidor de contingut de calibre per realitzar operacions en biblioteques remotes. Per fer\-ho, utilitzeu l\fB\(aq\fPURL de la manera següent: \fI\%http:nomdelservidor:port/#biblioteca_id\fP per exemple, \fI\%http:localhost:8080/#lamevabiblioteca\fP\&. Bilioteca_id és l\fB\(aq\fPid. de la biblioteca a la qual us voleu connectar al servidor de continguts. Podeu utilitzar el valor especial «libray_id value of», per obtenir una llista dels id. de les biblioteques disponibles al servidor. Per més informació sobre com configurar l\fB\(aq\fPaccés a través del servidor de continguts, vegeu: \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Ordena els resultats en ordre ascendent
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Els camps que es mostraran quan es mostra la llista de llibres a la base de dades. Hauria de ser una llista de camps separats per coma. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: title,authors. El camp especial «all» serveix per seleccionar tots els camps. A més dels camps ja predefinits descrits abans, també es disposa de camps personalitzats amb el format *nom_del_camp, com per exemple, per a un camp personalitzat #valoració, s\fB\(aq\fPutilitzaria el nom *valoració
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Estableix l\fB\(aq\fPISBN del(s) llibre(s) afegit(s)
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-Una llista de llengües separades per comes (millor si s\fB\(aq\fPutilitzen els codis d\fB\(aq\fPidioma ISO639, tot i que pot ser que també es reconegui els noms d\fB\(aq\fPalgunes llengües)
+Una llista de llengües separades per comes (millor si s\fB\(aq\fPutilitzen els codis de llengües ISO639, tot i que pot ser que també es reconegui els noms d\fB\(aq\fPalgunes llengües)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -628,23 +628,23 @@ Substitueix la portada existent quan es genera el catàleg. Per defecte: «False
 .sp
 .nf
 .ft C
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [opcions] (llista|afegeix|elimina)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Gestiona les cerques guardades en aquesta base de dades.
+Si proveu d’afegir una cerca amb un nom que ja existeix, se
+substituirà.
 .sp
-Syntax for adding:
+Sintaxi per afegir:
 .sp
-calibredb \fBsaved_searches\fP add search_name search_expression
+calibredb \fBsaved_searches\fP afegir cerca_nom cerca_expressió
 .sp
-Syntax for removing:
+Sintaxi per eliminar:
 .sp
-calibredb \fBsaved_searches\fP remove search_name
+calibredb \fBsaved_searches\fP elimina cerca_nom
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH ADD_CUSTOM_COLUMN
@@ -897,13 +897,13 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value “all” for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Actualitza les metadades als fitxers del llibre real que estan emmagatzemats a la biblioteca de calibre a partir de
+les metadades de la base de dades de calibre. Normalment, les metadades només s’actualitzen quan
+s’exporten els fitxers de calibre; per tant, aquesta ordre és útil si voleu que s’actualitzin
+a la vostra base de dades. Tingueu en compte que cada tipus de fitxer admet quantitats diferents
+de metadades. Es pot utilitzar el valor especial «all» perquè l’identificador de llibre actualitzi les metadades
+en tots els llibres. També es poden especificar diversos identificadors de llibre separats per espais o conjunts d’identificadors
+separats per guions. Per exemple: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .INDENT 0.0

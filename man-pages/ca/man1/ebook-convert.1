@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de novembre 02, 2017" "3.11.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "de desembre 15, 2017" "3.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -54,8 +54,7 @@ conversion
 .sp
 Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
+Les opcions i els valors per defecte de les opcions de canvi depenen tan del format d’enrtada com del format de sortida, per tant, sempre és possible comprovar\-ho amb:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -67,8 +66,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+A continuació es detallen les opcions comunes a totes les conversions, seguides per les opcions específiques de cada format d’entrada i de sortida.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPCIONS D’ENTRADA\fP
@@ -261,22 +259,22 @@ Alguns documents mal dissenyats utilitzen taules per controlar la disposició de
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Estableix el marge inferior en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Estableix el marge esquerre en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Estableix el marge dret en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Estableix el marge superior en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +304,7 @@ Subconjunt de totes les lletres incrustades. Es redueixen totes les lletres incr
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Camí al fitxer que conté les regles per transformar els estils CSS del llibre. La manera més fàcil de crear aquest tipus de fitxer és utilitzar l\fB\(aq\fPassistent de creació de regles a la interfície gràfica d\fB\(aq\fPusuari. Podeu accedir\-hi a la secció del diàleg de conversió a «Aparença\->Transformació dels estils». Un cop hàgiu creat les regles, empreu el botó «Exporta» per desar\-les en un fitxer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -381,7 +379,7 @@ Modifica el text i l’estructura del document mitjançant els patrons definits 
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Camí a un fitxer que conté les expressions regulars de cerca i substitució. El fitxer ha de contenir línies alternants d\fB\(aq\fPexpressions regulars seguides per un patró de substitució (que pot ser una línia buida). L\fB\(aq\fPexpressió regular ha de ser expressions regulars de Python i han d\fB\(aq\fPestar codificades en UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -419,7 +417,7 @@ Controla l’autodetecció de l’estructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Una expressió XPath per detectar títols de capítols. Per defecte, s\fB\(aq\fPassumeix que les etiquetes <h1> o <h2> contenen les paraules «capítol», «llibre», «secció», «pròleg», «epíleg» o «part» com a títols de capítol, així com qualsevol etiqueta que tingui class=«capítol». L\fB\(aq\fPexpressió que s\fB\(aq\fPutilitzi ha d\fB\(aq\fPequivaler a una llista d\fB\(aq\fPelements. Per desactivar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió «/». Vegeu l\fB\(aq\fPassistent de XPath al manual d\fB\(aq\fPusuari de calibre per a més informació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -434,7 +432,7 @@ Alguns documents especifiquen els marges de pàgina amb un marge a la dreta i a 
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Insereix les metadades del llibre a l\fB\(aq\fPinici. Això és útil si el vostre lector de llibres electrònics no disposa de cerca o visualització de metadades directament.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,7 +447,7 @@ Estableix la portada detectada al fitxer d\fB\(aq\fPorigen de forma preferent a 
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Elimina la primera imatge del llibre seleccionat. És útil si el document seleccionat té una imatge de portada que no està marcada com a tal. En aquest cas, si no s\fB\(aq\fPestableix una portada a calibre, el document resultant en tindrà dues, llevat que s\fB\(aq\fPespecifiqui aquesta opció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -545,7 +543,7 @@ Estableix la llengua.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Estableix la data de publicació (s\fB\(aq\fPassumeix que és zona horària local, llevat que s\fB\(aq\fPespecifiqui una altra explícitament)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +601,7 @@ Desa la sortida de les diferents etapes de la canonada de conversió al director
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Nivell de detall. Augmenteu\-ho per aconseguir més detall. Si s\fB\(aq\fPaugmenta dues vegades dóna com a resultat detall complet, una vegada, detall mitjà, i cap resulta en el menor detall.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

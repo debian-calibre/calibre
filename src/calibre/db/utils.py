@@ -15,6 +15,8 @@ from threading import Lock
 from calibre import as_unicode, prints
 from calibre.constants import cache_dir, get_windows_number_formats, iswindows
 
+from calibre.utils.localization import canonicalize_lang
+
 
 def force_to_bool(val):
     if isinstance(val, (str, unicode)):
@@ -31,6 +33,7 @@ def force_to_bool(val):
         except:
             val = None
     return val
+
 
 _fuzzy_title_patterns = None
 
@@ -59,7 +62,7 @@ def fuzzy_title(title):
 
 
 def find_identical_books(mi, data):
-    author_map, aid_map, title_map = data
+    author_map, aid_map, title_map, lang_map = data
     found_books = None
     for a in mi.authors:
         author_ids = author_map.get(icu_lower(a))
@@ -79,7 +82,16 @@ def find_identical_books(mi, data):
         title = title_map.get(book_id, '')
         if fuzzy_title(title) == titleq:
             ans.add(book_id)
-    return ans
+
+    langq = tuple(filter(lambda x: x and x != 'und', map(canonicalize_lang, mi.languages or ())))
+    if not langq:
+        return ans
+
+    def lang_matches(book_id):
+        book_langq = lang_map.get(book_id)
+        return not book_langq or langq == book_langq
+
+    return {book_id for book_id in ans if lang_matches(book_id)}
 
 
 Entry = namedtuple('Entry', 'path size timestamp thumbnail_size')
@@ -364,6 +376,7 @@ class ThumbnailCache(object):
             self.max_size = int(size_in_mb * (1024**2))
             if hasattr(self, 'total_size'):
                 self._apply_size()
+
 
 number_separators = None
 

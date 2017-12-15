@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "FETCH-EBOOK-METADATA" "1" "de novembre 02, 2017" "3.11.1" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "de desembre 15, 2017" "3.14.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .
@@ -35,21 +35,20 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-fetch\-ebook\-metadata [options]
+fetch\-ebook\-metadata [opcions]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+Agafa les metadades del llibre de fonts en línia. S’ha d’especificar com a mínim un d’entre: títol, autor o ISBN.
 .sp
 Sempre que passeu arguments a \fBfetch\-ebook\-metadata\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
 .SH [OPCIONS]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library, ISBNDB, Overdrive, Douban Books, OZON.ru, Big Book Search
+Especifiqueu el nom del connector a les descàrregues de metadades que s\fB\(aq\fPutilitzarà. Es pot especificar diverses vegades per a diferents connectors. Tots els noms dels connectors: Google, Google Images, Amazon.com, Edelweiss, Open Library, ISBNDB, Overdrive, Douban Books, OZON.ru, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -74,7 +73,7 @@ ISBN del llibre
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+Extreu les metadades en format OPF en comptes de text llegible.
 .UNINDENT
 .INDENT 0.0
 .TP

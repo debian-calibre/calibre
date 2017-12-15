@@ -15,7 +15,7 @@ from book_list.library_data import (
 )
 from book_list.router import back, home, open_book
 from book_list.theme import get_color, get_font_size
-from book_list.top_bar import add_button, create_top_bar, set_title
+from book_list.top_bar import add_button, create_top_bar, set_title, clear_buttons
 from book_list.ui import query_as_href, set_panel_handler, show_panel
 from book_list.views import search_query_for
 from date import format_date
@@ -100,6 +100,13 @@ def adjust_iframe_height(iframe):
     # scrollHeight is inaccurate on Firefox
     iframe.style.height = de.offsetHeight + 5 + 'px'
     iframe.dataset.last_window_width = window.innerWidth + ''
+    return de
+
+
+def setup_iframe(iframe):
+    de = adjust_iframe_height(iframe)
+    for a in de.querySelectorAll('a[href]'):
+        a.setAttribute('target', '_blank')
 
 
 def adjust_all_iframes(ev):
@@ -113,8 +120,10 @@ window.addEventListener('resize', debounce(adjust_all_iframes, 250))
 
 def adjusting_sandboxed_html(html):
     css =  'html, body {{ overflow: hidden; color: {} }}'.format(get_color('window-foreground'))
-    ans = sandboxed_html(html, css, 'allow-same-origin')
-    ans.addEventListener('load', def(ev): adjust_iframe_height(ev.target);)
+    # allow-same-origin is needed for resizing and allow-popups is needed for
+    # target="_blank"
+    ans = sandboxed_html(html, css, 'allow-same-origin allow-popups')
+    ans.addEventListener('load', def(ev): setup_iframe(ev.target);)
     ans.style.height = '50vh'
     ans.dataset.last_window_width = '0'
     return ans
@@ -188,7 +197,7 @@ def render_metadata(mi, table, book_id):  # {{{
         add_row(name, val, is_searchable=field)
 
     def process_formats(field, fm, name, val):
-        if val.length:
+        if val.length and book_id?:
             table.appendChild(E.tr(E.td(name + ':'), E.td()))
             td = table.lastChild.lastChild
             for fmt in val:
@@ -443,9 +452,10 @@ def render_book(container_id, book_id):
 def add_top_bar_buttons(container_id):
     container = document.getElementById(container_id)
     if container:
+        clear_buttons(container)
         book_id = parse_url_params().book_id
         if book_id is '0':
-            add_button(container.parentNode, 'random', def(): fetch_metadata(container_id, 0);)
+            add_button(container, 'random', def(): fetch_metadata(container_id, 0);)
         add_button(container, 'ellipsis-v', action=show_subsequent_panel.bind(None, 'more_actions'), tooltip=_('More actions'))
 
 

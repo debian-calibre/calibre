@@ -8,11 +8,12 @@ __docformat__ = 'restructuredtext en'
 Device driver for Barns and Nobel's Nook
 '''
 
-import os
+import os, errno
 
 import cStringIO
 
-from calibre import fsync
+from calibre import fsync, prints
+from calibre.constants import DEBUG
 from calibre.devices.usbms.driver import USBMS
 
 
@@ -91,8 +92,9 @@ class NOOK_COLOR(NOOK):
         0x002, 0x003, 0x004,
         0x005,  # Nook HD+
         0x007,  # Glowlight from 2013
+        0xb,    # Glowlight from 2017
     ]
-    BCD         = [0x216]
+    BCD         = [0x216, 0x9999]
 
     WINDOWS_MAIN_MEM = WINDOWS_CARD_A_MEM = ['EBOOK_DISK', 'NOOK_TABLET',
             'NOOK_SIMPLETOUCH', 'NOOK_GLOWLIGHT']
@@ -102,6 +104,20 @@ class NOOK_COLOR(NOOK):
 
     def upload_cover(self, path, filename, metadata, filepath):
         pass
+
+    def post_open_callback(self):
+        product_id = self.device_being_opened[1]
+        if DEBUG:
+            prints('Opened NOOK with product id:', product_id)
+        if product_id == 0xb:
+            if DEBUG:
+                prints('Setting Nook upload directory to NOOK/My Files')
+            self.EBOOK_DIR_MAIN = 'NOOK/My Files'
+            try:
+                os.makedirs(os.path.join(self._main_prefix, *self.EBOOK_DIR_MAIN.split('/')))
+            except EnvironmentError as err:
+                if err.errno != errno.EEXIST:
+                    self.EBOOK_DIR_MAIN = 'NOOK'
 
     def get_carda_ebook_dir(self, for_upload=False):
         if for_upload:
