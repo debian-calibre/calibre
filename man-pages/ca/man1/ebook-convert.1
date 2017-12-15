@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de desembre 01, 2017" "3.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de desembre 15, 2017" "3.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -259,22 +259,22 @@ Alguns documents mal dissenyats utilitzen taules per controlar la disposició de
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Estableix el marge inferior en pts. Per defecte és %defecte. Establir\-lo en menys de zero farà que no hi hagi marge (els paràmetres de marge del document original es conservaran). Atenció: Els formats orientats a pàgina, com PDF o DOCX, tenen paràmetres de marge propis i tenen preferència.
+Estableix el marge inferior en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Estableix el marge esquerre en pts. Per defecte és %defecte. Establir\-lo en menys de zero farà que no hi hagi marge (els paràmetres de marge del document original es conservaran). Atenció: Els formats orientats a pàgina, com PDF o DOCX, tenen paràmetres de marge propis i tenen preferència.
+Estableix el marge esquerre en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Estableix el marge dret en pts. Per defecte és %defecte. Establir\-lo en menys de zero farà que no hi hagi marge (els paràmetres de marge del document original es conservaran). Atenció: Els formats orientats a pàgina, com PDF o DOCX, tenen paràmetres de marge propis i tenen preferència.
+Estableix el marge dret en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Estableix el marge superior en pts. Per defecte és %defecte. Establir\-lo en menys de zero farà que no hi hagi marge (els paràmetres de marge del document original es conservaran). Atenció: Els formats orientats a pàgina, com PDF o DOCX, tenen paràmetres de marge propis i tenen preferència.
+Estableix el marge superior en pts. Per defecte és 5.0. Establir\-lo en menys de zero farà que no hi hagi marge (els ajusts del marge del document original es conservaran). Atenció: Els formats orientats a pàgines, com PDF o DOCX, tenen els seus propis ajusts del marge i aquests tenen preferència.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,7 +304,7 @@ Subconjunt de totes les lletres incrustades. Es redueixen totes les lletres incr
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Camí al fitxer que conté les regles per transformar els estils CSS del llibre. La manera més fàcil de crear aquest tipus de fitxer és utilitzar l\fB\(aq\fPassitent de creació de regles a la interfície gràfica d\fB\(aq\fPusuari. Podeu accedir\-hi a la secció del diàleg de conversió a «Aparença\->Transformació dels estils». Un cop hagueu creat les regles, empreu el botó «Exporta» per desar\-les en un fitxer.
+Camí al fitxer que conté les regles per transformar els estils CSS del llibre. La manera més fàcil de crear aquest tipus de fitxer és utilitzar l\fB\(aq\fPassistent de creació de regles a la interfície gràfica d\fB\(aq\fPusuari. Podeu accedir\-hi a la secció del diàleg de conversió a «Aparença\->Transformació dels estils». Un cop hàgiu creat les regles, empreu el botó «Exporta» per desar\-les en un fitxer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -379,7 +379,7 @@ Modifica el text i l’estructura del document mitjançant els patrons definits 
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Camí a un fitxer que conté expression regulars als camps cerca i reemplaça. el fitxer ha de contenir línies alternants d\fB\(aq\fPexpresions regulars seguides per un patró de reemplaçament (que pot ser una línia buida). L\fB\(aq\fPexpressió regular ha de ser en sintaxi Python regex i codificada en UTF\-8.
+Camí a un fitxer que conté les expressions regulars de cerca i substitució. El fitxer ha de contenir línies alternants d\fB\(aq\fPexpressions regulars seguides per un patró de substitució (que pot ser una línia buida). L\fB\(aq\fPexpressió regular ha de ser expressions regulars de Python i han d\fB\(aq\fPestar codificades en UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,7 +417,7 @@ Controla l’autodetecció de l’estructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Una expressió d\fB\(aq\fPXPath per detectar títols de capítols. Per defecte, s\fB\(aq\fPassumeix que les etiquetes <h1> o <h2> contenen les paraules «capítol», «llibre», «secció», «pròleg», «epíleg» o «part» com a títols de capítol, així com també qualsevol etiqueta que tingui class=«capítol». L\fB\(aq\fPexpressió que s\fB\(aq\fPutilitzi ha d\fB\(aq\fPequivaler a una llista d\fB\(aq\fPelements. Per desactovar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió «/». Vegeu l\fB\(aq\fPassistent d\fB\(aq\fPXPath al manual d\fB\(aq\fPusuari de calibre per a més informació.
+Una expressió XPath per detectar títols de capítols. Per defecte, s\fB\(aq\fPassumeix que les etiquetes <h1> o <h2> contenen les paraules «capítol», «llibre», «secció», «pròleg», «epíleg» o «part» com a títols de capítol, així com qualsevol etiqueta que tingui class=«capítol». L\fB\(aq\fPexpressió que s\fB\(aq\fPutilitzi ha d\fB\(aq\fPequivaler a una llista d\fB\(aq\fPelements. Per desactivar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió «/». Vegeu l\fB\(aq\fPassistent de XPath al manual d\fB\(aq\fPusuari de calibre per a més informació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -601,7 +601,7 @@ Desa la sortida de les diferents etapes de la canonada de conversió al director
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Nivell de detall. Augmenteu\-lo per aconseguir més detall. Augmentar\-lo dues vegades dona com a resultat detall complet, una vegada, detall mig, i cap resulta en el menor detall.
+Nivell de detall. Augmenteu\-ho per aconseguir més detall. Si s\fB\(aq\fPaugmenta dues vegades dóna com a resultat detall complet, una vegada, detall mitjà, i cap resulta en el menor detall.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
