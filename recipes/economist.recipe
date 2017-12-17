@@ -171,13 +171,12 @@ class Economist(BasicNewsRecipe):
         if img is not None:
             for part in img['srcset'].split():
                 if part.startswith('//'):
+                    part = part.replace('200-width', '640-width')
                     self.cover_url = 'https:' + part
+                    self.log('Got cover:', self.cover_url)
                     break
 
-        sections = soup.findAll(
-            'div', attrs={'class': 'list__title',
-                          'data-reactid': True}
-        )
+        sections = soup.findAll('div', attrs={'class': 'list__title'})
         if sections:
             feeds = []
             for section in sections:

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "december 01, 2017" "3.13.0" "calibre"
+.TH "EBOOK-META" "1" "december 15, 2017" "3.14.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,15 +41,15 @@ ebook\-meta ebook_file [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Lezen/schrijven metadata van/naar e\-boekbestanden.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Ondersteunende formaten om metadata te lezen: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Ondersteunende formaten om metadata te schrijven: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Verscheidene bestandtypes ondersteunen verscheidene soorten metadata. Indien u
+probeert sommige metadata in een niet\-ondersteunde bestandstype op te slaan
+worden die metadata gewoon genegeerd.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
 .SH [OPTIES]
@@ -91,12 +91,12 @@ Geef de publicatiedatum op.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Lees metadata uit het opgegeven OPF\-bestand en gebruik deze als metadata in het e\-book in te zetten. Metadata die op de opdrachtregel opgegeven worden hebben voorrang boven de metadata die zich in het OPF\-bestand bevinden
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+Haal de omslag van het e\-boek en sla dit op als het gespecificeerde bestand.
 .UNINDENT
 .INDENT 0.0
 .TP

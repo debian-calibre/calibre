@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de desembre 01, 2017" "3.13.0" "calibre"
+.TH "CALIBREDB" "1" "de desembre 15, 2017" "3.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ mostra aquest missatge d\fB\(aq\fPajuda i surt
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Camí a la biblioteca de calibre. Per defecte, s\fB\(aq\fPutilitza el camí emmagatzemat en els paràmetres. Tambés és possible connectar\-se a un servidor de contingut de calibre per realitzar operacions en biblioteques remotes. Per fer\-ho, empreu la URL de la manera següent: \fI\%http:nomdelservidor:port/#biblioteca_id\fP per exemple, \fI\%http:localhost:8080/#lamevabiblioteca\fP\&. Bilioteca_id és l\fB\(aq\fPid de la biblioteca a la qual us voleu connectar en el servidor de continguts. Podeu utilitzar el valor especial «libray_id value of», per aconseguir una llista d\fB\(aq\fPids de biblioteques disponibles al servidor. Per més informació sobre com configurar l\fB\(aq\fPaccés a través del servidor de continguts, vegeu: \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Camí a la biblioteca de calibre. Per defecte, s\fB\(aq\fPutilitza el camí emmagatzemat als ajusts. També és possible connectar\-se a un servidor de contingut de calibre per realitzar operacions en biblioteques remotes. Per fer\-ho, utilitzeu l\fB\(aq\fPURL de la manera següent: \fI\%http:nomdelservidor:port/#biblioteca_id\fP per exemple, \fI\%http:localhost:8080/#lamevabiblioteca\fP\&. Bilioteca_id és l\fB\(aq\fPid. de la biblioteca a la qual us voleu connectar al servidor de continguts. Podeu utilitzar el valor especial «libray_id value of», per obtenir una llista dels id. de les biblioteques disponibles al servidor. Per més informació sobre com configurar l\fB\(aq\fPaccés a través del servidor de continguts, vegeu: \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Ordena els resultats en ordre ascendent
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Els camps que es mostraran quan es vegi la llista de llibres a la base de dades. hauria de ser una llista de camps separats per coma. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: %per defecte. El camp especial «tots» serveix per seleccionar tots els camps. A més dels camps ja predefinits descrits abans, també es disposa de camps personalitzats amb el format *nom_del_camp, com per exemple, per a un camp personalitzat #valoració, s\fB\(aq\fPutilitzaria el nom *valoració
+Els camps que es mostraran quan es mostra la llista de llibres a la base de dades. Hauria de ser una llista de camps separats per coma. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: title,authors. El camp especial «all» serveix per seleccionar tots els camps. A més dels camps ja predefinits descrits abans, també es disposa de camps personalitzats amb el format *nom_del_camp, com per exemple, per a un camp personalitzat #valoració, s\fB\(aq\fPutilitzaria el nom *valoració
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Estableix l\fB\(aq\fPISBN del(s) llibre(s) afegit(s)
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-Una llista de llengües separades per comes (millor si s\fB\(aq\fPutilitzen els codis d\fB\(aq\fPidioma ISO639, tot i que pot ser que també es reconegui els noms d\fB\(aq\fPalgunes llengües)
+Una llista de llengües separades per comes (millor si s\fB\(aq\fPutilitzen els codis de llengües ISO639, tot i que pot ser que també es reconegui els noms d\fB\(aq\fPalgunes llengües)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -635,8 +635,8 @@ calibredb saved_searches [opcions] (llista|afegeix|elimina)
 .UNINDENT
 .sp
 Gestiona les cerques guardades en aquesta base de dades.
-Si proveu de afegir una cerca amb un nom que ja existeix, es
-reemplaçarà.
+Si proveu d’afegir una cerca amb un nom que ja existeix, se
+substituirà.
 .sp
 Sintaxi per afegir:
 .sp
@@ -897,12 +897,12 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Actualitza les metadades als fitxers de llibre emmagatzemats a la llibreria de calibre des de
+Actualitza les metadades als fitxers del llibre real que estan emmagatzemats a la biblioteca de calibre a partir de
 les metadades de la base de dades de calibre. Normalment, les metadades només s’actualitzen quan
 s’exporten els fitxers de calibre; per tant, aquesta ordre és útil si voleu que s’actualitzin
 a la vostra base de dades. Tingueu en compte que cada tipus de fitxer admet quantitats diferents
 de metadades. Es pot utilitzar el valor especial «all» perquè l’identificador de llibre actualitzi les metadades
-a tots els llibres. També podeu especificar diversos identificadors de llibre separats per espais o conjunts d’identificadors
+en tots els llibres. També es poden especificar diversos identificadors de llibre separats per espais o conjunts d’identificadors
 separats per guions. Per exemple: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
