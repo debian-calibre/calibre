@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dezembro 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "janeiro 05, 2018" "3.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,7 +35,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert ficheiro_ entrada ficheiro_saída [opções]
+ebook\-convert ficheiro_entrada ficheiro_saída [opções]
 .ft P
 .fi
 .UNINDENT
@@ -43,15 +43,11 @@ ebook\-convert ficheiro_ entrada ficheiro_saída [opções]
 .sp
 Converte um formato de livro digital noutro formato
 .sp
-
-.nf
-ficheiro_
-.fi
- entrada é a fonte e o ficheiro_saída é o resultado final. Os dois devem ser especificados como os dois primeiros argumento para o comando.
+ficheiro_entrada (input_file) é a fonte e o ficheiro_saída (output_file)é o resultado final. Os dois devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-O formato do resultado final é definido através  da extensão do ficheiro do  ficheiro_saída. O ficheiro_saída pode ser também o formato especial .EXT onde EXT é a extensão do resultado final . Neste caso, o nome do formato do  produto final é derivado do nome do ficheiro de matéria. Note que o nome do ficheiro não deve começar com um hífen. Finalmente, se ficheiro_saída não tiver extensão, então será tratado como diretório e um «um livro aberto» (OEB) composto por  ficheiros  HTML é gravado nesse diretório. Estes formatos são os formatos que normalmente serão passados pelo plugin de saída.
+O formato do resultado final é calculado através da extensão de ficheiro do  ficheiro_saída. O ficheiro_saída pode ter também o formato especial .EXT onde EXT é a extensão do ficheiro de saída. Neste caso, o nome do formato do ficheiro de saída é derivado do nome do ficheiro de entrada. Note que o nome do ficheiro não pode começar com um hífen. Finalmente, se ficheiro_saída não tiver extensão, então será tratado como pasta e será gravado nessa pasta um «livro digital aberto» (OEB) composto por ficheiros HTML. Estes ficheiros são os ficheiros que normalmente seriam passados pelo plugin de saída.
 .sp
-Depois de especificar o formato de entrada e o de saída poderá personalizar a conversão através da especificação de várias opções. As opções disponíveis são dependentes  do tipo de formato de entrada e o de saída. Para obter ajuda neste tópico introduza o ficheiro de entrada e de saída seguida da opção \-h .
+Depois de especificar o ficheiro de entrada e o de saída poderá personalizar a conversão através da especificação de várias opções. As opções disponíveis dependem dos tipos de ficheiro de entrada e do de saída. Para obter ajuda neste tópico indique o ficheiro de entrada e o de saída seguido da opção \-h .
 .sp
 Para obter a documentação completa do sistema de conversão veja
 conversion
@@ -348,7 +344,7 @@ Pesquisar por palavras comuns e padrões que denotam itálicos e tornar esse tex
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detetar cabeçalhos e sub\-cabeçalhos de capítulos sem formatação. Trocá\-los para etiquetas h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada juntamente com a estrutura de deteção para o criar.
+Detetar cabeçalhos e subcabeçalhos de capítulos sem formatação. Trocá\-los para etiquetas h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada juntamente com a estrutura de deteção para o criar.
 .UNINDENT
 .INDENT 0.0
 .TP

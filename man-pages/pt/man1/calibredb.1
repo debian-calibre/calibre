@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "dezembro 15, 2017" "3.14.0" "calibre"
+.TH "CALIBREDB" "1" "janeiro 05, 2018" "3.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -475,7 +475,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-Tema para controlar a estrutura de nome do arquivo e diretório dos ficheiros guardados. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai guardar os livros num subdiretório por autor com nomes de arquivos contendo título e autor. Os controles disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura de nome de ficheiro e pasta dos ficheiros guardados. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai guardar os livros numa subpasta por autor com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -548,7 +548,7 @@ Etiquetas discritivas Regex a excluír como genéros. Padrão: \fB\(aq\fP[.+]|^+
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Especifica as regras usadas para excluir livros do catálogo gerado. O tema para uma regra de exclusão é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<lista de etiquetas separadas por vírgula>\fB\(aq\fP) ou (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<coluna personalizada>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
+Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<lista de etiquetas separadas por vírgula>\fB\(aq\fP) ou (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<coluna personalizada>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +603,7 @@ Especifica um perfil de saída para equipamento. Em alguns casos, um perfil de s
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Especifica as regras usadas para incluir prefixos que indiquem livros de leitura, itens de lista de desejos e outros prefixos especificados pelo utilizador. O tema para uma regra de prefixo é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<campo do recurso>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP,\fB\(aq\fP<prefixo>\fB\(aq\fP). Quando várias regras forem definidas, será usada a primeira regra correspondente. Padrão: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
+Especifica as regras usadas para incluir prefixos que indiquem livros de leitura, itens de lista de desejos e outros prefixos especificados pelo utilizador. O modelo para uma regra de prefixo é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<campo do recurso>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP,\fB\(aq\fP<prefixo>\fB\(aq\fP). Quando várias regras forem definidas, será usada a primeira regra correspondente. Padrão: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -719,7 +719,7 @@ Não solicitar confirmação
 .sp
 .nf
 .ft C
-calibredb set_custom [opções] identificador livro_id valor
+\ \  calibredb set_custom [opções] identificador livro_id valor
 
 
 Altera o conteúdo de um campo personalizado do livro livro_id.
@@ -749,13 +749,13 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restaurar essa base de dados dos metadados armazenados em arquivos OPF em cada
-diretório de biblioteca do Calibre. Isto é útil se o seu arquivo metadata.db
-foi corrompido.
+Restaurar esta base de dados a partir dos metadados armazenados em arquivos OPF em cada
+pasta da biblioteca do Calibre. Isto é útil se o seu arquivo metadata.db
+tiver sido corrompido.
 .sp
-AVISO: Este comando regenera completamente o seu banco de dados. Vai perder
-tudo oq ue guardou como pesquisas, categorias de utilizadores, marcas de dispositivos, preferências de conversões por livros, e receitas personalizadas. Os metadados restaurados
-serão apenas tão precisos quanto os encontrados nos arquivos OPF
+AVISO: Este comando regenera completamente a sua base de dados. Vai perder
+todas as pesquisas guardadas, categorias do utilizador, ligações a dispositivos, preferências de conversões por livro e receitas personalizadas. Os metadados restaurados
+serão tão precisos quanto os encontrados nos ficheiros OPF
 .
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: «/some path/with spaces»

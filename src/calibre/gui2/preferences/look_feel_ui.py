@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -538,14 +538,15 @@ class Ui_Form(object):
         self.opt_systray_icon.setText(_("Enable s&ystem tray icon (needs restart)"))
         self.label_7.setText(_("Choose &language (needs restart):"))
         self.label_2.setText(_("&Interface font:"))
-        self.opt_disable_tray_notification.setText(_("Disable n&otifications in system tray"))
+        self.opt_disable_tray_notification.setToolTip(_("Disable popup notifications when calibre completes jobs such a conversion, sending to device etc. The notifications are sent via the operating system notification facility, if available. Note that on windows, you have to enable the system tray icon for notifications to work."))
+        self.opt_disable_tray_notification.setText(_("Disable n&otifications on job completion"))
         self.label_widget_style.setText(_("User interface style (&needs restart):"))
         self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
         self.opt_disable_animations.setText(_("Disable &animations"))
         self.opt_show_splash_screen.setText(_("Show &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
-        self.label_hidpi.setText(_("&Adjust for high resolution screens (needs restart):"))
+        self.label_hidpi.setText(_("Ad&just for high resolution screens (needs restart):"))
         self.opt_hidpi.setToolTip(_("<p>Whether to automatically adjust the calibre user interface for high resolution (high DPI) monitors. There are three possible values:</p>\n"
 "\n"
 "<ul>\n"

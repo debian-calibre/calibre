@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "12월 15, 2017" "3.14.0" "calibre"
+.TH "CALIBREDB" "1" "1월 05, 2018" "3.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%폴더에서 추가\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -241,7 +241,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+추가된 책에 사용할 표지의 경로
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Path to the cover to use for the added book
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+이 책의 식별자 설정하기, 예: \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+쉼표로 구분된 언어 목록 (일부 언어 이름도 인식될 수 있지만, ISO639 언어 코드를 사용하는 것이 가장 좋습니다)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,28 +288,28 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .B \-\-title, \-t
 추가된 책(들)의 이름을 입력하기
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS 폴더에서 추가
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+폴더에서 책 추가하는 것을 제어하는 옵션. 기본적으로 알려진 전자책 파일 형식의 확장자를 가진 파일만 추가됩니다.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+파일명(전역) 패턴, 이 패턴과 일치하는 파일은 알려진 전자책 파일 유형이 아닌 경우에도, 폴더에서 파일 스캔시 추가됩니다. 여러 패던에 대해 여러 번 지정할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+파일명(전역) 패턴, 이 패턴과 일치하는 파일은 폴더에서 파일 스캔시 무시됩니다. 여러 패턴에 대해 여러 번 지정할 수 있습니다. 예: *.pdf는 모든 pdf 파일을 무시합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+각 폴더에는 하나의 논리적인 책만 있고 그 폴더 안의 모든 파일은 해당 책의 다른 전자책 형식이라고 가정합니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+재귀적으로 폴더 처리하기
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -447,7 +447,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+보통, 캘리버는 표지를 실제 전자책 파일과 함께 별도의 파일에 저장합니다. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
