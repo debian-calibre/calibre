@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Disember 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Januari 05, 2018" "3.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Tukar format e\-buku dari satu format ke format yang lain.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file ialah input dan output_file ialah output. Kedua\-dua mesti dinyatakan sebagai dua argumen pertama perintah.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+Format e\-buku output diteka dari sambungan fail output_file. output_file juga boleh menjadi format khas .EXT yang mana EXT ialah sambungan fail output file. Dalam kes ini, nama fail output diambil dari nama fail input. Perhatian nama fail mesti tidak bermula dengan tanda hyphen. Akhir sekali, jika output_file tidak mempunyai sambungan, maka ia dianggap sebagai direktori dan "open ebook" (OEB) yang mengandungi fail HTML yang ditulis ke dalam direktori tersebut. Fail ini biasanya telah dilepasi ke pemalam output.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Selepas menyatakan fail input dan output anda boleh suaikan penukaran dengan menyatakan pelbagai pilihan. Pilihan tersedia bergantung pada jenis fail input dan output. Untuk mendapatkan bantuan nyatakan fail input dan output dan kemudian guna pilihan \-h.
 .sp
-For full documentation of the conversion system see
+Untuk dokumentasi penuh sistem penukaran, lihat
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -102,7 +102,7 @@ Nyatakan profil input. Profil input memberikan maklumat sistem penukaran bagaima
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Senaraikan nama resepi terbina\-dalam. Anda boleh cipta satu e\-buku melalui resepi terbina\-dalam seperti ini: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Pilihan untuk mengawal pemprosesan fail output epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Matikan pemisahan pada hentian halaman. Biasanya fail input dipisah secara automatik pada setiap hentian halaman menjadi dua fail. Ini memberikan e\-buku output yang boleh dihurai lebih pantas dengan kurang penggunaan sumber. Walaubagaimanapun, pemisahan adalah perlahan dan jika fail sumber anda mengandungi jumlah hentian halaman yang sangat besar, anda patut mematikan pemisahan hentian halaman.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +216,7 @@ Benamkan keluarga fon tertentu ke dalam buku. Ini menyatakan fon \fB"\fPdasar\fB
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Secara lalai, calibre akan guna kependekan untuk pelbagai sifat CSS seperti margin, pemadatan, sempadan, dll. Pilihan ini akan menyebabkan ia gunakan bentuk penuh. Perhatian CSS sentiasa dikembangkan bila menjana fail EPUB dengan profil output ditetapkan pada salah satu profil Nook kerana Nook tidak dapat kendalikan kependekan CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +306,7 @@ Sebset semua fon terbenam. Setiap fon terbenam dikurangkan hanya untuk mengandun
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Laluan ke fail yang mengandungi peraturan pengubah gaya CSS dalam buku ini. Cara termudah mencipta fail sebegitu adalah dengan menggunakan bestari untuk mencipta peraturan di dalam GUI calibre. Capai ia dalam seksyen \fB"\fPPenampilan\->Ubah gaya\fB"\fP bagi dialog pertukaran. Seusai anda mewujudkan peraturan, anda boleh guna butang \fB"\fPEksport\fB"\fP untuk menyimpannya ke dalam fail.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -381,7 +381,7 @@ Ubahsuai teks dan struktur dokumen menggunakan corak ditakrif pengguna.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Laluan ke fail yang mengandungi ungkapan nalar gelintar dan ganti. Fail mesti mengandungi bari alternatif bagi ungkapan nalar yang diikuti oleh corak penggantian (yang boleh jadi baris kosong). Ungkapan nalar mesti dalam sintaks ungkapan nalar Python dan fail mesti terenkod UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -434,7 +434,7 @@ Sesetengah dokumen nyatakan margin halaman dengan menyatakan margin kiri dan kan
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Sisip data meta buku pada permulaan buku. Ia berguna jika pembaca e\-buku anda tidak menyokong papar/gelintar data meta secara langsung.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,12 +449,12 @@ Guna kulit hadapan yang dikesan dari fail sumber dalam keutamaan ke kulit hadapa
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Buang imej pertama dari e\-buku input. Berguna jika dokumen input mempunyai imej kulit buku yang tidak dikenalpasti sebagai kulit buku. Dalam situasi ini, jika anda tetapkan kulit buku dalam calibre, dokumen output akan mempunyai dua imej kulit buku jika anda tidak nyatakan pilihan ini.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Ungkapan XPath untuk mengesan lokasi dalam dokumen untuk mula membaca. Sesetengah program membaca e\-buku (umumnya Kindle) gunakan lokasi ini sebagai kedudukan untuk membuka buku. Sila rujuk tutorial XPath di dalam Panduan Pengguna calibre untuk bantuan lanjutan berkenaan penggunaan fitur ini.
 .UNINDENT
 .SH ISI KANDUNGAN
 .sp
@@ -545,7 +545,7 @@ Tetapkan bahasa.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Tetapkan tarikh penerbitan (dianggap dalam zon waktu setempat, melainkan zon waktu dinyatakan secara eksplisit)
 .UNINDENT
 .INDENT 0.0
 .TP

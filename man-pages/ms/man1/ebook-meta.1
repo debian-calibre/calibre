@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "Disember 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-META" "1" "Januari 05, 2018" "3.15.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,15 +41,19 @@ ebook\-meta ebook_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Baca/Tulis data meta dari/ke fail e\-buku.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Format disokong untuk data meta pembacaan: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Format disokong untuk data meta penulisan: azw, azw1, azw3, azw4, docx, epub, fb2, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Jenis fail berbeza menyokong jenis data meta yang berlainan. Jika anda cuba
+tetapkan beberapa data meta pada satu jenis fail yang tidak menyokongnya,
+.INDENT 0.0
+.INDENT 3.5
+data meta tersebut akan diabaikan secara senyap.
+.UNINDENT
+.UNINDENT
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [PILIHAN]
@@ -91,12 +95,12 @@ Tetapkan tarikh diterbitkan.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Baca data meta dari fail OPF yang dinyatakna dan guna ia untuk tetapkan data meta dalam e\-buku. Data meta dinyatakan pada baris perintah akan membatalkan data meta yang dibaca dari fail OPF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+Dapatkan kulit buku dari e\-buku dan simpan ia seperti fail yang dinyatakan.
 .UNINDENT
 .INDENT 0.0
 .TP
