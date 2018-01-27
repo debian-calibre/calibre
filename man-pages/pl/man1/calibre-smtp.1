@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "stycznia 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "stycznia 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -48,12 +48,12 @@ Jeśli treść nie jest podana, jest ona odczytywana z STDIN.
 to jest adresem e\-mailowym odbiorcy wiadomości, zaś from \- adresem nadawcy.
 Jeśli kompletna wiadomość jest odczytywana z STDIN adresy nadawcy i odbiorcy są używane jedynie do negocjacji w protokole SMTP, nagłówki wiadomości nie są modyfikowane.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces”
+Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPCJE]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Oddziel i dostarcz wiadomość w tle. Jeśli użyjesz tej opcji, powinieneśużyć również parametru \fB\-\-outbox,\fP by móc zareagować na błędy przy dostarczaniu wiadomości.
+Oddziel i dostarcz wiadomość w tle. Jeśli użyjesz tej opcji, powinieneś użyć również parametru \fB\-\-outbox,\fP by móc zareagować na błędy przy dostarczaniu wiadomości.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -100,7 +100,7 @@ Temat maila
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Opcje, aby korzystać z serwera SMTP do wysyłania poczty. calibre będzie próbował wysłać e\-mail bezpośrednio, chyba, że –relay jest określony.
+Opcje, aby korzystać z serwera SMTP do wysyłania poczty. calibre będzie próbował wysłać e\-mail bezpośrednio, chyba, że \-\-relay jest określony.
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e

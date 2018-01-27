@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "enero 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "enero 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Ruta a la biblioteca de calibre. De manera predeterminada se usa la ruta almacen
 .INDENT 0.0
 .TP
 .B \-\-password
-Contraseña para conectar con un servidor de contenidos de calibre. Para leer la contraseña de la entrada estándar, use el valor especial: <stdin>. Para leer la contraseña de un archivo, use: <f:/path/to/file>.
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [opciones]
 .sp
 Lista de los libros disponibles en la base de datos de calibre.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -232,7 +232,7 @@ calibredb add [opciones] archivo1 archivo2 archivo3 ...
 Añadir los archivos especificados a la base de datos. También pueden especificarse
 directorios, ver las opciones relativas a directorios más abajo.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -325,7 +325,7 @@ calibredb remove ID
 .sp
 Eliminar los libros identificados por ID de la base de datos. ID debe ser una lista separada por comas de números de identificación (se pueden obtener números de identificación usando la orden «search»). Por ejemplo, 23,34,57\-85 (al especificar un intervalo, el último número del intervalo no está incluido).
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -345,7 +345,7 @@ calibredb add_format [opciones] ID archivo_libro
 .sp
 Añadir el libro electrónico archivo_libro a los formatos disponibles para el libro identificado por ID. Se puede obtener el ID usando la orden «search». Si el formato ya existe, será sustituido por el nuevo, a no ser que se use la opción de no sustituir.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -365,7 +365,7 @@ calibredb remove_format [options] ID fmt
 .sp
 Eliminar el formato fmt del libro identificado por ID. Se puede obtener el ID usando la orden «search». fmt debe ser una extensión de archivo como LRF, TXT o EPUB. Si el libro no tiene el formato fmt disponible, no hace nada.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -380,7 +380,7 @@ calibredb show_metadata [opciones] ID
 .sp
 Muestra los metadatos almacenados en la base de datos de calibre para el libro identificado por ID. ID es un identificador de la orden «search».
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -398,9 +398,9 @@ calibredb set_metadata [opciones] ID [/ruta/a/metadatos.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Asignar los metadatos del libro identificado por ID a partir del archivo OPF metadatos.opf. El ID es un identificador dado por la orden «search». Puede ver en qué consiste el formato OPF usando la opción –as\-opf en la orden «show_metadata». También puede asignar metadatos a campos individuales con la opción –field.
+Asignar los metadatos del libro identificado por ID a partir del archivo OPF metadatos.opf. El ID es un identificador dado por la orden «search». Puede ver en qué consiste el formato OPF usando la opción \-\-as\-opf en la orden «show_metadata». También puede asignar metadatos a campos individuales con la opción \-\-field.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -425,7 +425,7 @@ calibredb export [opciones] ID
 .sp
 Exportar los libros especificados por los ID (una lista de identificadores separados por comas) al sistema de archivos. La operación de exportación guarda todos los formatos del libro, su portada y metadatos (en un archivo OPF). Se pueden obtener los números ID con la orden «search».
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -455,6 +455,11 @@ Normalmente, calibre escribirá los metadatos en un archivo OPF separado, junto 
 .TP
 .B \-\-formats
 Lista de formatos, separados por comas, para guardar cada libro. De manera predeterminada se guardan todos los formatos disponibles.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -502,7 +507,7 @@ Exportar un catálogo en el formato especificado por la extensión de /ruta/a/de
 Las opciones controlan cómo se muestran las entradas en la salida del catálogo generado.
 Tenga en cuenta que los diferentes formatos de catálogo admiten diferentes opciones.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -638,7 +643,7 @@ Sintaxis para eliminar:
 .sp
 calibredb \fBsaved_searches\fP remove nombre_de_búsqueda
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -653,7 +658,7 @@ calibredb add_custom_column [opciones] etiqueta nombre tipo_de_dato
 .sp
 Crea una columna personalizada. «etiqueta» es un nombre interno para la columna. No debe contener espacios ni dos puntos. «nombre» es el nombre visible de la columna. «tipo_de_dato» es uno de: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -678,7 +683,7 @@ calibredb custom_columns [opciones]
 .sp
 Da una lista de las columnas personalizadas disponibles. Muestra las etiquetas de columna e ID.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -699,7 +704,7 @@ calibredb remove_custom_column [opciones] etiqueta
 Elimina la columna personalizada identificada por «etiqueta». Puede ver
 las columnas disponibles con la orden «custom_columns».
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -719,7 +724,7 @@ calibredb set_custom [opciones] columna ID valor
 .sp
 Establecer el valor de una columna personalizada para el libro identificado por ID. Puede obtener una lista de ID con la orden «search». Puede obtener una lista de nombres de columnas personalizadas usando la orden «custom_columns».
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -746,7 +751,7 @@ todas las búsquedas guardadas, categorías de usuario, controles, configuració
 conversión guardada por libro y fórmulas personalizadas. Los metadatos
 recuperados serán tan precisos como lo sean los archivos OPF.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -766,7 +771,7 @@ calibredb check_library [opciones]
 .sp
 Realiza algunas comprobaciones en el sistema de archivos que contiene la biblioteca. El resultado es invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -802,7 +807,7 @@ calibredb list_categories [opciones]
 Genera un informe de la información de la categoría en la base de datos. La
 información es el equivalente a lo que se muestra en el panel de etiquetas.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -843,12 +848,12 @@ calibredb backup_metadata [opciones]
 Hace una copia de respaldo de los metadatos almacenados en la base de datos
 en ficheros OPF individuales en cada directorio de libro. Esto se lleva a cabo
 normalmente de manera automática, pero puede ejecutar esta orden para
-forzar la regeneración de los ficheros OPF, con la opción –all.
+forzar la regeneración de los ficheros OPF, con la opción \-\-all.
 .sp
 Tenga en cuenta que normalmente no hay necesidad de hacer esto, pues
 los ficheros OPF se actualizan cada vez que se modifican los metadatos.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -874,7 +879,7 @@ La biblioteca clonada no contendrá ningún libro. Si quiere crear un duplicado 
 incluyendo todos los libros, use simplemente las utilidades del sistema operativo
 para copiar la carpeta de la biblioteca.
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -892,11 +897,11 @@ de calibre a partir de los metadatos en la base de datos de calibre. Normalmente
 los metadatos se actualizan únicamente cuando se exportan los libros de calibre,
 esta orden es útil si quiere actualizar los archivos de origen. Tenga en cuenta que
 los distintos formatos admiten diferentes tipos de metadatos. Puede usar el valor
-especial “all” para ID, para actualizar los metadatos de todos los libros. También
+especial \(aqall\(aq para ID, para actualizar los metadatos de todos los libros. También
 puede usar varios ID separados por espacios y gamas de ID separados por guiones.
 Por ejemplo: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -918,7 +923,7 @@ Busca la expresión de búsqueda especificada en la biblioteca y devuelve una li
 .sp
 La expresión de búsqueda puede ser cualquiera aceptada por el potente lenguaje de búsquedas de calibre, por ejemplo: author:asimov title:robot
 .sp
-Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: «/some path/with spaces»
+Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

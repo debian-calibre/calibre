@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "1月 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "1月 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,7 +52,7 @@ from is the email address of the sender and to is the email address
 of the recipient. When a complete email is read from STDIN, from and to
 are only used in the SMTP negotiation, the message headers are not modified.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: 「/some path/with spaces」
+Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [選項]
 .INDENT 0.0
 .TP
@@ -104,11 +104,11 @@ Subject of the email
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless –relay is specified.
+Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+請選擇連線至轉發伺服器的加密方式。你可以選擇TLS、SSL、NONE，預設值為TLS，請注意：選擇NONE是高度危險的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,7 +118,7 @@ Password for relay
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+連接至轉發伺服器的連接埠，預設使用SSL加密埠465，Port25是不被接受的。
 .UNINDENT
 .INDENT 0.0
 .TP

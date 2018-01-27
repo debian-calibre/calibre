@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Januari 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "Januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda ju
 .INDENT 0.0
 .TP
 .B \-\-password
-Kata laluan untuk menyambung dengan pelayan Kandungan calibre. Untuk membaca kata laluan dari input piawai, gunakan nilai khas: <stdin>. Manakala, untuk membaca kata laluan dari fail, guna: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -403,9 +403,9 @@ calibredb set_metadata [options] id [/laluan/ke/metadata.opf]
 Tetapan data meta yang tersimpan dalam pangkalan data calibre bagi buku
 yang dikenalpasti dengan id dari fail OPF metadata.opf. id ialah nombor id
 dari perintah gelintar. Anda boleh dapatkan format OPF dengan menggunakan
-–as\-opf yang ditukar ke perintah show_metadata. Anda juga boleh tetapkan
-data meta bagi medan secara individu dengan pilihan –field. Jika anda guna
-pilihan –field, tidak perlu nyatakan fail OPF.
+\-\-as\-opf yang ditukar ke perintah show_metadata. Anda juga boleh tetapkan
+data meta bagi medan secara individu dengan pilihan \-\-field. Jika anda guna
+pilihan \-\-field, tidak perlu nyatakan fail OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -465,6 +465,11 @@ Biasanya, calibre akan tulis data meta ke dalam fail OPS secara berasingan bersa
 .TP
 .B \-\-formats
 Senarai format dipisah\-koma untuk simpan setiap buku. Secara lalai semua format yang tersedia disimpan.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -862,7 +867,7 @@ calibredb backup_metadata [options]
 Sandar data meta tersimpan dalam pangkalan data ke dalam fail OPF secara
 individu dalam setiap direktori buku. Ia biasanya berlaku secara automatik,
 tetapi anda boleh jalankan perintah ini untuk paksa penjanaan\-semula fail
-OPF, dengan pilihan –all.
+OPF, dengan pilihan \-\-all.
 .sp
 Perhatian kebiasaannya tidak perlu membuatnya, kerana fail OPF disandar
 secara automatik, setiap kali data meta berubah.

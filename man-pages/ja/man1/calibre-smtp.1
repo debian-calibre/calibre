@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "1月 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "1月 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -54,7 +54,7 @@ from は送信者のメールアドレスで、to は電子メールの受取人
 text が標準入力から読み込まれた場合、from と to はSMTP のネゴシエーション
 でのみ使用され、メッセージのヘッダは変更されません。
 .sp
-スペースを含む引数を \fBcalibre\-smtp\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
+スペースを含む引数を \fBcalibre\-smtp\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH [オプション]
 .INDENT 0.0
 .TP
@@ -63,7 +63,7 @@ Forkしてバックグラウンドでメッセージの配送を行います。�
 .nf
 \(ga
 .fi
-–outbox\(gaで配送に失敗したメッセージを受け取れるようにしてください。
+\-\-outbox\(gaで配送に失敗したメッセージを受け取れるようにしてください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -110,7 +110,7 @@ localhostのホスト名。SMTPサーバとの接続時に使用します。
 .UNINDENT
 .SS SMTP RELAY
 .sp
-メールの送信にSMTPリレーサーバーを使う場合のオプション。–relayが指定されていなかった場合、Calibreは電子メールを直接送信するよう試みます。
+メールの送信にSMTPリレーサーバーを使う場合のオプション。\-\-relayが指定されていなかった場合、Calibreは電子メールを直接送信するよう試みます。
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e

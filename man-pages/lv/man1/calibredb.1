@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "janvāris 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "janvāris 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāt
 .INDENT 0.0
 .TP
 .B \-\-password
-Parole pieslēgšanai calibre satura serverim. Lai lasītu paroli no standarta ievades, izmantojiet īpašo vērtību: <stdin>. Lai lasītu paroli no faila, izmantojiet: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 Grāmatu saraksts, kas pieejams calibre datu bāzē.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -232,7 +232,7 @@ calibredb pievienot [options] file1 file2 file3 ...
 Pievienojiet norādītos failus kā grāmatas datu bāzē. Varat arī norādīt direktorijus, skatīt
 ar direktoriju saistītās opcijas zemāk.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -325,7 +325,7 @@ calibredb remove ids
 .sp
 Izņemt no datubāzes grāmatas ar noteiktu id. Id jābūt ar komatu atdalītiem id numuru sarakstam (id numurus varat iegūt, izmantojot meklēšanas komandu). Piemēram, 23,34,57\-85 (norādot diapazonu, pēdējais diapazona numurs nav iekļauts).
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -343,9 +343,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Pievienojiet e\-grāmatu, ebook_file loģiskai grāmatai, kas identificē pieejamos id formātus. Id var iegūt, izmantojot komandu „Meklēt“. Ja formāts jau pastāv, to aizstāj, ja vien nav norādīta opcija „Neaizstāt“.
+Pievienojiet e\-grāmatu, ebook_file loģiskai grāmatai, kas identificē pieejamos id formātus. Id var iegūt, izmantojot komandu "Meklēt". Ja formāts jau pastāv, to aizstāj, ja vien nav norādīta opcija "Neaizstāt".
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -365,7 +365,7 @@ calibredb remove_format [opcijas] id fmt
 .sp
 Noņemt formātu fmt no loģiskās grāmatas, kas identificēta ar id. Jūs varat iegūt id, izmantojot meklēšanas komandu. Fmt jābūt faila paplašinājumam, piemēram, LRF vai TXT vai EPUB. Ja loģiskajai grāmatai nav pieejams fmt, nedariet neko.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -381,7 +381,7 @@ calibredb show_metadata [opcijas] id
 Parāda grāmatas metadatus, kas glabājas calibre datu bāzē identificēts ar id.
 id ir id numurs no meklēšanas komandas.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -401,12 +401,12 @@ calibredb set_metadata [opcijas] id [/ceļš/uz/metadata.opf]
 .sp
 Iestatiet metadatus, kas saglabāti calibre datubāzē grāmatai, kas identificēta ar id
 no OPF faila metadatu.opf. Id ir id numurs no meklēšanas komandas. Jūs
-varat ātri uztvert OPF formātu, izmantojot pārslēgšanos no –as\-opf uz
+varat ātri uztvert OPF formātu, izmantojot pārslēgšanos no \-\-as\-opf uz
 show_metadata komandu. Varat arī iestatīt atsevišķu lauku metadatus ar
-–field opciju. Ja izmantojat opciju –field, nav jānorāda
+\-\-field opciju. Ja izmantojat opciju \-\-field, nav jānorāda
 OPF fails.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -433,7 +433,7 @@ Eksportē norādītās ar id grāmatas (ar komatu atdalīts saraksts), uz failu 
 Eksporta operācija saglabā visus grāmatas formātus, vāciņus un metadatus (opf
 fails). Jūs varat iegūt id numurus no meklēšanas komandas.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -463,6 +463,11 @@ Parasti Calibre raksta metadatus atsevišķā OPF datnē kopā ar citām e\-grā
 .TP
 .B \-\-formats
 Ar komatu atdalītu formātu saraksts katras grāmatas saglabāšanai. Pēc noklusējuma tiek saglabāti visi pieejamie formāti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -510,7 +515,7 @@ Kataloga eksportēšana formātā, kas norādīts ceļā / uz / galamērķa papl
 Opcijas kontrolē, kā ieraksti tiek parādīti ģenerētajā katalogā.
 Ņemiet vērā, ka dažādi kataloga formāti atbalsta dažādas opcijas.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -518,7 +523,7 @@ Ar komatu atdalīts ID saraksts datu bāzes katalogā. Ja uzrādīts, :option:
 .nf
 \(ga
 .fi
-–mekl\(gaēšana tiek ignorēta. Noklusējums: visas
+\-\-mekl\(gaēšana tiek ignorēta. Noklusējums: visas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -650,7 +655,7 @@ Noņemšanas sintakse:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -667,7 +672,7 @@ Izveido pielāgotu kolonnu. Etiķete ir datora kolonnas nosaukums.
 Nedrīkst saturēt atstarpes vai kolu. Kolonnas nosaukumam jābūt saprotamam.
 datu tips ir viens no: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -692,7 +697,7 @@ calibredb custom_columns [options]
 .sp
 Pieejamais pielāgoto sleju saraksts. Parāda sleju etiķetes un id.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -713,7 +718,7 @@ calibredb remove_custom_column [options] label
 Noņemt pielāgoto sleju identificētās etiķetes. Jūs varat redzēt pieejamās
 slejas ar custom_columns komandu.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -736,7 +741,7 @@ Jūs varat iegūt id sarakstu, izmantojot meklēšanas komandu.
 Jūs varat saņemt pielāgoto sleju nosaukumu sarakstu, izmantojot pielāgotās slejas
 komandu.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -763,7 +768,7 @@ visus saglabātos meklējumus, lietotāju kategorijas, spraudņus, grāmatas pā
 iestatījumus un pielāgotās receptes. Atjaunotie metadati būs tikpat precīzi kā tie
 kas būs atrodami OPF failos.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -783,7 +788,7 @@ calibredb check_library [opcijas]
 .sp
 Veikt dažas pārbaudes, kas pārstāv bibliotēka sistēmu. Ziņojumi ir invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -819,7 +824,7 @@ calibredb list_categories [opcijas]
 Sagatavo atskaiti par kategorijām datubāzē.
 Informācija ir ekvivalenta tai, kas parādīta birku rūtī.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -859,12 +864,12 @@ calibredb backup_metadata [opcijas]
 .sp
 Dublē metadatus, kas tiek glabāti datubāzē, atsevišķos OPF failos
 katras grāmatas mapē. Tas parasti notiek automātiski, bet var palaist
-komandu, lai piespiestu atkārtotu OPF failu rašanos opciju –all.
+komandu, lai piespiestu atkārtotu OPF failu rašanos opciju \-\-all.
 .sp
 Ņemiet vērā, ka parasti nav nepieciešams veikt šo darbību, jo OPF tiek dublēti
 automātiski katru reizi, kad tiek mainīti metadati.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -888,7 +893,7 @@ tās pašas pielāgotās slejas, virtuālās bibliotēkas un citi iestatījumi k
 Klonētajā bibliotēkā nebūs grāmatu. Ja vēlaties izveidot pilnu dublikātu, tostarp
 visas grāmatas, tad vienkārši izmantojiet failu sistēmas rīkus, lai kopētu bibliotēkas mapi.
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -905,11 +910,11 @@ Atjaunina faktisko grāmatu failus, kas saglabāti calibre bibliotēkā no
 calibre metadatu bāzes. Parasti metadati tiek atjaunināti tikai tad, kad
 eksportē failus no calibre, šī komanda ir noderīga, ja vēlaties, failus
 atjaunināt savā vietā. Ņemiet vērā, ka dažādi failu formāti atbalsta dažādas
-metadatu summas. Lai atjauninātu metadatus, varat izmantot īpašo vērtību „all“,, lai atjauninātu
+metadatu summas. Lai atjauninātu metadatus, varat izmantot īpašo vērtību "all",, lai atjauninātu
 book_id visām grāmatām. Varat arī norādīt vairāku grāmatu id, atdalītus ar atstarpēm un id diapazonus
 atdalītus ar defisēm. Piemēram: % prog \fBembed_metadata\fP 1 2 10 15 23
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -934,7 +939,7 @@ ziņas citām komandām, kas pieņem ieejas ID sarakstu.
 Meklēšanas izteiksme var būt jebkas, sākot no spēcīgās calibre meklēšanas vaicājumu
 valodas, piemēram: author:asimov title:robot
 .sp
-Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: „/some path/with spaces“
+Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

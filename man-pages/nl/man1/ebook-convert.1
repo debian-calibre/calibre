@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "januari 05, 2018" "3.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -43,14 +43,14 @@ ebook\-convert input_file output_file [opties]
 .sp
 Converteer een e\-book van het ene naar het andere formaat.
 .sp
-Het e\-book uitvoerformaat wordt geraden aan de hand van de extensie van het output_file. output_file kan ook van het speciale .EXT formaat zijn, waarbij EXT de extensie is van het uitvoerbestand. In dit geval wordt de naam van het uitvoerbestand die van het invoerbestand. Let op dat de bestandsnaam niet mag beginnen met een koppelteken (\-). Als, tot slot, output_file geen extensie heeft wordt deze gezien als een map en wordt een “open e\-book” (OEB) bestaande uit HTML\-bestanden weggeschreven in die map. Deze bestanden zijn dezelfde die normaal gezien de uitvoer plug\-in  zouden zijn gepasseerd.
+Het e\-book uitvoerformaat wordt geraden aan de hand van de extensie van het output_file. output_file kan ook van het speciale .EXT formaat zijn, waarbij EXT de extensie is van het uitvoerbestand. In dit geval wordt de naam van het uitvoerbestand die van het invoerbestand. Let op dat de bestandsnaam niet mag beginnen met een koppelteken (\-). Als, tot slot, output_file geen extensie heeft wordt deze gezien als een map en wordt een "open e\-book" (OEB) bestaande uit HTML\-bestanden weggeschreven in die map. Deze bestanden zijn dezelfde die normaal gezien de uitvoer plug\-in  zouden zijn gepasseerd.
 .sp
 Na specificatie van het invoer\- en uitvoerbestand kan men de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp kan na het kiezen van het invoer\- en uitvoerbestand de \-h optie worden gebruikt.
 .sp
 Voor de volledige documentatie van het conversiesysteem zie
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
 De opties en standaard waarden voor de opties veranderen met de
 de input en output waarden. U moet dus altijd controleren bij:
@@ -296,7 +296,7 @@ Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Het pad naar een bestand dat regels bevat om de CSS stijlen in dit boek te transformeren… De handigste weg om zo\fB\(aq\fPn bestand aan te maken is de wizard te gebruiken om regels op te stellen. U vindt deze onder de knop \fB"\fPBoeken converteren\fB"\fP onder de rubriek \fB"\fPUiterlijk & gedrag > Transformeer stijlen\fB"\fP Eens u regels heeft aangemaakt gebruikt u de functie \fB"\fPexporteren\fB"\fP om ze op te slaan in een bestand.
+Het pad naar een bestand dat regels bevat om de CSS stijlen in dit boek te transformeren... De handigste weg om zo\fB\(aq\fPn bestand aan te maken is de wizard te gebruiken om regels op te stellen. U vindt deze onder de knop \fB"\fPBoeken converteren\fB"\fP onder de rubriek \fB"\fPUiterlijk & gedrag > Transformeer stijlen\fB"\fP Eens u regels heeft aangemaakt gebruikt u de functie \fB"\fPexporteren\fB"\fP om ze op te slaan in een bestand.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -305,7 +305,7 @@ Vervang mooie aanhalingstekens, punten en afbrekingstekens met de \fB\(aq\fPplat
 .UNINDENT
 .SH HEURISTISCHE VERWERKING
 .sp
-Bewerk de tekst van het document en de struktuur, gebruikmakend van algemene patronen. Standaard uitgeschakeld. Gebruik –enable\-heuristics om in te schakelen. Individuele taken kunnen worden uitgeschakeld met de –disable\-* opties.
+Bewerk de tekst van het document en de struktuur, gebruikmakend van algemene patronen. Standaard uitgeschakeld. Gebruik \-\-enable\-heuristics om in te schakelen. Individuele taken kunnen worden uitgeschakeld met de \-\-disable\-* opties.
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "janvier 05, 2018" "3.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "janvier 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,21 +41,21 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convertir un livre numérique d’un format à un autre.
+Convertir un livre numérique d\(aqun format à un autre.
 .sp
-input_file est l’entrée output_file est la sortie. Chacun des deux doit être spécifié comme premiers arguments de la commande.
+input_file est l\(aqentrée output_file est la sortie. Chacun des deux doit être spécifié comme premiers arguments de la commande.
 .sp
-Le format de livre numérique de sortie est défini par l’extension du fichier output_file. output_file peut également être un format spécial .EXT où EXT est l’extension du fichier de sortie. Dans ce cas, le nom du fichier de sortie est dérivé du nom du fichier d’entrée. Notez que les noms de fichier ne doivent pas commencer par un trait d’union. Pour finir, si output_file n’a pas d’extension, il est traité comme un répertoire et un «open e\-book » (OEB) se composant des fichiers HTML est écrit dans ce répertoire. Ces fichiers sont les fichiers qui auraient été normalement traité par l’extension de sortie.
+Le format de livre numérique de sortie est défini par l\(aqextension du fichier output_file. output_file peut également être un format spécial .EXT où EXT est l\(aqextension du fichier de sortie. Dans ce cas, le nom du fichier de sortie est dérivé du nom du fichier d\(aqentrée. Notez que les noms de fichier ne doivent pas commencer par un trait d\(aqunion. Pour finir, si output_file n\(aqa pas d\(aqextension, il est traité comme un dossier et un «open e\-book » (OEB) se composant des fichiers HTML est écrit dans ce répertoire. Ces fichiers sont les fichiers qui auraient été normalement traité par l\(aqextension de sortie.
 .sp
-Après avoir spécifié le fichier d’entrée et de sortie vous pouvez adapter la conversion en spécifiant diverses options. Les options disponibles dépendent des types de fichier d’entrée et de sortie. Pour obtenir de l’aide sur celles\-ci, spécifiez le fichier d’entrée et de sortie et puis employez l’option \-h.
+Après avoir spécifié le fichier d\(aqentrée et de sortie vous pouvez adapter la conversion en spécifiant diverses options. Les options disponibles dépendent des types de fichier d\(aqentrée et de sortie. Pour obtenir de l\(aqaide sur celles\-ci, spécifiez le fichier d\(aqentrée et de sortie et puis employez l\(aqoption \-h.
 .sp
 Pour la documentation complète du système de conversion voir
 conversion
 .sp
-Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .sp
 Les options et les valeurs par défaut pour les options changent selon les
-formats d’entrée et de sortie, aussi vous devriez toujours vérifier avec
+formats d\(aqentrée et de sortie, aussi vous devriez toujours vérifier avec
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -68,10 +68,10 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .sp
 Ci\-dessous se trouvent les options communes à toutes les conversions, suivies par les
-options spécifiques à tous les formats d’entrée et de sortie.
+options spécifiques à tous les formats d\(aqentrée et de sortie.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%OPTIONS D’ENTRÉE\fP
+\fI\%OPTIONS D\(aqENTRÉE\fP
 .IP \(bu 2
 \fI\%OPTIONS DE SORTIE\fP
 .IP \(bu 2
@@ -114,7 +114,7 @@ Spécifiez le profil de sortie. Le profil de sortie explique au système de conv
 .B \-\-version
 affiche le numéro de version du logiciel et quitte
 .UNINDENT
-.SH OPTIONS D’ENTRÉE
+.SH OPTIONS D'ENTRÉE
 .sp
 Options pour contrôler le traitement du fichier d’entrée mobi
 .INDENT 0.0
@@ -148,7 +148,7 @@ Mettre la Table des Matières intégrée à la fin du livre plutôt qu\fB\(aq\fP
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extrait le contenu du fichier EPUB généré vers le répertoire spécifié. Le contenu du répertoire sera d’abord effacé, donc faites attention.
+Extrait le contenu du fichier EPUB généré vers le dossier spécifié. Le contenu du dossier sera d’abord effacé, donc faites attention.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -315,7 +315,7 @@ Convertir les guillemets fantaisie, les tirets et les points de suspension en le
 .UNINDENT
 .SH TRAITEMENT HEURISTIQUE
 .sp
-Modifier le texte et la structure du document selon le modèle courant. Désactivé par défaut. Utiliser –enable\-heuristics pour l’activer. Les actions individuelles peuvent être désactivées avec les options –disable\-
+Modifier le texte et la structure du document selon le modèle courant. Désactivé par défaut. Utiliser \-\-enable\-heuristics pour l’activer. Les actions individuelles peuvent être désactivées avec les options \-\-disable\-
 .nf
 *
 .fi
@@ -598,7 +598,7 @@ Options pour aider au débogage de la conversion
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Enregistre le résultat des différents cycles du processus de conversion dans le répertoire spécifié. Utile si vous ne savez pas à quel moment du cycle de conversion le bug survient.
+Enregistre le résultat des différentes étapes du processus de conversion dans le dossier spécifié. Utile si vous ne savez pas à quel étape de la conversion le bug survient.
 .UNINDENT
 .INDENT 0.0
 .TP

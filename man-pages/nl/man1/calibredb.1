@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "januari 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Pad naar calibrebibliotheek. Standaard wordt het pad gebruikt dat is opgeslagen 
 .INDENT 0.0
 .TP
 .B \-\-password
-Paswoord om te connecteren met de Content server.\  Om de\ waarde van het paswoord vanuit de standaard invoer\ te lezen, gebruik de speciale waarde: <stdin>. Om het paswoord vanuit een bestand te lezen, gebruik: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [opties]
 .sp
 Geef de beschikbare boeken in de calibre\-database weer.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -232,7 +232,7 @@ calibredb add [opties] bestand1 bestand2 bestand3 ...
 Voeg de opgegeven bestanden als boeken aan de database toe. Mappen kunnen ook worden
 opgegeven, zie de opties over mappen hieronder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -323,9 +323,9 @@ calibredb verwijder ID\(aqs
 .UNINDENT
 .UNINDENT
 .sp
-Verwijder de boek indentificatioren van de database. ID’s is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
+Verwijder de boek indentificatioren van de database. ID\(aqs is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -343,9 +343,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Voeg het e\-boek toe aan de ebook_file, in de beschikbare formaten voor het logische boek, dat door het id geïdentificeerd is. U kunt het id verkrijgen met behulp van het zoek commando. Als het formaat al bestaat, wordt het vervangen, tenzij de optie “niet vervangen” is opgegeven.
+Voeg het e\-boek toe aan de ebook_file, in de beschikbare formaten voor het logische boek, dat door het id geïdentificeerd is. U kunt het id verkrijgen met behulp van het zoek commando. Als het formaat al bestaat, wordt het vervangen, tenzij de optie "niet vervangen" is opgegeven.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -365,7 +365,7 @@ calibredb remove_format [opties] id fmt
 .sp
 Verwijder het formaat fmt van het logische boek geïdentificeerd door id. U kunt het id met het zoek\-commando vinden. fmt is een bestandsextensie zoals LRF, TXT of EPUB. Als het logische boek niet in dit formaat bestaat zal er niets gebeuren.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -381,7 +381,7 @@ calibredb show_metadata [opties] id
 Geef de metadata weer die in de calibre\-database zijn opgeslagen voor het boek dat bij de id hoort.
 id is een nummer verkregen met het zoek\-commando.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -401,12 +401,12 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .sp
 Instellen metadata opgeslagen in de calibre database voor het boek geïdentificeerd door id
 van het OPF\-bestand metadata.opf. id is een id nummer van het zoekcommando (ls). U
-kunt een idee krijgen van het OPF formaat door de –as\-opf parameter te gebruiken
+kunt een idee krijgen van het OPF formaat door de \-\-as\-opf parameter te gebruiken
 voor het show_metadata commando. U kunt ook de metadata van individuele velden instellen
-met de –field optie. Wanneer u de –field optie gebruikt, is er geen noodzaak een OPF\-bestand
+met de \-\-field optie. Wanneer u de \-\-field optie gebruikt, is er geen noodzaak een OPF\-bestand
 te specificeren.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -429,11 +429,11 @@ calibredb export [opties] ids
 .UNINDENT
 .UNINDENT
 .sp
-Exporteer de boeken gespecificeerd door ids (een lijst gescheiden door komma’s) naar het bestandssysteem.
+Exporteer de boeken gespecificeerd door ids (een lijst gescheiden door komma\(aqs) naar het bestandssysteem.
 De exportoperatie bewaard alle formaten van het boek, de omslag en metadata (in een opf\-bestand).
 U kunt id\-nummers met het zoek\-commando vinden.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -463,6 +463,11 @@ Normaal gesproken, zal calibre de metadata in een apart OPF\-bestand opslaan, sa
 .TP
 .B \-\-formats
 Kommagescheiden lijst van opslagformaten voor elk boek. Standaard worden alle formaten bewaard.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -510,7 +515,7 @@ Exporteer een\ catalogus in een\ door\ path/naar/bestemming gespecifieerde\ exte
 Opties bepalen hoe de invoer in de gegenereerde catalogusuitvoer wordt weergegeven.
 Merk op dat verschillende catalogusformaten\ andere\ opties ondersteunen.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -646,7 +651,7 @@ Syntax om te verwijderen:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -662,7 +667,7 @@ calibredb add_custom_column [opties] label naam datatype
 Creëer een zelf gedefinieerde kolom. label is de naam van de kolom die door de computer wordt gebruikt. Dit label mag geen spaties of dubbelepunten bevatten. name is de aan de menselijke taal aangepaste naam van de kolom.
 datatype één van: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -685,9 +690,9 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-Lijst van beschikbare\ aangepaste kolommen. Geeft kolommen en ID’s weer.
+Lijst van beschikbare\ aangepaste kolommen. Geeft kolommen en ID\(aqs weer.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -707,7 +712,7 @@ calibredb remove_custom_column [options] label
 .sp
 Verwijder de door het label geïdentificeerde aangepaste kolom. Je kan de beschikbare kolommen bekijken door het\ custom_columns commando te gebruiken.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -729,7 +734,7 @@ Stel de waarde van de aangepaste kolom in voor het boek,\ die\ geïdentificeerd 
 U kunt een lijst van ids krijgen met behulp van het zoek commando.
 U kunt een lijst met aangepaste kolomnamen krijgen met behulp van\ het custom_columns commando.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -755,7 +760,7 @@ bewaarde zoektermen, gebruikerscategorieën, adapters, conversie\-instellingen
 en recepten kwijt. Herstelde metadata zullen slechts zo accuraat zijn als wat er
 gevonden is in de OPF\-bestanden.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -775,7 +780,7 @@ calibredb check_library [opties]
 .sp
 Voer controles uit op het bestandssysteem van de bibliotheek. Rapporten zijn invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -811,7 +816,7 @@ calibredb list_categories [opties]
 Maak een rapport van de categorie\-informatie in de database. De
 informatie is gelijk aan wat er in het labelpaneel staat.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -851,12 +856,12 @@ calibredb backup_metadata [options]
 .sp
 Maak van de metadata opgeslagen in de database individuele reserve OPF bestanden
 in de map van elk boek. Normaal gebeurt dit automatisch, maar u kunt dit
-commando gebruiken om re\-generatie van OPF files te forceren, met de –all optie.
+commando gebruiken om re\-generatie van OPF files te forceren, met de \-\-all optie.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -880,7 +885,7 @@ aangepaste kolommen, virtuele bibliotheken en andere instellingen als de huidige
 De gekloonde bibliotheek zal geen boeken bevatten. Als u een echt duplicaat, inclusief
 alle boeken wilt maken, kunt u eenvoudigweg uw de bibliotheek map kopiëren in uw bestandsbeheer applicatie.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -897,11 +902,11 @@ Update de metadata in het eigenlijke boek file opgeslagen in calibre bibliotheek
 de metadata in de calibre databank. Normaal wordt metadata enkel geupdate wanneer
 files uit calibre worden geexporteerd, dit command is nuttig indien u wilt dat de bestanden worden
 geupdate in de plaats. Opgelet dat verschillende formaten verschillende hoeveelheden
-metadata ondersteuenen. U kan de speciale waarde “all” in plaats van boek_id om de metadata
+metadata ondersteuenen. U kan de speciale waarde "all" in plaats van boek_id om de metadata
 van alle boeken aan te passen. U kan ook verschillende boek IDs meegeven gescheiden door spaties en ID reeksen
 gesepareerd door koppeltekens. Bijvoorbeeld: calibredb ingevoegde_metadata 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -921,12 +926,12 @@ calibredb search [opties] zoek uitdrukking
 .sp
 Zoek de bibliotheek voor de specifieke zoek term, geeft een komma gescheiden
 lijst van boek IDs terug die overeen komen met de zoek uitdrukking. het uitvoer formaat is nuttig
-om andere commando’s uit te voeren die een lijst van IDs aanvaarden als invoer
+om andere commando\(aqs uit te voeren die een lijst van IDs aanvaarden als invoer
 .sp
 De zoekn expresie kan uit eender welke query uit calibres zoek systeem bestaan
 bijvoorbeeld: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

@@ -6,14 +6,15 @@
 # konrad … <konrad.krulikowski@gmail.com>, 2017
 # Ola Kleniewska <anyzeklove@gmail.com>, 2016
 # Piotr Parafiniuk <koliberek@gmail.com>, 2014-2015
+# Przemysław Siekiera <przemo.siekiera20@gmail.com>, 2018
 # Michał Zieliński <zielinski-michal@outlook.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 19:42+0530\n"
-"PO-Revision-Date: 2017-12-20 21:42+0000\n"
-"Last-Translator: konrad … <konrad.krulikowski@gmail.com>\n"
+"POT-Creation-Date: 2018-01-05 11:18+0530\n"
+"PO-Revision-Date: 2018-01-19 14:01+0000\n"
+"Last-Translator: Przemysław Siekiera <przemo.siekiera20@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/calibre/calibre/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgid ""
 "expression can *match* a number of different strings. This is what makes "
 "regular expression so powerful -- they are a concise way of describing a "
 "potentially large number of variations."
-msgstr "Wyrażenie regularne jest sposobem na opisanie ciągu znaków. Pojedyncze wyrażenie może *pasować* do wielu różnych ciągów. To właśnie czyni wyrażenia regularne tak poteżnym -- to zwięzły sposób na opisanie potencjalnie dużej liczby różnych wersji."
+msgstr "Wyrażenie regularne jest sposobem na opisanie ciągu znaków. Pojedyncze wyrażenie może *pasować* do wielu różnych ciągów. To właśnie czyni wyrażenia regularne tak potężnym – to zwięzły sposób na opisanie potencjalnie dużej liczby różnych wersji."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:32
 msgid ""
@@ -107,7 +108,7 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr "Otóż dlatego właśnie tu jesteśmy. Po pierwsze najważniejsza koncepcja wyrażeń regularnych: *Ciąg znaków jest wyrażeniem regularnym, pasującym do samego siebie*. To znaczy jeśli chcę dopasować ciąg ``\"Hello, World!\"`` przy użyciu wyrażeń regularnych, to najprostsze z nich to  ``Hello, World!``. Owszem, to jest takie proste. Zauważysz zapewne, że wyrażenie to pasuje wyłącznie do ``\"Hello, World!\"``, a nie na przykład ``\"Hello, wOrld!\"`` czy ``\"hello, world!\"`` ani żadnej innej odmiany."
+msgstr "Otóż dlatego właśnie tu jesteśmy. Po pierwsze najważniejsza koncepcja wyrażeń regularnych: *Ciąg znaków jest wyrażeniem regularnym, pasującym do samego siebie*. To znaczy, jeśli chcę dopasować ciąg ``\"Hello, World!\"`` przy użyciu wyrażeń regularnych, to najprostsze z nich to ``Hello, World!``. Owszem, to jest takie proste. Zauważysz zapewne, że wyrażenie to pasuje *wyłącznie* do ``\"Hello, World!\"``, a nie na przykład ``\"Hello, wOrld!\"`` czy ``\"hello, world!\"`` ani żadnej innej odmiany."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:40
 msgid "That doesn't sound too bad. What's next?"
@@ -217,7 +218,7 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand::"
-msgstr "Wiedziałem, że zapytasz. Niektóre z nich to ``[0-9]``, oznaczające pojedynczą cyfrę, ``[a-z]``, oznaczające pojedynczą małą literę, ``[A-Z]`` to pojedyncza wielka litera, ``[a-zA-Z]`` pasuje do pojedynczej dowolnej litery, a ``[a-zA-Z0-9]`` do pojedynczej litery lub cyfry. Możesz również użyć sekwencji unikowej jako skrótu::"
+msgstr "Wiedziałem, że zapytasz. Niektóre z nich to ``[0-9]``, oznaczające pojedynczą cyfrę, ``[a-z]``, oznaczające pojedynczą małą literę, ``[A-Z]`` to pojedyncza wielka litera, ``[a-zA-Z]`` pasuje do pojedynczej dowolnej litery, a ``[a-zA-Z0-9]`` do pojedynczej litery lub cyfry. Możesz również użyć sekwencji unikowej jako skrótu:"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:68
 msgid ""
@@ -277,7 +278,7 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr "Możesz oczywiście użyć pionowej kreski bez grupujących nawiasów. Pamiętasz, że kwantyfikatory powtarzają poprzedzający je znak? Pionowa kreska działa nieco inaczej: wyrażenie \"Tytuł|Autor\" także dopasuje ciąg \"Tytuł\" albo ciąg \"Autor\", tak jak w poprzednim przykładzie, gdzie użyliśmy nawiasów. *Pionowa kreska obejmuje swoim działaniem całe wyrażenie przed i za nią.* Tak więc jeśli chcesz odnaleźć ciąg \"Calibre\" i \"calibre\", wybierając pomiędzy małym a wielkim \"C\", musisz użyć wyrażenia ``(c|C)alibre``, w którym grupowanie oznacza, że wybór dotyczy wyłącznie \"c\". Gdybyś użył ``c|Calibre`` to dopasowany zostałby ciąg \"c\" albo ciąg \"Calibre\", co jest nieprawidłowe. W skrócie: jeśli masz wątpliwości, grupuj wyrażenia, jeśli używasz pionowej kreski."
+msgstr "Możesz oczywiście użyć pionowej kreski bez grupujących nawiasów. Pamiętasz, że kwantyfikatory powtarzają poprzedzający je znak? Pionowa kreska działa nieco inaczej: wyrażenie \"Tytuł|Autor\" także dopasuje ciąg \"Tytuł\" albo ciąg \"Autor\", tak jak w poprzednim przykładzie, gdzie użyliśmy nawiasów. *Pionowa kreska obejmuje swoim działaniem całe wyrażenie przed i za nią*. Tak więc jeśli chcesz odnaleźć ciąg \"Calibre\" i \"calibre\", wybierając pomiędzy małym a wielkim \"C\", musisz użyć wyrażenia ``(c|C)alibre``, w którym grupowanie oznacza, że wybór dotyczy wyłącznie \"c\". Gdybyś użył ``c|Calibre`` to dopasowany zostałby ciąg \"c\" albo ciąg \"Calibre\", co jest nieprawidłowe. W skrócie: jeśli masz wątpliwości, grupuj wyrażenia, jeśli używasz pionowej kreski."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:80
 msgid "You missed..."
@@ -344,7 +345,7 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr "Zacznijmy od ustawień konwertowania, co jest dość przyjemne. W części :guilabel:„Znajdź i zamień” możesz wprowadzić wyrażenie regularne opisujące napis, który zostanie podmieniony w trakcie konwertowania książki. Tu z pomocą przychodzi kreator. Naciśnij przycisk kreatora, a zobaczysz podgląd tego, jak calibre „widzi” książkę podczas konwertowania. Przewiń tekst do napisu, który chcesz usunąć, zaznacz go, skopiuj i wklej do pola wyrażenia regularnego na górze okna. Jeśli napis zawiera części zmienne, takie jak numery stron itp., możesz użyć zbiorów i kwantyfikatorów, by je wychwycić. Skoro już przy tym jesteśmy, pamiętaj, by poprzedzić jakiekolwiek znaki specjalne znakiem modyfikacji (tj. odwrotnym ukośnikiem). Naciśnij przycisk :guilabel:„Test”, a calibre yróżni części, które zastąpiłby podczas konwertowania. Kiedy już będziesz gotowy, naciśnij OK, by rozpocząć konwertowanie. Pamiętaj, że jeżeli źródło konwertowania zawiera znaczniki, jak w poniższym przykładzie::"
+msgstr "Zacznijmy od ustawień konwertowania, co jest dość przyjemne. W części :guilabel:„Znajdź i zamień” możesz wprowadzić wyrażenie regularne opisujące napis, który zostanie podmieniony w trakcie konwertowania książki. Tu z pomocą przychodzi kreator. Naciśnij przycisk kreatora, a zobaczysz podgląd tego, jak calibre „widzi” książkę podczas konwertowania. Przewiń tekst do napisu, który chcesz usunąć, zaznacz go, skopiuj i wklej do pola wyrażenia regularnego na górze okna. Jeśli napis zawiera części zmienne, takie jak numery stron itp., możesz użyć zbiorów i kwantyfikatorów, by je wychwycić. Skoro już przy tym jesteśmy, pamiętaj, by poprzedzić jakiekolwiek znaki specjalne znakiem modyfikacji (tj. odwrotnym ukośnikiem). Naciśnij przycisk :guilabel:„Test”, a calibre wyróżni części, które zastąpiłby podczas konwertowania. Kiedy już będziesz gotowy, naciśnij OK, by rozpocząć konwertowanie. Pamiętaj, że jeżeli źródło konwertowania zawiera znaczniki, jak w poniższym przykładzie:"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:108
 msgid ""
@@ -450,7 +451,7 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:127
-msgid "Quick Reference"
+msgid "Quick reference"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:135

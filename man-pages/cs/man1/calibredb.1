@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "ledna 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "ledna 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních
 .INDENT 0.0
 .TP
 .B \-\-password
-Heslo pro připojení k Serveru s obsahem Calibre. Pro přečtení hesla ze standardního vstupu použijte speciální hodnotu: <stdin>. Pro přečtení hesla ze souboru použijte: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -401,8 +401,8 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 Nastavit metadata uložená v databázi Calibre pro knihu identifikovanou
 identifikátorem ze souboru OPF metadata.opf. Identifikátor je identifikační
 číslo z příkazu search. Můžete získat rychlé chování pro formát OPF pomocí
-přepínače –as\-opf příkazu show_metadata. Můžete také nastavit metadata
-jednotlivých polí pomocí volby –field. Pokud použijete volbu –field,
+přepínače \-\-as\-opf příkazu show_metadata. Můžete také nastavit metadata
+jednotlivých polí pomocí volby \-\-field. Pokud použijete volbu \-\-field,
 není potřeba zadávat soubor OPF.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
@@ -462,6 +462,11 @@ Obyčejně Calibre zapíše metadata do samostatného souboru OPF společně se 
 .TP
 .B \-\-formats
 Čárkami oddělený seznam formátů pro uložení pro každou knihu. Ve výchozím nastavení jsou ukládány všechny dostupné formáty.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -854,7 +859,7 @@ calibredb backup_metadata [options]
 .sp
 Zálohovat metadata uložená v databázi do jednotlivých souborů OPF v každém
 adresáři knih. Toto se normálně děje automaticky, ale můžete tento příkaz spustit
-s volbou –all, abyste vynutili opětovné vygenerování souborů OPF.
+s volbou \-\-all, abyste vynutili opětovné vygenerování souborů OPF.
 .sp
 Pamatujte, že normálně není vůbec potřeba toto dělat, protože soubory OPF
 jsou zálohovány automaticky pokaždé, když se změní metadata.
@@ -902,7 +907,7 @@ z metadat v databázi Calibre. Normálně jsou metadata aktualizována pouze př
 exportování souborů z Calibre, tento příkaz je užitečný, pokud chcete, aby
 byla metadata aktualizována na místě. Pamatujte, že různé formáty souborů
 podporují různá množství metadat. K aktualizaci metadat ve všech knihách
-můžete pro book_id použít speciální hodnotu ‚all‘. Můžete také zadat mnoho
+můžete pro book_id použít speciální hodnotu \(aqall\(aq. Můžete také zadat mnoho
 identifikátorů knih oddělených mezerami a rozsahů identifikátorů oddělených
 spojovníky. Například: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
