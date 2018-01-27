@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "一月 05, 2018" "3.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "一月 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an “open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
 选项以及选项的默认值都取决于输入
 和输出格式，所以你应该经常检查
@@ -307,7 +307,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .UNINDENT
 .SH 启发式处理
 .sp
-使用常见模式修改文档内容与结构。默认禁用。使用 –enable\-heuristics 启用该功能。具体选项可以通过 –disable\-* 参数禁用。
+使用常见模式修改文档内容与结构。默认禁用。使用 \-\-enable\-heuristics 启用该功能。具体选项可以通过 \-\-disable\-* 参数禁用。
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "一月 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "一月 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 列出 Calibre 数据库中可用书籍。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -231,7 +231,7 @@ calibredb add [options] file1 file2 file3 ...
 .sp
 添加指定文件为书籍到数据库。您可以指定目录，请查看下面目录相关选项。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -324,7 +324,7 @@ calibredb remove ids
 .sp
 Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -344,7 +344,7 @@ calibredb add_format [options] id ebook_file
 .sp
 将ebook_file中的电子书添加到由id标识的逻辑书籍的可用格式。您可以使用搜索命令获取ID。如果格式已经存在，它将被替换，除非指定不替换选项。
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -364,7 +364,7 @@ calibredb remove_format [options] id fmt
 .sp
 Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -380,7 +380,7 @@ calibredb show_metadata [options] id
 Show the metadata stored in the calibre database for the book identified by id.
 id is an id number from the search command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -400,12 +400,12 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .sp
 Set the metadata stored in the calibre database for the book identified by id
 from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the –as\-opf switch to the
+can get a quick feel for the OPF format by using the \-\-as\-opf switch to the
 show_metadata command. You can also set the metadata of individual fields with
-the –field option. If you use the –field option, there is no need to specify
+the \-\-field option. If you use the \-\-field option, there is no need to specify
 an OPF file.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -432,7 +432,7 @@ Export the books specified by ids (a comma separated list) to the filesystem.
 The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
 an opf file). You can get id numbers from the search command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -462,6 +462,11 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .TP
 .B \-\-formats
 每本书籍的格式列表，逗号间隔。默认保存所有可用格式。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -509,7 +514,7 @@ Export a \fBcatalog\fP in format specified by path/to/destination extension.
 Options control how entries are displayed in the generated \fBcatalog\fP output.
 Note that different \fBcatalog\fP formats support different sets of options.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -645,7 +650,7 @@ Syntax for removing:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -660,11 +665,11 @@ calibredb add_custom_column [options] label name datatype
 .sp
 创建一个自定义的栏目，栏目名为您自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
-用于自定义此列中的数据将如何解释的选项字典。这是一个JSON字符串。对于枚举列，请使用:option:\fI–display\fP =“{”enum_values “：[”val1 “，”val2 “]}” ,有很多选项可以进入显示变量。列类型的选项是： 复合：composite_template，composite_sort，make_category，contains_html，use_decorations ,datetime：date_format ,枚举：enum_values，enum_colors，use_decorations ,int，float：number_format ,text：is_names，use_decorations ,查找合法组合的最佳方式是在GUI中创建适当类型的自定义列，然后查看书的备份OPF（确保从列添加以来已创建新的OPF）。您将看到OPF中新列的“显示”的JSON。
+用于自定义此列中的数据将如何解释的选项字典。这是一个JSON字符串。对于枚举列，请使用:option:\fI\-\-display\fP =“{”enum_values “：[”val1 “，”val2 “]}” ,有很多选项可以进入显示变量。列类型的选项是： 复合：composite_template，composite_sort，make_category，contains_html，use_decorations ,datetime：date_format ,枚举：enum_values，enum_colors，use_decorations ,int，float：number_format ,text：is_names，use_decorations ,查找合法组合的最佳方式是在GUI中创建适当类型的自定义列，然后查看书的备份OPF（确保从列添加以来已创建新的OPF）。您将看到OPF中新列的“显示”的JSON。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -685,7 +690,7 @@ calibredb custom_columns [options]
 .sp
 List available custom columns. Shows column labels and ids.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -706,7 +711,7 @@ calibredb remove_custom_column [options] label
 Remove the custom column identified by label. You can see available
 columns with the custom_columns command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -729,7 +734,7 @@ You can get a list of ids using the search command.
 You can get a list of custom column names using the custom_columns
 command.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -756,7 +761,7 @@ all saved searches, user categories, plugboards, stored per\-book conversion
 settings, and custom recipes. Restored metadata will only be as accurate as
 what is found in the OPF files.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -776,7 +781,7 @@ calibredb check_library [options]
 .sp
 Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -812,7 +817,7 @@ calibredb list_categories [options]
 Produce a report of the category information in the database. The
 information is the equivalent of what is shown in the tags pane.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -851,12 +856,12 @@ calibredb backup_metadata [选项]
 .UNINDENT
 .sp
 单独备份元数据储存到数据库到每个 OPF 文件书库。
-此项默认自动发生,但是你可以运行此命令来重新生成 OPF 文件,还可以用 –all 选项.
+此项默认自动发生,但是你可以运行此命令来重新生成 OPF 文件,还可以用 \-\-all 选项.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -880,7 +885,7 @@ same custom columns, virtual libraries and other settings as the current library
 The cloned library will contain no books. If you want to create a full duplicate, including
 all books, then simply use your filesystem tools to copy the library folder.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -897,11 +902,11 @@ Update the metadata in the actual book files stored in the calibre library from
 the metadata in the calibre database.  Normally, metadata is updated only when
 exporting files from calibre, this command is useful if you want the files to
 be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value ‘all’ for book_id to update metadata
+of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
 in all books. You can also specify many book ids separated by spaces and id ranges
 separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -923,10 +928,10 @@ Search the library for the specified \fBsearch\fP term, returning a comma separa
 list of book ids matching the \fBsearch\fP expression. The output format is useful
 to feed into other commands that accept a list of ids as input.
 .sp
-The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
 language, for example: author:asimov title:robot
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

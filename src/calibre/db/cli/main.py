@@ -94,9 +94,11 @@ def get_parser(usage):
     go.add_option(
         '--password',
         help=_('Password for connecting to a calibre Content server.'
-               ' To read the password from standard input, use the special value: {}.'
-               ' To read the password from a file, use: {}.)').format(
-                   '<stdin>', '<f:/path/to/file>')
+               ' To read the password from standard input, use the special value: {0}.'
+               ' To read the password from a file, use: {1} (i.e. <f: followed by the full path to the file and a trailing >).'
+               ' The angle brackets in the above are required, remember to escape them or use quotes'
+               ' for your shell.').format(
+                   '<stdin>', '<f:C:/path/to/file>' if iswindows else '<f:/path/to/file>')
     )
 
     return parser
@@ -125,7 +127,7 @@ def read_credentials(opts):
     if pw:
         if pw == '<stdin>':
             from calibre.utils.unicode_getpass import getpass
-            pw = getpass.getpass(_('Enter the password: '))
+            pw = getpass(_('Enter the password: '))
         elif pw.startswith('<f:') and pw.endswith('>'):
             with lopen(pw[3:-1], 'rb') as f:
                 pw = f.read().decode('utf-8').rstrip()

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "janvier 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "janvier 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -42,20 +42,20 @@ calibre\-debug [options]
 .UNINDENT
 .sp
 Différentes interfaces en ligne de commande utiles pour dépanner calibre. Sans options,
-cette commande démarre un interprétateur Python intégré. Vous pouvez également exécuter l’interface
-utilisateur principale de calibre, la visionneuse de calibre et l’éditeur de calibre en mode dépannage.
+cette commande démarre un interprétateur Python intégré. Vous pouvez également exécuter l\(aqinterface
+utilisateur principale de calibre, la visionneuse de calibre et l\(aqéditeur de calibre en mode dépannage.
 .sp
-Il contient également des interfaces vers différentes parties de calibre qui n’ont pas
-d’outils en ligne de commande dédiés, comme le sous\-ensemble de police, l’outil diff e\-book
+Il contient également des interfaces vers différentes parties de calibre qui n\(aqont pas
+d\(aqoutils en ligne de commande dédiés, comme le sous\-ensemble de police, l\(aqoutil diff e\-book
 etc.
 .sp
 Vous pouvez également utilisez \fBcalibre\-debug\fP pour exécuter des scripts autonomes. Pour faire cela utilisez\-le comme ceci :
 .sp
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .sp
 Tout ce qui se trouve après le \fB\-\-\fP est pris en charge par le script.
 .sp
-Chaque fois que vous passez à \fBcalibre\-debug\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à \fBcalibre\-debug\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH [OPTIONS]
 .INDENT 0.0
 .TP
@@ -95,7 +95,7 @@ Exécuter le code Python dans le fichier
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Décompacte le livre dans le répertoire spécifié. Utilisation : \-x file.epub output_dir Exporte le livre comme une collection de fichiers HTML et de métadonnées, qui peuvent être édités en utilisant des outils standards d\fB\(aq\fPédition HTML. Fonctionne avec des fichiers EPUB, AZW3, HTMLZ et DOCX
+Décompacte le livre dans le dossier spécifié. Utilisation : \-x file.epub output_dir Exporte le livre comme une collection de fichiers HTML et de métadonnées, qui peuvent être édités en utilisant des outils standards d\fB\(aq\fPédition HTML. Fonctionne avec des fichiers EPUB, AZW3, HTMLZ et DOCX
 .UNINDENT
 .INDENT 0.0
 .TP

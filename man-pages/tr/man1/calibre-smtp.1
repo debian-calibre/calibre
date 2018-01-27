@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "Ocak 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "Ocak 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,15 +41,15 @@ calibre\-smtp [seçenekler] [kimden kime metin]
 .UNINDENT
 .UNINDENT
 .sp
-SMTP protokolü kullanarak e\-posta gönder. \fBcalibre\-smtp\fP iki işlem kipine sahiptir. Derleme kipinde kimden kime ve metni belirtirsiniz, bunlar e\-posta iletisi göndermek için inşa edilir ve kullanılırlar. Filtre kipinde, \fBcalibre\-smtp\fP e\-posta iletisini STDIN’den okur ve gönderir.
+SMTP protokolü kullanarak e\-posta gönder. \fBcalibre\-smtp\fP iki işlem kipine sahiptir. Derleme kipinde kimden kime ve metni belirtirsiniz, bunlar e\-posta iletisi göndermek için inşa edilir ve kullanılırlar. Filtre kipinde, \fBcalibre\-smtp\fP e\-posta iletisini STDIN\(aqden okur ve gönderir.
 .sp
 metin e\-posta iletisinin gövdesidir.
-metin belirtilmemişse, e\-posta iletisi tamamen STDIN’den okunur.
-kimden gönderecinin, kime ise alıcının e\-posta adresidir. STDIN’den tam bir
+metin belirtilmemişse, e\-posta iletisi tamamen STDIN\(aqden okunur.
+kimden gönderecinin, kime ise alıcının e\-posta adresidir. STDIN\(aqden tam bir
 e\-posta okunduğunda, kimden ve kime yalnızca SMTP görüşmesinde kullanılır, ileti
 başlıkları değiştirilmez.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: “/some path/with spaces”
+Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [SEÇENEKLER]
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Epostanın konusu
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Bir SMTP sunucusunu posta göndermek için kullanma seçenekleri. Calibre –relay seçeneği kullanılmadığı durumlarda postayı doğrudan göndermeye çalışacaktır
+Bir SMTP sunucusunu posta göndermek için kullanma seçenekleri. Calibre \-\-relay seçeneği kullanılmadığı durumlarda postayı doğrudan göndermeye çalışacaktır
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e

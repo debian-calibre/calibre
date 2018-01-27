@@ -139,6 +139,7 @@ def create_defs():
     defs['cover_grid_show_title'] = False
     defs['cover_grid_texture'] = None
     defs['show_vl_tabs'] = False
+    defs['vl_tabs_closable'] = True
     defs['show_highlight_toggle_button'] = False
     defs['add_comments_to_email'] = False
     defs['cb_preserve_aspect_ratio'] = False
@@ -148,6 +149,7 @@ def create_defs():
     defs['emblem_position'] = 'left'
     defs['metadata_diff_mark_rejected'] = False
     defs['tag_browser_show_counts'] = True
+    defs['tag_browser_show_tooltips'] = True
     defs['row_numbers_in_book_list'] = True
     defs['hidpi'] = 'auto'
     defs['tag_browser_item_padding'] = 0.5

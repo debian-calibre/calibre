@@ -5,6 +5,7 @@
 # Translators:
 # Anne Mügge <info@numijneigenwebsite.nl>, 2016
 # erkfuizfeuadjfjzefzfuzeff gbhygsregfges <erkfuizfeuadjfjzefzfuzeff@gmail.com>, 2017
+# guy baert <guy.baert.opwijk@gmail.com>, 2018
 # Mar, 2015
 # Mario Moens <marimo.it4u@gmail.com>, 2017
 # Mar, 2015
@@ -14,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 09:23+0530\n"
-"PO-Revision-Date: 2017-09-20 05:40+0000\n"
-"Last-Translator: Mario Moens <marimo.it4u@gmail.com>\n"
+"POT-Creation-Date: 2018-01-05 11:18+0530\n"
+"PO-Revision-Date: 2018-01-16 18:18+0000\n"
+"Last-Translator: guy baert <guy.baert.opwijk@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -375,7 +376,7 @@ msgid ""
 "used by the largest number of people will be used (Chinese in the previous "
 "example). This option is mainly useful if you are going to view the e-book "
 "on a device that does not have support for unicode."
-msgstr ""
+msgstr "Unicode tekens omzetten in ASCII code tekens. Maak er voorzichtig gebruik van omdat dit unicode tekens vervangt door ASCII tekens. Zo zal dit  \"Михаил Горбачёв\" vervangen door \"Mikhail Gorbachiov\". Merk ook op dat in het geval waar er meerdere schrijfwijzen mogelijk zijn (tekens gedeeld door Chinees en Japans bijvoorbeeld) de schrijfwijze gebruikt door het merendeel van mensen wordt ingezet (Chinees in het vorige voorbeeld). Deze optie is hoofdzakelijk nuttig als u het e-boek wilt lezen op een apparaat dat geen unicode tekens ondersteunt."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:240
 msgid ":guilabel:`Input character encoding`"
@@ -406,7 +407,7 @@ msgid ""
 "profile. Both sets of profiles basically deal with how to interpret "
 "measurements in the input/output documents, screen sizes and default font "
 "rescaling keys."
-msgstr ""
+msgstr "De opties voor Pagina-instelling zijn bedoeld om schermindeling zoals marges en schermafmeting te controleren. Er zijn opties om marges in te stellen die gebruikt worden door het Uitvoer-plugin indien het geselecteerde Uitvoerformaat marges ondersteunt. daarnaast moet u een Invoerprofiel kiezen en een Uitvoerprofiel. Beide profielen zijn in principe verantwoordelijk hoe de afmetingen in invoer/uitvoer-documenten worden geïnterpreteerd, schermafmetingen en standaard lettergrootte-sleutels."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:253
 msgid ""
@@ -432,7 +433,7 @@ msgid ""
 "example, images to be auto-resized to be fit to the screen in some output "
 "formats. So choose a profile of a device that has a screen size similar to "
 "your device."
-msgstr ""
+msgstr "Het Uitvoerprofiel controleert ook de schermafmeting. Dit zorgt er bijvoorbeeld voor dat afbeeldingen automatisch herschaald worden om op het scherm te passen in sommige uitvoer-formaten. Kies daarom een profiel van een apparaat dat lijkt op de schermafmeting van uw apparaat."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:262
 msgid "Heuristic processing"
@@ -458,7 +459,7 @@ msgid ""
 "This option activates calibre's :guilabel:`Heuristic processing` stage of "
 "the conversion pipeline. This must be enabled in order for various sub-"
 "functions to be applied"
-msgstr ""
+msgstr "Deze optie activeert calibres Heuristische verwerking stap in de conversie-pijpline. Dit moet ingeschakeld zijn om diverse sub-functies toe te passen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:278
 msgid ":guilabel:`Unwrap lines`"
@@ -510,7 +511,7 @@ msgid ""
 " automatically created.  If there are no other headings used in the document"
 " then setting \"//h:h2\" under Structure detection would be the easiest way "
 "to create a TOC for the document."
-msgstr ""
+msgstr "Deze functie zal geen inhoudsopgave genereren, maar vaak kan dit helpen om standaard de hoofdstukken te herkennen en een inhoudsopgave op te bouwen. Stel de XPath in onder Structuurdetectie als een inhoudsopgave niet automatisch wordt aangemaakt. Indien er geen andere titels in het document zijn zal de instelling \"//h:h2\" onder Structuurdetectie de makkelijkste manier zijn om een inhoudsopgave voor het document te laten maken."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:296
 msgid ""
@@ -579,7 +580,7 @@ msgid ""
 "setting, otherwise the style information will be discarded.  Image tags can "
 "used, but calibre does not provide the ability to add the image during "
 "conversion, this must be done after the fact using the 'Edit book' feature."
-msgstr ""
+msgstr "Over het algemeen moet u voorkomen om HTML-tags te gebruiken. calibre zal tags negeren en voorafgedefineerde markup gebruiken. <hr>-tags, d.i. horizontale lijn en <img>-tags zijn uitzonderingen. Horizontale lijnen kunnen optioneel worden gespecificeerd met stylen. Indien u uw eigen style toevoegt, zorg ervoor dat de 'width'-instelling ook wordt opgenomen omdat anders de style wordt genegeerd. <img>-tags kunnen worden gebruikt, maar calibre heeft geen mogelijkheid om afbeeldingen toe te voegen tijdens conversie. Dit zou later eventueel wel kunnen met de functie 'Boek bewerken'."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:329
 msgid ""
@@ -640,7 +641,7 @@ msgid ""
 "Some documents use a convention of defining text indents using non-breaking "
 "space entities.  When this option is enabled calibre will attempt to detect "
 "this sort of formatting and convert them to a 3% text indent using CSS."
-msgstr ""
+msgstr "Sommige documenten bepalen inspringende tekst met behulp van spaties. Wanneer deze optie is geactiveerd zal calibre proberen deze te detecteren en vervangen door een 3% inspringende tekst met behulp van CSS."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:353
 msgid "Search & replace"
@@ -667,11 +668,11 @@ msgid ""
 "The replacement pattern is optional, if left blank then text matching the "
 "search pattern will be deleted from the document.  You can learn more about "
 "regular expressions and their syntax at :ref:`regexptutorial`."
-msgstr ""
+msgstr "Het zoeken werkt met een python reguliere expressie. Overeenkomende tekst wordt eenvoudig verwijderd van het document of vervangen met behulp van het vervangingspatroon. Het vervangingspatroon is optioneel, indien dit leeg blijft wordt tekst die met het zoekpatroon overeenkomt verwijderd van het document. U kunt meer te weten komen over reguliere expressies en hun syntax op :ref:`regexptutorial`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:371
 msgid "Structure detection"
-msgstr ""
+msgstr "Structuur detectie"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:373
 msgid ""
@@ -709,7 +710,7 @@ msgid ""
 "in the :ref:`conversion-introduction` to figure out the appropriate settings"
 " for your book. There is also a button for a XPath wizard to help with the "
 "generation of simple XPath expressions."
-msgstr ""
+msgstr "calibre gebruikt *XPath*, een krachtige taal zodat de gebruiker markeringen voor hoofdstukken/pagina-einden kan bepalen. XPath kan een uitdaging zijn om te gebruiken maar gelukkig is er een :ref:`XPath handleiding <xpath-tutorial>` in de Gebruikershandleiding. Onthoud dat Structuurdetectie werkt met het tussentijdse XHTML bestand geproduceerd door de conversie-pijplijn. Gebruik de foutenopsporingsoptie beschreven in de :ref:`conversion-introduction` om de passende instellingen voor uw boek te bepalen. Er is ook een knop voor een XPath-wizard om help te krijgen met het genereren van simpele XPath-expressies."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:389
 msgid ""
@@ -760,7 +761,7 @@ msgid ""
 "comments, etc. This option will create a single page with all this metadata "
 "and insert it into the converted e-book, typically just after the cover. "
 "Think of it as a way to create your own customised book jacket."
-msgstr ""
+msgstr "Een van de grote voordelen van calibre is dat u zeer uitgebreide metadata kunt bijhouden over al uw boeken, voor bijvoorbeeld een beoordeling, tags, commentaren etc. Deze optie voegt een enkele pagina in met alle metadata in het geconverteerde boek direct na de omslagfoto. Zie dit als u eigen gepersonaliseerde boekomslag."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:427
 msgid ":guilabel:`Remove first image`"
@@ -787,7 +788,7 @@ msgid ""
 "one. In these cases, the options in this section can help you automatically "
 "generate a Table of Contents in the converted e-book, based on the actual "
 "content in the input document."
-msgstr ""
+msgstr "Wanneer het invoer-document een Inhoudopgave heeft in de metadata zal calibre deze gebruiken. Maar een aantal oudere formaten ondersteunen of een op metadata gebaseerde inhoudsopgave niet of individuele documenten hebben er geen. In deze gevallen kunnen de opties helpen om een inhoudsopgave automatisch te genereren in het geconverteerde boek gebaseerd op de inhoud van het invoer-document."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:437
 msgid ""
@@ -802,7 +803,7 @@ msgid ""
 " a conversion. Go to :guilabel:`Preferences->Interface->Toolbars` and add "
 "the :guilabel:`ToC Editor` to the main toolbar. Then just select the book "
 "you want to edit and click the :guilabel:`ToC Editor` button."
-msgstr ""
+msgstr "Het kan een uitdaging zijn om de opties precies goed te krijgen. Indien u liever de inhoudsopgave handmatig wilt maken/bewerken, converteer in EPUB of AZW3 formaten en vink het keuzevakje aan onder aan de sectie Inhoudsopgave in de conversie-dialoog :guilabel:`Handmatig verfijnen van inhoudsopgave na conversie`. Hiermee opent u de editor na de conversie. Hiermee kunt u items maken in de Inhoudsopgave door eenvoudig te klikken op de plek in het boek waarheen moet worden verwezen. U kunt tevens de editor zelf gebruiken zonder een conversie te doen. Ga naar :guilabel:`Voorkeuren->Werkbalken` en voeg de inhoudsopgave-editor toe aan de hoofdwerkbalk. Darna selecteert u het boek dat u wilt bewerken en klik op de editor-knop."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:449
 msgid ""
@@ -875,7 +876,7 @@ msgstr "Dit zal resulteren in een automatisch gegenereerde twee traps inhoudsopg
 msgid ""
 "Not all output formats support a multi level Table of Contents. You should "
 "first try with EPUB output. If that works, then try your format of choice."
-msgstr ""
+msgstr "Niet alle uitvoer-formaten ondersteunen een gelaagde inhoudsopgave. Probeer het eerst met EPUB. Als dat werkt, probeer het dan met het formaat van uw keuze."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:519
 msgid "Using images as chapter titles when converting HTML input documents"
@@ -940,7 +941,7 @@ msgid ""
 " selecting all the books and then clicking the :guilabel:`Edit metadata` "
 "button to bring up the bulk metadata edit dialog, near the bottom of the "
 "dialog is an option to remove stored conversion settings."
-msgstr ""
+msgstr "U kunt ook instellingen wijzigen in een conversie-dialoog voor elke boek-conversie. Wanneer u een boek converteert zal calibre onthouden welke instellingen u heeft gebruikt voor dat boek; op deze manier zullen de opgeslagen instellingen voor ieder individueel boek voorrang krijgen boven de standaards in Voorkeuren als u dit boek opnieuw wilt converteren. U kunt de individuele instellingen terugzetten naar de standaards met behulp van de knop Hertelen naar standaards in het individuele boek in de conversie-dialoog. U kunt de opgeslagen instellingen verwijderen voor meerdere boeken door alle betreffende boeken te selecteren en dan te klikken op de knop Metadata bewerken om het dialoogvenster Bulk metadata bewerken onderaan van het dialoogvenster is een optie om opgeslagen conversie-instellingen te verwijderen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:580
 msgid ""
@@ -993,7 +994,7 @@ msgid ""
 "Options specific to particular format, whether input or output are available"
 " in the conversion dialog under their own section, for example `TXT input` "
 "or `EPUB output`."
-msgstr ""
+msgstr "Hier vindt u tips betreffende conversie van specifieke formaten. Opties voor specifieke formaten voor invoer of uitvoer die beschikbaar zijn in het converie-dialoogvenster onder hun eigen sectie, bijvoorbeeld `TXT invoer` of `EPUB uitvoer`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:613
 msgid "Convert Microsoft Word documents"
@@ -1022,7 +1023,7 @@ msgid ""
 "in Microsoft Word. Open the output e-book in the calibre E-book viewer and "
 "click the :guilabel:`Table of Contents` button to view the generated Table "
 "of Contents."
-msgstr ""
+msgstr "calibre zal automatisch een Inhoudsopgave genereren gebaseerd op titels als u deze markeert met de stijlen ``Titel 1``, ``Titel 2`` etc. in Word. Open de uitvoer e-boek in de calibre lezer en klik op de knop Inhoudsopgave om de gegenereerde Inhoudsopgave te bekijken."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:630
 msgid "Older .doc files"
@@ -1066,7 +1067,7 @@ msgstr "TXT invoer ondersteunt een aantal opties om onderscheid te maken hoe ali
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:655
 msgid ":guilabel:`Paragraph style: Auto`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Auto`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:654
 msgid ""
@@ -1077,7 +1078,7 @@ msgstr "Analyseert het tekstbestand en probeert automatisch te bepalen hoe aline
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:663
 msgid ":guilabel:`Paragraph style: Block`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Blok`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:658
 msgid "Assumes one or more blank lines are a paragraph boundary::"
@@ -1085,7 +1086,7 @@ msgstr "Gaat ervan uit dat een of meer lege regels een alinea aangeven::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:670
 msgid ":guilabel:`Paragraph style: Single`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Enkele`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:666
 msgid "Assumes that every line is a paragraph::"
@@ -1093,7 +1094,7 @@ msgstr "Gaat ervan uit dat elke regel een alinea is::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:681
 msgid ":guilabel:`Paragraph style: Print`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Print`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:673
 msgid ""
@@ -1104,7 +1105,7 @@ msgstr "Gaat ervan uit dat elke alinea begint met een inspringing (of een tab of
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:685
 msgid ":guilabel:`Paragraph style: Unformatted`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Ongeformatteerd`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:684
 msgid ""
@@ -1115,7 +1116,7 @@ msgstr "Gaat ervan uit dat het document niet opgemaakt is maar wel harde regelei
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:689
 msgid ":guilabel:`Formatting style: Auto`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Auto`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:688
 msgid ""
@@ -1125,17 +1126,17 @@ msgstr "Tracht het type van formatering opmaak te dectecteren. Als er geen opmaa
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:693
 msgid ":guilabel:`Formatting style: Heuristic`"
-msgstr ""
+msgstr ":guilabel:`Activeer heuristische verwerking`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:692
 msgid ""
 "Analyzes the document for common chapter headings, scene breaks, and "
 "italicized words and applies the appropriate HTML markup during conversion."
-msgstr ""
+msgstr "Doorzoekt het document naar hoofdstuktitels, scene-onderbrekingen en cursief geschreven woorden en zal de passende HTML-code toepassen tijdens conversie."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:700
 msgid ":guilabel:`Formatting style: Markdown`"
-msgstr ""
+msgstr ":guilabel:`Formattering: Markdown`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:696
 msgid ""
@@ -1147,11 +1148,11 @@ msgid ""
 "a proper table of contents generated from a TXT document. You can learn more"
 " about the Markdown syntax at `daringfireball "
 "<https://daringfireball.net/projects/markdown/syntax>`_."
-msgstr ""
+msgstr "calibre ondersteunt ook de invoer van TXT door een transformatie-preprocessor bekend als Markdown. Markdown voegt een basis-opmaak toe aan TXT-documenten zoals vetgedrukt, cursiev, sectie-titels, tabellen, lijsten, een Inhoudsopgave etc. Het markeren van hoofdstuktitels met een voorlopende # en hoofdstuk XPath detectie-expressie in te stellen als \"//h:h1\" is de makkelijkste manier om een nette inhoudsopgave te laten genereren van een TXT-document. U kunt meer lezen over de markdown-syntax op `daringfireball <http://daringfireball.net/projects/markdown/syntax>`_."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:703
 msgid ":guilabel:`Formatting style: None`"
-msgstr ""
+msgstr ":guilabel:`Alinea stijl: Ongeformatteerd`"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:703
 msgid ""
@@ -1239,7 +1240,7 @@ msgstr "Om te herhalen **PDF is echt, echt slecht** formaat om te gebruiken als 
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:736
 msgid "Comic book collections"
-msgstr ""
+msgstr "Stripboek collecties"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:738
 msgid ""
@@ -1248,7 +1249,7 @@ msgid ""
 "simple text file called comics.txt, encoded in UTF-8. The comics.txt file "
 "must contain a list of the comics files inside the .cbc file, in the form "
 "filename:title, as shown below::"
-msgstr ""
+msgstr "Een comic boek collectie is een .cbc-bestand. Een .cbc-bestand in een gezipt bestand dat andere CBZ/CBR bestanden bevat. Daarnaast moet een .cbc-bestand een simepel tekstbestand bevatten genaamd comics.txt, in UTF-8 codering. Het comics.txt bestand moet een lijst bevatten van de comics-bestanden binnen het .cbc-bestand in de vorm van bestandsnaam:titel zoals hieronder::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:746
 msgid "The .cbc file will then contain::"
@@ -1258,7 +1259,7 @@ msgstr "Het .cbc bestand zal dan bevatten::"
 msgid ""
 "calibre will automatically convert this .cbc file into a e-book with a Table"
 " of Contents pointing to each entry in comics.txt."
-msgstr ""
+msgstr "calibre zal dit .cbc-bestand automatisch converteren in een e-boek met een Inhoudsopgave met links naar iedere ingave in comics.txt."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:757
 msgid "EPUB advanced formatting demo"
@@ -1270,14 +1271,14 @@ msgid ""
 "file <https://calibre-ebook.com/downloads/demos/demo.epub>`_. The file was "
 "created from hand coded HTML using calibre and is meant to be used as a "
 "template for your own EPUB creation efforts."
-msgstr ""
+msgstr "Diverse geavanceerde opmaak voor EPUB-bestanden wordt gedemonstreerd in dit `demo bestand <http://calibre-ebook.com/downloads/demos/demo.epub>`_. Het bestand is gemaakt met handmatige HTML-code met behulp van calibre en is bedoeld als een sjabloon voor het maken uw eigen EPUB pogingen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:762
 msgid ""
 "The source HTML it was created from is available `demo.zip <https://calibre-"
 "ebook.com/downloads/demos/demo.zip>`_. The settings used to create the EPUB "
 "from the ZIP file are::"
-msgstr ""
+msgstr "De bron-HTML waarmee het gemaakt is, is beschikbaar `demo.zip <http://calibre-ebook.com/downloads/demos/demo.zip>`_. De instellingen gebruikt om de EPUB te maken van het ZIP-bestand zijn::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:767
 msgid ""
@@ -1418,7 +1419,7 @@ msgid ""
 "section on the page will be used. Similarly, there is a variable named "
 "_TOP_LEVEL_SECTION_ that can be used to get the name of the current top-"
 "level section."
-msgstr ""
+msgstr "_SECTION_ wordt vervangen door de naam van de huidige sectie. Deze namen worden gehaald uit de metadata Inhoudsopgave in het document (de PDF samenvatting). Als het document geen inhoudsopgave heeft, wordt het vervangen door blanco tekst. Als een enkele PDF-pagina meerdere secties heeft, wordt de eerste sectie op de pagina toegepast."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:854
 msgid ""
@@ -1432,7 +1433,7 @@ msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the Page setup section of the "
 "conversion dialog."
-msgstr ""
+msgstr "Wanneer u kop- en voeterteksten wilt toevoegen, zorg ervoor dat u de marges boven en onder aan de pagina groot genoeg maakt, onder de Paginainstellingen van de conversie-dialoog."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:865
 msgid "Printable Table of Contents"
@@ -1453,4 +1454,4 @@ msgid ""
 "Extra CSS conversion setting under the Look & feel part of the conversion "
 "dialog. The default css used is listed below, simply copy it and make "
 "whatever changes you like."
-msgstr ""
+msgstr "U kunt het uiterlijk van de gegenereerde Inhoudsopgave naar eigen wensen aanpassen met behulp van Extra CSS onder Uiterlijk & Gedrag in het conversie dialoogvenster. De standaard CSS vindt u hieronder, kopieer het en wijzig dat naar eigen wensen."

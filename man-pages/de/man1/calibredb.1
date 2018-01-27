@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Januar 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "Januar 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Pfad zur Calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gesp
 .INDENT 0.0
 .TP
 .B \-\-password
-Passwort für die Verbindung zu einem Calibre\-Inhalteserver. Um das Passwort von der Standardeingabe zu lesen, verwenden Sie den Sonderwert <stdin>. Um das Passwort aus einer Datei zu lesen, verwenden Sie: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [Optionen]
 .sp
 Auflisten der in der Calibre\-Datenbank verfügbaren Bücher.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -232,7 +232,7 @@ calibredb add [Optionen] Datei1 Datei2 Datei3 …
 Hinzufügen der angegebenen Dateien als Bücher zur Datenbank.
 Sie können auch Verzeichnisse angeben \- vergleichen Sie hierfür die auf Verzeichnisse bezogenen Optionen unten.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -326,7 +326,7 @@ calibredb remove IDs
 Entfernen der durch IDs bezeichneten Bücher aus der Datenbank.
 Die IDs müssen in Form einer kommagetrennten Liste von ID\-Nummern angegeben werden (Sie können ID\-Nummern mithilfe des Suchbefehls erhalten). Beispielsweise 23,34,57\-85 (bei Angabe eines Bereichs ist die letzte Nummer im Bereich nicht enthalten).
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -344,9 +344,9 @@ calibredb add_format [Optionen] ID eBook_Datei
 .UNINDENT
 .UNINDENT
 .sp
-Hinzufügen des eBooks in eBook_Datei zu den verfügbaren Formaten für das durch die ID bestimmte logische Buch. Sie können die ID durch die Verwendung des Suchbefehls erhalten. Falls das Format bereits existiert, wird es ersetzt, es sei denn, die „Nicht ersetzen“\-Option ist ausgewählt.
+Hinzufügen des eBooks in eBook_Datei zu den verfügbaren Formaten für das durch die ID bestimmte logische Buch. Sie können die ID durch die Verwendung des Suchbefehls erhalten. Falls das Format bereits existiert, wird es ersetzt, es sei denn, die "Nicht ersetzen"\-Option ist ausgewählt.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -366,7 +366,7 @@ calibredb remove_format [Optionen] ID Fmt
 .sp
 Entfernen des Formats Fmt des durch die ID bezeichneten logischen Buches. Sie erhalten die ID durch Verwendung des Suchbefehls. fmt sollte eine Dateinamenerweiterung wie LRF, TXT oder EPUB sein. Falls das logische Buch nicht im angegebenen Format verfügbar ist, passiert gar nichts.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -382,7 +382,7 @@ calibredb show_metadata [Optionen] ID
 Anzeigen der in der Calibre\-Datenbank gespeicherten Metadaten für das durch die ID bezeichnete Buch.
 ID ist eine ID\-Nummer aus dem Suchbefehl.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -402,10 +402,10 @@ calibredb set_metadata [Optionen] ID [/Pfad/zu/Metadaten.opf]
 .sp
 Festlegen der in der Calibre\-Datenbank gepeicherten Metadaten für das durch die ID bezeichnete Buch auf jene Metadaten aus der OPF\-Datei metadata.opf.
 ID ist eine ID\-Nummer aus dem Suchbefehl.
-Sie können eine schnelle Vorstellung vom OPF\-Format erhalten, indem Sie die Option –as\-opf für den Befehl show_metadata verwenden.
-Zudem lassen sich die Metadaten einzelner Felder mit der Option –field festlegen. Wenn Sie die Option –field verwenden, brauchen Sie keine OPF\-Datei anzugeben.
+Sie können eine schnelle Vorstellung vom OPF\-Format erhalten, indem Sie die Option \-\-as\-opf für den Befehl show_metadata verwenden.
+Zudem lassen sich die Metadaten einzelner Felder mit der Option \-\-field festlegen. Wenn Sie die Option \-\-field verwenden, brauchen Sie keine OPF\-Datei anzugeben.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -432,7 +432,7 @@ Exportieren der durch IDs (eine kommagetrennte Liste) bestimmten Bücher in das 
 Der Exportiervorgang speichert alle Formate des Buchs, dessen Titelseite und Metadaten (in einer opf\-Datei).
 Die ID\-Nummern erhalten Sie mit dem Suchbefehl.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -462,6 +462,11 @@ Normalerweise schreibt Calibre die Metadaten in eine separate OPF\-Datei zusamme
 .TP
 .B \-\-formats
 Kommagetrennte Liste der für jedes Buch zu speichernden Formate. Standardmäßig werden alle verfügbaren Formate gespeichert.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -509,7 +514,7 @@ Exportieren eines Katalogs nach /Pfad/zum/Ziel im Format der angegebenen Dateina
 Die Optionen bestimmen, wie Einträge im erzeugten Katalog dargestellt werden.
 Beachten Sie, dass unterschiedliche Katalogformate unterschiedliche Optionen unterstützen.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -636,15 +641,15 @@ calibredb saved_searches [Optionen] (list|add|remove)
 Verwalten der in der Calibre\-Datenbank gespeicherten Suchen.
 Falls Sie eine Suche hinzuzufügen, deren Name bereits existiert, so wird die bisherige ersetzt.
 .sp
-Syntax für Hinzufügen („add“):
+Syntax für Hinzufügen ("add"):
 .sp
 calibredb \fBsaved_searches\fP add Suchenname Suchausdruck
 .sp
-Syntax für Entfernen („remove“):
+Syntax für Entfernen ("remove"):
 .sp
 calibredb \fBsaved_searches\fP remove Suchenname
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -662,7 +667,7 @@ Bezeichnung ist der maschinenfreundliche Name der Spalte, und sollte keine Leerz
 Name ist der anwenderfreundliche Name der Spalte.
 Datentyp ist einer von : bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -687,7 +692,7 @@ calibredb custom_columns [Optionen]
 .sp
 Auflisten aller verfügbaren benutzerdefinierten Spalten. Zeigt Spaltenbezeichnungen und IDs an.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -708,7 +713,7 @@ calibredb remove_custom_column [Optionen] Bezeichnung
 Entfernen der bezeichneten benutzerdefinierten Spalte.
 Verfügbare Spalten können durch den Befehl custom_columns angezeigt werden.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -730,7 +735,7 @@ Festlegen des Werts einer benutzerdefinierte Spalte für das durch die ID bezeic
 Sie erhalten eine Liste der IDs mithilfe des Suchbefehls.
 Sie erhalten eine Liste der Namen von benutzerdefinierten Spalten mithilfe des Befehls custom_columns.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -754,7 +759,7 @@ Hilfreich, falls die Datei metadata.db beschädigt ist.
 ACHTUNG: Dieser Befehl baut Ihre Datenbank vollständig neu auf. Sie verlieren dadurch alle gespeicherten Suchen, benutzerdefinierte Kategorien, Schalttafeln, individuell je Buch gespeicherte Konvertierungseinstellungen und benutzerdefinierte Schemata.
 Wiederhergestellte Metadaten werden nur so präzise sein, wie die in den OPF\-Dateien vorgefundenen Daten.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -774,7 +779,7 @@ calibredb check_library [Optionen]
 .sp
 Durchführen einiger Überprüfungen des Dateisystems einer Bibliothek. Berichte sind invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -810,7 +815,7 @@ calibredb list_categories [Optionen]
 Erzeugen eines Berichts der Kategorieinformationen in der Datenbank.
 Die Informationen entsprechen dem, was in der Schlagwortleiste angezeigt wird.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -849,11 +854,11 @@ calibredb backup_metadata [Optionen]
 .UNINDENT
 .sp
 Sichern der in der Datenbank gespeicherte Metadaten in einzelne OPF\-Dateien im jeweiligen Verzeichnis eines Buches.
-Dies geschieht normalerweise automatisch, jedoch können Sie diesen Befehl ausführen, um die Neuerzeugung der OPF\-Dateien mit der Option –all zu erzwingen.
+Dies geschieht normalerweise automatisch, jedoch können Sie diesen Befehl ausführen, um die Neuerzeugung der OPF\-Dateien mit der Option \-\-all zu erzwingen.
 .sp
 Dies ist im Normalfall nicht notwendig, da beim Ändern von Metadaten die OPF\-Dateien automatisch gesichert werden.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -876,7 +881,7 @@ mit denselben benutzerdefinierten Spalten, virtuellen Bibliotheken und anderen E
 .sp
 Diese geklonte Bibliothek wird keine Bücher beinhalten. Wenn Sie ein vollständiges Duplikat, einschließlich aller Bücher, erstellen möchten, dann verwenden Sie einfach Ihre Dateisystemwerkzeuge und kopieren den Bibliotheksordner.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -893,11 +898,11 @@ Aktualisieren der in den eigentlichen Buchdateien enthaltenen Metadaten auf Basi
 Die Metadaten werden normalerweise nur aktualisiert, wenn Dateien aus Calibre exportiert werden.
 Dieser Befehl ist hilfreich, wenn Dateien an Ort und Stelle aktualisiert werden sollen.
 Beachten Sie, dass unterschiedliche Formate unterschiedliche Metadaten unterstützen.
-Sie können den besonderen Wert „all“ als Buch_ID verwenden, um die Metadaten aller Bücher zu aktualisieren.
+Sie können den besonderen Wert "all" als Buch_ID verwenden, um die Metadaten aller Bücher zu aktualisieren.
 Mehrere Bücher können ebenfalls mittels Leerzeichen voneinander getrennter Buch\-IDs und mittels Bindestrichen voneinander getrennter ID\-Bereiche angegeben werden.
 Beispiel: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -920,7 +925,7 @@ Das Zielformat ist nützlich, um es in anderen Befehlen zu verwenden, die ID\-Li
 .sp
 Der Suchausdruck kann jedem Ausdruck von Calibres leistungsstarker Suchabfragensprache entsprechen, beispielsweise: author:asimov title:robot
 .sp
-Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

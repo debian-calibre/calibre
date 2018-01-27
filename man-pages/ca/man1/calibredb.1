@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de gener 05, 2018" "3.15.0" "calibre"
+.TH "CALIBREDB" "1" "de gener 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Camí a la biblioteca de calibre. Per defecte, s\fB\(aq\fPutilitza el camí emma
 .INDENT 0.0
 .TP
 .B \-\-password
-Contrasenya per connectar a un servidor de continguts de calibre. Per llegir la contrasenya des de l\fB\(aq\fPentrada estàndard, utilitzeu el valor especial: <stdin>. Per llegir la contrasenya des d\fB\(aq\fPun fitxer, utilitzeu: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [opcions]
 .sp
 Llista dels llibres disponibles a la base de dades de calibre.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -232,7 +232,7 @@ calibredb add [opcions] fitxer1 fitxer2 fitxer3 ...
 Afegeix els fitxers especificats com a llibres a la base de dades. Podeu  indicar també
 directoris, vegeu les opcions relacionades amb els directoris més avall.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -290,7 +290,7 @@ Estableix el títol del(s) llibre(s) afegit(s)
 .UNINDENT
 .SS ADDICIÓ DES DELS DIRECTORIS
 .sp
-Les opcions per controlar l’addició de llibres des dels directoris. De manera predeterminada només s’afegeixen els fitxers que tenen extensions conegudes de tipus de fitxer de llibres electrònics.
+Les opcions per controlar l\(aqaddició de llibres des dels directoris. De manera predeterminada només s\(aqafegeixen els fitxers que tenen extensions conegudes de tipus de fitxer de llibres electrònics.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -323,9 +323,9 @@ calibredb remove IDs
 .UNINDENT
 .UNINDENT
 .sp
-Suprimeix els llibres identificats amb els identificadors de la base de dades. Els «IDs» han d’indicar\-se en una llista separada per comes amb els nombres dels identificadors (es poden obtenir els nombres dels identificadors mitjançant l’ordre «search»). Per exemple, 23,34,57\-85 (quan s’especifica un interval, no s’inclou l’últim nombre de l’interval).
+Suprimeix els llibres identificats amb els identificadors de la base de dades. Els «IDs» han d\(aqindicar\-se en una llista separada per comes amb els nombres dels identificadors (es poden obtenir els nombres dels identificadors mitjançant l\(aqordre «search»). Per exemple, 23,34,57\-85 (quan s\(aqespecifica un interval, no s\(aqinclou l\(aqúltim nombre de l\(aqinterval).
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -343,9 +343,9 @@ calibredb add_format [opcions] id fitxer_llibre
 .UNINDENT
 .UNINDENT
 .sp
-Afegeix el llibre electrònic «fitxer_llibre» als formats disponibles per al llibre lògic identificat per l”«id». Podeu obtenir l”«id» mitjançant l’ordre «search». Si ja existeix el format, se substituirà, a no ser que s’especifiqui l’opció de no substitució.
+Afegeix el llibre electrònic «fitxer_llibre» als formats disponibles per al llibre lògic identificat per l\(aq«id». Podeu obtenir l\(aq«id» mitjançant l\(aqordre «search». Si ja existeix el format, se substituirà, a no ser que s\(aqespecifiqui l\(aqopció de no substitució.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -363,9 +363,9 @@ calibredb remove_format [opcions] ID fmt
 .UNINDENT
 .UNINDENT
 .sp
-Suprimeix el format «fmt» del llibre lògic identificat per l’ID. Podeu obtenir l’ID mitjançant l’ordre «search». «fmt» ha de ser una extensió de fitxer com ara LRF, TXT o EPUB. Si el llibre lògic no té el disponible el «fmt», no fa res.
+Suprimeix el format «fmt» del llibre lògic identificat per l\(aqID. Podeu obtenir l\(aqID mitjançant l\(aqordre «search». «fmt» ha de ser una extensió de fitxer com ara LRF, TXT o EPUB. Si el llibre lògic no té el disponible el «fmt», no fa res.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -378,10 +378,10 @@ calibredb show_metadata [opcions] ID
 .UNINDENT
 .UNINDENT
 .sp
-Mostra les metadades emmagatzemades a la base de dades de calibre per al llibre identificat amb l’ID.
-L’ID és un nombre d’identificador de l’ordre «search».
+Mostra les metadades emmagatzemades a la base de dades de calibre per al llibre identificat amb l\(aqID.
+L\(aqID és un nombre d\(aqidentificador de l\(aqordre «search».
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -400,17 +400,17 @@ calibredb set_metadata [opcions] id [/camí/a/metadata.opf]
 .UNINDENT
 .sp
 Estableix les metadades emmagatzemades a la base de dades de calibre per al llibre
-identificat per l’ID del fitxer OPF «metadata.opf». L’ID és un nombre d’identificador
-de l’ordre «search». Podeu fer\-vos una idea ràpida del format OPF amb l’ús del
-commutador «–as\-opf» a l’ordre «show_metadata». També podeu establir les metadades
-de camps individuals amb l’opció «–field». Si utilitzeu l’opció «–field», no cal especificar
+identificat per l\(aqID del fitxer OPF «metadata.opf». L\(aqID és un nombre d\(aqidentificador
+de l\(aqordre «search». Podeu fer\-vos una idea ràpida del format OPF amb l\(aqús del
+commutador «\-\-as\-opf» a l\(aqordre «show_metadata». També podeu establir les metadades
+de camps individuals amb l\(aqopció «\-\-field». Si utilitzeu l\(aqopció «\-\-field», no cal especificar
 un fitxer OPF.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camp. Podeu especificar aquesta opció diversos cops per establir diversos camps. Nota: per a les llengües heu d\fB\(aq\fPutilitzar els codis ISO639 (per exemple «ca» per al català, «en» per a l\fB\(aq\fPanglès…). Per als identificadors la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps booleans (sí/no) utilitzeu «true» i «false» o «yes» i «no».
+El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camp. Podeu especificar aquesta opció diversos cops per establir diversos camps. Nota: per a les llengües heu d\fB\(aq\fPutilitzar els codis ISO639 (per exemple «ca» per al català, «en» per a l\fB\(aq\fPanglès...). Per als identificadors la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps booleans (sí/no) utilitzeu «true» i «false» o «yes» i «no».
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -430,10 +430,10 @@ calibredb export [opcions] IDs
 .UNINDENT
 .sp
 Exporta els llibres identificats pels IDs (una llista separada per comes) al sistema de fitxers.
-L’operació d’exportació desa tots els formats del llibre, la portada i les metadades (a un
-fitxer opf). Podeu obtenir els nombres dels IDs de l’ordre «search».
+L\(aqoperació d\(aqexportació desa tots els formats del llibre, la portada i les metadades (a un
+fitxer opf). Podeu obtenir els nombres dels IDs de l\(aqordre «search».
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -463,6 +463,11 @@ Normalment calibre escriurà les metadades a un fitxer OPF separat, junt amb els
 .TP
 .B \-\-formats
 Llista separada per comes de la llista de formats que es desaran de cada llibre. Per defecte es desen tots els formats disponibles.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -506,11 +511,11 @@ calibredb catalog /camí/a/destinació.(csv|epub|mobi|xml...) [opcions]
 .UNINDENT
 .UNINDENT
 .sp
-Exporta un catàleg amb el format especificat en l’extensió de camí/a/destinació.
+Exporta un catàleg amb el format especificat en l\(aqextensió de camí/a/destinació.
 Les opcions controlen com es mostren les entrades a la sortida del catàleg generat.
-Tingueu en compte que diferents formats de catàleg admeten diferents conjunts d’opcions.
+Tingueu en compte que diferents formats de catàleg admeten diferents conjunts d\(aqopcions.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -635,7 +640,7 @@ calibredb saved_searches [opcions] (llista|afegeix|elimina)
 .UNINDENT
 .sp
 Gestiona les cerques guardades en aquesta base de dades.
-Si proveu d’afegir una cerca amb un nom que ja existeix, se
+Si proveu d\(aqafegir una cerca amb un nom que ja existeix, se
 substituirà.
 .sp
 Sintaxi per afegir:
@@ -646,7 +651,7 @@ Sintaxi per eliminar:
 .sp
 calibredb \fBsaved_searches\fP elimina cerca_nom
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -659,10 +664,10 @@ calibredb add_custom_column [opcions] etiqueta nom tipus_de_dades
 .UNINDENT
 .UNINDENT
 .sp
-Crea una columna personalitzada. L’etiqueta és el nom intern de la columna. No ha de tenir
+Crea una columna personalitzada. L\(aqetiqueta és el nom intern de la columna. No ha de tenir
 espais ni dos punts. El nom és el nom visible de la columna. El tipus de dades és un de: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -687,7 +692,7 @@ calibredb custom_columns [opcions]
 .sp
 Llista les columnes personalitzades disponibles. Mostra les etiquetes ies id. de les columnes.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -705,10 +710,10 @@ calibredb remove_custom_column [opcions] etiqueta
 .UNINDENT
 .UNINDENT
 .sp
-Suprimeix la columna personalitzada identificada per l’etiqueta. Podeu veure
-les columnes disponibles amb l’ordre «custom_columns».
+Suprimeix la columna personalitzada identificada per l\(aqetiqueta. Podeu veure
+les columnes disponibles amb l\(aqordre «custom_columns».
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -726,11 +731,11 @@ calibredb set_custom [opcions] columna ID valor
 .UNINDENT
 .UNINDENT
 .sp
-Estableix el valor d’una columna personalitzada per al llibre identificat per l’ID.
-Podeu obtenir una llista dels ID mitjançant l’ordre «search».
-Podeu obtenir una llista dels noms de les columnes personalitzades mitjançant  l’ordre «custom_columns».
+Estableix el valor d\(aquna columna personalitzada per al llibre identificat per l\(aqID.
+Podeu obtenir una llista dels ID mitjançant l\(aqordre «search».
+Podeu obtenir una llista dels noms de les columnes personalitzades mitjançant  l\(aqordre «custom_columns».
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -752,11 +757,11 @@ Recupera la base de dades a partir de les metadades dels fitxers OPF de cada
 carpeta de la biblioteca de calibre. És útil quan el fitxer metadata.db està malmès.
 .sp
 ATENCIÓ: Aquesta ordre torna a generar completament la vostra base de
-dades. Perdreu totes les cerques desades, categories d’usuari, taulers de connexions,
+dades. Perdreu totes les cerques desades, categories d\(aqusuari, taulers de connexions,
 ajusts de conversió per a llibres individuals i receptes personalitzades. Les
 metadades que es recuperin seran tan acurades com el que hi hagi als fitxers OPF.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -776,7 +781,7 @@ calibredb check_library [opcions]
 .sp
 Realitza algunes comprovacions al sistema de fitxers que representa una biblioteca. Els informes són invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -810,9 +815,9 @@ calibredb list_categories [opcions]
 .UNINDENT
 .sp
 Genera un informe de la informació de les categories de la base de dades. La
-informació equival al que es mostra a la subfinestra d’etiquetes.
+informació equival al que es mostra a la subfinestra d\(aqetiquetes.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -853,12 +858,12 @@ calibredb backup_metadata [opcions]
 Fa una còpia de seguretat de les metadades de la base de dades en fitxers OPF
 individuals a cada directori del llibre. Això normalment es fa automàticament però
 podeu executar aquesta ordre per forçar que es tornin a regenerar els fitxers
-OPF amb l’opció «–all».
+OPF amb l\(aqopció «\-\-all».
 .sp
 Tingueu en compte que normalment no hi ha necessitat de fer això, ja que es fa
 una còpia de seguretat dels fitxers OPF cada cop que es canvien les metadades.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -884,7 +889,7 @@ La biblioteca clonada no contindrà llibres. Si voleu crear un duplicat complet,
 tots els llibres, només cal que utilitzeu les eines del sistema de fitxers per copiar la
 carpeta de la biblioteca.
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -898,14 +903,14 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .sp
 Actualitza les metadades als fitxers del llibre real que estan emmagatzemats a la biblioteca de calibre a partir de
-les metadades de la base de dades de calibre. Normalment, les metadades només s’actualitzen quan
-s’exporten els fitxers de calibre; per tant, aquesta ordre és útil si voleu que s’actualitzin
+les metadades de la base de dades de calibre. Normalment, les metadades només s\(aqactualitzen quan
+s\(aqexporten els fitxers de calibre; per tant, aquesta ordre és útil si voleu que s\(aqactualitzin
 a la vostra base de dades. Tingueu en compte que cada tipus de fitxer admet quantitats diferents
-de metadades. Es pot utilitzar el valor especial «all» perquè l’identificador de llibre actualitzi les metadades
-en tots els llibres. També es poden especificar diversos identificadors de llibre separats per espais o conjunts d’identificadors
+de metadades. Es pot utilitzar el valor especial «all» perquè l\(aqidentificador de llibre actualitzi les metadades
+en tots els llibres. També es poden especificar diversos identificadors de llibre separats per espais o conjunts d\(aqidentificadors
 separats per guions. Per exemple: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -924,13 +929,13 @@ calibredb search [opcions] expressió de cerca
 .UNINDENT
 .sp
 Cerca a la biblioteca el terme de cerca especificat, retornant una llista separada
-per comes dels id. dels llibres que coincideixen amb l’expressió de cerca. El format
-de sortida és útil per alimentar altres ordres que accepten una llista d’id. com a entrada.
+per comes dels id. dels llibres que coincideixen amb l\(aqexpressió de cerca. El format
+de sortida és útil per alimentar altres ordres que accepten una llista d\(aqid. com a entrada.
 .sp
-L’expressió de cerca pot ser qualsevol de llenguatge de cerca potent de calibre,
+L\(aqexpressió de cerca pot ser qualsevol de llenguatge de cerca potent de calibre,
 per exemple: author:asimov title:robot
 .sp
-Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

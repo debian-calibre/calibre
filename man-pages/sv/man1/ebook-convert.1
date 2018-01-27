@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "januari 05, 2018" "3.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,14 +45,14 @@ Konvertera en e\-bok från ett format till ett annat.
 .sp
 input_file är indatafilen och output_file är utdatafilen. Båda måste anges som de två första argumenten i kommandot.
 .sp
-Utdataformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utdatafilsändelsen. Om det används kommer namnet på utdatafilen att härledas från namnet på indatafilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utdatafilen, så behandlas den som en katalog till vilken en ”Öppen e\-bok” (OEB) bestående av HTML filer kommer att skrivas. Dessa filer är de filer som normalt sett skulle ha skickats till utdatainsticksmodulen.
+Utdataformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utdatafilsändelsen. Om det används kommer namnet på utdatafilen att härledas från namnet på indatafilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utdatafilen, så behandlas den som en katalog till vilken en "Öppen e\-bok" (OEB) bestående av HTML filer kommer att skrivas. Dessa filer är de filer som normalt sett skulle ha skickats till utdatainsticksmodulen.
 .sp
 Efter att ha angivit in\- och utdatafilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utdatafiltyperna. För att få hjälp med dem, ange in\- och utdatafilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
 conversion
 .sp
-När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: ”/some path/with spaces”
+När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 indata\- och utdataformat, därför bör du alltid kolla med:
@@ -315,7 +315,7 @@ Konvertera snitsiga citat, streck och specialtecken till deras motsvarigheter i 
 .UNINDENT
 .SH HEURISTISK BEARBETNING
 .sp
-Ändra dokumenttexten och strukturen med vanliga mönster. Inaktiverad som standard. Använd –enable\-heuristics för att aktivera. Individuella åtgärder kan inaktiveras med alternativen –disable\-
+Ändra dokumenttexten och strukturen med vanliga mönster. Inaktiverad som standard. Använd \-\-enable\-heuristics för att aktivera. Individuella åtgärder kan inaktiveras med alternativen \-\-disable\-
 .nf
 *
 .fi

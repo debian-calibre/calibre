@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "1月 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "1月 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -51,13 +51,13 @@ Calibre デバッグ用に有用なコマンドラインインタフェイス。
 スタンドアロンスクリプトを実行するには、\fBcalibre\-debug\fP を使用します。使い方はこちら:
 .INDENT 0.0
 .INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-”–” の後に付けるとスクリプトに渡します。
+”\-\-” の後に付けるとスクリプトに渡します。
 .sp
-スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: 「/some path/with spaces」
+スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: "/some path/with spaces"
 .SH [オプション]
 .INDENT 0.0
 .TP
@@ -126,7 +126,7 @@ GUIをデバッグモードで実行。デバッグの出力はstdoutとstderr�
 .nf
 \(ga
 .fi
-–explode\-book\(gaにより分割されたファイルの置かれた output_dir を読み込んで連結し、本にします。必ず分割したときと同じファイルタイプを指定してください。
+\-\-explode\-book\(gaにより分割されたファイルの置かれた output_dir を読み込んで連結し、本にします。必ず分割したときと同じファイルタイプを指定してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,7 +161,7 @@ Calibreの環境設定に必要なpathを出力
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-指定されたフォントをサブセット化。このオプションの後に \fB"\fP–\fB"\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
+指定されたフォントをサブセット化。このオプションの後に \fB"\fP\-\-\fB"\fP をつけるとフォント・サブセットプログラムにオプションを渡します。
 .UNINDENT
 .INDENT 0.0
 .TP

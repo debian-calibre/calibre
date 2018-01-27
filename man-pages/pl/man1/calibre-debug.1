@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "stycznia 05, 2018" "3.15.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "stycznia 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -45,16 +45,16 @@ Różne polecenia użyteczne przy debugowaniu calibre. Bez opcji uruchamia wbudo
 interpreter Pythona. Można również uruchomić główny interfejs calibre, przeglądarkę książek
 lub edytor w trybie debugowania.
 .sp
-Zawiera również intefejsy do wielu elementów calibre, które nie mają oddzielnych poleceń konsolowych
+Zawiera również interfejsy do wielu elementów calibre, które nie mają oddzielnych poleceń konsolowych
 takich jak redukowanie czcionek, porównywanie książek itp.
 .sp
 Można również użyć \fBcalibre\-debug\fP do uruchomienia samodzielnych skryptów w następujący sposób:
 .sp
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .sp
 Wszystko, co jest po \fB\-\-\fP jest przekazywane do skryptu.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces”
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPCJE]
 .INDENT 0.0
 .TP
@@ -144,7 +144,7 @@ Inicjuj ponownie bazę sqlite w podanym katalogu. Przydatne, by odzyskać bazę 
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Uruchom wtyczkę, która obsługuje linię poleceń. Na przykład: calbre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-plik1\fP \fB\-\-option1\fP Elementy poprzedzone \fB\-\-\fP zostaną przekazane do wtyczki jako argumenty.
+Uruchom wtyczkę, która obsługuje linię poleceń. Na przykład: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-file1\fP \fB\-\-option1\fP Elementy poprzedzone \fB\-\-\fP zostaną przekazane do wtyczki jako argumenty.
 .UNINDENT
 .INDENT 0.0
 .TP
