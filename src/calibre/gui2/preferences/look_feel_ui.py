@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -372,10 +372,10 @@ class Ui_Form(object):
         self.formLayout.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.opt_categories_using_hierarchy)
         self.opt_tag_browser_old_look = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_old_look.setObjectName("opt_tag_browser_old_look")
-        self.formLayout.setWidget(10, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_old_look)
+        self.formLayout.setWidget(11, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_old_look)
         self.opt_tag_browser_hide_empty_categories = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_hide_empty_categories.setObjectName("opt_tag_browser_hide_empty_categories")
-        self.formLayout.setWidget(11, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_hide_empty_categories)
+        self.formLayout.setWidget(12, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_hide_empty_categories)
         self.opt_tags_browser_partition_method = QtWidgets.QComboBox(self.tag_browser_tab)
         self.opt_tags_browser_partition_method.setObjectName("opt_tags_browser_partition_method")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_tags_browser_partition_method)
@@ -385,10 +385,10 @@ class Ui_Form(object):
         self.opt_show_avg_rating = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_show_avg_rating.setChecked(True)
         self.opt_show_avg_rating.setObjectName("opt_show_avg_rating")
-        self.formLayout.setWidget(8, QtWidgets.QFormLayout.LabelRole, self.opt_show_avg_rating)
+        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.opt_show_avg_rating)
         self.opt_tag_browser_show_counts = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_show_counts.setObjectName("opt_tag_browser_show_counts")
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_show_counts)
+        self.formLayout.setWidget(10, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_show_counts)
         self.label = QtWidgets.QLabel(self.tag_browser_tab)
         self.label.setObjectName("label")
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.label)
@@ -399,6 +399,9 @@ class Ui_Form(object):
         self.opt_tag_browser_item_padding.setSingleStep(0.1)
         self.opt_tag_browser_item_padding.setObjectName("opt_tag_browser_item_padding")
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.opt_tag_browser_item_padding)
+        self.opt_tag_browser_show_tooltips = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_tag_browser_show_tooltips.setObjectName("opt_tag_browser_show_tooltips")
+        self.formLayout.setWidget(8, QtWidgets.QFormLayout.LabelRole, self.opt_tag_browser_show_tooltips)
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(I("tags.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tag_browser_tab, icon7, "")
@@ -538,14 +541,15 @@ class Ui_Form(object):
         self.opt_systray_icon.setText(_("Enable s&ystem tray icon (needs restart)"))
         self.label_7.setText(_("Choose &language (needs restart):"))
         self.label_2.setText(_("&Interface font:"))
-        self.opt_disable_tray_notification.setText(_("Disable n&otifications in system tray"))
+        self.opt_disable_tray_notification.setToolTip(_("Disable popup notifications when calibre completes jobs such a conversion, sending to device etc. The notifications are sent via the operating system notification facility, if available. Note that on windows, you have to enable the system tray icon for notifications to work."))
+        self.opt_disable_tray_notification.setText(_("Disable n&otifications on job completion"))
         self.label_widget_style.setText(_("User interface style (&needs restart):"))
         self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
         self.opt_disable_animations.setText(_("Disable &animations"))
         self.opt_show_splash_screen.setText(_("Show &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
-        self.label_hidpi.setText(_("&Adjust for high resolution screens (needs restart):"))
+        self.label_hidpi.setText(_("Ad&just for high resolution screens (needs restart):"))
         self.opt_hidpi.setToolTip(_("<p>Whether to automatically adjust the calibre user interface for high resolution (high DPI) monitors. There are three possible values:</p>\n"
 "\n"
 "<ul>\n"
@@ -645,6 +649,7 @@ class Ui_Form(object):
         self.label.setText(_("Spacing between &items:"))
         self.opt_tag_browser_item_padding.setToolTip(_("The spacing between consecutive items in the Tag browser. In units of (ex) which is the approximate height of the letter \'x\' in the currently used font. "))
         self.opt_tag_browser_item_padding.setSuffix(_(" ex"))
+        self.opt_tag_browser_show_tooltips.setText(_("Show &tooltips in the Tag browser"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
         self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))

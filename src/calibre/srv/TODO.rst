@@ -14,13 +14,12 @@ New features for the in-browser viewer
 - Allow loading fonts from the computer running calibre and using them
   for reading.
 
-- Templates for headers/footers including current chapter name
 
 New features for the server generally
 ---------------------------------------
 
 - Create a UI for making changes to the library such as editing metadata,
-  adding/deleting books, converting, sending by email, etc.
+  converting, sending by email, etc.
 
 - Add a way to search the set of locally available books stored in offline
   storage.

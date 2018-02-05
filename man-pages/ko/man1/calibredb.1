@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "12월 15, 2017" "3.14.0" "calibre"
+.TH "CALIBREDB" "1" "1월 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%폴더에서 추가\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -145,7 +145,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+추가된 책에 사용할 표지의 경로
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Path to the cover to use for the added book
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+이 책의 식별자 설정하기, 예: \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,7 +266,7 @@ Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+쉼표로 구분된 언어 목록 (일부 언어 이름도 인식될 수 있지만, ISO639 언어 코드를 사용하는 것이 가장 좋습니다)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,28 +288,28 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .B \-\-title, \-t
 추가된 책(들)의 이름을 입력하기
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS 폴더에서 추가
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+폴더에서 책 추가하는 것을 제어하는 옵션. 기본적으로 알려진 전자책 파일 형식의 확장자를 가진 파일만 추가됩니다.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+파일명(전역) 패턴, 이 패턴과 일치하는 파일은 알려진 전자책 파일 유형이 아닌 경우에도, 폴더에서 파일 스캔시 추가됩니다. 여러 패던에 대해 여러 번 지정할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+파일명(전역) 패턴, 이 패턴과 일치하는 파일은 폴더에서 파일 스캔시 무시됩니다. 여러 패턴에 대해 여러 번 지정할 수 있습니다. 예: *.pdf는 모든 pdf 파일을 무시합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+각 폴더에는 하나의 논리적인 책만 있고 그 폴더 안의 모든 파일은 해당 책의 다른 전자책 형식이라고 가정합니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+재귀적으로 폴더 처리하기
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -401,9 +401,9 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .sp
 Set the metadata stored in the calibre database for the book identified by id
 from the OPF file metadata.opf. id is an id number from the search command. You
-can get a quick feel for the OPF format by using the –as\-opf switch to the
+can get a quick feel for the OPF format by using the \-\-as\-opf switch to the
 show_metadata command. You can also set the metadata of individual fields with
-the –field option. If you use the –field option, there is no need to specify
+the \-\-field option. If you use the \-\-field option, there is no need to specify
 an OPF file.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -447,7 +447,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+보통, 캘리버는 표지를 실제 전자책 파일과 함께 별도의 파일에 저장합니다. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -466,6 +466,11 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-progress
+Report progress
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-replace\-whitespace
 공백 문자를 밑줄로 교체합니다.
 .UNINDENT
@@ -477,7 +482,7 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-template
-저장되는 파일의 파일명과 디렉토리 구조를 제어하는 템플릿입니다. 기본값은 \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP이고, 제목과 저자명을 포함하는 파일명으로 저자별 하위 디렉토리에 저장하게 됩니다. 사용가능한 필드: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+저장되는 파일의 파일명과 폴더 구조를 제어하는 템플릿입니다. 기본값은 \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP이고, 제목과 저자명을 포함하는 파일명으로 저자별 하위 폴더에 저장하게 됩니다. 사용가능한 필드: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -855,7 +860,7 @@ calibredb backup_metadata [options]
 .sp
 Backup the metadata stored in the database into individual OPF files in each
 books directory. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the –all option.
+command to force re\-generation of the OPF files, with the \-\-all option.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up
 automatically, every time metadata is changed.
@@ -927,7 +932,7 @@ Search the library for the specified \fBsearch\fP term, returning a comma separa
 list of book ids matching the \fBsearch\fP expression. The output format is useful
 to feed into other commands that accept a list of ids as input.
 .sp
-The \fBsearch\fP expression can be anything from calibre’s powerful \fBsearch\fP query
+The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
 language, for example: author:asimov title:robot
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"

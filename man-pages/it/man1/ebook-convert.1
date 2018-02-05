@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dicembre 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "gennaio 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,14 +45,14 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an «open e\-book» (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: «/some path/with spaces»
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
 Le opzioni e i valori di default cambiano a seconda sia del
 formato di input che ti output, quindi bisognerebbe sempre controllare:
@@ -108,7 +108,7 @@ mostra la versione del programma ed esci
 .UNINDENT
 .SH OPZIONI DI INPUT
 .sp
-Opzioni per controllare l’elaborazione dei file di input mobi
+Opzioni per controllare l\(aqelaborazione dei file di input mobi
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -116,7 +116,7 @@ Specifica la codifica dei caratteri del documento di origine. Se impostata, ques
 .UNINDENT
 .SH OPZIONI DI OUTPUT
 .sp
-Opzioni per controllare l’elaborazione dell’output epub
+Opzioni per controllare l\(aqelaborazione dell\(aqoutput epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
@@ -174,7 +174,7 @@ Titolo per ogni indice in\-line generato.
 .UNINDENT
 .SH IMPRESSIONE VISIVA
 .sp
-Opzioni per controllare l’aspetto dell’output
+Opzioni per controllare l\(aqaspetto dell\(aqoutput
 .INDENT 0.0
 .TP
 .B \-\-asciiize
@@ -307,7 +307,7 @@ Converti virgolette eleganti, trattini e punti di sospensione nel loro equivalen
 .UNINDENT
 .SH ELABORAZIONE EURISTICA
 .sp
-Modifica il testo e la struttura del documento utilizzando schemi comuni. Disabilitata in modo predefinito. Usa –enable\-heuristics per abilitarla. Azioni singole possono essere disabilitate con le opzioni –disable\-
+Modifica il testo e la struttura del documento utilizzando schemi comuni. Disabilitata in modo predefinito. Usa \-\-enable\-heuristics per abilitarla. Azioni singole possono essere disabilitate con le opzioni \-\-disable\-
 .nf
 *
 .fi
@@ -450,7 +450,7 @@ An XPath expression to detect the location in the document at which to start rea
 .UNINDENT
 .SH INDICE
 .sp
-Gestisce la generazione automatica dell’indice. In modo predefinito, se il file sorgente ha un indice, questo sarà preferito a quello generato automaticamente.
+Gestisce la generazione automatica dell\(aqindice. In modo predefinito, se il file sorgente ha un indice, questo sarà preferito a quello generato automaticamente.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc

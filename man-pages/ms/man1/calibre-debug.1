@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "Disember 15, 2017" "3.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "Januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,23 @@ calibre\-debug [pilihan]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Pelbagai antaramuka baris perintah yang berguna untuk menyahpepijat calibre.
+Dengan tanpa pilihan, perintah ini bermula dengan pentafsir Python terbenam.
+Anda juga boleh jalankan GUI calibre utama, pelihat calibre dan penyunting
+calibre dalam mod nyahpepijat.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+Ia juga mengandungi antaramuka kepada pelbagai bit calibre yang tidak memilik
+baris perintah tertentu, seperti subsetting fon, alat diff e\-buku dan sebagainya.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Anda juga boleh guna \fBcalibre\-debug\fP untuk menjalankan skrip berdiri\-sendiri. Untuk
+melakukannya adalah seperti berikut:
 .INDENT 0.0
 .INDENT 3.5
-\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 …
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Segalanya selepas tanda \fB\-\-\fP dilepasi ke dalam skrip.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [PILIHAN]
@@ -98,7 +99,7 @@ Jalankan kod Python dalam fail.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Pecahkan buku  ke direktori yang dinyatakan. Penggunaan: \-x file.epub output_dir Eksport buku sebagai satu koleksi fail dan data meta HTML, yang anda boleh sunting menggunakan alat penyuntingan HTML piawai. Berfungsi baik dengan fail EPUB, AZW3, HTMLZ dan DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +124,7 @@ tunjuk mesej bantuan ini dan keluar
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Ledakkan buku terledak sebelum ini. Penggunaan: \-i output_dir file.epub Import buku dari fail dalam output_dir yang telah dihasilkan oleh perintah terdahulu \fI\%\-\-explode\-book\fP\&. Pastikan jenis fail yang sama dinyatakan.
 .UNINDENT
 .INDENT 0.0
 .TP

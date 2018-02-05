@@ -19,6 +19,7 @@ from calibre.gui2.actions import InterfaceAction
 from calibre.ebooks.metadata import authors_to_string
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf2 import OPF, metadata_to_opf
+from calibre.utils.config import tweaks
 from calibre.utils.date import is_date_undefined
 from calibre.utils.icu import sort_key
 from calibre.db.errors import NoSuchFormat
@@ -141,10 +142,21 @@ class EditMetadataAction(InterfaceAction):
         data = bytes(md.data('application/calibre-book-metadata'))
         mi = OPF(BytesIO(data), populate_spine=False, read_toc=False, try_to_guess_cover=False).to_book_metadata()
         mi.application_id = mi.uuid_id = None
-        cover = md.imageData()
+        exclude = set(tweaks['exclude_fields_on_paste'])
+        paste_cover = 'cover' not in exclude
+        cover = md.imageData() if paste_cover else None
+        exclude.discard('cover')
+        for field in exclude:
+            mi.set_null(field)
         db = self.gui.current_db
         book_ids = {db.id(r.row()) for r in rows}
+        title_excluded = 'title' in exclude
+        authors_excluded = 'authors' in exclude
         for book_id in book_ids:
+            if title_excluded:
+                mi.title = db.new_api.field_for('title', book_id)
+            if authors_excluded:
+                mi.authors = db.new_api.field_for('authors', book_id)
             db.new_api.set_metadata(book_id, mi, ignore_errors=True)
         if cover:
             db.new_api.set_cover({book_id: cover for book_id in book_ids})

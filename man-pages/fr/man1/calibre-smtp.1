@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "décembre 15, 2017" "3.14.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "janvier 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -41,18 +41,18 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Envoyer des courriels en utilisant le protocole SMTP. \fBcalibre\-smtp\fP a deux modes d’opération. Dans le
-mode composer vous spécifiez l’expéditeur, le destinataire et le texte, ceux\-ci sont utilisés pour élaborer et
+Envoyer des courriels en utilisant le protocole SMTP. \fBcalibre\-smtp\fP a deux modes d\(aqopération. Dans le
+mode composer vous spécifiez l\(aqexpéditeur, le destinataire et le texte, ceux\-ci sont utilisés pour élaborer et
 envoyer un  message électronique. Dans le mode filtre, \fBcalibre\-smtp\fP lit un message électronique complet
-depuis STDIN et l’envoie.
+depuis STDIN et l\(aqenvoie.
 .sp
 le texte est le corps du message.
-Si le texte n’est pas spécifié, un message complet est lu depuis STDIN.
-de est l’adresse courriel de l’expéditeur et à est l’adresse courriel
+Si le texte n\(aqest pas spécifié, un message complet est lu depuis STDIN.
+de est l\(aqadresse courriel de l\(aqexpéditeur et à est l\(aqadresse courriel
 du destinataire. Quand un courriel complet est lu depuis STDIN, de et à
-sont uniquement utilisés dans la négociation SMTP, l’en\-tête de message n’est pas modifié.
+sont uniquement utilisés dans la négociation SMTP, l\(aqen\-tête de message n\(aqest pas modifié.
 .sp
-Chaque fois que vous passez à \fBcalibre\-smtp\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à \fBcalibre\-smtp\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH [OPTIONS]
 .INDENT 0.0
 .TP
@@ -72,7 +72,7 @@ Nom d\fB\(aq\fPhôte de l\fB\(aq\fPhôte local. Utilisé lors d\fB\(aq\fPune con
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Chemin du répertoire courriel pour y stocker les courriels qui ont échoué.
+Chemin vers le dossier maildir où enregistrer les courriels qui ont échoué.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +91,7 @@ affiche le numéro de version du logiciel et quitte
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options pour rédiger un courriel. Ignoré si le texte n’est pas spécifié
+Options pour rédiger un courriel. Ignoré si le texte n\(aqest pas spécifié
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
@@ -104,7 +104,7 @@ Sujet du  courriel
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options pour utiliser un serveur de relais SMTP pour envoyer un courriel. calibre essayera d’envoyer un courriel directement à moins que –relay est spécifié.
+Options pour utiliser un serveur de relais SMTP pour envoyer un courriel. calibre essayera d\(aqenvoyer un courriel directement à moins que \-\-relay est spécifié.
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e

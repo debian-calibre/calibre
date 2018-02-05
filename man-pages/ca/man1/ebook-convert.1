@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de desembre 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de gener 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,20 +41,21 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Conversió d’un format de llibre a un altre.
+Conversió d\(aqun format de llibre a un altre.
 .sp
-input_file és el fitxer d’entrada i output_file el de sortida. S’han d’especificar els dos com als primers dos arguments de l’ordre.
+input_file és el fitxer d\(aqentrada i output_file el de sortida. S\(aqhan d\(aqespecificar els dos com als primers dos arguments de l\(aqordre.
 .sp
-El format de llibre de sortida es dedueix de l’extensió d’output_file. output_file també pot ser del format especial .EXT on EXT és l’extensió del fitxer de sortida. En aquest cas, el nom del fitxer de sortida es deriva del nom del fitxer d’entrada. Tingueu en compte que els noms de fitxer no poden començar amb un guió. Per acabar, si output_file no té extensió, es tracta com una carpeta i es desa un «open book» (OEB) format per fitxers HTML a la carpeta. Aquests fitxers són els que normalment haurien passat al connector de sortida.
+El format de llibre de sortida es dedueix de l\(aqextensió d\(aqoutput_file. output_file també pot ser del format especial .EXT on EXT és l\(aqextensió del fitxer de sortida. En aquest cas, el nom del fitxer de sortida es deriva del nom del fitxer d\(aqentrada. Tingueu en compte que els noms de fitxer no poden començar amb un guió. Per acabar, si output_file no té extensió, es tracta com una carpeta i es desa un "open book" (OEB) format per fitxers HTML a la carpeta. Aquests fitxers són els que normalment haurien passat al connector de sortida.
 .sp
-Després d’especificar el fitxer d’entrada i de sortida podeu personalitzar la conversió especificant diverses opcions. Les opcions disponibles depenen dels tipus de fitxer d’entrada i de sortida. Per obtenir ajuda d’això, especifiqueu el fitxer d’entrada i de sortida amb l’opció \-h.
+Després d\(aqespecificar el fitxer d\(aqentrada i de sortida podeu personalitzar la conversió especificant diverses opcions. Les opcions disponibles depenen dels tipus de fitxer d\(aqentrada i de sortida. Per obtenir ajuda d\(aqaixò, especifiqueu el fitxer d\(aqentrada i de sortida amb l\(aqopció \-h.
 .sp
 Per a la documentació completa del sistema de conversió vegeu
 conversion
 .sp
-Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: «/some path/with spaces»
+Sempre que passeu arguments a \fBebook\-convert\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .sp
-Les opcions i els valors per defecte de les opcions de canvi depenen tan del format d’enrtada com del format de sortida, per tant, sempre és possible comprovar\-ho amb:
+Les opcions i els valors predeterminats per al canvi f\(aqopcions de canvi depenen del format
+d\(aqentrada com del format de sortida, per tant, sempre és possible comprovar\-ho amb:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -66,10 +67,11 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .UNINDENT
 .sp
-A continuació es detallen les opcions comunes a totes les conversions, seguides per les opcions específiques de cada format d’entrada i de sortida.
+A continuació es detallen les opcions comunes a totes les conversions, seguides per
+les opcions específiques de cada format d\(aqentrada i de sortida.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%OPCIONS D’ENTRADA\fP
+\fI\%OPCIONS D\(aqENTRADA\fP
 .IP \(bu 2
 \fI\%OPCIONS DE SORTIDA\fP
 .IP \(bu 2
@@ -79,7 +81,7 @@ A continuació es detallen les opcions comunes a totes les conversions, seguides
 .IP \(bu 2
 \fI\%CERCA I SUBSTITUCIÓ\fP
 .IP \(bu 2
-\fI\%DETECCIÓ DE L’ESTRUCTURA\fP
+\fI\%DETECCIÓ DE L\(aqESTRUCTURA\fP
 .IP \(bu 2
 \fI\%TAULA DEL CONTINGUT\fP
 .IP \(bu 2
@@ -112,9 +114,9 @@ Especifica el perfil de sortida. El perfil de sortida li diu al sistema de conve
 .B \-\-version
 mostra el número de versió del programa i surt
 .UNINDENT
-.SH OPCIONS D’ENTRADA
+.SH OPCIONS D'ENTRADA
 .sp
-Opcions per controlar el processament del fitxer d’entrada mobi
+Opcions per controlar el processament del fitxer d\(aqentrada mobi
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -156,7 +158,7 @@ Divideix tots els fitxers HTML més grans d\fB\(aq\fPaquesta mida (en KB). Això
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Si el fitxer d\fB\(aq\fPentrada no té portada i no n\fB\(aq\fPespecifiqueu cap, es genera una portada per defecte amb títol, autors… Aquesta opció inhabilita la generació d\fB\(aq\fPaquesta portada.
+Si el fitxer d\fB\(aq\fPentrada no té portada i no n\fB\(aq\fPespecifiqueu cap, es genera una portada per defecte amb títol, autors... Aquesta opció inhabilita la generació d\fB\(aq\fPaquesta portada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +182,7 @@ Títol per a qualsevol taula del contingut generada automàticament.
 .UNINDENT
 .SH APARENÇA
 .sp
-Opcions per controlar l’aparença de la sortida
+Opcions per controlar l\(aqaparença de la sortida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
@@ -244,7 +246,7 @@ Estableix l\fB\(aq\fPalçada de les línies en blanc inserides (en unitats em). 
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserva les lligadures presents al document d\fB\(aq\fPentrada. Una lligadura és una renderització especial d\fB\(aq\fPun parell de caràcters com ara ff, fi, fl…. La majoria dels lectors no admeten les lligadures en les seves lletres predeterminades, per aquest motiu és poc probable que les renderitzin correctament. Per defecte, calibre canvia una lligadura pel seu parell corresponent de caràcters normals. Aquesta opció fa que les lligadures en preservin en lloc seu.
+Preserva les lligadures presents al document d\fB\(aq\fPentrada. Una lligadura és una renderització especial d\fB\(aq\fPun parell de caràcters com ara ff, fi, fl.... La majoria dels lectors no admeten les lligadures en les seves lletres predeterminades, per aquest motiu és poc probable que les renderitzin correctament. Per defecte, calibre canvia una lligadura pel seu parell corresponent de caràcters normals. Aquesta opció fa que les lligadures en preservin en lloc seu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -313,7 +315,7 @@ Converteix les cometes, els guions i els punts suspensius als seus equivalents s
 .UNINDENT
 .SH PROCESSAMENT HEURÍSTIC
 .sp
-Modifica el text i l’estructura del document utilitzant patrons habituals. Inhabilitat per defecte. Utilitzeu –enable\-heuristics per habilitar\-ho. Es pot inhabilitar les accions individuals amb les opcions –disable\-
+Modifica el text i l\(aqestructura del document utilitzant patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per habilitar\-ho. Es pot inhabilitar les accions individuals amb les opcions \-\-disable\-
 .nf
 *
 .fi
@@ -375,7 +377,7 @@ Substitueix els salts d\fB\(aq\fPescena pel text especificat. Per defecte s\fB\(
 .UNINDENT
 .SH CERCA I SUBSTITUCIÓ
 .sp
-Modifica el text i l’estructura del document mitjançant els patrons definits per l’usuari.
+Modifica el text i l\(aqestructura del document mitjançant els patrons definits per l\(aqusuari.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
@@ -411,9 +413,9 @@ Text de substitució del que es trobi amb sr3\-search.
 .B \-\-sr3\-search
 Patró de cerca (expressió regular) que se substituirà per sr3\-replace.
 .UNINDENT
-.SH DETECCIÓ DE L’ESTRUCTURA
+.SH DETECCIÓ DE L'ESTRUCTURA
 .sp
-Controla l’autodetecció de l’estructura del document.
+Controla l\(aqautodetecció de l\(aqestructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
@@ -456,7 +458,7 @@ Una expressió XPath per detectar el lloc del document on s\fB\(aq\fPha de comen
 .UNINDENT
 .SH TAULA DEL CONTINGUT
 .sp
-Controla la generació automàtica de la taula del contingut. Si el fitxer d’origen conté una taula del contingut, s’utilitzarà preferentment aquest en lloc del generat automàticament.
+Controla la generació automàtica de la taula del contingut. Si el fitxer d\(aqorigen conté una taula del contingut, s\(aqutilitzarà preferentment aquest en lloc del generat automàticament.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc

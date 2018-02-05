@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "Dezember 15, 2017" "3.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "Januar 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -45,7 +45,7 @@ Starten des Calibre\-Inhalteservers. Der Calibre\-Inhalteserver stellt Ihre Cali
 Sie können den Pfad zu den Bibliotheksordnern als Argumente von \fBcalibre\-server\fP angeben.
 Falls Sie keinen Pfad angeben, werden alle dem Calibre\-Hauptprogramm bekannten Bibliotheken verwendet.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-server\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-server\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH [OPTIONEN]
 .INDENT 0.0
 .TP
@@ -55,7 +55,7 @@ Pfad zur Zugangsprotokolldatei. Dieses Protokoll enthält Informationen über Cl
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Zeit (in Sekunden), um auf eine Antwort des Servers zu warten, wenn Anfragen gestellt werden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -70,12 +70,12 @@ Den Server automatisch neu laden, wenn sich der Quellcode ändert. Nützlich fü
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Anzahl der fehlgeschlagenen Anmeldungen für einen Bann.     Die Anzahl der Login\-Fehler, nach denen eine IP\-Adresse gesperrt wird.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Sperren von IP\-Adressen mit wiederholten Login\-Fehlern.     Verbietet vorübergehend den Zugriff für IP\-Adressen, die wiederholt fehlgeschlagene Anmeldungen für die angegebene Anzahl von Minuten haben. Nützlich, um Versuche zu verhindern, Passwörter zu erraten. Wenn auf Null gesetzt, wird kein Banning durchgeführt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -85,7 +85,7 @@ Min. Größe, bei der Antworten Datenkompression verwenden (in Bytes).
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Pfad zu einer JSON\-Datei, die eine Vorlage für den benutzerdefinierten Buchlistenmodus enthält. Der einfachste Weg, eine solche Template\-Datei zu erstellen, ist es, in den Einstellungen\->Sharing over the net\->Buchlistenvorlage im Kaliber zu gehen, die Vorlage zu erstellen und sie zu exportieren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -115,7 +115,7 @@ Rückgriff auf autom. erkannte Schnittstelle.        Falls es dem Server aus irg
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Standardmäßig ist diese Option deaktiviert.
+Erlauben Sie nicht authentifizierten lokalen Verbindungen, Änderungen vorzunehmen.  Wenn Sie die Authentifizierung nicht einschalten, arbeitet der Server normalerweise im Nur\-Lese\-Modus, damit anonyme Benutzer keine Änderungen an Ihren Calibre\-Bibliotheken vornehmen können. Mit dieser Option kann jeder, der sich von demselben Computer aus verbindet, auf dem der Server läuft, Änderungen vornehmen. Dies ist nützlich, wenn Sie den Server ohne Authentifizierung betreiben möchten, aber dennoch calibredb verwenden möchten, um Änderungen an Ihren Calibre\-Bibliotheken vorzunehmen. Beachten Sie, dass die Aktivierung dieser Option bedeutet, dass jedes Programm, das auf dem Computer läuft, Änderungen an Ihren Calibre\-Bibliotheken vornehmen kann. Standardmäßig ist diese Option deaktiviert.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -195,7 +195,7 @@ Max. zulässige Größe für auf den Server hochgeladene Dateien (in MB).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Anzahl der auf einer einzelnen Seite anzuzeigenden Bücher.  Anzahl der auf einer einzelnen Seite im Browser anzuzeigenden Bücher.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +235,7 @@ Vorzustellendes Präfix für alle URLs.       Hilfreich, wenn Sie diesen Server 
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/de/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Pfad zur Benutzerdatenbank, die für die Authentifizierung verwendet werden soll. Die Datenbank ist eine SQLite\-Datei. Um es zu erstellen, benutze \fI\%\-\-manage\-users\fP\&. Mehr über die Verwaltung von Benutzern erfahren Sie unter: \fI\%https://manual.calibre\-ebook.com/de/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP

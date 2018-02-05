@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "décembre 15, 2017" "3.14.0" "calibre"
+.TH "CALIBREDB" "1" "janvier 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Chemin vers la bibliothèque calibre. Par défaut utilise le chemin enregistré 
 .INDENT 0.0
 .TP
 .B \-\-password
-Mot de passe passe pour la connexion à un Serveur de contenu calibre. Pour lire le mot de passe en entrée standard, utilisez la valeur spéciale : <stdin>. Pour lire le mot de passe à partir d\fB\(aq\fPun fichier, utilisez : <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -171,7 +171,7 @@ calibredb list [options]
 .sp
 Lister les livres disponibles dans la base Calibre.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -200,7 +200,7 @@ Largeur maximum pour une seule ligne en sortie. Par défaut détecte la taille d
 .INDENT 0.0
 .TP
 .B \-\-prefix
-Préfixe de tous les répertoires. Par défaut\ : chemin absolu du dossier de la bibliothèque.
+Préfixe pour tous les chemins vers des fichiers. Par défaut\ : chemin absolu du dossier de la bibliothèque.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -229,9 +229,9 @@ calibredb add [options] fichier1 fichier2 fichier3 …
 .UNINDENT
 .UNINDENT
 .sp
-Ajouter les fichiers spécifiés comme livre numérique à la base de données. Vous pouvez aussi spécifier des répertoires, voir les options décrivant les répertoires ci\-dessous.
+Ajouter les fichiers spécifiés comme livre numérique à la base de données. Vous pouvez aussi spécifier des dossiers, voir ci\-dessous les options relatives aux dossiers.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -289,26 +289,26 @@ Définir le titre du(es) livre(s) ajouté(s)
 .UNINDENT
 .SS AJOUTER A PARTIR DES REPERTOIRES
 .sp
-Options pour contrôler l’ajout de livres à partir de répertoires. Par défaut seuls les fichiers qui ont des extensions de type livre numérique connues sont ajoutées.
+Options pour contrôler l\(aqajout de livres à partir de dossiers. Par défaut seuls les fichiers qui ont des extensions de type livre numérique connues sont ajoutés.
 .INDENT 0.0
 .TP
 .B \-\-add
-Un modèle de nom de fichier (glob), les fichiers correspondant à ce modèle seront ajoutés lors du passage en revue de répertoires pour des fichiers, même s\fB\(aq\fPils ne sont pas d\fB\(aq\fPun type de fichier connu pour les livres numériques. Peut être spécifié de multiples fois pour des modèles multiples.
+Un modèle de nom de fichier (glob), les fichiers correspondant à ce modèle seront ajoutés lors de la recherche de fichiers dans des dossiers, même s\fB\(aq\fPils ne sont pas d\fB\(aq\fPun type de fichier de livre numérique connu. Peut être spécifié plusieurs fois pour différents modèles.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Un modèle de nom de fichier (glob), les fichiers correspondant à ce modèle seront ignorés lors du passage en revue de répertoires pour des fichiers. Peut être spécifié de multiples fois pour des modèles multiples. Par ex. : *.pdf ignorera tous les fichiers pdf.
+Un modèle de nom de fichier (glob), les fichiers correspondant à ce modèle seront ignorés lors de la recherche de fichiers dans des dossiers. Peut être spécifié plusieurs fois pour différents modèles. Par ex. : *.pdf ignorera tous les fichiers pdf.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Suppose que chaque répertoire dispose d’un livre logique et que tous les fichiers dans celui\-ci sont des formats différents de ce même livre.
+Suppose que chaque dossier contient un seul livre et que tous les fichiers dans celui\-ci sont des formats différents du même livre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Traite les répertoires récursivement
+Traite les dossiers récursivement
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -325,7 +325,7 @@ calibredb supprime les ids
 Supprime les livres identifiés par leurs ids de la base de données. Les ids devraient être une liste de nombres id séparés par des virgules (vous pouvez obtenir les numéros id en utilisant la commande search).
 Par exemple, 23,34,57\-85 (quand un intervalle est précisé, le dernier nombre dans l’intervalle n’est pas inclus).
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -343,9 +343,9 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Ajouter le livre numérique dans ebook_file aux formats disponibles pour le livre logique identifié par l’id. Vous pouvez obtenir l’id à l’aide de la commande search. Si le format existe déjà, il est remplacé, à moins que l’option ne pas remplacer est spécifiée.
+Ajouter le livre numérique dans ebook_file aux formats disponibles pour le livre logique identifié par l\(aqid. Vous pouvez obtenir l\(aqid à l\(aqaide de la commande search. Si le format existe déjà, il est remplacé, à moins que l\(aqoption ne pas remplacer est spécifiée.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
@@ -363,9 +363,9 @@ calibredb remove_format [options] id fmt
 .UNINDENT
 .UNINDENT
 .sp
-Supprime le format fmt du livre logique identifié par l’id. Vous pouvez obtenir l’identifiant à l’aide de la commande search. fmt devrait être une extension de fichier comme LRF, TXT ou EPUB. Si le fichier logique n’a pas de format fmt disponible, aucune action n’est effectuée.
+Supprime le format fmt du livre logique identifié par l\(aqid. Vous pouvez obtenir l’identifiant à l’aide de la commande search. fmt devrait être une extension de fichier comme LRF, TXT ou EPUB. Si le fichier logique n’a pas de format fmt disponible, aucune action n’est effectuée.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -378,10 +378,10 @@ calibredb show_metadata [options] id
 .UNINDENT
 .UNINDENT
 .sp
-Afficher les métadonnées stockées dans la base de données calibre pour le livre identifié par l’id.
+Afficher les métadonnées stockées dans la base de données calibre pour le livre identifié par l\(aqid.
 id est un identifiant obtenu à l’aide de la commande search.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -399,15 +399,15 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Place les métadonnées stockées dans la base de données de calibre pour le livre identifié par l’id
-à partir du fichier OPF metadata.opf. id est un numéro d’identification issu de la commande search. Vous
+Place les métadonnées stockées dans la base de données de calibre pour le livre identifié par l\(aqid
+à partir du fichier OPF metadata.opf. id est un numéro d\(aqidentification issu de la commande search. Vous
 pouvez obtenir un aperçu rapide du format OPF à
-l’aide du commutateur –as\-opf de la
+l\(aqaide du commutateur \-\-as\-opf de la
 commande show_metadata. Vous pouvez également placer les métadonnées de champs individuels avec
-l’option –field. Si vous utilisez l’option –field, il n’est pas nécessaire de spécifier
+l\(aqoption \-\-field. Si vous utilisez l\(aqoption \-\-field, il n\(aqest pas nécessaire de spécifier
 un fichier OPF.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -431,10 +431,10 @@ calibredb export [options] ids
 .UNINDENT
 .sp
 Exporter les livres spécifiés par ids (une liste séparée par des virgules) vers le système de fichiers.
-L’opération d”\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dans
+L’opération d\(aq\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dans
 un fichier opf). Vous pouvez obtenir les numéros id à partir de la commande search.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -467,18 +467,23 @@ Liste séparée par des virgules de formats à enregistrer pour chaque livre. Pa
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-progress
+Report progress
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-replace\-whitespace
 Remplacer les espaces par des underscores.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Exporter les livres vers un seul répertoire
+Exporter tous les livres vers un dossier unique
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-Le modèle pour contrôler le nom de fichier et la structure des répertoires d’enregistrement des fichiers. Par défaut : \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP qui va sauvegarder les livres dans un sous\-répertoire par auteur avec des noms de fichiers contenant le titre et l’auteur. Les contrôles disponibles sont : {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modèle pour contrôler le nom des fichier et la structure des dossiers d’enregistrement des fichiers. Par défaut : \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP qui va sauvegarder les livres dans un sous\-dossier par auteur avec des noms de fichiers contenant le titre et l’auteur. Les variables disponibles sont  : {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -488,7 +493,7 @@ Le format suivant lequel afficher les dates. %d \- jour, %b \- mois, %m \- numé
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Exporter les livres vers le répertoire spécifié. Est par défaut .
+Exporter les livres vers le dossier spécifié. Par défaut : .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -509,9 +514,9 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .sp
 Exporter un catalogue dans un format spécifié par path/to/destination extension.
 Les options contrôlent comment comment les entées sont affichées dans la sorie du catalogue généré.
-Noter que différents formats de catalogue supportent différents ensembles d’options.
+Noter que différents formats de catalogue supportent différents ensembles d\(aqoptions.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -541,7 +546,7 @@ Crée des références croisées dans la section Auteurs pour les livres avec de
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Enregistre la sortie à différentes étapes du processus de conversion vers le répertoire spécifié. Utile si vous n\fB\(aq\fPêtes pas sûr de l\fB\(aq\fPétape de la conversion à laquelle se produit le bogue. Par défaut\ : \fB\(aq\fPNone\fB\(aq\fP S’applique aux formats de sortie\ : AZW3, EPUB, MOBI
+Enregistre la sortie à différentes étapes du processus de conversion vers le dossier spécifié. Utile si vous n\fB\(aq\fPêtes pas sûr de l\fB\(aq\fPétape de la conversion à laquelle se produit le bogue. Par défaut\ : \fB\(aq\fPNone\fB\(aq\fP S’applique aux formats de sortie\ : AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -639,7 +644,7 @@ Gère les recherches sauvegardées stockées dans la base de données.
 Si vous essayez d’ajouter une requête avec un nom préexistant, elle sera
 remplacée.
 .sp
-Syntaxe pour l’ajout :
+Syntaxe pour l\(aqajout :
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
@@ -647,7 +652,7 @@ Syntaxe pour la suppression :
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -664,7 +669,7 @@ Créer une colonne personnalisée. label correspond au nom de la colonne pour le
 Ne doit pas contenir d’espace ou de deux\-points. name est le nom de la colonne pour l’utilisateur.
 datatype est à choisir parmi\ : bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -689,7 +694,7 @@ calibredb custom_columns [options]
 .sp
 Liste des colonnes personnalisées disponibles. Affiche les entêtes de colonne et les ids.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -711,7 +716,7 @@ les colonnes disponibles avec la commande custom_columns.
 .UNINDENT
 .UNINDENT
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -734,7 +739,7 @@ Vous pouvez obtenir une liste d’ids en utilisant la commande search.
 Vous pouvez obtenir une liste des noms de colonnes personnalisés en utilisant la commande
 custom_columns.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -761,7 +766,7 @@ Vous perdrez toutes les recherches sauvegardées, les catégories utilisateur,
 les tableaux de connexions, les réglages de conversion par livre et les recettes personnalisées.
 Les métadonnées restaurées seront aussi précises que ce qui sera trouvé dans les fichiers OPF.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -781,7 +786,7 @@ calibredb check_library [options]
 .sp
 Réalise des vérifications sur le système de fichiers représentant une bibliothèque. Les rapports sont invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -817,11 +822,11 @@ calibredb list_categories [options]
 Produit un rapport sur les informations des catégories dans la base de données.
 Les informations sont les équivalents de ce qui est affiché dans le panneau des étiquettes.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Liste de catégories de noms de recherche séparées par des virgules. Par défaut: tous
+Liste de catégories de noms de recherche séparées par des virgules. Par défaut : tous
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -856,14 +861,14 @@ calibredb backup_metadata [options]
 .UNINDENT
 .sp
 Sauvegarde les métadonnées stockées dans la base de données dans les fichiers OPF
-individuels dans chaque répertoire de livres. Ceci se fait normalement automatiquement,
+individuels dans chaque dossier de livres. Ceci se fait normalement automatiquement,
 mais vous pouvez lancer cette commande pour forcer la régénération des fichiers OPF,
-avec l’option –all.
+avec l\(aqoption \-\-all.
 .sp
-Notez qu’il y a normalement aucun besoin de faire ceci, car les fichiers OPF sont mis à jour
+Notez qu\(aqil y a normalement aucun besoin de faire ceci, car les fichiers OPF sont mis à jour
 automatiquement, chaque fois que les métadonnées sont changées.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -885,9 +890,9 @@ Crée un \fBclone\fP de la bibliothèque active. Vous obtiendrez une bibliothèq
 les même colonnes personnalisées, bibliothèques virtuelles et autres paramétrages de la bibliothèque active.
 .sp
 Cette bibliothèque clonée ne contiendra aucun livre. Si vous voulez avoir une copie complète,
-contenu inclus, le plus simple est de copier manuellement le répertoire contenant cette bibliothèque.
+contenu inclus, le plus simple est de copier manuellement le dossier contenant cette bibliothèque.
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -904,10 +909,10 @@ Met à jour les métadonnées dans les fichiers de livre stockées dans la bibli
 les métadonnées de la base de données calibre.  Normalement, les métadonnées sont mises à jour uniquement quand
 des fichiers sont exportés depuis calibre, cette commande est utile si vous voulez que les fichiers
 soient mis à jour sur place. Notez que les différents formats de fichiers supportent différentes quantités
-de métadonnées. Vous pouvez utiliser la valeur spéciale “all” de book_id pour mettre à jour les métadonnées
-dans tous les livres. Vous pouvez aussi spécifier beaucoup d’ids de livres séparés par des espaces et des ensembles d’ids séparés par des traits d’union : calibredb \fBembed_metadata\fP 1 2 10\-15 23
+de métadonnées. Vous pouvez utiliser la valeur spéciale \(aqall\(aq de book_id pour mettre à jour les métadonnées
+dans tous les livres. Vous pouvez aussi spécifier beaucoup d\(aqids de livres séparés par des espaces et des ensembles d\(aqids séparés par des traits d\(aqunion : calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -926,13 +931,13 @@ calibredb search [options] expression de recherche
 .UNINDENT
 .sp
 Recherche dans la bibliothèque après le terme spécifié dans la recherche, renvoie une liste séparée par une virgule
-de livres dont les ids correspondent à l’expression de recherche. Le format de sortie est utilisé
-pour alimenter d’autres commandes qui acceptent une liste d’ids comme entrée.
+de livres dont les ids correspondent à l\(aqexpression de recherche. Le format de sortie est utilisé
+pour alimenter d\(aqautres commandes qui acceptent une liste d\(aqids comme entrée.
 .sp
-L’expression de recherche peut être n’importe quoi à partir du puissant langage de requête de recherche de calibre,
+L\(aqexpression de recherche peut être n\(aqimporte quoi à partir du puissant langage de requête de recherche de calibre,
 par exemple : author:asimov title:robot
 .sp
-Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: «\ /some path/with spaces\ »
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l

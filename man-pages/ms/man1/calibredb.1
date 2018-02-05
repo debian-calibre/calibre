@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Disember 15, 2017" "3.14.0" "calibre"
+.TH "CALIBREDB" "1" "Januari 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,17 +140,17 @@ tunjuk mesej bantuan ini dan keluar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/ms/generated/ms/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file>.)
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Nama pengguna untuk menyambung dengan pelayan Kandungan calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Isih keputusan dalam tertib menaik
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Medan yang dipaparkan bila menyenaraikan buku dalam pangkalan data.  Seharusnya senarai medan dipisah\-tanda\-koma. Medan tersedia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Lalai: % lalai. Medan khas \fB"\fPall\fB"\fP boleh digunakan untuk pilih semua medan. Selain dari medan terbina\-dalam seperti di atas, medan suai juga tersedia seperti *field_name, sebagai contoh, untuk medan suai #rating, gunakan nama: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -294,7 +294,7 @@ Pilihan untuk mengawal penambahan buku dari direktori. Secara lalai hanya fail y
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Satu pola (glob) nama fail, fail yang sepadan dengan pola ini akan diabaikan bila mengimbas direktori untuk dapatkan fail, walaupun jika ia bukanlah jenis fail e\-buku yang dikenali. Boleh dinyatakan lebih dari sekali untuk pola berbilang.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,13 +323,13 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Buang buku yang dikenalpasti dengan id dari pangkalan data. id seharusnya senarai terpisah\-tanda\-koma nombor id (anda boleh dapatkan nombor id dengan menggunakan perintah gelintar). Sebagai contoh, 23,34,57\-85 (bila menyatakan julat, nombor terakhir dalam julat tidak disertakan).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Jangan guna tong sampah kitar semula
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -337,13 +337,13 @@ Do not use the recycle bin
 .sp
 .nf
 .ft C
-calibredb add_format [options] id ebook_file
+calibredb add_format [options] id fail_ebuku
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Tambah e\-buku dalam fail_ebuku kepada format tersedia untuk buku logikal yang dkenalpasti dengan id. Anda boleh dapatkan id menerusi perintah gelintar. Jika format sudah wujud, ia akan digantikan, melainkan pilihan tidak ganti dinyatakan.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -403,9 +403,9 @@ calibredb set_metadata [options] id [/laluan/ke/metadata.opf]
 Tetapan data meta yang tersimpan dalam pangkalan data calibre bagi buku
 yang dikenalpasti dengan id dari fail OPF metadata.opf. id ialah nombor id
 dari perintah gelintar. Anda boleh dapatkan format OPF dengan menggunakan
-–as\-opf yang ditukar ke perintah show_metadata. Anda juga boleh tetapkan
-data meta bagi medan secara individu dengan pilihan –field. Jika anda guna
-pilihan –field, tidak perlu nyatakan fail OPF.
+\-\-as\-opf yang ditukar ke perintah show_metadata. Anda juga boleh tetapkan
+data meta bagi medan secara individu dengan pilihan \-\-field. Jika anda guna
+pilihan \-\-field, tidak perlu nyatakan fail OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -468,6 +468,11 @@ Senarai format dipisah\-koma untuk simpan setiap buku. Secara lalai semua format
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-progress
+Report progress
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-replace\-whitespace
 Ganti ruang putih dengan underscore.
 .UNINDENT
@@ -502,15 +507,16 @@ Tukar laluan menjadi huruf kecil.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalog /laluan/ke/destinasi.(csv|epub|mobi|xml...) [pilihan]
+
+
+Eksport satu katalog dalam format dinyatakan oleh sambungan laluan/ke/destinasi.
+Pilihan kawal bagaimana masukan dipapar dalam output katalog yang dijana.
+Perhatian, format katalog berbeza menyokong set pilihan yang berbeza.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
-.sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -636,15 +642,15 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Urus gelintar tersimpan yang disimpan dalam pangkalan data ini.
+Jika anda cuba menambah pertanyaan dengan nama sedia ada, ia
+akan digantikan.
 .sp
-Syntax for adding:
+Sintaks untuk penambahan:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Sintaks untuk pembuangan:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -683,12 +689,13 @@ Lajur ini menyimpan tag seperti data (iaitu nilai berbilang dipisah\-tanda\-koma
 .nf
 .ft C
 calibredb custom_columns [options]
+
+
+Senaraikan lajur suai tersedia. Tunjuk label dan id lajur.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
-.sp
-List available custom columns. Shows column labels and ids.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -703,13 +710,14 @@ Tunjuk perincian untuk setiap lajur.
 .nf
 .ft C
 calibredb remove_custom_column [options] label
+
+
+Buang lajur suai yang dikenalpasti oleh label. Anda boleh lihat lajur
+tersedia dengan perintah custom_columns.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
-.sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -729,10 +737,10 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Tetapkan nilai lajur suai bagi buku yang dikenalpasti oleh id.
+Anda boleh dapatkan senarai id menggunakan perintah gelintar.
+Anda boleh dapatkan senarai nama lajur suai menggunakan perintah
+custom_columns.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -822,7 +830,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+Senarai nama carian kategori dipisah\-tanda\-koma. Lalai: semua
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -832,7 +840,7 @@ Output dalam CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Jenis fail CSV yang dihasilkan. Pilihan: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -859,7 +867,7 @@ calibredb backup_metadata [options]
 Sandar data meta tersimpan dalam pangkalan data ke dalam fail OPF secara
 individu dalam setiap direktori buku. Ia biasanya berlaku secara automatik,
 tetapi anda boleh jalankan perintah ini untuk paksa penjanaan\-semula fail
-OPF, dengan pilihan –all.
+OPF, dengan pilihan \-\-all.
 .sp
 Perhatian kebiasaannya tidak perlu membuatnya, kerana fail OPF disandar
 secara automatik, setiap kali data meta berubah.

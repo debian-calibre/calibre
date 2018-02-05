@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "Dezember 15, 2017" "3.14.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "Januar 26, 2018" "3.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -42,15 +42,15 @@ calibre\-smtp [Optionen] [Absender Empfänger Text]
 .UNINDENT
 .sp
 Senden von E\-Mail\-Nachrichten über das SMTP\-Protokoll. \fBcalibre\-smtp\fP  kennt zwei Betriebsmodi.
-Im „Verfassen“\-Modus geben Sie Absender, Empfänger und Text an, und diese Angaben werden dazu verwendet, eine E\-Mail\-Nachricht zu erstellen und zu versenden.
-Im „Filter“\-Modus liest \fBcalibre\-smtp\fP eine vollständige E\-Mail\-Nachricht über die Standardeingabe STDIN ein und versendet diese.
+Im "Verfassen"\-Modus geben Sie Absender, Empfänger und Text an, und diese Angaben werden dazu verwendet, eine E\-Mail\-Nachricht zu erstellen und zu versenden.
+Im "Filter"\-Modus liest \fBcalibre\-smtp\fP eine vollständige E\-Mail\-Nachricht über die Standardeingabe STDIN ein und versendet diese.
 .sp
-„Text“ ist der Textkörper der E\-Mail\-Nachricht.
+"Text" ist der Textkörper der E\-Mail\-Nachricht.
 Falls Text nicht angegeben ist, wird eine vollständige E\-Mail\-Nachricht von der Standardeingabe STDIN eingelesen.
-„Absender“ ist die E\-Mail\-Adresse des Absenders und „Empfänger“ ist die E\-Mail\-Adresse des Empfängers.
+"Absender" ist die E\-Mail\-Adresse des Absenders und "Empfänger" ist die E\-Mail\-Adresse des Empfängers.
 Wurde eine vollständige E\-Mail von STDIN eingelesen, dienen Absender und Empfänger nur zum Aushandeln des SMTP\-Protokolls, die Nachrichtenkopfzeilen werden nicht verändert.
 .sp
-Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-smtp\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: „/some path/with spaces“
+Wann immer Sie Argumente mit Leerzeichen an \fBcalibre\-smtp\fP weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: "/some path/with spaces"
 .SH [OPTIONEN]
 .INDENT 0.0
 .TP
@@ -102,7 +102,7 @@ Betreff der E\-Mail
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Optionen für die Verwendung eines SMTP\-Servers zum Versenden von E\-Mails. Solange über –relay kein SMTP\-Server angegeben ist, wird Calibre versuchen, eine E\-Mail direkt zu versenden.
+Optionen für die Verwendung eines SMTP\-Servers zum Versenden von E\-Mails. Solange über \-\-relay kein SMTP\-Server angegeben ist, wird Calibre versuchen, eine E\-Mail direkt zu versenden.
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e

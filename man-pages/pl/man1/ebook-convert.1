@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "grudnia 15, 2017" "3.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "stycznia 26, 2018" "3.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,30 +45,25 @@ Convert an e\-book from one format to another.
 .sp
 input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an „open e\-book” (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
 .sp
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: „/some path/with spaces”
+Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
 Opcje i domyślne wartości są różne w zależności od formatu wejściowego i wyjściowego,
 zawsze więc należy je sprawdzić:
 .INDENT 0.0
 .INDENT 3.5
-.sp
-.nf
-.ft C
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
 .UNINDENT
 .UNINDENT
 .sp
 Poniżej znajdują się opcje wspólne dla wszystkich formatów, a następnie te, które zależą
-formatu wejścia i wyjścia.
+od formatu wejścia i wyjścia.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPCJE PLIKU ŹRÓDŁOWEGO\fP
@@ -77,7 +72,7 @@ formatu wejścia i wyjścia.
 .IP \(bu 2
 \fI\%WYGLĄD\fP
 .IP \(bu 2
-\fI\%PRZETWARZANIE HEURYSTCZNE\fP
+\fI\%PRZETWARZANIE HEURYSTYCZNE\fP
 .IP \(bu 2
 \fI\%WYSZUKAJ I ZASTĄP\fP
 .IP \(bu 2
@@ -97,17 +92,17 @@ pokaż ten tekst pomocy i zakończ
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Określ profil wejścia. Profil wejścia dyktuje systemowi konwersji jak interpretować różne informacje w dokumencie wejściowym. Na przykład długości zależne od rozdzielczości (tj. długość w pikselach). Do wyboru jest:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Określ profil wejścia. Profil wejścia dyktuje systemowi konwersji jak interpretować różne informacje w dokumencie wejściowym. Na przykład długości zależne od rozdzielczości (tj. długość w pikselach). Do wyboru jest: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e\-booka za pomocą polecenia ebook\-convert \fB"\fPNazwa źródła.recipe\fB"\fP wynik.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Określ profil wyjściowy. Profil wyjściowy informuje system konwersji, jak zoptymalizować stworzony dokument dla wybranego urządzenia (poprzez np. zmianę rozmiaru obrazów na pasujący do ekranu urządzenia). W niektórych przypadkach profil wyjściowy może posłużyć do optymalizacji dla szczególnego urządzenia, ale jest to rzadko wymagane. Do wyboru są: cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +123,7 @@ Opcje sterujące przetwarzaniem pliku wyjściowego epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Wyłącz dzielenie przy znaku podziału strony. Zwykle pliki wejściowe są automatycznie dzielone przy każdym znaku podziału strony na dwa pliki. Dzięki temu książka wyjściowa może być szybciej i wydajniej przetworzona. Jednakże, podział jest powolny i jeśli plik źródłowy zawiera dużą ilość znaków podziału strony, powinieneś wyłączyć podział przy znaku podziału strony.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,7 +148,7 @@ Rozpakuj zawartość wygenerowanego pliku EPUB do podanego folderu. UWAGA: Zawar
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Dzielenie wszystkich plików HTML większych niż ten rozmiar (w KB). Jest to konieczne, gdyż większość czytników EPUB nie potrafi obsłużyć plików o dużych rozmiarach. Domyślna wartość 260KB to rozmiar wymagany przez Adobe Digital Editions. Ustaw na 0, aby wyłączyć dzielenie w oparciu o rozmiar.
+Dzielenie wszystkich plików HTML większych niż ten rozmiar (w KB). Jest to konieczne, gdyż większość czytników EPUB nie potrafi obsłużyć plików o dużych rozmiarach. Domyślna wartość 260 KB to rozmiar wymagany przez Adobe Digital Editions. Ustaw na 0, aby wyłączyć dzielenie w oparciu o rozmiar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +211,7 @@ Osadź wybraną czcionkę w pliku książki. Czcionka jest traktowana jako \fB"\
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Domyślnie calibre używa skróconych form właściwości CSS, takich jak margin, padding, border itp. Ta opcja spowoduje, że zostaną użyte pełne formy zamiast skróconych. Pełne wersje są zawsze używane przy generowaniu EPUBów przy wybranym jednym z profili wyjściowych Nook ponieważ Nook nie obsługuje skróconych form CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -281,7 +276,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Minimalna wysokość wiersza, zależna od rozmiaru czcionki wyliczonego dla elementu. calibre będzie pilnoważ, żeby każdy element miał wysokość wiersza nie mniejszą niż ustawiona wartość, niezależnie od tego, co określa dokument wejściowy. Ustaw na zero, aby wyłączyć. Domyślnie jest to 120%. Użyj tego ustawienia, zamiast bezpośredniego ustawienia wysokości wiersza, chyba że wiesz co robisz. Na przykład, można uzyskać tekst o \fB"\fPpodwójnym odstępie między wierszami\fB"\fP poprzez ustawienie wartości na 240.
+Minimalna wysokość wiersza, zależna od rozmiaru czcionki wyliczonego dla elementu. calibre będzie pilnować, aby każdy element miał wysokość wiersza nie mniejszą niż ustawiona wartość, niezależnie od tego, co określa dokument wejściowy. Ustaw tę wartość na zero, aby wyłączyć. Domyślnie wynosi ona 120%. Użyj tego ustawienia, zamiast bezpośredniego ustawienia wysokości wiersza, chyba że wiesz co robisz. Na przykład, można uzyskać tekst o „podwójnym odstępie między wierszami” poprzez ustawienie wartości na 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +296,7 @@ Konwertuj zwykłe cudzysłowy, myślniki i wielokropki na ich poprawne typografi
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Zredukuj osadzone czcionki. Każda osadzona czcionka zostanie zredukowana tak, aby zawierała tylko znaki wykorzystywane w tym dokumencie. Zmniejszy to rozmiar plików z czcionkami. Przydatne przy korzystaniu z czcionek zawierających wiele nie wykorzystywanych znaków.
+Zredukuj osadzone czcionki. Każda osadzona czcionka zostanie zredukowana tak, aby zawierała tylko znaki wykorzystywane w tym dokumencie. Zmniejszy to rozmiar plików z czcionkami. Przydatne przy korzystaniu z czcionek zawierających wiele niewykorzystywanych znaków.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -313,9 +308,9 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .B \-\-unsmarten\-punctuation
 Przekształć typograficzne cudzysłowy, myślniki i wielokropki na zwykłe odpowiedniki.
 .UNINDENT
-.SH PRZETWARZANIE HEURYSTCZNE
+.SH PRZETWARZANIE HEURYSTYCZNE
 .sp
-Zmodyfikuj tekst i strukturę używając wzorców. Domyślnie wyłączone. Aby włączyć użyj –enable\-heuristics. Poszczególne akcje mogą zostać wyłączone przy użyciu –disable\-
+Zmodyfikuj tekst i strukturę używając wzorców. Domyślnie wyłączone. Aby włączyć użyj \-\-enable\-heuristics. Poszczególne akcje mogą zostać wyłączone przy użyciu \-\-disable\-
 .nf
 *
 .fi
@@ -381,7 +376,7 @@ Modyfikuj tekst dokumentu i jego strukturę, używając wzorów zdefiniowanych p
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Ścieżka do pliku zawierającego wyrażenia regularne wyszukiwania i zamiany. Plik musi zawierać naprzemiennie wiersze wzorca wyszukiwania i zamiany (wiersz zamiany może być pusty). Wyrażenie musi być poprawnym wyrażeniem regularnym Pythona, a plik musi być kodowany w UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -434,7 +429,7 @@ Niektóre dokumenty określają marginesy strony poprzez określenie lewego i pr
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Wstaw metadane na początku książki. Jest to przydatne, jeśli czytnik nie obsługuje bezpośrednio wyświetlania/wyszukiwania metadanych.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,12 +444,12 @@ Preferuj okładkę z pliku źródłowego w stosunku do wybranej okładki.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Usuń pierwszy obrazek ze źródłowej książki. Opcja przydaje się jeśli książka zawiera obrazek okładki, który nie jest identyfikowany jako okładka. W efekcie jeśli dodasz swoją okładkę, w calibre książka będzie miała dwie okładki, jeśli nie ustawisz tej opcji.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Wyrażenie XPath wykrywające miejsce w tekście, od którego należy zacząć czytanie. Niektóre programy do czytania ebooków (szczególnie Kindle) używają tej lokacji jako miejsca, w którym otwierają książkę. Więcej informacji można znaleźć w sekcji XPath Tutorial, w podręczniku calibre.
 .UNINDENT
 .SH SPIS TREŚCI
 .sp
@@ -482,7 +477,7 @@ Wyrażenie XPath określające znaczniki, które powinny zostać dodane do spisu
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Maksymalna liczba odnośników do wstawienia do spisu treści. Ustaw 0 aby wyłączyć. Domyślnie ustawienie: 50. Odnośniki są dodawane do spisu treści tylko jeśli odnaleziono mniej rozdziałów niż określony próg.
+Maksymalna liczba odnośników do wstawienia do spisu treści. Ustaw tę wartość na 0, aby wyłączyć. Domyślnie ustawienie: 50. Odnośniki są dodawane do spisu treści tylko jeśli odnaleziono mniej rozdziałów niż określony próg.
 .UNINDENT
 .INDENT 0.0
 .TP
