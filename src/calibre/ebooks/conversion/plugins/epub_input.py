@@ -80,14 +80,14 @@ class EPUBInput(InputFormatPlugin):
         return False
 
     def set_guide_type(self, opf, gtype, href=None, title=''):
-        # Set the titlepage guide entry
+        # Set the specified guide entry
         for elem in list(opf.iterguide()):
-            if elem.get('type', '').lower() == 'titlepage':
+            if elem.get('type', '').lower() == gtype:
                 elem.getparent().remove(elem)
 
         if href is not None:
             t = opf.create_guide_item(gtype, title, href)
-            for guide in opf.root.iterchildren('guide'):
+            for guide in opf.root.xpath('./*[local-name()="guide"]'):
                 guide.append(t)
                 return
             guide = opf.create_guide_element()
@@ -99,7 +99,24 @@ class EPUBInput(InputFormatPlugin):
         ''' If there is a reference to the cover/titlepage via manifest properties, convert to
         entries in the <guide> so that the rest of the pipeline picks it up. '''
         from calibre.ebooks.metadata.opf3 import items_with_property
-        removed = None
+        removed = guide_titlepage_href = guide_titlepage_id = None
+
+        # Look for titlepages incorrectly marked in the <guide> as covers
+        guide_cover, guide_elem = None, None
+        for guide_elem in opf.iterguide():
+            if guide_elem.get('type', '').lower() == 'cover':
+                guide_cover = guide_elem.get('href', '').partition('#')[0]
+                break
+        if guide_cover:
+            spine = list(opf.iterspine())
+            if spine:
+                idref = spine[0].get('idref', '')
+                for x in opf.itermanifest():
+                    if x.get('id') == idref and x.get('href') == guide_cover:
+                        guide_titlepage_href = guide_cover
+                        guide_titlepage_id = idref
+                        break
+
         raster_cover_href = opf.epub3_raster_cover
         if raster_cover_href:
             self.set_guide_type(opf, 'cover', raster_cover_href, 'Cover Image')
@@ -109,6 +126,8 @@ class EPUBInput(InputFormatPlugin):
             if href and tid:
                 titlepage_id, titlepage_href = tid, href.partition('#')[0]
                 break
+        if titlepage_href is None:
+            titlepage_href, titlepage_id = guide_titlepage_href, guide_titlepage_id
         if titlepage_href is not None:
             self.set_guide_type(opf, 'titlepage', titlepage_href, 'Title Page')
             spine = list(opf.iterspine())

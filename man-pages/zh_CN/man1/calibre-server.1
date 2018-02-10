@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "一月 26, 2018" "3.16.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "二月 09, 2018" "3.17.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -106,7 +106,7 @@ Socket pre\-allocation, for example, with systemd socket activation. By default,
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. 此选项默认禁用。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Fallback to auto\-detected interface.        If for some reason the server is un
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. 此选项默认禁用。
 .UNINDENT
 .INDENT 0.0
 .TP

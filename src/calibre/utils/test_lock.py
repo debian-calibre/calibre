@@ -13,8 +13,12 @@ import time
 import unittest
 from threading import Thread
 
-from calibre.constants import fcntl, iswindows
-from calibre.utils.lock import ExclusiveFile, unix_open, create_single_instance_mutex
+from calibre.constants import cache_dir, fcntl, iswindows
+from calibre.utils.lock import ExclusiveFile, create_single_instance_mutex, unix_open
+from calibre.utils.tdir_in_cache import (
+    clean_tdirs_in, is_tdir_locked, retry_lock_tdir, tdir_in_cache, tdirs_in,
+    unlock_file
+)
 
 
 def FastFailEF(name):
@@ -59,8 +63,11 @@ class IPCLockTest(unittest.TestCase):
         self.cwd = os.getcwd()
         self.tdir = tempfile.mkdtemp()
         os.chdir(self.tdir)
+        self.original_cache_dir = cache_dir()
+        cache_dir.ans = self.tdir
 
     def tearDown(self):
+        cache_dir.ans = self.original_cache_dir
         os.chdir(self.cwd)
         for i in range(100):
             try:
@@ -127,6 +134,27 @@ class IPCLockTest(unittest.TestCase):
         self.assertIsNotNone(release_mutex)
         release_mutex()
 
+    def test_tdir_in_cache_dir(self):
+        child = run_worker('calibre.utils.test_lock', 'other4')
+        tdirs = []
+        while not tdirs:
+            time.sleep(0.05)
+            gl = retry_lock_tdir('t', sleep=0.05)
+            try:
+                tdirs = list(tdirs_in('t'))
+            finally:
+                unlock_file(gl)
+        self.assertTrue(is_tdir_locked(tdirs[0]))
+        c2 = run_worker('calibre.utils.test_lock', 'other5')
+        self.assertEqual(c2.wait(), 0)
+        self.assertTrue(is_tdir_locked(tdirs[0]))
+        child.kill(), child.wait()
+        self.assertTrue(os.path.exists(tdirs[0]))
+        self.assertFalse(is_tdir_locked(tdirs[0]))
+        clean_tdirs_in('t')
+        self.assertFalse(os.path.exists(tdirs[0]))
+        self.assertEqual(os.listdir('t'), [u'tdir-lock'])
+
 
 def other1():
     e = ExclusiveFile('test')
@@ -145,6 +173,18 @@ def other3():
     create_single_instance_mutex('test')
     os.mkdir('ready')
     time.sleep(30)
+
+
+def other4():
+    cache_dir.ans = os.getcwdu()
+    tdir_in_cache('t')
+    time.sleep(30)
+
+
+def other5():
+    cache_dir.ans = os.getcwdu()
+    if not os.path.isdir(tdir_in_cache('t')):
+        raise SystemExit(1)
 
 
 def find_tests():

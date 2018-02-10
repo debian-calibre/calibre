@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2017
+# Jonatan Nyberg, 2017-2018
 # Jonatan Nyberg, 2017
 # Merarom <merarom@yahoo.es>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-20 09:18+0530\n"
-"PO-Revision-Date: 2017-10-22 08:09+0000\n"
+"POT-Creation-Date: 2018-01-26 09:29+0530\n"
+"PO-Revision-Date: 2018-01-28 17:43+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgid ""
 "always an additional field named ``#seriesname_index`` that becomes the "
 "series index for that series. So if you have a custom series field named "
 "``#myseries``, there will also be a field named ``#myseries_index``."
-msgstr "Du kan använda alla de olika metadatafält som finns i calibre i en mall, inklusive eventuella anpassade kolumner du har skapat själv. För att ta reda på mallnamnet för en kolumn håll bara musen över kolumntiteln. Namn för anpassade fält (kolumner du har skapat själv) har alltid en # som första tecken. För egna fält av serietyp , det finns alltid ett extra fält som heter ``#seriesname_index`` som blir serieindex för den serien. Så om du har ett eget seriefält som heter ``#myseries``, kommer det också att finnas ett fält som heter ``#myseries_index``."
+msgstr "Du kan använda alla de olika metadatafält som finns i calibre i en mall, inklusive eventuella anpassade kolumner du har skapat själv. För att ta reda på mallnamnet för en kolumn håll bara musen över kolumntiteln. Namn för anpassade fält (kolumner du har skapat själv) har alltid en # som första tecken. För egna fält av serietyp , det finns alltid ett extra fält som heter ``#serienamn_index`` som blir serieindex för den serien. Så om du har ett eget seriefält som heter ``#minaserier``, kommer det också att finnas ett fält som heter ``#minaserier_index``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:27
 msgid "In addition to the column based fields, you also can use::"
@@ -108,7 +108,7 @@ msgid ""
 "is ``series`` and ``series_index``, where you want either nothing or the two"
 " values with a hyphen between them. Calibre handles this case using a "
 "special field syntax."
-msgstr "Först, villkorad inkluderad text. Det finns fall där du kanske vill ha text som visas i utdata endast om ett fältet inte är tomt. Ett vanligt fall är ``series`` och ``series_index``, var du vill antingen ingenting eller de två värdena med ett bindestreck mellan dem. Calibre hanterar det här fallet med hjälp av en specialfältsyntax."
+msgstr "Först, villkorad inkluderad text. Det finns fall där du kanske vill ha text som visas i utdata endast om ett fältet inte är tomt. Ett vanligt fall är ``serier`` och ``series_index``, var du vill antingen ingenting eller de två värdena med ett bindestreck mellan dem. calibre hanterar det här fallet med hjälp av en specialfältsyntax."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:53
 msgid "For example, assume you want to use the template::"
@@ -201,7 +201,7 @@ msgid ""
 "the ISBN, create the column and enter ``{identifiers:select(isbn)}`` into "
 "the template box. To display a column containing the values of two series "
 "custom columns separated by a comma, use ``{#series1:||,}{#series2}``."
-msgstr "Ibland finns det fall där man vill visa metadata som calibre normalt inte visar, eller för att visa data på ett sätt som skiljer sig från hur calibre gör normalt. Till exempel kanske du vill visa ISBN, ett fält som calibre inte visar. Du kan använda anpassade kolumner för detta genom att skapa en kolumn med typen \"Kolumn byggs från andra kolumner\" (nedan kallade sammansatta kolumner), och går in i en mall. Resultat: calibre kommer att visa en kolumn som visar resultatet av utvärderingen av den mallen. För att visa ISBN skapa kolumnen och skriv `` {identifierare: välj (isbn)} `` in i mallrutan. För att visa en kolumn som innehåller värdena för två serier anpassade kolumner separerade med ett kommatecken, använd ``{#series1:||,}{#series2}``."
+msgstr "Ibland finns det fall där man vill visa metadata som calibre normalt inte visar, eller för att visa data på ett sätt som skiljer sig från hur calibre gör normalt. Till exempel kanske du vill visa ISBN, ett fält som calibre inte visar. Du kan använda anpassade kolumner för detta genom att skapa en kolumn med typen \"Kolumn byggs från andra kolumner\" (nedan kallade sammansatta kolumner), och går in i en mall. Resultat: calibre kommer att visa en kolumn som visar resultatet av utvärderingen av den mallen. För att visa ISBN skapa kolumnen och skriv `` {identifierare: välj (isbn)} `` in i mallrutan. För att visa en kolumn som innehåller värdena för två serier anpassade kolumner separerade med ett kommatecken, använd ``{#serier1:||,}{#serier2}``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:97
 msgid "Composite columns can use any template option, including formatting."
@@ -534,7 +534,7 @@ msgstr "programläge används om uttrycket börjar med  ``:'`` och slutar med  `
 msgid ""
 "the variable ``$`` stands for the field the expression is operating upon, "
 "``#series`` in this case."
-msgstr "variabeln ``$`` står för fältet uttrycket fungerar på, ``#series`` i detta fall."
+msgstr "variabeln ``$`` står för fältet uttrycket fungerar på, ``#serier`` i detta fall."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:182
 msgid ""
