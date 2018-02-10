@@ -292,4 +292,3 @@ def better_mktemp(*args, **kwargs):
     fd, path = tempfile.mkstemp(*args, **kwargs)
     os.close(fd)
     return path
-
