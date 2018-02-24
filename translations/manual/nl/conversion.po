@@ -6,6 +6,7 @@
 # Anne Mügge <info@numijneigenwebsite.nl>, 2016
 # erkfuizfeuadjfjzefzfuzeff gbhygsregfges <erkfuizfeuadjfjzefzfuzeff@gmail.com>, 2017
 # guy baert <guy.baert.opwijk@gmail.com>, 2018
+# Herman van der Vaart <vaarttuig@gmail.com>, 2018
 # Mar, 2015
 # Mario Moens <marimo.it4u@gmail.com>, 2017
 # Mar, 2015
@@ -15,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 11:18+0530\n"
-"PO-Revision-Date: 2018-01-16 18:18+0000\n"
-"Last-Translator: guy baert <guy.baert.opwijk@gmail.com>\n"
+"POT-Creation-Date: 2018-02-09 08:54+0530\n"
+"PO-Revision-Date: 2018-02-21 22:19+0000\n"
+"Last-Translator: Herman van der Vaart <vaarttuig@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -392,7 +393,7 @@ msgid ""
 "setting. `cp1252` is a common encoding for documents produced using Windows "
 "software. You should also read :ref:`char-encoding-faq` for more on encoding"
 " issues."
-msgstr ""
+msgstr "Oudere documenten specificeren hun karaktercodering soms niet. Bij conversie kan dit ertoe leiden dat niet-Engelse tekens of speciale tekens, zoals slimme aanhalingstekens, beschadigd zijn. calibre probeert de tekencodering van het bron-document automatisch te detecteren, maar dat lukt niet altijd. U kunt het dwingen een bepaalde tekencodering aan te nemen met behulp van deze instelling. `cp1252` is een algemene codering voor documenten die zijn geproduceerd met behulp van Windows-software. Lees ook: ref: `char-encoding-faq` voor meer informatie over coderingsproblemen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:245
 msgid "Page setup"
@@ -425,7 +426,7 @@ msgid ""
 " files will not be read on a SONY or similar device, use the default output "
 "profile. If you are producing MOBI files that are not intended for the "
 "Kindle, choose the Mobipocket books output profile."
-msgstr ""
+msgstr "Als u weet dat het bestand dat u aan het converteren bent, bedoeld was om op een bepaald apparaat / softwareplatform te worden gebruikt, kies dan het bijbehorende invoerprofiel, of kies anders gewoon het standaard invoerprofiel. Als u weet dat de bestanden die u produceert bedoeld zijn voor een bepaald apparaattype, kies dan het bijbehorende uitvoerprofiel. In het bijzonder, voor MOBI-uitvoerbestanden, zou je de Kindle moeten kiezen, voor LIT de Microsoft Reader en voor EPUB de Sony Reader. In het geval van EPUB resulteert het Sony Reader-profiel in EPUB-bestanden die overal werken. Het heeft echter enkele bijwerkingen, zoals het invoegen van kunstmatige sectie-einden om interne componenten onder de groottedrempel te houden, die nodig zijn voor SONY-apparaten. Kies met name voor de iPhone / Android-telefoons het SONY-uitvoerprofiel. Als u weet dat uw EPUB-bestanden niet worden gelezen op een SONY of vergelijkbaar apparaat, gebruikt u het standaard uitvoerprofiel. Als je MOBI-bestanden produceert die niet bedoeld zijn voor de Kindle, kies dan het Mobipocket-uitvoerprofiel voor boeken."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid ""
@@ -448,7 +449,7 @@ msgid ""
 "in some cases an option may lead to worse results, so use with care.  As an "
 "example, several of these options will remove all non-breaking-space "
 "entities, or may include false positive matches relating to the function."
-msgstr ""
+msgstr "Heuristische verwerking biedt een verscheidenheid aan functies die kunnen worden gebruikt om veelvoorkomende problemen in slecht opgemaakte invoerdocumenten te proberen te detecteren en te corrigeren. Gebruik deze functies als uw invoerdocument slecht is geformatteerd. Omdat deze functies afhankelijk zijn van overeenkomstige patronen, moet u er rekening mee houden dat een optie in sommige gevallen tot slechtere resultaten kan leiden, dus wees voorzichtig. Een aantal van deze opties verwijdert bijvoorbeeld alle niet-brekende spatie-entiteiten, of kan vals-positieve overeenkomsten met betrekking tot de functie bevatten."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:272
 msgid ":guilabel:`Enable heuristic processing`"
@@ -1158,7 +1159,7 @@ msgstr ":guilabel:`Alinea stijl: Ongeformatteerd`"
 msgid ""
 "Applies no special formatting to the text, the document is converted to HTML"
 " with no other changes."
-msgstr ""
+msgstr "Past geen speciale opmaak toe op de tekst, het document wordt geconverteerd naar HTML zonder andere wijzigingen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:708
 msgid "Convert PDF documents"
@@ -1175,7 +1176,7 @@ msgid ""
 "just under the median line length. Lower this value to include more text in "
 "the unwrapping. Increase to include less. You can adjust this value in the "
 "conversion settings under :guilabel:`PDF Input`."
-msgstr ""
+msgstr "PDF-documenten zijn een van de slechtste formaten om van te converteren. Ze hebben een vast pagina formaat en een formaat voor tekstplaatsing. Dit betekent dat het heel moeilijk is om te bepalen waar een alinea eindigt en een andere begint. calibre zal proberen paragrafen uit te pakken met behulp van een configureerbare, :guilabel: `Line Un-Wrapping Factor`. Dit is een schaal die wordt gebruikt om de lengte te bepalen waarop een lijn moet worden uitgepakt. Geldige waarden zijn een decimaal tussen 0 en 1. De standaardwaarde is 0,45, net onder de mediaanlijnlengte. Verlaag deze waarde om meer tekst toe te voegen aan het uitpakken. Verhoog om minder op te nemen. U kunt deze waarde aanpassen in de conversie-instellingen onder :guilabel: `PDF Input`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:717
 msgid ""
@@ -1369,7 +1370,7 @@ msgid ""
 " to use the page size from the :guilabel:`output profile` instead. So if "
 "your output profile is set to Kindle, calibre will create a PDF with page "
 "size suitable for viewing on the small kindle screen."
-msgstr ""
+msgstr "De eerste, belangrijkste, instelling om te beslissen bij het converteren naar PDF is het paginaformaat. Standaard gebruikt calibre een paginaformaat van \"U.S. letter\". U kunt dit wijzigen naar een ander standaard paginaformaat of een volledig aangepast formaat in de :guilabel:`PDF Output` sectie van het conversie dialoogvenster. Als u een PDF genereert die op een specifiek apparaat moet worden gebruikt, kunt u de optie inschakelen om het paginaformaat te gebruiken vanuit de :guilabel:'output profile`. Dus als uw uitvoerprofiel is ingesteld op Kindle, maakt kaliber een PDF met een paginaformaat dat geschikt is om te bekijken op het kleine Kindle-scherm."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:818
 msgid "Headers and Footers"
