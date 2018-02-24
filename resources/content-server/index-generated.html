@@ -850,6 +850,9 @@ function ρσ_list_pop(index) {
     if (this.length === 0) {
         throw new IndexError("list is empty");
     }
+    if (index === undefined) {
+        index = -1;
+    }
     ans = this.splice(index, 1);
     if (!ans.length) {
         throw new IndexError("pop index out of range");
@@ -1544,7 +1547,7 @@ Object.defineProperties(ρσ_set.prototype, (function(){
         }
     }
 };
-ρσ_set.prototype.toString = ρσ_set.prototype.inspect = function () {
+ρσ_set.prototype.toString = ρσ_set.prototype.__repr__ = ρσ_set.prototype.__str__ = ρσ_set.prototype.inspect = function () {
     return "{" + list(this).join(", ") + "}";
 };
 ρσ_set.prototype.__eq__ = (function() {
@@ -4003,6 +4006,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.prefs.user_stylesheet"] = {};
     ρσ_modules["read_book.prefs.head_foot"] = {};
     ρσ_modules["read_book.prefs.main"] = {};
+    ρσ_modules["read_book.word_actions"] = {};
     ρσ_modules["read_book.overlay"] = {};
     ρσ_modules["read_book.search"] = {};
     ρσ_modules["read_book.touch"] = {};
@@ -4012,6 +4016,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.local_books"] = {};
     ρσ_modules["book_list.main"] = {};
     ρσ_modules["read_book.cfi"] = {};
+    ρσ_modules.select = {};
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.settings"] = {};
     ρσ_modules["read_book.footnotes"] = {};
@@ -7818,6 +7823,7 @@ return parser;
                 ρσ_d["right"] = "progress";
                 return ρσ_d;
             }).call(this);
+            ρσ_d["word_actions"] = [];
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
@@ -19789,6 +19795,217 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.word_actions";
+        var current_data;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var create_item = ρσ_modules["book_list.item_list"].create_item;
+        var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
+
+        var clear = ρσ_modules.dom.clear;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        function lookup(close_panel_func, url) {
+            close_panel_func();
+            window.open(url, "_blank");
+        };
+        if (!lookup.__argnames__) Object.defineProperties(lookup, {
+            __argnames__ : {value: ["close_panel_func", "url"]}
+        });
+
+        function toggle_custom_container(container_id, visible) {
+            var container, c, list_container;
+            container = document.getElementById(container_id);
+            if (container) {
+                c = container.lastChild;
+                list_container = c.previousSibling;
+                list_container.style.display = (visible) ? "none" : "block";
+                c.style.display = (visible) ? "block" : "none";
+                return c;
+            }
+        };
+        if (!toggle_custom_container.__argnames__) Object.defineProperties(toggle_custom_container, {
+            __argnames__ : {value: ["container_id", "visible"]}
+        });
+
+        function add(container_id) {
+            var container, c, name, url, sd, actions;
+            container = document.getElementById(container_id);
+            if (!container) {
+                return;
+            }
+            c = container.lastChild;
+            name = c.querySelector("input[name=\"name\"]").value;
+            url = c.querySelector("input[name=\"url\"]").value;
+            if (!name || !url) {
+                error_dialog(_("Required fields missing"), _("You must specify both a name and a URL."));
+                return;
+            }
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            actions.push((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["title"] = name;
+                ρσ_d["url"] = url;
+                return ρσ_d;
+            }).call(this));
+            sd.set("word_actions", actions);
+            toggle_custom_container(container_id, false);
+            populate_list(container);
+        };
+        if (!add.__argnames__) Object.defineProperties(add, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
+        function add_custom(container_id) {
+            var container, do_add;
+            container = toggle_custom_container(container_id, true);
+            if (!container) {
+                return;
+            }
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Enter the name and URL for a custom lookup source. The URL must contain  {0} in it, which will be replaced by the word being looked up. For example:  {1}").format("{word}", "https://google.com/search?q={word}")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            do_add = add.bind(null, container_id);
+            container.appendChild(E.form(ρσ_interpolate_kwargs.call(E, E.button, [ρσ_desugar_kwargs({style: "display:none", onclick: do_add})]), ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Name:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "name"})]))), E.tr(E.td(" "), E.td(" ")), E.tr(E.td(_("URL:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "url"})])))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})]))));
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus", add.bind(null, container_id)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(_("Cancel"), toggle_custom_container.bind(null, container_id, false))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            container.querySelector("input").focus();
+        };
+        if (!add_custom.__argnames__) Object.defineProperties(add_custom, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
+        function remove(container_id, num) {
+            var container, sd, actions;
+            container = document.getElementById(container_id);
+            if (!container) {
+                return;
+            }
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            actions.splice(num, 1);
+            sd.set("word_actions", actions);
+            toggle_custom_container(container_id, false);
+            populate_list(container);
+        };
+        if (!remove.__argnames__) Object.defineProperties(remove, {
+            __argnames__ : {value: ["container_id", "num"]}
+        });
+
+        function remove_custom(container_id) {
+            var container, items, sd, actions, ρσ_unpack, i, item;
+            container = toggle_custom_container(container_id, true);
+            if (!container) {
+                return;
+            }
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a custom lookup to remove")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            items = ρσ_list_decorate([ create_item(_("Cancel (no removals)"), toggle_custom_container.bind(null, container_id, false)) ]);
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            var ρσ_Iter0 = ρσ_Iterable(enumerate(actions));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+                i = ρσ_unpack[0];
+                item = ρσ_unpack[1];
+                items.push(create_item(item.title, remove.bind(null, container_id, i)));
+            }
+            container.appendChild(E.div());
+            create_item_list(container.lastChild, items);
+        };
+        if (!remove_custom.__argnames__) Object.defineProperties(remove_custom, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
+        function lookup_items(word, close_panel_func, container_id) {
+            var eword, items, custom_actions, has_custom, entry;
+            eword = encodeURIComponent(word);
+            items = ρσ_list_decorate([]);
+            function a(title, url) {
+                items.push(create_item(title, lookup.bind(word, close_panel_func, ρσ_interpolate_kwargs.call(url, url.format, [ρσ_desugar_kwargs({word: eword})]))));
+            };
+            if (!a.__argnames__) Object.defineProperties(a, {
+                __argnames__ : {value: ["title", "url"]}
+            });
+
+            custom_actions = get_session_data().get("word_actions", []);
+            has_custom = custom_actions && custom_actions.length;
+            if (has_custom) {
+                var ρσ_Iter1 = ρσ_Iterable(custom_actions);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    entry = ρσ_Iter1[ρσ_Index1];
+                    if (entry.title && entry.url) {
+                        a(entry.title, entry.url);
+                    }
+                }
+            }
+            a(_("Google dictionary"), "https://google.com/search?q=define:{word}");
+            a(_("Wordnik"), "https://www.wordnik.com/words/{word}");
+            a(_("Search the internet"), "https://google.com/search?q={word}");
+            items.push(create_item(_("Add a custom lookup"), add_custom.bind(null, container_id)));
+            if (has_custom) {
+                items.push(create_item(_("Remove a custom lookup"), remove_custom.bind(null, container_id)));
+            }
+            return items;
+        };
+        if (!lookup_items.__argnames__) Object.defineProperties(lookup_items, {
+            __argnames__ : {value: ["word", "close_panel_func", "container_id"]}
+        });
+
+        current_data = null;
+        function populate_list(container) {
+            var ρσ_unpack, word, close_panel_func, list_container;
+            ρσ_unpack = current_data;
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            word = ρσ_unpack[0];
+            close_panel_func = ρσ_unpack[1];
+            list_container = container.lastChild.previousSibling;
+            clear(list_container);
+            create_item_list(list_container, lookup_items(word, close_panel_func, ensure_id(container)));
+        };
+        if (!populate_list.__argnames__) Object.defineProperties(populate_list, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        function create_word_actions_panel(container, word, close_panel_func) {
+            current_data = [word, close_panel_func];
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none"})]));
+            populate_list(container);
+        };
+        if (!create_word_actions_panel.__argnames__) Object.defineProperties(create_word_actions_panel, {
+            __argnames__ : {value: ["container", "word", "close_panel_func"]}
+        });
+
+        function develop(container) {
+            container.appendChild(E.div());
+            create_word_actions_panel(container, "develop", function () {
+            });
+        };
+        if (!develop.__argnames__) Object.defineProperties(develop, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        ρσ_modules["read_book.word_actions"].current_data = current_data;
+        ρσ_modules["read_book.word_actions"].lookup = lookup;
+        ρσ_modules["read_book.word_actions"].toggle_custom_container = toggle_custom_container;
+        ρσ_modules["read_book.word_actions"].add = add;
+        ρσ_modules["read_book.word_actions"].add_custom = add_custom;
+        ρσ_modules["read_book.word_actions"].remove = remove;
+        ρσ_modules["read_book.word_actions"].remove_custom = remove_custom;
+        ρσ_modules["read_book.word_actions"].lookup_items = lookup_items;
+        ρσ_modules["read_book.word_actions"].populate_list = populate_list;
+        ρσ_modules["read_book.word_actions"].create_word_actions_panel = create_word_actions_panel;
+        ρσ_modules["read_book.word_actions"].develop = develop;
+    })();
+
+    (function(){
         var __name__ = "read_book.overlay";
         var MAIN_OVERLAY_TS_CLASS, MAIN_OVERLAY_ACTIONS_CLASS;
         var E = ρσ_modules.elementmaker.E;
@@ -19824,6 +20041,8 @@ return this.__repr__();
         var create_prefs_panel = ρσ_modules["read_book.prefs.main"].create_prefs_panel;
 
         var create_toc_panel = ρσ_modules["read_book.toc"].create_toc_panel;
+
+        var create_word_actions_panel = ρσ_modules["read_book.word_actions"].create_word_actions_panel;
 
         var get_device_uuid = ρσ_modules.session.get_device_uuid;
 
@@ -20263,6 +20482,57 @@ return this.__repr__();
         };
         Object.defineProperty(TOCOverlay.prototype, "__bases__", {value: []});
 
+        function WordActionsOverlay() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            WordActionsOverlay.prototype.__bind_methods__.call(this);
+            WordActionsOverlay.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(WordActionsOverlay.prototype, "__bind_methods__", {value: function () {
+            this.on_container_click = WordActionsOverlay.prototype.on_container_click.bind(this);
+            this.show = WordActionsOverlay.prototype.show.bind(this);
+        }});
+        WordActionsOverlay.prototype.__init__ = function __init__(word, overlay) {
+            var self = this;
+            self.word = word;
+            self.overlay = overlay;
+        };
+        if (!WordActionsOverlay.prototype.__init__.__argnames__) Object.defineProperties(WordActionsOverlay.prototype.__init__, {
+            __argnames__ : {value: ["word", "overlay"]}
+        });
+        WordActionsOverlay.__argnames__ = WordActionsOverlay.prototype.__init__.__argnames__;
+        WordActionsOverlay.__handles_kwarg_interpolation__ = WordActionsOverlay.prototype.__init__.__handles_kwarg_interpolation__;
+        WordActionsOverlay.prototype.on_container_click = function on_container_click(evt) {
+            var self = this;
+        };
+        if (!WordActionsOverlay.prototype.on_container_click.__argnames__) Object.defineProperties(WordActionsOverlay.prototype.on_container_click, {
+            __argnames__ : {value: ["evt"]}
+        });
+        WordActionsOverlay.prototype.show = function show(container) {
+            var self = this;
+            container.style.backgroundColor = get_color("window-background");
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Lookup: {}").format(self.word)), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
+                var ρσ_anonfunc = function (event) {
+                    [event.preventDefault(), event.stopPropagation(), self.overlay.hide_current_panel(event)];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]}
+                });
+                return ρσ_anonfunc;
+            })(), class_: "simple-link"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: space-between"})])));
+            container.appendChild(E.div());
+            create_word_actions_panel(container, self.word, self.overlay.hide);
+        };
+        if (!WordActionsOverlay.prototype.show.__argnames__) Object.defineProperties(WordActionsOverlay.prototype.show, {
+            __argnames__ : {value: ["container"]}
+        });
+        WordActionsOverlay.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        WordActionsOverlay.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(WordActionsOverlay.prototype, "__bases__", {value: []});
+
         function PrefsOverlay() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             PrefsOverlay.prototype.__bind_methods__.call(this);
@@ -20370,6 +20640,7 @@ return this.__repr__();
             this.show_search = Overlay.prototype.show_search.bind(this);
             this.show_prefs = Overlay.prototype.show_prefs.bind(this);
             this.show_font_size_chooser = Overlay.prototype.show_font_size_chooser.bind(this);
+            this.show_word_actions = Overlay.prototype.show_word_actions.bind(this);
         }});
         Object.defineProperties(Overlay.prototype,  {
             "container": {
@@ -20530,6 +20801,15 @@ return this.__repr__();
             self.panels.push(new FontSizeOverlay(self));
             self.show_current_panel();
         };
+        Overlay.prototype.show_word_actions = function show_word_actions(word) {
+            var self = this;
+            self.hide_current_panel();
+            self.panels.push(new WordActionsOverlay(word, self));
+            self.show_current_panel();
+        };
+        if (!Overlay.prototype.show_word_actions.__argnames__) Object.defineProperties(Overlay.prototype.show_word_actions, {
+            __argnames__ : {value: ["word"]}
+        });
         Overlay.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -20547,6 +20827,7 @@ return this.__repr__();
         ρσ_modules["read_book.overlay"].SyncBook = SyncBook;
         ρσ_modules["read_book.overlay"].MainOverlay = MainOverlay;
         ρσ_modules["read_book.overlay"].TOCOverlay = TOCOverlay;
+        ρσ_modules["read_book.overlay"].WordActionsOverlay = WordActionsOverlay;
         ρσ_modules["read_book.overlay"].PrefsOverlay = PrefsOverlay;
         ρσ_modules["read_book.overlay"].FontSizeOverlay = FontSizeOverlay;
         ρσ_modules["read_book.overlay"].Overlay = Overlay;
@@ -20752,7 +21033,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.touch";
-        var HOLD_THRESHOLD, TAP_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
+        var HOLD_THRESHOLD, TAP_THRESHOLD, TAP_LINK_THRESHOLD, PINCH_THRESHOLD, LONG_TAP_THRESHOLD, gesture_id, main_touch_handler, left_margin_handler, right_margin_handler;
         var get_read_ui = ρσ_modules["book_list.globals"].get_read_ui;
 
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
@@ -20763,6 +21044,7 @@ return this.__repr__();
         TAP_THRESHOLD = 7;
         TAP_LINK_THRESHOLD = 5;
         PINCH_THRESHOLD = 10;
+        LONG_TAP_THRESHOLD = 500;
         gesture_id = 0;
         function touch_id(touch) {
             return touch.identifier + "";
@@ -20824,6 +21106,7 @@ return this.__repr__();
                 ρσ_d["active"] = touch.active;
                 ρσ_d["is_held"] = touch.is_held;
                 ρσ_d["id"] = gesture_id;
+                ρσ_d["start_time"] = touch.ctime;
                 return ρσ_d;
             }).call(this);
             if (max(max_x_displacement, max_y_displacement) < TAP_THRESHOLD) {
@@ -21184,26 +21467,13 @@ return this.__repr__();
         BookTouchHandler.__handles_kwarg_interpolation__ = BookTouchHandler.prototype.__init__.__handles_kwarg_interpolation__;
         BookTouchHandler.prototype.handle_gesture = function handle_gesture(gesture) {
             var self = this;
-            var fake_click, elem;
             gesture.from_side_margin = self.for_side_margin;
             if (gesture.type === "tap") {
                 if (gesture.is_held) {
-                    if (!self.for_side_margin && !self.handled_tap_hold) {
+                    if (!self.for_side_margin && !self.handled_tap_hold && window.performance.now() - gesture.start_time >= LONG_TAP_THRESHOLD) {
                         self.handled_tap_hold = true;
-                        fake_click = new MouseEvent("click", (function(){
-                            var ρσ_d = Object.create(null);
-                            ρσ_d["clientX"] = gesture.viewport_x;
-                            ρσ_d["clientY"] = gesture.viewport_y;
-                            ρσ_d["buttons"] = 1;
-                            ρσ_d["view"] = window.self;
-                            ρσ_d["bubbles"] = true;
-                            ρσ_d["cancelable"] = true;
-                            return ρσ_d;
-                        }).call(this));
-                        elem = document.elementFromPoint(fake_click.clientX, fake_click.clientY);
-                        if (elem) {
-                            elem.dispatchEvent(fake_click);
-                        }
+                        gesture.type = "long-tap";
+                        get_boss().handle_gesture(gesture);
                     }
                     return;
                 }
@@ -21293,6 +21563,7 @@ return this.__repr__();
         ρσ_modules["read_book.touch"].TAP_THRESHOLD = TAP_THRESHOLD;
         ρσ_modules["read_book.touch"].TAP_LINK_THRESHOLD = TAP_LINK_THRESHOLD;
         ρσ_modules["read_book.touch"].PINCH_THRESHOLD = PINCH_THRESHOLD;
+        ρσ_modules["read_book.touch"].LONG_TAP_THRESHOLD = LONG_TAP_THRESHOLD;
         ρσ_modules["read_book.touch"].gesture_id = gesture_id;
         ρσ_modules["read_book.touch"].main_touch_handler = main_touch_handler;
         ρσ_modules["read_book.touch"].left_margin_handler = left_margin_handler;
@@ -21455,6 +21726,7 @@ return this.__repr__();
             View.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(View.prototype, "__bind_methods__", {value: function () {
+            this.on_lookup_word = View.prototype.on_lookup_word.bind(this);
             this.left_margin_clicked = View.prototype.left_margin_clicked.bind(this);
             this.right_margin_clicked = View.prototype.right_margin_clicked.bind(this);
             this.top_margin_clicked = View.prototype.top_margin_clicked.bind(this);
@@ -21531,6 +21803,7 @@ return this.__repr__();
                 ρσ_d["error"] = self.on_iframe_error;
                 ρσ_d["next_spine_item"] = self.on_next_spine_item;
                 ρσ_d["next_section"] = self.on_next_section;
+                ρσ_d["lookup_word"] = self.on_lookup_word;
                 ρσ_d["goto_doc_boundary"] = (function() {
                     var ρσ_anonfunc = function (data) {
                         self.goto_doc_boundary(data.start);
@@ -21565,6 +21838,13 @@ return this.__repr__();
         });
         View.__argnames__ = View.prototype.__init__.__argnames__;
         View.__handles_kwarg_interpolation__ = View.prototype.__init__.__handles_kwarg_interpolation__;
+        View.prototype.on_lookup_word = function on_lookup_word(data) {
+            var self = this;
+            self.overlay.show_word_actions(data.word);
+        };
+        if (!View.prototype.on_lookup_word.__argnames__) Object.defineProperties(View.prototype.on_lookup_word, {
+            __argnames__ : {value: ["data"]}
+        });
         View.prototype.left_margin_clicked = function left_margin_clicked(event) {
             var self = this;
             if (event.button === 0) {
@@ -24680,8 +24960,87 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "select";
+        function range_from_point(x, y) {
+            var r, p;
+            r = null;
+            if (document.caretPositionFromPoint) {
+                p = document.caretPositionFromPoint(x, y);
+                if (p) {
+                    r = document.createRange();
+                    r.setStart(p.offsetNode, p.offset);
+                    r.collapse(true);
+                }
+            } else if (document.caretRangeFromPoint) {
+                r = document.caretRangeFromPoint(x, y);
+            }
+            return r;
+        };
+        if (!range_from_point.__argnames__) Object.defineProperties(range_from_point, {
+            __argnames__ : {value: ["x", "y"]}
+        });
+
+        function word_boundary_regex() {
+            var ans;
+            ans = word_boundary_regex.ans;
+            if (ans === undefined) {
+                ans = word_boundary_regex.ans = /[\s!-#%-\x2A,-\/:;\x3F@\x5B-\x5D_\x7B}\u00A1\u00A7\u00AB\u00B6\u00B7\u00BB\u00BF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E3B\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/;
+            }
+            return ans;
+        };
+
+        function expand_offset_to_word(string, offset) {
+            var start, pat, ρσ_unpack, end, sz;
+            start = offset;
+            pat = word_boundary_regex();
+            while (start >= 1 && !pat.test(string.charAt(start - 1))) {
+                start -= 1;
+            }
+            ρσ_unpack = [offset, string.length];
+            end = ρσ_unpack[0];
+            sz = ρσ_unpack[1];
+            while (end < sz && !pat.test(string.charAt(end))) {
+                end += 1;
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["word"] = string.slice(start, end);
+                ρσ_d["start"] = start;
+                ρσ_d["end"] = end;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!expand_offset_to_word.__argnames__) Object.defineProperties(expand_offset_to_word, {
+            __argnames__ : {value: ["string", "offset"]}
+        });
+
+        function word_at_point(x, y) {
+            var r, word_info;
+            r = range_from_point(x, y);
+            if (r && r.startContainer.nodeType === 3) {
+                word_info = expand_offset_to_word(r.startContainer.data, r.startOffset);
+                if (word_info.word) {
+                    r.setStart(r.startContainer, word_info.start);
+                    r.setEnd(r.startContainer, word_info.end);
+                    return r;
+                }
+            }
+        };
+        if (!word_at_point.__argnames__) Object.defineProperties(word_at_point, {
+            __argnames__ : {value: ["x", "y"]}
+        });
+
+        ρσ_modules.select.range_from_point = range_from_point;
+        ρσ_modules.select.word_boundary_regex = word_boundary_regex;
+        ρσ_modules.select.expand_offset_to_word = expand_offset_to_word;
+        ρσ_modules.select.word_at_point = word_at_point;
+    })();
+
+    (function(){
         var __name__ = "read_book.flow_mode";
         var smooth_y_data, flick_animator, anchor_funcs;
+        var word_at_point = ρσ_modules.select.word_at_point;
+
         var set_css = ρσ_modules.dom.set_css;
 
         var get_key = ρσ_modules.keycodes.get_key;
@@ -24953,7 +25312,7 @@ return this.__repr__();
 
         flick_animator = new FlickAnimator;
         function handle_gesture(gesture) {
-            var delta;
+            var delta, r, s;
             flick_animator.stop();
             if (gesture.type === "swipe") {
                 if (gesture.points.length > 1 && !gesture.is_held) {
@@ -24971,6 +25330,14 @@ return this.__repr__();
                 scroll_by_page(true);
             } else if (gesture.type === "next-page") {
                 scroll_by_page(false);
+            } else if (gesture.type === "long-tap") {
+                r = word_at_point(gesture.viewport_x, gesture.viewport_y);
+                if (r) {
+                    s = document.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                    (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["lookup_word"].concat([ρσ_desugar_kwargs({word: str(r)})])));
+                }
             }
         };
         if (!handle_gesture.__argnames__) Object.defineProperties(handle_gesture, {
@@ -25646,6 +26013,8 @@ return this.__repr__();
 
         var E = ρσ_modules.elementmaker.E;
 
+        var word_at_point = ρσ_modules.select.word_at_point;
+
         var set_css = ρσ_modules.dom.set_css;
 
         var get_key = ρσ_modules.keycodes.get_key;
@@ -26291,6 +26660,7 @@ return this.__repr__();
         });
 
         function handle_gesture(gesture) {
+            var r, s;
             if (gesture.type === "swipe") {
                 if (gesture.axis === "vertical") {
                     if (!gesture.active) {
@@ -26305,6 +26675,14 @@ return this.__repr__();
                 scroll_by_page(true, false);
             } else if (gesture.type === "next-page") {
                 scroll_by_page(false, false);
+            } else if (gesture.type === "long-tap") {
+                r = word_at_point(gesture.viewport_x, gesture.viewport_y);
+                if (r) {
+                    s = document.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                    (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["lookup_word"].concat([ρσ_desugar_kwargs({word: str(r)})])));
+                }
             }
         };
         if (!handle_gesture.__argnames__) Object.defineProperties(handle_gesture, {
@@ -26465,7 +26843,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.17.0";
+        CALIBRE_VERSION = "3.18.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
