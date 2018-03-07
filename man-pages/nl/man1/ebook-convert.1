@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "januari 26, 2018" "3.16.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "februari 23, 2018" "3.18.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -206,7 +206,7 @@ Het gespecificeerde lettertype wordt ingebed in het boek. Dit bepaalt het \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Standaard gebruikt calibre het steno\-formaat voor verschillende CSS\-eigenschappen zoals margins, padding, border, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Houd er rekening mee dat CSS altijd wordt uitgebreid bij het genereren van EPUB\-bestanden met het uitvoerprofiel ingesteld op een van de Nook\-profielen, aangezien de Nook geen steno\-CSS kan verwerken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,22 +251,22 @@ Sommige slecht\-ontworpen documenten gebruiken tabellen om de lay\-out van tekst
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Zet de ondermarge in punten. Standaard is 5.0. Bij een negatieve waarde wordt er geen marge ingesteld (de marge\-instelling in het originele document blijft behouden). Opmerking: pagina\-georiënteerde indelingen zoals PDF en DOCX hebben hun eigen marge\-instellingen die voorrang hebben.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Zet de linkermarge in punten. Standaard is 5.0. Bij een negatieve waarde wordt er geen marge ingesteld (de marge\-instelling in het originele document blijft behouden). Opmerking: pagina\-georiënteerde indelingen zoals PDF en DOCX hebben hun eigen marge\-instellingen die voorrang hebben.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Zet de rechtermarge in punten. Standaard is 5.0. Bij een negatieve waarde wordt er geen marge ingesteld (de marge\-instelling in het originele document blijft behouden). Opmerking: pagina\-georiënteerde indelingen zoals PDF en DOCX hebben hun eigen marge\-instellingen die voorrang hebben.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Zet de bovenmarge in punten. Standaard is 5.0. Bij een negatieve waarde wordt er geen marge ingesteld (de marge\-instelling in het originele document blijft behouden). Opmerking: pagina\-georiënteerde indelingen zoals PDF en DOCX hebben hun eigen marge\-instellingen die voorrang hebben.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -405,7 +405,7 @@ Stel de auto\-detectie van de documentstructuur in.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Een XPath\-expressie om hoofdstuktitels te detecteren. De standaard is om  <h1>te overwegen of <h2>tags die de woorden \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP  als hoofdstuktitels bevatten, evenals tags met class = \fB"\fPchapter\fB"\fP\&. De gebruikte uitdrukking moet resulteren in een lijst met elementen. Gebruik de uitdrukking \fB"\fP/\fB"\fP om hoofdstukdetectie uit te schakelen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -440,7 +440,7 @@ Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het  
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-book leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de Calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .SH INHOUDSOPGAVE
 .sp

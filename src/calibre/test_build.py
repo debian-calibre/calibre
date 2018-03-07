@@ -12,7 +12,7 @@ __docformat__ = 'restructuredtext en'
 Test a binary calibre build to ensure that all needed binary images/libraries have loaded.
 '''
 
-import os, ctypes, sys, unittest
+import os, ctypes, sys, unittest, time
 from calibre.constants import plugins, iswindows, islinux, isosx
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -120,6 +120,7 @@ class BuildTest(unittest.TestCase):
     @unittest.skipUnless(iswindows, 'winutil is windows only')
     def test_winutil(self):
         from calibre.constants import plugins
+        from calibre import strftime
         winutil = plugins['winutil'][0]
 
         def au(x, name):
@@ -135,6 +136,16 @@ class BuildTest(unittest.TestCase):
             au(v, k)
         for k in os.environ.keys():
             au(winutil.getenv(unicode(k)), 'getenv-' + k)
+        os.environ['XXXTEST'] = 'YYY'
+        self.assertEqual(winutil.getenv(u'XXXTEST'), u'YYY')
+        del os.environ['XXXTEST']
+        self.assertIsNone(winutil.getenv(u'XXXTEST'))
+        t = time.localtime()
+        fmt = u'%Y%a%b%e%H%M'
+        for fmt in (fmt, fmt.encode('ascii')):
+            x = strftime(fmt, t)
+            au(x, 'strftime')
+            self.assertEqual(unicode(time.strftime(fmt.replace('%e', '%#d'), t)), x)
 
     def test_sqlite(self):
         import sqlite3

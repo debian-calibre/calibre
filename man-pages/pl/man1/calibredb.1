@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "stycznia 26, 2018" "3.16.0" "calibre"
+.TH "CALIBREDB" "1" "lutego 23, 2018" "3.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -35,7 +35,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibredb polecenie [opcje] [parametry]
+calibredb polecenie [opcje] [argumenty]
 .ft P
 .fi
 .UNINDENT
@@ -155,7 +155,7 @@ Username for connecting to a calibre Content server
 .INDENT 0.0
 .TP
 .B \-\-version
-pokaż numer wersji programu i zakończ
+Wyświetla wersję programu
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -466,7 +466,7 @@ Oddzielana przecinkami lista formatów do zapisania dla każdej książki. Domy�
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Postęp
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -510,9 +510,9 @@ calibredb catalog /ścieżka/do/celu.(csv|epub|mobi|xml...) [opcje]
 .UNINDENT
 .UNINDENT
 .sp
-Eksportuje katalog w formacie wskazanym w rozszerzeniu ścieżka/do/celu .
+Eksportuje katalog w formacie wskazanym w rozszerzeniu ścieżka/do/celu.
 Opcje sterują sposobem, w jaki wyświetlane są wpisy generowanego katalogu wynikowego.
-Pamiętaj że różne formaty katalogów obsługują inne zestawy opcji.
+Pamiętaj, że różne formaty katalogów obsługują inne zestawy opcji.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -671,7 +671,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-Słownik opcji, określających jak będą interpretowane dane w tej kolumnie. Są one w formacie JSON. Do wyświetlenia kolumn można użyć \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Zmienna display może przyjąć wiele opcji. Dla kolejnych typów kolumn: złożone: composite_template, composite_sort, make_category,contains_html, use_decorations daty i czasu: ate_format wyliczenia: enum_values, enum_colors, use_decorations liczbowe: number_format tekstowe:  is_names, use_decorations  Najlepszym sposobem na znalezienie właściwej kombinacji jest stworzenie własnej kolumny odpowiedniego typu w interfejsie użytkownika, a potem zajrzenie do pliku OPF książki (przy założeniu, że plik OPF został uaktualniony po stworzeniu kolumny). Tam znajduje się JSON dla nowej kolumny.
+Słownik opcji, określających jak będą interpretowane dane w tej kolumnie. Są one w formacie JSON. Do wyświetlenia kolumn można użyć \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Zmienna display może przyjąć wiele opcji. Dla kolejnych typów kolumn: złożone: composite_template, composite_sort, make_category, contains_html, use_decorations daty i czasu: date_format wyliczenia: enum_values, enum_colors, use_decorations liczbowe: number_format tekstowe: is_names, use_decorations  Najlepszym sposobem na znalezienie właściwej kombinacji jest stworzenie własnej kolumny odpowiedniego typu w interfejsie użytkownika, a potem zajrzenie do pliku OPF książki (przy założeniu, że plik OPF został uaktualniony po stworzeniu kolumny). Tam znajduje się JSON dla nowej kolumny.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -684,13 +684,13 @@ Ta kolumna przechowuje dane etykietopodobne (np. wielokrotne wartości oddzielon
 .sp
 .nf
 .ft C
-calibredb własne_kolumny [opcja]
+calibredb custom_columns [opcje]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Wyświetla dostępne kolumny. Pokazuje nazwy kolumn i ich id
+Wyświetla listę dostępnych, własnych kolumn. Pokazuje ich nazwę oraz id.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -858,11 +858,11 @@ calibredb backup_metadata [opcje]
 .UNINDENT
 .sp
 Zapisz metadane z bazy danych do plików OPF w folderach
-poszczególnych książek. Zwykle jest to robione automatycznie
-ale można w ten sposób wymusić odświeżenie plików OPF
-używając opcji \-\-all
+poszczególnych książek. Zwykle jest to robione automatycznie,
+ale można w ten sposób wymusić odświeżenie plików OPF,
+używając opcji \-\-all.
 .sp
-Zwykle nie ma potrzeby tego robić \- pliki OPF są aktualizowane
+Zwykle nie ma potrzeby tego robić – pliki OPF są aktualizowane
 automatycznie przy każdej zmianie metadanych.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"

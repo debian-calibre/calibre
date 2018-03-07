@@ -4,14 +4,12 @@ Subject: Don't load external URLs for privacy
 
 Spotted by lintian.
 ---
- setup/plugins_mirror.py | 6 +++---
+ setup/plugins_mirror.py |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/setup/plugins_mirror.py b/setup/plugins_mirror.py
-index 2fe7d5c..0dc9737 100644
---- a/setup/plugins_mirror.py
-+++ b/setup/plugins_mirror.py
-@@ -437,7 +437,7 @@ def create_index(index, raw_stats):
+--- calibre-debian.git.orig/setup/plugins_mirror.py
++++ calibre-debian.git/setup/plugins_mirror.py
+@@ -465,7 +465,7 @@
  <!DOCTYPE html>
  <html>
  <head><meta charset="utf-8"><title>Index of calibre plugins</title>
@@ -20,7 +18,7 @@ index 2fe7d5c..0dc9737 100644
  <style type="text/css">
  body { background-color: #eee; }
  a { text-decoration: none }
-@@ -476,7 +476,7 @@ h1 { text-align: center }
+@@ -504,7 +504,7 @@
  <!DOCTYPE html>
  <html>
  <head><meta charset="utf-8"><title>Stats for calibre plugins</title>
@@ -29,7 +27,7 @@ index 2fe7d5c..0dc9737 100644
  <style type="text/css">
  body { background-color: #eee; }
  h1 img, h3 img { vertical-align: middle; margin-right: 0.5em; }
-@@ -562,7 +562,7 @@ def check_for_qt5_incompatibility():
+@@ -590,7 +590,7 @@
  <!DOCTYPE html>
  <html>
  <head><meta charset="utf-8"><title>Stats for porting of calibre plugins to Qt 5</title>

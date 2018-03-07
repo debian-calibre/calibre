@@ -5,14 +5,14 @@
 # Translators:
 # Zoriana Zaiats, 2014
 # Surmay Danilo <den-surmay@mail.ru>, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2017
+# Yuri Chornoivan <yurchor@ukr.net>, 2017-2018
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 09:23+0530\n"
-"PO-Revision-Date: 2017-09-20 05:42+0000\n"
+"POT-Creation-Date: 2018-01-26 09:29+0530\n"
+"PO-Revision-Date: 2018-01-26 07:12+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -153,14 +153,23 @@ msgstr "Якщо використано нестандартні налашту�
 
 #: ../../home/kovid/work/calibre/manual/server.rst:97
 msgid ""
+"If you have setup a username and password, first try it without that to see "
+"if it is causing issues. Some e-ink devices have browsers that do not handle"
+" authentication. You can sometimes workaround this by including the username"
+" and password in the URL, for example: "
+"``http://username:password@192.168.1.2:8080``."
+msgstr "Якщо у вашій конфігурації для доступу потрібно вказати ім'я користувача і пароль, спочатку спробуйте з'єднатися без них, щоб переконатися, що саме ім'я і пароль спричиняють проблеми. На деяких пристроях з електронним чорнилом у програмах для перегляду інтернету просто не передбачено можливість обробки розпізнавання за іменем і паролем. Іноді, можна скористатися обхідним маневром, включивши ім'я і пароль до самої адреси. Приклад: ``http://користувач:пароль@192.168.1.2:8080``."
+
+#: ../../home/kovid/work/calibre/manual/server.rst:103
+msgid ""
 "If you are stuck, you can always ask for help in the `calibre user forums`_."
 msgstr "Якщо у вас нічого не виходить, ви завжди можете попросити про допомогу на `форумі користувачів calibre`_."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:101
+#: ../../home/kovid/work/calibre/manual/server.rst:107
 msgid "Accessing the server from anywhere on the internet"
 msgstr "Доступ до сервера з довільного комп’ютера у інтернеті"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:105
+#: ../../home/kovid/work/calibre/manual/server.rst:111
 msgid ""
 "Before doing this you should turn on username/password protection in the "
 "server, otherwise anyone in the world will be able to access your books. Go "
@@ -169,34 +178,34 @@ msgid ""
 "server`."
 msgstr "Перш ніж це робити, вам слід увімкнути захист розпізнаванням користувача з паролем на сервері. Якщо ви цього не зробите, доступ до ваших книг отримає будь-хто. Відкрийте сторінку :guilabel:`Налаштування -> Спільний доступ -> Обмін мережею` і позначте пункт :guilabel:`Вимагати введення імені користувача і пароля для доступу до сервера даних`."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:111
+#: ../../home/kovid/work/calibre/manual/server.rst:117
 msgid ""
 "While the particular details on setting up internet access vary depending on"
 " the network configuration and type of computer you are using, the basic "
 "schema is as follows."
 msgstr "Хоча окремі речі у налаштовуванні доступу до інтернету залежать від налаштувань мережі і типу використаного комп’ютера, загальну схему можна знайти нижче."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:115
+#: ../../home/kovid/work/calibre/manual/server.rst:121
 msgid ""
 "Find out the external IP address of the computer you are going to run the "
 "server on. You can do that by visiting the site `What is my IP address "
 "<https://www.whatismyip.com/>`_ in a browser running on the computer."
 msgstr "Визначте зовнішню IP-адресу комп’ютера, на якому ви збираєтеся запустити сервер. Зробити це можна за допомогою сайта `What is my IP address <https://www.whatismyip.com/>`_, відкривши його сторінку у програмі для перегляду інтернету на відповідному комп’ютері."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:119
+#: ../../home/kovid/work/calibre/manual/server.rst:125
 msgid ""
 "If the computer is behind a router, enable port forwarding on the router to "
 "forward the port ``8080`` (or whatever port you choose to run the calibre "
 "Content server on) to the computer."
 msgstr "Якщо комп’ютер працює з інтернетом за допомогою маршрутизатора, увімкніть на маршрутизаторі переспрямовування портів, щоб переспрямувати порт ``8080`` (або інший вибраний вами порт для запуску сервера даних calibre) на комп’ютер."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:123
+#: ../../home/kovid/work/calibre/manual/server.rst:129
 msgid ""
 "Make sure the calibre server is allowed through any firewalls/anti-virus "
 "programs on your computer."
 msgstr "Переконайтеся, що доступ до сервера calibre уможливлено у налаштуваннях брандмауерів та антивірусних програм, які працюють на вашому комп’ютері."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:126
+#: ../../home/kovid/work/calibre/manual/server.rst:132
 msgid ""
 "Now you should be able to access the server on any internet-connected device"
 " using the IP address you found in the first step. For example, if the IP "
@@ -205,14 +214,14 @@ msgid ""
 "``http://123.123.123.123:8080``."
 msgstr "Тепер ви повинні мати змогу отримати доступ до сервера з будь-якого пристрою, з’єднаного з інтернетом, вказавши IP-адресу, яку ви визначили на першому кроці. Наприклад, якщо визначена вами IP-адреса — ``123.123.123.123``, а порт, яким ви користуєтеся на сервері calibre — ``8080``, адресою, яку слід ввести на пристрої, буде така: ``http://123.123.123.123:8080``."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:132
+#: ../../home/kovid/work/calibre/manual/server.rst:138
 msgid ""
 "Optionally, use a service like `no-ip <https://www.noip.com/free>`_ to setup"
 " an easy to remember address to use instead of the IP address you found in "
 "the first step."
 msgstr "Ви також можете скористатися службою, подібною до `no-ip <https://www.noip.com/free>`_, для визначення простої для запам’ятовування адреси замість цифрової IP-адреси, яку ви визначити на першому кроці."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:137
+#: ../../home/kovid/work/calibre/manual/server.rst:143
 msgid ""
 "For maximum security, you should also enable HTTPS on the content server. "
 "You can either do so directly in the server by providing the path to the "
@@ -221,11 +230,11 @@ msgid ""
 "existing HTTPS setup."
 msgstr "Щоб забезпечити максимальний захист, вам слід також увімкнути на сервері даних HTTPS. Зробити це можна або на самому сервері, вказавши шлях до сертифіката HTTPS, яким слід користуватися, у параметрах додаткового налаштовування для сервера, або за допомогою зворотного проксі, налаштовування якого описано нижче, якщо ви хочете скористатися наявним налаштуванням HTTPS."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:145
+#: ../../home/kovid/work/calibre/manual/server.rst:151
 msgid "The server interface"
 msgstr "Інтерфейс сервера"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:147
+#: ../../home/kovid/work/calibre/manual/server.rst:153
 msgid ""
 "The server interface is a simplified version of the main calibre interface, "
 "optimised for use with touch screens. The home screen shows you books you "
@@ -234,11 +243,11 @@ msgid ""
 "libraries, not just a single one, as before."
 msgstr "Інтерфейс сервера є спрощеною версією основного інтерфейсу calibre, яку оптимізовано для сенсорних екранів. На домашній сторінці вам буде показано книги, які ви читаєте, а також запропоновано вибрати бібліотеку calibre, книги у якій ви хочете переглянути. Сервер у calibre 3 надає вам доступу до усіх ваших бібліотек, а не лише однієї, як це було у попередніх версіях."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:154
+#: ../../home/kovid/work/calibre/manual/server.rst:160
 msgid "The book list"
 msgstr "Список книг"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:156
+#: ../../home/kovid/work/calibre/manual/server.rst:162
 msgid ""
 "The server book list is a simple grid of covers. Tap on a cover to see the "
 "detailed metadata for a book, or to read the book. If you prefer a more "
@@ -246,7 +255,7 @@ msgid ""
 "vertical dots in the top right corner."
 msgstr "Список книг на сторінці сервера це проста таблиця із зображеннями обкладинок. Натисніть обкладинку, щоб переглянути докладні метадані щодо книги або щоб розпочати читання книги. Якщо вам потрібен список із докладнішими даними, ви можете змінити типовий режим перегляду, натиснувши кнопку із трьома вертикальними крапками, яку розташовано у правому верхньому куті екрана."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:161
+#: ../../home/kovid/work/calibre/manual/server.rst:167
 msgid ""
 "Sorting and searching of the book list should be familiar to calibre users. "
 "They can be accessed by clicking their icons in the top right area. They "
@@ -256,18 +265,18 @@ msgid ""
 "program."
 msgstr "Прийоми упорядковування та пошуку книг мають бути знайомими користувачам calibre. Доступ до відповідних можливостей можна здійснювати за допомогою натискання піктограм у верхній правій частині екрана. Обидві можливості працюють абсолютно так само, як і у основній програмі calibre. На сторінці пошуку ви навіть можете будувати запити, натискаючи пункти авторів, міток тощо, зовсім так само, як ви це робите на панелі перегляду міток у вікні основної програми."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:167
+#: ../../home/kovid/work/calibre/manual/server.rst:173
 msgid ""
 "A much loved feature of the main program, :guilabel:`Virtual libraries` is "
 "present in the server interface as well. Click the three vertical dots in "
 "the top right corner to choose a virtual library."
 msgstr "Одна із найулюбленіших можливостей основної програми, :guilabel:`Віртуальні бібліотеки`, також є частиною інтерфейсу сервера. Натисніть кнопку із трьома вертикальними крапками у верхній правій частині екрана, щоб вибрати віртуальну бібліотеку."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:172
+#: ../../home/kovid/work/calibre/manual/server.rst:178
 msgid "The book reader"
 msgstr "Засіб для читання книг"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:174
+#: ../../home/kovid/work/calibre/manual/server.rst:180
 msgid ""
 "You can read any book in your calibre library by simply tapping on it and "
 "then tapping the :guilabel:`Read book` button. The books reader is very "
@@ -276,7 +285,7 @@ msgid ""
 "detailed controls and viewer preferences."
 msgstr "Ви можете почати читати будь-яку книгу із вашої бібліотеки calibre простим натисканням її пункту з наступним натисканням кнопки :guilabel:`Читати книгу`. Працювати із засобом читання книг дуже просто. Гортати сторінки можна як натисканням, так і рухом пальця. Рухами пальцем вгору-вниз можна переходити між розділами книги. Натисканням у верхній чверті екрана ви можете отримати доступу до засобів керування програмою та параметрів перегляду."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:180
+#: ../../home/kovid/work/calibre/manual/server.rst:186
 msgid ""
 "If you leave the Content server running, you can even open the same book on "
 "multiple devices and it will remember your last read position. If it does "
@@ -284,7 +293,7 @@ msgid ""
 ":guilabel:`Sync`."
 msgstr "Якщо сервер даних постійно працюватиме, ви можете навіть відкривати книгу на різних пристроях, зберігаючи при цьому місце, на якому ви закінчили читання попереднього разу. Якщо синхронізація місця читання не відбувається, ви можете виконати її у примусовому режимі. Для цього натисніть на екран у верхній чверті і виберіть у меню пункт :guilabel:`Синхронізувати`."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:185
+#: ../../home/kovid/work/calibre/manual/server.rst:191
 msgid ""
 "On initial release, the book reader is fully functional but is missing some "
 "more advanced features from the main calibre viewer, such as popup "
@@ -293,11 +302,11 @@ msgid ""
 "main viewer, once it matures."
 msgstr "У початковому випуску засіб для читання книг є повністю функціональним, але у ньому ще не вистачає деяких додаткових можливостей основного засобу для читання книг у calibre, зокрема контекстних нотаток, закладок та анотацій. Ці можливості буде поступово додано. Фактично, засіб для читання у програмі для перегляду інтернету створено так, щоб він із часом замінив поточну програму для читання."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:192
+#: ../../home/kovid/work/calibre/manual/server.rst:198
 msgid "Browser support"
 msgstr "Підтримка з боку програм для перегляду інтернету"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:194
+#: ../../home/kovid/work/calibre/manual/server.rst:200
 msgid ""
 "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 "
 "features. As such it requires an up-to-date browser to use. It has been "
@@ -307,7 +316,7 @@ msgid ""
 "implementing a few missing standards)."
 msgstr "У новому сервері calibre широко використано додаткові можливості HTML 5 і CSS 3. Через це, для його роботи потрібна сучасна програма для перегляду інтернету. Тестування виконувалося на Android Chrome та iOS Safari, а також на Chrome і Firefox на комп’ютері. Відомо, що програма не працює з Internet Explorer та Microsoft Edge (сподіваємося, Edge можна буде користуватися, коли Microsoft реалізує декілька стандартів, які ще не працюють у програмі)."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:201
+#: ../../home/kovid/work/calibre/manual/server.rst:207
 msgid ""
 "The server is careful to use functionality that has either been already "
 "standardised or is on the standards track. As such if it does not currently "
@@ -315,14 +324,14 @@ msgid ""
 "caught up."
 msgstr "У сервері використовуються лише ті можливості, які вже стандартизовано, або ті, які буде стандартизовано найближчим часом. Тому, якщо сервер не працює із вашою улюбленою програмою для перегляду інтернету, він запрацює у якійсь найближчій версії вашої програми."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:206
+#: ../../home/kovid/work/calibre/manual/server.rst:212
 msgid ""
 "If you are using a particularly old or limited browser or you don't like to "
 "run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` "
 "to the the server address."
 msgstr "Якщо ви користуєтеся застарілою програмою для перегляду інтернету, програмою із обмеженими можливостями або не хочете користуватися JavaScript, ви можете скористатися *мобільним* режимом перегляду, просто додавши ``/mobile`` до адреси сервера."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:211
+#: ../../home/kovid/work/calibre/manual/server.rst:217
 msgid ""
 "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
 "Safari are all actually the same browser under the hood. The new server "
@@ -330,11 +339,11 @@ msgid ""
 "tested with Chrome version 58 and newer."
 msgstr "У iOS Apple надає змогу використовувати лише один рушій роботи браузера. Отже, Firefox, Chrome і Safari насправді є одним і тим самим браузером. Для роботи нового інтерфейсу сервера потрібна iOS 10.3.2 або новіша версія. На Android сервер працює з Chrome версії 58 або новішої."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:217
+#: ../../home/kovid/work/calibre/manual/server.rst:223
 msgid "Managing user accounts from the command-line only"
 msgstr "Керування обліковими записами лише з командного рядка"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:219
+#: ../../home/kovid/work/calibre/manual/server.rst:225
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -343,28 +352,28 @@ msgid ""
 "line."
 msgstr "У програмі calibre є чудовий розділ у вікні :guilabel:`Налаштування`, за допомогою якого ви можете керувати обліковими записами для сервера. Втім, якщо ви хочете користуватися лише сервером і не маєте змоги запустити основну програму calibre на тому самому комп’ютері або обліковому записі, ви можете керувати записами користувачів за допомогою лише інтерфейсу командного рядка."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:224
+#: ../../home/kovid/work/calibre/manual/server.rst:230
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the directory ``/srv/calibre``, then you create it by running::"
 msgstr "Щоб перейти до режиму керування записами користувачів, скористайтеся параметром ``--manage-users`` під час запуску окремої програми ``calibre-server``. Припустімо, вам потрібно зберегти базу даних користувачів до каталогу ``/srv/calibre``. Створіть її за допомогою такої команди::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:231
+#: ../../home/kovid/work/calibre/manual/server.rst:237
 msgid ""
 "Just follow the prompts to create user accounts, set their permission, etc. "
 "Once you are done, you can run the server as::"
 msgstr "Виконайте настанови щодо створення облікових записів користувачів, встановлення паролів тощо. Виконавши відповідні дії, запустіть сервер такою командою::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:236
+#: ../../home/kovid/work/calibre/manual/server.rst:242
 msgid "It will use the user accounts you created in the previous step."
 msgstr "На запущеному сервері використовуватимуться облікові записи користувачів, створені вами на попередньому кроці."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:240
+#: ../../home/kovid/work/calibre/manual/server.rst:246
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Інтегрування сервера даних calibre в інші сервери"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:242
+#: ../../home/kovid/work/calibre/manual/server.rst:248
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -373,7 +382,7 @@ msgid ""
 "server."
 msgstr "Тут описано спосіб інтеграції сервера даних calibre до іншого сервера. Найпоширенішою причиною для такої інтеграції є використання SSL або обслуговування бібліотеки calibre як частини більшого сайта. Основною методикою є запуск сервера calibre і налаштовування на основному сервері зворотного проксі-сервера до сервера даних."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:247
+#: ../../home/kovid/work/calibre/manual/server.rst:253
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -382,36 +391,36 @@ msgid ""
 "with your main server."
 msgstr "Зворотною називається схема проксі-сервера, коли ваш звичайний сервер приймає вхідні запити і передає їх серверу calibre. Далі він читає відповідь від сервера calibre і переспрямовує її клієнту. Це означає, що ви можете просто запустити сервер calibre як звичайно, без спроб тісно інтегрувати його зі вашим основним сервером."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:254
+#: ../../home/kovid/work/calibre/manual/server.rst:260
 msgid "Using a full virtual host"
 msgstr "Використання повного віртуального вузла"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:256
+#: ../../home/kovid/work/calibre/manual/server.rst:262
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "Найпростішою є конфігурація із використанням повного віртуального вузла для роботи сервера calibre. У цьому випадку сервер calibre запускається так::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:261
+#: ../../home/kovid/work/calibre/manual/server.rst:267
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Далі, слід налаштувати віртуальний вузол на вашому основному сервері. Приклад для nginx::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:272
+#: ../../home/kovid/work/calibre/manual/server.rst:278
 msgid "Or, for Apache::"
 msgstr "Або для Apache::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:287
+#: ../../home/kovid/work/calibre/manual/server.rst:293
 msgid "Using a URL prefix"
 msgstr "Використання префікса адреси"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:289
+#: ../../home/kovid/work/calibre/manual/server.rst:295
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Якщо ви не хочете використовувати окремий віртуальний вузол для calibre, ви можете налаштувати систему з використанням префікса адреси. Запустіть сервер calibre так::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:294
+#: ../../home/kovid/work/calibre/manual/server.rst:300
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -419,17 +428,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr "Ключовим параметром тут є ``--url-prefix /calibre``. Цей параметр наказує серверу даних обслуговувати усі адреси із префіксом calibre. Щоб побачити як це праціює, відкрийте сторінку з адресою ``http://localhost:8080/calibre`` у вашій програмі для перегляду інтернету. Ви маєте побачити звичайний сайт сервера даних, але тепер він працюватиме у теці «/calibre»."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:296
+#: ../../home/kovid/work/calibre/manual/server.rst:302
 msgid "With nginx, the required configuration is::"
 msgstr "Для nginx потрібні такі налаштування::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:309
+#: ../../home/kovid/work/calibre/manual/server.rst:315
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr "Для Apache спочатку увімкніть модулі проксі в Apache додаванням таких рядків до :file:`httpd.conf`::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:314
+#: ../../home/kovid/work/calibre/manual/server.rst:320
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -437,7 +446,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr "Точна методика вмикання модулів проксі залежить від встановленого варіанта Apache. Щойно модулі проксі буде увімкнено, додайте такі правила до файла :file\"`httpd.conf` (або якщо ви використовуєте віртуальні вузли, до файла налаштувань віртуального вузла)::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:321
+#: ../../home/kovid/work/calibre/manual/server.rst:327
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -446,7 +455,7 @@ msgid ""
 "transparently."
 msgstr "Ось і усе, тепер ви можете отримувати доступ до сервера даних calibre за префіксом «/calibre» на вашому основному сервері. Вказані вище правила передають усі запити до «/calibre» на сервер calibre, який запущено на порту 8080 і, завдяки вказаному параметру «--url-prefix», сервер calibre прозоро їх обробляє."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:326
+#: ../../home/kovid/work/calibre/manual/server.rst:332
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -454,7 +463,7 @@ msgid ""
 "from the reverse proxy."
 msgstr "Якщо використовується зворотний проксі, вам слід повідомити сервер даних calibre про те, що слід очікувати на встановлення зв’язку лише від локального вузла, скориставшись параметром ``--listen-on 127.0.0.1``. Таким чином, сервер оброблятиме лише ті з’єднання, які встановлюватиметься з того самого комп’ютера, на якому його запущено, тобто з’єднання від зворотного проксі."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:333
+#: ../../home/kovid/work/calibre/manual/server.rst:339
 msgid ""
 "If you have setup SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -462,11 +471,11 @@ msgid ""
 "server``."
 msgstr "Якщо вами налаштовано SSL на вашому основному сервері, вам слід повідомити сервер calibre про те, що слід використовувати базове розпізнавання замість розпізнавання за контрольними сумами, оскільки воно працює швидше. Для цього передайте параметр ``--auth-mode=basic`` програмі ``calibre-server``."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:342
+#: ../../home/kovid/work/calibre/manual/server.rst:348
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr "Створення служби для сервера calibre у сучасній системі Linux"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:344
+#: ../../home/kovid/work/calibre/manual/server.rst:350
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -474,7 +483,7 @@ msgid ""
 "the contents shown below::"
 msgstr "Створити службу для запуску calibre під час завантаження у сучасній заснованій на `systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_ системі Linux дуже просто. Створіть файл ``/etc/systemd/system/calibre-server.service`` із таким вмістом:"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:363
+#: ../../home/kovid/work/calibre/manual/server.rst:369
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -484,25 +493,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr "Замініть ``mylinuxuser`` і ``mylinuxgroup`` на користувача і групу, від імені яких має бути запущено сервер. Користувач і група мають бути тими самими, що і користувач і група власника файлів у каталозі бібліотеки calibre. Зауважте, що, зазвичай, не варто запускати сервер від імені адміністратора (root). Крім того, вам слід змінити шлях до каталогу бібліотеки calibre так, щоб він збігався зі шляхом у вашій системі. Якщо треба, можете додати декілька бібліотек. Докладніший опис можна знайти у довідці до програми ``calibre-server``."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:370
+#: ../../home/kovid/work/calibre/manual/server.rst:376
 msgid "Now run::"
 msgstr "Тепер віддайте команду:"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:374
+#: ../../home/kovid/work/calibre/manual/server.rst:380
 msgid "to start the server. Check its status with::"
 msgstr "для запуску сервера. Перевірте стан сервера такою командою::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:378
+#: ../../home/kovid/work/calibre/manual/server.rst:384
 msgid "To make it start at boot, run::"
 msgstr "Щоб сервер запускався під час завантаження системи, віддайте таку команду::"
 
-#: ../../home/kovid/work/calibre/manual/server.rst:384
+#: ../../home/kovid/work/calibre/manual/server.rst:390
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr "Для роботи сервера calibre *не потрібен* графічний серве X, але йому знадобляться встановлені бібліотеки X, оскільки деякі з його компонентів зібрано із використанням цих бібліотек."
 
-#: ../../home/kovid/work/calibre/manual/server.rst:389
+#: ../../home/kovid/work/calibre/manual/server.rst:395
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."

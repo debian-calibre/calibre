@@ -864,12 +864,13 @@ There are several possible things I know of, that can cause this:
       clicking on the :guilabel:`Add books` button or the :guilabel:`Save to
       Disk button`, then you have some software that has installed broken Shell
       extensions on your computer. Known culprits include: *SpiderOak*, *odrive
-      sync* and *Dell Backup and Recovery*. If you have one of these, uninstall
-      them and you will be fine. You can also use the `NirSoft Shell Extension
-      Viewer <https://www.nirsoft.net/utils/shexview.html>`_ to see what shell
-      extensions are installed on your system and disable them individually, if
-      you dont want to uninstall the full program.  Remember to use "Restart
-      Explorer" or reboot your computer after disabling the shell extensions.
+      sync* and *Dell Backup and Recovery* and *NetDrive*. If you have one of
+      these, uninstall them and you will be fine. You can also use the `NirSoft
+      Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_ to
+      see what shell extensions are installed on your system and disable them
+      individually, if you dont want to uninstall the full program.  Remember
+      to use "Restart Explorer" or reboot your computer after disabling the
+      shell extensions.
 
 If none of the above apply to you, then there is some other program on your
 computer that is interfering with calibre. First reboot your computer in safe
@@ -1008,11 +1009,12 @@ How do I get calibre to use my HTTP proxy?
 By default, calibre uses whatever proxy settings are set in your OS. Sometimes
 these are incorrect, for example, on Windows if you don't use Internet Explorer
 then the proxy settings may not be up to date. You can tell calibre to use a
-particular proxy server by setting the ``http_proxy`` environment variable. The
-format of the variable is: ``http://username:password@servername`` you should
-ask your network administrator to give you the correct value for this variable.
-Note that calibre only supports HTTP proxies not SOCKS proxies. You can see the
-current proxies used by calibre in Preferences->Miscellaneous.
+particular proxy server by setting the ``http_proxy`` and ``https_proxy``
+environment variables. The format of the variable is:
+``http://username:password@servername`` you should ask your network
+administrator to give you the correct value for this variable.  Note that
+calibre only supports HTTP proxies not SOCKS proxies. You can see the current
+proxies used by calibre in Preferences->Miscellaneous.
 
 I want some feature added to calibre. What can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

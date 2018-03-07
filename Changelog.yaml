@@ -20,6 +20,79 @@
 #   new recipes:
 #     - title:
 
+- version: 3.18.0
+  date: 2018-02-23
+
+  new features:
+    - title: "Browser viewer: Allow long tapping a word to look it up in a dictionary or search the internet for it."
+      tickets: [1738995]
+
+  bug fixes:
+    - title: "Conversion: Handle the deprecated type attribute on <ol> tags."
+      tickets: [1751148]
+
+    - title: "Fix metadata download from amazon stopped working because of a website change"
+
+    - title: "Fix re-ordering of columns causing split book splitter state not being restored on restart"
+
+    - title: "Fix errors when using strftime with unicode strings on non-utf-8 windows systems."
+      tickets: [1749219]
+
+    - title: "Split book view: Fix vertical scroll position of the two views getting out of sync after doing some searches."
+      tickets: [1748739]
+
+    - title: "Fix some edit widget appearing in the wrong place when editing in the right hand panel of the new split book list."
+      tickets: [1748713]
+
+    - title: "Portable build: Fix cache directory not always being auto-created"
+      tickets: [1747887]
+
+    - title: "Workaround for Qt 5.10 on Linux resetting the global font, preventing custom interface font settings from working"
+
+  improved recipes:
+    - New York Times
+    - The Economist
+    - Gosc
+    - Various Uruguayan recipes
+
+
+- version: 3.17.0
+  date: 2018-02-09
+
+  new features:
+    - title: "Allow splitting the book list, by right clicking on the column headers and choosing 'Split the book list'"
+      type: major
+      description: "This is useful to 'lock' one or more columns in place so that they are always visible even when scrolling through other columns. Also, the split list has a separate right click menu which you can configure via Preferences->Toolbars and menus"
+
+    - title: "Store temporary files used by the editor and viewer in the cache directory to try to prevent errors caused by 'file cleaner' programs deleting temporary files still in use"
+
+  bug fixes:
+    - title: "EPUB3 Input: Fix HTML covers and titlepages that are marked using the deprecated <guide> element not being recognized."
+      tickets: [1746794]
+
+    - title: "Bulk metadata edit: Fix regression in 3.13 that made it impossible to use the Force numbering checkbox for custom series"
+
+    - title: "Conversion: Fix the valign attribute on <td> tags not being honored"
+
+    - title: "E-book viewer: Fix the 'Copy' keyboard shortcut/context menu action not working on some Windows systems"
+      tickets: [1477696]
+
+    - title: "E-book viewer: Make the semi-transparent background for viewing metadata a little more opaque."
+      tickets: [1745812]
+
+  improved recipes:
+    - New York Times
+    - Le Devoir
+    - New Statesman
+    - London Review of Books
+    - New York Post
+    - LWN Weekly
+    - Associated Press
+
+  new recipes:
+    - title: Computing
+      author: Darko Miletic
+
 - version: 3.16.0
   date: 2018-01-26
 
