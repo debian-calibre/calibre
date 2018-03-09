@@ -26,7 +26,7 @@ from calibre.srv.metadata import (
 from calibre.srv.routes import endpoint, json
 from calibre.srv.utils import get_library_data, get_use_roman
 from calibre.utils.config import prefs, tweaks
-from calibre.utils.icu import sort_key
+from calibre.utils.icu import sort_key, numeric_sort_key
 from calibre.utils.localization import get_lang
 from calibre.utils.search_query_parser import ParseException
 
@@ -384,3 +384,13 @@ def tag_browser(ctx, rd):
         return json(ctx, rd, tag_browser, categories_as_json(ctx, rd, db, opts, vl))
 
     return rd.etagged_dynamic_response(etag, generate)
+
+
+@endpoint('/interface-data/field-names/{field}', postprocess=json)
+def field_names(ctx, rd, field):
+    '''
+    Get a list of all names for the specified field
+    Optional: ?library_id=<default library>
+    '''
+    db, library_id = get_library_data(ctx, rd)[:2]
+    return tuple(sorted(db.all_field_names(field), key=numeric_sort_key))
