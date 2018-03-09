@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Herman van der Vaart <vaarttuig@gmail.com>, 2018
 # Mario Moens <marimo.it4u@gmail.com>, 2017
 # M. de Boer <de.boer.melle@gmail.com>, 2017
 # math1985 <transifex@matthijsmelissen.nl>, 2016
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 09:23+0530\n"
-"PO-Revision-Date: 2017-09-20 05:41+0000\n"
-"Last-Translator: Mario Moens <marimo.it4u@gmail.com>\n"
+"POT-Creation-Date: 2018-02-23 08:43+0530\n"
+"PO-Revision-Date: 2018-03-06 15:57+0000\n"
+"Last-Translator: Herman van der Vaart <vaarttuig@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +37,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr ""
+msgstr "Basisklasse die logica bevat die nodig is in alle recepten. Door steeds meer functionaliteit in deze klasse te overschrijven, kunt u steeds meer aangepaste/krachtige recepten maken. Voor een handleiding introductie tot het maken van recepten, zie :doc:`news`."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -44,7 +45,7 @@ msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr ""
+msgstr "Gebruik deze methode in een van de voorbewerk-methoden om de download voor het huidige artikel af te breken. Handig om artikelen over te slaan die ongepaste inhoud bevatten, zoals pure video-artikelen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
@@ -62,7 +63,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr ""
+msgstr "Gebruik dit vanuit populate_article_metadata met het src attribuut van een <img>label uit het artikel dat geschikt is om te gebruiken als de miniatuur die het artikel in de inhoudsopgave weergeeft. Of de miniatuur daadwerkelijk wordt gebruikt, is apparaatafhankelijk (momenteel alleen in gebruik bij de Kindles). Merk op dat de bedoelde afbeelding er een moet zijn die succesvol is gedownload, anders wordt deze genegeerd."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -70,7 +71,7 @@ msgid ""
 "If your recipe when converted to EPUB has problems with images when viewed "
 "in Adobe Digital Editions, call this method from within "
 ":meth:`postprocess_html`."
-msgstr ""
+msgstr "Als je recept dat is geconverteerd naar EPUB problemen heeft met afbeeldingen bekeken in Adobe Digital Editions, gebruik je deze methode vanuit :meth:`postprocess_html`."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
@@ -80,7 +81,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr ""
+msgstr "Retourneer een set canonieke representaties van `` url``. De standaardimplementatie gebruikt alleen de hostnaam van de server en het pad van de URL, waarbij alle zoekparameters, fragmenten, enzovoort worden genegeerd. De canonieke weergaven moeten uniek zijn voor alle URL's voor deze nieuwsbron. Als dat niet het geval is, kunnen interne links onjuist worden opgelost."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -93,21 +94,21 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parameters"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
 " the URL is the URL used to download an article."
-msgstr ""
+msgstr "Is Waar als de URL afkomstig is van een interne link in een HTML-bestand. Onwaar als de URL de URL is die werd gebruikt om een ​​artikel te downloaden."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
 msgid ""
 "Called after all articles have been download. Use it to do any cleanup like "
 "logging out of subscription sites, etc."
-msgstr ""
+msgstr "Gebruikt nadat alle artikelen zijn gedownload. Gebruik het om op te schonen, zoals het afmelden van abonnementssites, enz."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
@@ -116,14 +117,14 @@ msgid ""
 " since mechanize is not thread safe. The default cloning routines should "
 "capture most browser customization, but if you do something exotic in your "
 "recipe, you should override this method in your recipe and clone manually."
-msgstr ""
+msgstr "Kloon de browser br. Gekloonde browsers worden gebruikt voor multi-threaded downloads, omdat mechaniseren niet thread safe is. De standaard kloneringsroutines moeten de meeste browseraanpassingen vastleggen, maar als u iets exotisch in uw recept doet, moet u deze methode in uw recept overschrijven en handmatig klonen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
 msgid ""
 "Cloned browser instances use the same, thread-safe CookieJar by default, "
 "unless you have customized cookie handling."
-msgstr ""
+msgstr "Gekloonde browserinstances gebruiken standaard dezelfde, thread-safe CookieJar, tenzij u aangepaste cookieverwerking hebt ingesteld."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
@@ -137,7 +138,7 @@ msgid ""
 "method should be called only once on a particular Recipe instance. Calling "
 "it more than once will lead to undefined behavior. :return: Path to "
 "index.html"
-msgstr ""
+msgstr "Download en verwerk alle artikelen uit de feeds in dit recept. Deze methode moet slechts één keer worden aangeroepen voor een bepaalde receptinstantie. Meer dan één keer aanroepen zal leiden tot ongedefinieerd gedrag. :return: Path to index.html"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
@@ -145,7 +146,7 @@ msgid ""
 "Extracts main article content from 'html', cleans up and returns as a "
 "(article_html, extracted_title) tuple. Based on the original readability "
 "algorithm by Arc90."
-msgstr ""
+msgstr "Haalt inhoud van hoofdartikel uit 'html', ruimt op en retourneert als een (article_html, extracted_title) tupel. Gebaseerd op het oorspronkelijke leesbaarheidsalgoritme van Arc90."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
@@ -157,7 +158,7 @@ msgid ""
 "for the original link (for feeds syndicated via a service like feedburner or"
 " pheedo) and if found, returns that or else returns `article.link "
 "<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
-msgstr ""
+msgstr "Overschrijven in een subklasse om extractie van de :term:`URL` aan te passen  die verwijst naar de inhoud voor elk artikel. Retourneer de artikel-URL. Het wordt aangeroepen met 'article', een object dat een verwerkt artikel uit een feed vertegenwoordigt. Zie `feedparser<https://pythonhosted.org/feedparser/>`_. Standaard wordt gezocht naar de originele koppeling (voor feeds die worden gesyndiceerd via een service zoals feedburner of pheedo) en als deze wordt gevonden, wordt dat geretourneerd of anders wordt `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html> `_ geretourneerd."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
@@ -166,7 +167,7 @@ msgid ""
 "it returns a `mechanize <https://github.com/jjlee/mechanize>`_ browser "
 "instance that supports cookies, ignores robots.txt, handles refreshes and "
 "has a mozilla firefox user agent."
-msgstr ""
+msgstr "Retourneer een browserinstantie die wordt gebruikt om documenten van internet op te halen. Standaard retourneert het een `mechanize <https://github.com/jjlee/mechanize>` _ browserinstantie die cookies ondersteunt, robots.txt negeert, verversingen verwerkt en een mozilla firefox user-agent heeft."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -174,7 +175,7 @@ msgid ""
 "If your recipe requires that you login first, override this method in your "
 "subclass. For example, the following code is used in the New York Times "
 "recipe to login for full access::"
-msgstr ""
+msgstr "Als uw recept vereist dat u eerst inlogt, overschrijf dan deze methode in uw subklasse. Bijvoorbeeld: de volgende code wordt  gebruikt in het New York Times recept om in te loggen voor volledige toegang ::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
