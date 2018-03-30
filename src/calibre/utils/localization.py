@@ -323,7 +323,7 @@ if False:
     _('Select All')
     _('Copy Link')
     _('&Select All')
-    _('Copy &Link location')
+    _('Copy &Link Location')
     _('&Undo')
     _('&Redo')
     _('Cu&t')
@@ -424,6 +424,16 @@ def lang_map():
     if _lang_map is None:
         _lang_map = {k:translate(v) for k, v in iso639['by_3t'].iteritems()}
     return _lang_map
+
+
+def lang_map_for_ui():
+    ans = getattr(lang_map_for_ui, 'ans', None)
+    if ans is None:
+        ans = lang_map().copy()
+        for x in ('zxx', 'mis', 'mul'):
+            ans.pop(x, None)
+        lang_map_for_ui.ans = ans
+    return ans
 
 
 def langnames_to_langcodes(names):
