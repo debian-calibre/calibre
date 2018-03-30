@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "三月 09, 2018" "3.19.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "三月 23, 2018" "3.20.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -178,7 +178,7 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-把 Unicode 字符转换为 ASCII 表达型式。请谨慎使用这个功能，因为它会把所有的 Unicode 字符转换为 ASCII 字符。比如：它会把 \fB"\fPМихаил Горбачёв\fB"\fP 替换为 \fB"\fPMikhail Gorbachiov\fB"\fP。并且当一个字符可能有多种表示方式时（比如中文和日文中一些共用的字符）， Calibre 会根据当前设置的界面语言类型决定如何去转换这类字符。
+把 Unicode 字符转换为 ASCII 表达型式。请谨慎使用这个功能，因为它会把所有的 Unicode 字符转换为 ASCII 字符。比如：它会把 \fB"\fPМихаил Горбачёв\fB"\fP 替换为 \fB"\fPMikhail Gorbachiov\fB"\fP。并且当一个字符可能有多种表示方式时（比如中文和日文中一些共用的字符）， calibre 会根据当前设置的界面语言类型决定如何去转换这类字符。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,7 +208,7 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Calibre 默认会使用各种 CSS 属性值的简写形式，如 margin、padding、border 等。打开此选项会使用完全展开的形式替代。注意，当生成采用了 Nook 系列配置文件的 EPUB 文件时，CSS 总是会用展开的形式，这是因为 Nook 无法处理简写的 CSS。
+calibre 默认会使用各种 CSS 属性值的简写形式，如 margin、padding、border 等。打开此选项会使用完全展开的形式替代。注意，当生成采用了 Nook 系列配置文件的 EPUB 文件时，CSS 总是会用展开的形式，这是因为 Nook 无法处理简写的 CSS。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -273,7 +273,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-最小行高，元素字体计算值的百分比。Calibre 将保证行中所有元素至少有此高度，无论输入文档如何定义。设为零即禁用。默认 120%。首选项中也有此设定，请注意。否则可能出现双倍行高，达 240%。
+最小行高，元素字体计算值的百分比。calibre 将保证行中所有元素至少有此高度，无论输入文档如何定义。设为零即禁用。默认 120%。首选项中也有此设定，请注意。否则可能出现双倍行高，达 240%。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -283,7 +283,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-当 Calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果您将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 Calibre 不进行缩进处理。
+当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果您将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -417,7 +417,7 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-有些文档通过在每一页上指定左右页边距来指定页面边框大小。 Calibre 会尝试检测并移除这些页边距。有时候 Calibre 会错误的移除不应该移除的页边距，在这种情况下，您可以禁用这项功能。
+有些文档通过在每一页上指定左右页边距来指定页面边框大小。 calibre 会尝试检测并移除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，您可以禁用这项功能。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -455,17 +455,17 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-指定应添加到目录级别1的所有标签的 XPath 表达式。如果指定此项，它会优先于其他自动检测形式。可查阅 Calibre 用户手册中的 XPath 向导。
+指定应添加到目录级别1的所有标签的 XPath 表达式。如果指定此项，它会优先于其他自动检测形式。可查阅 calibre 用户手册中的 XPath 向导。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath 表达式指定所有标签应添加在二级目录表。每个条目加入到一级目录条目下。请参阅 Calibre 用户手册中 XPath 教程的例子。
+XPath 表达式指定所有标签应添加在二级目录表。每个条目加入到一级目录条目下。请参阅 calibre 用户手册中 XPath 教程的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath 表达式指定所有标签应添加在三级目录表。每个条目加入到二级目录条目下。请参阅 Calibre 用户手册中 XPath 教程的例子。
+XPath 表达式指定所有标签应添加在三级目录表。每个条目加入到二级目录条目下。请参阅 calibre 用户手册中 XPath 教程的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -513,7 +513,7 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+设置电子书描述。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -538,7 +538,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+设置电子书出版商。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -553,7 +553,7 @@ Set the e\-book publisher.
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+设置这本电子书所属的丛书。
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maart 09, 2018" "3.19.0" "calibre"
+.TH "CALIBREDB" "1" "maart 23, 2018" "3.20.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -294,7 +294,7 @@ Opties voor het instellen van boeken uit mappen. Standaard worden alleen bestand
 .INDENT 0.0
 .TP
 .B \-\-add
-Een zoekpatroon ( vb: *.xml ), bestanden die voldoen aan dit patroon, worden toegevoegd bij het scannen van de bestanden, ook al zijn ze niet bekend met een bekende bestandstype. Kan voor meerdere patronen opgegeven worden
+Een bestandsnaam (glob) patroon, bestanden die overeenkomen met dit patroon zullen worden toegevoegd bij het scannen van mappen naar bestanden, zelfs als ze geen bekend e\-book bestandstype hebben. Kan meerdere keren worden opgegeven voor meerdere patronen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -337,13 +337,13 @@ prullenbak niet gebruiken
 .sp
 .nf
 .ft C
-calibredb add_format [options] id ebook_file
+calibredb add_format [opties] id ebook_file
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Voeg het e\-boek toe aan de ebook_file, in de beschikbare formaten voor het logische boek, dat door het id geïdentificeerd is. U kunt het id verkrijgen met behulp van het zoek commando. Als het formaat al bestaat, wordt het vervangen, tenzij de optie "niet vervangen" is opgegeven.
+Voeg het e\-book in ebook_file toe aan de beschikbare formaten voor het logische boek geïdentificeerd door id. U kunt id krijgen door de zoekopdracht te gebruiken. Als het formaat al bestaat, wordt het vervangen, tenzij de optie Niet vervangen is opgegeven.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
