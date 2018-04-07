@@ -170,6 +170,9 @@ class IframeBoss:
     def gesture_from_margin(self, data):
         self.handle_gesture(data.gesture)
 
+    def report_human_scroll(self, scrolled_by_frac):
+        self.send_message('human_scroll', scrolled_by_frac=scrolled_by_frac or None)
+
     def on_scroll_to_anchor(self, data):
         frag = data.frag
         if frag:
@@ -270,7 +273,7 @@ class IframeBoss:
                 if cfi != self.last_cfi:
                     self.last_cfi = cfi
                     self.send_message('update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update,
-                                      progress_frac=self.calculate_progress_frac(current_name, index))
+                                      progress_frac=self.calculate_progress_frac(current_name, index), file_progress_frac=progress_frac())
                     self.replace_history_on_next_cfi_update = True
 
     def update_toc_position(self):

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 00:01+0530\n"
-"PO-Revision-Date: 2017-08-03 11:59+0000\n"
+"POT-Creation-Date: 2018-03-23 09:59+0530\n"
+"PO-Revision-Date: 2018-03-23 04:29+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Pushto (http://www.transifex.com/calibre/calibre/language/ps/)\n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:102
-msgid "Font size rescaling"
+msgid "Fonts"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:104
@@ -257,11 +257,52 @@ msgid ""
 "input, it's better to use the :ref:`extra-css`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:161
-msgid "Paragraph spacing"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:160
+msgid ""
+"In this section you can also tell calibre to embed any referenced fonts into"
+" the book. This will allow the fonts to work on reader devices even if they "
+"are not available on the device."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:163
+#: ../../home/kovid/work/calibre/manual/conversion.rst:165
+msgid "Text"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:167
+msgid ""
+"Text can be either justified or not. Justified text has extra spaces between"
+" words to give a smooth right margin. Some people prefer justified text, "
+"others do not. Normally, calibre will preserve the justification in the "
+"original document. If you want to override it you can use the "
+":guilabel:`Text justification` option in this section."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:173
+msgid ""
+"You can also tell calibre to :guilabel:`Smarten punctuation` which will "
+"replace plain quotes, dashes and ellipses with their typographically correct"
+" alternatives. Note that this algorithm is not perfect so it is worth "
+"reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
+"punctuation` is also available."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:178
+msgid ""
+"Finally, there is :guilabel:`Input character encoding`.  Older documents "
+"sometimes don't specify their character encoding. When converted, this can "
+"result in non-English characters or special characters like smart quotes "
+"being corrupted.  calibre tries to auto-detect the character encoding of the"
+" source document, but it does not always succeed. You can force it to assume"
+" a particular character encoding by using this setting.  `cp1252` is a "
+"common encoding for documents produced using Windows software. You should "
+"also read :ref:`char-encoding-faq` for more on encoding issues."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:188
+msgid "Layout"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:190
 msgid ""
 "Normally, paragraphs in XHTML are rendered with a blank line between them "
 "and no leading text indent. calibre has a couple of options to control this."
@@ -277,14 +318,14 @@ msgid ""
 "hard line breaks to implement inter-paragraph spacing."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:174
+#: ../../home/kovid/work/calibre/manual/conversion.rst:201
 msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
 "few, don't use these options. Instead add the following CSS code to :ref"
 ":`extra-css`::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:180
+#: ../../home/kovid/work/calibre/manual/conversion.rst:207
 msgid ""
 "Then, in your source document, mark the paragraphs that need spacing with "
 "`class=\"spacious\"`. If your input document is not in HTML, use the Debug "
@@ -292,25 +333,36 @@ msgid ""
 "sub-directory)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:188
-msgid "Extra CSS"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:190
+#: ../../home/kovid/work/calibre/manual/conversion.rst:211
 msgid ""
-"This option allows you to specify arbitrary CSS that will be applied to all "
-"HTML files in the input. This CSS is applied with very high priority and so "
-"should override most CSS present in the **input document** itself. You can "
-"use this setting to fine tune the presentation/layout of your document. For "
-"example, if you want all paragraphs of class `endnote` to be right aligned, "
-"just add::"
+"Another useful options is :guilabel:`Linearize tables`.  Some badly designed"
+" documents use tables to control the layout of text on the page.  When "
+"converted these documents often have text that runs off the page and other "
+"artifacts. This option will extract the content from the tables and present "
+"it in a linear fashion.  Note that this option linearizes *all* tables, so "
+"only use it if you are sure the input document does not use tables for "
+"legitimate purposes, like presenting tabular information."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:198
+#: ../../home/kovid/work/calibre/manual/conversion.rst:220
+msgid "Styling"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:224
+msgid ""
+"The :guilabel:`Extra CSS` option allows you to specify arbitrary CSS that "
+"will be applied to all HTML files in the input. This CSS is applied with "
+"very high priority and so should override most CSS present in the **input "
+"document** itself. You can use this setting to fine tune the "
+"presentation/layout of your document. For example, if you want all "
+"paragraphs of class `endnote` to be right aligned, just add::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:202
+#: ../../home/kovid/work/calibre/manual/conversion.rst:237
 msgid ""
 ":guilabel:`Extra CSS` is a very powerful option, but you do need an "
 "understanding of how CSS works to use it to its full potential. You can use "
@@ -318,79 +370,30 @@ msgid ""
 " input document."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:207
-#: ../../home/kovid/work/calibre/manual/conversion.rst:412
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:209
-#: ../../home/kovid/work/calibre/manual/conversion.rst:414
-msgid "There are a few more options in this section."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:215
-msgid ":guilabel:`No text justification`"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:212
+#: ../../home/kovid/work/calibre/manual/conversion.rst:241
 msgid ""
-"Normally, if the output format supports it, calibre will force the output "
-"e-book to have *justified* text (i.e., a smooth right margin). This option "
-"will turn off this behavior, in which case whatever justification is "
-"specified in the input document will be used instead."
+"A simpler option is to use :guilabel:`Filter style information`. This allows"
+" you to remove all CSS properties of the specified types from the document. "
+"For example, you can use it to remove all colors or fonts."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:222
-msgid ":guilabel:`Linearize tables`"
+#: ../../home/kovid/work/calibre/manual/conversion.rst:246
+msgid "Transform styles"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:218
+#: ../../home/kovid/work/calibre/manual/conversion.rst:248
 msgid ""
-"Some badly designed documents use tables to control the layout of text on "
-"the page. When converted these documents often have text that runs off the "
-"page and other artifacts. This option will extract the content from the "
-"tables and present it in a linear fashion. Note that this option linearizes "
-"*all* tables, so only use it if you are sure the input document does not use"
-" tables for legitimate purposes, like presenting tabular information."
+"This is the most powerful styling related facility. You can use it to define"
+" rules that change styles based on various conditions. For example you can "
+"use it to change all green colors to blue, or remove all bold styling from "
+"the text or color all headings a certain color, etc."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:231
-msgid ":guilabel:`Transliterate unicode characters`"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:225
-msgid ""
-"Transliterate unicode characters to an ASCII representation. Use with care "
-"because this will replace unicode characters with ASCII. For instance it "
-"will replace \"Михаил Горбачёв\" with \"Mikhail Gorbachiov\". Also, note "
-"that in cases where there are multiple representations of a character "
-"(characters shared by Chinese and Japanese for instance) the representation "
-"used by the largest number of people will be used (Chinese in the previous "
-"example). This option is mainly useful if you are going to view the e-book "
-"on a device that does not have support for unicode."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:240
-msgid ":guilabel:`Input character encoding`"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:234
-msgid ""
-"Older documents sometimes don't specify their character encoding. When "
-"converted, this can result in non-English characters or special characters "
-"like smart quotes being corrupted. calibre tries to auto-detect the "
-"character encoding of the source document, but it does not always succeed. "
-"You can force it to assume a particular character encoding by using this "
-"setting. `cp1252` is a common encoding for documents produced using Windows "
-"software. You should also read :ref:`char-encoding-faq` for more on encoding"
-" issues."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:245
+#: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid "Page setup"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:247
+#: ../../home/kovid/work/calibre/manual/conversion.rst:259
 msgid ""
 "The :guilabel:`Page setup` options are for controlling screen layout, like "
 "margins and screen sizes. There are options to setup page margins, which "
@@ -401,7 +404,7 @@ msgid ""
 "rescaling keys."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:253
+#: ../../home/kovid/work/calibre/manual/conversion.rst:265
 msgid ""
 "If you know that the file you are converting was intended to be used on a "
 "particular device/software platform, choose the corresponding input profile,"
@@ -419,7 +422,7 @@ msgid ""
 "Kindle, choose the Mobipocket books output profile."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:257
+#: ../../home/kovid/work/calibre/manual/conversion.rst:269
 msgid ""
 "The output profile also controls the screen size. This will cause, for "
 "example, images to be auto-resized to be fit to the screen in some output "
@@ -427,11 +430,11 @@ msgid ""
 "your device."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:262
+#: ../../home/kovid/work/calibre/manual/conversion.rst:274
 msgid "Heuristic processing"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:264
+#: ../../home/kovid/work/calibre/manual/conversion.rst:276
 msgid ""
 "Heuristic processing provides a variety of functions which can be used to "
 "try and detect and correct common problems in poorly formatted input "
@@ -442,22 +445,22 @@ msgid ""
 "entities, or may include false positive matches relating to the function."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:272
+#: ../../home/kovid/work/calibre/manual/conversion.rst:284
 msgid ":guilabel:`Enable heuristic processing`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:271
+#: ../../home/kovid/work/calibre/manual/conversion.rst:283
 msgid ""
 "This option activates calibre's :guilabel:`Heuristic processing` stage of "
 "the conversion pipeline. This must be enabled in order for various sub-"
 "functions to be applied"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:278
+#: ../../home/kovid/work/calibre/manual/conversion.rst:290
 msgid ":guilabel:`Unwrap lines`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:275
+#: ../../home/kovid/work/calibre/manual/conversion.rst:287
 msgid ""
 "Enabling this option will cause calibre to attempt to detect and correct "
 "hard line breaks that exist within a document using punctuation clues and "
@@ -467,11 +470,11 @@ msgid ""
 "to unwrap lines."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:284
+#: ../../home/kovid/work/calibre/manual/conversion.rst:296
 msgid ":guilabel:`Line-unwrap factor`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:281
+#: ../../home/kovid/work/calibre/manual/conversion.rst:293
 msgid ""
 "This option controls the algorithm calibre uses to remove hard line breaks. "
 "For example, if the value of this option is 0.4, that means calibre will "
@@ -481,12 +484,12 @@ msgid ""
 " somewhere between 0.1 and 0.2."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:299
+#: ../../home/kovid/work/calibre/manual/conversion.rst:311
 msgid ""
 ":guilabel:`Detect and markup unformatted chapter headings and sub headings`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:287
+#: ../../home/kovid/work/calibre/manual/conversion.rst:299
 msgid ""
 "If your document does not have chapter headings and titles formatted "
 "differently from the rest of the text, calibre can use this option to "
@@ -495,7 +498,7 @@ msgid ""
 "detected."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:291
+#: ../../home/kovid/work/calibre/manual/conversion.rst:303
 msgid ""
 "This function will not create a TOC, but in many cases it will cause "
 "calibre's default chapter detection settings to correctly detect chapters "
@@ -505,18 +508,18 @@ msgid ""
 "to create a TOC for the document."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:296
+#: ../../home/kovid/work/calibre/manual/conversion.rst:308
 msgid ""
 "The inserted headings are not formatted, to apply formatting use the "
 ":guilabel:`Extra CSS` option under the Look and Feel conversion settings.  "
 "For example, to center heading tags, use the following::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:304
+#: ../../home/kovid/work/calibre/manual/conversion.rst:316
 msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:302
+#: ../../home/kovid/work/calibre/manual/conversion.rst:314
 msgid ""
 "Some publishers format chapter headings using multiple <h1> or <h2> tags "
 "sequentially. calibre's default conversion settings will cause such titles "
@@ -524,11 +527,11 @@ msgid ""
 " prevent splitting."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:311
+#: ../../home/kovid/work/calibre/manual/conversion.rst:323
 msgid ":guilabel:`Delete blank lines between paragraphs`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:307
+#: ../../home/kovid/work/calibre/manual/conversion.rst:319
 msgid ""
 "This option will cause calibre to analyze blank lines included within the "
 "document.  If every paragraph is interleaved with a blank line, then calibre"
@@ -540,11 +543,11 @@ msgid ""
 "were inserted using calibre's 'Insert blank line' option."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:316
+#: ../../home/kovid/work/calibre/manual/conversion.rst:328
 msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:314
+#: ../../home/kovid/work/calibre/manual/conversion.rst:326
 msgid ""
 "With this option calibre will attempt to detect common scene-break markers "
 "and ensure that they are center aligned. 'Soft' scene break markers, i.e. "
@@ -552,18 +555,18 @@ msgid ""
 "they will not be displayed in conjunction with page breaks."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:332
+#: ../../home/kovid/work/calibre/manual/conversion.rst:344
 msgid ":guilabel:`Replace scene breaks`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:319
+#: ../../home/kovid/work/calibre/manual/conversion.rst:331
 msgid ""
 "If this option is configured then calibre will replace scene break markers "
 "it finds with the replacement text specified by the user.  Please note that "
 "some ornamental characters may not be supported across all reading devices."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:322
+#: ../../home/kovid/work/calibre/manual/conversion.rst:334
 msgid ""
 "In general you should avoid using HTML tags, calibre will discard any tags "
 "and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> "
@@ -574,31 +577,31 @@ msgid ""
 "conversion, this must be done after the fact using the 'Edit book' feature."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:329
+#: ../../home/kovid/work/calibre/manual/conversion.rst:341
 msgid ""
 "Example image tag (place the image within an 'Images' folder inside the epub"
 " after conversion):"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:329
+#: ../../home/kovid/work/calibre/manual/conversion.rst:341
 msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:332
+#: ../../home/kovid/work/calibre/manual/conversion.rst:344
 msgid "Example horizontal rule with styles:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:332
+#: ../../home/kovid/work/calibre/manual/conversion.rst:344
 msgid ""
 "<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-"
 "bottom: 2px groove black;\"/>"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:340
+#: ../../home/kovid/work/calibre/manual/conversion.rst:352
 msgid ":guilabel:`Remove unnecessary hyphens`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:335
+#: ../../home/kovid/work/calibre/manual/conversion.rst:347
 msgid ""
 "calibre will analyze all hyphenated content in the document when this option"
 " is enabled.  The document itself is used as a dictionary for analysis.  "
@@ -612,11 +615,11 @@ msgid ""
 "elsewhere in the document without a match."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:344
+#: ../../home/kovid/work/calibre/manual/conversion.rst:356
 msgid ":guilabel:`Italicize common words and patterns`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:343
+#: ../../home/kovid/work/calibre/manual/conversion.rst:355
 msgid ""
 "When enabled, calibre will look for common words and patterns that denote "
 "italics and italicize them.  Examples are common text conventions such as "
@@ -624,22 +627,22 @@ msgid ""
 "like 'etc.' or 'et cetera'."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:348
+#: ../../home/kovid/work/calibre/manual/conversion.rst:360
 msgid ":guilabel:`Replace entity indents with CSS indents`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:347
+#: ../../home/kovid/work/calibre/manual/conversion.rst:359
 msgid ""
 "Some documents use a convention of defining text indents using non-breaking "
 "space entities.  When this option is enabled calibre will attempt to detect "
 "this sort of formatting and convert them to a 3% text indent using CSS."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:353
+#: ../../home/kovid/work/calibre/manual/conversion.rst:365
 msgid "Search & replace"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:355
+#: ../../home/kovid/work/calibre/manual/conversion.rst:367
 msgid ""
 "These options are useful primarily for conversion of PDF documents or OCR "
 "conversions, though they can also be used to fix many document specific "
@@ -653,7 +656,7 @@ msgid ""
 "Successful matches will be highlighted in Yellow."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:363
+#: ../../home/kovid/work/calibre/manual/conversion.rst:375
 msgid ""
 "The search works by using a Python regular expression. All matched text is "
 "simply removed from the document or replaced using the replacement pattern. "
@@ -662,11 +665,11 @@ msgid ""
 "regular expressions and their syntax at :ref:`regexptutorial`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:371
+#: ../../home/kovid/work/calibre/manual/conversion.rst:383
 msgid "Structure detection"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:373
+#: ../../home/kovid/work/calibre/manual/conversion.rst:385
 msgid ""
 "Structure detection involves calibre trying its best to detect structural "
 "elements in the input document, when they are not properly specified. For "
@@ -677,11 +680,11 @@ msgid ""
 "effort."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:376
+#: ../../home/kovid/work/calibre/manual/conversion.rst:388
 msgid "Chapters and page breaks"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:378
+#: ../../home/kovid/work/calibre/manual/conversion.rst:390
 msgid ""
 "calibre has two sets of options for :guilabel:`chapter detection` and "
 ":guilabel:`inserting page breaks`. This can sometimes be slightly confusing,"
@@ -692,7 +695,7 @@ msgid ""
 "inserted into the auto generated Table of Contents."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:383
+#: ../../home/kovid/work/calibre/manual/conversion.rst:395
 msgid ""
 "calibre uses *XPath*, a powerful language to allow the user to specify "
 "chapter boundaries/page breaks. XPath can seem a little daunting to use at "
@@ -704,12 +707,12 @@ msgid ""
 "generation of simple XPath expressions."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:389
+#: ../../home/kovid/work/calibre/manual/conversion.rst:401
 msgid ""
 "By default, calibre uses the following expression for chapter detection::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:393
+#: ../../home/kovid/work/calibre/manual/conversion.rst:405
 msgid ""
 "This expression is rather complex, because it tries to handle a number of "
 "common cases simultaneously. What it means is that calibre will assume "
@@ -718,7 +721,7 @@ msgid ""
 "`class=\"chapter\"` attribute."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:397
+#: ../../home/kovid/work/calibre/manual/conversion.rst:409
 msgid ""
 "A related option is :guilabel:`Chapter mark`, which allows you to control "
 "what calibre does when it detects a chapter. By default, it will insert a "
@@ -726,27 +729,35 @@ msgid ""
 "of, or in addition to the page break. You can also have it do nothing."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:401
+#: ../../home/kovid/work/calibre/manual/conversion.rst:413
 msgid "The default setting for detecting page breaks is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:405
+#: ../../home/kovid/work/calibre/manual/conversion.rst:417
 msgid ""
 "which means that calibre will insert page breaks before every `<h1>` and "
 "`<h2>` tag by default."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:409
+#: ../../home/kovid/work/calibre/manual/conversion.rst:421
 msgid ""
 "The default expressions may change depending on the input format you are "
 "converting."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:420
+#: ../../home/kovid/work/calibre/manual/conversion.rst:424
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:426
+msgid "There are a few more options in this section."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:432
 msgid ":guilabel:`Insert metadata as page at start of book`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:417
+#: ../../home/kovid/work/calibre/manual/conversion.rst:429
 msgid ""
 "One of the great things about calibre is that it allows you to maintain very"
 " complete metadata about all of your books, for example, a rating, tags, "
@@ -755,11 +766,11 @@ msgid ""
 "Think of it as a way to create your own customised book jacket."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:427
+#: ../../home/kovid/work/calibre/manual/conversion.rst:439
 msgid ":guilabel:`Remove first image`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:423
+#: ../../home/kovid/work/calibre/manual/conversion.rst:435
 msgid ""
 "Sometimes, the source document you are converting includes the cover as part"
 " of the book, instead of as a separate cover. If you also specify a cover in"
@@ -768,11 +779,11 @@ msgid ""
 "that the converted book has only one cover, the one specified in calibre."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:430
+#: ../../home/kovid/work/calibre/manual/conversion.rst:442
 msgid "Table of Contents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:432
+#: ../../home/kovid/work/calibre/manual/conversion.rst:444
 msgid ""
 "When the input document has a Table of Contents in its metadata, calibre "
 "will just use that. However, a number of older formats either do not support"
@@ -782,7 +793,7 @@ msgid ""
 "content in the input document."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:437
+#: ../../home/kovid/work/calibre/manual/conversion.rst:449
 msgid ""
 "Using these options can be a little challenging to get exactly right. If you"
 " prefer creating/editing the Table of Contents by hand, convert to the EPUB "
@@ -797,7 +808,7 @@ msgid ""
 "you want to edit and click the :guilabel:`ToC Editor` button."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:449
+#: ../../home/kovid/work/calibre/manual/conversion.rst:461
 msgid ""
 "The first option is :guilabel:`Force use of auto-generated Table of "
 "Contents`. By checking this option you can have calibre override any Table "
@@ -805,7 +816,7 @@ msgid ""
 "generated one."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:453
+#: ../../home/kovid/work/calibre/manual/conversion.rst:465
 msgid ""
 "The default way that the creation of the auto generated Table of Contents "
 "works is that, calibre will first try to add any detected chapters to the "
@@ -815,7 +826,7 @@ msgid ""
 "the :guilabel:`Do not add detected chapters` option."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:458
+#: ../../home/kovid/work/calibre/manual/conversion.rst:470
 msgid ""
 "If less than the :guilabel:`Chapter threshold` number of chapters were "
 "detected, calibre will then add any hyperlinks it finds in the input "
@@ -826,7 +837,7 @@ msgid ""
 "most that number of links is added."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:464
+#: ../../home/kovid/work/calibre/manual/conversion.rst:476
 msgid ""
 "calibre will automatically filter duplicates from the generated Table of "
 "Contents. However, if there are some additional undesirable entries, you can"
@@ -836,7 +847,7 @@ msgid ""
 "remove all entries titles \"Next\" or \"Previous\" use::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:471
+#: ../../home/kovid/work/calibre/manual/conversion.rst:483
 msgid ""
 "The :guilabel:`Level 1,2,3 TOC` options allow you to create a sophisticated "
 "multi-level Table of Contents. They are XPath expressions that match tags in"
@@ -848,59 +859,59 @@ msgid ""
 " use these options."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:477
+#: ../../home/kovid/work/calibre/manual/conversion.rst:489
 msgid ""
 "Suppose you have an input document that results in XHTML that look like "
 "this:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:499
+#: ../../home/kovid/work/calibre/manual/conversion.rst:511
 msgid "Then, we set the options as::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:504
+#: ../../home/kovid/work/calibre/manual/conversion.rst:516
 msgid ""
 "This will result in an automatically generated two level Table of Contents "
 "that looks like::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:515
+#: ../../home/kovid/work/calibre/manual/conversion.rst:527
 msgid ""
 "Not all output formats support a multi level Table of Contents. You should "
 "first try with EPUB output. If that works, then try your format of choice."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:519
+#: ../../home/kovid/work/calibre/manual/conversion.rst:531
 msgid "Using images as chapter titles when converting HTML input documents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:521
+#: ../../home/kovid/work/calibre/manual/conversion.rst:533
 msgid ""
 "Suppose you want to use an image as your chapter title, but still want "
 "calibre to be able to automatically generate a Table of Contents for you "
 "from the chapter titles. Use the following HTML markup to achieve this"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:535
+#: ../../home/kovid/work/calibre/manual/conversion.rst:547
 msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
 "two, calibre will take the title from the value of the ``title`` attribute "
 "on the ``<h2>`` tag, since the tag has no text."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:538
+#: ../../home/kovid/work/calibre/manual/conversion.rst:550
 msgid ""
 "Using tag attributes to supply the text for entries in the Table of Contents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:540
+#: ../../home/kovid/work/calibre/manual/conversion.rst:552
 msgid ""
 "If you have particularly long chapter titles and want shortened versions in "
 "the Table of Contents, you can use the title attribute to achieve this, for "
 "example:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:555
+#: ../../home/kovid/work/calibre/manual/conversion.rst:567
 msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2/@title``. Then calibre "
 "will take the title from the value of the ``title`` attribute on the "
@@ -909,11 +920,11 @@ msgid ""
 "to get the text from any attribute you like."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:562
+#: ../../home/kovid/work/calibre/manual/conversion.rst:574
 msgid "How options are set/saved for Conversion"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:564
+#: ../../home/kovid/work/calibre/manual/conversion.rst:576
 msgid ""
 "There are two places where conversion options can be set in calibre. The "
 "first is in Preferences->Conversion. These settings are the defaults for the"
@@ -921,7 +932,7 @@ msgid ""
 "set here will be used by default."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:569
+#: ../../home/kovid/work/calibre/manual/conversion.rst:581
 msgid ""
 "You can also change settings in the conversion dialog for each book "
 "conversion. When you convert a book, calibre remembers the settings you used"
@@ -935,28 +946,28 @@ msgid ""
 "dialog is an option to remove stored conversion settings."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:580
+#: ../../home/kovid/work/calibre/manual/conversion.rst:592
 msgid ""
 "When you Bulk Convert a set of books, settings are taken in the following "
 "order (last one wins):"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:582
+#: ../../home/kovid/work/calibre/manual/conversion.rst:594
 msgid "From the defaults set in Preferences->Conversion"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:584
+#: ../../home/kovid/work/calibre/manual/conversion.rst:596
 msgid ""
 "From the saved conversion settings for each book being converted (if any). "
 "This can be turned off by the option in the top left corner of the Bulk "
 "Conversion dialog."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:588
+#: ../../home/kovid/work/calibre/manual/conversion.rst:600
 msgid "From the settings set in the Bulk conversion dialog"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:590
+#: ../../home/kovid/work/calibre/manual/conversion.rst:602
 msgid ""
 "Note that the final settings for each book in a Bulk Conversion will be "
 "saved and re-used if the book is converted again. Since the highest priority"
@@ -968,7 +979,7 @@ msgid ""
 "from book specific settings (if any) or the defaults."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:601
+#: ../../home/kovid/work/calibre/manual/conversion.rst:613
 msgid ""
 "You can see the actual settings used during any conversion by clicking the "
 "rotating icon in the lower right corner and then double clicking the "
@@ -976,11 +987,11 @@ msgid ""
 "contain the actual settings used, near the top."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:606
+#: ../../home/kovid/work/calibre/manual/conversion.rst:618
 msgid "Format specific tips"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:608
+#: ../../home/kovid/work/calibre/manual/conversion.rst:620
 msgid ""
 "Here you will find tips specific to the conversion of particular formats. "
 "Options specific to particular format, whether input or output are available"
@@ -988,11 +999,11 @@ msgid ""
 "or `EPUB output`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:613
+#: ../../home/kovid/work/calibre/manual/conversion.rst:625
 msgid "Convert Microsoft Word documents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:615
+#: ../../home/kovid/work/calibre/manual/conversion.rst:627
 msgid ""
 "calibre can automatically convert ``.docx`` files created by Microsoft Word "
 "2007 and newer. Just add the file to calibre and click convert (make sure "
@@ -1000,7 +1011,7 @@ msgid ""
 " is very new)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:620
+#: ../../home/kovid/work/calibre/manual/conversion.rst:632
 msgid ""
 "There is a `demo .docx file <https://calibre-"
 "ebook.com/downloads/demos/demo.docx>`_ that demonstrates the capabilities of"
@@ -1008,7 +1019,7 @@ msgid ""
 "AZW3 to see what calibre can do."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:624
+#: ../../home/kovid/work/calibre/manual/conversion.rst:636
 msgid ""
 "calibre will automatically generate a Table of Contents based on headings if"
 " you mark your headings with the ``Heading 1``, ``Heading 2``, etc. styles "
@@ -1017,11 +1028,11 @@ msgid ""
 "of Contents."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:630
+#: ../../home/kovid/work/calibre/manual/conversion.rst:642
 msgid "Older .doc files"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:632
+#: ../../home/kovid/work/calibre/manual/conversion.rst:644
 msgid ""
 "For older .doc files, you can save the document as HTML with Microsoft Word "
 "and then convert the resulting HTML file with calibre. When saving as HTML, "
@@ -1031,18 +1042,18 @@ msgid ""
 " newer version of Word available, you can directly save it as docx as well."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:639
+#: ../../home/kovid/work/calibre/manual/conversion.rst:651
 msgid ""
 "Another alternative is to use the free OpenOffice. Open your .doc file in "
 "OpenOffice and save it in OpenOffice's format .odt. calibre can directly "
 "convert .odt files."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:644
+#: ../../home/kovid/work/calibre/manual/conversion.rst:656
 msgid "Convert TXT documents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:646
+#: ../../home/kovid/work/calibre/manual/conversion.rst:658
 msgid ""
 "TXT documents have no well defined way to specify formatting like bold, "
 "italics, etc, or document structure like paragraphs, headings, sections and "
@@ -1051,86 +1062,86 @@ msgid ""
 "based on those conventions."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:651
+#: ../../home/kovid/work/calibre/manual/conversion.rst:663
 msgid ""
 "TXT input supports a number of options to differentiate how paragraphs are "
 "detected."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:655
+#: ../../home/kovid/work/calibre/manual/conversion.rst:667
 msgid ":guilabel:`Paragraph style: Auto`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:654
+#: ../../home/kovid/work/calibre/manual/conversion.rst:666
 msgid ""
 "Analyzes the text file and attempts to automatically determine how "
 "paragraphs are defined.  This option will generally work fine, if you "
 "achieve undesirable results try one of the manual options."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:663
+#: ../../home/kovid/work/calibre/manual/conversion.rst:675
 msgid ":guilabel:`Paragraph style: Block`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:658
+#: ../../home/kovid/work/calibre/manual/conversion.rst:670
 msgid "Assumes one or more blank lines are a paragraph boundary::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:670
+#: ../../home/kovid/work/calibre/manual/conversion.rst:682
 msgid ":guilabel:`Paragraph style: Single`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:666
+#: ../../home/kovid/work/calibre/manual/conversion.rst:678
 msgid "Assumes that every line is a paragraph::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:681
+#: ../../home/kovid/work/calibre/manual/conversion.rst:693
 msgid ":guilabel:`Paragraph style: Print`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:673
+#: ../../home/kovid/work/calibre/manual/conversion.rst:685
 msgid ""
 "Assumes that every paragraph starts with an indent (either a tab or 2+ "
 "spaces). Paragraphs end when the next line that starts with an indent is "
 "reached::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:685
+#: ../../home/kovid/work/calibre/manual/conversion.rst:697
 msgid ":guilabel:`Paragraph style: Unformatted`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:684
+#: ../../home/kovid/work/calibre/manual/conversion.rst:696
 msgid ""
 "Assumes that the document has no formatting, but does use hard line breaks."
 "  Punctuation and median line length are used to attempt to re-create "
 "paragraphs."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:689
+#: ../../home/kovid/work/calibre/manual/conversion.rst:701
 msgid ":guilabel:`Formatting style: Auto`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:688
+#: ../../home/kovid/work/calibre/manual/conversion.rst:700
 msgid ""
 "Attempts to detect the type of formatting markup being used.  If no markup "
 "is used then heuristic formatting will be applied."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:693
+#: ../../home/kovid/work/calibre/manual/conversion.rst:705
 msgid ":guilabel:`Formatting style: Heuristic`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:692
+#: ../../home/kovid/work/calibre/manual/conversion.rst:704
 msgid ""
 "Analyzes the document for common chapter headings, scene breaks, and "
 "italicized words and applies the appropriate HTML markup during conversion."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:700
+#: ../../home/kovid/work/calibre/manual/conversion.rst:712
 msgid ":guilabel:`Formatting style: Markdown`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:696
+#: ../../home/kovid/work/calibre/manual/conversion.rst:708
 msgid ""
 "calibre also supports running TXT input though a transformation preprocessor"
 " known as Markdown. Markdown allows for basic formatting to be added to TXT "
@@ -1142,21 +1153,21 @@ msgid ""
 "<https://daringfireball.net/projects/markdown/syntax>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:703
+#: ../../home/kovid/work/calibre/manual/conversion.rst:715
 msgid ":guilabel:`Formatting style: None`"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:703
+#: ../../home/kovid/work/calibre/manual/conversion.rst:715
 msgid ""
 "Applies no special formatting to the text, the document is converted to HTML"
 " with no other changes."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:708
+#: ../../home/kovid/work/calibre/manual/conversion.rst:720
 msgid "Convert PDF documents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:710
+#: ../../home/kovid/work/calibre/manual/conversion.rst:722
 msgid ""
 "PDF documents are one of the worst formats to convert from. They are a fixed"
 " page size and text placement format. Meaning, it is very difficult to "
@@ -1169,7 +1180,7 @@ msgid ""
 "conversion settings under :guilabel:`PDF Input`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:717
+#: ../../home/kovid/work/calibre/manual/conversion.rst:729
 msgid ""
 "Also, they often have headers and footers as part of the document that will "
 "become included with the text. Use the Search and Replace panel to remove "
@@ -1179,62 +1190,62 @@ msgid ""
 ":ref:`regexptutorial`."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:722
+#: ../../home/kovid/work/calibre/manual/conversion.rst:734
 msgid "Some limitations of PDF input are:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:724
+#: ../../home/kovid/work/calibre/manual/conversion.rst:736
 msgid "Complex, multi-column, and image based documents are not supported."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:725
+#: ../../home/kovid/work/calibre/manual/conversion.rst:737
 msgid ""
 "Extraction of vector images and tables from within the document is also not "
 "supported."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:726
+#: ../../home/kovid/work/calibre/manual/conversion.rst:738
 msgid ""
 "Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
 " these may or may not work depending on just how they are represented "
 "internally in the PDF."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:727
+#: ../../home/kovid/work/calibre/manual/conversion.rst:739
 msgid "Links and Tables of Contents are not supported"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:728
+#: ../../home/kovid/work/calibre/manual/conversion.rst:740
 msgid ""
 "PDFs that use embedded non-unicode fonts to represent non-English characters"
 " will result in garbled output for those characters"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:729
+#: ../../home/kovid/work/calibre/manual/conversion.rst:741
 msgid ""
 "Some PDFs are made up of photographs of the page with OCRed text behind "
 "them. In such cases calibre uses the OCRed text, which can be very different"
 " from what you see when you view the PDF file"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:730
+#: ../../home/kovid/work/calibre/manual/conversion.rst:742
 msgid ""
 "PDFs that are used to display complex text, like right to left languages and"
 " math typesetting will not convert correctly"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:732
+#: ../../home/kovid/work/calibre/manual/conversion.rst:744
 msgid ""
 "To re-iterate **PDF is a really, really bad** format to use as input. If you"
 " absolutely must use PDF, then be prepared for an output ranging anywhere "
 "from decent to unusable, depending on the input PDF."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:736
+#: ../../home/kovid/work/calibre/manual/conversion.rst:748
 msgid "Comic book collections"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:738
+#: ../../home/kovid/work/calibre/manual/conversion.rst:750
 msgid ""
 "A comic book collection is a .cbc file. A .cbc file is a ZIP file that "
 "contains other CBZ/CBR files. In addition the .cbc file must contain a "
@@ -1243,21 +1254,21 @@ msgid ""
 "filename:title, as shown below::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:746
+#: ../../home/kovid/work/calibre/manual/conversion.rst:758
 msgid "The .cbc file will then contain::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:753
+#: ../../home/kovid/work/calibre/manual/conversion.rst:765
 msgid ""
 "calibre will automatically convert this .cbc file into a e-book with a Table"
 " of Contents pointing to each entry in comics.txt."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:757
+#: ../../home/kovid/work/calibre/manual/conversion.rst:769
 msgid "EPUB advanced formatting demo"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:759
+#: ../../home/kovid/work/calibre/manual/conversion.rst:771
 msgid ""
 "Various advanced formatting for EPUB files is demonstrated in this `demo "
 "file <https://calibre-ebook.com/downloads/demos/demo.epub>`_. The file was "
@@ -1265,25 +1276,25 @@ msgid ""
 "template for your own EPUB creation efforts."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:762
+#: ../../home/kovid/work/calibre/manual/conversion.rst:774
 msgid ""
 "The source HTML it was created from is available `demo.zip <https://calibre-"
 "ebook.com/downloads/demos/demo.zip>`_. The settings used to create the EPUB "
 "from the ZIP file are::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:767
+#: ../../home/kovid/work/calibre/manual/conversion.rst:779
 msgid ""
 "Note that because this file explores the potential of EPUB, most of the "
 "advanced formatting is not going to work on readers less capable than "
 "calibre's built-in EPUB viewer."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:771
+#: ../../home/kovid/work/calibre/manual/conversion.rst:783
 msgid "Convert ODT documents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:773
+#: ../../home/kovid/work/calibre/manual/conversion.rst:785
 msgid ""
 "calibre can directly convert ODT (OpenDocument Text) files. You should use "
 "styles to format your document and minimize the use of direct formatting. "
@@ -1292,7 +1303,7 @@ msgid ""
 "conversion."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:776
+#: ../../home/kovid/work/calibre/manual/conversion.rst:788
 msgid ""
 "To enable automatic detection of chapters, you need to mark them with the "
 "build-in styles called 'Heading 1', 'Heading 2', ..., 'Heading 6' ('Heading "
@@ -1301,13 +1312,13 @@ msgid ""
 "box. Example:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:778
+#: ../../home/kovid/work/calibre/manual/conversion.rst:790
 msgid ""
 "If you mark Chapters with style 'Heading 2', you have to set the 'Detect "
 "chapters at' box to ``//h:h2``"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:779
+#: ../../home/kovid/work/calibre/manual/conversion.rst:791
 msgid ""
 "For a nested TOC with Sections marked with 'Heading 2' and the Chapters "
 "marked with 'Heading 3' you need to enter ``//h:h2|//h:h3``. On the Convert "
@@ -1315,14 +1326,14 @@ msgid ""
 " to ``//h:h3``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:781
+#: ../../home/kovid/work/calibre/manual/conversion.rst:793
 msgid ""
 "Well-known document properties (Title, Keywords, Description, Creator) are "
 "recognized and calibre will use the first image (not to small, and with good"
 " aspect-ratio) as the cover image."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:783
+#: ../../home/kovid/work/calibre/manual/conversion.rst:795
 msgid ""
 "There is also an advanced property conversion mode, which is activated by "
 "setting the custom property ``opf.metadata`` ('Yes or No' type) to Yes in "
@@ -1331,7 +1342,7 @@ msgid ""
 "(``opf.authors`` overrides document creator)::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:796
+#: ../../home/kovid/work/calibre/manual/conversion.rst:808
 msgid ""
 "In addition to this, you can specify the picture to use as the cover by "
 "naming it ``opf.cover`` (right click, Picture->Options->Name) in the ODT. If"
@@ -1341,17 +1352,17 @@ msgid ""
 "from the document. But this works only with the named picture!"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:803
+#: ../../home/kovid/work/calibre/manual/conversion.rst:815
 msgid ""
 "To disable cover detection you can set the custom property ``opf.nocover`` "
 "('Yes or No' type) to Yes in advanced mode."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:806
+#: ../../home/kovid/work/calibre/manual/conversion.rst:818
 msgid "Converting to PDF"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:808
+#: ../../home/kovid/work/calibre/manual/conversion.rst:820
 msgid ""
 "The first, most important, setting to decide on when converting to PDF is "
 "the page size. By default, calibre uses a page size of \"U.S. Letter\". You "
@@ -1363,11 +1374,11 @@ msgid ""
 "size suitable for viewing on the small kindle screen."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:818
+#: ../../home/kovid/work/calibre/manual/conversion.rst:830
 msgid "Headers and Footers"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:819
+#: ../../home/kovid/work/calibre/manual/conversion.rst:831
 msgid ""
 "You can insert arbitrary headers and footers on each page of the PDF by "
 "specifying header and footer templates. Templates are just snippets of HTML "
@@ -1376,7 +1387,7 @@ msgid ""
 " following footer template::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:827
+#: ../../home/kovid/work/calibre/manual/conversion.rst:839
 msgid ""
 "calibre will automatically replace _PAGENUM_ with the current page number. "
 "You can even put different content on even and odd pages, for example the "
@@ -1384,7 +1395,7 @@ msgid ""
 " even pages::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:833
+#: ../../home/kovid/work/calibre/manual/conversion.rst:845
 msgid ""
 "calibre will automatically replace _TITLE_ and _AUTHOR_ with the title and "
 "author of the document being converted.  You can also display text at the "
@@ -1392,17 +1403,17 @@ msgid ""
 "header template::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:840
+#: ../../home/kovid/work/calibre/manual/conversion.rst:852
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:843
+#: ../../home/kovid/work/calibre/manual/conversion.rst:855
 msgid "You can also use the current section in templates, as shown below::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:847
+#: ../../home/kovid/work/calibre/manual/conversion.rst:859
 msgid ""
 "_SECTION_ is replaced by whatever the name of the current section is. These "
 "names are taken from the metadata Table of Contents in the document (the PDF"
@@ -1413,25 +1424,25 @@ msgid ""
 "level section."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:854
+#: ../../home/kovid/work/calibre/manual/conversion.rst:866
 msgid ""
 "You can even use javascript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:860
+#: ../../home/kovid/work/calibre/manual/conversion.rst:872
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the Page setup section of the "
 "conversion dialog."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:865
+#: ../../home/kovid/work/calibre/manual/conversion.rst:877
 msgid "Printable Table of Contents"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:867
+#: ../../home/kovid/work/calibre/manual/conversion.rst:879
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1440,7 +1451,7 @@ msgid ""
 " default."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:872
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "

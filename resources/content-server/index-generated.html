@@ -4172,6 +4172,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.word_actions"] = {};
     ρσ_modules["read_book.overlay"] = {};
     ρσ_modules["read_book.search"] = {};
+    ρσ_modules["read_book.timers"] = {};
     ρσ_modules["read_book.view"] = {};
     ρσ_modules["read_book.ui"] = {};
     ρσ_modules["book_list.home"] = {};
@@ -4182,7 +4183,7 @@ var str = ρσ_str, repr = ρσ_repr;;
 
     (function(){
         var __name__ = "gettext";
-        var Jed, plural_forms_parser, _gettext, _ngettext, has_prop;
+        var Jed, plural_forms_parser, _gettext, _ngettext, has_prop, empty_translation_data;
         Jed = {};
         
   Jed.PF = {};
@@ -4743,6 +4744,11 @@ return parser;
         });
 
         register_callback.install_callbacks = [];
+        empty_translation_data = (function(){
+            var ρσ_d = {};
+            ρσ_d["entries"] = {};
+            return ρσ_d;
+        }).call(this);
         function Translations() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             Translations.prototype.__init__.apply(this, arguments);
@@ -4750,8 +4756,8 @@ return parser;
         Translations.prototype.__init__ = function __init__(translation_data) {
             var self = this;
             var func;
-            translation_data = translation_data || {};
-            func = _get_plural_forms_function(translation_data["plural_forms"]);
+            translation_data = translation_data || empty_translation_data;
+            func = _get_plural_forms_function(translation_data.plural_forms);
             self.translations = ρσ_list_decorate([ ρσ_list_decorate([ translation_data, func ]) ]);
             self.language = translation_data["language"];
         };
@@ -4763,8 +4769,8 @@ return parser;
         Translations.prototype.add_fallback = function add_fallback(fallback) {
             var self = this;
             var func;
-            fallback = fallback || {};
-            func = _get_plural_forms_function(fallback["plural_forms"]);
+            fallback = fallback || empty_translation_data;
+            func = _get_plural_forms_function(fallback.plural_forms);
             self.translations.push(ρσ_list_decorate([ fallback, func ]));
         };
         if (!Translations.prototype.add_fallback.__argnames__) Object.defineProperties(Translations.prototype.add_fallback, {
@@ -4776,7 +4782,7 @@ return parser;
             var ρσ_Iter1 = ρσ_Iterable(self.translations);
             for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
                 t = ρσ_Iter1[ρσ_Index1];
-                m = t[0]["entries"];
+                m = t[0].entries;
                 if (has_prop(m, text)) {
                     return m[(typeof text === "number" && text < 0) ? m.length + text : text][0];
                 }
@@ -4792,7 +4798,7 @@ return parser;
             var ρσ_Iter2 = ρσ_Iterable(self.translations);
             for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                 t = ρσ_Iter2[ρσ_Index2];
-                m = t[0]["entries"];
+                m = t[0].entries;
                 if (has_prop(m, text)) {
                     idx = t[1](n);
                     return (ρσ_expr_temp = m[(typeof text === "number" && text < 0) ? m.length + text : text])[(typeof idx === "number" && idx < 0) ? ρσ_expr_temp.length + idx : idx] || ((n === 1) ? text : plural);
@@ -4825,6 +4831,7 @@ return parser;
         ρσ_modules.gettext._gettext = _gettext;
         ρσ_modules.gettext._ngettext = _ngettext;
         ρσ_modules.gettext.has_prop = has_prop;
+        ρσ_modules.gettext.empty_translation_data = empty_translation_data;
         ρσ_modules.gettext._get_plural_forms_function = _get_plural_forms_function;
         ρσ_modules.gettext.gettext = gettext;
         ρσ_modules.gettext.ngettext = ngettext;
@@ -8262,7 +8269,7 @@ return parser;
             if (!get_translations.storage) {
                 get_translations.storage = new SessionData("calibre-translations-");
             }
-            if (newval) {
+            if ((typeof newval !== "undefined" && newval !== null)) {
                 get_translations.storage.set("current", newval);
             } else {
                 return get_translations.storage.get("current");
@@ -13101,7 +13108,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.flow_mode";
-        var smooth_y_data, flick_animator, anchor_funcs;
+        var small_scroll_events, smooth_y_data, flick_animator, anchor_funcs;
         var word_at_point = ρσ_modules.select.word_at_point;
 
         var set_css = ρσ_modules.dom.set_css;
@@ -13123,24 +13130,99 @@ return this.__repr__();
             __argnames__ : {value: ["frac"]}
         });
 
+        small_scroll_events = [];
+        function clear_small_scrolls() {
+            small_scroll_events = [];
+        };
+
+        function dispatch_small_scrolls() {
+            var now, amt, x;
+            if (small_scroll_events.length) {
+                now = window.performance.now();
+                if (now - small_scroll_events[small_scroll_events.length-1].time <= 2e3) {
+                    window.setTimeout(dispatch_small_scrolls, 100);
+                    return;
+                }
+                amt = 0;
+                var ρσ_Iter0 = ρσ_Iterable(small_scroll_events);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    x = ρσ_Iter0[ρσ_Index0];
+                    amt += x.amt;
+                }
+                clear_small_scrolls();
+                get_boss().report_human_scroll(amt / document_height());
+            }
+        };
+
+        function add_small_scroll(amt) {
+            small_scroll_events.push((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["amt"] = amt;
+                ρσ_d["time"] = window.performance.now();
+                return ρσ_d;
+            }).call(this));
+            window.setTimeout(dispatch_small_scrolls, 100);
+        };
+        if (!add_small_scroll.__argnames__) Object.defineProperties(add_small_scroll, {
+            __argnames__ : {value: ["amt"]}
+        });
+
+        function report_human_scroll(amt) {
+            var h, is_large_scroll;
+            if (amt > 0) {
+                h = scroll_viewport.height();
+                is_large_scroll = amt / h >= .5;
+                if (is_large_scroll) {
+                    clear_small_scrolls();
+                    get_boss().report_human_scroll(amt / document_height());
+                } else {
+                    add_small_scroll(amt);
+                }
+            } else {
+                clear_small_scrolls();
+            }
+        };
+        if (!report_human_scroll.__argnames__) Object.defineProperties(report_human_scroll, {
+            __argnames__ : {value: ["amt"]}
+        });
+
+        function _check_for_scroll_end(func, obj, args, report) {
+            var before;
+            before = window.pageYOffset;
+            func.apply(obj, args);
+            if (window.pageYOffset === before) {
+                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: arguments[0] < 0})])));
+                return false;
+            }
+            if (report) {
+                report_human_scroll(window.pageYOffset - before);
+            }
+            return true;
+        };
+        if (!_check_for_scroll_end.__argnames__) Object.defineProperties(_check_for_scroll_end, {
+            __argnames__ : {value: ["func", "obj", "args", "report"]}
+        });
+
         function check_for_scroll_end(func) {
             return function () {
-                var before;
-                before = window.pageYOffset;
-                func.apply(this, arguments);
-                if (window.pageYOffset === before) {
-                    (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: arguments[0] < 0})])));
-                    return false;
-                }
-                return true;
+                return _check_for_scroll_end(func, this, arguments, false);
             };
         };
         if (!check_for_scroll_end.__argnames__) Object.defineProperties(check_for_scroll_end, {
             __argnames__ : {value: ["func"]}
         });
 
+        function check_for_scroll_end_and_report(func) {
+            return function () {
+                return _check_for_scroll_end(func, this, arguments, true);
+            };
+        };
+        if (!check_for_scroll_end_and_report.__argnames__) Object.defineProperties(check_for_scroll_end_and_report, {
+            __argnames__ : {value: ["func"]}
+        });
+
         
-        var scroll_by = check_for_scroll_end((function() {
+        var scroll_by = check_for_scroll_end_and_report((function() {
             var ρσ_anonfunc = function scroll_by(y) {
                 window.scrollBy(0, y);
             };
@@ -13215,6 +13297,7 @@ return this.__repr__();
         var goto_boundary = check_for_scroll_end((function() {
             var ρσ_anonfunc = function goto_boundary(y) {
                 scroll_viewport.scroll_to(window.pageXOffset, 0);
+                get_boss().report_human_scroll();
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                 __argnames__ : {value: ["y"]}
@@ -13223,7 +13306,7 @@ return this.__repr__();
         })());
 
         
-        var scroll_by_page = check_for_scroll_end((function() {
+        var scroll_by_page = check_for_scroll_end_and_report((function() {
             var ρσ_anonfunc = function scroll_by_page(backward) {
                 var h;
                 h = scroll_viewport.height() - 10;
@@ -13255,6 +13338,8 @@ return this.__repr__();
                 }
             } else if (key === "home" || key === "end") {
                 handled = true;
+                get_boss().report_human_scroll();
+                clear_small_scrolls();
                 if (evt.ctrlKey) {
                     (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["goto_doc_boundary"].concat([ρσ_desugar_kwargs({start: key === "home"})])));
                 } else {
@@ -13305,9 +13390,9 @@ return this.__repr__();
             self.vertical = gesture.axis === "vertical";
             now = window.performance.now();
             points = times = null;
-            var ρσ_Iter0 = ρσ_Iterable(enumerate(gesture.times));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter1 = ρσ_Iterable(enumerate(gesture.times));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                ρσ_unpack = ρσ_Iter1[ρσ_Index1];
                 i = ρσ_unpack[0];
                 t = ρσ_unpack[1];
                 if (now - t < self.VELOCITY_HISTORY) {
@@ -13463,11 +13548,18 @@ return this.__repr__();
             })();
             return ρσ_d;
         }).call(this);
+        ρσ_modules["read_book.flow_mode"].small_scroll_events = small_scroll_events;
         ρσ_modules["read_book.flow_mode"].smooth_y_data = smooth_y_data;
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
         ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction = flow_to_scroll_fraction;
+        ρσ_modules["read_book.flow_mode"].clear_small_scrolls = clear_small_scrolls;
+        ρσ_modules["read_book.flow_mode"].dispatch_small_scrolls = dispatch_small_scrolls;
+        ρσ_modules["read_book.flow_mode"].add_small_scroll = add_small_scroll;
+        ρσ_modules["read_book.flow_mode"].report_human_scroll = report_human_scroll;
+        ρσ_modules["read_book.flow_mode"]._check_for_scroll_end = _check_for_scroll_end;
         ρσ_modules["read_book.flow_mode"].check_for_scroll_end = check_for_scroll_end;
+        ρσ_modules["read_book.flow_mode"].check_for_scroll_end_and_report = check_for_scroll_end_and_report;
         ρσ_modules["read_book.flow_mode"].scroll_by = scroll_by;
         ρσ_modules["read_book.flow_mode"].flow_onwheel = flow_onwheel;
         ρσ_modules["read_book.flow_mode"].do_y_scroll = do_y_scroll;
@@ -14602,7 +14694,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.paged_mode";
-        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, is_full_screen_layout, anchor_funcs;
+        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, number_of_cols, is_full_screen_layout, anchor_funcs;
         var traceback = ρσ_modules.traceback;
 
         var E = ρσ_modules.elementmaker.E;
@@ -14695,11 +14787,11 @@ return this.__repr__();
             return _in_paged_mode;
         };
 
-        col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = 0;
+        col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = number_of_cols = 0;
         is_full_screen_layout = false;
         function reset_paged_mode_globals() {
             scroll_viewport.reset_globals();
-            col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = 0;
+            col_width = screen_width = screen_height = cols_per_screen = gap = col_and_gap = number_of_cols = 0;
             is_full_screen_layout = _in_paged_mode = false;
         };
 
@@ -14861,9 +14953,9 @@ return this.__repr__();
             }
             function check_column_widths() {
                 var ncols, n, dw, data;
-                ncols = (scroll_viewport.paged_content_width() + gap) / col_and_gap;
+                ncols = number_of_cols = (scroll_viewport.paged_content_width() + gap) / col_and_gap;
                 if (ncols !== Math.floor(ncols)) {
-                    n = Math.floor(ncols);
+                    n = number_of_cols = Math.floor(ncols);
                     dw = n * col_width + (n - 1) * gap;
                     data = (function(){
                         var ρσ_d = Object.create(null);
@@ -15196,15 +15288,23 @@ return this.__repr__();
         });
 
         function scroll_by_page(backward, by_screen) {
-            var pos;
+            var pos, pages, scrolled_frac;
             if (by_screen) {
                 pos = (backward) ? previous_screen_location() : next_screen_location();
+                pages = cols_per_screen;
             } else {
                 pos = (backward) ? previous_col_location() : next_col_location();
+                pages = 1;
             }
             if (pos === -1) {
                 (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: backward})])));
             } else {
+                if (!backward) {
+                    scrolled_frac = (number_of_cols > 0) ? pages / number_of_cols : 0;
+                    get_boss().report_human_scroll(scrolled_frac);
+                } else {
+                    get_boss().report_human_scroll();
+                }
                 scroll_to_xpos(pos);
             }
         };
@@ -15219,6 +15319,7 @@ return this.__repr__();
             if (key === "up" || key === "down") {
                 handled = true;
                 if (evt.ctrlKey) {
+                    get_boss().report_human_scroll();
                     scroll_to_offset((key === "left") ? 0 : document_width());
                 } else {
                     scroll_by_page(key === "up", true);
@@ -15226,6 +15327,7 @@ return this.__repr__();
             } else if ((key === "left" || key === "right") && !evt.altKey) {
                 handled = true;
                 if (evt.ctrlKey) {
+                    get_boss().report_human_scroll();
                     scroll_to_offset((key === "left") ? 0 : document_width());
                 } else {
                     scroll_by_page(key === "left", false);
@@ -15233,9 +15335,11 @@ return this.__repr__();
             } else if (key === "home" || key === "end") {
                 handled = true;
                 if (evt.ctrlKey) {
+                    get_boss().report_human_scroll();
                     (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["goto_doc_boundary"].concat([ρσ_desugar_kwargs({start: key === "home"})])));
                 } else {
                     if (key === "home") {
+                        get_boss().report_human_scroll();
                         scroll_to_offset(0);
                     } else {
                         scroll_to_offset(document_width());
@@ -15335,6 +15439,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].cols_per_screen = cols_per_screen;
         ρσ_modules["read_book.paged_mode"].gap = gap;
         ρσ_modules["read_book.paged_mode"].col_and_gap = col_and_gap;
+        ρσ_modules["read_book.paged_mode"].number_of_cols = number_of_cols;
         ρσ_modules["read_book.paged_mode"].is_full_screen_layout = is_full_screen_layout;
         ρσ_modules["read_book.paged_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.paged_mode"].first_child = first_child;
@@ -16914,7 +17019,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.20.0";
+        CALIBRE_VERSION = "3.21.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -16994,6 +17099,7 @@ return this.__repr__();
             this.display = IframeBoss.prototype.display.bind(this);
             this.handle_gesture = IframeBoss.prototype.handle_gesture.bind(this);
             this.gesture_from_margin = IframeBoss.prototype.gesture_from_margin.bind(this);
+            this.report_human_scroll = IframeBoss.prototype.report_human_scroll.bind(this);
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
             this.on_next_screen = IframeBoss.prototype.on_next_screen.bind(this);
             this.change_font_size = IframeBoss.prototype.change_font_size.bind(this);
@@ -17167,6 +17273,13 @@ return this.__repr__();
         if (!IframeBoss.prototype.gesture_from_margin.__argnames__) Object.defineProperties(IframeBoss.prototype.gesture_from_margin, {
             __argnames__ : {value: ["data"]}
         });
+        IframeBoss.prototype.report_human_scroll = function report_human_scroll(scrolled_by_frac) {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["human_scroll"].concat([ρσ_desugar_kwargs({scrolled_by_frac: scrolled_by_frac || null})]));
+        };
+        if (!IframeBoss.prototype.report_human_scroll.__argnames__) Object.defineProperties(IframeBoss.prototype.report_human_scroll, {
+            __argnames__ : {value: ["scrolled_by_frac"]}
+        });
         IframeBoss.prototype.on_scroll_to_anchor = function on_scroll_to_anchor(data) {
             var self = this;
             var frag;
@@ -17312,7 +17425,7 @@ return this.__repr__();
                     cfi = "epubcfi(/{}{})".format(2 * (index + 1), cfi);
                     if ((cfi !== self.last_cfi && (typeof cfi !== "object" || ρσ_not_equals(cfi, self.last_cfi)))) {
                         self.last_cfi = cfi;
-                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, replace_history: self.replace_history_on_next_cfi_update, progress_frac: self.calculate_progress_frac(current_name, index)})]));
+                        ρσ_interpolate_kwargs.call(self, self.send_message, ["update_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, replace_history: self.replace_history_on_next_cfi_update, progress_frac: self.calculate_progress_frac(current_name, index), file_progress_frac: progress_frac()})]));
                         self.replace_history_on_next_cfi_update = true;
                     }
                 }
@@ -18475,7 +18588,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "book_list.cover_grid";
-        var COVER_GRID_CLASS, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MIN_WIDTH, THUMBNAIL_MIN_HEIGHT, BORDER_RADIUS, DESCRIPTION;
+        var COVER_GRID_CLASS, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MIN_WIDTH, THUMBNAIL_MIN_HEIGHT, BORDER_RADIUS;
         var clear = ρσ_modules.dom.clear;
         var set_css = ρσ_modules.dom.set_css;
         var build_rule = ρσ_modules.dom.build_rule;
@@ -18490,7 +18603,10 @@ return this.__repr__();
         THUMBNAIL_MIN_WIDTH = 3 * 35;
         THUMBNAIL_MIN_HEIGHT = 4 * 35;
         BORDER_RADIUS = 10;
-        DESCRIPTION = _("A grid of book covers");
+        function description() {
+            return _("A grid of book covers");
+        };
+
         function cover_grid_css() {
             var sel, ρσ_unpack, margin, margin_unit, ans, mq, dim;
             sel = "." + COVER_GRID_CLASS;
@@ -18575,7 +18691,7 @@ return this.__repr__();
         ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_WIDTH = THUMBNAIL_MIN_WIDTH;
         ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_HEIGHT = THUMBNAIL_MIN_HEIGHT;
         ρσ_modules["book_list.cover_grid"].BORDER_RADIUS = BORDER_RADIUS;
-        ρσ_modules["book_list.cover_grid"].DESCRIPTION = DESCRIPTION;
+        ρσ_modules["book_list.cover_grid"].description = description;
         ρσ_modules["book_list.cover_grid"].cover_grid_css = cover_grid_css;
         ρσ_modules["book_list.cover_grid"].init = init;
         ρσ_modules["book_list.cover_grid"].on_img_load = on_img_load;
@@ -18585,7 +18701,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "book_list.details_list";
-        var DETAILS_LIST_CLASS, ITEM_CLASS, DESCRIPTION, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, BORDER_RADIUS;
+        var DETAILS_LIST_CLASS, ITEM_CLASS, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, BORDER_RADIUS;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -18605,7 +18721,10 @@ return this.__repr__();
 
         DETAILS_LIST_CLASS = "book-list-details-list";
         ITEM_CLASS = DETAILS_LIST_CLASS + "-item";
-        DESCRIPTION = _("A list with thumbnails and some book details");
+        function description() {
+            return _("A list with thumbnails and some book details");
+        };
+
         THUMBNAIL_MAX_WIDTH = 35 * 3;
         THUMBNAIL_MAX_HEIGHT = 35 * 4;
         BORDER_RADIUS = 6;
@@ -18720,10 +18839,10 @@ return this.__repr__();
 
         ρσ_modules["book_list.details_list"].DETAILS_LIST_CLASS = DETAILS_LIST_CLASS;
         ρσ_modules["book_list.details_list"].ITEM_CLASS = ITEM_CLASS;
-        ρσ_modules["book_list.details_list"].DESCRIPTION = DESCRIPTION;
         ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_WIDTH = THUMBNAIL_MAX_WIDTH;
         ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_HEIGHT = THUMBNAIL_MAX_HEIGHT;
         ρσ_modules["book_list.details_list"].BORDER_RADIUS = BORDER_RADIUS;
+        ρσ_modules["book_list.details_list"].description = description;
         ρσ_modules["book_list.details_list"].details_list_css = details_list_css;
         ρσ_modules["book_list.details_list"].init = init;
         ρσ_modules["book_list.details_list"].on_img_load = on_img_load;
@@ -18990,7 +19109,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "book_list.custom_list";
-        var CUSTOM_LIST_CLASS, ITEM_CLASS, DESCRIPTION;
+        var CUSTOM_LIST_CLASS, ITEM_CLASS;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -19015,7 +19134,10 @@ return this.__repr__();
 
         CUSTOM_LIST_CLASS = "book-list-custom-list";
         ITEM_CLASS = CUSTOM_LIST_CLASS + "-item";
-        DESCRIPTION = _("A customizable list (see Preferences->Sharing over the net->Book list template)");
+        function description() {
+            return _("A customizable list (see Preferences->Sharing over the net->Book list template)");
+        };
+
         function custom_list_css() {
             var ans, sel, s;
             ans = "";
@@ -19453,7 +19575,7 @@ return this.__repr__();
 
         ρσ_modules["book_list.custom_list"].CUSTOM_LIST_CLASS = CUSTOM_LIST_CLASS;
         ρσ_modules["book_list.custom_list"].ITEM_CLASS = ITEM_CLASS;
-        ρσ_modules["book_list.custom_list"].DESCRIPTION = DESCRIPTION;
+        ρσ_modules["book_list.custom_list"].description = description;
         ρσ_modules["book_list.custom_list"].custom_list_css = custom_list_css;
         ρσ_modules["book_list.custom_list"].default_template = default_template;
         ρσ_modules["book_list.custom_list"].render_field = render_field;
@@ -20643,19 +20765,19 @@ return this.__repr__();
 
         var add_books_panel = ρσ_modules["book_list.add"].add_books_panel;
 
-        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].DESCRIPTION;
+        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].description;
         var cover_grid_append_item = ρσ_modules["book_list.cover_grid"].append_item;
         var cover_grid_css = ρσ_modules["book_list.cover_grid"].cover_grid_css;
         var create_cover_grid_item = ρσ_modules["book_list.cover_grid"].create_item;
         var init_cover_grid = ρσ_modules["book_list.cover_grid"].init;
 
-        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].DESCRIPTION;
+        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].description;
         var custom_list_append_item = ρσ_modules["book_list.custom_list"].append_item;
         var create_custom_list_item = ρσ_modules["book_list.custom_list"].create_item;
         var custom_list_css = ρσ_modules["book_list.custom_list"].custom_list_css;
         var init_custom_list = ρσ_modules["book_list.custom_list"].init;
 
-        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].DESCRIPTION;
+        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].description;
         var details_list_append_item = ρσ_modules["book_list.details_list"].append_item;
         var create_details_list_item = ρσ_modules["book_list.details_list"].create_item;
         var details_list_css = ρσ_modules["book_list.details_list"].details_list_css;
@@ -21284,9 +21406,9 @@ return this.__repr__();
                 __argnames__ : {value: ["title", "desc", "name"]}
             });
 
-            ci(_("Cover grid"), COVER_GRID_DESCRIPTION, "cover_grid");
-            ci(_("Detailed list"), DETAILS_LIST_DESCRIPTION, "details_list");
-            ci(_("Custom list"), CUSTOM_LIST_DESCRIPTION, "custom_list");
+            ci(_("Cover grid"), COVER_GRID_DESCRIPTION(), "cover_grid");
+            ci(_("Detailed list"), DETAILS_LIST_DESCRIPTION(), "details_list");
+            ci(_("Custom list"), CUSTOM_LIST_DESCRIPTION(), "custom_list");
             container.appendChild(E.div());
             create_item_list(container.lastChild, items, _("Choose a display mode for the list of books from below"));
         };
@@ -23525,7 +23647,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.prefs.head_foot";
-        var CONTAINER, date_formatter;
+        var CONTAINER, time_formatter;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -23551,7 +23673,7 @@ return this.__repr__();
                 __argnames__ : {value: ["label", "name", "selected"]}
             });
 
-            return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Progress"), "progress"), opt(_("Clock"), "clock")].concat([ρσ_desugar_kwargs({data_region: region})]))));
+            return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Clock"), "clock")].concat([ρσ_desugar_kwargs({data_region: region})]))));
         };
         if (!create_item.__argnames__) Object.defineProperties(create_item, {
             __argnames__ : {value: ["region", "label"]}
@@ -23656,14 +23778,14 @@ return this.__repr__();
         });
 
         if (ρσ_exists.d(window.Intl).DateTimeFormat) {
-            date_formatter = window.Intl.DateTimeFormat(undefined, (function(){
+            time_formatter = window.Intl.DateTimeFormat(undefined, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["hour"] = "numeric";
                 ρσ_d["minute"] = "numeric";
                 return ρσ_d;
             }).call(this));
         } else {
-            date_formatter = (function(){
+            time_formatter = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["format"] = (function() {
                     var ρσ_anonfunc = function (date) {
@@ -23677,7 +23799,29 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
         }
-        function render_head_foot(div, which, region, progress_frac, metadata, current_toc_node, current_toc_toplevel_node) {
+        function format_time_left(seconds) {
+            var ρσ_unpack, hours, minutes;
+            ρσ_unpack = divmod(int(seconds / 60), 60);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            hours = ρσ_unpack[0];
+            minutes = ρσ_unpack[1];
+            if (hours <= 0) {
+                if (minutes < 1) {
+                    return _("almost done");
+                }
+                minutes = minutes;
+                return _("{} mins").format(minutes);
+            }
+            if (!minutes) {
+                return _("{} hours").format(hours);
+            }
+            return _("{} h {} mins").format(hours, minutes);
+        };
+        if (!format_time_left.__argnames__) Object.defineProperties(format_time_left, {
+            __argnames__ : {value: ["seconds"]}
+        });
+
+        function render_head_foot(div, which, region, progress_frac, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time) {
             var template, field, interface_data, text, has_clock, percent, ival;
             template = get_session_data().get(which) || Object.create(null);
             field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
@@ -23697,7 +23841,7 @@ return this.__repr__();
                     text = _("{0} of {1}").format(ival, metadata.series);
                 }
             } else if (field === "clock") {
-                text = date_formatter.format(new Date);
+                text = time_formatter.format(new Date);
                 has_clock = true;
             } else if (field === "section") {
                 text = (current_toc_node) ? current_toc_node.title : "";
@@ -23705,6 +23849,18 @@ return this.__repr__();
                 text = (current_toc_toplevel_node) ? current_toc_toplevel_node.title : "";
                 if (!text) {
                     text = (current_toc_node) ? current_toc_node.title : "";
+                }
+            } else if (field.startswith("time-")) {
+                if (book_time === null || chapter_time === null) {
+                    text = _("Calculating...");
+                } else {
+                    if (field === "time-book") {
+                        text = format_time_left(book_time);
+                    } else if (field === "time-chapter") {
+                        text = format_time_left(chapter_time);
+                    } else {
+                        text = "{} ({})".format(format_time_left(chapter_time), format_time_left(book_time));
+                    }
                 }
             }
             if (text !== div.textContent) {
@@ -23714,17 +23870,18 @@ return this.__repr__();
             return [text, has_clock];
         };
         if (!render_head_foot.__argnames__) Object.defineProperties(render_head_foot, {
-            __argnames__ : {value: ["div", "which", "region", "progress_frac", "metadata", "current_toc_node", "current_toc_toplevel_node"]}
+            __argnames__ : {value: ["div", "which", "region", "progress_frac", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time"]}
         });
 
         ρσ_modules["read_book.prefs.head_foot"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.head_foot"].date_formatter = date_formatter;
+        ρσ_modules["read_book.prefs.head_foot"].time_formatter = time_formatter;
         ρσ_modules["read_book.prefs.head_foot"].create_item = create_item;
         ρσ_modules["read_book.prefs.head_foot"].create_items = create_items;
         ρσ_modules["read_book.prefs.head_foot"].apply_setting = apply_setting;
         ρσ_modules["read_book.prefs.head_foot"].get_setting = get_setting;
         ρσ_modules["read_book.prefs.head_foot"].create_head_foot_panel = create_head_foot_panel;
         ρσ_modules["read_book.prefs.head_foot"].commit_head_foot = commit_head_foot;
+        ρσ_modules["read_book.prefs.head_foot"].format_time_left = format_time_left;
         ρσ_modules["read_book.prefs.head_foot"].render_head_foot = render_head_foot;
     })();
 
@@ -24105,6 +24262,7 @@ return this.__repr__();
         });
 
         function create_word_actions_panel(container, word, close_panel_func) {
+            word = str.replace(word, "\u00ad", "");
             current_data = [word, close_panel_func];
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none"})]));
             populate_list(container);
@@ -25162,6 +25320,118 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.timers";
+        var THRESHOLD, FILTER_THRESHOLD, MAX_SAMPLES;
+        THRESHOLD = 5;
+        FILTER_THRESHOLD = 25;
+        MAX_SAMPLES = 256;
+        function Timers() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            Timers.prototype.__bind_methods__.call(this);
+            Timers.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(Timers.prototype, "__bind_methods__", {value: function () {
+            this.start_book = Timers.prototype.start_book.bind(this);
+            this.reset_read_timer = Timers.prototype.reset_read_timer.bind(this);
+            this.calculate = Timers.prototype.calculate.bind(this);
+            this.on_human_scroll = Timers.prototype.on_human_scroll.bind(this);
+            this.time_for = Timers.prototype.time_for.bind(this);
+        }});
+        Timers.prototype.__init__ = function __init__() {
+            var self = this;
+            self.reset_read_timer();
+            self.rates = [];
+            self.average = self.stddev = 0;
+        };
+        Timers.__argnames__ = Timers.prototype.__init__.__argnames__;
+        Timers.__handles_kwarg_interpolation__ = Timers.prototype.__init__.__handles_kwarg_interpolation__;
+        Timers.prototype.start_book = function start_book(book) {
+            var self = this;
+            self.reset_read_timer();
+            self.rates = [];
+        };
+        if (!Timers.prototype.start_book.__argnames__) Object.defineProperties(Timers.prototype.start_book, {
+            __argnames__ : {value: ["book"]}
+        });
+        Timers.prototype.reset_read_timer = function reset_read_timer() {
+            var self = this;
+            self.last_scroll_at = null;
+        };
+        Timers.prototype.calculate = function calculate() {
+            var self = this;
+            var rates, rlen, avg, sq, x;
+            rates = self.rates;
+            rlen = rates.length;
+            if (rlen >= THRESHOLD) {
+                avg = 0;
+                for (var i = 0; i < rlen; i++) {
+                    avg += rates[(typeof i === "number" && i < 0) ? rates.length + i : i];
+                }
+                avg /= rlen;
+                self.average = avg;
+                sq = 0;
+                for (var i = 0; i < rlen; i++) {
+                    x = rates[(typeof i === "number" && i < 0) ? rates.length + i : i] - avg;
+                    sq += x * x;
+                }
+                self.stddev = Math.sqrt(sq / (rlen - 1));
+            } else {
+                self.average = self.stddev = 0;
+            }
+        };
+        Timers.prototype.on_human_scroll = function on_human_scroll(amt_scrolled) {
+            var self = this;
+            var last_scroll_at, now, time_since_last_scroll, rate;
+            last_scroll_at = self.last_scroll_at;
+            self.last_scroll_at = now = window.performance.now();
+            if (last_scroll_at === null) {
+                return;
+            }
+            time_since_last_scroll = (now - last_scroll_at) / 1e3;
+            if (time_since_last_scroll <= 0 || time_since_last_scroll >= 300) {
+                return;
+            }
+            if (time_since_last_scroll < 2) {
+                return;
+            }
+            rate = amt_scrolled / time_since_last_scroll;
+            if (self.rates.length >= FILTER_THRESHOLD && Math.abs(rate - self.average) > 2 * self.stddev) {
+                return;
+            }
+            if (self.rates.length >= MAX_SAMPLES) {
+                self.rates.shift();
+            }
+            self.rates.push(rate);
+            self.calculate();
+        };
+        if (!Timers.prototype.on_human_scroll.__argnames__) Object.defineProperties(Timers.prototype.on_human_scroll, {
+            __argnames__ : {value: ["amt_scrolled"]}
+        });
+        Timers.prototype.time_for = function time_for(length) {
+            var self = this;
+            if (length >= 0 && self.rates.length >= THRESHOLD && self.average > 0) {
+                return length / self.average;
+            }
+            return null;
+        };
+        if (!Timers.prototype.time_for.__argnames__) Object.defineProperties(Timers.prototype.time_for, {
+            __argnames__ : {value: ["length"]}
+        });
+        Timers.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        Timers.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(Timers.prototype, "__bases__", {value: []});
+
+        ρσ_modules["read_book.timers"].THRESHOLD = THRESHOLD;
+        ρσ_modules["read_book.timers"].FILTER_THRESHOLD = FILTER_THRESHOLD;
+        ρσ_modules["read_book.timers"].MAX_SAMPLES = MAX_SAMPLES;
+        ρσ_modules["read_book.timers"].Timers = Timers;
+    })();
+
+    (function(){
         var __name__ = "read_book.view";
         var E = ρσ_modules.elementmaker.E;
 
@@ -25213,6 +25483,8 @@ return this.__repr__();
 
         var SearchOverlay = ρσ_modules["read_book.search"].SearchOverlay;
         var find_in_spine = ρσ_modules["read_book.search"].find_in_spine;
+
+        var Timers = ρσ_modules["read_book.timers"].Timers;
 
         var get_current_toc_nodes = ρσ_modules["read_book.toc"].get_current_toc_nodes;
         var update_visible_toc_nodes = ρσ_modules["read_book.toc"].update_visible_toc_nodes;
@@ -25314,6 +25586,7 @@ return this.__repr__();
             this.iframe_size = View.prototype.iframe_size.bind(this);
             this.on_request_size = View.prototype.on_request_size.bind(this);
             this.on_print = View.prototype.on_print.bind(this);
+            this.on_human_scroll = View.prototype.on_human_scroll.bind(this);
             this.find = View.prototype.find.bind(this);
             this.on_find_in_spine = View.prototype.on_find_in_spine.bind(this);
             this.bump_font_size = View.prototype.bump_font_size.bind(this);
@@ -25366,8 +25639,9 @@ return this.__repr__();
             var self = this;
             var sd, left_margin, right_margin, iframe_id, handlers;
             self.ui = ui;
+            self.timers = new Timers;
             self.loaded_resources = Object.create(null);
-            self.current_progress_frac = 0;
+            self.current_progress_frac = self.current_file_progress_frac = 0;
             self.current_toc_node = self.current_toc_toplevel_node = null;
             self.clock_timer_id = 0;
             sd = get_session_data();
@@ -25403,6 +25677,7 @@ return this.__repr__();
                 ρσ_d["request_size"] = self.on_request_size;
                 ρσ_d["show_footnote"] = self.on_show_footnote;
                 ρσ_d["print"] = self.on_print;
+                ρσ_d["human_scroll"] = self.on_human_scroll;
                 return ρσ_d;
             }).call(this);
             self.iframe_wrapper = new IframeWrapper(handlers, document.getElementById(iframe_id), "read_book.iframe", _("Bootstrapping book reader..."));
@@ -25494,6 +25769,23 @@ return this.__repr__();
             print(data.string);
         };
         if (!View.prototype.on_print.__argnames__) Object.defineProperties(View.prototype.on_print, {
+            __argnames__ : {value: ["data"]}
+        });
+        View.prototype.on_human_scroll = function on_human_scroll(data) {
+            var self = this;
+            var name, length, amt_scrolled;
+            if (data.scrolled_by_frac === null) {
+                self.timers.reset_read_timer();
+            } else {
+                name = self.currently_showing.name;
+                length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length;
+                if (length) {
+                    amt_scrolled = data.scrolled_by_frac * length;
+                    self.timers.on_human_scroll(amt_scrolled);
+                }
+            }
+        };
+        if (!View.prototype.on_human_scroll.__argnames__) Object.defineProperties(View.prototype.on_human_scroll, {
             __argnames__ : {value: ["data"]}
         });
         View.prototype.find = function find(text, backwards) {
@@ -25742,6 +26034,7 @@ return this.__repr__();
                 self.content_popup_overlay.iframe_wrapper.reset();
                 self.loaded_resources = Object.create(null);
                 self.content_popup_overlay.loaded_resources = Object.create(null);
+                self.timers.start_book(book);
             }
             self.book = current_book.book = book;
             self.ui.db.update_last_read_time(book);
@@ -26010,6 +26303,7 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
             self.current_progress_frac = data.progress_frac;
+            self.current_file_progress_frac = data.file_progress_frac;
             self.update_header_footer();
             key = self.book.key;
             if (username) {
@@ -26031,22 +26325,33 @@ return this.__repr__();
         });
         View.prototype.update_header_footer = function update_header_footer() {
             var self = this;
-            var sd, has_clock, div;
+            var sd, has_clock, book_length, name, chapter_length, book_time, chapter_time, div;
             sd = get_session_data();
             has_clock = false;
+            if (ρσ_exists.d(self.book).manifest) {
+                book_length = self.book.manifest.total_length || 0;
+                name = self.currently_showing.name;
+                chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
+            } else {
+                book_length = chapter_length = 0;
+            }
+            book_length *= max(0, 1 - self.current_progress_frac);
+            chapter_length *= max(0, 1 - self.current_file_progress_frac);
+            book_time = self.timers.time_for(book_length);
+            chapter_time = self.timers.time_for(chapter_length);
             function render_template(div, sz_attr, name) {
                 var mi, ρσ_unpack, texta, hca, textb, hcb, textc, hcc, c;
                 if (sd.get(sz_attr, 20) > 5) {
                     mi = self.book.metadata;
-                    ρσ_unpack = render_head_foot(div.firstChild, name, "left", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node);
+                    ρσ_unpack = render_head_foot(div.firstChild, name, "left", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                     texta = ρσ_unpack[0];
                     hca = ρσ_unpack[1];
-                    ρσ_unpack = render_head_foot(div.firstChild.nextSibling, name, "middle", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node);
+                    ρσ_unpack = render_head_foot(div.firstChild.nextSibling, name, "middle", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                     textb = ρσ_unpack[0];
                     hcb = ρσ_unpack[1];
-                    ρσ_unpack = render_head_foot(div.lastChild, name, "right", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node);
+                    ρσ_unpack = render_head_foot(div.lastChild, name, "right", self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                     textc = ρσ_unpack[0];
                     hcc = ρσ_unpack[1];
@@ -30150,10 +30455,7 @@ return this.__repr__();
                 window.onpopstate = on_pop_state;
             }, 0);
             translations = get_translations();
-            if (translations) {
-                install(translations);
-                get_translations(translations);
-            }
+            install(translations);
             remove_initial_progress_bar();
             document.head.appendChild(E.style(get_widget_css()));
             ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({background_color: get_color("window-background"), color: get_color("window-foreground")})]));
@@ -30177,7 +30479,7 @@ return this.__repr__();
             interface_data = get_interface_data();
             sd = new UserSessionData(interface_data.username, interface_data.user_session_data);
             set_session_data(sd);
-            if (data.translations) {
+            if (ρσ_exists.n(data.translations)) {
                 get_translations(data.translations);
             }
             init_ui();
@@ -30230,12 +30532,23 @@ return this.__repr__();
         };
 
         function do_update_interface_data() {
-            ajax("interface-data/update", (function() {
+            var t, thash, url;
+            t = get_translations();
+            thash = (typeof t !== "undefined" && t !== null ? t : Object.create(null)).hash;
+            url = "interface-data/update";
+            if (thash) {
+                url += "/" + thash;
+            }
+            ajax(url, (function() {
                 var ρσ_anonfunc = function (end_type, xhr, ev) {
                     var data;
                     if (end_type === "load") {
                         data = JSON.parse(xhr.responseText);
                         update_interface_data(data);
+                        if (ρσ_exists.n(data.translations)) {
+                            get_translations(data.translations);
+                            install(data.translations);
+                        }
                     }
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {

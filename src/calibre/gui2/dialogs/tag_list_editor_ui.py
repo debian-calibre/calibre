@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -53,6 +53,13 @@ class Ui_TagListEditor(object):
         self.rename_button.setIconSize(QtCore.QSize(32, 32))
         self.rename_button.setObjectName("rename_button")
         self.verticalLayout_2.addWidget(self.rename_button)
+        self.undo_button = QtWidgets.QToolButton(TagListEditor)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(I("edit-undo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.undo_button.setIcon(icon4)
+        self.undo_button.setIconSize(QtCore.QSize(32, 32))
+        self.undo_button.setObjectName("undo_button")
+        self.verticalLayout_2.addWidget(self.undo_button)
         self.gridlayout.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
         self.table = QtWidgets.QTableWidget(TagListEditor)
         self.table.setAlternatingRowColors(True)
@@ -80,13 +87,17 @@ class Ui_TagListEditor(object):
         TagListEditor.setWindowTitle(_("Category editor"))
         self.label.setText(_("&Search for:"))
         self.search_box.setToolTip(_("Search for an item in the Tag column"))
-        self.search_button.setToolTip(_("Find the first/next matching item"))
+        self.search_button.setToolTip(_("Display items containing the search string"))
         self.search_button.setText(_("&Find"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))
         self.delete_button.setText(_("..."))
+        self.delete_button.setShortcut(_("Ctrl+D"))
         self.rename_button.setToolTip(_("Rename the item in every book where it is used."))
         self.rename_button.setText(_("..."))
-        self.rename_button.setShortcut(_("Ctrl+S"))
+        self.rename_button.setShortcut(_("Ctrl+R"))
+        self.undo_button.setToolTip(_("Undo any deletes or edits on the selected lines"))
+        self.undo_button.setText(_("..."))
+        self.undo_button.setShortcut(_("Ctrl+U"))
 
 from calibre.gui2.widgets import HistoryLineEdit
 
