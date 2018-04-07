@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Herman van der Vaart <vaarttuig@gmail.com>, 2018
+# Herman L.M. van der Vaart <vaarttuig@gmail.com>, 2018
 # Mario Moens <marimo.it4u@gmail.com>, 2017
-# M. de Boer <de.boer.melle@gmail.com>, 2017
+# M. de Boer <de.boer.melle@gmail.com>, 2017-2018
 # math1985 <transifex@matthijsmelissen.nl>, 2016
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-23 08:43+0530\n"
-"PO-Revision-Date: 2018-03-06 15:57+0000\n"
-"Last-Translator: Herman van der Vaart <vaarttuig@gmail.com>\n"
+"POT-Creation-Date: 2018-03-23 09:59+0530\n"
+"PO-Revision-Date: 2018-03-16 11:36+0000\n"
+"Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news_recipe.rst:4
 msgid "API documentation for recipes"
-msgstr "API documenten voor recepten"
+msgstr "API documentatie voor recepten"
 
 #: ../../home/kovid/work/calibre/manual/news_recipe.rst:9
 msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
@@ -45,7 +45,7 @@ msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr "Gebruik deze methode in een van de voorbewerk-methoden om de download voor het huidige artikel af te breken. Handig om artikelen over te slaan die ongepaste inhoud bevatten, zoals pure video-artikelen."
+msgstr "Gebruik deze methode in een van de voorbewerk-methoden om de download voor het huidige artikel te beëindigen. Handig om artikelen over te slaan die ongepaste inhoud bevatten, zoals pure video-artikelen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
@@ -185,14 +185,14 @@ msgid ""
 "`None`. If you want your recipe to download a cover for the e-book override "
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
-msgstr ""
+msgstr "Retourneer een :term:`URL` naar de omslagafbeelding voor deze editie of` `Geen`. Standaard retourneert het de waarde van het lid `self.cover_url` dat normaal` Geen` is. Als u wilt dat uw recept een omslag voor het e-book download, vervangt u deze methode in uw subklasse of stelt u de lid-variabele `self.cover_url` in voordat deze methode wordt aangeroepen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
 msgid ""
 "By default returns `self.extra_css`. Override if you want to "
 "programmatically generate the extra_css."
-msgstr ""
+msgstr "Retourneert standaard `self.extra_css`. Negeren als je de extra_css programmatisch wilt genereren."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
@@ -202,12 +202,12 @@ msgid ""
 "None or an empty string, the title from the feed is used. This method is "
 "useful if your recipe needs to do some processing to figure out the list of "
 "feeds to download. If so, override in your subclass."
-msgstr ""
+msgstr "Retourneer een lijst met :term:`RSS`-feeds om op te halen voor dit profiel. Elk element van de lijst moet een 2-elementen-tupel van het formaat (titel, URL) zijn. Als de titel Geen of een lege tekenreeks is, wordt de titel uit de feed gebruikt. Deze methode is handig als uw recept een aantal bewerkingen moet uitvoeren om uit te zoeken welke feeds moeten worden gedownload. Als dit het geval is, overschrijft dit in uw subklasse."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
 msgid "Override in subclass to use something other than the recipe title"
-msgstr ""
+msgstr "Overschrijven in subklasse om iets anders dan de recept-titel te gebruiken"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
@@ -218,7 +218,7 @@ msgid ""
 "e-book override this method in your subclass, or set the member variable "
 "`self.masthead_url` before this method is called. Masthead images are used "
 "in Kindle MOBI files."
-msgstr ""
+msgstr "Retourneer een :term:`URL` naar de masthead-afbeelding voor deze editie of` `Geen`. Standaard retourneert het de waarde van het lid `self.masthead_url` dat normaal` Geen` is. Als u wilt dat uw recept een masthead voor het e-book download, vervangt u deze methode in uw subklasse of stelt u de lid-variabele `self.masthead_url` in voordat deze methode wordt aangeroepen. Masthead-afbeeldingen worden gebruikt in Kindle MOBI-bestanden."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
@@ -227,21 +227,21 @@ msgid ""
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
 "fetching engine, so it can contain links to pages/images on the web."
-msgstr ""
+msgstr "Als u `articles_are_obfuscated` instelt, wordt deze methode bij elke artikel-URL aangeroepen. Het dient het pad naar een bestand, dat de artikel-HTML bevat, in het bestandssysteem terug te geven. Dat bestand wordt verwerkt door de recursieve HTML-ophaalengine, zodat het koppelingen naar pagina's / afbeeldingen op internet kan bevatten."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
-msgstr ""
+msgstr "Deze methode is meestal nuttig voor sites die het moeilijk maken om automatisch toegang te krijgen tot artikelinhoud."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL."
-msgstr ""
+msgstr "Voer enige bewerking uit op afbeeldings-URL's (zoals verwijderen van formaatbeperkingen voor dynamisch gegenereerde afbeeldingen, enz.) en retourneer de precessed URL."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -250,19 +250,19 @@ msgid ""
 "`BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ of "
 "it."
-msgstr ""
+msgstr "Gemaksmethode waarbij een URL naar de indexpagina wordt gehaald en een `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>` _ ervan wordt geretourneerd."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
 msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
-msgstr ""
+msgstr "`url_or_raw`: ofwel een URL of de gedownloade indexpagina als een tekenreeks"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
 msgid ""
 "Return True if the link should be followed or False otherwise. By default, "
 "raises NotImplementedError which causes the downloader to ignore it."
-msgstr ""
+msgstr "Retourneer Waar als de link moet worden gevolgd of anders Onwaar. Hiermee wordt standaard NotImplementedError gezet waardoor de downloader deze negeert."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
@@ -272,14 +272,14 @@ msgstr "De te volgen URL"
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
 msgid "The tag from which the URL was derived"
-msgstr ""
+msgstr "Het label waarvan de URL is afgeleid"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
 msgid ""
 "Create a list of articles from the list of feeds returned by "
 ":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
-msgstr ""
+msgstr "Maak een lijst met artikelen uit de lijst met feeds geretourneerd door :meth:`BasicNewsRecipe.get_feeds`. Retourneer een lijst met :class:`Feed` objecten."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
@@ -289,26 +289,26 @@ msgid ""
 "that have a \"Print Edition\" webpage that lists all the articles in the "
 "current print edition. If this function is implemented, it will be used in "
 "preference to :meth:`BasicNewsRecipe.parse_feeds`."
-msgstr ""
+msgstr "Deze methode moet worden geïmplementeerd in recepten die een website verwerken in plaats van feeds om een ​​lijst met artikelen te genereren. Typische toepassingen zijn voor nieuwsbronnen met een \"Printeditie\" -webpagina met een overzicht van alle artikelen in de huidige gedrukte editie. Als deze functie is geïmplementeerd, wordt deze gebruikt in plaats van :meth:`BasicNewsRecipe.parse_feeds`."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
 msgid ""
 "It must return a list. Each element of the list must be a 2-element tuple of"
 " the form ``('feed title', list of articles)``."
-msgstr ""
+msgstr "Het moet een lijst retourneren. Elk element van de lijst moet een 2-elementen tupel zijn van de vorm ``('feed title', lijst van artikelen)``."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
 msgid "Each list of articles must contain dictionaries of the form::"
-msgstr ""
+msgstr "Elke lijst met artikelen moet woordenboeken bevatten met de vorm::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
 msgid ""
 "For an example, see the recipe for downloading `The Atlantic`. In addition, "
 "you can add 'author' for the author of the article."
-msgstr ""
+msgstr "Als voorbeeld zie het recept voor het downloaden van `The Atlantic`. Daarnaast kunt u 'author' toevoegen voor de auteur van het artikel."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
@@ -316,7 +316,7 @@ msgid ""
 "If you want to abort processing for some reason and have calibre show the "
 "user a simple message instead of an error, call "
 ":meth:`abort_recipe_processing`."
-msgstr ""
+msgstr "Als u de verwerking om een ​​of andere reden wilt afbreken en Calibre aan de gebruiker een eenvoudig bericht in plaats van een fout wilt laten tonen, roep dan meth: `abort_recipe_processing` aan."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
@@ -324,29 +324,29 @@ msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr ""
+msgstr "Wordt aangeroepen wanneer elke HTML-pagina die bij het artikel hoort wordt gedownload. Bedoeld om te worden gebruikt om artikelmetagegevens te krijgen zoals auteur / samenvatting / enz. van de bewerkte HTML (soep)."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
 msgid ""
 "A object of class :class:`calibre.web.feeds.Article`. If you change the "
 "summary, remember to also change the text_summary"
-msgstr ""
+msgstr "Een object van klasse :class:`calibre.web.feeds.Article`. Als u de samenvatting wijzigt, vergeet dan niet om ook de text_summary te wijzigen"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr ""
+msgstr "Bewerkte HTML behorend bij dit artikel"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
 msgid "True iff the parsed HTML is the first page of the article."
-msgstr ""
+msgstr "Waar als de bewerkte HTML de eerste pagina van het artikel is."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
 msgid "Run any needed post processing on the parsed downloaded e-book."
-msgstr ""
+msgstr "Voer de benodigde nabewerking uit op het bewerkte gedownloade e-boek."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
@@ -365,7 +365,7 @@ msgid ""
 "after it is parsed for links and images. It can be used to do arbitrarily "
 "powerful post-processing on the :term:`HTML`. It should return `soup` after "
 "processing it."
-msgstr ""
+msgstr "Deze methode wordt aangeroepen met de bron van elk gedownload :term:`HTML` bestand, nadat het is bewerkt voor koppelingen en afbeeldingen. Het kan worden gebruikt om willekeurig krachtige post-processing uit te voeren op de :term:`HTML`. Het moet `soup` teruggeven na bewerking."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
@@ -375,7 +375,7 @@ msgid ""
 "A `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_  "
 "instance containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "Een `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>` _ exemplaar die de gedownloade :term:`HTML` bevat."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
@@ -389,7 +389,7 @@ msgid ""
 "before it is parsed for links and images. It is called after the cleanup as "
 "specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
 "processing on the :term:`HTML`. It should return `soup` after processing it."
-msgstr ""
+msgstr "Deze methode wordt aangeroepen met de bron van elk gedownload :term:`HTML` bestand, voor dat het is bewerkt voor koppelingen en afbeeldingen. Het wordt aangeroepen na het opschonen zoals gevraagd door remove_tags enz. Het kan worden gebruikt om willekeurig krachtige post-processing uit te voeren op de :term:`HTML`. Het moet `soup` teruggeven na bewerking."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
@@ -399,7 +399,7 @@ msgid ""
 "`soup`: A `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "instance containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "śoup': Een `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>` _ exemplaar die de gedownloade :term:`HTML` bevat."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
@@ -407,7 +407,7 @@ msgid ""
 "Perform some processing on downloaded image data. This is called on the raw "
 "data before any resizing is done. Must return the processed raw data. Return"
 " None to skip the image."
-msgstr ""
+msgstr "Voer enige bewerking uit op gedownloade afbeeldingsgegevens. Dit wordt aangeroepen voor de onbewerkte gegevens voordat enige formaat wijziging is gedaan. Moet de verwerkte onbewerkte gegevens retourneren. Retourneer None om de afbeelding over te slaan."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -416,17 +416,17 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr ""
+msgstr "Deze methode wordt aangeroepen met de bron van elk gedownload :term:`HTML` bestand, voordat het is bewerkt in een object-boom. raw_html is een unicode-tekenreeks die de onbewerkte HTML vertegenwoordigt die is gedownload van internet. url is de URL van waaruit de HTML is gedownload."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
 msgid "Note that this method acts *before* preprocess_regexps."
-msgstr ""
+msgstr "Merk op dat deze methode werkt * vóór * preprocess_regexps."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
 msgid "This method must return the processed raw_html as a unicode object."
-msgstr ""
+msgstr "Deze methode moet de bewerkte raw_html retourneren als een unicode-object."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
@@ -434,7 +434,7 @@ msgid ""
 "Take a `url` pointing to the webpage with article content and return the "
 ":term:`URL` pointing to the print version of the article. By default does "
 "nothing. For example::"
-msgstr ""
+msgstr "Neem een ​​`url` wijzend naar de webpagina met artikelinhoud en retourneer de :term:`URL` wijzend naar de gedrukte versie van het artikel. Doet standaard niets. Bijvoorbeeld::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
@@ -444,14 +444,14 @@ msgid ""
 "applied. Note that preprocess_regexps will have already been applied. It is "
 "meant to allow the recipe to skip ad pages. If the soup represents an ad "
 "page, return the HTML of the real page. Otherwise return None."
-msgstr ""
+msgstr "Deze methode wordt aangeroepen met de bron van elk gedownload :term:`HTML` bestand, voordat een van de opschoonattributen zoals remove_tags, keep_only_tags worden toegepast. Merk op dat preprocess_regexps al is toegepast. Het is bedoeld om het recept toe te staan ​​advertentiepagina's over te slaan. Als de soep een advertentiepagina vertegenwoordigt, retourneert u de HTML-code van de echte pagina. Anders retourneert u Geen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
 msgid ""
 "Convenience method to sort the titles in `index` according to `weights`. "
 "`index` is sorted in place. Returns `index`."
-msgstr ""
+msgstr "Gemaksmethode om de titels in `index`  te sorteren volgens` gewichten`. `index` wordt op zijn plaats gesorteerd. Retourneert `index`."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
@@ -463,7 +463,7 @@ msgstr "`index`: Een lijst van titels."
 msgid ""
 "`weights`: A dictionary that maps weights to titles. If any titles in index "
 "are not in weights, they are assumed to have a weight of 0."
-msgstr ""
+msgstr "`gewichten`: een woordenboek dat gewichten toewijst aan titels. Als titels in de index niet in 'gewichten' voorkomen, wordt aangenomen dat ze een gewicht van 0 hebben."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
@@ -472,14 +472,14 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag` and extract the text from it recursively, including any CDATA sections"
 " and alt tag attributes. Return a possibly empty unicode string."
-msgstr ""
+msgstr "Gemaksmethode om een ​​`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>` _ `Tag` te pakken en de tekst er recursief uit te halen, inclusief eventuele CDATA-secties en alt-tagattributen. Retourneer een mogelijk lege unicode-reeks."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
 msgid ""
 "`use_alt`: If `True` try to use the alt attribute for tags that don't have "
 "any textual content"
-msgstr ""
+msgstr "`use_alt`: Als` True` probeer het alt-attribuut te gebruiken voor tags die geen tekstuele inhoud hebben"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
@@ -487,14 +487,14 @@ msgid ""
 "`tag`: `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ "
 "`Tag`"
-msgstr ""
+msgstr "`tag`:` BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html> `_` Tag`"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
 msgid ""
 "Set to True and implement :meth:`get_obfuscated_article` to handle websites "
 "that try to make it difficult to scrape content."
-msgstr ""
+msgstr "Stel in op True en implementeer :meth:`get_obfuscated_article` om websites te beheren die het moeilijk maken om inhoud te schrapen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
@@ -503,20 +503,20 @@ msgid ""
 "algorithms from the readability project. Setting this to True, means that "
 "you do not have to worry about cleaning up the downloaded HTML manually "
 "(though manual cleanup will always be superior)."
-msgstr ""
+msgstr "Haal automatisch alle tekst uit de gedownloade artikelpagina's. Gebruikt de algoritmen van het leesbaarheidsproject. Als u dit instelt op True, betekent dit dat u zich geen zorgen hoeft te maken over het handmatig opschonen van de gedownloade HTML (hoewel handmatige opschoning altijd beter is)."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
-msgstr ""
+msgstr "Geef elementen op die het algoritme voor automatische opruiming nooit mag verwijderen. De syntaxis is een XPath-uitdrukking. Bijvoorbeeld::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
-msgstr ""
+msgstr "Indien Waar dan is de navigatiebalk gecentreerd, anders is deze links uitgelijnd"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
@@ -526,7 +526,7 @@ msgid ""
 "left at their default values, jpeg images will be scaled to fit in the "
 "screen dimensions set by the output profile and compressed to size at most "
 "(w * h)/16 where w x h are the scaled image dimensions."
-msgstr ""
+msgstr "Stel dit in op False om alle parameters voor schaling en compressie te negeren en afbeeldingen onaangepast door te geven. Als True en de andere compressieparameters hun standaardwaarden behouden, worden jpeg-afbeeldingen geschaald zodat ze passen in de schermafmetingen die zijn ingesteld door het uitvoerprofiel en maximaal tot (w * h) / 16 zijn gecomprimeerd waarbij wxh de geschaalde afbeeldingsafmetingen zijn ."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
@@ -542,7 +542,7 @@ msgid ""
 "will first be scaled and then its quality lowered until its size is less "
 "than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
 "other words, this compression happens after scaling."
-msgstr ""
+msgstr "De factor  gebruikt bij het automatisch comprimeren van JPEG-afbeeldingen. Indien ingesteld op Geen, is automatische compressie uitgeschakeld. Anders worden de afbeeldingen verkleind naar (w*h)/compress_news_images_auto_size bytes indien mogelijk door het kwaliteitsniveau te verlagen, waarbij w x h de afbeeldingsdimensies in pixels zijn. De minimale JPEG-kwaliteit is 5/100, dus het is mogelijk dat aan deze beperking niet wordt voldaan. Deze parameter kan worden overschreven door de parameter compress_news_images_max_size die een vaste maximumgrootte voor afbeeldingen biedt. Houd er rekening mee dat als u scale_news_images_to_device inschakelt, de afbeelding eerst wordt geschaald en de kwaliteit ervan wordt verlaagd totdat de grootte kleiner is dan (w * h)/factor, waarbij w en h nu de afmetingen van de *geschaalde* afbeelding zijn. Met andere woorden, deze compressie gebeurt na het schalen."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
@@ -551,7 +551,7 @@ msgid ""
 " this parameter overrides auto compression via "
 "compress_news_images_auto_size. The minimum jpeg quality will be 5/100 so it"
 " is possible this constraint will not be met."
-msgstr ""
+msgstr "Stel de JPEG-kwaliteit in zodat afbeeldingen niet groter zijn dan de opgegeven grootte (in KBytes). Indien ingesteld, overschrijft deze parameter automatische compressie via compress_news_images_auto_size. De minimale JPEG-kwaliteit is 5/100, dus het is mogelijk dat aan deze beperking niet wordt voldaan."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
@@ -559,7 +559,7 @@ msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
 "into an e-book. These will override any user or plugin specified values, so "
 "only use if absolutely necessary. For example::"
-msgstr ""
+msgstr "Receptspecifieke opties om de conversie van de gedownloade content naar een e-book te sturen. Deze zullen elke door gebruiker of plugin opgegeven waarden overschrijven, dus alleen gebruiken als dit absoluut noodzakelijk is. Bijvoorbeeld::"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
@@ -572,21 +572,21 @@ msgid ""
 "15px on the top and bottom. Color names defined at "
 "https://www.imagemagick.org/script/color.php Note that for some reason, "
 "white does not always work in Windows. Use #ffffff instead"
-msgstr ""
+msgstr "Standaard wordt de omslagafbeelding geretourneerd door get_cover_url () gebruikt als omslag voor het tijdschrift. Als u dit in uw recept overschrijft, krijgt Calibre de opdracht om de gedownloade omslag in een frame weer te geven waarvan de breedte en hoogte worden uitgedrukt als een percentage van de gedownloade omslag. cover_margins = (10, 15, '#ffffff') geeft de hoes een witte marge van 10px aan de linker- en rechterkant, 15px aan de boven- en onderkant. Kleurnamen gedefinieerd op https://www.imagemagick.org/script/color.php Merk op dat om welke reden dan ook wit niet altijd werkt in Windows. Gebruik in plaats daarvan #ffffff"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
 "Delay between consecutive downloads in seconds. The argument may be a "
 "floating point number to indicate a more precise time."
-msgstr ""
+msgstr "Vertraging in seconden tussen opeenvolgende downloads. Het argument kan een zwevendekommagetal zijn om een ​​preciezere tijd aan te geven."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
 msgid ""
 "A couple of lines that describe the content this recipe downloads. This will"
 " be used primarily in a GUI that presents a list of recipes."
-msgstr ""
+msgstr "Een paar regels die de inhoud beschrijven die door dit recept wordt gedownload. Dit wordt voornamelijk gebruikt in een GUI die een lijst met recepten aanbiedt."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
@@ -596,7 +596,7 @@ msgid ""
 "``cp1252``. If None, try to detect the encoding. If it is a callable, the "
 "callable is called with two arguments: The recipe object and the source to "
 "be decoded. It must return the decoded source."
-msgstr ""
+msgstr "Geef een overschrijf-codering op voor sites met een onjuiste karakterset-specificatie. De meest gebruikelijke is '`latin1`` opgeven en \"cp1252\" gebruiken. Als None, probeer de codering te detecteren. Als het een aanroepbare is, wordt deze aangeroepen met twee argumenten: het receptobject en de bron die moet worden gedecodeerd. Het moet de gedecodeerde bron retourneren."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
