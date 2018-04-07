@@ -27,7 +27,7 @@ from calibre.srv.routes import endpoint, json
 from calibre.srv.utils import get_library_data, get_use_roman
 from calibre.utils.config import prefs, tweaks
 from calibre.utils.icu import sort_key, numeric_sort_key
-from calibre.utils.localization import get_lang
+from calibre.utils.localization import get_lang, lang_map_for_ui
 from calibre.utils.search_query_parser import ParseException
 
 POSTABLE = frozenset({'GET', 'POST', 'HEAD'})
@@ -142,6 +142,7 @@ def basic_interface_data(ctx, rd):
         'gui_pubdate_display_format': tweaks['gui_pubdate_display_format'],
         'gui_timestamp_display_format': tweaks['gui_timestamp_display_format'],
         'gui_last_modified_display_format': tweaks['gui_last_modified_display_format'],
+        'completion_mode': tweaks['completion_mode'],
         'use_roman_numerals_for_series_number': get_use_roman(),
         'translations': get_translations(),
         'icon_map': icon_map(),
@@ -153,12 +154,16 @@ def basic_interface_data(ctx, rd):
     return ans
 
 
-@endpoint('/interface-data/update', postprocess=json)
-def update_interface_data(ctx, rd):
+@endpoint('/interface-data/update/{translations_hash=None}', postprocess=json)
+def update_interface_data(ctx, rd, translations_hash):
     '''
     Return the interface data needed for the server UI
     '''
-    return basic_interface_data(ctx, rd)
+    ans = basic_interface_data(ctx, rd)
+    t = ans['translations']
+    if t and (t.get('hash') or translations_hash) and t.get('hash') == translations_hash:
+        del ans['translations']
+    return ans
 
 
 def get_field_list(db):
@@ -386,11 +391,22 @@ def tag_browser(ctx, rd):
     return rd.etagged_dynamic_response(etag, generate)
 
 
+def all_lang_names():
+    ans = getattr(all_lang_names, 'ans', None)
+    if ans is None:
+        ans = all_lang_names.ans = tuple(sorted(lang_map_for_ui().itervalues(), key=numeric_sort_key))
+    return ans
+
+
 @endpoint('/interface-data/field-names/{field}', postprocess=json)
 def field_names(ctx, rd, field):
     '''
     Get a list of all names for the specified field
     Optional: ?library_id=<default library>
     '''
-    db, library_id = get_library_data(ctx, rd)[:2]
-    return tuple(sorted(db.all_field_names(field), key=numeric_sort_key))
+    if field == 'languages':
+        ans = all_lang_names()
+    else:
+        db, library_id = get_library_data(ctx, rd)[:2]
+        ans = tuple(sorted(db.all_field_names(field), key=numeric_sort_key))
+    return ans

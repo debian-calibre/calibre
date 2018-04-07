@@ -5,14 +5,15 @@ from __python__ import bound_methods, hash_literals
 from elementmaker import E
 from gettext import gettext as _
 
+import read_book.iframe  # noqa
 from ajax import ajax_send
 from book_list.book_details import CLASS_NAME as BD_CLASS_NAME, render_metadata
 from book_list.globals import get_session_data
 from book_list.router import push_state, read_book_mode
 from book_list.theme import get_color
 from dom import add_extra_css, build_rule, clear, set_css, svgicon, unique_id
+from iframe_comm import IframeWrapper
 from modals import error_dialog, warning_dialog
-from read_book.comm import IframeWrapper
 from read_book.content_popup import ContentPopupOverlay
 from read_book.globals import current_book, set_current_spine_item
 from read_book.goto import get_next_section
@@ -22,7 +23,8 @@ from read_book.prefs.font_size import change_font_size_by
 from read_book.prefs.head_foot import render_head_foot
 from read_book.resources import load_resources
 from read_book.search import SearchOverlay, find_in_spine
-from read_book.toc import update_visible_toc_nodes, get_current_toc_nodes
+from read_book.timers import Timers
+from read_book.toc import get_current_toc_nodes, update_visible_toc_nodes
 from read_book.touch import set_left_margin_handler, set_right_margin_handler
 from session import get_device_uuid, get_interface_data
 from utils import html_escape, is_ios, parse_url_params, username_key
@@ -115,8 +117,9 @@ class View:
 
     def __init__(self, container, ui):
         self.ui = ui
+        self.timers = Timers()
         self.loaded_resources = {}
-        self.current_progress_frac = 0
+        self.current_progress_frac = self.current_file_progress_frac = 0
         self.current_toc_node = self.current_toc_toplevel_node = None
         self.clock_timer_id = 0
         sd = get_session_data()
@@ -162,8 +165,9 @@ class View:
             'request_size': self.on_request_size,
             'show_footnote': self.on_show_footnote,
             'print': self.on_print,
+            'human_scroll': self.on_human_scroll,
         }
-        self.iframe_wrapper = IframeWrapper(handlers, document.getElementById(iframe_id), 'main', _('Bootstrapping book reader...'))
+        self.iframe_wrapper = IframeWrapper(handlers, document.getElementById(iframe_id), 'read_book.iframe', _('Bootstrapping book reader...'))
         self.search_overlay = SearchOverlay(self)
         self.content_popup_overlay = ContentPopupOverlay(self)
         self.overlay = Overlay(self)
@@ -212,6 +216,16 @@ class View:
 
     def on_print(self, data):
         print(data.string)
+
+    def on_human_scroll(self, data):
+        if data.scrolled_by_frac is None:
+            self.timers.reset_read_timer()
+        else:
+            name = self.currently_showing.name
+            length = self.book.manifest.files[name]?.length
+            if length:
+                amt_scrolled = data.scrolled_by_frac * length
+                self.timers.on_human_scroll(amt_scrolled)
 
     def find(self, text, backwards):
         self.iframe_wrapper.send_message('find', text=text, backwards=backwards, searched_in_spine=False)
@@ -360,6 +374,7 @@ class View:
             self.content_popup_overlay.iframe_wrapper.reset()
             self.loaded_resources = {}
             self.content_popup_overlay.loaded_resources = {}
+            self.timers.start_book(book)
         self.book = current_book.book = book
         self.ui.db.update_last_read_time(book)
         pos = {'replace_history':True}
@@ -489,6 +504,7 @@ class View:
         self.ui.db.update_last_read_time(self.book)
         lrd = {'device':get_device_uuid(), 'cfi':data.cfi, 'pos_frac':data.progress_frac}
         self.current_progress_frac = data.progress_frac
+        self.current_file_progress_frac = data.file_progress_frac
         self.update_header_footer()
         key = self.book.key
         if username:
@@ -502,13 +518,24 @@ class View:
         sd = get_session_data()
         has_clock = False
 
+        if self.book?.manifest:
+            book_length = self.book.manifest.total_length or 0
+            name = self.currently_showing.name
+            chapter_length = self.book.manifest.files[name]?.length or 0
+        else:
+            book_length = chapter_length = 0
+        book_length *= max(0, 1 - self.current_progress_frac)
+        chapter_length *=  max(0, 1 - self.current_file_progress_frac)
+        book_time = self.timers.time_for(book_length)
+        chapter_time = self.timers.time_for(chapter_length)
+
         def render_template(div, sz_attr, name):
             nonlocal has_clock
             if sd.get(sz_attr, 20) > 5:
                 mi = self.book.metadata
-                texta, hca = render_head_foot(div.firstChild, name, 'left', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node)
-                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node)
-                textc, hcc = render_head_foot(div.lastChild, name, 'right', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node)
+                texta, hca = render_head_foot(div.firstChild, name, 'left', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
+                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
+                textc, hcc = render_head_foot(div.lastChild, name, 'right', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
                 has_clock = hca or hcb or hcc
                 if textc and not textb and not texta:
                     # Want right-aligned

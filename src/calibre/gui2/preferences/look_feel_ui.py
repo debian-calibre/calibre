@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -546,7 +546,7 @@ class Ui_Form(object):
         self.label_widget_style.setText(_("User interface style (&needs restart):"))
         self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
         self.opt_disable_animations.setText(_("Disable &animations"))
-        self.opt_show_splash_screen.setText(_("Show &splash screen at startup"))
+        self.opt_show_splash_screen.setText(_("Show the &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
         self.label_hidpi.setText(_("Ad&just for high resolution screens (needs restart):"))
