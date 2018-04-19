@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -84,6 +84,11 @@ class Ui_Form(object):
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.relay_use_gmx = QtWidgets.QToolButton(Form)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.relay_use_gmx.sizePolicy().hasHeightForWidth())
+        self.relay_use_gmx.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(I("gmail_logo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.relay_use_gmx.setIcon(icon)
@@ -92,6 +97,11 @@ class Ui_Form(object):
         self.relay_use_gmx.setObjectName("relay_use_gmx")
         self.verticalLayout_9.addWidget(self.relay_use_gmx)
         self.relay_use_hotmail = QtWidgets.QToolButton(Form)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.relay_use_hotmail.sizePolicy().hasHeightForWidth())
+        self.relay_use_hotmail.setSizePolicy(sizePolicy)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(I("hotmail.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.relay_use_hotmail.setIcon(icon1)
@@ -130,11 +140,11 @@ class Ui_Form(object):
         self.label_20.setText(_("&Password:"))
         self.relay_password.setToolTip(_("Your password on the mail server"))
         self.relay_show_password.setText(_("&Show"))
-        self.label_21.setText(_("&Encryption:"))
+        self.label_21.setText(_("Encr&yption:"))
         self.relay_tls.setToolTip(_("Use TLS encryption when connecting to the mail server. This is the most common."))
         self.relay_tls.setText(_("&TLS"))
         self.relay_ssl.setToolTip(_("Use SSL encryption when connecting to the mail server."))
-        self.relay_ssl.setText(_("&SSL"))
+        self.relay_ssl.setText(_("SS&L"))
         self.relay_none.setToolTip(_("WARNING: Using no encryption is highly insecure"))
         self.relay_none.setText(_("&None"))
         self.relay_use_gmx.setText(_("Use &GMX"))

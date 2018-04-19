@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/email.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -28,6 +28,11 @@ class Ui_Form(object):
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.email_add = QtWidgets.QToolButton(Form)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.email_add.sizePolicy().hasHeightForWidth())
+        self.email_add.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(I("plus.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.email_add.setIcon(icon)
@@ -36,9 +41,19 @@ class Ui_Form(object):
         self.email_add.setObjectName("email_add")
         self.verticalLayout_8.addWidget(self.email_add)
         self.email_make_default = QtWidgets.QPushButton(Form)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.email_make_default.sizePolicy().hasHeightForWidth())
+        self.email_make_default.setSizePolicy(sizePolicy)
         self.email_make_default.setObjectName("email_make_default")
         self.verticalLayout_8.addWidget(self.email_make_default)
         self.email_remove = QtWidgets.QToolButton(Form)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.email_remove.sizePolicy().hasHeightForWidth())
+        self.email_remove.setSizePolicy(sizePolicy)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(I("minus.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.email_remove.setIcon(icon1)

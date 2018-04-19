@@ -418,6 +418,7 @@ class EbookViewer(MainWindow):
 
     def lookup(self, word):
         from urllib import quote
+        word = word.replace(u'\u00ad', '')
         word = quote(word.encode('utf-8'))
         lang = canonicalize_lang(self.view.current_language) or get_lang() or 'en'
         try:
@@ -1127,6 +1128,7 @@ class EbookViewer(MainWindow):
             if not self.tool_bar.isVisible():
                 self.toggle_toolbars()
             self.search.setFocus(Qt.OtherFocusReason)
+            self.search.lineEdit().selectAll()
             return
         if not self.view.handle_key_press(event):
             event.ignore()

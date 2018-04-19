@@ -117,6 +117,13 @@ def adjust_all_iframes(ev):
             adjust_iframe_height(iframe)
 
 
+def add_stars_to(stars, val, allow_half_stars):
+    for i in range(val // 2):
+        stars.appendChild(svgicon('star'))
+    if allow_half_stars and (val % 2):
+        stars.appendChild(svgicon('star-half'))
+
+
 window.addEventListener('resize', debounce(adjust_all_iframes, 250))
 
 def adjusting_sandboxed_html(html):
@@ -215,19 +222,15 @@ def render_metadata(mi, table, book_id):  # {{{
         stars = E.span()
         val = int(val or 0)
         if val > 0:
-            for i in range(val // 2):
-                stars.appendChild(svgicon('star'))
-            if fm.display.allow_half_stars and (val % 2):
-                stars.appendChild(svgicon('star-half'))
+            add_stars_to(stars, val, fm.display?.allow_half_stars)
             add_row(name, stars)
 
     def process_identifiers(field, fm, name, val):
         if val:
             keys = Object.keys(val)
             if keys.length:
-                table.appendChild(E.tr(E.td(name + ':'), E.td()))
+                td = E.td()
                 url_map = {k:v'[text, url]' for text, k, val, url in mi.urls_from_identifiers or v'[]'}
-                td = table.lastChild.lastChild
                 for k in keys:
                     idval = val[k]
                     x = url_map[k]
@@ -235,6 +238,8 @@ def render_metadata(mi, table, book_id):  # {{{
                         if td.childNodes.length:
                             td.appendChild(document.createTextNode(', '))
                         td.appendChild(E.a(title='{}:{}'.format(k, idval), target='_new', href=x[1], x[0]))
+                if td.childNodes.length:
+                    table.appendChild(E.tr(E.td(name + ':'), td))
 
     def process_languages(field, fm, name, val):
         if val and val.length:
@@ -356,12 +361,17 @@ def render_metadata(mi, table, book_id):  # {{{
 # }}}
 
 
-add_extra_css(def():
-    sel = '.' + CLASS_NAME + ' '
+def basic_table_rules(sel):
     style = ''
     style += build_rule(sel + 'table.metadata td', vertical_align='top')
     style += build_rule(sel + 'table.metadata td:first-of-type', font_weight='bold', padding_right='1em', white_space='nowrap')
     style += build_rule(sel + 'table.metadata td:last-of-type', overflow_wrap='break-word')
+    return style
+
+
+add_extra_css(def():
+    sel = '.' + CLASS_NAME + ' '
+    style = basic_table_rules(sel)
     style += build_rule(sel + 'table.metadata a[href]', color='blue')
     style += build_rule(sel + 'table.metadata a[href]:hover', color=get_color('window-hover-foreground'))
     style += build_rule(sel + 'table.metadata a[href]:active', color=get_color('window-hover-foreground'), transform='scale(1.5)')
@@ -455,14 +465,20 @@ def add_top_bar_buttons(container_id):
     container = document.getElementById(container_id)
     if container:
         clear_buttons(container)
+        add_button(container, 'edit', action=edit_metadata, tooltip=_('Edit the metadata for this book'))
         add_button(container, 'trash', action=delete_book, tooltip=_('Delete this book'))
         book_id = parse_url_params().book_id
         if book_id is '0':
-            add_button(container, 'random', def(): fetch_metadata(container_id, 0);)
+            add_button(container, 'random', def(): fetch_metadata(container_id, 0, proceed_after_succesful_fetch_metadata);)
         add_button(container, 'ellipsis-v', action=show_subsequent_panel.bind(None, 'more_actions'), tooltip=_('More actions'))
 
 
-def metadata_fetched(container_id, book_id, end_type, xhr, event):
+def proceed_after_succesful_fetch_metadata(container_id, book_id):
+    render_book(container_id, book_id)
+    add_top_bar_buttons(container_id)
+
+
+def metadata_fetched(container_id, book_id, proceed, end_type, xhr, event):
     nonlocal current_fetch
     if current_fetch is None or current_fetch is not xhr:
         return  # Fetching was aborted
@@ -480,8 +496,7 @@ def metadata_fetched(container_id, book_id, end_type, xhr, event):
         clear(c)
         book_id = int(data['id'])
         set_book_metadata(book_id, data)
-        render_book(container_id, book_id)
-        add_top_bar_buttons(container_id)
+        proceed(container_id, book_id)
     elif end_type is not 'abort':
         clear(c)
         c.appendChild(E.div(
@@ -491,14 +506,14 @@ def metadata_fetched(container_id, book_id, end_type, xhr, event):
         ))
         safe_set_inner_html(c.lastChild.lastChild, xhr.error_html)
 
-def fetch_metadata(container_id, book_id):
+def fetch_metadata(container_id, book_id, proceed):
     nonlocal current_fetch
     container = document.getElementById(container_id)
     if not container:
         return
     if current_fetch:
         current_fetch.abort()
-    current_fetch = ajax('interface-data/book-metadata/' + book_id, metadata_fetched.bind(None, container_id, book_id),
+    current_fetch = ajax('interface-data/book-metadata/' + book_id, metadata_fetched.bind(None, container_id, book_id, proceed),
                          query={'library_id':current_library_id(), 'vl':current_virtual_library()})
     current_fetch.send()
     container = container.lastChild
@@ -521,7 +536,21 @@ def create_book_details(container):
         render_book(container_id, current_book_id)
         add_top_bar_buttons(container_id)
     else:
-        fetch_metadata(container_id, current_book_id)
+        fetch_metadata(container_id, current_book_id, proceed_after_succesful_fetch_metadata)
+
+
+def report_load_failure(container):
+    err = E.div()
+    safe_set_inner_html(err, load_status.error_html)
+    container.appendChild(E.div(
+        style='margin: 1ex 1em',
+        E.div(_('Failed to load books from calibre library, with error:')),
+        err,
+        E.div(
+            style='margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1ex;',
+            E.a(onclick=def(): home(replace=True);, href='javascript: void(0)', style='color: blue', _('Go back to the home page')))
+        ),
+    )
 
 
 def check_for_books_loaded():
@@ -532,17 +561,7 @@ def check_for_books_loaded():
     container = container.lastChild
     clear(container)
     if not load_status.ok:
-        err = E.div()
-        safe_set_inner_html(err, load_status.error_html)
-        container.appendChild(E.div(
-            style='margin: 1ex 1em',
-            E.div(_('Failed to load books from calibre library, with error:')),
-            err,
-            E.div(
-                style='margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1ex;',
-                E.a(onclick=def(): home(replace=True);, href='javascript: void(0)', style='color: blue', _('Go back to the home page')))
-            ),
-        )
+        report_load_failure(container)
         return
     create_book_details(container)
 
@@ -568,6 +587,12 @@ def show_subsequent_panel(name, replace=False):
     q = parse_url_params()
     q.book_id = (read_book.book_id or q.book_id) + ''
     show_panel('book_details^' + name, query=q, replace=replace)
+
+
+def edit_metadata():
+    q = parse_url_params()
+    q.book_id = (read_book.book_id or q.book_id) + ''
+    show_panel('edit_metadata', query=q, replace=False)
 
 
 def create_more_actions_panel(container_id):

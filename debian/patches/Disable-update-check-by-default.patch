@@ -3,14 +3,12 @@ Date: Mon, 14 Nov 2016 22:41:23 +0100
 Subject: Disable update check by default
 
 ---
- src/calibre/gui2/main.py | 4 ++--
+ src/calibre/gui2/main.py |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/calibre/gui2/main.py b/src/calibre/gui2/main.py
-index 6240c59..0d92b4f 100644
---- a/src/calibre/gui2/main.py
-+++ b/src/calibre/gui2/main.py
-@@ -49,8 +49,8 @@ path_to_ebook to the database.
+--- calibre-debian.git.orig/src/calibre/gui2/main.py
++++ calibre-debian.git/src/calibre/gui2/main.py
+@@ -50,8 +50,8 @@
                        help=_('Start minimized to system tray.'))
      parser.add_option('-v', '--verbose', default=0, action='count',
                        help=_('Ignored, do not use. Present only for legacy reasons'))

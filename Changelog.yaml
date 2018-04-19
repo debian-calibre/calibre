@@ -20,6 +20,111 @@
 #   new recipes:
 #     - title:
 
+- version: 3.21.0
+  date: 2018-04-06
+
+  new features:
+    - title: "Browser viewer: Allow showing the time left in the current chapter/book in the header and footer areas of the book."
+      description: "To use go to the preferences of the browser viewer and customize the headers and footers to display the time left. Note that time left in chapter only works correctly if chapters are in separate HTML files in the book."
+
+    - title: "Manage tags dialog: Searching now shows all matching tags and there is an undo button to undo changes."
+      tickets: [1743896]
+
+    - title: "Add an output profile for the Kindle Oasis 2017"
+      tickets: [1759434]
+
+  bug fixes:
+    - title: "Content server: Fix adding/deleting books and editing metadata not updating the main calibre book list automatically."
+      tickets: [1761017]
+
+    - title: "Viewer: When doing a dictionary lookup, remove soft hyphens from the word, if any are present."
+      tickets: [1760292]
+
+    - title: "Edit metadata dialog: Fix tab order for buttons to the left of the title and author"
+
+    - title: "Trim cover dialog: Remove the redundant Trim & OK button, instead have the OK button trim automatically if there is a selection."
+      tickets: [1759671]
+
+    - title: "Update Amazon metadata plugin for a website change"
+
+    - title: "Content server: Fix translations not being updated without clearing the browser cache"
+
+    - title: "Content server: Fix switching from translations to no translations not working"
+
+    - title: "Content server: When updating interface data do not transmit translations if they have not been changed. Saves ~30-60KB bandwidth when using non-English interface language."
+
+  improved recipes:
+    - The Atlantic
+    - Fortune Magazine
+    - Telegraph UK
+    - Hot Air
+    - Reader's Digest
+    - The Economist
+
+
+- version: 3.20.0
+  date: 2018-03-23
+
+  new features:
+    - title: "Content server: Allow editing the metadata of books from the book details page"
+      type: major
+      description: "On the book details page, you can now edit any metadata and change covers by clicking the edit metadata icon in the right area of the top bar. Note that only users that have write permissions for the library can edit metadata."
+
+    - title: "Kobo driver: Recognize Kobo Aura 2 with new firmware (4.6.10188)"
+
+  bug fixes:
+    - title: 'When reading metadata from HTML also recognize <meta name="dc.description"> as being comments'
+
+  improved recipes:
+    - Danas
+    - Al monitor
+    - Folha de Sao Paolo
+    - New York Times
+    - Wirtschaft's Woche
+
+
+- version: 3.19.0
+  date: 2018-03-09
+
+  new features:
+    - title: "Driver for the new PocketBook 740"
+
+    - title: "Allow using relative URLs in comments type metadata. The relative URLs are interpreted relative to the book folder in the calibre library"
+
+    - title: "Edit book: Reports: Do not show characters from the HTML markup in the characters report."
+      tickets: [1753788]
+
+    - title: "Allow adding the Virtual library button to any toolbar/menu via Preferences->Toolbars & menus"
+
+  bug fixes:
+    - title: "Server: Fix server becoming unresponsive if a client sends invalid SSL data at exactly the right moment"
+
+    - title: "Conversion heuristics: Make unwrapping recognize Georgian letters as well."
+      tickets: [1753533]
+
+    - title: "Make de-serialization of stored conversion options safe against maliciously crafted input"
+      tickets: [1753870]
+
+    - title: "E-book viewer: Change the file format used to import/export bookmarks to use JSON. This prevents malicious bookmarks files from causing code execution."
+      tickets: [1753870]
+
+    - title: "Make the history completion for the search and replace edit box case-sensitive."
+      tickets: [1752447]
+
+    - title: "PDF Output: When the input document contains multiple anchors with the same value, use the first anchor rather than the last. This follows browser behavior."
+      tickets: [1752825]
+
+    - title: "FB2 Input: Add <div> to <blockquote> content to silence the useless epubcheck"
+      tickets: [1752141]
+
+  improved recipes:
+    - WirtschaftsWoche Online
+    - Spektrum der Wissenschaft
+
+  new recipes:
+    - title: Granta
+      author: Gary Arnold
+
 - version: 3.18.0
   date: 2018-02-23
 
