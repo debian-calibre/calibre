@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "avril 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-POLISH" "1" "avril 20, 2018" "3.22.1" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -103,6 +103,11 @@ Convertir les  tirets de texte brut, ellipses, guillemets, multiples traits d\fB
 .TP
 .B \-\-subset\-fonts, \-f
 Créer un sous\-ensemble de polices signifie réduire une police embarquée pour  contenir uniquement les caractères utilisés de cette police dans le livre. Cela réduit considérablement la taille des fichiers de police (une réduction de moitié de la taille du fichier de police est fréquent). Par exemple, si le livre utilise une police spécifique pour les en\-têtes, alors créer un sous\-ensemble réduira la police pour ne contenir que  les caractères réellement présents dans les en\-têtes du livre. Ou si le livre intègre les versions en gras et italique d\fB\(aq\fPune police, mais que le texte en italique ou en gras est relativement rare, voire inexistant, alors les caractères gras et en italiques peuvent être soit réduits à seulement  quelques caractères, voire complètement retirés. Le seul inconvénient des sous\-ensembles de polices, c\fB\(aq\fPest que si, à une date  ultérieure, vous décidez d\fB\(aq\fPajouter du texte à vos livres, le texte nouvellement  ajouté pourrait ne pas être pris en compte par la police réduite.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-upgrade\-book, \-U
+Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
 .UNINDENT
 .INDENT 0.0
 .TP

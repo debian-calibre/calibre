@@ -418,7 +418,11 @@ function ρσ_print() {
 
 function ρσ_int(val, base) {
     var ans;
-    ans = parseInt(val, base || 10);
+    if (typeof val === "number") {
+        ans = val | 0;
+    } else {
+        ans = parseInt(val, base || 10);
+    }
     if (isNaN(ans)) {
         throw new ValueError("Invalid literal for int with base " + (base || 10) + ": " + val);
     }
@@ -428,14 +432,21 @@ if (!ρσ_int.__argnames__) Object.defineProperties(ρσ_int, {
     __argnames__ : {value: ["val", "base"]}
 });
 
-function ρσ_float() {
+function ρσ_float(val) {
     var ans;
-    ans = parseFloat.apply(null, arguments);
+    if (typeof val === "number") {
+        ans = val;
+    } else {
+        ans = parseFloat(val);
+    }
     if (isNaN(ans)) {
         throw new ValueError("Could not convert string to float: " + arguments[0]);
     }
     return ans;
 };
+if (!ρσ_float.__argnames__) Object.defineProperties(ρσ_float, {
+    __argnames__ : {value: ["val"]}
+});
 
 function ρσ_arraylike_creator() {
     var names;
@@ -17019,7 +17030,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.21.0";
+        CALIBRE_VERSION = "3.22.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -23651,6 +23662,7 @@ return this.__repr__();
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
+        var ngettext = ρσ_modules.gettext.ngettext;
 
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
@@ -23810,10 +23822,10 @@ return this.__repr__();
                     return _("almost done");
                 }
                 minutes = minutes;
-                return _("{} mins").format(minutes);
+                return ngettext("{} min", "{} mins", minutes).format(minutes);
             }
             if (!minutes) {
-                return _("{} hours").format(hours);
+                return ngettext("{} hour", "{} hours", hours).format(hours);
             }
             return _("{} h {} mins").format(hours, minutes);
         };
@@ -24528,7 +24540,11 @@ return this.__repr__();
             }
             self.overlay.hide();
             if (load_type !== "load") {
-                error_dialog(_("Failed to fetch sync data"), _("Failed to download last read data from server, click \"Show details\" for more information."), xhr.error_html);
+                if (xhr.responseText === "login required for sync") {
+                    error_dialog(_("Failed to fetch sync data"), _("You must setup user accounts and login to use the sync functionality"));
+                } else {
+                    error_dialog(_("Failed to fetch sync data"), _("Failed to download last read data from server, click \"Show details\" for more information."), xhr.error_html);
+                }
                 return;
             }
             data = JSON.parse(xhr.responseText);

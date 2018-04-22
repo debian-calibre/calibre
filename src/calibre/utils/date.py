@@ -73,6 +73,7 @@ def is_date_undefined(qt_or_dt):
             d.month == UNDEFINED_DATE.month and
             d.day == UNDEFINED_DATE.day)
 
+
 _iso_pat = None
 
 
@@ -146,6 +147,7 @@ def dt_factory(time_t, assume_utc=False, as_utc=True):
         dt = dt.replace(tzinfo=_utc_tz if assume_utc else _local_tz)
     return dt.astimezone(_utc_tz if as_utc else _local_tz)
 
+
 safeyear = lambda x: min(max(x, MINYEAR), MAXYEAR)
 
 
@@ -191,6 +193,15 @@ def isoformat(date_time, assume_utc=False, as_utc=True, sep='T'):
     date_time = date_time.astimezone(_utc_tz if as_utc else _local_tz)
     # str(sep) because isoformat barfs with unicode sep on python 2.x
     return unicode(date_time.isoformat(str(sep)))
+
+
+def w3cdtf(date_time, assume_utc=False):
+    if hasattr(date_time, 'tzinfo'):
+        if date_time.tzinfo is None:
+            date_time = date_time.replace(tzinfo=_utc_tz if assume_utc else
+                    _local_tz)
+        date_time = date_time.astimezone(_utc_tz if as_utc else _local_tz)
+    return unicode(date_time.strftime('%Y-%m-%dT%H:%M:%SZ'))
 
 
 def as_local_time(date_time, assume_utc=True):
@@ -300,6 +311,7 @@ def fd_format_year(dt, ampm, yr):
         return '%02d'%(dt.year % 100)
     return '%04d'%dt.year
 
+
 fd_function_index = {
         'd': fd_format_day,
         'M': fd_format_month,
@@ -377,6 +389,7 @@ def cd_has_month(tt, dt):
 def cd_has_year(tt, dt):
     tt['year'] = dt.year
     return ''
+
 
 cd_function_index = {
         'd': cd_has_day,

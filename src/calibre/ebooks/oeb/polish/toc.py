@@ -19,7 +19,7 @@ from lxml.builder import ElementMaker
 
 from calibre import __version__
 from calibre.ebooks.oeb.base import (
-    XPath, uuid_id, xml2text, NCX, NCX_NS, XML, XHTML, XHTML_NS, serialize, EPUB_NS)
+    XPath, uuid_id, xml2text, NCX, NCX_NS, XML, XHTML, XHTML_NS, serialize, EPUB_NS, XML_NS, OEB_DOCS)
 from calibre.ebooks.oeb.polish.errors import MalformedMarkup
 from calibre.ebooks.oeb.polish.utils import guess_type, extract
 from calibre.ebooks.oeb.polish.opf import set_guide_item, get_book_language
@@ -43,6 +43,7 @@ class TOC(object):
             self.title = self.title.strip()
         self.parent = None
         self.children = []
+        self.page_list = []
 
     def add(self, title, dest, frag=None):
         c = TOC(title, dest, frag)
@@ -162,6 +163,15 @@ def parse_ncx(container, ncx_name):
         if uid:
             toc_root.uid = unicode(uid)
             break
+    for pl in root.xpath('//*[calibre:lower-case(local-name()) = "pagelist"]'):
+        for pt in pl.xpath('descendant::*[calibre:lower-case(local-name()) = "pagetarget"]'):
+            pagenum = pt.get('value')
+            if pagenum:
+                href = pt.xpath('descendant::*[calibre:lower-case(local-name()) = "content"]/@src')
+                if href:
+                    dest = container.href_to_name(href[0], base=ncx_name)
+                    frag = urlparse(href[0]).fragment or None
+                    toc_root.page_list.append({'dest': dest, 'pagenum': pagenum, 'frag': frag})
     return toc_root
 
 
@@ -625,19 +635,9 @@ def commit_ncx_toc(container, toc, lang=None, uid=None):
     container.pretty_print.add(tocname)
 
 
-def commit_nav_toc(container, toc, lang=None):
-    from calibre.ebooks.oeb.polish.pretty import pretty_xml_tree
-    tocname = find_existing_nav_toc(container)
-    if tocname is None:
-        item = container.generate_item('nav.xhtml', id_prefix='nav')
-        item.set('properties', 'nav')
-        tocname = container.href_to_name(item.get('href'), base=container.opf_name)
-    try:
-        root = container.parsed(tocname)
-    except KeyError:
-        root = container.parse_xhtml(P('templates/new_nav.html', data=True).decode('utf-8'))
+def ensure_single_nav_of_type(root, ntype='toc'):
     et = '{%s}type' % EPUB_NS
-    navs = [n for n in root.iterdescendants(XHTML('nav')) if n.get(et) == 'toc']
+    navs = [n for n in root.iterdescendants(XHTML('nav')) if n.get(et) == ntype]
     for x in navs[1:]:
         extract(x)
     if navs:
@@ -650,7 +650,26 @@ def commit_nav_toc(container, toc, lang=None):
     else:
         nav = root.makeelement(XHTML('nav'))
         first_child(root, XHTML('body')).append(nav)
-    nav.set('{%s}type' % EPUB_NS, 'toc')
+    nav.set('{%s}type' % EPUB_NS, ntype)
+    return nav
+
+
+def commit_nav_toc(container, toc, lang=None, landmarks=None):
+    from calibre.ebooks.oeb.polish.pretty import pretty_xml_tree
+    tocname = find_existing_nav_toc(container)
+    if tocname is None:
+        item = container.generate_item('nav.xhtml', id_prefix='nav')
+        item.set('properties', 'nav')
+        tocname = container.href_to_name(item.get('href'), base=container.opf_name)
+        root = container.parse_xhtml(P('templates/new_nav.html', data=True).decode('utf-8'))
+        container.replace(tocname, root)
+    else:
+        root = container.parsed(tocname)
+    if lang:
+        lang = lang_as_iso639_1(lang) or lang
+        root.set('lang', lang)
+        root.set('{%s}lang' % XML_NS, lang)
+    nav = ensure_single_nav_of_type(root, 'toc')
     if toc.toc_title:
         nav.append(nav.makeelement(XHTML('h1')))
         nav[-1].text = toc.toc_title
@@ -679,11 +698,51 @@ def commit_nav_toc(container, toc, lang=None):
                 li.append(ol)
                 process_node(ol, child)
     process_node(rnode, toc)
-    pretty_xml_tree(rnode)
-    for li in rnode.iterdescendants(XHTML('li')):
-        if len(li) == 1:
-            li.text = None
-            li[0].tail = None
+    pretty_xml_tree(nav)
+
+    def collapse_li(parent):
+        for li in parent.iterdescendants(XHTML('li')):
+            if len(li) == 1:
+                li.text = None
+                li[0].tail = None
+    collapse_li(nav)
+    nav.tail = '\n'
+
+    def create_li(ol, entry):
+        li = ol.makeelement(XHTML('li'))
+        ol.append(li)
+        a = li.makeelement(XHTML('a'))
+        li.append(a)
+        href = container.name_to_href(entry['dest'], tocname)
+        if entry['frag']:
+            href += '#' + entry['frag']
+        a.set('href', href)
+        return a
+
+    if landmarks is not None:
+        nav = ensure_single_nav_of_type(root, 'landmarks')
+        nav.set('hidden', '')
+        ol = nav.makeelement(XHTML('ol'))
+        nav.append(ol)
+        for entry in landmarks:
+            if entry['type'] and container.has_name(entry['dest']) and container.mime_map[entry['dest']] in OEB_DOCS:
+                a = create_li(ol, entry)
+                a.set('{%s}type' % EPUB_NS, entry['type'])
+                a.text = entry['title'] or None
+        pretty_xml_tree(nav)
+        collapse_li(nav)
+
+    if toc.page_list:
+        nav = ensure_single_nav_of_type(root, 'page-list')
+        nav.set('hidden', '')
+        ol = nav.makeelement(XHTML('ol'))
+        nav.append(ol)
+        for entry in toc.page_list:
+            if container.has_name(entry['dest']) and container.mime_map[entry['dest']] in OEB_DOCS:
+                a = create_li(ol, entry)
+                a.text = str(entry['pagenum'])
+        pretty_xml_tree(nav)
+        collapse_li(nav)
     container.replace(tocname, root)
 
 
