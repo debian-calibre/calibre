@@ -6,22 +6,22 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import unicodedata, re, os, cPickle, textwrap
+import re, textwrap
 from bisect import bisect
 from functools import partial
-from collections import defaultdict
 
 from PyQt5.Qt import (
-    QAbstractItemModel, QModelIndex, Qt, pyqtSignal, QApplication,
+    QAbstractItemModel, QModelIndex, Qt, pyqtSignal, QApplication, QHBoxLayout,
     QTreeView, QSize, QGridLayout, QAbstractListModel, QListView, QPen, QMenu,
     QStyledItemDelegate, QSplitter, QLabel, QSizePolicy, QIcon, QMimeData,
-    QPushButton, QToolButton, QInputMethodEvent)
+    QPushButton, QToolButton, QInputMethodEvent, QCheckBox)
 
-from calibre.constants import plugins, cache_dir
+from calibre.constants import plugins
 from calibre.gui2.widgets2 import HistoryLineEdit2
 from calibre.gui2.tweak_book import tprefs
 from calibre.gui2.tweak_book.widgets import Dialog, BusyCursor
-from calibre.utils.icu import safe_chr as chr, icu_unicode_version, character_name_from_code
+from calibre.utils.icu import safe_chr as chr
+from calibre.utils.unicode_names import character_name_from_code, points_for_word
 
 ROOT = QModelIndex()
 
@@ -33,55 +33,20 @@ non_printing = {
     0x206e: 'nads', 0x206f: 'nods', 0x20: 'sp', 0x7f: 'del', 0x2e3a: '2m', 0x2e3b: '3m', 0xad: 'shy',
 }
 
+
 # Searching {{{
-
-
-def load_search_index():
-    topchar = 0x10ffff
-    ver = (1, topchar, icu_unicode_version or unicodedata.unidata_version)  # Increment this when you make any changes to the index
-    name_map = {}
-    path = os.path.join(cache_dir(), 'unicode-name-index.pickle')
-    if os.path.exists(path):
-        with open(path, 'rb') as f:
-            name_map = cPickle.load(f)
-        if name_map.pop('calibre-nm-version:', None) != ver:
-            name_map = {}
-    if not name_map:
-        name_map = defaultdict(set)
-        for x in xrange(1, topchar + 1):
-            for word in character_name_from_code(x).split():
-                name_map[word.lower()].add(x)
-        from calibre.ebooks.html_entities import html5_entities
-        for name, char in html5_entities.iteritems():
-            try:
-                name_map[name.lower()].add(ord(char))
-            except TypeError:
-                continue
-        name_map['nnbsp'].add(0x202F)
-        name_map['calibre-nm-version:'] = ver
-        cPickle.dump(dict(name_map), open(path, 'wb'), -1)
-        del name_map['calibre-nm-version:']
-    return name_map
-
-
-_index = None
-
-
 def search_for_chars(query, and_tokens=False):
-    global _index
-    if _index is None:
-        _index = load_search_index()
     ans = set()
-    for token in query.split():
+    for i, token in enumerate(query.split()):
         token = token.lower()
         m = re.match(r'(?:[u]\+)([a-f0-9]+)', token)
         if m is not None:
             chars = {int(m.group(1), 16)}
         else:
-            chars = _index.get(token, None)
+            chars = points_for_word(token)
         if chars is not None:
             if and_tokens:
-                ans &= chars
+                ans = chars if i == 0 else (ans & chars)
             else:
                 ans |= chars
     return sorted(ans)
@@ -469,7 +434,7 @@ class CategoryModel(QAbstractItemModel):
             category, subcategory = self.category_map[self.starts[ipos]]
         except IndexError:
             category = subcategory = _('Unknown')
-        return category, subcategory, (character_name_from_code(char_code) or _('Unknown'))
+        return category, subcategory, character_name_from_code(char_code)
 
 
 class CategoryDelegate(QStyledItemDelegate):
@@ -790,7 +755,14 @@ class CharSelect(Dialog):
         la.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         la.setVisible(False)
         l.addWidget(la, 3, 0, 1, 3)
-        l.addWidget(self.bb, 4, 0, 1, 3)
+        self.h = h = QHBoxLayout()
+        h.setContentsMargins(0, 0, 0, 0)
+        self.match_any = mm = QCheckBox(_('Match any word'))
+        mm.setToolTip(_('When searching return characters whose names match any of the specified words'))
+        mm.setChecked(tprefs.get('char_select_match_any', True))
+        mm.stateChanged.connect(lambda: tprefs.set('char_select_match_any', self.match_any.isChecked()))
+        h.addWidget(mm), h.addStretch(), h.addWidget(self.bb)
+        l.addLayout(h, 4, 0, 1, 3)
         self.char_view.setFocus(Qt.OtherFocusReason)
 
     def do_search(self):
@@ -798,7 +770,7 @@ class CharSelect(Dialog):
         if not text:
             return self.clear_search()
         with BusyCursor():
-            chars = search_for_chars(text)
+            chars = search_for_chars(text, and_tokens=not self.match_any.isChecked())
         self.show_chars(_('Search'), chars)
 
     def clear_search(self):

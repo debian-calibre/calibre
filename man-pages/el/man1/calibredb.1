@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Απριλίου 20, 2018" "3.22.1" "calibre"
+.TH "CALIBREDB" "1" "Μαΐου 04, 2018" "3.23.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -155,7 +155,7 @@ Username for connecting to a calibre Content server
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+δείξε τον αριθμό έκδοσης του προγράμματος και κλείσε
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -190,7 +190,7 @@ Generate output in JSON format, which is more suitable for machine parsing. Caus
 .INDENT 0.0
 .TP
 .B \-\-limit
-The maximum number of results to display. Default: all
+Ο μέγιστος αριθμός αποτελεσμάτων προς παρουσίαση. Εξ ορισμού: όλα
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,12 +251,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-Πρόσθεσε κενό βιβλίο (Εγγραφή βιβλίου χωρίς αρχείο)
+Προσθέστε κενό βιβλίο (Εγγραφή βιβλίου χωρίς αρχείο)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Καθορίστε τα αναγνωριστικά για το βιβλίο αυτό, π.χ. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,17 +266,17 @@ Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+Ένας κατάλογος από γλώσσες που διαχωρίζονται από κόμμα (καλύτερα να χρησιμοποιηθούν κωδικοί γλωσσών ISO639, αν και κάποια ονόματα γλωσσών μπορούν επίσης να αναγνωριστούν)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series of the added book(s)
+Καθορίστε τη σειρά του προστιθέμενου βιβλίου (ή των προστιθέμενων βιβλίων).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-Set the series number of the added book(s)
+Καθορίστε τον αριθμό σειράς του προστιθέμενου βιβλίου (ή των προστιθέμενων βιβλίων).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,9 +288,9 @@ Set the series number of the added book(s)
 .B \-\-title, \-t
 Καθορισμός του τίτλου του προστιθέμενου βιβλίου(ων)
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Επιλογές για τον έλεγχο της προσθήκης βιβλίων από φακέλους. Εξ ορισμού, μόνο αρχεία με επεκτάσεις που αντιστοιχούν σε γνωστές μορφές ψηφιακών βιβλίων προστίθενται.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -304,12 +304,12 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Υπέθεσε ότι κάθε φάκελλος έχει ένα μόνο βιβλίο και ότι όλα τα αρχεία του είναι διαφορετικές μορφές του βιβλίου αυτού
+Υπέθεσε ότι κάθε φάκελος έχει ένα μόνο βιβλίο και ότι όλα τα αρχεία του είναι διαφορετικές μορφές του βιβλίου αυτού
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Αναδρομική επεξεργασία φακέλλων
+Αναδρομική επεξεργασία φακέλων
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -457,7 +457,7 @@ Normally, calibre will update the metadata in the saved files from what is in th
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Κανονικα, το calibre θα γράψει τα μεταδεδομένα σε ένα ξεχωριστό OPF αρχείο μαζί με τα πραγματικά ebook αρχεία. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα γράψει τα μεταδεδομένα σε ένα ξεχωριστό αρχείο OPF μαζί με τα πραγματικά αρχεία ψηφιακών βιβλίων. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -477,7 +477,7 @@ Replace whitespace with underscores.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single directory
+Εξαγωγή όλων των βιβλίων στον ίδιο φάκελο
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -492,12 +492,12 @@ The template to control the filename and directory structure of the saved files.
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified directory. Default is .
+Εξαγωγή των βιβλίων στον καθορισμένο φάκελο. Εξ ορισμού  .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-to\-lowercase
-Convert paths to lowercase.
+Μετατροπή διαδρομών σε πεζά.
 .UNINDENT
 .SH CATALOG
 .INDENT 0.0
@@ -590,7 +590,7 @@ Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPΕτικέτα\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPΕτικέτες\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -677,7 +677,7 @@ A dictionary of options to customize how the data in this column will be interpr
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+Στη στήλη αυτή αποθηκεύονται δεδομένα τύπου ετικέτας (δηλαδή πολλαπλές τιμές που διαχωρίζονται από κόμμα). Βρίσκει εφαρμογή μόνο αν ο τύπος δεδομένων είναι κείμενο.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -697,7 +697,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
-Εμφάνιση λεπτομερειών για κάθε στήλη.
+Προβολή λεπτομερειών για κάθε στήλη.
 .UNINDENT
 .SH REMOVE_CUSTOM_COLUMN
 .INDENT 0.0
@@ -788,7 +788,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Εξαγωγή σε CSV
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -829,12 +829,12 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Εξαγωγή σε CSV
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Ο τύπος του αρχείου CSV που θα δημιουργηθεί. Επιλογές: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -869,7 +869,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Κανονικά, η εντολή αυτή ενεργεί μόνο σε βιβλία που έχουν παρωχημένα αρχεία OPF. Με την επιλογή αυτή επιτρέπεται η δράση σε όλα τα βιβλία.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0

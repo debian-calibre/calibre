@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "aprill 20, 2018" "3.22.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "mai 04, 2018" "3.23.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -161,17 +161,17 @@ Manage the database of users allowed to connect to this server. See also the \fI
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Üksiku HTTP päise suurim suurus (ühikutes KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Töölisprotsesside suurim aeg.       Töölisprotsesside käituseks lubatud suurim aeg (minutites). Piirangu keelamiseks pane väärtuseks null.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Töölisprotsesside suurim arv.       Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Töölisprotsesside suurim arv.       Töölisprotsessid käivitatakse vajaduspõhiselt ja neid kasutatakse mahukate tööde jaoks nagu raamatu lugemiseks ettevalmistamine, raamatute lisamine, teisendamine jms. Tavaliselt põhineb selliste protsesside suurim arv protsessori tuumade arvul. Seda saad juhtida selle sättega.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Maximum number of ungrouped items in OPDS feeds.    Group items in categories su
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Serverisse üleslaaditavate failide suurim lubatud suurus (ühikutes MB).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ näita programmi versiooninumbrit ja välju
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Taotluste töötlemiseks kasutatavate töölõimede arv.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
