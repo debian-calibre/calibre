@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 09:59+0530\n"
-"PO-Revision-Date: 2018-04-03 22:25+0000\n"
+"POT-Creation-Date: 2018-04-20 12:57+0530\n"
+"PO-Revision-Date: 2018-04-24 14:38+0000\n"
 "Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -264,8 +264,8 @@ msgid ""
 "heights will be set in all locations that don't specify their own line "
 "heights. However, this is something of a blunt weapon and should be used "
 "sparingly. If you want to adjust the line heights for some section of the "
-"input, it's better to use the :ref:`extra-css`."
-msgstr "De hiermee verbonden instelling is :guilabel:`Regelhoogte`. Regelhoogte controleert de verticale hoogte van regels. Standaard (een regelhoogte van 0) wordt de regelhoogte niet gewijzigd. Indien u een niet-standaard waarde ingeeft, zullen de regelhoogtes overal aangepast worden waar geen eigen regelhoogtes zijn gespecificeerd. Maar dit is een enigszins bot instrument en zou maar voorzichtig worden gebruikt. Indien u de regelhoogtes wilt aanpassen in sommige delen van de invoer is het beter om de :ref:`extra-css` te gebruiken."
+"input, it's better to use the :ref:`Extra CSS <extra-css>`."
+msgstr "Een verwante instelling is: guilabel: `Lijnhoogte`. Lijnhoogte bepaalt de verticale hoogte van de lijnen. Standaard wordt (een regelhoogte van 0) geen manipulatie van lijnhoogten uitgevoerd. Als u een niet-standaardwaarde opgeeft, worden regelhoogten ingesteld op alle locaties die niet hun eigen lijnhoogten specificeren. Dit is echter iets van een botte bijl en moet spaarzaam worden gebruikt. Als u de lijnhoogten voor een deel van de invoer wilt aanpassen, is het beter om de:ref:`Extra CSS <extra-css>`.te gebruiken."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:160
 msgid ""
@@ -306,7 +306,7 @@ msgid ""
 " a particular character encoding by using this setting.  `cp1252` is a "
 "common encoding for documents produced using Windows software. You should "
 "also read :ref:`char-encoding-faq` for more on encoding issues."
-msgstr ""
+msgstr "Ten slotte is er: guilabel: `Invoer karakter encodering`. Oudere documenten specificeren soms hun karaktercodering niet. Bij conversie kan dit ertoe leiden dat niet-Engelse tekens of speciale tekens, zoals slimme aanhalingstekens, beschadigd zijn. calibre probeert de karaktercodering van het brondocument automatisch te detecteren, maar het lukt niet altijd. U kunt het dwingen een bepaalde tekencodering aan te nemen met behulp van deze instelling. `cp1252` is een algemene codering voor documenten die zijn geproduceerd met behulp van Windows-software. Je zou ook moeten lezen :ref:`char-encoding-faq` voor meer informatie over coderingsproblemen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:188
 msgid "Layout"
@@ -331,9 +331,9 @@ msgstr "Normaal worden alinea's in XHTML gerenderd met een lege regel tussen ali
 #: ../../home/kovid/work/calibre/manual/conversion.rst:201
 msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
-"few, don't use these options. Instead add the following CSS code to :ref"
-":`extra-css`::"
-msgstr "Indien u de afstand tussen all alinea's wilt verwijderen behalve een paar, gebruik dan niet deze opties. Voeg beter de volgende CSS code toe :ref:`extra-css`::"
+"few, don't use these options. Instead add the following CSS code to "
+":ref:`Extra CSS <extra-css>`::"
+msgstr "Als u de spatiëring tussen alle alinea's wilt verwijderen, behalve een select aantal, gebruik dan deze opties niet. Voeg in plaats daarvan de volgende CSS-code toe aan :ref:`Extra CSS 1`::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:207
 msgid ""
@@ -352,7 +352,7 @@ msgid ""
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr ""
+msgstr "Een andere handige optie is: guilabel: `Lineariseer tabellen`. Sommige slecht ontworpen documenten gebruiken tabellen om de lay-out van tekst op de pagina te regelen. Bij het converteren bevatten deze documenten vaak tekst die van de pagina afloopt en andere artefacten. Met deze optie wordt de inhoud uit de tabellen gehaald en lineair gepresenteerd. Merk op dat deze optie *alle* tabellen lineariseert, dus gebruik het alleen als u zeker weet dat het invoerdocument geen tabellen gebruikt voor legitieme doeleinden, zoals het presenteren van tabelinformatie."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:220
 msgid "Styling"
@@ -366,7 +366,7 @@ msgid ""
 "document** itself. You can use this setting to fine tune the "
 "presentation/layout of your document. For example, if you want all "
 "paragraphs of class `endnote` to be right aligned, just add::"
-msgstr ""
+msgstr "De :guilabel:`Extra CSS` optie geeft je de mogelijkheid om willekeurige CSS te specificeren die zal worden toegepast op alle HTML-bestanden in de invoer. Deze CSS wordt met een zeer hoge prioriteit toegepast en moet dus de meeste CSS overschrijden die aanwezig is in het **invoerdocument** zelf. U kunt deze instelling gebruiken om de presentatie / lay-out van uw document aan te passen. Als u bijvoorbeeld wilt dat alle alinea's van klasse `eindnotitie` juist zijn uitgelijnd, voegt u gewoon::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
@@ -385,7 +385,7 @@ msgid ""
 "A simpler option is to use :guilabel:`Filter style information`. This allows"
 " you to remove all CSS properties of the specified types from the document. "
 "For example, you can use it to remove all colors or fonts."
-msgstr ""
+msgstr "Een eenvoudigere optie is om te gebruiken: guilabel: `Filter stijl informatie`. Hiermee kunt u alle CSS-eigenschappen van de opgegeven typen uit het document verwijderen. U kunt het bijvoorbeeld gebruiken om alle kleuren of lettertypen te verwijderen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:246
 msgid "Transform styles"
@@ -397,7 +397,7 @@ msgid ""
 " rules that change styles based on various conditions. For example you can "
 "use it to change all green colors to blue, or remove all bold styling from "
 "the text or color all headings a certain color, etc."
-msgstr ""
+msgstr "Dit is de meest krachtige styling gerelateerde voorziening. U kunt het gebruiken om regels te definiëren die van stijl veranderen op basis van verschillende omstandigheden. U kunt het bijvoorbeeld gebruiken om alle groene kleuren in blauw te veranderen, of om alle vetgedrukte stijlen uit de tekst te verwijderen of om alle koppen in een bepaalde kleur, enz. Te kleuren."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid "Page setup"
