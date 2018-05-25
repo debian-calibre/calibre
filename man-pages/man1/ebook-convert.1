@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "May 04, 2018" "3.23.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "May 25, 2018" "3.24.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -1045,6 +1045,11 @@ Put the inserted inline Table of Contents at the end of the book instead of the 
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-epub\-version
+The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-extract\-to
 Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
 .UNINDENT
@@ -1326,6 +1331,11 @@ An HTML template used to generate footers on every page. The strings _PAGENUM_, 
 .TP
 .B \-\-pdf\-header\-template
 An HTML template used to generate headers on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-hyphenate
+Break long words at the end of lines. This can give the text at the right margin a more even appearance.
 .UNINDENT
 .INDENT 0.0
 .TP
