@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maj 04, 2018" "3.23.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "maj 25, 2018" "3.24.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -72,12 +72,12 @@ Starta automatiskt om servern när källkoden ändras. Användbar för utvecklin
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Antal misslyckande inloggningar för förbud.         Antal inloggnings misslyckaden, varefter en IP\-adress är förbjuden
+Antal misslyckande inloggningsförsök för bannlysning.       Antal misslyckade inloggningsförsök varefter en IP\-adress är bannlyst
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP\-adresser som har upprepade inloggnings misslyckaden.         Förbjuder tillfälligt åtkomst för IP\-adresser som har upprepade inloggnings misslyckaden för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen förbud.
+Bannlys IP\-adresser som har upprepade misslyckade inloggningsförsök.        Bannlyser tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen bannlysning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -117,12 +117,12 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Tillåt ej autentiserade lokala anslutningar att göra ändringar.     Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
+Tillåt inte autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Logga HTTP 404 (Not Found) förfrågningar.   Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
+Logga HTTP 404 (Inte hittad) förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -222,7 +222,7 @@ Sökväg till SSL certifikat fil.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Sökväg till SSL privat nyckel fil.
+Sökväg till SSL privat nyckelfil.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -24,6 +24,7 @@ from calibre.ebooks.pdf.render.common import (inch, cm, mm, pica, cicero,
                                               didot, PAPER_SIZES, current_log)
 from calibre.ebooks.pdf.render.engine import PdfDevice
 from calibre.ptempfile import PersistentTemporaryFile
+from calibre.utils.resources import load_hyphenator_dicts
 
 
 def get_page_size(opts, for_comic=False):  # {{{
@@ -159,8 +160,7 @@ class PDFWriter(QObject):
         self.view = QWebView()
         self.page = Page(opts, self.log)
         self.view.setPage(self.page)
-        self.view.setRenderHints(QPainter.Antialiasing|
-                    QPainter.TextAntialiasing|QPainter.SmoothPixmapTransform)
+        self.view.setRenderHints(QPainter.Antialiasing|QPainter.TextAntialiasing|QPainter.SmoothPixmapTransform)
         self.view.loadFinished.connect(self.render_html,
                 type=Qt.QueuedConnection)
         for x in (Qt.Horizontal, Qt.Vertical):
@@ -214,6 +214,7 @@ class PDFWriter(QObject):
         self.margin_top, self.margin_bottom = map(lambda x:int(floor(x)), (mt, mb))
 
         self.painter = QPainter(self.doc)
+        self.book_language = pdf_metadata.mi.languages[0]
         self.doc.set_metadata(title=pdf_metadata.title,
                               author=pdf_metadata.author,
                               tags=pdf_metadata.tags, mi=pdf_metadata.mi)
@@ -316,6 +317,16 @@ class PDFWriter(QObject):
                 self.loop.processEvents(self.loop.ExcludeUserInputEvents)
             evaljs('document.getElementById("MathJax_Message").style.display="none";')
 
+    def load_header_footer_images(self):
+        from calibre.utils.monotonic import monotonic
+        evaljs = self.view.page().mainFrame().evaluateJavaScript
+        st = monotonic()
+        while not evaljs('paged_display.header_footer_images_loaded()'):
+            self.loop.processEvents(self.loop.ExcludeUserInputEvents)
+            if monotonic() - st > 5:
+                self.log.warn('Header and footer images have not loaded in 5 seconds, ignoring')
+                break
+
     def get_sections(self, anchor_map, only_top_level=False):
         sections = defaultdict(list)
         ci = os.path.abspath(os.path.normcase(self.current_item))
@@ -335,6 +346,25 @@ class PDFWriter(QObject):
 
         return sections
 
+    def hyphenate(self, evaljs):
+        evaljs(u'''\
+        Hyphenator.config(
+            {
+            'minwordlength'    : 6,
+            // 'hyphenchar'     : '|',
+            'displaytogglebox' : false,
+            'remoteloading'    : false,
+            'doframes'         : true,
+            'defaultlanguage'  : 'en',
+            'storagetype'      : 'session',
+            'onerrorhandler'   : function (e) {
+                                    console.log(e);
+                                }
+            });
+        Hyphenator.hyphenate(document.body, "%s");
+        ''' % self.hyphenate_lang
+        )
+
     def do_paged_render(self):
         if self.paged_js is None:
             import uuid
@@ -343,6 +373,10 @@ class PDFWriter(QObject):
             self.paged_js += cc('ebooks.oeb.display.indexing')
             self.paged_js += cc('ebooks.oeb.display.paged')
             self.paged_js += cc('ebooks.oeb.display.mathjax')
+            if self.opts.pdf_hyphenate:
+                self.paged_js += P('viewer/hyphenate/Hyphenator.js', data=True).decode('utf-8')
+                hjs, self.hyphenate_lang = load_hyphenator_dicts({}, self.book_language)
+                self.paged_js += hjs
             self.hf_uuid = str(uuid.uuid4()).replace('-', '')
 
         self.view.page().mainFrame().addToJavaScriptWindowObject("py_bridge", self)
@@ -350,6 +384,8 @@ class PDFWriter(QObject):
         evaljs = self.view.page().mainFrame().evaluateJavaScript
         evaljs(self.paged_js)
         self.load_mathjax()
+        if self.opts.pdf_hyphenate:
+            self.hyphenate(evaljs)
 
         amap = json.loads(evaljs('''
         document.body.style.backgroundColor = "white";
@@ -395,7 +431,9 @@ class PDFWriter(QObject):
             set_section(col, tl_sections, 'current_tl_section')
             self.doc.init_page()
             if self.header or self.footer:
-                evaljs('paged_display.update_header_footer(%d)'%self.current_page_num)
+                if evaljs('paged_display.update_header_footer(%d)'%self.current_page_num) is True:
+                    self.load_header_footer_images()
+
             self.painter.save()
             mf.render(self.painter)
             self.painter.restore()
