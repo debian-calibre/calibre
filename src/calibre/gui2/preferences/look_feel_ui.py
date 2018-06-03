@@ -564,7 +564,7 @@ class Ui_Form(object):
 "<li><b>Off</b>: Do not adjust the user interface, regardless of Qt environment variables.</li>\n"
 "</ul>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.main_interface_tab), _("&Main interface"))
-        self.label_19.setText(_("Control the Cover grid view. You can enable this view by clicking the \"Cover grid\" button in the bottom right corner of the main calibre window."))
+        self.label_19.setText(_("Control the Cover grid view. You can enable this view by clicking the \"Layout\" button in the bottom right corner of the main calibre window."))
         self.label_14.setText(_("Field to show &under the covers:"))
         self.label_16.setText(_("Spac&ing between covers:"))
         self.opt_cover_grid_spacing.setToolTip(_("The spacing between covers. A value of zero means calculate automatically based on cover size."))
