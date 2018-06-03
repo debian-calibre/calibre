@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maj 27, 2018" "3.24.2" "calibre"
+.TH "CALIBRE-SERVER" "1" "juni 01, 2018" "3.25.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -162,12 +162,12 @@ Hantera databasen av användare tillåtna att ansluta till denna server. Se ocks
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. storlek på enskild HTTP\-rubrik (i KB).
+Maximal storlek på enskild HTTP\-rubrik (i KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximal tid för arbetarprocesser.   Maximala tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+Maximal tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -177,27 +177,27 @@ Maximalt antal arbetarprocesser.    Arbetsprocesser lanseras allt efter de behö
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. loggfilstorlek (i MB).         Den maximala storleken på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
+Maximal loggfilstorlek (i MB).      Största storlek på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximalt antal böcker i OPDS\-flöden.        Maximala antalet böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
+Maximalt antal böcker i OPDS\-flöden.        Högsta antal böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximala antalet ogrupperade objekt i OPDS\-flöden.  Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera.
+Högsta antal ogrupperade objekt i OPDS\-flöden.      Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. tillåten storlek för uppladdade filer till servern (i MB).
+Maximal tillåten storlek för uppladdade filer till servern (i MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Antal böcker att visa på en enda sida.      Antalet böcker som ska visas på en enda sida i webbläsaren.
+Antal böcker att visa på en enskild sida.   Antalet böcker som ska visas på en enda sida i webbläsaren.
 .UNINDENT
 .INDENT 0.0
 .TP
