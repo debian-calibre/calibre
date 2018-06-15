@@ -260,12 +260,12 @@ class EditMetadataAction(InterfaceAction):
             from calibre.utils.icu import lower
 
             modified = sorted(modified, key=lower)
-            if not question_dialog(self.gui, _('Some books changed'), '<p>'+
-                    _('The metadata for some books in your library has'
-                        ' changed since you started the download. If you'
-                        ' proceed, some of those changes may be overwritten. '
-                        'Click "Show details" to see the list of changed books. '
-                        'Do you want to proceed?'), det_msg='\n'.join(modified)):
+            if not question_dialog(self.gui, _('Some books changed'), '<p>' + _(
+                'The metadata for some books in your library has'
+                ' changed since you started the download. If you'
+                ' proceed, some of those changes may be overwritten. '
+                'Click "Show details" to see the list of changed books. '
+                'Do you want to proceed?'), det_msg='\n'.join(modified)):
                 return
 
         id_map = {}
@@ -480,14 +480,41 @@ class EditMetadataAction(InterfaceAction):
             self.gui.library_view.select_rows(book_ids)
 
     # Merge books {{{
+
+    def confirm_large_merge(self, num):
+        if num < 5:
+            return True
+        return confirm('<p>'+_(
+            'You are about to merge very many ({}) books. '
+            'Are you <b>sure</b> you want to proceed?').format(num) + '</p>',
+            'merge_too_many_books', self.gui)
+
+    def books_dropped(self, merge_map):
+        for dest_id, src_ids in merge_map.iteritems():
+            if not self.confirm_large_merge(len(src_ids) + 1):
+                continue
+            from calibre.gui2.dialogs.confirm_merge import merge_drop
+            merge_metadata, merge_formats, delete_books = merge_drop(dest_id, src_ids, self.gui)
+            if merge_metadata is None:
+                return
+            if merge_formats:
+                self.add_formats(dest_id, self.formats_for_ids(list(src_ids)))
+            if merge_metadata:
+                self.merge_metadata(dest_id, src_ids)
+            if delete_books:
+                self.delete_books_after_merge(src_ids)
+            # leave the selection highlight on the target book
+            row = self.gui.library_view.ids_to_rows([dest_id])[dest_id]
+            self.gui.library_view.set_current_row(row)
+
     def merge_books(self, safe_merge=False, merge_only_formats=False):
         '''
         Merge selected books in library.
         '''
         from calibre.gui2.dialogs.confirm_merge import confirm_merge
-        if self.gui.stack.currentIndex() != 0:
+        if self.gui.current_view() is not self.gui.library_view:
             return
-        rows = self.gui.library_view.selectionModel().selectedRows()
+        rows = self.gui.library_view.indices_for_merge()
         if not rows or len(rows) == 0:
             return error_dialog(self.gui, _('Cannot merge books'),
                                 _('No books selected'), show=True)
@@ -495,11 +522,8 @@ class EditMetadataAction(InterfaceAction):
             return error_dialog(self.gui, _('Cannot merge books'),
                         _('At least two books must be selected for merging'),
                         show=True)
-        if len(rows) > 5:
-            if not confirm('<p>'+_('You are about to merge more than 5 books.  '
-                                    'Are you <b>sure</b> you want to proceed?') +
-                           '</p>', 'merge_too_many_books', self.gui):
-                return
+        if not self.confirm_large_merge(len(rows)):
+            return
 
         dest_id, src_ids = self.books_to_merge(rows)
         mi = self.gui.current_db.new_api.get_proxy_metadata(dest_id)
@@ -511,8 +535,8 @@ class EditMetadataAction(InterfaceAction):
                 'will be added to the <b>first selected book</b> (%s).<br> '
                 'The second and subsequently selected books will not '
                 'be deleted or changed.<br><br>'
-                'Please confirm you want to proceed.')%title +
-                           '</p>', 'merge_books_safe', self.gui, mi):
+                'Please confirm you want to proceed.')%title + '</p>',
+                'merge_books_safe', self.gui, mi):
                 return
             self.add_formats(dest_id, self.formats_for_books(rows))
             self.merge_metadata(dest_id, src_ids)
@@ -527,8 +551,8 @@ class EditMetadataAction(InterfaceAction):
                 'All book formats of the first selected book will be kept '
                 'and any duplicate formats in the second and subsequently selected books '
                 'will be permanently <b>deleted</b> from your calibre library.<br><br>  '
-                'Are you <b>sure</b> you want to proceed?')%title +
-                           '</p>', 'merge_only_formats', self.gui, mi):
+                'Are you <b>sure</b> you want to proceed?')%title + '</p>',
+                'merge_only_formats', self.gui, mi):
                 return
             self.add_formats(dest_id, self.formats_for_books(rows))
             self.delete_books_after_merge(src_ids)
@@ -541,8 +565,8 @@ class EditMetadataAction(InterfaceAction):
                 'All book formats of the first selected book will be kept '
                 'and any duplicate formats in the second and subsequently selected books '
                 'will be permanently <b>deleted</b> from your calibre library.<br><br>  '
-                'Are you <b>sure</b> you want to proceed?')%title +
-                           '</p>', 'merge_books', self.gui, mi):
+                'Are you <b>sure</b> you want to proceed?')%title + '</p>',
+                'merge_books', self.gui, mi):
                 return
             self.add_formats(dest_id, self.formats_for_books(rows))
             self.merge_metadata(dest_id, src_ids)
@@ -565,10 +589,10 @@ class EditMetadataAction(InterfaceAction):
                     self.gui.library_view.model().db.add_format(dest_id, fmt, f, index_is_id=True,
                             notify=False, replace=replace)
 
-    def formats_for_books(self, rows):
+    def formats_for_ids(self, ids):
         m = self.gui.library_view.model()
         ans = []
-        for id_ in map(m.id, rows):
+        for id_ in ids:
             dbfmts = m.db.formats(id_, index_is_id=True)
             if dbfmts:
                 for fmt in dbfmts.split(','):
@@ -579,6 +603,10 @@ class EditMetadataAction(InterfaceAction):
                     except NoSuchFormat:
                         continue
         return ans
+
+    def formats_for_books(self, rows):
+        m = self.gui.library_view.model()
+        return self.formats_for_ids(map(m.id, rows))
 
     def books_to_merge(self, rows):
         src_ids = []
@@ -613,11 +641,9 @@ class EditMetadataAction(InterfaceAction):
                     dest_mi.comments = src_mi.comments
                 else:
                     dest_mi.comments = unicode(dest_mi.comments) + u'\n\n' + unicode(src_mi.comments)
-            if src_mi.title and (not dest_mi.title or
-                    dest_mi.title == _('Unknown')):
+            if src_mi.title and (not dest_mi.title or dest_mi.title == _('Unknown')):
                 dest_mi.title = src_mi.title
-            if src_mi.title and (not dest_mi.authors or dest_mi.authors[0] ==
-                    _('Unknown')):
+            if src_mi.title and (not dest_mi.authors or dest_mi.authors[0] == _('Unknown')):
                 dest_mi.authors = src_mi.authors
                 dest_mi.author_sort = src_mi.author_sort
             if src_mi.tags:
