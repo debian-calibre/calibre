@@ -36,7 +36,9 @@ CACHE_FORMAT = 'PPM'
 
 
 def auto_height(widget):
-    return max(185, QApplication.instance().desktop().availableGeometry(widget).height() / 5.0)
+    # On some broken systems, availableGeometry() returns tiny values, we need
+    # a value of at least 1000 for 200 DPI systems.
+    return max(1000, QApplication.instance().desktop().availableGeometry(widget).height()) / 5.0
 
 
 class EncodeError(ValueError):
@@ -204,12 +206,24 @@ def dragEnterEvent(self, event):
         int(event.possibleActions() & Qt.MoveAction) == 0:
         return
     paths = self.paths_from_event(event)
+    md = event.mimeData()
 
-    if paths:
+    if paths or md.hasFormat('application/calibre+from_library'):
         event.acceptProposedAction()
 
 
 def dropEvent(self, event):
+    md = event.mimeData()
+    if md.hasFormat('application/calibre+from_library'):
+        ids = set(map(int, bytes(md.data('application/calibre+from_library')).decode('utf-8').split(' ')))
+        row = self.indexAt(event.pos()).row()
+        if row > -1 and ids:
+            book_id = self.model().id(row)
+            if book_id:
+                self.books_dropped.emit({book_id: ids})
+                event.setDropAction(Qt.CopyAction)
+                event.accept()
+        return
     paths = self.paths_from_event(event)
     event.setDropAction(Qt.CopyAction)
     event.accept()
@@ -225,8 +239,7 @@ def paths_from_event(self, event):
     if md.hasFormat('text/uri-list') and not \
             md.hasFormat('application/calibre+from_library'):
         urls = [unicode(u.toLocalFile()) for u in md.urls()]
-        return [u for u in urls if os.path.splitext(u)[1] and
-                os.path.exists(u)]
+        return [u for u in urls if os.path.splitext(u)[1] and os.path.exists(u)]
 
 
 def setup_dnd_interface(cls_or_self):
@@ -290,6 +303,7 @@ class AlternateViews(object):
         view.selectionModel().currentChanged.connect(self.slave_current_changed)
         view.selectionModel().selectionChanged.connect(self.slave_selection_changed)
         view.files_dropped.connect(self.main_view.files_dropped)
+        view.books_dropped.connect(self.main_view.books_dropped)
 
     def show_view(self, key=None):
         view = self.views[key]
@@ -662,6 +676,7 @@ class GridView(QListView):
 
     update_item = pyqtSignal(object)
     files_dropped = pyqtSignal(object)
+    books_dropped = pyqtSignal(object)
 
     def __init__(self, parent):
         QListView.__init__(self, parent)
@@ -788,13 +803,13 @@ class GridView(QListView):
 
     def refresh_settings(self):
         size_changed = (
-            gprefs['cover_grid_width'] != self.delegate.original_width or
-            gprefs['cover_grid_height'] != self.delegate.original_height
+            gprefs['cover_grid_width'] != self.delegate.original_width or gprefs['cover_grid_height'] != self.delegate.original_height
         )
-        if (size_changed or gprefs['cover_grid_show_title'] != self.delegate.original_show_title or
-                gprefs['show_emblems'] != self.delegate.original_show_emblems or
-                gprefs['emblem_size'] != self.delegate.orginal_emblem_size or
-                gprefs['emblem_position'] != self.delegate.orginal_emblem_position):
+        if (size_changed or gprefs[
+            'cover_grid_show_title'] != self.delegate.original_show_title or gprefs[
+                'show_emblems'] != self.delegate.original_show_emblems or gprefs[
+                    'emblem_size'] != self.delegate.orginal_emblem_size or gprefs[
+                        'emblem_position'] != self.delegate.orginal_emblem_position):
             self.delegate.set_dimensions()
             self.setSpacing(self.delegate.spacing)
             if size_changed:
@@ -1015,6 +1030,9 @@ class GridView(QListView):
             sm.select(QItemSelection(top, bottom), sm.Select)
         else:
             return QListView.mousePressEvent(self, ev)
+
+    def indices_for_merge(self, resolved=True):
+        return self.selectionModel().selectedIndexes()
 
     def number_of_columns(self):
         # Number of columns currently visible in the grid

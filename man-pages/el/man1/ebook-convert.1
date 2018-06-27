@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "Απριλίου 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Ιουνίου 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -75,19 +75,19 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%ΠΑΡΑΜΕΤΡΟΙ ΕΞΑΓΩΓΗΣ\fP
 .IP \(bu 2
-\fI\%LOOK AND FEEL\fP
+\fI\%ΟΨΗ ΚΑΙ ΑΙΣΘΗΣΗ\fP
 .IP \(bu 2
 \fI\%HEURISTIC PROCESSING\fP
 .IP \(bu 2
 \fI\%ΑΝΑΖΗΤΗΣΗ ΚΑΙ ΑΝΤΙΚΑΤΑΣΤΑΣΗ\fP
 .IP \(bu 2
-\fI\%STRUCTURE DETECTION\fP
+\fI\%ΑΝΙΧΝΕΥΣΗ ΔΟΜΗΣ\fP
 .IP \(bu 2
 \fI\%ΠΙΝΑΚΑΣ ΠΕΡΙΕΧΟΜΕΝΩΝ\fP
 .IP \(bu 2
 \fI\%ΜΕΤΑΔΕΔΟΜΕΝΑ\fP
 .IP \(bu 2
-\fI\%DEBUG\fP
+\fI\%ΑΠΟΣΦΑΛΜΑΤΩΣΗ\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -112,7 +112,7 @@ Specify the output profile. The output profile tells the conversion system how t
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+δείξε τον αριθμό έκδοσης του προγράμματος και κλείσε
 .UNINDENT
 .SH ΠΑΡΑΜΕΤΡΟΙ ΕΙΣΑΓΩΓΗΣ
 .sp
@@ -147,6 +147,11 @@ Put the inserted inline Table of Contents at the end of the book instead of the 
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-epub\-version
+The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-extract\-to
 Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
 .UNINDENT
@@ -158,7 +163,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Normally, if the input file has no cover and you don\fB\(aq\fPt specify one, a default cover is generated with the title, authors, etc. This option disables the generation of this cover.
+Κανονικά, αν το εισαγόμενο αρχείο δεν έχει εξώφυλλο και δεν καθορίσετε εσείς κάποιο, δημιουργείται εξ ορισμού ένα προεπιλεγμένο εξώφυλλο με τον τίτλο, τους συγγραφείς κτλ. Η επιλογή αυτή απενεργοποιεί τη δημιουργία αυτού του εξώφυλλου.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +185,7 @@ When using an SVG cover, this option will cause the cover to scale to cover the 
 .B \-\-toc\-title
 Title for any generated in\-line table of contents.
 .UNINDENT
-.SH LOOK AND FEEL
+.SH ΟΨΗ ΚΑΙ ΑΙΣΘΗΣΗ
 .sp
 Παράμετροι για τον έλεγχο της εμφάνισης και του ύφους των εξαγομένων
 .INDENT 0.0
@@ -409,7 +414,7 @@ Replacement to replace the text found with sr3\-search.
 .B \-\-sr3\-search
 Search pattern (regular expression) to be replaced with sr3\-replace.
 .UNINDENT
-.SH STRUCTURE DETECTION
+.SH ΑΝΙΧΝΕΥΣΗ ΔΟΜΗΣ
 .sp
 Έλεγχος αυτόματου εντοπισμού της δομής του εγγράφου
 .INDENT 0.0
@@ -435,7 +440,7 @@ Insert the book metadata at the start of the book. This is useful if your e\-boo
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+Μια έκφραση XPath. Αλλαγές σελίδας εισάγονται πριν από τα καθορισμένα στοιχεία. Για να το απενεργοποιήσετε αυτό, χρησιμοποιήστε την έκφραση: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -483,12 +488,12 @@ XPath expression that specifies all tags that should be added to the Table of Co
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Να μην προστεθούν κεφάλαια, που έχουν εντοπιστεί αυτόματα, στον Πίνακα Περιεχομένων
+Να μην προστεθούν κεφάλαια που έχουν εντοπιστεί αυτόματα στον Πίνακα Περιεχομένων
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Αφαίρεση των καταχωρήσεων, από τον Πίνακα Περιεχομένων, των οποίων οι τίτλοι ταιριάζουν σε μια προσδιορισμένη κανονική έκφραση. Οι καταχωρήσεις που ταιριάζουν και τα παιδιά τους αφαιρούνται.
+Αφαίρεση των καταχωρήσεων από τον Πίνακα Περιεχομένων, των οποίων οι τίτλοι ταιριάζουν σε μια προσδιορισμένη κανονική έκφραση. Οι καταχωρήσεις που ταιριάζουν και τα παιδιά τους αφαιρούνται.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -526,7 +531,7 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-cover
-Set the cover to the specified file or URL
+Καθορισμός του εξωφύλλου στο συγκεκριμένο αρχείο ή URL
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -536,7 +541,7 @@ Set the cover to the specified file or URL
 .INDENT 0.0
 .TP
 .B \-\-language
-Ρυθμίστε την γλώσσα.
+Ρυθμίστε τη γλώσσα.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -546,7 +551,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+Καθορισμός του εκδότη του ψηφιακού βιβλίου.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,17 +566,17 @@ Set the e\-book publisher.
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+Καθορισμός της σειράς στην οποία ανήκει αυτό το ψηφιακό βιβλίο.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-Set the index of the book in this series.
+Καθορισμός του δείκτη σειράς του βιβλίου.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags
-Set the tags for the book. Should be a comma separated list.
+Καθορισμός των ετικετών του βιβλίου. Πρέπει να είναι μια λίστα εγγραφών που διαχωρίζονται με κόμμα.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -588,7 +593,7 @@ Set the book timestamp (no longer used anywhere)
 .B \-\-title\-sort
 The version of the title to be used for sorting.
 .UNINDENT
-.SH DEBUG
+.SH ΑΠΟΣΦΑΛΜΑΤΩΣΗ
 .sp
 Παράμετροι που βοηθούν στη διόρθωση (αποσφαλμάτωση) της μετατροπής
 .INDENT 0.0

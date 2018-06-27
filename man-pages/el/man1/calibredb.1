@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Απριλίου 06, 2018" "3.21.0" "calibre"
+.TH "CALIBREDB" "1" "Ιουνίου 15, 2018" "3.26.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -79,14 +79,14 @@ To connect to a running Content server, pass the URL of the server to the
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+\fI\%ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ\fP
 .IP \(bu 2
 \fI\%list\fP
 .IP \(bu 2
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB ΕΠΙΛΟΓΕΣ\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -131,7 +131,7 @@ details and examples.
 .IP \(bu 2
 \fI\%search\fP
 .UNINDENT
-.SH GLOBAL OPTIONS
+.SH ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
@@ -150,12 +150,12 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+Όνομα χρήστη για σύνδεση σε διακομιστή περιεχομένων calibre
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+δείξε τον αριθμό έκδοσης του προγράμματος και κλείσε
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -190,7 +190,7 @@ Generate output in JSON format, which is more suitable for machine parsing. Caus
 .INDENT 0.0
 .TP
 .B \-\-limit
-The maximum number of results to display. Default: all
+Ο μέγιστος αριθμός αποτελεσμάτων προς παρουσίαση. Εξ ορισμού: όλα
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,12 +210,12 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-separator
-The string used to separate fields. Default is a space.
+Η συμβολοσειρά που χρησιμοποιείται για να διαχωρίζει τα πεδία. Προεπιλέχθηκε ο χαρακτήρας διαστήματος.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Το πεδίο βάσει του οποίου θα ταξινομούνται τα αποτελέσματα. Διαθέσιμα πεδία: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Προεπιλεχθέν: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -241,7 +241,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to the cover to use for the added book
+Διαδρομή για το εξώφυλλο που θα χρησιμοποιηθεί για το βιβλίο που προστέθηκε
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,12 +251,12 @@ Path to the cover to use for the added book
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-Add an empty book (a book with no formats)
+Προσθέστε κενό βιβλίο (Εγγραφή βιβλίου χωρίς αρχείο)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+Καθορίστε τα αναγνωριστικά για το βιβλίο αυτό, π.χ. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,17 +266,17 @@ Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+Ένας κατάλογος από γλώσσες που διαχωρίζονται από κόμμα (καλύτερα να χρησιμοποιηθούν κωδικοί γλωσσών ISO639, αν και κάποια ονόματα γλωσσών μπορούν επίσης να αναγνωριστούν)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series of the added book(s)
+Καθορίστε τη σειρά του προστιθέμενου βιβλίου (ή των προστιθέμενων βιβλίων).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-Set the series number of the added book(s)
+Καθορίστε τον αριθμό σειράς του προστιθέμενου βιβλίου (ή των προστιθέμενων βιβλίων).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,9 +288,9 @@ Set the series number of the added book(s)
 .B \-\-title, \-t
 Καθορισμός του τίτλου του προστιθέμενου βιβλίου(ων)
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS ΠΡΟΣΘΗΚΗ ΑΠΟ ΦΑΚΕΛΟΥΣ
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+Επιλογές για τον έλεγχο της προσθήκης βιβλίων από φακέλους. Εξ ορισμού, μόνο αρχεία με επεκτάσεις που αντιστοιχούν σε γνωστές μορφές ψηφιακών βιβλίων προστίθενται.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -304,12 +304,12 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+Υπέθεσε ότι κάθε φάκελος έχει ένα μόνο βιβλίο και ότι όλα τα αρχεία του είναι διαφορετικές μορφές του βιβλίου αυτού
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+Αναδρομική επεξεργασία φακέλων
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -329,7 +329,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+Να μην χρησιμοποιηθεί ο κάδος ανακύκλωσης
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -349,7 +349,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+Να μην αντικατασταθούν μορφές που ήδη υπάρχουν
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -385,7 +385,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-Print metadata in OPF form (XML)
+Εκτύπωση μεταδεδομένων σε μορφή OPF (XML)
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -447,42 +447,42 @@ Export all books in database, ignoring the list of ids.
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα αποθηκεύσει το εξώφυλλο σε ένα ξεχωριστό αρχείο, μαζί  με τα αρχεία ψηφιακών βιβλίων. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα ενημερώσει τα μεταδεδομένα στα προς αποθήκευση αρχεία, βασιζόμενο στα δεδομένα της βιβλιοθήκης. Αυτό κάνει πιο αργή τη διαδικασία αποθήκευσης. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Κανονικα, το calibre θα γράψει τα μεταδεδομένα σε ένα ξεχωριστό OPF αρχείο μαζί με τα πραγματικά ebook αρχεία. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα γράψει τα μεταδεδομένα σε ένα ξεχωριστό αρχείο OPF μαζί με τα πραγματικά αρχεία ψηφιακών βιβλίων. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-Comma separated list of formats to save for each book. By default all available formats are saved.
+Διαχωριζόμενος από κόμματα κατάλογος των μορφών που θα αποθηκεύονται για κάθε βιβλίο. Προεπιλογή είναι να αποθηκεύονται όλες οι διαθέσιμες μορφές.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Αναφορά προόδου
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Replace whitespace with underscores.
+Αντικατάσταση των λευκών χαρακτήρων από κάτω παύλες.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single directory
+Εξαγωγή όλων των βιβλίων στον ίδιο φάκελο
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and directory structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subdirectory with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Το πρότυπο που καθορίζει τα ονόματα και τη δομή των φακέλων για τα αρχεία που αποθηκεύονται. Προεπιλογή είναι η \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, η οποία θα αποθηκεύσει τα βιβλία στη βιβλιοθήκη του calibre σε υποφακέλους συγγραφέων, και με ονόματα που περιέχουν τίτλο και όνομα συγγραφέα. Οι διαθέσιμες μεταβλητές είναι: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -492,12 +492,12 @@ The template to control the filename and directory structure of the saved files.
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified directory. Default is .
+Εξαγωγή των βιβλίων στον καθορισμένο φάκελο. Εξ ορισμού  .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-to\-lowercase
-Convert paths to lowercase.
+Μετατροπή διαδρομών σε πεζά.
 .UNINDENT
 .SH CATALOG
 .INDENT 0.0
@@ -531,7 +531,7 @@ Filter the results by the search query. For the format of the search query, plea
 .B \-\-verbose, \-v
 Show detailed output information. Useful for debugging
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB ΕΠΙΛΟΓΕΣ
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -590,7 +590,7 @@ Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPΕτικέτα\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPΕτικέτες\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -677,7 +677,7 @@ A dictionary of options to customize how the data in this column will be interpr
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.
+Στη στήλη αυτή αποθηκεύονται δεδομένα τύπου ετικέτας (δηλαδή πολλαπλές τιμές που διαχωρίζονται από κόμμα). Βρίσκει εφαρμογή μόνο αν ο τύπος δεδομένων είναι κείμενο.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -697,7 +697,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
-Εμφάνιση λεπτομερειών για κάθε στήλη.
+Προβολή λεπτομερειών για κάθε στήλη.
 .UNINDENT
 .SH REMOVE_CUSTOM_COLUMN
 .INDENT 0.0
@@ -741,7 +741,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-If the column stores multiple values, append the specified values to the existing ones, instead of replacing them.
+Αν στη στήλη αποθηκεύονται πολλαπλές τιμές, να προστεθούν οι καθορισμένες τιμές στις ήδη υπάρχουσες αντί να τις αντικαταστήσουν.
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -788,7 +788,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Εξαγωγή σε CSV
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -829,12 +829,12 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+Εξαγωγή σε CSV
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Ο τύπος του αρχείου CSV που θα δημιουργηθεί. Επιλογές: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -869,7 +869,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Κανονικά, η εντολή αυτή ενεργεί μόνο σε βιβλία που έχουν παρωχημένα αρχεία OPF. Με την επιλογή αυτή επιτρέπεται η δράση σε όλα τα βιβλία.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -939,7 +939,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+Ο μέγιστος αριθμός αποτελεσμάτων που θα επιστραφεί. Η προεπιλεγμένη τιμή είναι όλα τα αποτελέσματα.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

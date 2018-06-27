@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "四月 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-POLISH" "1" "六月 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -104,6 +104,11 @@ OPF文件路径。从OPF文件更新书中的元数据。
 .TP
 .B \-\-subset\-fonts, \-f
 嵌入子集字体意味着可以减少内嵌字体的体积大小，因为只 使用书籍中所需要调用的字符。这有助于大幅减少字体文件的大 小（通常能减少近一半的体积）。 举个例子，如果一本书为标题使用了特定的字体，子集字体 将只保留使用标题字符中使用的字体。或者是如果书籍内嵌了字 体的粗体和斜体，但是却很少使用粗体和斜体，那么粗体和斜体 可能会被精简为少量的字符，甚至是完全被移除。 子集字体唯一的缺点是，如果您想在以后为您的书籍添加更 多的内容，新的内容可能无法使用原有的子集字体。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-upgrade\-book, \-U
+Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "4月 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "6月 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -102,7 +102,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+列出內建食譜名稱。您可以從內建食譜建立電子書，就像：ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -147,8 +147,13 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-epub\-version
+The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified directory. The contents of the directory are first deleted, so be careful.
+將產生 EPUB 文件的內容解壓縮到指定文件夾，請注意該文件夾會先被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -521,7 +526,7 @@ XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+設定電子書籍描述。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -546,7 +551,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+設定電子書籍出版商。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -561,7 +566,7 @@ Set the e\-book publisher.
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+設定這個電子書所屬的系列。
 .UNINDENT
 .INDENT 0.0
 .TP

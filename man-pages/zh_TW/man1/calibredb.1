@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "4月 06, 2018" "3.21.0" "calibre"
+.TH "CALIBREDB" "1" "6月 15, 2018" "3.26.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -79,14 +79,14 @@ To connect to a running Content server, pass the URL of the server to the
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+\fI\%通用選項\fP
 .IP \(bu 2
 \fI\%list\fP
 .IP \(bu 2
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%從目錄中加入\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -131,7 +131,7 @@ details and examples.
 .IP \(bu 2
 \fI\%search\fP
 .UNINDENT
-.SH GLOBAL OPTIONS
+.SH 通用選項
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
@@ -150,7 +150,7 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+用於登入Calibre網路伺服器的使用者名稱
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+產生適用於機器讀取用的JSON檔案，線寬及分隔符號將被忽略。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -255,7 +255,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
+編輯書籍的書號。例如：\-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -287,18 +287,18 @@ Set the identifiers for this book, for e.g. \-I asin:XXX \-I isbn:YYY
 .B \-\-title, \-t
 設定已添加書籍的標題
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS 從目錄中加入
 .sp
-Options to control the adding of books from directories. By default only files that have extensions of known e\-book file types are added.
+用來控制從目錄中添加書籍的選項。預設情況下，只會添加具有已知電子書文件副檔名的檔案。
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+文件名（全局）模式，當掃描文件目錄時，即使它們不是已知的電子書檔案類型，匹配此模式的文件將被加入，可以多次指定多個模式。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+文件名（全局）模式，當掃描文件目錄時，匹配此模式的文件將被忽略。可以多次指定多個模式，例如：* .pdf將會忽略所有pdf文件
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -328,7 +328,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+略過資源回收筒
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -414,7 +414,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+列出所有 \fI\%\-\-field\fP 可使用的詮釋資料欄位
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -466,7 +466,7 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+回報進度
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -790,17 +790,17 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ignore_extensions, \-e
-Comma\-separated list of extensions to ignore. Default: all
+以逗號分割忽略的副檔名。 預設值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Comma\-separated list of names to ignore. Default: all
+以逗號分割忽略的檔名。 預設值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-report, \-r
-Comma\-separated list of reports. Default: all
+以逗號分割報告清單。 預設值：全部
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -821,7 +821,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+以逗號分割分類查詢名稱。 預設值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -831,12 +831,12 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+指定輸出的CSV檔案格式，格式: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-Output only the number of items in a category instead of the counts per item within the category
+只列出每個分類中的書籍總數，而不是列出每個分類中的書籍。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -866,7 +866,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+此命令通常僅對於過時的OPT文件進行操作，此選項會使它在所有的書籍上操作。
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -911,7 +911,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+只更新特定格式檔案的詮釋資料，可以多次指定多個檔案格式。預設會更新所有格式的檔案。
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -936,7 +936,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+結果回傳結果的最大數目。默認回傳全部結果
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

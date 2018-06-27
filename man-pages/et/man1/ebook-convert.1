@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "aprill 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "juuni 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -144,6 +144,11 @@ Sisesta reasisene sisukord, mis näib osana raamatu peamisest sisust.
 .TP
 .B \-\-epub\-toc\-at\-end
 Pane sisestatav sisukord raamatu lõppu, mitte algusesse.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-version
+Loodava EPUB\-faili versioon. EPUB 2 on kõige ühilduvam; kasuta EPUB 3 ainult siis, kui tead, et see on kindlasti vajalik.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -296,7 +301,7 @@ When calibre removes blank lines between paragraphs, it automatically sets a par
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Teisenda tavalised jutumärgid, mõttekriipsud ja kolmikpunktid nende tüpograafiliselt õigete vastetega. Üksikasjade saamiseks vaata lehte \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -435,7 +440,7 @@ Insert the book metadata at the start of the book. This is useful if your e\-boo
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+XPath avaldis. Määratletud elementide ette sisestatakse lehepiir. Keelamiseks kasuta avaldist: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -488,7 +493,7 @@ Maximum number of links to insert into the TOC. Set to 0 to disable. Default is:
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Remove entries from the Table of Contents whose titles match the specified regular expression. Matching entries and all their children are removed.
+Eemalda sisukorrast kirjed, mille pealkiri vastab määratletud regulaaravaldisele. Eemaldatakse kõik vastavad kirjed ja nende alamkirjed.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -18,7 +18,7 @@ What formats does calibre support conversion to/from?
 calibre supports the conversion of many input formats to many output formats.
 It can convert every input format in the following list, to every output format.
 
-*Input Formats:* AZW, AZW3, AZW4, CBZ, CBR, CBC, CHM, DJVU, DOCX, EPUB, FB2, HTML, HTMLZ, LIT, LRF, MOBI, ODT, PDF, PRC, PDB, PML, RB, RTF, SNB, TCR, TXT, TXTZ
+*Input Formats:* AZW, AZW3, AZW4, CBZ, CBR, CBC, CHM, DJVU, DOCX, EPUB, FB2, FBZ, HTML, HTMLZ, LIT, LRF, MOBI, ODT, PDF, PRC, PDB, PML, RB, RTF, SNB, TCR, TXT, TXTZ
 
 *Output Formats:* AZW3, EPUB, DOCX, FB2, HTMLZ, OEB, LIT, LRF, MOBI, PDB, PMLZ, RB, PDF, RTF, SNB, TCR, TXT, TXTZ, ZIP
 
@@ -34,7 +34,7 @@ It can convert every input format in the following list, to every output format.
 
 What are the best source formats to convert?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In order of decreasing preference: LIT, MOBI, AZW, EPUB, AZW3, FB2, DOCX, HTML, PRC, ODT, RTF, PDB, TXT, PDF
+In order of decreasing preference: LIT, MOBI, AZW, EPUB, AZW3, FB2, FBZ, DOCX, HTML, PRC, ODT, RTF, PDB, TXT, PDF
 
 I converted a PDF file, but the result has various problems?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -668,7 +668,7 @@ then import it on another computer. First let's see how to export the data:
     folder to your new computer and follow the instructions below to import the
     data.
 
-  * Install calibre on your new computer and run through the Welcome Wizard, it
+  * Install calibre on your new computer and run through the :guilabel:`Welcome wizard`, it
     does not matter what you do there, as you will be importing your old
     settings in the next step. You will now have an empty calibre, with just
     the :guilabel:`Getting Started` guide in your library. Once again, right
@@ -693,9 +693,9 @@ then import it on another computer. First let's see how to export the data:
     you will see the path to the current calibre library.
     
     Now on the new computer, start calibre for the first time. It will run the
-    Welcome Wizard asking you for the location of the calibre library. Point it
+    :guilabel:`Welcome wizard` asking you for the location of the calibre library. Point it
     to the previously copied folder. If the computer you are transferring to
-    already has a calibre installation, then the Welcome wizard wont run. In
+    already has a calibre installation, then the :guilabel:`Welcome wizard` wont run. In
     that case, right-click the calibre icon in the toolbar and point it to the
     newly copied directory. You will now have two calibre libraries on your
     computer and you can switch between them by clicking the calibre icon on
@@ -820,7 +820,7 @@ There can be several causes for this:
 
     * If you get an error about a Python function terminating unexpectedly after upgrading calibre, first uninstall calibre, then delete the folders (if they exists)
       :file:`C:\\Program Files\\Calibre` and :file:`C:\\Program Files\\Calibre2`. Now re-install and you should be fine.
-    * If you get an error in the welcome wizard on an initial run of calibre, try choosing a folder like :file:`C:\\library` as the calibre library (calibre sometimes
+    * If you get an error in the :guilabel:`Welcome wizard` on an initial run of calibre, try choosing a folder like :file:`C:\\library` as the calibre library (calibre sometimes
       has trouble with library locations if the path contains non-English characters, or only numbers, etc.)
     * Try running it as Administrator (Right click on the icon and select "Run as Administrator")
 
@@ -845,7 +845,8 @@ There are several possible things I know of, that can cause this:
       you are running any of these, close them before starting calibre, or
       uninstall them:
       *RoboForm*, *Logitech SetPoint Settings*, *Constant Guard Protection by
-      Xfinity*, *Spybot*, *Killer Network Manager*, *Nahimic UI Interface*.
+      Xfinity*, *Spybot*, *Killer Network Manager*, *Nahimic UI Interface*,
+      *Acronis True Image*.
 
     * You are using a Wacom branded USB mouse/tablet. There is an incompatibility between
       Wacom drivers and the graphics toolkit calibre uses. Try using a non-Wacom
@@ -938,7 +939,7 @@ I downloaded the installer, but it is not working?
 Downloading from the Internet can sometimes result in a corrupted download. If the calibre installer you downloaded is not opening, try downloading it again. If re-downloading it does not work, download it from `an alternate location <https://github.com/kovidgoyal/calibre/releases/latest>`_. If the installer still doesn't work, then something on your computer is preventing it from running.
 
     * Try temporarily disabling your antivirus program (Microsoft Security Essentials, or Kaspersky or Norton or McAfee or whatever). This is most likely the culprit if the upgrade process is hanging in the middle.
-    * Try rebooting your computer and running a registry cleaner like `Wise registry cleaner <http://www.wisecleaner.com>`_.
+    * Try rebooting your computer and running a registry cleaner like `Wise registry cleaner <https://www.wisecleaner.com>`_.
     * Try a clean install. That is, uninstall calibre, delete :file:`C:\\Program Files\\Calibre2` (or wherever you previously chose to install calibre). Then re-install calibre. Note that uninstalling does not touch your books or settings.
     * Try downloading the installer with an alternate browser. For example if you are using Internet Explorer, try using Firefox or Chrome instead.
     * If you get an error about a missing DLL on Windows, then most likely, the

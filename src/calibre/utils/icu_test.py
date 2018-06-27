@@ -133,6 +133,8 @@ class TestICU(unittest.TestCase):
         ' Test roundtripping '
         for r in (u'xxx\0\u2219\U0001f431xxx', u'\0', u'', u'simple'):
             self.ae(r, icu._icu.roundtrip(r))
+        self.ae(icu._icu.roundtrip('\ud8e81'), '\ufffd1')
+        self.ae(icu._icu.roundtrip('\udc01\ud8e8'), '\ufffd\ufffd')
         for x, l in [('', 0), ('a', 1), ('\U0001f431', 1)]:
             self.ae(icu._icu.string_length(x), l)
         for x, l in [('', 0), ('a', 1), ('\U0001f431', 2)]:
@@ -143,7 +145,12 @@ class TestICU(unittest.TestCase):
 
     def test_character_name(self):
         ' Test character naming '
-        self.ae(icu.character_name('\U0001f431'), 'CAT FACE')
+        from calibre.utils.unicode_names import character_name_from_code
+        for q, e in {
+                '\U0001f431': 'CAT FACE'
+                }.items():
+            self.ae(icu.character_name(q), e)
+            self.ae(character_name_from_code(icu.ord_string(q)[0]), e)
 
     def test_contractions(self):
         ' Test contractions '
@@ -218,6 +225,6 @@ def test_build():
     if not result.wasSuccessful():
         raise SystemExit(1)
 
+
 if __name__ == '__main__':
     run(verbosity=4)
-

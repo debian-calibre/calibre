@@ -94,6 +94,8 @@ class PDFOutput(OutputFormatPlugin):
         OptionRecommendation(name='pdf_mono_font_size',
             recommended_value=16, help=_(
                 'The default font size for monospaced text')),
+        OptionRecommendation(name='pdf_hyphenate', recommended_value=False,
+            help=_('Break long words at the end of lines. This can give the text at the right margin a more even appearance.')),
         OptionRecommendation(name='pdf_mark_links', recommended_value=False,
             help=_('Surround all links with a red box, useful for debugging.')),
         OptionRecommendation(name='uncompressed_pdf',
@@ -140,7 +142,17 @@ class PDFOutput(OutputFormatPlugin):
             help=_('The size of the bottom page margin, in pts. Default is 72pt.'
                    ' Overrides the common bottom page margin setting, unless set to zero.')
         ),
+        OptionRecommendation(name='pdf_use_document_margins', recommended_value=False,
+            help=_('Use the page margins specified in the input document via @page CSS rules.'
+            ' This will cause the margins specified in the conversion settings to be ignored.'
+            ' If the document does not specify page margins, the conversion settings will be used as a fallback.')
+        ),
     ])
+
+    def specialize_options(self, log, opts, input_fmt):
+        if opts.pdf_use_document_margins:
+            # Prevent the conversion pipeline from overwriting document margins
+            opts.margin_left = opts.margin_right = opts.margin_top = opts.margin_bottom = -1
 
     def convert(self, oeb_book, output_path, input_plugin, opts, log):
         from calibre.gui2 import must_use_qt, load_builtin_fonts
@@ -148,6 +160,7 @@ class PDFOutput(OutputFormatPlugin):
         # Turn off hinting in WebKit (requires a patched build of QtWebKit)
         os.environ['CALIBRE_WEBKIT_NO_HINTING'] = '1'
         self.filtered_font_warnings = set()
+        self.stored_page_margins = getattr(opts, '_stored_page_margins', {})
         try:
             # split on page breaks, as the JS code to convert page breaks to
             # column breaks will not work because of QWebSettings.LocalContentCanAccessFileUrls
@@ -184,14 +197,13 @@ class PDFOutput(OutputFormatPlugin):
 
     def get_cover_data(self):
         oeb = self.oeb
-        if (oeb.metadata.cover and
-                unicode(oeb.metadata.cover[0]) in oeb.manifest.ids):
+        if (oeb.metadata.cover and unicode(oeb.metadata.cover[0]) in oeb.manifest.ids):
             cover_id = unicode(oeb.metadata.cover[0])
             item = oeb.manifest.ids[cover_id]
             self.cover_data = item.data
 
     def process_fonts(self):
-        ''' Make sure all fonts are embeddable. Also remove some fonts that causes problems. '''
+        ''' Make sure all fonts are embeddable. Also remove some fonts that cause problems. '''
         from calibre.ebooks.oeb.base import urlnormalize
         from calibre.utils.fonts.utils import remove_embed_restriction
 
@@ -243,6 +255,13 @@ class PDFOutput(OutputFormatPlugin):
         self.get_cover_data()
 
         self.process_fonts()
+        if self.opts.pdf_use_document_margins and self.stored_page_margins:
+            import json
+            for href, margins in self.stored_page_margins.iteritems():
+                item = oeb_book.manifest.hrefs.get(href)
+                root = item.data
+                if hasattr(root, 'xpath') and margins:
+                    root.set('data-calibre-pdf-output-page-margins', json.dumps(margins))
 
         with TemporaryDirectory('_pdf_out') as oeb_dir:
             from calibre.customize.ui import plugin_for_output_format

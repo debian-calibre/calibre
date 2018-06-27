@@ -312,6 +312,8 @@ class PagedDisplay
             this.footer.style.setProperty('left', left+'px')
 
     update_header_footer: (pagenum) ->
+        has_images = false
+        this.header_footer_images = []
         if this.hf_style != null
             if pagenum%2 == 1 then cls = "even_page" else cls = "odd_page"
             this.hf_style.innerHTML = "#pdf_page_header_#{ this.hf_uuid } .#{ cls }, #pdf_page_footer_#{ this.hf_uuid } .#{ cls } { display: none }"
@@ -322,9 +324,23 @@ class PagedDisplay
         if this.header != null
             this.header.innerHTML = this.header_template.replace(/_PAGENUM_/g, pagenum+"").replace(/_TITLE_/g, title+"").replace(/_AUTHOR_/g, author+"").replace(/_TOP_LEVEL_SECTION_/g, tl_section+"").replace(/_SECTION_/g, section+"")
             runscripts(this.header)
+            for img in this.header.getElementsByTagName('img')
+                this.header_footer_images.push(img)
+                has_images = true
         if this.footer != null
             this.footer.innerHTML = this.footer_template.replace(/_PAGENUM_/g, pagenum+"").replace(/_TITLE_/g, title+"").replace(/_AUTHOR_/g, author+"").replace(/_TOP_LEVEL_SECTION_/g, tl_section+"").replace(/_SECTION_/g, section+"")
             runscripts(this.footer)
+            for img in this.header.getElementsByTagName('img')
+                this.header_footer_images.push(img)
+                has_images = true
+        has_images
+
+    header_footer_images_loaded: () ->
+        for img in this.header_footer_images
+            if not img.complete
+                return false
+        this.header_footer_images = []
+        return true
 
     fit_images: () ->
         # Ensure no images are wider than the available width in a column. Note
@@ -332,11 +348,16 @@ class PagedDisplay
         # force a relayout if the render tree is dirty.
         images = []
         vimages = []
+        bounding_rects = []
+        img_tags = document.getElementsByTagName('img')
+        for img in img_tags
+            bounding_rects.push(img.getBoundingClientRect())
         maxh = this.current_page_height
-        for img in document.getElementsByTagName('img')
+        for i in [0...img_tags.length]
+            img = img_tags[i]
             previously_limited = calibre_utils.retrieve(img, 'width-limited', false)
             data = calibre_utils.retrieve(img, 'img-data', null)
-            br = img.getBoundingClientRect()
+            br = bounding_rects[i]
             if data == null
                 data = {'left':br.left, 'right':br.right, 'height':br.height, 'display': img.style.display}
                 calibre_utils.store(img, 'img-data', data)

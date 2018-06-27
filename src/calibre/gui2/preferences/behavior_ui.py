@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -155,7 +155,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.opt_new_version_notification.setText(_("Show notification when &new version is available"))
+        self.opt_new_version_notification.setText(_("Notify when a &new version is available"))
         self.opt_upload_news_to_device.setText(_("Automatically send downloaded &news to e-book reader"))
         self.priority_label.setText(_("Job &priority:"))
         self.opt_worker_process_priority.setItemText(0, _("Normal"))

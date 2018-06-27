@@ -418,7 +418,11 @@ function ρσ_print() {
 
 function ρσ_int(val, base) {
     var ans;
-    ans = parseInt(val, base || 10);
+    if (typeof val === "number") {
+        ans = val | 0;
+    } else {
+        ans = parseInt(val, base || 10);
+    }
     if (isNaN(ans)) {
         throw new ValueError("Invalid literal for int with base " + (base || 10) + ": " + val);
     }
@@ -428,14 +432,21 @@ if (!ρσ_int.__argnames__) Object.defineProperties(ρσ_int, {
     __argnames__ : {value: ["val", "base"]}
 });
 
-function ρσ_float() {
+function ρσ_float(val) {
     var ans;
-    ans = parseFloat.apply(null, arguments);
+    if (typeof val === "number") {
+        ans = val;
+    } else {
+        ans = parseFloat(val);
+    }
     if (isNaN(ans)) {
         throw new ValueError("Could not convert string to float: " + arguments[0]);
     }
     return ans;
 };
+if (!ρσ_float.__argnames__) Object.defineProperties(ρσ_float, {
+    __argnames__ : {value: ["val"]}
+});
 
 function ρσ_arraylike_creator() {
     var names;
@@ -14808,16 +14819,23 @@ return this.__repr__();
         });
 
         function fit_images() {
-            var images, vimages, maxh, previously_limited, data, br, left, col, rleft, width, rright, img, ρσ_unpack, max_width;
+            var images, vimages, img_tags, bounding_rects, img_tag, maxh, img, br, previously_limited, data, left, col, rleft, width, rright, i, ρσ_unpack, max_width;
             images = ρσ_list_decorate([]);
             vimages = ρσ_list_decorate([]);
-            maxh = screen_height;
-            var ρσ_Iter2 = ρσ_Iterable(document.getElementsByTagName("img"));
+            img_tags = document.getElementsByTagName("img");
+            bounding_rects = [];
+            var ρσ_Iter2 = ρσ_Iterable(img_tags);
             for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                img = ρσ_Iter2[ρσ_Index2];
+                img_tag = ρσ_Iter2[ρσ_Index2];
+                bounding_rects.push(img_tag.getBoundingClientRect());
+            }
+            maxh = screen_height;
+            for (var ρσ_Index3 = 0; ρσ_Index3 < img_tags.length; ρσ_Index3++) {
+                i = ρσ_Index3;
+                img = img_tags[(typeof i === "number" && i < 0) ? img_tags.length + i : i];
+                br = bounding_rects[(typeof i === "number" && i < 0) ? bounding_rects.length + i : i];
                 previously_limited = get_elem_data(img, "width-limited", false);
                 data = get_elem_data(img, "img-data", null);
-                br = img.getBoundingClientRect();
                 if (data === null) {
                     data = (function(){
                         var ρσ_d = Object.create(null);
@@ -14846,19 +14864,19 @@ return this.__repr__();
                 }
                 ρσ_interpolate_kwargs.call(this, set_css, [img].concat([ρσ_desugar_kwargs({break_inside: "avoid"})]));
             }
-            var ρσ_Iter3 = ρσ_Iterable(images);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
-                img = ρσ_unpack[0];
-                max_width = ρσ_unpack[1];
-                img.style.setProperty("max-width", max_width + "px");
-                set_elem_data(img, "width-limited", true);
-            }
-            var ρσ_Iter4 = ρσ_Iterable(vimages);
+            var ρσ_Iter4 = ρσ_Iterable(images);
             for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                img = ρσ_Iter4[ρσ_Index4];
-                data = get_elem_data(img, "img-data", null);
-                ρσ_interpolate_kwargs.call(this, set_css, [img].concat([ρσ_desugar_kwargs({break_before: "always", max_height: maxh + "px"})]));
+                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+                img_tag = ρσ_unpack[0];
+                max_width = ρσ_unpack[1];
+                img_tag.style.setProperty("max-width", max_width + "px");
+                set_elem_data(img_tag, "width-limited", true);
+            }
+            var ρσ_Iter5 = ρσ_Iterable(vimages);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                img_tag = ρσ_Iter5[ρσ_Index5];
+                data = get_elem_data(img_tag, "img-data", null);
+                ρσ_interpolate_kwargs.call(this, set_css, [img_tag].concat([ρσ_desugar_kwargs({break_before: "always", max_height: maxh + "px"})]));
                 if (data.height > maxh) {
                     img.style.setProperty("display", "block");
                 }
@@ -14973,9 +14991,9 @@ return this.__repr__();
             data = check_column_widths();
             if (data) {
                 dw = data.desired_width;
-                var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    elem = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    elem = ρσ_Iter6[ρσ_Index6];
                     ρσ_interpolate_kwargs.call(this, set_css, [elem].concat([ρσ_desugar_kwargs({max_width: dw + "px", min_width: dw + "px"})]));
                 }
             }
@@ -15215,9 +15233,9 @@ return this.__repr__();
             ans = null;
             if (in_paged_mode) {
                 c = current_column_location();
-                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ c, c - col_and_gap, c + col_and_gap ]));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    x = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter7 = ρσ_Iterable(ρσ_list_decorate([ c, c - col_and_gap, c + col_and_gap ]));
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    x = ρσ_Iter7[ρσ_Index7];
                     ρσ_unpack = [x, x + col_and_gap];
                     left = ρσ_unpack[0];
                     right = ρσ_unpack[1];
@@ -17019,7 +17037,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.21.0";
+        CALIBRE_VERSION = "3.26.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -18822,7 +18840,7 @@ return this.__repr__();
                 extra_data.appendChild(safe_set_inner_html(E.span(), _("{0} of <i>{1}</i>").format(ival, metadata.series)));
             }
             right = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.div(E.b(metadata.title || _("Unknown")), E.br(), authors), extra_data].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content: space-between; overflow: hidden"})])), comments].concat([ρσ_desugar_kwargs({class_: "details-list-right"})]));
-            ans = ρσ_interpolate_kwargs.call(E, E.a, [img_div, right].concat([ρσ_desugar_kwargs({href: href, style: "height:" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px; display: flex", class_: ITEM_CLASS})]));
+            ans = E.div(ρσ_interpolate_kwargs.call(E, E.a, [img_div, right].concat([ρσ_desugar_kwargs({href: href, style: "height:" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px; display: flex", class_: ITEM_CLASS})])));
             ans.addEventListener("click", show_book_details, true);
             return ans;
         };
@@ -22006,7 +22024,7 @@ return this.__repr__();
             });
 
             function process_series(field, fm, name, val) {
-                var ifield, ival, s;
+                var ifield, ival, s, a;
                 if (val) {
                     ifield = field + "_index";
                     try {
@@ -22022,8 +22040,14 @@ return this.__repr__();
                     ival = ρσ_interpolate_kwargs.call(this, fmt_sidx, [ival].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
                     table.appendChild(E.tr(E.td(name + ":"), E.td()));
                     s = safe_set_inner_html(E.span(), _("{0} of <a>{1}</a>").format(ival, val));
-                    s.lastChild.setAttribute("href", href_for_search(field, val));
-                    s.lastChild.setAttribute("title", _("Click to see books with {0}: {1}").format(name, val));
+                    a = s.getElementsByTagName("a");
+                    if (a && a.length) {
+                        a = a[0];
+                        a.setAttribute("href", href_for_search(field, val));
+                        a.setAttribute("title", _("Click to see books with {0}: {1}").format(name, val));
+                    } else {
+                        print("WARNING: Translation of series template is incorrect as it does not have an <a> tag");
+                    }
                     table.lastChild.lastChild.appendChild(s);
                 }
             };
@@ -23651,6 +23675,7 @@ return this.__repr__();
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
+        var ngettext = ρσ_modules.gettext.ngettext;
 
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
@@ -23810,10 +23835,10 @@ return this.__repr__();
                     return _("almost done");
                 }
                 minutes = minutes;
-                return _("{} mins").format(minutes);
+                return ngettext("{} min", "{} mins", minutes).format(minutes);
             }
             if (!minutes) {
-                return _("{} hours").format(hours);
+                return ngettext("{} hour", "{} hours", hours).format(hours);
             }
             return _("{} h {} mins").format(hours, minutes);
         };
@@ -24528,7 +24553,11 @@ return this.__repr__();
             }
             self.overlay.hide();
             if (load_type !== "load") {
-                error_dialog(_("Failed to fetch sync data"), _("Failed to download last read data from server, click \"Show details\" for more information."), xhr.error_html);
+                if (xhr.responseText === "login required for sync") {
+                    error_dialog(_("Failed to fetch sync data"), _("You must setup user accounts and login to use the sync functionality"));
+                } else {
+                    error_dialog(_("Failed to fetch sync data"), _("Failed to download last read data from server, click \"Show details\" for more information."), xhr.error_html);
+                }
                 return;
             }
             data = JSON.parse(xhr.responseText);

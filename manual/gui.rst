@@ -281,7 +281,7 @@ Preferences
 |cbi| The :guilabel:`Preferences` action allows you to change the way various aspects of calibre work. It has four variations, accessed by doing a right-click on the button.
 
     1. **Preferences**: Allows you to change the way various aspects of calibre work. Clicking the button also performs this action.
-    2. **Run welcome wizard**: Allows you to start the Welcome Wizard which appeared the first time you started calibre.
+    2. **Run Welcome wizard**: Allows you to start the :guilabel:`Welcome wizard` which appeared the first time you started calibre.
     3. **Get plugins to enhance calibre**: Opens a new window that shows plugins for calibre. These plugins are developed by third parties to extend calibre's functionality.
     4. **Restart in debug mode**: Allows you to enable a debugging mode that can assist the calibre developers in solving problems you encounter with the program. For most users this should remain disabled unless instructed by a developer to enable it.
 
@@ -315,7 +315,7 @@ The Search & Sort section allows you to perform several powerful actions on your
 
     * You can quickly and conveniently edit metadata by selecting the entry you want changed in the list and pressing the :kbd:`E` key.
 
-    * You can perform :ref:`actions` on sets to books. To select multiple books you can either:
+    * You can perform :ref:`actions` on sets of books. To select multiple books you can either:
 
         - Keep the :kbd:`Ctrl` key pressed and click on the books you want selected.
 

@@ -190,18 +190,15 @@ class ProgressBar:
             self.cleared = 0
         n = int((self.width-10)*percent)
         msg = message.center(self.width)
-        msg = (self.term.BOL + self.term.UP + self.term.CLEAR_EOL +
-            (self.bar % (100*percent, '='*n, '-'*(self.width-10-n))) +
-            self.term.CLEAR_EOL + msg).encode(enc)
+        msg = (self.term.BOL + self.term.UP + self.term.CLEAR_EOL + (
+            self.bar % (100*percent, '='*n, '-'*(self.width-10-n))) + self.term.CLEAR_EOL + msg).encode(enc)
         out.write(msg)
         out.flush()
 
     def clear(self):
         out = (sys.stdout.buffer if py3 else sys.stdout)
         if not self.cleared:
-            out.write((self.term.BOL + self.term.CLEAR_EOL +
-            self.term.UP + self.term.CLEAR_EOL +
-            self.term.UP + self.term.CLEAR_EOL).encode(enc))
+            out.write((self.term.BOL + self.term.CLEAR_EOL + self.term.UP + self.term.CLEAR_EOL + self.term.UP + self.term.CLEAR_EOL).encode(enc))
             self.cleared = 1
             out.flush()
 # }}}
@@ -637,8 +634,8 @@ def extract_tarball(raw, destdir):
 def get_tarball_info():
     global signature, calibre_version
     print ('Downloading tarball signature securely...')
-    raw = get_https_resource_securely('https://code.calibre-ebook.com/tarball-info/' +
-                                      ('x86_64' if is64bit else 'i686'))
+    raw = get_https_resource_securely(
+            'https://code.calibre-ebook.com/tarball-info/' + ('x86_64' if is64bit else 'i686'))
     signature, calibre_version = raw.rpartition(b'@')[::2]
     if not signature or not calibre_version:
         raise ValueError('Failed to get install file signature, invalid signature returned')
@@ -705,6 +702,7 @@ def check_umask():
             ' this can cause system breakage when running the installer because'
             ' of bugs in common system utilities.'
         )
+        sys.stdin = open('/dev/tty')  # stdin is a pipe from wget
         while True:
             q = raw_input('Should the installer (f)ix the umask, (i)gnore it or (a)bort [f/i/a Default is abort]: ') or 'a'
             if q in 'f i a'.split():
@@ -738,5 +736,44 @@ try:
 except NameError:
     from_file = False
 
+
+def update_intaller_wrapper():
+    # To run: python3 -c "import runpy; runpy.run_path('setup/linux-installer.py', run_name='update_wrapper')"
+    src = open(__file__, 'rb').read().decode('utf-8')
+    wrapper = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'linux-installer.sh')
+    with open(wrapper, 'r+b') as f:
+        raw = f.read().decode('utf-8')
+        nraw = re.sub(r'^# HEREDOC_START.+^# HEREDOC_END', lambda m: '# HEREDOC_START\n{}\n# HEREDOC_END'.format(src), raw, flags=re.MULTILINE | re.DOTALL)
+        if 'update_intaller_wrapper()' not in nraw:
+            raise SystemExit('regex substitute of HEREDOC failed')
+        f.seek(0), f.truncate()
+        f.write(nraw.encode('utf-8'))
+
+
+def script_launch():
+    def path(x):
+        return os.path.expanduser(x)
+
+    def to_bool(x):
+        return x.lower() in ('y', 'yes', '1', 'true')
+
+    type_map = {x: path for x in 'install_dir isolated bin_dir share_dir ignore_umask'.split()}
+    type_map['isolated'] = type_map['ignore_umask'] = to_bool
+    kwargs = {}
+
+    for arg in sys.argv[1:]:
+        if arg:
+            m = re.match('([a-z_]+)=(.+)', arg)
+            if m is None:
+                raise SystemExit('Unrecognized command line argument: ' + arg)
+            k = m.group(1)
+            if k not in type_map:
+                raise SystemExit('Unrecognized command line argument: ' + arg)
+            kwargs[k] = type_map[k](m.group(2))
+    main(**kwargs)
+
+
 if __name__ == '__main__' and from_file:
     main()
+elif __name__ == 'update_wrapper':
+    update_intaller_wrapper()

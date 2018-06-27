@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "april 06, 2018" "3.21.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "juni 15, 2018" "3.26.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -72,12 +72,12 @@ Starta automatiskt om servern när källkoden ändras. Användbar för utvecklin
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Antal misslyckande inloggningar för förbud.         Antal inloggnings misslyckaden, varefter en IP\-adress är förbjuden
+Antal misslyckande inloggningsförsök för bannlysning.       Antal misslyckade inloggningsförsök varefter en IP\-adress är bannlyst
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP\-adresser som har upprepade inloggnings misslyckaden.         Förbjuder tillfälligt åtkomst för IP\-adresser som har upprepade inloggnings misslyckaden för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen förbud.
+Bannlys IP\-adresser som har upprepade misslyckade inloggningsförsök.        Bannlyser tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen bannlysning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -117,12 +117,12 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Tillåt ej autentiserade lokala anslutningar att göra ändringar.     Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
+Tillåt inte autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Logga HTTP 404 (Not Found) förfrågningar.   Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
+Logga HTTP 404 (Inte hittad) förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan generera en hel del skräploggar, om din server är inriktad från robotar. Använd detta alternativ för att stänga av dem. Som standard är detta alternativ aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -162,12 +162,12 @@ Hantera databasen av användare tillåtna att ansluta till denna server. Se ocks
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. storlek på enskild HTTP\-rubrik (i KB).
+Maximal storlek på enskild HTTP\-rubrik (i KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximal tid för arbetarprocesser.   Maximala tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+Maximal tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -177,27 +177,27 @@ Maximalt antal arbetarprocesser.    Arbetsprocesser lanseras allt efter de behö
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. loggfilstorlek (i MB).         Den maximala storleken på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
+Maximal loggfilstorlek (i MB).      Största storlek på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximalt antal böcker i OPDS\-flöden.        Maximala antalet böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
+Maximalt antal böcker i OPDS\-flöden.        Högsta antal böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximala antalet ogrupperade objekt i OPDS\-flöden.  Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera.
+Högsta antal ogrupperade objekt i OPDS\-flöden.      Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. tillåten storlek för uppladdade filer till servern (i MB).
+Maximal tillåten storlek för uppladdade filer till servern (i MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Antal böcker att visa på en enda sida.      Antalet böcker som ska visas på en enda sida i webbläsaren.
+Antal böcker att visa på en enskild sida.   Antalet böcker som ska visas på en enda sida i webbläsaren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -222,7 +222,7 @@ Sökväg till SSL certifikat fil.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Sökväg till SSL privat nyckel fil.
+Sökväg till SSL privat nyckelfil.
 .UNINDENT
 .INDENT 0.0
 .TP

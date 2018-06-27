@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/epub_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -27,7 +27,7 @@ class Ui_Form(object):
         self.opt_flow_size.setObjectName("opt_flow_size")
         self.gridLayout.addWidget(self.opt_flow_size, 5, 1, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 262, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem, 6, 0, 1, 1)
+        self.gridLayout.addItem(spacerItem, 7, 0, 1, 1)
         self.opt_no_default_epub_cover = QtWidgets.QCheckBox(Form)
         self.opt_no_default_epub_cover.setObjectName("opt_no_default_epub_cover")
         self.gridLayout.addWidget(self.opt_no_default_epub_cover, 1, 0, 1, 1)
@@ -52,8 +52,15 @@ class Ui_Form(object):
         self.opt_toc_title = QtWidgets.QLineEdit(Form)
         self.opt_toc_title.setObjectName("opt_toc_title")
         self.gridLayout.addWidget(self.opt_toc_title, 4, 1, 1, 1)
+        self.label_3 = QtWidgets.QLabel(Form)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout.addWidget(self.label_3, 6, 0, 1, 1)
+        self.opt_epub_version = QtWidgets.QComboBox(Form)
+        self.opt_epub_version.setObjectName("opt_epub_version")
+        self.gridLayout.addWidget(self.opt_epub_version, 6, 1, 1, 1)
         self.label.setBuddy(self.opt_flow_size)
         self.label_2.setBuddy(self.opt_toc_title)
+        self.label_3.setBuddy(self.opt_epub_version)
 
         self.retranslateUi(Form)
         self.opt_no_svg_cover.toggled['bool'].connect(self.opt_preserve_cover_aspect_ratio.setDisabled)
@@ -73,4 +80,5 @@ class Ui_Form(object):
         self.opt_epub_toc_at_end.setText(_("Put inserted Table of Contents at the &end of the book"))
         self.opt_epub_flatten.setText(_("&Flatten EPUB file structure"))
         self.label_2.setText(_("&Title for inserted ToC:"))
+        self.label_3.setText(_("EP&UB version:"))
 

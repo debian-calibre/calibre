@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/txt_input.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -100,5 +100,5 @@ class Ui_Form(object):
         self.markdown_box.setTitle(_("Markdown"))
         self.label.setText(_("<p>Markdown is a simple markup language for text files, that allows for advanced formatting. To learn more visit <a href=\"https://daringfireball.net/projects/markdown\">Markdown</a>."))
         self.label_4.setText(_("You can optionally enable various extensions to the base Markdown syntax, below."))
-        self.label_5.setText(_("More information on <a href=\"https://pythonhosted.org/Markdown/extensions/index.html\">Markdown extensions</a>"))
+        self.label_5.setText(_("More information on <a href=\"https://python-markdown.github.io/extensions/\">Markdown extensions</a>"))
 

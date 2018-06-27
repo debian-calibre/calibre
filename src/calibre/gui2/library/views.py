@@ -121,8 +121,8 @@ class HeaderView(QHeaderView):  # {{{
 
         painter.save()
         if (
-                (opt.orientation == Qt.Horizontal and sm.currentIndex().column() == logical_index) or
-                (opt.orientation == Qt.Vertical and sm.currentIndex().row() == logical_index)):
+                (opt.orientation == Qt.Horizontal and sm.currentIndex().column() == logical_index) or (
+                    opt.orientation == Qt.Vertical and sm.currentIndex().row() == logical_index)):
             painter.setFont(self.current_font)
         self.style().drawControl(QStyle.CE_Header, opt, painter, self)
         painter.restore()
@@ -204,6 +204,7 @@ class PreserveViewState(object):  # {{{
 class BooksView(QTableView):  # {{{
 
     files_dropped = pyqtSignal(object)
+    books_dropped = pyqtSignal(object)
     add_column_signal = pyqtSignal()
     is_library_view = True
 
@@ -346,9 +347,12 @@ class BooksView(QTableView):  # {{{
             dest.selectionModel().select(src.selectionModel().selection(), QItemSelectionModel.ClearAndSelect)
             ci = dest.currentIndex()
             nci = src.selectionModel().currentIndex()
+            # Save/restore horz scroll.  ci column may be scrolled out of view.
+            hpos = dest.horizontalScrollBar().value()
             if ci.isValid():
                 nci = dest.model().index(nci.row(), ci.column())
             dest.selectionModel().setCurrentIndex(nci, QItemSelectionModel.NoUpdate)
+            dest.horizontalScrollBar().setValue(hpos)
             self.allow_mirroring = True
 
     def mirror_vscroll(self, src, *a):
@@ -424,9 +428,7 @@ class BooksView(QTableView):  # {{{
             ac.setCheckable(True)
             ac.setChecked(True)
         if col not in ('ondevice', 'inlibrary') and \
-                (not self.model().is_custom_column(col) or
-                self.model().custom_columns[col]['datatype'] not in ('bool',
-                    )):
+                (not self.model().is_custom_column(col) or self.model().custom_columns[col]['datatype'] not in ('bool',)):
             m = ans.addMenu(_('Change text alignment for %s') % name)
             al = self._model.alignment_map.get(col, 'left')
             for x, t in (('left', _('Left')), ('right', _('Right')), ('center', _('Center'))):
@@ -467,12 +469,14 @@ class BooksView(QTableView):  # {{{
             col = self.column_map[idx]
             name = unicode(self.model().headerData(idx, Qt.Horizontal, Qt.DisplayRole) or '')
             view.column_header_context_menu = self.create_context_menu(col, name, view)
-        if self.is_library_view:
+        has_context_menu = hasattr(view, 'column_header_context_menu')
+        if self.is_library_view and has_context_menu:
             view.column_header_context_menu.addSeparator()
             view.column_header_context_menu.addAction(
                 _('Un-split the book list') if self.pin_view.isVisible() else _('Split the book list'),
                 partial(self.column_header_context_handler, action='split', column=col or 'title'))
-        view.column_header_context_menu.popup(view.column_header.mapToGlobal(pos))
+        if has_context_menu:
+            view.column_header_context_menu.popup(view.column_header.mapToGlobal(pos))
     # }}}
 
     # Sorting {{{
@@ -945,6 +949,11 @@ class BooksView(QTableView):  # {{{
             return True
         return False
 
+    def indices_for_merge(self, resolved=False):
+        if not resolved:
+            return self.alternate_views.current_view.indices_for_merge(resolved=True)
+        return self.selectionModel().selectedRows()
+
     def scrollContentsBy(self, dx, dy):
         # Needed as Qt bug causes headerview to not always update when scrolling
         QTableView.scrollContentsBy(self, dx, dy)
@@ -1254,8 +1263,7 @@ class DeviceBooksView(BooksView):  # {{{
         md.setUrls([QUrl.fromLocalFile(p) for p in paths])
         drag = QDrag(self)
         drag.setMimeData(md)
-        cover = self.drag_icon(m.cover(self.currentIndex().row()), len(paths) >
-                1)
+        cover = self.drag_icon(m.cover(self.currentIndex().row()), len(paths) > 1)
         drag.setHotSpot(QPoint(-15, -15))
         drag.setPixmap(cover)
         return drag

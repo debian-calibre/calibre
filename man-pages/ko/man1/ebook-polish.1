@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "4월 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-POLISH" "1" "6월 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -101,6 +101,11 @@ Path to an OPF file. The metadata in the book is updated from the OPF file.
 .TP
 .B \-\-subset\-fonts, \-f
 사용된 문자만 취하기(Subsetting fonts) 기능은 내장된 글꼴이 실제로 책에서 사용된 문자만 포함하도록 크기를 줄이는 것을 말합니다. 이 기능은 글꼴 파일을 상당히 줄이는 효과가 있습니다. (보통, 글꼴 파일 크기의 절반 정도로 줄어듭니다.) 예를 들어, 제목으로 특정 글꼴을 사용한다면 \fB\(aq\fP사용된 문자만 취하기\fB\(aq\fP 기능은 책에서 실제로 사용된 문자만 포함하도록 글꼴 크기를 줄일 것입니다. 또는 글꼴의 굵은 글씨체와 기울임체가 내장되어(embedded) 있다면, 실제로 책에서 사용하는 기울임체와 굵은 글씨체는 상대적으로 매우 적거나 아예 쓰이지 않으므로, 굵은 글씨체나 기울임체의 글꼴은 크기가 매우 줄어들거나 또는 아예 제거될 수도 있습니다. 이 기능의 유일한 단점은, 나중에 이 책에 내용을 추가하게 되면 새로 추가된 텍스트가 이 줄어든 글꼴로 제대로 처리가 되지 않을 수 있다는 점입니다.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-upgrade\-book, \-U
+Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
 .UNINDENT
 .INDENT 0.0
 .TP

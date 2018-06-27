@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "4月 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-POLISH" "1" "6月 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -99,6 +99,11 @@ OPFファイルへのパス。本の書誌情報はOPFファイルの内容で�
 .TP
 .B \-\-subset\-fonts, \-f
 フォントのサブセット化とは、埋め込みフォントを実際に本の中で 使用されている文字だけを含むようにすることです。これにより、 フォントのサイズを大きく削減することができます(半分になることもよくあります)。 例えば本が見出しに特定のフォントを使用していた場合、サブセット化により 実際に見出しで使用されている文字のみを含むよう削減することができます。 また、太字やイタリックのフォントを埋め込んでいるもののほとんど またはまったく使われていない場合、サブセット化により太字やイタリックの フォントををほんの数文字だけにしたり完全に削除したりできます。 サブセット化の唯一の欠点は、後で本にテキストを追加した場合に、追加したテキストがサブセット化されたフォントに含まれていない文字を使うことがあり得る、と言う点です。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-upgrade\-book, \-U
+Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
 .UNINDENT
 .INDENT 0.0
 .TP

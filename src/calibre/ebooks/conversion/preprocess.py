@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+# flake8: noqa
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -663,6 +664,9 @@ class HTMLPreProcessor(object):
             from calibre.ebooks.conversion.utils import HeuristicProcessor
             preprocessor = HeuristicProcessor(self.extra_opts, self.log)
             html = preprocessor(html)
+
+        if is_pdftohtml:
+            html = html.replace('<!-- created by calibre\'s pdftohtml -->', '')
 
         if getattr(self.extra_opts, 'smarten_punctuation', False):
             html = smarten_punctuation(html, self.log)

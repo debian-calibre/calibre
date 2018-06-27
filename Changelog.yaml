@@ -20,6 +20,247 @@
 #   new recipes:
 #     - title:
 
+- version: 3.26.0
+  date: 2018-06-15
+
+  new features:
+    - title: "Book list: Allow drag and drop of books onto other books to merge the book records."
+      tickets: [1775123]
+
+    - title: "Check Book: External link checker: Also check HTML anchors (the part after the # in the link). Can be turned off via a checkbox at the bottom of the link checker window."
+
+    - title: "Edit Book: Preview panel: Show previews when editing SVG files"
+
+    - title: "Edit book: When downloading external resources, also convert data URLs into files."
+      tickets: [1774945]
+
+    - title: "E-book viewer: When the controls are hidden show the progress in the window title."
+      tickets: [1776710]
+
+    - title: "Library Quick switch menu: Highlight the previously switched from library in bold."
+      tickets: [1775888]
+
+  bug fixes:
+    - title: "PDF Input: Fix a regression in 3.24 that caused conversion of PDF to be significantly worse."
+      tickets: [1775984]
+
+    - title: "E-book viewer: Fix very slow loading for HTML files with very many images on Linux."
+      tickets: [1774884]
+
+    - title: "Content server: Fix a regression in 3.14 that removed the separator between books in the detailed list view mode."
+      tickets: [1776294]
+
+    - title: "Edit book: Fix SVG files not being beautified by the Beautify all files tool"
+
+    - title: "Edit book: Fix searching in selected files not searching SVG files"
+
+    - title: "Fix Tweaks help string not being displayed translated"
+
+    - title: "Edit metadata dialog: Fix distorted rendering of some labels in the custom metadata tab in rare circumstances."
+      tickets: [1766762]
+
+  improved recipes:
+    - Slate
+    - New York Times Book Review
+    - The Independent UK
+    - NYTimes Tech Beat
+    - New York Times
+    - Cracked.com
+
+  new recipes:
+    - title: El Cronista
+      author: Darko Miletic
+
+- version: 3.25.0
+  date: 2018-06-01
+
+  new features:
+    - title: "Kobo driver: Support the new Clara HD"
+
+    - title: "PDF Output: Add an option to use page margins from the input document, specified via @page CSS rules."
+      description: "Allows individual HTML files in the input document to have different page margins in the output PDF."
+      tickets: [1773319]
+
+  bug fixes:
+    - title: 'Fix option to "show text under buttons only if there is enough space" not working well with the option to use "two lines for the text under the buttons".'
+      tickets: [1773426]
+
+    - title: "Update notification: When both calibre and plugin updates are available and the user updates only the plugins, fix the restart calibre button not working."
+      tickets: [1774059]
+
+    - title: "E-book viewer: Fix printing of comics (cbz/cbr files) not working."
+      tickets: [1774163]
+
+    - title: "EPUB3 Input: Fix Table of Contents not being recognized for some EPUB 3 books that placed their nav document in-side a sub-folder."
+      tickets: [1773627]
+
+  improved recipes:
+    - Associated Press
+
+
+- version: 3.24.2
+  date: 2018-05-25
+
+  new features:
+    - title: "Conversion: EPUB Output: Add an option to output EPUB 3 files."
+      type: major
+
+    - title: "PDF Output: Add an option to break long words at the ends of lines."
+      tickets: [1773111]
+
+    - title: "PDF Output: Allow using images in the header/footer templates"
+
+    - title: "Add an option to use two lines for the text under the toolbar button in Preferences->Look & feel"
+
+    - title: "Edit book: Spell check: Update the number of misspelled words/total words displayed when correcting/ignoring words."
+      tickets: [1772276]
+
+    - title: "Edit book: Fix HTML: Automatically resolve private entities"
+      tickets: [1772157]
+
+    - title: "Improve formatting of help in Preferences->Tweaks"
+
+    - title: "ToC Editor: Allow undo for renaming single items as well."
+      tickets: [1769442]
+
+  bug fixes:
+    - title: "Version 3.24.2 fixes a bug in the new EPUB 3 output functionality that prevented conversion of non-EPUB 3 books to EPUB 3"
+
+    - title: "Version 3.24.1 fixes a regression in the 3.24 in the editor that caused syncing between the editor and the Preview panel/Live CSS panel to not work correctly"
+
+    - title: "PDF Output: Strip zero-width space characters from the text as their presence prevents searching from working"
+
+    - title: "DOCX Output: Fix <pre> tags not being converted correctly."
+      tickets: [1772219]
+
+    - title: "DOCX Input: Fix incorrect conversion of a framed block that contains a list."
+      tickets: [1771279]
+
+    - title: "Conversion: Fix private entities that use the same name as an HTML entity not being handled correctly"
+      tickets: [1772157]
+
+    - title: "Viewer: Fix HTML files with private entities displaying an artifact at the top"
+      tickets: [1772157]
+
+    - title: "Edit book: Check book: Show an error for HTML files with private entities"
+      tickets: [1772157]
+
+    - title: "EPUB3 Input: Fix titlepage being referred to in the nav causing two titlepage entries in the final book."
+
+    - title: "Fix throbber buttons not being perfectly aligned inside toolbars"
+
+    - title: "Quickview: Fix sizes not being displayed."
+      tickets: [1772151]
+
+    - title: "Edit book: Compress images tool: Do not mark the book as changed if no images could be further compressed."
+
+    - title: "Book list split-view: Fix horizontal scroll position of split view can change when changing the current column in one view."
+
+    - title: "Fix Bookeen Saga not being recognized on macOS/Linux."
+      tickets: [1769681]
+
+    - title: "Edit metadata dialog: Fix undo last trim not working for automatic trims."
+      tickets: [1769606]
+
+    - title: "Content server: Fix series field blank in Italian translation"
+
+    - title: "BeautifulSoup: Port fix from upstream for outputting bare ampersands in strings."
+      tickets: [1769481]
+
+    - title: "calibredb add: Run the input plugins before reading metadata instead of after."
+
+  improved recipes:
+    - The New York Times Book Review
+    - New York Times
+    - Le Devoir
+
+  new recipes:
+    - title: The Federalist
+      author: Kovid Goyal
+
+- version: 3.23.0
+  date: 2018-05-04
+
+  new features:
+    - title: "Kobo driver: Add support for new firmware"
+      tickets: [1767589]
+
+    - title: "Book polishing: Add an option to upgrade EPUB 2 to EPUB 3"
+
+    - title: "DOCX Input: Convert text written with dingbat fonts such as Wingding or Symbol correctly."
+
+    - title: "When choosing the page to use as a cover from a PDF file, add a button to render more pages, if needed"
+
+    - title: "TXT Input: Add support for embedded images that use relative URLs when converting markdown or textile. Note that this will only work if you are converting using the ebook-convert command line tool as the main calibre program moves files around, so relative references will not be valid."
+
+    - title: "Edit book: Insert special character: Add an option to select if searching should match all words or any of the words"
+
+    - title: 'Edit book: Insert special character: When searching by name match prefixes in addition to whole words. So you can now type "horiz" to match "horizontal".'
+
+    - title: "Linux installer: Simplify the command used to install calibre and add support for Ubuntu 18.04 which is missing a default python executable"
+
+    - title: "When upgrading EPUB 2 to EPUB 3 add the 'epub' namespace to all HTML files, for convenience."
+      tickets: [1765944]
+
+    - title: "Kobo driver: Add an option to not maintain bookmarks/read status/etc. when resending a book already on the device."
+
+  bug fixes:
+    - title: "Edit Book: Fix an error caused by a landmark entry in EPUB 3 files that has an <a> tag without an href attribute."
+
+    - title: "Edit Book: Fix names for some control characters not being displayed in the status bar"
+
+    - title: "Searching: Fix A (B) not being treated as A AND (B)"
+
+    - title: "DOCX Input: Ignore complex script font styles. Fixes conversion of documents that specify only complex script styles and no simple script styles."
+      tickets: [1766650]
+
+    - title: "When updating EPUB 2 to EPUB 3 ensure only a single dc:date element is present in the OPF"
+
+
+- version: 3.22.1
+  date: 2018-04-19
+
+  new features:
+    - title: "Edit book: Add a tool to upgrade books from EPUB 2 to EPUB 3 (Tools->Upgrade book internals)"
+      description: "Automatically upgrades metadata, converts the NCX table of contents and adds required manifest annotations"
+      type: major
+
+    - title: "Add support for the FBZ format (zipped FB2)"
+      tickets: [1762634]
+
+    - title: "Kindle driver: Change the height of generated thumbnails to 500px, needed for the Oasis 2017"
+
+    - title: "Edit book: When bulk renaming files add an option to rename by the order in which the files appear in the book."
+
+    - title: "Polishing: Recognize titlepages that are marked as covers in the EPUB 3 landmarks section"
+
+    - title: "Edit Book: Automatically updated the modified timestamp in the OPF when saving EPUB 3 books."
+
+    - title: "Remove the ISBNDB metadata plugin as ISBNDB no longer allows free lookups."
+      tickets: [1761906]
+
+  bug fixes:
+    - title: "EPUB 3 metadata: If the book defines more than one author sort value for an author use the first instead of the last"
+
+    - title: "Check Book: Dont warn for nav document not in spine in EPUB 3 books"
+
+    - title: "Linux installer: Fix umask question not working with the recommended install command because stdin is a pipe"
+
+    - title: "Browser viewer: Show an error message when trying to use the Sync function without being logged in"
+
+    - title: "When setting cover from a PDF file and the user clicks cancel, do not delete the existing cover"
+
+  improved recipes:
+    - Globe & Mail
+    - National Geographic
+    - Slate
+    - GoComics
+    - Oregonian
+
+  new recipes:
+    - title: "Le Monde: subscriber paper edition"
+      author: Remi Vanicat
+
 - version: 3.21.0
   date: 2018-04-06
 

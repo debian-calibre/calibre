@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "april 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "juni 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -147,6 +147,11 @@ Lägg den infogade innehållsförteckningen i slutet av boken istället för i b
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-epub\-version
+Versionen av EPUB\-filen som ska genereras. EPUB 2 är den mest kompatibla, använd endast EPUB 3 om du vet att du faktiskt behöver det.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-extract\-to
 Extrahera innehållet i den genererade EPUB filen till den angivna katalogen. Innehållet i katalogen först tas bort, så var försiktig.
 .UNINDENT
@@ -163,7 +168,7 @@ Om indatafilen inte har något omslag och du inte anger ett, skapas normalt ett 
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-Använd inte SVG\-grafik till omslag. Använd om din EPUB\-fil kommer att användas på enheter som inte stöder SVG, t.ex. iPhone och JetBook Lite. Om detta alternativ ej väljs, kommer dessa enheter att visa ett tomt omslag.
+Använd inte SVG\-grafik till omslag. Använd om din EPUB\-fil kommer att användas på enheter som inte stöder SVG, t.ex. iPhone och JetBook Lite. Om detta alternativ inte väljs, kommer dessa enheter att visa ett tomt omslag.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -355,8 +355,7 @@ class ItemView(QFrame):  # {{{
 # }}}
 
 
-NODE_FLAGS = (Qt.ItemIsDragEnabled|Qt.ItemIsEditable|Qt.ItemIsEnabled|
-                        Qt.ItemIsSelectable|Qt.ItemIsDropEnabled)
+NODE_FLAGS = (Qt.ItemIsDragEnabled|Qt.ItemIsEditable|Qt.ItemIsEnabled|Qt.ItemIsSelectable|Qt.ItemIsDropEnabled)
 
 
 class TreeWidget(QTreeWidget):  # {{{
@@ -393,6 +392,10 @@ class TreeWidget(QTreeWidget):  # {{{
         if self.history:
             self.unserialize_tree(self.history.pop())
             self.history_state_changed.emit()
+
+    def commitData(self, editor):
+        self.push_history()
+        return QTreeWidget.commitData(self, editor)
 
     def iteritems(self, parent=None):
         if parent is None:
@@ -610,8 +613,9 @@ class TreeWidget(QTreeWidget):  # {{{
         from calibre.gui2.tweak_book.file_list import get_bulk_rename_settings
         sort_map = {item:i for i, item in enumerate(self.iteritems())}
         items = sorted(self.selectedItems(), key=lambda x:sort_map.get(x, -1))
-        fmt, num = get_bulk_rename_settings(self, len(items), prefix=_('Chapter '), msg=_(
+        settings = get_bulk_rename_settings(self, len(items), prefix=_('Chapter '), msg=_(
             'All selected items will be renamed to the form prefix-number'), sanitize=lambda x:x, leading_zeros=False)
+        fmt, num = settings['prefix'], settings['start']
         if fmt is not None and num is not None:
             self.push_history()
             for i, item in enumerate(items):

@@ -45,7 +45,8 @@ from calibre.gui2.tweak_book.manage_fonts import ManageFonts
 from calibre.gui2.tweak_book.function_replace import DebugOutput
 from calibre.gui2.tweak_book.editor.widget import register_text_editor_actions
 from calibre.gui2.tweak_book.editor.insert_resource import InsertImage
-from calibre.utils.icu import character_name, sort_key
+from calibre.utils.icu import sort_key, ord_string
+from calibre.utils.unicode_names import character_name_from_code
 from calibre.utils.localization import localize_user_manual_link
 
 
@@ -219,7 +220,7 @@ class CursorPositionWidget(QWidget):  # {{{
             self.la.setText('')
         else:
             try:
-                name = character_name(character) if character and tprefs['editor_show_char_under_cursor'] else None
+                name = character_name_from_code(ord_string(character)[0]) if character and tprefs['editor_show_char_under_cursor'] else None
             except Exception:
                 name = None
             text = _('Line: {0} : {1}').format(line, col)
@@ -424,6 +425,9 @@ class Main(MainWindow):
         self.action_remove_unused_css = treg(
             'edit-clear.png', _('Remove &unused CSS rules'), partial(
                 self.boss.polish, 'remove_unused_css', _('Remove unused CSS rules')), 'remove-unused-css', (), _('Remove unused CSS rules'))
+        self.action_upgrade_book_internals = treg(
+            'arrow-up.png', _('&Upgrade book internals'), partial(
+                self.boss.polish, 'upgrade_book', _('Upgrade book internals')), 'upgrade-book', (), _('Upgrade book internals'))
 
         # Preview actions
         group = _('Preview')
@@ -572,6 +576,7 @@ class Main(MainWindow):
         er.addAction(self.action_get_ext_resources)
         e.addAction(self.action_check_book)
         e.addAction(self.action_reports)
+        e.addAction(self.action_upgrade_book_internals)
 
         e = b.addMenu(_('&View'))
         t = e.addMenu(_('Tool&bars'))

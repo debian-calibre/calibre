@@ -197,7 +197,7 @@ class EPUBMetadataReader(MetadataReaderPlugin):
 class FB2MetadataReader(MetadataReaderPlugin):
 
     name        = 'Read FB2 metadata'
-    file_types  = set(['fb2'])
+    file_types  = {'fb2', 'fbz'}
     description = _('Read metadata from %s files')%'FB2'
 
     def get_metadata(self, stream, ftype):
@@ -476,7 +476,7 @@ class EPUBMetadataWriter(MetadataWriterPlugin):
 class FB2MetadataWriter(MetadataWriterPlugin):
 
     name = 'Set FB2 metadata'
-    file_types = set(['fb2'])
+    file_types = {'fb2', 'fbz'}
     description = _('Set metadata in %s files')%'FB2'
 
     def set_metadata(self, stream, mi, type):
@@ -816,14 +816,13 @@ from calibre.ebooks.metadata.sources.google import GoogleBooks
 from calibre.ebooks.metadata.sources.amazon import Amazon
 from calibre.ebooks.metadata.sources.edelweiss import Edelweiss
 from calibre.ebooks.metadata.sources.openlibrary import OpenLibrary
-from calibre.ebooks.metadata.sources.isbndb import ISBNDB
 from calibre.ebooks.metadata.sources.overdrive import OverDrive
 from calibre.ebooks.metadata.sources.douban import Douban
 from calibre.ebooks.metadata.sources.ozon import Ozon
 from calibre.ebooks.metadata.sources.google_images import GoogleImages
 from calibre.ebooks.metadata.sources.big_book_search import BigBookSearch
 
-plugins += [GoogleBooks, GoogleImages, Amazon, Edelweiss, OpenLibrary, ISBNDB, OverDrive, Douban, Ozon, BigBookSearch]
+plugins += [GoogleBooks, GoogleImages, Amazon, Edelweiss, OpenLibrary, OverDrive, Douban, Ozon, BigBookSearch]
 
 # }}}
 

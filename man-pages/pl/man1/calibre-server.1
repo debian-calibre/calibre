@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "kwietnia 06, 2018" "3.21.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "czerwca 15, 2018" "3.26.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -61,7 +61,7 @@ Time (in seconds) to wait for a response from the server when making queries.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Wybierz rodzaj używanego uwierzytelnienia.  Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,12 +71,12 @@ Automatically reload server when source code changes. Useful for development. Yo
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Liczba nieudanych logowań powodująca blokadę.       Liczba nieudanych logowań, po których adres IP jest blokowany
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Blokuj adresy IP, z których dokonano wielokrotnych nieudanych logowań.      Tymczasowo blokuje dostęp dla adresów IP, z których dokonano wielokrotnych nieudanych logowań przez określoną liczbę minut. Opcja przydatna, aby zablokować próby odgadnięcia haseł. Jeśli ustawiona jest na zero, blokada nie będzie działała.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -86,7 +86,7 @@ Minimum size for which responses use data compression (in bytes).
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Ścieżka do pliku JSON, zawierającego szablon dla własnego wyglądu listy książek. Najłatwiejszym sposobem na utworzenie takiego pliku szablonu jest przejście do Ustawienia\-> Współdzielenie poprzez sieć\-> Szablon listy książek w calibre, utworzenie szablonu i wyeksportowanie go..
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,7 +96,7 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Ogranicz wyświetlane pól zdefiniowanych przez użytkownika.  Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ Socket pre\-allocation, for example, with systemd socket activation. Domyślnie 
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Domyślnie ta opcja jest wyłączona.
+Uwierzytelnianie na podstawie hasła w celu uzyskania dostępu do serwera.    Domyślnie serwer daje każdemu nieograniczony dostęp. Za pomocą tej opcji można ograniczyć dostęp tylko do wstępnie zdefiniowanych użytkowników. Domyślnie ta opcja jest wyłączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,17 +116,17 @@ Fallback to auto\-detected interface.        If for some reason the server is un
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Domyślnie ta opcja jest wyłączona.
+Zezwalaj nieuwierzytelnionym połączeniom lokalnym na wprowadzanie zmian.    Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Domyślnie ta opcja jest wyłączona.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Domyślnie ta opcja jest włączona.
+Zapisuj do dziennika żądania HTTP 404 (Nie znaleziono).     Domyślnie serwer zapisuje do dziennika wszystkie żądania HTTP do zasobów, które nie zostały znalezione. Może to powodować generowanie wielu śmieciowych wpisów do dziennika, zwłaszcza jeśli twój serwer stanie się celem botów. Użyj tej opcji, aby wyłączyć zapis tych żądań do dziennika. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Domyślnie ta opcja jest włączona.
+Reklamuj kanały OPDS przez BonJour.         Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,12 +141,12 @@ Wyświetla ten tekst pomocy i kończy działanie
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ignorowane pola metadanych.         Oddzielona przecinkami lista zdefiniowanych przez użytkownika pól metadanych, które nie będą wyświetlane przez serwer zawartości w widokach /opds i /mobile. Na przykład: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Interfejs, na którym będziemy nasłuchiwać połączeń.         Domyślnie serwer nasłuchuje na wszystkich interfejsach. Możesz to zmienić, na przykład na \fB"\fP127.0.0.1\fB"\fP, aby zaakceptować tylko połączenia z lokalnego komputera lub na \fB"\fP::\fB"\fP, aby zaakceptować wszystkie przychodzące połączenia IPv4 i IPv6.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,7 +181,7 @@ Maks. rozmiar pliku dziennika (w MB).       The maximum size of log files, gener
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Maksymalna liczba książek w kanałach OPDS.  The maximum number of books that the server will return in a single OPDS acquisition feed.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Max. allowed size for files uploaded to the server (in MB).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Liczba książek wyświetlanych na pojedynczej stronie.        Liczba książek wyświetlanych na pojedynczej stronie w przeglądarce.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,17 +216,17 @@ Całkowity czas w sekundach oczekiwania na pełne wyłączenie.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Ścieżka do pliku z certyfikatem SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Ścieżka do pliku z kluczem prywatnym SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Czas (w sekundach), po którym bezczynne połączenie zostanie zamknięte.
 .UNINDENT
 .INDENT 0.0
 .TP

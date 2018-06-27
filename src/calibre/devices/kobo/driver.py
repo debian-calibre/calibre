@@ -52,6 +52,13 @@ def qhash(inputstr):
     return h
 
 
+def any_in(haystack, *needles):
+    for n in needles:
+        if n in haystack:
+            return True
+    return False
+
+
 class DummyCSSPreProcessor(object):
 
     def __call__(self, data, add_namespace=False):
@@ -69,7 +76,7 @@ class KOBO(USBMS):
 
     dbversion = 0
     fwversion = (0,0,0)
-    supported_dbversion = 129
+    supported_dbversion = 146
     has_kepubs = False
 
     supported_platforms = ['windows', 'osx', 'linux']
@@ -98,33 +105,33 @@ class KOBO(USBMS):
     VIRTUAL_BOOK_EXTENSIONS = frozenset(['kobo', ''])
 
     EXTRA_CUSTOMIZATION_MESSAGE = [
-        _('The Kobo supports several collections including ')+ 'Read, Closed, Im_Reading. ' +
-        _('Create tags for automatic management'),
-        _('Upload covers for books (newer readers)') +
-        ':::'+_('Normally, the Kobo readers get the cover image from the'
-                ' e-book file itself. With this option, calibre will send a '
-                'separate cover image to the reader, useful if you '
-                'have modified the cover.'),
+        _('The Kobo supports several collections including ')+ 'Read, Closed, Im_Reading. ' + _(
+            'Create tags for automatic management'),
+        _('Upload covers for books (newer readers)') + ':::'+_(
+            'Normally, the Kobo readers get the cover image from the'
+            ' e-book file itself. With this option, calibre will send a '
+            'separate cover image to the reader, useful if you '
+            'have modified the cover.'),
         _('Upload black and white covers'),
-        _('Show expired books') +
-        ':::'+_('A bug in an earlier version left non kepubs book records'
-                ' in the database.  With this option calibre will show the '
-                'expired records and allow you to delete them with '
-                'the new delete logic.'),
-        _('Show Previews') +
-        ':::'+_('Kobo previews are included on the Touch and some other versions'
-                ' by default they are no longer displayed as there is no good reason to '
-                'see them.  Enable if you wish to see/delete them.'),
-        _('Show Recommendations') +
-        ':::'+_('Kobo now shows recommendations on the device. In some cases these have '
-                'files but in other cases they are just pointers to the web site to buy. '
-                'Enable if you wish to see/delete them.'),
-        _('Attempt to support newer firmware') +
-        ':::'+_('Kobo routinely updates the firmware and the '
-                'database version. With this option calibre will attempt '
-                'to perform full read-write functionality - Here be Dragons!! '
-                'Enable only if you are comfortable with restoring your kobo '
-                'to factory defaults and testing software'),
+        _('Show expired books') + ':::'+_(
+            'A bug in an earlier version left non kepubs book records'
+            ' in the database.  With this option calibre will show the '
+            'expired records and allow you to delete them with '
+            'the new delete logic.'),
+        _('Show Previews') + ':::'+_(
+            'Kobo previews are included on the Touch and some other versions'
+            ' by default they are no longer displayed as there is no good reason to '
+            'see them.  Enable if you wish to see/delete them.'),
+        _('Show Recommendations') + ':::'+_(
+            'Kobo now shows recommendations on the device. In some cases these have '
+            'files but in other cases they are just pointers to the web site to buy. '
+            'Enable if you wish to see/delete them.'),
+        _('Attempt to support newer firmware') + ':::'+_(
+            'Kobo routinely updates the firmware and the '
+            'database version. With this option calibre will attempt '
+            'to perform full read-write functionality - Here be Dragons!! '
+            'Enable only if you are comfortable with restoring your kobo '
+            'to factory defaults and testing software'),
     ]
 
     EXTRA_CUSTOMIZATION_DEFAULT = [
@@ -353,8 +360,7 @@ class KOBO(USBMS):
                 cursor.execute(query)
             except Exception as e:
                 err = str(e)
-                if not ('___ExpirationStatus' in err or 'FavouritesIndex' in err or
-                        'Accessibility' in err or 'IsDownloaded' in err):
+                if not (any_in(err, '___ExpirationStatus', 'FavouritesIndex', 'Accessibility', 'IsDownloaded')):
                     raise
                 query= ('select Title, Attribution, DateCreated, ContentID, MimeType, ContentType, '
                     'ImageID, ReadStatus, "-1" as ___ExpirationStatus, "-1" as '
@@ -1316,7 +1322,7 @@ class KOBOTOUCH(KOBO):
                     ' Based on the existing Kobo driver by %s.') % KOBO.author
 #    icon        = I('devices/kobotouch.jpg')
 
-    supported_dbversion             = 143
+    supported_dbversion             = 146
     min_supported_dbversion         = 53
     min_dbversion_series            = 65
     min_dbversion_externalid        = 65
@@ -1328,7 +1334,7 @@ class KOBOTOUCH(KOBO):
     # Starting with firmware version 3.19.x, the last number appears to be is a
     # build number. A number will be recorded here but it can be safely ignored
     # when testing the firmware version.
-    max_supported_fwversion         = (4, 7, 10413)
+    max_supported_fwversion         = (4, 8, 11073)
     # The following document firwmare versions where new function or devices were added.
     # Not all are used, but this feels a good place to record it.
     min_fwversion_shelves           = (2, 0, 0)
@@ -1337,8 +1343,9 @@ class KOBOTOUCH(KOBO):
     min_aurah2o_fwversion           = (3, 7, 0)
     min_reviews_fwversion           = (3, 12, 0)
     min_glohd_fwversion             = (3, 14, 0)
-    min_auraone_fwversion           = (3, 20, 7280)
-    min_fwversion_overdrive         = (4,  0, 7523)
+    min_auraone_fwversion           = (3, 20,  7280)
+    min_fwversion_overdrive         = (4,  0,  7523)
+    min_clarahd_fwversion           = (4,  8, 11090)
 
     has_kepubs = True
 
@@ -1363,6 +1370,7 @@ class KOBOTOUCH(KOBO):
     AURA_H2O_PRODUCT_ID = [0x4213]
     AURA_H2O_EDITION2_PRODUCT_ID = [0x4227]
     AURA_ONE_PRODUCT_ID = [0x4225]
+    CLARA_HD_PRODUCT_ID = [0x4228]
     GLO_PRODUCT_ID      = [0x4173]
     GLO_HD_PRODUCT_ID   = [0x4223]
     MINI_PRODUCT_ID     = [0x4183]
@@ -1372,7 +1380,7 @@ class KOBOTOUCH(KOBO):
                           AURA_HD_PRODUCT_ID + AURA_H2O_PRODUCT_ID + AURA_H2O_EDITION2_PRODUCT_ID + \
                           GLO_PRODUCT_ID + GLO_HD_PRODUCT_ID + \
                           MINI_PRODUCT_ID + TOUCH_PRODUCT_ID + TOUCH2_PRODUCT_ID + \
-                          AURA_ONE_PRODUCT_ID
+                          AURA_ONE_PRODUCT_ID + CLARA_HD_PRODUCT_ID
 
     BCD = [0x0110, 0x0326, 0x401]
 
@@ -1402,6 +1410,7 @@ class KOBOTOUCH(KOBO):
                           # Used for Details screen from FW2.8.1
                           ' - AndroidBookLoadTablet_Aspect.parsed':[(355,479), 88, 100,False,],
                           }
+    # Glo HD and Clara HD share resolution, so the image sizes should be the same.
     GLO_HD_COVER_FILE_ENDINGS = {
                           # Used for screensaver, home screen
                           ' - N3_FULL.parsed':        [(1072,1448), 0, 200,True,],
@@ -1572,7 +1581,7 @@ class KOBOTOUCH(KOBO):
                 if lpath.startswith(os.sep):
                     lpath = lpath[len(os.sep):]
                 lpath = lpath.replace('\\', '/')
-                # debug_print("LPATH: ", lpath, "  - Title:  " , title)
+#                 debug_print("KoboTouch:update_booklist - LPATH: ", lpath, "  - Title:  " , title)
 
                 playlist_map = {}
 
@@ -1839,13 +1848,7 @@ class KOBOTOUCH(KOBO):
                 cursor.execute(query)
             except Exception as e:
                 err = str(e)
-                if not ('___ExpirationStatus' in err or
-                        'FavouritesIndex' in err or
-                        'Accessibility' in err or
-                        'IsDownloaded' in err or
-                        'Series' in err or
-                        'ExternalId' in err
-                        ):
+                if not (any_in(err, '___ExpirationStatus', 'FavouritesIndex', 'Accessibility', 'IsDownloaded', 'Series', 'ExternalId')):
                     raise
                 query= ('SELECT Title, Attribution, DateCreated, ContentID, MimeType, ContentType, '
                         'ImageID, ReadStatus, -1 AS ___ExpirationStatus, "-1" AS '
@@ -2039,7 +2042,8 @@ class KOBOTOUCH(KOBO):
 #                        debug_print('KoboTouch:upload_books: Delete record left if deleted on Touch')
                         cursor.execute(cleanup_query, cleanup_values)
 
-                        self.set_filesize_in_device_database(connection, contentID, fname)
+                        if self.override_kobo_replace_existing:
+                            self.set_filesize_in_device_database(connection, contentID, fname)
 
                         if not self.upload_covers:
                             imageID = self.imageid_from_contentid(contentID)
@@ -2963,6 +2967,7 @@ class KOBOTOUCH(KOBO):
         c.add_opt('update_device_metadata', default=True)
 
         c.add_opt('modify_css', default=False)
+        c.add_opt('override_kobo_replace_existing', default=True)  # Overriding the replace behaviour is how the driver has always worked.
 
         c.add_opt('support_newer_firmware', default=False)
         c.add_opt('debugging_title', default='')
@@ -2997,6 +3002,9 @@ class KOBOTOUCH(KOBO):
     def isAuraOne(self):
         return self.detected_device.idProduct in self.AURA_ONE_PRODUCT_ID
 
+    def isClaraHD(self):
+        return self.detected_device.idProduct in self.CLARA_HD_PRODUCT_ID
+
     def isGlo(self):
         return self.detected_device.idProduct in self.GLO_PRODUCT_ID
 
@@ -3025,6 +3033,8 @@ class KOBOTOUCH(KOBO):
             _cover_file_endings = self.AURA_HD_COVER_FILE_ENDINGS
         elif self.isAuraOne():
             _cover_file_endings = self.AURA_ONE_COVER_FILE_ENDINGS
+        elif self.isClaraHD():
+            _cover_file_endings = self.GLO_HD_COVER_FILE_ENDINGS
         elif self.isGlo():
             _cover_file_endings = self.GLO_COVER_FILE_ENDINGS
         elif self.isGloHD():
@@ -3054,6 +3064,8 @@ class KOBOTOUCH(KOBO):
             device_name = 'Kobo Aura H2O Edition 2'
         elif self.isAuraOne():
             device_name = 'Kobo Aura ONE'
+        elif self.isClaraHD():
+            device_name = 'Clara HD'
         elif self.isGlo():
             device_name = 'Kobo Glo'
         elif self.isGloHD():
@@ -3123,6 +3135,10 @@ class KOBOTOUCH(KOBO):
 
     def modifying_css(self):
         return self.get_pref('modify_css')
+
+    @property
+    def override_kobo_replace_existing(self):
+        return self.get_pref('override_kobo_replace_existing')
 
     @property
     def update_device_metadata(self):

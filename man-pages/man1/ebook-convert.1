@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "April 06, 2018" "3.21.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "June 15, 2018" "3.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -908,7 +908,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-markdown\-extensions
-Enable extensions to markdown syntax. Extensions are formatting that is not part of the standard markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about markdown extensions, see \fI\%https://pythonhosted.org/Markdown/extensions/index.html\fP This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * headerid: Allow ids as part of a header * meta: Metadata in the document * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
+Enable extensions to markdown syntax. Extensions are formatting that is not part of the standard markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about markdown extensions, see \fI\%https://python\-markdown.github.io/extensions/\fP This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * headerid: Allow ids as part of a header * meta: Metadata in the document * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1042,6 +1042,11 @@ Insert an inline Table of Contents that will appear as part of the main book con
 .TP
 .B \-\-epub\-toc\-at\-end
 Put the inserted inline Table of Contents at the end of the book instead of the start.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-version
+The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1329,6 +1334,11 @@ An HTML template used to generate headers on every page. The strings _PAGENUM_, 
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-pdf\-hyphenate
+Break long words at the end of lines. This can give the text at the right margin a more even appearance.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-pdf\-mark\-links
 Surround all links with a red box, useful for debugging.
 .UNINDENT
@@ -1381,6 +1391,11 @@ The font family used to render serif fonts
 .TP
 .B \-\-pdf\-standard\-font
 The font family used to render monospace fonts
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-use\-document\-margins
+Use the page margins specified in the input document via @page CSS rules. This will cause the margins specified in the conversion settings to be ignored. If the document does not specify page margins, the conversion settings will be used as a fallback.
 .UNINDENT
 .INDENT 0.0
 .TP

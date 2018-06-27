@@ -2,20 +2,27 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
-import shutil, os, posixpath, cgi, mimetypes
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import cgi
+import mimetypes
+import os
+import posixpath
+import re
+import shutil
+from base64 import standard_b64decode
 from collections import defaultdict
 from contextlib import closing
-from urlparse import urlparse
-from multiprocessing.dummy import Pool
 from functools import partial
+from io import BytesIO
+from multiprocessing.dummy import Pool
 from tempfile import NamedTemporaryFile
 from urllib2 import urlopen
+from urlparse import urlparse
 
 from calibre import as_unicode, sanitize_file_name2
+from calibre.ebooks.oeb.base import OEB_DOCS, OEB_STYLES, barename, iterlinks
 from calibre.ebooks.oeb.polish.utils import guess_type
-from calibre.ebooks.oeb.base import OEB_DOCS, iterlinks, barename, OEB_STYLES
 from calibre.ptempfile import TemporaryDirectory
 from calibre.web import get_download_filename_from_response
 
@@ -25,7 +32,7 @@ def is_external(url):
         purl = urlparse(url)
     except Exception:
         return False
-    return purl.scheme in ('http', 'https', 'file', 'ftp')
+    return purl.scheme in ('http', 'https', 'file', 'ftp', 'data')
 
 
 def iterhtmllinks(container, name):
@@ -96,14 +103,37 @@ def sanitize_file_name(x):
     return make_filename_safe(x)
 
 
-def download_one(tdir, timeout, progress_report, url):
+def download_one(tdir, timeout, progress_report, data_uri_map, url):
     try:
         purl = urlparse(url)
+        data_url_key = None
         with NamedTemporaryFile(dir=tdir, delete=False) as df:
             if purl.scheme == 'file':
                 src = lopen(purl.path, 'rb')
                 filename = os.path.basename(src)
                 sz = (src.seek(0, os.SEEK_END), src.tell(), src.seek(0))[1]
+            elif purl.scheme == 'data':
+                prefix, payload = purl.path.split(',', 1)
+                parts = prefix.split(';')
+                if parts and parts[-1].lower() == 'base64':
+                    payload = re.sub(r'\s+', '', payload)
+                    payload = standard_b64decode(payload)
+                else:
+                    payload = payload.encode('utf-8')
+                seen_before = data_uri_map.get(payload)
+                if seen_before is not None:
+                    return True, (url, filename, seen_before, guess_type(seen_before))
+                data_url_key = payload
+                src = BytesIO(payload)
+                sz = len(payload)
+                ext = 'unknown'
+                for x in parts:
+                    if '=' not in x and '/' in x:
+                        exts = mimetypes.guess_all_extensions(x)
+                        if exts:
+                            ext = exts[0]
+                            break
+                filename = 'data-uri.' + ext
             else:
                 src = urlopen(url, timeout=timeout)
                 filename = get_filename(purl, src)
@@ -112,6 +142,8 @@ def download_one(tdir, timeout, progress_report, url):
             dest = ProgressTracker(df, url, sz, progress_report)
             with closing(src):
                 shutil.copyfileobj(src, dest)
+            if data_url_key is not None:
+                data_uri_map[data_url_key] = dest.name
             filename = sanitize_file_name(filename)
             mt = guess_type(filename)
             if mt in OEB_DOCS:
@@ -126,10 +158,11 @@ def download_one(tdir, timeout, progress_report, url):
 def download_external_resources(container, urls, timeout=60, progress_report=lambda url, done, total: None):
     failures = {}
     replacements = {}
+    data_uri_map = {}
     with TemporaryDirectory('editor-download') as tdir:
         pool = Pool(10)
         with closing(pool):
-            for ok, result in pool.imap_unordered(partial(download_one, tdir, timeout, progress_report), urls):
+            for ok, result in pool.imap_unordered(partial(download_one, tdir, timeout, progress_report, data_uri_map), urls):
                 if ok:
                     url, suggested_filename, downloaded_file, mt = result
                     with lopen(downloaded_file, 'rb') as src:

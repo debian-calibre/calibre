@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "aprill 06, 2018" "3.21.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "juuni 15, 2018" "3.26.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -81,7 +81,7 @@ Keelusta IP\-aadressid, millel on korduvalt ebaõnnestunud sisselogimiskatseid. 
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Vähim suurus, mille puhul kasutavad vastused andmetihendust (baitides).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Fallback to auto\-detected interface.        If for some reason the server is un
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Vaikimisi on see säte keelatud.
+Luba autentimata kohalikel ühendustel teha muudatusi.       Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. Vaikimisi on see säte keelatud.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -161,17 +161,17 @@ Manage the database of users allowed to connect to this server. See also the \fI
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Üksiku HTTP päise suurim suurus (ühikutes KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Töölisprotsesside suurim aeg.       Töölisprotsesside käituseks lubatud suurim aeg (minutites). Piirangu keelamiseks pane väärtuseks null.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Töölisprotsesside suurim arv.       Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Töölisprotsesside suurim arv.       Töölisprotsessid käivitatakse vajaduspõhiselt ja neid kasutatakse mahukate tööde jaoks nagu raamatu lugemiseks ettevalmistamine, raamatute lisamine, teisendamine jms. Tavaliselt põhineb selliste protsesside suurim arv protsessori tuumade arvul. Seda saad juhtida selle sättega.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Maximum number of ungrouped items in OPDS feeds.    Group items in categories su
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Serverisse üleslaaditavate failide suurim lubatud suurus (ühikutes MB).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ näita programmi versiooninumbrit ja välju
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Taotluste töötlemiseks kasutatavate töölõimede arv.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
