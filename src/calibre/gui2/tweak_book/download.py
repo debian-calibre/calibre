@@ -42,14 +42,22 @@ class ChooseResources(QWidget):
 
     @property
     def resources(self):
-        return {i.text():self.original_resources[i.text()] for i in self if i.checkState() == Qt.Checked}
+        return {i.data(Qt.UserRole):self.original_resources[i.data(Qt.UserRole)] for i in self if i.checkState() == Qt.Checked}
 
     @resources.setter
     def resources(self, resources):
         self.items.clear()
         self.original_resources = resources
-        for url in resources:
-            i = QListWidgetItem(url, self.items)
+        dc = 0
+        for url, matches in resources.iteritems():
+            text = url
+            num = len(matches)
+            if text.startswith('data:'):
+                dc += 1
+                text = _('Data URL #{}').format(dc)
+            text += ' ({})'.format(ngettext('one instance', '{} instances', num).format(num))
+            i = QListWidgetItem(text, self.items)
+            i.setData(Qt.UserRole, url)
             i.setCheckState(Qt.Checked)
             i.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
 

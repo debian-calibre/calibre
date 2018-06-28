@@ -4,20 +4,20 @@
 # 
 # Translators:
 # Tomas Michalek <tomas.michalek.st@vsb.cz>, 2015
-# Trottel <trottel09@gmail.com>, 2014-2017
+# Trottel <trottel09@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 12:57+0530\n"
-"PO-Revision-Date: 2018-04-20 04:44+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2018-06-01 07:07+0530\n"
+"PO-Revision-Date: 2018-06-02 07:33+0000\n"
+"Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:4
 msgid "E-book conversion"
@@ -257,14 +257,14 @@ msgid ""
 "heights. However, this is something of a blunt weapon and should be used "
 "sparingly. If you want to adjust the line heights for some section of the "
 "input, it's better to use the :ref:`Extra CSS <extra-css>`."
-msgstr ""
+msgstr "Související nastavení je :guilabel:`Výška řádku`. Výška řádku určuje svislou výšku řádků. Ve výchozím nastavení (výška řádku 0) se neprovádí žádná manipulace s výškami řádků. Pokud zadáte nevýchozí hodnotu, budou výšky řádků nastaveny na všech místech, které nemají určenu vlastní výšky řádků. Toto je však taková tupá zbraň a mělo by to být používáno šetrně. Pokud chcete upravit výšky řádků pro nějaký oddíl vstupu, je lepší použít :ref:`Dodatečné CSS`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:160
 msgid ""
 "In this section you can also tell calibre to embed any referenced fonts into"
 " the book. This will allow the fonts to work on reader devices even if they "
 "are not available on the device."
-msgstr ""
+msgstr "V tomto oddíle můžete také říct Calibre, aby do knihy vložilo jakákoliv odkazovaná písma. To umožní, aby písma na čtecích zařízeních fungovala, i když nejsou v zařízení dostupná."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:165
 msgid "Text"
@@ -277,7 +277,7 @@ msgid ""
 "others do not. Normally, calibre will preserve the justification in the "
 "original document. If you want to override it you can use the "
 ":guilabel:`Text justification` option in this section."
-msgstr ""
+msgstr "Text může být buď zarovnaný, nebo ne. Zarovnaný text má dodatečné mezery mezi slovy, aby měl hladký pravý okraj. Někteří lidé upřednostňují zarovnaný text, jiní ne. Calibre obyčejně zachová zarovnání v původním dokumentu. Pokud ho chcete přepsat, můžete v tomto oddíle použít volbu :guilabel:`Zarovnání textu`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:173
 msgid ""
@@ -286,7 +286,7 @@ msgid ""
 " alternatives. Note that this algorithm is not perfect so it is worth "
 "reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
 "punctuation` is also available."
-msgstr ""
+msgstr "Můžete také říct Calibre, aby :guilabel:`Vylepšilo interpunkci`, což nahradí prosté uvozovky, pomlčky a výpustky jejich typograficky správnými alternativami. Pamatujte, že tento algoritmus není dokonalý, takže stojí za to přezkoumat výsledky. Naopak je také dostupná :guilabel:`Nevylepšená interpunkce`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:178
 msgid ""
@@ -298,7 +298,7 @@ msgid ""
 " a particular character encoding by using this setting.  `cp1252` is a "
 "common encoding for documents produced using Windows software. You should "
 "also read :ref:`char-encoding-faq` for more on encoding issues."
-msgstr ""
+msgstr "Nakonec je zde :guilabel:`Vstupní kódování znaků`. Starší dokumenty někdy nezadávají své kódování znaků. Při převodu to může vést k neanglické znakům nebo speciálním znakům, jako je poškození chytrých uvozovek. Calibre zkouší automaticky rozpoznat kódování znaků zdrojového dokumentu, ale není vždy úspěšné. Pomocí tohoto nastavení můžete vynutit předpokládání konkrétního kódování znaků. `cp1252` je běžné kódování pro dokumenty vytvořené pomocí softwaru Windows. Měli byste si také přečíst :ref:`char-encoding-faq` pro více informací o problematice kódování."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:188
 msgid "Layout"
@@ -325,7 +325,7 @@ msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
 "few, don't use these options. Instead add the following CSS code to "
 ":ref:`Extra CSS <extra-css>`::"
-msgstr ""
+msgstr "Pokud chcete odebrat mezery mezi všemi odstavci kromě pár vybraných, nepoužívejte tyto volby. Místo toho přidejte následující kód CSS do :ref:`Dodatečné CSS`::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:207
 msgid ""
@@ -344,7 +344,7 @@ msgid ""
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr ""
+msgstr "Další užitečnou volbou je :guilabel:`Převést tabulky na řádky`. Některé chybně navržené dokumenty používají tabulky pro ovládání rozložení textu na stránce. Při převodu mají tyto dokumenty často text, který vybíhá mimo stránku a jiné artefakty. Tato volba extrahuje obsah z tabulek a zobrazí ho v lineárním tvaru. Pamatujte, že tato volba převede na řádky *všechny* tabulky, takže ji používejte, pouze pokud jste si jisti, že vstupní dokument nepoužívá tabulky pro oprávněné účely, jako je zobrazení tabulkových informací."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:220
 msgid "Styling"
@@ -358,7 +358,7 @@ msgid ""
 "document** itself. You can use this setting to fine tune the "
 "presentation/layout of your document. For example, if you want all "
 "paragraphs of class `endnote` to be right aligned, just add::"
-msgstr ""
+msgstr "Volba :guilabel:`Dodatečné CSS` vám umožňuje zadat libovolné CSS, které bude použito na všechny soubory HTML na vstupu. Toto CSS je použito s velice vysokou prioritou, a proto by mělo přepsat většinu CSS přítomného v samotném **vstupním dokumentu**. Toto nastavení můžete použít pro jemné ladění prezentace nebo rozložení dokumentu. Například pokud chcete, aby všechny odstavce třídy `endnote` byly zarovnány vpravo, stačí přidat::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
@@ -377,7 +377,7 @@ msgid ""
 "A simpler option is to use :guilabel:`Filter style information`. This allows"
 " you to remove all CSS properties of the specified types from the document. "
 "For example, you can use it to remove all colors or fonts."
-msgstr ""
+msgstr "Jednodušší volbou je použít :guilabel:`Filtrovat informace o stylu`. To vám umožňuje odebrat všechny vlastnosti CSS zadaných typů z dokumentu. Můžete to například použít k odebrání všech barev nebo písem."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:246
 msgid "Transform styles"
@@ -389,7 +389,7 @@ msgid ""
 " rules that change styles based on various conditions. For example you can "
 "use it to change all green colors to blue, or remove all bold styling from "
 "the text or color all headings a certain color, etc."
-msgstr ""
+msgstr "Toto je nejvýkonnější vybavení související se stylováním. Můžete ho použít k definování pravidel, které mění styly na základě různých podmínek. Můžete ho například použít ke změně všech zelených barev na modré nebo k odebrání všech tučných stylů z textu nebo obarvení všech záhlaví určitou barvou apod."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid "Page setup"

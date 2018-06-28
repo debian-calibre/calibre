@@ -204,6 +204,7 @@ class PreserveViewState(object):  # {{{
 class BooksView(QTableView):  # {{{
 
     files_dropped = pyqtSignal(object)
+    books_dropped = pyqtSignal(object)
     add_column_signal = pyqtSignal()
     is_library_view = True
 
@@ -468,12 +469,13 @@ class BooksView(QTableView):  # {{{
             col = self.column_map[idx]
             name = unicode(self.model().headerData(idx, Qt.Horizontal, Qt.DisplayRole) or '')
             view.column_header_context_menu = self.create_context_menu(col, name, view)
-        if self.is_library_view:
+        has_context_menu = hasattr(view, 'column_header_context_menu')
+        if self.is_library_view and has_context_menu:
             view.column_header_context_menu.addSeparator()
             view.column_header_context_menu.addAction(
                 _('Un-split the book list') if self.pin_view.isVisible() else _('Split the book list'),
                 partial(self.column_header_context_handler, action='split', column=col or 'title'))
-        if hasattr(view, 'column_header_context_menu'):
+        if has_context_menu:
             view.column_header_context_menu.popup(view.column_header.mapToGlobal(pos))
     # }}}
 
@@ -946,6 +948,11 @@ class BooksView(QTableView):  # {{{
             self._model.current_changed(idx, idx)
             return True
         return False
+
+    def indices_for_merge(self, resolved=False):
+        if not resolved:
+            return self.alternate_views.current_view.indices_for_merge(resolved=True)
+        return self.selectionModel().selectedRows()
 
     def scrollContentsBy(self, dx, dy):
         # Needed as Qt bug causes headerview to not always update when scrolling

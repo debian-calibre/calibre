@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Ιουνίου 01, 2018" "3.25.0" "calibre"
+.TH "CALIBREDB" "1" "Ιουνίου 15, 2018" "3.26.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -79,7 +79,7 @@ To connect to a running Content server, pass the URL of the server to the
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+\fI\%ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ\fP
 .IP \(bu 2
 \fI\%list\fP
 .IP \(bu 2
@@ -131,7 +131,7 @@ details and examples.
 .IP \(bu 2
 \fI\%search\fP
 .UNINDENT
-.SH GLOBAL OPTIONS
+.SH ΓΕΝΙΚΕΣ ΕΠΙΛΟΓΕΣ
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
@@ -447,12 +447,12 @@ Export all books in database, ignoring the list of ids.
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα αποθηκεύσει το εξώφυλλο σε ένα ξεχωριστό αρχείο, μαζί  με τα αρχεία ψηφιακών βιβλίων. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Specifying this switch will turn this behavior off.
+Κανονικά, το calibre θα ενημερώσει τα μεταδεδομένα στα προς αποθήκευση αρχεία, βασιζόμενο στα δεδομένα της βιβλιοθήκης. Αυτό κάνει πιο αργή τη διαδικασία αποθήκευσης. Specifying this switch will turn this behavior off.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -462,7 +462,7 @@ Normally, calibre will update the metadata in the saved files from what is in th
 .INDENT 0.0
 .TP
 .B \-\-formats
-Comma separated list of formats to save for each book. By default all available formats are saved.
+Διαχωριζόμενος από κόμματα κατάλογος των μορφών που θα αποθηκεύονται για κάθε βιβλίο. Προεπιλογή είναι να αποθηκεύονται όλες οι διαθέσιμες μορφές.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -472,7 +472,7 @@ Comma separated list of formats to save for each book. By default all available 
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Replace whitespace with underscores.
+Αντικατάσταση των λευκών χαρακτήρων από κάτω παύλες.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -482,7 +482,7 @@ Replace whitespace with underscores.
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and directory structure of the saved files. Default is \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP which will save books into a per\-author subdirectory with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Το πρότυπο που καθορίζει τα ονόματα και τη δομή των φακέλων για τα αρχεία που αποθηκεύονται. Προεπιλογή είναι η \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, η οποία θα αποθηκεύσει τα βιβλία στη βιβλιοθήκη του calibre σε υποφακέλους συγγραφέων, και με ονόματα που περιέχουν τίτλο και όνομα συγγραφέα. Οι διαθέσιμες μεταβλητές είναι: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
