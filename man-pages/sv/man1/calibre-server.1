@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "juni 15, 2018" "3.26.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "juli 06, 2018" "3.27.1" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -162,27 +162,27 @@ Hantera databasen av användare tillåtna att ansluta till denna server. Se ocks
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Maximal storlek på enskild HTTP\-rubrik (i KB).
+Största storlek på enskild HTTP\-rubrik (i KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximal tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
+Längsta tid för arbetarprocesser.   Högsta tiden arbetsprocesser tillåts att köra (i minuter). Sätt till noll för ingen tidsbegränsning.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximalt antal arbetarprocesser.    Arbetsprocesser lanseras allt efter de behövs och används för stora jobb som förbereder en bok för visning, läggs till för böcker, konvertering, o.s.v. Normalt, är maximalt antal sådana processer baserad på antalet CPU\-kärnor. Du kan anpassa den med den här inställningen.
+Högsta antal arbetarprocesser.      Arbetsprocesser lanseras allt efter de behövs och används för stora jobb som förbereder en bok för visning, läggs till för böcker, konvertering, o.s.v. Normalt, är högsta antal sådana processer baserad på antalet CPU\-kärnor. Du kan anpassa den med den här inställningen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Maximal loggfilstorlek (i MB).      Största storlek på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
+Största loggfilstorlek (i MB).      Största storlek på loggfiler som genereras av servern. När loggfilen blir större än denna storlek roteras den automatiskt. Satt till noll för att inaktivera loggrotation.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximalt antal böcker i OPDS\-flöden.        Högsta antal böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
+Högsta antal böcker i OPDS\-flöden.  Högsta antal böcker som servern kommer att återvända i ett enda OPDS\-anskaffningsflöde.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ Högsta antal ogrupperade objekt i OPDS\-flöden.      Gruppera objekt i kategor
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Maximal tillåten storlek för uppladdade filer till servern (i MB).
+Största tillåtna storlek för sända filer till servern (i MB).
 .UNINDENT
 .INDENT 0.0
 .TP

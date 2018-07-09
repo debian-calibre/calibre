@@ -111,7 +111,7 @@ class IdLinksRuleEdit(Dialog):
     def __init__(self, key='', name='', template='', parent=None):
         title = _('Edit rule') if key else _('Create a new rule')
         Dialog.__init__(self, title=title, name='id-links-rule-editor', parent=parent)
-        self.key.setText(key), self.nw.setText(name), self.template.setText(template or 'http://example.com/{id}')
+        self.key.setText(key), self.nw.setText(name), self.template.setText(template or 'https://example.com/{id}')
 
     @property
     def rule(self):
@@ -394,6 +394,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             self.opt_hidpi.setVisible(False), self.label_hidpi.setVisible(False)
         r('ui_style', gprefs, restart_required=True, choices=[(_('System default'), 'system'), (_('calibre style'), 'calibre')])
         r('book_list_tooltips', gprefs)
+        r('dnd_merge', gprefs)
         r('wrap_toolbar_text', gprefs, restart_required=True)
         r('show_layout_buttons', gprefs, restart_required=True)
         r('row_numbers_in_book_list', gprefs)

@@ -5,13 +5,14 @@
 # Translators:
 # Jonatan Nyberg, 2016-2017
 # Jonatan Nyberg, 2018
+# Jonatan Nyberg, 2018
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-27 08:39+0530\n"
-"PO-Revision-Date: 2018-05-30 17:32+0000\n"
+"POT-Creation-Date: 2018-06-15 12:28+0530\n"
+"PO-Revision-Date: 2018-06-21 21:01+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -162,10 +163,10 @@ msgstr "Överrid i en underklass för att anpassa utvinning av :term:`URL` som h
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
 msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
-"it returns a `mechanize <https://github.com/jjlee/mechanize>`_ browser "
-"instance that supports cookies, ignores robots.txt, handles refreshes and "
-"has a mozilla firefox user agent."
-msgstr "Återge en webbläsarinstans som används för att hämta dokument från webben. Som standard återges en `mechanize (mekanisera) <https://github.com/jjlee/mechanize>`_ webbläsarinstans som stöder kakor, ignorerar robots.txt, hanterar uppdateringar och har en Mozilla Firefox användaragent."
+"it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
+"browser instance that supports cookies, ignores robots.txt, handles "
+"refreshes and has a mozilla firefox user agent."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -540,7 +541,7 @@ msgid ""
 "will first be scaled and then its quality lowered until its size is less "
 "than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
 "other words, this compression happens after scaling."
-msgstr "Den faktor som används när automatisk komprimera jpeg-bilder. Om värdet är None, är komprimering automatisk inaktiverad. Annars kommer bilderna att minskas i storlek till (b * h) / compress_news_images_auto_size byte om möjligt genom att minska kvalitetsnivån, där bxh är bildens dimensioner i pixlar. Den minsta jpeg-kvalitet kommer att vara 5/100 så det är möjligt denna begränsning inte kommer att uppfyllas. Denna parameter kan åsidosättas av parametern compress_news_images_max_size som ger en fast maximal storlek för bilder. Observera att om du aktiverar scale_news_images_to_device kommer sedan bilden först skalas och sedan dess kvalitet sänkas tills dess storlek är mindre än (b*h)/faktor där w och h är nu bildens *skalade* dimensioner. Med andra ord, denna kompression sker efter skalning."
+msgstr "Den faktor som används när automatisk komprimera jpeg-bilder. Om värdet är None, är komprimering automatisk inaktiverad. Annars kommer bilderna att minskas i storlek till (b * h) / compress_news_images_auto_size byte om möjligt genom att minska kvalitetsnivån, där bxh är bildens dimensioner i pixlar. Den minsta jpeg-kvalitet kommer att vara 5/100 så det är möjligt denna begränsning inte kommer att uppfyllas. Denna parameter kan åsidosättas av parametern compress_news_images_max_size som ger en fast största storlek för bilder. Observera att om du aktiverar scale_news_images_to_device kommer sedan bilden först skalas och sedan dess kvalitet sänkas tills dess storlek är mindre än (b*h)/faktor där w och h är nu bildens *skalade* dimensioner. Med andra ord, denna kompression sker efter skalning."
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
@@ -709,7 +710,7 @@ msgid ""
 "Maximum number of articles to download from each feed. This is primarily "
 "useful for feeds that don't have article dates. For most feeds, you should "
 "use :attr:`BasicNewsRecipe.oldest_article`"
-msgstr "Maximalt antal artiklar att hämta från varje flöde. Den är primärt användbar för flöde som inte har artikeldatum. För de flesta flödes, bör du använda :attr:`BasicNewsRecipe.oldest_article`"
+msgstr "Högsta antal artiklar att hämta från varje flöde. Den är primärt användbar för flöde som inte har artikeldatum. För de flesta flödes, bör du använda :attr:`BasicNewsRecipe.oldest_article`"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
@@ -878,7 +879,7 @@ msgstr "Antal samtidiga hämtningar. Sätt till 1 om servern är petig. Automati
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
 msgid "Max number of characters in the short description"
-msgstr "Maximalt antal tecken i den korta beskrivningen"
+msgstr "Högsta antal tecken i den korta beskrivningen"
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.template_css:1

@@ -48,6 +48,8 @@ class EPUBOutput(OutputFormatPlugin):
     name = 'EPUB Output'
     author = 'Kovid Goyal'
     file_type = 'epub'
+    commit_name = 'epub_output'
+    ui_data = {'versions': ('2', '3')}
 
     options = set([
         OptionRecommendation(name='extract_to',
@@ -117,7 +119,7 @@ class EPUBOutput(OutputFormatPlugin):
             help=_('Title for any generated in-line table of contents.')
         ),
 
-        OptionRecommendation(name='epub_version', recommended_value='2', choices=('2', '3'),
+        OptionRecommendation(name='epub_version', recommended_value='2', choices=ui_data['versions'],
             help=_('The version of the EPUB file to generate. EPUB 2 is the'
                 ' most widely compatible, only use EPUB 3 if you know you'
                 ' actually need it.')
@@ -298,7 +300,7 @@ class EPUBOutput(OutputFormatPlugin):
         from calibre.ebooks.oeb.polish.upgrade import epub_2_to_3
         existing_nav = getattr(self.opts, 'epub3_nav_parsed', None)
         nav_href = getattr(self.opts, 'epub3_nav_href', None)
-        previous_nav = (existing_nav, nav_href) if existing_nav and nav_href else None
+        previous_nav = (nav_href, existing_nav) if existing_nav and nav_href else None
         epub_2_to_3(container, self.log.info, previous_nav=previous_nav)
         fix_conversion_titlepage_links_in_nav(container)
         container.commit()

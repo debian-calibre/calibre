@@ -16,6 +16,7 @@ class CHMInput(InputFormatPlugin):
     author      = 'Kovid Goyal and Alex Bramley'
     description = 'Convert CHM files to OEB'
     file_types  = set(['chm'])
+    commit_name = 'chm_input'
 
     def _chmtohtml(self, output_dir, chm_path, no_images, log, debug_dump=False):
         from calibre.ebooks.chm.reader import CHMReader
@@ -130,8 +131,7 @@ class CHMInput(InputFormatPlugin):
 
         def unquote_path(x):
             y = unquote(x)
-            if (not os.path.exists(os.path.join(base, x)) and
-                os.path.exists(os.path.join(base, y))):
+            if (not os.path.exists(os.path.join(base, x)) and os.path.exists(os.path.join(base, y))):
                 x = y
             return x
 
@@ -143,8 +143,7 @@ class CHMInput(InputFormatPlugin):
                 raw = unquote_path(child.href or '')
                 rsrcname = os.path.basename(raw)
                 rsrcpath = os.path.join(subpath, rsrcname)
-                if (not os.path.exists(os.path.join(base, rsrcpath)) and
-                        os.path.exists(os.path.join(base, raw))):
+                if (not os.path.exists(os.path.join(base, rsrcpath)) and os.path.exists(os.path.join(base, raw))):
                     rsrcpath = raw
 
                 if '%' not in rsrcpath:

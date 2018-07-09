@@ -151,7 +151,7 @@ OptionRecommendation(name='base_font_size',
             help=_('The base font size in pts. All font sizes in the produced book '
                    'will be rescaled based on this size. By choosing a larger '
                    'size you can make the fonts in the output bigger and vice '
-                   'versa. By default, the base font size is chosen based on '
+                   'versa. By default, when the value is zero, the base font size is chosen based on '
                    'the output profile you chose.'
                    )
         ),
@@ -828,6 +828,14 @@ OptionRecommendation(name='search_replace',
                     return f, os.path.splitext(f)[1].lower()[1:]
         return html_files[-1], os.path.splitext(html_files[-1])[1].lower()[1:]
 
+    def get_all_options(self):
+        ans = {}
+        for group in (self.input_options, self.pipeline_options,
+                      self.output_options, self.all_format_options):
+            for rec in group:
+                ans[rec.option] = rec.recommended_value
+        return ans
+
     def get_option_by_name(self, name):
         for group in (self.input_options, self.pipeline_options,
                       self.output_options, self.all_format_options):
@@ -840,6 +848,16 @@ OptionRecommendation(name='search_replace',
         help = getattr(rec, 'help', None)
         if help is not None:
             return help.replace('%default', str(rec.recommended_value))
+
+    def get_all_help(self):
+        ans = {}
+        for group in (self.input_options, self.pipeline_options,
+                      self.output_options, self.all_format_options):
+            for rec in group:
+                help = getattr(rec, 'help', None)
+                if help is not None:
+                    ans[rec.option.name] = help
+        return ans
 
     def merge_plugin_recs(self, plugin):
         for name, val, level in plugin.recommendations:
@@ -1292,3 +1310,16 @@ def create_oebbook(log, path_or_stream, opts, reader=None,
 
     reader()(oeb, path_or_stream)
     return oeb
+
+
+def create_dummy_plumber(input_format, output_format):
+    from calibre.utils.logging import Log
+    input_format = input_format.lower()
+    output_format = output_format.lower()
+    output_path = 'dummy.'+output_format
+    log = Log()
+    log.outputs = []
+    input_file = 'dummy.'+input_format
+    if input_format in ARCHIVE_FMTS:
+        input_file = 'dummy.html'
+    return Plumber(input_file, output_path, log)

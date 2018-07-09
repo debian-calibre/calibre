@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "junij 15, 2018" "3.26.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "julij 06, 2018" "3.27.1" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -105,6 +105,16 @@ Subject of the email
 .SS SMTP RELAY
 .sp
 Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+.INDENT 0.0
+.TP
+.B \-\-cafile
+Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-verify\-server\-certificate
+Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
