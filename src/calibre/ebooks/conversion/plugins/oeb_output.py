@@ -16,6 +16,7 @@ class OEBOutput(OutputFormatPlugin):
     name = 'OEB Output'
     author = 'Kovid Goyal'
     file_type = 'oeb'
+    commit_name = 'oeb_output'
 
     recommendations = set([('pretty_print', True, OptionRecommendation.HIGH)])
 
@@ -56,9 +57,8 @@ class OEBOutput(OutputFormatPlugin):
 
             for item in oeb_book.manifest:
                 if (
-                        not self.opts.expand_css and
-                        item.media_type in OEB_STYLES and hasattr(item.data, 'cssText') and
-                        'nook' not in self.opts.output_profile.short_name):
+                        not self.opts.expand_css and item.media_type in OEB_STYLES and hasattr(
+                            item.data, 'cssText') and 'nook' not in self.opts.output_profile.short_name):
                     condense_sheet(item.data)
                 path = os.path.abspath(unquote(item.href))
                 dir = os.path.dirname(path)
@@ -119,4 +119,3 @@ class OEBOutput(OutputFormatPlugin):
             if clc:
                 lang.text = clc
     # }}}
-

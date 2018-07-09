@@ -16,13 +16,14 @@ class PDBOutput(OutputFormatPlugin):
     name = 'PDB Output'
     author = 'John Schember'
     file_type = 'pdb'
+    commit_name = 'pdb_output'
+    ui_data = {'formats': tuple(ALL_FORMAT_WRITERS)}
 
     options = set([
         OptionRecommendation(name='format', recommended_value='doc',
             level=OptionRecommendation.LOW,
             short_switch='f', choices=list(ALL_FORMAT_WRITERS),
-            help=(_('Format to use inside the pdb container. Choices are:')+
-            ' %s' % sorted(ALL_FORMAT_WRITERS))),
+            help=(_('Format to use inside the pdb container. Choices are:') + ' %s' % sorted(ALL_FORMAT_WRITERS))),
         OptionRecommendation(name='pdb_output_encoding', recommended_value='cp1252',
             level=OptionRecommendation.LOW,
             help=_('Specify the character encoding of the output document. '
@@ -60,4 +61,3 @@ class PDBOutput(OutputFormatPlugin):
 
         if close:
             out_stream.close()
-

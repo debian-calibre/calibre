@@ -8,13 +8,16 @@ import os
 import textwrap
 import time
 
-import sip
 from PyQt5.Qt import (
     QCheckBox, QComboBox, QDialog, QDialogButtonBox, QDoubleSpinBox, QFormLayout,
     QFrame, QHBoxLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit,
     QPushButton, QScrollArea, QSize, QSizePolicy, QSpinBox, Qt, QTabWidget, QTimer,
     QToolButton, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
+try:
+    from PyQt5 import sip
+except ImportError:
+    import sip
 
 from calibre import as_unicode
 from calibre.gui2 import (
@@ -676,7 +679,7 @@ class User(QWidget):
             b = _('Change the blocked libraries')
         else:
             m = _('{} is currently allowed access to all libraries')
-            b = _('Restrict the &libraries {} can access'.format(self.username))
+            b = _('Restrict the &libraries {} can access').format(self.username)
         self.restrict_button.setText(b),
         self.access_label.setText(m.format(username))
 
