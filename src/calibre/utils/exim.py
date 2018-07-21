@@ -385,8 +385,30 @@ def cli_report(*args, **kw):
         pass
 
 
-def run_exporter():
-    export_dir = raw_input('Enter path to an empty folder (all exported data will be saved inside it): ').decode(filesystem_encoding)
+def run_exporter(export_dir=None, args=None):
+    if args:
+        if len(args) < 2:
+            raise SystemExit('You must specify the export dir and libraries to export')
+        export_dir = args[0]
+        if not os.path.exists(export_dir):
+            os.makedirs(export_dir)
+        if os.listdir(export_dir):
+            raise SystemExit('%s is not empty' % export_dir)
+        all_libraries = {os.path.normcase(os.path.abspath(path)):lus for path, lus in all_known_libraries().iteritems()}
+        if 'all' in args[1:]:
+            libraries = set(all_libraries)
+        else:
+            libraries = {os.path.normcase(os.path.abspath(os.path.expanduser(path))) for path in args[1:]}
+        if libraries - set(all_libraries):
+            raise SystemExit('Unknown library: ' + tuple(libraries - all_libraries)[0])
+        libraries = {p: all_libraries[p] for p in libraries}
+        print('Exporting libraries:', ', '.join(sorted(libraries)), 'to:', export_dir)
+        export(export_dir, progress1=cli_report, progress2=cli_report, library_paths=libraries)
+        return
+
+    export_dir = export_dir or raw_input(
+            'Enter path to an empty folder (all exported data will be saved inside it): ').decode(
+                    filesystem_encoding).rstrip('\r')
     if not os.path.exists(export_dir):
         os.makedirs(export_dir)
     if not os.path.isdir(export_dir):
@@ -395,7 +417,7 @@ def run_exporter():
         raise SystemExit('%s is not empty' % export_dir)
     library_paths = {}
     for lpath, lus in all_known_libraries().iteritems():
-        if raw_input('Export the library %s [y/n]: ' % lpath) == b'y':
+        if raw_input('Export the library %s [y/n]: ' % lpath).strip().lower() == b'y':
             library_paths[lpath] = lus
     if library_paths:
         export(export_dir, progress1=cli_report, progress2=cli_report, library_paths=library_paths)
@@ -404,7 +426,7 @@ def run_exporter():
 
 
 def run_importer():
-    export_dir = raw_input('Enter path to folder containing previously exported data: ').decode(filesystem_encoding)
+    export_dir = raw_input('Enter path to folder containing previously exported data: ').decode(filesystem_encoding).rstrip('\r')
     if not os.path.isdir(export_dir):
         raise SystemExit('%s is not a folder' % export_dir)
     try:
@@ -412,7 +434,7 @@ def run_importer():
     except ValueError as err:
         raise SystemExit(err.message)
 
-    import_dir = raw_input('Enter path to an empty folder (all libraries will be created inside this folder): ').decode(filesystem_encoding)
+    import_dir = raw_input('Enter path to an empty folder (all libraries will be created inside this folder): ').decode(filesystem_encoding).rstrip('\r')
     if not os.path.exists(import_dir):
         os.makedirs(import_dir)
     if not os.path.isdir(import_dir):

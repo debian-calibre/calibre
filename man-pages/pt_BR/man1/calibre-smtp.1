@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "julho 06, 2018" "3.27.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "julho 20, 2018" "3.28.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,7 +52,7 @@ Se o texto não for especificado, uma mensagem completa de e\-mail é lida de ST
 do destinatário. Quando um e\-mail completo é lido de STDIN, de e para
 apenas são usados ​​na negociação SMTP, os cabeçalhos das mensagens não são modificados.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Sempre que você for passar argumentos para \fBcalibre\-smtp\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
@@ -108,12 +108,12 @@ Opções para usar um servidor de retransmissão SMTP para enviar mensagens. O c
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Caminho para um arquivo de certificados de CA concatenados no formato PEM, usado para verificar o certificado do servidor ao usar o TLS. Por padrão, os certificados de autoridade de certificação do sistema são usados
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Não verifique o certificado do servidor ao se conectar usando o TLS. Este costumava ser o comportamento padrão em versões de calibre antes de 3.27. Se você estiver usando um relay com um certificado autoassinado ou inválido, poderá usar essa opção para restaurar o comportamento anterior à 3.27.
 .UNINDENT
 .INDENT 0.0
 .TP

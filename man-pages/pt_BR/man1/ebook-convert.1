@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "julho 06, 2018" "3.27.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "julho 20, 2018" "3.28.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,24 +35,24 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert arquivo_entrada arquivo_saída [opções]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Converta um e\-book de um formato para outro.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+arquivo_entrada é a entrada e arquivo_saída é a saída. Ambos devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como um diretório e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nesse diretório. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plug\-in de saída.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Depois de especificar o arquivo de entrada e saída, você pode personalizar a conversão especificando várias opções. As opções disponíveis dependem dos tipos de arquivo de entrada e saída. Para obter ajuda sobre eles, especifique o arquivo de entrada e saída e, em seguida, use a opção \-h.
 .sp
-For full documentation of the conversion system see
+Para documentação completa do sistema de conversão, consulte
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Sempre que você for passar argumentos para \fBebook\-convert\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .sp
 As opções e valores padrão para as opções alteram dependendo dos formatos
 de entrada e saída, por isso você deve sempre verificar com:
@@ -102,7 +102,7 @@ Especificar o perfil de origem. O perfil de origem dá informações ao sistema 
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Listar nomes de receita incorporados. Você pode criar um e\-book a partir de uma receita embutida como esta: ebook\-convert \fB"\fPNome da receita.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Opções para controlar o processamento do arquivo de saída epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Desativar a divisão nas quebras de página. Normalmente, os arquivos de entrada são divididos automaticamente a cada quebra de página em dois arquivos. Isso fornece um e\-book de saída que pode ser analisado mais rapidamente e com menos recursos. No entanto, a divisão é lenta e, se o arquivo de origem contiver um número muito grande de quebras de página, você deverá desativar a divisão nas quebras de página.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ Colocar o índice em linha inserida no final do livro, em vez do começo.
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+A versão do arquivo EPUB para ser gerado. O EPUB 2 é o mais compatível, use apenas o EPUB 3 se você sabe que realmente precisa dele.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Transliterar caracteres Unicode em uma representação ASCII. Use com cuidado, p
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+O tamanho da fonte base em pts. Todos os tamanhos de fonte no livro produzido serão redimensionados com base nesse tamanho. Ao escolher um tamanho maior, você pode aumentar as fontes na saída e vice\-versa. Por padrão, quando o valor é zero, o tamanho da fonte base é escolhido com base no perfil de saída escolhido.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +221,7 @@ Coloque a fonte especificada no livro. Isto especifica a fonte \fB"\fPbase\fB"\f
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Por padrão, o calibre usará o formato abreviado para várias propriedades CSS, como margem, preenchimento, borda etc. Essa opção fará com que ele use o formulário expandido completo. Observe que o CSS é sempre expandido ao gerar arquivos EPUB com o perfil de saída configurado para um dos perfis do Nook, pois o Nook não pode manipular o CSS abreviado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,22 +266,22 @@ Alguns documentos mal modelados usam tabelas para controlar a disposição do te
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Definir a margem inferior em pts. O padrão é %d. Definir isso para menos de zero fará com que nenhuma margem seja definida (a configuração de margem no documento original será preservada). Nota: Formatos orientados a páginas, como PDF e DOCX, têm suas próprias configurações de margem que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Definir a margem esquerda em pts. O padrão é %d. Definir isso para menos de zero fará com que nenhuma margem seja definida (a configuração de margem no documento original será preservada). Nota: Formatos orientados a páginas, como PDF e DOCX, têm suas próprias configurações de margem que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Definir a margem direita em pts. O padrão é %d. Definir isso para menos de zero fará com que nenhuma margem seja definida (a configuração de margem no documento original será preservada). Nota: Formatos orientados a páginas, como PDF e DOCX, têm suas próprias configurações de margem que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Definir a margem superior em pts. O padrão é %d. Definir isso para menos de zero fará com que nenhuma margem seja definida (a configuração de margem no documento original será preservada). Nota: Formatos orientados a páginas, como PDF e DOCX, têm suas próprias configurações de margem que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -301,7 +301,7 @@ Quando calibre remove linhas em branco entre parágrafos, ele insere automaticam
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Converta aspas, travessões e reticências em seus equivalentes tipograficamente corretos. Para detalhes, veja \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +311,7 @@ Subconjunto de todas as fontes incorporadas. Cada fonte incorporada é reduzida 
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+￼Caminho para um arquivo contendo regras para transformar os estilos CSS neste livro. A maneira mais fácil de criar esse arquivo é usar o assistente para criar regras na GUI do calibre. Acesse\-o na seção \fB"\fPVeja & sinta\-> Transformação de estilos\fB"\fP da caixa de diálogo de conversão. Depois de criar as regras, você pode usar o botão \fB"\fPExportar\fB"\fP para salvá\-las em um arquivo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -382,7 +382,7 @@ Modificar o texto do documento e estrutura usando os padrões definidos pelo usu
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Caminho para um arquivo que contém pesquisa e substitui expressões regulares. O arquivo deve conter linhas alternadas de expressão regular seguidas por padrão de substituição (que pode ser uma linha vazia). A expressão regular deve estar na sintaxe de regex do Python e o arquivo deve ser codificado em UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +420,7 @@ Auto\-detecção do controle da estrutura de documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar <h1> ou <h2> tags que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -435,7 +435,7 @@ Alguns documentos especificam os tamanhos de margem direita e esquerda individua
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Insira os metadados do livro no início do livro. Isso é útil se o seu e\-book reader não suporta a exibição / pesquisa de metadados diretamente.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -450,12 +450,12 @@ Usar a capa detectada no arquivo fonte em relação à capa especificada.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Remova a primeira imagem do e\-book de entrada. Útil se o documento de entrada tiver uma imagem de capa não identificada como capa. Nesse caso, se você definir uma capa em calibre, o documento de saída terminará com duas imagens de capa, se você não especificar essa opção.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Uma expressão XPath para detectar o local no documento no qual começar a ler. Alguns programas de leitura de livros eletrônicos (mais proeminentemente o Kindle) usam esse local como a posição na qual abrir o livro. Consulte o tutorial do XPath no Manual do Usuário do calibre para obter ajuda adicional ao usar essa função.
 .UNINDENT
 .SH ÍNDICE
 .sp
@@ -526,7 +526,7 @@ Defina o produtor do livro.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+Defina a descrição do e\-book.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -546,12 +546,12 @@ Defina o idioma.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Definir a data de publicação (supostamente no fuso horário local, a menos que o fuso horário seja especificado explicitamente)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+Defina o editor do e\-book.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -566,7 +566,7 @@ Ler metadados de um arquivo OPF específico. Metadados lidos deste arquivo irão
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+Defina a série a que este e\-book pertence.
 .UNINDENT
 .INDENT 0.0
 .TP

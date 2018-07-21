@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "julio 06, 2018" "3.27.1" "calibre"
+.TH "CALIBRE-SMTP" "1" "julio 20, 2018" "3.28.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -108,12 +108,12 @@ Opciones para usar un servidor SMTP intermedio para enviar correos. calibre inte
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Ruta a un archivo de certificados CA concatenados en formato PEM, usado para comprobar el certificado del servidor al usar TLS. De manera predeterminada se usan los certificados CA del sistema.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+No comprobar el certificado del servidor al conectar usando TLS. Éste solía ser el comportamiento predeterminado en las versiones de calibre anteriores a 3.27. Si usa un servidor intermedio con un certificado autofirmado o inválido, puede usar esta opción para restablecer el comportamiento anterior a 3.27.
 .UNINDENT
 .INDENT 0.0
 .TP
