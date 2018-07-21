@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "julho 06, 2018" "3.27.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "julho 20, 2018" "3.28.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -66,7 +66,7 @@ use\-o assim:
 .sp
 Tudo após o \fB\-\-\fP é passado ao script.
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+Sempre que você for passar argumentos para \fBcalibre\-debug\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .SH [OPÇÕES]
 .INDENT 0.0
 .TP
@@ -106,12 +106,12 @@ Executar o código Python no arquivo.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Extrai o livro dentro do diretório especificado. Use: \-x arquivo.epub diretório Exporta o livro como uma coleção de arquivos e metadados em HTML, onde você pode editar usando algum editor HTML padrão. Funciona com arquivos EPUB, AZW3, HTMLZ e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos os dados do calibre (livros/configurações/plugins)
+Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Reúne um livro préviamente extraído. USe: \-i diretório aquivo.epub Importa o livro  dos arquivos dentro do diretório que foram criados pela opção explode\-book. Tenha certeza de especifiar os mesmo tipos de arquivo que foram usados quando estraídos.
 .UNINDENT
 .INDENT 0.0
 .TP

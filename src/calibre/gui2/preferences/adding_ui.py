@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -104,6 +104,11 @@ class Ui_Form(object):
         self.line_7.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_7.setObjectName("line_7")
         self.formLayout_2.setWidget(12, QtWidgets.QFormLayout.LabelRole, self.line_7)
+        self.line_8 = QtWidgets.QFrame(self.actions_tab)
+        self.line_8.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_8.setObjectName("line_8")
+        self.formLayout_2.setWidget(13, QtWidgets.QFormLayout.SpanningRole, self.line_8)
         self.label_5 = QtWidgets.QLabel(self.actions_tab)
         self.label_5.setObjectName("label_5")
         self.formLayout_2.setWidget(14, QtWidgets.QFormLayout.LabelRole, self.label_5)
@@ -121,11 +126,12 @@ class Ui_Form(object):
         self.add_filter_rules_button = QtWidgets.QPushButton(self.actions_tab)
         self.add_filter_rules_button.setObjectName("add_filter_rules_button")
         self.formLayout_2.setWidget(18, QtWidgets.QFormLayout.FieldRole, self.add_filter_rules_button)
-        self.line_8 = QtWidgets.QFrame(self.actions_tab)
-        self.line_8.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_8.setObjectName("line_8")
-        self.formLayout_2.setWidget(13, QtWidgets.QFormLayout.SpanningRole, self.line_8)
+        self.label_7 = QtWidgets.QLabel(self.actions_tab)
+        self.label_7.setObjectName("label_7")
+        self.formLayout_2.setWidget(15, QtWidgets.QFormLayout.LabelRole, self.label_7)
+        self.author_map_rules_button = QtWidgets.QPushButton(self.actions_tab)
+        self.author_map_rules_button.setObjectName("author_map_rules_button")
+        self.formLayout_2.setWidget(15, QtWidgets.QFormLayout.FieldRole, self.author_map_rules_button)
         self.tabWidget.addTab(self.actions_tab, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -182,6 +188,7 @@ class Ui_Form(object):
         self.label_230.setBuddy(self.opt_new_book_tags)
         self.label_5.setBuddy(self.tag_map_rules_button)
         self.label_6.setBuddy(self.add_filter_rules_button)
+        self.label_7.setBuddy(self.author_map_rules_button)
         self.label_3.setBuddy(self.opt_blocked_auto_formats)
         self.label.setBuddy(self.opt_auto_add_path)
 
@@ -223,12 +230,14 @@ class Ui_Form(object):
 "Author matching is exact."))
         self.label_230.setText(_("&Tags to apply when adding a book:"))
         self.opt_new_book_tags.setToolTip(_("A comma-separated list of tags that will be applied to books added to the library"))
-        self.label_5.setText(_("Control how tags are processed:"))
+        self.label_5.setText(_("Contro&l how tags are processed:"))
         self.tag_map_rules_button.setToolTip(_("Create rules that can filter or transform tags on added books automatically as soon as they are added. "))
         self.tag_map_rules_button.setText(_("&Rules to filter tags read from metadata"))
-        self.label_6.setText(_("Control which files are added during bulk imports:"))
+        self.label_6.setText(_("Control which files are added during bul&k imports:"))
         self.add_filter_rules_button.setToolTip(_("<p>You can specify rules to add/ignore files here. These will be used when recursively adding books from directories."))
         self.add_filter_rules_button.setText(_("Rules to filter added &files"))
+        self.label_7.setText(_("Control how auth&ors are processed:"))
+        self.author_map_rules_button.setText(_("Rules to manipulate a&uthor names"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.actions_tab), _("Adding &actions"))
         self.opt_auto_add_everything.setToolTip(_("By default, calibre will automatically add only known e-book files. \n"
 "This option tells calibre to add all file types, except those\n"
