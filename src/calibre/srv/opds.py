@@ -209,8 +209,7 @@ def ACQUISITION_ENTRY(book_id, updated, request_context):
                               xml(format_tag_string(val,
                                     fm['is_multiple']['ui_to_list'],
                                     joinval=fm['is_multiple']['list_to_ui']))))
-            elif datatype == 'comments' or (fm['datatype'] == 'composite' and
-                            fm['display'].get('contains_html', False)):
+            elif datatype == 'comments' or (fm['datatype'] == 'composite' and fm['display'].get('contains_html', False)):
                 extra.append('%s: %s<br />'%(xml(name), comments_to_html(unicode(val))))
             else:
                 extra.append('%s: %s<br />'%(xml(name), xml(unicode(val))))
@@ -301,7 +300,7 @@ class TopLevel(Feed):  # {{{
             categories]
         for x in subcatalogs:
             self.root.append(x)
-        for library_id, library_name in request_context.library_map.iteritems():
+        for library_id, library_name in sorted(request_context.library_map.iteritems(), key=lambda item: sort_key(item[1])):
             id_ = 'calibre-library:' + library_id
             self.root.append(E.entry(
                 TITLE(_('Library:') + ' ' + library_name),
@@ -551,8 +550,7 @@ def opds_category(ctx, rd, category, which):
             which = int(which[:p])
         except Exception:
             # Might be a composite column, where we have the lookup key
-            if not (category in rc.db.field_metadata and
-                    rc.db.field_metadata[category]['datatype'] == 'composite'):
+            if not (category in rc.db.field_metadata and rc.db.field_metadata[category]['datatype'] == 'composite'):
                 raise HTTPNotFound('Tag %r not found'%which)
 
     categories = rc.get_categories()

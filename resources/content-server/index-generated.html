@@ -357,6 +357,11 @@ input[type=radio] {
   <symbol viewBox="0 0 1792 1792" id="icon-sort-amount-asc">
     <path d="M736 1440q0 12-10 24l-319 319q-10 9-23 9-12 0-23-9l-320-320q-15-16-7-35 8-20 30-20h192v-1376q0-14 9-23t23-9h192q14 0 23 9t9 23v1376h192q14 0 23 9t9 23zm1056 128v192q0 14-9 23t-23 9h-832q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h832q14 0 23 9t9 23zm-192-512v192q0 14-9 23t-23 9h-640q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h640q14 0 23 9t9 23zm-192-512v192q0 14-9 23t-23 9h-448q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h448q14 0 23 9t9 23zm-192-512v192q0 14-9 23t-23 9h-256q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h256q14 0 23 9t9 23z"/>
   </symbol>
+  <symbol viewBox="0 0 16.933333 16.933333" id="icon-convert">
+    <g transform="translate(0,-280.06667)">
+      <path d="m 16.183572,290.33818 q 0,0.0517 -0.01032,0.0723 -0.661458,2.76987 -2.76987,4.4907 -2.108385,1.72082 -4.9402735,1.72082 -1.508945,0 -2.919703,-0.56843 -1.410759,-0.56846 -2.516638,-1.62264 l -1.333261,1.33324 q -0.196374,0.19637 -0.465085,0.19637 -0.268711,0 -0.465085,-0.19637 -0.196372,-0.19635 -0.196372,-0.46506 v -4.63021 q 0,-0.26871 0.196373,-0.46508 0.196374,-0.19637 0.465085,-0.19637 h 4.630208 q 0.268711,0 0.465085,0.19637 0.196374,0.19637 0.196374,0.46508 0,0.26872 -0.196374,0.46509 l -1.415944,1.41594 q 0.733822,0.68213 1.663991,1.05421 0.930169,0.37206 1.932701,0.37206 1.384935,0 2.5838155,-0.67181 1.198906,-0.67177 1.922356,-1.84999 0.113692,-0.17571 0.547794,-1.20925 0.08268,-0.2377 0.310038,-0.2377 h 1.984375 q 0.134356,0 0.232543,0.0982 0.09819,0.0982 0.09819,0.23255 z m 0.258392,-8.26823 v 4.6302 q 0,0.26872 -0.196374,0.46509 -0.196374,0.19637 -0.465085,0.19637 h -4.630208 q -0.268711,0 -0.465084,-0.19637 -0.196375,-0.19637 -0.196375,-0.46509 0,-0.2687 0.196375,-0.46507 l 1.426262,-1.42626 q -1.529609,-1.41595 -3.6070115,-1.41595 -1.384934,0 -2.583814,0.67181 -1.198907,0.67177 -1.922384,1.85002 -0.113665,0.17568 -0.547766,1.20921 -0.08268,0.2377 -0.310039,0.2377 h -2.056739 q -0.134355,0 -0.232542,-0.0982 -0.09819,-0.0982 -0.09819,-0.23255 v -0.0723 q 0.671804,-2.76986 2.790534,-4.4907 2.11873,-1.72082 4.960937,-1.72082 1.5089455,0 2.9352085,0.57362 1.426289,0.57359 2.532168,1.61748 l 1.343581,-1.33327 q 0.196374,-0.19637 0.465084,-0.19637 0.268711,0 0.465085,0.19637 0.196374,0.19638 0.196374,0.46509 z"/>
+    </g>
+  </symbol>
   <symbol viewBox="0 0 1792 1792" id="icon-chevron-up">
     <path d="M1683 1331l-166 165q-19 19-45 19t-45-19l-531-531-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"/>
   </symbol>
@@ -4190,6 +4195,8 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.local_books"] = {};
     ρσ_modules["book_list.comments_editor"] = {};
     ρσ_modules["book_list.edit_metadata"] = {};
+    ρσ_modules["book_list.conversion_widgets"] = {};
+    ρσ_modules["book_list.convert_book"] = {};
     ρσ_modules["book_list.main"] = {};
 
     (function(){
@@ -9092,6 +9099,10 @@ return this.__repr__();
     (function(){
         var __name__ = "book_list.router";
         var mode_handlers, default_mode_handler, read_book_mode;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
         var book_list_container_id = ρσ_modules["book_list.constants"].book_list_container_id;
         var read_book_container_id = ρσ_modules["book_list.constants"].read_book_container_id;
 
@@ -9104,6 +9115,7 @@ return this.__repr__();
         var encode_query_with_path = ρσ_modules.utils.encode_query_with_path;
         var parse_url_params = ρσ_modules.utils.parse_url_params;
         var request_full_screen = ρσ_modules.utils.request_full_screen;
+        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
 
         mode_handlers = Object.create(null);
         default_mode_handler = null;
@@ -9290,6 +9302,18 @@ return this.__repr__();
             __argnames__ : {value: ["replace"]}
         });
 
+        function report_a_load_failure(container, msg, error_html) {
+            var err;
+            err = E.div();
+            safe_set_inner_html(err, error_html);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(msg), err, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Go back to the home page")].concat([ρσ_desugar_kwargs({onclick: function () {
+                ρσ_interpolate_kwargs.call(this, home, [ρσ_desugar_kwargs({replace: true})]);
+            }, href: "javascript: void(0)", style: "color: blue"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1ex;"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em"})])));
+        };
+        if (!report_a_load_failure.__argnames__) Object.defineProperties(report_a_load_failure, {
+            __argnames__ : {value: ["container", "msg", "error_html"]}
+        });
+
         ρσ_modules["book_list.router"].mode_handlers = mode_handlers;
         ρσ_modules["book_list.router"].default_mode_handler = default_mode_handler;
         ρσ_modules["book_list.router"].read_book_mode = read_book_mode;
@@ -9304,6 +9328,7 @@ return this.__repr__();
         ρσ_modules["book_list.router"].on_pop_state = on_pop_state;
         ρσ_modules["book_list.router"].back = back;
         ρσ_modules["book_list.router"].home = home;
+        ρσ_modules["book_list.router"].report_a_load_failure = report_a_load_failure;
     })();
 
     (function(){
@@ -17037,7 +17062,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.26.0";
+        CALIBRE_VERSION = "3.27.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -17770,7 +17795,7 @@ return this.__repr__();
                     if (icon === "heart") {
                         ρσ_interpolate_kwargs.call(this, set_css, [a].concat([ρσ_desugar_kwargs({animation_name: THROBBER_NAME, animation_duration: "1s", animation_timing_function: "ease-in-out", animation_iteration_count: "5", animation_play_state: (run_animation) ? "running" : "paused"})]));
                         ρσ_interpolate_kwargs.call(this, set_css, [a.firstChild].concat([ρσ_desugar_kwargs({color: get_color("heart")})]));
-                        a.setAttribute("href", "http://calibre-ebook.com/donate");
+                        a.setAttribute("href", "https://calibre-ebook.com/donate");
                         a.setAttribute("target", "donate-to-calibre");
                     }
                     if (action !== null) {
@@ -21548,6 +21573,7 @@ return this.__repr__();
         var back = ρσ_modules["book_list.router"].back;
         var home = ρσ_modules["book_list.router"].home;
         var open_book = ρσ_modules["book_list.router"].open_book;
+        var report_a_load_failure = ρσ_modules["book_list.router"].report_a_load_failure;
 
         var get_color = ρσ_modules["book_list.theme"].get_color;
         var get_font_size = ρσ_modules["book_list.theme"].get_font_size;
@@ -22305,6 +22331,7 @@ return this.__repr__();
             container = document.getElementById(container_id);
             if (container) {
                 clear_buttons(container);
+                ρσ_interpolate_kwargs.call(this, add_button, [container, "convert"].concat([ρσ_desugar_kwargs({action: convert_book, tooltip: _("Convert this book to another format")})]));
                 ρσ_interpolate_kwargs.call(this, add_button, [container, "edit"].concat([ρσ_desugar_kwargs({action: edit_metadata, tooltip: _("Edit the metadata for this book")})]));
                 ρσ_interpolate_kwargs.call(this, add_button, [container, "trash"].concat([ρσ_desugar_kwargs({action: delete_book, tooltip: _("Delete this book")})]));
                 book_id = parse_url_params().book_id;
@@ -22412,12 +22439,7 @@ return this.__repr__();
         });
 
         function report_load_failure(container) {
-            var err;
-            err = E.div();
-            safe_set_inner_html(err, load_status.error_html);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("Failed to load books from calibre library, with error:")), err, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Go back to the home page")].concat([ρσ_desugar_kwargs({onclick: function () {
-                ρσ_interpolate_kwargs.call(this, home, [ρσ_desugar_kwargs({replace: true})]);
-            }, href: "javascript: void(0)", style: "color: blue"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1ex;"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em"})])));
+            report_a_load_failure(container, _("Failed to load books from calibre library, with error:"), load_status.error_html);
         };
         if (!report_load_failure.__argnames__) Object.defineProperties(report_load_failure, {
             __argnames__ : {value: ["container"]}
@@ -22496,6 +22518,13 @@ return this.__repr__();
             q = parse_url_params();
             q.book_id = (read_book.book_id || q.book_id) + "";
             ρσ_interpolate_kwargs.call(this, show_panel, ["edit_metadata"].concat([ρσ_desugar_kwargs({query: q, replace: false})]));
+        };
+
+        function convert_book() {
+            var q;
+            q = parse_url_params();
+            q.book_id = (read_book.book_id || q.book_id) + "";
+            ρσ_interpolate_kwargs.call(this, show_panel, ["convert_book"].concat([ρσ_desugar_kwargs({query: q, replace: false})]));
         };
 
         function create_more_actions_panel(container_id) {
@@ -22622,6 +22651,7 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].init = init;
         ρσ_modules["book_list.book_details"].show_subsequent_panel = show_subsequent_panel;
         ρσ_modules["book_list.book_details"].edit_metadata = edit_metadata;
+        ρσ_modules["book_list.book_details"].convert_book = convert_book;
         ρσ_modules["book_list.book_details"].create_more_actions_panel = create_more_actions_panel;
         ρσ_modules["book_list.book_details"].return_to_book_details = return_to_book_details;
         ρσ_modules["book_list.book_details"].toggle_fields = toggle_fields;
@@ -30376,6 +30406,2005 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "book_list.conversion_widgets";
+        var CLASS_NAME, indent, container_id, get_option_value, get_option_default_value, is_option_disabled, get_option_help, profiles, ui_data, entry_points, registry, listeners;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var clear = ρσ_modules.dom.clear;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+
+        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        CLASS_NAME = "conversion-option-group";
+        indent = "↳ ";
+        add_extra_css(function () {
+            var style, sel;
+            style = "";
+            sel = "." + CLASS_NAME + " ";
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "input[type=\"checkbox\"]"].concat([ρσ_desugar_kwargs({margin_left: "0"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "[data-option-name]"].concat([ρσ_desugar_kwargs({margin_bottom: "1ex", display: "block", padding_bottom: "0.5ex"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".simple-group > label"].concat([ρσ_desugar_kwargs({display: "table-row"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".simple-group > label > *"].concat([ρσ_desugar_kwargs({display: "table-cell", padding_bottom: "1ex", padding_right: "1rem"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "label.vertical"].concat([ρσ_desugar_kwargs({display: "block"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "label.vertical > *"].concat([ρσ_desugar_kwargs({display: "block", padding_bottom: "1ex", padding_right: "1rem"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "[data-profile]"].concat([ρσ_desugar_kwargs({margin_left: "2em", text_indent: "-2em", font_size: "smaller", margin_bottom: "1ex"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".subset-choice label"].concat([ρσ_desugar_kwargs({display: "block", margin_bottom: "1ex"})]));
+            return style;
+        });
+        container_id = null;
+        get_option_value = get_option_default_value = is_option_disabled = get_option_help = profiles = ui_data = null;
+        entry_points = Object.create(null);
+        registry = Object.create(null);
+        listeners = Object.create(null);
+        function ep(func) {
+            entry_points[ρσ_bound_index(func.name, entry_points)] = func;
+            return func;
+        };
+        if (!ep.__argnames__) Object.defineProperties(ep, {
+            __argnames__ : {value: ["func"]}
+        });
+
+        function add_listener(name, callback) {
+            if (!listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name]) {
+                listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name] = [];
+            }
+            listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name].push(callback);
+        };
+        if (!add_listener.__argnames__) Object.defineProperties(add_listener, {
+            __argnames__ : {value: ["name", "callback"]}
+        });
+
+        function on_change(name) {
+            var callback;
+            if (listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name]) {
+                var ρσ_Iter0 = ρσ_Iterable(listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name]);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    callback = ρσ_Iter0[ρσ_Index0];
+                    callback(name);
+                }
+            }
+        };
+        if (!on_change.__argnames__) Object.defineProperties(on_change, {
+            __argnames__ : {value: ["name"]}
+        });
+
+        function sanitize_accelerator(text) {
+            return text.replace("&", "");
+        };
+        if (!sanitize_accelerator.__argnames__) Object.defineProperties(sanitize_accelerator, {
+            __argnames__ : {value: ["text"]}
+        });
+
+        function subset_choice() {
+            var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var choices = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var tooltip = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? subset_choice.__defaults__.tooltip : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            var ans, names, cname, ops;
+            if (get_option_default_value(name) === undefined) {
+                throw new KeyError("" + ρσ_str.format("{}", name) + " is not a known option");
+            }
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_option_name: name, class_: "subset-choice"})]);
+            if (tooltip !== null) {
+                ans.setAttribute("title", tooltip || get_option_help(name));
+            }
+            names = Object.keys(choices);
+            var ρσ_Iter1 = ρσ_Iterable(names);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                cname = ρσ_Iter1[ρσ_Index1];
+                ans.appendChild(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: cname})]), " " + choices[(typeof cname === "number" && cname < 0) ? choices.length + cname : cname]));
+            }
+            ops = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["get"] = (function() {
+                    var ρσ_anonfunc = function (container) {
+                        var ans, w;
+                        ans = [];
+                        var ρσ_Iter2 = ρσ_Iterable(container.querySelectorAll("input"));
+                        for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                            w = ρσ_Iter2[ρσ_Index2];
+                            if (w.checked) {
+                                ans.push(w.name);
+                            }
+                        }
+                        return ",".join(ans);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                ρσ_d["set"] = (function() {
+                    var ρσ_anonfunc = function (container, val) {
+                        var q, x, w;
+                        q = (function() {
+                            var ρσ_Iter = ρσ_Iterable((val || "").split(",")), ρσ_Result = Object.create(null), x;
+                            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                                x = ρσ_Iter[ρσ_Index];
+                                ρσ_Result[x.strip()] = (true);
+                            }
+                            return ρσ_Result;
+                        })();
+                        var ρσ_Iter3 = ρσ_Iterable(container.querySelectorAll("input"));
+                        for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                            w = ρσ_Iter3[ρσ_Index3];
+                            w.checked = bool(q[ρσ_bound_index(w.name, q)]);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container", "val"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                ρσ_d["set_disabled"] = (function() {
+                    var ρσ_anonfunc = function (container, val) {
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container", "val"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            registry[(typeof name === "number" && name < 0) ? registry.length + name : name] = ops;
+            ops.set(ans, get_option_value(name));
+            return ans;
+        };
+        if (!subset_choice.__defaults__) Object.defineProperties(subset_choice, {
+            __defaults__ : {value: {tooltip:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["name", "choices", "tooltip"]}
+        });
+
+        function create_simple_widget(name, text, tooltip, input_widget_, getter, setter, suffix) {
+            var label, input_widget, ops;
+            if (get_option_default_value(name) === undefined) {
+                throw new KeyError("" + ρσ_str.format("{}", name) + " is not a known option");
+            }
+            if (!text.endswith(":")) {
+                text = text + ":";
+            }
+            label = E.label(E.span(sanitize_accelerator(text)), E.span(input_widget_));
+            if (suffix) {
+                label.lastChild.appendChild(document.createTextNode(" " + suffix));
+            }
+            label.dataset.optionName = name;
+            label.setAttribute("title", tooltip || get_option_help(name));
+            function straight_input_widget(container) {
+                return container.lastChild.firstChild;
+            };
+            if (!straight_input_widget.__argnames__) Object.defineProperties(straight_input_widget, {
+                __argnames__ : {value: ["container"]}
+            });
+
+            input_widget = straight_input_widget;
+            ops = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["get"] = (function() {
+                    var ρσ_anonfunc = function (container) {
+                        return getter(input_widget(container));
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                ρσ_d["set"] = (function() {
+                    var ρσ_anonfunc = function (container, val) {
+                        setter(input_widget(container), val);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container", "val"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                ρσ_d["set_disabled"] = (function() {
+                    var ρσ_anonfunc = function (container, val) {
+                        if (val) {
+                            container.classList.add("disabled");
+                            input_widget(container).setAttribute("disabled", "disabled");
+                        } else {
+                            container.classList.remove("disabled");
+                            input_widget(container).removeAttribute("disabled");
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["container", "val"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            registry[(typeof name === "number" && name < 0) ? registry.length + name : name] = ops;
+            ops.set(label, get_option_value(name));
+            if (is_option_disabled(name)) {
+                ops.set_disabled(label, true);
+            }
+            input_widget(label).addEventListener("change", on_change.bind(null, name));
+            if (listeners[(typeof name === "number" && name < 0) ? listeners.length + name : name]) {
+                window.setTimeout(on_change.bind(null, name), 0);
+            }
+            return label;
+        };
+        if (!create_simple_widget.__argnames__) Object.defineProperties(create_simple_widget, {
+            __argnames__ : {value: ["name", "text", "tooltip", "input_widget_", "getter", "setter", "suffix"]}
+        });
+
+        function checkbox(name, text, tooltip) {
+            return create_simple_widget(name, text, tooltip, ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox"})]), (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    return bool(w.checked);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.checked = bool(val);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!checkbox.__argnames__) Object.defineProperties(checkbox, {
+            __argnames__ : {value: ["name", "text", "tooltip"]}
+        });
+
+        function lineedit() {
+            var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var text = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var width = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? lineedit.__defaults__.width : arguments[2];
+            var tooltip = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? lineedit.__defaults__.tooltip : arguments[3];
+            var suffix = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? lineedit.__defaults__.suffix : arguments[4];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "width")){
+                width = ρσ_kwargs_obj.width;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "suffix")){
+                suffix = ρσ_kwargs_obj.suffix;
+            }
+            return ρσ_interpolate_kwargs.call(this, create_simple_widget, [name, text, tooltip, ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", size: str(width)})]), (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    var ans;
+                    ans = w.value;
+                    if (ans && ans.strip()) {
+                        return ans.strip();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.value = val || "";
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({suffix: suffix})]));
+        };
+        if (!lineedit.__defaults__) Object.defineProperties(lineedit, {
+            __defaults__ : {value: {width:25, tooltip:null, suffix:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["name", "text", "width", "tooltip", "suffix"]}
+        });
+
+        function float_spin() {
+            var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var text = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var tooltip = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? float_spin.__defaults__.tooltip : arguments[2];
+            var step = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? float_spin.__defaults__.step : arguments[3];
+            var min = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? float_spin.__defaults__.min : arguments[4];
+            var max = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? float_spin.__defaults__.max : arguments[5];
+            var unit = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? float_spin.__defaults__.unit : arguments[6];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "step")){
+                step = ρσ_kwargs_obj.step;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "min")){
+                min = ρσ_kwargs_obj.min;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "max")){
+                max = ρσ_kwargs_obj.max;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "unit")){
+                unit = ρσ_kwargs_obj.unit;
+            }
+            var f, defval;
+            f = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", step: str(step), min: str(min), max: str(max), required: true})]);
+            defval = get_option_default_value(name);
+            return ρσ_interpolate_kwargs.call(this, create_simple_widget, [name, text, tooltip, f, (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    try {
+                        return float(w.value);
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        {
+                            return defval;
+                        } 
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.value = str(float(val));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({suffix: unit})]));
+        };
+        if (!float_spin.__defaults__) Object.defineProperties(float_spin, {
+            __defaults__ : {value: {tooltip:null, step:.1, min:0, max:100, unit:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["name", "text", "tooltip", "step", "min", "max", "unit"]}
+        });
+
+        function int_spin() {
+            var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var text = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var tooltip = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? int_spin.__defaults__.tooltip : arguments[2];
+            var step = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? int_spin.__defaults__.step : arguments[3];
+            var min = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? int_spin.__defaults__.min : arguments[4];
+            var max = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? int_spin.__defaults__.max : arguments[5];
+            var unit = (arguments[6] === undefined || ( 6 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? int_spin.__defaults__.unit : arguments[6];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "step")){
+                step = ρσ_kwargs_obj.step;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "min")){
+                min = ρσ_kwargs_obj.min;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "max")){
+                max = ρσ_kwargs_obj.max;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "unit")){
+                unit = ρσ_kwargs_obj.unit;
+            }
+            var f, defval;
+            f = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", step: str(step), min: str(min), max: str(max), required: true})]);
+            defval = get_option_default_value(name);
+            return ρσ_interpolate_kwargs.call(this, create_simple_widget, [name, text, tooltip, f, (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    try {
+                        return int(w.value);
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        {
+                            return defval;
+                        } 
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.value = str(int(val));
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({suffix: unit})]));
+        };
+        if (!int_spin.__defaults__) Object.defineProperties(int_spin, {
+            __defaults__ : {value: {tooltip:null, step:1, min:0, max:100, unit:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["name", "text", "tooltip", "step", "min", "max", "unit"]}
+        });
+
+        function choices(name, text, choices, tooltip) {
+            var f, key;
+            f = E.select();
+            if (Array.isArray(choices)) {
+                var ρσ_Iter4 = ρσ_Iterable(choices);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    key = ρσ_Iter4[ρσ_Index4];
+                    f.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [key].concat([ρσ_desugar_kwargs({value: key})])));
+                }
+            } else {
+                var ρσ_Iter5 = ρσ_Iterable(choices);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    key = ρσ_Iter5[ρσ_Index5];
+                    f.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [choices[(typeof key === "number" && key < 0) ? choices.length + key : key]].concat([ρσ_desugar_kwargs({value: key})])));
+                }
+            }
+            return create_simple_widget(name, text, tooltip, f, (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    return w.value;
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.value = val;
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!choices.__argnames__) Object.defineProperties(choices, {
+            __argnames__ : {value: ["name", "text", "choices", "tooltip"]}
+        });
+
+        function textarea(name, text, tooltip) {
+            var ans;
+            ans = create_simple_widget(name, text, tooltip, ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({rows: "30", cols: "70"})]), (function() {
+                var ρσ_anonfunc = function getter(w) {
+                    var ans;
+                    ans = w.value;
+                    if (ans && ans.strip()) {
+                        return ans.strip();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w"]}
+                });
+                return ρσ_anonfunc;
+            })(), (function() {
+                var ρσ_anonfunc = function setter(w, val) {
+                    w.value = val || "";
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["w", "val"]}
+                });
+                return ρσ_anonfunc;
+            })());
+            ans.classList.add("vertical");
+            return ans;
+        };
+        if (!textarea.__argnames__) Object.defineProperties(textarea, {
+            __argnames__ : {value: ["name", "text", "tooltip"]}
+        });
+
+        function container_for_option(name) {
+            return document.getElementById(container_id).querySelector("[data-option-name=\"" + ρσ_str.format("{}", name) + "\"]");
+        };
+        if (!container_for_option.__argnames__) Object.defineProperties(container_for_option, {
+            __argnames__ : {value: ["name"]}
+        });
+
+        function get(name) {
+            return registry[(typeof name === "number" && name < 0) ? registry.length + name : name].get(container_for_option(name));
+        };
+        if (!get.__argnames__) Object.defineProperties(get, {
+            __argnames__ : {value: ["name"]}
+        });
+
+        function set(name, val) {
+            registry[(typeof name === "number" && name < 0) ? registry.length + name : name].set(container_for_option(name), val);
+        };
+        if (!set.__argnames__) Object.defineProperties(set, {
+            __argnames__ : {value: ["name", "val"]}
+        });
+
+        function set_disabled(name, val) {
+            registry[(typeof name === "number" && name < 0) ? registry.length + name : name].set_disabled(container_for_option(name), val);
+        };
+        if (!set_disabled.__argnames__) Object.defineProperties(set_disabled, {
+            __argnames__ : {value: ["name", "val"]}
+        });
+
+        
+        var look_and_feel = ep((function() {
+            var ρσ_anonfunc = function look_and_feel(container) {
+                var g;
+                function subhead(text) {
+                    container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.b(sanitize_accelerator(text))].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px currentColor; margin-bottom: 1ex; max-width: 35em"})])));
+                };
+                if (!subhead.__argnames__) Object.defineProperties(subhead, {
+                    __argnames__ : {value: ["text"]}
+                });
+
+                subhead(_("&Fonts"));
+                add_listener("disable_font_rescaling", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled, dname;
+                        disabled = get("disable_font_rescaling");
+                        var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "font_size_mapping", "base_font_size" ]));
+                        for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                            dname = ρσ_Iter6[ρσ_Index6];
+                            set_disabled(dname, disabled);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("disable_font_rescaling", _("&Disable font size rescaling")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["base_font_size", _("Base font si&ze:")].concat([ρσ_desugar_kwargs({max: 50, unit: "pt"})])));
+                g.appendChild(lineedit("font_size_mapping", _("Font size &key:")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["minimum_line_height", _("Minim&um line height:")].concat([ρσ_desugar_kwargs({max: 900, unit: "%"})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["line_height", _("Line hei&ght:")].concat([ρσ_desugar_kwargs({unit: "%"})])));
+                g.appendChild(lineedit("embed_font_family", _("Embed font fami&ly:")));
+                g.appendChild(checkbox("embed_all_fonts", _("&Embed all fonts in document")));
+                g.appendChild(checkbox("subset_embedded_fonts", _("&Subset all embedded fonts")));
+                g.appendChild(checkbox("keep_ligatures", _("Keep &ligatures")));
+                subhead(_("Te&xt"));
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(lineedit("input_encoding", _("I&nput character encoding:")));
+                g.appendChild(choices("change_justification", _("Text &justification:"), (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["original"] = _("Original");
+                    ρσ_d["left"] = _("Left align");
+                    ρσ_d["justify"] = _("Justify text");
+                    return ρσ_d;
+                }).call(this)));
+                g.appendChild(checkbox("smarten_punctuation", _("Smarten &punctuation")));
+                g.appendChild(checkbox("unsmarten_punctuation", _("&UnSmarten punctuation")));
+                g.appendChild(checkbox("asciiize", _("&Transliterate unicode characters to ASCII")));
+                subhead(_("Lay&out"));
+                add_listener("remove_paragraph_spacing", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled;
+                        disabled = get("remove_paragraph_spacing");
+                        set_disabled("remove_paragraph_spacing_indent_size", !disabled);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("remove_paragraph_spacing", _("Remove &spacing between paragraphs")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["remove_paragraph_spacing_indent_size", indent + _("I&ndent size:")].concat([ρσ_desugar_kwargs({min: -.1, unit: "em"})])));
+                g.appendChild(checkbox("insert_blank_line", _("Insert &blank line between paragraphs")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["insert_blank_line_size", indent + _("&Line size:")].concat([ρσ_desugar_kwargs({unit: "em"})])));
+                g.appendChild(checkbox("linearize_tables", _("&Linearize tables")));
+                subhead(_("St&yling"));
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(lineedit("filter_css", _("Filter Style Information"), 40));
+                container.appendChild(textarea("extra_css", "E&xtra CSS"));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var heuristics = ep((function() {
+            var ρσ_anonfunc = function heuristics(container) {
+                var settings, blurb, g;
+                settings = [];
+                function add() {
+                    var func = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+                    var name = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+                    var text = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+                    var kw = arguments[arguments.length-1];
+                    if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
+                    g.appendChild(ρσ_interpolate_kwargs.call(this, func, [name, text].concat([ρσ_desugar_kwargs(kw)])));
+                    settings.push(name);
+                };
+                if (!add.__handles_kwarg_interpolation__) Object.defineProperties(add, {
+                    __handles_kwarg_interpolation__ : {value: true},
+                    __argnames__ : {value: ["func", "name", "text"]}
+                });
+
+                add_listener("enable_heuristics", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled, dname;
+                        disabled = !get("enable_heuristics");
+                        var ρσ_Iter7 = ρσ_Iterable(settings);
+                        for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                            dname = ρσ_Iter7[ρσ_Index7];
+                            set_disabled(dname, disabled);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                blurb = _("<b>Heuristic processing</b> means that calibre will scan your book for common patterns and fix them. As the name implies, this involves guesswork, which means that it could end up worsening the result of a conversion, if calibre guesses wrong. Therefore, it is disabled by default. Often, if a conversion does not turn out as you expect, turning on heuristics can improve matters. Read more about the various heuristic processing options in the <a href=\"%s\">User Manual</a>.").replace("%s", "https://manual.calibre-ebook.com/conversion.html#heuristic-processing");
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
+                safe_set_inner_html(container.lastChild, blurb);
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("enable_heuristics", _("Enable &heuristic processing")));
+                add(checkbox, "unwrap_lines", _("Unwrap lines"));
+                ρσ_interpolate_kwargs.call(this, add, [float_spin, "html_unwrap_factor", indent + _("Line &un-wrap factor:")].concat([ρσ_desugar_kwargs({max: 1, step: .05})]));
+                add(checkbox, "markup_chapter_headings", _("Detect and markup unformatted chapter headings and sub headings"));
+                add(checkbox, "renumber_headings", _("Renumber sequences of <h1> or <h2> tags to prevent splitting"));
+                add(checkbox, "delete_blank_paragraphs", _("Delete blank lines between paragraphs"));
+                add(checkbox, "format_scene_breaks", _("Ensure scene breaks are consistently formatted"));
+                add(lineedit, "replace_scene_breaks", _("Rep&lace soft scene breaks:"));
+                add(checkbox, "dehyphenate", _("Remove unnecessary hyphens"));
+                add(checkbox, "italicize_common_cases", _("Italicize common words and patterns"));
+                add(checkbox, "fix_indents", _("Replace entity indents with CSS indents"));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var page_setup = ep((function() {
+            var ρσ_anonfunc = function page_setup(container) {
+                var g;
+                function show_profile_desc(name) {
+                    var profile, data;
+                    profile = get(name);
+                    data = (name === "input_profile") ? profiles.input : profiles.output;
+                    profile = data[(typeof profile === "number" && profile < 0) ? data.length + profile : profile];
+                    container_for_option(name).parentNode.querySelector("[data-profile=\"{}\"".format((name === "input_profile") ? "input" : "output")).textContent = indent + profile.description;
+                };
+                if (!show_profile_desc.__argnames__) Object.defineProperties(show_profile_desc, {
+                    __argnames__ : {value: ["name"]}
+                });
+
+                add_listener("input_profile", show_profile_desc);
+                add_listener("output_profile", show_profile_desc);
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["margin_left", _("Left page margin")].concat([ρσ_desugar_kwargs({unit: "pt", step: .1, min: -1, max: 200})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["margin_top", _("Top page margin")].concat([ρσ_desugar_kwargs({unit: "pt", step: .1, min: -1, max: 200})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["margin_right", _("Right page margin")].concat([ρσ_desugar_kwargs({unit: "pt", step: .1, min: -1, max: 200})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["margin_bottom", _("Bottom page margin")].concat([ρσ_desugar_kwargs({unit: "pt", step: .1, min: -1, max: 200})])));
+                g.appendChild(choices("input_profile", _("&Input profile:"), (function() {
+                    var ρσ_Iter = ρσ_Iterable(profiles.input), ρσ_Result = Object.create(null), name;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        name = ρσ_Iter[ρσ_Index];
+                        ρσ_Result[name] = ((ρσ_expr_temp = profiles.input)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name].name);
+                    }
+                    return ρσ_Result;
+                })()));
+                g.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_profile: "input"})]));
+                g.appendChild(choices("output_profile", _("&Output profile:"), (function() {
+                    var ρσ_Iter = ρσ_Iterable(profiles.output), ρσ_Result = Object.create(null), name;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        name = ρσ_Iter[ρσ_Index];
+                        ρσ_Result[name] = ((ρσ_expr_temp = profiles.output)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name].name);
+                    }
+                    return ρσ_Result;
+                })()));
+                g.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_profile: "output"})]));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var structure_detection = ep((function() {
+            var ρσ_anonfunc = function structure_detection(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(lineedit("chapter", _("Detect chapters at"), 50));
+                g.appendChild(choices("chapter_mark", _("Chap&ter mark:"), ρσ_list_decorate([ "pagebreak", "rule", "both", "none" ])));
+                g.appendChild(checkbox("remove_first_image", _("Remove first &image")));
+                g.appendChild(checkbox("remove_fake_margins", _("Remove &fake margins")));
+                g.appendChild(checkbox("insert_metadata", _("Insert metadata at start of book")));
+                g.appendChild(lineedit("page_breaks_before", _("Insert page breaks before"), 50));
+                g.appendChild(lineedit("start_reading_at", _("Start reading at"), 50));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var toc = ep((function() {
+            var ρσ_anonfunc = function toc(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("use_auto_toc", _("&Force use of auto-generated Table of Contents")));
+                g.appendChild(checkbox("no_chapters_in_toc", _("Do not add &detected chapters to the Table of Contents")));
+                g.appendChild(checkbox("duplicate_links_in_toc", _("Allow &duplicate links when creating the Table of Contents")));
+                g.appendChild(int_spin("max_toc_links", _("Number of &links to add to Table of Contents:")));
+                g.appendChild(int_spin("toc_threshold", _("Chapter &threshold:")));
+                g.appendChild(lineedit("toc_filter", _("TOC &filter:")));
+                g.appendChild(lineedit("level1_toc", _("Level &1 TOC (XPath expression):")));
+                g.appendChild(lineedit("level2_toc", _("Level &2 TOC (XPath expression):")));
+                g.appendChild(lineedit("level3_toc", _("Level &3 TOC (XPath expression):")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var search_and_replace = ep((function() {
+            var ρσ_anonfunc = function search_and_replace(container) {
+                var ops;
+                function add(val) {
+                    var c;
+                    c = container_for_option("search_replace");
+                    c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.label(E.span(_("Search:")), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "search"})])), E.label(E.span(_("Replace:")), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "replace"})]))].concat([ρσ_desugar_kwargs({class_: "simple-group sr-instance", style: "border-bottom: solid 1px currentColor; margin-bottom: 1ex"})])));
+                    if (val && val[0]) {
+                        c.lastChild.querySelector("input[name=\"search\"]").value = val[0];
+                        c.lastChild.querySelector("input[name=\"replace\"]").value = val[1];
+                    }
+                    return c.lastChild;
+                };
+                if (!add.__argnames__) Object.defineProperties(add, {
+                    __argnames__ : {value: ["val"]}
+                });
+
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_option_name: "search_replace"})]));
+                ops = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["get"] = (function() {
+                        var ρσ_anonfunc = function get(container) {
+                            var ans, ρσ_unpack, search, replace, r, div;
+                            ans = [];
+                            var ρσ_Iter8 = ρσ_Iterable(container.querySelectorAll(".sr-instance"));
+                            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                                div = ρσ_Iter8[ρσ_Index8];
+                                ρσ_unpack = div.querySelectorAll("input");
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                                search = ρσ_unpack[0];
+                                replace = ρσ_unpack[1];
+                                if (search.value) {
+                                    r = replace.value || "";
+                                    ans.push([search.value, r]);
+                                }
+                            }
+                            return JSON.stringify(ans);
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["container"]}
+                        });
+                        return ρσ_anonfunc;
+                    })();
+                    ρσ_d["set"] = (function() {
+                        var ρσ_anonfunc = function set(container, encval) {
+                            var vals, val;
+                            try {
+                                vals = JSON.parse(encval);
+                            } catch (ρσ_Exception) {
+                                ρσ_last_exception = ρσ_Exception;
+                                {
+                                    vals = [];
+                                } 
+                            }
+                            vals = vals || [];
+                            clear(container);
+                            var ρσ_Iter9 = ρσ_Iterable(vals);
+                            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                                val = ρσ_Iter9[ρσ_Index9];
+                                add(val);
+                            }
+                            add();
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["container", "encval"]}
+                        });
+                        return ρσ_anonfunc;
+                    })();
+                    ρσ_d["set_disabled"] = (function() {
+                        var ρσ_anonfunc = function set_disabled(container, disabled) {
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["container", "disabled"]}
+                        });
+                        return ρσ_anonfunc;
+                    })();
+                    return ρσ_d;
+                }).call(this);
+                registry["search_replace"] = ops;
+                ops.set(container.lastChild, get_option_value("search_replace"));
+                container.appendChild(E.div(ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus"].concat([ρσ_desugar_kwargs({action: function () {
+                    add();
+                }})]))));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var comic_input = ep((function() {
+            var ρσ_anonfunc = function comic_input(container) {
+                var settings, g;
+                settings = [];
+                function add() {
+                    var func = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+                    var name = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+                    var text = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+                    var kw = arguments[arguments.length-1];
+                    if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
+                    g.appendChild(ρσ_interpolate_kwargs.call(this, func, [name, text].concat([ρσ_desugar_kwargs(kw)])));
+                    settings.push(name);
+                };
+                if (!add.__handles_kwarg_interpolation__) Object.defineProperties(add, {
+                    __handles_kwarg_interpolation__ : {value: true},
+                    __argnames__ : {value: ["func", "name", "text"]}
+                });
+
+                add_listener("no_process", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled, dname;
+                        disabled = get("no_process");
+                        var ρσ_Iter10 = ρσ_Iterable(settings);
+                        for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                            dname = ρσ_Iter10[ρσ_Index10];
+                            set_disabled(dname, disabled);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("no_process", _("&Disable comic processing")));
+                add(checkbox, "dont_grayscale", _("Disable conversion of images to &black and white"));
+                add(checkbox, "dont_add_comic_pages_to_toc", _("Don't add links to &pages to the Table of Contents for CBC files"));
+                ρσ_interpolate_kwargs.call(this, add, [int_spin, "colors", _("&Number of colors:")].concat([ρσ_desugar_kwargs({max: 256, step: 8})]));
+                add(lineedit, "comic_image_size", _("Override image si&ze:"));
+                add(checkbox, "dont_normalize", _("Disable &normalize"));
+                add(checkbox, "keep_aspect_ratio", _("Keep &aspect ratio"));
+                add(checkbox, "dont_sharpen", _("Disable &Sharpening"));
+                add(checkbox, "disable_trim", _("Disable &Trimming"));
+                add(checkbox, "wide", _("&Wide"));
+                add(checkbox, "landscape", _("&Landscape"));
+                add(checkbox, "right2left", _("&Right to left"));
+                add(checkbox, "no_sort", _("Don't so&rt"));
+                add(checkbox, "despeckle", _("De&speckle"));
+                g.appendChild(choices("output_format", _("O&utput format:"), ['png', 'jpg']));
+                settings.push("output_format");
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var fb2_input = ep((function() {
+            var ρσ_anonfunc = function fb2_input(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("no_inline_fb2_toc", _("Do not insert a Table of Contents at the beginning of the book")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var pdf_input = ep((function() {
+            var ρσ_anonfunc = function pdf_input(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["unwrap_factor", _("Line &un-wrapping factor:")].concat([ρσ_desugar_kwargs({max: 1, step: .01})])));
+                g.appendChild(checkbox("no_images", _("No &images")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var rtf_input = ep((function() {
+            var ρσ_anonfunc = function rtf_input(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("ignore_wmf", _("Ignore &WMF images in the RTF file")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var docx_input = ep((function() {
+            var ρσ_anonfunc = function docx_input(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("docx_no_cover", _("Do not try to autodetect a &cover from images in the document")));
+                g.appendChild(checkbox("docx_no_pagebreaks_between_notes", _("Do not add a page after every &endnote")));
+                g.appendChild(checkbox("docx_inline_subsup", _("Render &superscripts and subscripts so that they do not affect the line height")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var txt_input = ep((function() {
+            var ρσ_anonfunc = function txt_input(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(choices("paragraph_type", _("Para&graph style:"), ui_data.paragraph_types));
+                g.appendChild(choices("formatting_type", _("Forma&tting style:"), ui_data.formatting_types));
+                g.appendChild(checkbox("preserve_spaces", _("Preserve &spaces")));
+                g.appendChild(checkbox("txt_in_remove_indents", _("Remove &indents at the beginning of lines")));
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Allowed Markdown extensions:"), ρσ_interpolate_kwargs.call(E, E.div, [subset_choice("markdown_extensions", ui_data.md_extensions)].concat([ρσ_desugar_kwargs({style: "margin-left: 1em; margin-top: 1ex"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var epub_output = ep((function() {
+            var ρσ_anonfunc = function epub_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("dont_split_on_page_breaks", _("Do not &split on page breaks")));
+                g.appendChild(checkbox("no_default_epub_cover", _("No default &cover")));
+                g.appendChild(checkbox("epub_flatten", _("&Flatten EPUB file structure")));
+                g.appendChild(checkbox("no_svg_cover", _("No &SVG cover")));
+                g.appendChild(checkbox("preserve_cover_aspect_ratio", _("Preserve cover &aspect ratio")));
+                g.appendChild(checkbox("epub_inline_toc", _("Insert inline &Table of Contents")));
+                g.appendChild(checkbox("epub_toc_at_end", _("Put inserted Table of Contents at the &end of the book")));
+                g.appendChild(lineedit("toc_title", _("&Title for inserted ToC:")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["flow_size", _("Split files &larger than:")].concat([ρσ_desugar_kwargs({unit: "KB", max: 1e6, step: 20})])));
+                g.appendChild(choices("epub_version", _("EP&UB version:"), ui_data.versions));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var docx_output = ep((function() {
+            var ρσ_anonfunc = function docx_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(choices("docx_page_size", _("Paper si&ze:"), ui_data.page_sizes));
+                g.appendChild(lineedit("docx_custom_page_size", _("&Custom size:")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["docx_page_margin_left", _("Page &left margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["docx_page_margin_top", _("Page &top margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["docx_page_margin_right", _("Page &right margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["docx_page_margin_bottom", _("Page &bottom margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(checkbox("docx_no_toc", _("Do not insert the &Table of Contents as a page at the start of the document")));
+                g.appendChild(checkbox("docx_no_cover", _("Do not insert &cover as image at start of document")));
+                g.appendChild(checkbox("preserve_cover_aspect_ratio", _("Preserve the aspect ratio of the image inserted as cover")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var fb2_output = ep((function() {
+            var ρσ_anonfunc = function fb2_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(choices("sectionize", _("Sec&tionize:"), ui_data.sectionize));
+                g.appendChild(choices("fb2_genre", _("&Genre:"), ui_data.genres));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var lrf_output = ep((function() {
+            var ρσ_anonfunc = function lrf_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("autorotation", _("Enable &auto-rotation of wide images")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["wordspace", _("&Wordspace:")].concat([ρσ_desugar_kwargs({min: 1, max: 20, unit: "pt"})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["minimum_indent", _("Minim&um para. indent:")].concat([ρσ_desugar_kwargs({unit: "pt"})])));
+                g.appendChild(checkbox("render_tables_as_images", _("Render &tables as images")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["text_size_multiplier_for_rendered_tables", indent + _("Text size multiplier for text in rendered tables:")].concat([ρσ_desugar_kwargs({step: .01})])));
+                g.appendChild(checkbox("header", _("Add &header")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["header_separation", indent + _("Header &separation:")].concat([ρσ_desugar_kwargs({unit: "pt"})])));
+                g.appendChild(lineedit("header_format", indent + _("Header &format:")));
+                g.appendChild(lineedit("serif_family", _("Serif fon&t family:")));
+                g.appendChild(lineedit("sans_family", _("Sans-serif font fami&ly:")));
+                g.appendChild(lineedit("mono_family", _("&Monospace font family:")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var mobi_output = ep((function() {
+            var ρσ_anonfunc = function mobi_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("no_inline_toc", _("Do not add &Table of Contents to book")));
+                g.appendChild(lineedit("toc_title", indent + _("&Title for Table of Contents:")));
+                g.appendChild(checkbox("mobi_toc_at_start", _("Put generated Table of Contents at &start of book instead of end")));
+                g.appendChild(checkbox("mobi_ignore_margins", _("Ignore &margins")));
+                g.appendChild(checkbox("prefer_author_sort", _("Use author &sort for author")));
+                g.appendChild(checkbox("mobi_keep_original_images", _("Do not convert all images to &JPEG (may result in images not working in older viewers)")));
+                g.appendChild(checkbox("dont_compress", _("Disable &compression of the file contents")));
+                g.appendChild(choices("mobi_file_type", _("MOBI fi&le type:"), ui_data.file_types));
+                g.appendChild(lineedit("personal_doc", _("Personal Doc tag:")));
+                g.appendChild(checkbox("share_not_sync", _("Enable &sharing of book content via Facebook, etc. WARNING: Disables last read syncing")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var azw3_output = ep((function() {
+            var ρσ_anonfunc = function azw3_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("no_inline_toc", _("Do not add &Table of Contents to book")));
+                g.appendChild(lineedit("toc_title", indent + _("&Title for Table of Contents:")));
+                g.appendChild(checkbox("mobi_toc_at_start", _("Put generated Table of Contents at &start of book instead of end")));
+                g.appendChild(checkbox("prefer_author_sort", _("Use author &sort for author")));
+                g.appendChild(checkbox("dont_compress", _("Disable &compression of the file contents")));
+                g.appendChild(checkbox("share_not_sync", _("Enable &sharing of book content via Facebook, etc. WARNING: Disables last read syncing")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var pdb_output = ep((function() {
+            var ρσ_anonfunc = function pdb_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(choices("format", _("Forma&t:"), ui_data.formats));
+                g.appendChild(lineedit("pdb_output_encoding", _("O&utput encoding:")));
+                g.appendChild(checkbox("inline_toc", _("&Inline TOC")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var pdf_output = ep((function() {
+            var ρσ_anonfunc = function pdf_output(container) {
+                var g;
+                add_listener("use_profile_size", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled, dname;
+                        disabled = get("use_profile_size");
+                        var ρσ_Iter11 = ρσ_Iterable(ρσ_list_decorate([ "paper_size", "custom_size", "unit" ]));
+                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                            dname = ρσ_Iter11[ρσ_Index11];
+                            set_disabled(dname, disabled);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                add_listener("pdf_use_document_margins", (function() {
+                    var ρσ_anonfunc = function (name) {
+                        var disabled, dname;
+                        disabled = get("pdf_use_document_margins");
+                        var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ "left", "top", "right", "bottom" ]));
+                        for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                            dname = ρσ_Iter12[ρσ_Index12];
+                            set_disabled("pdf_page_margin_" + ρσ_str.format("{}", dname) + "", disabled);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["name"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("use_profile_size", _("&Use the paper size set in output profile")));
+                g.appendChild(choices("paper_size", indent + _("&Paper size:"), ui_data.paper_sizes));
+                g.appendChild(lineedit("custom_size", indent + _("&Custom size:")));
+                g.appendChild(choices("unit", indent + _("Custom size unit:"), ui_data.units));
+                g.appendChild(checkbox("preserve_cover_aspect_ratio", _("Preserve &aspect ratio of cover")));
+                g.appendChild(checkbox("pdf_page_numbers", _("Add page &numbers to the bottom of every page")));
+                g.appendChild(checkbox("pdf_hyphenate", _("&Break long words at the end of lines")));
+                g.appendChild(checkbox("pdf_add_toc", _("Add a printable &Table of Contents at the end")));
+                g.appendChild(lineedit("toc_title", indent + _("&Title for ToC:")));
+                g.appendChild(lineedit("pdf_serif_family", _("Serif famil&y:")));
+                g.appendChild(lineedit("pdf_sans_family", _("Sans fami&ly:")));
+                g.appendChild(lineedit("pdf_mono_family", _("&Monospace family:")));
+                g.appendChild(choices("pdf_standard_font", _("S&tandard font:"), ui_data.font_types));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_default_font_size", _("Default font si&ze:")].concat([ρσ_desugar_kwargs({unit: "px"})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_mono_font_size", _("Default font si&ze:")].concat([ρσ_desugar_kwargs({unit: "px"})])));
+                g.appendChild(checkbox("pdf_use_document_margins", _("Use page margins from the &document being converted")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_left", indent + _("Left page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_top", indent + _("Top page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_right", indent + _("Right page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_bottom", indent + _("Bottom page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
+                g.appendChild(lineedit("pdf_header_template", _("&Header template:")));
+                g.appendChild(lineedit("pdf_footer_template", _("&Footer template:")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var pml_output = ep((function() {
+            var ρσ_anonfunc = function pml_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(lineedit("pml_output_encoding", _("O&utput encoding:")));
+                g.appendChild(checkbox("inline_toc", _("&Inline TOC")));
+                g.appendChild(checkbox("full_image_depth", _("Do not &reduce image size and depth")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var rb_output = ep((function() {
+            var ρσ_anonfunc = function rb_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("inline_toc", _("&Inline TOC")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var txt_output = ep((function() {
+            var ρσ_anonfunc = function txt_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(lineedit("txt_output_encoding", _("O&utput encoding:")));
+                g.appendChild(choices("newline", _("&Line ending style:"), ui_data.newline_types));
+                g.appendChild(choices("txt_output_formatting", _("Forma&tting:"), ui_data.formatting_types));
+                g = E.div(E.div(_("Options for plain text output:")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group", style: "margin-left: 1rem; margin-top: 1ex"})]));
+                container.appendChild(g);
+                g = g.lastChild;
+                g.appendChild(checkbox("inline_toc", _("&Inline TOC")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["max_line_length", _("&Maximum line length:")].concat([ρσ_desugar_kwargs({max: 1e3})])));
+                g.appendChild(checkbox("force_max_line_length", _("Force maximum line &length")));
+                g = E.div(E.div(_("Options for Markdown and TexTile output:")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group", style: "margin-left: 1rem; margin-top: 1ex"})]));
+                container.appendChild(g);
+                g = g.lastChild;
+                g.appendChild(checkbox("keep_links", _("Do not remove links (<a> tags) before processing")));
+                g.appendChild(checkbox("keep_image_references", _("Do not remove image &references before processing")));
+                g.appendChild(checkbox("keep_color", _("Keep text &color, when possible")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var txtz_output = ep((function() {
+            var ρσ_anonfunc = function txtz_output(container) {
+                return txt_output(container);
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var htmlz_output = ep((function() {
+            var ρσ_anonfunc = function htmlz_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(choices("htmlz_css_type", _("How to handle &CSS"), ui_data.css_choices));
+                g.appendChild(choices("htmlz_class_style", _("How to handle &CSS"), ui_data.sheet_choices));
+                g.appendChild(checkbox("htmlz_title_filename", _("Use book title as the filename for the HTML file")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var snb_output = ep((function() {
+            var ρσ_anonfunc = function snb_output(container) {
+                var g;
+                g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-group"})]);
+                container.appendChild(g);
+                g.appendChild(checkbox("snb_insert_empty_line", _("Insert &empty line between paragraphs")));
+                g.appendChild(checkbox("snb_dont_indent_first_line", _("Don't indent the &first line for each paragraph")));
+                g.appendChild(checkbox("snb_hide_chapter_name", _("Hide &chapter name")));
+                g.appendChild(checkbox("snb_full_screen", _("Optimize for full-&screen view ")));
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["container"]}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        function restore_defaults() {
+            var setting;
+            var ρσ_Iter13 = ρσ_Iterable(registry);
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                setting = ρσ_Iter13[ρσ_Index13];
+                set(setting, get_option_default_value(setting));
+            }
+        };
+
+        function create_option_group(group_name, ui_data_, profiles_, container, get_option_value_, get_option_default_value_, is_option_disabled_, get_option_help_, on_close) {
+            var ρσ_unpack;
+            ρσ_unpack = [get_option_value_, get_option_default_value_, is_option_disabled_, 
+            get_option_help_];
+            get_option_value = ρσ_unpack[0];
+            get_option_default_value = ρσ_unpack[1];
+            is_option_disabled = ρσ_unpack[2];
+            get_option_help = ρσ_unpack[3];
+            ρσ_unpack = [profiles_, ui_data_];
+            profiles = ρσ_unpack[0];
+            ui_data = ρσ_unpack[1];
+            registry = Object.create(null);
+            listeners = Object.create(null);
+            container_id = ensure_id(container);
+            container.classList.add(CLASS_NAME);
+            entry_points[(typeof group_name === "number" && group_name < 0) ? entry_points.length + group_name : group_name](container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Done")].concat([ρσ_desugar_kwargs({action: on_close})])), "  ", ρσ_interpolate_kwargs.call(this, create_button, [_("Restore defaults")].concat([ρσ_desugar_kwargs({action: restore_defaults})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 2ex; padding-top: 2ex; border-top: solid 1px currentColor"})])));
+        };
+        if (!create_option_group.__argnames__) Object.defineProperties(create_option_group, {
+            __argnames__ : {value: ["group_name", "ui_data_", "profiles_", "container", "get_option_value_", "get_option_default_value_", "is_option_disabled_", "get_option_help_", "on_close"]}
+        });
+
+        function commit_changes(set_option_value) {
+            var name;
+            var ρσ_Iter14 = ρσ_Iterable(registry);
+            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                name = ρσ_Iter14[ρσ_Index14];
+                set_option_value(name, get(name));
+            }
+        };
+        if (!commit_changes.__argnames__) Object.defineProperties(commit_changes, {
+            __argnames__ : {value: ["set_option_value"]}
+        });
+
+        ρσ_modules["book_list.conversion_widgets"].CLASS_NAME = CLASS_NAME;
+        ρσ_modules["book_list.conversion_widgets"].indent = indent;
+        ρσ_modules["book_list.conversion_widgets"].container_id = container_id;
+        ρσ_modules["book_list.conversion_widgets"].get_option_value = get_option_value;
+        ρσ_modules["book_list.conversion_widgets"].get_option_default_value = get_option_default_value;
+        ρσ_modules["book_list.conversion_widgets"].is_option_disabled = is_option_disabled;
+        ρσ_modules["book_list.conversion_widgets"].get_option_help = get_option_help;
+        ρσ_modules["book_list.conversion_widgets"].profiles = profiles;
+        ρσ_modules["book_list.conversion_widgets"].ui_data = ui_data;
+        ρσ_modules["book_list.conversion_widgets"].entry_points = entry_points;
+        ρσ_modules["book_list.conversion_widgets"].registry = registry;
+        ρσ_modules["book_list.conversion_widgets"].listeners = listeners;
+        ρσ_modules["book_list.conversion_widgets"].ep = ep;
+        ρσ_modules["book_list.conversion_widgets"].add_listener = add_listener;
+        ρσ_modules["book_list.conversion_widgets"].on_change = on_change;
+        ρσ_modules["book_list.conversion_widgets"].sanitize_accelerator = sanitize_accelerator;
+        ρσ_modules["book_list.conversion_widgets"].subset_choice = subset_choice;
+        ρσ_modules["book_list.conversion_widgets"].create_simple_widget = create_simple_widget;
+        ρσ_modules["book_list.conversion_widgets"].checkbox = checkbox;
+        ρσ_modules["book_list.conversion_widgets"].lineedit = lineedit;
+        ρσ_modules["book_list.conversion_widgets"].float_spin = float_spin;
+        ρσ_modules["book_list.conversion_widgets"].int_spin = int_spin;
+        ρσ_modules["book_list.conversion_widgets"].choices = choices;
+        ρσ_modules["book_list.conversion_widgets"].textarea = textarea;
+        ρσ_modules["book_list.conversion_widgets"].container_for_option = container_for_option;
+        ρσ_modules["book_list.conversion_widgets"].get = get;
+        ρσ_modules["book_list.conversion_widgets"].set = set;
+        ρσ_modules["book_list.conversion_widgets"].set_disabled = set_disabled;
+        ρσ_modules["book_list.conversion_widgets"].look_and_feel = look_and_feel;
+        ρσ_modules["book_list.conversion_widgets"].heuristics = heuristics;
+        ρσ_modules["book_list.conversion_widgets"].page_setup = page_setup;
+        ρσ_modules["book_list.conversion_widgets"].structure_detection = structure_detection;
+        ρσ_modules["book_list.conversion_widgets"].toc = toc;
+        ρσ_modules["book_list.conversion_widgets"].search_and_replace = search_and_replace;
+        ρσ_modules["book_list.conversion_widgets"].comic_input = comic_input;
+        ρσ_modules["book_list.conversion_widgets"].fb2_input = fb2_input;
+        ρσ_modules["book_list.conversion_widgets"].pdf_input = pdf_input;
+        ρσ_modules["book_list.conversion_widgets"].rtf_input = rtf_input;
+        ρσ_modules["book_list.conversion_widgets"].docx_input = docx_input;
+        ρσ_modules["book_list.conversion_widgets"].txt_input = txt_input;
+        ρσ_modules["book_list.conversion_widgets"].epub_output = epub_output;
+        ρσ_modules["book_list.conversion_widgets"].docx_output = docx_output;
+        ρσ_modules["book_list.conversion_widgets"].fb2_output = fb2_output;
+        ρσ_modules["book_list.conversion_widgets"].lrf_output = lrf_output;
+        ρσ_modules["book_list.conversion_widgets"].mobi_output = mobi_output;
+        ρσ_modules["book_list.conversion_widgets"].azw3_output = azw3_output;
+        ρσ_modules["book_list.conversion_widgets"].pdb_output = pdb_output;
+        ρσ_modules["book_list.conversion_widgets"].pdf_output = pdf_output;
+        ρσ_modules["book_list.conversion_widgets"].pml_output = pml_output;
+        ρσ_modules["book_list.conversion_widgets"].rb_output = rb_output;
+        ρσ_modules["book_list.conversion_widgets"].txt_output = txt_output;
+        ρσ_modules["book_list.conversion_widgets"].txtz_output = txtz_output;
+        ρσ_modules["book_list.conversion_widgets"].htmlz_output = htmlz_output;
+        ρσ_modules["book_list.conversion_widgets"].snb_output = snb_output;
+        ρσ_modules["book_list.conversion_widgets"].restore_defaults = restore_defaults;
+        ρσ_modules["book_list.conversion_widgets"].create_option_group = create_option_group;
+        ρσ_modules["book_list.conversion_widgets"].commit_changes = commit_changes;
+    })();
+
+    (function(){
+        var __name__ = "book_list.convert_book";
+        var CLASS_NAME, current_state, overall_container_id, initializers, conversion_data, conversion_data_load_status;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var ajax = ρσ_modules.ajax.ajax;
+        var ajax_send = ρσ_modules.ajax.ajax_send;
+
+        var report_load_failure = ρσ_modules["book_list.book_details"].report_load_failure;
+
+        var create_option_group = ρσ_modules["book_list.conversion_widgets"].create_option_group;
+        var entry_points = ρσ_modules["book_list.conversion_widgets"].entry_points;
+        var commit_changes = ρσ_modules["book_list.conversion_widgets"].commit_changes;
+
+        var download_url = ρσ_modules["book_list.library_data"].download_url;
+        var load_status = ρσ_modules["book_list.library_data"].load_status;
+        var url_books_query = ρσ_modules["book_list.library_data"].url_books_query;
+
+        var back = ρσ_modules["book_list.router"].back;
+        var open_book = ρσ_modules["book_list.router"].open_book;
+        var report_a_load_failure = ρσ_modules["book_list.router"].report_a_load_failure;
+
+        var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
+        var set_title = ρσ_modules["book_list.top_bar"].set_title;
+
+        var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var clear = ρσ_modules.dom.clear;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var conditional_timeout = ρσ_modules.utils.conditional_timeout;
+        var human_readable = ρσ_modules.utils.human_readable;
+        var parse_url_params = ρσ_modules.utils.parse_url_params;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        CLASS_NAME = "convert-book-panel";
+        current_state = "initializing";
+        overall_container_id = null;
+        initializers = Object.create(null);
+        add_extra_css(function () {
+            var sel, style;
+            sel = "." + CLASS_NAME + " ";
+            style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding: "1ex 1rem"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "h3"].concat([ρσ_desugar_kwargs({margin_bottom: "1ex"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".group-names"].concat([ρσ_desugar_kwargs({list_style: "none", display: "flex", flex_wrap: "wrap"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".group-names li"].concat([ρσ_desugar_kwargs({padding: "1ex 1rem", font_weight: "bold", white_space: "nowrap"})]));
+            return style;
+        });
+        conversion_data = null;
+        conversion_data_load_status = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["loading"] = true;
+            ρσ_d["ok"] = false;
+            ρσ_d["error_html"] = null;
+            ρσ_d["current_fetch"] = null;
+            return ρσ_d;
+        }).call(this);
+        function container_for_current_state() {
+            var ans;
+            ans = document.getElementById(overall_container_id);
+            if (ans) {
+                return ans.querySelector("[data-state=\"" + ρσ_str.format("{}", current_state) + "\"]");
+            }
+        };
+
+        function create_converted_markup() {
+            function init(container) {
+                var fmt, book_id;
+                clear(container);
+                container.appendChild(E.h3("Conversion successful!"));
+                fmt = conversion_data.fmt.toUpperCase();
+                book_id = int(conversion_data.book_id);
+                function read_book() {
+                    open_book(book_id, fmt);
+                };
+
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Read {}").format(fmt), "book", read_book), " ", ρσ_interpolate_kwargs.call(this, create_button, [_("Download {}").format(fmt), "cloud-download", download_url(book_id, fmt), _("File size: {}").format(human_readable(conversion_data.size))].concat([ρσ_desugar_kwargs({download_filename: "" + ρσ_str.format("{}", conversion_data.title) + "." + ρσ_str.format("{}", fmt.toLowerCase()) + ""})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+            };
+            if (!init.__argnames__) Object.defineProperties(init, {
+                __argnames__ : {value: ["container"]}
+            });
+
+            return [E.div(), init];
+        };
+
+        function report_conversion_ajax_failure(xhr) {
+            current_state = "configuring";
+            apply_state_to_markup();
+            error_dialog(_("Failed to convert"), _("Could not convert {}. Click \"Show details\" for more information").format(conversion_data.title), xhr.error_html);
+        };
+        if (!report_conversion_ajax_failure.__argnames__) Object.defineProperties(report_conversion_ajax_failure, {
+            __argnames__ : {value: ["xhr"]}
+        });
+
+        function show_failure(response) {
+            var c, log;
+            current_state = "failed";
+            apply_state_to_markup();
+            c = container_for_current_state();
+            clear(c);
+            c.appendChild(E.h3(_("Conversion failed!")));
+            c.appendChild(E.div(_("Error details below...")));
+            c.appendChild(E.div(" "));
+            c.appendChild(E.div());
+            c = c.lastChild;
+            if (response.was_aborted) {
+                c.textContent = _("Conversion of {} was taking too long, and has been aborted").format(conversion_data.title);
+            } else {
+                log = "";
+                if (response.traceback) {
+                    log += response.traceback;
+                }
+                if (response.log) {
+                    log += "\n\n" + _("Conversion log") + "\n\n";
+                    log += response.log;
+                }
+                c.appendChild(E.pre(log));
+            }
+        };
+        if (!show_failure.__argnames__) Object.defineProperties(show_failure, {
+            __argnames__ : {value: ["response"]}
+        });
+
+        function on_conversion_status(end_type, xhr, ev) {
+            var response, c;
+            if (current_state !== "converting" || !container_for_current_state()) {
+                return;
+            }
+            if (end_type === "load") {
+                response = JSON.parse(xhr.responseText);
+                if (response.running) {
+                    c = container_for_current_state();
+                    c.querySelector("progress").value = response.percent;
+                    if (response.msg) {
+                        c.querySelector(".progress-msg").textContent = response.msg;
+                    }
+                    check_for_conversion_status();
+                } else {
+                    if (response.ok) {
+                        conversion_data.fmt = response.fmt;
+                        conversion_data.size = response.size;
+                        current_state = "converted";
+                        apply_state_to_markup();
+                    } else {
+                        show_failure(response);
+                    }
+                }
+            } else {
+                report_conversion_ajax_failure(xhr);
+            }
+        };
+        if (!on_conversion_status.__argnames__) Object.defineProperties(on_conversion_status, {
+            __argnames__ : {value: ["end_type", "xhr", "ev"]}
+        });
+
+        function check_for_conversion_status(abort_job) {
+            var query, data;
+            query = url_books_query();
+            if (abort_job) {
+                query.abort_job = "1";
+            }
+            data = Object.create(null);
+            ρσ_interpolate_kwargs.call(this, ajax_send, ["/conversion/status/" + ρσ_str.format("{}", conversion_data.job_id) + "", data, on_conversion_status].concat([ρσ_desugar_kwargs({query: query})]));
+        };
+        if (!check_for_conversion_status.__argnames__) Object.defineProperties(check_for_conversion_status, {
+            __argnames__ : {value: ["abort_job"]}
+        });
+
+        function on_conversion_started(end_type, xhr, ev) {
+            if (end_type === "load") {
+                conversion_data.job_id = JSON.parse(xhr.responseText);
+                check_for_conversion_status();
+            } else {
+                report_conversion_ajax_failure(xhr);
+            }
+        };
+        if (!on_conversion_started.__argnames__) Object.defineProperties(on_conversion_started, {
+            __argnames__ : {value: ["end_type", "xhr", "ev"]}
+        });
+
+        function get_conversion_options(container) {
+            return conversion_data.conversion_options.options;
+        };
+        if (!get_conversion_options.__argnames__) Object.defineProperties(get_conversion_options, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        function create_converting_markup() {
+            var ans;
+            ans = E.div(ρσ_interpolate_kwargs.call(E, E.div, [_("Converting, please wait…"), E.div(E.progress()), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({class_: "progress-msg"})])), E.div(" "), E.div(_("Conversion progress can sometimes stall for a few minutes when converting complex books, that is normal.")), E.div(" "), E.div(_("Click the close button in the top left corner to abort the conversion."))].concat([ρσ_desugar_kwargs({style: "text-align: center; margin: auto"})])));
+            function init(container) {
+                container.querySelector("progress").removeAttribute("value");
+            };
+            if (!init.__argnames__) Object.defineProperties(init, {
+                __argnames__ : {value: ["container"]}
+            });
+
+            return [ans, init];
+        };
+
+        function current_input_format() {
+            return document.getElementById(overall_container_id).querySelector("select[name=\"input_formats\"]").value.toUpperCase();
+        };
+
+        function current_output_format() {
+            return document.getElementById(overall_container_id).querySelector("select[name=\"output_formats\"]").value.toUpperCase();
+        };
+
+        function start_conversion() {
+            var container, data, query;
+            container = document.getElementById(overall_container_id);
+            data = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["input_fmt"] = current_input_format();
+                ρσ_d["output_fmt"] = current_output_format();
+                ρσ_d["options"] = get_conversion_options(container);
+                ρσ_d["book_id"] = conversion_data.book_id;
+                return ρσ_d;
+            }).call(this);
+            query = url_books_query();
+            ρσ_interpolate_kwargs.call(this, ajax_send, ["/conversion/start/" + ρσ_str.format("{}", conversion_data.book_id) + "", data, on_conversion_started].concat([ρσ_desugar_kwargs({query: query})]));
+            current_state = "converting";
+            apply_state_to_markup();
+        };
+
+        function create_configuring_markup() {
+            var ignore_changes, ans, tcell, start_conv, GROUP_TITLES;
+            ignore_changes = false;
+            ans = E.div();
+            function on_format_change() {
+                var input_fmt, output_fmt, q;
+                if (ignore_changes) {
+                    return;
+                }
+                input_fmt = container_for_current_state().querySelector("select[name=\"input_formats\"]").value;
+                output_fmt = container_for_current_state().querySelector("select[name=\"output_formats\"]").value;
+                current_state = "initializing";
+                conditional_timeout(overall_container_id, 5, check_for_data_loaded);
+                q = parse_url_params();
+                fetch_conversion_data(q.book_id, input_fmt, output_fmt);
+                apply_state_to_markup();
+            };
+
+            function generate_choice(name) {
+                var ans;
+                ans = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: name})]);
+                ans.addEventListener("change", on_format_change);
+                return ans;
+            };
+            if (!generate_choice.__argnames__) Object.defineProperties(generate_choice, {
+                __argnames__ : {value: ["name"]}
+            });
+
+            tcell = "display: table-cell; padding-top: 1em; padding-left: 1em";
+            start_conv = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.label, [ρσ_interpolate_kwargs.call(E, E.div, [_("Input format:")].concat([ρσ_desugar_kwargs({style: tcell})])), ρσ_interpolate_kwargs.call(E, E.div, [generate_choice("input_formats")].concat([ρσ_desugar_kwargs({style: tcell})]))].concat([ρσ_desugar_kwargs({style: "display: table-row"})])), ρσ_interpolate_kwargs.call(E, E.label, [ρσ_interpolate_kwargs.call(E, E.div, [_("Output format:")].concat([ρσ_desugar_kwargs({style: tcell})])), ρσ_interpolate_kwargs.call(E, E.div, [generate_choice("output_formats")].concat([ρσ_desugar_kwargs({style: tcell})]))].concat([ρσ_desugar_kwargs({style: "display: table-row"})]))), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Start conversion")].concat([ρσ_desugar_kwargs({action: start_conversion})]))].concat([ρσ_desugar_kwargs({style: "margin: 1em"})]))].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px currentColor; margin-bottom: 1em"})]));
+            ans.appendChild(start_conv);
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("To change the settings for this conversion, click on one of the option groups below:")].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1em"})])));
+            function show_group(ev) {
+                var li, group_name, group_title;
+                li = ev.currentTarget.closest("li");
+                group_name = li.dataset.group;
+                group_title = li.firstChild.textContent;
+                conversion_data.configuring_group = group_name;
+                conversion_data.configuring_group_title = group_title;
+                current_state = "configure-group";
+                apply_state_to_markup();
+            };
+            if (!show_group.__argnames__) Object.defineProperties(show_group, {
+                __argnames__ : {value: ["ev"]}
+            });
+
+            function is_group_configurable(name) {
+                if (entry_points[(typeof name === "number" && name < 0) ? entry_points.length + name : name]) {
+                    return true;
+                }
+                if (name === "input_fmt") {
+                    name = conversion_data.conversion_options.input_plugin_name;
+                } else if (name === "output_fmt") {
+                    name = conversion_data.conversion_options.output_plugin_name;
+                }
+                return bool(entry_points[(typeof name === "number" && name < 0) ? entry_points.length + name : name]);
+            };
+            if (!is_group_configurable.__argnames__) Object.defineProperties(is_group_configurable, {
+                __argnames__ : {value: ["name"]}
+            });
+
+            function category(name) {
+                var ans;
+                ans = E.li(ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({class_: "simple-link", href: "javascript: void(0)"})]));
+                ans.dataset.group = name;
+                ans.firstChild.addEventListener("click", show_group);
+                return ans;
+            };
+            if (!category.__argnames__) Object.defineProperties(category, {
+                __argnames__ : {value: ["name"]}
+            });
+
+            GROUP_TITLES = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["heuristics"] = _("Heuristic processing");
+                ρσ_d["look_and_feel"] = _("Look & feel");
+                ρσ_d["page_setup"] = _("Page setup");
+                ρσ_d["search_and_replace"] = _("Search & replace");
+                ρσ_d["structure_detection"] = _("Structure detection");
+                ρσ_d["toc"] = _("Table of Contents");
+                return ρσ_d;
+            }).call(this);
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.ul, [category("input_fmt"), category("look_and_feel"), category("page_setup"), category("search_and_replace"), category("structure_detection"), category("toc"), category("heuristics"), category("output_fmt")].concat([ρσ_desugar_kwargs({class_: "group-names"})])));
+            function initialize(container) {
+                var sel, formats, fmt, name, group_name, title, li;
+                ignore_changes = true;
+                var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "input_formats", "output_formats" ]));
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    name = ρσ_Iter0[ρσ_Index0];
+                    sel = container.querySelector("select[name=\"" + ρσ_str.format("{}", name) + "\"]");
+                    clear(sel);
+                    formats = conversion_data[(typeof name === "number" && name < 0) ? conversion_data.length + name : name];
+                    var ρσ_Iter1 = ρσ_Iterable(formats);
+                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                        fmt = ρσ_Iter1[ρσ_Index1];
+                        sel.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [fmt].concat([ρσ_desugar_kwargs({value: fmt})])));
+                    }
+                }
+                ignore_changes = false;
+                var ρσ_Iter2 = ρσ_Iterable(container.querySelectorAll(".group-names > li"));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    li = ρσ_Iter2[ρσ_Index2];
+                    group_name = li.dataset.group;
+                    li.style.display = (is_group_configurable(group_name)) ? "block" : "none";
+                    if (GROUP_TITLES[(typeof group_name === "number" && group_name < 0) ? GROUP_TITLES.length + group_name : group_name]) {
+                        title = GROUP_TITLES[(typeof group_name === "number" && group_name < 0) ? GROUP_TITLES.length + group_name : group_name];
+                    } else if (group_name === "input_fmt") {
+                        title = _("{} input").format(current_input_format(), title);
+                    } else {
+                        title = _("{} output").format(current_output_format(), title);
+                    }
+                    li.firstChild.textContent = title;
+                }
+            };
+            if (!initialize.__argnames__) Object.defineProperties(initialize, {
+                __argnames__ : {value: ["container"]}
+            });
+
+            return [ans, initialize];
+        };
+
+        function get_option_value(name, defval) {
+            var ans;
+            ans = (ρσ_expr_temp = conversion_data.conversion_options.options)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            if (ans === undefined) {
+                ans = defval;
+            }
+            return ans;
+        };
+        if (!get_option_value.__argnames__) Object.defineProperties(get_option_value, {
+            __argnames__ : {value: ["name", "defval"]}
+        });
+
+        function get_option_default_value(name, defval) {
+            var ans;
+            ans = (ρσ_expr_temp = conversion_data.conversion_options.defaults)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            if (ans === undefined) {
+                ans = defval;
+            }
+            return ans;
+        };
+        if (!get_option_default_value.__argnames__) Object.defineProperties(get_option_default_value, {
+            __argnames__ : {value: ["name", "defval"]}
+        });
+
+        function set_option_value(name, val) {
+            (ρσ_expr_temp = conversion_data.conversion_options.options)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = val;
+        };
+        if (!set_option_value.__argnames__) Object.defineProperties(set_option_value, {
+            __argnames__ : {value: ["name", "val"]}
+        });
+
+        function is_option_disabled(name) {
+            return (ρσ_expr_temp = conversion_data.disabled_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] === true;
+        };
+        if (!is_option_disabled.__argnames__) Object.defineProperties(is_option_disabled, {
+            __argnames__ : {value: ["name"]}
+        });
+
+        function get_option_help(name) {
+            return (ρσ_expr_temp = conversion_data.conversion_options.help)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] || "";
+        };
+        if (!get_option_help.__argnames__) Object.defineProperties(get_option_help, {
+            __argnames__ : {value: ["name"]}
+        });
+
+        function create_configure_group_markup() {
+            var ans;
+            ans = E.div();
+            function init(container) {
+                var panel, g, ui_data;
+                clear(container);
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Configuring {} settings").format(conversion_data.configuring_group_title)].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})])));
+                panel = E.div();
+                container.appendChild(panel);
+                g = conversion_data.configuring_group;
+                ui_data = null;
+                if (g === "input_fmt") {
+                    g = conversion_data.conversion_options.input_plugin_name;
+                    ui_data = conversion_data.conversion_options.input_ui_data;
+                } else if (g === "output_fmt") {
+                    g = conversion_data.conversion_options.output_plugin_name;
+                    ui_data = conversion_data.conversion_options.output_ui_data;
+                }
+                create_option_group(g, ui_data, conversion_data.profiles, container, get_option_value, get_option_default_value, is_option_disabled, get_option_help, on_close);
+            };
+            if (!init.__argnames__) Object.defineProperties(init, {
+                __argnames__ : {value: ["container"]}
+            });
+
+            return [ans, init];
+        };
+
+        function on_data_loaded(end_type, xhr, ev) {
+            var name;
+            conversion_data_load_status.current_fetch = null;
+            conversion_data_load_status.loading = false;
+            conversion_data_load_status.ok = true;
+            conversion_data_load_status.error_html = null;
+            function bad_load(msg) {
+                conversion_data_load_status.ok = false;
+                conversion_data_load_status.error_html = msg || xhr.error_html;
+            };
+            if (!bad_load.__argnames__) Object.defineProperties(bad_load, {
+                __argnames__ : {value: ["msg"]}
+            });
+
+            if (end_type === "load") {
+                conversion_data = JSON.parse(xhr.responseText);
+                conversion_data.disabled_map = Object.create(null);
+                var ρσ_Iter3 = ρσ_Iterable(conversion_data.conversion_options.disabled);
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    name = ρσ_Iter3[ρσ_Index3];
+                    (ρσ_expr_temp = conversion_data.disabled_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = true;
+                }
+            } else if (end_type === "abort") {
+            } else {
+                bad_load();
+            }
+        };
+        if (!on_data_loaded.__argnames__) Object.defineProperties(on_data_loaded, {
+            __argnames__ : {value: ["end_type", "xhr", "ev"]}
+        });
+
+        function fetch_conversion_data(book_id, input_fmt, output_fmt) {
+            var query;
+            if (conversion_data_load_status.current_fetch) {
+                conversion_data_load_status.current_fetch.abort();
+            }
+            conversion_data = null;
+            query = url_books_query();
+            if (input_fmt) {
+                query.input_fmt = input_fmt;
+            }
+            if (output_fmt) {
+                query.output_fmt = output_fmt;
+            }
+            conversion_data_load_status.loading = true;
+            conversion_data_load_status.ok = false;
+            conversion_data_load_status.error_html = null;
+            conversion_data_load_status.current_fetch = ρσ_interpolate_kwargs.call(this, ajax, ["conversion/book-data/" + ρσ_str.format("{}", book_id) + "", on_data_loaded].concat([ρσ_desugar_kwargs({query: query})]));
+            conversion_data_load_status.current_fetch.send();
+        };
+        if (!fetch_conversion_data.__argnames__) Object.defineProperties(fetch_conversion_data, {
+            __argnames__ : {value: ["book_id", "input_fmt", "output_fmt"]}
+        });
+
+        function on_close(container_id) {
+            if (current_state === "configure-group") {
+                commit_changes(set_option_value);
+                current_state = "configuring";
+                apply_state_to_markup();
+                return;
+            }
+            if (current_state === "converting") {
+                check_for_conversion_status(true);
+            }
+            current_state = "initializing";
+            apply_state_to_markup();
+            back();
+        };
+        if (!on_close.__argnames__) Object.defineProperties(on_close, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
+        function check_for_data_loaded() {
+            var container;
+            container = this;
+            if (load_status.loading || conversion_data_load_status.loading) {
+                conditional_timeout(container.id, 5, check_for_data_loaded);
+                return;
+            }
+            container = container.lastChild;
+            if (!load_status.ok) {
+                current_state = "load-failure";
+                report_load_failure(container_for_current_state());
+            } else if (!conversion_data_load_status.ok) {
+                current_state = "load-failure";
+                report_a_load_failure(container_for_current_state(), _("Failed to load conversion data from calibre, with error:"), conversion_data_load_status.error_html);
+            } else {
+                set_title(container.parentNode, _("Convert: {}").format(conversion_data.title));
+                current_state = "configuring";
+            }
+            apply_state_to_markup();
+        };
+
+        function create_markup(container) {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("Loading conversion data, please wait..."))].concat([ρσ_desugar_kwargs({data_state: "initializing"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_state: "load-failure"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_state: "failed"})]));
+            function cm(name, func) {
+                var ρσ_unpack, ccm, init;
+                ρσ_unpack = func();
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                ccm = ρσ_unpack[0];
+                init = ρσ_unpack[1];
+                ccm.dataset.state = name;
+                container.appendChild(ccm);
+                initializers[(typeof name === "number" && name < 0) ? initializers.length + name : name] = init;
+            };
+            if (!cm.__argnames__) Object.defineProperties(cm, {
+                __argnames__ : {value: ["name", "func"]}
+            });
+
+            cm("configuring", create_configuring_markup);
+            cm("converting", create_converting_markup);
+            cm("converted", create_converted_markup);
+            cm("configure-group", create_configure_group_markup);
+        };
+        if (!create_markup.__argnames__) Object.defineProperties(create_markup, {
+            __argnames__ : {value: ["container"]}
+        });
+
+        function apply_state_to_markup() {
+            var container, node;
+            container = document.getElementById(overall_container_id);
+            if (container) {
+                var ρσ_Iter4 = ρσ_Iterable(container.lastChild.childNodes);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    node = ρσ_Iter4[ρσ_Index4];
+                    if (node.dataset.state === current_state) {
+                        node.style.display = "block";
+                        if (initializers[(typeof current_state === "number" && current_state < 0) ? initializers.length + current_state : current_state]) {
+                            initializers[(typeof current_state === "number" && current_state < 0) ? initializers.length + current_state : current_state](node);
+                        }
+                    } else {
+                        node.style.display = "none";
+                    }
+                }
+            }
+        };
+
+        function init(container_id) {
+            var container, q;
+            container = document.getElementById(container_id);
+            overall_container_id = container_id;
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Convert book"), action: on_close.bind(null, container_id), icon: "close"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: CLASS_NAME})]));
+            create_markup(container.lastChild);
+            apply_state_to_markup();
+            conditional_timeout(container_id, 5, check_for_data_loaded);
+            q = parse_url_params();
+            fetch_conversion_data(q.book_id);
+        };
+        if (!init.__argnames__) Object.defineProperties(init, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
+        set_panel_handler("convert_book", init);
+        ρσ_modules["book_list.convert_book"].CLASS_NAME = CLASS_NAME;
+        ρσ_modules["book_list.convert_book"].current_state = current_state;
+        ρσ_modules["book_list.convert_book"].overall_container_id = overall_container_id;
+        ρσ_modules["book_list.convert_book"].initializers = initializers;
+        ρσ_modules["book_list.convert_book"].conversion_data = conversion_data;
+        ρσ_modules["book_list.convert_book"].conversion_data_load_status = conversion_data_load_status;
+        ρσ_modules["book_list.convert_book"].container_for_current_state = container_for_current_state;
+        ρσ_modules["book_list.convert_book"].create_converted_markup = create_converted_markup;
+        ρσ_modules["book_list.convert_book"].report_conversion_ajax_failure = report_conversion_ajax_failure;
+        ρσ_modules["book_list.convert_book"].show_failure = show_failure;
+        ρσ_modules["book_list.convert_book"].on_conversion_status = on_conversion_status;
+        ρσ_modules["book_list.convert_book"].check_for_conversion_status = check_for_conversion_status;
+        ρσ_modules["book_list.convert_book"].on_conversion_started = on_conversion_started;
+        ρσ_modules["book_list.convert_book"].get_conversion_options = get_conversion_options;
+        ρσ_modules["book_list.convert_book"].create_converting_markup = create_converting_markup;
+        ρσ_modules["book_list.convert_book"].current_input_format = current_input_format;
+        ρσ_modules["book_list.convert_book"].current_output_format = current_output_format;
+        ρσ_modules["book_list.convert_book"].start_conversion = start_conversion;
+        ρσ_modules["book_list.convert_book"].create_configuring_markup = create_configuring_markup;
+        ρσ_modules["book_list.convert_book"].get_option_value = get_option_value;
+        ρσ_modules["book_list.convert_book"].get_option_default_value = get_option_default_value;
+        ρσ_modules["book_list.convert_book"].set_option_value = set_option_value;
+        ρσ_modules["book_list.convert_book"].is_option_disabled = is_option_disabled;
+        ρσ_modules["book_list.convert_book"].get_option_help = get_option_help;
+        ρσ_modules["book_list.convert_book"].create_configure_group_markup = create_configure_group_markup;
+        ρσ_modules["book_list.convert_book"].on_data_loaded = on_data_loaded;
+        ρσ_modules["book_list.convert_book"].fetch_conversion_data = fetch_conversion_data;
+        ρσ_modules["book_list.convert_book"].on_close = on_close;
+        ρσ_modules["book_list.convert_book"].check_for_data_loaded = check_for_data_loaded;
+        ρσ_modules["book_list.convert_book"].create_markup = create_markup;
+        ρσ_modules["book_list.convert_book"].apply_state_to_markup = apply_state_to_markup;
+        ρσ_modules["book_list.convert_book"].init = init;
+    })();
+
+    (function(){
         var __name__ = "book_list.main";
         var traceback = ρσ_modules.traceback;
 
@@ -30440,6 +32469,9 @@ return this.__repr__();
 
         var book_list = ρσ_modules.book_list;
         book_list.edit_metadata = ρσ_modules["book_list.edit_metadata"];
+
+        var book_list = ρσ_modules.book_list;
+        book_list.convert_book = ρσ_modules["book_list.convert_book"];
 
         function remove_initial_progress_bar() {
             var p;

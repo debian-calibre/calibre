@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "junho 15, 2018" "3.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "julho 06, 2018" "3.27.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -196,7 +196,7 @@ Transliterar caracteres Unicode para uma representação em ASCII. Utilize com c
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-O tamanho do tipo de letra padrão em pts. Todos os tamanhos dos tipos de letra no livro produzido vão ser alterados proporcionalmente baseados neste tamanho. Ao escolher um tamanho maior os tipos de letra no ficheiro de destino serão maiores e vice versa. Por predefinição o tamanho do tipo de letra base é escolhido baseado no perfil de destino que escolheu.
+The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +221,7 @@ Incorporar a família de fontes especificada no livro. Isto especifica o tipo de
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Por padrão, o Calibre vai usar a forma mais curta para várias propriedades do CSS como margem, espaçamento, borda, etc. Esta opção fará com que use a forma completamente expandida. Note que o CSS é sempre expandido ao gerar ficheiros EPUB com o perfil de saída definido para um dos perfis do Nook, porque o Nook não lida com CSS abreviado.
+Por padrão, o Calibre vai usar a forma mais curta para várias propriedades do CSS como margem, espaçamento, borda, etc. Esta opção fará com que use a forma completamente expandida. Note que o CSS é sempre expandido ao gerar ficheiros EPUB com o perfil de saída definido para um dos perfis do Nook, porque o Nook não permite CSS abreviado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -455,7 +455,7 @@ Remover a primeira imagem do livro especificado. Útil se o documento especifica
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Uma expressão XPath para detectar a localização no documento a partir do qual se deve começar a leitura. Alguns programas de leitura de e\-books (como por exmplo o Kindle) usam esta localização como posição para abertura do livro. Veja o tutorial do XPath no Manual do Utilizador do calibre para mais ajuda no uso desta função.
+Uma expressão XPath para detectar a localização no documento a partir do qual se deve começar a leitura. Alguns programas de leitura de ebooks (como por exemplo o Kindle) usam esta localização como posição para abertura do livro. Veja o tutorial do XPath no Manual do Utilizador do calibre para mais ajuda no uso desta função.
 .UNINDENT
 .SH ÍNDICE
 .sp

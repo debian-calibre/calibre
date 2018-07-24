@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "junho 15, 2018" "3.26.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "julho 06, 2018" "3.27.1" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -76,7 +76,7 @@ Número de erros de autenticação até ser banido.     The number of login fail
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Banir endereços IP que apresentem diversos erros de autenticação.   Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Banir endereços IP que apresentem erros de autenticação continuados.        Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ Socket pre\-allocation, for example, with systemd socket activation. Por predefi
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Autenticação por palavra\-passe para aceder ao servidor.     Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Por predefinição, a opção esta desativada.
+Autenticação por senha para aceder ao servidor.     Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. Por predefinição, a opção esta desativada.
 .UNINDENT
 .INDENT 0.0
 .TP

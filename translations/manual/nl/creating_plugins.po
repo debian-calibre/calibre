@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 12:57+0530\n"
-"PO-Revision-Date: 2018-04-24 18:15+0000\n"
+"POT-Creation-Date: 2018-06-15 12:28+0530\n"
+"PO-Revision-Date: 2018-06-23 20:07+0000\n"
 "Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,10 @@ msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
 msgstr "Hier laten we zien hoe u uw eigen plugins kunt maken om nieuwe functies toe te voegen aan calibre."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:13
+msgid "Contents"
+msgstr "Inhoud"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
@@ -264,7 +268,7 @@ msgstr "Hulpbronnen ophalen uit het ZIP-bestand voor de plug-in"
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr ""
+msgstr "Calibre plugin laadsysteem definieert een aantal ingebouwde functies waarmee u gemakkelijk bestanden kunt ophalen uit het plug-in ZIP bestand."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -280,7 +284,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr ""
+msgstr "Deze functie moet worden aangeroepen met een lijst met paden naar bestanden in het ZIP-bestand. Als u bijvoorbeeld het bestand icon.png wilt openen in de map afbeeldingen in het ZIP-bestand, gebruikt u: ``images/icon.png``. Gebruik altijd een schuine streep als pad scheider, zelfs op vensters. Wanneer u één enkele naam doorgeeft, retourneert de functie de onbewerkte bytes van dat bestand of geen als de naam niet is gevonden in het ZIP-bestand. Als u in meer dan één naam slaagt, levert dit een dictaat op dat de namen naar bytes toewijst. Als een naam niet wordt gevonden, is deze niet aanwezig in het geretourneerde dictaat."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"

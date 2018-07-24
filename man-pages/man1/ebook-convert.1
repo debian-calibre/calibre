@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "June 15, 2018" "3.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "July 06, 2018" "3.27.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -203,7 +203,7 @@ Transliterate unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, the base font size is chosen based on the output profile you chose.
+The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -898,7 +898,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-formatting\-type
-Formatting used within the document. * auto: Automatically decide which formatting processor to use. * plain: Do not process the document formatting. Everything is a paragraph and no styling is applied. * heuristic: Process using heuristics to determine formatting such as chapter headings and italic text. * textile: Processing using textile formatting. * markdown: Processing using markdown formatting. To learn more about markdown see \fI\%https://daringfireball.net/projects/markdown/\fP
+Formatting used within the document. * auto: Automatically decide which formatting processor to use * plain: No formatting * heuristic: Use heuristics to determine chapter headings, italics, etc. * textile: Use the TexTile markup language * markdown: Use the Markdown markup language To learn more about markdown see \fI\%https://daringfireball.net/projects/markdown/\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -913,7 +913,7 @@ Enable extensions to markdown syntax. Extensions are formatting that is not part
 .INDENT 0.0
 .TP
 .B \-\-paragraph\-type
-Paragraph structure. choices are [\fB\(aq\fPauto\fB\(aq\fP, \fB\(aq\fPblock\fB\(aq\fP, \fB\(aq\fPsingle\fB\(aq\fP, \fB\(aq\fPprint\fB\(aq\fP, \fB\(aq\fPunformatted\fB\(aq\fP, \fB\(aq\fPoff\fB\(aq\fP] * auto: Try to auto detect paragraph type. * block: Treat a blank line as a paragraph break. * single: Assume every line is a paragraph. * print:  Assume every line starting with 2+ spaces or a tab starts a paragraph. * unformatted: Most lines have hard line breaks, few/no blank lines or indents. Tries to determine structure and reformat the differentiate elements. * off: Don\fB\(aq\fPt modify the paragraph structure. This is useful when combined with Markdown or Textile formatting to ensure no formatting is lost.
+Paragraph structure to assume. The value of \fB"\fPoff\fB"\fP is useful for formatted documents such as Markdown or Textile. Choices are: * auto: Try to auto detect paragraph type * block: Treat a blank line as a paragraph break * single: Assume every line is a paragraph * print:  Assume every line starting with 2+ spaces or a tab starts a paragraph * unformatted: Most lines have hard line breaks, few/no blank lines or indents * off: Don\fB\(aq\fPt modify the paragraph structure
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1097,7 +1097,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-sectionize
-Specify the sectionization of elements. A value of \fB"\fPnothing\fB"\fP turns the book into a single section. A value of \fB"\fPfiles\fB"\fP turns each file into a separate section; use this if your device is having trouble. A value of \fB"\fPTable of Contents\fB"\fP turns the entries in the Table of Contents into titles and creates sections; if it fails, adjust the \fB"\fPStructure detection\fB"\fP and/or \fB"\fPTable of Contents\fB"\fP settings (turn on \fB"\fPForce use of auto\-generated Table of Contents\fB"\fP).
+Specify how sections are created:  * nothing: A single section  * files: Section per file  * toc: Section per entry in the ToC If ToC based generation fails, adjust the \fB"\fPStructure detection\fB"\fP and/or \fB"\fPTable of Contents\fB"\fP settings (turn on \fB"\fPForce use of auto\-generated Table of Contents\fB"\fP).
 .UNINDENT
 .SH HTML OUTPUT OPTIONS
 .INDENT 0.0
@@ -1129,12 +1129,12 @@ Template used for generation of the HTML index file instead of the default file
 .INDENT 0.0
 .TP
 .B \-\-htmlz\-class\-style
-How to handle the CSS when using css\-type = \fB\(aq\fPclass\fB\(aq\fP\&. Default is external. external: Use an external CSS file that is linked in the document. inline: Place the CSS in the head section of the document.
+How to handle the CSS when using css\-type = \fB\(aq\fPclass\fB\(aq\fP\&. Default is external. external: Use an external CSS file inline: Use a <style> tag in the HTML file
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-htmlz\-css\-type
-Specify the handling of CSS. Default is class. class: Use CSS classes and have elements reference them. inline: Write the CSS as an inline style attribute. tag: Turn as many CSS styles as possible into HTML tags.
+Specify the handling of CSS. Default is class. class: Use CSS classes inline: Use the style attribute tag: Use HTML tags wherever possible
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1561,7 +1561,7 @@ Specify the character encoding of the output document. The default is utf\-8.
 .INDENT 0.0
 .TP
 .B \-\-txt\-output\-formatting
-Formatting used within the document. * plain: Produce plain text. * markdown: Produce Markdown formatted text. * textile: Produce Textile formatted text.
+Formatting used within the document. * plain: Plain text * markdown: Markdown formatted text * textile: TexTile formatted text
 .UNINDENT
 .SH TXTZ OUTPUT OPTIONS
 .INDENT 0.0
@@ -1612,7 +1612,7 @@ Specify the character encoding of the output document. The default is utf\-8.
 .INDENT 0.0
 .TP
 .B \-\-txt\-output\-formatting
-Formatting used within the document. * plain: Produce plain text. * markdown: Produce Markdown formatted text. * textile: Produce Textile formatted text.
+Formatting used within the document. * plain: Plain text * markdown: Markdown formatted text * textile: TexTile formatted text
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

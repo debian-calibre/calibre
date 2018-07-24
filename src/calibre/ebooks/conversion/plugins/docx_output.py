@@ -17,6 +17,8 @@ class DOCXOutput(OutputFormatPlugin):
     name = 'DOCX Output'
     author = 'Kovid Goyal'
     file_type = 'docx'
+    commit_name = 'docx_output'
+    ui_data = {'page_sizes': PAGE_SIZES}
 
     options = {
         OptionRecommendation(name='docx_page_size', recommended_value='letter',
