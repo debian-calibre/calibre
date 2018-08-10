@@ -10121,10 +10121,10 @@ return this.__repr__();
             err = _("Failed to read the file {0} for the book {1} from the browser offline cache.").format(name, book.metadata.title);
             self.do_op(ρσ_list_decorate([ "files" ]), key, err, (function() {
                 var ρσ_anonfunc = function (result) {
-                    var err, fdata, mt;
+                    var bad, fdata, mt;
                     if (!result) {
-                        err += _(" This usually means the cache is close to full. Clear the browser cache from the browser settings.");
-                        self.show_error(_("Cannot read file from book"), err);
+                        bad = err + _(" This usually means the cache is close to full. Clear the browser cache from the browser settings.");
+                        self.show_error(_("Cannot read file from book"), bad);
                         return;
                     }
                     fdata = (ρσ_expr_temp = book.stored_files)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key];
@@ -11958,6 +11958,7 @@ return this.__repr__();
                 var ρσ_d = Object.create(null);
                 ρσ_d["foreground"] = "#ffffff";
                 ρσ_d["background"] = "#000000";
+                ρσ_d["link"] = "#4f81bd";
                 ρσ_d["name"] = _("Black");
                 return ρσ_d;
             }).call(this);
@@ -11972,6 +11973,7 @@ return this.__repr__();
                 var ρσ_d = Object.create(null);
                 ρσ_d["background"] = "#39322B";
                 ρσ_d["foreground"] = "#F6F3E9";
+                ρσ_d["link"] = "#4f81bd";
                 ρσ_d["name"] = _("Sepia dark");
                 return ρσ_d;
             }).call(this);
@@ -14164,12 +14166,23 @@ return this.__repr__();
         };
 
         function apply_colors() {
-            var elem;
+            var elem, ss, c;
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 elem = ρσ_Iter0[ρσ_Index0];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = opts.color_scheme.background;
+            }
+            ss = document.getElementById("calibre-color-scheme-style-overrides");
+            if (!ss) {
+                ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: "calibre-color-scheme-style-overrides", type: "text/css"})]);
+                document.documentElement.appendChild(ss);
+            }
+            if (opts.color_scheme.link) {
+                c = opts.color_scheme.link;
+                ss.textContent = ":link, :link * { color: " + ρσ_str.format("{}", c) + " !important } :visited, :visited * { color: " + ρσ_str.format("{}", c) + " !important }";
+            } else {
+                ss.textContent = "";
             }
         };
 
@@ -17062,7 +17075,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.28.0";
+        CALIBRE_VERSION = "3.29.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -21816,7 +21829,7 @@ return this.__repr__();
         });
 
         function render_metadata(mi, table, book_id) {
-            var field_metadata, interface_data, fields, comments, fm, field, all_html, comment, name, ρσ_unpack, i, iframe;
+            var field_metadata, interface_data, fields, comments, fm, field, all_html, name, ρσ_unpack, comment, iframe;
             field_metadata = library_data.field_metadata;
             interface_data = get_interface_data();
             function allowed_fields(field) {
@@ -21848,7 +21861,7 @@ return this.__repr__();
             } else {
                 fields = filter(allowed_fields, fields);
             }
-            comments = Object.create(null);
+            comments = [];
             function add_row() {
                 var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
                 var val = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
@@ -22112,7 +22125,7 @@ return this.__repr__();
                     if (hp === "above") {
                         val = E.h3(name).outerHTML + val;
                     }
-                    comments[(typeof field === "number" && field < 0) ? comments.length + field : field] = val;
+                    comments.push([field, val]);
                     return;
                 }
                 func = null;
@@ -22182,14 +22195,13 @@ return this.__repr__();
                 }
             }
             all_html = "";
-            var ρσ_Iter9 = ρσ_Iterable(enumerate(sorted(comments)));
+            var ρσ_Iter9 = ρσ_Iterable(comments);
             for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
                 ρσ_unpack = ρσ_Iter9[ρσ_Index9];
-                i = ρσ_unpack[0];
-                field = ρσ_unpack[1];
-                fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
-                comment = comments[(typeof field === "number" && field < 0) ? comments.length + field : field];
+                field = ρσ_unpack[0];
+                comment = ρσ_unpack[1];
                 if (comment) {
+                    fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
                     if (ρσ_exists.d(fm.display).heading_position === "above") {
                         name = fm.name || field;
                         all_html += "<h3>" + ρσ_str.format("{}", name) + "</h3>";
@@ -23236,20 +23248,24 @@ return this.__repr__();
         });
 
         function new_color_scheme(ev) {
-            var container, n, inp;
+            var container, inp;
             container = get_container();
             container.lastChild.style.display = "block";
             var ρσ_Iter2 = ρσ_Iterable(container.lastChild.querySelectorAll("input"));
             for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                 inp = ρσ_Iter2[ρσ_Index2];
-                n = inp.getAttribute("name");
-                inp.value = (ρσ_expr_temp = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["name"] = "";
-                    ρσ_d["bg"] = "#ffffff";
-                    ρσ_d["fg"] = "#000000";
-                    return ρσ_d;
-                }).call(this))[(typeof n === "number" && n < 0) ? ρσ_expr_temp.length + n : n];
+                if (inp.name === "link_color_type") {
+                    inp.checked = inp.value === "default";
+                } else {
+                    inp.value = (ρσ_expr_temp = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["name"] = "";
+                        ρσ_d["bg"] = "#ffffff";
+                        ρσ_d["fg"] = "#000000";
+                        ρσ_d["link"] = "#0000ee";
+                        return ρσ_d;
+                    }).call(this))[ρσ_bound_index(inp.name, ρσ_expr_temp)];
+                }
             }
             container.lastChild.querySelector("input").focus();
             return container;
@@ -23259,15 +23275,22 @@ return this.__repr__();
         });
 
         function edit_color_scheme(ev) {
-            var container, ccs, all_schemes;
+            var container, ccs, all_schemes, scheme;
             container = new_color_scheme(ev);
             ccs = current_color_scheme(container);
             all_schemes = all_color_schemes();
             if (all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
+                scheme = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs];
                 container = document.getElementById(EDIT_SCHEME);
-                container.querySelector("input").value = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs].name;
-                container.querySelector("input[name=bg]").value = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs].background;
-                container.querySelector("input[name=fg]").value = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs].foreground;
+                container.querySelector("input").value = scheme.name;
+                container.querySelector("input[name=bg]").value = scheme.background;
+                container.querySelector("input[name=fg]").value = scheme.foreground;
+                if (scheme.link) {
+                    container.querySelector("input[value=custom]").checked = true;
+                    container.querySelector("input[name=link]").value = scheme.link;
+                } else {
+                    container.querySelector("input[value=default]").checked = true;
+                }
             }
         };
         if (!edit_color_scheme.__argnames__) Object.defineProperties(edit_color_scheme, {
@@ -23323,7 +23346,7 @@ return this.__repr__();
         });
 
         function add_color_scheme(ev) {
-            var div, name, bg, fg, col, key, sd, ucs;
+            var div, name, colors, col, key, sd, ucs;
             div = document.getElementById(EDIT_SCHEME);
             if (this !== "cancel") {
                 name = div.querySelector("input[name=name]").value;
@@ -23331,13 +23354,13 @@ return this.__repr__();
                     error_dialog(_("Name not specified"), _("You must specify a name for the color scheme"));
                     return;
                 }
-                bg = div.querySelector("input[name=bg]").value;
-                fg = div.querySelector("input[name=fg]").value;
-                var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ bg, fg ]));
+                colors = Object.create(null);
+                var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ "bg", "fg", "link" ]));
                 for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
                     col = ρσ_Iter5[ρσ_Index5];
-                    if (!/^#[0-9A-F]{6}$/i.test(bg)) {
-                        error_dialog(_("Invalid color"), _("The color {} is not a valid color").format(col));
+                    colors[(typeof col === "number" && col < 0) ? colors.length + col : col] = div.querySelector("input[name=" + ρσ_str.format("{}", col) + "]").value;
+                    if (!/^#[0-9A-F]{6}$/i.test(colors[(typeof col === "number" && col < 0) ? colors.length + col : col])) {
+                        error_dialog(_("Invalid color"), _("The color {} is not a valid color").format(colors[(typeof col === "number" && col < 0) ? colors.length + col : col]));
                         return;
                     }
                 }
@@ -23347,10 +23370,13 @@ return this.__repr__();
                 ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key] = (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["name"] = name;
-                    ρσ_d["foreground"] = fg;
-                    ρσ_d["background"] = bg;
+                    ρσ_d["foreground"] = colors.fg;
+                    ρσ_d["background"] = colors.bg;
                     return ρσ_d;
                 }).call(this);
+                if (div.querySelector("input[name=link_color_type]:checked").value === "custom") {
+                    ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key]["link"] = colors.link;
+                }
                 sd.set("user_color_schemes", ucs);
                 create_color_buttons();
                 set_current_color_scheme(key);
@@ -23432,7 +23458,15 @@ return this.__repr__();
             container.appendChild(ul);
             create_color_buttons();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(create_button(_("New scheme"), "plus", new_color_scheme)), E.span(create_button(_("Edit scheme"), "pencil", edit_color_scheme)), E.span(create_button(_("Remove scheme"), "trash", remove_color_scheme))].concat([ρσ_desugar_kwargs({id: ACTION_BUTTONS})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.table(E.tr(E.td(_("Name:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "name"})]))), E.tr(E.td(_("Background:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "bg", type: "color", value: "#ffffff"})]))), E.tr(E.td(_("Foreground:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "fg", type: "color", value: "#000000"})])))), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("OK"), "check", add_color_scheme), E.span(" "), create_button(_("Cancel"), "close", add_color_scheme.bind("cancel"))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content: flex-end; margin: 1ex 1em"})]))].concat([ρσ_desugar_kwargs({id: EDIT_SCHEME, style: "display:none"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.table(E.tr(E.td(_("Name:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "name"})]))), E.tr(E.td(_("Background:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "bg", type: "color", value: "#ffffff"})]))), E.tr(E.td(_("Foreground:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "fg", type: "color", value: "#000000"})]))), E.tr(E.td(_("Link:")), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "custom"})]), _("Custom")), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "link", type: "color", value: "#000000", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ev.currentTarget.parentNode.querySelector("[name=link_color_type][value=custom]").checked = true;
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]}
+                });
+                return ρσ_anonfunc;
+            })()})])))), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("OK"), "check", add_color_scheme), E.span(" "), create_button(_("Cancel"), "close", add_color_scheme.bind("cancel"))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content: flex-end; margin: 1ex 1em"})]))].concat([ρσ_desugar_kwargs({id: EDIT_SCHEME, style: "display:none"})])));
             set_action_button_visibility();
         };
         if (!create_colors_panel.__argnames__) Object.defineProperties(create_colors_panel, {

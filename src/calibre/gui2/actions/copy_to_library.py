@@ -298,7 +298,10 @@ class ChooseLibrary(Dialog):  # {{{
         v.addWidget(sa)
         sa.setChecked(bool(gprefs.get('copy_to_library_choose_library_sort_alphabetically', True)))
         sa.stateChanged.connect(self.resort)
-        sa.stateChanged.connect(lambda: gprefs.set('copy_to_library_choose_library_sort_alphabetically', bool(self.sort_alphabetically.isChecked())))
+
+        connect_lambda(sa.stateChanged, self, lambda self:
+                gprefs.set('copy_to_library_choose_library_sort_alphabetically',
+                bool(self.sort_alphabetically.isChecked())))
         la = self.la = QLabel(_('Library &path:'))
         v.addWidget(la)
         le = self.le = QLineEdit(self)
@@ -318,7 +321,7 @@ class ChooseLibrary(Dialog):  # {{{
         b.setIcon(QIcon(I('edit-copy.png')))
         b.setToolTip(_('Copy to the specified library'))
         b2 = bb.addButton(_('&Move'), bb.AcceptRole)
-        b2.clicked.connect(lambda: setattr(self, 'delete_after_copy', True))
+        connect_lambda(b2.clicked, self, lambda self: setattr(self, 'delete_after_copy', True))
         b2.setIcon(QIcon(I('edit-cut.png')))
         b2.setToolTip(_('Copy to the specified library and delete from the current library'))
         b.setDefault(True)
