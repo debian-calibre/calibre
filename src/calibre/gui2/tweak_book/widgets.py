@@ -570,7 +570,7 @@ class NamesModel(QAbstractListModel):
 def create_filterable_names_list(names, filter_text=None, parent=None, model=NamesModel):
     nl = QListView(parent)
     nl.m = m = model(names, parent=nl)
-    m.filtered.connect(lambda all_items: nl.scrollTo(m.index(0)))
+    connect_lambda(m.filtered, nl, lambda nl, all_items: nl.scrollTo(m.index(0)))
     nl.setModel(m)
     if model is NamesModel:
         nl.d = NamesDelegate(nl)
@@ -1082,7 +1082,11 @@ class AddCover(Dialog):
                        ' to the image.')))
         p.setChecked(tprefs['add_cover_preserve_aspect_ratio'])
         p.setVisible(self.container.book_type != 'azw3')
-        p.stateChanged.connect(lambda s:tprefs.set('add_cover_preserve_aspect_ratio', s == Qt.Checked))
+
+        def on_state_change(s):
+            tprefs.set('add_cover_preserve_aspect_ratio', s == Qt.Checked)
+
+        p.stateChanged.connect(on_state_change)
         self.info_label = il = QLabel('\xa0')
         h.addWidget(p), h.addStretch(1), h.addWidget(il)
         l.addLayout(h)

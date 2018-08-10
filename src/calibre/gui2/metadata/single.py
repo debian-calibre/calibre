@@ -609,8 +609,8 @@ class MetadataSingleDialogBase(QDialog):
             pm = ngettext('There is another book to edit in this set.',
                           'There are still {} more books to edit in this set.', num).format(num)
             if not question_dialog(
-                    self, _('Are you sure?'), pm + _(
-                      ' Are you sure you want to stop? Use the "Next" button'
+                    self, _('Are you sure?'), pm + ' ' + _(
+                      'Are you sure you want to stop? Use the "Next" button'
                       ' instead of the "OK" button to move through books in the set.'),
                     yes_text=_('&Stop editing'), no_text=_('&Continue editing'),
                     yes_icon='dot_red.png', no_icon='dot_green.png',
@@ -835,7 +835,7 @@ class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
         l.addWidget(self.fetch_metadata_button, 10, 0, 1, 2)
         l.addWidget(self.config_metadata_button, 10, 2, 1, 1)
 
-        self.tabs[0].gb2 = gb = QGroupBox(_('Comments'), self)
+        self.tabs[0].gb2 = gb = QGroupBox(_('Co&mments'), self)
         gb.l = l = QVBoxLayout()
         gb.setLayout(l)
         l.addWidget(self.comments)

@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2018-07-06 18:29+IST\n"
-"PO-Revision-Date: 2018-07-06 02:16+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2018-07-20 10:13+IST\n"
+"PO-Revision-Date: 2018-07-24 18:37+0000\n"
+"Last-Translator: Maidur\n"
 "Language-Team: Estonian (http://www.transifex.com/calibre/calibre/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -159,7 +159,7 @@ msgstr "Ei tee midagi"
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/rtf.py:115
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/snb.py:17
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:36
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:370
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:342
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/covers.py:93
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/covers.py:95
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/douban.py:80
@@ -207,9 +207,9 @@ msgstr "Ei tee midagi"
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:257
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:644
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:646
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:307
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:358
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:413
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:312
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:372
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:427
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:880
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/__init__.py:52
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:141
@@ -480,234 +480,239 @@ msgid "Filter/transform the tags for books in the library"
 msgstr "Filtreeri/muunda kogus olevate raamatute silte"
 
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:913
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:16
+msgid "Transform the authors for books in the library"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:919
 msgid "Show an editor for testing templates"
 msgstr "Näita mallide testimiseks redaktorit"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:919
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:925
 msgid "Export books from your calibre library to the hard disk"
 msgstr "Ekspordi raamatud calibre kogust kõvakettale"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:925
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:931
 msgid "Show Book details in a separate popup"
 msgstr "Näita raamatu üksikasju eraldi hüpikaknas"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:931
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:937
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/restart.py:15
 msgid "Restart calibre"
 msgstr "Taaskäivita calibre"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:937
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:943
 msgid "Open the folder that contains the book files in your calibre library"
 msgstr "Ava kaust, kus asuvad calibre kogu raamatud"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:944
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:950
 msgid "Send books to the connected device"
 msgstr "Saada raamatud ühendatud seadmesse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:950
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:956
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
 msgstr "Saada raamatud e-kirja või veebi vahendusel. Samuti ühendu arvutis olevate kaustadega, justkui oleks need seadmed"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:957
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:963
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/help.py:18
 msgid "Browse the calibre User Manual"
 msgstr "Sirvi calibre kasutusjuhendit"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:963
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:969
 msgid "Customize calibre"
 msgstr "Seadista calibret"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:969
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:975
 msgid "Easily find books similar to the currently selected one"
 msgstr "Leia hetkel valituga sarnaseid raamatuid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:975
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:981
 msgid ""
 "Switch between different calibre libraries and perform maintenance on them"
 msgstr "Lülitu erinevate calibre raamatukogude vahel ja halda neid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:982
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:988
 msgid "Copy books from the device to your calibre library"
 msgstr "Kopeeri raamatuid seadmest oma calibre kogusse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:988
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:994
 msgid "Edit the collections in which books are placed on your device"
 msgstr "Halda neid kogumikke, millistest on raamatud pandud sinu seadmesse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:994
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1000
 msgid "Match book on the devices to books in the library"
 msgstr "Vastenda seadmetes olevad raamatud kogus olevatega"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1000
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1006
 msgid "Copy a book from one calibre library to another"
 msgstr "Kopeeri raamat ühest calibre kogust teise"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1006
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1012
 msgid "Edit e-books in the EPUB or AZW3 formats"
 msgstr "Muuda EPUB- või AZW3-formaadis raamatuid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1012
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1018
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
 msgstr "Tee pisimuudatusi oma calibre kogus olevatele EPUB- või HTMLZ-failidele"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1018
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1024
 msgid ""
 "Find the next or previous match when searching in your calibre library in "
 "highlight mode"
 msgstr "Leia eelmine või järgmine tulemus, kui teed calibre kogus esiletõstmisrežiimis otsingut"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1025
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1031
 msgid "Choose a random book from your calibre library"
 msgstr "Võta calibre kogust juhuslik raamat"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1031
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1037
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/sort.py:31
 msgid "Sort the list of books"
 msgstr "Sordi raamatute loendit"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1037
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1043
 msgid "Temporarily mark books"
 msgstr "Ajutiselt märgista raamatuid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1043
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1049
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/virtual_library.py:16
 msgid "Change the current Virtual library"
 msgstr "Muuda praegust Virtuaalset kogu"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1050
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1056
 msgid "Search for books from different book sellers"
 msgstr "Otsi raamatuid erinevatelt müüjatelt"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1067
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1073
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "Hangi uusi calibre pluginaid või uuenda olemasolevaid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1090
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1096
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "Välimus"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1092
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1105
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1117
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1129
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1142
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1098
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1111
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1123
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1135
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1148
 msgid "Interface"
 msgstr "Kasutajaliides"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1096
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1102
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "Kohanda calibre liidese välimust oma maitse järgi"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1103
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1109
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1109
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1115
 msgid "Change the way calibre behaves"
 msgstr "Muuda calibre käitumist"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1115
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1121
 #: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:463
 msgid "Add your own columns"
 msgstr "Lisa enda veergusid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1121
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1127
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "Lisa/eemalda veergusid calibre raamatunimekirjast"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1127
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1133
 msgid "Toolbars & menus"
 msgstr "Tööriistaribad & menüüd"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1133
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1139
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "Kohanda tööriistaribasid ja nendega seonduvaid menüüsid valides neisse võimalikke tegevusi"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1140
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1146
 msgid "Searching"
 msgstr "Otsing"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1146
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1152
 msgid "Customize the way searching for books works in calibre"
 msgstr "Kohanda viisi, kuidas raamatute otsimine calibres toimub"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1152
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1158
 msgid "Input options"
 msgstr "Sisendi sätted"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1154
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1171
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1183
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1160
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1177
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1189
 msgid "Conversion"
 msgstr "Teisendamine"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1158
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1164
 msgid "Set conversion options specific to each input format"
 msgstr "Seadista teisendussuvandeid vastavalt igale sisendformaadile"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1169
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1175
 msgid "Common options"
 msgstr "Üldised sätted"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1175
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1181
 msgid "Set conversion options common to all formats"
 msgstr "Seadista kõigile formaatidele ühiseid teisendussuvandeid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1181
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1187
 msgid "Output options"
 msgstr "Väljundi sätted"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1187
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1193
 msgid "Set conversion options specific to each output format"
 msgstr "Seadista igale fomaadile eriomaseid  teisendussuvandeid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1193
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1199
 msgid "Adding books"
 msgstr "Raamatute lisamine"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1195
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1208
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1221
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1234
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1201
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1214
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1227
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1240
 msgid "Import/export"
 msgstr "Import/eksport"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1199
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1205
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "Kontrolli kuidas calibre loeb raamatute lisamisel failide metaandmeid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1206
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1212
 msgid "Saving books to disk"
 msgstr "Raamatute salvestamine kettale"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1212
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1218
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "Kontrolli, kuidas calibre ekspordib faile andmebaasist kettale kasutades \"Salvesta kettale\""
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1219
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1225
 msgid "Sending books to devices"
 msgstr "Raamatute saatmine seadmesse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1225
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1231
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "Kontrolli kuidas calibre edastab faile sinu e-lugerisse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1232
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1238
 msgid "Metadata plugboards"
 msgstr "Metaandmete ühendustahvlid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1238
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1244
 msgid "Change metadata fields before saving/sending"
 msgstr "Muuda metaandmeid enne salvestamist/edastamist"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1244
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1250
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions.py:138
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions.py:148
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions.py:155
@@ -716,92 +721,92 @@ msgstr "Muuda metaandmeid enne salvestamist/edastamist"
 msgid "Template functions"
 msgstr "Malli funktsioonid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1246
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1310
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1323
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1335
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1347
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1252
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1316
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1329
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1341
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1353
 msgid "Advanced"
 msgstr "Täpsemad"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1250
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1256
 msgid "Create your own template functions"
 msgstr "Loo enda malli funktsioonid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1256
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1262
 msgid "Sharing books by email"
 msgstr "Raamatute jagamine e-posti teel"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1258
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1271
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1285
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1297
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1264
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1277
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1291
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1303
 msgid "Sharing"
 msgstr "Jagamine"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1262
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1268
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "Seadista raamatute jagamine e-posti teel. Seda võib kasutada, kui on soov saata automaatselt allalaetud uudiseid oma seadmesse"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1269
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1275
 msgid "Sharing over the net"
 msgstr "Jagamine üle võrgu"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1275
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1281
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "Seadista calibre Sisuserverit,  mis võimaldab sul ligi pääseda oma raamatukokku igalt poolt, igalt seadmelt, üle interneti"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1283
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1289
 msgid "Metadata download"
 msgstr "Metaandmete allalaadimine"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1289
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1295
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "Kontrolli e-raamatute metaandmete internetist allalaadimist"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1295
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1301
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/mtp_config.py:407
 msgid "Ignored devices"
 msgstr "Eiratud seadmed"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1301
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1307
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "Kontrolli, milliseid seadmeid calibre eirab, kui need arvutiga ühendada"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1308
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1314
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:301
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.py:88
 msgid "Plugins"
 msgstr "Pluginad"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1314
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1320
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "Lisa/eemalda/seadista calibre funktsionaalsuse osasid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1321
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1327
 msgid "Tweaks"
 msgstr "Peenseadistused"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1327
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1333
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "Seadista calibre käitumist erinevates olukordades"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1333
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1339
 #: /home/kovid/work/calibre/src/calibre/gui2/keyboard.py:545
 msgid "Shortcuts"
 msgstr "Otseteed"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1339
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1345
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "Seadista calibres kasutatavaid klaviatuuri otseteid"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1345
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1351
 #: /home/kovid/work/calibre/src/calibre/gui2/keyboard.py:135
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:327
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:58
@@ -809,7 +814,7 @@ msgstr "Seadista calibres kasutatavaid klaviatuuri otseteid"
 msgid "Miscellaneous"
 msgstr "Muu"
 
-#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1351
+#: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1357
 msgid "Miscellaneous advanced configuration"
 msgstr "Muud täiustatud seadistused"
 
@@ -2290,46 +2295,51 @@ msgid ""
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/debug.py:97
-msgid "Export all calibre data (books/settings/plugins)"
-msgstr "Ekspordi kõik calibre andmed (raamatud/sätted/pluginad)"
+msgid ""
+"Export all calibre data (books/settings/plugins). Normally, you will be "
+"asked for the export dir and the libraries to export. You can also specify "
+"them as command line arguments to skip the questions. Use absolute paths for"
+" the export directory and libraries. The special keyword \"all\" can be used"
+" to export all libraries."
+msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:99
+#: /home/kovid/work/calibre/src/calibre/debug.py:103
 msgid "Import previously exported calibre data"
 msgstr "Impordi eelnevalt eksporditud calibre andmed"
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:102
+#: /home/kovid/work/calibre/src/calibre/debug.py:106
 #: /home/kovid/work/calibre/src/calibre/gui2/main.py:60
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "Pane töötav calibre eksemplar, kui on, sulguma. Pane tähele, et kui on pooleliolevaid töid, need katkestatakse vaikselt, seega kasuta ettevaatusega."
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:105
+#: /home/kovid/work/calibre/src/calibre/debug.py:109
 msgid "Test binary modules in build"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:108
+#: /home/kovid/work/calibre/src/calibre/debug.py:112
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Add Books\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:112
+#: /home/kovid/work/calibre/src/calibre/debug.py:116
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:115
+#: /home/kovid/work/calibre/src/calibre/debug.py:119
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "(De)registreeri calibre Windowsi vaikeprogrammides."
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:223
+#: /home/kovid/work/calibre/src/calibre/debug.py:227
 msgid "Debug log"
 msgstr "Silumise logi"
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:308
+#: /home/kovid/work/calibre/src/calibre/debug.py:312
 #, python-format
 msgid "No plugin named %s found"
 msgstr "Ei leitud ühtki pluginat nimega %s"
@@ -4362,23 +4372,23 @@ msgstr "Tipptasandi HTML-fail %s on tühi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:26
 msgid "Use CSS classes"
-msgstr ""
+msgstr "Kasuta CSS-klasse"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:27
 msgid "Use the style attribute"
-msgstr ""
+msgstr "Kasuta laadiatribuuti"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:28
 msgid "Use HTML tags wherever possible"
-msgstr ""
+msgstr "Kasuta võimalusel HTML-märgendeid"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:31
 msgid "Use an external CSS file"
-msgstr ""
+msgstr "Kasuta välist CSS-faili"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:32
 msgid "Use a <style> tag in the HTML file"
-msgstr ""
+msgstr "Kasuta HTML-failis <style>-märgendit"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/htmlz_output.py:40
 #, python-brace-format
@@ -4828,19 +4838,19 @@ msgstr "Wiki-stiilis lingid"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:39
 msgid "Try to auto detect paragraph type"
-msgstr ""
+msgstr "Proovi lõigutüüpi automaatselt tuvastada"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:40
 msgid "Treat a blank line as a paragraph break"
-msgstr ""
+msgstr "Käsitle tühja rida lõiguvahena"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:41
 msgid "Assume every line is a paragraph"
-msgstr ""
+msgstr "Eelda, et iga rida on eraldi lõik"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:42
 msgid "Assume every line starting with 2+ spaces or a tab starts a paragraph"
-msgstr ""
+msgstr "Eelda, et iga vähemalt 2 tühikuga või tabeldusmärgiga algav rida alustab lõiku"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:43
 msgid "Most lines have hard line breaks, few/no blank lines or indents"
@@ -4848,7 +4858,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:44
 msgid "Don't modify the paragraph structure"
-msgstr ""
+msgstr "Ära muuda lõigustruktuuri"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:47
 msgid "Automatically decide which formatting processor to use"
@@ -6414,7 +6424,7 @@ msgstr "Amazon on hakanud blokeerima katseid oma serveritest metaandmeid alla la
 msgid "Amazon timed out. Try again later."
 msgstr "Amazon ei saatnud andmeid. Proovi hiljem uuesti."
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:198
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:170
 msgid "Metadata source"
 msgstr "Metaandmete allikas"
 
@@ -8208,7 +8218,7 @@ msgstr "Ei saa faile lisada, sest ühtki raamatut pole valitud"
 #: /home/kovid/work/calibre/src/calibre/gui2/jobs.py:675
 #: /home/kovid/work/calibre/src/calibre/gui2/jobs.py:685
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:612
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:157
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:168
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns.py:199
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:93
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:307
@@ -8412,6 +8422,30 @@ msgid ""
 "Could not fetch annotations for some books. Click show details to see which "
 "ones."
 msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:16
+msgid "Author mapper"
+msgstr "Autorite vastendaja"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:37
+msgid "Map authors for one book in the library"
+msgid_plural "Map authors for {} books in the library"
+msgstr[0] "Autorite vastendamine ühe raamatu jaoks kogus"
+msgstr[1] "Autorite vastendamine {} raamatu jaoks kogus"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:41
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:41
+msgid "The changes will be applied to the <b>selected book</b>"
+msgid_plural "The changes will be applied to the <b>{} selected books</b>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:43
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:43
+msgid "The changes will be applied to <b>one book in the library</b>"
+msgid_plural "The changes will be applied to <b>{} books in the library</b>"
+msgstr[0] "Muudatused rakendatakse <b>ühele raamatule kogus</b>"
+msgstr[1] "Muudatused rakendatakse <b>{} raamatule kogus</b>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/catalog.py:22
 msgid "Create catalog"
@@ -10462,18 +10496,6 @@ msgid_plural "Map tags for {} books in the library"
 msgstr[0] "Siltide vastendamine ühe raamatu jaoks kogus"
 msgstr[1] "Siltide vastendamine {} raamatu jaoks kogus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:41
-msgid "The changes will be applied to the <b>selected book</b>"
-msgid_plural "The changes will be applied to the <b>{} selected books</b>"
-msgstr[0] ""
-msgstr[1] ""
-
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:43
-msgid "The changes will be applied to <b>one book in the library</b>"
-msgid_plural "The changes will be applied to <b>{} books in the library</b>"
-msgstr[0] "Muudatused rakendatakse <b>ühele raamatule kogus</b>"
-msgstr[1] "Muudatused rakendatakse <b>{} raamatule kogus</b>"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/toc_edit.py:25
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:23
 msgid "Choose format to edit"
@@ -10781,75 +10803,75 @@ msgstr "Raamatul %s pole ühtki formaati."
 msgid "Virtual library"
 msgstr "Virtuaalne kogu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:37
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:41
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:51
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:206
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:231
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:251
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:267
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:38
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:42
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:52
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:211
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:236
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:256
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:272
 msgid "Cannot add books"
 msgstr "Ei saa raamatuid lisada"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:38
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:39
 #, python-format
 msgid "The path %s does not exist"
 msgstr "Rada %s pole olemas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:42
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:43
 #, python-format
 msgid "You do not have permission to read %s"
 msgstr "Sul pole õigust kohta %s lugeda"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:52
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:53
 msgid "You do not have permission to read any of the selected files"
 msgstr "Sul pole õigust lugeda ühtegi valitud faili"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:74
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:79
 msgid "Adding books..."
 msgstr "Raamatute lisamine..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:74
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:79
 msgid "Scanning for files..."
 msgstr "Failide skannimine..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:189
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:194
 msgid "You do not have permission to read the selected file."
 msgid_plural "You do not have permission to read the selected files."
 msgstr[0] "Sul pole õigust valitud faili lugeda."
 msgstr[1] "Sul pole õigust valitud faile lugeda."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:195
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:200
 #, python-format
 msgid "Could not add %s as you do not have permission to read the file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:207
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:232
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:252
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:237
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:257
 msgid "Failed to add any books, click \"Show details\" for more information."
 msgstr "Ei saanud ühtki raamatut lisada, rohkema teabe saamiseks klõpsa \"Näita üksikasju\"."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:217
 msgid "Could not add"
 msgstr "Ei saanud lisada"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:213
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:218
 #, python-format
 msgid "No e-book files were found in %s"
 msgstr "Kaustast %s ei leitud ühtki e-raamatu faili"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:218
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:223
 msgid "Reading metadata and adding to library (one book)..."
 msgid_plural "Reading metadata and adding to library ({} books)..."
 msgstr[0] "Metaandmete lugemine ja kogusse lisamine (üks raamat)..."
 msgstr[1] "Metaandmete lugemine ja kogusse lisamine ({} raamatut)..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:268
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:273
 msgid "Failed to add some books, click \"Show details\" for more information."
 msgstr "Mõne raamatu lisamine ebaõnnestus, rohkema teabe saamiseks klõpsa \"Näita üksikasju\"."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:284
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:289
 #: /home/kovid/work/calibre/src/calibre/gui2/save.py:159
 #: /home/kovid/work/calibre/src/calibre/gui2/save.py:190
 #: /home/kovid/work/calibre/src/calibre/gui2/save.py:273
@@ -10857,54 +10879,54 @@ msgstr "Mõne raamatu lisamine ebaõnnestus, rohkema teabe saamiseks klõpsa \"N
 msgid "Critical failure"
 msgstr "Kriitiline viga"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:285
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:290
 msgid ""
 "The read metadata worker process crashed while processing some files. Adding"
 " of books is aborted. Click \"Show details\" to see which files caused the "
 "problem."
 msgstr "Metaandmete lugemise tööprotsess jooksis mõne faili töötlemisel kokku. Raamatute lisamine on katkestatud. Probleemi põhjustanud failide nägemiseks klõpsa \"Näita üksikasju\"."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:303
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:308
 msgid "Failed to read metadata from the file:"
 msgid_plural "Failed to read metadata from the files:"
 msgstr[0] "Ei suutnud metaandmeid lugeda failist:"
 msgstr[1] "Ei suutnud metaandmeid lugeda failidest:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:306
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:354
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:406
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:437
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:311
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:368
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:420
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:451
 msgid "With error:"
 msgstr "Veaga:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:352
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:366
 msgid "Failed to merge the book: "
 msgstr "Ei suutnud ühendada raamatut: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:404
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:418
 msgid "Failed to add the book: "
 msgstr "Ei suutnud lisada raamatut: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:436
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:450
 #, python-brace-format
 msgid "Failed to add the file {0} to the book: {1}"
 msgstr "Ei suutnud lisada faili {0} raamatusse: {1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:449
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:463
 msgid "Adding duplicates"
 msgstr "Koopiate lisamine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:473
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:487
 msgid ""
 "There were problems adding some files, click \"Show details\" for more "
 "information"
 msgstr "Mõne faili lisamisel oli probleeme, rohkema teabe saamiseks klõpsa \"Näita üksikasju\""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:474
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:488
 msgid "Failed to add any books, click \"Show details\" for more information"
 msgstr "Ei saanud ühtki raamatut lisada, rohkema teabe saamiseks klõpsa \"Näita üksikasju\""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/add.py:475
+#: /home/kovid/work/calibre/src/calibre/gui2/add.py:489
 msgid "Errors while adding"
 msgstr "Vead lisamisel"
 
@@ -10943,14 +10965,17 @@ msgid "does not match glob pattern"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:37
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:35
 msgid "matches regex pattern"
 msgstr "vastab regulaaravaldise mustrile"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:38
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:36
 msgid "does not match regex pattern"
 msgstr "ei vasta regulaaravaldise mustrile"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:41
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:39
 msgid "Create the rule below, the rule can be used to add or ignore files"
 msgstr "Allpool loo reegel, mida saab kasutada failide lisamiseks või eiramiseks"
 
@@ -11030,7 +11055,92 @@ msgstr "Failinimi {0} saab olema {1}"
 msgid "Edit file filter rules"
 msgstr "Faili filtri reeglite muutmine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:313
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:25
+msgid "Change"
+msgstr "Muuda"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:26
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:171
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:459
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:49
+#: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:674
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:469
+msgid "Capitalize"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:27
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:50
+msgid "Lower-case"
+msgstr "Väiketähesta"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:28
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:51
+msgid "Upper-case"
+msgstr "Suurtähesta"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:32
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:56
+msgid "is one of"
+msgstr "on üks neist"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:33
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:57
+msgid "is not one of"
+msgstr "ei ole üks neist"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:34
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:82
+#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:60
+msgid "contains"
+msgstr "sisaldab"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:40
+msgid "the author, if the author name"
+msgstr "autorit, kui autori nimi"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:41
+msgid "You must provide a value for the author name to match"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:42
+msgid "with the name:"
+msgstr "nimega:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:90
+#, python-brace-format
+msgid ""
+"<b>{action}</b> the author name, if it <i>{match_type}</i>: <b>{query}</b>"
+msgstr "<b>{action}</b> autori nimi, kui see <i>{match_type}</i>: <b>{query}</b>"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:93
+msgid "to the name"
+msgstr "nimeks"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:101
+msgid ""
+"You can specify rules to manipulate author names here. Click the \"Add "
+"Rule\" button below to get started. The rules will be processed in order for"
+" every author."
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:108
+msgid "Test author mapping rules"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:110
+msgid "Enter an author name to test:"
+msgstr "Sisesta autori nimi, mida testida:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:111
+msgid "Enter author and click the \"Test\" button"
+msgstr "Sisesta autor ja klõpsa nupul \"Testi\""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:122
+msgid "Edit author mapping rules"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:319
 #, python-brace-format
 msgid "Added a book automatically from {src}"
 msgid_plural "Added {num} books automatically from {src}"
@@ -11269,12 +11379,12 @@ msgstr "väljund"
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/xpath_wizard_ui.py:67
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/configwidget_ui.py:74
 #: /home/kovid/work/calibre/src/calibre/gui2/filename_pattern_ui.py:131
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:195
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:202
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior_ui.py:157
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns_ui.py:84
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/email_ui.py:78
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:537
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:120
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:122
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/misc_ui.py:69
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:111
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins_ui.py:103
@@ -11624,7 +11734,7 @@ msgstr "Taasta vaikeseaded"
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:93
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:96
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:99
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:239
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:248
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior_ui.py:166
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior_ui.py:167
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns_ui.py:87
@@ -11734,114 +11844,114 @@ msgstr "Mitme autoriga raamatu korral loenda iga autor eraldi"
 msgid "Tab template for catalog.ui"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:91
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:92
 msgid "Bold"
 msgstr "Paks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:92
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:93
 msgid "Italic"
 msgstr "Kaldkiri"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:95
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:96
 msgid "Underline"
 msgstr "Allakriipsutus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:97
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:98
 msgid "Strikethrough"
 msgstr "Läbikriipsutus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:99
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:100
 msgid "Superscript"
 msgstr "Ülaindeks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:101
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:102
 msgid "Subscript"
 msgstr "Allindeks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:103
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:104
 msgid "Ordered list"
 msgstr "Järjestatud loend"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:105
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:106
 msgid "Unordered list"
 msgstr "Järjestamata loend"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:108
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:109
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:76
 msgid "Align left"
 msgstr "Joonda vasakule"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:110
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:111
 msgid "Align center"
 msgstr "Joonda keskele"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:112
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:113
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:80
 msgid "Align right"
 msgstr "Joonda paremale"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:114
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:115
 msgid "Align justified"
 msgstr "Rööpjoonda"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:115
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:116
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:295
 msgid "Undo"
 msgstr "Võta tagasi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:116
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:117
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:297
 msgid "Redo"
 msgstr "Tee uuesti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:117
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:118
 msgid "Remove formatting"
 msgstr "Eemalda vorming"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:118
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:119
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:180
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/live_css.py:355
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:119
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:120
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:182
 msgid "Paste"
 msgstr "Kleebi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:120
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:121
 msgid "Cut"
 msgstr "Lõika"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:122
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:123
 msgid "Increase indentation"
 msgstr "Suurenda taanet"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:124
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:125
 msgid "Decrease indentation"
 msgstr "Vähenda taanet"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:126
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:127
 msgid "Select all"
 msgstr "Vali kõik"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:137
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:138
 msgid "Foreground color"
 msgstr "Teksti värv"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:142
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:143
 msgid "Background color"
 msgstr "Taustavärv"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:146
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:147
 msgid "Style text block"
 msgstr "Tekstiploki vorming"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:148
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:149
 msgid "Style the selected text block"
 msgstr "Vorminda valitud teksti plokki"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:153
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:154
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.py:35
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.py:37
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior_ui.py:161
@@ -11850,51 +11960,51 @@ msgstr "Vorminda valitud teksti plokki"
 msgid "Normal"
 msgstr "Tavaline"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:154
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:155
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:156
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:157
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:158
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:160
 msgid "Heading"
 msgstr "Pealkiri"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:161
 msgid "Pre-formatted"
 msgstr "Eelvormindatud"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:161
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:162
 msgid "Blockquote"
 msgstr "Plokktsitaat"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:162
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:163
 msgid "Address"
 msgstr "Aadress"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:169
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:170
 msgid "Insert link or image"
 msgstr "Sisesta link või pilt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:171
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:172
 msgid "Insert separator"
 msgstr "Sisesta eraldaja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:177
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:178
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:129
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:59
 msgid "Clear"
 msgstr "Tühjenda"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:211
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:212
 msgid "Choose foreground color"
 msgstr "Teksti värvi valimine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:217
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:218
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config.py:379
 msgid "Choose background color"
 msgstr "Taustavärvi valimine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:235
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:236
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/completion/basic.py:88
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/text.py:860
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:228
@@ -11902,26 +12012,26 @@ msgstr "Taustavärvi valimine"
 msgid "Image"
 msgstr "Pilt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:243
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:244
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config.py:276
 msgid "Invalid URL"
 msgstr "Vigane URL"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:244
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:245
 #, python-format
 msgid "The url %r is invalid"
 msgstr "URL %r on vigane"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:248
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:249
 msgid "Create link"
 msgstr "Lingi loomine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:257
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:258
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1054
 msgid "&Browse"
 msgstr "Lehitse"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:261
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:262
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:807
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:870
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:902
@@ -11933,7 +12043,7 @@ msgstr "Lehitse"
 msgid "Choose file"
 msgstr "Faili valimine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:273
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:274
 msgid ""
 "Enter a URL. If you check the \"Treat the URL as an image\" box then the URL"
 " will be added as an image reference instead of as a link. You can also "
@@ -11942,42 +12052,42 @@ msgid ""
 "moved."
 msgstr "Sisesta URL. Kui märgistad ruudu \"Käsitle URLi pildina\", siis lisatakse URL lingi asemel pildiviitena. Sa võid ka luua lingi oma arvutis oleva failini. Pane tähele, et oma arvutis oleva failini lingi loomisel selle faili teisaldamisel link enam ei tööta."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:282
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:283
 msgid "Enter &URL:"
 msgstr "Sisesta URL:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:283
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:284
 msgid "Treat the URL as an &image"
 msgstr "Käsitle URLi pildina"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:284
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:285
 msgid "Enter &name (optional):"
 msgstr "Sisesta nimi (valikuline):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:285
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:286
 msgid "Choose a file on your computer:"
 msgstr "Vali fail oma arvutist:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:430
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:440
 #, python-format
 msgid "%s toolbars"
 msgstr "%s tööriistaribad"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:430
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:440
 #: /home/kovid/work/calibre/src/calibre/gui2/layout_menu.py:71
 msgid "Hide"
 msgstr "Peida"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:430
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:440
 #: /home/kovid/work/calibre/src/calibre/gui2/layout_menu.py:71
 msgid "Show"
 msgstr "Kuva"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:687
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:697
 msgid "N&ormal view"
 msgstr "Tavavaade"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:688
+#: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:698
 msgid "&HTML source"
 msgstr "HTML-lähtekood"
 
@@ -12489,7 +12599,7 @@ msgstr "Säilita ligatuurid"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:250
 msgid "&Disable font size rescaling"
-msgstr ""
+msgstr "Keela kirjasuuruse muutmine"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:251
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:272
@@ -13554,7 +13664,7 @@ msgstr "Suurim reapikkus:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/txt_output_ui.py:91
 msgid "Force maximum line &length"
-msgstr ""
+msgstr "Jõusta suurimat reapikkust"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/txt_output_ui.py:93
 msgid "Markdown, Textile"
@@ -15754,46 +15864,37 @@ msgstr "Vasteid ei leitud"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:166
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:669
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:467
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:464
 msgid "Change case"
 msgstr "Muuda tõstu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:167
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:670
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:468
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:465
 msgid "Upper case"
 msgstr "Suurtähed"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:168
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:671
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:469
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:466
 msgid "Lower case"
 msgstr "Väiketähed"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:169
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:672
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:470
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:467
 msgid "Swap case"
 msgstr "Muuda tõst vastupidiseks"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:170
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:673
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:471
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:468
 msgid "Title case"
 msgstr "Suurtäht iga sõna alguses"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:171
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:459
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:521
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:49
-#: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:674
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:472
-msgid "Capitalize"
-msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:187
 msgid "Copy to author sort"
@@ -16121,7 +16222,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:71
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/char_select.py:774
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:449
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:733
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:735
 #: /home/kovid/work/calibre/src/calibre/linux.py:1148
 #: /home/kovid/work/calibre/src/calibre/srv/legacy.py:95
 msgid "Search"
@@ -19006,7 +19107,7 @@ msgstr "Kaaneruudustik"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:343
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:373
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1073
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1075
 msgid "Toggle"
 msgstr "Lülita"
 
@@ -20226,7 +20327,7 @@ msgid "Processed %s"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/config.py:66
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:130
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:133
 msgid "Metadata fields to download"
 msgstr ""
 
@@ -20726,103 +20827,103 @@ msgstr ""
 msgid "Create new record for each duplicate format"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:81
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:91
 msgid "Choose a folder"
 msgstr "Kausta valimine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:142
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:148
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:153
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:164
 msgid "Invalid folder"
 msgstr "Vigane kaust"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:143
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:154
 #, python-format
 msgid ""
 "You must specify an existing folder as your auto-add folder. %s does not "
 "exist."
 msgstr "Sa pead määrama automaatselt lisatava kausta, mis on olemas. Kausta %s pole olemas."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:149
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:160
 #, python-format
 msgid "You do not have read/write permissions for the folder: %s"
 msgstr "Sul pole õigusi seda kausta lugeda/kirjutada: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:154
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:165
 #, python-format
 msgid "Cannot use folders whose names start with a period or underscore: %s"
 msgstr "Ei saa kasutada kaustu, mille nimi algab punktiga või alljoonega: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:158
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding.py:169
 #, python-format
 msgid ""
 "<b>WARNING:</b> Any files you place in %s will be automatically deleted "
 "after being added to calibre. Are you sure?"
 msgstr "<b>HOIATUS:</b> Kõik, failid, mille sa paned kausta %s, automaatselt kustutatakse pärast calibresse lisamist. Kas oled kindel?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:196
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:203
 msgid ""
 "Here you can control how calibre will read metadata from the files you add "
 "to it. calibre can either read metadata from the contents of the file, or "
 "from the filename."
 msgstr "Siin saad juhtida, kuidas calibre lisatavatest failidest metaandmeid loeb. calibre suudab metaandmeid lugeda kas faili sisust või failinimest."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:197
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:204
 msgid "Read &metadata from file contents rather than file name"
 msgstr "Loe metaandmeid faili sisust, mitte failinimest"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:198
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:205
 msgid ""
 "Swap the firstname and lastname of the author. This affects only metadata "
 "read from file names."
 msgstr "Vaheta autori eesnimi ja perekonnanimi. See mõjutab ainult failinimedest loetud metaandmeid."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:199
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:206
 msgid "&Swap author firstname and lastname when reading author from filename"
 msgstr "Failinimest autorit lugedes vaheta autori eesnimi ja perekonnanimi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:200
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:207
 msgid "Configure metadata from file name"
 msgstr "Seadista failinimest saadud metaandmeid"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:201
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:208
 msgid "Reading &metadata"
 msgstr "Metaandmete lugemine"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:202
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:209
 msgid "&Mark newly added books"
 msgstr "Märgi värskelt lisatud raamatud"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:203
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:210
 msgid ""
 "When using the  \"&Copy to library\" action to copy books between libraries,"
 " preserve the date"
 msgstr "Kogude vahel raamatute kopeerimiseks tegevust \"Kopeeri kogusse\" kasutades säilita kuupäevad"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:211
 msgid ""
 "When using the \"Copy to library\" action check for &duplicates with the "
 "same title, author and language"
 msgstr "Tegevust \"Kopeeri kogusse\" kasutades kontrolli sama autori, pealkirja ja keelega koopiaid"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:205
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:212
 msgid "Automatically &convert added books to the current output format"
 msgstr "Automaatselt teisenda lisatavad raamatud praegusesse väljundformaati"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:206
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:213
 msgid ""
 "This will force an automatic conversion even if the file being added is the "
 "same format as the output format. For example, if you set your output format"
 " to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:207
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:214
 msgid ""
 "When auto-converting, convert even if the format being added is the &same as"
 " the output format"
 msgstr "Automaatselt teisendades teisenda isegi siis, kui lisatav formaat on väljundformaadiga sama"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:208
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:215
 msgid ""
 "Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
 "existing book records. The box to the right controls what happens when an existing record already has\n"
@@ -20831,11 +20932,11 @@ msgid ""
 "Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:213
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:220
 msgid "&Auto-merge added books if they already exist:"
 msgstr "Automaatselt ühenda lisatavad raamatud, kui need on juba olemas:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:214
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:221
 msgid ""
 "Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
 "existing book records. This box controls what happens when an existing record already has\n"
@@ -20849,90 +20950,98 @@ msgid ""
 "Author matching is exact."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:224
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:231
 msgid "&Tags to apply when adding a book:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:225
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:232
 msgid ""
 "A comma-separated list of tags that will be applied to books added to the "
 "library"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:226
-msgid "Control how tags are processed:"
-msgstr "Juhi, kuidas töödeldakse silte:"
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:233
+msgid "Contro&l how tags are processed:"
+msgstr "Juhi, kuidas silte töödeldakse:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:227
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:234
 msgid ""
 "Create rules that can filter or transform tags on added books automatically "
 "as soon as they are added. "
 msgstr "Loo reegleid, mis saavad lisatavate raamatute silte automaatselt filtreerida või muundada niipea kui need lisatakse. "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:228
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:235
 msgid "&Rules to filter tags read from metadata"
 msgstr "Reeglid metaandmetest loetud siltide filtreerimiseks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:229
-msgid "Control which files are added during bulk imports:"
-msgstr "Juhi, millised failid massimportimisel lisatakse:"
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:236
+msgid "Control which files are added during bul&k imports:"
+msgstr "Juhi, millised failid massimportimistel lisatakse:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:230
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:237
 msgid ""
 "<p>You can specify rules to add/ignore files here. These will be used when "
 "recursively adding books from directories."
 msgstr "<p>Siin saad määratleda failide lisamise/eiramise reeglid. Neid kasutatakse raamatute rekursiivselt kaustadest lisamisel."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:231
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:238
 msgid "Rules to filter added &files"
 msgstr "Reeglid lisatavate failide filtreerimiseks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:232
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:239
+msgid "Control how auth&ors are processed:"
+msgstr "Juhi, kuidas autoreid töödeldakse:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:240
+msgid "Rules to manipulate a&uthor names"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:241
 msgid "Adding &actions"
 msgstr "Tegevused lisamisel"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:233
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:242
 msgid ""
 "By default, calibre will automatically add only known e-book files. \n"
 "This option tells calibre to add all file types, except those\n"
 "that have been explicitly ignored below."
 msgstr "Vaikimisi lisab calibre automaatselt ainult tuntud tüübiga e-raamatuid.\nSee valik ütleb calibrele, et lisama peab kõikide tüüpidega faile,\nvälja arvatud neid, mis on allpool selgelt eiratud."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:236
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:245
 msgid "Automatically add files of &all types (not just e-books)"
 msgstr "Automaatselt lisa kõiki tüüpi failid (mitte ainult e-raamatud)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:237
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:246
 msgid "Folder to automatically add files from"
 msgstr "Kaust, millest faile automaatselt lisada"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:238
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:247
 msgid "Browse for folder"
 msgstr "Otsi kausta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:240
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:249
 msgid "Automatically &convert added files to the current output format"
 msgstr "Automaatselt teisenda lisatavad failid praegusesse väljundformaati"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:241
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:250
 msgid ""
 "<b>Ignore</b> files with the following &extensions when automatically adding"
 " "
 msgstr "Automaatsel lisamisel <b>eira</b> järgnevate laienditega faile"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:242
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:251
 msgid ""
 "Specify a &folder. Any files you put into this folder will be automatically "
 "added to calibre (restart required)."
 msgstr "Määra kaust. Kõik sellesse kausta pandavad failid lisatakse automaatselt calibresse (taaskäivitamine vajalik)."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:243
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:252
 msgid ""
 "<b>WARNING:</b> Files in the above folder will be deleted after being added "
 "to calibre."
 msgstr "<b>HOIATUS:</b> Pärast calibresse lisamist kustutatakse failid ülalolevast kaustast."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:244
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:253
 msgid ""
 "If set, this option will cause calibre to check if a file\n"
 " being automatically added is already in the calibre library.\n"
@@ -20940,11 +21049,11 @@ msgid ""
 " you want to add it anyway."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:248
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:257
 msgid "Check for &duplicates when automatically adding files"
 msgstr "Faile automaatselt lisades kontrolli koopiaid"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:249
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:258
 msgid "&Automatic adding"
 msgstr "Automaatne lisamine"
 
@@ -21147,11 +21256,6 @@ msgstr "sisaldab mustrit"
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:75
 msgid "does not have pattern"
 msgstr "ei sisalda mustrit"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:82
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:60
-msgid "contains"
-msgstr "sisaldab"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:83
 msgid "does not contain"
@@ -22960,133 +23064,137 @@ msgstr "Avaldamisaeg"
 msgid "<b>Configure %(name)s</b><br>%(desc)s"
 msgstr "<b>Allika %(name)s seadistamine</b><br>%(desc)s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:334
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:335
 msgid "No source selected"
 msgstr "Allikat pole valitud"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:335
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:336
 msgid "No source selected, cannot configure."
 msgstr "Ühtki allikat pole valitud, ei saa seadistada."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:121
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:123
+msgid "Max. &number of tags to download:"
+msgstr "Suurim arv allalaaditavaid silte:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:124
 msgid "Use &published date of \"first edition\" (from worldcat.org)"
 msgstr "Kasuta \"esmaväljalaske\" avaldamiskuupäeva (saidilt worldcat.org)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:122
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:125
 msgid "Max. &time to wait after first match is found:"
 msgstr "Suurim ooteaeg pärast esimese vaste leidmist:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:123
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:126
 msgid "Max. time to wait after first &cover is found:"
 msgstr "Suurim ooteaeg pärast esimese kaane leidmist:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:124
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:140
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:127
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:142
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:570
 msgid " secs"
 msgstr " sek"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:125
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:128
 msgid ""
 "<p>Different metadata sources have different sets of tags for the same book. If this option is checked, then calibre will use the smaller tag sets. These tend to be more like genres, while the larger tag sets tend to describe the books content.\n"
 "<p>Note that this option will only make a practical difference if one of the metadata sources has a genre like tag set for the book you are searching for. Most often, they all have large tag sets."
 msgstr "<p>Erinevatel metaandmete allikatel on sama raamatu jaoks erinevad siltide komplektid. Kui see valik on märgistatud, siis kasutab calibre väiksemat siltide komplekti. Need on enamasti rohkem nagu žanrid, samas kui suuremad sildikomplektid enamasti kirjeldavad raamatu sisu.\n<p>Pane tähele, et see valik on kasulik ainult siis, kui ühel metaandmete allikal on otsitava raamatu jaoks säetud žanrilaadne silt. Enamasti on neil kõigil suured sildikomplektid."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:127
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:130
 msgid ""
 "Prefer smaller tag sets when picking tags from different metadata sources"
 msgstr "Erinevatest metaandmete allikatest siltide valimisel eelista väiksemaid sildikomplekte"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:128
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:131
 msgid "Prefer &fewer tags"
 msgstr "Eelista vähem silte"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:129
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:132
 msgid "Swap &author names from FN LN to LN, FN"
 msgstr "Vaheta autorinimed: EN PN asemel PN, EN"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:131
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:134
 msgid ""
 "If you uncheck any fields, metadata for those fields will not be downloaded"
 msgstr "Kui mõne välja märgistuse eemaldad, ei laadita alla selle välja metaandmeid"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:132
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:135
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:573
 msgid "&Select all"
 msgstr "Vali kõik"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:133
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:136
 msgid "&Clear all"
 msgstr "Eemalda kõigilt märgistus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:134
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:137
 msgid ""
 "Restore your own subset of checked fields that you define using the 'Set as "
 "default' button"
 msgstr "Taasta oma märgitud väljade komplekt, mille määrasid nupul 'Määra vaikesätteks' klõpsates"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:135
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:138
 msgid "&Select default"
 msgstr "Vali vaikesätted"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:136
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:139
 msgid ""
 "Store the currently checked fields as the default, you can quickly apply the"
 " default using the 'Select default' button"
 msgstr "Talleta praegu valitud väljad vaikimisi sättena, mida saad kiiresti rakendada nupul 'Vali vaikesätted' klõpsates"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:137
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:140
 msgid "&Set as default"
 msgstr "Määra vaikesätteks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:138
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:141
 msgid "Convert all downloaded comments to plain &text"
 msgstr "Teisenda kõik allalaaditavad kommentaarid lihttekstiks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:139
-msgid "Max. &number of tags to download:"
-msgstr "Suurim arv allalaaditavaid silte:"
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:143
+msgid ""
+"<p>When downloading comments, append the downloaded comments to any existing"
+" comment, instead of overwriting them."
+msgstr "<p>Kommentaaride allalaadimisel lisa allalaaditud kommentaarid olemasolevatele, ära kirjuta neid üle."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:141
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:144
+msgid ""
+"When downloading comments, append the downloaded comments to any existing "
+"comment, instead of overwriting them."
+msgstr "Kommentaaride allalaadimisel lisa allalaaditud kommentaarid olemasolevatele, ära kirjuta neid üle."
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:145
+msgid "Append comments to &existing"
+msgstr "Lisa kommentaarid olemasolevatele"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:146
 msgid "Metadata sources"
 msgstr "Metaandmete allikad"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:142
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:147
 msgid ""
 "Disable any metadata sources you do not want by unchecking them. You can "
 "also set the cover priority. Covers from sources that have a higher "
 "(smaller) priority will be preferred when bulk downloading metadata.\n"
 msgstr "Keela kõik soovimatud metaandmete allikad, eemaldades nendelt märgistuse. Saad määrata ka kaanepiltide prioriteedi. Metaandmete massallalaadimisel eelistatakse kaanepilte kõrgema prioriteediga (väiksema numbriga) allikatest.\n"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:144
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:149
 msgid ""
 "Sources with a red X next to their names must be configured before they will"
 " be used. "
 msgstr "Allikad, mille nime kõrval on punane X, tuleb enne nende kasutamist seadistada."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:145
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:150
 msgid "C&onfigure selected source"
 msgstr "Seadista valitud allikat"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:146
-msgid ""
-"<p>When downloading comments, append the downloaded comments to any existing"
-" comment, instead of overwriting them."
-msgstr "<p>Kommentaaride allalaadimisel lisa allalaaditud kommentaarid olemasolevatele, ära kirjuta neid üle."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:147
-msgid ""
-"When downloading comments, append the downloaded comments to any existing "
-"comment, instead of overwriting them."
-msgstr "Kommentaaride allalaadimisel lisa allalaaditud kommentaarid olemasolevatele, ära kirjuta neid üle."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:148
-msgid "Append comments to &existing"
-msgstr "Lisa kommentaarid olemasolevatele"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:149
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:151
 msgid "Create &rules to filter/transform tags"
 msgstr "Loo reegleid siltide filteerimiseks/muundamiseks"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:152
+msgid "Create rules to &transform author names"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/misc.py:36
 msgid ""
@@ -24356,7 +24464,7 @@ msgstr "ID"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:158
 msgid "This tweak has its default value"
-msgstr ""
+msgstr "See peenseadistus on vaikimisi väärtusega"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:160
 msgid "This tweak has been customized"
@@ -25642,25 +25750,9 @@ msgstr "Asenda"
 msgid "Keep"
 msgstr "Säilita"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:50
-msgid "Lower-case"
-msgstr "Väiketähesta"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:51
-msgid "Upper-case"
-msgstr "Suurtähesta"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:52
 msgid "Split"
 msgstr ""
-
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:56
-msgid "is one of"
-msgstr "on üks neist"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:57
-msgid "is not one of"
-msgstr "ei ole üks neist"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:63
 msgid "Create the rule below, the rule can be used to remove or replace tags"
@@ -31425,19 +31517,19 @@ msgstr "Ava kaust (lahtipakitud EPUB) raamatuna"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:340
 msgid "Edit &next file"
-msgstr ""
+msgstr "Muuda järgmist faili"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:341
 msgid "Edit the next file in the spine"
-msgstr ""
+msgstr "Muuda järgmist faili raamatuseljal"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:342
 msgid "Edit &previous file"
-msgstr ""
+msgstr "Muuda eelmist faili"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:343
 msgid "Edit the previous file in the spine"
-msgstr ""
+msgstr "Muuda eelmist faili raamatuseljal"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:347
 msgid "&Revert to before"
@@ -33829,15 +33921,15 @@ msgstr "Peida nurgast suurus"
 msgid "Show size in corner"
 msgstr "Näita nurgas suurust"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:969
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:971
 msgid "Drag to resize"
 msgstr "Suuruse muutmiseks lohista"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1005
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1007
 msgid "Hide {}"
 msgstr "Peida {}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1005
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1007
 msgid "Show {}"
 msgstr "Kuva {}"
 

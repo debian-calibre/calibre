@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(843, 546)
+        Form.resize(843, 552)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.tabWidget = QtWidgets.QTabWidget(Form)
@@ -20,6 +20,9 @@ class Ui_Form(object):
         self.main_interface_tab.setObjectName("main_interface_tab")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.main_interface_tab)
         self.gridLayout_9.setObjectName("gridLayout_9")
+        self.opt_disable_animations = QtWidgets.QCheckBox(self.main_interface_tab)
+        self.opt_disable_animations.setObjectName("opt_disable_animations")
+        self.gridLayout_9.addWidget(self.opt_disable_animations, 5, 1, 1, 1)
         self.label_widget_style = QtWidgets.QLabel(self.main_interface_tab)
         self.label_widget_style.setObjectName("label_widget_style")
         self.gridLayout_9.addWidget(self.label_widget_style, 0, 0, 1, 1)
@@ -72,7 +75,7 @@ class Ui_Form(object):
         self.opt_show_layout_buttons.setObjectName("opt_show_layout_buttons")
         self.gridLayout_9.addWidget(self.opt_show_layout_buttons, 7, 1, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_9.addItem(spacerItem, 13, 0, 1, 1)
+        self.gridLayout_9.addItem(spacerItem, 14, 0, 1, 1)
         self.opt_systray_icon = QtWidgets.QCheckBox(self.main_interface_tab)
         self.opt_systray_icon.setObjectName("opt_systray_icon")
         self.gridLayout_9.addWidget(self.opt_systray_icon, 5, 0, 1, 1)
@@ -101,9 +104,6 @@ class Ui_Form(object):
         self.opt_language.setMinimumContentsLength(20)
         self.opt_language.setObjectName("opt_language")
         self.gridLayout_9.addWidget(self.opt_language, 3, 1, 1, 1)
-        self.opt_disable_animations = QtWidgets.QCheckBox(self.main_interface_tab)
-        self.opt_disable_animations.setObjectName("opt_disable_animations")
-        self.gridLayout_9.addWidget(self.opt_disable_animations, 5, 1, 1, 1)
         self.opt_show_splash_screen = QtWidgets.QCheckBox(self.main_interface_tab)
         self.opt_show_splash_screen.setObjectName("opt_show_splash_screen")
         self.gridLayout_9.addWidget(self.opt_show_splash_screen, 6, 1, 1, 1)
@@ -121,7 +121,10 @@ class Ui_Form(object):
         self.gridLayout_9.addWidget(self.opt_hidpi, 4, 1, 1, 1)
         self.opt_dnd_merge = QtWidgets.QCheckBox(self.main_interface_tab)
         self.opt_dnd_merge.setObjectName("opt_dnd_merge")
-        self.gridLayout_9.addWidget(self.opt_dnd_merge, 12, 0, 1, 1)
+        self.gridLayout_9.addWidget(self.opt_dnd_merge, 13, 0, 1, 1)
+        self.opt_booklist_grid = QtWidgets.QCheckBox(self.main_interface_tab)
+        self.opt_booklist_grid.setObjectName("opt_booklist_grid")
+        self.gridLayout_9.addWidget(self.opt_booklist_grid, 12, 0, 1, 2)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(I("lt.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.main_interface_tab, icon, "")
@@ -535,6 +538,8 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
+        self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
+        self.opt_disable_animations.setText(_("Disable &animations"))
         self.label_widget_style.setText(_("User interface style (&needs restart):"))
         self.label_17.setText(_("&User interface layout (needs restart):"))
         self.label_4.setText(_("E&xtra spacing to add between rows in the book list (can be negative):"))
@@ -551,8 +556,6 @@ class Ui_Form(object):
         self.label_2.setText(_("&Interface font:"))
         self.opt_disable_tray_notification.setToolTip(_("Disable popup notifications when calibre completes jobs such a conversion, sending to device etc. The notifications are sent via the operating system notification facility, if available. Note that on windows, you have to enable the system tray icon for notifications to work."))
         self.opt_disable_tray_notification.setText(_("Disable n&otifications on job completion"))
-        self.opt_disable_animations.setToolTip(_("Disable all animations. Useful if you have a slow/old computer."))
-        self.opt_disable_animations.setText(_("Disable &animations"))
         self.opt_show_splash_screen.setText(_("Show the &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
         self.opt_row_numbers_in_book_list.setText(_("Show &row numbers in the book list"))
@@ -567,6 +570,7 @@ class Ui_Form(object):
 "<li><b>Off</b>: Do not adjust the user interface, regardless of Qt environment variables.</li>\n"
 "</ul>"))
         self.opt_dnd_merge.setText(_("Allow using &drag and drop to merge books"))
+        self.opt_booklist_grid.setText(_("Draw a &grid in the book list"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.main_interface_tab), _("&Main interface"))
         self.label_19.setText(_("Control the Cover grid view. You can enable this view by clicking the \"Layout\" button in the bottom right corner of the main calibre window."))
         self.label_14.setText(_("Field to show &under the covers:"))

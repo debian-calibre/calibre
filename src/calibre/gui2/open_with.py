@@ -327,7 +327,7 @@ def choose_program(file_type='jpeg', parent=None, prefs=oprefs):
     return entry
 
 
-def populate_menu(menu, receiver, file_type):
+def populate_menu(menu, connect_action, file_type):
     file_type = file_type.lower()
     for entry in oprefs['entries'].get(file_type, ()):
         icon, text = entry_to_icon_text(entry)
@@ -336,8 +336,7 @@ def populate_menu(menu, receiver, file_type):
         if sa is not None:
             text += '\t' + sa.shortcut().toString(QKeySequence.NativeText)
         ac = menu.addAction(icon, text)
-
-        ac.triggered.connect(partial(receiver, entry))
+        connect_action(ac, entry)
     return menu
 
 # }}}
@@ -435,7 +434,8 @@ def register_keyboard_shortcuts(gui=None, finalize=False):
             name = _('Open {0} files with {1}').format(t, text)
             ac = QAction(gui)
             unique_name = application['uuid']
-            ac.triggered.connect(partial(gui.open_with_action_triggerred, filetype, application))
+            func = partial(gui.open_with_action_triggerred, filetype, application)
+            ac.triggered.connect(func)
             gui.keyboard.register_shortcut(unique_name, name, action=ac, group=_('Open With'))
             gui.addAction(ac)
             registered_shortcuts[unique_name] = ac
