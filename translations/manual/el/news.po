@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 18:28+0530\n"
-"PO-Revision-Date: 2018-07-15 11:12+0000\n"
+"POT-Creation-Date: 2018-08-10 08:26+0530\n"
+"PO-Revision-Date: 2018-08-17 07:28+0000\n"
 "Last-Translator: Georgios Savopulos <gsavopul@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/calibre/calibre/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -146,7 +146,7 @@ msgid ""
 "alone, like article headings. In order, to have perfect content extraction, "
 "we will need to customize the fetch process, as described in the next "
 "section."
-msgstr "Ακολουθήστε τη διαδικασία που περιγράφηκε στην ενότητα :ref:`calibre_blog` παραπάνω για τη δημιουργία συνταγής για το *The BBC* (με χρήση των προαναφερθέντων ροών). Κοιτώντας στο ληφθέν ψηφιακό βιβλίο, βλέπουμε ότι το calibre έχει κάνει μια αξιόπιστη δουλειά στην επιλογή του περιεχομένου που σας ενδιαφέρει από την ιστοσελίδα του κάθε άρθρου. Ωστόσο, η διαδικασία επιλογής δεν είναι τέλεια. Μερικές φορές αφήνει ανεπιθύμητο περιεχόμενο όπως μενού και βοηθήματα πλοήγησης, ή αφαιρεί περιεχόμενο που θα έπρεπε να έχει επιλεγεί, όπως επικεφαλίδες άρθρων. Για να τελειοποιηθεί η διαδικασία επιλογής θα χρειαστεί να εξατομικεύσουμε τη διαδικασία λήψης όπως περιγράφεται στην επόμενη ενότητα."
+msgstr "Ακολουθήστε τη διαδικασία που περιγράφηκε στην ενότητα :ref:`calibre_blog` παραπάνω για τη δημιουργία συνταγής για το *BBC* (με χρήση των προαναφερθέντων ροών). Κοιτώντας στο ληφθέν ψηφιακό βιβλίο, βλέπουμε ότι το calibre έχει κάνει μια αξιόπιστη δουλειά στην επιλογή του περιεχομένου που σας ενδιαφέρει από την ιστοσελίδα του κάθε άρθρου. Ωστόσο, η διαδικασία επιλογής δεν είναι τέλεια. Μερικές φορές αφήνει ανεπιθύμητο περιεχόμενο όπως μενού και βοηθήματα πλοήγησης, ή αφαιρεί περιεχόμενο που θα έπρεπε να έχει επιλεγεί, όπως επικεφαλίδες άρθρων. Για να τελειοποιηθεί η διαδικασία επιλογής θα χρειαστεί να εξατομικεύσουμε τη διαδικασία λήψης όπως περιγράφεται στην επόμενη ενότητα."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:68
 msgid "Customizing the fetch process"
@@ -215,7 +215,7 @@ msgid ""
 "Now in the :guilabel:`Advanced Mode` of the Custom  news sources dialog, you"
 " should see something like (remember to select *The BBC* recipe before "
 "switching to advanced mode):"
-msgstr ""
+msgstr "Τώρα, στην :guilabel:`Κατάσταση για προχωρημένους` του διαλόγου Προσθήκη εξατομικευμένης πηγής ειδήσεων, πρέπει να δείτε κάτι σαν (θυμηθείτε να επιλέξετε τη συνταγή *BBC* πριν πάτε στην κατάσταση για προχωρημένους):"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:94
 msgid ""
@@ -223,13 +223,13 @@ msgid ""
 "translated to Python code in a straightforward manner. We need to add "
 "instructions to this recipe to use the print version of the articles. All "
 "that's needed is to add the following two lines:"
-msgstr ""
+msgstr "Μπορείτε να δείτε ότι τα πεδία από τη :guilabel:`Βασική κατάσταση` έχουν μεταφραστεί σε κώδικα Python με ένα ξεκάθαρο τρόπο. Χρειαζόμαστε την προσθήκη εντολών στη συνταγή αυτή, για να χρησιμοποιεί την εκτυπώσιμη έκδοση των άρθρων. Το μόνο που χρειάζεται είναι να προσθέσουμε τις ακόλουθες 2 γραμμές:"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:101
 msgid ""
 "This is Python, so indentation is important. After you've added the lines, "
 "it should look like:"
-msgstr ""
+msgstr "Έχουμε να κάνουμε με την Python, οπότε οι εσοχές είναι σημαντικές. Αφού έχετε προσθέσει τις γραμμές, θα πρέπει να μοιάζει με το εξής:"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:106
 msgid ""
@@ -239,7 +239,7 @@ msgid ""
 "the new URL that points to the print version of the article. To learn about "
 "`Python <https://www.python.org>`_ see the `tutorial "
 "<https://docs.python.org/2/tutorial/>`_."
-msgstr ""
+msgstr "Στα παραπάνω, η ``def print_version(self, url)`` ορίζει μια *μέθοδο* που καλείται από το calibre για κάθε άρθρο. Το ``url`` είναι το URL του αρχικού άρθρου. Αυτό που κάνει η ``print_version`` είναι να πάρει αυτό το url και να το αντικαταστήσει με το νέο URL που δείχνει στην εκτυπώσιμη έκδοση του άρθρου. Για να μάθετε για την `Python <https://www.python.org>`_ δείτε τον `οδηγό εκμάθησης<https://docs.python.org/2/tutorial/>`_."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:108
 msgid ""
@@ -250,11 +250,11 @@ msgid ""
 "e-book, but even after the fixing process, the font size of the menus and "
 "navigation bar to become too large relative to the article text. To fix "
 "this, we will do some more customization, in the next section."
-msgstr ""
+msgstr "Τώρα, πατήστε το κουμπί :guilabel:`Προσθήκη/ενημέρωση συνταγής` και οι αλλαγές σας θα αποθηκευτούν. Κατεβάστε ξανά το ψηφιακό βιβλίο. Θα πρέπει να έχετε ένα αρκετά καλύτερο ψηφιακό βιβλίο. Ένα από τα προβλήματα με τη νέα έκδοση είναι ότι οι γραμματοσειρές στην ιστοσελίδα της εκτυπώσιμης έκδοσης είναι υπερβολικά μικρές. Αυτό διορθώνεται αυτόματα κατά τη μετατροπή σε ψηφιακό βιβλίο, αλλά ακόμα και μετά την επιδιόρθωση το μέγεθος της γραμματοσειράς των μενού και της μπάρας πλοήγησης γίνονται πολύ μεγάλα συγκριτικά με το κείμενο του άρθρου. Για να διορθωθεί αυτό, θα κάνουμε λίγη παραπάνω εξατομίκευση στην επόμενη ενότητα."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:111
 msgid "Replacing article styles"
-msgstr ""
+msgstr "Αντικατάσταση του στυλ των άρθρων"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:113
 msgid ""
@@ -262,22 +262,22 @@ msgid ""
 "print version of *The BBC* was too small. In most websites, *The BBC* "
 "included, this font size is set by means of :term:`CSS` stylesheets. We can "
 "disable the fetching of such stylesheets by adding the line::"
-msgstr ""
+msgstr "Στην προηγούμενη ενότητα είδαμε πως το μέγεθος της γραμματοσειράς των άρθρων στην εκτυπώσιμη έκδοσή τους στο *BBC* ήταν πολύ μικρό. Στις περισσότερες ιστοσελίδες, συμπεριλαμβανομένου του *BBC*, το μέγεθος της γραμματοσειράς ορίζεται με χρήση φύλλων στυλ :term:`CSS`. Μπορούμε να απενεργοποιήσουμε τη λήψη τέτοιων φύλλων στυλ προσθέτοντας τη γραμμή::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:119
 msgid "The recipe now looks like:"
-msgstr ""
+msgstr "Η συνταγή τώρα μοιάζει με:"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:124
 msgid ""
 "The new version looks pretty good. If you're a perfectionist, you'll want to"
 " read the next section, which deals with actually modifying the downloaded "
 "content."
-msgstr ""
+msgstr "Η νέα έκδοση φαίνεται πολύ καλή. Αν είστε τελειομανείς, θα θέλετε να διαβάσετε την επόμενη ενότητα, η οποία ουσιαστικά πραγματεύεται την τροποποίηση του ληφθέντος περιεχομένου."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:127
 msgid "Slicing and dicing"
-msgstr ""
+msgstr "Τομές και τεμαχισμός"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:129
 msgid ""
@@ -286,25 +286,25 @@ msgid ""
 "at our old friend the :ref:`The BBC <bbc1>` recipe again. Looking at the "
 "source code (:term:`HTML`) of a couple of articles (print version), we see "
 "that they have a footer that contains no useful information, contained in"
-msgstr ""
+msgstr "Το calibre έχει πολύ ισχυρές και ευπροσάρμοστες ικανότητες για τη διαχείριση ληφθέντος περιεχομένου. Για να επιδείξουμε λίγες εξ αυτών, ας κοιτάξουμε τον παλιόφιλό μας, τη συνταγή :ref:`BBC <bbc1>`, για μια ακόμα φορά. Κοιτώντας τον πηγαίο κώδικα (:term:`HTML`) σε λίγα άρθρα (στην εκτυπώσιμη έκδοσή τους), βλέπουμε ότι έχουν ένα υποσέλιδο που δεν περιέχει καμιά χρήσιμη πληροφορία, το οποίο περιέχεται στο"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:137
 msgid "This can be removed by adding::"
-msgstr ""
+msgstr "Αυτό μπορεί να αφαιρεθεί προσθέτοντας::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:141
 msgid ""
 "to the recipe. Finally, lets replace some of the :term:`CSS` that we "
 "disabled earlier, with our own :term:`CSS` that is suitable for conversion "
 "to an e-book::"
-msgstr ""
+msgstr "στη συνταγή. Τέλος, ας αντικαταστήσουμε κάποια από τα  :term:`CSS` που απενεργοποιήσαμε νωρίτερα, με δικά μας :term:`CSS`, τα οποία είναι κατάλληλα για μετατροπή σε ψηφιακό βιβλίο::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:145
 msgid ""
 "With these additions, our recipe has become \"production quality\", indeed "
 "it is very close to the actual recipe used by calibre for the *BBC*, shown "
 "below:"
-msgstr ""
+msgstr "Με αυτές τις προσθήκες, η συνταγή μας έχει αποκτήσει \"ποιότητα παραγωγής\". Ουσιαστικά, είναι πολύ κοντά στην πραγματική συνταγή που χρησιμοποιεί το calibre για το *BBC*, η οποία παρατίθεται κάτωθι:"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:149
 msgid ""
@@ -352,7 +352,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:255
 msgid "The next interesting feature is::"
-msgstr ""
+msgstr "Το επόμενο ενδιαφέρον χαρακτηριστικό είναι::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:262
 msgid ""
@@ -394,7 +394,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:288
 msgid "Tips for developing new recipes"
-msgstr ""
+msgstr "Συμβουλές για ανάπτυξη νέων συνταγών"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:290
 msgid ""
@@ -501,4 +501,4 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/news.rst:341
 msgid "API documentation"
-msgstr ""
+msgstr "Τεκμηρίωση API"
