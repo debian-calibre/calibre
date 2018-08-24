@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "8月 10, 2018" "3.29.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "8月 24, 2018" "3.30.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -114,12 +114,12 @@ localhostのホスト名。SMTPサーバとの接続時に使用します。
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+TLS接続時のサーバ認証に使用するPEM形式のCA証明書ファイルへのパス。デフォルトではシステムのCA証明書を使用します。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+TLSを使った接続時にサーバ証明書の確認を行いません。これはバージョン3.27以前のCalibreにおけるデフォルトの動作でした。自己署名証明書あるいは不正な証明書を使った中継を利用している場合に、このオプションにより3.27以前と同様に動作させることができます。
 .UNINDENT
 .INDENT 0.0
 .TP
