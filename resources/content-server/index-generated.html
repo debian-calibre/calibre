@@ -8445,9 +8445,20 @@ return this.__repr__();
         book_list_container_id = "book-list-container";
         read_book_container_id = "read-book-container";
         INIT_ENDPOINT = "interface-data/init";
+        function has_offline_support(val) {
+            if (val !== undefined) {
+                has_offline_support.ans = val;
+            }
+            return has_offline_support.ans;
+        };
+        if (!has_offline_support.__argnames__) Object.defineProperties(has_offline_support, {
+            __argnames__ : {value: ["val"]}
+        });
+
         ρσ_modules["book_list.constants"].book_list_container_id = book_list_container_id;
         ρσ_modules["book_list.constants"].read_book_container_id = read_book_container_id;
         ρσ_modules["book_list.constants"].INIT_ENDPOINT = INIT_ENDPOINT;
+        ρσ_modules["book_list.constants"].has_offline_support = has_offline_support;
     })();
 
     (function(){
@@ -17075,7 +17086,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.30.0";
+        CALIBRE_VERSION = "3.31.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -27297,6 +27308,8 @@ return this.__repr__();
 
         var ajax_send = ρσ_modules.ajax.ajax_send;
 
+        var has_offline_support = ρσ_modules["book_list.constants"].has_offline_support;
+
         var BORDER_RADIUS = ρσ_modules["book_list.cover_grid"].BORDER_RADIUS;
 
         var get_db = ρσ_modules["book_list.globals"].get_db;
@@ -27317,8 +27330,8 @@ return this.__repr__();
         var build_rule = ρσ_modules.dom.build_rule;
         var clear = ρσ_modules.dom.clear;
         var ensure_id = ρσ_modules.dom.ensure_id;
-        var unique_id = ρσ_modules.dom.unique_id;
         var set_css = ρσ_modules.dom.set_css;
+        var unique_id = ρσ_modules.dom.unique_id;
 
         var create_custom_dialog = ρσ_modules.modals.create_custom_dialog;
 
@@ -27642,6 +27655,9 @@ return this.__repr__();
                     cl.lastChild.style.margin = "1ex 1rem";
                     cl.lastChild.dataset.lid = library_id;
                 }
+            }
+            if (!has_offline_support()) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("WARNING: This browser does not support Application Cache so offline access to calibre will not work. Some browsers only enable Application Cache over HTTPS connections, so you may have to setup HTTPS for your calibre server.")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; padding: 1rem; border-top: solid 1px currentColor"})])));
             }
         };
         if (!init.__argnames__) Object.defineProperties(init, {
@@ -32702,6 +32718,8 @@ return this.__repr__();
 
         var main = ρσ_modules["book_list.main"].main;
 
+        var has_offline_support = ρσ_modules["book_list.constants"].has_offline_support;
+
         is_running_in_iframe = false;
         autoreload_enabled = false;
         asked_appcache_update = false;
@@ -32745,9 +32763,15 @@ return this.__repr__();
                     }
                 }
             };
-            window.applicationCache.addEventListener("updateready", on_appcache_ready);
-            if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-                on_appcache_ready();
+            if (window.applicationCache) {
+                window.applicationCache.addEventListener("updateready", on_appcache_ready);
+                if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+                    on_appcache_ready();
+                }
+                has_offline_support(true);
+            } else {
+                has_offline_support(false);
+                console.warn("Your browser does not have a working Application Cache, offline access will not work");
             }
             script = document.currentScript || document.scripts[0];
             main_js(script.textContent);
