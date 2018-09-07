@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 08:26+0530\n"
-"PO-Revision-Date: 2018-08-17 07:28+0000\n"
+"POT-Creation-Date: 2018-08-24 07:15+0530\n"
+"PO-Revision-Date: 2018-08-27 06:25+0000\n"
 "Last-Translator: Georgios Savopulos <gsavopul@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/calibre/calibre/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -311,33 +311,33 @@ msgid ""
 "This :term:`recipe` explores only the tip of the iceberg when it comes to "
 "the power of calibre. To explore more of the abilities of calibre we'll "
 "examine a more complex real life example in the next section."
-msgstr ""
+msgstr "Αυτή η :term:`recipe` εξερευνά μόνο την κορφή του παγόβουνου όσον αφορά την ισχύ του calibre. Για να εξερευνήσουμε περισσότερες από τις δυνατότητες του calibre, θα εξετάσουμε ένα πιο πολύπλοκο παράδειγμα πραγματικής χρήσης στην επόμενη ενότητα."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:152
 msgid "Real life example"
-msgstr ""
+msgstr "Παράδειγμα πραγματικής χρήσης"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:154
 msgid ""
 "A reasonably complex real life example that exposes more of the :term:`API` "
 "of ``BasicNewsRecipe`` is the :term:`recipe` for *The New York Times*"
-msgstr ""
+msgstr "Ένα αρκούντως περίπλοκο παράδειγμα πραγματικής χρήσης που εκθέτει περισσότερο από το :term:`API` των ``BasicNewsRecipe`` είναι η :term:`recipe` των *New York Times*"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:240
 msgid "We see several new features in this :term:`recipe`. First, we have::"
-msgstr ""
+msgstr "Βλέπουμε αρκετά νέα χαρακτηριστικά στη :term:`recipe` αυτή. Αρχικά, έχουμε::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:244
 msgid ""
 "This sets the displayed time on the front page of the created e-book to be "
 "in the format, ``Day, Day_Number Month, Year``. See :attr:`timefmt "
 "<calibre.web.feeds.news.BasicNewsRecipe.timefmt>`."
-msgstr ""
+msgstr "Αυτό θέτει την ημερομηνία που εμφανίζεται στην μπροστινή σελίδα του δημιουργημένου ψηφιακού βιβλίου στη μορφή ``Όνομα_μέρας, αριθμός_μέρας όνομα_μήνα έτος``. Δείτε :attr:`μορφοποιήσεις_χρόνου <calibre.web.feeds.news.BasicNewsRecipe.timefmt>`."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:247
 msgid ""
 "Then we see a group of directives to cleanup the downloaded :term:`HTML`::"
-msgstr ""
+msgstr "Στη συνέχεια βλέπουμε μια ομάδα από εντολές για εκκαθάριση του ληφθέντος :term:`HTML`::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:253
 msgid ""
@@ -348,7 +348,7 @@ msgid ""
 "<calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before>`, "
 ":attr:`remove_tags_after "
 "<calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after>`."
-msgstr ""
+msgstr "Αυτές απομακρύνουν τα πάντα πριν από την πρώτη ετικέτα ``<h1>``, και ότι υπάρχει μετά την πρώτη ετικέτα της οποίας το όνομα είναι ``footer``. Δείτε :attr:`αφαίρεση_ετικετών <calibre.web.feeds.news.BasicNewsRecipe.remove_tags>`, :attr:`αφαίρεση_ετικετών_πριν <calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before>`, :attr:`αφαίρεση_ετικετών_μετά <calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after>`."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:255
 msgid "The next interesting feature is::"
@@ -364,7 +364,7 @@ msgid ""
 "same, logged in, browser instance to fetch all content. See `mechanize "
 "<https://mechanize.readthedocs.io/en/latest/>`_ to understand the code in "
 "``get_browser``."
-msgstr ""
+msgstr "Το ``needs_subscription = True`` ενημερώνει το calibre ότι η συνταγή αυτή χρειάζεται ένα όνομα χρήστη και ένα κωδικό εξουσιοδότησης για την πρόσβαση στο περιεχόμενο. Αυτό έχει ως αποτέλεσμα το calibre να ζητήσει όνομα χρήστη και κωδικό όποτε προσπαθήσετε να χρησιμοποιήσετε τη συνταγή αυτή. Ο κώδικας στο :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` ουσιαστικά κάνει την είσοδό σας στην ιστοσελίδα των NYT. Μόλις μπείτε, το calibre θα χρησιμοποιήσει την ίδια, εξουσιοδοτημένη από την ιστοσελίδα διεργασία φυλλομέτρησης, για τη λήψη όλου του περιεχομένου. Κοιτάξτε στο `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ για να κατανοήσετε τον κώδικα του ``get_browser``."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:264
 msgid ""
@@ -381,7 +381,7 @@ msgid ""
 "and `html5lib <https://github.com/html5lib/html5lib-python>`_, which are the"
 " recommended parsers. To use them, replace the call to ``index_to_soup()`` "
 "with the following::"
-msgstr ""
+msgstr "Το επόμενο νέο χαρακτηριστικό είναι η μέθοδος :meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index`. Η δουλειά της είναι να πάει στο https://www.nytimes.com/pages/todayspaper/index.html και να λάβει τη λίστα των άρθρων που εμφανίζονται στη *σημερινή* εφημερίδα. Αν και πιο σύνθετη από μια απλή χρήση :term:`RSS`, η συνταγή δημιουργεί ένα ψηφιακό βιβλίο που αντιστοιχεί πολύ στενά στη σημερινή εφημερίδα. Η ``parse_index`` κάνει βαριά χρήση του πακέτου `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ για τη σάρωση της ιστοσελίδας της σημερινής εφημερίδας. Μπορείτε επίσης να χρησιμοποιήσετε άλλους, πιο σύγχρονους, σαρωτές αν δεν σας αρέσει το BeatifulSoup. Το calibre έρχεται με τους `lxml <http://lxml.de/>`_ και `html5lib <https://github.com/html5lib/html5lib-python>`_, οι οποίοι είναι οι προτεινόμενοι σαρωτές. Για να τους χρησιμοποιήσετε, αντικαταστήστε την κλήση της ``index_to_soup()`` ως ακολούθως::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:285
 msgid ""
@@ -390,7 +390,7 @@ msgid ""
 "can be used to perform arbitrary transformations on every downloaded HTML "
 "page. Here it is used to bypass the ads that the nytimes shows you before "
 "each article."
-msgstr ""
+msgstr "Το τελευταίο νέο χαρακτηριστικό είναι η μέθοδος :meth:`calibre.web.feeds.news.BasicNewsRecipe.preprocess_html`. Μπορεί να χρησιμοποιηθεί για να επιφέρει τυχαίους μετασχηματισμούς σε κάθε ληφθείσα σελίδα HTML. Εδώ χρησιμοποιείται για να υπερκεράσει τις διαφημίσεις που σας δείχνουν οι nytimes πριν από κάθε άρθρο."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:288
 msgid "Tips for developing new recipes"
@@ -402,7 +402,7 @@ msgid ""
 "Create the recipe using your favorite Python editor and save it to a file "
 "say :file:`myrecipe.recipe`. The `.recipe` extension is required. You can "
 "download content using this recipe with the command::"
-msgstr ""
+msgstr "Ο καλύτερος τρόπος ανάπτυξης νέων συνταγών είναι με τη χρήση της διεπαφής γραμμής εντολών. Δημιουργήστε τη συνταγή χρησιμοποιώντας τον αγαπημένο σας συντάκτη προγραμμάτων Python, και αποθηκεύστε τη συνταγή σε ένα αρχείο, πχ :file:`myrecipe.recipe`. Η κατάληξη `.recipe` απαιτείται. Μπορείτε να λάβετε περιεχόμενο χρησιμοποιώντας τη συνταγή αυτή με την εντολή::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:294
 msgid ""
@@ -414,7 +414,7 @@ msgid ""
 "put the downloaded HTML into the ``debug/input`` directory, where ``debug`` "
 "is the directory you specified in the :option:`ebook-convert --debug-"
 "pipeline` option."
-msgstr ""
+msgstr "Η εντολή :command:`ebook-convert` θα κατεβάσει όλες τις ιστοσελίδες και θα τις αποθηκεύσει στο αρχείο EPUB  :file:`myrecipe.epub`. Η επιλογή ``-vv`` κάνει την εντολή ebook-convert να εξάγει πολλές πληροφορίες για το τι ακριβώς κάνει. Η επιλογή :option:`ebook-convert-recipe-input --test` έχει ως αποτέλεσμα την λήψη λίγων μόνο ζευγών άρθρων, από 2 το πολύ ροές. Επιπροσθέτως, η εντολή ebook-convert θα τοποθετήσει το ληφθέν HTML στο φάκελο ``debug/input``, όπου ``debug`` είναι ο φάκελος που καθορίσατε στην επιλογή :option:`ebook-convert --debug-pipeline`."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:302
 msgid ""
@@ -422,7 +422,7 @@ msgid ""
 "by opening the file :file:`debug/input/index.html` in a browser. Once you're"
 " satisfied that the download and preprocessing is happening correctly, you "
 "can generate e-books in different formats as shown below::"
-msgstr ""
+msgstr "Όταν η λήψη ολοκληρωθεί, μπορείτε να κοιτάξετε το ληφθέν :term:`HTML` ανοίγοντας το αρχείο :file:`debug/input/index.html` σε ένα φυλλομετρητή. Μόλις είστε ικανοποιημένοι ότι η λήψη και η προεπεξεργασία γίνονται σωστά, μπορείτε να δημιουργήσετε ψηφιακά βιβλία σε διάφορες μορφές όπως φαίνεται παρακάτω::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:309
 msgid ""
@@ -431,7 +431,7 @@ msgid ""
 " the `calibre recipes forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_ to share it "
 "with other calibre users."
-msgstr ""
+msgstr "Αν είστε ικανοποιημένοι με τη συνταγή σας και νοιώθετε πως υπάρχει αρκετή ζήτηση που να δικαιολογεί τη συμπερίληψή της στο σύνολο των ενσωματωμένων συνταγών, αναρτήστε τη συνταγή σας στο `φόρουμ συνταγών calibre <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_ για να τη μοιραστείτε με άλλους χρήστες του calibre."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:312
 msgid ""
@@ -439,65 +439,65 @@ msgid ""
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in "
 ":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr ""
+msgstr "Στο macOS, τα εργαλεία γραμμής εντολών είναι μέσα στο φάκελο εγκατάστασης του calibre, για παράδειγμα, αν εγκαταστήσατε το calibre στο φάκελο :file:`/Applications` τα εργαλεία γραμμής εντολών είναι στη θέση :file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:318
 msgid ":doc:`generated/en/ebook-convert`"
-msgstr ""
+msgstr ":doc:`generated/el/ebook-convert`"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:319
 msgid "The command line interface for all e-book conversion."
-msgstr ""
+msgstr "Η διεπαφή γραμμής εντολών για ολόκληρη τη μετατροπή των ψηφιακών βιβλίων."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:323
 msgid "Further reading"
-msgstr ""
+msgstr "Πρόσθετο διάβασμα"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:325
 msgid ""
 "To learn more about writing advanced recipes using some of the facilities, "
 "available in ``BasicNewsRecipe`` you should consult the following sources:"
-msgstr ""
+msgstr "Για να μάθετε περισσότερα σχετικά με τη συγγραφή προχωρημένων συνταγών χρησιμοποιώντας κάποιες από τις διαθέσιμες δυνατότητες της κλάσης ``BasicNewsRecipe``, συμβουλευτείτε τις παρακάτω πηγές:"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:328
 msgid ":ref:`API documentation <news_recipe>`"
-msgstr ""
+msgstr ":ref:`Τεκμηρίωση API <news_recipe>`"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:328
 msgid ""
 "Documentation of the ``BasicNewsRecipe`` class and all its important methods"
 " and fields."
-msgstr ""
+msgstr "Τεκμηρίωση για την κλάση ``BasicNewsRecipe`` και όλες τις σημαντικές μεθόδους και πεδία της."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:331
 msgid ""
 "`BasicNewsRecipe "
 "<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/web/feeds/news.py>`_"
-msgstr ""
+msgstr "`BasicNewsRecipe <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/web/feeds/news.py>`_"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:331
 msgid "The source code of ``BasicNewsRecipe``"
-msgstr ""
+msgstr "Ο πηγαίος κώδικας της ``BasicNewsRecipe``"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:334
 msgid ""
 "`Built-in recipes "
 "<https://github.com/kovidgoyal/calibre/tree/master/recipes>`_"
-msgstr ""
+msgstr "`Ενσωματωμένες συνταγές <https://github.com/kovidgoyal/calibre/tree/master/recipes>`_"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:334
 msgid "The source code for the built-in recipes that come with calibre"
-msgstr ""
+msgstr "Ο πηγαίος κώδικας για τις ενσωματωμένες συνταγές που έρχονται με το calibre"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:338
 msgid ""
 "`The calibre recipes forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
-msgstr ""
+msgstr "`Το φόρουμ συνταγών calibre <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:337
 msgid "Lots of knowledgeable calibre recipe writers hang out here."
-msgstr ""
+msgstr "Εκεί συχνάζουν πολλοί συγγραφείς συνταγών calibre που γνωρίζουν καλά το θέμα."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:341
 msgid "API documentation"
