@@ -254,8 +254,8 @@ class BooksView(QTableView):  # {{{
         setup_dnd_interface(self)
         for wv in self, self.pin_view:
             wv.setAlternatingRowColors(True)
-            wv.setShowGrid(False)
             wv.setWordWrap(False)
+        self.refresh_grid()
 
         self.rating_delegate = RatingDelegate(self)
         self.half_rating_delegate = RatingDelegate(self, is_half_star=True)
@@ -403,6 +403,8 @@ class BooksView(QTableView):  # {{{
         elif action.startswith('align_'):
             alignment = action.partition('_')[-1]
             self._model.change_alignment(column, alignment)
+        elif action.startswith('font_'):
+            self._model.change_column_font(column, action[len('font_'):])
         elif action == 'quickview':
             from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
             qv = get_quickview_action_plugin()
@@ -437,6 +439,18 @@ class BooksView(QTableView):  # {{{
                     if al == x:
                         a.setCheckable(True)
                         a.setChecked(True)
+            if not isinstance(view, DeviceBooksView):
+                col_font = self._model.styled_columns.get(col)
+                m = ans.addMenu(_('Change font style for %s') % name)
+                for x, t, f in (
+                        ('normal', _('Normal font'), None), ('bold', _('Bold Font'), self._model.bold_font),
+                        ('italic', _('Italic font'), self._model.italic_font), ('bi', _('Bold and Italic font'), self._model.bi_font),
+                ):
+                    a = m.addAction(t, partial(handler, action='font_' + x))
+                    if f is col_font:
+                        a.setCheckable(True)
+                        a.setChecked(True)
+
         if self.is_library_view:
             if self._model.db.field_metadata[col]['is_category']:
                 act = ans.addAction(_('Quickview column %s') % name, partial(handler, action='quickview'))
@@ -785,6 +799,10 @@ class BooksView(QTableView):  # {{{
     def refresh_row_sizing(self):
         self.row_sizing_done = False
         self.do_row_sizing()
+
+    def refresh_grid(self):
+        for wv in self, self.pin_view:
+            wv.setShowGrid(bool(gprefs['booklist_grid']))
 
     def do_row_sizing(self):
         # Resize all rows to have the correct height

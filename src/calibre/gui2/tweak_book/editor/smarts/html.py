@@ -350,6 +350,25 @@ class Smarts(NullSmarts):
         editor.setTextCursor(c)
         return True
 
+    def remove_tag(self, editor):
+        editor.highlighter.join()
+        if not self.last_matched_closing_tag and not self.last_matched_tag:
+            return
+        c = editor.textCursor()
+        c.beginEditBlock()
+
+        def erase_tag(tag):
+            c.setPosition(tag.start_block.position() + tag.start_offset)
+            c.setPosition(tag.end_block.position() + tag.end_offset + 1, c.KeepAnchor)
+            c.removeSelectedText()
+
+        if self.last_matched_closing_tag:
+            erase_tag(self.last_matched_closing_tag)
+        if self.last_matched_tag:
+            erase_tag(self.last_matched_tag)
+        c.endEditBlock()
+        self.last_matched_tag = self.last_matched_closing_tag = None
+
     def rename_block_tag(self, editor, new_name):
         editor.highlighter.join()
         c = editor.textCursor()

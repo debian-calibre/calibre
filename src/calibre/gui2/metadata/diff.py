@@ -431,7 +431,8 @@ class CompareSingle(QWidget):
             else:
                 continue
             neww = cls(field, True, self, m, extra)
-            neww.changed.connect(partial(self.changed, field))
+            neww.setObjectName(field)
+            connect_lambda(neww.changed, self, lambda self: self.changed(self.sender().objectName()))
             if isinstance(neww, EditWithComplete):
                 try:
                     neww.update_items_cache(db.new_api.all_field_names(field))
@@ -444,7 +445,8 @@ class CompareSingle(QWidget):
             newl.setBuddy(neww)
             button = RightClickButton(self)
             button.setIcon(QIcon(I('back.png')))
-            button.clicked.connect(partial(self.revert, field))
+            button.setObjectName(field)
+            connect_lambda(button.clicked, self, lambda self: self.revert(self.sender().objectName()))
             button.setToolTip(revert_tooltip % m['name'])
             if field == 'identifiers':
                 button.m = m = QMenu(button)
@@ -580,7 +582,7 @@ class CompareMany(QDialog):
                 b.setToolTip(reject_all_tooltip)
             b.clicked.connect(self.reject_all_remaining)
             self.sb = b = bb.addButton(_('R&eject'), bb.ActionRole)
-            b.clicked.connect(partial(self.next_item, False))
+            connect_lambda(b.clicked, self, lambda self: self.next_item(False))
             b.setIcon(QIcon(I('minus.png'))), b.setAutoDefault(False)
             if reject_button_tooltip:
                 b.setToolTip(reject_button_tooltip)
@@ -597,14 +599,14 @@ class CompareMany(QDialog):
             b.setToolTip(_('Move to next [%s]') % self.next_action.shortcut().toString(QKeySequence.NativeText))
             self.next_action.triggered.connect(b.click)
         b.setIcon(QIcon(I('forward.png' if self.total > 1 else 'ok.png')))
-        b.clicked.connect(partial(self.next_item, True))
+        connect_lambda(b.clicked, self, lambda self: self.next_item(True))
         b.setDefault(True), b.setAutoDefault(True)
         self.bbh = h = QHBoxLayout()
         h.setContentsMargins(0, 0, 0, 0)
         l.addLayout(h)
         self.markq = m = QCheckBox(_('&Mark rejected books'))
         m.setChecked(gprefs['metadata_diff_mark_rejected'])
-        m.stateChanged[int].connect(lambda : gprefs.set('metadata_diff_mark_rejected', m.isChecked()))
+        connect_lambda(m.stateChanged[int], self, lambda self: gprefs.set('metadata_diff_mark_rejected', self.markq.isChecked()))
         m.setToolTip(_('Mark rejected books in the book list after this dialog is closed'))
         h.addWidget(m), h.addWidget(bb)
 
@@ -701,4 +703,4 @@ if __name__ == '__main__':
     if d.exec_() == d.Accepted:
         for changed, mi in d.accepted.itervalues():
             if changed and mi is not None:
-                print (mi)
+                print(mi)

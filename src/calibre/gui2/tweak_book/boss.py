@@ -11,8 +11,8 @@ from functools import partial, wraps
 from urlparse import urlparse
 
 from PyQt5.Qt import (
-    QObject, QApplication, QDialog, QGridLayout, QLabel, QSize, Qt,
-    QDialogButtonBox, QIcon, QInputDialog, QUrl, pyqtSignal)
+    QObject, QApplication, QDialog, QGridLayout, QLabel, QSize, Qt, QCheckBox,
+    QDialogButtonBox, QIcon, QInputDialog, QUrl, pyqtSignal, QVBoxLayout)
 
 from calibre import prints, isbytestring
 from calibre.constants import cache_dir, iswindows
@@ -768,10 +768,32 @@ class Boss(QObject):
         self.commit_all_editors_to_container()
         k = {} if allow_revert else {'revert_msg': None}
         d = self.create_diff_dialog(**k)
-        d.revert_requested.connect(partial(self.revert_requested, self.global_undo.previous_container))
+        previous_container = self.global_undo.previous_container
+        connect_lambda(d.revert_requested, self, lambda self: self.revert_requested(previous_container))
         other = to_container or self.global_undo.previous_container
         d.container_diff(other, self.global_undo.current_container,
                          names=(self.global_undo.label_for_container(other), self.global_undo.label_for_container(self.global_undo.current_container)))
+
+    def ask_to_show_current_diff(self, name, title, msg, allow_revert=True, to_container=None):
+        if tprefs.get('skip_ask_to_show_current_diff_for_' + name):
+            return
+        d = QDialog(self.gui)
+        k = QVBoxLayout(d)
+        d.setWindowTitle(title)
+        k.addWidget(QLabel(msg))
+        k.confirm = cb = QCheckBox(_('Show this popup again'))
+        k.addWidget(cb)
+        cb.setChecked(True)
+        connect_lambda(cb.toggled, d, lambda d, checked: tprefs.set('skip_ask_to_show_current_diff_for_' + name, not checked))
+        d.bb = bb = QDialogButtonBox(QDialogButtonBox.Close, d)
+        k.addWidget(bb)
+        bb.accepted.connect(d.accept)
+        bb.rejected.connect(d.reject)
+        d.b = b = bb.addButton(_('See what &changed'), bb.AcceptRole)
+        b.setIcon(QIcon(I('diff.png'))), b.setAutoDefault(False)
+        bb.button(bb.Close).setDefault(True)
+        if d.exec_() == d.Accepted:
+            self.show_current_diff(allow_revert=allow_revert, to_container=to_container)
 
     def compare_book(self):
         self.commit_all_editors_to_container()
@@ -826,6 +848,7 @@ class Boss(QObject):
                 fix_all_html(current_container())
                 self.update_editors_from_container()
                 self.set_modified()
+            self.ask_to_show_current_diff('html-fix', _('Fixing done'), _('All HTML files fixed'))
 
     def pretty_print(self, current):
         if current:
@@ -838,6 +861,7 @@ class Boss(QObject):
                 self.update_editors_from_container()
                 self.set_modified()
                 QApplication.alert(self.gui)
+            self.ask_to_show_current_diff('beautify', _('Beautified'), _('All files beautified'))
 
     def mark_selected_text(self):
         ed = self.gui.central.current_editor
@@ -1608,14 +1632,14 @@ class Boss(QObject):
             d.l.addWidget(d.bb, 1, 0, 1, 2)
             d.do_save = None
 
-            def endit(x):
+            def endit(d, x):
                 d.do_save = x
                 d.accept()
             b = d.bb.addButton(_('&Save and Quit'), QDialogButtonBox.ActionRole)
             b.setIcon(QIcon(I('save.png')))
-            b.clicked.connect(lambda *args: endit(True))
+            connect_lambda(b.clicked, d, lambda d: endit(d, True))
             b = d.bb.addButton(_('&Quit without saving'), QDialogButtonBox.ActionRole)
-            b.clicked.connect(lambda *args: endit(False))
+            connect_lambda(b.clicked, d, lambda d: endit(d, False))
             d.resize(d.sizeHint())
             if d.exec_() != d.Accepted or d.do_save is None:
                 return False

@@ -143,6 +143,27 @@ history_length(2000) #value of -1 means no limit
         del readline, rlcompleter, atexit
 
 
+class Exit:
+
+    def __repr__(self):
+        raise SystemExit(0)
+    __str__ = __repr__
+
+    def __call__(self):
+        raise SystemExit(0)
+
+
+class Helper(object):
+
+    def __repr__(self):
+        return "Type help() for interactive help, " \
+               "or help(object) for help about object."
+
+    def __call__(self, *args, **kwds):
+        import pydoc
+        return pydoc.help(*args, **kwds)
+
+
 def simple_repl(user_ns={}):
     if iswindows:
         setup_pyreadline()
@@ -158,8 +179,12 @@ def simple_repl(user_ns={}):
     import sys, re  # noqa
     for x in ('os', 'sys', 're'):
         user_ns[x] = user_ns.get(x, globals().get(x, locals().get(x)))
-    import code
-    code.interact(BANNER, raw_input, user_ns)
+    user_ns['exit'] = Exit()
+    user_ns['help'] = Helper()
+    from code import InteractiveConsole
+    console = InteractiveConsole(user_ns)
+    console.runsource('from __future__ import (unicode_literals, division, absolute_import, print_function)')
+    console.interact(BANNER + 'Use exit to quit')
 
 
 def ipython(user_ns=None):

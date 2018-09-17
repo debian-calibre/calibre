@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "července 20, 2018" "3.28.0" "calibre"
+.TH "CALIBREDB" "1" "září 07, 2018" "3.31.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -180,7 +180,7 @@ Seřadit výsledky ve vzestupném pořadí
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: title,authors. Pro výběr všech polí může být použito speciální pole \fB"\fPall\fB"\fP\&. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating
+Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí. Dostupná pole: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Výchozí: title,authors. Pro výběr všech polí může být použito speciální pole „all“. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,7 +511,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .sp
 Exportovat katalog ve formátu zadaném rozšířením path/to/destination.
-Volby řídí, jak jsou položky v generovaném výstupním katalogu zobrazeny.
+Volby určují, jak jsou položky v generovaném výstupním katalogu zobrazeny.
 Pamatujte, že různé formáty katalogu podporují různé sady voleb.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces

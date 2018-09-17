@@ -249,9 +249,11 @@ class ChooseLibraryAction(InterfaceAction):
         for i in range(5):
             ac = self.create_action(spec=('', None, None, None),
                     attr='switch_action%d'%i)
+            ac.setObjectName(str(i))
             self.switch_actions.append(ac)
             ac.setVisible(False)
-            ac.triggered.connect(partial(self.qs_requested, i),
+            connect_lambda(ac.triggered, self, lambda self:
+                    self.switch_requested(self.qs_locations[int(self.gui.sender().objectName())]),
                     type=Qt.QueuedConnection)
             self.choose_menu.addAction(ac)
 
@@ -319,9 +321,10 @@ class ChooseLibraryAction(InterfaceAction):
         a.setWhatsThis(tooltip)
 
     def library_changed(self, db):
-        self.prev_lname = self.last_lname
         lname = self.stats.library_used(db)
-        self.last_lname = lname
+        if lname != self.last_lname:
+            self.prev_lname = self.last_lname
+            self.last_lname = lname
         if len(lname) > 16:
             lname = lname[:16] + u'…'
         a = self.qaction
@@ -596,9 +599,6 @@ class ChooseLibraryAction(InterfaceAction):
         print 'after:', memory()
         print
         self.dbref = self.before_mem = None
-
-    def qs_requested(self, idx, *args):
-        self.switch_requested(self.qs_locations[idx])
 
     def count_changed(self, new_count):
         self.update_tooltip(new_count)

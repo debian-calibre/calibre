@@ -12,7 +12,7 @@ from threading import Thread
 from functools import partial
 from future_builtins import map
 
-from PyQt5.Qt import (QPushButton, QFrame, QMenu, QInputDialog,
+from PyQt5.Qt import (QPushButton, QFrame, QMenu, QInputDialog, QCheckBox,
     QDialog, QVBoxLayout, QDialogButtonBox, QSize, QStackedWidget, QWidget,
     QLabel, Qt, pyqtSignal, QIcon, QTreeWidget, QGridLayout, QTreeWidgetItem,
     QToolButton, QItemSelectionModel, QCursor, QKeySequence, QSizePolicy)
@@ -60,6 +60,9 @@ class XPathDialog(QDialog):  # {{{
         self.load_menu = QMenu(b)
         b.setMenu(self.load_menu)
         self.setup_load_button()
+        self.remove_duplicates_cb = QCheckBox(_('Do not add duplicate entries at the same level'))
+        self.remove_duplicates_cb.setChecked(self.prefs.get('xpath_toc_remove_duplicates', True))
+        l.addWidget(self.remove_duplicates_cb)
         l.addStretch()
         l.addWidget(bb)
         self.resize(self.sizeHint() + QSize(50, 75))
@@ -115,6 +118,7 @@ class XPathDialog(QDialog):  # {{{
 
     def accept(self):
         if self.check():
+            self.prefs.set('xpath_toc_remove_duplicates', self.remove_duplicates_cb.isChecked())
             super(XPathDialog, self).accept()
 
     @property
@@ -129,7 +133,7 @@ class ItemView(QFrame):  # {{{
     delete_item = pyqtSignal()
     flatten_item = pyqtSignal()
     go_to_root = pyqtSignal()
-    create_from_xpath = pyqtSignal(object)
+    create_from_xpath = pyqtSignal(object, object)
     create_from_links = pyqtSignal()
     create_from_files = pyqtSignal()
     flatten_toc = pyqtSignal()
@@ -266,13 +270,13 @@ class ItemView(QFrame):  # {{{
         # Add new item
         rs = l.rowCount()
         ip.b3 = b = QPushButton(QIcon(I('plus.png')), _('New entry &inside this entry'))
-        b.clicked.connect(partial(self.add_new, 'inside'))
+        connect_lambda(b.clicked, self, lambda self: self.add_new('inside'))
         l.addWidget(b, l.rowCount()+1, 0, 1, 2)
         ip.b4 = b = QPushButton(QIcon(I('plus.png')), _('New entry &above this entry'))
-        b.clicked.connect(partial(self.add_new, 'before'))
+        connect_lambda(b.clicked, self, lambda self: self.add_new('before'))
         l.addWidget(b, l.rowCount(), 0, 1, 2)
         ip.b5 = b = QPushButton(QIcon(I('plus.png')), _('New entry &below this entry'))
-        b.clicked.connect(partial(self.add_new, 'after'))
+        connect_lambda(b.clicked, self, lambda self: self.add_new('after'))
         l.addWidget(b, l.rowCount(), 0, 1, 2)
         # Flatten entry
         ip.b3 = b = QPushButton(QIcon(I('heuristics.png')), _('&Flatten this entry'))
@@ -303,15 +307,15 @@ class ItemView(QFrame):  # {{{
         l.addWidget(la, l.rowCount(), 0, 1, 2)
 
     def create_from_major_headings(self):
-        self.create_from_xpath.emit(['//h:h%d'%i for i in xrange(1, 4)])
+        self.create_from_xpath.emit(['//h:h%d'%i for i in xrange(1, 4)], True)
 
     def create_from_all_headings(self):
-        self.create_from_xpath.emit(['//h:h%d'%i for i in xrange(1, 7)])
+        self.create_from_xpath.emit(['//h:h%d'%i for i in xrange(1, 7)], True)
 
     def create_from_user_xpath(self):
         d = XPathDialog(self, self.prefs)
         if d.exec_() == d.Accepted and d.xpaths:
-            self.create_from_xpath.emit(d.xpaths)
+            self.create_from_xpath.emit(d.xpaths, d.remove_duplicates_cb.isChecked())
 
     def hide_azw3_warning(self):
         self.w1.setVisible(False), self.w2.setVisible(False)
@@ -928,11 +932,14 @@ class TOCView(QWidget):  # {{{
         process_node(self.root, toc, nodes)
         self.highlight_item(nodes[0])
 
-    def create_from_xpath(self, xpaths):
+    def create_from_xpath(self, xpaths, remove_duplicates=True):
         toc = from_xpaths(self.ebook, xpaths)
+        print(1111111, remove_duplicates)
         if len(toc) == 0:
             return error_dialog(self, _('No items found'),
                 _('No items were found that could be added to the Table of Contents.'), show=True)
+        if remove_duplicates:
+            toc.remove_duplicates()
         self.insert_toc_fragment(toc)
 
     def create_from_links(self):
