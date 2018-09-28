@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement
+from __future__ import with_statement, print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -14,6 +14,7 @@ from lxml import etree
 from lxml.builder import ElementMaker
 
 from calibre import force_unicode
+from calibre.constants import numeric_version
 from calibre.utils.iso8601 import parse_iso8601
 from calibre.utils.date import now as nowf, utcnow, local_tz, isoformat, EPOCH, UNDEFINED_DATE
 from calibre.utils.recycle_bin import delete_file
@@ -117,7 +118,7 @@ def get_custom_recipe_collection(*args):
             if recipe_class is not None:
                 rmap['custom:%s'%id_] = recipe_class
         except:
-            print 'Failed to load recipe from: %r'%fname
+            print('Failed to load recipe from: %r'%fname)
             import traceback
             traceback.print_exc()
             continue
@@ -217,8 +218,15 @@ def download_builtin_recipe(urn):
     from calibre.utils.config_base import prefs
     from calibre.utils.https import get_https_resource_securely
     import bz2
-    return bz2.decompress(get_https_resource_securely(
+    recipe_source = bz2.decompress(get_https_resource_securely(
         'https://code.calibre-ebook.com/recipe-compressed/'+urn, headers={'CALIBRE-INSTALL-UUID':prefs['installation_uuid']}))
+    from calibre.web.feeds.recipes import compile_recipe
+    recipe = compile_recipe(recipe_source)  # ensure the downloaded recipe is at least compile-able
+    if recipe is None:
+        raise ValueError('Failed to find recipe object in downloaded recipe: ' + urn)
+    if recipe.requires_version > numeric_version:
+        raise ValueError('Downloaded recipe for {} requires calibre >= {}'.format(urn, recipe.requires_version))
+    return recipe_source
 
 
 def get_builtin_recipe(urn):
@@ -278,7 +286,7 @@ class SchedulerConfig(object):
                 try:
                     self.root = etree.fromstring(f.read())
                 except:
-                    print 'Failed to read recipe scheduler config'
+                    print('Failed to read recipe scheduler config')
                     import traceback
                     traceback.print_exc()
         elif os.path.exists(old_conf_path):

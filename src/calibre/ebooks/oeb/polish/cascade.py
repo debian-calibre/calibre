@@ -82,6 +82,7 @@ def iterrules(container, sheet_name, rules=None, media_rule_ok=media_allowed, ru
 
     importing.discard(sheet_name)
 
+
 StyleDeclaration = namedtuple('StyleDeclaration', 'index declaration pseudo_element')
 Specificity = namedtuple('Specificity', 'is_style num_id num_class num_elem rule_index')
 
@@ -163,7 +164,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     style_map = defaultdict(list)
     pseudo_style_map = defaultdict(list)
     rule_index_counter = count()
-    pseudo_pat = re.compile(ur':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
+    pseudo_pat = re.compile(u':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
 
     def process_sheet(sheet, sheet_name):
         if sheet_callback is not None:
@@ -223,6 +224,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     pseudo_style_map = {elem:resolve_pseudo_declarations(x) for elem, x in pseudo_style_map.iteritems()}
 
     return partial(resolve_property, style_map), partial(resolve_pseudo_property, style_map, pseudo_style_map), select
+
 
 _defvals = None
 

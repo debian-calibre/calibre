@@ -2,7 +2,7 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-from future_builtins import map
+from polyglot.builtins import map
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -111,6 +111,8 @@ class BuildTest(unittest.TestCase):
         for obj in ({1:1}, utcnow()):
             s = msgpack_dumps(obj)
             self.assertEqual(obj, msgpack_loads(s))
+        self.assertEqual(type(msgpack_loads(msgpack_dumps(b'b'))), bytes)
+        self.assertEqual(type(msgpack_loads(msgpack_dumps(u'b'))), type(u''))
 
     @unittest.skipUnless(isosx, 'FSEvents only present on OS X')
     def test_fsevents(self):

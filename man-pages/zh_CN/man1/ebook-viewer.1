@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-VIEWER" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "九月 28, 2018" "3.32.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .
@@ -35,15 +35,19 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-viewer [options] file
+ebook\-viewer [选项] 文件
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-View an e\-book.
+阅读一本电子书。
 .sp
-Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+ebook\-viewer\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH [选项]
 .INDENT 0.0
 .TP
@@ -58,7 +62,7 @@ Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enc
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+脱离任何存在的控制台，如果有的话（仅Linux）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,7 +77,7 @@ Detach from the controlling terminal, if any (Linux only)
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location as displayed in the top left corner of the viewer. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&.
+打开指定图书的位置。该位置是在观众的左上角位置显示。或者，您可以使用表单toc:something，它将在包含字符串“something”的第一个目录条目的位置打开。
 .UNINDENT
 .INDENT 0.0
 .TP

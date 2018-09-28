@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__license__ = 'GPL v3'
+from __future__ import print_function
+__license__   = 'GPL v3'
 __copyright__ = '2010, Greg Riker'
 
 import datetime, os, platform, re, shutil, time, unicodedata, zlib
@@ -1208,11 +1209,11 @@ class CatalogBuilder(object):
               clipped to max_len
             """
 
-            normalized = massaged = re.sub('\s', '', ascii_text(tag).lower())
-            if re.search('\W', normalized):
+            normalized = massaged = re.sub('\\s', '', ascii_text(tag).lower())
+            if re.search('\\W', normalized):
                 normalized = ''
                 for c in massaged:
-                    if re.search('\W', c):
+                    if re.search('\\W', c):
                         normalized += self.generate_unicode_name(c)
                     else:
                         normalized += c
@@ -1375,7 +1376,7 @@ class CatalogBuilder(object):
         Return:
          (str): asciized version of author
         """
-        return re.sub("\W", "", ascii_text(author))
+        return re.sub("\\W", "", ascii_text(author))
 
     def generate_format_args(self, book):
         """ Generate the format args for template substitution.
@@ -4208,9 +4209,9 @@ class CatalogBuilder(object):
 
         # Generate a legal XHTML id/href string
         if self.letter_or_symbol(series) == self.SYMBOLS:
-            return "symbol_%s_series" % re.sub('\W', '', series).lower()
+            return "symbol_%s_series" % re.sub('\\W', '', series).lower()
         else:
-            return "%s_series" % re.sub('\W', '', ascii_text(series)).lower()
+            return "%s_series" % re.sub('\\W', '', ascii_text(series)).lower()
 
     def generate_short_description(self, description, dest=None):
         """ Generate a truncated version of the supplied string.
@@ -4255,7 +4256,7 @@ class CatalogBuilder(object):
             else:
                 return _short_description(description, self.opts.description_clip)
         else:
-            print " returning description with unspecified destination '%s'" % description
+            print(" returning description with unspecified destination '%s'" % description)
             raise RuntimeError
 
     def generate_sort_title(self, title):
@@ -4291,7 +4292,7 @@ class CatalogBuilder(object):
                 else:
                     if re.match('[0-9]+', word[0]):
                         word = word.replace(',', '')
-                        suffix = re.search('[\D]', word)
+                        suffix = re.search('[\\D]', word)
                         if suffix:
                             word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                         else:
@@ -4307,7 +4308,7 @@ class CatalogBuilder(object):
             else:
                 if re.search('[0-9]+', word[0]):
                     word = word.replace(',', '')
-                    suffix = re.search('[\D]', word)
+                    suffix = re.search('[\\D]', word)
                     if suffix:
                         word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                     else:
@@ -4637,7 +4638,7 @@ class CatalogBuilder(object):
         # confusion with decimal points.
 
         # Explode lost CRs to \n\n
-        for lost_cr in re.finditer('([a-z])([\.\?!])([A-Z])', comments):
+        for lost_cr in re.finditer('([a-z])([\\.\\?!])([A-Z])', comments):
             comments = comments.replace(lost_cr.group(),
                                         '%s%s\n\n%s' % (lost_cr.group(1),
                                                         lost_cr.group(2),

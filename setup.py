@@ -13,9 +13,11 @@ def check_version_info():
     vi = sys.version_info
     if vi[0] == 2 and vi[1:3] >= (7, 9):
         return
+    if vi.major > 2 and 'CALIBRE_PY3_PORT' in os.environ:
+        # PY3_TODO: Remove check for 'CALIBRE_PY3_PORT' once calibre works with python3
+        return
     raise SystemExit(
-        'calibre requires python >= 2.7.9 and < 3. Current python version: %s'
-        % vi)
+        'calibre requires python >= 2.7.9 and < 3. Current python version: ' + '.'.join(map(str, vi[:3])))
 
 
 check_version_info()
@@ -23,7 +25,7 @@ check_version_info()
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import setup.commands as commands
-from setup import prints, get_warnings
+from setup import get_warnings
 
 
 def option_parser():
@@ -91,13 +93,13 @@ def main(args=sys.argv):
         clean_backups()
 
     if opts.clean:
-        prints('Cleaning', args[1])
+        print('Cleaning', args[1])
         command.clean()
         return 0
 
     if opts.clean_all:
         for cmd in commands.__all__:
-            prints('Cleaning', cmd)
+            print('Cleaning', cmd)
             getattr(commands, cmd).clean()
         return 0
 
@@ -106,10 +108,10 @@ def main(args=sys.argv):
     warnings = get_warnings()
     if warnings:
         print()
-        prints('There were', len(warnings), 'warning(s):')
+        print('There were', len(warnings), 'warning(s):')
         print()
         for args, kwargs in warnings:
-            prints('*', *args, **kwargs)
+            print('*', *args, **kwargs)
             print()
 
     return 0

@@ -6,6 +6,8 @@ from __future__ import (unicode_literals, division, absolute_import,
 import re, sys
 from collections import defaultdict
 
+from polyglot.builtins import reraise
+
 from lxml.etree import tostring
 from lxml.html import (fragment_fromstring, document_fromstring,
         tostring as htostring)
@@ -62,7 +64,7 @@ def to_int(x):
 
 
 def clean(text):
-    text = re.sub('\s*\n\s*', '\n', text)
+    text = re.sub('\\s*\n\\s*', '\n', text)
     text = re.sub('[ \t]{2,}', ' ', text)
     return text.strip()
 
@@ -154,9 +156,9 @@ class Document:
                     continue  # try again
                 else:
                     return cleaned_article
-        except StandardError, e:
+        except StandardError as e:
             self.log.exception('error getting summary: ')
-            raise Unparseable(str(e)), None, sys.exc_info()[2]
+            reraise(Unparseable, Unparseable(str(e)), sys.exc_info()[2])
 
     def get_article(self, candidates, best_candidate):
         # Now that we have the top candidate, look through its siblings for content that might also be related.
@@ -183,7 +185,7 @@ class Document:
 
                 if node_length > 80 and link_density < 0.25:
                     append = True
-                elif node_length < 80 and link_density == 0 and re.search('\.( |$)', node_content):
+                elif node_length < 80 and link_density == 0 and re.search(r'\.( |$)', node_content):
                     append = True
 
             if append:

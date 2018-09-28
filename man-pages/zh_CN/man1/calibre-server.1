@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "九月 28, 2018" "3.32.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -35,103 +35,108 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-server [options] [path to library folder...]
+calibre\-server [选项] [库文件夹的路径...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+启动caliber内容服务器。calibre内容服务器通过互联网公开你的calibre库。你可以将库文件夹的路径指定为:command:
+.nf
+\(ga
+.fi
+calibre\-server\(ga的参数。如果未指定任何路径，calibre主程序所知道的所有部件都将被使用。
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+calibre\-server\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+访问日志文件的路径。此日志包含有关连接到服务器并发出请求的客户端的信息。默认情况下，不进行访问日志记录。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+在查询时等待服务器响应的时间(秒).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-选择认证方式.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+选择认证方式.     设置服务器使用的HTTP身份验证模式。如果将服务器放在SSL代理后面，则设置为\fB"\fPbasic\fB"\fP，否则将其设为 \fB"\fPauto\fB"\fP，如果SSL被配置它将使用\fB"\fPbasic\fB"\fP，否则它将使用\fB"\fPdigest\fB"\fP。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+当源代码更改时自动重新加载服务器。有利于开发。还应该为关闭超时指定一个小值。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+禁止登录失败次数.   禁止IP地址后的登录失败次数
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+禁止登录失败的IP地址重复次数.    临时禁止在指定的分钟数上重复登录失败的IP地址的访问。有助于防止猜测密码的尝试。如果设置为零则不禁止。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+响应使用数据压缩的最小尺寸(字节).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+包含自定义图书列表模式的JSON模板文件的路径。创建这种模板文件的最简单方法是在caliber中转到首选项\->通过网络分享\->书籍列表模板，创建模板并导出它。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+后台进程运行为守护进程（仅Linux）。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+限制显示的用户定义字段.        逗号分隔的用户定义元数据字段的列表，将由内容服务器在 /opds 和 /mobile 视图中显示。如果指定此选项，则不会显示任何在此列表中的字段。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+套接字预分配，例如，systemd套接字激活. 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. 此选项默认禁用。
+访问服务器的基于密码的身份验证.    通常，服务器是不受限制的，允许任何人访问它。你可以使用此选项限制对预定义用户的访问。 默认情况下, 此选项是禁用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+返回到自动检测界面.  如果由于某种原因，服务器无法绑定到listen_on选项中指定的接口，那么它将尝试检测连接到外部世界的接口并绑定到该接口。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. 此选项默认禁用。
+允许未经身份验证的本地连接进行更改.  通常，如果你不打开身份验证，则服务器以只读模式运行，从而不允许匿名用户更改你的calibre库。此选项允许任何人从服务器上运行的同一台计算机连接来进行更改。如果你想在没有身份验证的情况下运行服务器，但是仍然使用calibredb对你的calibre库进行更改，那么这选项是非常有用。请注意，打开这个选项后意味着在计算机上运行的任何程序都可以对你的calibre库进行更改。 默认情况下, 此选项是禁用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+记录HTTP 404(未找到)的请求.         通常，服务器记录所有未找到的资源的HTTP请求。这可能产生大量的日志垃圾，如果你的服务器是蠕虫攻击的目标。请使用此选项关闭它。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+通过BonJour供稿广告OPDS.  通过BonJour服务宣传OPDS提要，这样基于OPDS的阅读应用程序就可以自动检测和连接到服务器。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+零复制文件传输以提高性能.       当通过网络发送文件时这将在内核传输中使用零拷贝，从而提高性能。然而，它可能导致损坏的文件传输在一些崩溃的文件系统上。如果你经历了损坏的文件传输，关掉它。 默认情况下, 此选项是启用的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,22 +146,26 @@ Zero copy file transfers for increased performance.         This will use zero\-
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-忽略用户定义的元数据字段.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+忽略用户定义的元数据字段.       逗号分隔用户定义元数据字段的列表，该内容字段将不能显示在内容服务器的 /opds 和 /mobile 的视图中。例如: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+侦听连接的界面.    默认是监听所有可用的接口。你可以改变，。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+服务器日志的日志文件路径。此日志包含服务器信息和错误，而不是访问日志。默认情况下，它被写入标准输出(stdout)。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. See also the \fI\%\-\-userdb\fP option.
+管理允许连接到该服务器的用户的数据库。也请参阅:option:
+.nf
+\(ga
+.fi
+\-\-userdb\(ga选项。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,27 +175,27 @@ Manage the database of users allowed to connect to this server. See also the \fI
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+作业单元进程的最大时间.        允许作业单元进程运行的最大时间量(分钟)。设为零则无限制。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+最大进程数.      对于大型作业任务设置运行作业单元的进程数是必需和有用的，如准备一本书供预览、添加书籍、转换等。通常，此类进程的最大数量基于CPU核的数量。你可以通过这个设置来控制它。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-日志文件最大大小（MB）.       The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+日志文件最大大小（MB）.       由服务器生成的日志文件的最大容量。当日志变得大于这个容量时，它将自动旋转。设置为零时禁用日志旋转。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返回的最大图书数量。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+在OPDS源中未分组项目的最大项目数.         当有超过这个设定数量的项目时将以如作者/标签的首字母对类别进行分组。设置为零以禁用。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +205,7 @@ Maximum number of ungrouped items in OPDS feeds.    Group items in categories su
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+在一页中显示的图书数量.        浏览器中单个页面显示的图书数量。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -206,37 +215,41 @@ Number of books to show in a single page.   The number of books to show in a sin
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+侦听连接的端口.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+等待干净关机的总时间(秒).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-SSL认证文件路径.
+SSL证书文件的路径.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-SSL私钥文件路径.
+到SSL私钥文件的路径.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+空闲连接关闭后的时间(秒).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+预置所有URL的一个前缀.       如果希望在逆向代理后面运行此服务器，则非常有用。例如使用, /calibre 作为URL前缀。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+用于身份验证的用户数据库路径。数据库是SQLite文件。使用:option:
+.nf
+\(ga
+.fi
+\-\-manage\-users\(ga创建它。您可以阅读以下更多关于管理用户的信息：\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +259,7 @@ Path to the user database to use for authentication. The database is a SQLite fi
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+用于处理请求的作业单元线程数.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

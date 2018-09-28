@@ -8,7 +8,7 @@ __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import json, os
-from future_builtins import map
+from polyglot.builtins import map
 from math import floor
 from collections import defaultdict
 
@@ -419,6 +419,10 @@ class PDFWriter(QObject):
 
         amap = json.loads(evaljs('''
         document.body.style.backgroundColor = "white";
+        // Qt WebKit cannot handle opacity with the Pdf backend
+        s = document.createElement('style');
+        s.textContent = '* {opacity: 1 !important}';
+        document.documentElement.appendChild(s);
         paged_display.set_geometry(1, %d, %d, %d);
         paged_display.layout();
         paged_display.fit_images();
@@ -465,7 +469,7 @@ class PDFWriter(QObject):
                     self.load_header_footer_images()
 
             self.painter.save()
-            mf.render(self.painter)
+            mf.render(self.painter, mf.ContentsLayer)
             self.painter.restore()
             try:
                 nsl = int(evaljs('paged_display.next_screen_location()'))

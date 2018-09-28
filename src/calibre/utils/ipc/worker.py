@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import with_statement
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -33,6 +34,9 @@ PARALLEL_FUNCS = {
 
     'gui_convert'     :
     ('calibre.gui2.convert.gui_conversion', 'gui_convert', 'notification'),
+
+    'gui_convert_recipe'     :
+    ('calibre.gui2.convert.gui_conversion', 'gui_convert_recipe', 'notification'),
 
     'gui_polish'     :
     ('calibre.ebooks.oeb.polish.main', 'gui_polish', None),
@@ -175,7 +179,7 @@ def main():
         try:
             exec (sys.argv[-1])
         except Exception:
-            print 'Failed to run pipe worker with command:', sys.argv[-1]
+            print('Failed to run pipe worker with command:', sys.argv[-1])
             raise
         return
     address = cPickle.loads(unhexlify(os.environ['CALIBRE_WORKER_ADDRESS']))

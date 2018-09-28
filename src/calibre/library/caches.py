@@ -128,6 +128,7 @@ def set_use_primary_find_in_search(toWhat):
     global pref_use_primary_find_in_search
     pref_use_primary_find_in_search = toWhat
 
+
 y, c, n, u = map(icu_lower, (_('yes'), _('checked'), _('no'), _('unchecked')))
 yes_vals = {y, c, 'true'}
 no_vals = {n, u, 'false'}
@@ -264,7 +265,7 @@ class ResultCache(SearchQueryParser):  # {{{
     # Search functions {{{
 
     def universal_set(self):
-        return set([i[0] for i in self._data if i is not None])
+        return {i[0] for i in self._data if i is not None}
 
     def change_search_locations(self, locations):
         self.sqp_change_locations(locations)
@@ -1215,5 +1216,3 @@ class SortKeyGenerator(object):
     # }}}
 
 # }}}
-
-

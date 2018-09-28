@@ -37,7 +37,7 @@ def inspect_mobi(path_or_stream, ddir=None):  # {{{
     else:
         inspect_mobi8(f, ddir)
 
-    print ('Debug data saved to:', ddir)
+    print('Debug data saved to:', ddir)
 
 # }}}
 
@@ -45,6 +45,6 @@ def inspect_mobi(path_or_stream, ddir=None):  # {{{
 def main():
     inspect_mobi(sys.argv[1])
 
+
 if __name__ == '__main__':
     main()
-

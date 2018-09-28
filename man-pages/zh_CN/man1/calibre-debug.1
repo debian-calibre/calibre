@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "九月 28, 2018" "3.32.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,24 +41,28 @@ calibre\-debug [选项]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+多种命令行界面在排除 calibre 的故障时很有用。这个命令将无条
+件地开启内置的 python 编译器。你也可以在 debug 模式下运行主
+要的 cailbre GUI，calibre 阅读器和 calibre 编辑器。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the e\-book diff tool and so
-on.
+它同时也包含了部分没有命令行工具的
+calibre 界面，比如字体子集，电子书区分
+工具等等。
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+你也能用 \fBcalibre\-debug\fP 来运行独立的脚本。像这样来操作：
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+在 \fB\-\-\fP 后的的所有东西都被传输到了脚本里。
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+calibre\-debug\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH [选项]
 .INDENT 0.0
 .TP
@@ -78,7 +82,7 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-从 Windows 默认程序注册 / 取消注册 calibre。 \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+从 Windows 默认程序注册 / 取消注册 Calibre。 \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -88,7 +92,7 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-用调试模式启动 calibre 书籍编辑工具
+用调试模式启动 Calibre \fB"\fP编辑书籍\fB"\fP工具。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,12 +102,12 @@ Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, en
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+将书炸开到指定目录中。 用法：\-x file.epub output_dir 将该书作为HTML文件和元数据的集合导出，您可以使用标准的HTML编辑工具进行编辑。可与EPUB、AZW3、HTMLZ和DOX文件一起工作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+导出所有calibre数据（书籍/设置/插件）。通常，您将被询问导出到目录和导出到库。你还可以将它们指定为命令行参数以跳过这些问题。对导出目录和库使用绝对路径。特殊关键字 \fB"\fPall\fB"\fP 可用于导出所有库。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -123,7 +127,11 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+聚合以前炸开过的书籍。 用法：\-i output_dir file.epub 从output_dir的文件中导入该图书，该文件必须是由之前调用:option:
+.nf
+\(ga
+.fi
+\-\-explode\-book\(ga创建的。一定要指定与炸开时使用的文件类型相同的文件类型。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,17 +151,17 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-将 calibre 指定路径的 SQLite 数据库重新初始化，这尝尝对于解决数据库冲突有奇效。
+将 Calibre 指定路径的 SQLite 数据库重新初始化，这尝尝对于解决数据库冲突有奇效。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-提供了一个命令行界面来运行插件。例如： calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 之后的一切将被作为参数传递给该插件。
+提供了一个命令行界面来运行插件。例如： Calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 之后的一切将被作为参数传递给该插件。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-本操作会导致正在运行的 calibre 关闭。请注意：如果正在执行某些任务，那么这些任务会被强行中断。
+本操作会导致正在运行的 Calibre 关闭。请注意：如果正在执行某些任务，那么这些任务会被强行中断。
 .UNINDENT
 .INDENT 0.0
 .TP

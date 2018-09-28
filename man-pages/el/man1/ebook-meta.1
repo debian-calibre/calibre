@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "Σεπτεμβρίου 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-META" "1" "Σεπτεμβρίου 28, 2018" "3.32.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,15 +41,16 @@ ebook\-meta ebook_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Ανάγνωση/Εγγραφή μεταδεδομένων από/προς αρχεία ψηφιακών βιβλίων.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Υποστηριζόμενες μορφές για ανάγνωση μεταδεδομένων: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Υποστηριζόμενες μορφές για εγγραφή μεταδεδομένων: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Διαφορετικοί τύποι αρχείων υποστηρίζουν διαφορετικές
+μορφές μεταδεδομένων. Αν προσπαθήσετε να εισάγετε κάποια
+μεταδεδομένα σε μορφή αρχείου που δεν τα υποστηρίζει, τα
+μεταδεδομένα θα αγνοηθούν σιωπηρά.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [ΕΠΙΛΟΓΈΣ]
@@ -91,7 +92,7 @@ String to be used when sorting by author. If unspecified, and the author(s) are 
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Ανάγνωση μεταδεδομένων από το καθορισμένο αρχείο OPF και ορισμός τους ως μεταδεδομένα του ψηφιακού βιβλίου. Τα μεταδεδομένα που καθορίζονται στη γραμμή εντολής θα υπερκαλύψουν αυτά που διαβάστηκαν από το αρχείο OPF
 .UNINDENT
 .INDENT 0.0
 .TP

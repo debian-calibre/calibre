@@ -1,3 +1,4 @@
+from __future__ import print_function
 #########################################################################
 #                                                                       #
 #                                                                       #
@@ -98,7 +99,7 @@ class ListTable:
                 self.__ob_group -= 1
             action = self.__state_dict.get(self.__state)
             if action is None:
-                print self.__state
+                print(self.__state)
             action(line)
         self.__write_final_string()
         # self.__add_to_final_line()
@@ -119,7 +120,7 @@ class ListTable:
         Requires: line -- line to process
         Returns: nothing
         Logic:
-            I have found \list.
+            I have found \\list.
             Change the state to list
             Get the open bracket count so you know when this state ends.
             Append an empty list to all lists.
@@ -161,7 +162,7 @@ class ListTable:
         Requires: line -- line to process
         Returns: nothing
         Logic:
-            I have found \listlevel.
+            I have found \\listlevel.
             Change the state to level
             Get the open bracket count so you know when this state ends.
             Append an empty list to the last list inside all lists.
@@ -284,7 +285,7 @@ class ListTable:
         Returns:
             nothing
         Logic:
-            Method is used for to parse text in the \leveltext group.
+            Method is used for to parse text in the \\leveltext group.
         """
         num = line[18:]
         the_num = int(num, 16)

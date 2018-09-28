@@ -1,3 +1,4 @@
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 import struct, array, zlib, cStringIO, collections, re
@@ -177,7 +178,7 @@ class LRFStream(LRFObject):
             if len(self.stream) != decomp_size:
                 raise LRFParseError("Stream decompressed size is wrong!")
         if stream.read(2) != '\x06\xF5':
-            print "Warning: corrupted end-of-stream tag at %08X; skipping it"%(stream.tell()-2)
+            print("Warning: corrupted end-of-stream tag at %08X; skipping it"%(stream.tell()-2))
         self.end_stream(None, None)
 
 
@@ -819,7 +820,7 @@ class Text(LRFStream):
         text_tags = set(list(TextAttr.tag_map.keys()) +
                         list(Text.text_tags.keys()) +
                         list(ruby_tags.keys()))
-        text_tags -= set([0xf500+i for i in range(10)])
+        text_tags -= {0xf500+i for i in range(10)}
         text_tags.add(0xf5cc)
 
         while stream.tell() < length:
@@ -992,7 +993,7 @@ class Canvas(LRFStream):
                     PutObj(self._document.objects,
                         *struct.unpack("<HHI", tag.contents)))
             except struct.error:
-                print 'Canvas object has errors, skipping.'
+                print('Canvas object has errors, skipping.')
 
     def __unicode__(self):
         s = '\n<%s objid="%s" '%(self.__class__.__name__, self.id,)

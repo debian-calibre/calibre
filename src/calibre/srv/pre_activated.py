@@ -14,6 +14,8 @@ from calibre.constants import islinux
 
 def pre_activated_socket():
     return None
+
+
 has_preactivated_support = False
 
 if islinux:
@@ -61,4 +63,4 @@ if __name__ == '__main__':
     # /usr/lib/systemd/systemd-activate -l 8081 calibre-debug pre_activated.py
     # telnet localhost 8081
     s = pre_activated_socket()
-    print (s, s.getsockname())
+    print(s, s.getsockname())

@@ -148,7 +148,7 @@ class OverDrive(Source):
         fix_slashes = re.compile(r'\\/')
         thumbimage = fix_slashes.sub('/', thumbimage)
         worldcatlink = fix_slashes.sub('/', worldcatlink)
-        cover_url = re.sub('(?P<img>(Ima?g(eType-)?))200', '\g<img>100', thumbimage)
+        cover_url = re.sub('(?P<img>(Ima?g(eType-)?))200', '\\g<img>100', thumbimage)
         social_metadata_url = base_url+'TitleInfo.aspx?ReserveID='+reserveid+'&FormatID='+formatid
         series_num = ''
         if not series:
@@ -233,7 +233,7 @@ class OverDrive(Source):
             xreq.add_header('Referer', q_init_search)
             xreq.add_header('Accept', 'application/json, text/javascript, */*')
             raw = br.open_novisit(xreq).read()
-            for m in re.finditer(ur'"iTotalDisplayRecords":(?P<displayrecords>\d+).*?"iTotalRecords":(?P<totalrecords>\d+)', raw):
+            for m in re.finditer(unicode(r'"iTotalDisplayRecords":(?P<displayrecords>\d+).*?"iTotalRecords":(?P<totalrecords>\d+)'), raw):
                 if int(m.group('totalrecords')) == 0:
                     return ''
                 elif int(m.group('displayrecords')) >= 1:
@@ -254,7 +254,7 @@ class OverDrive(Source):
 
     def sort_ovrdrv_results(self, raw, log, title=None, title_tokens=None, author=None, author_tokens=None, ovrdrv_id=None):
         close_matches = []
-        raw = re.sub('.*?\[\[(?P<content>.*?)\]\].*', '[[\g<content>]]', raw)
+        raw = re.sub('.*?\\[\\[(?P<content>.*?)\\]\\].*', '[[\\g<content>]]', raw)
         results = json.loads(raw)
         # log.error('raw results are:'+str(results))
         # The search results are either from a keyword search or a multi-format list from a single ID,
@@ -408,7 +408,7 @@ class OverDrive(Source):
 
         try:
             raw = br.open_novisit(metadata_url).read()
-        except Exception, e:
+        except Exception as e:
             if callable(getattr(e, 'getcode', None)) and \
                     e.getcode() == 404:
                 return False

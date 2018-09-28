@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
@@ -15,7 +16,7 @@ from calibre.utils.html2text import html2text
 
 # Hackish - ignoring sentences ending or beginning in numbers to avoid
 # confusion with decimal points.
-lost_cr_pat = re.compile('([a-z])([\.\?!])([A-Z])')
+lost_cr_pat = re.compile('([a-z])([\\.\\?!])([A-Z])')
 lost_cr_exception_pat = re.compile(r'(Ph\.D)|(D\.Phil)|((Dr|Mr|Mrs|Ms)\.[A-Z])')
 sanitize_pat = re.compile(r'<script|<table|<tr|<td|<th|<style|<iframe',
         re.IGNORECASE)
@@ -160,12 +161,12 @@ def test():
             ('a <b>b&c</b>\nf', '<p class="description">a <b>b&amp;c;</b><br />f</p>'),
             ('a <?xml asd> b\n\ncd', '<p class="description">a  b</p><p class="description">cd</p>'),
             ]:
-        print
-        print 'Testing: %r'%pat
+        print()
+        print('Testing: %r'%pat)
         cval = comments_to_html(pat)
-        print 'Value: %r'%cval
+        print('Value: %r'%cval)
         if comments_to_html(pat) != val:
-            print 'FAILED'
+            print('FAILED')
             break
 
 

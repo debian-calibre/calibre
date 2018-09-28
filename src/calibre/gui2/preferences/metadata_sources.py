@@ -233,10 +233,10 @@ class FieldsModel(QAbstractListModel):  # {{{
         return ret
 
     def commit(self):
-        ignored_fields = set([x for x in msprefs['ignore_fields'] if x not in
-            self.overrides])
-        changed = set([k for k, v in self.overrides.iteritems() if v ==
-            Qt.Unchecked])
+        ignored_fields = {x for x in msprefs['ignore_fields'] if x not in
+            self.overrides}
+        changed = {k for k, v in self.overrides.iteritems() if v ==
+            Qt.Unchecked}
         msprefs['ignore_fields'] = list(ignored_fields.union(changed))
 
     def user_default_state(self, field):
@@ -249,10 +249,10 @@ class FieldsModel(QAbstractListModel):  # {{{
         self.endResetModel()
 
     def commit_user_defaults(self):
-        default_ignored_fields = set([x for x in msprefs['user_default_ignore_fields'] if x not in
-            self.overrides])
-        changed = set([k for k, v in self.overrides.iteritems() if v ==
-            Qt.Unchecked])
+        default_ignored_fields = {x for x in msprefs['user_default_ignore_fields'] if x not in
+            self.overrides}
+        changed = {k for k, v in self.overrides.iteritems() if v ==
+            Qt.Unchecked}
         msprefs['user_default_ignore_fields'] = list(default_ignored_fields.union(changed))
 
 # }}}
@@ -399,6 +399,6 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
 
 if __name__ == '__main__':
-    from PyQt5.Qt import QApplication
-    app = QApplication([])
+    from calibre.gui2 import Application
+    app = Application([])
     test_widget('Sharing', 'Metadata download')

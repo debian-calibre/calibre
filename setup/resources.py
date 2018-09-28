@@ -1,17 +1,18 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement
+from __future__ import with_statement, print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, cPickle, re, shutil, marshal, zipfile, glob, time, sys, hashlib, json, errno
+import os, re, shutil, zipfile, glob, time, sys, hashlib, json, errno
 from zlib import compress
 from itertools import chain
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
 from setup import Command, basenames, __appname__, download_securely
+from polyglot.builtins import itervalues, iteritems
 
 
 def get_opts_from_parser(parser):
@@ -55,7 +56,7 @@ class Coffee(Command):  # {{{
         from pygments.lexers import JavascriptLexer
         from pygments.formatters import TerminalFormatter
         from pygments import highlight
-        print highlight(raw, JavascriptLexer(), TerminalFormatter())
+        print(highlight(raw, JavascriptLexer(), TerminalFormatter()))
 
     def do_coffee_compile(self, opts, timestamp=False, ignore_errors=False):
         from calibre.utils.serve_coffee import compile_coffeescript
@@ -96,7 +97,7 @@ class Coffee(Command):  # {{{
             if errors:
                 print ('\n\tCompilation of %s failed'%name)
                 for line in errors:
-                    print >>sys.stderr, line
+                    print(line, file=sys.stderr)
                 if ignore_errors:
                     js = u'# Compilation from coffeescript failed'
                 else:
@@ -113,7 +114,7 @@ class Coffee(Command):  # {{{
         if updated:
             hashes = {}
             with zipfile.ZipFile(dest, 'w', zipfile.ZIP_STORED) as zf:
-                for raw, zi, sig in sorted(chain(updated.itervalues(), existing.itervalues()), key=lambda x: x[1].filename):
+                for raw, zi, sig in sorted(chain(itervalues(updated), itervalues(existing)), key=lambda x: x[1].filename):
                     zf.writestr(zi, raw)
                     hashes[zi.filename] = sig
                 zf.comment = json.dumps(hashes)
@@ -136,7 +137,7 @@ class Kakasi(Command):  # {{{
         self.records = {}
         src = self.j(self.KAKASI_PATH, 'kakasidict.utf8')
         dest = self.j(self.RESOURCES, 'localization',
-                'pykakasi','kanwadict2.pickle')
+                'pykakasi','kanwadict2.calibre_msgpack')
         base = os.path.dirname(dest)
         if not os.path.exists(base):
             os.makedirs(base)
@@ -150,7 +151,7 @@ class Kakasi(Command):  # {{{
 
         src = self.j(self.KAKASI_PATH, 'itaijidict.utf8')
         dest = self.j(self.RESOURCES, 'localization',
-                'pykakasi','itaijidict2.pickle')
+                'pykakasi','itaijidict2.calibre_msgpack')
 
         if self.newer(dest, src):
             self.info('\tGenerating Itaijidict')
@@ -158,7 +159,7 @@ class Kakasi(Command):  # {{{
 
         src = self.j(self.KAKASI_PATH, 'kanadict.utf8')
         dest = self.j(self.RESOURCES, 'localization',
-                'pykakasi','kanadict2.pickle')
+                'pykakasi','kanadict2.calibre_msgpack')
 
         if self.newer(dest, src):
             self.info('\tGenerating kanadict')
@@ -174,7 +175,9 @@ class Kakasi(Command):  # {{{
                 continue
             pair = re.sub(r'\\u([0-9a-fA-F]{4})', lambda x:unichr(int(x.group(1),16)), line)
             dic[pair[0]] = pair[1]
-        cPickle.dump(dic, open(dst, 'wb'), protocol=-1)  # pickle
+        from calibre.utils.serialize import msgpack_dumps
+        with open(dst, 'wb') as f:
+            f.write(msgpack_dumps(dic))
 
     def mkkanadict(self, src, dst):
         dic = {}
@@ -186,7 +189,9 @@ class Kakasi(Command):  # {{{
                 continue
             (alpha, kana) = line.split(' ')
             dic[kana] = alpha
-        cPickle.dump(dic, open(dst, 'wb'), protocol=-1)  # pickle
+        from calibre.utils.serialize import msgpack_dumps
+        with open(dst, 'wb') as f:
+            f.write(msgpack_dumps(dic))
 
     def parsekdict(self, line):
         line = line.decode("utf-8").strip()
@@ -214,11 +219,12 @@ class Kakasi(Command):  # {{{
             self.records[key][kanji]=[(yomi, tail)]
 
     def kanwaout(self, out):
+        from calibre.utils.serialize import msgpack_dumps
         with open(out, 'wb') as f:
             dic = {}
-            for k, v in self.records.iteritems():
-                dic[k] = compress(marshal.dumps(v))
-            cPickle.dump(dic, f, -1)
+            for k, v in iteritems(self.records):
+                dic[k] = compress(msgpack_dumps(v))
+            f.write(msgpack_dumps(dic))
 
     def clean(self):
         kakasi = self.j(self.RESOURCES, 'localization', 'pykakasi')
@@ -291,11 +297,12 @@ class Resources(Command):  # {{{
                     continue
                 scripts[name] = x
 
-        dest = self.j(self.RESOURCES, 'scripts.pickle')
+        dest = self.j(self.RESOURCES, 'scripts.calibre_msgpack')
         if self.newer(dest, self.j(self.SRC, 'calibre', 'linux.py')):
-            self.info('\tCreating scripts.pickle')
-            f = open(dest, 'wb')
-            cPickle.dump(scripts, f, -1)
+            self.info('\tCreating ' + os.path.basename(dest))
+            from calibre.utils.serialize import msgpack_dumps
+            with open(dest, 'wb') as f:
+                f.write(msgpack_dumps(scripts))
 
         from calibre.web.feeds.recipes.collection import \
                 serialize_builtin_recipes, iterate_over_builtin_recipe_files
@@ -320,7 +327,7 @@ class Resources(Command):  # {{{
                     with open(n, 'rb') as f:
                         zf.writestr(os.path.basename(n), f.read())
 
-        dest = self.j(self.RESOURCES, 'ebook-convert-complete.pickle')
+        dest = self.j(self.RESOURCES, 'ebook-convert-complete.calibre_msgpack')
         files = []
         for x in os.walk(self.j(self.SRC, 'calibre')):
             for f in x[-1]:
@@ -350,7 +357,8 @@ class Resources(Command):  # {{{
                     complete[(inf, ouf)] = [x+' 'for x in
                             get_opts_from_parser(p)]
 
-            cPickle.dump(complete, open(dest, 'wb'), -1)
+            with open(dest, 'wb') as f:
+                f.write(msgpack_dumps(complete))
 
         self.info('\tCreating template-functions.json')
         dest = self.j(self.RESOURCES, 'template-functions.json')
@@ -386,8 +394,8 @@ class Resources(Command):  # {{{
         json.dump(function_dict, open(dest, 'wb'), indent=4)
         self.info('\tCreating user-manual-translation-stats.json')
         d = {}
-        for lc, stats in json.load(open(self.j(self.d(self.SRC), 'manual', 'locale', 'completed.json'))).iteritems():
-            total = sum(stats.itervalues())
+        for lc, stats in iteritems(json.load(open(self.j(self.d(self.SRC), 'manual', 'locale', 'completed.json')))):
+            total = sum(itervalues(stats))
             d[lc] = stats['translated'] / float(total)
         json.dump(d, open(self.j(self.RESOURCES, 'user-manual-translation-stats.json'), 'wb'), indent=4)
 

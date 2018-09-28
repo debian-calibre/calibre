@@ -389,6 +389,20 @@ def date_edit(container_id, book_id, field, fm, div, mi):
         val = format_date(val, 'yyyy-MM-dd')
     le.value = val or ''
     form = create_form(le, date_edit_get_value, container_id, book_id, field)
+
+    def clear(ev):
+        ev.currentTarget.closest('form').querySelector('input').value = ''
+
+    def today(ev):
+        ev.currentTarget.closest('form').querySelector('input').value = Date().toISOString().substr(0, 10)
+
+    form.firstChild.appendChild(
+        E.span(
+        '\xa0',
+        create_button(_('Clear'), action=clear),
+        '\xa0',
+        create_button(_('Today'), action=today),
+    ))
     div.appendChild(E.div(style='margin: 0.5ex 1rem', _('Edit the "{}" below.').format(name)))
     div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
     le.focus(), le.select()
@@ -543,10 +557,20 @@ def cover_chosen(top_container_id, book_id, container_id, files):
 cover_chosen.counter = 0
 
 
+def remove_cover(top_container_id, book_id):
+    nonlocal has_changes
+    changes.cover = '--remove--'
+    has_changes = True
+    on_close(top_container_id)
+
+
 def cover_edit(container_id, book_id, field, fm, div, mi):
     upload_files_widget(div, cover_chosen.bind(None, container_id, book_id), _(
         'Change the cover by <a>selecting the cover image</a> or drag and drop of the cover image here.'),
     single_file=True, accept_extensions='png jpeg jpg')
+    div.appendChild(E.div(
+        style='padding: 1rem',
+        create_button(_('Remove existing cover'), action=remove_cover.bind(None, container_id, book_id))))
 
 # }}}
 
@@ -804,12 +828,16 @@ def render_metadata(mi, table, container_id, book_id):  # {{{
         style='max-width: 300px; max-height: 400px',
     )
     if changes.cover:
-        r = FileReader()
-        r.onload = def(evt):
-            img.src = evt.target.result
-            changes.cover = evt.target.result
-        r.readAsDataURL(changes.cover)
-        v'delete changes.cover'
+        if changes.cover is '--remove--':
+            img.removeAttribute('src')
+            changes.cover = None
+        else:
+            r = FileReader()
+            r.onload = def(evt):
+                img.src = evt.target.result
+                changes.cover = evt.target.result
+            r.readAsDataURL(changes.cover)
+            v'delete changes.cover'
     else:
         img.src = cover_url(book_id)
     table.lastChild.lastChild.appendChild(img)
