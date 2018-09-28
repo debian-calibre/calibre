@@ -17086,7 +17086,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.31.0";
+        CALIBRE_VERSION = "3.32.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -18928,7 +18928,7 @@ return this.__repr__();
             ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
             dy = ρσ_unpack[0];
             uy = ρσ_unpack[1];
-            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() === UNDEFINED_DATE.getUTCDate();
+            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() <= UNDEFINED_DATE.getUTCDate() + 1;
         };
         if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
             __argnames__ : {value: ["date"]}
@@ -19394,7 +19394,10 @@ return this.__repr__();
                 var sval;
                 sval = mi[ρσ_bound_index(field.slice(0, -6), mi)];
                 if (sval) {
-                    return ρσ_interpolate_kwargs.call(this, fmt_sidx, [val || 1].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
+                    if (val === null || val === undefined) {
+                        val = 1;
+                    }
+                    return ρσ_interpolate_kwargs.call(this, fmt_sidx, [val].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
                 }
             };
             if (!process_series_index.__argnames__) Object.defineProperties(process_series_index, {
@@ -29530,6 +29533,21 @@ return this.__repr__();
             }
             le.value = val || "";
             form = create_form(le, date_edit_get_value, container_id, book_id, field);
+            function clear(ev) {
+                ev.currentTarget.closest("form").querySelector("input").value = "";
+            };
+            if (!clear.__argnames__) Object.defineProperties(clear, {
+                __argnames__ : {value: ["ev"]}
+            });
+
+            function today(ev) {
+                ev.currentTarget.closest("form").querySelector("input").value = (new Date).toISOString().substr(0, 10);
+            };
+            if (!today.__argnames__) Object.defineProperties(today, {
+                __argnames__ : {value: ["ev"]}
+            });
+
+            form.firstChild.appendChild(E.span(" ", ρσ_interpolate_kwargs.call(this, create_button, [_("Clear")].concat([ρσ_desugar_kwargs({action: clear})])), " ", ρσ_interpolate_kwargs.call(this, create_button, [_("Today")].concat([ρσ_desugar_kwargs({action: today})]))));
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Edit the \"{}\" below.").format(name)].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [form].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             [le.focus(), le.select()];
@@ -29760,8 +29778,18 @@ return this.__repr__();
         });
 
         cover_chosen.counter = 0;
+        function remove_cover(top_container_id, book_id) {
+            changes.cover = "--remove--";
+            has_changes = true;
+            on_close(top_container_id);
+        };
+        if (!remove_cover.__argnames__) Object.defineProperties(remove_cover, {
+            __argnames__ : {value: ["top_container_id", "book_id"]}
+        });
+
         function cover_edit(container_id, book_id, field, fm, div, mi) {
             ρσ_interpolate_kwargs.call(this, upload_files_widget, [div, cover_chosen.bind(null, container_id, book_id), _("Change the cover by <a>selecting the cover image</a> or drag and drop of the cover image here.")].concat([ρσ_desugar_kwargs({single_file: true, accept_extensions: "png jpeg jpg"})]));
+            div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Remove existing cover")].concat([ρσ_desugar_kwargs({action: remove_cover.bind(null, container_id, book_id)})]))].concat([ρσ_desugar_kwargs({style: "padding: 1rem"})])));
         };
         if (!cover_edit.__argnames__) Object.defineProperties(cover_edit, {
             __argnames__ : {value: ["container_id", "book_id", "field", "fm", "div", "mi"]}
@@ -30191,19 +30219,24 @@ return this.__repr__();
             table.appendChild(ρσ_interpolate_kwargs.call(E, E.tr, [E.td(_("Cover") + ":"), E.td()].concat([ρσ_desugar_kwargs({onclick: current_edit_action})])));
             img = ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({style: "max-width: 300px; max-height: 400px"})]);
             if (changes.cover) {
-                r = new FileReader;
-                r.onload = (function() {
-                    var ρσ_anonfunc = function (evt) {
-                        img.src = evt.target.result;
-                        changes.cover = evt.target.result;
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["evt"]}
-                    });
-                    return ρσ_anonfunc;
-                })();
-                r.readAsDataURL(changes.cover);
-                delete changes.cover;
+                if (changes.cover === "--remove--") {
+                    img.removeAttribute("src");
+                    changes.cover = null;
+                } else {
+                    r = new FileReader;
+                    r.onload = (function() {
+                        var ρσ_anonfunc = function (evt) {
+                            img.src = evt.target.result;
+                            changes.cover = evt.target.result;
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["evt"]}
+                        });
+                        return ρσ_anonfunc;
+                    })();
+                    r.readAsDataURL(changes.cover);
+                    delete changes.cover;
+                }
             } else {
                 img.src = cover_url(book_id);
             }
@@ -30441,6 +30474,7 @@ return this.__repr__();
         ρσ_modules["book_list.edit_metadata"].enum_edit = enum_edit;
         ρσ_modules["book_list.edit_metadata"].bool_edit = bool_edit;
         ρσ_modules["book_list.edit_metadata"].cover_chosen = cover_chosen;
+        ρσ_modules["book_list.edit_metadata"].remove_cover = remove_cover;
         ρσ_modules["book_list.edit_metadata"].cover_edit = cover_edit;
         ρσ_modules["book_list.edit_metadata"].edit_field = edit_field;
         ρσ_modules["book_list.edit_metadata"].render_metadata = render_metadata;

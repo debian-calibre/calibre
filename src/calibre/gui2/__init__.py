@@ -26,7 +26,8 @@ from calibre.utils.file_type_icons import EXT_MAP
 try:
     NO_URL_FORMATTING = QUrl.None_
 except AttributeError:
-    NO_URL_FORMATTING = QUrl.None
+    NO_URL_FORMATTING = getattr(QUrl, 'None')
+
 
 # Setup gprefs {{{
 gprefs = JSONConfig('gui')

@@ -8,7 +8,7 @@ __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import hashlib
-from future_builtins import map
+from polyglot.builtins import map
 
 from PyQt5.Qt import QBuffer, QByteArray, QImage, Qt, QColor, qRgba, QPainter
 
@@ -278,7 +278,7 @@ class PDFStream(object):
         self.stream = HashingStream(stream)
         self.compress = compress
         self.write_line(PDFVER)
-        self.write_line(b'%íì¦"')
+        self.write_line(u'%íì¦"'.encode('utf-8'))
         creator = ('%s %s [https://calibre-ebook.com]'%(__appname__,
                                     __version__))
         self.write_line('%% Created by %s'%creator)
@@ -528,5 +528,3 @@ class PDFStream(object):
         self.write_line('startxref')
         self.write_line('%d'%startxref)
         self.stream.write('%%EOF')
-
-

@@ -131,10 +131,9 @@ def main():
     run(img, func)
     path = os.path.join(tdir, 'painter.png')
     img.save(path)
-    print ('PDF written to:', pdf)
-    print ('Image written to:', path)
+    print('PDF written to:', pdf)
+    print('Image written to:', path)
+
 
 if __name__ == '__main__':
     main()
-
-

@@ -2,6 +2,7 @@
 Basic support for writing LIT files.
 '''
 from __future__ import with_statement
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
@@ -33,7 +34,7 @@ import calibre.ebooks.lit.mssha1 as mssha1
 
 __all__ = ['LitWriter']
 
-LIT_IMAGES = set(['image/png', 'image/jpeg', 'image/gif'])
+LIT_IMAGES = {'image/png', 'image/jpeg', 'image/gif'}
 LIT_MIMES = OEB_DOCS | OEB_STYLES | LIT_IMAGES
 
 MS_COVER_TYPE = 'other.ms-coverimage-standard'
@@ -56,6 +57,7 @@ def invert_tag_map(tag_map):
     tattrs[0] = dattrs
     return tags, tattrs
 
+
 OPF_MAP = invert_tag_map(maps.OPF_MAP)
 HTML_MAP = invert_tag_map(maps.HTML_MAP)
 
@@ -74,6 +76,7 @@ def packguid(guid):
         guid[29:31], guid[31:33], guid[33:35], guid[35:37]
     values = [int(value, 16) for value in values]
     return pack("<LHHBBBBBBBB", *values)
+
 
 FLAG_OPENING = (1 << 0)
 FLAG_CLOSING = (1 << 1)
@@ -114,7 +117,7 @@ LZXC_CONTROL = \
 
 COLLAPSE = re.compile(r'[ \t\r\n\v]+')
 
-PAGE_BREAKS = set(['always', 'left', 'right'])
+PAGE_BREAKS = {'always', 'left', 'right'}
 
 
 def decint(value):
@@ -135,7 +138,7 @@ def randbytes(n):
 
 
 def warn(x):
-    print x
+    print(x)
 
 
 class ReBinary(object):

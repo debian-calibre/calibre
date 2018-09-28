@@ -6,6 +6,7 @@ Created on 13 Jan 2011
 
 @author: charles
 '''
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -345,7 +346,7 @@ class BuiltinPrint(BuiltinFormatterFunction):
             'the output will go to a black hole.')
 
     def evaluate(self, formatter, kwargs, mi, locals, *args):
-        print args
+        print(args)
         return ''
 
 
@@ -639,7 +640,7 @@ class BuiltinReGroup(BuiltinFormatterFunction):
             'the template and the eval functions, you use [[ for { and ]] for }.'
             ' The following example in template program mode looks for series '
             'with more than one word and uppercases the first word: '
-            "{series:'re_group($, \"(\S* )(.*)\", \"[[$:uppercase()]]\", \"[[$]]\")'}")
+            "{series:'re_group($, \"(\\S* )(.*)\", \"[[$:uppercase()]]\", \"[[$]]\")'}")
 
     def evaluate(self, formatter, kwargs, mi, locals, val, pattern, *args):
         from formatter import EvalFormatter
@@ -923,9 +924,9 @@ class BuiltinSublist(BuiltinFormatterFunction):
             'of zero is assumed to be the length of the list. Examples using '
             'basic template mode and assuming that the tags column (which is '
             'comma-separated) contains "A, B, C": '
-            '{tags:sublist(0,1,\,)} returns "A". '
-            '{tags:sublist(-1,0,\,)} returns "C". '
-            '{tags:sublist(0,-1,\,)} returns "A, B".'
+            '{tags:sublist(0,1,\\\\,)} returns "A". '
+            '{tags:sublist(-1,0,\\\\,)} returns "C". '
+            '{tags:sublist(0,-1,\\\\,)} returns "A, B".'
             )
 
     def evaluate(self, formatter, kwargs, mi, locals, val, start_index, end_index, sep):
@@ -1220,7 +1221,7 @@ class BuiltinListUnion(BuiltinFormatterFunction):
     def evaluate(self, formatter, kwargs, mi, locals, list1, list2, separator):
         res = [l.strip() for l in list1.split(separator) if l.strip()]
         l2 = [l.strip() for l in list2.split(separator) if l.strip()]
-        lcl1 = set([icu_lower(l) for l in res])
+        lcl1 = {icu_lower(l) for l in res}
 
         for i in l2:
             if icu_lower(i) not in lcl1 and i not in res:
@@ -1241,7 +1242,7 @@ class BuiltinListDifference(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals, list1, list2, separator):
         l1 = [l.strip() for l in list1.split(separator) if l.strip()]
-        l2 = set([icu_lower(l.strip()) for l in list2.split(separator) if l.strip()])
+        l2 = {icu_lower(l.strip()) for l in list2.split(separator) if l.strip()}
 
         res = []
         for i in l1:
@@ -1263,7 +1264,7 @@ class BuiltinListIntersection(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals, list1, list2, separator):
         l1 = [l.strip() for l in list1.split(separator) if l.strip()]
-        l2 = set([icu_lower(l.strip()) for l in list2.split(separator) if l.strip()])
+        l2 = {icu_lower(l.strip()) for l in list2.split(separator) if l.strip()}
 
         res = []
         for i in l1:
@@ -1302,8 +1303,8 @@ class BuiltinListEquals(BuiltinFormatterFunction):
             'The comparison is case insensitive.')
 
     def evaluate(self, formatter, kwargs, mi, locals, list1, sep1, list2, sep2, yes_val, no_val):
-        s1 = set([icu_lower(l.strip()) for l in list1.split(sep1) if l.strip()])
-        s2 = set([icu_lower(l.strip()) for l in list2.split(sep2) if l.strip()])
+        s1 = {icu_lower(l.strip()) for l in list1.split(sep1) if l.strip()}
+        s2 = {icu_lower(l.strip()) for l in list2.split(sep2) if l.strip()}
         if s1 == s2:
             return yes_val
         return no_val
@@ -1652,8 +1653,8 @@ class UserFunction(FormatterUserFunction):
 ''' + func
     locals_ = {}
     if DEBUG and tweaks.get('enable_template_debug_printing', False):
-        print prog
-    exec prog in locals_
+        print(prog)
+    exec(prog, locals_)
     cls = locals_['UserFunction'](name, doc, arg_count, eval_func)
     return cls
 

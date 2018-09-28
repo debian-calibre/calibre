@@ -12,6 +12,7 @@ import os, shutil, uuid, json, glob, time, hashlib, errno, sys
 from functools import partial
 
 import apsw
+from polyglot.builtins import reraise
 
 from calibre import isbytestring, force_unicode, prints, as_unicode
 from calibre.constants import (iswindows, filesystem_encoding,
@@ -1214,9 +1215,9 @@ class DB(object):
 
     @property
     def custom_tables(self):
-        return set([x[0] for x in self.conn.get(
+        return {x[0] for x in self.conn.get(
             'SELECT name FROM sqlite_master WHERE type="table" AND '
-            '(name GLOB "custom_column_*" OR name GLOB "books_custom_column_*")')])
+            '(name GLOB "custom_column_*" OR name GLOB "books_custom_column_*")')}
 
     @classmethod
     def exists_at(cls, path):
@@ -1626,7 +1627,7 @@ class DB(object):
             except EnvironmentError as err:
                 if err.errno == errno.EEXIST:
                     # Parent directory already exists, re-raise original exception
-                    raise exc_info[0], exc_info[1], exc_info[2]
+                    reraise(*exc_info)
                 raise
             finally:
                 del exc_info

@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 import threading
 from functools import wraps
-from future_builtins import map
+from polyglot.builtins import map
 
 from calibre.constants import plugins
 
@@ -29,6 +29,7 @@ def same_thread(func):
             raise ThreadingViolation()
         return func(self, *args, **kwargs)
     return check_thread
+
 
 FreeTypeError = getattr(plugins['freetype'][0], 'FreeTypeError', Exception)
 
@@ -80,5 +81,3 @@ class FreeType(object):
     @same_thread
     def load_font(self, data):
         return Face(self.ft.load_font(data))
-
-

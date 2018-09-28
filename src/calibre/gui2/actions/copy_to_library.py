@@ -250,8 +250,8 @@ class Worker(Thread):  # {{{
 
         if gprefs['automerge'] == 'new record':
             incoming_fmts = \
-                set([os.path.splitext(path)[-1].replace('.',
-                    '').upper() for path in paths])
+                {os.path.splitext(path)[-1].replace('.',
+                    '').upper() for path in paths}
 
             if incoming_fmts.intersection(seen_fmts):
                 # There was at least one duplicate format
@@ -277,7 +277,7 @@ class ChooseLibrary(Dialog):  # {{{
 
     def resort(self):
         if self.sort_alphabetically.isChecked():
-            sorted_locations = sorted(self.locations, key=lambda (name, loc): numeric_sort_key(name))
+            sorted_locations = sorted(self.locations, key=lambda name_loc: numeric_sort_key(name_loc[0]))
         else:
             sorted_locations = self.locations
         self.items.clear()
@@ -432,6 +432,7 @@ class CopyToLibraryAction(InterfaceAction):
     def location_selected(self, loc):
         enabled = loc == 'library'
         self.qaction.setEnabled(enabled)
+        self.menuless_qaction.setEnabled(enabled)
 
     def build_menus(self):
         self.menu.clear()

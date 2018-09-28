@@ -9,10 +9,12 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 import os, errno, json, importlib, math, httplib, bz2, shutil, sys
 from itertools import count
 from io import BytesIO
-from future_builtins import map
+from polyglot.builtins import map
 from Queue import Queue, Empty
 from threading import Thread, Event
 from multiprocessing.pool import ThreadPool
+
+from polyglot.builtins import reraise
 
 from PyQt5.Qt import (
     QImageReader, QFormLayout, QVBoxLayout, QSplitter, QGroupBox, QListWidget,
@@ -368,7 +370,7 @@ def create_themeball(report, progress=None, abort=None):
         return
     if errors:
         e = errors[0]
-        raise e[0], e[1], e[2]
+        reraise(*e)
 
     if progress is not None:
         progress(next(num), _('Creating theme file'))

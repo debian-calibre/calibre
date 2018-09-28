@@ -24,7 +24,7 @@ class CSV_XML(CatalogPlugin):
     supported_platforms = ['windows', 'osx', 'linux']
     author = 'Greg Riker'
     version = (1, 0, 0)
-    file_types = set(['csv', 'xml'])
+    file_types = {'csv', 'xml'}
 
     cli_options = [
             Option('--fields',
@@ -154,9 +154,9 @@ class CSV_XML(CatalogPlugin):
 
                     # Convert HTML to markdown text
                     if type(item) is unicode:
-                        opening_tag = re.search('<(\w+)(\x20|>)', item)
+                        opening_tag = re.search('<(\\w+)(\x20|>)', item)
                         if opening_tag:
-                            closing_tag = re.search('<\/%s>$' % opening_tag.group(1), item)
+                            closing_tag = re.search('<\\/%s>$' % opening_tag.group(1), item)
                             if closing_tag:
                                 item = html2text(item)
 

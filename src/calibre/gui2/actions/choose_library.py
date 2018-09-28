@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
@@ -401,6 +402,7 @@ class ChooseLibraryAction(InterfaceAction):
     def location_selected(self, loc):
         enabled = loc == 'library'
         self.qaction.setEnabled(enabled)
+        self.menuless_qaction.setEnabled(enabled)
 
     def rename_requested(self, name, location):
         LibraryDatabase = db_class()
@@ -591,13 +593,13 @@ class ChooseLibraryAction(InterfaceAction):
         for i in xrange(3):
             gc.collect()
         if ref() is not None:
-            print 'DB object alive:', ref()
+            print('DB object alive:', ref())
             for r in gc.get_referrers(ref())[:10]:
-                print r
-                print
-        print 'before:', self.before_mem
-        print 'after:', memory()
-        print
+                print(r)
+                print()
+        print('before:', self.before_mem)
+        print('after:', memory())
+        print()
         self.dbref = self.before_mem = None
 
     def count_changed(self, new_count):

@@ -1,12 +1,12 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
-
-from future_builtins import map
+from __future__ import print_function
+from polyglot.builtins import map
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = u'calibre'
-numeric_version = (3, 31, 0)
+numeric_version = (3, 32, 0)
 __version__   = u'.'.join(map(unicode, numeric_version))
 __author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
 
@@ -168,7 +168,6 @@ class Plugins(collections.Mapping):
                 'chm_extra',
                 'icu',
                 'speedup',
-                'monotonic',
                 'unicode_names',
                 'zlib2',
                 'html',
@@ -183,6 +182,10 @@ class Plugins(collections.Mapping):
                 'certgen',
                 'lzma_binding',
             ]
+        if not ispy3:
+            plugins.extend([
+                'monotonic',
+            ])
         if iswindows:
             plugins.extend(['winutil', 'wpd', 'winfonts'])
         if isosx:
@@ -231,7 +234,7 @@ if plugins is None:
 
 # config_dir {{{
 
-CONFIG_DIR_MODE = 0700
+CONFIG_DIR_MODE = 0o700
 
 if 'CALIBRE_CONFIG_DIRECTORY' in os.environ:
     config_dir = os.path.abspath(os.environ['CALIBRE_CONFIG_DIRECTORY'])
@@ -257,7 +260,7 @@ else:
     if not os.path.exists(config_dir) or \
             not os.access(config_dir, os.W_OK) or not \
             os.access(config_dir, os.X_OK):
-        print 'No write acces to', config_dir, 'using a temporary dir instead'
+        print('No write acces to', config_dir, 'using a temporary dir instead')
         import tempfile, atexit
         config_dir = tempfile.mkdtemp(prefix='calibre-config-')
 

@@ -1,13 +1,14 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import itertools, operator
 from functools import partial
-from future_builtins import map
+from polyglot.builtins import map
 from collections import OrderedDict
 
 from PyQt5.Qt import (
@@ -1113,8 +1114,8 @@ class BooksView(QTableView):  # {{{
         Select rows identified by identifiers. identifiers can be a set of ids,
         row numbers or QModelIndexes.
         '''
-        rows = set([x.row() if hasattr(x, 'row') else x for x in
-            identifiers])
+        rows = {x.row() if hasattr(x, 'row') else x for x in
+            identifiers}
         if using_ids:
             rows = set([])
             identifiers = set(identifiers)
@@ -1136,7 +1137,7 @@ class BooksView(QTableView):  # {{{
         # Create a range based selector for each set of contiguous rows
         # as supplying selectors for each individual row causes very poor
         # performance if a large number of rows has to be selected.
-        for k, g in itertools.groupby(enumerate(rows), lambda (i,x):i-x):
+        for k, g in itertools.groupby(enumerate(rows), lambda i_x:i_x[0]-i_x[1]):
             group = list(map(operator.itemgetter(1), g))
             sel.merge(QItemSelection(m.index(min(group), 0),
                 m.index(max(group), max_col)), sm.Select)

@@ -10,7 +10,7 @@ import re, random, unicodedata
 from collections import namedtuple
 from contextlib import contextmanager
 from math import ceil, sqrt, cos, sin, atan2
-from future_builtins import map, zip
+from polyglot.builtins import map, zip
 from itertools import chain
 
 from PyQt5.Qt import (
@@ -174,7 +174,8 @@ class Block(object):
         def fget(self):
             return self._position
 
-        def fset(self, (x, y)):
+        def fset(self, new_pos):
+            (x, y) = new_pos
             self._position = Point(x, y)
             if self.layouts:
                 self.layouts[0].setPosition(QPointF(x, y))
