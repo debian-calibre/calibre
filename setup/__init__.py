@@ -10,6 +10,7 @@ import sys, re, os, platform, subprocess, time, errno
 
 is64bit = platform.architecture()[0] == '64bit'
 iswindows = re.search('win(32|64)', sys.platform)
+ispy3 = sys.version_info.major > 2
 isosx = 'darwin' in sys.platform
 isfreebsd = 'freebsd' in sys.platform
 isnetbsd = 'netbsd' in sys.platform
@@ -121,6 +122,49 @@ initialize_constants()
 
 preferred_encoding = 'utf-8'
 
+
+if ispy3:
+    prints = print
+else:
+    def prints(*args, **kwargs):
+        '''
+        Print unicode arguments safely by encoding them to preferred_encoding
+        Has the same signature as the print function from Python 3, except for the
+        additional keyword argument safe_encode, which if set to True will cause the
+        function to use repr when encoding fails.
+        '''
+        file = kwargs.get('file', sys.stdout)
+        sep  = kwargs.get('sep', ' ')
+        end  = kwargs.get('end', '\n')
+        enc = preferred_encoding
+        safe_encode = kwargs.get('safe_encode', False)
+        for i, arg in enumerate(args):
+            if isinstance(arg, unicode):
+                try:
+                    arg = arg.encode(enc)
+                except UnicodeEncodeError:
+                    if not safe_encode:
+                        raise
+                    arg = repr(arg)
+            if not isinstance(arg, str):
+                try:
+                    arg = str(arg)
+                except ValueError:
+                    arg = unicode(arg)
+                if isinstance(arg, unicode):
+                    try:
+                        arg = arg.encode(enc)
+                    except UnicodeEncodeError:
+                        if not safe_encode:
+                            raise
+                        arg = repr(arg)
+
+            file.write(arg)
+            if i != len(args)-1:
+                file.write(sep)
+        file.write(end)
+
+
 warnings = []
 
 
@@ -227,12 +271,12 @@ class Command(object):
         return newer(targets, sources)
 
     def info(self, *args, **kwargs):
-        print(*args, **kwargs)
+        prints(*args, **kwargs)
         sys.stdout.flush()
 
     def warn(self, *args, **kwargs):
         print('\n'+'_'*20, 'WARNING','_'*20)
-        print(*args, **kwargs)
+        prints(*args, **kwargs)
         print('_'*50)
         warnings.append((args, kwargs))
         sys.stdout.flush()

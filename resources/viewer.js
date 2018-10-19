@@ -18653,7 +18653,7 @@ return this.__repr__();
             ρσ_unpack = [date.getUTCFullYear(), UNDEFINED_DATE.getUTCFullYear()];
             dy = ρσ_unpack[0];
             uy = ρσ_unpack[1];
-            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() === UNDEFINED_DATE.getUTCDate();
+            return dy < uy || dy === uy && date.getUTCMonth() === UNDEFINED_DATE.getUTCMonth() && date.getUTCDate() <= UNDEFINED_DATE.getUTCDate() + 1;
         };
         if (!is_date_undefined.__argnames__) Object.defineProperties(is_date_undefined, {
             __argnames__ : {value: ["date"]}
@@ -26389,8 +26389,14 @@ return this.__repr__();
 
         var set_session_data = ρσ_modules["book_list.globals"].set_session_data;
 
-        var error_dialog = ρσ_modules.modals.error_dialog;
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+        var get_font_family = ρσ_modules["book_list.theme"].get_font_family;
+
+        var get_widget_css = ρσ_modules.dom.get_widget_css;
+        var set_css = ρσ_modules.dom.set_css;
+
         var create_modal_container = ρσ_modules.modals.create_modal_container;
+        var error_dialog = ρσ_modules.modals.error_dialog;
 
         var from_python = ρσ_modules.qt.from_python;
         var to_python = ρσ_modules.qt.to_python;
@@ -26400,9 +26406,9 @@ return this.__repr__();
         var runtime = ρσ_modules["read_book.globals"].runtime;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
 
-        var View = ρσ_modules["read_book.view"].View;
-
         var iframe_main = ρσ_modules["read_book.iframe"].main;
+
+        var View = ρσ_modules["read_book.view"].View;
 
         var session_defaults = ρσ_modules.session.session_defaults;
 
@@ -26624,6 +26630,9 @@ return this.__repr__();
             document.body.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: "view"})]));
             window.onerror = onerror;
             create_modal_container();
+            document.body.style.fontFamily = get_font_family();
+            document.head.appendChild(E.style(get_widget_css()));
+            ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({background_color: get_color("window-background"), color: get_color("window-foreground")})]));
         } else {
             iframe_main();
         }

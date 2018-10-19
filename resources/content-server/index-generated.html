@@ -17086,7 +17086,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.32.0";
+        CALIBRE_VERSION = "3.33.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -31656,6 +31656,7 @@ return this.__repr__();
                 g.appendChild(choices("pdf_standard_font", _("S&tandard font:"), ui_data.font_types));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_default_font_size", _("Default font si&ze:")].concat([ρσ_desugar_kwargs({unit: "px"})])));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_mono_font_size", _("Default font si&ze:")].concat([ρσ_desugar_kwargs({unit: "px"})])));
+                g.appendChild(lineedit("pdf_page_number_map", _("Page number &map:")));
                 g.appendChild(checkbox("pdf_use_document_margins", _("Use page margins from the &document being converted")));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_left", indent + _("Left page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["pdf_page_margin_top", indent + _("Top page margin")].concat([ρσ_desugar_kwargs({unit: "pt", min: -100, max: 500})])));

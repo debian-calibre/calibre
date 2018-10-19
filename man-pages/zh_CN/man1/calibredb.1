@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "九月 28, 2018" "3.32.0" "calibre"
+.TH "CALIBREDB" "1" "十月 19, 2018" "3.33.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB 选项\fP
+\fI\%EPUB 个选项\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -140,12 +140,12 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre库的路径。默认是使用存储在设置中的路径。您还可以连接到calibre内容服务器，以便在远程库上执行操作。为此使用表单的URL：\fI\%http://hostname:port/#library_id\fP 例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id是要在内容服务器上连接的库的库id。您可以使用特殊的library_id值来获得服务器上可用库id的列表。有关如何通过内容服务器设置访问的详细信息，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+calibre 库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程库上执行操作。为此使用表单的URL：\fI\%http://hostname:port/#library_id\fP 例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id是要在内容服务器上连接的库的库id。您可以使用特殊的library_id值来获得服务器上可用库id的列表。有关如何通过内容服务器设置访问的详细信息，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-连接到calibre内容服务器的密码。若要从标准输入读取密码，请使用特殊值：<stdin>。若要从文件读取密码，请使用<f:/path/to/file>（即<f:后跟文件的完整路径和尾随>）。上面的角括号是必需的，记住要脱掉它们，或者使用引号。
+连接到 calibre 内容服务器的密码。若要从标准输入读取密码，请使用特殊值：<stdin>。若要从文件读取密码，请使用<f:/path/to/file>（即<f:后跟文件的完整路径和尾随>）。上面的角括号是必需的，记住要脱掉它们，或者使用引号。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,7 +169,7 @@ calibredb list [选项]
 .UNINDENT
 .UNINDENT
 .sp
-列出 Calibre 数据库中可用书籍。
+列出 calibre 数据库中可用书籍。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -377,7 +377,7 @@ calibredb show_metadata [options] id
 .UNINDENT
 .UNINDENT
 .sp
-显示在calibre数据库中存储的id所标识的图书的元数据。
+显示在 calibre 数据库中存储的id所标识的图书的元数据。
 id是来自搜索命令的id号。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
@@ -398,7 +398,7 @@ calibredb set_metadata [options] id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-根据OPF文件的metadata.opf设置存储在calibre数据库中的用于标识图书的元数据。
+根据OPF文件的metadata.opf设置存储在 calibre 数据库中的用于标识图书的元数据。
 id是来自搜索命令的id号。您可以通过使用\-\-as\-opf切换到show_metadata命令来快速
 了解OPF格式。还可以用\-\-field选项设置各个字段的元数据。如果使用\-\-field选项则
 不需要指定OPF文件。
@@ -443,22 +443,22 @@ an opf file). You can get id numbers from the search command.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-一般来说，Calibre 为文件名将所有非英文字符转换为英文对应字符。警告：若关闭此项，你可能保存文件出错，取决于你的文件系统是否支持 unicode。 选定此项将关闭此操作。
+一般来说，calibre 为文件名将所有非英文字符转换为英文对应字符。警告：若关闭此项，你可能保存文件出错，取决于你的文件系统是否支持 unicode。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-一般来说，Calibre 将把封面保存为单独文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
+一般来说，calibre 将把封面保存为单独文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-一般来说，Calibre 将基于 Calibre 书库升级存储所存文件的元数据。这使保存到磁盘变慢一些。 选定此项将关闭此操作。
+一般来说，calibre 将基于 calibre 书库升级存储所存文件的元数据。这使保存到磁盘变慢一些。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-一般来说，Calibre 将会把元数据写入单独的 OPF 文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
+一般来说，calibre 将会把元数据写入单独的 OPF 文件，和原始电子书文件分开保存。 选定此项将关闭此操作。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -532,7 +532,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .B \-\-verbose, \-v
 显示详细输出信息。有利调试
 .UNINDENT
-.SS EPUB 选项
+.SS EPUB 个选项
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -897,8 +897,8 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-从calibre数据库中的元数据更新存储在calibre库中的实际图书文件中的元数据。
-通常，只有从calibre导出文件时才更新元数据，如果希望文件就地更新，则此命
+从 calibre 数据库中的元数据更新存储在 calibre 库中的实际图书文件中的元数据。
+通常，只有从 calibre 导出文件时才更新元数据，如果希望文件就地更新，则此命
 令很有用。请注意，不同的文件格式支持不同数量的元数据。你可以使用book_id
 的特殊值“all”来更新所有书籍中的元数据。还可以指定许多由空间分隔的书籍ID
 和由连字符分隔的ID范围。例如：calibredb \fBembed_metadata\fP 1 2 10\-15 23
