@@ -11,7 +11,7 @@ from subprocess import check_call
 from tempfile import NamedTemporaryFile, mkdtemp, gettempdir
 from zipfile import ZipFile
 from polyglot.builtins import iteritems
-from polyglot.urllib import urlopen, urlencode
+from polyglot.urllib import urlopen, Request
 
 if __name__ == '__main__':
     d = os.path.dirname
@@ -157,8 +157,37 @@ def run_remote_upload(args):
 
 
 def upload_to_fosshub():
+    # https://devzone.fosshub.com/dashboard/restApi
     # fosshub has no API to do partial uploads, so we always upload all files.
+    api_key = get_fosshub_data()
+
+    def request(path, data=None):
+        r = Request('https://api.fosshub.com/rest/' + path.lstrip('/'),
+                headers={
+                    'Content-Type': 'application/json',
+                    'X-auth-key': api_key,
+                    'User-Agent': 'calibre'
+        })
+        res = urlopen(r, data=data)
+        ans = json.loads(res.read())
+        if ans.get('error'):
+            raise SystemExit(ans['error'])
+        if res.getcode() != 200:
+            raise SystemExit('Request to {} failed with response code: {}'.format(path, res.getcode()))
+        # from pprint import pprint
+        # pprint(ans)
+        return ans['status'] if 'status' in ans else ans['data']
+
     print('Sending upload request to fosshub...')
+    project_id = None
+
+    for project in request('projects'):
+        if project['name'].lower() == 'calibre':
+            project_id = project['id']
+            break
+    else:
+        raise SystemExit('No calibre project found')
+
     files = set(installers())
     entries = []
     for fname in files:
@@ -167,33 +196,19 @@ def upload_to_fosshub():
             __version__, os.path.basename(fname)
         )
         entries.append({
-            'url': url,
+            'fileUrl': url,
             'type': desc,
             'version': __version__,
         })
     jq = {
-        'software': 'Calibre',
-        'apiKey': get_fosshub_data(),
-        'upload': entries,
-        'delete': [{
-            'type': '*',
-            'version': '*',
-            'name': '*'
-        }]
+        'version': __version__,
+        'files': entries,
+        'publish': True,
+        'isOldRelease': False,
     }
     # print(json.dumps(jq, indent=2))
-    rq = urlopen(
-        'https://www.fosshub.com/JSTools/uploadJson',
-        urlencode({
-            'content': json.dumps(jq)
-        })
-    )
-    resp = rq.read()
-    if rq.getcode() != 200:
-        raise SystemExit(
-            'Failed to upload to fosshub, with HTTP error code: %d and response: %s'
-            % (rq.getcode(), resp)
-        )
+    if not request('projects/{}/releases/'.format(project_id), data=json.dumps(jq)):
+        raise SystemExit('Failed to queue publish job with fosshub')
 
 
 class UploadInstallers(Command):  # {{{
