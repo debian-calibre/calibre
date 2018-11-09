@@ -8,12 +8,13 @@
 # Jonatan Nyberg, 2017-2018
 # Jonatan Nyberg, 2017
 # Merarom <merarom@yahoo.es>, 2014-2016
+# Sebastian Rasmussen <sebras@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 08:26+0530\n"
-"PO-Revision-Date: 2018-08-10 14:36+0000\n"
+"POT-Creation-Date: 2018-10-19 10:31+0530\n"
+"PO-Revision-Date: 2018-11-04 11:47+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -294,7 +295,7 @@ msgid ""
 " alternatives. Note that this algorithm is not perfect so it is worth "
 "reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
 "punctuation` is also available."
-msgstr ""
+msgstr "Du kan också be calibre att :guilabel:`Förbättra interpunktion` vilket kommer att ersätta vanliga citattecken, streck och uteslutningstecken med deras typografiskt korrekt alternativ. Notera att denna algoritm inte är perfekt så det är värt att granska resultaten. Det omvända, :guilabel:`Avförbättra interpunktion`, finns också."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:178
 msgid ""
@@ -306,7 +307,7 @@ msgid ""
 " a particular character encoding by using this setting.  `cp1252` is a "
 "common encoding for documents produced using Windows software. You should "
 "also read :ref:`char-encoding-faq` for more on encoding issues."
-msgstr ""
+msgstr "Avslutningsvis finns :guilabel:`Indatateckenkodning`. Äldre dokument anger ibland inte sin teckenkodning. Vi omkodning kan detta resultera i icke-engelska tecken eller specialtecken som smarta citat skadas. calibre försöker att automatiskt detektera teckenkodning av källdokumentet, men det är inte alltid lyckas. Du kan tvinga den att anta en viss teckenkodning med den här inställningen. `cp1252` är en gemensam kodning för dokument för Windows-mjukvara. Du bör också läsa :ref:`char-kodning-faq` för mer information om kodningsfrågor."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:188
 msgid "Layout"
@@ -352,7 +353,7 @@ msgid ""
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr ""
+msgstr "Ett annat användbart alternativ är :guilabel:`Konvertera data i tabeller till linjära data`. Några dåligt utformade dokument använder tabeller för att anpassa utformningen på texten på sidan. Vid konvertering har dessa dokument ofta text som rinner ut från sidan och andra artefakter. Detta alternativ kommer att extrahera innehållet från tabellerna och presentera den på ett linjärt sätt. Observera att detta alternativ linjärisera *alla* bord, så att använd bara den om du är säker indatasdokumentet använder inte tabeller för verkliga ändamål, som att presentera tabellinformation."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:220
 msgid "Styling"
@@ -366,7 +367,7 @@ msgid ""
 "document** itself. You can use this setting to fine tune the "
 "presentation/layout of your document. For example, if you want all "
 "paragraphs of class `endnote` to be right aligned, just add::"
-msgstr ""
+msgstr "Alternativet :guilabel:`Extra CSS` låter dig ange godtycklig CSS som kommer att tillämpas på alla HTML-filer i inmatningen. Denna CSS appliceras med mycket hög prioritet och bör åsidosätta de flesta CSS närvarande i själva **inmatningsdokumentet**. Du kan använda denna inställning för att finjustera presentation/utformningen av dokumentet. Till exempel, om du vill att alla stycken i klassen  `slutnotering`  att vara högerställda, lägg bara till::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
@@ -397,7 +398,7 @@ msgid ""
 " rules that change styles based on various conditions. For example you can "
 "use it to change all green colors to blue, or remove all bold styling from "
 "the text or color all headings a certain color, etc."
-msgstr ""
+msgstr "Detta är den mest kraftfulla stilrelaterade bekvämligheten. Du kan använda den för att definiera regler som ändrar stilar baserat på olika villkor. Till exempel kan du använda den för att ändra alla gröna färger till blåa, eller ta bort alla feta stilar från text eller färga alla rubriker en viss färg, m.m."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:257
 msgid "Page setup"
@@ -453,7 +454,7 @@ msgid ""
 "in some cases an option may lead to worse results, so use with care.  As an "
 "example, several of these options will remove all non-breaking-space "
 "entities, or may include false positive matches relating to the function."
-msgstr "Heuristisk bearbetning erbjuder en mängd olika funktioner som kan användas för att försöka upptäcka och åtgärda vanliga problem i dåligt formaterade indatadokument. Använd dessa funktioner om ditt indatadokument lider av dålig formatering. Eftersom dessa funktioner är beroende av gemensamma mönster, var medveten om att ett alternativ i vissa fall kan leda till sämre resultat, så använd med försiktighet. Som ett exempel, kommer flera av dessa alternativ ta bort alla icke-mellanslagsbrytande entiteter, eller kan innefatta falska positiva resultat avseende funktionen."
+msgstr "Heuristisk bearbetning erbjuder en mängd olika funktioner som kan användas för att försöka upptäcka och åtgärda vanliga problem i dåligt formaterade indatadokument. Använd dessa funktioner om ditt indatadokument lider av dålig formatering. Eftersom dessa funktioner är beroende av gemensamma mönster, var medveten om att ett alternativ i vissa fall kan leda till sämre resultat, så använd med försiktighet. Som ett exempel, kommer flera av dessa alternativ ta bort alla icke-blankstegsbrytande entiteter, eller kan innefatta falska positiva resultat avseende funktionen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:284
 msgid ":guilabel:`Enable heuristic processing`"
@@ -646,7 +647,7 @@ msgid ""
 "Some documents use a convention of defining text indents using non-breaking "
 "space entities.  When this option is enabled calibre will attempt to detect "
 "this sort of formatting and convert them to a 3% text indent using CSS."
-msgstr "Vissa dokument använder en konvention att definiera textindrag med att använd hårda blanka enheter. När det här alternativet är aktiverat calibre kommer att försöka upptäcka denna typ av formatering och konvertera dem till en 3% textindrag hjälp av CSS."
+msgstr "Vissa dokument använder en konvention att definiera textindrag med att använd hårda blankstegs enheter. När det här alternativet är aktiverat calibre kommer att försöka upptäcka denna typ av formatering och konvertera dem till en 3% textindrag hjälp av CSS."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:365
 msgid "Search & replace"
@@ -1114,7 +1115,7 @@ msgid ""
 "Assumes that every paragraph starts with an indent (either a tab or 2+ "
 "spaces). Paragraphs end when the next line that starts with an indent is "
 "reached::"
-msgstr "Förutsätter att varje stycke börjar med en indragning (antingen en tabulering eller 2+ mellanslag). Styckena avslutas när nästa rad som börjar med en indragning nås::"
+msgstr "Förutsätter att varje stycke börjar med en indragning (antingen en tabulering eller 2+ blankslag). Styckena avslutas när nästa rad som börjar med en indragning nås::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:697
 msgid ":guilabel:`Paragraph style: Unformatted`"
@@ -1298,7 +1299,7 @@ msgid ""
 "Note that because this file explores the potential of EPUB, most of the "
 "advanced formatting is not going to work on readers less capable than "
 "calibre's built-in EPUB viewer."
-msgstr "Observera att eftersom den här filen utforskar potentialen i EPUB, kommer inte de flesta av de avancerade formatering att fungera på läsplattor mindre kapabla än calibres inbyggda EPUB-visare."
+msgstr "Observera att eftersom den här filen utforskar potentialen i EPUB, kommer inte de flesta av de avancerade formatering att fungera på läsenheter mindre kapabla än calibres inbyggda EPUB-visare."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:783
 msgid "Convert ODT documents"

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "oktober 19, 2018" "3.33.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "november 08, 2018" "3.34.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -52,7 +52,7 @@ Efter att ha angivit in\- och utdatafilerna kan du anpassa konverteringen genom 
 För fullständig dokumentation om konverteringssystemet, gå till
 conversion
 .sp
-När du skickar argument till \fBebook\-convert\fP som har mellanslag i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
+När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .sp
 Alternativen och standardvärden för ändringsalternativ beror på både
 indata\- och utdataformat, därför bör du alltid kolla med:
@@ -158,7 +158,7 @@ Extrahera innehållet i den genererade EPUB filen till den angivna katalogen. In
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödvändigt eftersom de flesta EPUB\-läsare inte kan hantera stora filer. Standardvärdet 260KB är den storlek som krävs för Adobe Digital Editions. Satt till 0 för stänga av storleksbaserad delning.
+Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödvändigt eftersom de flesta EPUB\-läsplattor inte kan hantera stora filer. Standardvärdet 260KB är den storlek som krävs för Adobe Digital Editions. Satt till 0 för stänga av storleksbaserad delning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Translitterera Unicode\-tecken till en ASCII\-representation. Används med förs
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Basstorlek för typsnitt i punkter. Alla typsnittsstorlekar i den producerade boken kommer att skapas om baserat på denna storlek. Genom att välja en större storlek kan du få typsnitt i utdatan större och vice versa. Som standard, när värdet är noll, kommer basstorleken för typsnitt att väljas baserat på utdataprofilen du väljer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +251,7 @@ Ställ in höjden på in tomma rader (i EM). Höjden av linjerna mellan punktern
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i indatadokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsplattor saknar stöd för ligaturer i deras standardtypsnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Detta alternativ kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i indatadokumentet. En ligatur är en speciell framställning ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardtypsnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av vanliga tecken. Detta alternativ kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -439,7 +439,7 @@ Vissa dokument anger sidmarginaler genom att ange en vänster\- och höger margi
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Infoga bokens metadata i början av boken. Används om din läsplatta inte kan visa eller söka efter metadata direkt.
+Infoga bokens metadata i början av boken. Används om din läsenhet inte kan visa eller söka efter metadata direkt.
 .UNINDENT
 .INDENT 0.0
 .TP

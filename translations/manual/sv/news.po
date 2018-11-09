@@ -7,12 +7,13 @@
 # Jonatan Nyberg, 2018
 # Jonatan Nyberg, 2018
 # Merarom <merarom@yahoo.es>, 2014-2017
+# Sebastian Rasmussen <sebras@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 10:12+0530\n"
-"PO-Revision-Date: 2018-08-08 17:11+0000\n"
+"POT-Creation-Date: 2018-10-19 10:31+0530\n"
+"PO-Revision-Date: 2018-10-30 05:47+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +103,7 @@ msgid ""
 "will appear in the main library view (if you have your reader connected, it "
 "will be put onto the reader instead of into the library). Select it and hit "
 "the :guilabel:`View` button to read!"
-msgstr "Så här testar du nya :term:`recept` klicka på knappen :guilabel:`Hämta nyheter` och i  undermenyn :guilabel:`Anpassad nyhetskälla` klicka på :guilabel:`calibre blogg`. Efter ett par minuter, kommer den nyligen hämtade e-boken av blogginlägget visas i huvudbiblioteksvyn (om du har din läsplatta ansluten kommer den att läggas till på läsplattan istället för in i biblioteket). Välj det och tryck på knappen :guilabel:`Visa` för att läsa!"
+msgstr "Så här testar du nya :term:`recept` klicka på knappen :guilabel:`Hämta nyheter` och i  undermenyn :guilabel:`Anpassad nyhetskälla` klicka på :guilabel:`calibre blogg`. Efter ett par minuter, kommer den nyligen hämtade e-boken av blogginlägget visas i huvudbiblioteksvyn (om du har din läsenhet ansluten kommer den att läggas till på läsenheten istället för in i biblioteket). Välj det och tryck på knappen :guilabel:`Visa` för att läsa!"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:53
 msgid ""
@@ -365,7 +366,7 @@ msgid ""
 "same, logged in, browser instance to fetch all content. See `mechanize "
 "<https://mechanize.readthedocs.io/en/latest/>`_ to understand the code in "
 "``get_browser``."
-msgstr ""
+msgstr "``needs_subscription = True`` berättar för calibre att detta recept behöver användarnamn och lösenord för att kunna åt innehållet. Detta medför att, calibre frågar efter användarnamn och lösenord när du försöker använda det här receptet. Koden i :meth:`calibre.web.feeds.news.BasicNewsRecipe.get_browser` loggar faktiskt in på NYT webbplats. När du loggat in, kommer calibre använda samma webbinstans för att hämta allt innehåll. Se `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ för att förstå koden i ``get_browser``."
 
 #: ../../home/kovid/work/calibre/manual/news.rst:264
 msgid ""
@@ -382,7 +383,7 @@ msgid ""
 "and `html5lib <https://github.com/html5lib/html5lib-python>`_, which are the"
 " recommended parsers. To use them, replace the call to ``index_to_soup()`` "
 "with the following::"
-msgstr ""
+msgstr "Nästa nya funktion är :meth:`calibre.web.feeds.news.BasicNewsRecipe.parse_index` metoden. Dess uppgift är att gå till \nhttps://www.nytimes.com/pages/todayspaper/index.html och hämta listan med artiklar som visas i *dagens* tidning. Medan mer komplex än att bara använda :term:`RSS`, skapar receptet en e-bok som motsvarar mycket nära dagens tidning.\n``parse_index`` använder mycket `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs3/documentation.html>`_ för att tolka dagens tidningswebbplats. Du kan också använda andra, mer moderna parsers om du ogillar \nBeatifulSoup. calibre comes with `lxml <http://lxml.de/>`_\noch `html5lib <https://github.com/html5lib/html5lib-python>`_, \nvilka är de rekommenderade parsers. För att använda dem, ersätt anropet till index_to_soup() med följande::"
 
 #: ../../home/kovid/work/calibre/manual/news.rst:285
 msgid ""
