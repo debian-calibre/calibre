@@ -17086,7 +17086,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.33.1";
+        CALIBRE_VERSION = "3.34.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -32101,7 +32101,7 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
             query = url_books_query();
-            ρσ_interpolate_kwargs.call(this, ajax_send, ["/conversion/start/" + ρσ_str.format("{}", conversion_data.book_id) + "", data, on_conversion_started].concat([ρσ_desugar_kwargs({query: query})]));
+            ρσ_interpolate_kwargs.call(this, ajax_send, ["conversion/start/" + ρσ_str.format("{}", conversion_data.book_id) + "", data, on_conversion_started].concat([ρσ_desugar_kwargs({query: query})]));
             current_state = "converting";
             apply_state_to_markup();
         };
