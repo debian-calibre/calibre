@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 10:31+0530\n"
-"PO-Revision-Date: 2018-10-30 05:48+0000\n"
+"POT-Creation-Date: 2018-11-08 10:11+0530\n"
+"PO-Revision-Date: 2018-11-22 19:42+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -876,6 +876,14 @@ msgid ""
 msgstr "Observera att den här metoden bara måste återvända validerade URL:er, d.v.s. inte webbadresser som kan resultera i en generisk omslagsbild eller inte hittat felet."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.id_from_url:1
+msgid ""
+"Parse a URL and return a tuple of the form: (identifier_type, "
+"identifier_value). If the URL does not match the pattern for the metadata "
+"source, return None."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:1
 msgid ""
 "Return a function that is used to generate a key that can sort Metadata "
@@ -1710,7 +1718,7 @@ msgid ""
 " called by calibre after the book lists have been loaded. Note that it is "
 "not called on the device thread, so the driver should cache the drive info "
 "in the books() method and this function should return the cached data."
-msgstr "Återge driveinfo-ordlistan. Vanligtvis anropas från get_device_information(), men om laddning av driveinfo är långsam för denna drivrutin, så borde den sätta SLOW_DRIVEINFO. I detta fall kommer den här metoden anropas av calibre efter bokenlistor har laddats. Observera att den inte anropas på enhetens processtråd, så att drivrutinen ska buffra driveinfo i books() och funktionen ska återge cachad data."
+msgstr "Återge driveinfo-ordlistan. Vanligtvis anropas från get_device_information(), men om laddning av driveinfo är långsam för denna drivrutin, så borde den sätta SLOW_DRIVEINFO. I detta fall kommer den här metoden anropas av calibre efter bokenlistor har lästs in. Observera att den inte anropas på enhetens processtråd, så att drivrutinen ska buffra driveinfo i books() och funktionen ska återge cachad data."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.card_prefix:1
@@ -1827,7 +1835,7 @@ msgid ""
 ":class:`FreeSpaceError` if there is not enough free space on the device. The"
 " text of the FreeSpaceError must contain the word \"card\" if ``on_card`` is"
 " not None otherwise it must contain the word \"memory\"."
-msgstr "Ladda upp en lista med böcker till enheten. Om en fil redan finns på enheten, ska den ersättas. Denna metod bör signalera ett :class:`FreeSpaceError` om det inte finns tillräckligt med ledigt utrymme på enheten. Texten till FreeSpaceError måste innehålla ordet \"kort\" om ``on_card`` inte None annars måste innehålla ordet \"minne\"."
+msgstr "Överför en lista med böcker till enheten. Om en fil redan finns på enheten, ska den ersättas. Denna metod bör signalera ett :class:`FreeSpaceError` om det inte finns tillräckligt med ledigt utrymme på enheten. Texten till FreeSpaceError måste innehålla ordet \"kort\" om ``on_card`` inte None annars måste innehålla ordet \"minne\"."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:7
@@ -1843,7 +1851,7 @@ msgstr "En lista med sökvägar"
 msgid ""
 "A list of file names that the books should have once uploaded to the device."
 " len(names) == len(files)"
-msgstr "En lista med filnamn som böckerna skulle ha när väl uppladdade till enheten.  len(names) == len(files)"
+msgstr "En lista med filnamn som böckerna skulle ha när väl överförda till enheten. len(names) == len(files)"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:10
@@ -2391,7 +2399,7 @@ msgstr "Tillbakaanrop för att låta enskilda drivrutiner ändra standard filnam
 msgid ""
 "Perform any device specific sanitization on the path components for files to"
 " be uploaded to the device"
-msgstr "Utför någon enhetsspecifik sanering på sökvägskomponenter för filer som laddas upp till enheten"
+msgstr "Utför någon enhetsspecifik sanering på sökvägskomponenter för filer som överförs till enheten"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.get_annotations:1
@@ -2420,7 +2428,7 @@ msgstr "Basklass för alla USBMS-enheter. Implementerar logiken för att skicka/
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
-msgstr "Ladda upp bokomslag till enheten. Standard implementationen gör ingenting."
+msgstr "Överför bokomslag till enheten. Standard implementationen gör ingenting."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:3
@@ -2985,21 +2993,21 @@ msgstr "Dessa insticksmoduler används för att lägga till funktionalitet till 
 msgid ""
 "This method is called once at viewer startup. It should load any fonts it "
 "wants to make available. For example::"
-msgstr "Denna metod anropas en gång vid uppstart av visare. Det borde ladda godtyckligt typsnitt som det vill göra tillgängligt. Till exempel::"
+msgstr "Denna metod anropas en gång vid uppstart av visare. Det borde läsa in godtyckligt typsnitt som det vill göra tillgängligt. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.load_javascript:1
 msgid ""
 "This method is called every time a new HTML document is loaded in the "
 "viewer. Use it to load javascript libraries into the viewer. For example::"
-msgstr "Denna metod anropas varje gång ett nytt HTML dokument laddas i visaren. Använd det för att ladda JavaScript bibliotek in i visaren. Till exempel::"
+msgstr "Denna metod anropas varje gång ett nytt HTML-dokument läses in i visaren. Använd det för att ladda JavaScript bibliotek in i visaren. Till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.run_javascript:1
 msgid ""
 "This method is called every time a document has finished loading. Use it in "
 "the same way as load_javascript()."
-msgstr "Denna metod anropas varje gång ett dokument laddats klart. Använd det på samma sätt som load_javascript()."
+msgstr "Denna metod anropas varje gång ett dokument har lästs in. Använd det på samma sätt som load_javascript()."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.ViewerPlugin.customize_ui:1

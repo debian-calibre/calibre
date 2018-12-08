@@ -25,7 +25,7 @@ from calibre.ebooks.oeb.polish.utils import lead_text, guess_type
 from calibre.gui2 import error_dialog, choose_files, choose_save_file, info_dialog, choose_images
 from calibre.gui2.tweak_book import tprefs, current_container
 from calibre.gui2.widgets2 import Dialog as BaseDialog
-from calibre.utils.icu import primary_sort_key, sort_key, primary_contains
+from calibre.utils.icu import primary_sort_key, sort_key, primary_contains, numeric_sort_key
 from calibre.utils.matcher import get_char, Matcher
 from calibre.gui2.complete2 import EditWithComplete
 
@@ -671,7 +671,21 @@ class InsertLink(Dialog):
         t.setText(self.initial_text or '')
         t.setPlaceholderText(_('The (optional) text for the link'))
 
+        self.template_edit = t = QLineEdit(self)
+        tl.addRow(_('Tem&plate:'), t)
+        from calibre.gui2.tweak_book.editor.smarts.html import DEFAULT_LINK_TEMPLATE
+        t.setText(tprefs.get('insert-hyperlink-template', None) or DEFAULT_LINK_TEMPLATE)
+
         l.addWidget(self.bb)
+
+    def accept(self):
+        from calibre.gui2.tweak_book.editor.smarts.html import DEFAULT_LINK_TEMPLATE
+        t = self.template
+        if t:
+            if t == DEFAULT_LINK_TEMPLATE:
+                t = None
+            tprefs.set('insert-hyperlink-template', self.template)
+        return Dialog.accept(self)
 
     def selected_file_changed(self, *args):
         rows = list(self.file_names.selectionModel().selectedRows())
@@ -692,7 +706,7 @@ class InsertLink(Dialog):
                     continue
                 text = lead_text(item, num_words=4)
                 ac.append((text, frag))
-            ac.sort(key=lambda text_frag: primary_sort_key(text_frag[0]))
+            ac.sort(key=lambda text_frag: numeric_sort_key(text_frag[0]))
         self.anchor_names.model().set_names(self.anchor_cache[name])
         self.update_target()
 
@@ -721,6 +735,10 @@ class InsertLink(Dialog):
     @property
     def text(self):
         return unicode(self.text_edit.text()).strip()
+
+    @property
+    def template(self):
+        return self.template_edit.text().strip() or None
 
     @classmethod
     def test(cls):

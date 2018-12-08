@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "novembro 08, 2018" "3.34.0" "calibre"
+.TH "CALIBREDB" "1" "dezembro 07, 2018" "3.35.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -746,7 +746,7 @@ Se o campo possibilitar armazenar diversos valores, não sobrescreva os valores 
 .sp
 .nf
 .ft C
-calibredb restore_database [options]
+calibredb restore_database [opções]
 .ft P
 .fi
 .UNINDENT
@@ -757,7 +757,7 @@ diretório de biblioteca do calibre. Isto é útil se o seu arquivo metadata.db
 foi corrompido.
 .sp
 AVISO: Este comando regenera completamente o seu banco de dados. Você vai perder
-todas as buscas salvas, as categorias de usuários, quadros de dispositivos, configurações
+todas as buscas salvas, as categorias de usuários, quadros de conexões, configurações
 armazenadas por conversão de livros, e receitas personalizadas. Os metadados restaurados
 serão apenas tão precisos quanto aos encontrados nos arquivos OPF
 .
@@ -935,8 +935,8 @@ calibredb search [options] search expression
 .UNINDENT
 .sp
 Procura a biblioteca para o termo de pesquisa específicado, retornando uma lista
-separada por vírgula de ids de livros resultantes da expressão de busca. O formato de saída é utilizado
-em outros comandos que aceitam uma lista de ids como entrada.
+separada por vírgula de ids de livros resultantes da expressão de busca. O formato de saída é útil
+para alimentar outros comandos que aceitam uma lista de ids como entrada.
 .sp
 O comando de expressão poder ser qualquer coisa da poderosa consulta de busca do calibre
 por exemplo: author:asimov title:robot

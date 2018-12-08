@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "ноября 08, 2018" "3.34.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "декабря 07, 2018" "3.35.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -104,7 +104,7 @@ calibre\-smtp [options] [откуда куда текст]
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Параметры для отправки почты через SMTP узел. calibre попытается отправить письмо напрямую, \-\-relay если узел не задан.
+Параметры для отправки почты через SMTP релей сервер. calibre попытается отправить письмо напрямую, если \-\-relay не задан.
 .INDENT 0.0
 .TP
 .B \-\-cafile
@@ -118,27 +118,27 @@ calibre\-smtp [options] [откуда куда текст]
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Метод шифрования при подключении к узлу. Выбор из TLS, SSL и NONE. По\-умолчанию TLS. ВНИМАНИЕ: опция NONE крайне небезопасна
+Метод шифрования при подключении к релею. Выбор из TLS, SSL и NONE. По\-умолчанию TLS. ВНИМАНИЕ: опция NONE крайне небезопасна
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Пароль для узла
+Пароль для релея
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Порт подключения к почтовому узлу. По\-умолчанию 465, если шифрование идёт по SSL, иначе 25.
+Порт подключения к почтовому релей серверу. По\-умолчанию 465, если используется SSL шифрование, иначе 25.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-Узел SMTP для отправки почты
+SMTP релей сервер для отправки почты.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Имя для узла
+Имя для релея
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
