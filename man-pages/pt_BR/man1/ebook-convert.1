@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dezembro 07, 2018" "3.35.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "dezembro 21, 2018" "3.36.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -241,7 +241,7 @@ Mapeamento de nomes de fonte em CSS para tamanhos de fonte em pontos. Um exemplo
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insere uma linha em branco entre parágrafos. Não irá funcionar se o arquivo de origem não usa parágrafos (etiquetas <p> ou <div>).
+Insere uma linha em branco entre parágrafos. Não irá funcionar se o arquivo de origem não usa parágrafos (tags <p> ou <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ A altura mínima de linha, como uma percentagem do tamanho do elemento de fonte 
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Remova espaço entre parágrafos. Também configura um espaçamento de 1,5 linhas nos parágrafos. Remoção de espaços não irão funcionar se o arquivo de origem não usa parágrafos (etiquetas <p> ou <div>).
+Remove espaço entre parágrafos. Também configura um espaçamento de 1,5 linhas nos parágrafos. A remoção de espaços não irão funcionar se o arquivo de origem não usa parágrafos (tags <p> ou <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -349,12 +349,12 @@ Procure por palavras e padrões comuns que deveriam ser itálicos e os coloque e
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detectar títulos e subtítulos de capítulos sem formatação. Trocá\-los para marcações h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada junto com a estrutura de detecção para criar um.
+Detectar títulos e subtítulos de capítulos sem formatação. Altera\-os para tags h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada junto com a estrutura de detecção para criar um.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-Procura ocorrências sequenciais de etiquetas <h1> ou <h2>. As etiquetas serão renomeadas para evitar quebra no meio do título dos capítulos.
+Procura ocorrências sequenciais de tags <h1> ou <h2>. As tags serão renumeradas para evitar quebra no meio do título dos capítulos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +420,7 @@ Auto\-detecção do controle da estrutura de documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar <h1> ou <h2> tags que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
+Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar tags <h1> ou <h2> que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -468,17 +468,17 @@ Ao criar de um índice a partir de links contidos no documento de entrada, é pe
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no primeiro nível do índice. Se estiver especificada, terá precedência em relação a outras formas de detecção automática. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no primeiro nível do índice. Se estiver especificada, terá precedência em relação a outras formas de detecção automática. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no segundo nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível um. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no segundo nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível um. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no terceiro nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível dois. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no terceiro nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível dois. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -576,7 +576,7 @@ Define o índice do livro nesta série.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Defina etiquetas para o livro. Faça uma lista separada por vírgulas.
+Defina etiquetas para o livro. Deve ser uma lista separada por vírgulas.
 .UNINDENT
 .INDENT 0.0
 .TP

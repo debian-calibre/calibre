@@ -21,7 +21,8 @@ from setup import Command, download_securely
 class MathJax(Command):
 
     description = 'Create the MathJax bundle'
-    MATH_JAX_URL = 'https://github.com/kovidgoyal/MathJax/archive/master.zip'
+    MATH_JAX_VERSION = '2.7.5'
+    MATH_JAX_URL = 'https://github.com/mathjax/MathJax/archive/%s.zip' % MATH_JAX_VERSION
     FONT_FAMILY = 'TeX'
 
     def add_options(self, parser):
@@ -33,7 +34,7 @@ class MathJax(Command):
         raw = download_securely(url)
         with ZipFile(BytesIO(raw)) as zf:
             zf.extractall(tdir)
-            return os.path.join(tdir, 'MathJax-master')
+            return os.path.join(tdir, 'MathJax-' + self.MATH_JAX_VERSION)
 
     def add_file(self, zf, path, name):
         with open(path, 'rb') as f:
@@ -71,7 +72,7 @@ class MathJax(Command):
                 zf.comment = self.h.hexdigest()
             t.seek(0)
             with open(self.j(self.RESOURCES, 'content-server', 'mathjax.zip.xz'), 'wb') as f:
-                compress(t, f, level=1 if is_ci else 9)
+                compress(t, f, level=4 if is_ci else 9)
             with open(self.j(self.RESOURCES, 'content-server', 'mathjax.version'), 'wb') as f:
                 f.write(zf.comment)
         finally:

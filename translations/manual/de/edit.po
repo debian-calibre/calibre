@@ -8,15 +8,15 @@
 # Leun4m <manuel@mi55ion.de>, 2016
 # Taktylo <martin.scharer@gmail.com>, 2016
 # rs_bitbucket, 2017
-# Simon_Schuette <simonschuette@arcor.de>, 2016
+# Simon_Schuette <simonschuette@arcor.de>, 2016,2018
 # RiseT, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-08 10:11+0530\n"
-"PO-Revision-Date: 2018-11-24 17:13+0000\n"
-"Last-Translator: H K <HK@hallo.ms>\n"
+"POT-Creation-Date: 2018-12-07 10:46+0530\n"
+"PO-Revision-Date: 2018-12-19 12:46+0000\n"
+"Last-Translator: Simon_Schuette <simonschuette@arcor.de>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -628,7 +628,7 @@ msgid ""
 " can sometimes have counter-intuitive results. If you prefer, you can use "
 "the Check Book tool discussed above to find and manually correct problems in"
 " the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
-msgstr ""
+msgstr "Dieses Werkzeug wandelt einfach nur HTML, das nicht als XML geparst werden kann in wohlgeformtes XML um. In eBooks findet man nichtwohlgeformtes XML häufiger, weshalb dieses Werkzeug das Verbessern automatisiert. Dafür parst das Werkzeug das HTML mit dem HTML 5-Algorithmus (der in allen modernen Browsern verwendet wird) und wandelt das Ergebnis in XML um. Beachten Sie, dass die automatische Verbesserung manchmal zu unerwarteten Ergebnissen führt. Sie können über das bereits besprochene Werkzeug 'Buch bearbeiten' HTML-Fehler finden und manuell beheben. Sie finden das Werkzeug unter  :guilabel:`Werkzeuge → HTML reparieren - alle Dateien`."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:432
 msgid "Beautifying files"
@@ -656,7 +656,7 @@ msgid ""
 "beautify as it has no suitable block level tags. In such cases you can try "
 "different beautification tools, that are less careful, for example: `HTML "
 "Tidy <https://infohound.net/tidy/>`_."
-msgstr ""
+msgstr "In HTML kann jeder Text über die CSS Whitespace-Direktive einen deutlichen Whitespace haben. Deshalb kann die Verschönerung die Umsetzung des HTML-Code möglicherweise verändern. Um das so weit wie möglich zu verhindern, verschönert der Algorithmus nur Block Level Marker, die andere Block Level Marker enthalten. Damit wird zum Beispiel der Whitespace von Text in einem <p> Marker nicht verändert. Aber ein <body> Marker, der nur andere <p> und <div> Marker enthält, wird verschönert. Das bedeutet manchmal dass eine bestimmte Datei nicht von der Verschönerung verändert wird, da sie keine passenden Block Level Marker enthält. In diesen Fällen können Sie verschiedene Werkzeuge zur Verschönerung verwenden, die weniger vorsichtig vorgehen, z.B.:  `HTML Tidy <https://infohound.net/tidy/>`_."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:455
 msgid "Inserting an inline Table of Contents"
@@ -711,14 +711,14 @@ msgstr "Sie können dieses Werkzeug verwenden, um festgelegte CSS-style-Attribut
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:490
 msgid "Upgrading the book's internals"
-msgstr ""
+msgstr "Buchstrukturen upgraden"
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:492
 msgid ""
 "This tool can be used to upgrade the book's internals, if possible. For "
 "instance it will upgrade EPUB 2 books to EPUB 3 books. The tool can be "
 "accessed via :guilabel:`Upgrade book internals`."
-msgstr ""
+msgstr "Dieses Tool kann verwendet werden, um Buchstrukturen zu upgraden, wenn es möglich ist. Es ermöglicht beispielsweise das Upgraden von EPUB 2 Bücher auf EPUB 3. Auf das Tool kann über :guilabel:`Buchstrukturen upgraden` zugegriffen werden."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:499
 msgid "Checkpoints"
@@ -960,7 +960,7 @@ msgid ""
 "format). You can download these dictionaries from `The LibreOffice "
 "Extensions repository <https://extensions.libreoffice.org/extension-"
 "center?getCategories=Dictionary&getCompatibility=any&sort_on=positive_ratings>`_."
-msgstr ""
+msgstr "Die Rechtschreibprüfung kommt mit eingebauten Wörterbüchern für Englisch und Spanisch. Eigene Wörterbücher können Sie unter :guilabel:`Einstellungen → Editor → Wörterbücher verwalten` installieren. Die Rechtschreibprüfung kann Wörterbücher des LibreOffice -Programms (im .oxt-Format) verwenden. Diese Wörterbücher können vom `The LibreOffice Extensions repository <https://extensions.libreoffice.org/extension-center?getCategories=Dictionary&getCompatibility=any&sort_on=positive_ratings>`_ heruntergeladen werden."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:683
 msgid "Inserting special characters"
@@ -1046,7 +1046,7 @@ msgid ""
 " to a location on the internet). The tool will find all such resources and "
 "automatically download them, add them to the book and replace all references"
 " to them to use the downloaded files."
-msgstr ""
+msgstr "Sie können dieses Hilfsmittel verwenden um automatisch alle Bilder/Stylesheets/etc. herunterzuladen, welche nicht mit dem Buch gebündelt sind (z.B. wenn diese per URL auf einen Ort im Internet verweisen). Das Werkzeug wird alle solche Ressourcen finden sie automatisch herunterladen, dem Buch hinzufügen und alle Referenzen auf diese Ressourcen durch die heruntergeladenen Dateien ersetzen."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:744
 msgid "Arranging files into folders by type"
@@ -1060,7 +1060,7 @@ msgid ""
 "folders based on their types. Access it via :guilabel:`Tools->Arrange into "
 "folders`. Note that this tool only changes how the files are arranged inside"
 " the EPUB, it does not change how they are displayed in the File browser."
-msgstr ""
+msgstr "Wenn Sie EPUB-Dateien bearbeiten, die Sie von irgendwo bekommen haben, werden Sie oft sehen, dass die Dateien willkürlich in verschiedene Unterordner sortiert sind. Dieses Tool ermöglicht Ihnen die Dateien automatisch aufgrund ihrer Typen in Unterordner zu sortieren. Zugriff darauf via :guilabel:`Werkzeuge->In Ordner sortieren`. Beachten Sie, dass dieses Werkzeug nur ändert, wie die Dateien in EPUB sortiert sind, es verändert nicht, wie diese im Dateibrowser angezeigt werden."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:754
 msgid "Importing files in other e-book formats as EPUB"
@@ -1120,7 +1120,7 @@ msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
 "keyboard shortcuts :kbd:`Ctrl+{` and :kbd:`Ctrl+}`"
-msgstr ""
+msgstr "Wenn Sie den Mauszeiger durch das HTML bewgen, werden die passenden HTML-Tags hervorgehoben, und Sie können mit der Tastenkombination :kbd:`Strg+{` und :kbd:`Strg+}` zum Öffnen oder Schließen des Tags wechseln."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:800
 msgid "Invalid HTML is highlighted with a red underline"
@@ -1176,7 +1176,7 @@ msgid ""
 "other files inside the book, or to CSS stylesheets, or images. You have to "
 "figure out the correct filename and relative path to the file. The editor "
 "has auto-complete to make that easier."
-msgstr ""
+msgstr "Eine der mühsamsten Arbeiten beim Editieren von elektronischen Büchern ist das Verknüpfen verschiedener Dateien innerhalb eines Buches wie CSS Stylesheets oder Bilder, da die korrekten Dateinamen und relativen Pfade bekannt sein müssen. Die Auto-Vervollständigung des Editors vereinfacht diese Aufgabe."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:829
 msgid ""

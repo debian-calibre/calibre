@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "dezembro 07, 2018" "3.35.0" "calibre"
+.TH "CALIBREDB" "1" "dezembro 21, 2018" "3.36.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -407,7 +407,7 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-O campo a ser definido. O formato é field_name:value, por exemplo: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP para obter uma lista de todos os nomes de campo. Você pode especificar essa opção várias vezes para definir vários campos. Nota: Para idiomas que você deve usar os códigos de linguagem ISO639 (por exemplo, en para Inglês, fr para Francês e assim por diante). Para identificadores, a sintaxe é \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para campos booleanos (sim/não) usam verdadeiro e falso ou sim e não.
+O campo a ser definido. O formato é field_name:valor, por exemplo: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Use \fI\%\-\-list\-fields\fP para obter uma lista de todos os nomes de campo. Você pode especificar essa opção várias vezes para definir vários campos. Nota: Para idiomas que você deve usar os códigos de linguagem ISO639 (por exemplo, en para Inglês, fr para Francês e assim por diante). Para identificadores, a sintaxe é \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para campos booleanos (sim/não) usam verdadeiro e falso ou sim e não.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -552,7 +552,7 @@ Expressão regular descrevendo etiquetas para excluir como gêneros. Padrão: \f
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, ePub, MOBI
+Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPEtiquetas\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando várias regras são definidas, todas as regras serão aplicadas. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, ePub, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -674,7 +674,7 @@ Um dicionário de opções para personalizar a forma como os dados nesta coluna 
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Este campo armazena dados como etiquetas (ex. vários valores separados por vírgulas). Somente se aplica se o tipo de dados for texto.
+Este campo armazena dados como etiquetas (ou seja, vários valores separados por vírgulas). Somente se aplica se o tipo de dados for texto.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -809,14 +809,14 @@ Lista de relatórios separados por vírgula. Padrão: tudo
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [opções]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produzir um relatório das informações da categoria no banco de dados. A
-informação é equivalente a que é mostrada no painel de etiquetas.
+Produz um relatório das informações da categoria no banco de dados. A
+informação é equivalente à que é mostrada no painel de etiquetas.
 .sp
 Sempre que você for passar argumentos para calibredb que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

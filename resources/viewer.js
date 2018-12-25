@@ -1796,7 +1796,8 @@ if (!ρσ_dict_wrap.__argnames__) Object.defineProperties(ρσ_dict_wrap, {
     __argnames__ : {value: ["x"]}
 });
 
-var dict = ρσ_dict, dict_wrap = ρσ_dict_wrap;var NameError;
+var dict = ρσ_dict, dict_wrap = ρσ_dict_wrap;// }}}
+var NameError;
 NameError = ReferenceError;
 function Exception() {
     if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
@@ -3793,6 +3794,8 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.search"] = {};
     ρσ_modules["read_book.timers"] = {};
     ρσ_modules["read_book.view"] = {};
+    ρσ_modules.viewer = {};
+    ρσ_modules["viewer.constants"] = {};
 
     (function(){
         var __name__ = "traceback";
@@ -14132,6 +14135,8 @@ return this.__repr__();
         var __name__ = "read_book.mathjax";
         var E = ρσ_modules.elementmaker.E;
 
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+
         function get_url(mathjax_files, name) {
             var ans;
             ans = mathjax_files[(typeof name === "number" && name < 0) ? mathjax_files.length + name : name];
@@ -14148,7 +14153,29 @@ return this.__repr__();
         });
 
         function monkeypatch(mathjax_files) {
-            var orig;
+            var StyleString, orig;
+            StyleString = window.MathJax.Ajax.StyleString.bind(window.MathJax.Ajax);
+            function style_string(styles) {
+                return StyleString(styles).replace(/url\('?(.*?)'?\)/g, (function() {
+                    var ρσ_anonfunc = function (match, url) {
+                        var ans;
+                        if (!url.endsWith(".woff")) {
+                            return match;
+                        }
+                        url = get_url(mathjax_files, url);
+                        ans = "url('" + ρσ_str.format("{}", url) + "')";
+                        return ans;
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["match", "url"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+            };
+            if (!style_string.__argnames__) Object.defineProperties(style_string, {
+                __argnames__ : {value: ["styles"]}
+            });
+
             orig = window.MathJax.Ajax.fileURL.bind(window.MathJax.Ajax);
             function file_url(file) {
                 var ans, name;
@@ -14174,6 +14201,7 @@ return this.__repr__();
             });
 
             window.MathJax.Ajax.fileURL = file_url;
+            window.MathJax.Ajax.StyleString = style_string;
             window.MathJax.Ajax.fileRev = (function() {
                 var ρσ_anonfunc = function (file) {
                     return "";
@@ -14219,9 +14247,8 @@ return this.__repr__();
         });
 
         function apply_mathjax(mathjax_files, link_uid, proceed) {
-            var m;
+            var m, script;
             window.MathJax = m = {};
-            m.AuthorInit = init_mathjax.bind(this, mathjax_files, link_uid, proceed);
             m.positionToHash = false;
             m.showMathMenu = false;
             m.showMathMenuMSIE = false;
@@ -14230,7 +14257,37 @@ return this.__repr__();
             m.TeX = {};
             m.TeX.extensions = "AMSmath.js AMSsymbols.js noErrors.js noUndefined.js".split(" ");
             m.CommonHTML = { linebreaks: { automatic: true} };
-            document.head.appendChild(ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript", src: get_url(mathjax_files, "MathJax.js")})]));
+            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
+            document.head.appendChild(script);
+            if (runtime.is_standalone_viewer) {
+                script.onload = function () {
+                    var ev;
+                    ev = new CustomEvent("calibre-mathjax-init", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["detail"] = (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["MathJax"] = m;
+                            ρσ_d["link_uid"] = link_uid;
+                            ρσ_d["mathjax_files"] = mathjax_files;
+                            return ρσ_d;
+                        }).call(this);
+                        return ρσ_d;
+                    }).call(this));
+                    document.documentElement.dispatchEvent(ev);
+                };
+                document.documentElement.addEventListener("calibre-mathjax-init-done", (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        proceed();
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+            } else {
+                m.AuthorInit = init_mathjax.bind(this, mathjax_files, link_uid, proceed);
+            }
+            script.src = get_url(mathjax_files, "MathJax.js");
         };
         if (!apply_mathjax.__argnames__) Object.defineProperties(apply_mathjax, {
             __argnames__ : {value: ["mathjax_files", "link_uid", "proceed"]}
@@ -25577,7 +25634,7 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
             entry_point = (runtime.is_standalone_viewer) ? null : "read_book.iframe";
-            self.iframe_wrapper = new IframeWrapper(handlers, document.getElementById(iframe_id), entry_point, _("Bootstrapping book reader..."));
+            self.iframe_wrapper = new IframeWrapper(handlers, document.getElementById(iframe_id), entry_point, _("Bootstrapping book reader..."), runtime.FAKE_PROTOCOL, runtime.FAKE_HOST);
             self.search_overlay = new SearchOverlay(self);
             self.content_popup_overlay = new ContentPopupOverlay(self);
             self.overlay = new Overlay(self);
@@ -26372,6 +26429,20 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "viewer";
+
+    })();
+
+    (function(){
+        var __name__ = "viewer.constants";
+        var FAKE_PROTOCOL, FAKE_HOST;
+        FAKE_PROTOCOL = "clbr";
+        FAKE_HOST = "internal.invalid";
+        ρσ_modules["viewer.constants"].FAKE_PROTOCOL = FAKE_PROTOCOL;
+        ρσ_modules["viewer.constants"].FAKE_HOST = FAKE_HOST;
+    })();
+
+    (function(){
 
         var __name__ = "__main__";
 
@@ -26412,6 +26483,9 @@ return this.__repr__();
 
         var session_defaults = ρσ_modules.session.session_defaults;
 
+        var FAKE_HOST = ρσ_modules["viewer.constants"].FAKE_HOST;
+        var FAKE_PROTOCOL = ρσ_modules["viewer.constants"].FAKE_PROTOCOL;
+
         function container_div(id) {
             return ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: id, style: "margin: 0; padding: 0; display: none"})]);
         };
@@ -26420,6 +26494,8 @@ return this.__repr__();
         });
 
         runtime.is_standalone_viewer = true;
+        runtime.FAKE_HOST = FAKE_HOST;
+        runtime.FAKE_PROTOCOL = FAKE_PROTOCOL;
         book = null;
         view = null;
         function file_received(name, file_data, proceed, end_type, xhr, ev) {
@@ -26460,7 +26536,75 @@ return this.__repr__();
             __argnames__ : {value: ["book", "name", "proceed"]}
         });
 
+        function mathjax_file_received(name, proceed, end_type, xhr, ev) {
+            var result;
+            if (end_type === "abort") {
+                return;
+            }
+            if (end_type !== "load") {
+                show_error(_("Failed to load MathJax file"), _("Could not load the file: {} with error: {}").format(name, xhr.error_html));
+                return;
+            }
+            if (!xhr.responseType || xhr.responseType === "text") {
+                result = xhr.responseText;
+            } else if (xhr.responseType === "blob" || xhr.responseType === "json") {
+                result = xhr.response;
+            } else {
+                show_error(_("Failed to load MathJax file"), _("Could not load the file: {} unknown response type: {}").format(name, xhr.responseType));
+                return;
+            }
+            if (name === "manifest.json") {
+                get_mathjax_files.manifest = result;
+                get_mathjax_files_stage2.files_to_get = list(Object.keys(result));
+                get_mathjax_files_stage2.file_data = Object.create(null);
+                get_mathjax_files_stage2(proceed);
+                return;
+            }
+            (ρσ_expr_temp = get_mathjax_files_stage2.file_data)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = result;
+            get_mathjax_files_stage2.files_to_get.remove(name);
+            if (!get_mathjax_files_stage2.files_to_get.length) {
+                proceed(get_mathjax_files_stage2.file_data);
+            }
+        };
+        if (!mathjax_file_received.__argnames__) Object.defineProperties(mathjax_file_received, {
+            __argnames__ : {value: ["name", "proceed", "end_type", "xhr", "ev"]}
+        });
+
+        function get_mathjax_manifest(proceed) {
+            var xhr;
+            xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/manifest.json", mathjax_file_received.bind(null, "manifest.json", proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
+            xhr.responseType = "json";
+            xhr.send();
+        };
+        if (!get_mathjax_manifest.__argnames__) Object.defineProperties(get_mathjax_manifest, {
+            __argnames__ : {value: ["proceed"]}
+        });
+
+        function get_mathjax_files_stage2(proceed) {
+            var xhr, filename;
+            if (!get_mathjax_files_stage2.files_to_get.length) {
+                proceed(get_mathjax_files_stage2.file_data);
+                return;
+            }
+            var ρσ_Iter0 = get_mathjax_files_stage2.files_to_get;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                filename = ρσ_Index0;
+                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
+                xhr.responseType = "blob";
+                xhr.send();
+            }
+        };
+        if (!get_mathjax_files_stage2.__argnames__) Object.defineProperties(get_mathjax_files_stage2, {
+            __argnames__ : {value: ["proceed"]}
+        });
+
         function get_mathjax_files(proceed) {
+            if (!get_mathjax_files.manifest) {
+                get_mathjax_manifest(proceed);
+            } else {
+                get_mathjax_files_stage2(proceed);
+            }
         };
         if (!get_mathjax_files.__argnames__) Object.defineProperties(get_mathjax_files, {
             __argnames__ : {value: ["proceed"]}
