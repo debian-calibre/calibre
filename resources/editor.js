@@ -1796,7 +1796,8 @@ if (!ρσ_dict_wrap.__argnames__) Object.defineProperties(ρσ_dict_wrap, {
     __argnames__ : {value: ["x"]}
 });
 
-var dict = ρσ_dict, dict_wrap = ρσ_dict_wrap;var NameError;
+var dict = ρσ_dict, dict_wrap = ρσ_dict_wrap;// }}}
+var NameError;
 NameError = ReferenceError;
 function Exception() {
     if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
