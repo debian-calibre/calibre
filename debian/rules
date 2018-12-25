@@ -51,6 +51,10 @@ debian/tmp:
 	rm -rf debian/tmp/usr/share/calibre/coffee-script.js
 	ln -s /usr/share/javascript/coffeescript/coffee-script.min.js debian/tmp/usr/share/calibre/coffee-script.js
 
+	# use system jquery
+	rm -rf debian/tmp/usr/share/calibre/viewer/jquery.js
+	ln -s /usr/share/javascript/jquery/jquery.js debian/tmp/usr/share/calibre/viewer/jquery.js
+
 	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
