@@ -83,7 +83,7 @@ get-orig-source:
 	set -e; \
 	V=`dpkg-parsechangelog | sed -rn '/^Version:/ {s/^Version: ([0-9.]+).*$$/\1/; p}'`; \
 	mkdir -p debian/orig; cd debian/orig; \
-	wget -O - http://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
+	wget -O - https://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
 	\
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
 	rm -r calibre*/resources/viewer/mathjax; \
