@@ -9933,9 +9933,9 @@ return this.__repr__();
             book.is_complete = false;
             if (get_interface_data().username) {
                 newest_epoch = newest_pos = null;
-                var ρσ_Iter3 = ρσ_Iterable(manifest.last_read_positions);
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    pos = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter0 = ρσ_Iterable(manifest.last_read_positions);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    pos = ρσ_Iter0[ρσ_Index0];
                     if (newest_epoch === null || pos.epoch > newest_epoch) {
                         newest_epoch = pos.epoch;
                         newest_pos = pos.cfi;
@@ -11993,9 +11993,9 @@ return this.__repr__();
         }).call(this);
         register_callback(function () {
             var scheme, key;
-            var ρσ_Iter4 = ρσ_Iterable(default_color_schemes);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                key = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter0 = ρσ_Iterable(default_color_schemes);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                key = ρσ_Iter0[ρσ_Index0];
                 scheme = default_color_schemes[(typeof key === "number" && key < 0) ? default_color_schemes.length + key : key];
                 scheme.name = gt(scheme.name);
             }
@@ -13664,9 +13664,9 @@ return this.__repr__();
             function do_one() {
                 var k, name, data;
                 if (!pending_resources.length) {
-                    var ρσ_Iter5 = ρσ_Iterable(previous_resources);
-                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                        k = ρσ_Iter5[ρσ_Index5];
+                    var ρσ_Iter0 = ρσ_Iterable(previous_resources);
+                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                        k = ρσ_Iter0[ρσ_Index0];
                         delete previous_resources[k];
                     }
                     if ((ρσ_expr_temp = book.manifest.files)[(typeof root_name === "number" && root_name < 0) ? ρσ_expr_temp.length + root_name : root_name].has_maths) {
@@ -13767,9 +13767,9 @@ return this.__repr__();
             link_pat = create_link_pat(book);
             mathjax = resource_data["..mathjax-files.."];
             delete resource_data["..mathjax-files.."];
-            var ρσ_Iter6 = ρσ_Iterable(resource_data);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                name = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter1 = ρσ_Iterable(resource_data);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                name = ρσ_Iter1[ρσ_Index1];
                 ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 data = ρσ_unpack[0];
@@ -13778,9 +13778,9 @@ return this.__repr__();
                     blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name] = window.URL.createObjectURL(data);
                 }
             }
-            var ρσ_Iter7 = ρσ_Iterable(blob_url_map);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                name = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter2 = ρσ_Iterable(blob_url_map);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                name = ρσ_Iter2[ρσ_Index2];
                 delete resource_data[name];
             }
             function add_virtualized_resource(name, text, mimetype) {
@@ -13822,9 +13822,9 @@ return this.__repr__();
                         unresolved_deps.add(dname);
                     }
                 }
-                var ρσ_Iter8 = ρσ_Iterable(reversed(replacements));
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    ρσ_unpack = ρσ_flatten(ρσ_Iter8[ρσ_Index8]);
+                var ρσ_Iter3 = ρσ_Iterable(reversed(replacements));
+                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                    ρσ_unpack = ρσ_flatten(ρσ_Iter3[ρσ_Index3]);
                     index = ρσ_unpack[0];
                     sz = ρσ_unpack[1];
                     repl = ρσ_unpack[2];
@@ -13843,9 +13843,9 @@ return this.__repr__();
                 if (!deps || !deps.length) {
                     return false;
                 }
-                var ρσ_Iter9 = ρσ_Iterable(deps);
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    x = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter4 = ρσ_Iterable(deps);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    x = ρσ_Iter4[ρσ_Index4];
                     if (!blob_url_map[(typeof x === "number" && x < 0) ? blob_url_map.length + x : x]) {
                         return true;
                     }
@@ -13859,9 +13859,9 @@ return this.__repr__();
             while (true) {
                 resolved = [];
                 num = 0;
-                var ρσ_Iter10 = ρσ_Iterable(resource_data);
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    name = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter5 = ρσ_Iterable(resource_data);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    name = ρσ_Iter5[ρσ_Index5];
                     if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                         num += 1;
                         ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
@@ -13897,9 +13897,9 @@ return this.__repr__();
                         return ρσ_Result;
                     })();
                     print("ERROR: Could not resolve all dependencies of {} because of a cyclic dependency. Remaining deps: {}".format(root_name, unresolved));
-                    var ρσ_Iter11 = ρσ_Iterable(resource_data);
-                    for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                        name = ρσ_Iter11[ρσ_Index11];
+                    var ρσ_Iter6 = ρσ_Iterable(resource_data);
+                    for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                        name = ρσ_Iter6[ρσ_Index6];
                         if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                             ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -13911,9 +13911,9 @@ return this.__repr__();
                     }
                     break;
                 }
-                var ρσ_Iter12 = ρσ_Iterable(resolved);
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    name = ρσ_Iter12[ρσ_Index12];
+                var ρσ_Iter7 = ρσ_Iterable(resolved);
+                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                    name = ρσ_Iter7[ρσ_Index7];
                     delete resource_data[name];
                 }
             }
@@ -13960,9 +13960,9 @@ return this.__repr__();
             if (!attributes) {
                 return;
             }
-            var ρσ_Iter13 = ρσ_Iterable(attributes);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                a = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter8 = ρσ_Iterable(attributes);
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                a = ρσ_Iter8[ρσ_Index8];
                 if (a[2]) {
                     ns = ns_map[ρσ_bound_index(a[2], ns_map)];
                     elem.setAttributeNS(ns, get_prefix(ns) + a[0], a[1]);
@@ -13994,9 +13994,9 @@ return this.__repr__();
                     if (ρσ_not_equals(attr.indexOf(":"), -1)) {
                         attr = attr.replace("xlink:", "");
                     }
-                    var ρσ_Iter14 = ρσ_Iterable(src.a || []);
-                    for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                        a = ρσ_Iter14[ρσ_Index14];
+                    var ρσ_Iter9 = ρσ_Iterable(src.a || []);
+                    for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                        a = ρσ_Iter9[ρσ_Index9];
                         if (a[0] === attr) {
                             loadable = a[1].startswith("blob:");
                             resource_urls[ρσ_bound_index(a[1], resource_urls)] = true;
@@ -14724,9 +14724,9 @@ return this.__repr__();
 
         function postprocess(link_uid, proceed) {
             var href, a;
-            var ρσ_Iter15 = ρσ_Iterable(document.getElementsByTagName("a"));
-            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                a = ρσ_Iter15[ρσ_Index15];
+            var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("a"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                a = ρσ_Iter0[ρσ_Index0];
                 href = a.getAttribute("href");
                 if (href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
@@ -17110,7 +17110,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.36.0";
+        CALIBRE_VERSION = "3.37.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -25941,12 +25941,12 @@ return this.__repr__();
             }
             names = [];
             item_groups = (data.backwards) ? ρσ_list_decorate([ range(idx - 1, -1, -1), range(spine.length - 1, idx, -1) ]) : ρσ_list_decorate([ range(idx + 1, spine.length), range(idx) ]);
-            var ρσ_Iter16 = ρσ_Iterable(item_groups);
-            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                items = ρσ_Iter16[ρσ_Index16];
-                var ρσ_Iter17 = ρσ_Iterable(items);
-                for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                    i = ρσ_Iter17[ρσ_Index17];
+            var ρσ_Iter0 = ρσ_Iterable(item_groups);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                items = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter1 = ρσ_Iterable(items);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    i = ρσ_Iter1[ρσ_Index1];
                     names.push(spine[(typeof i === "number" && i < 0) ? spine.length + i : i]);
                 }
             }
@@ -26086,9 +26086,9 @@ return this.__repr__();
             var ans, m, s, which;
             ans = resolve_color_scheme();
             if (apply_to_margins) {
-                var ρσ_Iter18 = ρσ_Iterable("left top right bottom".split(" "));
-                for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                    which = ρσ_Iter18[ρσ_Index18];
+                var ρσ_Iter2 = ρσ_Iterable("left top right bottom".split(" "));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    which = ρσ_Iter2[ρσ_Index2];
                     m = document.getElementById("book-{}-margin".format(which));
                     s = m.style;
                     if (which === "top" || which === "bottom") {
@@ -26495,9 +26495,9 @@ return this.__repr__();
                         div.lastChild.style.display = "block";
                     }
                 } else {
-                    var ρσ_Iter19 = ρσ_Iterable(div.childNodes);
-                    for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                        c = ρσ_Iter19[ρσ_Index19];
+                    var ρσ_Iter3 = ρσ_Iterable(div.childNodes);
+                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                        c = ρσ_Iter3[ρσ_Index3];
                         c.style.display = "none";
                     }
                 }
