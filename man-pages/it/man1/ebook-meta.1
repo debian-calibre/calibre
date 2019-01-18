@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "gennaio 04, 2019" "3.37.0" "calibre"
+.TH "EBOOK-META" "1" "gennaio 18, 2019" "3.38.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,15 +41,15 @@ ebook\-meta ebook_file [opzioni]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Leggi/Scrivi metadata da/su file e\-book.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Formati supportati per la lettura dei metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Formati supportati per la scrittura dei metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Formati di file differenti supportano diversi tipi di metadata. Se imposti
+alcuni metadata in un file che non li supporta, i metadata saranno
+ignorati silenziosamente.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPZIONI]
@@ -91,7 +91,7 @@ Imposta la data di pubblicazione.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Leggi metadata dal file OPF specificato e usalo per impostare i metadata nell\fB\(aq\fPebook. I metadata specificati nella linea di comando sovrascriranno quelli letti nel file OPF
 .UNINDENT
 .INDENT 0.0
 .TP

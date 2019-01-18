@@ -24,7 +24,7 @@ from calibre.ebooks.oeb.polish.cover import get_raster_cover_name
 from calibre.ebooks.oeb.polish.utils import lead_text, guess_type
 from calibre.gui2 import error_dialog, choose_files, choose_save_file, info_dialog, choose_images
 from calibre.gui2.tweak_book import tprefs, current_container
-from calibre.gui2.widgets2 import Dialog as BaseDialog
+from calibre.gui2.widgets2 import Dialog as BaseDialog, HistoryComboBox
 from calibre.utils.icu import primary_sort_key, sort_key, primary_contains, numeric_sort_key
 from calibre.utils.matcher import get_char, Matcher
 from calibre.gui2.complete2 import EditWithComplete
@@ -671,10 +671,19 @@ class InsertLink(Dialog):
         t.setText(self.initial_text or '')
         t.setPlaceholderText(_('The (optional) text for the link'))
 
-        self.template_edit = t = QLineEdit(self)
+        self.template_edit = t = HistoryComboBox(self)
+        t.lineEdit().setClearButtonEnabled(True)
+        t.initialize('edit_book_insert_link_template_history')
         tl.addRow(_('Tem&plate:'), t)
         from calibre.gui2.tweak_book.editor.smarts.html import DEFAULT_LINK_TEMPLATE
         t.setText(tprefs.get('insert-hyperlink-template', None) or DEFAULT_LINK_TEMPLATE)
+        t.setToolTip('<p>' + _('''
+            The template to use for generating the link. In addition to {0} and {1}
+            you can also use {2}, {3} and {4} variables
+            in the template, they will be replaced by the source filename, the destination
+            filename and the anchor, respectively.
+        ''').format(
+            '_TITLE_', '_TARGET', '_SOURCE_FILENAME_', '_DEST_FILENAME_', '_ANCHOR_'))
 
         l.addWidget(self.bb)
 
@@ -739,6 +748,22 @@ class InsertLink(Dialog):
     @property
     def template(self):
         return self.template_edit.text().strip() or None
+
+    @property
+    def rendered_template(self):
+        ans = self.template
+        if ans:
+            target = self.href
+            frag = target.partition('#')[-1]
+            if target.startswith('#'):
+                target = ''
+            else:
+                target = target.split('#', 1)[0]
+                target = self.container.href_to_name(target)
+            ans = ans.replace('_SOURCE_FILENAME_', self.source_name or '')
+            ans = ans.replace('_DEST_FILENAME_', target or '')
+            ans = ans.replace('_ANCHOR_', frag or '')
+        return ans
 
     @classmethod
     def test(cls):

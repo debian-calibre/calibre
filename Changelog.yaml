@@ -6,7 +6,7 @@
 # Also, each release can have new and improved recipes.
 
 # - version: 3.?.?
-#   date: 2018-??-??
+#   date: 2019-??-??
 #
 #   new features:
 #     - title:
@@ -20,10 +20,60 @@
 #   new recipes:
 #     - title:
 
-- version: 3.37.0
-  date: 2018-01-04
+- version: 3.38.0
+  date: 2019-01-18
+
+  new features:
+    - title: "Tag browser: When using the Find function have unaccented characters match their accented equivalents, if the setting for it is set in Preferences->Searching"
+
+    - title: "DOCX Input: When converting indices, put each sub-entry on its own line."
+      tickets: [1811611]
+
+    - title: "Edit book: Insert hyperlink: Add history for the template"
+
+    - title: "Edit book: Insert hyperlink: Add a few more variables for the link template: _SOURCE_FILENAME_, _DEST_FILENAME_ and _ANCHOR_"
 
   bug fixes:
+    - title: "Catalogs: Set the language of created catalogs to the calibre interface language instead of English"
+      tickets: [1810936]
+
+    - title: "DOCX Input: Do not display section breaks that have a numbering style applied to them."
+      tickets: [1811611]
+
+    - title: "Content server: Fix listening on :: not also listening on IPv4 interfaces on Windows"
+
+    - title: "DOCX Output: Fix heading styles that have the same font size as body text getting incorrect font sizes after conversion."
+      tickets: [1811616]
+
+    - title: "EPUB/MOBI Catalogs: Fix prefix rules not working when calibre UI language is something other than English"
+
+    - title: "EPUB/MOBI Catalogs: Fix exclusion by tag not working for tags that have spaces in them"
+
+    - title: "Subset fonts: Fix error when trying to subset unicode characters that require two UTF-16 code points on Windows."
+      tickets: [1811224]
+
+    - title: "Content server: Fix option to restrict displayed user field not working in the /opds view"
+
+    - title: "Tag browser: Fix incorrect icon for user categories."
+      tickets: [1810217]
+
+    - title: "PDF Output: Fix conversion failing when fonts with non-English names are used."
+      tickets: [1812218]
+
+  improved recipes:
+    - Chicago Tribune
+    - New York Times Book Review
+
+  new recipes:
+    - title: Nature
+      author: Jose Ortiz
+
+- version: 3.37.0
+  date: 2019-01-04
+
+  bug fixes:
+    - title: "Switch from cssutils to css_parser for parsing CSS. Fixes various minor, long standing bugs"
+
     - title: "calibredb: Fix adding books from directories to a remote server running on Windows not working"
 
     - title: "Edit Book: Fix style attribute on <html> tags not being preserved when editing AZW3 files."
@@ -63,7 +113,7 @@
 
   bug fixes:
     - title: "Kobo driver: Fix a regression in the last release that caused book title
-to appear as unknown if metadata management was set to manual in calibre."
+to appear as Unknown if metadata management was set to manual in calibre."
       tickets: [1807914]
 
     - title: "PDF Output: Do not fail if one of the fonts from the source document has no name metadata"
@@ -311,7 +361,7 @@ to appear as unknown if metadata management was set to manual in calibre."
     - title: "Content server: When defining a color scheme for the in browser viewer allow specifying the link color as well as the foreground and background."
       tickets: [1735904]
 
-    - title: "Edit book: Show a popup after a fix all html/beautify all files so the user can easily see what was changed, if needed."
+    - title: "Edit book: Show a popup after a fix all HTML/Beautify all files so the user can easily see what was changed, if needed."
       tickets: [1785482]
 
     - title: "Kindle driver: Create cover thumbnails on the device when transferring KFX format books"

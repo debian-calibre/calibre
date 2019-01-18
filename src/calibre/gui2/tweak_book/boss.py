@@ -898,7 +898,7 @@ class Boss(QObject):
                 self.commit_all_editors_to_container()
                 d = InsertLink(current_container(), edname, initial_text=ed.get_smart_selection(), parent=self.gui)
                 if d.exec_() == d.Accepted:
-                    ed.insert_hyperlink(d.href, d.text, template=d.template)
+                    ed.insert_hyperlink(d.href, d.text, template=d.rendered_template)
             elif action[0] == 'insert_tag':
                 d = InsertTag(parent=self.gui)
                 if d.exec_() == d.Accepted:
@@ -1403,6 +1403,24 @@ class Boss(QObject):
             name = editor_name(ed)
             if name is not None and getattr(ed, 'syntax', None) == 'html':
                 self.gui.preview.sync_to_editor(name, ed.current_tag())
+
+    def show_partial_cfi_in_editor(self, name, cfi):
+        editor = self.edit_file(name, 'html')
+        if not editor or not editor.has_line_numbers:
+            return False
+        from calibre.ebooks.oeb.polish.parsing import parse
+        from calibre.ebooks.epub.cfi.parse import decode_cfi
+        root = parse(
+            editor.get_raw_data(), decoder=lambda x: x.decode('utf-8'),
+            line_numbers=True, linenumber_attribute='data-lnum')
+        node = decode_cfi(root, cfi)
+        if node is not None:
+            lnum = node.get('data-lnum')
+            if lnum:
+                lnum = int(lnum)
+                editor.current_line = lnum
+                return True
+        return False
 
     def goto_style_declaration(self, data):
         name = data['name']
