@@ -1,0 +1,667 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) Kovid Goyal
+# This file is distributed under the same license as the calibre package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calibre 3.38.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-18 20:12+0530\n"
+"PO-Revision-Date: 2017-12-15 03:02+0000\n"
+"Language-Team: Khmer (Cambodia) (https://www.transifex.com/calibre/teams/19337/km_KH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km_KH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:2
+msgid "Quick reference for regexp syntax"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:4
+msgid ""
+"This checklist summarizes the most commonly used/hard to remember parts of "
+"the regexp engine available in the calibre edit and conversion "
+"search/replace features. Note that this engine is more powerful than the "
+"basic regexp engine used throughout the rest of calibre."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:12
+msgid "Contents"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:15
+msgid "Character classes"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:17
+msgid ""
+"Character classes are useful to represent different groups of characters, "
+"succinctly."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:20
+msgid "Examples:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:23
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:54
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:255
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:285
+msgid "**Representation**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:23
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:54
+msgid "**Class**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:26
+msgid "``[a-z]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:26
+msgid ""
+"Lowercase letters. Does not include characters with accent mark and "
+"ligatures"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:29
+msgid "``[a-z0-9]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:29
+msgid "Lowercase letters from a to z or numbers from 0 to 9"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:32
+msgid "``[A-Za-z-]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:32
+msgid ""
+"Uppercase or lowercase letters, or a dash. To include the dash in a class, "
+"you must put it at the beginning or at the end so as not to confuse it with "
+"the hyphen that specifies a range of characters"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:35
+msgid "``[^0-9]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:35
+msgid ""
+"Any character except a digit. The caret (^) placed at the beginning of the "
+"class excludes the characters of the class (complemented class)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
+msgid "``[[a-z]--[aeiouy]]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
+msgid ""
+"The lowercase consonants. A class can be included in a class. The characters"
+" ``--`` exclude what follows them"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
+msgid "``[\\w--[\\d_]]``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
+msgid ""
+"All letters (including foreign accented characters). Abbreviated classes can"
+" be used inside a class"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:46
+msgid "Example::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:51
+msgid "Shorthand character classes"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:57
+msgid "``\\d``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:57
+msgid "A digit (same as ``[0-9]``)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:60
+msgid "``\\D``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:60
+msgid "Any non-numeric character (same as ``[^0-9]``)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:63
+msgid "``\\w``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:63
+msgid ""
+"An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
+" mark and ligatures"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
+msgid "``\\W``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
+msgid "Any “non-word” character"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
+msgid "``\\s``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
+msgid "Space, non-breaking space, tab, return line"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
+msgid "``\\S``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
+msgid "Any “non-whitespace” character"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:75
+msgid "``.``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:75
+msgid ""
+"Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
+"regexp modifier to include the newline character."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:80
+msgid "The quantifiers"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:83
+msgid "**Quantifier**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:83
+msgid "**Number of occurrences of the expression preceding the quantifier**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:86
+msgid "``?``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:86
+msgid "0 or 1 occurrence of the expression. Same as ``{0,1}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:89
+msgid "``+``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:89
+msgid "1 or more occurrences of the expression. Same as ``{1,}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:92
+msgid "``*``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:92
+msgid "0, 1 or more occurrences of the expression. Same as ``{0,}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:95
+msgid "``{n}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:95
+msgid "Exactly n occurrences of the expression"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:98
+msgid "``{min,max}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:98
+msgid "Number of occurrences between the minimum and maximum values included"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:101
+msgid "``{min,}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:101
+msgid ""
+"Number of occurrences between the minimum value included and the infinite"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:104
+msgid "``{,max}``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:104
+msgid "Number of occurrences between 0 and the maximum value included"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:111
+msgid "Greed"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:113
+msgid ""
+"By default, with quantifiers, the regular expression engine is greedy: it "
+"extends the selection as much as possible. This often causes surprises, at "
+"first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
+"same expression, the result can be unpredictable."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:118
+msgid ""
+"Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
+"exponentially increases processing time."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:122
+msgid "Alternation"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:124
+msgid ""
+"The ``|`` character in a regular expression is a logical ``OR``. It means "
+"that either the preceding or the following expression can match."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:128
+msgid "Exclusion"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:130
+msgid "Method 1"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:132
+msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:134
+msgid "Example:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:136
+msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:138
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:146
+msgid ""
+"selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
+"\"Blabla\"."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:140
+msgid "Method 2"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:142
+msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:144
+msgid "``\"Blabla\"\\K|(Blabla)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:149
+msgid "Anchors"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:151
+msgid ""
+"An anchor is a way to match a logical location in a string, rather than a "
+"character. The most useful anchors for text processing are:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:157
+msgid "``\\b``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:155
+msgid ""
+"Designates a word boundary, i.e. a transition from space to non-space "
+"character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
+"not ``absurd``."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:161
+msgid "``^``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:160
+msgid "Matches the start of a line (in multi-line mode, which is the default)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:164
+msgid "``$``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:164
+msgid "Matches the end of a line (in multi-line mode, which is the default)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:171
+msgid "``\\K``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:167
+msgid ""
+"Resets the start position of the selection to its position in the pattern. "
+"Some regexp engines (but not calibre) do not allow lookbehind of variable "
+"length, especially with quantifiers. When you can use ``\\K`` with these "
+"engines, it also allows you to get rid of this limit by writing the "
+"equivalent of a positive lookbehind of variable length."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:174
+msgid "Groups"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:179
+msgid "``(expression)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:177
+msgid ""
+"Capturing group, which stores the selection and can be recalled later in the"
+" *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
+"number of the capturing group (starting at 1 in reading order)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:182
+msgid "``(?:expression)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:182
+msgid "Group that does not capture the selection"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:188
+msgid "``(?>expression)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:185
+msgid ""
+"Atomic Group: As soon as the expression is satisfied, the regexp engine "
+"passes, and if the rest of the pattern fails, it will not backtrack to try "
+"other combinations with the expression. Atomic groups do not capture."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:192
+msgid "``(?|expression)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:191
+msgid ""
+"Branch reset group: the branches of the alternations included in the "
+"expression share the same group numbers"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:198
+msgid "``(?<name>expression)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:195
+msgid ""
+"Group named “name”. The selection can be recalled later in the *search* "
+"pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
+"different groups can use the same name."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:201
+msgid "Lookarounds"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:204
+msgid "**Lookaround**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:204
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:255
+msgid "**Meaning**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:207
+msgid "``?=``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:207
+msgid "Positive lookahead (to be placed after the selection)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:210
+msgid "``?!``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:210
+msgid "Negative lookahead (to be placed after the selection)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:213
+msgid "``?<=``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:213
+msgid "Positive lookbehind (to be placed before the selection)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:216
+msgid "``?<!``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:216
+msgid "Negative lookbehind (to be placed before the selection)"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:220
+msgid ""
+"Lookaheads and lookbehinds do not consume characters, they are zero length "
+"and do not capture. They are atomic groups: as soon as the assertion is "
+"satisfied, the regexp engine passes, and if the rest of the pattern fails, "
+"it will not backtrack inside the lookaround to try other combinations."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:225
+msgid ""
+"When looking for multiple matches in a string, at the starting position of "
+"each match attempt, a lookbehind can inspect the characters before the "
+"current position. Therefore, on the string 123, the pattern ``(?<=\\d)\\d`` "
+"(a digit preceded by a digit) should, in theory, select 2 and 3. On the "
+"other hand, ``\\d\\K\\d`` can only select 2, because the starting position "
+"after the first selection is immediately before 3, and there are not enough "
+"digits for a second match. Similarly, ``\\d(\\d)`` only captures 2. In "
+"calibre's regexp engine practice, the positive lookbehind behaves in the "
+"same way, and selects only 2, contrary to theory."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:235
+msgid ""
+"Groups can be placed inside lookarounds, but capture is rarely useful. "
+"Nevertheless, if it is useful, it will be necessary to be very careful in "
+"the use of a quantifier in a lookbehind: the greed associated with the "
+"absence of backtracking can give a surprising capture. For this reason, use "
+"``\\K`` rather than a positive lookbehind when you have a quantifier (or "
+"worse, several) in a capturing group of the positive lookbehind."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:242
+msgid "Example of negative lookahead:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:244
+msgid "``(?![^<>{}]*[>}])``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:246
+msgid ""
+"Placed at the end of the pattern prevents to select within a tag or a style "
+"embedded in the file."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:248
+msgid ""
+"Whenever possible, it is always better to \"anchor\" the lookarounds, to "
+"reduce the number of steps necessary to obtain the result."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:252
+msgid "Recursion"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:258
+msgid "``(?R)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:258
+msgid "Recursion of the entire pattern"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:261
+msgid "``(?1)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:261
+msgid ""
+"Recursion of the only pattern of the numbered capturing group, here group 1"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:265
+msgid ""
+"Recursion is calling oneself. This is useful for balanced queries, such as "
+"quoted strings, which can contain embedded quoted strings. Thus, if during "
+"the processing of a string between double quotation marks, we encounter the "
+"beginning of a new string between double quotation marks, well we know how "
+"to do, and we call ourselves. Then we have a pattern like::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:273
+msgid ""
+"To select a string between double quotation marks without stopping on an "
+"embedded string::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:277
+msgid ""
+"This template can also be used to modify pairs of tags that can be embedded,"
+" such as ``<div>`` tags."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:282
+msgid "Special characters"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:285
+msgid "**Character**"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:288
+msgid "``\\t``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:288
+msgid "tabulation"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:291
+msgid "``\\n``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:291
+msgid "line break"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:294
+msgid "``\\x20``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:294
+msgid "(breakable) space"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:297
+msgid "``\\xa0``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:297
+msgid "no-break space"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:302
+msgid "Meta-characters"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:304
+msgid ""
+"Meta-characters are those that have a special meaning for the regexp engine."
+" Of these, twelve must be preceded by an escape character, the backslash "
+"(``\\``), to lose their special meaning and become a regular character "
+"again::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:310
+msgid ""
+"Seven other meta-characters do not need to be preceded by a backslash (but "
+"can be without any other consequence)::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:316
+msgid ""
+"Special characters lose their status if they are used inside a class "
+"(between brackets ``[]``). The closing bracket and the dash have a special "
+"status in a class. Outside the class, the dash is a simple literal, the "
+"closing bracket remains a meta-character."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:321
+msgid ""
+"The slash (/) and the number sign (or hash character) (#) are not meta-"
+"characters, they don’t need to be escaped."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:324
+msgid ""
+"In some tools, like regex101.com with the Python engine, double quotes have "
+"the special status of separator, and must be escaped, or the options "
+"changed. This is not the case in the editor of calibre."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:329
+msgid "Modes"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:332
+msgid "``(?s)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:332
+msgid "Causes the dot (``.``) to match newline characters as well"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:336
+msgid "``(?m)``"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:335
+msgid ""
+"Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
+"of the start and end of the entire string."
+msgstr ""

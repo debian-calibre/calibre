@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import division
-from __future__ import print_function
+from __future__ import print_function, division
 
 __license__   = 'GPL v3'
 __copyright__ = '2010-2012, Timothy Legge <timlegge@gmail.com>, Kovid Goyal <kovid@kovidgoyal.net> and David Forrester <davidfor@internode.on.net>'
@@ -3033,7 +3032,7 @@ class KOBOTOUCH(KOBO):
 
         series_changed = not (newmi.series == kobo_metadata.series)
         series_number_changed = False
-        if kobo_metadata.series_index:
+        if kobo_metadata.series_index is not None:
             try:
                 kobo_series_number = float(book.kobo_series_number)
             except:
@@ -3041,9 +3040,12 @@ class KOBOTOUCH(KOBO):
             series_number_changed = not (kobo_series_number == newmi.series_index)
 
         if series_changed or series_number_changed:
-            if newmi.series:
+            if newmi.series is not None:
                 new_series = newmi.series
-                new_series_number = "%g" % newmi.series_index
+                try:
+                    new_series_number = "%g" % newmi.series_index
+                except:
+                    new_series_number = None
             else:
                 new_series = None
                 new_series_number = None

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "janeiro 04, 2019" "3.37.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "fevereiro 01, 2019" "3.39.1" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,26 +41,25 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Diversas inferfaces de linha de comando úteis para depurar o Calibre.
-Sem opções, esse comando inicia um tradutor Python incorporado.
+Diversas interfaces de linha de comando úteis para depurar o Calibre.
+Sem opções, esse comando inicia um intérprete Python incorporado.
 Você também pode executar a interface principal do Calibre, o visualizador
 .INDENT 0.0
 .INDENT 3.5
-do Calibre e o editor do Calibre no pode de depuração (debug mode).
+do Calibre e o editor do Calibre no modo de depuração (debug mode).
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
 .TP
 .B Também contém interfaces para várias partes do Calibre que não possuem
-ferramentas de linha de comando dedicadas, como subgrupamento de fontes
-(font subsetting), a ferramenta de comparação de e\-books (diff tool) etc.
-.TP
-Você também pode usar \fBcalibre\-debug\fP para executar scripts isolados. Para fazer isso,
-use\-o assim:
-.INDENT 7.0
+ferramentas de linha de comando dedicadas, como subdivisão de fontes
+(font subsetting), a ferramenta de comparação de e\-books (diff tool), etc.
+.UNINDENT
+.sp
+Você também pode usar o \fBcalibre\-debug\fP para executar scripts isolados. Para isso, use\-o assim:
+.INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
@@ -166,7 +165,7 @@ Faz com que uma instância ativa do calibre, se houver uma, seja desligada. Note
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Escolha o conjunto de fontes específicas. Use \fB\-\-\fP depois dessa opção para repassar ao programa o conjunto de fontes escolhido.
+Subconjunto da fonte especificada. Use \fB\-\-\fP depois dessa opção para passar opções ao programa de subdivisão de fontes.
 .UNINDENT
 .INDENT 0.0
 .TP

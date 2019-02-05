@@ -213,12 +213,15 @@ class Styles(object):
             ans = self.para_cache[p] = ParagraphStyle(self.namespace)
             ans.style_name = None
             direct_formatting = None
+            is_section_break = False
             for pPr in self.namespace.XPath('./w:pPr')(p):
                 ps = ParagraphStyle(self.namespace, pPr)
                 if direct_formatting is None:
                     direct_formatting = ps
                 else:
                     direct_formatting.update(ps)
+                if self.namespace.XPath('./w:sectPr')(pPr):
+                    is_section_break = True
 
             if direct_formatting is None:
                 direct_formatting = ParagraphStyle(self.namespace)
@@ -246,7 +249,8 @@ class Styles(object):
                     self.para_char_cache[p] = default_para.character_style
 
             is_numbering = direct_formatting.numbering is not inherit
-            if is_numbering:
+            is_section_break = is_section_break and not self.namespace.XPath('./w:r')(p)
+            if is_numbering and not is_section_break:
                 num_id, lvl = direct_formatting.numbering
                 if num_id is not None:
                     p.set('calibre_num_id', '%s:%s' % (lvl, num_id))
@@ -254,7 +258,9 @@ class Styles(object):
                     ps = self.numbering.get_para_style(num_id, lvl)
                     if ps is not None:
                         parent_styles.append(ps)
-            if not is_numbering and linked_style is not None and getattr(linked_style.paragraph_style, 'numbering', inherit) is not inherit:
+            if (
+                    not is_numbering and not is_section_break and linked_style is not None and getattr(
+                        linked_style.paragraph_style, 'numbering', inherit) is not inherit):
                 num_id, lvl = linked_style.paragraph_style.numbering
                 if num_id is not None:
                     p.set('calibre_num_id', '%s:%s' % (lvl, num_id))
@@ -445,8 +451,9 @@ class Styles(object):
 
             /* In word all paragraphs have zero margins unless explicitly specified in a style */
             p, h1, h2, h3, h4, h5, h6, div { margin: 0; padding: 0 }
-            /* In word headings only have bold font if explicitly specified */
-            h1, h2, h3, h4, h5, h6 { font-weight: normal }
+            /* In word headings only have bold font if explicitly specified,
+                similarly the font size is the body font size, unless explicitly set. */
+            h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: 1rem }
             /* Setting padding-left to zero breaks rendering of lists, so we only set the other values to zero and leave padding-left for the user-agent */
             ul, ol { margin: 0; padding-top: 0; padding-bottom: 0; padding-right: 0 }
 
