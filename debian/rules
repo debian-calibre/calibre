@@ -82,7 +82,7 @@ get-orig-source:
 	wget -O - https://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
 	\
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
-	rm -r calibre*/resources/viewer/mathjax; \
+	rm -r calibre*/resources/mathjax; \
 	rm -r calibre*/resources/coffee-script.js; \
 	rm -r calibre*/src/calibre/ebooks/markdown; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
