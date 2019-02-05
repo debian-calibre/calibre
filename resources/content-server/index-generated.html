@@ -5018,7 +5018,14 @@ return parser;
                 } else if (event === "abort") {
                     xhr.error_html = str.format(_("Failed to communicate with \"{}\", aborted"), xhr.request_path);
                 } else {
-                    rtext = xhr.responseText || "";
+                    try {
+                        rtext = xhr.responseText || "";
+                    } catch (ρσ_Exception) {
+                        ρσ_last_exception = ρσ_Exception;
+                        {
+                            rtext = "";
+                        } 
+                    }
                     xhr.error_html = str.format(_("Failed to communicate with \"{}\", with status: [{}] {}<br><br>{}"), xhr.request_path, xhr.status, xhr.statusText, rtext.slice(0, 200));
                 }
             };
@@ -7975,6 +7982,7 @@ return parser;
             ρσ_d["sort"] = "timestamp.desc";
             ρσ_d["last_sort_order"] = Object.create(null);
             ρσ_d["show_all_metadata"] = false;
+            ρσ_d["copy_to_library_dupes"] = "add;overwrite";
             ρσ_d["partition_method"] = "first letter";
             ρσ_d["collapse_at"] = 25;
             ρσ_d["dont_collapse"] = "";
@@ -8636,6 +8644,29 @@ return this.__repr__();
             return q.library_id || get_interface_data().default_library_id;
         };
 
+        function all_libraries() {
+            var interface_data, lids;
+            interface_data = get_interface_data();
+            lids = ρσ_interpolate_kwargs.call(this, sorted, [interface_data.library_map].concat([ρσ_desugar_kwargs({key: (function() {
+                var ρσ_anonfunc = function (x) {
+                    return (ρσ_expr_temp = interface_data.library_map)[(typeof x === "number" && x < 0) ? ρσ_expr_temp.length + x : x];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["x"]}
+                });
+                return ρσ_anonfunc;
+            })()})]));
+            return (function() {
+                var ρσ_Iter = ρσ_Iterable(lids), ρσ_Result = [], lid;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    lid = ρσ_Iter[ρσ_Index];
+                    ρσ_Result.push([lid, (ρσ_expr_temp = interface_data.library_map)[(typeof lid === "number" && lid < 0) ? ρσ_expr_temp.length + lid : lid]]);
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+
         function current_virtual_library() {
             var q;
             q = parse_url_params();
@@ -8761,21 +8792,20 @@ return this.__repr__();
             return library_data.previous_book_ids.concat(library_data.search_result.book_ids);
         };
 
-        function book_after(book_id) {
-            var ids, idx;
+        function book_after(book_id, delta) {
+            var ids, idx, new_idx;
+            if (!delta) {
+                delta = 1;
+            }
             ids = current_book_ids();
             idx = ids.indexOf(int(book_id));
             if (idx > -1) {
-                if (idx < ids.length - 1) {
-                    return ids[ρσ_bound_index(idx + 1, ids)];
-                }
-                if (idx > 0) {
-                    return ids[0];
-                }
+                new_idx = (idx + ids.length + delta) % ids.length;
+                return ids[(typeof new_idx === "number" && new_idx < 0) ? ids.length + new_idx : new_idx];
             }
         };
         if (!book_after.__argnames__) Object.defineProperties(book_after, {
-            __argnames__ : {value: ["book_id"]}
+            __argnames__ : {value: ["book_id", "delta"]}
         });
 
         function on_data_loaded(end_type, xhr, ev) {
@@ -9082,6 +9112,7 @@ return this.__repr__();
         ρσ_modules["book_list.library_data"].library_data = library_data;
         ρσ_modules["book_list.library_data"].thumbnail_cache = thumbnail_cache;
         ρσ_modules["book_list.library_data"].current_library_id = current_library_id;
+        ρσ_modules["book_list.library_data"].all_libraries = all_libraries;
         ρσ_modules["book_list.library_data"].current_virtual_library = current_virtual_library;
         ρσ_modules["book_list.library_data"].last_virtual_library_for = last_virtual_library_for;
         ρσ_modules["book_list.library_data"].url_books_query = url_books_query;
@@ -17110,7 +17141,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.37.0";
+        CALIBRE_VERSION = "3.39.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -18430,25 +18461,33 @@ return this.__repr__();
             __argnames__ : {value: ["library_id", "book_id", "title"]}
         });
 
+        function refresh_after_delete(book_id, library_id) {
+            var next_book_id;
+            force_refresh_on_next_load();
+            next_book_id = book_after(book_id);
+            if (next_book_id) {
+                show_panel("book_details", (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["book_id"] = str(next_book_id);
+                    ρσ_d["library_id"] = library_id;
+                    return ρσ_d;
+                }).call(this), true);
+            } else {
+                back();
+            }
+        };
+        if (!refresh_after_delete.__argnames__) Object.defineProperties(refresh_after_delete, {
+            __argnames__ : {value: ["book_id", "library_id"]}
+        });
+
         function do_delete_from_library(parent, close_modal, library_id, book_id, title) {
             parent.appendChild(E.div(_("Deleting {0} from library, please wait...").format(title)));
             function oncomplete(end_type, xhr, ev) {
-                var next_book_id, msg;
+                var msg;
                 if (end_type === "load" || end_type === "abort") {
                     close_modal();
                     if (end_type === "load") {
-                        force_refresh_on_next_load();
-                        next_book_id = book_after(book_id);
-                        if (next_book_id) {
-                            show_panel("book_details", (function(){
-                                var ρσ_d = Object.create(null);
-                                ρσ_d["book_id"] = str(next_book_id);
-                                ρσ_d["library_id"] = library_id;
-                                return ρσ_d;
-                            }).call(this), true);
-                        } else {
-                            back();
-                        }
+                        refresh_after_delete(book_id, library_id);
                     }
                     return;
                 }
@@ -18548,6 +18587,7 @@ return this.__repr__();
         });
 
         ρσ_modules["book_list.delete_book"].delete_from_cache = delete_from_cache;
+        ρσ_modules["book_list.delete_book"].refresh_after_delete = refresh_after_delete;
         ρσ_modules["book_list.delete_book"].do_delete_from_library = do_delete_from_library;
         ρσ_modules["book_list.delete_book"].confirm_delete_from_library = confirm_delete_from_library;
         ρσ_modules["book_list.delete_book"].choose_which_delete = choose_which_delete;
@@ -21595,7 +21635,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "book_list.book_details";
-        var bd_counter, CLASS_NAME, SEARCH_INTERNET_CLASS, FORMAT_PRIORITIES, IGNORED_FIELDS, default_sort, ρσ_unpack, i, f, current_fetch;
+        var bd_counter, CLASS_NAME, SEARCH_INTERNET_CLASS, COPY_TO_LIBRARY_CLASS, FORMAT_PRIORITIES, IGNORED_FIELDS, default_sort, ρσ_unpack, i, f, current_fetch;
         var traceback = ρσ_modules.traceback;
 
         var E = ρσ_modules.elementmaker.E;
@@ -21603,8 +21643,10 @@ return this.__repr__();
         var _ = ρσ_modules.gettext.gettext;
 
         var ajax = ρσ_modules.ajax.ajax;
+        var ajax_send = ρσ_modules.ajax.ajax_send;
         var encode_query_component = ρσ_modules.ajax.encode_query_component;
 
+        var refresh_after_delete = ρσ_modules["book_list.delete_book"].refresh_after_delete;
         var start_delete_book = ρσ_modules["book_list.delete_book"].start_delete_book;
 
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
@@ -21612,6 +21654,8 @@ return this.__repr__();
         var create_item = ρσ_modules["book_list.item_list"].create_item;
         var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
 
+        var all_libraries = ρσ_modules["book_list.library_data"].all_libraries;
+        var book_after = ρσ_modules["book_list.library_data"].book_after;
         var book_metadata = ρσ_modules["book_list.library_data"].book_metadata;
         var cover_url = ρσ_modules["book_list.library_data"].cover_url;
         var current_library_id = ρσ_modules["book_list.library_data"].current_library_id;
@@ -21645,10 +21689,13 @@ return this.__repr__();
         var add_extra_css = ρσ_modules.dom.add_extra_css;
         var build_rule = ρσ_modules.dom.build_rule;
         var clear = ρσ_modules.dom.clear;
+        var ensure_id = ρσ_modules.dom.ensure_id;
         var svgicon = ρσ_modules.dom.svgicon;
+        var unique_id = ρσ_modules.dom.unique_id;
 
         var create_custom_dialog = ρσ_modules.modals.create_custom_dialog;
         var error_dialog = ρσ_modules.modals.error_dialog;
+        var warning_dialog = ρσ_modules.modals.warning_dialog;
 
         var get_interface_data = ρσ_modules.session.get_interface_data;
 
@@ -21666,6 +21713,7 @@ return this.__repr__();
         bd_counter = 0;
         CLASS_NAME = "book-details-panel";
         SEARCH_INTERNET_CLASS = "book-details-search-internet";
+        COPY_TO_LIBRARY_CLASS = "book-details-copy-to-library";
         FORMAT_PRIORITIES = ρσ_list_decorate([ "EPUB", "AZW3", "DOCX", "LIT", "MOBI", "ODT", "RTF", "MD", "MARKDOWN", "TXT", "PDF" ]);
         function sort_formats_key(fmt) {
             var ans;
@@ -22160,9 +22208,6 @@ return this.__repr__();
                         ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({is_html: true})]));
                         return;
                     }
-                    if (hp === "above") {
-                        val = E.h3(name).outerHTML + val;
-                    }
                     comments.push([field, val]);
                     return;
                 }
@@ -22278,6 +22323,8 @@ return this.__repr__();
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1ex 1em"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " ul > li"].concat([ρσ_desugar_kwargs({list_style_type: "none"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " ul > li > a"].concat([ρσ_desugar_kwargs({padding: "2ex 1em", display: "block", width: "100%"})]));
+            sel = "." + COPY_TO_LIBRARY_CLASS;
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1ex 1em"})]));
             return style;
         });
         current_fetch = null;
@@ -22370,6 +22417,20 @@ return this.__repr__();
             table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({class_: "metadata"})]);
             container.appendChild(md);
             md.appendChild(table);
+            function next_book(delta) {
+                var next_book_id, q;
+                next_book_id = book_after(book_id, delta);
+                if (next_book_id) {
+                    q = parse_url_params();
+                    q.book_id = next_book_id + "";
+                    ρσ_interpolate_kwargs.call(this, show_panel, ["book_details"].concat([ρσ_desugar_kwargs({query: q})]));
+                }
+            };
+            if (!next_book.__argnames__) Object.defineProperties(next_book, {
+                __argnames__ : {value: ["delta"]}
+            });
+
+            md.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Previous"), "arrow-left", next_book.bind(null, -1)), "   ", create_button(_("Next"), "arrow-right", next_book.bind(null, 1))].concat([ρσ_desugar_kwargs({style: "margin-top: 1.5ex"})])));
             render_metadata(metadata, table, book_id);
         };
         if (!render_book.__argnames__) Object.defineProperties(render_book, {
@@ -22592,7 +22653,9 @@ return this.__repr__();
             }
             items = ρσ_list_decorate([ ρσ_interpolate_kwargs.call(this, create_item, [_("Search the internet")].concat([ρσ_desugar_kwargs({subtitle: _("Search for this author or book on various websites"), action: function () {
                 ρσ_interpolate_kwargs.call(this, show_subsequent_panel, ["search_internet"].concat([ρσ_desugar_kwargs({replace: true})]));
-            }})])), ρσ_interpolate_kwargs.call(this, create_item, [title].concat([ρσ_desugar_kwargs({subtitle: subtitle, action: toggle_fields})])) ]);
+            }})])), ρσ_interpolate_kwargs.call(this, create_item, [title].concat([ρσ_desugar_kwargs({subtitle: subtitle, action: toggle_fields})])), ρσ_interpolate_kwargs.call(this, create_item, [_("Copy to library")].concat([ρσ_desugar_kwargs({subtitle: _("Copy or move this book to another calibre library"), action: function () {
+                ρσ_interpolate_kwargs.call(this, show_subsequent_panel, ["copy_to_library"].concat([ρσ_desugar_kwargs({replace: true})]));
+            }})])) ]);
             container.appendChild(E.div());
             create_item_list(container.lastChild, items);
         };
@@ -22654,6 +22717,144 @@ return this.__repr__();
             __argnames__ : {value: ["container_id"]}
         });
 
+        function do_copy_to_library(book_id, target_library_id, target_library_name) {
+            var title, dupes_id, sd, saved_value;
+            function handle_result(move, close_func, end_type, xhr, ev) {
+                var title, response;
+                close_func();
+                title = book_metadata(book_id).title;
+                return_to_book_details();
+                if (end_type === "abort") {
+                    return;
+                }
+                if (end_type !== "load") {
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), xhr.error_html);
+                    return;
+                }
+                try {
+                    response = (ρσ_expr_temp = JSON.parse(xhr.responseText))[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id];
+                    if (!response) {
+                        throw new Exception("bad");
+                    }
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" got an invalid response from calibre").format(title));
+                        return;
+                    } 
+                }
+                if (!response.ok) {
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), response.payload);
+                    return;
+                }
+                if (response.action === "duplicate") {
+                    warning_dialog(_("Book already exists"), _("Could not copy as a book with the same title and authors already exists in the {} library").format(target_library_name));
+                } else if (response.action === "automerge") {
+                    warning_dialog(_("Book merged"), _("The files from the book were merged into a book with the same title and authors in the {} library").format(target_library_name));
+                }
+                if (move) {
+                    refresh_after_delete(book_id, current_library_id());
+                }
+            };
+            if (!handle_result.__argnames__) Object.defineProperties(handle_result, {
+                __argnames__ : {value: ["move", "close_func", "end_type", "xhr", "ev"]}
+            });
+
+            function trigger_copy(container_id, move, close_func) {
+                var choice, ρσ_unpack, duplicate_action, automerge_action, data, container;
+                try {
+                    choice = document.querySelector("#" + ρσ_str.format("{}", dupes_id) + " input[name=\"dupes\"]:checked").value;
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        choice = document.querySelector("#" + ρσ_str.format("{}", dupes_id) + " input[name=\"dupes\"]").value;
+                    } 
+                }
+                sd.set("copy_to_library_dupes", choice);
+                ρσ_unpack = choice.split(";", 2);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                duplicate_action = ρσ_unpack[0];
+                automerge_action = ρσ_unpack[1];
+                data = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["book_ids"] = [book_id];
+                    ρσ_d["move"] = move;
+                    ρσ_d["duplicate_action"] = duplicate_action;
+                    ρσ_d["automerge_action"] = automerge_action;
+                    return ρσ_d;
+                }).call(this);
+                container = document.getElementById(container_id);
+                clear(container);
+                container.appendChild(E.div(_("Contacting calibre to copy book, please wait...")));
+                ajax_send("cdb/copy-to-library/" + ρσ_str.format("{}", target_library_id) + "/" + ρσ_str.format("{}", current_library_id()) + "", data, handle_result.bind(null, move, close_func));
+            };
+            if (!trigger_copy.__argnames__) Object.defineProperties(trigger_copy, {
+                __argnames__ : {value: ["container_id", "move", "close_func"]}
+            });
+
+            function radio(value, text) {
+                return ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "dupes", value: value, checked: value === saved_value})]), " ", E.span(text)].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})]));
+            };
+            if (!radio.__argnames__) Object.defineProperties(radio, {
+                __argnames__ : {value: ["value", "text"]}
+            });
+
+            title = book_metadata(book_id).title;
+            dupes_id = unique_id();
+            sd = get_session_data();
+            saved_value = sd.get("copy_to_library_dupes");
+            create_custom_dialog((ρσ_expr_temp = _("Copy book to \"{target_library_name}\""), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({target_library_name: target_library_name})])), (function() {
+                var ρσ_anonfunc = function (container, close_func) {
+                    var container_id;
+                    container_id = ensure_id(container);
+                    container.appendChild(E.div(E.div(_("Copying: {}").format(title)), ρσ_interpolate_kwargs.call(E, E.div, [E.p(_("If there are already existing books in \"{}\" with the same title and authors, how would you like to handle them?").format(target_library_name)), radio("add;overwrite", _("Copy anyway")), radio("ignore;overwrite", _("Do not copy")), radio("add_formats_to_existing;overwrite", _("Merge into existing books, overwriting existing files")), radio("add_formats_to_existing;ignore", _("Merge into existing books, keeping existing files")), radio("add_formats_to_existing;new record", _("Merge into existing books, putting conflicting files into a new book record"))].concat([ρσ_desugar_kwargs({id: dupes_id})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Copy"), null, trigger_copy.bind(null, container_id, false, close_func)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(_("Move"), null, trigger_copy.bind(null, container_id, true, close_func)), " ", create_button(_("Cancel"), null, close_func)].concat([ρσ_desugar_kwargs({class_: "button-box"})]))));
+                    if (!container.querySelector("#" + ρσ_str.format("{}", dupes_id) + " input[name=\"dupes\"]:checked")) {
+                        container.querySelector("#" + ρσ_str.format("{}", dupes_id) + " input[name=\"dupes\"]").checked = true;
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["container", "close_func"]}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!do_copy_to_library.__argnames__) Object.defineProperties(do_copy_to_library, {
+            __argnames__ : {value: ["book_id", "target_library_id", "target_library_name"]}
+        });
+
+        function copy_to_library(container_id) {
+            var container, libraries, items, ρσ_unpack, library_id, library_name;
+            if (!render_book.book_id || !book_metadata(render_book.book_id)) {
+                return return_to_book_details();
+            }
+            container = document.getElementById(container_id);
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Copy to library"), action: back, icon: "close"})]));
+            libraries = all_libraries();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: COPY_TO_LIBRARY_CLASS})]));
+            container = container.lastChild;
+            if (libraries.length < 2) {
+                container.appendChild(E.div(_("There are no other calibre libraries available to copy the book to")));
+                return;
+            }
+            container.appendChild(E.h2(_("Choose the library to copy to below")));
+            items = ρσ_list_decorate([]);
+            var ρσ_Iter10 = ρσ_Iterable(libraries);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                ρσ_unpack = ρσ_Iter10[ρσ_Index10];
+                library_id = ρσ_unpack[0];
+                library_name = ρσ_unpack[1];
+                if (library_id === current_library_id()) {
+                    continue;
+                }
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [library_name].concat([ρσ_desugar_kwargs({action: do_copy_to_library.bind(null, render_book.book_id, library_id, library_name)})])));
+            }
+            container.appendChild(E.div());
+            create_item_list(container.lastChild, items);
+        };
+        if (!copy_to_library.__argnames__) Object.defineProperties(copy_to_library, {
+            __argnames__ : {value: ["container_id"]}
+        });
+
         function delete_book() {
             start_delete_book(current_library_id(), render_book.book_id, render_book.title || _("Unknown"));
         };
@@ -22661,9 +22862,11 @@ return this.__repr__();
         set_panel_handler("book_details", init);
         set_panel_handler("book_details^more_actions", create_more_actions_panel);
         set_panel_handler("book_details^search_internet", search_internet);
+        set_panel_handler("book_details^copy_to_library", copy_to_library);
         ρσ_modules["book_list.book_details"].bd_counter = bd_counter;
         ρσ_modules["book_list.book_details"].CLASS_NAME = CLASS_NAME;
         ρσ_modules["book_list.book_details"].SEARCH_INTERNET_CLASS = SEARCH_INTERNET_CLASS;
+        ρσ_modules["book_list.book_details"].COPY_TO_LIBRARY_CLASS = COPY_TO_LIBRARY_CLASS;
         ρσ_modules["book_list.book_details"].FORMAT_PRIORITIES = FORMAT_PRIORITIES;
         ρσ_modules["book_list.book_details"].IGNORED_FIELDS = IGNORED_FIELDS;
         ρσ_modules["book_list.book_details"].default_sort = default_sort;
@@ -22707,6 +22910,8 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].toggle_fields = toggle_fields;
         ρσ_modules["book_list.book_details"].url_for = url_for;
         ρσ_modules["book_list.book_details"].search_internet = search_internet;
+        ρσ_modules["book_list.book_details"].do_copy_to_library = do_copy_to_library;
+        ρσ_modules["book_list.book_details"].copy_to_library = copy_to_library;
         ρσ_modules["book_list.book_details"].delete_book = delete_book;
     })();
 
@@ -27343,6 +27548,7 @@ return this.__repr__();
 
         var last_virtual_library_for = ρσ_modules["book_list.library_data"].last_virtual_library_for;
         var sync_library_books = ρσ_modules["book_list.library_data"].sync_library_books;
+        var all_libraries = ρσ_modules["book_list.library_data"].all_libraries;
 
         var open_book = ρσ_modules["book_list.router"].open_book;
         var update_window_title = ρσ_modules["book_list.router"].update_window_title;
@@ -27629,7 +27835,7 @@ return this.__repr__();
         };
 
         function init(container_id) {
-            var container, interface_data, recent, recent_container_id, cl, lids, library_name, library_id;
+            var container, interface_data, recent, recent_container_id, cl, library_name, ρσ_unpack, library_id;
             update_window_title();
             container = document.getElementById(container_id);
             container.classList.add(CLASS_NAME);
@@ -27645,18 +27851,11 @@ return this.__repr__();
             container.appendChild(E.h2(_("Choose the calibre library to browse…")));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap"})]));
             cl = container.lastChild;
-            lids = ρσ_interpolate_kwargs.call(this, sorted, [interface_data.library_map].concat([ρσ_desugar_kwargs({key: (function() {
-                var ρσ_anonfunc = function (x) {
-                    return (ρσ_expr_temp = interface_data.library_map)[(typeof x === "number" && x < 0) ? ρσ_expr_temp.length + x : x];
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["x"]}
-                });
-                return ρσ_anonfunc;
-            })()})]));
-            var ρσ_Iter5 = ρσ_Iterable(lids);
+            var ρσ_Iter5 = ρσ_Iterable(all_libraries());
             for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                library_id = ρσ_Iter5[ρσ_Index5];
+                ρσ_unpack = ρσ_Iter5[ρσ_Index5];
+                library_id = ρσ_unpack[0];
+                library_name = ρσ_unpack[1];
                 library_name = (ρσ_expr_temp = interface_data.library_map)[(typeof library_id === "number" && library_id < 0) ? ρσ_expr_temp.length + library_id : library_id];
                 if (library_name) {
                     cl.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [library_name].concat([ρσ_desugar_kwargs({icon: "library", action: (function() {

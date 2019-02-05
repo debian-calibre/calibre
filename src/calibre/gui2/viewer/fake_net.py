@@ -106,6 +106,7 @@ class NetworkAccessManager(QNetworkAccessManager):
         self.mathjax_base = '%s://%s/%s/' % (FAKE_PROTOCOL, FAKE_HOST, self.mathjax_prefix)
         self.root = self.orig_root = os.path.dirname(P('viewer/blank.html', allow_user_override=False))
         self.mime_map, self.single_pages, self.codec_map = {}, set(), {}
+        self.mathjax_dir = P('mathjax', allow_user_override=False)
 
     def set_book_data(self, root, spine):
         self.orig_root = root
@@ -166,7 +167,7 @@ class NetworkAccessManager(QNetworkAccessManager):
         if operation == QNetworkAccessManager.GetOperation and qurl.host() == FAKE_HOST:
             name = qurl.path()[1:]
             if name.startswith(self.mathjax_prefix):
-                base = normpath(P('viewer/mathjax'))
+                base = normpath(self.mathjax_dir)
                 path = normpath(os.path.join(base, name.partition('/')[2]))
             else:
                 base = self.root

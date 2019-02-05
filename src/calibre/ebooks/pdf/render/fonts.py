@@ -108,6 +108,10 @@ class CMap(Stream):
         for m in maps:
             meat = '\n'.join('%s %s'%(k, v) for k, v in m.iteritems())
             mapping.append('%d beginbfchar\n%s\nendbfchar'%(len(m), meat))
+        try:
+            name = name.encode('ascii').decode('ascii')
+        except Exception:
+            name = uuid4()
         self.write(self.skeleton.format(name=name, mapping='\n'.join(mapping)))
 
 
@@ -184,7 +188,6 @@ class Font(object):
         try:
             name = self.metrics.postscript_name
         except KeyError:
-            from calibre.utils.short_uuid import uuid4
             name = uuid4()
         cmap = CMap(name, self.metrics.glyph_map, compress=self.compress)
         self.font_dict['ToUnicode'] = objects.add(cmap)

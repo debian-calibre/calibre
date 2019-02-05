@@ -25,6 +25,7 @@ from calibre.utils.formatter import TemplateFormatter
 from calibre.utils.icu import capitalize, collation_order, sort_key
 from calibre.utils.img import scale_image
 from calibre.utils.zipfile import ZipFile
+from calibre.utils.localization import get_lang, lang_as_iso639_1
 
 
 class Formatter(TemplateFormatter):
@@ -581,7 +582,7 @@ class CatalogBuilder(object):
         # Compare the record to each rule looking for a match
         for rule in self.prefix_rules:
             # Literal comparison for Tags field
-            if rule['field'].lower() == 'tags':
+            if rule['field'].lower() == 'tags' or rule['field'] == _('Tags'):
                 if rule['pattern'].lower() in map(unicode.lower, record['tags']):
                     if self.DEBUG and self.opts.verbose:
                         self.opts.log.info("  %s '%s' by %s (%s: Tags includes '%s')" %
@@ -1021,7 +1022,7 @@ class CatalogBuilder(object):
         if self.excluded_tags:
             search_terms = []
             for tag in self.excluded_tags:
-                search_terms.append("tag:=%s" % tag)
+                search_terms.append('tags:"=%s"' % tag)
             search_phrase = "not (%s)" % " or ".join(search_terms)
 
         # If a list of ids are provided, don't use search_text
@@ -4014,19 +4015,22 @@ class CatalogBuilder(object):
         """
 
         self.update_progress_full_step(_("Generating OPF"))
+        lang = get_lang() or 'en'
+        if lang_as_iso639_1(lang):
+            lang = lang_as_iso639_1(lang)
 
         header = '''
             <?xml version="1.0" encoding="UTF-8"?>
             <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="calibre_id">
                 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf"
                         xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                    <dc:language>en-US</dc:language>
+                    <dc:language>LANG</dc:language>
                 </metadata>
                 <manifest></manifest>
                 <spine toc="ncx"></spine>
                 <guide></guide>
             </package>
-            '''
+            '''.replace('LANG', lang)
         # Add the supplied metadata tags
         soup = BeautifulStoneSoup(header, selfClosingTags=['item', 'itemref', 'meta', 'reference'])
         metadata = soup.find('metadata')

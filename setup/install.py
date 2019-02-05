@@ -259,7 +259,7 @@ class Install(Develop):
         if os.path.exists(dest):
             shutil.rmtree(dest)
         self.info('Installing resources to', dest)
-        shutil.copytree(self.RESOURCES, dest)
+        shutil.copytree(self.RESOURCES, dest, symlinks=True)
         self.manifest.append(dest)
 
     def success(self):
@@ -335,7 +335,7 @@ class Bootstrap(Command):
 
     description = 'Bootstrap a fresh checkout of calibre from git to a state where it can be installed. Requires various development tools/libraries/headers'
     TRANSLATIONS_REPO = 'https://github.com/kovidgoyal/calibre-translations.git'
-    sub_commands = 'build iso639 iso3166 translations gui resources cacerts recent_uas mathjax'.split()
+    sub_commands = 'build iso639 iso3166 translations gui resources cacerts recent_uas'.split()
 
     def add_options(self, parser):
         parser.add_option('--ephemeral', default=False, action='store_true',

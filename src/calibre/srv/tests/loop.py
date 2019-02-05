@@ -126,6 +126,17 @@ class LoopTest(BaseTest):
 
         self.assertTrue(b.stopped.wait(5), 'BonJour not stopped')
 
+    def test_dual_stack(self):
+        from calibre.srv.loop import IPPROTO_IPV6
+        with TestServer(lambda data:(data.path[0] + data.read()), listen_on='::') as server:
+            self.ae(server.address[0], '::')
+            self.ae(server.loop.socket.getsockopt(IPPROTO_IPV6, socket.IPV6_V6ONLY), 0)
+            conn = server.connect(interface='127.0.0.1')
+            conn.request('GET', '/test', 'body')
+            r = conn.getresponse()
+            self.ae(r.status, httplib.OK)
+            self.ae(r.read(), b'testbody')
+
     def test_ring_buffer(self):
         'Test the ring buffer used for reads'
         class FakeSocket(object):
