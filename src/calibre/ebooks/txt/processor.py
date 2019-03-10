@@ -37,8 +37,8 @@ def clean_txt(txt):
     txt = re.sub('[ ]{2,}', ' ', txt)
 
     # Remove blank space from the beginning and end of the document.
-    txt = re.sub('^\s+(?=.)', '', txt)
-    txt = re.sub('(?<=.)\s+$', '', txt)
+    txt = re.sub(r'^\s+(?=.)', '', txt)
+    txt = re.sub(r'(?<=.)\s+$', '', txt)
     # Remove excessive line breaks.
     txt = re.sub('\n{5,}', '\n\n\n\n', txt)
     # remove ASCII invalid chars : 0 to 8 and 11-14 to 24
@@ -102,25 +102,44 @@ def convert_basic(txt, title='', epub_split_size_kb=0):
 DEFAULT_MD_EXTENSIONS = ('footnotes', 'tables', 'toc')
 
 
-def convert_markdown(txt, title='', extensions=DEFAULT_MD_EXTENSIONS):
-    from calibre.ebooks.conversion.plugins.txt_input import MD_EXTENSIONS
+def create_markdown_object(extensions):
+    # Need to load markdown extensions without relying on pkg_resources
+    import importlib
     from calibre.ebooks.markdown import Markdown
-    extensions = ['calibre.ebooks.markdown.extensions.' + x.lower() for x in extensions if x.lower() in MD_EXTENSIONS]
-    md = Markdown(extensions=extensions)
+    from markdown import Extension
+
+    class NotBrainDeadMarkdown(Markdown):
+        def build_extension(self, ext_name, configs):
+            if '.' in ext_name or ':' in ext_name:
+                return Markdown.build_extension(self, ext_name, configs)
+            ext_name = 'markdown.extensions.' + ext_name
+            module = importlib.import_module(ext_name)
+            if hasattr(module, 'makeExtension'):
+                return module.makeExtension(**configs)
+            for name, x in vars(module).items():
+                if type(x) is type and issubclass(x, Extension) and x is not Extension:
+                    return x(**configs)
+            raise ImportError('No extension class in {}'.format(ext_name))
+
+    from calibre.ebooks.conversion.plugins.txt_input import MD_EXTENSIONS
+    extensions = [x.lower() for x in extensions]
+    extensions = [x for x in extensions if x in MD_EXTENSIONS]
+    md = NotBrainDeadMarkdown(extensions=extensions)
+    return md
+
+
+def convert_markdown(txt, title='', extensions=DEFAULT_MD_EXTENSIONS):
+    md = create_markdown_object(extensions)
     return HTML_TEMPLATE % (title, md.convert(txt))
 
 
 def convert_markdown_with_metadata(txt, title='', extensions=DEFAULT_MD_EXTENSIONS):
-    from calibre.ebooks.conversion.plugins.txt_input import MD_EXTENSIONS
-    from calibre.ebooks.markdown import Markdown
     from calibre.ebooks.metadata.book.base import Metadata
     from calibre.utils.date import parse_only_date
     from calibre.db.write import get_series_values
-    extensions = ['calibre.ebooks.markdown.extensions.' + x.lower() for x in extensions if x.lower() in MD_EXTENSIONS]
-    meta_ext = 'calibre.ebooks.markdown.extensions.meta'
-    if meta_ext not in extensions:
-        extensions.append(meta_ext)
-    md = Markdown(extensions=extensions)
+    if 'meta' not in extensions:
+        extensions.append('meta')
+    md = create_markdown_object(extensions)
     html = md.convert(txt)
     mi = Metadata(title or _('Unknown'))
     m = md.Meta
@@ -178,7 +197,7 @@ def separate_hard_scene_breaks(txt):
             return '\n%s\n' % line
         else:
             return line
-    txt = re.sub(u'(?miu)^[ \t-=~\/_]+$', lambda mo: sep_break(mo.group()), txt)
+    txt = re.sub(type(u'')(r'(?miu)^[ \t-=~\/_]+$'), lambda mo: sep_break(mo.group()), txt)
     return txt
 
 
@@ -200,8 +219,7 @@ def remove_indents(txt):
     '''
     Remove whitespace at the beginning of each line.
     '''
-    txt = re.sub('(?miu)^\s+', '', txt)
-    return txt
+    return '\n'.join([l.lstrip() for l in txt.splitlines()])
 
 
 def opf_writer(path, opf_name, manifest, spine, mi):
@@ -217,7 +235,7 @@ def split_string_separator(txt, size):
     Splits the text by putting \n\n at the point size.
     '''
     if len(txt) > size:
-        txt = ''.join([re.sub(u'\.(?P<ends>[^.]*)$', '.\n\n\g<ends>',
+        txt = ''.join([re.sub(type(u'')(r'\.(?P<ends>[^.]*)$'), r'.\n\n\g<ends>',
             txt[i:i+size], 1) for i in
             xrange(0, len(txt), size)])
     return txt
@@ -237,7 +255,7 @@ def detect_paragraph_type(txt):
     '''
     txt = txt.replace('\r\n', '\n')
     txt = txt.replace('\r', '\n')
-    txt_line_count = len(re.findall('(?mu)^\s*.+$', txt))
+    txt_line_count = len(re.findall(r'(?mu)^\s*.+$', txt))
 
     # Check for hard line breaks - true if 55% of the doc breaks in the same region
     docanalysis = DocAnalysis('txt', txt)
@@ -245,11 +263,11 @@ def detect_paragraph_type(txt):
 
     if hardbreaks:
         # Determine print percentage
-        tab_line_count = len(re.findall('(?mu)^(\t|\s{2,}).+$', txt))
+        tab_line_count = len(re.findall(r'(?mu)^(\t|\s{2,}).+$', txt))
         print_percent = tab_line_count / float(txt_line_count)
 
         # Determine block percentage
-        empty_line_count = len(re.findall('(?mu)^\s*$', txt))
+        empty_line_count = len(re.findall(r'(?mu)^\s*$', txt))
         block_percent = empty_line_count / float(txt_line_count)
 
         # Compare the two types - the type with the larger number of instances wins
@@ -287,9 +305,9 @@ def detect_formatting_type(txt):
     markdown_count += len(re.findall('(?mu)^=+$', txt))
     markdown_count += len(re.findall('(?mu)^-+$', txt))
     # Images
-    markdown_count += len(re.findall('(?u)!\[.*?\](\[|\()', txt))
+    markdown_count += len(re.findall(r'(?u)!\[.*?\](\[|\()', txt))
     # Links
-    markdown_count += len(re.findall('(?u)^|[^!]\[.*?\](\[|\()', txt))
+    markdown_count += len(re.findall(r'(?u)^|[^!]\[.*?\](\[|\()', txt))
 
     # Check for textile
     # Headings

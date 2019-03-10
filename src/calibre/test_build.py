@@ -269,10 +269,19 @@ class BuildTest(unittest.TestCase):
         del readline
 
     def test_markdown(self):
-        from calibre.ebooks.markdown import Markdown
-        Markdown(extensions=['extra'])
+        from calibre.ebooks.txt.processor import create_markdown_object
+        from calibre.ebooks.conversion.plugins.txt_input import MD_EXTENSIONS
+        create_markdown_object(sorted(MD_EXTENSIONS))
         from calibre.library.comments import sanitize_comments_html
         sanitize_comments_html(b'''<script>moo</script>xxx<img src="http://moo.com/x.jpg">''')
+
+    def test_feedparser(self):
+        from calibre.web.feeds.feedparser import parse
+        # sgmllib is needed for feedparser parsing malformed feeds
+        # on python3 you can get it by taking it from python2 stdlib and
+        # running 2to3 on it
+        import sgmllib
+        sgmllib, parse
 
     def test_openssl(self):
         import ssl

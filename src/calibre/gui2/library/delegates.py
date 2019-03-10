@@ -18,7 +18,8 @@ from calibre.constants import iswindows
 from calibre.gui2.widgets import EnLineEdit
 from calibre.gui2.widgets2 import populate_standard_spinbox_context_menu, RatingEditor
 from calibre.gui2.complete2 import EditWithComplete
-from calibre.utils.date import now, format_date, qt_to_dt, is_date_undefined
+from calibre.utils.date import now, format_date, qt_to_dt, is_date_undefined, internal_iso_format_string
+
 from calibre.utils.config import tweaks
 from calibre.utils.icu import sort_key
 from calibre.gui2.dialogs.comments_dialog import CommentsDialog, PlainTextDialog
@@ -118,7 +119,7 @@ class DateTimeEdit(QDateTimeEdit):  # {{{
         self.setSpecialValueText(_('Undefined'))
         self.setCalendarPopup(True)
         if format_ == 'iso':
-            format_ = 'yyyy-MM-ddTHH:mm:ss'
+            format_ = internal_iso_format_string()
         self.setDisplayFormat(format_)
 
     def contextMenuEvent(self, ev):
@@ -300,7 +301,7 @@ class PubDateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
         elif check_key_modifier(Qt.ShiftModifier + Qt.ControlModifier):
             val = now()
         elif is_date_undefined(val):
-            val = QDate(2000, 1, 1)
+            val = QDate.currentDate()
         if isinstance(val, QDateTime):
             val = val.date()
         editor.setDate(val)
@@ -431,11 +432,13 @@ class CcDateDelegate(QStyledItemDelegate, UpdateEditorGeometry):  # {{{
         QStyledItemDelegate.__init__(self, parent)
         self.table_widget = parent
 
-    def set_format(self, format):
-        if not format:
+    def set_format(self, _format):
+        if not _format:
             self.format = 'dd MMM yyyy'
+        elif _format == 'iso':
+            self.format = internal_iso_format_string()
         else:
-            self.format = format
+            self.format = _format
 
     def displayText(self, val, locale):
         d = qt_to_dt(val)
