@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "febrúar 01, 2019" "3.39.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "mars 08, 2019" "3.40.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -89,7 +89,7 @@ sýna þessi hjálparskilaboð og hætta
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-Tilgreina intaksforstillingu. Inntaksforstilling veitir umbreytingarferlinu upplýsingar um hvernig skal túlka ýmsar upplýsingar í inntakssjalinu. Til dæmis upplausnarháðar lengdir (þ.e. lengd í myndeindum). Val er um:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+Tilgreindu inntakssnið. Inntakssnið veitir umbreytingarferlinu upplýsingar um hvernig skal túlka ýmsar upplýsingar í inntaksskjalinu. Til dæmis varðandi upplausnarháðar lengdir (þ.e. lengd í mynddílum). Val er um:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -130,17 +130,17 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Bæta við innvöfðu efnisyfirliti sem mun birtast sem hluti af megin innihaldi bókar.
+Bæta við innfelldu efnisyfirliti sem mun birtast sem hluti af meginefni bókar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Setja innvafið efnisyfirlit aftast í bókina í stað fremst.
+Setja innfellt efnisyfirlit aftast í bókina í stað fremst.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+Útgáfa EPUB\-skrár sem á að útbúa. EPUB 2 er það sem samhæft er flestum tækjum, notðu EPUB 3 aðeins ef þú veist að þú munir þurfa á því að halda.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -150,7 +150,7 @@ Setja innihaldið í tilbúnu EPUB skránni í tilgreinda möppu. Farið varlega
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Skipta öllum HTML skrár stærri en þetta (í kB). Þetta er nauðsynlegt því flestir EPUB lesarar ráða ekki við stórar skrár. Sjálfgefna gildið 260KB er stærðarmörk Adobe Digital Editions. Veldu gildið 0 til að gera stærðarskiptingu óvirka.
+Skipta upp öllum HTML skrár stærri en þetta (í KB). Þetta er nauðsynlegt því flestir EPUB\-lesarar ráða ekki við stórar skrár. Sjálfgefna gildið 260KB er stærðarmörk Adobe Digital Editions. Veldu gildið 0 til að gera stærðarskiptingu óvirka.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -175,7 +175,7 @@ Ef tilgreind, þá mun úttaksviðbótin reyna að skapa úttak sem er eins mann
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titill á öllum innvöfðum efnisyfirlitum.
+Titill á öllum innfelldum efnisyfirlitum.
 .UNINDENT
 .SH ÚTLIT OG VIÐMÓT
 .sp
@@ -188,7 +188,7 @@ Transliterate unicode characters to an ASCII representation. Use with care becau
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Punktastærð grunnleturs. Allar leturstærðir í nýtilbúinni bók verða endurkvarðaðar út frá þessari stærð. Ef t.d. stærri leturgerð er valin þá verður letrið í úttakinu stærra. Sjálfgefið er, þegar gildið er núll, að grunnleturstærðin sé valin í samræmi við virkt úttakssnið.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -278,7 +278,7 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Lágmarks hæð línu, sem hlutfall af útreiknaðri leturstærð einingarinnar. Calibre mun tryggja að allar einingar fái línuhæð sem er að lágmarki þetta gildi, óháð því sem tilgreint er í inntaksskránni. Gildið núll gerir þetta óvirkt. Sjálfgefið er 120%. Notið það val í kjörstillingum til að tilgreina línuhæð, nema afleiðingar breytinga séu vel þekktar. Til dæmis, þá er hægt að hafa \fB"\fPtvöfalt línubil\fB"\fP með því að velja hér 240.
+Lágmarkshæð línu, sem hlutfall af útreiknaðri leturstærð einingarinnar. Calibre mun tryggja að allar einingar fái línuhæð sem er að lágmarki þetta gildi, óháð því sem tilgreint er í inntaksskránni. Gildið núll gerir þetta óvirkt. Sjálfgefið er 120%. Notið það val í kjörstillingum til að tilgreina línuhæð, nema afleiðingar breytinga séu vel þekktar. Til dæmis, þá er hægt að hafa \fB"\fPtvöfalt línubil\fB"\fP með því að velja hér 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,12 +288,12 @@ Fjarlægja bil á milli málsgreina. Setur einnig 1,5em inndrátt á málsgreina
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Þegar calibre fjarlægir auðar línur á milli málsgreina þá er inndráttur á málsgreinar settur sjálfkrafa til að tryggja að málsgreinar séu auðveldlega aðskiljanlegar. Þessi aðgerð stýrir breidd þess inndráttar (í em einingum). Ef gildið er neikvætt, þá ræður sá inndráttur sem notaður er í inntaksskjalinu, þ.e. calibre mun ekki breyta inndrætti.
+Þegar Calibre fjarlægir auðar línur á milli málsgreina þá er sjálfkrafa settur inndráttur á málsgreinar til að tryggja að auðvelt sé að greina á milli málsgreina. Þessi aðgerð stýrir breidd þess inndráttar (í em\-einingum). Ef gildið er neikvætt, þá ræður sá inndráttur sem notaður er í inntaksskjalinu, þ.e. Calibre mun ekki breyta inndrætti.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Umbreytir einföldum gæsalöppum, strikum og úrfellingapunktum í samsvarandi rétt staftákn. Til að skoða þetta nánar skaltu skoðahttps://daringfireball.net/projects/smartypants
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -341,7 +341,7 @@ Look for common words and patterns that denote italics and italicize them.
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+Finna og merkja óforsniðnar kafla\- og undirfyrirsagnir. Breyta þeim í h2 og h3 einindi. Þessi stilling mun ekki útbúa efnisyfirlit, en er hægt að nota samhliða greiningu á uppbyggingu til að útbúa slíkt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +412,7 @@ Stilla sjálfvirka greiningu á byggingu skráa.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath\-segð til að greina titla á köflum. Sjálfgefið er að skilgreina sem kaflatitla <h1> eða <h2> einindi sem innihalda orðin \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP aða \fB"\fPpart\fB"\fP jafnframt þeim einindum sem eru með class=\fB"\fPchapter\fB"\fP\&. Segðin verður að samsvara lista yfir eigindi. Til að gera greiningu kafla óvirka skaltu nota segðina \fB"\fP/\fB"\fP\&. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre fyrir nánari upplýsingar um hvernig þetta er notað.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -447,7 +447,7 @@ Remove the first image from the input e\-book. Useful if the input document has 
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+XPath\-segð til að finna staðinn í skjalinu þar sem á að hefja lestur. Sum rafbókalesaraforrit (mest áberandi er Kindle) nota þessa staðsetningu sem staðinn þar sem bókin opnast. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre fyrir nánari upplýsingar um hvernig þetta er notað.
 .UNINDENT
 .SH EFNISYFIRLIT
 .sp
@@ -460,17 +460,17 @@ Stilla sjálfvirka gerð efnisyfirlits. Sjálfgefið er að ef frumskráin hefur
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath skipun sem tilgreinir öll tög sem bæta á við sem meginefni í efnisyfirlitinu. Ef þetta er tilgreint þá er þessi aðgerð tekin umfram allar aðrar skjálfkrafa efnisaðgerðir. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+XPath skipun sem tilgreinir öll merki sem bæta á við sem meginefni á stigi eitt í efnisyfirlitinu. Ef þetta er tilgreint þá er þessi aðgerð tekin umfram allar aðrar sjálfvirkar efnisaðgerðir. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre til að sjá dæmi um hvernig þetta er notað.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath skipun sem skilgreinir öll tög sem bæta á við sem fyrsta undirefni í efnisyfirlitinu. Færslunum er bætt við undir hvert meginefni. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+XPath skipun sem skilgreinir öll merki sem bæta á við sem stigi tvö í efnisyfirlitinu. Færslunum er bætt við undir fyrri færslu af stigi eitt. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre til að sjá dæmi um hvernig þetta er notað.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath skipun sem tilgreinir öll tög sem bæta á við sem annað undirefni í efnisyfirlitinu. Færslunum er bætt við undir hvert fyrsta undirefni. Dæmi um þetta má finna í XPath leiðsögnum í calibre notendaleiðbeiningunum.
+XPath skipun sem skilgreinir öll merki sem bæta á við sem stigi þrjú í efnisyfirlitinu Færslunum er bætt við undir fyrri færslu af stigi tvö. Skoðaðu kennsluefnið yfir XPath í notendahandbók Calibre til að sjá dæmi um hvernig þetta er notað.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -480,7 +480,7 @@ Hámarks fjöldi tengla sem bætt er við í efnisyfirlit. Veljið 0 til að ger
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Ekki bæta þeim köflum við í efnisyfirlitið sem fundust sjálfkrafa.
+Ekki bæta þeim köflum við í efnisyfirlitið sem fundust sjálfvirkt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -596,7 +596,7 @@ Vista úttakið á mismunandi stigum við umbreytingu í tilgreinda möppu. Nota
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Umfang orðnotkunar. Tilgreindu orðnotkunarstuðul. Stuðullinn tveir veldur orðagljáfri, einn meðal orðnotkun og núll er knapport.
+Umfang orðnotkunar. Tilgreindu orðnotkunarstuðul. Stuðullinn tveir veldur orðagljáfri, einn meðal orðnotkun og núll er knappur stíll.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

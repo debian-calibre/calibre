@@ -8243,6 +8243,8 @@ return parser;
             ρσ_d["use_roman_numerals_for_series_number"] = true;
             ρσ_d["default_library_id"] = null;
             ρσ_d["library_map"] = null;
+            ρσ_d["search_the_net_urls"] = ρσ_list_decorate([]);
+            ρσ_d["donate_link"] = "https://calibre-ebook.com/donate";
             ρσ_d["icon_map"] = Object.create(null);
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
@@ -17141,7 +17143,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.39.1";
+        CALIBRE_VERSION = "3.40.1";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -17779,6 +17781,8 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
+        var get_interface_data = ρσ_modules.session.get_interface_data;
+
         bar_counter = 0;
         CLASS_NAME = "main-top-bar";
         SPACING = "0.75em";
@@ -17852,13 +17856,14 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "title_tooltip")){
                 title_tooltip = ρσ_kwargs_obj.title_tooltip;
             }
-            var bars, left, title_elem, a, ρσ_unpack, i, bar;
+            var bars, interface_data, left, title_elem, a, ρσ_unpack, i, bar;
             bars = get_bars(container);
             if (icon === "heart") {
                 if (!tooltip) {
                     tooltip = _("Donate to support calibre development");
                 }
             }
+            interface_data = get_interface_data();
             var ρσ_Iter1 = ρσ_Iterable(enumerate(bars));
             for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
                 ρσ_unpack = ρσ_Iter1[ρσ_Index1];
@@ -17874,7 +17879,7 @@ return this.__repr__();
                     if (icon === "heart") {
                         ρσ_interpolate_kwargs.call(this, set_css, [a].concat([ρσ_desugar_kwargs({animation_name: THROBBER_NAME, animation_duration: "1s", animation_timing_function: "ease-in-out", animation_iteration_count: "5", animation_play_state: (run_animation) ? "running" : "paused"})]));
                         ρσ_interpolate_kwargs.call(this, set_css, [a.firstChild].concat([ρσ_desugar_kwargs({color: get_color("heart")})]));
-                        a.setAttribute("href", "https://calibre-ebook.com/donate");
+                        a.setAttribute("href", interface_data.donate_link);
                         a.setAttribute("target", "donate-to-calibre");
                     }
                     if (action !== null) {
@@ -19303,6 +19308,9 @@ return this.__repr__();
 
         function render_field(field, mi, book_id) {
             var field_metadata, fm, val, interface_data, name, datatype, func, ans, join, fmt;
+            if (field === "id") {
+                return book_id + "";
+            }
             field_metadata = library_data.field_metadata;
             fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
             if (!fm) {
@@ -22398,8 +22406,8 @@ return this.__repr__();
             render_book.title = metadata.title;
             set_title(c, metadata.title);
             authors = (metadata.authors) ? metadata.authors.join(" & ") : _("Unknown");
-            alt = _("{} by {}").format(metadata.title, authors);
-            imgdiv = E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({alt: alt, title: alt, data_title: metadata.title, data_authors: authors, style: "border-radius: 20px; max-width: calc(100vw - 2em); max-height: calc(100vh - 4ex - {}); display: block; width:auto; height:auto; border-radius: 20px".format(get_font_size("title"))})]));
+            alt = _("{} by {}\nClick to read").format(metadata.title, authors);
+            imgdiv = E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({alt: alt, title: alt, data_title: metadata.title, data_authors: authors, onclick: read_book.bind(null, book_id), style: "cursor: pointer; border-radius: 20px; max-width: calc(100vw - 2em); max-height: calc(100vh - 4ex - {}); display: block; width:auto; height:auto; border-radius: 20px".format(get_font_size("title"))})]));
             imgdiv.firstChild.onerror = on_img_err;
             imgdiv.firstChild.src = cover_url(book_id);
             c = c.lastChild;
@@ -22423,7 +22431,7 @@ return this.__repr__();
                 if (next_book_id) {
                     q = parse_url_params();
                     q.book_id = next_book_id + "";
-                    ρσ_interpolate_kwargs.call(this, show_panel, ["book_details"].concat([ρσ_desugar_kwargs({query: q})]));
+                    ρσ_interpolate_kwargs.call(this, show_panel, ["book_details"].concat([ρσ_desugar_kwargs({query: q, replace: true})]));
                 }
             };
             if (!next_book.__argnames__) Object.defineProperties(next_book, {
@@ -22691,7 +22699,7 @@ return this.__repr__();
         });
 
         function search_internet(container_id) {
-            var container, mi, data;
+            var container, mi, data, interface_data, author_links, book_links, links, entry, ρσ_unpack, name, url;
             if (!render_book.book_id || !book_metadata(render_book.book_id)) {
                 return return_to_book_details();
             }
@@ -22704,6 +22712,7 @@ return this.__repr__();
                 ρσ_d["author"] = (mi.authors) ? mi.authors[0] : _("Unknown");
                 return ρσ_d;
             }).call(this);
+            interface_data = get_interface_data();
             function link_for(name, template) {
                 return ρσ_interpolate_kwargs.call(E, E.a, [name].concat([ρσ_desugar_kwargs({class_: "simple-link", href: url_for(template, data), target: "_blank"})]));
             };
@@ -22711,7 +22720,34 @@ return this.__repr__();
                 __argnames__ : {value: ["name", "template"]}
             });
 
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [safe_set_inner_html(E.h2(), _("Search for the author <i>{}</i> at:").format(data.author)), E.ul(E.li(link_for(_("Goodreads"), "https://www.goodreads.com/book/author/{author}")), E.li(link_for(_("Wikipedia"), "https://en.wikipedia.org/w/index.php?search={author}")), E.li(link_for(_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"))), E.hr(), safe_set_inner_html(E.h2(), _("Search for the book <i>{}</i> at:").format(data.title)), E.ul(E.li(link_for(_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books")), E.li(link_for(_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22")), E.li(link_for(_("Amazon"), "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}")))].concat([ρσ_desugar_kwargs({class_: SEARCH_INTERNET_CLASS})])));
+            author_links = E.ul();
+            book_links = E.ul();
+            if (interface_data.search_the_net_urls) {
+                var ρσ_Iter10 = ρσ_Iterable(interface_data.search_the_net_urls);
+                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                    entry = ρσ_Iter10[ρσ_Index10];
+                    links = (entry.type === "book") ? book_links : author_links;
+                    links.appendChild(E.li(link_for(entry.name, entry.url)));
+                }
+            }
+            var ρσ_Iter11 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
+            "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]));
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                ρσ_unpack = ρσ_Iter11[ρσ_Index11];
+                name = ρσ_unpack[0];
+                url = ρσ_unpack[1];
+                author_links.appendChild(E.li(link_for(name, url)));
+            }
+            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google books"), 
+            "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22"], [_("Amazon"), 
+            "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}"] ]));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                ρσ_unpack = ρσ_Iter12[ρσ_Index12];
+                name = ρσ_unpack[0];
+                url = ρσ_unpack[1];
+                book_links.appendChild(E.li(link_for(name, url)));
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [safe_set_inner_html(E.h2(), _("Search for the author <i>{}</i> at:").format(data.author)), author_links, E.hr(), safe_set_inner_html(E.h2(), _("Search for the book <i>{}</i> at:").format(data.title)), book_links].concat([ρσ_desugar_kwargs({class_: SEARCH_INTERNET_CLASS})])));
         };
         if (!search_internet.__argnames__) Object.defineProperties(search_internet, {
             __argnames__ : {value: ["container_id"]}
@@ -22838,9 +22874,9 @@ return this.__repr__();
             }
             container.appendChild(E.h2(_("Choose the library to copy to below")));
             items = ρσ_list_decorate([]);
-            var ρσ_Iter10 = ρσ_Iterable(libraries);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                ρσ_unpack = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter13 = ρσ_Iterable(libraries);
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                ρσ_unpack = ρσ_Iter13[ρσ_Index13];
                 library_id = ρσ_unpack[0];
                 library_name = ρσ_unpack[1];
                 if (library_id === current_library_id()) {

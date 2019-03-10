@@ -10,12 +10,12 @@ Perform various initialization tasks.
 import locale, sys
 
 # Default translation is NOOP
-import __builtin__
-__builtin__.__dict__['_'] = lambda s: s
+from polyglot.builtins import builtins
+builtins.__dict__['_'] = lambda s: s
 
 # For strings which belong in the translation tables, but which shouldn't be
 # immediately translated to the environment language
-__builtin__.__dict__['__'] = lambda s: s
+builtins.__dict__['__'] = lambda s: s
 
 from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd
 
@@ -37,6 +37,20 @@ if not _run_once:
                 raise ImportError('Importing PyQt4 is not allowed as calibre uses PyQt5')
 
         sys.meta_path.insert(0, PyQt4Ban())
+
+    class DeVendor(object):
+
+        def find_module(self, fullname, path=None):
+            if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
+                return self
+
+        def load_module(self, fullname):
+            from importlib import import_module
+            if fullname == 'calibre.web.feeds.feedparser':
+                return import_module('feedparser')
+            return import_module(fullname[len('calibre.ebooks.'):])
+
+    sys.meta_path.insert(0, DeVendor())
 
     #
     # Platform specific modules
@@ -147,12 +161,12 @@ if not _run_once:
                 supports_mode_e = True
             return ans
 
-    __builtin__.__dict__['lopen'] = local_open
+    builtins.__dict__['lopen'] = local_open
 
     from calibre.utils.icu import title_case, lower as icu_lower, upper as icu_upper
-    __builtin__.__dict__['icu_lower'] = icu_lower
-    __builtin__.__dict__['icu_upper'] = icu_upper
-    __builtin__.__dict__['icu_title'] = title_case
+    builtins.__dict__['icu_lower'] = icu_lower
+    builtins.__dict__['icu_upper'] = icu_upper
+    builtins.__dict__['icu_title'] = title_case
 
     def connect_lambda(bound_signal, self, func, **kw):
         import weakref
@@ -170,7 +184,7 @@ if not _run_once:
                 func(ctx, *args)
 
         bound_signal.connect(slot, **kw)
-    __builtin__.__dict__['connect_lambda'] = connect_lambda
+    builtins.__dict__['connect_lambda'] = connect_lambda
 
     if islinux or isosx or isfreebsd:
         # Name all threads at the OS level created using the threading module, see

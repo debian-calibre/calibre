@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_TagListEditor(object):
     def setupUi(self, TagListEditor):
@@ -37,6 +38,9 @@ class Ui_TagListEditor(object):
         self.search_button.setObjectName("search_button")
         self.horizontalLayout_11.addWidget(self.search_button)
         self.gridlayout.addLayout(self.horizontalLayout_11, 0, 0, 1, 2)
+        self.apply_vl_checkbox = QtWidgets.QCheckBox(TagListEditor)
+        self.apply_vl_checkbox.setObjectName("apply_vl_checkbox")
+        self.gridlayout.addWidget(self.apply_vl_checkbox, 1, 0, 1, 3)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.delete_button = QtWidgets.QToolButton(TagListEditor)
@@ -60,7 +64,7 @@ class Ui_TagListEditor(object):
         self.undo_button.setIconSize(QtCore.QSize(32, 32))
         self.undo_button.setObjectName("undo_button")
         self.verticalLayout_2.addWidget(self.undo_button)
-        self.gridlayout.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
+        self.gridlayout.addLayout(self.verticalLayout_2, 2, 0, 1, 1)
         self.table = QtWidgets.QTableWidget(TagListEditor)
         self.table.setAlternatingRowColors(True)
         self.table.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
@@ -68,7 +72,7 @@ class Ui_TagListEditor(object):
         self.table.setObjectName("table")
         self.table.setColumnCount(0)
         self.table.setRowCount(0)
-        self.gridlayout.addWidget(self.table, 1, 1, 1, 1)
+        self.gridlayout.addWidget(self.table, 2, 1, 1, 1)
         self.buttonBox = QtWidgets.QDialogButtonBox(TagListEditor)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
@@ -89,6 +93,10 @@ class Ui_TagListEditor(object):
         self.search_box.setToolTip(_("Search for an item in the Tag column"))
         self.search_button.setToolTip(_("Display items containing the search string"))
         self.search_button.setText(_("&Find"))
+        self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
+"      current virtual library. Applied items not in the VL will be marked\n"
+"      \"not on any book\".</p>"))
+        self.apply_vl_checkbox.setText(_("&Show only available items in current virtual library"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))
         self.delete_button.setText(_("..."))
         self.delete_button.setShortcut(_("Ctrl+D"))
@@ -98,6 +106,7 @@ class Ui_TagListEditor(object):
         self.undo_button.setToolTip(_("Undo any deletes or edits on the selected lines"))
         self.undo_button.setText(_("..."))
         self.undo_button.setShortcut(_("Ctrl+U"))
+
 
 from calibre.gui2.widgets import HistoryLineEdit
 

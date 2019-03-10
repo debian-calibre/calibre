@@ -6,7 +6,7 @@ from polyglot.builtins import map
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = u'calibre'
-numeric_version = (3, 39, 1)
+numeric_version = (3, 40, 1)
 __version__   = u'.'.join(map(unicode, numeric_version))
 __author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
 
@@ -87,7 +87,7 @@ else:
         filesystem_encoding = 'utf-8'
 
 
-DEBUG = b'CALIBRE_DEBUG' in os.environ
+DEBUG = 'CALIBRE_DEBUG' in os.environ
 
 
 def debug():
@@ -189,6 +189,7 @@ class Plugins(collections.Mapping):
             plugins.extend(['winutil', 'wpd', 'winfonts'])
         if isosx:
             plugins.append('usbobserver')
+            plugins.append('cocoa')
         if isfreebsd or ishaiku or islinux or isosx:
             plugins.append('libusb')
             plugins.append('libmtp')

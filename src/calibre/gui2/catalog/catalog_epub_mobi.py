@@ -45,6 +45,7 @@ class PluginWidget(QWidget,Ui_Form):
         self.setupUi(self)
         self._initControlArrays()
         self.blocking_all_signals = None
+        self.parent_ref = lambda: None
 
     def _initControlArrays(self):
         # Default values for controls
@@ -140,18 +141,17 @@ class PluginWidget(QWidget,Ui_Form):
             # Skip disabled and incomplete rules
             if not rule['enabled']:
                 continue
-            elif not rule['field'] or not rule['pattern']:
+            if not rule['field'] or not rule['pattern']:
                 continue
-            elif 'prefix' in rule and rule['prefix'] is None:
+            if 'prefix' in rule and rule['prefix'] is None:
                 continue
-            else:
-                if rule['field'] != _('Tags'):
-                    # Look up custom column friendly name
-                    rule['field'] = self.eligible_custom_fields[rule['field']]['field']
-                    if rule['pattern'] in [_('any value'),_('any date')]:
-                        rule['pattern'] = '.*'
-                    elif rule['pattern'] == _('unspecified'):
-                        rule['pattern'] = 'None'
+            if rule['field'] != _('Tags'):
+                # Look up custom column friendly name
+                rule['field'] = self.eligible_custom_fields[rule['field']]['field']
+                if rule['pattern'] in [_('any value'),_('any date')]:
+                    rule['pattern'] = '.*'
+                elif rule['pattern'] == _('unspecified'):
+                    rule['pattern'] = 'None'
             if 'prefix' in rule:
                 pr = (rule['name'],rule['field'],rule['pattern'],rule['prefix'])
             else:
@@ -284,17 +284,10 @@ class PluginWidget(QWidget,Ui_Form):
     def get_format_and_title(self):
         current_format = None
         current_title = None
-        self.parentWidget().blockSignals(True)
-        for peer in self.parentWidget().children():
-            if peer == self:
-                continue
-            elif peer.children():
-                for child in peer.children():
-                    if child.objectName() == 'format':
-                        current_format = child.currentText().strip()
-                    elif child.objectName() == 'title':
-                        current_title = unicode(child.text()).strip()
-        self.parentWidget().blockSignals(False)
+        parent = self.parent_ref()
+        if parent is not None:
+            current_title = parent.title.text().strip()
+            current_format = parent.format.currentText().strip()
         return current_format, current_title
 
     def header_note_source_field_changed(self,new_index):
@@ -796,18 +789,15 @@ class PluginWidget(QWidget,Ui_Form):
         self.preset_field.setCurrentIndex(self.preset_field.findText(name))
 
     def set_format_and_title(self, format, title):
-        for peer in self.parentWidget().children():
-            if peer == self:
-                continue
-            elif peer.children():
-                for child in peer.children():
-                    if child.objectName() == 'format':
-                        index = child.findText(format)
-                        child.blockSignals(True)
-                        child.setCurrentIndex(index)
-                        child.blockSignals(False)
-                    elif child.objectName() == 'title':
-                        child.setText(title)
+        parent = self.parent_ref()
+        if parent is not None:
+            if format:
+                index = parent.format.findText(format)
+                parent.format.blockSignals(True)
+                parent.format.setCurrentIndex(index)
+                parent.format.blockSignals(False)
+            if title:
+                parent.title.setText(title)
 
     def settings_changed(self, source):
         '''

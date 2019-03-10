@@ -195,6 +195,10 @@ def isoformat(date_time, assume_utc=False, as_utc=True, sep='T'):
     return unicode(date_time.isoformat(str(sep)))
 
 
+def internal_iso_format_string():
+    return 'yyyy-MM-ddThh:mm:ss'
+
+
 def w3cdtf(date_time, assume_utc=False):
     if hasattr(date_time, 'tzinfo'):
         if date_time.tzinfo is None:
