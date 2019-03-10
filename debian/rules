@@ -84,6 +84,5 @@ get-orig-source:
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
 	rm -r calibre*/resources/mathjax; \
 	rm -r calibre*/resources/coffee-script.js; \
-	rm -r calibre*/src/calibre/ebooks/markdown; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
 	cd ../..; rm -r debian/orig
