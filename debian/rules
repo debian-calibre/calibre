@@ -30,8 +30,6 @@ debian/tmp:
 	mkdir -p  debian/tmp/usr/share/mime/packages
 	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
-	rm debian/tmp/usr/lib/calibre/calibre/web/feeds/feedparser.py
-	find debian/tmp/ -name '*.py' | xargs sed -i 's/calibre.utils.pyparsing/pyparsing/g'
 	find debian/tmp/ -name '*.py' -o -name "markdown-calibre" | xargs sed -i 's/calibre.ebooks.markdown/markdown/g'
 
 	# not needed
