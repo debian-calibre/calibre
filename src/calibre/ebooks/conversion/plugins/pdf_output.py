@@ -148,6 +148,10 @@ class PDFOutput(OutputFormatPlugin):
             ' This will cause the margins specified in the conversion settings to be ignored.'
             ' If the document does not specify page margins, the conversion settings will be used as a fallback.')
         ),
+        OptionRecommendation(name='pdf_page_number_map', recommended_value=None,
+            help=_('Adjust page numbers, as needed. Syntax is a JavaScript expression for the page number.'
+                ' For example, "if (n < 3) 0; else n - 3;", where n is current page number.')
+        ),
     }
 
     def specialize_options(self, log, opts, input_fmt):
@@ -260,9 +264,10 @@ class PDFOutput(OutputFormatPlugin):
             import json
             for href, margins in self.stored_page_margins.iteritems():
                 item = oeb_book.manifest.hrefs.get(href)
-                root = item.data
-                if hasattr(root, 'xpath') and margins:
-                    root.set('data-calibre-pdf-output-page-margins', json.dumps(margins))
+                if item is not None:
+                    root = item.data
+                    if hasattr(root, 'xpath') and margins:
+                        root.set('data-calibre-pdf-output-page-margins', json.dumps(margins))
 
         with TemporaryDirectory('_pdf_out') as oeb_dir:
             from calibre.customize.ui import plugin_for_output_format

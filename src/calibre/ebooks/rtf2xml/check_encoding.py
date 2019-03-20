@@ -13,7 +13,7 @@ class CheckEncoding:
             char_position +=1
             try:
                 char.decode(encoding)
-            except UnicodeError, msg:
+            except UnicodeError as msg:
                 sys.stderr.write('line: %s char: %s\n%s\n' %  (line_num, char_position, str(msg)))
 
     def check_encoding(self, path, encoding='us-ascii', verbose=True):
@@ -31,6 +31,7 @@ class CheckEncoding:
                             sys.stderr.write('line: %d has bad encoding\n' % line_num)
                     return True
         return False
+
 
 if __name__ == '__main__':
     check_encoding_obj = CheckEncoding()

@@ -22,7 +22,7 @@ class HTMLOutput(OutputFormatPlugin):
     file_type = 'zip'
     commit_name = 'html_output'
 
-    options = set([
+    options = {
         OptionRecommendation(name='template_css',
             help=_('CSS file used for the output instead of the default file')),
 
@@ -37,9 +37,9 @@ class HTMLOutput(OutputFormatPlugin):
                 'specified directory. WARNING: The contents of the directory '
                 'will be deleted.')
         ),
-    ])
+    }
 
-    recommendations = set([('pretty_print', True, OptionRecommendation.HIGH)])
+    recommendations = {('pretty_print', True, OptionRecommendation.HIGH)}
 
     def generate_toc(self, oeb_book, ref_url, output_dir):
         '''
@@ -49,6 +49,7 @@ class HTMLOutput(OutputFormatPlugin):
         from urllib import unquote
 
         from calibre.ebooks.oeb.base import element
+        from calibre.utils.cleantext import clean_xml_chars
         with CurrentDir(output_dir):
             def build_node(current_node, parent=None):
                 if parent is None:
@@ -58,11 +59,15 @@ class HTMLOutput(OutputFormatPlugin):
                 for node in current_node.nodes:
                     point = element(parent, 'li')
                     href = relpath(abspath(unquote(node.href)), dirname(ref_url))
-                    link = element(point, 'a', href=href)
+                    if isinstance(href, bytes):
+                        href = href.decode('utf-8')
+                    link = element(point, 'a', href=clean_xml_chars(href))
                     title = node.title
+                    if isinstance(title, bytes):
+                        title = title.decode('utf-8')
                     if title:
                         title = re.sub(r'\s+', ' ', title)
-                    link.text=title
+                    link.text = clean_xml_chars(title)
                     build_node(node, point)
                 return parent
             wrap = etree.Element('div')

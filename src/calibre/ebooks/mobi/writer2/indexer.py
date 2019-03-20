@@ -2,7 +2,7 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-from future_builtins import filter, map
+from polyglot.builtins import filter, map
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -354,8 +354,8 @@ class TBS(object):  # {{{
 
         if spanner is None:
             articles = depth_map[2]
-            sections = set([self.section_map[a.parent_index] for a in
-                articles])
+            sections = {self.section_map[a.parent_index] for a in
+                articles}
             sections = sorted(sections, key=lambda x:x.offset)
             section_map = {s:[a for a in articles if a.parent_index ==
                 s.index] for s in sections}

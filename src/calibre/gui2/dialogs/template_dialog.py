@@ -219,7 +219,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         cols = []
         if fm is not None:
             for key in sorted(displayable_columns(fm),
-                              key=lambda(k): sort_key(fm[k]['name']) if k != color_row_key else 0):
+                              key=lambda k: sort_key(fm[k]['name']) if k != color_row_key else 0):
                 if key == color_row_key and not self.coloring:
                     continue
                 from calibre.gui2.preferences.coloring import all_columns_string
@@ -455,6 +455,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         else:
             self.rule = ('', txt)
         QDialog.accept(self)
+
 
 if __name__ == '__main__':
     app = QApplication([])

@@ -200,9 +200,9 @@ class Completer(QListView):  # {{{
 
     def debug_event(self, ev):
         from calibre.gui2 import event_type_name
-        print ('Event:', event_type_name(ev))
+        print('Event:', event_type_name(ev))
         if ev.type() in (ev.KeyPress, ev.ShortcutOverride, ev.KeyRelease):
-            print ('\tkey:', QKeySequence(ev.key()).toString())
+            print('\tkey:', QKeySequence(ev.key()).toString())
 
     def eventFilter(self, obj, e):
         'Redirect key presses from the popup to the widget'
@@ -353,9 +353,12 @@ class LineEdit(QLineEdit, LineEditECM):
 
     def event(self, ev):
         # See https://bugreports.qt.io/browse/QTBUG-46911
-        if ev.type() == ev.ShortcutOverride and (
-                ev.key() in (Qt.Key_Left, Qt.Key_Right) and (ev.modifiers() & ~Qt.KeypadModifier) == Qt.ControlModifier):
-            ev.accept()
+        try:
+            if ev.type() == ev.ShortcutOverride and (
+                    ev.key() in (Qt.Key_Left, Qt.Key_Right) and (ev.modifiers() & ~Qt.KeypadModifier) == Qt.ControlModifier):
+                ev.accept()
+        except AttributeError:
+            pass
         return QLineEdit.event(self, ev)
 
     def complete(self, show_all=False, select_first=True):

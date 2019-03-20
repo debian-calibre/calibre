@@ -242,7 +242,7 @@ class ConfigDialog(QDialog, Ui_Dialog):
 
         def fset(self, wl):
             self.dictionary_list.clear()
-            for langcode, url in sorted(wl.iteritems(), key=lambda (lc, url):sort_key(calibre_langcode_to_name(lc))):
+            for langcode, url in sorted(wl.iteritems(), key=lambda lc_url:sort_key(calibre_langcode_to_name(lc_url[0]))):
                 i = QListWidgetItem('%s: %s' % (calibre_langcode_to_name(langcode), url), self.dictionary_list)
                 i.setData(Qt.UserRole, (langcode, url))
         return property(fget=fget, fset=fset)
@@ -264,7 +264,7 @@ class ConfigDialog(QDialog, Ui_Dialog):
                 l.addRow(_('&Language:'), self.le)
                 self.url = u = QLineEdit(self)
                 u.setMinimumWidth(350)
-                u.setPlaceholderText(_('For example: %s') % 'http://dictionary.com/{word}')
+                u.setPlaceholderText(_('For example: %s') % 'https://dictionary.com/{word}')
                 l.addRow(_('&URL:'), u)
                 self.bb = bb = QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel)
                 l.addRow(bb)
@@ -397,8 +397,8 @@ class ConfigDialog(QDialog, Ui_Dialog):
         if self.shortcut_config.is_editing:
             from calibre.gui2 import info_dialog
             info_dialog(self, _('Still editing'),
-                    _('You are in the middle of editing a keyboard shortcut'
-                        ' first complete that, by clicking outside the '
+                    _('You are in the middle of editing a keyboard shortcut.'
+                        ' First complete that by clicking outside the'
                         ' shortcut editing box.'), show=True)
             return
         self.save_options(config())

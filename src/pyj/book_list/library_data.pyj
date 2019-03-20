@@ -19,6 +19,12 @@ def current_library_id():
     return q.library_id or get_interface_data().default_library_id
 
 
+def all_libraries():
+    interface_data = get_interface_data()
+    lids = sorted(interface_data.library_map, key=def(x): return interface_data.library_map[x];)
+    return [(lid, interface_data.library_map[lid]) for lid in lids]
+
+
 def current_virtual_library():
     q = parse_url_params()
     return q.vl or ''
@@ -100,14 +106,14 @@ def current_book_ids():
     return library_data.previous_book_ids.concat(library_data.search_result.book_ids)
 
 
-def book_after(book_id):
+def book_after(book_id, delta):
+    if not delta:
+        delta = 1
     ids = current_book_ids()
     idx = ids.indexOf(int(book_id))
     if idx > -1:
-        if idx < ids.length - 1:
-            return ids[idx + 1]
-        if idx > 0:  # wrap around
-            return ids[0]
+        new_idx = (idx + ids.length + delta) % ids.length
+        return ids[new_idx]
 
 
 def on_data_loaded(end_type, xhr, ev):

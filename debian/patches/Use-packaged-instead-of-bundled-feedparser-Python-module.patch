@@ -26,7 +26,7 @@ Subject: Use packaged instead of bundled feedparser Python module
      title = u'Lenta.ru: \u041d\u043e\u0432\u043e\u0441\u0442\u0438'
 --- calibre-debian.git.orig/src/calibre/web/feeds/__init__.py
 +++ calibre-debian.git/src/calibre/web/feeds/__init__.py
-@@ -11,7 +11,10 @@
+@@ -12,7 +12,10 @@ from calibre.utils.logging import defaul
  from calibre import entity_to_unicode, strftime, force_unicode
  from calibre.utils.date import dt_factory, utcnow, local_tz
  from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
@@ -37,7 +37,7 @@ Subject: Use packaged instead of bundled feedparser Python module
  
  class Article(object):
  
-@@ -336,7 +339,6 @@
+@@ -337,7 +340,6 @@ def feed_from_xml(raw_xml, title=None, o
                    max_articles_per_feed=100,
                    get_article_url=lambda item: item.get('link', None),
                    log=default_log):

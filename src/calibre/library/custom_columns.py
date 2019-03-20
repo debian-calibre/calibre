@@ -26,9 +26,9 @@ class CustomColumns(object):
 
     @property
     def custom_tables(self):
-        return set([x[0] for x in self.conn.get(
+        return {x[0] for x in self.conn.get(
             'SELECT name FROM sqlite_master WHERE type="table" AND '
-            '(name GLOB "custom_column_*" OR name GLOB "books_custom_column_*")')])
+            '(name GLOB "custom_column_*" OR name GLOB "books_custom_column_*")')}
 
     def __init__(self):
         # Verify that CUSTOM_DATA_TYPES is a (possibly improper) subset of
@@ -361,7 +361,7 @@ class CustomColumns(object):
             ans = self.conn.get('SELECT value FROM %s'%table)
         else:
             ans = self.conn.get('SELECT DISTINCT value FROM %s'%table)
-        ans = set([x[0] for x in ans])
+        ans = {x[0] for x in ans}
         return ans
 
     def delete_custom_column(self, label=None, num=None):
@@ -509,7 +509,7 @@ class CustomColumns(object):
         rv = self._set_custom(id, val, label=label, num=num, append=append,
                          notify=notify, extra=extra,
                          allow_case_change=allow_case_change)
-        self.dirtied(set([id])|rv, commit=False)
+        self.dirtied({id}|rv, commit=False)
         if commit:
             self.conn.commit()
         return rv
@@ -590,7 +590,7 @@ class CustomColumns(object):
                 if case_change:
                     bks = self.conn.get('SELECT book FROM %s WHERE value=?'%lt,
                                         (xid,))
-                    books_to_refresh |= set([bk[0] for bk in bks])
+                    books_to_refresh |= {bk[0] for bk in bks}
             nval = self.conn.get(
                     'SELECT custom_%s FROM meta2 WHERE id=?'%data['num'],
                     (id_,), all=False)
@@ -657,7 +657,7 @@ class CustomColumns(object):
             editable=True, display={}):
         if not label:
             raise ValueError(_('No label was provided'))
-        if re.match('^\w*$', label) is None or not label[0].isalpha() or label.lower() != label:
+        if re.match('^\\w*$', label) is None or not label[0].isalpha() or label.lower() != label:
             raise ValueError(_('The label must contain only lower case letters, digits and underscores, and start with a letter'))
         if datatype not in self.CUSTOM_DATA_TYPES:
             raise ValueError('%r is not a supported data type'%datatype)
@@ -809,5 +809,3 @@ class CustomColumns(object):
         self.conn.executescript(script)
         self.conn.commit()
         return num
-
-

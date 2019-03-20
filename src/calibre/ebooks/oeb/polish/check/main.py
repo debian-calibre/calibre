@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-from future_builtins import map
+from polyglot.builtins import map
 
 from calibre.ebooks.oeb.base import OEB_DOCS, OEB_STYLES
 from calibre.ebooks.oeb.polish.utils import guess_type
@@ -50,7 +50,7 @@ def run_checks(container):
         if err.level > WARN:
             return errors
 
-    # cssutils is not thread safe
+    # css_parser is not thread safe
     for name, mt, raw in stylesheets:
         if not raw:
             errors.append(EmptyFile(name))
@@ -107,4 +107,3 @@ def fix_errors(container, errors):
                 # better to have a false positive than a false negative)
                 changed = True
     return changed
-

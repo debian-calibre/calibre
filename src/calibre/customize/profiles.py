@@ -44,7 +44,7 @@ class Plugin(_Plugin):
 class InputProfile(Plugin):
 
     author = 'Kovid Goyal'
-    supported_platforms = set(['windows', 'osx', 'linux'])
+    supported_platforms = {'windows', 'osx', 'linux'}
     can_be_disabled = False
     type = _('Input profile')
 
@@ -242,7 +242,7 @@ input_profiles.sort(cmp=lambda x,y:cmp(x.name.lower(), y.name.lower()))
 class OutputProfile(Plugin):
 
     author = 'Kovid Goyal'
-    supported_platforms = set(['windows', 'osx', 'linux'])
+    supported_platforms = {'windows', 'osx', 'linux'}
     can_be_disabled = False
     type = _('Output profile')
 
@@ -262,7 +262,7 @@ class OutputProfile(Plugin):
     touchscreen = False
     touchscreen_news_css = ''
     #: A list of extra (beyond CSS 2.1) modules supported by the device
-    #: Format is a cssutils profile dictionary (see iPad for example)
+    #: Format is a css_parser profile dictionary (see iPad for example)
     extra_css_modules = []
     #: If True, the date is appended to the title of downloaded news
     periodical_date_in_title = True

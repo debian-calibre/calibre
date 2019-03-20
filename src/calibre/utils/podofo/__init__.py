@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import with_statement
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -149,7 +150,7 @@ def test_outline(src):
     out = '/tmp/outlined.pdf'
     with open(out, 'wb') as f:
         f.write(raw)
-    print 'Outlined PDF:', out
+    print('Outlined PDF:', out)
 
 
 def test_save_to(src, dest):
@@ -160,10 +161,11 @@ def test_save_to(src, dest):
     p.load(raw)
     with open(dest, 'wb') as out:
         p.save_to_fileobj(out)
-        print ('Wrote PDF of size:', out.tell())
+        print('Wrote PDF of size:', out.tell())
 
 
 def test_podofo():
+    import tempfile
     from io import BytesIO
     from calibre.ebooks.metadata.book.base import Metadata
     from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
@@ -179,12 +181,19 @@ def test_podofo():
     buf = BytesIO()
     p.save_to_fileobj(buf)
     raw = buf.getvalue()
-    p = podofo.PDFDoc()
-    p.load(raw)
-    if (p.title, p.author) != (mi.title, mi.authors[0]):
-        raise ValueError('podofo failed to set title and author in Info dict')
-    if not p.get_xmp_metadata():
-        raise ValueError('podofo failed to write XMP packet')
+    with tempfile.NamedTemporaryFile(delete=False) as f:
+        f.write(raw)
+    try:
+        p = podofo.PDFDoc()
+        p.open(f.name)
+        if (p.title, p.author) != (mi.title, mi.authors[0]):
+            raise ValueError('podofo failed to set title and author in Info dict')
+        if not p.get_xmp_metadata():
+            raise ValueError('podofo failed to write XMP packet')
+        del p
+    finally:
+        os.remove(f.name)
+
 
 if __name__ == '__main__':
     import sys

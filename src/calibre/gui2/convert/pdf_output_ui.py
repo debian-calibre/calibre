@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(638, 588)
+        Form.resize(638, 634)
         self.formLayout = QtWidgets.QFormLayout(Form)
         self.formLayout.setObjectName("formLayout")
         self.opt_use_profile_size = QtWidgets.QCheckBox(Form)
@@ -99,9 +99,15 @@ class Ui_Form(object):
         self.opt_pdf_mono_font_size = QtWidgets.QSpinBox(Form)
         self.opt_pdf_mono_font_size.setObjectName("opt_pdf_mono_font_size")
         self.formLayout.setWidget(15, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_mono_font_size)
+        self.label_91 = QtWidgets.QLabel(Form)
+        self.label_91.setObjectName("label_91")
+        self.formLayout.setWidget(16, QtWidgets.QFormLayout.LabelRole, self.label_91)
+        self.opt_pdf_page_number_map = QtWidgets.QLineEdit(Form)
+        self.opt_pdf_page_number_map.setObjectName("opt_pdf_page_number_map")
+        self.formLayout.setWidget(16, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_page_number_map)
         self.page_margins_box = QtWidgets.QGroupBox(Form)
         self.page_margins_box.setObjectName("page_margins_box")
-        self.formLayout.setWidget(16, QtWidgets.QFormLayout.SpanningRole, self.page_margins_box)
+        self.formLayout.setWidget(17, QtWidgets.QFormLayout.SpanningRole, self.page_margins_box)
         self.template_box = QtWidgets.QGroupBox(Form)
         self.template_box.setObjectName("template_box")
         self.formLayout_2 = QtWidgets.QFormLayout(self.template_box)
@@ -123,7 +129,7 @@ class Ui_Form(object):
         self.opt_pdf_footer_template = QtWidgets.QLineEdit(self.template_box)
         self.opt_pdf_footer_template.setObjectName("opt_pdf_footer_template")
         self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_footer_template)
-        self.formLayout.setWidget(17, QtWidgets.QFormLayout.SpanningRole, self.template_box)
+        self.formLayout.setWidget(18, QtWidgets.QFormLayout.SpanningRole, self.template_box)
         self.opt_pdf_hyphenate = QtWidgets.QCheckBox(Form)
         self.opt_pdf_hyphenate.setObjectName("opt_pdf_hyphenate")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.SpanningRole, self.opt_pdf_hyphenate)
@@ -137,6 +143,7 @@ class Ui_Form(object):
         self.label_7.setBuddy(self.opt_pdf_standard_font)
         self.label_8.setBuddy(self.opt_pdf_default_font_size)
         self.label_9.setBuddy(self.opt_pdf_mono_font_size)
+        self.label_91.setBuddy(self.opt_pdf_page_number_map)
         self.label_12.setBuddy(self.opt_pdf_header_template)
         self.label_13.setBuddy(self.opt_pdf_footer_template)
 
@@ -162,6 +169,7 @@ class Ui_Form(object):
         self.opt_pdf_default_font_size.setSuffix(_(" px"))
         self.label_9.setText(_("Monospace &font size:"))
         self.opt_pdf_mono_font_size.setSuffix(_(" px"))
+        self.label_91.setText(_("Page &number map:"))
         self.page_margins_box.setTitle(_("Page  margins"))
         self.template_box.setTitle(_("Page headers and footers"))
         self.hf_label.setText(_("You can insert headers and footers into every page of the produced PDF file by using header and footer templates. For examples, see the <a href=\"%s\">documentation</a>."))

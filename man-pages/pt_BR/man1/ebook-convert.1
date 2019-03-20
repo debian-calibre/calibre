@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "setembro 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "fevereiro 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -45,7 +45,7 @@ Converta um e\-book de um formato para outro.
 .sp
 arquivo_entrada é a entrada e arquivo_saída é a saída. Ambos devem ser especificados como os dois primeiros argumentos para o comando.
 .sp
-O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como um diretório e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nesse diretório. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plug\-in de saída.
+O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do arquivo_saída. O arquivo_saída também pode ser do formato especial .EXT, em que EXT é a extensão do arquivo de saída. Nesse caso, o nome do arquivo de saída é derivado do nome do arquivo de entrada. Observe que os nomes dos arquivos não devem começar com um hífen. Finalmente, se o arquivo_saida não tiver nenhuma extensão, ele será tratado como um diretório e um "e\-book aberto" (OEB), consistindo de arquivos HTML, será gravado nesse diretório. Esses arquivos são os arquivos que normalmente teriam sido passados ​​para o plugin de saída.
 .sp
 Depois de especificar o arquivo de entrada e saída, você pode personalizar a conversão especificando várias opções. As opções disponíveis dependem dos tipos de arquivo de entrada e saída. Para obter ajuda sobre eles, especifique o arquivo de entrada e saída e, em seguida, use a opção \-h.
 .sp
@@ -75,7 +75,7 @@ opções específicas para cada formato de entrada e saída.
 .IP \(bu 2
 \fI\%OPÇÕES DE SAÍDA\fP
 .IP \(bu 2
-\fI\%VEJA E SINTA\fP
+\fI\%APARÊNCIA\fP
 .IP \(bu 2
 \fI\%PROCESSAMENTO HEURÍSTICO\fP
 .IP \(bu 2
@@ -178,14 +178,14 @@ Quando estiver usando uma capa SVG, esta opção irá fazer a capa se ajustar ao
 .INDENT 0.0
 .TP
 .B \-\-pretty\-print
-Se especificado, o plug\-in de saída tentará produzir uma saída que seja tão legível por pessoas quanto possível. Pode não ter efeito para alguns plug\-ins de saída.
+Se especificado, o plugin de saída tentará produzir uma saída que seja tão legível por pessoas quanto possível. Pode não ter efeito para alguns plugins de saída.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
 Título para qualquer índice gerado em linha.
 .UNINDENT
-.SH VEJA E SINTA
+.SH APARÊNCIA
 .sp
 Opções para controlar a aparência do arquivo de saída
 .INDENT 0.0
@@ -241,7 +241,7 @@ Mapeamento de nomes de fonte em CSS para tamanhos de fonte em pontos. Um exemplo
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insere uma linha em branco entre parágrafos. Não irá funcionar se o arquivo de origem não usa parágrafos (etiquetas <p> ou <div>).
+Insere uma linha em branco entre parágrafos. Não irá funcionar se o arquivo de origem não usa parágrafos (tags <p> ou <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ A altura mínima de linha, como uma percentagem do tamanho do elemento de fonte 
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Remova espaço entre parágrafos. Também configura um espaçamento de 1,5 linhas nos parágrafos. Remoção de espaços não irão funcionar se o arquivo de origem não usa parágrafos (etiquetas <p> ou <div>).
+Remove espaço entre parágrafos. Também configura um espaçamento de 1,5 linhas nos parágrafos. A remoção de espaços não irão funcionar se o arquivo de origem não usa parágrafos (tags <p> ou <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +306,7 @@ Converta aspas, travessões e reticências em seus equivalentes tipograficamente
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Subconjunto de todas as fontes incorporadas. Cada fonte incorporada é reduzida para conter apenas os glifos usados ​​neste documento. Isto diminui o tamanho dos arquivos de fonte. Útil se você estiver incorporando particularmente fontes grandes com lotes de glifos não utilizados.
+Subconjunto de todas as fontes incorporadas. Cada fonte incorporada é reduzida para conter apenas os glifos usados ​​neste documento. Isto diminui o tamanho dos arquivos de fonte. Útil se você estiver incorporando fontes particularmente grandes com muitos glifos não utilizados.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -349,12 +349,12 @@ Procure por palavras e padrões comuns que deveriam ser itálicos e os coloque e
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detectar títulos e subtítulos de capítulos sem formatação. Trocá\-los para marcações h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada junto com a estrutura de detecção para criar um.
+Detectar títulos e subtítulos de capítulos sem formatação. Altera\-os para tags h2 e h3. Esta opção não irá criar um índice, mas pode ser utilizada junto com a estrutura de detecção para criar um.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-Procura ocorrências sequenciais de etiquetas <h1> ou <h2>. As etiquetas serão renomeadas para evitar quebra no meio do título dos capítulos.
+Procura ocorrências sequenciais de tags <h1> ou <h2>. As tags serão renumeradas para evitar quebra no meio do título dos capítulos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +420,7 @@ Auto\-detecção do controle da estrutura de documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar <h1> ou <h2> tags que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
+Uma expressão XPath para detectar títulos de capítulos. O padrão é considerar tags <h1> ou <h2> que contenham as palavras \fB"\fPcapítulo\fB"\fP, \fB"\fPlivro\fB"\fP, \fB"\fPsessão\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepílogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulo, bem como quaisquer tags que tenham class = \fB"\fPchapter \fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a detecção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Consulte o tutorial do XPath no manual do usuário do calibre para obter mais ajuda sobre como usar esse recurso.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -468,17 +468,17 @@ Ao criar de um índice a partir de links contidos no documento de entrada, é pe
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no primeiro nível do índice. Se estiver especificada, terá precedência em relação a outras formas de detecção automática. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no primeiro nível do índice. Se estiver especificada, terá precedência em relação a outras formas de detecção automática. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no segundo nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível um. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no segundo nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível um. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas no terceiro nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível dois. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
+Expressão XPath que especifica todas as tags que deverão ser adicionadas no terceiro nível do índice. Cada entrada será adicionada abaixo da entrada anterior no nível dois. Consulte o tutorial do XPath no Manual do Usuário do calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -576,7 +576,7 @@ Define o índice do livro nesta série.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Defina etiquetas para o livro. Faça uma lista separada por vírgulas.
+Defina etiquetas para o livro. Deve ser uma lista separada por vírgulas.
 .UNINDENT
 .INDENT 0.0
 .TP

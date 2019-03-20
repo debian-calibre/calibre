@@ -7,7 +7,7 @@ __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import regex, sys
-from future_builtins import map, zip
+from polyglot.builtins import map, zip
 
 is_narrow_build = sys.maxunicode < 0x10ffff
 
@@ -165,6 +165,7 @@ class Parser(object):
             ans['text_assertion'] = ta
         return raw[1:]
 
+
 _parser = None
 
 
@@ -205,3 +206,38 @@ def cfi_sort_key(cfi, only_path=True):
     return (step_nums, offsets)
 
 
+def decode_cfi(root, cfi):
+    from lxml.etree import XPathEvalError
+    p = parser()
+    try:
+        pcfi = p.parse_path(cfi)[0]
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        return
+    if not pcfi:
+        import sys
+        print ('Failed to parse CFI: %r' % pcfi, file=sys.stderr)
+        return
+    steps = get_steps(pcfi)
+    ans = root
+    for step in steps:
+        num = step.get('num', 0)
+        node_id = step.get('id')
+        try:
+            match = ans.xpath('descendant::*[@id="%s"]' % node_id)
+        except XPathEvalError:
+            match = ()
+        if match:
+            ans = match[0]
+            continue
+        index = 0
+        for child in ans.iterchildren('*'):
+            index |= 1  # increment index by 1 if it is even
+            index += 1
+            if index == num:
+                ans = child
+                break
+        else:
+            return
+    return ans

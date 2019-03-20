@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "settembre 07, 2018" "3.31.0" "calibre"
+.TH "CALIBREDB" "1" "febbraio 01, 2019" "3.39.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -185,7 +185,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Genera output in formato JSON, più adatto all\fB\(aq\fPelaborazione automatica. Le opzioni di larghezza e separazione di linea verranno ignorate.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -467,7 +467,7 @@ Elenco di formati separati da virgole da salvare per ogni libro. In modo predefi
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Avanzamento report
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -672,7 +672,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+Un dizionario di opzioni per personalizzare l\fB\(aq\fPinterpretazione dei dati di questa colonna. Questa è una stringa JSON. Per le colonne di enumerazione, usare \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP\&. Ci sono molte opzioni che possono entrare nella variabile di visualizzazione. Le opzioni per tipo di colonna sono: composite: composite_template, composite_sort, make_category,contains_html, use_decorations data e ora: formato_data enumerazione: enum_valori, enum_colori, uso_decorazioni int, float: numero_formato testo: is_nomi, uso_decorazioni Il modo migliore per trovare combinazioni ammesse è quello di creare una colonna personalizzata del tipo appropriato nella GUI e poi guardare l\fB\(aq\fPOPF di backup per un libro (assicurarsi che sia stato creato un nuovo OPF da quando la colonna è stata aggiunta). Vedrete il JSON per il \fB"\fPdisplay\fB"\fP per la nuova colonna nell\fB\(aq\fPOPF.
 .UNINDENT
 .INDENT 0.0
 .TP

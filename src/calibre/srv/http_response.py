@@ -12,7 +12,8 @@ from io import BytesIO, DEFAULT_BUFFER_SIZE
 from itertools import chain, repeat, izip_longest
 from operator import itemgetter
 from functools import wraps
-from future_builtins import map
+
+from polyglot.builtins import reraise, map, is_py3
 
 from calibre import guess_type, force_unicode
 from calibre.constants import __version__, plugins
@@ -29,10 +30,13 @@ from calibre.utils.monotonic import monotonic
 Range = namedtuple('Range', 'start stop size')
 MULTIPART_SEPARATOR = uuid.uuid4().hex.decode('ascii')
 COMPRESSIBLE_TYPES = {'application/json', 'application/javascript', 'application/xml', 'application/oebps-package+xml'}
-zlib, zlib2_err = plugins['zlib2']
-if zlib2_err:
-    raise RuntimeError('Failed to laod the zlib2 module with error: ' + zlib2_err)
-del zlib2_err
+if is_py3:
+    import zlib
+else:
+    zlib, zlib2_err = plugins['zlib2']
+    if zlib2_err:
+        raise RuntimeError('Failed to load the zlib2 module with error: ' + zlib2_err)
+    del zlib2_err
 
 
 def header_list_to_file(buf):  # {{{
@@ -478,7 +482,7 @@ class HTTPConnection(HTTPRequest):
                 if e.log:
                     self.log.warn(e.log)
                 return self.simple_response(e.http_code, msg=e.message or '', close_after_response=e.close_connection, extra_headers=eh)
-            raise etype, e, tb
+            reraise(etype, e, tb)
 
         data, output = result
         output = self.finalize_output(output, data, self.method is HTTP1)

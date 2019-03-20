@@ -10,7 +10,7 @@ __docformat__ = 'restructuredtext en'
 import sys, os, textwrap
 from threading import Thread
 from functools import partial
-from future_builtins import map
+from polyglot.builtins import map
 
 from PyQt5.Qt import (QPushButton, QFrame, QMenu, QInputDialog, QCheckBox,
     QDialog, QVBoxLayout, QDialogButtonBox, QSize, QStackedWidget, QWidget,
@@ -934,7 +934,6 @@ class TOCView(QWidget):  # {{{
 
     def create_from_xpath(self, xpaths, remove_duplicates=True):
         toc = from_xpaths(self.ebook, xpaths)
-        print(1111111, remove_duplicates)
         if len(toc) == 0:
             return error_dialog(self, _('No items found'),
                 _('No items were found that could be added to the Table of Contents.'), show=True)

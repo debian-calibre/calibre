@@ -2,6 +2,7 @@
 Container-/OPF-based input OEBBook reader.
 """
 from __future__ import with_statement
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
@@ -184,7 +185,7 @@ class OEBReader(object):
         return bad
 
     def _manifest_add_missing(self, invalid):
-        import cssutils
+        import css_parser
         manifest = self.oeb.manifest
         known = set(manifest.hrefs)
         unchecked = set(manifest.values())
@@ -224,7 +225,7 @@ class OEBReader(object):
                             new.add(href)
                 elif item.media_type in OEB_STYLES:
                     try:
-                        urls = list(cssutils.getUrls(data))
+                        urls = list(css_parser.getUrls(data))
                     except:
                         urls = []
                     for url in urls:
@@ -336,7 +337,7 @@ class OEBReader(object):
                 self.logger.warn(u'Spine item %r not found' % idref)
                 continue
             item = manifest.ids[idref]
-            if item.media_type.lower() in OEB_DOCS and hasattr(item.data, 'xpath'):
+            if item.media_type.lower() in OEB_DOCS and hasattr(item.data, 'xpath') and not getattr(item.data, 'tag', '').endswith('}ncx'):
                 spine.add(item, elem.get('linear'))
             else:
                 if hasattr(item.data, 'tag') and item.data.tag and item.data.tag.endswith('}html'):
@@ -715,9 +716,9 @@ def main(argv=sys.argv):
     for arg in argv[1:]:
         oeb = reader(OEBBook(), arg)
         for name, doc in oeb.to_opf1().values():
-            print etree.tostring(doc, pretty_print=True)
+            print(etree.tostring(doc, pretty_print=True))
         for name, doc in oeb.to_opf2(page_map=True).values():
-            print etree.tostring(doc, pretty_print=True)
+            print(etree.tostring(doc, pretty_print=True))
     return 0
 
 

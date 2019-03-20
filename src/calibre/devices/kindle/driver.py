@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2009, John Schember <john at nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
@@ -270,7 +271,7 @@ class KINDLE(USBMS):
         from calibre.ebooks.metadata import MetaInformation
 
         bm = annotation
-        ignore_tags = set(['Catalog', 'Clippings'])
+        ignore_tags = {'Catalog', 'Clippings'}
 
         if bm.type == 'kindle_bookmark':
             mi = db.get_metadata(db_id, index_is_id=True)
@@ -327,7 +328,7 @@ class KINDLE2(KINDLE):
     # (for X-Ray & End Actions), azw3f & azw3r files, but all of them are in
     # the .sdr sidecar folder
 
-    PRODUCT_ID = [0x0002, 0x0004]
+    PRODUCT_ID = [0x0002, 0x0004, 0x0324]
     BCD        = [0x0100, 0x0310, 0x401]
     # SUPPORTS_SUB_DIRS = False # Apparently the Paperwhite doesn't like files placed in subdirectories
     # SUPPORTS_SUB_DIRS_FOR_SCAN = True
@@ -555,7 +556,7 @@ class KINDLE2(KINDLE):
                         print('Could not retrieve override method choice, using default.')
                 apnx_builder.write_apnx(filepath, apnx_path, method=method, page_count=custom_page_count)
             except:
-                print 'Failed to generate APNX'
+                print('Failed to generate APNX')
                 import traceback
                 traceback.print_exc()
 

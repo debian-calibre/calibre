@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "二月 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -41,18 +41,22 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+转换不同格式的电子书。
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file 表示输入文件，output_file 表示输出文件。这两者作为命令行参数必须指定到最前面。
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+输出的电子书格式可由 output_file 的扩展名得到。同时 output_file 也可以是一种以 .EXT 为扩展名的特殊格式。在这种情况下，输出文件的名称则使用输入文件的名称。注意：文件名不能以连字号作为开头。如果 output_file 不含扩展名，那么它将被视为一个目录并将会在该目录下生成 HTML 格式的“开放式电子书(OEB)”。这些文件会被视为正常文件而被输出插件所识别。
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+在指定输入和输出文件后，你可以自定义特定的转换选项。根据输入和输出文件的类型不同可用的转换选项也不同。如需获取针对输入和输出文件的帮助，请在命令行中输入 \-h。
 .sp
-For full documentation of the conversion system see
+对于转换系统的完整文档请查阅
 conversion
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+ebook\-convert\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .sp
 选项以及选项的默认值都取决于输入
 和输出格式，所以你应该经常检查
@@ -94,7 +98,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+列出内建的订阅清单名。你可以通过如下命令创建基于内建订阅清单的电子书： ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -120,12 +124,12 @@ List builtin recipe names. You can create an e\-book from a builtin recipe like 
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+关闭按分页符切割. 默认情况下, 程序会按分页符将输入文件切切分为多个文件. 由此程序可以使用较少的计算机资源来解析和输出结果. 当然切分操作会增加处理时间, 如果输入文件含有较多的分页符, 请关闭此功能.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-仅在您需要使用 FBReaderJ 阅读 EPUB 文件时使用本选项。启用本选项会消除 EPUB 文件中的目录结构，把所有文件放到同一层目录中。
+仅在你需要使用 FBReaderJ 阅读 EPUB 文件时使用本选项。启用本选项会消除 EPUB 文件中的目录结构，把所有文件放到同一层目录中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -140,7 +144,7 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+要生成的 EPUB 文件版本。EPUB 2 是最具广泛兼容性的，只有在你确实需要的情况下才使用 EPUB 3。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,12 +159,12 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-正常情况下，如导入的文件无封面并且您也未指定，则会生成一张带有书名、作者等信息的默认封面。选定此选项可以禁止生成默认封面。
+正常情况下，如导入的文件无封面并且你也未指定，则会生成一张带有书名、作者等信息的默认封面。选定此选项可以禁止生成默认封面。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-请不要使用 SVG 作为书籍封面。如果您打算将 EPUB 文件用到不支持 SVG 格式的设备(像 iPhone 或 JetBook Lite)上的话，请使用该选项。不选中此选项的话，这类设备将只能显示封面为一个空白页。
+请不要使用 SVG 作为书籍封面。如果你打算将 EPUB 文件用到不支持 SVG 格式的设备(像 iPhone 或 JetBook Lite)上的话，请使用该选项。不选中此选项的话，这类设备将只能显示封面为一个空白页。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -188,7 +192,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+PTS中的基本字体大小。在生成的书籍中所有的字体尺寸将基于这个大小重新缩放。通过选择更大的尺寸，可以使输出中的字体更大，反之亦然。默认情况下，当值为0时，根据你选择的输出配置文件选择基本字体大小。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +217,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-calibre 默认会使用各种 CSS 属性值的简写形式，如 margin、padding、border 等。打开此选项会使用完全展开的形式替代。注意，当生成采用了 Nook 系列配置文件的 EPUB 文件时，CSS 总是会用展开的形式，这是因为 Nook 无法处理简写的 CSS。
+默认情况下，calibre 将使用各种CSS属性的简写形式，如边距、填充、边框等。此选项将使用完整的展开形式。注意，在生成EPUB文件时，由于Nook不能处理速记CSS，所以将输出配置文件设置为Nook配置文件中的一个，CSS总是被展开的。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -223,7 +227,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-以逗号分隔的 CSS 属性列表，将移除所有 CSS 样式规则。这是非常有用的，如果存在的一些样式信息，防止覆盖您的的设备上的样式信息。例如：字体系列，颜色，左边距，右边距
+以逗号分隔的 CSS 属性列表，将移除所有 CSS 样式规则。这是非常有用的，如果存在的一些样式信息，防止覆盖你的的设备上的样式信息。例如：字体系列，颜色，左边距，右边距
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -243,7 +247,7 @@ CSS 样式表或原始 CSS 文件路径。该 CSS 样式表将会被添加到源
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-保留输入文档中的“印刷连字”。所谓“印刷连字”是指对于ff, fi, fl之类的字母组合的一种特殊的展示方式。大部分阅读器在使用默认字体时无法支持“印刷连字”，所以常常无法正常显示。默认情况下，Calibre会把“印刷连字”转换成对应的字母组合。本选项用于选择保留“印刷连字”。
+保留输入文档中的“印刷连字”。所谓“印刷连字”是指对于ff, fi, fl之类的字母组合的一种特殊的展示方式。大部分阅读器在使用默认字体时无法支持“印刷连字”，所以常常无法正常显示。默认情况下，calibre 会把“印刷连字”转换成对应的字母组合。本选项用于选择保留“印刷连字”。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -258,22 +262,22 @@ pt 行高。控制两行高度距离。仅仅适用于未定义行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定下边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定左边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设置右边距，单位pts，默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+设定上边距，单位pts。默认为 5.0。如果设置为负值表示不使用页边距（保留使用原始文档的页边距）。提示：页面原始格式如PDF和docx有自己优先的边距设置。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,12 +292,12 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果您将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
+当 calibre 删除段落之间空行时，它会自动设置一个段落缩进，以确保轻松区分段落。此选项控制缩进的宽度(单位 em)。如果你将此值设置为负数，则使用输入文件中自身定义的缩进，换句话说就是 calibre 不进行缩进处理。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+将普通引号、破折号和省略号转换为与它们对应的正确印刷体。有关详细信息, 请参阅 \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -303,7 +307,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+包含转换本书中CSS样式规则的文件路径。创建这样一个文件的最简单方法是在 calibre GUI中使用向导创建规则。在“界面外观\->转换风格”的转换对话框部分访问它。 一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -374,7 +378,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+包含搜索和替换正则表达式的文件路径。该文件必须包含正则表达式交替行后面跟着替换模式（它可以是一个空行）。正则表达式必须是Python正则表达式的语法并且文件必须是UTF\-8编码。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +416,7 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath 表达式用于检测章节标题。默认考虑使用 <h1> 或 <h2> 标签来涵括“章节”，“书籍”，“节选”，“前言”，“结束语”，或者使用任何标签包含级别 =“章节”的“部分”做为章节标题。使用的表达式必须评估元素列表。要禁用检测章节，请使用表达式“/”。请参阅 calibre 用户手册中的 XPath 教程了解使用此功能的更多帮助。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -422,12 +426,12 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-有些文档通过在每一页上指定左右页边距来指定页面边框大小。 calibre 会尝试检测并移除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，您可以禁用这项功能。
+有些文档通过在每一页上指定左右页边距来指定页面边框大小。 calibre 会尝试检测并移除这些页边距。有时候 calibre 会错误的移除不应该移除的页边距，在这种情况下，你可以禁用这项功能。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+将书籍元数据添加到书籍的开始。如果你的电子书阅读设备不支持显示和搜索元数据功能，该功能可以有所帮助。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -442,12 +446,12 @@ XPath表达式。在指定的元素之前插入分页符。禁止使用表达式
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+移除输入电子书的第一个图像。这是有用的如果输入文档有一个封面图像，但没有确定为封面图像。在这种情况下，如果你在 calibre 设置了封面，如果你不指定此选项，输出文件将最终有两个封面图片。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+用于检测文档中开始阅读位置的 XPath 表达式。某些电子书阅读器(以 Kindle 为代表)使用此定位标识来打开书籍。请参阅 calibre 用户手册中的 XPath 教程了解使用此功能的更多帮助。
 .UNINDENT
 .SH 目录
 .sp
@@ -538,7 +542,7 @@ XPath 表达式指定所有标签应添加在三级目录表。每个条目加�
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+设置发布日期（假定在本地时区，除非明确指定时区）
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -558,7 +562,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-series
-设置这本电子书所属的丛书。
+设置书籍所属丛书。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,7 +595,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-在转换过程的不同阶段分别保存输出到指定目录。如果您不确定在哪个阶段出了问题，这个选项非常实用。
+在转换过程的不同阶段分别保存输出到指定目录。如果你不确定在哪个阶段出了问题，这个选项非常实用。
 .UNINDENT
 .INDENT 0.0
 .TP

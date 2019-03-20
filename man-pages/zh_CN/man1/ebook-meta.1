@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-META" "1" "二月 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,17 +41,21 @@ ebook\-meta ebook_file [选项]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+对电子书文件读/写元数据
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+支持读取元数据的格式：azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+支持写入元数据的格式：azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+不同的文件格式支持不同种类的元数据。
+如果你试图在不支持的格式上设置某种元数据，
+这种元数据就会被静默忽略。
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+ebook\-meta\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH [选项]
 .INDENT 0.0
 .TP
@@ -91,12 +95,12 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+从指定的OPF文件中读取元数据，并使用它来设置电子书中的元数据。命令行上指定的元数据将覆盖从OPF文件读取的元数据。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+从电子书中获取封面并将其保存为指定文件。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +110,7 @@ Get the cover from the e\-book and save it at as the specified file.
 .INDENT 0.0
 .TP
 .B \-\-identifier
-设置书籍的标识符，可以指定多次。例如：\fI\%\-\-identifier\fP uri:http://acme.com \fI\%\-\-identifier\fP isbn:12345 要移除一个标识符，指定空值，像 \fI\%\-\-identifier\fP isbn: 注意对于 EPUB 文件，无法移除被标记为包标识符的标识符。
+Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +145,7 @@ Get the cover from the e\-book and save it at as the specified file.
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-设置这本电子书所属的丛书。
+设置书籍所属丛书。
 .UNINDENT
 .INDENT 0.0
 .TP

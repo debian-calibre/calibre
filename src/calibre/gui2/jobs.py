@@ -351,8 +351,8 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
                 self._kill_job(job)
 
     def universal_set(self):
-        return set([i for i, j in enumerate(self.jobs) if not getattr(j,
-            'hidden_in_gui', False)])
+        return {i for i, j in enumerate(self.jobs) if not getattr(j,
+            'hidden_in_gui', False)}
 
     def get_matches(self, location, query, candidates=None):
         if candidates is None:
@@ -443,6 +443,15 @@ class DetailView(Dialog):  # {{{
     def sizeHint(self):
         return QSize(700, 500)
 
+    @property
+    def plain_text(self):
+        if self.html_view:
+            return self.tb.toPlainText()
+        return self.log.toPlainText()
+
+    def copy_to_clipboard(self):
+        QApplication.instance().clipboard().setText(self.plain_text)
+
     def setup_ui(self):
         self.l = l = QVBoxLayout(self)
         if self.html_view:
@@ -453,6 +462,9 @@ class DetailView(Dialog):  # {{{
         l.addWidget(w)
         l.addWidget(self.bb)
         self.bb.clear(), self.bb.setStandardButtons(self.bb.Close)
+        self.copy_button = b = self.bb.addButton(_('&Copy to clipboard'), self.bb.ActionRole)
+        b.setIcon(QIcon(I('edit-copy.png')))
+        b.clicked.connect(self.copy_to_clipboard)
         self.next_pos = 0
         self.update()
         self.timer = QTimer(self)

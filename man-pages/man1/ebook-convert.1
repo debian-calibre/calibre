@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "September 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "February 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -1371,6 +1371,11 @@ The size of the right page margin, in pts. Default is 72pt. Overrides the common
 .TP
 .B \-\-pdf\-page\-margin\-top
 The size of the top page margin, in pts. Default is 72pt. Overrides the common top page margin setting, unless set to zero.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-page\-number\-map
+Adjust page numbers, as needed. Syntax is a JavaScript expression for the page number. For example, \fB"\fPif (n < 3) 0; else n \- 3;\fB"\fP, where n is current page number.
 .UNINDENT
 .INDENT 0.0
 .TP

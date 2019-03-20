@@ -5,14 +5,12 @@ Subject: Fix desktop integration installation
 Don't use xdg-mime and xdg-desktop-menu because they hard-code
 gnome_app_dir etc which cannot be overridden, and replace with install calls.
 ---
- src/calibre/linux.py | 7 ++++---
+ src/calibre/linux.py |    7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index f54c5c0..4383457 100644
---- a/src/calibre/linux.py
-+++ b/src/calibre/linux.py
-@@ -854,17 +854,18 @@ class PostInstall:
+--- calibre-debian.git.orig/src/calibre/linux.py
++++ calibre-debian.git/src/calibre/linux.py
+@@ -856,17 +856,18 @@ class PostInstall:
                      translators = dict(get_all_translators())
  
                  APPDATA = get_appdata()

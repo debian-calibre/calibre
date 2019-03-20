@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "setembro 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-META" "1" "fevereiro 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -104,7 +104,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Defina os identificadores para o livro, pode ser especificado várias vezes. Por exemplo: \fI\%\-\-identifier\fP uri:http://acme.com \fI\%\-\-identifier\fP isbn:12345 Para remover um identificador, não especificar nenhum valor, \fI\%\-\-identifier\fP isbn: Note que para arquivos EPUB, um identificador marcado como o identificador de pacote não poderá ser removido.
+Defina identificadores para o livro. Pode ser especificado múltiplas vezes. Por exemplo: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345. Para remover um identificador, não especifique nenhum valor, \fI\%\-\-identifier\fP isbn:. Note que para arquivos EPUB, um identificador marcado como \fB"\fPpackage identifier\fB"\fP não pode ser removido.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -144,7 +144,7 @@ Defina a série a que este e\-book pertence.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Defina etiquetas para o livro. Faça uma lista separada por vírgulas.
+Defina etiquetas para o livro. Deve ser uma lista separada por vírgulas.
 .UNINDENT
 .INDENT 0.0
 .TP

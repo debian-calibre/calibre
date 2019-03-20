@@ -10,15 +10,15 @@
 # Philip De, 2016
 # Philip De, 2016
 # RiseT, 2016
-# Simon_Schuette <simonschuette@arcor.de>, 2015-2016
+# Simon_Schuette <simonschuette@arcor.de>, 2015-2016,2018
 # RiseT, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: 2018-06-15 01:03+0000\n"
-"Last-Translator: H K <HK@hallo.ms>\n"
+"POT-Creation-Date: 2018-12-07 10:46+0530\n"
+"PO-Revision-Date: 2018-12-19 13:51+0000\n"
+"Last-Translator: Simon_Schuette <simonschuette@arcor.de>\n"
 "Language-Team: German (http://www.transifex.com/calibre/calibre/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +36,7 @@ msgid ""
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr ""
+msgstr "Reguläre Ausdrücke werden an vielen Stellen in calibre verwendet, um den Inhalt und die Metadaten von E-Büchern auf raffinierte Weise zu manipulieren. Dieses Tutorial ist eine vorsichtige Einführung, mit der man den Umgang mit regulären Ausdrücken erlernen kann."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:11
 msgid "Contents"
@@ -100,7 +100,7 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr ""
+msgstr "Dabei benutze ich den Begriff Zeichenfolge so wie in einer Programmiersprache, nämlich eine Folge von einem oder mehreren Zeichen, wobei als Zeichen die eigentlichen Buchstaben und Zahlen, aber auch Satzzeichen und sogenannten Leerraum (Umbrüche, Tabulatorschritte usw.) gelten. Man beachte, dass meistens Klein- und Großbuchstaben nicht als gleichwertig angesehen werden. Es ist also nicht egal, ob man \"a\" oder \"A\" schreibt. In der Suchleiste von calibre spielt die Groß- oder Kleinschreibung keine Rolle, wohl aber bei den Einstellungen für die Konvertierung. Es gibt zwar eine Möglichkeit, alle regulären Ausdrücke unabhängig von Klein- und Großbuchstaben zu machen, aber dazu kommen wir später. Es wird kompliziert, weil reguläre Ausdrücke Abweichungen in den Zeichenfolgen zulassen, denen sie entsprechen. Anders gesagt: Ein einziger  passt zu verschiedenen Zeichenfolgen - deshalb werden reguläre Ausdrücke ja überhaupt verwendet. Mehr dazu in Kürze."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:35
 msgid "Care to explain?"
@@ -142,7 +142,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr ""
+msgstr "Als Nächstes kommen jetzt die richtig guten Sachen. Sie erinnern sich daran, dass reguläre Ausdrücke zu verschiedenen Zeichenfolgen passen können? Da wird es nun etwas komplizierter. Mal angenommen, als praktisches Beispiel, Sie wollen ein Buch konvertieren mit einer ganz hässlichen Zeilenangabe in der Fußzeile, so etwas wie \"Seite 5 von 423\". Offensichtlich steigt die Seitenzahl von 1 bis 423, und Sie bräuchten 423 verschiedene Zeichenfolgen, oder? Falsch: Tatsächlich können Sie mit regulären Ausdrücken Zeichenmengen festlegen, die zueinander passen. Zur Festlegung einer solchen Menge schreiben Sie alle betreffenden Zeichen in eckige Klammern. Zum Beispiel entspricht die Menge ``[abc]`` entweder dem Zeichen \"a\", \"b\" oder \"c\". *Mengen entsprechen immer nur einem der Zeichen dieser Menge*. Sie \"verstehen\" übrigens auch Zeichen-Bereiche, so dass Sie für alle Kleinbuchstaben (ohne Umlaute) die Menge ``[a-z]`` und für sämtliche Klein- und Großbuchstaben (wieder ohne Umlaute) die Menge ``[a-zA-Z]`` schreiben können - und so weiter. Soweit klar? Mit dem regulären Ausdruck ``Seite [0-9] von 423`` hätten Sie also etwas Passendes für die ersten neun Seiten und benötigten nun nur noch drei Ausdrücke: ``Seite [0-9][0-9] von 423`` wäre der zweite Ausdruck, entsprechend den zweistelligen Seitenzahlen, und den dritten Ausdruck können Sie sicherlich selbst finden. Ja, versuchen Sie es und schreiben Sie ihn auf!"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:45
 msgid "Hey, neat! This is starting to make sense!"
@@ -270,7 +270,7 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "Keine Angst, das Leben ist noch immer schön und leicht. Betrachten Sie dieses Beispiel: Das Buch, das Sie konvertieren hat \"Titel\" auf jeder ungeraden, und \"Autor\" auf jeder geraden Seite stehen. Das sieht im Druck toll aus, stimmt's? Nur: Bei Ebooks ist das lästig. Sie können ganze Ausdrücke mit normalen Klammern gruppieren, und das Zeichen ``\"|\"`` erlaubt Ihnen *entweder* den Ausdruck links *oder* denjenigen rechts davon zu finden. Kombinieren Sie diese beiden und sie haben es. Das war zu schnell? OK, als Erstes kombinieren wir die Ausdrücke für gerade und ungerade Seiten, erhalten also ``(Title)(Author)`` für unsere zwei benötigten Ausdrücke. Nun vereinfachen wir das Ganze, indem wir den senkrechten Strich verwenden (``\"|\"`` wird senkrechter Strich oder Verkettungszeichen genannt): Wenn Sie den Ausdruck ``(Title|Author)`` verwenden finden Sie entweder \"Titel\" (auf den ungeraden Seiten) oder \"Autor\" (auf den geraden Seiten). Na, war das nicht einfach?"
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:77
 msgid ""
@@ -318,7 +318,7 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "Ja, das habe ich. Danke für's Aufpassen. Sie können Calibre sagen, wie es mit bestimmten Dingen umgehen soll, indem Sie sogenannte \"Flags\" verwenden. Sie fügen Flags in ihren Ausdruck mithilfe des speziellen Konstrukts ``(?Flag hierher)`` ein, in welchem Sie selbstverständlich \"Flags hierher\" durch die genauen Flags, die Sie wollen, ersetzen würden. Um die Groß-/Kleinschreibung zu ignorieren lautet die Flag ``i``, folglich würden Sie ``(?i)`` in Ihren Ausdruck einfügen. Also würde ``(?i)test`` mit \"Test\", \"tEst\", \"TEst\" übereinstimmen und jegliche Variation der Groß-/Kleinschreibung, die Ihnen einfällt."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:90
 msgid ""
@@ -380,7 +380,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(Schamlos stibitzt aus `dieser Forumsdiskussion <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Sie müssten auch einige der Marken (\"Tags\") entfernen. In diesem Beispiel würde ich empfehlen, mit der Marke ``<b class=\"calibre2\">`` anzufangen, die Sie dann mit der entsprechenden schließenden Marke beenden müssen, die in diesem Fall einfach das nächste ``<\\b>`` ist. (Öffnende Marken lauten ``<Marke>``, schließende Marken ``</Marke>``; wenden Sie sich an ein gutes HTML-Handbuch oder fragen Sie im Forum nach, falls Ihnen dieser Punkt nicht ganz klar ist.) Die öffnende Marke kann hier mit ``<b.*?>``, die schließende mit ``</b>`` beschrieben werden, also könnten wir alles zwischen diesen Marken mit ``<b.*?>.*?</b>`` entfernen. Diesen Ausdruck zu verwenden wäre aber keine gute Idee, denn es würde alles von <b>-Marken eingeschlossene (diese geben übrigens Text in Fettdruck wieder) entfernen und dabei jede Wette Teile des Buches löschen. Stattdessen fügen Sie auch den Anfang der eingeschlossenen Zeichenfolge ein, was den regulären Ausdruck zu ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` macht. Hier wurden die ``\\s`` mit Quantifizierern eingefügt, statt die Leerzeichen selbst wie in der Zeichenfolge einzusetzen, um jegliche vorkommenden Variationen derselben abzufangen. Vergessen Sie beim Ausprobieren eines neuen Ausdruckes nicht zu überprüfen, was Calibre entfernen würde, um sicherzugehen, dass Sie keine Abschnitte verlieren, die Sie behalten wollten. Wenn Sie nur ein Auftreten überprüfen, übersehen Sie vielleicht ein fälschlicherweise gefundenes woanders im Text. Beachten Sie außerdem: Sollten Sie aus Versehen mehr oder weniger Marken als sie wollten entfernt haben, versucht Calibre, den beschädigten Code nach der Entfernung zu reparieren."
 
 #: ../../home/kovid/work/calibre/manual/regexp.rst:111
 msgid "Adding books"

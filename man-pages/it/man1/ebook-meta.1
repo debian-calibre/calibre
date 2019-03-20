@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "settembre 07, 2018" "3.31.0" "calibre"
+.TH "EBOOK-META" "1" "febbraio 01, 2019" "3.39.1" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -41,15 +41,15 @@ ebook\-meta ebook_file [opzioni]
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Leggi/Scrivi metadata da/su file e\-book.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Formati supportati per la lettura dei metadata: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
+Formati supportati per la scrittura dei metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Formati di file differenti supportano diversi tipi di metadata. Se imposti
+alcuni metadata in un file che non li supporta, i metadata saranno
+ignorati silenziosamente.
 .sp
 Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPZIONI]
@@ -76,7 +76,7 @@ Imposta la categoria del libro.
 .INDENT 0.0
 .TP
 .B \-\-comments, \-c
-Set the e\-book description.
+Imposta la descrizione dell\fB\(aq\fPe\-book.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +91,7 @@ Imposta la data di pubblicazione.
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Leggi metadata dal file OPF specificato e usalo per impostare i metadata nell\fB\(aq\fPebook. I metadata specificati nella linea di comando sovrascriranno quelli letti nel file OPF
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ mostra questo messaggio di aiuto ed esci
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Imposta gli identificativi del libro, possono essere specificati più volte. Ad esempio: \fI\%\-\-identifier\fP uri:http://acme.com \fI\%\-\-identifier\fP isbn:12345 Per rimuovere un identificativo non specificare nessun valore \fI\%\-\-identifier\fP isbn: Per i file EPUB, un identificativo impostato come identificativo del pacchetto non può essere rimosso.
+Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ Imposta il BookID nei file LRF
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-Set the e\-book publisher.
+Imposta l\fB\(aq\fPeditore dell\fB\(aq\fPe\-book.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +141,7 @@ Imposta la valutazione. Deve essere un numero compreso tra 1 e 5.
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series this e\-book belongs to.
+Imposta la serie alla quale questo e\-book appartiene.
 .UNINDENT
 .INDENT 0.0
 .TP

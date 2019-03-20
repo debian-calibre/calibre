@@ -31,7 +31,7 @@ class EPUB_MOBI(CatalogPlugin):
     minimum_calibre_version = (0, 7, 40)
     author = 'Greg Riker'
     version = (1, 0, 0)
-    file_types = set(['azw3', 'epub', 'mobi'])
+    file_types = {'azw3', 'epub', 'mobi'}
 
     THUMB_SMALLEST = "1.0"
     THUMB_LARGEST = "2.0"
@@ -61,7 +61,7 @@ class EPUB_MOBI(CatalogPlugin):
                            "Default: '%default'\n"
                            "Applies to: AZW3, EPUB, MOBI output formats")),
                    Option('--exclude-genre',
-                          default='\[.+\]|^\+$',
+                          default='\\[.+\\]|^\\+$',
                           dest='exclude_genre',
                           action=None,
                           help=_("Regex describing tags to exclude as genres.\n"
@@ -408,7 +408,7 @@ class EPUB_MOBI(CatalogPlugin):
             if opts.verbose:
                 log.info(" Completed catalog source generation (%s)\n"  %
                          str(datetime.timedelta(seconds=int(time.time() - opts.start_time))))
-        except (AuthorSortMismatchException, EmptyCatalogException), e:
+        except (AuthorSortMismatchException, EmptyCatalogException) as e:
             log.error(" *** Terminated catalog generation: %s ***" % e)
         except:
             log.error(" unhandled exception in catalog generator")

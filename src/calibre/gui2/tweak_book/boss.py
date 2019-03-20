@@ -26,7 +26,7 @@ from calibre.ebooks.oeb.polish.pretty import fix_all_html, pretty_all
 from calibre.ebooks.oeb.polish.replace import rename_files, replace_file, get_recommended_folders, rationalize_folders
 from calibre.ebooks.oeb.polish.split import split, merge, AbortError, multisplit
 from calibre.ebooks.oeb.polish.toc import remove_names_from_toc, create_inline_toc
-from calibre.ebooks.oeb.polish.utils import link_stylesheets, setup_cssutils_serialization as scs
+from calibre.ebooks.oeb.polish.utils import link_stylesheets, setup_css_parser_serialization as scs
 from calibre.gui2 import error_dialog, choose_files, question_dialog, info_dialog, choose_save_file, open_url, choose_dir, add_to_recent_docs
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.tweak_book import (
@@ -61,7 +61,7 @@ def get_container(*args, **kwargs):
     return container
 
 
-def setup_cssutils_serialization():
+def setup_css_parser_serialization():
     scs(tprefs['editor_tab_stop_width'])
 
 
@@ -91,7 +91,7 @@ class Boss(QObject):
         self.save_manager.check_for_completion.connect(self.check_terminal_save)
         self.doing_terminal_save = False
         self.ignore_preview_to_editor_sync = False
-        setup_cssutils_serialization()
+        setup_css_parser_serialization()
         get_boss.boss = self
         self.gui = parent
         completion_worker().result_callback = self.handle_completion_result_signal.emit
@@ -172,7 +172,7 @@ class Boss(QObject):
                         bar.setIconSize(QSize(tprefs['toolbar_icon_size'], tprefs['toolbar_icon_size']))
 
         if ret == p.Accepted:
-            setup_cssutils_serialization()
+            setup_css_parser_serialization()
             self.gui.apply_settings()
             self.refresh_file_list()
         if ret == p.Accepted or p.dictionaries_changed:
@@ -898,7 +898,7 @@ class Boss(QObject):
                 self.commit_all_editors_to_container()
                 d = InsertLink(current_container(), edname, initial_text=ed.get_smart_selection(), parent=self.gui)
                 if d.exec_() == d.Accepted:
-                    ed.insert_hyperlink(d.href, d.text)
+                    ed.insert_hyperlink(d.href, d.text, template=d.rendered_template)
             elif action[0] == 'insert_tag':
                 d = InsertTag(parent=self.gui)
                 if d.exec_() == d.Accepted:
@@ -1403,6 +1403,34 @@ class Boss(QObject):
             name = editor_name(ed)
             if name is not None and getattr(ed, 'syntax', None) == 'html':
                 self.gui.preview.sync_to_editor(name, ed.current_tag())
+
+    def show_partial_cfi_in_editor(self, name, cfi):
+        editor = self.edit_file(name, 'html')
+        if not editor or not editor.has_line_numbers:
+            return False
+        from calibre.ebooks.oeb.polish.parsing import parse
+        from calibre.ebooks.epub.cfi.parse import decode_cfi
+        root = parse(
+            editor.get_raw_data(), decoder=lambda x: x.decode('utf-8'),
+            line_numbers=True, linenumber_attribute='data-lnum')
+        node = decode_cfi(root, cfi)
+
+        def barename(x):
+            return x.tag.partition('}')[-1]
+
+        if node is not None:
+            lnum = node.get('data-lnum')
+            if lnum:
+                tags_before = []
+                for tag in root.xpath('//*[@data-lnum="%s"]' % lnum):
+                    tags_before.append(barename(tag))
+                    if tag is node:
+                        break
+                else:
+                    tags_before.append(barename(node))
+                lnum = int(lnum)
+                return editor.goto_sourceline(lnum, tags_before, attribute='id' if node.get('id') else None)
+        return False
 
     def goto_style_declaration(self, data):
         name = data['name']

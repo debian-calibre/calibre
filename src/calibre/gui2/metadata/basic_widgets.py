@@ -40,6 +40,7 @@ from calibre.utils.icu import strcmp
 from calibre.ptempfile import PersistentTemporaryFile, SpooledTemporaryFile
 from calibre.gui2.languages import LanguagesEdit as LE
 from calibre.db import SPOOL_SIZE
+from calibre.ebooks.oeb.polish.main import SUPPORTED as EDIT_SUPPORTED
 
 OK_COLOR = 'rgba(0, 255, 0, 12%)'
 ERR_COLOR = 'rgba(255, 0, 0, 12%)'
@@ -774,26 +775,69 @@ class OrigAction(QAction):
         self.restore_fmt.emit(self.fmt)
 
 
+class ViewAction(QAction):
+
+    view_fmt = pyqtSignal(object)
+
+    def __init__(self, item, parent):
+        self.item = item
+        QAction.__init__(self, _('&View')+' '+item.ext.upper(), parent)
+        self.triggered.connect(self._triggered)
+
+    def _triggered(self):
+        self.view_fmt.emit(self.item)
+
+
+class EditAction(QAction):
+
+    edit_fmt = pyqtSignal(object)
+
+    def __init__(self, item, parent):
+        self.item = item
+        QAction.__init__(self, _('&Edit')+' '+item.ext.upper(), parent)
+        self.triggered.connect(self._triggered)
+
+    def _triggered(self):
+        self.edit_fmt.emit(self.item)
+
+
 class FormatList(_FormatList):
 
     restore_fmt = pyqtSignal(object)
+    view_fmt = pyqtSignal(object)
+    edit_fmt = pyqtSignal(object)
 
     def __init__(self, parent):
         _FormatList.__init__(self, parent)
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
 
     def contextMenuEvent(self, event):
+        item = self.itemFromIndex(self.currentIndex())
         originals = [self.item(x).ext.upper() for x in range(self.count())]
         originals = [x for x in originals if x.startswith('ORIGINAL_')]
-        if not originals:
-            return
-        self.cm = cm = QMenu(self)
-        for fmt in originals:
-            action = OrigAction(fmt, cm)
-            action.restore_fmt.connect(self.restore_fmt)
-            cm.addAction(action)
-        cm.popup(event.globalPos())
-        event.accept()
+
+        if item or originals:
+            self.cm = cm = QMenu(self)
+
+            if item:
+                action = ViewAction(item, cm)
+                action.view_fmt.connect(self.view_fmt, type=Qt.QueuedConnection)
+                cm.addAction(action)
+
+                if item.ext.upper() in EDIT_SUPPORTED:
+                    action = EditAction(item, cm)
+                    action.edit_fmt.connect(self.edit_fmt, type=Qt.QueuedConnection)
+                    cm.addAction(action)
+
+            if item and originals:
+                cm.addSeparator()
+
+            for fmt in originals:
+                action = OrigAction(fmt, cm)
+                action.restore_fmt.connect(self.restore_fmt)
+                cm.addAction(action)
+            cm.popup(event.globalPos())
+            event.accept()
 
     def remove_format(self, fmt):
         for i in range(self.count()):
@@ -855,6 +899,8 @@ class FormatsManager(QWidget):
         self.formats.setAcceptDrops(True)
         self.formats.formats_dropped.connect(self.formats_dropped)
         self.formats.restore_fmt.connect(self.restore_fmt)
+        self.formats.view_fmt.connect(self.show_format)
+        self.formats.edit_fmt.connect(self.edit_format)
         self.formats.delete_format.connect(self.remove_format)
         self.formats.itemDoubleClicked.connect(self.show_format)
         self.formats.setDragDropMode(self.formats.DropOnly)
@@ -911,8 +957,8 @@ class FormatsManager(QWidget):
                 db.add_format(id_, ext, spool, notify=False,
                         index_is_id=True)
         dbfmts = db.formats(id_, index_is_id=True)
-        db_extensions = set([fl.lower() for fl in (dbfmts.split(',') if dbfmts
-            else [])])
+        db_extensions = {fl.lower() for fl in (dbfmts.split(',') if dbfmts
+            else [])}
         extensions = new_extensions.union(old_extensions)
         for ext in db_extensions:
             if ext not in extensions and ext in self.original_val:
@@ -983,6 +1029,11 @@ class FormatsManager(QWidget):
 
     def show_format(self, item, *args):
         self.dialog.do_view_format(item.path, item.ext)
+
+    def edit_format(self, item, *args):
+        from calibre.gui2.device import BusyCursor
+        with BusyCursor():
+            self.dialog.do_edit_format(item.path, item.ext)
 
     def get_selected_format(self):
         row = self.formats.currentRow()
@@ -1574,6 +1625,9 @@ class IdentifiersEdit(QLineEdit, ToMetadataMixin):
         self.setStyleSheet(INDICATOR_SHEET % col)
 
     def paste_identifier(self):
+        identifier_found = self.parse_clipboard_for_identifier()
+        if identifier_found:
+            return
         try:
             prefix = gprefs['paste_isbn_prefixes'][0]
         except IndexError:
@@ -1605,6 +1659,51 @@ class IdentifiersEdit(QLineEdit, ToMetadataMixin):
             vals['isbn'] = text
             self.current_val = vals
 
+        if not text:
+            return
+
+    def parse_clipboard_for_identifier(self):
+        from calibre.ebooks.metadata.sources.prefs import msprefs
+        from calibre.utils.formatter import EvalFormatter
+        text = unicode(QApplication.clipboard().text()).strip()
+        if not text:
+            return False
+
+        rules = msprefs['id_link_rules']
+        if rules:
+            formatter = EvalFormatter()
+            vals = {'id' : '(?P<new_id>[^/]+)'}
+            for key in rules.keys():
+                rule = rules[key]
+                for name, template in rule:
+                    try:
+                        url_pattern = formatter.safe_format(template, vals, '', vals)
+                        new_id = re.compile(url_pattern)
+                        new_id = new_id.search(text).group('new_id')
+                        if new_id:
+                            vals = self.current_val
+                            vals[key] = new_id
+                            self.current_val = vals
+                            return True
+                    except Exception:
+                        import traceback
+                        traceback.format_exc()
+                        continue
+
+        from calibre.customize.ui import all_metadata_plugins
+
+        for plugin in all_metadata_plugins():
+            try:
+                identifier = plugin.id_from_url(text)
+                if identifier:
+                    vals = self.current_val
+                    vals[identifier[0]] = identifier[1]
+                    self.current_val = vals
+                    return True
+            except Exception:
+                pass
+
+        return False
 # }}}
 
 
@@ -1739,6 +1838,8 @@ class DateEdit(make_undoable(QDateTimeEdit), ToMetadataMixin):
         fmt = tweaks[self.TWEAK]
         if fmt is None:
             fmt = self.FMT
+        elif fmt == 'iso':
+            fmt = 'yyyy-MM-ddTHH:mm:ss'
         self.setDisplayFormat(fmt)
         self.setCalendarPopup(True)
         self.cw = CalendarWidget(self)

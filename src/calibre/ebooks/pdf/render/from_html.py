@@ -8,7 +8,7 @@ __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import json, os
-from future_builtins import map
+from polyglot.builtins import map
 from math import floor
 from collections import defaultdict
 
@@ -150,6 +150,7 @@ class PDFWriter(QObject):
         QObject.__init__(self)
 
         self.logger = self.log = log
+        self.mathjax_dir = P('mathjax', allow_user_override=False)
         current_log(log)
         self.opts = opts
         self.cover_data = cover_data
@@ -254,9 +255,10 @@ class PDFWriter(QObject):
             raise Exception('PDF Output failed, see log for details')
 
     def render_inline_toc(self):
+        evaljs = self.view.page().mainFrame().evaluateJavaScript
         self.rendered_inline_toc = True
         from calibre.ebooks.pdf.render.toc import toc_as_html
-        raw = toc_as_html(self.toc, self.doc, self.opts)
+        raw = toc_as_html(self.toc, self.doc, self.opts, evaljs)
         pt = PersistentTemporaryFile('_pdf_itoc.htm')
         pt.write(raw)
         pt.close()
@@ -308,7 +310,7 @@ class PDFWriter(QObject):
 
     def load_mathjax(self):
         evaljs = self.view.page().mainFrame().evaluateJavaScript
-        mjpath = P(u'viewer/mathjax').replace(os.sep, '/')
+        mjpath = self.mathjax_dir.replace(os.sep, '/')
         if iswindows:
             mjpath = u'/' + mjpath
         if bool(evaljs('''
@@ -317,6 +319,9 @@ class PDFWriter(QObject):
                     '''%(json.dumps(mjpath, ensure_ascii=False)))):
             self.log.debug('Math present, loading MathJax')
             while not bool(evaljs('mathjax.math_loaded')):
+                self.loop.processEvents(self.loop.ExcludeUserInputEvents)
+            # give the MathJax fonts time to load
+            for i in range(5):
                 self.loop.processEvents(self.loop.ExcludeUserInputEvents)
             evaljs('document.getElementById("MathJax_Message").style.display="none";')
 
@@ -419,6 +424,10 @@ class PDFWriter(QObject):
 
         amap = json.loads(evaljs('''
         document.body.style.backgroundColor = "white";
+        // Qt WebKit cannot handle opacity with the Pdf backend
+        s = document.createElement('style');
+        s.textContent = '* {opacity: 1 !important}';
+        document.documentElement.appendChild(s);
         paged_display.set_geometry(1, %d, %d, %d);
         paged_display.layout();
         paged_display.fit_images();
@@ -456,16 +465,19 @@ class PDFWriter(QObject):
             if idx is not None:
                 setattr(self, attr, sections[idx][0])
 
+        from calibre.ebooks.pdf.render.toc import calculate_page_number
+
         while True:
             set_section(col, sections, 'current_section')
             set_section(col, tl_sections, 'current_tl_section')
             self.doc.init_page(page_margins)
+            num = calculate_page_number(self.current_page_num, self.opts.pdf_page_number_map, evaljs)
             if self.header or self.footer:
-                if evaljs('paged_display.update_header_footer(%d)'%self.current_page_num) is True:
+                if evaljs('paged_display.update_header_footer(%d)'%num) is True:
                     self.load_header_footer_images()
 
             self.painter.save()
-            mf.render(self.painter)
+            mf.render(self.painter, mf.ContentsLayer)
             self.painter.restore()
             try:
                 nsl = int(evaljs('paged_display.next_screen_location()'))

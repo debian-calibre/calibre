@@ -1,13 +1,14 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import itertools, operator
 from functools import partial
-from future_builtins import map
+from polyglot.builtins import map
 from collections import OrderedDict
 
 from PyQt5.Qt import (
@@ -443,7 +444,7 @@ class BooksView(QTableView):  # {{{
                 col_font = self._model.styled_columns.get(col)
                 m = ans.addMenu(_('Change font style for %s') % name)
                 for x, t, f in (
-                        ('normal', _('Normal font'), None), ('bold', _('Bold Font'), self._model.bold_font),
+                        ('normal', _('Normal font'), None), ('bold', _('Bold font'), self._model.bold_font),
                         ('italic', _('Italic font'), self._model.italic_font), ('bi', _('Bold and Italic font'), self._model.bi_font),
                 ):
                     a = m.addAction(t, partial(handler, action='font_' + x))
@@ -488,9 +489,14 @@ class BooksView(QTableView):  # {{{
         has_context_menu = hasattr(view, 'column_header_context_menu')
         if self.is_library_view and has_context_menu:
             view.column_header_context_menu.addSeparator()
-            view.column_header_context_menu.addAction(
-                _('Un-split the book list') if self.pin_view.isVisible() else _('Split the book list'),
-                partial(self.column_header_context_handler, action='split', column=col or 'title'))
+            if not hasattr(view.column_header_context_menu, 'bl_split_action'):
+                view.column_header_context_menu.bl_split_action = view.column_header_context_menu.addAction(
+                        'xxx', partial(self.column_header_context_handler, action='split', column='title'))
+            ac = view.column_header_context_menu.bl_split_action
+            if self.pin_view.isVisible():
+                ac.setText(_('Un-split the book list'))
+            else:
+                ac.setText(_('Split the book list'))
         if has_context_menu:
             view.column_header_context_menu.popup(view.column_header.mapToGlobal(pos))
     # }}}
@@ -649,7 +655,10 @@ class BooksView(QTableView):  # {{{
         if self.is_library_view:
             for col, order in reversed(self.cleanup_sort_history(
                     saved_history, ignore_column_map=True)[:max_sort_levels]):
-                self.sort_by_named_field(col, order)
+                try:
+                    self.sort_by_named_field(col, order)
+                except KeyError:
+                    pass
         else:
             for col, order in reversed(self.cleanup_sort_history(
                     saved_history)[:max_sort_levels]):
@@ -1113,8 +1122,8 @@ class BooksView(QTableView):  # {{{
         Select rows identified by identifiers. identifiers can be a set of ids,
         row numbers or QModelIndexes.
         '''
-        rows = set([x.row() if hasattr(x, 'row') else x for x in
-            identifiers])
+        rows = {x.row() if hasattr(x, 'row') else x for x in
+            identifiers}
         if using_ids:
             rows = set([])
             identifiers = set(identifiers)
@@ -1136,7 +1145,7 @@ class BooksView(QTableView):  # {{{
         # Create a range based selector for each set of contiguous rows
         # as supplying selectors for each individual row causes very poor
         # performance if a large number of rows has to be selected.
-        for k, g in itertools.groupby(enumerate(rows), lambda (i,x):i-x):
+        for k, g in itertools.groupby(enumerate(rows), lambda i_x:i_x[0]-i_x[1]):
             group = list(map(operator.itemgetter(1), g))
             sel.merge(QItemSelection(m.index(min(group), 0),
                 m.index(max(group), max_col)), sm.Select)

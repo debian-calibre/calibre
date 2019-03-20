@@ -14,12 +14,12 @@ import time
 import unicodedata
 import uuid
 from collections import defaultdict
-from future_builtins import zip
+from polyglot.builtins import zip
 from io import BytesIO
 from itertools import count
 from urlparse import urlparse
 
-from cssutils import getUrls, replaceUrls
+from css_parser import getUrls, replaceUrls
 from lxml import etree
 
 from calibre import CurrentDir, walk
@@ -149,8 +149,14 @@ class ContainerBase(object):  # {{{
         ans = guess_type(name)
         if ans == 'text/html':
             ans = 'application/xhtml+xml'
-        if ans in {'application/x-font-truetype', 'application/vnd.ms-opentype'} and self.opf_version_parsed[:2] > (3, 0):
-            return 'application/font-sfnt'
+        if ans in {'application/x-font-truetype', 'application/vnd.ms-opentype'}:
+            opfversion = self.opf_version_parsed[:2]
+            if opfversion > (3, 0):
+                return 'application/font-sfnt'
+            if opfversion >= (3, 0):
+                # bloody epubcheck has recently decided it likes this mimetype
+                # for ttf files
+                return 'application/vnd.ms-opentype'
         return ans
 
     def decode(self, data, normalize_to_nfc=True):
@@ -564,7 +570,7 @@ class Container(ContainerBase):  # {{{
         return set()
 
     def parse(self, path, mime):
-        with open(path, 'rb') as src:
+        with lopen(path, 'rb') as src:
             data = src.read()
         if mime in OEB_DOCS:
             data = self.parse_xhtml(data, self.relpath(path))
@@ -589,7 +595,7 @@ class Container(ContainerBase):  # {{{
 
     def parsed(self, name):
         ''' Return a parsed representation of the file specified by name. For
-        HTML and XML files an lxml tree is returned. For CSS files a cssutils
+        HTML and XML files an lxml tree is returned. For CSS files a css_parser
         stylesheet is returned. Note that parsed objects are cached for
         performance. If you make any changes to the parsed object, you must
         call :meth:`dirty` so that the container knows to update the cache. See also :meth:`replace`.'''
@@ -605,7 +611,7 @@ class Container(ContainerBase):  # {{{
     def replace(self, name, obj):
         '''
         Replace the parsed object corresponding to name with obj, which must be
-        a similar object, i.e. an lxml tree for HTML/XML or a cssutils
+        a similar object, i.e. an lxml tree for HTML/XML or a css_parser
         stylesheet for a CSS file.
         '''
         self.parsed_cache[name] = obj
@@ -944,7 +950,7 @@ class Container(ContainerBase):  # {{{
         base = os.path.dirname(path)
         if not os.path.exists(base):
             os.makedirs(base)
-        open(path, 'wb').close()
+        lopen(path, 'wb').close()
         return item
 
     def format_opf(self):
@@ -999,7 +1005,7 @@ class Container(ContainerBase):  # {{{
         if self.cloned and nlinks_file(dest) > 1:
             # Decouple this file from its links
             os.unlink(dest)
-        with open(dest, 'wb') as f:
+        with lopen(dest, 'wb') as f:
             f.write(data)
 
     def filesize(self, name):
@@ -1040,7 +1046,7 @@ class Container(ContainerBase):  # {{{
         this will commit the file if it is dirtied and remove it from the parse
         cache. You must finish with this file before accessing the parsed
         version of it again, or bad things will happen. '''
-        return open(self.get_file_path_for_processing(name, mode not in {'r', 'rb'}), mode)
+        return lopen(self.get_file_path_for_processing(name, mode not in {'r', 'rb'}), mode)
 
     def commit(self, outpath=None, keep_parsed=False):
         '''
@@ -1058,7 +1064,7 @@ class Container(ContainerBase):  # {{{
         mismatches = []
         for name, path in self.name_path_map.iteritems():
             opath = other.name_path_map[name]
-            with open(path, 'rb') as f1, open(opath, 'rb') as f2:
+            with lopen(path, 'rb') as f1, lopen(opath, 'rb') as f2:
                 if f1.read() != f2.read():
                     mismatches.append('The file %s is not the same'%name)
         return '\n'.join(mismatches)
@@ -1131,7 +1137,7 @@ class EpubContainer(Container):
                 if fname is not None:
                     shutil.copy(os.path.join(dirpath, fname), os.path.join(base, fname))
         else:
-            with open(self.pathtoepub, 'rb') as stream:
+            with lopen(self.pathtoepub, 'rb') as stream:
                 try:
                     zf = ZipFile(stream)
                     zf.extractall(tdir)
@@ -1348,12 +1354,12 @@ class EpubContainer(Container):
                     if err.errno != errno.EEXIST:
                         raise
                 for fname in filenames:
-                    with open(os.path.join(dirpath, fname), 'rb') as src, open(os.path.join(base, fname), 'wb') as dest:
+                    with lopen(os.path.join(dirpath, fname), 'rb') as src, lopen(os.path.join(base, fname), 'wb') as dest:
                         shutil.copyfileobj(src, dest)
 
         else:
             from calibre.ebooks.tweak import zip_rebuilder
-            with open(join(self.root, 'mimetype'), 'wb') as f:
+            with lopen(join(self.root, 'mimetype'), 'wb') as f:
                 f.write(guess_type('a.epub'))
             zip_rebuilder(self.root, outpath)
             for name, data in restore_fonts.iteritems():
@@ -1439,7 +1445,7 @@ class AZW3Container(Container):
             tdir = PersistentTemporaryDirectory('_azw3_container')
         tdir = os.path.abspath(os.path.realpath(tdir))
         self.root = tdir
-        with open(pathtoazw3, 'rb') as stream:
+        with lopen(pathtoazw3, 'rb') as stream:
             raw = stream.read(3)
             if raw == b'TPZ':
                 raise InvalidMobi(_('This is not a MOBI file. It is a Topaz file.'))

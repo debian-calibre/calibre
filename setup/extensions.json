@@ -10,7 +10,8 @@
     {
         "name": "monotonic",
         "sources": "calibre/utils/monotonic.c",
-        "linux_libraries": "rt"
+        "linux_libraries": "rt",
+        "needs_py2": true
     },
     {
         "name": "unicode_names",
@@ -30,7 +31,8 @@
         "inc_dirs": "!zlib_inc_dirs",
         "lib_dirs": "!zlib_lib_dirs",
         "libraries": "z",
-        "windows_libraries": "zlib"
+        "windows_libraries": "zlib",
+        "needs_py2": true
     },
     {
         "name": "certgen",
@@ -83,15 +85,6 @@
         "inc_dirs": "!chmlib_inc_dirs",
         "lib_dirs": "!chmlib_lib_dirs",
         "defines": "SWIG_COBJECT_TYPES"
-    },
-    {
-        "name": "chm_extra",
-        "sources": "calibre/utils/chm/extra.c",
-        "libraries": "chm",
-        "windows_libraries": "ChmLib",
-        "inc_dirs": "!chmlib_inc_dirs",
-        "lib_dirs": "!chmlib_lib_dirs",
-        "defines": "__PYTHON__"
     },
     {
         "name": "lzx",

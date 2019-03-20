@@ -12,7 +12,7 @@ from calibre.constants import DEBUG
 from calibre.db.errors import NoSuchFormat
 from calibre.utils.config import Config, StringConfig, tweaks
 from calibre.utils.formatter import TemplateFormatter
-from calibre.utils.filenames import shorten_components_to, supports_long_names, ascii_filename
+from calibre.utils.filenames import shorten_components_to, ascii_filename
 from calibre.constants import preferred_encoding
 from calibre.ebooks.metadata import fmt_sidx
 from calibre.ebooks.metadata import title_sort
@@ -282,7 +282,7 @@ def get_path_components(opts, mi, book_id, path_length):
             to_lowercase=opts.to_lowercase,
             replace_whitespace=opts.replace_whitespace, safe_format=False,
             last_has_extension=False, single_dir=opts.single_dir)
-    except Exception, e:
+    except Exception as e:
         raise ValueError(_('Failed to calculate path for '
             'save to disk. Template: %(templ)s\n'
             'Error: %(err)s')%dict(templ=opts.template, err=e))
@@ -378,7 +378,7 @@ def sanitize_args(root, opts):
     root = os.path.abspath(root)
 
     opts.template = preprocess_template(opts.template)
-    length = 1000 if supports_long_names(root) else 240
+    length = 240
     length -= len(root)
     if length < 5:
         raise ValueError('%r is too long.'%root)

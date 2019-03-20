@@ -30,10 +30,10 @@ class HTMLInput(InputFormatPlugin):
     name        = 'HTML Input'
     author      = 'Kovid Goyal'
     description = 'Convert HTML and OPF files to an OEB'
-    file_types  = set(['opf', 'html', 'htm', 'xhtml', 'xhtm', 'shtm', 'shtml'])
+    file_types  = {'opf', 'html', 'htm', 'xhtml', 'xhtm', 'shtm', 'shtml'}
     commit_name = 'html_input'
 
-    options = set([
+    options = {
         OptionRecommendation(name='breadth_first',
             recommended_value=False, level=OptionRecommendation.LOW,
             help=_('Traverse links in HTML files breadth first. Normally, '
@@ -59,7 +59,7 @@ class HTMLInput(InputFormatPlugin):
                 )
         ),
 
-    ])
+    }
 
     def convert(self, stream, opts, file_ext, log,
                 accelerators):
@@ -109,8 +109,8 @@ class HTMLInput(InputFormatPlugin):
         from calibre.ebooks.html.input import get_filelist
         from calibre.ebooks.metadata import string_to_authors
         from calibre.utils.localization import canonicalize_lang
-        import cssutils, logging
-        cssutils.log.setLevel(logging.WARN)
+        import css_parser, logging
+        css_parser.log.setLevel(logging.WARN)
         self.OEB_STYLES = OEB_STYLES
         oeb = create_oebbook(log, None, opts, self,
                 encoding=opts.input_encoding, populate=False)
@@ -189,7 +189,7 @@ class HTMLInput(InputFormatPlugin):
                     if href == item.href:
                         dpath = os.path.dirname(path)
                         break
-                cssutils.replaceUrls(item.data,
+                css_parser.replaceUrls(item.data,
                         partial(self.resource_adder, base=dpath))
 
         toc = self.oeb.toc

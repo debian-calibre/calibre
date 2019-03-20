@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__license__ = 'GPL v3'
+from __future__ import print_function
+__license__   = 'GPL v3'
 __copyright__ = '2010, Greg Riker'
 
 import datetime, os, platform, re, shutil, time, unicodedata, zlib
@@ -24,6 +25,7 @@ from calibre.utils.formatter import TemplateFormatter
 from calibre.utils.icu import capitalize, collation_order, sort_key
 from calibre.utils.img import scale_image
 from calibre.utils.zipfile import ZipFile
+from calibre.utils.localization import get_lang, lang_as_iso639_1
 
 
 class Formatter(TemplateFormatter):
@@ -580,7 +582,7 @@ class CatalogBuilder(object):
         # Compare the record to each rule looking for a match
         for rule in self.prefix_rules:
             # Literal comparison for Tags field
-            if rule['field'].lower() == 'tags':
+            if rule['field'].lower() == 'tags' or rule['field'] == _('Tags'):
                 if rule['pattern'].lower() in map(unicode.lower, record['tags']):
                     if self.DEBUG and self.opts.verbose:
                         self.opts.log.info("  %s '%s' by %s (%s: Tags includes '%s')" %
@@ -1020,7 +1022,7 @@ class CatalogBuilder(object):
         if self.excluded_tags:
             search_terms = []
             for tag in self.excluded_tags:
-                search_terms.append("tag:=%s" % tag)
+                search_terms.append('tags:"=%s"' % tag)
             search_phrase = "not (%s)" % " or ".join(search_terms)
 
         # If a list of ids are provided, don't use search_text
@@ -1208,11 +1210,11 @@ class CatalogBuilder(object):
               clipped to max_len
             """
 
-            normalized = massaged = re.sub('\s', '', ascii_text(tag).lower())
-            if re.search('\W', normalized):
+            normalized = massaged = re.sub('\\s', '', ascii_text(tag).lower())
+            if re.search('\\W', normalized):
                 normalized = ''
                 for c in massaged:
-                    if re.search('\W', c):
+                    if re.search('\\W', c):
                         normalized += self.generate_unicode_name(c)
                     else:
                         normalized += c
@@ -1375,7 +1377,7 @@ class CatalogBuilder(object):
         Return:
          (str): asciized version of author
         """
-        return re.sub("\W", "", ascii_text(author))
+        return re.sub("\\W", "", ascii_text(author))
 
     def generate_format_args(self, book):
         """ Generate the format args for template substitution.
@@ -4013,19 +4015,22 @@ class CatalogBuilder(object):
         """
 
         self.update_progress_full_step(_("Generating OPF"))
+        lang = get_lang() or 'en'
+        if lang_as_iso639_1(lang):
+            lang = lang_as_iso639_1(lang)
 
         header = '''
             <?xml version="1.0" encoding="UTF-8"?>
             <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="calibre_id">
                 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf"
                         xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                    <dc:language>en-US</dc:language>
+                    <dc:language>LANG</dc:language>
                 </metadata>
                 <manifest></manifest>
                 <spine toc="ncx"></spine>
                 <guide></guide>
             </package>
-            '''
+            '''.replace('LANG', lang)
         # Add the supplied metadata tags
         soup = BeautifulStoneSoup(header, selfClosingTags=['item', 'itemref', 'meta', 'reference'])
         metadata = soup.find('metadata')
@@ -4208,9 +4213,9 @@ class CatalogBuilder(object):
 
         # Generate a legal XHTML id/href string
         if self.letter_or_symbol(series) == self.SYMBOLS:
-            return "symbol_%s_series" % re.sub('\W', '', series).lower()
+            return "symbol_%s_series" % re.sub('\\W', '', series).lower()
         else:
-            return "%s_series" % re.sub('\W', '', ascii_text(series)).lower()
+            return "%s_series" % re.sub('\\W', '', ascii_text(series)).lower()
 
     def generate_short_description(self, description, dest=None):
         """ Generate a truncated version of the supplied string.
@@ -4255,7 +4260,7 @@ class CatalogBuilder(object):
             else:
                 return _short_description(description, self.opts.description_clip)
         else:
-            print " returning description with unspecified destination '%s'" % description
+            print(" returning description with unspecified destination '%s'" % description)
             raise RuntimeError
 
     def generate_sort_title(self, title):
@@ -4291,7 +4296,7 @@ class CatalogBuilder(object):
                 else:
                     if re.match('[0-9]+', word[0]):
                         word = word.replace(',', '')
-                        suffix = re.search('[\D]', word)
+                        suffix = re.search('[\\D]', word)
                         if suffix:
                             word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                         else:
@@ -4307,7 +4312,7 @@ class CatalogBuilder(object):
             else:
                 if re.search('[0-9]+', word[0]):
                     word = word.replace(',', '')
-                    suffix = re.search('[\D]', word)
+                    suffix = re.search('[\\D]', word)
                     if suffix:
                         word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                     else:
@@ -4637,7 +4642,7 @@ class CatalogBuilder(object):
         # confusion with decimal points.
 
         # Explode lost CRs to \n\n
-        for lost_cr in re.finditer('([a-z])([\.\?!])([A-Z])', comments):
+        for lost_cr in re.finditer('([a-z])([\\.\\?!])([A-Z])', comments):
             comments = comments.replace(lost_cr.group(),
                                         '%s%s\n\n%s' % (lost_cr.group(1),
                                                         lost_cr.group(2),

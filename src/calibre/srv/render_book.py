@@ -9,12 +9,12 @@ from base64 import standard_b64encode, standard_b64decode
 from collections import defaultdict, OrderedDict
 from itertools import count
 from functools import partial
-from future_builtins import map
+from polyglot.builtins import map
 from urlparse import urlparse
 from urllib import quote
 
-from cssutils import replaceUrls
-from cssutils.css import CSSRule
+from css_parser import replaceUrls
+from css_parser.css import CSSRule
 
 from calibre import prepare_string_for_xml, force_unicode
 from calibre.ebooks import parse_css_length

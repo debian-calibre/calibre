@@ -1,3 +1,4 @@
+from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 '''
@@ -49,7 +50,7 @@ def _connect(path):
     conn =  sqlite.connect(path, factory=Connection, detect_types=sqlite.PARSE_DECLTYPES|sqlite.PARSE_COLNAMES)
     conn.row_factory = lambda cursor, row : list(row)
     conn.create_aggregate('concat', 1, Concatenate)
-    title_pat = re.compile('^(A|The|An)\s+', re.IGNORECASE)
+    title_pat = re.compile('^(A|The|An)\\s+', re.IGNORECASE)
 
     def title_sort(title):
         match = title_pat.search(title)
@@ -809,7 +810,7 @@ ALTER TABLE books ADD COLUMN isbn TEXT DEFAULT "" COLLATE NOCASE;
             if func is None:
                 break
             if self.user_version == i:
-                print 'Upgrading database from version: %d'%i
+                print('Upgrading database from version: %d'%i)
                 func(self.conn)
 
     def close(self):
@@ -1512,6 +1513,7 @@ def text_to_tokens(text):
         except sre_constants.error:
             continue
     return ans, OR
+
 
 if __name__ == '__main__':
     sqlite.enable_callback_tracebacks(True)

@@ -1,12 +1,13 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import absolute_import
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, locale, re, cStringIO, cPickle
+import os, locale, re, cStringIO
 from gettext import GNUTranslations, NullTranslations
 
 _available_translations = None
@@ -15,9 +16,10 @@ _available_translations = None
 def available_translations():
     global _available_translations
     if _available_translations is None:
-        stats = P('localization/stats.pickle', allow_user_override=False)
+        stats = P('localization/stats.calibre_msgpack', allow_user_override=False)
         if os.path.exists(stats):
-            stats = cPickle.load(open(stats, 'rb'))
+            from calibre.utils.serialize import msgpack_loads
+            stats = msgpack_loads(open(stats, 'rb').read())
         else:
             stats = {}
         _available_translations = [x for x in stats if stats[x] > 0.1]
@@ -222,8 +224,9 @@ def set_translators():
                 except:
                     pass  # No iso639 translations for this lang
                 if buf is not None:
+                    from calibre.utils.serialize import msgpack_loads
                     try:
-                        lcdata = cPickle.loads(zf.read(mpath + '/lcdata.pickle'))
+                        lcdata = msgpack_loads(zf.read(mpath + '/lcdata.calibre_msgpack'))
                     except:
                         pass  # No lcdata
 
@@ -346,9 +349,9 @@ for k in _extra_lang_codes:
 def _load_iso639():
     global _iso639
     if _iso639 is None:
-        ip = P('localization/iso639.pickle', allow_user_override=False)
-        with open(ip, 'rb') as f:
-            _iso639 = cPickle.load(f)
+        ip = P('localization/iso639.calibre_msgpack', allow_user_override=False, data=True)
+        from calibre.utils.serialize import msgpack_loads
+        _iso639 = msgpack_loads(ip)
     return _iso639
 
 

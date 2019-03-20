@@ -55,6 +55,7 @@ Codepages as to RTF 1.9.1:
     57010	Gujarati
     57011	Punjabi
 '''
+from __future__ import print_function
 import re
 
 
@@ -174,6 +175,7 @@ class DefaultEncoding:
                     elif enc == 'pca':
                         self.__code_page = '850'
 
+
 if __name__ == '__main__':
     import sys
     encode_obj = DefaultEncoding(
@@ -182,4 +184,4 @@ if __name__ == '__main__':
             bug_handler=Exception,
             check_raw=True,
             )
-    print encode_obj.get_codepage()
+    print(encode_obj.get_codepage())

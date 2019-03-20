@@ -32,11 +32,11 @@ class EPUBInput(InputFormatPlugin):
     name        = 'EPUB Input'
     author      = 'Kovid Goyal'
     description = 'Convert EPUB files (.epub) to HTML'
-    file_types  = set(['epub'])
+    file_types  = {'epub'}
     output_encoding = None
     commit_name = 'epub_input'
 
-    recommendations = set([('page_breaks_before', '/', OptionRecommendation.MED)])
+    recommendations = {('page_breaks_before', '/', OptionRecommendation.MED)}
 
     def process_encryption(self, encfile, opf, log):
         from lxml import etree
@@ -118,7 +118,7 @@ class EPUBInput(InputFormatPlugin):
                         guide_titlepage_id = idref
                         break
 
-        raster_cover_href = opf.epub3_raster_cover
+        raster_cover_href = opf.epub3_raster_cover or opf.raster_cover
         if raster_cover_href:
             self.set_guide_type(opf, 'cover', raster_cover_href, 'Cover Image')
         titlepage_id = titlepage_href = None

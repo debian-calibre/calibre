@@ -2,7 +2,7 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-from future_builtins import map
+from polyglot.builtins import map
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -18,8 +18,8 @@ from calibre.constants import config_dir
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import gprefs, config, error_dialog, file_icon_provider
 from calibre.db.categories import Tag
-from calibre.utils.config import tweaks
-from calibre.utils.icu import sort_key, lower, strcmp, collation_order
+from calibre.utils.config import tweaks, prefs
+from calibre.utils.icu import sort_key, lower, strcmp, collation_order, primary_strcmp, primary_contains, contains
 from calibre.library.field_metadata import category_icon_map
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.utils.formatter import EvalFormatter
@@ -423,8 +423,8 @@ class TagsModel(QAbstractItemModel):  # {{{
 
             if self.category_custom_icons.get(key, None) is None:
                 self.category_custom_icons[key] = QIcon(I(
-                    category_icon_map['gst'] if is_gst else
-                    category_icon_map.get(key, category_icon_map['custom:'])))
+                    category_icon_map['gst'] if is_gst else category_icon_map.get(
+                        key, (category_icon_map['user:'] if key.startswith('@') else category_icon_map['custom:']))))
 
             if key.startswith('@'):
                 path_parts = [p for p in key.split('.')]
@@ -745,7 +745,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         return ans
 
     def dropMimeData(self, md, action, row, column, parent):
-        fmts = set([unicode(x) for x in md.formats()])
+        fmts = {unicode(x) for x in md.formats()}
         if not fmts.intersection(set(self.mimeTypes())):
             return False
         if "application/calibre+from_library" in fmts:
@@ -880,7 +880,7 @@ class TagsModel(QAbstractItemModel):  # {{{
         cat_contents = categories.get(on_node.category_key[1:], None)
         if cat_contents is None:
             return
-        cat_contents = set([(v, c) for v,c,ign in cat_contents])
+        cat_contents = {(v, c) for v,c,ign in cat_contents}
 
         fm_src = self.db.metadata_for_field(column)
         label = fm_src['label']
@@ -903,7 +903,7 @@ class TagsModel(QAbstractItemModel):  # {{{
             if value:
                 if not isinstance(value, list):
                     value = [value]
-                cat_contents |= set([(v, column) for v in value])
+                cat_contents |= {(v, column) for v in value}
 
         categories[on_node.category_key[1:]] = [[v, c, 0] for v,c in cat_contents]
         self.db.new_api.set_pref('user_categories', categories)
@@ -1460,6 +1460,12 @@ class TagsModel(QAbstractItemModel):  # {{{
         self.path_found = None
         if start_path is None:
             start_path = []
+        if prefs['use_primary_find_in_search']:
+            final_strcmp = primary_strcmp
+            final_contains = primary_contains
+        else:
+            final_strcmp = strcmp
+            final_contains = contains
 
         def process_tag(depth, tag_index, tag_item, start_path):
             path = self.path_for_index(tag_index)
@@ -1469,8 +1475,8 @@ class TagsModel(QAbstractItemModel):  # {{{
             if tag is None:
                 return False
             name = tag.original_name
-            if (equals_match and strcmp(name, txt) == 0) or \
-                    (not equals_match and lower(name).find(txt) >= 0):
+            if (equals_match and final_strcmp(name, txt) == 0) or \
+                    (not equals_match and final_contains(txt, name)):
                 self.path_found = path
                 return True
             for i,c in enumerate(tag_item.children):

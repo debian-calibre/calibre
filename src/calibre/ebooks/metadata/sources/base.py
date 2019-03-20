@@ -8,7 +8,6 @@ __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import re, threading
-from future_builtins import map
 
 from calibre import browser, random_user_agent
 from calibre.customize import Plugin
@@ -494,6 +493,15 @@ class Source(Plugin):
 
         Note that this method must only return validated URLs, i.e. not URLS
         that could result in a generic cover image or a not found error.
+        '''
+        return None
+
+    def id_from_url(self, url):
+        '''
+        Parse a URL and return a tuple of the form:
+        (identifier_type, identifier_value).
+        If the URL does not match the pattern for the metadata source,
+        return None.
         '''
         return None
 

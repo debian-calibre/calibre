@@ -10,7 +10,7 @@ import sys, re
 from operator import itemgetter
 from itertools import chain
 
-from cssutils import parseStyle
+from css_parser import parseStyle
 from PyQt5.Qt import QTextEdit, Qt, QTextCursor
 
 from calibre import prepare_string_for_xml, xml_entity_to_unicode
@@ -26,6 +26,7 @@ from calibre.utils.icu import utf16_length
 
 get_offset = itemgetter(0)
 PARAGRAPH_SEPARATOR = '\u2029'
+DEFAULT_LINK_TEMPLATE = '<a href="_TARGET_">_TEXT_</a>'
 
 
 class Tag(object):
@@ -407,18 +408,18 @@ class Smarts(NullSmarts):
             editor.setTextCursor(cursor)
         return editor.selected_text_from_cursor(cursor)
 
-    def insert_hyperlink(self, editor, target, text):
+    def insert_hyperlink(self, editor, target, text, template=None):
+        template = template or DEFAULT_LINK_TEMPLATE
+        template = template.replace('_TARGET_', prepare_string_for_xml(target, True))
+        offset = template.find('_TEXT_')
         editor.highlighter.join()
         c = editor.textCursor()
         if c.hasSelection():
             c.insertText('')  # delete any existing selected text
         ensure_not_within_tag_definition(c)
-        c.insertText('<a href="%s">' % prepare_string_for_xml(target, True))
-        p = c.position()
-        c.insertText('</a>')
+        p = c.position() + offset
+        c.insertText(template.replace('_TEXT_', text or ''))
         c.setPosition(p)  # ensure cursor is positioned inside the newly created tag
-        if text:
-            c.insertText(text)
         editor.setTextCursor(c)
 
     def insert_tag(self, editor, name):
@@ -526,11 +527,12 @@ class Smarts(NullSmarts):
         block = editor.document().findBlockByNumber(sourceline - 1)  # blockNumber() is zero based
         if not block.isValid():
             return found_tag
+        editor.highlighter.join()
         c = editor.textCursor()
         ud = block.userData()
         all_tags = [] if ud is None else [t for t in ud.tags if (t.is_start and not t.closing)]
         tag_names = [t.name for t in all_tags]
-        if tag_names[:len(tags)] == tags:
+        if all_tags and tag_names[:len(tags)] == tags:
             c.setPosition(block.position() + all_tags[len(tags)-1].offset)
             found_tag = True
         else:

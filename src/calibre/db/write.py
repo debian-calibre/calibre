@@ -10,7 +10,7 @@ __docformat__ = 'restructuredtext en'
 import re
 from functools import partial
 from datetime import datetime
-from future_builtins import zip
+from polyglot.builtins import zip
 
 from calibre.constants import preferred_encoding, ispy3
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
@@ -59,7 +59,7 @@ def multiple_text(sep, ui_sep, x):
     if not x:
         return ()
     if isinstance(x, bytes):
-        x = x.decode(preferred_encoding, 'replce')
+        x = x.decode(preferred_encoding, 'replace')
     if isinstance(x, unicode):
         x = x.split(sep)
     else:

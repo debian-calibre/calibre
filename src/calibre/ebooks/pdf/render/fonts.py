@@ -11,7 +11,7 @@ import re
 from itertools import izip, groupby
 from operator import itemgetter
 from collections import Counter, OrderedDict
-from future_builtins import map
+from polyglot.builtins import map
 
 from calibre import as_unicode
 from calibre.ebooks.pdf.render.common import (Array, String, Stream,
@@ -108,6 +108,10 @@ class CMap(Stream):
         for m in maps:
             meat = '\n'.join('%s %s'%(k, v) for k, v in m.iteritems())
             mapping.append('%d beginbfchar\n%s\nendbfchar'%(len(m), meat))
+        try:
+            name = name.encode('ascii').decode('ascii')
+        except Exception:
+            name = uuid4()
         self.write(self.skeleton.format(name=name, mapping='\n'.join(mapping)))
 
 
@@ -181,8 +185,11 @@ class Font(object):
             self.metrics.sfnt(self.font_stream)
 
     def write_to_unicode(self, objects):
-        cmap = CMap(self.metrics.postscript_name, self.metrics.glyph_map,
-                    compress=self.compress)
+        try:
+            name = self.metrics.postscript_name
+        except KeyError:
+            name = uuid4()
+        cmap = CMap(name, self.metrics.glyph_map, compress=self.compress)
         self.font_dict['ToUnicode'] = objects.add(cmap)
 
     def write_widths(self, objects):

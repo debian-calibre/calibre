@@ -10,7 +10,7 @@ from itertools import count
 from operator import itemgetter
 import re
 
-from cssutils.css import CSSStyleSheet, CSSRule, Property
+from css_parser.css import CSSStyleSheet, CSSRule, Property
 
 from css_selectors import Select, INAPPROPRIATE_PSEUDO_CLASSES, SelectorError
 from calibre import as_unicode
@@ -45,7 +45,8 @@ def iterrules(container, sheet_name, rules=None, media_rule_ok=media_allowed, ru
     :param sheet_name: The name of the sheet in the container (in case of inline style sheets, the name of the html file)
     :param media_rule_ok: A function to test if a @media rule is allowed
     :param rule_index_counter: A counter object, rule numbers will be calculated by incrementing the counter.
-    :param rule_type: Only yield rules of this type, where type is a string type name, see cssutils.css.CSSRule for the names (by default all rules are yielded)
+    :param rule_type: Only yield rules of this type, where type is a string type name, see css_parser.css.CSSRule for the names (
+                    by default all rules are yielded)
     :return: (CSSRule object, the name of the sheet from which it comes, rule index - a monotonically increasing number)
     '''
 
@@ -82,6 +83,7 @@ def iterrules(container, sheet_name, rules=None, media_rule_ok=media_allowed, ru
 
     importing.discard(sheet_name)
 
+
 StyleDeclaration = namedtuple('StyleDeclaration', 'index declaration pseudo_element')
 Specificity = namedtuple('Specificity', 'is_style num_id num_class num_elem rule_index')
 
@@ -103,7 +105,7 @@ def iterdeclaration(decl):
 
 class Values(tuple):
 
-    ''' A tuple of `cssutils.css.Value ` (and its subclasses) objects. Also has a
+    ''' A tuple of `css_parser.css.Value ` (and its subclasses) objects. Also has a
     `sheet_name` attribute that is the canonical name relative to which URLs
     for this property should be resolved. '''
 
@@ -163,7 +165,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     style_map = defaultdict(list)
     pseudo_style_map = defaultdict(list)
     rule_index_counter = count()
-    pseudo_pat = re.compile(ur':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
+    pseudo_pat = re.compile(u':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
 
     def process_sheet(sheet, sheet_name):
         if sheet_callback is not None:
@@ -223,6 +225,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     pseudo_style_map = {elem:resolve_pseudo_declarations(x) for elem, x in pseudo_style_map.iteritems()}
 
     return partial(resolve_property, style_map), partial(resolve_pseudo_property, style_map, pseudo_style_map), select
+
 
 _defvals = None
 

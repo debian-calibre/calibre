@@ -6,14 +6,11 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
-from future_builtins import zip
+from polyglot.builtins import zip
 from functools import wraps
 
-try:
-    from cssutils.css import PropertyValue
-except ImportError:
-    raise RuntimeError('You need cssutils >= 0.9.9 for calibre')
-from cssutils import profile as cssprofiles, CSSParser
+from css_parser.css import PropertyValue
+from css_parser import profile as cssprofiles, CSSParser
 from tinycss.fonts3 import parse_font, serialize_font_family
 
 DEFAULTS = {'azimuth': 'center', 'background-attachment': 'scroll',  # {{{
@@ -114,6 +111,7 @@ def normalize_simple_composition(name, cssvalue, composition, check_inherit=True
                     break
     return style
 
+
 font_composition = ('font-style', 'font-variant', 'font-weight', 'font-size', 'line-height', 'font-family')
 
 
@@ -143,6 +141,7 @@ def normalize_border(name, cssvalue):
     for edge in EDGES[1:]:
         style.update({k.replace(EDGES[0], edge):v for k, v in vals.iteritems()})
     return style
+
 
 normalizers = {
     'list-style': simple_normalizer('list-style', ('type', 'position', 'image')),
@@ -243,6 +242,7 @@ def condense_border(style, props):
             style.removeProperty(prop.name)
         style.setProperty('border', edge_vals[0].value)
 
+
 condensers = {'margin': simple_condenser('margin', condense_edge), 'padding': simple_condenser('padding', condense_edge), 'border': condense_border}
 
 
@@ -266,7 +266,7 @@ def condense_sheet(sheet):
 
 def test_normalization(return_tests=False):  # {{{
     import unittest
-    from cssutils import parseStyle
+    from css_parser import parseStyle
     from itertools import product
 
     class TestNormalization(unittest.TestCase):
@@ -429,6 +429,7 @@ def test_normalization(return_tests=False):  # {{{
         return tests
     unittest.TextTestRunner(verbosity=4).run(tests)
 # }}}
+
 
 if __name__ == '__main__':
     test_normalization()

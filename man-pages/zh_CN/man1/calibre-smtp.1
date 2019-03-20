@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "九月 07, 2018" "3.31.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "二月 01, 2019" "3.39.1" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -52,12 +52,16 @@ from is the email address of the sender and to is the email address
 of the recipient. When a complete email is read from STDIN, from and to
 are only used in the SMTP negotiation, the message headers are not modified.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+每当向具有它们自己空间的:command:
+.nf
+\(ga
+.fi
+calibre\-smtp\(ga传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH [选项]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+在后台发送邮件。如果使用此选项, 还应使用 \fI\%\-\-outbox\fP 处理传递失败。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,7 +76,7 @@ Fork and deliver message in background. If you use this option, you should also 
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+在邮件文件夹中存储失败电子邮件的路径。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -104,16 +108,16 @@ Path to maildir folder to store failed email messages in.
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+使用SMTP中继服务器发送邮件的选项。calibre 将尝试直接发送电子邮件，除非 \-\-relay 已经指定。
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+一个以PEM格式连接的CA证书文件(用于在使用TLS时验证服务器证书)的路径。默认情况下，使用系统CA证书。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+在使用TLS连接时不验证服务器证书。这是caliber 3.27版之前的默认行为。如果要使用带有自签名证书或其他无效证书的中继，则可以使用此选项恢复之前3.27版的行为
 .UNINDENT
 .INDENT 0.0
 .TP

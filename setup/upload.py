@@ -1,14 +1,17 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 
-__license__ = 'GPL v3'
+from __future__ import print_function
+__license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, subprocess, hashlib, shutil, glob, stat, sys, time, urllib2, urllib, json, httplib
+import os, subprocess, hashlib, shutil, glob, stat, sys, time, json
 from subprocess import check_call
 from tempfile import NamedTemporaryFile, mkdtemp, gettempdir
 from zipfile import ZipFile
+from polyglot.builtins import iteritems
+from polyglot.urllib import urlopen, Request
 
 if __name__ == '__main__':
     d = os.path.dirname
@@ -143,7 +146,7 @@ def calibre_cmdline(ver):
 
 
 def run_remote_upload(args):
-    print 'Running remotely:', ' '.join(args)
+    print('Running remotely:', ' '.join(args))
     subprocess.check_call([
         'ssh', '-x', '%s@%s' % (STAGING_USER, STAGING_HOST), 'cd', STAGING_DIR, '&&',
         'python2', 'hosting.py'
@@ -154,8 +157,37 @@ def run_remote_upload(args):
 
 
 def upload_to_fosshub():
+    # https://devzone.fosshub.com/dashboard/restApi
     # fosshub has no API to do partial uploads, so we always upload all files.
+    api_key = get_fosshub_data()
+
+    def request(path, data=None):
+        r = Request('https://api.fosshub.com/rest/' + path.lstrip('/'),
+                headers={
+                    'Content-Type': 'application/json',
+                    'X-auth-key': api_key,
+                    'User-Agent': 'calibre'
+        })
+        res = urlopen(r, data=data)
+        ans = json.loads(res.read())
+        if ans.get('error'):
+            raise SystemExit(ans['error'])
+        if res.getcode() != 200:
+            raise SystemExit('Request to {} failed with response code: {}'.format(path, res.getcode()))
+        # from pprint import pprint
+        # pprint(ans)
+        return ans['status'] if 'status' in ans else ans['data']
+
     print('Sending upload request to fosshub...')
+    project_id = None
+
+    for project in request('projects'):
+        if project['name'].lower() == 'calibre':
+            project_id = project['id']
+            break
+    else:
+        raise SystemExit('No calibre project found')
+
     files = set(installers())
     entries = []
     for fname in files:
@@ -164,33 +196,19 @@ def upload_to_fosshub():
             __version__, os.path.basename(fname)
         )
         entries.append({
-            'url': url,
+            'fileUrl': url,
             'type': desc,
             'version': __version__,
         })
     jq = {
-        'software': 'Calibre',
-        'apiKey': get_fosshub_data(),
-        'upload': entries,
-        'delete': [{
-            'type': '*',
-            'version': '*',
-            'name': '*'
-        }]
+        'version': __version__,
+        'files': entries,
+        'publish': True,
+        'isOldRelease': False,
     }
     # print(json.dumps(jq, indent=2))
-    rq = urllib2.urlopen(
-        'https://www.fosshub.com/JSTools/uploadJson',
-        urllib.urlencode({
-            'content': json.dumps(jq)
-        })
-    )
-    resp = rq.read()
-    if rq.getcode() != httplib.OK:
-        raise SystemExit(
-            'Failed to upload to fosshub, with HTTP error code: %d and response: %s'
-            % (rq.getcode(), resp)
-        )
+    if not request('projects/{}/releases/'.format(project_id), data=json.dumps(jq)):
+        raise SystemExit('Failed to queue publish job with fosshub')
 
 
 class UploadInstallers(Command):  # {{{
@@ -235,7 +253,7 @@ class UploadInstallers(Command):  # {{{
         print('\nRecording dist sizes')
         args = [
             '%s:%s:%s' % (__version__, fname, size)
-            for fname, size in sizes.iteritems()
+            for fname, size in iteritems(sizes)
         ]
         check_call(['ssh', 'code', '/usr/local/bin/dist_sizes'] + args)
 
@@ -255,7 +273,7 @@ class UploadInstallers(Command):  # {{{
                 )
 
         with open(os.path.join(tdir, 'fmap'), 'wb') as fo:
-            for f, desc in files.iteritems():
+            for f, desc in iteritems(files):
                 fo.write('%s: %s\n' % (f, desc))
 
         while True:

@@ -12,6 +12,7 @@ Build-Depends: cdbs (>= 0.4.43),
  qt5-qmake,
  qtchooser,
  python-apsw (>= 3.7.17),
+ python-css-parser,
  python-pil,
  python-lxml (>= 3.8),
  python-mechanize (>= 0.2.5),
@@ -22,7 +23,7 @@ Build-Depends: cdbs (>= 0.4.43),
  python-cssselect (>= 0.7.1),
  python-cherrypy3,
  python-markdown,
- python-msgpack,
+ python-msgpack (>= 0.5.6~),
  python-pyparsing,
  python-regex,
  python-routes,
@@ -49,16 +50,18 @@ Build-Depends: cdbs (>= 0.4.43),
  libchm-dev,
  libusb-1.0-0-dev,
  xdg-utils
-Maintainer: Norbert Preining <preining@debian.org>
-Uploaders: Martin Pitt <mpitt@debian.org>
-Standards-Version: 4.1.3
+Maintainer: Norbert Preining <norbert@preining.info>
+Uploaders: Martin Pitt <mpitt@debian.org>,
+ Nicholas D Steeves <nsteeves@gmail.com>
+Standards-Version: 4.2.1
 Homepage: http://calibre-ebook.com
-Vcs-Browser: https://salsa.debian.org/preining/calibre
-Vcs-Git: https://salsa.debian.org/preining/calibre.git
+Vcs-Browser: https://github.com/norbusan/calibre-debian
+Vcs-Git: https://github.com/norbusan/calibre-debian.git
 
 Package: calibre
 Architecture: all
 Depends: python2.7,
+ python-css-parser,
  python-dbus,
  python-pil,
  python-lxml (>= 3.8),
@@ -72,7 +75,7 @@ Depends: python2.7,
  python-html5-parser,
  python-html5lib,
  python-markdown,
- python-msgpack,
+ python-msgpack (>= 0.5.6~),
  python-pyqt5 (>= ${pyqt:Version}),
  python-pyqt5.qtwebkit,
  python-pyqt5.qtsvg,
@@ -93,24 +96,26 @@ Depends: python2.7,
  calibre-bin (>= ${source:Version}),
  ${misc:Depends}
 Recommends: python-dnspython (>= 1.6.0)
+Suggests: python-unrardll
 Description: powerful and easy to use e-book manager
- Calibre is a complete e-library solution. It includes library management, 
+ Calibre is a complete e-library solution. It includes library management,
  format conversion, news feeds to e-book conversion, e-book viewer and editor,
  and e-book reader sync features.
  .
  Calibre is primarily an e-book cataloging program. It manages your e-book
  collection for you. It is designed around the concept of the logical book,
  i.e. a single entry in the database that may correspond to e-books in several
- formats. It also supports conversion to and from a dozen different e-book formats.
+ formats. It also supports conversion to and from a dozen different e-book
+ formats.
  .
- Calibre supports almost every single e-Reader (e.g., Kindle, Kobo, Nook) and 
- is compatible with more devices with every update. Calibre can transfer your 
- e-books from one device to another in seconds, wirelessly or with a cable. 
- It will send the best file format for your device converting it if 
+ Calibre supports almost every single e-Reader (e.g., Kindle, Kobo, Nook) and
+ is compatible with more devices with every update. Calibre can transfer your
+ e-books from one device to another in seconds, wirelessly or with a cable.
+ It will send the best file format for your device converting it if
  needed, automatically.
  .
  Calibre can automatically fetch news from a number of websites/RSS feeds,
- format the news into a e-book and upload to a connected device. 
+ format the news into a e-book and upload to a connected device.
  .
  Calibre has also a built-in e-book viewer that can display all the major e-book
  formats.
@@ -127,5 +132,5 @@ Description: powerful and easy to use e-book manager
  format conversion, news feeds to e-book conversion, e-book viewer and editor,
  and e-book reader sync features.
  .
- This package contains the compiled architecture dependent plugins, the main 
+ This package contains the compiled architecture dependent plugins, the main
  package is called 'calibre'.

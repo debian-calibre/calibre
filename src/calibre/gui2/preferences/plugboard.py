@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -96,7 +97,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
         self.dest_fields = ['',
                             'authors', 'author_sort', 'language', 'publisher',
-                            'tags', 'title', 'title_sort']
+                            'tags', 'title', 'title_sort', 'comments']
 
         self.source_widgets = []
         self.dest_widgets = []
@@ -155,11 +156,11 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.current_device = unicode(txt)
         fpb = self.current_plugboards.get(self.current_format, None)
         if fpb is None:
-            print 'edit_device_changed: none format!'
+            print('edit_device_changed: none format!')
             return
         dpb = fpb.get(self.current_device, None)
         if dpb is None:
-            print 'edit_device_changed: none device!'
+            print('edit_device_changed: none device!')
             return
         self.set_fields()
         for i,op in enumerate(dpb):
@@ -178,7 +179,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         txt = unicode(txt)
         fpb = self.current_plugboards.get(txt, None)
         if fpb is None:
-            print 'edit_format_changed: none editable format!'
+            print('edit_format_changed: none editable format!')
             return
         self.current_format = txt
         self.check_if_writer_disabled(txt)
@@ -298,6 +299,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
     def ok_clicked(self):
         pb = []
+        comments_in_dests = False
         for i in range(0, len(self.source_widgets)):
             s = unicode(self.source_widgets[i].text())
             if s:
@@ -311,6 +313,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                                 '<br>'+str(err), show=True)
                         return
                     pb.append((s, self.dest_fields[d]))
+                    comments_in_dests = comments_in_dests or self.dest_fields[d] == 'comments'
                 else:
                     error_dialog(self, _('Invalid destination'),
                             '<p>'+_('The destination field cannot be blank'),
@@ -324,6 +327,14 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 if len(fpb) == 0:
                     del self.current_plugboards[self.current_format]
         else:
+            if comments_in_dests and not question_dialog(self.gui, _('Plugboard modifies Comments'),
+                     _('This plugboard modifies the Comments metadata. '
+                       'If the Comments are set to invalid HTML, it could cause problems on the device. '
+                       'Are you sure you wish to save this plugboard?'
+                       ),
+                        skip_dialog_name='plugboard_comments_in_dests'
+                        ):
+                return
             if self.current_format not in self.current_plugboards:
                 self.current_plugboards[self.current_format] = {}
             fpb = self.current_plugboards[self.current_format]

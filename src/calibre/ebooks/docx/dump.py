@@ -39,8 +39,8 @@ def dump(path):
     dest += '-dumped'
     do_dump(path, dest)
 
-    print (path, 'dumped to', dest)
+    print(path, 'dumped to', dest)
+
 
 if __name__ == '__main__':
     dump(sys.argv[-1])
-

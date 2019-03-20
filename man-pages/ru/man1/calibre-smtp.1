@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "сентября 07, 2018" "3.31.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "февраля 01, 2019" "3.39.1" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -104,41 +104,41 @@ calibre\-smtp [options] [откуда куда текст]
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Параметры для отправки почты через SMTP узел. calibre попытается отправить письмо напрямую, \-\-relay если узел не задан.
+Параметры для отправки почты через SMTP релей сервер. calibre попытается отправить письмо напрямую, если \-\-relay не задан.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Путь к файлу конкатенированных сертификатов CA в формате PEM, используемому для проверки сертификата сервера при использовании TLS. По умолчанию используются системные CA сертификаты.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Не проверять сертификат сервера при подключении с помощью TLS. Раньше это было поведение по умолчанию в calibre до 3.27. Если вы используется релей с самоподписанным или иным образом недействительным сертификатом, вы можете использовать этот параметр для восстановления поведения до 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Метод шифрования при подключении к узлу. Выбор из TLS, SSL и NONE. По\-умолчанию TLS. ВНИМАНИЕ: опция NONE крайне небезопасна
+Метод шифрования при подключении к релею. Выбор из TLS, SSL и NONE. По\-умолчанию TLS. ВНИМАНИЕ: опция NONE крайне небезопасна
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Пароль для узла
+Пароль для релея
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Порт подключения к почтовому узлу. По\-умолчанию 465, если шифрование идёт по SSL, иначе 25.
+Порт подключения к почтовому релей серверу. По\-умолчанию 465, если используется SSL шифрование, иначе 25.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-Узел SMTP для отправки почты
+SMTP релей сервер для отправки почты.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Имя для узла
+Имя для релея
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
