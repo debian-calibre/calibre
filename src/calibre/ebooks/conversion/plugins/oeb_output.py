@@ -21,7 +21,7 @@ class OEBOutput(OutputFormatPlugin):
     recommendations = {('pretty_print', True, OptionRecommendation.HIGH)}
 
     def convert(self, oeb_book, output_path, input_plugin, opts, log):
-        from urllib import unquote
+        from polyglot.urllib import unquote
         from lxml import etree
 
         self.log, self.opts = log, opts
@@ -51,7 +51,7 @@ class OEBOutput(OutputFormatPlugin):
                     if key == OPF_MIME:
                         # Needed as I can't get lxml to output opf:role and
                         # not output <opf:metadata> as well
-                        raw = re.sub(r'(<[/]{0,1})opf:', r'\1', raw)
+                        raw = re.sub(br'(<[/]{0,1})opf:', br'\1', raw)
                     with open(href, 'wb') as f:
                         f.write(raw)
 
@@ -65,7 +65,7 @@ class OEBOutput(OutputFormatPlugin):
                 if not os.path.exists(dir):
                     os.makedirs(dir)
                 with open(path, 'wb') as f:
-                    f.write(str(item))
+                    f.write(item.bytes_representation)
                 item.unload_data_from_memory(memory=path)
 
     def workaround_nook_cover_bug(self, root):  # {{{

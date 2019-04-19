@@ -2,12 +2,12 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from __future__ import print_function
-from polyglot.builtins import map
+from polyglot.builtins import map, unicode_type
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = u'calibre'
-numeric_version = (3, 40, 1)
-__version__   = u'.'.join(map(unicode, numeric_version))
+numeric_version = (3, 41, 0)
+__version__   = u'.'.join(map(unicode_type, numeric_version))
 __author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
 
 '''
@@ -168,7 +168,6 @@ class Plugins(collections.Mapping):
                 'icu',
                 'speedup',
                 'unicode_names',
-                'zlib2',
                 'html',
                 'freetype',
                 'imageops',
@@ -184,6 +183,7 @@ class Plugins(collections.Mapping):
         if not ispy3:
             plugins.extend([
                 'monotonic',
+                'zlib2',
             ])
         if iswindows:
             plugins.extend(['winutil', 'wpd', 'winfonts'])
@@ -198,18 +198,22 @@ class Plugins(collections.Mapping):
     def load_plugin(self, name):
         if name in self._plugins:
             return
-        sys.path.insert(0, sys.extensions_location)
+        plugins_loc = sys.extensions_location
+        if ispy3:
+            plugins_loc = os.path.join(plugins_loc, '3')
+        sys.path.insert(0, plugins_loc)
         try:
             del sys.modules[name]
         except KeyError:
             pass
+        plugin_err = u''
         try:
-            p, err = importlib.import_module(name), ''
+            p = importlib.import_module(name)
         except Exception as err:
             p = None
-            err = str(err)
-        self._plugins[name] = (p, err)
-        sys.path.remove(sys.extensions_location)
+            plugin_err = unicode_type(err)
+        self._plugins[name] = p, plugin_err
+        sys.path.remove(plugins_loc)
 
     def __iter__(self):
         return iter(self.plugins)
@@ -300,7 +304,7 @@ def get_portable_base():
 
 def get_unicode_windows_env_var(name):
     getenv = plugins['winutil'][0].getenv
-    return getenv(unicode(name))
+    return getenv(unicode_type(name))
 
 
 def get_windows_username():

@@ -26,6 +26,7 @@ from calibre.gui2.widgets2 import Dialog
 from calibre.utils.config import prefs
 from calibre.utils.icu import sort_key, numeric_sort_key
 from calibre.db.copy_to_library import copy_one_book
+from polyglot.builtins import iteritems, itervalues, unicode_type
 
 
 def ask_about_cc_mismatch(gui, db, newdb, missing_cols, incompatible_cols):  # {{{
@@ -132,7 +133,7 @@ class Worker(Thread):  # {{{
         except Exception as err:
             import traceback
             try:
-                err = unicode(err)
+                err = unicode_type(err)
             except:
                 err = repr(err)
             self.error = (err, traceback.format_exc())
@@ -260,7 +261,7 @@ class ChooseLibrary(Dialog):  # {{{
 
     @property
     def args(self):
-        return (unicode(self.le.text()), self.delete_after_copy)
+        return (unicode_type(self.le.text()), self.delete_after_copy)
 # }}}
 
 
@@ -278,7 +279,7 @@ class DuplicatesQuestion(QDialog):  # {{{
         self.setWindowTitle(_('Duplicate books'))
         self.books = QListWidget(self)
         self.items = []
-        for book_id, (title, authors) in duplicates.iteritems():
+        for book_id, (title, authors) in iteritems(duplicates):
             i = QListWidgetItem(_('{0} by {1}').format(title, ' & '.join(authors[:3])), self.books)
             i.setData(Qt.UserRole, book_id)
             i.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
@@ -298,7 +299,7 @@ class DuplicatesQuestion(QDialog):  # {{{
         self.resize(600, 400)
 
     def copy_to_clipboard(self):
-        items = [('✓' if item.checkState() == Qt.Checked else '✗') + ' ' + unicode(item.text())
+        items = [('✓' if item.checkState() == Qt.Checked else '✗') + ' ' + unicode_type(item.text())
                  for item in self.items]
         QApplication.clipboard().setText('\n'.join(items))
 
@@ -491,7 +492,7 @@ class CopyToLibraryAction(InterfaceAction):
 
         self.gui.status_bar.show_message(donemsg.format(num=len(self.worker.processed), loc=loc), 2000)
         if self.worker.auto_merged_ids:
-            books = '\n'.join(self.worker.auto_merged_ids.itervalues())
+            books = '\n'.join(itervalues(self.worker.auto_merged_ids))
             info_dialog(self.gui, _('Auto merged'),
                     _('Some books were automatically merged into existing '
                         'records in the target library. Click "Show '

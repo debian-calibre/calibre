@@ -7,7 +7,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import json, time
+import json, time, numbers
 
 from PyQt5.Qt import QApplication, QEventLoop
 
@@ -53,7 +53,7 @@ class PagePosition(object):
             if jid in self.pending_scrolls:
                 self.pending_scrolls.discard(jid)
                 if DEBUG:
-                    print ('jump_to_cfi() failed to complete after %s seconds' % WAIT)
+                    print('jump_to_cfi() failed to complete after %s seconds' % WAIT)
 
     @property
     def current_pos(self):
@@ -83,7 +83,7 @@ class PagePosition(object):
         self._cpos = None
 
     def to_pos(self, pos):
-        if isinstance(pos, (int, float)):
+        if isinstance(pos, numbers.Number):
             self.document.scroll_fraction = pos
         else:
             self.scroll_to_cfi(pos)

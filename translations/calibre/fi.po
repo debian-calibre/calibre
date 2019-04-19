@@ -5,15 +5,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010
 # Hannu Lammi <hannu.lammi@gmail.com>, 2015
 # lohkoa, 2015
+# lohkoa, 2015
 # Pekka Tuominen <pekka.tuominen@iki.fi>, 2019
+# Saku Tiihonen <zackyistic@gmail.com>, 2016
 # Saku Tiihonen <zackyistic@gmail.com>, 2016
 # Timo Virtanen <pompila@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2019-03-07 10:34+IST\n"
-"PO-Revision-Date: 2019-03-07 05:01+0000\n"
+"POT-Creation-Date: 2019-03-08 11:44+IST\n"
+"PO-Revision-Date: 2019-03-20 19:12+0000\n"
 "Last-Translator: Pekka Tuominen <pekka.tuominen@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/calibre/calibre/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -204,13 +206,13 @@ msgstr "Ei tee mitään"
 #: /home/kovid/work/calibre/src/calibre/ebooks/txt/processor.py:144
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:550
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:558
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:304
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:651
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:653
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:312
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:372
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:427
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:902
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:904
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/__init__.py:52
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:141
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:160
@@ -228,7 +230,7 @@ msgstr "Ei tee mitään"
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:387
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:402
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:533
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:743
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:744
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:606
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1325
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1553
@@ -1860,7 +1862,7 @@ msgid ""
 "You can get a list of custom column names using the custom_columns\n"
 "command.\n"
 "    "
-msgstr ""
+msgstr "%prog set_custom [vaihtoehdot] sarake if arvo\n\nAseta arvo id:n mukaisen kirjan mukautettuun sarakkeeseen.\nSaat listan id:istä haulla.\nSaat listan mukautetuista sarakkeista custom_columns-komennolla."
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_set_custom.py:64
 msgid ""
@@ -1952,7 +1954,7 @@ msgid ""
 "\n"
 "Show the metadata stored in the calibre database for the book identified by id.\n"
 "id is an id number from the search command.\n"
-msgstr ""
+msgstr "\n%prog show_metadata [vaihtoehdot] id\n\nNäytä tietokannan metatiedot id:n mukaiselle kirjalle.\nSaat listan id:istä haulla.\n"
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_show_metadata.py:39
 msgid "Print metadata in OPF form (XML)"
@@ -2215,7 +2217,7 @@ msgid ""
 "    {1}\n"
 "\n"
 "Everything after the -- is passed to the script.\n"
-msgstr ""
+msgstr "{0}\n\nKomentorivikäyttöliittymiä calibren virheentestaukseen. Ilman vaihtoehtoja, komento käynnistää upotetun Python-tulkin. Voit myös suorittaa calibren pääkäyttöliittymän, lukuohjelman sekä muokkaimen virheenetsintätilassa.\n\nSisältää myös käyttöliittymän joihinkin komentorivittömiin calibren osiin, kuten fontin osittamiseen, ekirjan diff-työkaluun jne.\n\n%progilla voit suorittaa myös itsenäisiä skriptejä. Toiminta:\n\n{1}\n\nKaikki --:n jälkeen ohjataan skriptille.\n"
 
 #: /home/kovid/work/calibre/src/calibre/debug.py:56
 msgid "%prog [options]"
@@ -2850,7 +2852,7 @@ msgid ""
 msgstr "Kobosi käyttää päivitettyä tietokantaa/firmwarea. Calibrella ei ole tietoa tästä versiosta, joten tietokannan muokkaus on estetty vikaantumisen estämiseksi. Voit yhä lähettää kirjoja laitteelle, mutta et voi poistaa tai hallita kirjoja siellä, Jos haluat kokeilla ja osaat palauttaa laitteen tehdasasetukset, voit ohittaa tämän klikkaamalla laitetta oikealla hiirennapilla calibressa ja valitsemalla \"Määritä laite\" ja sitten \"Yritä tukea uudempaa firmwarea\". Tämä voi vaatia Kobosi palauttamista tehdasasetuksiin."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:730
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:523
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:568
 msgid "Not Implemented"
 msgstr "Ei toteutettu"
 
@@ -3339,7 +3341,7 @@ msgid ""
 "tap \"Allow\" on any connection popup message you see, then either wait a "
 "minute or restart calibre. You might also have to change the mode of the USB"
 " connection on the {0} to \"Media Transfer mode (MTP)\" or similar."
-msgstr ""
+msgstr "laite{0} ei salli yhteyttä. Avaa {0}:n näyttö, valitse \"Salli\" jos näet yhteyslupapyynnön, ja odota hetki tai käynnistä calibre uudelleen. USB:n tiedonsiirtotila {0}:ssa pitää mahdollisesti vaihtaa \"Media Transfer mode (MTP)\" -tilaan tms."
 
 #: /home/kovid/work/calibre/src/calibre/devices/mtp/unix/driver.py:265
 #: /home/kovid/work/calibre/src/calibre/devices/mtp/windows/driver.py:340
@@ -3385,16 +3387,16 @@ msgstr "Nook"
 
 #: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:24
 msgid "Communicate with the Nook e-book reader."
-msgstr ""
+msgstr "Kommunikoi Nook-lukulaitteen kanssa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:89
 msgid ""
 "Communicate with the Nook Color, TSR, Glowlight and Tablet e-book readers."
-msgstr ""
+msgstr "Kommunikoi Nook Color, TSR, Glowlight tai Tablet-lukulaitteen kanssa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/nuut2/driver.py:18
 msgid "Communicate with the Nuut2 e-book reader."
-msgstr ""
+msgstr "Kommunikoi Nuut2-lukijan kanssa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/paladin/driver.py:31
 msgid "Communicate with the Paladin readers"
@@ -3409,7 +3411,7 @@ msgstr "Pilkun erottama lista metatietokentistä, jotka muutetaan kokoelmiksi la
 
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/driver.py:23
 msgid "Communicate with Sony e-book readers older than the PRST1."
-msgstr ""
+msgstr "Kommunikoi Sony eBook lukijoiden kanssa jotka ovat vanhempia kuin PRST1."
 
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/driver.py:59
 msgid "Comments have been removed as the SONY reader chokes on them"
@@ -3433,7 +3435,7 @@ msgid ""
 "available: %(abt)s:%(abtv)s and %(aba)s:%(abav)s. Add these values to the "
 "list to enable them. The collections will be given the name provided after "
 "the \":\" character."
-msgstr ""
+msgstr "Pilkuin erotetut listat muuntuvat laitteella kokoelmiksi. Vaihtoehdot ovat: %(coll)s. Käytettävissä on kaksi erikoiskokoelmaa: %(abt)s:%(abtv)s ja %(aba)s:%(abav)s. Lisää nämä arvot listaan ottaaksesi ne käyttöön. Kokoelmat nimetään :-merkin jälkeisen osan mukaan."
 
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/driver.py:76
 msgid "Upload separate cover thumbnails for books (newer readers)"
@@ -3446,7 +3448,7 @@ msgid ""
 "useful if you are sending DRMed books in which you cannot change the cover. "
 "WARNING: This option should only be used with newer SONY readers: 350, 650, "
 "950 and newer."
-msgstr ""
+msgstr "Normaalisti SONY lukijalaitteet ottavat kansikuvan e-kirjatiedostosta. Kun tämä on valittuna calibre lähettää erillisen kansikuvan lukijalle. Tämä on käytännöllistä jos lähetät DRM-suojattuja kirjoja, joiden kansikuvaa ei voi muuttaa. VAROITUS: Valitse tämä vain jos käytössä on uudehko SONY lukija (350, 650, 950 tai uudempi)."
 
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/driver.py:83
 msgid ""
@@ -3492,7 +3494,7 @@ msgstr "Nimeämätön"
 
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:41
 msgid "Communicate with the PRST1 and newer SONY e-book readers"
-msgstr ""
+msgstr "Kommunikoi PSRT1 ja uudempien SONY-lukulaitteiden kanssa"
 
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:75
 msgid "Upload separate cover thumbnails for books"
@@ -3503,7 +3505,7 @@ msgid ""
 "Normally, the SONY readers get the cover image from the e-book file itself. "
 "With this option, calibre will send a separate cover image to the reader, "
 "useful if you are sending DRMed books in which you cannot change the cover."
-msgstr ""
+msgstr "Normaalisti SONY lukijalaitteet ottavat kansikuvan e-kirjatiedostosta. Kun tämä on valittuna calibre lähettää erillisen kansikuvan lukijalle. Tämä on käytännöllistä jos lähetät DRM-suojattuja kirjoja, joiden kansikuvaa ei voi muuttaa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:80
 msgid "Refresh separate covers when using automatic management"
@@ -3518,7 +3520,7 @@ msgid ""
 "Set this option if you want the author on the Sony to appear the same way "
 "the T1 sets it. This means it will only show the first author for books with"
 " multiple authors. Leave this disabled if you use Metadata Plugboards."
-msgstr ""
+msgstr "Valitse, jos haluat tekijän näkyvän Sony-lukulaitteessa samalla tavalla kuin T1:n asettamana. Tällöin näytetään vain ensimmäinen tekijä useamman tekijän teoksille. Jätä pois jos käytät Metatietojen Ohjaustauluja."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:175
 msgid "Wireless Device"
@@ -3538,7 +3540,7 @@ msgstr "Ota yhteydet käyttöön käynnistyksen yhteydessä"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:280
 msgid "Check this box to allow connections when calibre starts"
-msgstr ""
+msgstr "Valitse salliaksesi yhteydet heti calibren käynnistyessä"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:282
 msgid "Security password"
@@ -3546,7 +3548,7 @@ msgstr "Turvallinen salasana"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:283
 msgid "Enter a password that the device app must use to connect to calibre"
-msgstr ""
+msgstr "Aseta salasana, jota laitteen tulee käyttää yhdistyäkseen calibreen"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:285
 msgid "Use fixed network port"
@@ -3556,7 +3558,7 @@ msgstr "Käytä kiinteää verkon porttia"
 msgid ""
 "If checked, use the port number in the \"Port\" box, otherwise the driver "
 "will pick a random port"
-msgstr ""
+msgstr "Jos valittuna, käytetään Portti-kentän porttinumeroa, muutoin ajuri valitsee satunnaisen portin"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:288
 msgid "Port number: "
@@ -3574,13 +3576,13 @@ msgstr "Tulosta ylimääräistä vianmääritystietoa"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:291
 msgid "Check this box if requested when reporting problems"
-msgstr ""
+msgstr "Valitse, jos sitä on pyydetty virheraportointia varten"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:293
 msgid ""
 "Comma separated list of metadata fields to turn into collections on the "
 "device."
-msgstr ""
+msgstr "Pilkuin erotettu lista metatietokentistä, jotka muutetaan kokoelmiksi laitteella."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:295
 #, python-format
@@ -3593,7 +3595,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:303
 msgid "Enable the no-activity timeout"
-msgstr ""
+msgstr "Salli epäaktiivisuuden aikaraja."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:304
 #, python-format
@@ -3601,7 +3603,7 @@ msgid ""
 "If this box is checked, calibre will automatically disconnect if a connected"
 " device does nothing for %d minutes. Unchecking this  box disables this "
 "timeout, so calibre will never automatically disconnect."
-msgstr ""
+msgstr "Valinta sallii calibren katkaista yhteyden, jos laite ei tee mitään %d minuuttiin. Ilman valintaa calibre ei katkaise yhteyttä koskaan automaattisesti."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:308
 msgid "Use this IP address"
@@ -3612,11 +3614,11 @@ msgid ""
 "Use this option if you want to force the driver to listen on a particular IP"
 " address. The driver will listen only on the entered address, and this "
 "address will be the one advertized over mDNS (bonjour)."
-msgstr ""
+msgstr "Käytä jos haluat pakottaa ajurin kuuntelemaan tiettyä IP-osoitetta. Ajuri kuuntelee vain annettua osoitetta, ja se ilmoitetaan mDNS:n (bonjour) kautta."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:313
 msgid "Replace books with same calibre ID"
-msgstr ""
+msgstr "Korvaa kirjat joilla on sama calibre ID"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:314
 msgid ""
@@ -3625,11 +3627,11 @@ msgid ""
 "not change even if the save template produces a different result. Using this"
 " option in most cases prevents having multiple copies of a book on the "
 "device."
-msgstr ""
+msgstr "Käytä tät jos haluat kirjoittaa olemassa olevan kirjan päälle, jolla on sama ID. Kirjan tiedoston nimi ei muutu, vaikka tallennusmalli tuottaisi toisen tuloksen. Tämä estää yleensä useampien kirjakopioiden tallentumisen laitteelle."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:319
 msgid "Cover thumbnail compression quality"
-msgstr ""
+msgstr "Kannen esikatselukuvan pakkauksen laatu"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:320
 msgid ""
@@ -3640,11 +3642,11 @@ msgid ""
 " as big. To see the changes you must force calibre to resend metadata to the"
 " device, either by changing the metadata for the book (updating the last "
 "modification time) or resending the book itself."
-msgstr ""
+msgstr "Aseta kansikuvan koko ja laatu laitteella. Arvo 50-99. Suurempi numero tuottaa paremman laadun, mutta myös suuremman tiedoston. Esim. asetus 70:stä 90:een tuottaa selkeästi laadukkaamman kuvan ja n. 2.5-kertaisen tiedostokoon. Jotta näet muutokset, pakota calibre päivittämään metatiedot laitteele, joko muuttamalla kirjan metatietoja (jolloin tietojen muokkauspäivä muuttuu) tai siirtämällä koko kirja uudelleen."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:329
 msgid "Use metadata cache"
-msgstr ""
+msgstr "Käytä metatietovälimuistia"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:330
 msgid ""
@@ -3652,11 +3654,11 @@ msgid ""
 " speeding up device connections. Unsetting this option disables keeping the "
 "copy, forcing the device to send metadata to calibre on every connect. Unset"
 " this option if you think that the cache might not be operating correctly."
-msgstr ""
+msgstr "Sallii calibren säilyttää laitteen metatietojen kopiota, nopeuttaen yhteydenpitoa. Valinnan poistamien estää välimuistin, ja laitteen on lähetettävä metatiedot calibrelle joka kerta. Poista, jos epäilet välimuistin toimivan virheellisesti."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:336
 msgid "Additional file extensions to send to the device"
-msgstr ""
+msgstr "Muita laitteelle siirrettäviä tiedostoformaatteja"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:337
 msgid ""
@@ -3664,7 +3666,7 @@ msgid ""
 " to send to the device. For example, you might have audio books in your "
 "library with the extension \"m4b\" that you want to listen to on your "
 "device. Don't worry about the \"extra enabled extensions\" warning."
-msgstr ""
+msgstr "Pilkuin erotettu lista niiden tiedostoformaattien päätteistä, joita haluat siirtää laitteelle. Esimerkiksi äänikirjaformaatti \"m4b\". Älä välitä \"lisätiedostoformaatteja\"-varoituksesta."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:988
 #, python-format
@@ -3675,40 +3677,40 @@ msgstr "Liian monta yhteysyritystä kohteesta %s"
 msgid ""
 "The app on your device is too old and is no longer supported. Update it to a"
 " newer version."
-msgstr ""
+msgstr "Laitteesi sovellus on liian vanha eikä sitä enää tueta. Päivitä uudempaan versioon."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1632
 msgid ""
 "You have book formats in your library with dates in the future. See calibre "
 "for details"
-msgstr ""
+msgstr "Kirjastossasi on kirjoja, joiden päivämäärä on asetettu tulevaisuuteen. Näet lisätietoja calibresta"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1667
 #, python-format
 msgid "The read sync column %s is not in calibre's library"
-msgstr ""
+msgstr "Luettu synkronointisarake %s puuttuu calibren kirjastosta"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1672
 #, python-format
 msgid "The read sync column %s is not a Yes/No column"
-msgstr ""
+msgstr "Luettu synkronointisareke %s ei ole muotoa Kyllä/Ei."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1679
 #, python-format
 msgid "The read date sync column %s is not in calibre's library"
-msgstr ""
+msgstr "Luettu päivämäärän synkronointisarake %s puuttuu calibren kirjastosta"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1684
 #, python-format
 msgid "The read date sync column %s is not a date column"
-msgstr ""
+msgstr "Luettu synkronointisarake %s ei ole päivämäärämuotoinen"
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1883
 #, python-format
 msgid ""
 "Bad compression quality setting. It must be a number between 50 and 99. "
 "Forced to be %d."
-msgstr ""
+msgstr "Väärä pakkauslaatuasetus. Arvon on oltava välilä 50-99. Pakotettu arvoksi %d."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:1904
 #, python-format
@@ -3726,7 +3728,7 @@ msgstr "Satunnaisen portin varaaminen epäonnistui"
 
 #: /home/kovid/work/calibre/src/calibre/devices/sne/driver.py:18
 msgid "Communicate with the Samsung SNE e-book reader."
-msgstr ""
+msgstr "Kommunikoi Samsung SNE -lukulaitteen kanssa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/teclast/driver.py:12
 msgid "Communicate with the Teclast K3/K5 reader."
@@ -3767,7 +3769,7 @@ msgstr "Kommunikoi Wexler lukijan kanssa."
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/device.py:275
 #, python-format
 msgid "Unable to detect any disk drives for the device: %s. Try rebooting"
-msgstr ""
+msgstr "Laitteella %s ei havaittu levyasemia. Kokeile uudelleenkäynnistämistä."
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/device.py:418
 #, python-format
@@ -3784,7 +3786,7 @@ msgstr "Levyasemaa %s ei havaittu."
 msgid ""
 "Unable to detect the %s disk drive. Either the device has already been "
 "ejected, or your kernel is exporting a deprecated version of SYSFS."
-msgstr ""
+msgstr "Levyasemaa %s ei havaittu. Joko laite on poistettu tai kernel tuottaa tukematonta versiota SYSFS:stä."
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/device.py:580
 #, python-format
@@ -3800,7 +3802,7 @@ msgstr "%s:n päämuistiin ei voi kirjoittaa. Tämä johtuu yleensä tiedostojä
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/device.py:773
 msgid "Unable to mount the device"
-msgstr ""
+msgstr "Laitetta ei voitu ottaa käyttöön"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/deviceconfig.py:12
 msgid "Configure Device"
@@ -3817,7 +3819,7 @@ msgstr "Tilattu lista laitteen hyväksymistä formaateista"
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/deviceconfig.py:66
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/tabbed_device_config.py:94
 msgid "Place files in sub-directories if the device supports them"
-msgstr ""
+msgstr "Sijoita tiedostot alihakemistoihin, mikäli laite tukee niitä"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/deviceconfig.py:68
 #: /home/kovid/work/calibre/src/calibre/gui2/device_drivers/configwidget_ui.py:78
@@ -3828,7 +3830,7 @@ msgstr "Lue metatiedot laitteella olevista tiedostoista"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/deviceconfig.py:70
 msgid "Use author sort instead of author"
-msgstr ""
+msgstr "Käytä tekijäjärjestelyä tekijän sijaan"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/deviceconfig.py:72
 msgid "Template to control how books are saved"
@@ -3841,7 +3843,7 @@ msgstr "Lisäasetukset"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:84
 msgid "Communicate with an e-book reader."
-msgstr ""
+msgstr "Kommunikoi lukulaitteen kanssa."
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:147
 #, python-format
@@ -3860,7 +3862,7 @@ msgid ""
 "device, it may be write-protected, etc. Try a different SD card, or reformat"
 " your SD card using the FAT32 filesystem. Also make sure there are not too "
 "many files in the root of your SD card. Underlying error: %s"
-msgstr ""
+msgstr "Laitteesi SD-kortin tiedostoja ei voitu lukea. Syitä voi olla useita. SD-kortti voi olla viallinen, sen tila voi olla laitteelle liian suuri, se voi olla kirjoitussuojattu, jne. Testaa toista korttia, tai formatoi kortti uudelleen FAT32-tiedostojärjestelmään. Varmista myös, ettei kortin juurihakemistossa ole liikaa tiedostoja. Lähdevirhe: %s"
 
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:459
 msgid "Sending metadata to device..."
@@ -3877,7 +3879,7 @@ msgstr "USB valmistajan ID (heksalukuna)"
 msgid ""
 "Get this ID using Preferences -> Misc -> Get information to set up the user-"
 "defined device"
-msgstr ""
+msgstr "Löydät tämän ID:n kohdasta Asetukset -> Muuta -> Hae tietoja lukulaitteen käyttäjämäärittelyä varten"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:41
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:75
@@ -3887,38 +3889,38 @@ msgstr "USB Tuote ID (heksalukuna)"
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:44
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:77
 msgid "USB Revision ID (in hex)"
-msgstr ""
+msgstr "USB-revision ID (heksalukuna)"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:48
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:50
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:52
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:54
 msgid "Unused (leave blank)"
-msgstr ""
+msgstr "Käyttämätön (jätä tyhjäksi)"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:49
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:51
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:53
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:55
 msgid "This field is no longer used, leave it blank."
-msgstr ""
+msgstr "Kenttää ei enää käytetä, jätä tyhjäksi"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:56
 msgid "Main memory folder"
-msgstr ""
+msgstr "Päämuistin kansio"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:57
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:60
 msgid ""
 "Enter the folder where the books are to be stored. This folder is prepended "
 "to any send_to_device template"
-msgstr ""
+msgstr "Syötä kansio johon kirjat viedään muistikortilla. Tämä kansio listätään kaikkiin laitteen send_to_device vientimalleihin."
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:63
 msgid ""
 "Check this box if the device's main memory is being seen as card a and the "
 "card is being seen as main memory"
-msgstr ""
+msgstr "Valitse jos laitteen päämuisti nähdään A:na ja kortti päämuistina."
 
 #: /home/kovid/work/calibre/src/calibre/devices/utils.py:19
 #: /home/kovid/work/calibre/src/calibre/devices/utils.py:25
@@ -3927,7 +3929,7 @@ msgid ""
 "The reader has no storage card %s. You may have changed the default send to "
 "device action. Right click on the \"Send to device\" button and reset the "
 "default action to be \"Send to main memory\"."
-msgstr ""
+msgstr "Laitteessa ei ole muistikorttia %s. Olet ehkä vaihtanut vientiasetuksen oletusarvoja. Klikkaa oikealla hiirennapilla \"Lähetä laitteelle\"-painiketta, ja palauta oletusasetukseksi \"Lähetä päämuistiin\"."
 
 #: /home/kovid/work/calibre/src/calibre/devices/utils.py:30
 #, python-format
@@ -3975,7 +3977,7 @@ msgid ""
 "After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the -h option.\n"
 "\n"
 "For full documentation of the conversion system see\n"
-msgstr ""
+msgstr "lähdetiedosto kohdetiedosto [vaihtoehdot]\n\nMuunna ekirja formaatista toiseen.\n\nLähdetiedosto on alkupiste ja kohdetiedosto on tulos. Molemmat on ilmoitettava komennon alkuarvoina.\n\nEkirjan formaatti päätellään kohdetiedoston nimen tiedostopäätteestä. Kohdetiedoston voi määritellä myös arvolla .PÄÄTE, jolloin PÄÄTE on haluttu kohdetiedoston tiedostoformaattipääte, ja tiedoston nimi muodostetaan lähdetiedostosta. Huomaa, että tiedostojen nimet eivät saa alkaa väliviivalla. Jos kohdetiedostolle ei ilmoiteta formaattia, se tulkitaan kansioksi, ja tulos on \"avoin ekirja\" (OEB) joka koostuu HTML-tiedostoista tuossa kansiossa. Nämä tiedostot vietäisiin normaalisti edelleen kohdetiedostoformaattiin.\n\nLähde- ja kohdetiedostojen jälkeen voit asettaa komentoon vaihtoehtoja toiminnon mukauttamiseksi. Vaihtoehdot riippuvat tiedostoformaateista. Saat tietoja niistä asettamalla lähde- ja kohdetiedostojen jälkeen valinta -h.\n\nTäysi dokumentaatio toiminnolle\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:106
 msgid ""
@@ -3984,7 +3986,7 @@ msgid ""
 "rules in the calibre GUI. Access it in the \"Look & feel->Transform styles\""
 " section of the conversion dialog. Once you create the rules, you can use "
 "the \"Export\" button to save them to a file."
-msgstr ""
+msgstr "Polku tiedostoon jossa on sääntöjä käytettäväksi kirjan CSS-tyylien  muunnoksessa. Helpoin tapa tällaisen tiedoston luomiseen on käyttää graafisen käyttöliittymän aputoimintoa sääntöjen luomiseen, \"Ilme -> Muunnostyylit\"-osassa muunnosikkunaa. Kun olet määritellyt säännöt, voit tallentaa ne tiedostoon \"Vie\"-painikkeella."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:119
 msgid "INPUT OPTIONS"
@@ -4006,7 +4008,7 @@ msgstr "Asetukset, joilla kontrolloidaan ulostulo %s prosessointia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:188
 msgid "LOOK AND FEEL"
-msgstr ""
+msgstr "ILME"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:189
 msgid "Options to control the look and feel of the output"
@@ -4014,7 +4016,7 @@ msgstr "Asetukset, joilla kontrolloidaan ulostulon ulkoasua"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "HEURISTIC PROCESSING"
-msgstr ""
+msgstr "HEURISTINEN PROSESSOINTI"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:208
 #, python-format
@@ -4022,20 +4024,20 @@ msgid ""
 "Modify the document text and structure using common patterns. Disabled by "
 "default. Use %(en)s to enable.  Individual actions can be disabled with the "
 "%(dis)s options."
-msgstr ""
+msgstr "Muokkaa dokumentin tekstiä ja rakennetta yleisillä sääntömalleilla. Oletuksen poissa käytöstä. Käytä %(en)s ottaaksesi käyttöön. Yksittäisiä toimintoja voi sammuttaa %(dis)s-valinnoilla."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:215
 msgid "SEARCH AND REPLACE"
-msgstr ""
+msgstr "ETSI JA KORVAA"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:216
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace.py:24
 msgid "Modify the document text and structure using user defined patterns."
-msgstr ""
+msgstr "Muokkaka dokumentin tekstiä ja rakennetta käyttäjän asettamilla säännöillä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:225
 msgid "STRUCTURE DETECTION"
-msgstr ""
+msgstr "RAKENTEEN TUNNISTUS"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "Control auto-detection of document structure."
@@ -4043,7 +4045,7 @@ msgstr "Kontrolloi asiakirjan rakenteen automaattista tunnistusta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:235
 msgid "TABLE OF CONTENTS"
-msgstr ""
+msgstr "SISÄLLYSLUETTELO"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:236
 msgid ""
@@ -4054,7 +4056,7 @@ msgstr "Kontrolloi Sisällysluettelon automaattista luomista. Oletuksena, jos l�
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:246
 msgid "METADATA"
-msgstr ""
+msgstr "METATIEDOT"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:246
 msgid "Options to set metadata in the output"
@@ -4062,7 +4064,7 @@ msgstr "Asetukset ulostulon metatiedoille"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:249
 msgid "DEBUG"
-msgstr ""
+msgstr "VIRHEENETSINTÄ"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:249
 msgid "Options to help with debugging the conversion"
@@ -4072,7 +4074,7 @@ msgstr "Asetukset, joilla muunnoksen vianmääritystä helpotetaan"
 msgid ""
 "List builtin recipe names. You can create an e-book from a builtin recipe "
 "like this: ebook-convert \"Recipe Name.recipe\" output.epub"
-msgstr ""
+msgstr "Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänrakennetulla reseptillä komennolla: ebook-convert \"Reseptin Nimi.recipe\" kohdenimi.epub"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:401
 msgid "Output saved to"
@@ -4088,14 +4090,14 @@ msgid ""
 "\n"
 "Below are the options that are common to all conversion, followed by the\n"
 "options specific to every input and output format."
-msgstr ""
+msgstr "Vaihtoehdot ja oletusarvot asetuksille vaihtuvat sekä lähde- että kohdeformaatin mukaan, joten tarkasta aina:\n\n %s\n\nAlla on kaikille formaateille yhteiset vaihtoehdot, ja niiden jälkeen kunkin formaatin käytössä olevat lähde- ja kohdevaihtoehdot."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:29
 msgid ""
 "Reduce the number of colors used in the image. This works only if you choose"
 " the PNG output format. It is useful to reduce file sizes. Set to zero to "
 "turn off. Maximum value is 256. It is off by default."
-msgstr ""
+msgstr "Laske kuvien värimäärää. Toimii vain PNG-formaattiin tallennettaessa. Auttaa tiedostokoon kutistamisessa. Poista käytöstä arvolla 0. Maksimiarvo on 256. Oletuksena pois käytöstä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:33
 msgid ""
@@ -4150,7 +4152,7 @@ msgid ""
 "The format that images in the created e-book are converted to. You can "
 "experiment to see which format gives you optimal size and look on your "
 "device."
-msgstr ""
+msgstr "Muoto, johon luodussa ekirjassa olevat kuvat muunnetaan. Voit kokeilla mikä muoto antaa omalla laitteellasi parhaan tiedostokoon ja kuvalaadun kompromissin."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:63
 msgid "Apply no processing to the image"
@@ -4164,13 +4166,13 @@ msgstr "Älä muunna kuvaa mustavalkoiseksi"
 msgid ""
 "Specify the image size as widthxheight pixels. Normally, an image size is "
 "automatically calculated from the output profile, this option overrides it."
-msgstr ""
+msgstr "Aseta kuvan koko leveysxkorkeus pikseleinä. Tavallisesti arvo lasketaan suoraan vientiprofiilista, tämä arvo ohittaa sen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:71
 msgid ""
 "When converting a CBC do not add links to each page to the TOC. Note this "
 "only applies if the TOC has more than one section"
-msgstr ""
+msgstr "Kun muunnetaan CBC-formaatista, älä lisää sisällysluetteloon linkkejä jokaiselle sivulle. Voimassa vain jos sisällysluettelossa on enemmän kuin yksi osio."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:217
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:229
@@ -4179,18 +4181,18 @@ msgstr "Sivu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/docx_input.py:15
 msgid "Convert DOCX files (.docx and .docm) to HTML"
-msgstr ""
+msgstr "Muunna DOCX-tiedostot (.docx ja .docm) HTML:ksi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/docx_input.py:21
 msgid ""
 "Normally, if a large image is present at the start of the document that "
 "looks like a cover, it will be removed from the document and used as the "
 "cover for created e-book. This option turns off that behavior."
-msgstr ""
+msgstr "Yleensä, jos kirjan alussa on suuri kannen näköinen kuva, se poistetaan kirjasta ja käytetään kirjan kansikuvana. Kytkee tämän toiminnon pois päältä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/docx_input.py:25
 msgid "Do not insert a page break after every endnote."
-msgstr ""
+msgstr "Älä lisää sivunvaihtoa jokaisen alaviitteen jälkeen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/docx_input.py:27
 msgid ""
@@ -4872,7 +4874,7 @@ msgstr "Lisää attribuutti HMTL-tägeihin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:17
 msgid "Add code highlighting via Pygments"
-msgstr ""
+msgstr "Lisää koodin korostukset Pygmentsistä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:18
 msgid "Definition lists"
@@ -4894,11 +4896,11 @@ msgstr "Alaviitteet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:22
 msgid "Use legacy element attributes"
-msgstr ""
+msgstr "Käytä vanhan muotoisa element attribuutteja"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:23
 msgid "Use legacy underscore handling for connected words"
-msgstr ""
+msgstr "Käytä vanhan muotoista alaviivakäsittelyä yhdstettyjen sanojen hallintaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:24
 msgid "Metadata in the document"
@@ -4906,15 +4908,15 @@ msgstr "Metatiedot tiedostossa"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:25
 msgid "Treat newlines as hard breaks"
-msgstr ""
+msgstr "Käsittele rivinvaihtoja (newline) kappaleenvaihtoina"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:26
 msgid "Do not allow mixing list types"
-msgstr ""
+msgstr "Älä salli listatyyppien sekoituksia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:27
 msgid "Use markdown's internal smartypants parser"
-msgstr ""
+msgstr "Käytä markdownin sisäistä smartypants-tulkkia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:28
 msgid "Support tables"
@@ -4994,7 +4996,7 @@ msgid ""
 "* print:  {print}\n"
 "* unformatted: {unformatted}\n"
 "* off: {off}"
-msgstr ""
+msgstr "Oletus kappalerakenteesta. Käytöstä poistaminen on hyödyksi jos dokumentissa on jokin Markdownin tai Textilen kaltainen muotoilu. Vaihtoehdot:\n* automaattinen: {auto}\n* blokki: {block}\n* yksittäinen: {single}\n* painettu: {print}\n* muotoilematon: {unformatted}\n* pois: {off}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:84
 msgid ""
@@ -5014,7 +5016,7 @@ msgid ""
 "Enable extensions to markdown syntax. Extensions are formatting that is not part of the standard markdown format. The extensions enabled by default: %default.\n"
 "To learn more about markdown extensions, see {}\n"
 "This should be a comma separated list of extensions to enable:\n"
-msgstr ""
+msgstr "Ota Markdown-muotoilun laajennukset käyttöön. Laajennukset eivät ole osa markdown-standardimuotoilua. Laajennukset ovat oletuksena käytössä: %default.\nSaadaksesi lisätietoja markdownista, katso {}\nIlmoitetaan pilkuin erotettuna listana käyttöönotettavia laajennuksia:\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:27
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:333
@@ -5035,13 +5037,13 @@ msgid ""
 "Type of newline to use. Options are %s. Default is 'system'. Use 'old_mac' "
 "for compatibility with Mac OS 9 and earlier. For macOS use 'unix'. 'system' "
 "will default to the newline type used by this OS."
-msgstr ""
+msgstr "Käytettävä rivinvaihdon tyyppi. Vaihtoehdot ovat %s. Oletus on 'järjestelmä'. Aseta 'old_mac' Mac OS 9:n ja vanhempien tukemiseksi. macOS:lle valitse 'unix'. 'järjestelmä' käyttää nykyisen käyttöjärjestelmän oletusrivinvaihtoa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:57
 msgid ""
 "Force splitting on the max-line-length value when no space is present. Also "
 "allows max-line-length to be below the minimum"
-msgstr ""
+msgstr "Pakota katkaisu max-line-length pituuden kohdalla jos välilyöntiä ei ole. Sallii myös max-line-lengthin toteutumisen minimiä pienemmäksi."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:62
 #, python-brace-format
@@ -5050,21 +5052,21 @@ msgid ""
 "* plain: {plain}\n"
 "* markdown: {markdown}\n"
 "* textile: {textile}"
-msgstr ""
+msgstr "Dokumentissa käytetty muotoilu.\n* muotoilematon: {plain}\n* markdown: {markdown}\n* textile: {textile}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:68
 msgid ""
 "Do not remove links within the document. This is only useful when paired "
 "with a txt-output-formatting option that is not none because links are "
 "always removed with plain text output."
-msgstr ""
+msgstr "Älä poista linkkejä dokumentin sisältä. Hyödyksi vain jos txt-output-formatting-asetus on muu kuin 'ei mitään', sillä vain tekstiä sisältävästä kohdetiedostosta linkit poistetaan aina."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:73
 msgid ""
 "Do not remove image references within the document. This is only useful when"
 " paired with a txt-output-formatting option that is not none because links "
 "are always removed with plain text output."
-msgstr ""
+msgstr "Älä poista kuvaviitteitä dokumentista. Hyödyllinen vain, jos samalla käytetään txt-output-formatting-valintaa, joka on muu kuin 'ei mitään', sillä vain tekstiä sisältävästä kohdedokumentista linkit poistetaan aina."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:78
 msgid ""
@@ -5073,14 +5075,14 @@ msgid ""
 "setting font color. If this option is not specified font color will not be "
 "set and default to the color displayed by the reader (generally this is "
 "black)."
-msgstr ""
+msgstr "Älä poista kirjaimen väriä dokumentista. Hyödyksi vain, jos txt-output-formatting-valinta on 'textile'. Vain Textile tukee kirjaimen väriä. Jos ei ole valittuna, tekstin väriä ei aseteta ja käytetään lukijan oletusväriä (yleensä musta)."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:113
 msgid ""
 "Level of verbosity. Specify multiple times for greater verbosity. Specifying"
 " it twice will result in full verbosity, once medium verbosity and zero "
 "times least verbosity."
-msgstr ""
+msgstr "Kuvausten tarkkuustaso. Useampi määrittely tuottaa yksityiskohtaisemmat kuvaukset. Kaksinkertainen asetus tuottaa täyden tarkkuustason, yksi kerta keskimääräisen ja nolla kertaa vähäisimman tarkkuustason."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:121
 msgid ""
@@ -5104,7 +5106,7 @@ msgid ""
 "resizing images for the device screen size). In some cases, an output "
 "profile can be used to optimize the output for a particular device, but this"
 " is rarely necessary. Choices are:"
-msgstr ""
+msgstr "Aseta vientiprofiili. Vientiprofiilissa määritetään muunnettavan dokumentin optimointi kohdelaitteelle (kuten kuvien skaalaus näytön kokoon). Joissakin tapauksissa vientiprofiililla voidaan optimoida vienti tietylle laitteelle, mutta tämä on harvoin tarpeellista. Vaihtoehdot ovat:"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:151
 msgid ""
@@ -5112,7 +5114,7 @@ msgid ""
 "rescaled based on this size. By choosing a larger size you can make the "
 "fonts in the output bigger and vice versa. By default, when the value is "
 "zero, the base font size is chosen based on the output profile you chose."
-msgstr ""
+msgstr "Normaali tekstin koko pisteinä (pt). Kaikki teksti tuotetaan tätä kokoa skaalaamalla. Suurempi koko suurentaa kaikkia tekstejä, ja toisinpäin. Oletuksena, jos arvona on 0, käytetään vientiprofiilissa asetettua arvoa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:161
 msgid ""
@@ -5121,11 +5123,11 @@ msgid ""
 "xx-large, with the final size being for huge fonts. The font rescaling "
 "algorithm uses these sizes to intelligently rescale fonts. The default is to"
 " use a mapping based on the output profile you chose."
-msgstr ""
+msgstr "CSS-tekstikokojen vastavuus tekstikokoihin pisteinä (pt). Esimerkkiarvo on 12,12,14,16,18,20,22,24, joka vastaa kokoja xx-small->xx-large. Tekstinskaalausalgoritmi käyttää näitä kokoja tekstikoon älykkääseen skaalaukseen. Oletuksena käytetään vastaavuutta, joka perustuu valitsemaasi vientiprofiiliin."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:173
 msgid "Disable all rescaling of font sizes."
-msgstr ""
+msgstr "Kytke tekstikoon skaalaus pois päältä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:180
 msgid ""
@@ -5135,7 +5137,7 @@ msgid ""
 " to disable. Default is 120%. Use this setting in preference to the direct "
 "line height specification, unless you know what you are doing. For example, "
 "you can achieve \"double spaced\" text by setting this to 240."
-msgstr ""
+msgstr "Rivinkorkeuden minimi, prosenttiarvona lasketusta tekstielementin korkeudesta. calibre tarkastaa, että kaikilla elementeillä on vähintään tämä rivinkorkeus, riippumatta lähdetiedoston asetuksista. Aseta 0 poistaaksesi käytöstä. Oletus on 120%. Käytä tätä asetusta suoran rivikorkeuden sijaan, ellet ole varma että haluat tehdä toisin. Esimerkiksi \"tuplarivin\" saat asettamalla arvoksi 240."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:195
 msgid ""
@@ -5143,7 +5145,7 @@ msgid ""
 "Only applies to elements that do not define their own line height. In most "
 "cases, the minimum line height option is more useful. By default no line "
 "height manipulation is performed."
-msgstr ""
+msgstr "Rivinkorkeus pisteinä (pt). Tekstirivien välistys. Koskee vain elementtejä, jotka eivät määrittele omaa rivinkorkeuttaan. Useimmiten minimirivinkorkeus on hyödyllisempi asetus. Oletuksena ei suoriteta mitään rivinkorkeuden muokkausta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:206
 msgid ""
@@ -5152,7 +5154,7 @@ msgid ""
 "may override this base font. You can use the filter style information option"
 " to remove fonts from the input document. Note that font embedding only "
 "works with some output formats, principally EPUB, AZW3 and DOCX."
-msgstr ""
+msgstr "Upota valittu fonttitiedosto kirjaan. Tästä tulee kirjan \"perusfontti\". Jos lähdetiedostossa on omat fonttinsa, ne voivat ohittaa tämän fontin. Voit käyttää tyyliasetusten suodatusta lähdetiedoston fonttien poistamiseen. Huomaa, että fontin upottaminen toimii vain joissakin formaateissa, kuten EPUB, AZW3 ja DOCX."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:217
 msgid ""
@@ -5162,7 +5164,7 @@ msgid ""
 "to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure "
 "that you have the proper license for embedding the fonts used in this "
 "document."
-msgstr ""
+msgstr "Upota kaikki dokumentissa viitatut fontit jos ne eivät ole jo upotettuina. Fontteja etsitään järjestelmästäsi, ja läydetyt fontit upotetaan. Upottaminen toimii vain sitä tukevissa formaateissa, kuten EPUB, AZW3, DOCX ja PDF. Varmistathan, että sinulla on lisenssi fontin upottamiseen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:228
 msgid ""
@@ -5170,7 +5172,7 @@ msgid ""
 "the glyphs used in this document. This decreases the size of the font files."
 " Useful if you are embedding a particularly large font with lots of unused "
 "glyphs."
-msgstr ""
+msgstr "Osita kaikki upotetut fontit. Kaikki fontit rajataan vain dokumentissa käytettyihin merkkeihin. Tämä pienentää fonttitiedostojen kokoa. Etenkin erittäin suuria fonttitiedostoja käyttäessä tämä on hyvin hyödyllistä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:236
 msgid ""
@@ -5178,7 +5180,7 @@ msgid ""
 "the page. When converted these documents often have text that runs off the "
 "page and other artifacts. This option will extract the content from the "
 "tables and present it in a linear fashion."
-msgstr ""
+msgstr "Jotkin huonosti suunnitellut dokumentit käyttävät taulukoita tekstin asetteluun sivulle. Muunnoksessa niiden rivit usein venyvät sivun ulkopuolelle yms. Tämä valinta purkaa sisällön taulukoista ja esittää sen rivitetyssä muodossa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:246
 msgid ""
@@ -5186,28 +5188,28 @@ msgid ""
 "of Contents at level one. If this is specified, it takes precedence over "
 "other forms of auto-detection. See the XPath Tutorial in the calibre User "
 "Manual for examples."
-msgstr ""
+msgstr "XPath-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 1. Asetus tässä ohittaa kaikki muut automaattisesti tunnistetut otsikot. Katso calibren käyttöohjeesta XPathin käyttöopastus."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:256
 msgid ""
 "XPath expression that specifies all tags that should be added to the Table "
 "of Contents at level two. Each entry is added under the previous level one "
 "entry. See the XPath Tutorial in the calibre User Manual for examples."
-msgstr ""
+msgstr "XPath-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 2. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:265
 msgid ""
 "XPath expression that specifies all tags that should be added to the Table "
 "of Contents at level three. Each entry is added under the previous level two"
 " entry. See the XPath Tutorial in the calibre User Manual for examples."
-msgstr ""
+msgstr "XPath-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 3. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:274
 msgid ""
 "Normally, if the source file already has a Table of Contents, it is used in "
 "preference to the auto-generated one. With this option, the auto-generated "
 "one is always used."
-msgstr ""
+msgstr "Yleensä, jos tiedostossa on jo sisällysluettelo, sitä käytetään automaattisesti luodun sijaan. Valinta asettaa aina käyttöön automaattisesti luodun sisällysluettelon."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:282
 msgid "Don't add auto-detected chapters to the Table of Contents."
@@ -5218,7 +5220,7 @@ msgstr "Älä lisää automaattisesti havaittuja lukuja sisällysluetteloon."
 msgid ""
 "If fewer than this number of chapters is detected, then links are added to "
 "the Table of Contents. Default: %default"
-msgstr ""
+msgstr "Jos lukuja löydetään vähemmän kuin tämä lukumäärä, sisällysluetteloon asetetaan linkit. Oletus: %default"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:296
 #, python-format
@@ -5226,20 +5228,20 @@ msgid ""
 "Maximum number of links to insert into the TOC. Set to 0 to disable. Default"
 " is: %default. Links are only added to the TOC if less than the threshold "
 "number of chapters were detected."
-msgstr ""
+msgstr "Maksimimäärä linkkejä sisällysluettelossa. 0 poistaa rajan käytöstä. Oletus: %default. Linkit lisätään sisällysluetteloon vain jos lukuja on tätä arvoa vähemmän."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:304
 msgid ""
 "Remove entries from the Table of Contents whose titles match the specified "
 "regular expression. Matching entries and all their children are removed."
-msgstr ""
+msgstr "Poista sisällysluettelosta rivit, joiden sisältö vastaa asetettua regexp-lauseketta. Nämä rivit sekä niiden alarivit karsitaan luettelosta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:312
 msgid ""
 "When creating a TOC from links in the input document, allow duplicate "
 "entries, i.e. allow more than one entry with the same text, provided that "
 "they point to a different location."
-msgstr ""
+msgstr "Salli sisällysluettelossa toistuvat rivit, eli samansisältöiset rivit, kunhan ne osoittavat eri kohtiin dokumentissa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:323
 msgid ""
@@ -5250,7 +5252,7 @@ msgid ""
 "list of elements. To disable chapter detection, use the expression \"/\". "
 "See the XPath Tutorial in the calibre User Manual for further help on using "
 "this feature."
-msgstr ""
+msgstr "XPath-lauseke lukujen otsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \"chapter\", \"book\", \"section\", \"prologue\", \"epilogue\" tai \"part\" lukujen otsikoiksi, kuten myös tägit joiden class=\"chapter\". Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \"/\".  Katso calibren käyttöohjeesta XPathin käyttöopastus."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:337
 msgid ""
@@ -5258,7 +5260,7 @@ msgid ""
 "page breaks before chapters. A value of \"rule\" will insert a line before "
 "chapters. A value of \"none\" will disable chapter marking and a value of "
 "\"both\" will use both page breaks and lines to mark chapters."
-msgstr ""
+msgstr "Aseta lukujen merkintätapa. Arvo \"pagebreak\" lisää sivunvaihdot ennen lukuja. Arvo \"rule\" lisää vaakaviivan ennen lukuja. Arvo \"none\" estää lukujen merkitsemisen ja arvo \"both\" lisää sekä sivunvaihdon että vaakaviivan."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:347
 msgid ""
@@ -5266,20 +5268,20 @@ msgid ""
 " reading. Some e-book reading programs (most prominently the Kindle) use "
 "this location as the position at which to open the book. See the XPath "
 "tutorial in the calibre User Manual for further help using this feature."
-msgstr ""
+msgstr "XPath-lauseke lukemisen aloituskohdan löytämiseen dokumentista. Jotkin lukuohjelmat (etenkin Kindle) käyttävät tätä kohtaa kirjan avaamiseen. Katso lisäominaisuuksia XPath-opastuksesta calibre-käyttöohjeesta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:357
 msgid ""
 "Either the path to a CSS stylesheet or raw CSS. This CSS will be appended to"
 " the style rules from the source file, so it can be used to override those "
 "rules."
-msgstr ""
+msgstr "Polku CSS-stylesheetiin tai suoraan CSS:ää. Tämä CSS lisätään lähdetiedoston tyylisääntöihin, jotta se voi ohittaa noita sääntöjä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:365
 msgid ""
 "Rules for transforming the styles in this book. These rules are applied "
 "after all other CSS processing is done."
-msgstr ""
+msgstr "Säännöt kirjan tyylien muuntamiseen. Nämä säännöt suoritetaan kaiken muun CSS-käsittelyn jälkeen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:371
 msgid ""
@@ -5287,7 +5289,7 @@ msgid ""
 "style rules. This is useful if the presence of some style information "
 "prevents it from being overridden on your device. For example: font-"
 "family,color,margin-left,margin-right"
-msgstr ""
+msgstr "Pilkuin erotettu lista CSS-määreitä, jotka poistetaan kaikista CSS-säännöistä. Hyödyllistä, jos jonkin tyylimäärityksen ohittaminen ei muuten onnistu. Esimerkiksi: font-family,color,margin-left,margin-right"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:382
 msgid ""
@@ -5296,13 +5298,13 @@ msgid ""
 "full expanded form instead. Note that CSS is always expanded when generating"
 " EPUB files with the output profile set to one of the Nook profiles as the "
 "Nook cannot handle shorthand CSS."
-msgstr ""
+msgstr "Oletuksena calibre käyttää CSS-määritysten lyhennettyjä muotoja, mm. margin, padding, border jne. Valinta kytkee käyttöön täydet, laajennetut muodot. Nook ei pysty käsittelemään lyhennettyjä muotoja, ja Nookin muunnosprofiilit käyttävät aina laajennettua muotoa EPUB-tiedostoissa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:393
 msgid ""
 "An XPath expression. Page breaks are inserted before the specified elements."
 " To disable use the expression: /"
-msgstr ""
+msgstr "XPath-lauseke. Lisää sivunvaihdot ennen tiettyjä elementtejä. Poista käytöstä lausekkeella: /"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:399
 msgid ""
@@ -5310,7 +5312,7 @@ msgid ""
 " each individual paragraph. calibre will try to detect and remove these "
 "margins. Sometimes, this can cause the removal of margins that should not "
 "have been removed. In this case you can disable the removal."
-msgstr ""
+msgstr "Joissakin dokumenteissa oikea ja vasen marginaali on ilmoitettu jokaiselle kappaleelle erikseen. calibre pyrkii etsimään ja poistamaan tällaiset marginaalit. Joskus kuitenkin poistuu vääriä marginaaliasetuksia Voit estää poiston tällä valinnalla."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:410
 #, python-format
@@ -5319,7 +5321,7 @@ msgid ""
 "zero will cause no margin to be set (the margin setting in the original "
 "document will be preserved). Note: Page oriented formats such as PDF and "
 "DOCX have their own margin settings that take precedence."
-msgstr ""
+msgstr "Aseta ylämarginaali pisteinä (pt). Oletus on %default. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:418
 #, python-format
@@ -5328,7 +5330,7 @@ msgid ""
 " zero will cause no margin to be set (the margin setting in the original "
 "document will be preserved). Note: Page oriented formats such as PDF and "
 "DOCX have their own margin settings that take precedence."
-msgstr ""
+msgstr "Aseta alamarginaali pisteinä (pt). Oletus on %default. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:426
 #, python-format
@@ -5337,7 +5339,7 @@ msgid ""
 "zero will cause no margin to be set (the margin setting in the original "
 "document will be preserved). Note: Page oriented formats such as PDF and "
 "DOCX have their own margin settings that take precedence."
-msgstr ""
+msgstr "Aseta vasen marginaali pisteinä (pt). Oletus on %default. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:434
 #, python-format
@@ -5346,7 +5348,7 @@ msgid ""
 "zero will cause no margin to be set (the margin setting in the original "
 "document will be preserved). Note: Page oriented formats such as PDF and "
 "DOCX have their own margin settings that take precedence."
-msgstr ""
+msgstr "Aseta oikea marginaali pisteinä (pt). Oletus on %default. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:443
 msgid ""
@@ -5355,14 +5357,14 @@ msgid ""
 "\"justify\" converts all unjustified text to justified. A value of "
 "\"original\" (the default) does not change justification in the source file."
 " Note that only some output formats support justification."
-msgstr ""
+msgstr "Vaihda tekstin tasaus. Arvo \"left\" muuntaa kaiken tekstin vasemmalle tasatuksi. Arvo \"justify\" muuntaa kaiken tekstin tasapalstaksi. Arvo \"original\" (oletus) säilyttää alkuperäisen tasauksen lähdetiedostosta. Huomaa, että vain jotkin kohdeformaatit tukevat tasapalstaa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:453
 msgid ""
 "Remove spacing between paragraphs. Also sets an indent on paragraphs of "
 "1.5em. Spacing removal will not work if the source file does not use "
 "paragraphs (<p> or <div> tags)."
-msgstr ""
+msgstr "Poista kappaleiden väliset tyhjät rivit. Asettaa myös 1.5 em sisennyksen kappaleisiin. Välistyksen poistaminen ei toimi, jos lähdetiedosto ei käytä kappaleita (<p> tai <div> tägi)."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:460
 msgid ""
@@ -5371,13 +5373,13 @@ msgid ""
 "This option controls the width of that indent (in em). If you set this value"
 " negative, then the indent specified in the input document is used, that is,"
 " calibre does not change the indentation."
-msgstr ""
+msgstr "Kun calibre poistaa tyhjiä rivejä kappaleiden välistä, se asettaa myös kappalesisennyksen, jotta kappaleet ovat erotettavissa. Arvo asettaa sisennyksen leveyden (em). Jos asetat negatiivisen arvon, säilytetään lähdetiedoston kappalesisennys."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:469
 msgid ""
 "Use the cover detected from the source file in preference to the specified "
 "cover."
-msgstr ""
+msgstr "Käytä lähdetiedostosta havaittua kansikuvaa erikseen määritellyn kansikuvan sijaan."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:475
 msgid ""
@@ -5389,7 +5391,7 @@ msgstr "Lisää tyhjä rivi kappaleiden väliin. Ei toimi, jos lähdetiedosto ei
 msgid ""
 "Set the height of the inserted blank lines (in em). The height of the lines "
 "between paragraphs will be twice the value set here."
-msgstr ""
+msgstr "Aseta tyhjien lisättyjen rivien korkeus (em). Rivien korkeus on kaksi kertaa tämä arvo."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:489
 msgid ""
@@ -5397,30 +5399,30 @@ msgid ""
 "has a cover image that is not identified as a cover. In this case, if you "
 "set a cover in calibre, the output document will end up with two cover "
 "images if you do not specify this option."
-msgstr ""
+msgstr "Poista ekirjan ensimmäinen kuva. Hyödyllistä, jos lähdetiedostossa on kansikuva, jota ei tunnisteta kanneksi.  Jos asetat oman kansikuvan sen sijaan, tämä valinta estää kahden kannen muodostumisen kirjaan."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:498
 msgid ""
 "Insert the book metadata at the start of the book. This is useful if your "
 "e-book reader does not support displaying/searching metadata directly."
-msgstr ""
+msgstr "Lisää metatiedot kirjan alkuun. Hyödyllistä, jos lukulaitteesi ei tue metatietojen normaalia esittämistä/hakua."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:506
 msgid ""
 "Convert plain quotes, dashes and ellipsis to their typographically correct "
 "equivalents. For details, see "
 "https://daringfireball.net/projects/smartypants"
-msgstr ""
+msgstr "Muunna tavalliset lainausmerkit, väliviivat ja perättäiset pisteet typografisesti oikeiksi välimerkeiksi. Katso lisätietoja: https://daringfireball.net/projects/smartypants"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:514
 msgid "Convert fancy quotes, dashes and ellipsis to their plain equivalents."
-msgstr ""
+msgstr "Muunna typografisesti tarkat lainausmerkit, väliviivat ja perättäiset pisteet niiden tavanomaisiksi vastineiksi."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:522
 msgid ""
 "Read metadata from the specified OPF file. Metadata read from this file will"
 " override any metadata in the source file."
-msgstr ""
+msgstr "Lue metatiedot osoitetusta OPF-tiedostosta. Luetut metatiedot ohittavat lähdetiedostosta löytyvät tiedot."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:529
 #, python-format
@@ -5431,7 +5433,7 @@ msgid ""
 "where there are multiple representations of a character (characters shared "
 "by Chinese and Japanese for instance) the representation based on the "
 "current calibre interface language will be used."
-msgstr ""
+msgstr "Translitteroi unicode-merkistö ASCII-merkeiksi. Käytä varoen - esimerkiksi \"%s\":n korvaa \"Mikhail Gorbachiov\". Jos merkistä on useampia versioita (esimerkiksi kiinan ja japanin versiot), valitaan nykyisen calibre-käyttöliittymän kielivalinta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:544
 msgid ""
@@ -5441,7 +5443,7 @@ msgid ""
 " to render correctly. By default, calibre will turn a ligature into the "
 "corresponding pair of normal characters. This option will preserve them "
 "instead."
-msgstr ""
+msgstr "Säilytä ligatuurit lähdetiedostosta. Ligatuuri on erityinen kahden merkin typografinen yhdistelmä, kuten ff, fi, fl jne. Useimmat elukijat eivät tue ligatuureja, joten ne eivät yleensä näy oikein. Oletuksen calibre muuntaa ligatuurin vastaaviksi vakiomerkeiksi. Tämä valinta säilyttää ligatuurit."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:556
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:37
@@ -5450,44 +5452,44 @@ msgstr "Anna otsikko"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:560
 msgid "Set the authors. Multiple authors should be separated by ampersands."
-msgstr ""
+msgstr "Aseta tekijät. Useammat tekijät erotetaan puolipisteillä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:565
 msgid "The version of the title to be used for sorting. "
-msgstr ""
+msgstr "Nimen muoto jota käytetään järjestämiseen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:569
 msgid "String to be used when sorting by author. "
-msgstr ""
+msgstr "Teksti jota käytetään tekijän mukaan järjestämiseen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:573
 msgid "Set the cover to the specified file or URL"
-msgstr ""
+msgstr "Aseta kansi osoitetusta tiedostosta tai URL:stä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:577
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:53
 msgid "Set the e-book description."
-msgstr ""
+msgstr "Aseta kirjan kuvaus."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:581
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:55
 msgid "Set the e-book publisher."
-msgstr ""
+msgstr "Aseta kirjan julkaisija."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:585
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:59
 msgid "Set the series this e-book belongs to."
-msgstr ""
+msgstr "Aseta sarja johon kirja kuuluu."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:589
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:61
 msgid "Set the index of the book in this series."
-msgstr ""
+msgstr "Aseta kirjan järjestysnumero sarjassa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:593
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:63
 msgid "Set the rating. Should be a number between 1 and 5."
-msgstr ""
+msgstr "Aseta arvosana. Luku 1-5"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:597
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:65
@@ -5497,12 +5499,12 @@ msgstr "Anna kirjan ISBN"
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:601
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:72
 msgid "Set the tags for the book. Should be a comma separated list."
-msgstr ""
+msgstr "Aseta kirjan tägit. Muotona pilkuin erotettu lista."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:605
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:74
 msgid "Set the book producer."
-msgstr ""
+msgstr "Aseta kirjan tuottaja."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:609
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:76
@@ -5513,35 +5515,35 @@ msgstr "Anna kieli"
 msgid ""
 "Set the publication date (assumed to be in the local timezone, unless the "
 "timezone is explicitly specified)"
-msgstr ""
+msgstr "Aseta julkaisupäivämäärä (oletetaan käyttävän paikallista aikavyöhykettä, ellei aikavyöhykettä ilmoiteta erikseen)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:617
 msgid "Set the book timestamp (no longer used anywhere)"
-msgstr ""
+msgstr "Aseta kirja aikaleima (ei enää käytössä missään)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:621
 msgid ""
 "Enable heuristic processing. This option must be set for any heuristic "
 "processing to take place."
-msgstr ""
+msgstr "Ota heuristinen prosessointi käyttöön. Valinta vaaditaan, jotta heuristista prosessointia suoritetaan."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:626
 msgid ""
 "Detect unformatted chapter headings and sub headings. Change them to h2 and "
 "h3 tags.  This setting will not create a TOC, but can be used in conjunction"
 " with structure detection to create one."
-msgstr ""
+msgstr "Tunnista muotoilemattomat lukujen otsikot ja alaotsikot. Muuntaa ne h2 ja h3 tägeiksi. Tästä ei vielä muodostu sisällysluetteloa, mutta toimintoa voidaan hyödyntää rakenteen luomisessa sisällyluettelon generoimisen yhteydessä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:633
 msgid ""
 "Look for common words and patterns that denote italics and italicize them."
-msgstr ""
+msgstr "Etsi yleisiä sanoja sekä rakenteita joilla merkitään kursivointeja ja kursivoi nämä kohdat."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:638
 msgid ""
 "Turn indentation created from multiple non-breaking space entities into CSS "
 "indents."
-msgstr ""
+msgstr "Muunna perättäisistä sitovista välilyönneistä tehdyt sisennykset CSS-sisennyksiksi."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:643
 msgid ""
@@ -5549,66 +5551,66 @@ msgid ""
 "Valid values are a decimal between 0 and 1. The default is 0.4, just below "
 "the median line length.  If only a few lines in the document require "
 "unwrapping this value should be reduced"
-msgstr ""
+msgstr "Pituuden suhdeluku, jolla arvioida mistä riveistä tulisi poistaa rivitys. Käyvät arvot ovat desimaalilukuja välillä 0-1. Oletus on 0.4, hiukan rivipituuksien mediaanin alapuolella. Jos vain harvoista dokumentin riveistä tarvitsee poistaa rivitys, tarvitaan pienempi suhdeluku."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:651
 msgid "Unwrap lines using punctuation and other formatting clues."
-msgstr ""
+msgstr "Poista turhat rivinvaihdot päättelemällä kappaleet välimerkeistä ja muista muista muotoiluista."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:655
 msgid ""
 "Remove empty paragraphs from the document when they exist between every "
 "other paragraph"
-msgstr ""
+msgstr "Poista tyhjät kappaleet kappaleiden välistä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:660
 msgid ""
 "Left aligned scene break markers are center aligned. Replace soft scene "
 "breaks that use multiple blank lines with horizontal rules."
-msgstr ""
+msgstr "Vasempaan tasatut kohtausten vaihdokset keskitetään. Korvaa useilla tyhjillä riveillä tehdyn kohtausten vaihdoksen vaakaviivalla."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:666
 msgid ""
 "Replace scene breaks with the specified text. By default, the text from the "
 "input document is used."
-msgstr ""
+msgstr "Korvaa kohtausten vaihdokset asetetulla tekstillä. Oletuksena käytetään lähdetiedoston tekstiä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:671
 msgid ""
 "Analyze hyphenated words throughout the document.  The document itself is "
 "used as a dictionary to determine whether hyphens should be retained or "
 "removed."
-msgstr ""
+msgstr "Analysoi dokumentin tavutetut sanat. Dokumentin omaa sisältöä käytetään tunnistamaan tulisiko väliviiva poistaa vai säilyttää."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:677
 msgid ""
 "Looks for occurrences of sequential <h1> or <h2> tags. The tags are "
 "renumbered to prevent splitting in the middle of chapter headings."
-msgstr ""
+msgstr "Etsii perättäisiä <h1> tai <h2> tägejä. Tägit numeroidaan uusiksi, jotta lukujen otsikot eivät katkea kesken."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:683
 msgid "Search pattern (regular expression) to be replaced with sr1-replace."
-msgstr ""
+msgstr "Hakulauseke (regular expression) joka korvataan sr1-replacella."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:688
 msgid "Replacement to replace the text found with sr1-search."
-msgstr ""
+msgstr "Korvaava teksti sr1-searchilla löydetylle tekstille."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:692
 msgid "Search pattern (regular expression) to be replaced with sr2-replace."
-msgstr ""
+msgstr "Hakulauseke (regular expression) joka korvataan sr2-replacella."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:697
 msgid "Replacement to replace the text found with sr2-search."
-msgstr ""
+msgstr "Korvaava teksti sr2-searchilla löydetylle tekstille."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:701
 msgid "Search pattern (regular expression) to be replaced with sr3-replace."
-msgstr ""
+msgstr "Hakulauseke (regular expression) joka korvataan sr3-replacella."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:706
 msgid "Replacement to replace the text found with sr3-search."
-msgstr ""
+msgstr "Korvaava teksti sr3-searchilla löydetylle tekstille."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:710
 msgid ""
@@ -5616,84 +5618,84 @@ msgid ""
 "must contain alternating lines of regular expression followed by replacement"
 " pattern (which can be an empty line). The regular expression must be in the"
 " Python regex syntax and the file must be UTF-8 encoded."
-msgstr ""
+msgstr "Polku tiedostoon jossa on etsi ja korvaa -regular expressionit. Tiedoston tulee muodostua perättäisistä riveistä, hakulauseke ja korvauslauseke (joka voi olla myös tyhjä rivi). Lausekkeen tulee noudattaa Python regex -syntaksia ja tiedoston tulee käyttää UTF-8-merkistöä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:821
 msgid "Could not find an e-book inside the archive"
-msgstr ""
+msgstr "Arkistosta ei löytynyt ekirjaa"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:911
 msgid "Values of series index and rating must be numbers. Ignoring"
-msgstr ""
+msgstr "Sarjan järjestysnumeron sekä arvosanan tulee olla numeroita. Ohitetaan."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:918
 msgid "Failed to parse date/time"
-msgstr ""
+msgstr "Pvm/aika-tulkinta epäonnistui"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:1097
 msgid "Converting input to HTML..."
-msgstr ""
+msgstr "Muunnetaan lähde HTML:ksi..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:1131
 msgid "Running transforms on e-book..."
-msgstr ""
+msgstr "Muunnetaan ekirjaa..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:1267
 #, python-format
 msgid "Running %s plugin"
-msgstr ""
+msgstr "Suoritetaan %s-lisäosaa"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:271
 msgid "Template error"
-msgstr ""
+msgstr "Mallivirhe"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:367
 msgid "The Cross"
-msgstr ""
+msgstr "Risti"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:388
 msgid "Half and half"
-msgstr ""
+msgstr "Half and half"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:413
 msgid "Banner"
-msgstr ""
+msgstr "Banneri"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:483
 msgid "Ornamental"
-msgstr ""
+msgstr "Koristeellinen"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/covers.py:543
 msgid "Blocks"
-msgstr ""
+msgstr "Palkit"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:213
 msgid "Remove the property"
-msgstr ""
+msgstr "Poista ominaisuustieto"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:214
 msgid "Add extra properties"
-msgstr ""
+msgstr "Lisää lisäominaisuustietoja"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:215
 msgid "Change the value to"
-msgstr ""
+msgstr "Muuta arvoksi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:216
 msgid "Multiply the value by"
-msgstr ""
+msgstr "Kerro arvo luvulla "
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:217
 msgid "Divide the value by"
-msgstr ""
+msgstr "Jaa arvo luvulla"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:218
 msgid "Add to the value"
-msgstr ""
+msgstr "Summaa arvoon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:219
 msgid "Subtract from the value"
-msgstr ""
+msgstr "Vähennä arvosta"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:223
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:79
@@ -5707,145 +5709,145 @@ msgstr "ei ole"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:225
 msgid "is any value"
-msgstr ""
+msgstr "on mikä tahansa arvo"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:226
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:83
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:57
 msgid "matches pattern"
-msgstr ""
+msgstr "vastaa mallia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:227
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:84
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:58
 msgid "does not match pattern"
-msgstr ""
+msgstr "ei vastaa mallia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:228
 msgid "is the same length as"
-msgstr ""
+msgstr "on yhtä pitkä kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:229
 msgid "is not the same length as"
-msgstr ""
+msgstr "ei ole yhtä pitkä kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:230
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:56
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:61
 msgid "is less than"
-msgstr ""
+msgstr "on pienempi kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:231
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:57
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/coloring.py:62
 msgid "is greater than"
-msgstr ""
+msgstr "on suurempi kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:232
 msgid "is less than or equal to"
-msgstr ""
+msgstr "on pienempi tai yhtä suuri kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:233
 msgid "is greater than or equal to"
-msgstr ""
+msgstr "on suurempi tai yhtä suuri kuin"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:243
 msgid "Unknown keys"
-msgstr ""
+msgstr "Tuntemattomat tunnisteet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:244
 #, python-format
 msgid "The rule has unknown keys: %s"
-msgstr ""
+msgstr "Säännössä tuntemattomat tunnisteet: %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:247
 msgid "Missing keys"
-msgstr ""
+msgstr "Puuttuvat tunnisteet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:248
 #, python-format
 msgid "The rule has missing keys: %s"
-msgstr ""
+msgstr "Säännöstä puuttuu tunnisteet: %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:251
 msgid "Property required"
-msgstr ""
+msgstr "Ominaisuustieto vaaditaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:251
 msgid "You must specify a CSS property to match"
-msgstr ""
+msgstr "Vastattava CSS-ominaisuus vaaditaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:253
 msgid "Shorthand property not allowed"
-msgstr ""
+msgstr "Lyhennettyä ominaisuusmuotoa ei tueta"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:254
 #, python-brace-format
 msgid ""
 "{0} is a shorthand property. Use the full form of the property, for example,"
 " instead of font, use font-family, instead of margin, use margin-top, etc."
-msgstr ""
+msgstr "{0} on lyhennetty muoto. Käytä ominaisuustiedon täyttä muotoa, esimerkiksi font muodossa font-family, margin muodossa margin-top, jne."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:257
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:186
 msgid "Query required"
-msgstr ""
+msgstr "Hakulauseke vaaditaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:258
 msgid "You must specify a value for the CSS property to match"
-msgstr ""
+msgstr "Vastattavalle CSS-ominaisuudelle on ilmoitettava arvo"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:260
 msgid "Unknown match type"
-msgstr ""
+msgstr "Tuntematon vastattavan tyyppi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:261
 #, python-format
 msgid "The match type %s is not known"
-msgstr ""
+msgstr "Vastattava tyyppi %s on tuntematon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:266
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:274
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:84
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:192
 msgid "Query invalid"
-msgstr ""
+msgstr "Epäkelpo haku"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:267
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:193
 #, python-format
 msgid "%s is not a valid regular expression"
-msgstr ""
+msgstr "%s on epäkelpo lauseke"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:275
 #, python-format
 msgid "%s is not a valid length or number"
-msgstr ""
+msgstr "%s on epäkelpo pituus tai numero"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:278
 msgid "Unknown action type"
-msgstr ""
+msgstr "Tuntematon toimintotyyppi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:279
 #, python-format
 msgid "The action type %s is not known"
-msgstr ""
+msgstr "Toimintotyyppi %s on tuntematon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:281
 msgid "You must specify a number"
-msgstr ""
+msgstr "Vaaditaan numero"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:283
 msgid "You must specify at least one CSS property to add"
-msgstr ""
+msgstr "Vaaditaan vähintään yksi lisättävä CSS-ominaisuus"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:285
 msgid "You must specify a value to change the property to"
-msgstr ""
+msgstr "Vaaditaan arvo joka ominaisuudelle asetetaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:286
 msgid "No data"
-msgstr ""
+msgstr "Ei tietoja"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:291
 #, python-format
@@ -5854,14 +5856,14 @@ msgstr "%s ei ole numero"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:291
 msgid "Invalid number"
-msgstr ""
+msgstr "Epäkelpo luku"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/css_transform_rules.py:329
 #, python-brace-format
 msgid ""
 "If the property {property} {match_type} {query}\n"
 "{action}"
-msgstr ""
+msgstr "Jos ominaisuus {property} {match_type} {query}\n{action}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/docx/to_html.py:68
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1387
@@ -5907,11 +5909,11 @@ msgstr "Seuraa kaikkia HTML-tiedoston linkkejä ja luo ZIP-tiedosto, joka sisäl
 msgid ""
 "Character encoding for the input HTML files. Common choices include: cp1252,"
 " cp1251, latin1 and utf-8."
-msgstr ""
+msgstr "Lähde-HTML:n merkistökoodaus. Yleisiä muotoja ovat: cp1252, cp1251, latin1 ja utf-8."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/html/to_zip.py:97
 msgid "Add linked files in breadth first order"
-msgstr ""
+msgstr "Lisää linkitetyt tiedostot alkaen ylätasosta"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/html/to_zip.py:98
 msgid ""
@@ -5919,115 +5921,115 @@ msgid ""
 "i.e. if file A links to B and  C, but B links to D, the files are added in "
 "the order A, B, D, C.  With this option, they will instead be added as A, B,"
 " C, D"
-msgstr ""
+msgstr "Normaalisti calibre asettaa HTML-tiedostot linkitysjärjestykseen, eli jos A:sta on linkki B:hen ja C:hen, ja B:stä on linkki D:hen, tiedostot kootaan järjestyksessä A, B, D, C. Tämän valinnan myötä calibre kokoaa tiedostot järjestyksessä A, B, C, D"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lit/from_any.py:51
 msgid "Creating LIT file from EPUB..."
-msgstr ""
+msgstr "Luodaan LIT-tiedosto EPUBista..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:322
 msgid "\tBook Designer file detected."
-msgstr ""
+msgstr "\tBook Designer -tiedosto havaittu."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:324
 msgid "\tParsing HTML..."
-msgstr ""
+msgstr "\tTulkitsee HTML:ää..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:347
 msgid "\tBaen file detected. Re-parsing..."
-msgstr ""
+msgstr "\tBaen-tiedosto havaittu. Tulkitaan uudelleen..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:363
 msgid "Written preprocessed HTML to "
-msgstr ""
+msgstr "Esikäsitelty HTML kirjoitettu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:380
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "Prosessoi %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:394
 msgid "\tConverting to BBeB..."
-msgstr ""
+msgstr "\tMuunnetaan BBeB:ksi..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:539
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:552
 #, python-format
 msgid "Could not parse file: %s"
-msgstr ""
+msgstr "Ei voitu tulkita tiedostoa: %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:544
 #, python-format
 msgid "%s is an empty file"
-msgstr ""
+msgstr "%s on tyhjä tiedosto"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:564
 #, python-format
 msgid "Failed to parse link %(tag)s %(children)s"
-msgstr ""
+msgstr "Linkin %(tag)s%(children)s lukeminen epäonnistui"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:948
 #, python-format
 msgid "Unable to process image %(path)s. Error: %(err)s"
-msgstr ""
+msgstr "Kuvan %(path)s prosessointi epäonnistui. Virhe: %(err)s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:994
 #, python-format
 msgid "Unable to process interlaced PNG %s"
-msgstr ""
+msgstr "Ei voida käsitellä lomitettua PNG:tä %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1760
 #, python-format
 msgid "An error occurred while processing a table: %s. Ignoring table markup."
-msgstr ""
+msgstr "Virhe käsiteltäessä taulukkoa: %s. Ohitetaan taulukkomerkinnät."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1762
 #, python-format
 msgid ""
 "Bad table:\n"
 "%s"
-msgstr ""
+msgstr "Epäkelpo taulukko:\n%s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1784
 msgid "Table has cell that is too large"
-msgstr ""
+msgstr "Taulukossa on liian suuri solu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1850
 #, python-format
 msgid "Could not read cover image: %s"
-msgstr ""
+msgstr "Ei voida lukea kansikuvaa: %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1853
 #, python-format
 msgid "Cannot read from: %s"
-msgstr ""
+msgstr "Ei voida lukea lähdettä: %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/html/convert_from.py:1982
 msgid "Failed to process OPF file"
-msgstr ""
+msgstr "OPF-tiedoston käsittely epäonnistui"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:139
 msgid ""
 "%prog book.lrf\n"
 "Convert an LRF file into an LRS (XML UTF-8 encoded) file"
-msgstr ""
+msgstr "%prog book.lrf\nMuunna LRF-tiedosto LRS-tiedostoksi (XML UTF-8 koodaus)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:140
 msgid "Output LRS file"
-msgstr ""
+msgstr "LRS-kohdetiedosto"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:142
 msgid "Do not save embedded image and font files to disk"
-msgstr ""
+msgstr "Älä tallenna upotettuja kuva- ja fonttitiedostoja levylle"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:144
 #: /home/kovid/work/calibre/src/calibre/utils/smtp.py:229
 msgid "Be more verbose"
-msgstr ""
+msgstr "Tee tarkempaa raportointia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:162
 msgid "Parsing LRF..."
-msgstr ""
+msgstr "Tulkitaan PRF:ää..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:165
 msgid "Creating XML..."
@@ -6035,29 +6037,29 @@ msgstr "Luodaan XML..."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:167
 msgid "LRS written to "
-msgstr ""
+msgstr "LRS tallennettu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrs/convert_from.py:263
 msgid "Could not read from thumbnail file:"
-msgstr ""
+msgstr "Ei voitu lukea esikatselukuvaa:"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrs/convert_from.py:283
 msgid ""
 "%prog [options] file.lrs\n"
 "Compile an LRS file into an LRF file."
-msgstr ""
+msgstr "%prog  [vaihtoehdot] tiedosto.lrs\nMuunna LRS LRF:ksi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrs/convert_from.py:284
 msgid "Path to output file"
-msgstr ""
+msgstr "Polku kohdetiedostolle"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrs/convert_from.py:286
 msgid "Verbose processing"
-msgstr ""
+msgstr "Tarkka prosessointi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrs/convert_from.py:288
 msgid "Convert LRS to LRS, useful for debugging."
-msgstr ""
+msgstr "Muunna LRS LRS:ksi, hyödyllinen virheenetsintään."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/meta.py:499
 msgid "Invalid LRF file. Could not set metadata."
@@ -6070,7 +6072,7 @@ msgid ""
 "\n"
 "Show/edit the metadata in an LRF file.\n"
 "\n"
-msgstr ""
+msgstr "%prog [vaihtoehdot] minunkirjani.lrs\n\n\nNäytä/muokkaa LRF-tiedoston metatietoja.\n\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/meta.py:629
 msgid "Set the book title"
@@ -6099,7 +6101,7 @@ msgstr "Polku grafiikalle, joka määritetään tämän tiedoston kuvakkeeksi"
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/meta.py:643
 msgid ""
 "Path to a TXT file containing the comment to be stored in the LRF file."
-msgstr ""
+msgstr "Polku tekstitiedostoon jossa on LRF-tiedostoon lisättävä kommentti"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/meta.py:647
 msgid "Extract thumbnail from LRF file"
@@ -6135,7 +6137,7 @@ msgstr "Määritä kirjan ID"
 msgid ""
 "Extract common e-book formats from archive files (ZIP/RAR). Also try to "
 "autodetect if they are actually CBZ/CBR files."
-msgstr ""
+msgstr "Pura tavanomaiset ekirja-formaatit pakkaustiedostoista (ZIP/RAR). Pyri myös tunnistamaan onko kyseessä CBZ/CBR-tiedosto."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:662
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:144
@@ -6221,8 +6223,8 @@ msgstr "Tagit"
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:71
 msgid "Series"
 msgid_plural "Series"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sarja"
+msgstr[1] "Sarja"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:777
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:198
@@ -6233,7 +6235,7 @@ msgstr "Kielet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:779
 msgid "Timestamp"
-msgstr ""
+msgstr "Aikaleima"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:781
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:257
@@ -6245,26 +6247,26 @@ msgstr "Julkaistu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:783
 msgid "Rights"
-msgstr ""
+msgstr "Oikeudet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/formatter.py:32
 msgid "Value: unknown field "
-msgstr ""
+msgstr "Arvo: tuntematon kenttä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:64
 #, python-format
 msgid "Search the calibre library for books by %s"
-msgstr ""
+msgstr "Etsi calibre-kirjastosta kirjoja haulla %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:73
 #, python-brace-format
 msgid "Search {0} for the author: {1}"
-msgstr ""
+msgstr "Hae kohteesta {0} tekijää: {1}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:75
 #, python-brace-format
 msgid "Search {0} for the book: {1} by the author {2}"
-msgstr ""
+msgstr "Hae {0} etsien kirjaa: {1} tekijältä {2}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:152
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:157
@@ -6277,30 +6279,30 @@ msgstr "Klikkaa nähdäksesi kirjat joille {0}: {1}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:167
 msgid "Click to open"
-msgstr ""
+msgstr "Klikkaa auki"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:199
 msgid "Ids"
-msgstr ""
+msgstr "ID:t"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:231
 msgid "Search calibre for books with the language: {}"
-msgstr ""
+msgstr "Hae calibre-kirjoja kielellä: {}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:262
 #, python-format
 msgid ""
 "%(sidx)s of <a href=\"%(href)s\" title=\"%(tt)s\" data-"
 "item=\"%(data)s\"><span class=\"%(cls)s\">%(series)s</span></a>"
-msgstr ""
+msgstr "%(sidx)s / <a href=\"%(href)s\" title=\"%(tt)s\" data-item=\"%(data)s\"><span class=\"%(cls)s\">%(series)s</span></a>"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/render.py:267
 msgid "Click to see books in this series"
-msgstr ""
+msgstr "Klikkaa nähdäksesi sarjan kirjat"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:20
 msgid "%prog ebook_file [options]\n"
-msgstr ""
+msgstr "%prog ekirja-tiedosto [vaihtoehdot]\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:21
 #, python-brace-format
@@ -6315,33 +6317,33 @@ msgid ""
 "Different file types support different kinds of metadata. If you try to set\n"
 "some metadata on a file type that does not support it, the metadata will be\n"
 "silently ignored.\n"
-msgstr ""
+msgstr "\nLue/Kirjoita metatietoja ekirjoista/-hin.\n\nTuetut formaatit metatietojen lukemiseen: {0}\n\nTuetut formaatit metatietojen kirjoittamiseen: {1}\n\nFormaatit tukevat erilaisia metatietoja. Jos yrität kirjoittaa metatietoja joita tiedosto ei tue, ne ohitetaan ilman virheilmoitusta.\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:39
 msgid ""
 "Set the authors. Multiple authors should be separated by the & character. "
 "Author names should be in the order Firstname Lastname."
-msgstr ""
+msgstr "Aseta tekijät. Useammat tekijät erotetaan &-merkillä. Tekijänimet muodossa Etunimi Sukunimi."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:43
 msgid ""
 "The version of the title to be used for sorting. If unspecified, and the "
 "title is specified, it will be auto-generated from the title."
-msgstr ""
+msgstr "Järjestämisessä käytettävä nimen muoto. Jos arvoa ei ole asetettu, se luodaan automaattisesti varsinaisesta nimestä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:47
 msgid ""
 "String to be used when sorting by author. If unspecified, and the author(s) "
 "are specified, it will be auto-generated from the author(s)."
-msgstr ""
+msgstr "Teksti, jota käytetään järjestettäessä tekijöiden mukaan. Jos arvoa ei ole asetettu, se luodaan automaattisesti tekijätiedoista."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:51
 msgid "Set the cover to the specified file."
-msgstr ""
+msgstr "Aseta kansi osoitetusta tiedostosta."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:57
 msgid "Set the book category."
-msgstr ""
+msgstr "Aseta kirjan luokka."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:67
 msgid ""
@@ -6349,56 +6351,56 @@ msgid ""
 "example: --identifier uri:https://acme.com --identifier isbn:12345 To remove"
 " an identifier, specify no value, --identifier isbn: Note that for EPUB "
 "files, an identifier marked as the package identifier cannot be removed."
-msgstr ""
+msgstr "Aseta kirjan tunnisteet, tarvittaessa useita. Esimerkiksi: --identifier uri:https://acme.com --identifier isbn:12345 Poistaaksesi tunniste, aseta tyhjä arvo, --identifier isbn: Huomaa, että EPUB-kirjojen package identifier -tunnistetta ei voi poistaa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:78
 msgid "Set the published date."
-msgstr ""
+msgstr "Aseta julkaisupäivämäärä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:81
 msgid "Get the cover from the e-book and save it at as the specified file."
-msgstr ""
+msgstr "Hae kansi ekirjasta ja talenna se osoitettuun tiedostoon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:84
 msgid ""
 "Specify the name of an OPF file. The metadata will be written to the OPF "
 "file."
-msgstr ""
+msgstr "Aseta OPF-tiedoston nimi. Metatiedot kirjoitetaan tähän OPF-tiedostoon."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:87
 msgid ""
 "Read metadata from the specified OPF file and use it to set metadata in the "
 "e-book. Metadata specified on the command line will override metadata read "
 "from the OPF file"
-msgstr ""
+msgstr "Lue metatiedot osoitetusta OPF-tiedostosta ja aseta siitä kirjan metatiedot. Komentorivillä asetetut metatiedot ohittavat OPF-tiedostosta löytyvät tiedot."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:92
 msgid "Set the BookID in LRF files"
-msgstr ""
+msgstr "Aseta LRF-tiedostojen BookID"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:168
 msgid "No file specified"
-msgstr ""
+msgstr "Tiedostoa ei ole asetettu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:183
 msgid "Original metadata"
-msgstr ""
+msgstr "Alkuperäiset metatiedot"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:200
 msgid "Changed metadata"
-msgstr ""
+msgstr "Muokatut metatiedot"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:212
 msgid "OPF created in"
-msgstr ""
+msgstr "OPF luotiin kansioon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:218
 msgid "Cover saved to"
-msgstr ""
+msgstr "Kansi tallennettiin kansioon"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:220
 msgid "No cover found"
-msgstr ""
+msgstr "Kantta ei löytynyt"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/search_internet.py:34
 msgid "Goodreads"
@@ -6426,7 +6428,7 @@ msgstr "Google-kuvat"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:847
 msgid "Downloads metadata and covers from Amazon"
-msgstr ""
+msgstr "Ladataan metatiedot ja kannet Amazonista"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:858
 msgid "US"
@@ -6446,7 +6448,7 @@ msgstr "Iso-Britannia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:862
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:863
 msgid "Italy"
@@ -6486,57 +6488,57 @@ msgstr "Amazon palvelimet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:875
 msgid "Bing search cache"
-msgstr ""
+msgstr "Bing-hakuvälimuisti"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:876
 msgid "Google search cache"
-msgstr ""
+msgstr "Google-hakuvälimuisti"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:877
 msgid "Wayback machine cache (slow)"
-msgstr ""
+msgstr "Wayback machine -välimuisti (hidas)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:881
 msgid "Amazon country website to use:"
-msgstr ""
+msgstr "Käytettävä Amazon-maasivusto:"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:882
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
-msgstr ""
+msgstr "Metatiedot haetaan tämän maan Amazonista"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:884
 msgid "Server to get data from:"
-msgstr ""
+msgstr "Palvelin jolta tiedot haetaan:"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:886
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
-msgstr ""
+msgstr "Amazon on alkanut estämään metatietojen hakemista. Tämän kiertämiseksi calibre hakee tietoja useista eri välimuisteista joihin tieto on tallennettu. Valitse haluamasi lähteet."
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1229
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1232
 msgid "Amazon timed out. Try again later."
-msgstr ""
+msgstr "Amazonin aikaraja ylittyi. Yritä uudelleen myöhemmin."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:169
 msgid "Metadata source"
-msgstr ""
+msgstr "Metatietolähde"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/big_book_search.py:35
 msgid ""
 "Downloads multiple book covers from Amazon. Useful to find alternate covers."
-msgstr ""
+msgstr "Lataa useampi kansi Amazonista. Hyödyllinen vaihtoehtoisten kansien löytämiseen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/big_book_search.py:38
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:36
 msgid "Maximum number of covers to get"
-msgstr ""
+msgstr "Haettavien kansien maksimimäärä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/big_book_search.py:39
 msgid "The maximum number of covers to process from the search result"
-msgstr ""
+msgstr "Maksimimäärä hausta käsiteltäviä kansia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:27
 msgid ""
@@ -6552,7 +6554,7 @@ msgstr "Kirjan nimi"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:35
 msgid "Book author(s)"
-msgstr ""
+msgstr "Kirjan tekijä(t)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:36
 msgid "Book ISBN"
@@ -6562,71 +6564,71 @@ msgstr "Kirjan ISBN"
 msgid ""
 "Identifiers such as ASIN/goodreads id etc. Can be specified multiple times "
 "for multiple identifiers. For example: "
-msgstr ""
+msgstr "Tunnisteet kuten ASIN/goodreads id jne. Voidaan asettaa useamman kerran. Esimerkiksi:"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:41
 msgid "Print the log to the console (stderr)"
-msgstr ""
+msgstr "Tulosta loki konsoliin (stderr)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:42
 msgid "Output the metadata in OPF format instead of human readable text."
-msgstr ""
+msgstr "Näytä metatiedot OPF-muodossa ihmisluettavan muodon sijaan"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:44
 msgid ""
 "Specify a filename. The cover, if available, will be saved to it. Without "
 "this option, no cover will be downloaded."
-msgstr ""
+msgstr "Aseta tiedostonimi. Löydettäessä, kansi tallennetaan tällä nimellä. Kantta ei tallenneta ilman tätä valintaa."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:46
 msgid "Timeout in seconds. Default is 30"
-msgstr ""
+msgstr "Aikaraja sekunneissa. Oletus on 30"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/cli.py:48
 msgid ""
 "Specify the name of a metadata download plugin to use. By default, all "
 "metadata plugins will be used. Can be specified multiple times for multiple "
 "plugins. All plugin names: {}"
-msgstr ""
+msgstr "Aseta metatietojen lataukseen käytettävän lisäosan nimi. Oletuksena käytetään kaikkia lisäosia. Voidaan määrittää useampi lisäosa. Lisäosien nimet: {}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/douban.py:158
 msgid ""
 "Downloads metadata and covers from Douban.com. Useful only for Chinese "
 "language books."
-msgstr ""
+msgstr "Lataa metatiedot ja kannet Douban.comista. Vai kiinankielisä kirjoja varten."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/edelweiss.py:198
 msgid ""
 "Downloads metadata and covers from Edelweiss - A catalog updated by book "
 "publishers"
-msgstr ""
+msgstr "Lataa metatiedot ja kannet Edelweissista - julkaisijoiden ylläpitämä tietokanta"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google.py:175
 msgid "Downloads metadata and covers from Google Books"
-msgstr ""
+msgstr "Lataa metatiedot ja kannet Google Booksista"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:32
 msgid ""
 "Downloads covers from a Google Image search. Useful to find larger/alternate"
 " covers."
-msgstr ""
+msgstr "Lataa kannet Google Kuvahausta. Toimii suurikokoisten ja vaihtoehtoisten kansien löytämiseen"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:37
 msgid "The maximum number of covers to process from the Google search result"
-msgstr ""
+msgstr "Google hausta käsiteltävien kansien maksimimäärä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:38
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:582
 msgid "Cover size"
-msgstr ""
+msgstr "Kannen koko"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:39
 msgid "Search for covers larger than the specified size"
-msgstr ""
+msgstr "Hae tätä suurempia kansikuvia"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:41
 msgid "Any size"
-msgstr ""
+msgstr "Mikä tahansa"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:42
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:475
@@ -6641,23 +6643,23 @@ msgstr "Kauppa"
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google_images.py:48
 #, python-format
 msgid "Larger than %s"
-msgstr ""
+msgstr "Suurempi kuin %s"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/openlibrary.py:18
 msgid "Downloads covers from The Open Library"
-msgstr ""
+msgstr "Lataa kannet The Open Librarysta"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/overdrive.py:31
 msgid "Downloads metadata and covers from Overdrive's Content Reserve"
-msgstr ""
+msgstr "Lataa metatiedot ja kannet Overdriven Content Reservestä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/overdrive.py:43
 msgid "Download all metadata (slow)"
-msgstr ""
+msgstr "Lataa kaikki metatiedot (hidas)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/overdrive.py:44
 msgid "Enable this option to gather all metadata available from Overdrive."
-msgstr ""
+msgstr "Valitse kerätäksesi kaikki Overdrivessa saatavilla olevat metatiedot"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/overdrive.py:47
 msgid ""
@@ -6666,21 +6668,21 @@ msgid ""
 "the e-book ISBN. Collecting this data is disabled by default due to the "
 "extra time required. Check the download all metadata option below to enable "
 "downloading this data."
-msgstr ""
+msgstr "Lisää metatietoja voidaan kerätä Overdriven kirjan tietosivulta. Näihin kuuluu kirjastojen käyttämä rajattu tägijoukko, kommentit, kieli ja kirjan ISBN. Näitä tietoja ei yleensä haeta hitauden vuoksi. Valitse Lataa kaikki metatiedot nöiden tietojen lataamiseksi."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/ozon.py:27
 msgid "Downloads metadata and covers from OZON.ru (updated)"
-msgstr ""
+msgstr "Lataa metatiedot ja kannet OZON.ru:sta (päivitetty)"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/ozon.py:51
 msgid "Filter out less relevant hits from the search results"
-msgstr ""
+msgstr "Suodata huonosti sopivat osumat hakutuloksista"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/ozon.py:53
 msgid ""
 "Improve search result by removing less relevant hits. It can be useful to "
 "refine the search when there are many matches"
-msgstr ""
+msgstr "Paranna hakutuloksia poistamalla epärelevantteja osumia. Hyödyllinen, jos osumia tulee suuria määriä"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/headers.py:65
 msgid "Sample Book"
@@ -6690,52 +6692,52 @@ msgstr "Näytekirja"
 msgid ""
 "This is an Amazon KFX book. It cannot be processed. See {} for information "
 "on how to handle KFX books."
-msgstr ""
+msgstr "Tämä on Amazonin KFX-kirja. Sitä ei voida käsitellä. Lue {}  saadaksesi lisätietoja KFX-kirjojen käsittelystä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:82
 msgid "This is an Amazon Topaz book. It cannot be processed."
-msgstr ""
+msgstr "Tämä on Amazonin Topaz-kirja. Sitä ei voida käsitellä."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/tweak.py:49
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.py:1451
 msgid "This is not a MOBI file. It is a Topaz file."
-msgstr ""
+msgstr "Tämä ei ole MOBI-tiedosto. Se on Topaz-tiedosto."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/tweak.py:54
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.py:1456
 msgid "This is not a MOBI file."
-msgstr ""
+msgstr "Tämä ei ole MOBI-tiedosto."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/tweak.py:57
 msgid "This file is locked with DRM. It cannot be tweaked."
-msgstr ""
+msgstr "Tiedosto on lukittu DRM:llä. Sitä ei voida säätää."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/tweak.py:62
 msgid ""
 "This MOBI file does not contain a KF8 format book. KF8 is the new format "
 "from Amazon. calibre can only tweak MOBI files that contain KF8 books. Older"
 " MOBI files without KF8 are not tweakable."
-msgstr ""
+msgstr "Tämä MOBI-tiedosto ei sisällä KF8-formaatissa olevaa kirjaa. KF8 on Amazonin uusi formaatti. calibre voi muokata vain MOBI-tiedostoja jotka sisältävät KF8-kirjoja. KF8-tiedostoja sisältämättömät MOBI-tiedostoja ei voi muokata."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/tweak.py:68
 msgid ""
 "This MOBI file contains both KF8 and older Mobi6 data. Tweaking it will "
 "remove the Mobi6 data, which means the file will not be usable on older "
 "Kindles. Are you sure?"
-msgstr ""
+msgstr "Tämä MOBI sisältää sekä KF8- että vanhemmat Mobi6-tiedot. Tiedoston muokkaaminen poistaa Mobi6-tiedot, joten tiedosto ei ole käytettävissä vanhemmilla Kindleillä. Oletko varma muokkauksesta?"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:471
 msgid "No details available"
-msgstr ""
+msgstr "Ei yksityiskohtia saatavilla"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1374
 msgid "Title page"
-msgstr ""
+msgstr "Nimisivu"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1376
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:801
 msgid "Index"
-msgstr ""
+msgstr "Hakusanasto"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1377
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:802
@@ -8205,7 +8207,7 @@ msgid "Comics"
 msgstr "Sarjakuvat"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:40
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:249
 msgid "Archives"
 msgstr "Arkistot"
 
@@ -8266,19 +8268,23 @@ msgid "Add files to selected book records"
 msgstr "Lisää tiedostoja valittuihin kirjatietueisiin"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:81
+msgid "Add files to selected book records from clipboard"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:83
 msgid "Add an empty file to selected book records"
 msgstr "Lisää tyhjä tiedosto valittuihin kirjatietueisiin"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:84
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:86
 msgid "Add empty {}"
 msgstr "Lisää tyhjä {}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:88
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:90
 msgid "Control the adding of books"
 msgstr "Säädä kirjojen lisäystä"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:109
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:111
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:204
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/annotate.py:122
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/catalog.py:41
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/convert.py:151
@@ -8298,15 +8304,24 @@ msgstr "Säädä kirjojen lisäystä"
 msgid "No books selected"
 msgstr "Ei valittuja kirjoja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:110
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:112
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:205
 msgid "Cannot add files as no books are selected"
 msgstr "Ei voida lisätä tiedostoja koska kirjoja ei ole valittu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:115
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:139
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:166
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:181
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:134
+msgid "No files in clipboard"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:135
+msgid "No files have been copied to the clipboard"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:141
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:165
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:184
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:211
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:226
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:34
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:463
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/unpack_book.py:163
@@ -8335,104 +8350,109 @@ msgstr "Ei voida lisätä tiedostoja koska kirjoja ei ole valittu"
 msgid "Are you sure?"
 msgstr "Oletko varma?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:116
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:142
+#, python-format
+msgid "Are you sure you want to set the same cover for all %d books?"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:158
+msgid "Select book files"
+msgstr "Valitse kirjatiedostot"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:166
 #, python-format
 msgid ""
 "Are you sure you want to add the same files to all %d books? If the format "
 "already exists for a book, it will be replaced."
 msgstr "Oletko varma että haluat lisätä samat tiedostot kaikkiin %d kirjoihin? Jos formaatti on kirjalle jo olemassa, se korvataan."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:122
-msgid "Select book files"
-msgstr "Valitse kirjatiedostot"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:136
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:179
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:181
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:224
 #, python-brace-format
 msgid "The {0} format will be replaced in the book {1}. Are you sure?"
 msgid_plural "The {0} formats will be replaced in the book {1}. Are you sure?"
 msgstr[0] "{0} formaatti korvataan kirjassa {1}. Oletko varma?"
 msgstr[1] "{0} formaatit korvataan kirjasta {1}. Oletko varma?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:167
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:212
 #, python-format
 msgid ""
 "Are you sure you want to add the same empty file to all %d books? If the "
 "format already exists for a book, it will be replaced."
 msgstr "Oletko varma, että haluat lisätä saman tyhjän tiedoston kaikkiin %d kirjoihin? Jos formaatti on kirjalla jo olemassa, se korvataan."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:203
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:248
 msgid "Choose archive file"
 msgstr "Valitse arkistotiedosto"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:210
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:255
 msgid "Select root folder"
 msgstr "Valitse juurikansio"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:215
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:260
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.py:299
 msgid "Cannot add"
 msgstr "Ei voida lisätä"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:216
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:261
 #, python-format
 msgid ""
 "Cannot add books from the folder: %s as it contains the currently opened "
 "calibre library"
 msgstr "Ei voida lisätä kirjoja kansiosta: %s koska siellä on tällä hetkellä avoinna oleva calibre-kirjasto"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:301
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:346
 msgid "Adding"
 msgstr "Lisätään"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:302
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:347
 msgid "Creating book records from ISBNs"
 msgstr "Luodaan kirjarekisterit ISBN:stä"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:382
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:427
 #, python-format
 msgid ""
 "You have dropped some files onto the book <b>%s</b>. This will add or "
 "replace the files for this book. Do you want to proceed?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:404
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:458
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:449
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:503
 msgid "Uploading books to device."
 msgstr "Siirretään kirjat laitteeseen"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:423
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:468
 msgid "Supported books"
 msgstr "Tuetut kirjat"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:426
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:471
 msgid "Select books"
 msgstr "Valitse kirja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:474
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:519
 msgid "The following duplicate book was found."
 msgid_plural "The following {} duplicate books were found."
 msgstr[0] "Nämä kirjojen kaksoiskappaleet löydettin: {}"
 msgstr[1] "Nämä kirjojen kaksoiskappaleet löydettiin: {}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:477
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:522
 msgid "Merged some books"
 msgstr "Sulautettiin joitakin kirjoja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:478
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:523
 msgid ""
 "Incoming book formats were processed and merged into your calibre database "
 "according to your auto-merge settings. Click \"Show details\" to see the "
 "list of merged books."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:502
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:507
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:527
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:547
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:552
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:572
 msgid "Add to library"
 msgstr "Lisää kirjastoon"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:507
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:552
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:166
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:90
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:107
@@ -8444,32 +8464,32 @@ msgstr "Lisää kirjastoon"
 msgid "No book selected"
 msgstr "Ei kirjaa valittuna"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:521
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:566
 msgid ""
 "The following books are virtual and cannot be added to the calibre library:"
 msgstr "Nämä kirjat ovat virtuaalisia ja niitä ei voi lisätä calibre-kirjastoon"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:527
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:572
 msgid "No book files found"
 msgstr "Kirjatiedostoja ei löydetty"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:533
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:578
 msgid "Downloading books"
 msgstr "Ladataan kirjoja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:534
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:579
 msgid "Downloading books from device"
 msgstr "Ladataan kirjoja laitteelta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:553
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:598
 msgid "Could not download files from the device"
 msgstr "Ei voitu ladata kirjoja laitteelta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:556
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:601
 msgid "Could not download some files from the device"
 msgstr "Ei voitu ladata joitakin tiedostoja laitteelta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:605
 msgid "Could not download files"
 msgstr "Ei voitu ladata tiedostoja"
 
@@ -8896,7 +8916,7 @@ msgstr "Tiedostot kirjastossasi vastaavat tietokannan tietoja."
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:631
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:636
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:642
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:530
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:529
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/save_to_disk.py:93
 #: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1333
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/image.py:207
@@ -9194,36 +9214,36 @@ msgid ""
 "books."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:517
 #, python-brace-format
 msgid ""
 "Copying: {0} failed, with error:\n"
 "{1}"
 msgstr "Kopiointi: {0} epäonnistui, virhein:\n{1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:519
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
 msgid "Could not copy some books, click \"Show Details\" for more information."
 msgstr "Ei voitu kopioida joitakin kirjoja, klikka \"Näytä tiedot\" saadaksesi lisätietoja."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:519
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
 msgid "Failed to copy some books"
 msgstr "Joidenkin kirjojen kopiointi epäonnistui"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:521
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:520
 msgid "Failed to copy a book, see below for details"
 msgid_plural "Failed to copy {} books, see below for details"
 msgstr[0] "Kirjan kopioiminen epäonnistui, katso alta lisätietoja"
 msgstr[1] "{} kirjan kopioiminen epäonnistui, katso alta lisätietoja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:524
 msgid "Could not copy any books, click \"Show Details\" for more information."
 msgstr "Ei voitu kopioida kirjoja, klikkaa \"Näytä tiedot\" saadaksesi lisätietoja."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:524
 msgid "Failed to copy books"
 msgstr "Kirjojen kopioiminen epäonnistui"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:531
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:530
 msgid ""
 "You cannot use other libraries while using the environment variable "
 "CALIBRE_OVERRIDE_DATABASE_PATH."
@@ -11255,9 +11275,12 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:319
 #, python-brace-format
 msgid "Added a book automatically from {src}"
-msgid_plural "Added {num} books automatically from {src}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:319
+#, python-brace-format
+msgid "Added {num} books automatically from {src}"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/bars.py:426
 #: /home/kovid/work/calibre/src/calibre/gui2/bars.py:515
@@ -11412,6 +11435,10 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1276
 #, python-format
 msgid "Cover size: %(width)d x %(height)d pixels"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:581
+msgid "Edit identifiers for this book"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex.py:17
@@ -12267,7 +12294,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/rtf_input.py:17
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/txt_input.py:18
 msgid "input"
-msgstr ""
+msgstr "Syöte"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/comic_input_ui.py:100
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/comicconf_ui.py:94
@@ -15075,7 +15102,7 @@ msgid "No help available for this output format."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:376
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:377
 msgid "Generate catalog"
 msgstr ""
 
@@ -16251,8 +16278,8 @@ msgid "Failed to import data."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:936
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:949
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:937
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:950
 msgid "Active jobs"
 msgstr ""
 
@@ -17229,7 +17256,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/plugin_updater.py:508
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns.py:84
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/plugin_updater.py:521
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/plugin_updater.py:539
@@ -19287,23 +19314,23 @@ msgstr "Kirjan tiedot"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:643
 msgid "Layout"
-msgstr ""
+msgstr "Sivun asettelu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:646
 msgid "Show and hide various parts of the calibre main window"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:741
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:742
 #, python-format
 msgid "No %s format"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:742
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:743
 #, python-brace-format
 msgid "The book {0} does not have the {1} format"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:777
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:778
 #, python-format
 msgid "Restore %s"
 msgstr ""
@@ -21783,7 +21810,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:229
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:814
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns.py:132
 msgid "Yes/No with text"
@@ -26604,50 +26631,52 @@ msgid "This book has no actual e-book files"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tools.py:120
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:258
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:259
 msgid "Could not convert some books"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tools.py:122
-#, python-brace-format
 msgid ""
 "Could not convert the book because no supported source format was found"
-msgid_plural ""
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:124
+#, python-brace-format
+msgid ""
 "Could not convert {num} of {tot} books, because no supported source formats "
 "were found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:161
 msgid "Queueing books for bulk conversion"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:232
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:233
 msgid "Queueing "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:233
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:234
 #, python-format
 msgid "Convert book %(num)d of %(tot)d (%(title)s)"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:260
 #, python-format
 msgid ""
 "Could not convert %(num)d of %(tot)d books, because no suitable source "
 "format was found."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:315
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:316
 #, python-format
 msgid "Fetch news from %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:390
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:391
 msgid "Convert existing"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:391
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:392
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -29638,7 +29667,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:91
 #: /home/kovid/work/calibre/src/calibre/utils/localization.py:338
 msgid "Fonts"
-msgstr ""
+msgstr "Fontit"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:63
 msgid "Misc-"
@@ -32877,40 +32906,40 @@ msgstr ""
 msgid "<b>Failed</b>"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:929
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:930
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:932
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:933
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:940
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:941
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:941
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:942
 msgid "Library updates waiting"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:946
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:947
 msgid ""
 "Some deleted books are still being moved to the Recycle Bin, if you quit "
 "now, they will be left behind. Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:962
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:963
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1016
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1017
 msgid "Shutting down the Content server. This could take a while..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1050
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1051
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -35426,7 +35455,7 @@ msgid ""
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in "
 ":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr ""
+msgstr "MacOS:ssä komentorivityökalut ovat calibren sisällä, esimerkiksi asennuskansion ollessa :file:'/Applications' komentorivit löytyvät polusta :file:'/Applications/calibre.app/Contents/console.app/Content/MacOS/'."
 
 #: /home/kovid/work/calibre/src/calibre/linux.py:1149
 msgid "Documented commands"

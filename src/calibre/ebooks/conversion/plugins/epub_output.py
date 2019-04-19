@@ -12,7 +12,7 @@ from calibre.customize.conversion import (OutputFormatPlugin,
         OptionRecommendation)
 from calibre.ptempfile import TemporaryDirectory
 from calibre import CurrentDir
-from calibre.constants import filesystem_encoding
+from polyglot.builtins import unicode_type, filter
 
 block_level_tags = (
       'address',
@@ -40,7 +40,7 @@ block_level_tags = (
       'pre',
       'table',
       'ul',
-      )
+)
 
 
 class EPUBOutput(OutputFormatPlugin):
@@ -218,15 +218,15 @@ class EPUBOutput(OutputFormatPlugin):
         if self.oeb.toc.count() == 0:
             self.log.warn('This EPUB file has no Table of Contents. '
                     'Creating a default TOC')
-            first = iter(self.oeb.spine).next()
+            first = next(iter(self.oeb.spine))
             self.oeb.toc.add(_('Start'), first.href)
 
         from calibre.ebooks.oeb.base import OPF
         identifiers = oeb.metadata['identifier']
         uuid = None
         for x in identifiers:
-            if x.get(OPF('scheme'), None).lower() == 'uuid' or unicode(x).startswith('urn:uuid:'):
-                uuid = unicode(x).split(':')[-1]
+            if x.get(OPF('scheme'), None).lower() == 'uuid' or unicode_type(x).startswith('urn:uuid:'):
+                uuid = unicode_type(x).split(':')[-1]
                 break
         encrypted_fonts = getattr(input_plugin, 'encrypted_fonts', [])
 
@@ -241,7 +241,7 @@ class EPUBOutput(OutputFormatPlugin):
             # for some absurd reason, or it will throw a hissy fit and refuse
             # to use the obfuscated fonts.
             for x in identifiers:
-                if unicode(x) == uuid:
+                if unicode_type(x) == uuid:
                     x.content = 'urn:uuid:'+uuid
 
         with TemporaryDirectory(u'_epub_output') as tdir:
@@ -311,13 +311,12 @@ class EPUBOutput(OutputFormatPlugin):
             pass
 
     def encrypt_fonts(self, uris, tdir, uuid):  # {{{
-        from binascii import unhexlify
+        from polyglot.binary import from_hex_bytes
 
         key = re.sub(r'[^a-fA-F0-9]', '', uuid)
         if len(key) < 16:
             raise ValueError('UUID identifier %r is invalid'%uuid)
-        key = unhexlify((key + key)[:32])
-        key = tuple(map(ord, key))
+        key = bytearray(from_hex_bytes((key + key)[:32]))
         paths = []
         with CurrentDir(tdir):
             paths = [os.path.join(*x.split('/')) for x in uris]
@@ -325,13 +324,11 @@ class EPUBOutput(OutputFormatPlugin):
             fonts = []
             for uri in list(uris.keys()):
                 path = uris[uri]
-                if isinstance(path, unicode):
-                    path = path.encode(filesystem_encoding)
                 if not os.path.exists(path):
                     uris.pop(uri)
                     continue
                 self.log.debug('Encrypting font:', uri)
-                with open(path, 'r+b') as f:
+                with lopen(path, 'r+b') as f:
                     data = f.read(1024)
                     if len(data) >= 1024:
                         f.seek(0)
@@ -339,7 +336,7 @@ class EPUBOutput(OutputFormatPlugin):
                             f.write(chr(ord(data[i]) ^ key[i%16]))
                     else:
                         self.log.warn('Font', path, 'is invalid, ignoring')
-                if not isinstance(uri, unicode):
+                if not isinstance(uri, unicode_type):
                     uri = uri.decode('utf-8')
                 fonts.append(u'''
                 <enc:EncryptedData>
@@ -424,7 +421,7 @@ class EPUBOutput(OutputFormatPlugin):
                     if br.getparent() is None:
                         continue
                     try:
-                        prior = br.itersiblings(preceding=True).next()
+                        prior = next(br.itersiblings(preceding=True))
                         priortag = barename(prior.tag)
                         priortext = prior.tail
                     except:
@@ -435,7 +432,7 @@ class EPUBOutput(OutputFormatPlugin):
                     br.tag = XHTML('p')
                     br.text = u'\u00a0'
                     style = br.get('style', '').split(';')
-                    style = filter(None, map(lambda x: x.strip(), style))
+                    style = list(filter(None, map(lambda x: x.strip(), style)))
                     style.append('margin:0pt; border:0pt')
                     # If the prior tag is a block (including a <br> we replaced)
                     # then this <br> replacement should have a 1-line height.

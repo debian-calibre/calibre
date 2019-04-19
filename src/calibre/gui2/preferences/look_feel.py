@@ -36,6 +36,7 @@ from calibre.gui2.preferences.coloring import EditRules
 from calibre.gui2.library.alternate_views import auto_height, CM_TO_INCH
 from calibre.gui2.widgets2 import Dialog
 from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
+from polyglot.builtins import iteritems, unicode_type
 
 
 class BusyCursor(object):
@@ -158,7 +159,7 @@ class IdLinksEditor(Dialog):
         la.setWordWrap(True)
         l.addWidget(la)
         items = []
-        for k, lx in msprefs['id_link_rules'].iteritems():
+        for k, lx in iteritems(msprefs['id_link_rules']):
             for n, t in lx:
                 items.append((k, n, t))
         items.sort(key=lambda x:sort_key(x[1]))
@@ -455,7 +456,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                  if l != lang]
         if lang != 'en':
             items.append(('en', get_esc_lang('en')))
-        items.sort(cmp=lambda x, y: cmp(x[1].lower(), y[1].lower()))
+        items.sort(key=lambda x: x[1].lower())
         choices = [(y, x) for x, y in items]
         # Default language is the autodetected one
         choices = [(get_language(lang), lang)] + choices
@@ -541,8 +542,8 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.tabWidget.setCurrentIndex(0)
         keys = [QKeySequence('F11', QKeySequence.PortableText), QKeySequence(
             'Ctrl+Shift+F', QKeySequence.PortableText)]
-        keys = [unicode(x.toString(QKeySequence.NativeText)) for x in keys]
-        self.fs_help_msg.setText(unicode(self.fs_help_msg.text())%(
+        keys = [unicode_type(x.toString(QKeySequence.NativeText)) for x in keys]
+        self.fs_help_msg.setText(unicode_type(self.fs_help_msg.text())%(
             _(' or ').join(keys)))
         self.size_calculated.connect(self.update_cg_cache_size, type=Qt.QueuedConnection)
         self.tabWidget.currentChanged.connect(self.tab_changed)
@@ -727,7 +728,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def update_font_display(self):
         font = self.build_font_obj()
         fi = QFontInfo(font)
-        name = unicode(fi.family())
+        name = unicode_type(fi.family())
 
         self.font_display.setFont(font)
         self.font_display.setText(name + ' [%dpt]'%fi.pointSize())
@@ -737,7 +738,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         if fd.exec_() == fd.Accepted:
             font = fd.selectedFont()
             fi = QFontInfo(font)
-            self.current_font = [unicode(fi.family()), fi.pointSize(),
+            self.current_font = [unicode_type(fi.family()), fi.pointSize(),
                     fi.weight(), fi.italic(), font.stretch()]
             self.update_font_display()
             self.changed_signal.emit()

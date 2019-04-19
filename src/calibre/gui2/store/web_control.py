@@ -7,7 +7,6 @@ __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
 
 import os
-from urlparse import urlparse
 
 from PyQt5.Qt import QNetworkCookieJar, QNetworkProxy
 from PyQt5.QtWebKitWidgets import QWebView, QWebPage
@@ -19,6 +18,8 @@ from calibre.gui2.ebook_download import show_download_info
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.filenames import ascii_filename
 from calibre.web import get_download_filename
+from polyglot.builtins import unicode_type
+from polyglot.urllib import urlparse
 
 
 class NPWebView(QWebView):
@@ -70,7 +71,7 @@ class NPWebView(QWebView):
         if not self.gui:
             return
 
-        url = unicode(request.url().toString(NO_URL_FORMATTING))
+        url = unicode_type(request.url().toString(NO_URL_FORMATTING))
         cf = self.get_cookies()
 
         filename = get_download_filename(url, cf)
@@ -112,15 +113,15 @@ class NPWebView(QWebView):
 
         for c in self.page().networkAccessManager().cookieJar().allCookies():
             cookie = []
-            domain = unicode(c.domain())
+            domain = unicode_type(c.domain())
 
             cookie.append(domain)
             cookie.append('TRUE' if domain.startswith('.') else 'FALSE')
-            cookie.append(unicode(c.path()))
+            cookie.append(unicode_type(c.path()))
             cookie.append('TRUE' if c.isSecure() else 'FALSE')
-            cookie.append(unicode(c.expirationDate().toTime_t()))
-            cookie.append(unicode(c.name()))
-            cookie.append(unicode(c.value()))
+            cookie.append(unicode_type(c.expirationDate().toTime_t()))
+            cookie.append(unicode_type(c.name()))
+            cookie.append(unicode_type(c.value()))
 
             cf.write('\t'.join(cookie))
             cf.write('\n')

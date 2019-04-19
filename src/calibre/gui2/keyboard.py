@@ -26,6 +26,7 @@ from calibre.utils.icu import sort_key, lower
 from calibre.gui2 import error_dialog, info_dialog
 from calibre.utils.search_query_parser import SearchQueryParser, ParseException
 from calibre.gui2.search_box import SearchBox2
+from polyglot.builtins import iteritems, itervalues, unicode_type, range
 
 ROOT = QModelIndex()
 
@@ -59,7 +60,7 @@ def finalize(shortcuts, custom_keys_map={}):  # {{{
     correctly for each shortcut.
     '''
     seen, keys_map = {}, {}
-    for unique_name, shortcut in shortcuts.iteritems():
+    for unique_name, shortcut in iteritems(shortcuts):
         custom_keys = custom_keys_map.get(unique_name, None)
         if custom_keys is None:
             candidates = shortcut['default_keys']
@@ -70,7 +71,7 @@ def finalize(shortcuts, custom_keys_map={}):  # {{{
         keys = []
         for x in candidates:
             ks = QKeySequence(x, QKeySequence.PortableText)
-            x = unicode(ks.toString(QKeySequence.PortableText))
+            x = unicode_type(ks.toString(QKeySequence.PortableText))
             if x in seen:
                 if DEBUG:
                     prints('Key %r for shortcut %s is already used by'
@@ -141,15 +142,15 @@ class Manager(QObject):  # {{{
         done unregistering.
         '''
         self.shortcuts.pop(unique_name, None)
-        for group in self.groups.itervalues():
+        for group in itervalues(self.groups):
             try:
                 group.remove(unique_name)
             except ValueError:
                 pass
 
     def finalize(self):
-        custom_keys_map = {un:tuple(keys) for un, keys in self.config.get(
-            'map', {}).iteritems()}
+        custom_keys_map = {un:tuple(keys) for un, keys in iteritems(self.config.get(
+            'map', {}))}
         self.keys_map = finalize(self.shortcuts, custom_keys_map=custom_keys_map)
 
     def replace_action(self, unique_name, new_action):
@@ -197,16 +198,16 @@ class ConfigModel(SearchQueryParser, QAbstractItemModel):
         self.keyboard = keyboard
         groups = sorted(keyboard.groups, key=sort_key)
         shortcut_map = {k:v.copy() for k, v in
-                self.keyboard.shortcuts.iteritems()}
-        for un, s in shortcut_map.iteritems():
+                iteritems(self.keyboard.shortcuts)}
+        for un, s in iteritems(shortcut_map):
             s['keys'] = tuple(self.keyboard.keys_map.get(un, ()))
             s['unique_name'] = un
-            s['group'] = [g for g, names in self.keyboard.groups.iteritems() if un in
+            s['group'] = [g for g, names in iteritems(self.keyboard.groups) if un in
                     names][0]
 
         group_map = {group:sorted(names, key=lambda x:
                 sort_key(shortcut_map[x]['name'])) for group, names in
-                self.keyboard.groups.iteritems()}
+                iteritems(self.keyboard.groups)}
 
         self.data = [Node(group_map, shortcut_map, group) for group in groups]
 
@@ -269,7 +270,7 @@ class ConfigModel(SearchQueryParser, QAbstractItemModel):
         for node in self.all_shortcuts:
             s = node.data
             s['keys'] = tuple(keys_map[s['unique_name']])
-        for r in xrange(self.rowCount()):
+        for r in range(self.rowCount()):
             group = self.index(r, 0)
             num = self.rowCount(group)
             if num > 0:
@@ -282,7 +283,7 @@ class ConfigModel(SearchQueryParser, QAbstractItemModel):
             sc = node.data
             if sc['set_to_default']:
                 continue
-            keys = [unicode(k.toString(k.PortableText)) for k in sc['keys']]
+            keys = [unicode_type(k.toString(k.PortableText)) for k in sc['keys']]
             kmap[sc['unique_name']] = keys
         self.keyboard.config['map'] = kmap
 
@@ -428,11 +429,11 @@ class Editor(QFrame):  # {{{
         self.default_keys = [QKeySequence(k, QKeySequence.PortableText) for k
                 in shortcut['default_keys']]
         self.current_keys = list(shortcut['keys'])
-        default = ', '.join([unicode(k.toString(k.NativeText)) for k in
+        default = ', '.join([unicode_type(k.toString(k.NativeText)) for k in
                     self.default_keys])
         if not default:
             default = _('None')
-        current = ', '.join([unicode(k.toString(k.NativeText)) for k in
+        current = ', '.join([unicode_type(k.toString(k.NativeText)) for k in
                     self.current_keys])
         if not current:
             current = _('None')
@@ -490,7 +491,7 @@ class Editor(QFrame):  # {{{
         dup_desc = self.dup_check(sequence)
         if dup_desc is not None:
             error_dialog(self, _('Already assigned'),
-                    unicode(sequence.toString(QKeySequence.NativeText)) + ' ' + _(
+                    unicode_type(sequence.toString(QKeySequence.NativeText)) + ' ' + _(
                         'already assigned to') + ' ' + dup_desc, show=True)
             self.clear_clicked(which=which)
 
@@ -509,7 +510,7 @@ class Editor(QFrame):  # {{{
         ans = []
         for which in (1, 2):
             button = getattr(self, 'button%d'%which)
-            t = unicode(button.text())
+            t = unicode_type(button.text())
             if t == _('None'):
                 continue
             ks = QKeySequence(t, QKeySequence.NativeText)
@@ -536,7 +537,7 @@ class Delegate(QStyledItemDelegate):  # {{{
         elif data.is_shortcut:
             shortcut = data.data
             # Shortcut
-            keys = [unicode(k.toString(k.NativeText)) for k in shortcut['keys']]
+            keys = [unicode_type(k.toString(k.NativeText)) for k in shortcut['keys']]
             if not keys:
                 keys = _('None')
             else:
@@ -707,7 +708,7 @@ class ShortcutConfig(QWidget):  # {{{
         if not idx.isValid():
             idx = self._model.index(0, 0)
         idx = self._model.find_next(idx,
-                unicode(self.search.currentText()))
+                unicode_type(self.search.currentText()))
         self.highlight_index(idx)
 
     def find_previous(self, *args):
@@ -715,7 +716,7 @@ class ShortcutConfig(QWidget):  # {{{
         if not idx.isValid():
             idx = self._model.index(0, 0)
         idx = self._model.find_next(idx,
-            unicode(self.search.currentText()), backwards=True)
+            unicode_type(self.search.currentText()), backwards=True)
         self.highlight_index(idx)
 
     def highlight_group(self, group_name):

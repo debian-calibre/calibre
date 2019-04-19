@@ -14,6 +14,7 @@ from calibre import prints
 from calibre.customize.ui import all_edit_book_tool_plugins
 from calibre.gui2.tweak_book import tprefs, current_container
 from calibre.gui2.tweak_book.boss import get_boss
+from polyglot.builtins import itervalues, unicode_type
 
 
 class Tool(object):
@@ -82,7 +83,7 @@ class Tool(object):
         :param description: An optional longer description of this action, it
             will be used in the preferences entry for this shortcut.
         '''
-        short_text = short_text or unicode(qaction.text()).replace('&&', '\0').replace('&', '').replace('\0', '&')
+        short_text = short_text or unicode_type(qaction.text()).replace('&&', '\0').replace('&', '').replace('\0', '&')
         self.gui.keyboard.register_shortcut(
             self.name + '_' + unique_name, short_text, default_keys=default_keys, action=qaction,
             description=description or '', group=_('Plugins'))
@@ -119,7 +120,7 @@ def load_plugin_tools(plugin):
         import traceback
         traceback.print_exc()
     else:
-        for x in vars(main).itervalues():
+        for x in itervalues(vars(main)):
             if isinstance(x, type) and x is not Tool and issubclass(x, Tool):
                 ans = x()
                 ans.plugin = plugin

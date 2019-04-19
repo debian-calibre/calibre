@@ -9,7 +9,10 @@ __docformat__ = 'restructuredtext en'
 
 import random
 import re
-import urllib2
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
 
 from contextlib import closing
 from lxml import etree
@@ -37,7 +40,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
         if detail_item:
             # http://www.litres.ru/pages/biblio_book/?art=157074
             detail_url = self.shop_url + u'/pages/biblio_book/' + aff_id +\
-                u'&art=' + urllib2.quote(detail_item)
+                u'&art=' + quote(detail_item)
 
         if external or self.config.get('open_external', False):
             open_url(QUrl(url_slash_cleaner(detail_url if detail_url else url)))
@@ -50,7 +53,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
     def search(self, query, max_results=10, timeout=60):
         search_url = u'http://robot.litres.ru/pages/catalit_browser/?checkpoint=2000-01-02&'\
         'search=%s&limit=0,%s'
-        search_url = search_url % (urllib2.quote(query), max_results)
+        search_url = search_url % (quote(query), max_results)
 
         counter = max_results
         br = browser()
@@ -88,7 +91,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
         authors = data.xpath('.//title-info/author/first-name/text()|'
         './/title-info/author/middle-name/text()|'
         './/title-info/author/last-name/text()')
-        sRes.author = u' '.join(map(unicode, authors))
+        sRes.author = u' '.join(map(type(u''), authors))
         sRes.price = data.xpath(xp_template.format('price'))
         # cover vs cover_preview
         sRes.cover_url = data.xpath(xp_template.format('cover_preview'))
@@ -107,7 +110,7 @@ def format_price_in_RUR(price):
     @return: formatted price if possible otherwise original value
     @rtype: unicode
     '''
-    if price and re.match("^\d*?\.\d*?$", price):
+    if price and re.match(r"^\d*?\.\d*?$", price):
         try:
             price = u'{:,.2F} руб.'.format(float(price))
             price = price.replace(',', ' ').replace('.', ',', 1)

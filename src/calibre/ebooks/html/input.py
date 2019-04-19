@@ -13,12 +13,13 @@ Input plugin for HTML or OPF ebooks.
 '''
 
 import os, re, sys,  errno as gerrno
-from urlparse import urlparse, urlunparse
 
 from calibre.ebooks.oeb.base import urlunquote
 from calibre.ebooks.chardet import detect_xml_encoding
 from calibre.constants import iswindows
 from calibre import unicode_path, as_unicode, replace_entities
+from polyglot.builtins import unicode_type
+from polyglot.urllib import urlparse, urlunparse
 
 
 class Link(object):
@@ -46,7 +47,7 @@ class Link(object):
         :param base: The base directory that relative URLs are with respect to.
                      Must be a unicode string.
         '''
-        assert isinstance(url, unicode) and isinstance(base, unicode)
+        assert isinstance(url, unicode_type) and isinstance(base, unicode_type)
         self.url         = url
         self.parsed_url  = urlparse(self.url)
         self.is_local    = self.parsed_url.scheme in ('', 'file')
@@ -189,7 +190,7 @@ def depth_first(root, flat, visited=set([])):
                         visited.add(hf)
 
 
-def traverse(path_to_html_file, max_levels=sys.maxint, verbose=0, encoding=None):
+def traverse(path_to_html_file, max_levels=sys.maxsize, verbose=0, encoding=None):
     '''
     Recursively traverse all links in the HTML file.
 
@@ -248,6 +249,3 @@ def get_filelist(htmlfile, dir, opts, log):
         for f in filelist:
             log.debug('\t\t', f)
     return filelist
-
-
-

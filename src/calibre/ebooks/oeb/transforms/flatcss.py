@@ -6,7 +6,7 @@ from __future__ import with_statement
 __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
 
-import re, operator, math
+import re, operator, math, numbers
 from collections import defaultdict
 from xml.dom import SyntaxErr
 
@@ -21,13 +21,14 @@ from calibre.ebooks.oeb.base import (XHTML, XHTML_NS, CSS_MIME, OEB_STYLES,
 from calibre.ebooks.oeb.stylizer import Stylizer
 from calibre.utils.filenames import ascii_filename, ascii_text
 from calibre.utils.icu import numeric_sort_key
+from polyglot.builtins import iteritems, unicode_type, string_or_bytes
 
 COLLAPSE = re.compile(r'[ \t\r\n\v]+')
 STRIPNUM = re.compile(r'[-0-9]+$')
 
 
 def asfloat(value, default):
-    if not isinstance(value, (int, long, float)):
+    if not isinstance(value, numbers.Number):
         value = default
     return float(value)
 
@@ -223,7 +224,7 @@ class CSSFlattener(object):
 
     def store_page_margins(self):
         self.opts._stored_page_margins = {}
-        for item, stylizer in self.stylizers.iteritems():
+        for item, stylizer in iteritems(self.stylizers):
             margins = self.opts._stored_page_margins[item.href] = {}
             for prop, val in stylizer.page_rule.items():
                 p, w = prop.partition('-')[::2]
@@ -265,7 +266,7 @@ class CSSFlattener(object):
 
             cfont = {
                     u'font-family':u'"%s"'%font['font-family'],
-                    u'panose-1': u' '.join(map(unicode, font['panose'])),
+                    u'panose-1': u' '.join(map(unicode_type, font['panose'])),
                     u'src': u'url(%s)'%item.href,
             }
 
@@ -277,7 +278,7 @@ class CSSFlattener(object):
                 if font[k] != u'normal':
                     cfont[k] = font[k]
             rule = '@font-face { %s }'%('; '.join(u'%s:%s'%(k, v) for k, v in
-                cfont.iteritems()))
+                iteritems(cfont)))
             rule = css_parser.parseString(rule)
             efi.append(rule)
 
@@ -334,7 +335,7 @@ class CSSFlattener(object):
             fsize = self.context.source.fbase
             self.baseline_node(body, stylizer, sizes, fsize)
         try:
-            sbase = max(sizes.items(), key=operator.itemgetter(1))[0]
+            sbase = max(list(sizes.items()), key=operator.itemgetter(1))[0]
         except:
             sbase = 12.0
         self.oeb.logger.info(
@@ -366,7 +367,7 @@ class CSSFlattener(object):
                     cssdict[property] = "%0.5fem" % (value / fsize)
 
     def flatten_node(self, node, stylizer, names, styles, pseudo_styles, psize, item_id):
-        if not isinstance(node.tag, basestring) \
+        if not isinstance(node.tag, string_or_bytes) \
            or namespace(node.tag) != XHTML_NS:
             return
         tag = barename(node.tag)
@@ -377,7 +378,7 @@ class CSSFlattener(object):
         except:
             font_size = self.sbase if self.sbase is not None else \
                 self.context.source.fbase
-        if tag == 'body' and isinstance(font_size, (int, float)):
+        if tag == 'body' and isinstance(font_size, numbers.Number):
             stylizer.body_font_size = font_size
         if 'align' in node.attrib:
             if tag != 'img':
@@ -537,7 +538,7 @@ class CSSFlattener(object):
             keep_classes = set()
 
             if cssdict:
-                items = sorted(cssdict.iteritems())
+                items = sorted(iteritems(cssdict))
                 css = u';\n'.join(u'%s: %s' % (key, val) for key, val in items)
                 classes = node.get('class', '').strip() or 'calibre'
                 # lower() because otherwise if the document uses the same class
@@ -553,8 +554,8 @@ class CSSFlattener(object):
                 node.attrib['class'] = match
                 keep_classes.add(match)
 
-            for psel, cssdict in pseudo_classes.iteritems():
-                items = sorted(cssdict.iteritems())
+            for psel, cssdict in iteritems(pseudo_classes):
+                items = sorted(iteritems(cssdict))
                 css = u';\n'.join(u'%s: %s' % (key, val) for key, val in items)
                 pstyles = pseudo_styles[psel]
                 if css in pstyles:
@@ -655,7 +656,7 @@ class CSSFlattener(object):
             gc_map[css] = href
 
         ans = {}
-        for css, items in global_css.iteritems():
+        for css, items in iteritems(global_css):
             for item in items:
                 ans[item] = gc_map[css]
         return ans
@@ -671,15 +672,15 @@ class CSSFlattener(object):
             body = html.find(XHTML('body'))
             fsize = self.context.dest.fbase
             self.flatten_node(body, stylizer, names, styles, pseudo_styles, fsize, item.id)
-        items = sorted(((key, val) for (val, key) in styles.iteritems()), key=lambda x:numeric_sort_key(x[0]))
+        items = sorted(((key, val) for (val, key) in iteritems(styles)), key=lambda x:numeric_sort_key(x[0]))
         # :hover must come after link and :active must come after :hover
-        psels = sorted(pseudo_styles.iterkeys(), key=lambda x :
+        psels = sorted(pseudo_styles, key=lambda x :
                 {'hover':1, 'active':2}.get(x, 0))
         for psel in psels:
             styles = pseudo_styles[psel]
             if not styles:
                 continue
-            x = sorted(((k+':'+psel, v) for v, k in styles.iteritems()))
+            x = sorted(((k+':'+psel, v) for v, k in iteritems(styles)))
             items.extend(x)
 
         css = ''.join(".%s {\n%s;\n}\n\n" % (key, val) for key, val in items)

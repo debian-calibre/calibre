@@ -9,7 +9,8 @@ __docformat__ = 'restructuredtext en'
 
 import time
 from calibre import prints
-from calibre.constants import islinux, isosx, get_osx_version, DEBUG
+from calibre.constants import islinux, isosx, get_osx_version, DEBUG, ispy3
+from polyglot.builtins import unicode_type
 
 
 class Notifier(object):
@@ -106,7 +107,7 @@ class QtNotifier(Notifier):
             try:
                 hide = False
                 try:
-                    if not isinstance(body, unicode):
+                    if not isinstance(body, unicode_type):
                         body = body.decode('utf-8')
                     if isosx and not self.systray.isVisible():
                         self.systray.show()
@@ -144,8 +145,12 @@ class AppleNotifier(Notifier):
 
     def notify(self, body, summary):
         def encode(x):
-            if isinstance(x, unicode):
-                x = x.encode('utf-8')
+            if ispy3:
+                if isinstance(x, bytes):
+                    x = x.decode('utf-8')
+            else:
+                if isinstance(x, unicode_type):
+                    x = x.encode('utf-8')
             return x
 
         cmd = [self.exe, '-activate',

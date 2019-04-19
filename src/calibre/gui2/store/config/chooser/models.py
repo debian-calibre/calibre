@@ -13,6 +13,7 @@ from calibre.db.search import _match, CONTAINS_MATCH, EQUALS_MATCH, REGEXP_MATCH
 from calibre.utils.config_base import prefs
 from calibre.utils.icu import sort_key
 from calibre.utils.search_query_parser import SearchQueryParser
+from polyglot.builtins import unicode_type, range
 
 
 class Matches(QAbstractItemModel):
@@ -55,19 +56,19 @@ class Matches(QAbstractItemModel):
         self.sort(self.sort_col, self.sort_order)
 
     def enable_all(self):
-        for i in xrange(len(self.matches)):
+        for i in range(len(self.matches)):
             index = self.createIndex(i, 0)
             data = (True)
             self.setData(index, data, Qt.CheckStateRole)
 
     def enable_none(self):
-        for i in xrange(len(self.matches)):
+        for i in range(len(self.matches)):
             index = self.createIndex(i, 0)
             data = (False)
             self.setData(index, data, Qt.CheckStateRole)
 
     def enable_invert(self):
-        for i in xrange(len(self.matches)):
+        for i in range(len(self.matches)):
             self.toggle_plugin(self.createIndex(i, 0))
 
     def toggle_plugin(self, index):
@@ -182,7 +183,7 @@ class Matches(QAbstractItemModel):
             return
         descending = order == Qt.DescendingOrder
         self.matches.sort(None,
-            lambda x: sort_key(unicode(self.data_as_text(x, col))),
+            lambda x: sort_key(unicode_type(self.data_as_text(x, col))),
             descending)
         if reset:
             self.beginResetModel(), self.endResetModel()

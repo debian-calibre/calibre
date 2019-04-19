@@ -9,8 +9,11 @@ __docformat__ = 'restructuredtext en'
 
 import re
 import random
-import urllib2
 from contextlib import closing
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
 
 from lxml import html
 
@@ -49,13 +52,13 @@ class eKnigiStore(BasicStoreConfig, StorePlugin):
 
     def search(self, query, max_results=10, timeout=60):
         # check for cyrillic symbols before performing search
-        uquery = unicode(query.strip(), 'utf-8')
+        uquery = type(u'')(query.strip(), 'utf-8')
         reObj = re.search(u'^[а-яА-Я\\d\\s]{2,}$', uquery)
         if not reObj:
             return
 
         base_url = 'http://e-knigi.net'
-        url = base_url + '/virtuemart?page=shop.browse&search_category=0&search_limiter=anywhere&keyword=' + urllib2.quote(query)
+        url = base_url + '/virtuemart?page=shop.browse&search_category=0&search_limiter=anywhere&keyword=' + quote(query)
 
         br = browser()
 

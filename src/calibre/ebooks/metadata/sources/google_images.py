@@ -65,7 +65,10 @@ class GoogleImages(Source):
 
     def get_image_urls(self, title, author, log, abort, timeout):
         from calibre.utils.cleantext import clean_ascii_chars
-        from urllib import urlencode
+        try:
+            from urllib.parse import urlencode
+        except ImportError:
+            from urllib import urlencode
         import json
         from collections import OrderedDict
         ans = OrderedDict()
@@ -91,11 +94,14 @@ class GoogleImages(Source):
                 continue
             if 'ou' in data:
                 ans[data['ou']] = True
-        return list(ans.iterkeys())
+        return list(ans)
 
 
 def test():
-    from Queue import Queue
+    try:
+        from queue import Queue
+    except ImportError:
+        from Queue import Queue
     from threading import Event
     from calibre.utils.logging import default_log
     p = GoogleImages(None)

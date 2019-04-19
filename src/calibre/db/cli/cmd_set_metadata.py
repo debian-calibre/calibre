@@ -11,6 +11,7 @@ from calibre.ebooks.metadata.book.base import field_from_string
 from calibre.ebooks.metadata.book.serialize import read_cover
 from calibre.ebooks.metadata.opf import get_metadata
 from calibre.srv.changes import metadata
+from polyglot.builtins import iteritems, unicode_type
 
 readonly = False
 version = 0  # change this if you change signature of implementation()
@@ -169,7 +170,7 @@ def main(opts, args, dbctx):
             vals[field] = val
         fvals = []
         for field, val in sorted(  # ensure series_index fields are set last
-                vals.iteritems(), key=lambda k: 1 if k[0].endswith('_index') else 0):
+                iteritems(vals), key=lambda k: 1 if k[0].endswith('_index') else 0):
             if field.endswith('_index'):
                 try:
                     val = float(val)
@@ -181,5 +182,5 @@ def main(opts, args, dbctx):
         if not final_mi:
             raise SystemExit(_('No book with id: %s in the database') % book_id)
 
-    prints(unicode(final_mi))
+    prints(unicode_type(final_mi))
     return 0

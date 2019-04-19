@@ -6,7 +6,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import cPickle, shutil
+import shutil
 
 from PyQt5.Qt import QAbstractListModel, Qt, QFont, QModelIndex, QDialog, QCoreApplication, QSize
 
@@ -28,6 +28,7 @@ from calibre.ebooks.conversion.plumber import create_dummy_plumber
 from calibre.ebooks.conversion.config import delete_specifics
 from calibre.customize.conversion import OptionRecommendation
 from calibre.utils.config import prefs
+from polyglot.builtins import unicode_type, range
 
 
 class GroupModel(QAbstractListModel):
@@ -107,15 +108,15 @@ class Config(QDialog, Ui_Dialog):
 
     @property
     def input_format(self):
-        return unicode(self.input_formats.currentText()).lower()
+        return unicode_type(self.input_formats.currentText()).lower()
 
     @property
     def output_format(self):
-        return unicode(self.output_formats.currentText()).lower()
+        return unicode_type(self.output_formats.currentText()).lower()
 
     @property
     def manually_fine_tune_toc(self):
-        for i in xrange(self.stack.count()):
+        for i in range(self.stack.count()):
             w = self.stack.widget(i)
             if hasattr(w, 'manually_fine_tune_toc'):
                 return w.manually_fine_tune_toc.isChecked()
@@ -131,7 +132,7 @@ class Config(QDialog, Ui_Dialog):
                 self.plumber.get_option_help, self.db, self.book_id)
 
         self.mw = widget_factory(MetadataWidget)
-        self.setWindowTitle(_('Convert')+ ' ' + unicode(self.mw.title.text()))
+        self.setWindowTitle(_('Convert')+ ' ' + unicode_type(self.mw.title.text()))
         lf = widget_factory(LookAndFeelWidget)
         hw = widget_factory(HeuristicsWidget)
         sr = widget_factory(SearchAndReplaceWidget)
@@ -186,9 +187,9 @@ class Config(QDialog, Ui_Dialog):
             preferred_output_format in output_formats else \
             sort_formats_by_preference(output_formats,
                     [prefs['output_format']])[0]
-        self.input_formats.addItems(list(map(unicode, [x.upper() for x in
+        self.input_formats.addItems(list(map(unicode_type, [x.upper() for x in
             input_formats])))
-        self.output_formats.addItems(list(map(unicode, [x.upper() for x in
+        self.output_formats.addItems(list(map(unicode_type, [x.upper() for x in
             output_formats])))
         self.input_formats.setCurrentIndex(input_formats.index(input_format))
         self.output_formats.setCurrentIndex(output_formats.index(preferred_output_format))
@@ -230,7 +231,7 @@ class Config(QDialog, Ui_Dialog):
     def recommendations(self):
         recs = [(k, v, OptionRecommendation.HIGH) for k, v in
                 self._recommendations.items()]
-        return cPickle.dumps(recs, -1)
+        return recs
 
     def show_group_help(self, index):
         widget = self._groups_model.widgets[index.row()]

@@ -14,10 +14,9 @@ import time
 import unicodedata
 import uuid
 from collections import defaultdict
-from polyglot.builtins import zip
+from polyglot.builtins import iteritems, unicode_type, zip, as_bytes
 from io import BytesIO
 from itertools import count
-from urlparse import urlparse
 
 from css_parser import getUrls, replaceUrls
 from lxml import etree
@@ -55,6 +54,7 @@ from calibre.utils.filenames import hardlink_file, nlinks_file
 from calibre.utils.ipc.simple_worker import WorkerError, fork_job
 from calibre.utils.logging import default_log
 from calibre.utils.zipfile import ZipFile
+from polyglot.urllib import urlparse
 
 exists, join, relpath = os.path.exists, os.path.join, os.path.relpath
 
@@ -167,7 +167,7 @@ class ContainerBase(object):  # {{{
         """
         def fix_data(d):
             return d.replace('\r\n', '\n').replace('\r', '\n')
-        if isinstance(data, unicode):
+        if isinstance(data, unicode_type):
             return fix_data(data)
         bom_enc = None
         if data[:4] in {b'\0\0\xfe\xff', b'\xff\xfe\0\0'}:
@@ -311,7 +311,7 @@ class Container(ContainerBase):  # {{{
             'tweak_mode': self.tweak_mode,
             'name_path_map': {
                 name:os.path.join(dest_dir, os.path.relpath(path, self.root))
-                for name, path in self.name_path_map.iteritems()}
+                for name, path in iteritems(self.name_path_map)}
         }
 
     def add_name_to_manifest(self, name, process_manifest_item=None):
@@ -658,7 +658,7 @@ class Container(ContainerBase):  # {{{
         for item in self.opf_xpath('//opf:manifest/opf:item[@href and @media-type]'):
             ans[item.get('media-type').lower()].append(self.href_to_name(
                 item.get('href'), self.opf_name))
-        return {mt:tuple(v) for mt, v in ans.iteritems()}
+        return {mt:tuple(v) for mt, v in iteritems(ans)}
 
     def manifest_items_with_property(self, property_name):
         ' All manifest items that have the specified property '
@@ -676,7 +676,7 @@ class Container(ContainerBase):  # {{{
             predicate = predicate.__eq__
         elif hasattr(predicate, '__contains__'):
             predicate = predicate.__contains__
-        for mt, names in self.manifest_type_map.iteritems():
+        for mt, names in iteritems(self.manifest_type_map):
             if predicate(mt):
                 for name in names:
                     yield name
@@ -798,7 +798,7 @@ class Container(ContainerBase):  # {{{
         the form (name, linear). Will raise an error if one of the names is not
         present in the manifest. '''
         imap = self.manifest_id_map
-        imap = {name:item_id for item_id, name in imap.iteritems()}
+        imap = {name:item_id for item_id, name in iteritems(imap)}
         items = [item for item, name, linear in self.spine_iter]
         tail, last_tail = (items[0].tail, items[-1].tail) if items else ('\n    ', '\n  ')
         map(self.remove_from_xml, items)
@@ -1062,7 +1062,7 @@ class Container(ContainerBase):  # {{{
         if set(self.name_path_map) != set(other.name_path_map):
             return 'Set of files is not the same'
         mismatches = []
-        for name, path in self.name_path_map.iteritems():
+        for name, path in iteritems(self.name_path_map):
             opath = other.name_path_map[name]
             with lopen(path, 'rb') as f1, lopen(opath, 'rb') as f2:
                 if f1.read() != f2.read():
@@ -1266,7 +1266,7 @@ class EpubContainer(Container):
             return
 
         package_id = raw_unique_identifier = idpf_key = None
-        for attrib, val in self.opf.attrib.iteritems():
+        for attrib, val in iteritems(self.opf.attrib):
             if attrib.endswith('unique-identifier'):
                 package_id = val
                 break
@@ -1289,13 +1289,13 @@ class EpubContainer(Container):
             if (scheme and scheme.lower() == 'uuid') or \
                     (item.text and item.text.startswith('urn:uuid:')):
                 try:
-                    key = bytes(item.text).rpartition(':')[-1]
-                    key = uuid.UUID(key).bytes
-                except:
+                    key = item.text.rpartition(':')[-1]
+                    key = uuid.UUID(as_bytes(key)).bytes
+                except Exception:
                     self.log.exception('Failed to parse obfuscation key')
                     key = None
 
-        for font, alg in fonts.iteritems():
+        for font, alg in iteritems(fonts):
             tkey = key if alg == ADOBE_OBFUSCATION else idpf_key
             if not tkey:
                 raise ObfuscationKeyMissing('Failed to find obfuscation key')
@@ -1360,9 +1360,12 @@ class EpubContainer(Container):
         else:
             from calibre.ebooks.tweak import zip_rebuilder
             with lopen(join(self.root, 'mimetype'), 'wb') as f:
-                f.write(guess_type('a.epub'))
+                et = guess_type('a.epub')
+                if not isinstance(et, bytes):
+                    et = et.encode('ascii')
+                f.write(et)
             zip_rebuilder(self.root, outpath)
-            for name, data in restore_fonts.iteritems():
+            for name, data in iteritems(restore_fonts):
                 with self.open(name, 'wb') as f:
                     f.write(data)
 
@@ -1530,7 +1533,7 @@ def test_roundtrip():
     ebook3 = get_container(p.name)
     diff = ebook3.compare_to(ebook2)
     if diff is not None:
-        print (diff)
+        print(diff)
 
 
 if __name__ == '__main__':

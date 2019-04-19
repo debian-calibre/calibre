@@ -24,9 +24,9 @@
 #
 import xml.dom
 from xml.dom.minicompat import *
-from namespaces import nsdict
-import grammar
-from attrconverters import AttrConverters
+from .namespaces import nsdict
+from . import grammar
+from .attrconverters import AttrConverters
 
 # The following code is pasted form xml.sax.saxutils
 # Tt makes it possible to run the code without the xml sax package installed
@@ -80,9 +80,9 @@ def _nsassign(namespace):
     return nsdict.setdefault(namespace,"ns" + str(len(nsdict)))
 
 # Exceptions
-class IllegalChild(StandardError):
+class IllegalChild(Exception):
     """ Complains if you add an element to a parent where it is not allowed """
-class IllegalText(StandardError):
+class IllegalText(Exception):
     """ Complains if you add text or cdata to an element where it is not allowed """
 
 class Node(xml.dom.Node):
@@ -182,7 +182,7 @@ class Node(xml.dom.Node):
     def __unicode__(self):
         val = []
         for c in self.childNodes:
-            val.append(unicode(c))
+            val.append(type(u'')(c))
         return u''.join(val)
 
 defproperty(Node, "firstChild", doc="First child node, or None.")
@@ -253,9 +253,9 @@ class Text(Childless, Node):
     def toXml(self,level,f):
         """ Write XML in UTF-8 """
         if self.data:
-            f.write(_escape(unicode(self.data).encode('utf-8')))
-    
-class CDATASection(Childless, Text):
+            f.write(_escape(type(u'')(self.data).encode('utf-8')))
+
+class CDATASection(Text, Childless):
     nodeType = Node.CDATA_SECTION_NODE
 
     def toXml(self,level,f):
@@ -283,7 +283,7 @@ class Element(Node):
                          Node.TEXT_NODE,
                          Node.CDATA_SECTION_NODE,
                          Node.ENTITY_REFERENCE_NODE)
-    
+
     def __init__(self, attributes=None, text=None, cdata=None, qname=None, qattributes=None, check_grammar=True, **args):
         if qname is not None:
             self.qname = qname
@@ -334,7 +334,7 @@ class Element(Node):
         for ns,p in nsdict.items():
             if p == prefix: return ns
         return None
-        
+
     def get_nsprefix(self, namespace):
         """ Odfpy maintains a list of known namespaces. In some cases we have a namespace URL,
             and needs to look up or assign the prefix for it.
@@ -352,7 +352,7 @@ class Element(Node):
         element.ownerDocument = self.ownerDocument
         for child in element.childNodes:
             self._setOwnerDoc(child)
-        
+
     def addElement(self, element, check_grammar=True):
         """ adds an element to an Element
 
@@ -469,7 +469,7 @@ class Element(Node):
                 f.write(' xmlns:' + prefix + '="'+ _escape(str(namespace))+'"')
         for qname in self.attributes.keys():
             prefix = self.get_nsprefix(qname[0])
-            f.write(' '+_escape(str(prefix+':'+qname[1]))+'='+_quoteattr(unicode(self.attributes[qname]).encode('utf-8')))
+            f.write(' '+_escape(str(prefix+':'+qname[1]))+'='+_quoteattr(type(u'')(self.attributes[qname]).encode('utf-8')))
         f.write('>')
 
     def write_close_tag(self, level, f):
@@ -483,7 +483,7 @@ class Element(Node):
                 f.write(' xmlns:' + prefix + '="'+ _escape(str(namespace))+'"')
         for qname in self.attributes.keys():
             prefix = self.get_nsprefix(qname[0])
-            f.write(' '+_escape(str(prefix+':'+qname[1]))+'='+_quoteattr(unicode(self.attributes[qname]).encode('utf-8')))
+            f.write(' '+_escape(str(prefix+':'+qname[1]))+'='+_quoteattr(type(u'')(self.attributes[qname]).encode('utf-8')))
         if self.childNodes:
             f.write('>')
             for element in self.childNodes:
@@ -509,5 +509,3 @@ class Element(Node):
         """ This is a check to see if the object is an instance of a type """
         obj = element(check_grammar=False)
         return self.qname == obj.qname
-
-

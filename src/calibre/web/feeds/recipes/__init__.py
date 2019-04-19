@@ -9,6 +9,7 @@ from calibre.web.feeds.news import (BasicNewsRecipe, CustomIndexRecipe,
     AutomaticNewsRecipe, CalibrePeriodical)
 from calibre.ebooks.BeautifulSoup import BeautifulSoup
 from calibre.utils.config import JSONConfig
+from polyglot.builtins import itervalues, unicode_type, codepoint_to_chr, range
 
 basic_recipes = (BasicNewsRecipe, AutomaticNewsRecipe, CustomIndexRecipe,
         CalibrePeriodical)
@@ -30,9 +31,9 @@ def compile_recipe(src):
 
     :return: Recipe class or None, if no such class was found in src
     '''
-    if not isinstance(src, unicode):
-        match = re.search(r'coding[:=]\s*([-\w.]+)', src[:200])
-        enc = match.group(1) if match else 'utf-8'
+    if not isinstance(src, unicode_type):
+        match = re.search(br'coding[:=]\s*([-\w.]+)', src[:200])
+        enc = match.group(1).decode('utf-8') if match else 'utf-8'
         src = src.decode(enc)
     # Python complains if there is a coding declaration in a unicode string
     src = re.sub(r'^#.*coding\s*[:=]\s*([-\w.]+)', '#', src.lstrip(u'\ufeff'), flags=re.MULTILINE)
@@ -43,14 +44,16 @@ def compile_recipe(src):
             'BasicNewsRecipe':BasicNewsRecipe,
             'AutomaticNewsRecipe':AutomaticNewsRecipe,
             'time':time, 're':re,
-            'BeautifulSoup':BeautifulSoup
+            'BeautifulSoup':BeautifulSoup,
+            'unicode': unicode_type,
+            'unichr': codepoint_to_chr,
+            'xrange': range,
     }
     exec(src, namespace)
 
-    for x in namespace.itervalues():
+    for x in itervalues(namespace):
         if (isinstance(x, type) and issubclass(x, BasicNewsRecipe) and x not
                 in basic_recipes):
             return x
 
     return None
-

@@ -8,9 +8,9 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import posixpath, re
 from uuid import uuid4
-from urlparse import urlparse
 
 from calibre.utils.filenames import ascii_text
+from polyglot.urllib import urlparse
 
 
 def start_text(tag, prefix_len=0, top_level=True):
@@ -42,7 +42,7 @@ class TOCItem(object):
             r = makeelement(p, 'w:r')
             makeelement(r, 'w:fldChar', w_fldCharType='begin')
             r = makeelement(p, 'w:r')
-            makeelement(r, 'w:instrText').text = ' TOC \h '
+            makeelement(r, 'w:instrText').text = r' TOC \h '
             r[0].set('{http://www.w3.org/XML/1998/namespace}space', 'preserve')
             r = makeelement(p, 'w:r')
             makeelement(r, 'w:fldChar', w_fldCharType='separate')

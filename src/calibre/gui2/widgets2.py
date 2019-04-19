@@ -19,6 +19,7 @@ from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import gprefs, rating_font
 from calibre.gui2.complete2 import LineEdit, EditWithComplete
 from calibre.gui2.widgets import history
+from polyglot.builtins import unicode_type
 
 
 class HistoryMixin(object):
@@ -44,7 +45,7 @@ class HistoryMixin(object):
             self.lineEdit().editingFinished.connect(self.save_history)
 
     def save_history(self):
-        ct = unicode(self.text())
+        ct = unicode_type(self.text())
         if len(ct) > 2:
             try:
                 self.history.remove(ct)
@@ -64,14 +65,14 @@ class HistoryMixin(object):
 
 class HistoryLineEdit2(LineEdit, HistoryMixin):
 
-    def __init__(self, parent=None, completer_widget=None, sort_func=lambda x:None):
+    def __init__(self, parent=None, completer_widget=None, sort_func=lambda x:b''):
         LineEdit.__init__(self, parent=parent, completer_widget=completer_widget, sort_func=sort_func)
 
 
 class HistoryComboBox(EditWithComplete, HistoryMixin):
 
     def __init__(self, parent=None):
-        EditWithComplete.__init__(self, parent, sort_func=lambda x:None)
+        EditWithComplete.__init__(self, parent, sort_func=lambda x:b'')
 
 
 class ColorButton(QPushButton):
@@ -91,7 +92,7 @@ class ColorButton(QPushButton):
             return self._color
 
         def fset(self, val):
-            val = unicode(val or '')
+            val = unicode_type(val or '')
             col = QColor(val)
             orig = self._color
             if col.isValid():
@@ -111,7 +112,7 @@ class ColorButton(QPushButton):
     def choose_color(self):
         col = QColorDialog.getColor(QColor(self._color or Qt.white), self, _('Choose a color'))
         if col.isValid():
-            self.color = unicode(col.name())
+            self.color = unicode_type(col.name())
 
 
 def access_key(k):

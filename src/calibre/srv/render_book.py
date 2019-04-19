@@ -2,46 +2,41 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
-import sys, os, json, re
-from base64 import standard_b64encode, standard_b64decode
-from collections import defaultdict, OrderedDict
-from itertools import count
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import json
+import os
+import re
+import sys
+from collections import OrderedDict, defaultdict
 from functools import partial
-from polyglot.builtins import map
-from urlparse import urlparse
-from urllib import quote
+from itertools import count
 
 from css_parser import replaceUrls
 from css_parser.css import CSSRule
 
-from calibre import prepare_string_for_xml, force_unicode
+from calibre import force_unicode, prepare_string_for_xml
 from calibre.ebooks import parse_css_length
+from calibre.ebooks.css_transform_rules import StyleDeclaration
 from calibre.ebooks.oeb.base import (
-    OEB_DOCS, OEB_STYLES, rewrite_links, XPath, urlunquote, XLINK, XHTML_NS, OPF, XHTML, EPUB_NS)
+    EPUB_NS, OEB_DOCS, OEB_STYLES, OPF, XHTML, XHTML_NS, XLINK, XPath, rewrite_links,
+    urlunquote
+)
 from calibre.ebooks.oeb.iterator.book import extract_book
 from calibre.ebooks.oeb.polish.container import Container as ContainerBase
-from calibre.ebooks.oeb.polish.cover import set_epub_cover, find_cover_image
+from calibre.ebooks.oeb.polish.cover import find_cover_image, set_epub_cover
 from calibre.ebooks.oeb.polish.css import transform_css
-from calibre.ebooks.oeb.polish.utils import extract
-from calibre.ebooks.css_transform_rules import StyleDeclaration
-from calibre.ebooks.oeb.polish.toc import get_toc, get_landmarks
-from calibre.ebooks.oeb.polish.utils import guess_type
-from calibre.utils.short_uuid import uuid4
+from calibre.ebooks.oeb.polish.toc import get_landmarks, get_toc
+from calibre.ebooks.oeb.polish.utils import extract, guess_type
 from calibre.utils.logging import default_log
+from calibre.utils.short_uuid import uuid4
+from polyglot.binary import as_base64_unicode as encode_component, from_base64_unicode as decode_component
+from polyglot.builtins import iteritems, map, unicode_type
+from polyglot.urllib import quote, urlparse
 
 RENDER_VERSION = 1
 
 BLANK_JPEG = b'\xff\xd8\xff\xdb\x00C\x00\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x03\x03\x03\x04\x06\x04\x04\x04\x04\x04\x08\x06\x06\x05\x06\t\x08\n\n\t\x08\t\t\n\x0c\x0f\x0c\n\x0b\x0e\x0b\t\t\r\x11\r\x0e\x0f\x10\x10\x11\x10\n\x0c\x12\x13\x12\x10\x13\x0f\x10\x10\x10\xff\xc9\x00\x0b\x08\x00\x01\x00\x01\x01\x01\x11\x00\xff\xcc\x00\x06\x00\x10\x10\x05\xff\xda\x00\x08\x01\x01\x00\x00?\x00\xd2\xcf \xff\xd9'  # noqa
-
-
-def encode_component(x):
-    return standard_b64encode(x.encode('utf-8')).decode('ascii')
-
-
-def decode_component(x):
-    return standard_b64decode(x).decode('utf-8')
 
 
 def encode_url(name, frag=''):
@@ -180,7 +175,7 @@ class Container(ContainerBase):
         # browser has no good way to distinguish between zero byte files and
         # load failures.
         excluded_names = {
-            name for name, mt in self.mime_map.iteritems() if
+            name for name, mt in iteritems(self.mime_map) if
             name == self.opf_name or mt == guess_type('a.ncx') or name.startswith('META-INF/') or
             name == 'mimetype' or not self.has_name_and_is_not_empty(name)}
         raster_cover_name, titlepage_name = self.create_cover_page(input_fmt.lower())
@@ -235,8 +230,11 @@ class Container(ContainerBase):
         self.commit()
         for name in excluded_names:
             os.remove(self.name_path_map[name])
+        data = json.dumps(self.book_render_data, ensure_ascii=False)
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
         with lopen(os.path.join(self.root, 'calibre-book-manifest.json'), 'wb') as f:
-            f.write(json.dumps(self.book_render_data, ensure_ascii=False).encode('utf-8'))
+            f.write(data)
 
     def create_cover_page(self, input_fmt):
         templ = '''
@@ -277,7 +275,7 @@ class Container(ContainerBase):
         # Firefox flakes out sometimes when dynamically creating <style> tags,
         # so convert them to external stylesheets to ensure they never fail
         style_xpath = XPath('//h:style')
-        for name, mt in tuple(self.mime_map.iteritems()):
+        for name, mt in tuple(iteritems(self.mime_map)):
             mt = mt.lower()
             if mt in OEB_DOCS:
                 head = ensure_head(self.parsed(name))
@@ -325,7 +323,7 @@ class Container(ContainerBase):
                     frag = urlunquote(frag)
                     url = resource_template.format(encode_url(name, frag))
                 else:
-                    if isinstance(name, unicode):
+                    if isinstance(name, unicode_type):
                         name = name.encode('utf-8')
                     url = 'missing:' + force_unicode(quote(name), 'utf-8')
                 changed.add(base)
@@ -333,7 +331,7 @@ class Container(ContainerBase):
 
         ltm = self.book_render_data['link_to_map']
 
-        for name, mt in self.mime_map.iteritems():
+        for name, mt in iteritems(self.mime_map):
             mt = mt.lower()
             if mt in OEB_STYLES:
                 replaceUrls(self.parsed(name), partial(link_replacer, name))
@@ -369,8 +367,8 @@ class Container(ContainerBase):
                 for elem in xlink_xpath(self.parsed(name)):
                     elem.set(xlink, link_replacer(name, elem.get(xlink)))
 
-        for name, amap in ltm.iteritems():
-            for k, v in tuple(amap.iteritems()):
+        for name, amap in iteritems(ltm):
+            for k, v in tuple(iteritems(amap)):
                 amap[k] = tuple(v)  # needed for JSON serialization
 
         tuple(map(self.dirty, changed))
@@ -388,6 +386,7 @@ def split_name(name):
     if r:
         return l[1:], r
     return None, l
+
 
 boolean_attributes = frozenset('allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,truespeed,typemustmatch,visible'.split(','))  # noqa
 
@@ -416,7 +415,7 @@ def map_epub_type(epub_type, attribs, elem):
         roles = OrderedDict([(k, True) for k in role.split()]) if role else OrderedDict()
         if val not in roles:
             roles[val] = True
-        role = ' '.join(roles.iterkeys())
+        role = ' '.join(roles)
         if in_attribs is None:
             attribs.append(['role', role])
         else:
@@ -516,7 +515,7 @@ def html_as_dict(root):
                 child_tree_node = [len(tags)-1]
                 node.append(child_tree_node)
                 stack.append((child, child_tree_node))
-    ns_map = [ns for ns, nsnum in sorted(nsmap.iteritems(), key=lambda x: x[1])]
+    ns_map = [ns for ns, nsnum in sorted(iteritems(nsmap), key=lambda x: x[1])]
     return {'ns_map':ns_map, 'tag_map':tags, 'tree':tree}
 
 

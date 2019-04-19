@@ -9,7 +9,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 import os, weakref
 from collections import OrderedDict, namedtuple
 from functools import partial
-from polyglot.builtins import zip
+from polyglot.builtins import iteritems, itervalues, zip, unicode_type, range
 
 from PyQt5.Qt import (
     QDialog, QWidget, QGridLayout, QLabel, QToolButton, QIcon,
@@ -52,7 +52,7 @@ class LineEdit(EditWithComplete):
     @dynamic_property
     def value(self):
         def fget(self):
-            val = unicode(self.text()).strip()
+            val = unicode_type(self.text()).strip()
             ism = self.metadata['is_multiple']
             if ism:
                 if not val:
@@ -88,7 +88,7 @@ class LineEdit(EditWithComplete):
     @dynamic_property
     def current_val(self):
         def fget(self):
-            return unicode(self.text())
+            return unicode_type(self.text())
 
         def fset(self, val):
             self.setText(val)
@@ -212,7 +212,7 @@ class SeriesEdit(LineEdit):
         self.setCursorPosition(0)
 
     def to_mi(self, mi):
-        val = unicode(self.text()).strip()
+        val = unicode_type(self.text()).strip()
         try:
             series_index = float(val.rpartition('[')[-1].rstrip(']').strip())
         except:
@@ -245,10 +245,10 @@ class IdentifiersEdit(LineEdit):
     def as_dict(self):
         def fget(self):
             parts = (x.strip() for x in self.current_val.split(',') if x.strip())
-            return {k:v for k, v in {x.partition(':')[0].strip():x.partition(':')[-1].strip() for x in parts}.iteritems() if k and v}
+            return {k:v for k, v in iteritems({x.partition(':')[0].strip():x.partition(':')[-1].strip() for x in parts}) if k and v}
 
         def fset(self, val):
-            val = ('%s:%s' % (k, v) for k, v in val.iteritems())
+            val = ('%s:%s' % (k, v) for k, v in iteritems(val))
             self.setText(', '.join(val))
             self.setCursorPosition(0)
         return property(fget=fget, fset=fset)
@@ -519,14 +519,14 @@ class CompareSingle(QWidget):
     def __call__(self, oldmi, newmi):
         self.current_mi = newmi
         self.initial_vals = {}
-        for field, widgets in self.widgets.iteritems():
+        for field, widgets in iteritems(self.widgets):
             widgets.old.from_mi(oldmi)
             widgets.new.from_mi(newmi)
             self.initial_vals[field] = widgets.new.current_val
 
     def apply_changes(self):
         changed = False
-        for field, widgets in self.widgets.iteritems():
+        for field, widgets in iteritems(self.widgets):
             val = widgets.new.current_val
             if val != self.initial_vals[field]:
                 widgets.new.to_mi(self.current_mi)
@@ -699,8 +699,8 @@ if __name__ == '__main__':
     ids = tuple(zip(ids[0::2], ids[1::2]))
     gm = partial(db.get_metadata, index_is_id=True, get_cover=True, cover_as_data=True)
     get_metadata = lambda x:map(gm, ids[x])
-    d = CompareMany(list(xrange(len(ids))), get_metadata, db.field_metadata, db=db)
+    d = CompareMany(list(range(len(ids))), get_metadata, db.field_metadata, db=db)
     if d.exec_() == d.Accepted:
-        for changed, mi in d.accepted.itervalues():
+        for changed, mi in itervalues(d.accepted):
             if changed and mi is not None:
                 print(mi)

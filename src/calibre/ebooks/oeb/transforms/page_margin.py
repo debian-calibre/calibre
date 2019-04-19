@@ -7,9 +7,11 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import numbers
 from collections import Counter
 
 from calibre.ebooks.oeb.base import barename, XPath
+from polyglot.builtins import iteritems
 
 
 class RemoveAdobeMargins(object):
@@ -89,7 +91,7 @@ class RemoveFakeMargins(object):
                     pass
                 else:
                     if ((hasattr(ti, 'startswith') and ti.startswith('-')) or
-                            isinstance(ti, (int, float)) and ti < 0):
+                            isinstance(ti, numbers.Number) and ti < 0):
                         raise NegativeTextIndent()
                 return style.marginLeft, style.marginRight, style
         return '', '', None
@@ -151,7 +153,7 @@ class RemoveFakeMargins(object):
                 self.levels[level].append(p)
 
         remove = set()
-        for k, v in self.levels.iteritems():
+        for k, v in iteritems(self.levels):
             num = len(v)
             self.log.debug('Found %d items of level:'%num, k)
             level = int(k.split('_')[-1])

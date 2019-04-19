@@ -12,6 +12,7 @@ from lxml.html.builder import HTML, HEAD, TITLE, STYLE, DIV, BODY, \
         TABLE, TD, TR
 
 from calibre import strftime, isbytestring
+from polyglot.builtins import unicode_type
 
 
 def CLASS(*args, **kwargs):  # class is a reserved word in Python
@@ -73,7 +74,7 @@ class EmbeddedContent(Template):
         self.root = HTML(head,
                 BODY(H2(article.title), DIV()))
         div = self.root.find('body').find('div')
-        if elements and isinstance(elements[0], unicode):
+        if elements and isinstance(elements[0], unicode_type):
             div.text = elements[0]
             elements = list(elements)[1:]
         for elem in elements:
@@ -216,23 +217,23 @@ class NavBarTemplate(Template):
                 navbar.append(BR())
             navbar.append(BR())
         else:
-            next = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
+            next_art = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
                     else 'article_%d'%(art+1)
             up = '../..' if art == number_of_articles_in_feed - 1 else '..'
-            href = '%s%s/%s/index.html'%(prefix, up, next)
+            href = '%s%s/%s/index.html'%(prefix, up, next_art)
             navbar.text = '| '
             navbar.append(A(_('Next'), href=href))
         href = '%s../index.html#article_%d'%(prefix, art)
-        navbar.iterchildren(reversed=True).next().tail = ' | '
+        next(navbar.iterchildren(reversed=True)).tail = ' | '
         navbar.append(A(_('Section menu'), href=href))
         href = '%s../../index.html#feed_%d'%(prefix, feed)
-        navbar.iterchildren(reversed=True).next().tail = ' | '
+        next(navbar.iterchildren(reversed=True)).tail = ' | '
         navbar.append(A(_('Main menu'), href=href))
         if art > 0 and not bottom:
             href = '%s../article_%d/index.html'%(prefix, art-1)
-            navbar.iterchildren(reversed=True).next().tail = ' | '
+            next(navbar.iterchildren(reversed=True)).tail = ' | '
             navbar.append(A(_('Previous'), href=href))
-        navbar.iterchildren(reversed=True).next().tail = ' | '
+        next(navbar.iterchildren(reversed=True)).tail = ' | '
         if not bottom:
             navbar.append(HR())
 
@@ -412,11 +413,11 @@ class TouchscreenNavBarTemplate(Template):
         navbar_tr.append(TD(CLASS('article_sections_list'),link))
 
         # | Next
-        next = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
+        next_art = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
                 else 'article_%d'%(art+1)
         up = '../..' if art == number_of_articles_in_feed - 1 else '..'
 
-        link = A(CLASS('article_link'), _('Next'), href='%s%s/%s/index.html'%(prefix, up, next))
+        link = A(CLASS('article_link'), _('Next'), href='%s%s/%s/index.html'%(prefix, up, next_art))
         navbar_tr.append(TD(CLASS('article_next'),link))
         navbar_t.append(navbar_tr)
         navbar.append(navbar_t)

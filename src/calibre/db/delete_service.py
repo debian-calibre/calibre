@@ -8,11 +8,11 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os, tempfile, shutil, errno, time, atexit
 from threading import Thread
-from Queue import Queue
 
 from calibre.ptempfile import remove_dir
 from calibre.utils.filenames import remove_dir_if_empty
 from calibre.utils.recycle_bin import delete_tree, delete_file
+from polyglot.queue import Queue
 
 
 class DeleteService(Thread):
@@ -136,6 +136,7 @@ class DeleteService(Thread):
             finally:
                 shutil.rmtree(tdir)
 
+
 __ds = None
 
 
@@ -159,4 +160,3 @@ def has_jobs():
     if __ds is not None:
         return (not __ds.requests.empty()) or __ds.requests.unfinished_tasks
     return False
-

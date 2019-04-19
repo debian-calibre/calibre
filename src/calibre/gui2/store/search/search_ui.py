@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/search/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -196,6 +197,7 @@ class Ui_Dialog(object):
         self.total.setText(_("0"))
         self.close.setText(_("&Close"))
 
+
+from calibre.gui2.store.search.results_view import ResultsView
 from calibre.gui2.widgets2 import HistoryLineEdit2
-from results_view import ResultsView
 

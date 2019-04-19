@@ -9,6 +9,7 @@ __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 from calibre.ebooks.oeb.polish.container import OEB_STYLES, OEB_DOCS
 from calibre.ebooks.oeb.normalize_css import normalize_font
 from tinycss.fonts3 import parse_font_family, parse_font, serialize_font_family, serialize_font
+from polyglot.builtins import iteritems, filter
 
 
 def unquote(x):
@@ -45,7 +46,7 @@ def font_family_data_from_sheet(sheet, families):
 
 def font_family_data(container):
     families = {}
-    for name, mt in container.mime_map.iteritems():
+    for name, mt in iteritems(container.mime_map):
         if mt in OEB_STYLES:
             sheet = container.parsed(name)
             font_family_data_from_sheet(sheet, families)
@@ -67,7 +68,7 @@ def change_font_in_declaration(style, old_name, new_name=None):
     ff = style.getProperty('font-family')
     if ff is not None:
         fams = parse_font_family(ff.propertyValue.cssText)
-        nfams = filter(None, [new_name if x == old_name else x for x in fams])
+        nfams = list(filter(None, [new_name if x == old_name else x for x in fams]))
         if fams != nfams:
             if nfams:
                 ff.propertyValue.cssText = serialize_font_family(nfams)
@@ -78,7 +79,7 @@ def change_font_in_declaration(style, old_name, new_name=None):
     if ff is not None:
         props = parse_font(ff.propertyValue.cssText)
         fams = props.get('font-family') or []
-        nfams = filter(None, [new_name if x == old_name else x for x in fams])
+        nfams = list(filter(None, [new_name if x == old_name else x for x in fams]))
         if fams != nfams:
             props['font-family'] = nfams
             if nfams:
@@ -128,7 +129,7 @@ def change_font(container, old_name, new_name=None):
     new_name to None to remove the font family instead of changing it.
     '''
     changed = False
-    for name, mt in tuple(container.mime_map.iteritems()):
+    for name, mt in tuple(iteritems(container.mime_map)):
         if mt in OEB_STYLES:
             sheet = container.parsed(name)
             if change_font_in_sheet(container, sheet, old_name, new_name, name):

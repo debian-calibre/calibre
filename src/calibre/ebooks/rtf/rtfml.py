@@ -10,13 +10,14 @@ Transform OEB content into RTF markup
 
 import os
 import re
-import cStringIO
+import io
 
 from lxml import etree
 
 from calibre.ebooks.metadata import authors_to_string
 from calibre.utils.img import save_cover_data_to
 from calibre.utils.imghdr import identify
+from polyglot.builtins import unicode_type, string_or_bytes
 
 TAGS = {
     'b': '\\b',
@@ -75,18 +76,18 @@ def txt2rtf(text):
     text = text.replace('}', r'\'7d')
     text = text.replace('\\', r'\'5c')
 
-    if not isinstance(text, unicode):
+    if not isinstance(text, unicode_type):
         return text
 
-    buf = cStringIO.StringIO()
+    buf = io.StringIO()
     for x in text:
         val = ord(x)
         if val == 160:
-            buf.write('\\~')
+            buf.write(u'\\~')
         elif val <= 127:
-            buf.write(x)
+            buf.write(unicode_type(x))
         else:
-            c = r'\u{0:d}?'.format(val)
+            c = unicode_type(r'\u{0:d}?'.format(val))
             buf.write(c)
     return buf.getvalue()
 
@@ -119,7 +120,7 @@ class RTFMLizer(object):
             self.log.debug('Converting %s to RTF markup...' % item.href)
             # Removing comments is needed as comments with -- inside them can
             # cause fromstring() to fail
-            content = re.sub(u'<!--.*?-->', u'', etree.tostring(item.data, encoding=unicode), flags=re.DOTALL)
+            content = re.sub(u'<!--.*?-->', u'', etree.tostring(item.data, encoding=unicode_type), flags=re.DOTALL)
             content = self.remove_newlines(content)
             content = self.remove_tabs(content)
             content = etree.fromstring(content)
@@ -223,10 +224,10 @@ class RTFMLizer(object):
         from calibre.ebooks.oeb.base import (XHTML_NS, namespace, barename,
                 urlnormalize)
 
-        if not isinstance(elem.tag, basestring) \
+        if not isinstance(elem.tag, string_or_bytes) \
            or namespace(elem.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, basestring) and namespace(p.tag) == XHTML_NS \
+            if p is not None and isinstance(p.tag, string_or_bytes) and namespace(p.tag) == XHTML_NS \
                     and elem.tail:
                 return elem.tail
             return u''

@@ -20,6 +20,7 @@ from calibre.ebooks.mobi.utils import (decode_hex_number, decint,
 from calibre.utils.imghdr import what
 from calibre.ebooks.mobi.debug import format_bytes
 from calibre.ebooks.mobi.debug.headers import TextRecord
+from polyglot.builtins import unicode_type, range, iteritems, as_bytes
 
 
 class TagX(object):  # {{{
@@ -275,7 +276,7 @@ class Tag(object):  # {{{
         if tag_type in self.TAG_MAP:
             self.attr, self.desc = self.TAG_MAP[tag_type]
         else:
-            print ('Unknown tag value: %%s'%tag_type)
+            print('Unknown tag value: %%s'%tag_type)
             self.desc = '??Unknown (tag value: %d)'%tag_type
             self.attr = 'unknown'
 
@@ -305,7 +306,7 @@ class IndexEntry(object):  # {{{
         except ValueError:
             self.index = ident
         self.tags = [Tag(tag_type, vals, cncx) for tag_type, vals in
-                entry.iteritems()]
+                iteritems(entry)]
 
     @property
     def label(self):
@@ -401,7 +402,7 @@ class IndexRecord(object):  # {{{
 
         self.indices = []
 
-        for ident, entry in table.iteritems():
+        for ident, entry in iteritems(table):
             self.indices.append(IndexEntry(ident, entry, cncx))
 
     def get_parent(self, index):
@@ -460,7 +461,7 @@ class CNCX(object):  # {{{
                     except:
                         byts = raw[pos:]
                         r = format_bytes(byts)
-                        print ('CNCX entry at offset %d has unknown format %s'%(
+                        print('CNCX entry at offset %d has unknown format %s'%(
                             pos+record_offset, r))
                         self.records[pos+record_offset] = r
                         pos = len(raw)
@@ -472,7 +473,7 @@ class CNCX(object):  # {{{
 
     def __str__(self):
         ans = ['*'*20 + ' cncx (%d strings) '%len(self.records)+ '*'*20]
-        for k, v in self.records.iteritems():
+        for k, v in iteritems(self.records):
             ans.append('%10d : %s'%(k, v))
         return '\n'.join(ans)
 
@@ -564,24 +565,24 @@ class TBSIndexing(object):  # {{{
 
     def get_index(self, idx):
         for i in self.indices:
-            if i.index in {idx, unicode(idx)}:
+            if i.index in {idx, unicode_type(idx)}:
                 return i
         raise IndexError('Index %d not found'%idx)
 
     def __str__(self):
         ans = ['*'*20 + ' TBS Indexing (%d records) '%len(self.record_indices)+ '*'*20]
-        for r, dat in self.record_indices.iteritems():
+        for r, dat in iteritems(self.record_indices):
             ans += self.dump_record(r, dat)[-1]
         return '\n'.join(ans)
 
     def dump(self, bdir):
         types = defaultdict(list)
-        for r, dat in self.record_indices.iteritems():
+        for r, dat in iteritems(self.record_indices):
             tbs_type, strings = self.dump_record(r, dat)
             if tbs_type == 0:
                 continue
             types[tbs_type] += strings
-        for typ, strings in types.iteritems():
+        for typ, strings in iteritems(types):
             with open(os.path.join(bdir, 'tbs_type_%d.txt'%typ), 'wb') as f:
                 f.write('\n'.join(strings))
 
@@ -605,10 +606,10 @@ class TBSIndexing(object):  # {{{
 
         def bin4(num):
             ans = bin(num)[2:]
-            return bytes('0'*(4-len(ans)) + ans)
+            return as_bytes('0'*(4-len(ans)) + ans)
 
         def repr_extra(x):
-            return str({bin4(k):v for k, v in extra.iteritems()})
+            return str({bin4(k):v for k, v in iteritems(extra)})
 
         tbs_type = 0
         is_periodical = self.doc_type in (257, 258, 259)
@@ -628,7 +629,7 @@ class TBSIndexing(object):  # {{{
                     import traceback
                     traceback.print_exc()
                     a = []
-                    print ('Failed to decode TBS bytes for record: %d'%r.idx)
+                    print('Failed to decode TBS bytes for record: %d'%r.idx)
                 ans += a
             if byts:
                 sbyts = tuple(hex(b)[2:] for b in byts)
@@ -743,7 +744,7 @@ class MOBIFile(object):  # {{{
                 self.index_header.index_encoding)
             self.index_record = IndexRecord(self.records[pir+1:pir+1+numi],
                     self.index_header, self.cncx)
-            self.indexing_record_nums = set(xrange(pir,
+            self.indexing_record_nums = set(range(pir,
                 pir+1+numi+self.index_header.num_of_cncx_blocks))
         self.secondary_index_record = self.secondary_index_header = None
         sir = self.mobi_header.secondary_index_record
@@ -753,17 +754,17 @@ class MOBIFile(object):  # {{{
             self.indexing_record_nums.add(sir)
             self.secondary_index_record = IndexRecord(
                     self.records[sir+1:sir+1+numi], self.secondary_index_header, self.cncx)
-            self.indexing_record_nums |= set(xrange(sir+1, sir+1+numi))
+            self.indexing_record_nums |= set(range(sir+1, sir+1+numi))
 
         ntr = self.mobi_header.number_of_text_records
         fii = self.mobi_header.first_image_index
         self.text_records = [TextRecord(r, self.records[r],
-            self.mobi_header.extra_data_flags, mf.decompress6) for r in xrange(1,
+            self.mobi_header.extra_data_flags, mf.decompress6) for r in range(1,
             min(len(self.records), ntr+1))]
         self.image_records, self.binary_records = [], []
         self.font_records = []
         image_index = 0
-        for i in xrange(self.mobi_header.first_resource_record, min(self.mobi_header.last_resource_record, len(self.records))):
+        for i in range(self.mobi_header.first_resource_record, min(self.mobi_header.last_resource_record, len(self.records))):
             if i in self.indexing_record_nums or i in self.huffman_record_nums:
                 continue
             image_index += 1
@@ -788,14 +789,14 @@ class MOBIFile(object):  # {{{
                     self.index_record.indices, self.mobi_header.type_raw)
 
     def print_header(self, f=sys.stdout):
-        print (str(self.palmdb).encode('utf-8'), file=f)
-        print (file=f)
-        print ('Record headers:', file=f)
+        print(str(self.palmdb).encode('utf-8'), file=f)
+        print(file=f)
+        print('Record headers:', file=f)
         for i, r in enumerate(self.records):
-            print ('%6d. %s'%(i, r.header), file=f)
+            print('%6d. %s'%(i, r.header), file=f)
 
-        print (file=f)
-        print (str(self.mobi_header).encode('utf-8'), file=f)
+        print(file=f)
+        print(str(self.mobi_header).encode('utf-8'), file=f)
 # }}}
 
 
@@ -844,5 +845,3 @@ def inspect_mobi(mobi_file, ddir):
 
 
 # }}}
-
-

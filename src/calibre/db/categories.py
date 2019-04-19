@@ -9,8 +9,9 @@ __docformat__ = 'restructuredtext en'
 
 import copy
 from functools import partial
-from polyglot.builtins import map
+from polyglot.builtins import iteritems, unicode_type, map
 
+from calibre.constants import ispy3
 from calibre.ebooks.metadata import author_to_author_sort
 from calibre.utils.config_base import tweaks
 from calibre.utils.icu import sort_key, collation_order
@@ -43,11 +44,19 @@ class Tag(object):
         self.search_expression = search_expression
         self.original_categories = None
 
-    def __unicode__(self):
+    @property
+    def string_representation(self):
         return u'%s:%s:%s:%s:%s'%(self.name, self.count, self.id, self.state, self.category)
 
-    def __str__(self):
-        return unicode(self).encode('utf-8')
+    if ispy3:
+        def __str__(self):
+            return self.string_representation
+    else:
+        def __str__(self):
+            return self.string_representation.encode('utf-8')
+
+        def __unicode__(self):
+            return self.string_representation
 
     def __repr__(self):
         return str(self)
@@ -66,7 +75,7 @@ class Tag(object):
 
 
 def find_categories(field_metadata):
-    for category, cat in field_metadata.iteritems():
+    for category, cat in field_metadata.iter_items():
         if (cat['is_category'] and cat['kind'] not in {'user', 'search'}):
             yield (category, cat['is_multiple'].get('cache_to_list', None), False)
         elif (cat['datatype'] == 'composite' and
@@ -101,8 +110,8 @@ def clean_user_categories(dbcache):
         if len(comps) == 0:
             i = 1
             while True:
-                if unicode(i) not in user_cats:
-                    new_cats[unicode(i)] = user_cats[k]
+                if unicode_type(i) not in user_cats:
+                    new_cats[unicode_type(i)] = user_cats[k]
                     break
                 i += 1
         else:
@@ -206,11 +215,11 @@ def get_categories(dbcache, sort='name', book_ids=None, first_letter_sort=False)
         # do the verification in the category loop much faster, at the cost of
         # temporarily duplicating the categories lists.
         taglist = {}
-        for c, items in categories.iteritems():
+        for c, items in iteritems(categories):
             taglist[c] = dict(map(lambda t:(icu_lower(t.name), t), items))
 
         # Add the category values to the user categories
-        for user_cat in sorted(user_categories.iterkeys(), key=sort_key):
+        for user_cat in sorted(user_categories, key=sort_key):
             items = []
             names_seen = {}
             user_cat_is_gst = user_cat in gst

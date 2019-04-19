@@ -26,6 +26,7 @@ from calibre.db.errors import NoSuchFormat
 from calibre.library.comments import merge_comments
 from calibre.ebooks.metadata.sources.prefs import msprefs
 from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
+from polyglot.builtins import iteritems, unicode_type
 
 
 class EditMetadataAction(InterfaceAction):
@@ -118,7 +119,7 @@ class EditMetadataAction(InterfaceAction):
         book_id = db.id(rows[0].row())
         mi = db.new_api.get_metadata(book_id)
         md = QMimeData()
-        md.setText(unicode(mi))
+        md.setText(unicode_type(mi))
         md.setData('application/calibre-book-metadata', bytearray(metadata_to_opf(mi, default_lang='und')))
         img = db.new_api.cover(book_id, as_image=True)
         if img:
@@ -319,7 +320,7 @@ class EditMetadataAction(InterfaceAction):
                     failed_ids |= d.rejected_ids
                     restrict_to_failed = True
                 nid_map = {}
-                for book_id, (changed, mi) in d.accepted.iteritems():
+                for book_id, (changed, mi) in iteritems(d.accepted):
                     if mi is None:  # discarded
                         continue
                     if changed:
@@ -497,7 +498,7 @@ class EditMetadataAction(InterfaceAction):
             'merge_too_many_books', self.gui)
 
     def books_dropped(self, merge_map):
-        for dest_id, src_ids in merge_map.iteritems():
+        for dest_id, src_ids in iteritems(merge_map):
             if not self.confirm_large_merge(len(src_ids) + 1):
                 continue
             from calibre.gui2.dialogs.confirm_merge import merge_drop
@@ -647,7 +648,7 @@ class EditMetadataAction(InterfaceAction):
                 if not dest_mi.comments:
                     dest_mi.comments = src_mi.comments
                 else:
-                    dest_mi.comments = unicode(dest_mi.comments) + u'\n\n' + unicode(src_mi.comments)
+                    dest_mi.comments = unicode_type(dest_mi.comments) + u'\n\n' + unicode_type(src_mi.comments)
             if src_mi.title and (not dest_mi.title or dest_mi.title == _('Unknown')):
                 dest_mi.title = src_mi.title
             if (src_mi.authors and src_mi.authors[0] != _('Unknown')) and (not dest_mi.authors or dest_mi.authors[0] == _('Unknown')):
@@ -700,7 +701,7 @@ class EditMetadataAction(InterfaceAction):
                     if not dest_value:
                         db.set_custom(dest_id, src_value, num=colnum)
                     else:
-                        dest_value = unicode(dest_value) + u'\n\n' + unicode(src_value)
+                        dest_value = unicode_type(dest_value) + u'\n\n' + unicode_type(src_value)
                         db.set_custom(dest_id, dest_value, num=colnum)
                 if (dt in {'bool', 'int', 'float', 'rating', 'datetime'} and dest_value is None):
                     db.set_custom(dest_id, src_value, num=colnum)
@@ -725,8 +726,8 @@ class EditMetadataAction(InterfaceAction):
         if d.result() == d.Accepted:
             to_rename = d.to_rename  # dict of new text to old ids
             to_delete = d.to_delete  # list of ids
-            for old_id, new_name in to_rename.iteritems():
-                model.rename_collection(old_id, new_name=unicode(new_name))
+            for old_id, new_name in iteritems(to_rename):
+                model.rename_collection(old_id, new_name=unicode_type(new_name))
             for item in to_delete:
                 model.delete_collection_using_id(item)
             self.gui.upload_collections(model.db, view=view, oncard=oncard)
@@ -753,7 +754,7 @@ class EditMetadataAction(InterfaceAction):
         '''
         if title is None:
             title = _('Applying changed metadata')
-        self.apply_id_map = list(id_map.iteritems())
+        self.apply_id_map = list(iteritems(id_map))
         self.apply_current_idx = 0
         self.apply_failures = []
         self.applied_ids = set()

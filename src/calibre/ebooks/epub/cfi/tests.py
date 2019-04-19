@@ -6,10 +6,11 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import unittest
+import unittest, numbers
 from polyglot.builtins import map
 
 from calibre.ebooks.epub.cfi.parse import parser, cfi_sort_key, decode_cfi
+from polyglot.builtins import iteritems, unicode_type
 
 
 class Tests(unittest.TestCase):
@@ -28,7 +29,7 @@ class Tests(unittest.TestCase):
         p = parser()
 
         def step(x):
-            if isinstance(x, int):
+            if isinstance(x, numbers.Integral):
                 return {'num': x}
             return {'num':x[0], 'id':x[1]}
 
@@ -60,7 +61,7 @@ class Tests(unittest.TestCase):
             if after is not None:
                 ta['after'] = after
             if params:
-                ta['params'] = {unicode(k):(v,) if isinstance(v, unicode) else v for k, v in params.iteritems()}
+                ta['params'] = {unicode_type(k):(v,) if isinstance(v, unicode_type) else v for k, v in iteritems(params)}
             if ta:
                 step['text_assertion'] = ta
             return ans

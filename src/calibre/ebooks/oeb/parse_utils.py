@@ -14,6 +14,7 @@ from lxml import etree, html
 from calibre import xml_replace_entities, force_unicode
 from calibre.constants import filesystem_encoding
 from calibre.ebooks.chardet import xml_to_unicode, strip_encoding_declarations
+from polyglot.builtins import iteritems, itervalues, unicode_type, string_or_bytes
 
 RECOVER_PARSER = etree.XMLParser(recover=True, no_network=True)
 XHTML_NS     = 'http://www.w3.org/1999/xhtml'
@@ -98,7 +99,7 @@ def html5_parse(data, max_nesting_depth=100):
     # Check that the asinine HTML 5 algorithm did not result in a tree with
     # insane nesting depths
     for x in data.iterdescendants():
-        if isinstance(x.tag, basestring) and len(x) is 0:  # Leaf node
+        if isinstance(x.tag, string_or_bytes) and not len(x):  # Leaf node
             depth = node_depth(x)
             if depth > max_nesting_depth:
                 raise ValueError('HTML 5 parsing resulted in a tree with nesting'
@@ -106,17 +107,13 @@ def html5_parse(data, max_nesting_depth=100):
     return data
 
 
-def _html4_parse(data, prefer_soup=False):
-    if prefer_soup:
-        from calibre.utils.soupparser import fromstring
-        data = fromstring(data)
-    else:
-        data = html.fromstring(data)
+def _html4_parse(data):
+    data = html.fromstring(data)
     data.attrib.pop('xmlns', None)
     for elem in data.iter(tag=etree.Comment):
         if elem.text:
             elem.text = elem.text.strip('-')
-    data = etree.tostring(data, encoding=unicode)
+    data = etree.tostring(data, encoding=unicode_type)
 
     # Setting huge_tree=True causes crashes in windows with large files
     parser = etree.XMLParser(no_network=True)
@@ -147,8 +144,8 @@ def clean_word_doc(data, log):
 
 
 def ensure_namespace_prefixes(node, nsmap):
-    namespace_uris = frozenset(nsmap.itervalues())
-    fnsmap = {k:v for k, v in node.nsmap.iteritems() if v not in namespace_uris}
+    namespace_uris = frozenset(itervalues(nsmap))
+    fnsmap = {k:v for k, v in iteritems(node.nsmap) if v not in namespace_uris}
     fnsmap.update(nsmap)
     if fnsmap != dict(node.nsmap):
         node = clone_element(node, nsmap=fnsmap, in_context=False)
@@ -173,7 +170,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
 
     filename = force_unicode(filename, enc=filesystem_encoding)
 
-    if not isinstance(data, unicode):
+    if not isinstance(data, unicode_type):
         if decoder is not None:
             data = decoder(data)
         else:
@@ -204,7 +201,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
                     val = val[1:-1]
                 user_entities[match.group(1)] = val
             if user_entities:
-                pat = re.compile(r'&(%s);'%('|'.join(user_entities.keys())))
+                pat = re.compile(r'&(%s);'%('|'.join(list(user_entities.keys()))))
                 data = pat.sub(lambda m:user_entities[m.group(1)], data)
 
     if preprocessor is not None:
@@ -244,7 +241,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
         for x in data.iterdescendants():
             try:
                 x.tag = x.tag.lower()
-                for key, val in list(x.attrib.iteritems()):
+                for key, val in list(iteritems(x.attrib)):
                     del x.attrib[key]
                     key = key.lower()
                     x.attrib[key] = val
@@ -258,7 +255,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
         nroot = etree.fromstring('<html></html>')
         has_body = False
         for child in list(data):
-            if isinstance(child.tag, (unicode, str)) and barename(child.tag) == 'body':
+            if isinstance(child.tag, (unicode_type, bytes)) and barename(child.tag) == 'body':
                 has_body = True
                 break
         parent = nroot
@@ -277,7 +274,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
     if not namespace(data.tag):
         log.warn('Forcing', filename, 'into XHTML namespace')
         data.attrib['xmlns'] = XHTML_NS
-        data = etree.tostring(data, encoding=unicode)
+        data = etree.tostring(data, encoding=unicode_type)
 
         try:
             data = etree.fromstring(data, parser=parser)
@@ -309,7 +306,7 @@ def parse_html(data, log=None, decoder=None, preprocessor=None,
         nroot = etree.Element(XHTML('html'),
             nsmap={None: XHTML_NS}, attrib=attrib)
         for elem in data.iterdescendants():
-            if isinstance(elem.tag, basestring) and \
+            if isinstance(elem.tag, string_or_bytes) and \
                 namespace(elem.tag) == ns:
                 elem.tag = XHTML(barename(elem.tag))
         for elem in data:

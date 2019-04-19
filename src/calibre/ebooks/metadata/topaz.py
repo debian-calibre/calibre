@@ -5,11 +5,19 @@ __copyright__ = '2010, Greg Riker <griker@hotmail.com>'
 __docformat__ = 'restructuredtext en'
 
 ''' Read/write metadata from Amazon's topaz format '''
-import StringIO, sys
+import io, sys, numbers
 from struct import pack
 
 from calibre.ebooks.metadata import MetaInformation
 from calibre import force_unicode
+
+
+class StringIO(io.StringIO):
+
+    def write(self, x):
+        if isinstance(x, bytes):
+            x = x.decode('iso-8859-1')
+        return io.StringIO.write(self, x)
 
 
 class StreamSlicer(object):
@@ -29,7 +37,7 @@ class StreamSlicer(object):
     def __getitem__(self, key):
         stream = self._stream
         base = self.start
-        if isinstance(key, (int, long)):
+        if isinstance(key, numbers.Integral):
             stream.seek(base + key)
             return stream.read(1)
         if isinstance(key, slice):
@@ -38,7 +46,7 @@ class StreamSlicer(object):
                 start, stop = stop, start
             size = stop - start
             if size <= 0:
-                return ""
+                return b""
             stream.seek(base + start)
             data = stream.read(size)
             if stride != 1:
@@ -49,7 +57,7 @@ class StreamSlicer(object):
     def __setitem__(self, key, value):
         stream = self._stream
         base = self.start
-        if isinstance(key, (int, long)):
+        if isinstance(key, numbers.Integral):
             if len(value) != 1:
                 raise ValueError("key and value lengths must match")
             stream.seek(base + key)
@@ -87,7 +95,7 @@ class MetadataUpdater(object):
         self.data = StreamSlicer(stream)
 
         sig = self.data[:4]
-        if not sig.startswith('TPZ'):
+        if not sig.startswith(b'TPZ'):
             raise ValueError("'%s': Not a Topaz file" % getattr(stream, 'name', 'Unnamed stream'))
         offset = 4
 
@@ -102,7 +110,7 @@ class MetadataUpdater(object):
         # Second integrity test - metadata body
         md_offset = self.topaz_headers['metadata']['blocks'][0]['offset']
         md_offset += self.base
-        if self.data[md_offset+1:md_offset+9] != 'metadata':
+        if self.data[md_offset+1:md_offset+9] != b'metadata':
             raise ValueError("'%s': Damaged metadata record" % getattr(stream, 'name', 'Unnamed stream'))
 
     def book_length(self):
@@ -116,8 +124,9 @@ class MetadataUpdater(object):
     def decode_vwi(self,bytes):
         pos, val = 0, 0
         done = False
+        byts = bytearray(bytes)
         while pos < len(bytes) and not done:
-            b = ord(bytes[pos])
+            b = byts[pos]
             pos += 1
             if (b & 0x80) == 0:
                 done = True
@@ -194,12 +203,12 @@ class MetadataUpdater(object):
                 else:
                     return None
         dkey = self.topaz_headers[x]
-        dks = StringIO.StringIO()
+        dks = StringIO()
         dks.write(self.encode_vwi(len(dkey['tag'])))
         offset += 1
         dks.write(dkey['tag'])
         offset += len('dkey')
-        dks.write(chr(0))
+        dks.write(u'\0')
         offset += 1
         dks.write(self.data[offset:offset + len_uncomp].decode('iso-8859-1'))
         return dks.getvalue().encode('iso-8859-1')
@@ -233,7 +242,7 @@ class MetadataUpdater(object):
         return topaz_headers, th_seq
 
     def generate_metadata_stream(self):
-        ms = StringIO.StringIO()
+        ms = StringIO()
         ms.write(self.encode_vwi(len(self.md_header['tag'])).encode('iso-8859-1'))
         ms.write(self.md_header['tag'])
         ms.write(chr(self.md_header['flags']))
@@ -290,7 +299,7 @@ class MetadataUpdater(object):
         delta = updated_md_len - original_md_len
 
         # Copy the first 5 bytes of the file: sig + num_recs
-        ths = StringIO.StringIO()
+        ths = io.StringIO()
         ths.write(self.data[:5])
 
         # Rewrite the offsets for hdr_offsets > metadata offset
@@ -377,9 +386,8 @@ if __name__ == '__main__':
         print(get_metadata(open(sys.argv[1], 'rb')))
     else:
         # Test set_metadata()
-        import cStringIO
         data = open(sys.argv[1], 'rb')
-        stream = cStringIO.StringIO()
+        stream = io.BytesIO()
         stream.write(data.read())
         mi = MetaInformation(title="Updated Title", authors=['Author, Random'])
         set_metadata(stream, mi)

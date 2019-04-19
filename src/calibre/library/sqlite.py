@@ -1,5 +1,4 @@
-from __future__ import with_statement
-from __future__ import print_function
+from __future__ import print_function, with_statement
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -9,10 +8,8 @@ Wrapper for multi-threaded access to a single sqlite database connection. Serial
 all calls.
 '''
 import sqlite3 as sqlite, traceback, time, uuid, sys, os
-import repr as reprlib
 from sqlite3 import IntegrityError, OperationalError
 from threading import Thread
-from Queue import Queue
 from threading import RLock
 from datetime import datetime
 from functools import partial
@@ -23,6 +20,9 @@ from calibre import isbytestring, force_unicode
 from calibre.constants import iswindows, DEBUG, plugins
 from calibre.utils.icu import sort_key
 from calibre import prints
+from polyglot.builtins import unicode_type, cmp
+from polyglot import reprlib
+from polyglot.queue import Queue
 
 from dateutil.tz import tzoffset
 
@@ -115,9 +115,14 @@ class Concatenate(object):
             self.ans.append(value)
 
     def finalize(self):
-        if not self.ans:
-            return None
-        return self.sep.join(self.ans)
+        try:
+            if not self.ans:
+                return None
+            return self.sep.join(self.ans)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
 
 class SortedConcatenate(object):
@@ -132,9 +137,14 @@ class SortedConcatenate(object):
             self.ans[ndx] = value
 
     def finalize(self):
-        if len(self.ans) == 0:
-            return None
-        return self.sep.join(map(self.ans.get, sorted(self.ans.keys())))
+        try:
+            if len(self.ans) == 0:
+                return None
+            return self.sep.join(map(self.ans.get, sorted(self.ans.keys())))
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
 
 class SortedConcatenateBar(SortedConcatenate):
@@ -155,7 +165,12 @@ class IdentifiersConcat(object):
         self.ans.append(u'%s:%s'%(key, val))
 
     def finalize(self):
-        return ','.join(self.ans)
+        try:
+            return ','.join(self.ans)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
 
 class AumSortedConcatenate(object):
@@ -169,13 +184,18 @@ class AumSortedConcatenate(object):
             self.ans[ndx] = ':::'.join((author, sort, link))
 
     def finalize(self):
-        keys = self.ans.keys()
-        l = len(keys)
-        if l == 0:
-            return None
-        if l == 1:
-            return self.ans[keys[0]]
-        return ':#:'.join([self.ans[v] for v in sorted(keys)])
+        try:
+            keys = tuple(self.ans)
+            l = len(keys)
+            if l == 0:
+                return None
+            if l == 1:
+                return self.ans[keys[0]]
+            return ':#:'.join([self.ans[v] for v in sorted(keys)])
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
 
 class Connection(sqlite.Connection):
@@ -231,8 +251,7 @@ def load_c_extensions(conn, debug=DEBUG):
 
 
 def do_connect(path, row_factory=None):
-    conn = sqlite.connect(path, factory=Connection,
-                                detect_types=sqlite.PARSE_DECLTYPES|sqlite.PARSE_COLNAMES)
+    conn = sqlite.connect(path, factory=Connection)
     conn.execute('pragma cache_size=-5000')
     encoding = conn.execute('pragma encoding').fetchone()[0]
     conn.create_aggregate('sortconcat', 2, SortedConcatenate)
@@ -321,7 +340,7 @@ class DatabaseException(Exception):
     def __init__(self, err, tb):
         tb = '\n\t'.join(('\tRemote'+tb).splitlines())
         try:
-            msg = unicode(err) +'\n' + tb
+            msg = unicode_type(err) +'\n' + tb
         except:
             msg = repr(err) + '\n' + tb
         Exception.__init__(self, msg)
@@ -342,7 +361,7 @@ def proxy(fn):
             ok, res = self.proxy.results.get()
             if not ok:
                 if isinstance(res[0], IntegrityError):
-                    raise IntegrityError(unicode(res[0]))
+                    raise IntegrityError(unicode_type(res[0]))
                 raise DatabaseException(*res)
             return res
     return run

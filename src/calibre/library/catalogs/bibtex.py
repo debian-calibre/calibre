@@ -5,9 +5,8 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import re, codecs, os
+import re, codecs, os, numbers
 from collections import namedtuple
-from types import StringType, UnicodeType
 
 from calibre import (strftime)
 from calibre.customize import CatalogPlugin
@@ -15,6 +14,7 @@ from calibre.library.catalogs import FIELDS, TEMPLATE_ALLOWED_FIELDS
 from calibre.customize.conversion import DummyReporter
 from calibre.constants import preferred_encoding
 from calibre.ebooks.metadata import format_isbn
+from polyglot.builtins import string_or_bytes, filter
 
 
 class BIBTEX(CatalogPlugin):
@@ -142,7 +142,7 @@ class BIBTEX(CatalogPlugin):
             for field in fields:
                 if field.startswith('#'):
                     item = db.get_field(entry['id'],field,index_is_id=True)
-                    if isinstance(item, (bool, float, int)):
+                    if isinstance(item, (bool, numbers.Number)):
                         item = repr(item)
                 elif field == 'title_sort':
                     item = entry['sort']
@@ -212,13 +212,13 @@ class BIBTEX(CatalogPlugin):
                     bibtex_entry.append(u'year = "%s"' % item.year)
                     bibtex_entry.append(u'month = "%s"' % bibtexdict.utf8ToBibtex(strftime("%b", item)))
 
-                elif field.startswith('#') and isinstance(item, basestring):
+                elif field.startswith('#') and isinstance(item, string_or_bytes):
                     bibtex_entry.append(u'custom_%s = "%s"' % (field[1:],
                         bibtexdict.utf8ToBibtex(item)))
 
-                elif isinstance(item, basestring):
+                elif isinstance(item, string_or_bytes):
                     # elif field in ['title', 'publisher', 'cover', 'uuid', 'ondevice',
-                        # 'author_sort', 'series', 'title_sort'] :
+                    # 'author_sort', 'series', 'title_sort'] :
                     bibtex_entry.append(u'%s = "%s"' % (field, bibtexdict.utf8ToBibtex(item)))
 
             bibtex_entry = u',\n    '.join(bibtex_entry)
@@ -350,7 +350,7 @@ class BIBTEX(CatalogPlugin):
             bibtexc.ascii_bibtex = True
 
         # Check citation choice and go to default in case of bad CLI
-        if isinstance(opts.impcit, (StringType, UnicodeType)) :
+        if isinstance(opts.impcit, string_or_bytes) :
             if opts.impcit == 'False' :
                 citation_bibtex= False
             elif opts.impcit == 'True' :
@@ -362,7 +362,7 @@ class BIBTEX(CatalogPlugin):
             citation_bibtex= opts.impcit
 
         # Check add file entry and go to default in case of bad CLI
-        if isinstance(opts.addfiles, (StringType, UnicodeType)) :
+        if isinstance(opts.addfiles, string_or_bytes) :
             if opts.addfiles == 'False' :
                 addfiles_bibtex = False
             elif opts.addfiles == 'True' :
@@ -384,7 +384,7 @@ class BIBTEX(CatalogPlugin):
 
             # check in book strict if all is ok else throw a warning into log
             if bib_entry == 'book' :
-                nb_books = len(filter(check_entry_book_valid, data))
+                nb_books = len(list(filter(check_entry_book_valid, data)))
                 if nb_books < nb_entries :
                     log.warn("Only %d entries in %d are book compatible" % (nb_books, nb_entries))
                     nb_entries = nb_books

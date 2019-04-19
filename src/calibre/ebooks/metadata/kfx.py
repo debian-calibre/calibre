@@ -8,7 +8,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 # Based on work of John Howell reversing the KFX format
 # https://www.mobileread.com/forums/showpost.php?p=3176029&postcount=89
 
-import struct, sys, base64, re
+import struct, sys, re
 from collections import defaultdict
 
 from calibre.ebooks.metadata.book.base import Metadata
@@ -18,6 +18,8 @@ from calibre.utils.config_base import tweaks
 from calibre.utils.date import parse_only_date
 from calibre.utils.localization import canonicalize_lang
 from calibre.utils.imghdr import identify
+from polyglot.builtins import unicode_type, filter
+from polyglot.binary import as_base64_bytes, from_base64_bytes
 
 
 class InvalidKFX(ValueError):
@@ -154,7 +156,7 @@ class Entity(PackedBlock):
         if PackedData(self.entity_data).unpack_one('4s') == ION_MAGIC:
             entity_value = PackedIon(self.entity_data).decode()
         else:
-            entity_value = base64.b64encode(self.entity_data)
+            entity_value = as_base64_bytes(self.entity_data)
 
         return (property_name(self.entity_type), property_name(self.entity_id), entity_value)
 
@@ -252,11 +254,11 @@ def extract_metadata(container_data):
 
     # locate book metadata within the container data structures
 
+    metadata_entity = {}
+
     for entity_type, entity_id, entity_value in container_data:
         if entity_type == PROP_METADATA:
-            for key, value in entity_value.items():
-                if key in METADATA_PROPERTIES:
-                    metadata[METADATA_PROPERTIES[key]].append(value)
+            metadata_entity = entity_value
 
         elif entity_type == PROP_METADATA2:
             if entity_value is not None:
@@ -267,6 +269,10 @@ def extract_metadata(container_data):
         elif entity_type == PROP_IMAGE and COVER_KEY not in metadata:
             # assume first image is the cover
             metadata[COVER_KEY] = entity_value
+
+    for key, value in metadata_entity.items():
+        if key in METADATA_PROPERTIES:
+            metadata[METADATA_PROPERTIES[key]].append(value)
 
     return metadata
 
@@ -342,8 +348,8 @@ def read_metadata_kfx(stream, read_cover=True):
         mi.publisher = get('publisher')
     if read_cover and m[COVER_KEY]:
         try:
-            data = base64.standard_b64decode(m[COVER_KEY])
-            fmt, w, h = identify(bytes(data))
+            data = from_base64_bytes(m[COVER_KEY])
+            fmt, w, h = identify(data)
         except Exception:
             w, h, fmt = 0, 0, None
         if fmt and w > -1 and h > -1:
@@ -356,4 +362,4 @@ if __name__ == '__main__':
     from calibre import prints
     with open(sys.argv[-1], 'rb') as f:
         mi = read_metadata_kfx(f)
-        prints(unicode(mi))
+        prints(unicode_type(mi))

@@ -6,15 +6,72 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, re, cPickle, traceback
+import os, re, traceback, numbers
 from functools import partial
 from collections import defaultdict
 from copy import deepcopy
 
 from calibre.utils.lock import ExclusiveFile
-from calibre.constants import config_dir, CONFIG_DIR_MODE
+from calibre.constants import config_dir, CONFIG_DIR_MODE, ispy3, preferred_encoding
+from polyglot.builtins import unicode_type, iteritems, map
 
 plugin_dir = os.path.join(config_dir, 'plugins')
+
+
+def to_json(obj):
+    import datetime
+    if isinstance(obj, bytearray):
+        from base64 import standard_b64encode
+        return {'__class__': 'bytearray',
+                '__value__': standard_b64encode(bytes(obj)).decode('ascii')}
+    if isinstance(obj, datetime.datetime):
+        from calibre.utils.date import isoformat
+        return {'__class__': 'datetime.datetime',
+                '__value__': isoformat(obj, as_utc=True)}
+    if isinstance(obj, (set, frozenset)):
+        return {'__class__': 'set', '__value__': tuple(obj)}
+    if isinstance(obj, bytes):
+        return obj.decode('utf-8')
+    if hasattr(obj, 'toBase64'):  # QByteArray
+        return {'__class__': 'bytearray',
+                '__value__': bytes(obj.toBase64()).decode('ascii')}
+    raise TypeError(repr(obj) + ' is not JSON serializable')
+
+
+def safe_to_json(obj):
+    try:
+        return to_json(obj)
+    except Exception:
+        pass
+
+
+def from_json(obj):
+    custom = obj.get('__class__')
+    if custom is not None:
+        if custom == 'bytearray':
+            from base64 import standard_b64decode
+            return bytearray(standard_b64decode(obj['__value__'].encode('ascii')))
+        if custom == 'datetime.datetime':
+            from calibre.utils.iso8601 import parse_iso8601
+            return parse_iso8601(obj['__value__'], assume_utc=True)
+        if custom == 'set':
+            return set(obj['__value__'])
+    return obj
+
+
+def json_dumps(obj, ignore_unserializable=False):
+    import json
+    ans = json.dumps(obj, indent=2, default=safe_to_json if ignore_unserializable else to_json, sort_keys=True, ensure_ascii=False)
+    if not isinstance(ans, bytes):
+        ans = ans.encode('utf-8')
+    return ans
+
+
+def json_loads(raw):
+    import json
+    if isinstance(raw, bytes):
+        raw = raw.decode('utf-8')
+    return json.loads(raw, object_hook=from_json)
 
 
 def make_config_dir():
@@ -36,7 +93,7 @@ class Option(object):
         if self.type is None and action is None and choices is None:
             if isinstance(default, float):
                 self.type = 'float'
-            elif isinstance(default, int) and not isinstance(default, bool):
+            elif isinstance(default, numbers.Integral) and not isinstance(default, bool):
                 self.type = 'int'
 
         self.choices  = choices
@@ -194,18 +251,40 @@ class OptionSet(object):
             return match.group()
         return ''
 
-    def parse_string(self, src):
+    def parse_old_style(self, src):
+        if ispy3:
+            import pickle as cPickle
+        else:
+            import cPickle
         options = {'cPickle':cPickle}
-        if src is not None:
+        try:
+            if not isinstance(src, unicode_type):
+                src = src.decode('utf-8')
+            src = src.replace(u'PyQt%d.QtCore' % 4, u'PyQt5.QtCore')
+            exec(src, options)
+        except Exception as err:
             try:
-                if not isinstance(src, unicode):
-                    src = src.decode('utf-8')
-                src = src.replace(u'PyQt%d.QtCore' % 4, u'PyQt5.QtCore')
-                exec(src, options)
-            except:
-                print('Failed to parse options string:')
-                print(repr(src))
-                traceback.print_exc()
+                print('Failed to parse old style options string with error: {}'.format(err))
+            except Exception:
+                pass
+        return options
+
+    def parse_string(self, src):
+        options = {}
+        if src:
+            is_old_style = (isinstance(src, bytes) and src.startswith(b'#')) or (isinstance(src, unicode_type) and src.startswith(u'#'))
+            if is_old_style:
+                options = self.parse_old_style(src)
+            else:
+                try:
+                    options = json_loads(src)
+                    if not isinstance(options, dict):
+                        raise Exception('options is not a dictionary')
+                except Exception as err:
+                    try:
+                        print('Failed to parse options string with error: {}'.format(err))
+                    except Exception:
+                        pass
         opts = OptionValues()
         for pref in self.preferences:
             val = options.get(pref.name, pref.default)
@@ -216,33 +295,9 @@ class OptionSet(object):
 
         return opts
 
-    def render_group(self, name, desc, opts):
-        prefs = [pref for pref in self.preferences if pref.group == name]
-        lines = ['### Begin group: %s'%(name if name else 'DEFAULT')]
-        if desc:
-            lines += map(lambda x: '# '+x, desc.split('\n'))
-        lines.append(' ')
-        for pref in prefs:
-            lines.append('# '+pref.name.replace('_', ' '))
-            if pref.help:
-                lines += map(lambda x: '# ' + x, pref.help.split('\n'))
-            lines.append('%s = %s'%(pref.name,
-                            self.serialize_opt(getattr(opts, pref.name, pref.default))))
-            lines.append(' ')
-        return '\n'.join(lines)
-
-    def serialize_opt(self, val):
-        if val is val is True or val is False or val is None or \
-           isinstance(val, (int, float, long, basestring)):
-            return repr(val)
-        pickle = cPickle.dumps(val, -1)
-        return 'cPickle.loads(%s)'%repr(pickle)
-
-    def serialize(self, opts):
-        src = '# %s\n\n'%(self.description.replace('\n', '\n# '))
-        groups = [self.render_group(name, self.groups.get(name, ''), opts)
-                                        for name in [None] + self.group_list]
-        return src + '\n\n'.join(groups)
+    def serialize(self, opts, ignore_unserializable=False):
+        data = {pref.name: getattr(opts, pref.name, pref.default) for pref in self.preferences}
+        return json_dumps(data, ignore_unserializable=ignore_unserializable)
 
 
 class ConfigInterface(object):
@@ -274,24 +329,40 @@ class Config(ConfigInterface):
 
     def __init__(self, basename, description=''):
         ConfigInterface.__init__(self, description)
-        self.config_file_path = os.path.join(config_dir, basename+'.py')
+        self.filename_base = basename
+
+    @property
+    def config_file_path(self):
+        return os.path.join(config_dir, self.filename_base + '.py.json')
 
     def parse(self):
-        src = ''
-        if os.path.exists(self.config_file_path):
-            with ExclusiveFile(self.config_file_path) as f:
+        src = u''
+        migrate = False
+        path = self.config_file_path
+        if os.path.exists(path):
+            with ExclusiveFile(path) as f:
                 try:
                     src = f.read().decode('utf-8')
                 except ValueError:
-                    print("Failed to parse", self.config_file_path)
+                    print("Failed to parse", path)
                     traceback.print_exc()
-        return self.option_set.parse_string(src)
-
-    def as_string(self):
-        if not os.path.exists(self.config_file_path):
-            return ''
-        with ExclusiveFile(self.config_file_path) as f:
-            return f.read().decode('utf-8')
+        if not src:
+            path = path.rpartition('.')[0]
+            from calibre.utils.shared_file import share_open
+            try:
+                with share_open(path, 'rb') as f:
+                    src = f.read().decode('utf-8')
+            except Exception:
+                pass
+            else:
+                migrate = bool(src)
+        ans = self.option_set.parse_string(src)
+        if migrate:
+            new_src = self.option_set.serialize(ans, ignore_unserializable=True)
+            with ExclusiveFile(self.config_file_path) as f:
+                f.seek(0), f.truncate()
+                f.write(new_src)
+        return ans
 
     def set(self, name, val):
         if not self.option_set.has_option(name):
@@ -302,11 +373,10 @@ class Config(ConfigInterface):
             src = f.read()
             opts = self.option_set.parse_string(src)
             setattr(opts, name, val)
-            footer = self.option_set.get_override_section(src)
-            src = self.option_set.serialize(opts)+ '\n\n' + footer + '\n'
+            src = self.option_set.serialize(opts)
             f.seek(0)
             f.truncate()
-            if isinstance(src, unicode):
+            if isinstance(src, unicode_type):
                 src = src.encode('utf-8')
             f.write(src)
 
@@ -318,7 +388,12 @@ class StringConfig(ConfigInterface):
 
     def __init__(self, src, description=''):
         ConfigInterface.__init__(self, description)
+        self.set_src(src)
+
+    def set_src(self, src):
         self.src = src
+        if isinstance(self.src, bytes):
+            self.src = self.src.decode('utf-8')
 
     def parse(self):
         return self.option_set.parse_string(self.src)
@@ -328,8 +403,7 @@ class StringConfig(ConfigInterface):
             raise ValueError('The option %s is not defined.'%name)
         opts = self.option_set.parse_string(self.src)
         setattr(opts, name, val)
-        footer = self.option_set.get_override_section(self.src)
-        self.src = self.option_set.serialize(opts)+ '\n\n' + footer + '\n'
+        self.set_src(self.option_set.serialize(opts))
 
 
 class ConfigProxy(object):
@@ -450,55 +524,98 @@ def create_global_prefs(conf_obj=None):
 prefs = ConfigProxy(create_global_prefs())
 if prefs['installation_uuid'] is None:
     import uuid
-    prefs['installation_uuid'] = str(uuid.uuid4())
+    prefs['installation_uuid'] = unicode_type(uuid.uuid4())
 
 # Read tweaks
 
 
-def read_raw_tweaks():
+def tweaks_file():
+    return os.path.join(config_dir, u'tweaks.json')
+
+
+def make_unicode(obj):
+    if isinstance(obj, bytes):
+        try:
+            return obj.decode('utf-8')
+        except UnicodeDecodeError:
+            return obj.decode(preferred_encoding, errors='replace')
+    if isinstance(obj, (list, tuple)):
+        return list(map(make_unicode, obj))
+    if isinstance(obj, dict):
+        return {make_unicode(k): make_unicode(v) for k, v in iteritems(obj)}
+    return obj
+
+
+def normalize_tweak(val):
+    if isinstance(val, (list, tuple)):
+        return tuple(map(normalize_tweak, val))
+    if isinstance(val, dict):
+        return {k: normalize_tweak(v) for k, v in iteritems(val)}
+    return val
+
+
+def write_custom_tweaks(tweaks_dict):
     make_config_dir()
-    default_tweaks = P('default_tweaks.py', data=True,
-            allow_user_override=False)
-    tweaks_file = os.path.join(config_dir, 'tweaks.py')
-    if not os.path.exists(tweaks_file):
-        with open(tweaks_file, 'wb') as f:
-            f.write(default_tweaks)
-    with open(tweaks_file, 'rb') as f:
-        return default_tweaks, f.read()
+    tweaks_dict = make_unicode(tweaks_dict)
+    changed_tweaks = {}
+    default_tweaks = exec_tweaks(default_tweaks_raw())
+    for key, cval in iteritems(tweaks_dict):
+        if key in default_tweaks and normalize_tweak(cval) == normalize_tweak(default_tweaks[key]):
+            continue
+        changed_tweaks[key] = cval
+    raw = json_dumps(changed_tweaks)
+    with open(tweaks_file(), 'wb') as f:
+        f.write(raw)
+
+
+def exec_tweaks(path):
+    if isinstance(path, bytes):
+        raw = path
+        fname = '<string>'
+    else:
+        with open(path, 'rb') as f:
+            raw = f.read()
+            fname = f.name
+    code = compile(raw, fname, 'exec')
+    l = {}
+    g = {'__file__': fname}
+    exec(code, g, l)
+    return l
+
+
+def read_custom_tweaks():
+    make_config_dir()
+    tf = tweaks_file()
+    if os.path.exists(tf):
+        with open(tf, 'rb') as f:
+            raw = f.read()
+        return json_loads(raw)
+    old_tweaks_file = tf.rpartition(u'.')[0] + u'.py'
+    ans = {}
+    if os.path.exists(old_tweaks_file):
+        ans = exec_tweaks(old_tweaks_file)
+        ans = make_unicode(ans)
+        write_custom_tweaks(ans)
+    return ans
+
+
+def default_tweaks_raw():
+    return P('default_tweaks.py', data=True, allow_user_override=False)
 
 
 def read_tweaks():
-    default_tweaks, tweaks = read_raw_tweaks()
-    l, g = {}, {}
-    try:
-        exec(tweaks, g, l)
-    except:
-        import traceback
-        print('Failed to load custom tweaks file')
-        traceback.print_exc()
-    dl, dg = {}, {}
-    exec(default_tweaks, dg, dl)
-    dl.update(l)
-    return dl
-
-
-def write_tweaks(raw):
-    make_config_dir()
-    tweaks_file = os.path.join(config_dir, 'tweaks.py')
-    with open(tweaks_file, 'wb') as f:
-        f.write(raw)
+    default_tweaks = exec_tweaks(default_tweaks_raw())
+    default_tweaks.update(read_custom_tweaks())
+    return default_tweaks
 
 
 tweaks = read_tweaks()
 
 
 def reset_tweaks_to_default():
-    default_tweaks = P('default_tweaks.py', data=True,
-            allow_user_override=False)
-    dl, dg = {}, {}
-    exec(default_tweaks, dg, dl)
+    default_tweaks = exec_tweaks(default_tweaks_raw())
     tweaks.clear()
-    tweaks.update(dl)
+    tweaks.update(default_tweaks)
 
 
 class Tweak(object):

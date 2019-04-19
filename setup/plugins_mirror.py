@@ -292,7 +292,7 @@ def get_plugin_info(raw, check_for_qt5=False):
             metadata = names[inits[0]]
         else:
             # Legacy plugin
-            for name, val in names.iteritems():
+            for name, val in names.items():
                 if name.endswith('plugin.py'):
                     metadata = val
                     break
@@ -331,7 +331,7 @@ def update_plugin_from_entry(plugin, entry):
 
 
 def fetch_plugin(old_index, entry):
-    lm_map = {plugin['thread_id']:plugin for plugin in old_index.itervalues()}
+    lm_map = {plugin['thread_id']:plugin for plugin in old_index.values()}
     raw = read(entry.url)
     url, name = parse_plugin_zip_url(raw)
     if url is None:
@@ -373,10 +373,10 @@ def parallel_fetch(old_index, entry):
 
 
 def log(*args, **kwargs):
-    print (*args, **kwargs)
+    print(*args, **kwargs)
     with open('log', 'a') as f:
         kwargs['file'] = f
-        print (*args, **kwargs)
+        print(*args, **kwargs)
 
 
 def atomic_write(raw, name):
@@ -403,7 +403,7 @@ def fetch_plugins(old_index):
             log('Failed to get plugin', entry.name, 'at', datetime.utcnow().isoformat(), 'with error:')
             log(plugin)
     # Move staged files
-    for plugin in ans.itervalues():
+    for plugin in ans.values():
         if plugin['file'].startswith('staging_'):
             src = plugin['file']
             plugin['file'] = src.partition('_')[-1]
@@ -411,7 +411,7 @@ def fetch_plugins(old_index):
     raw = bz2.compress(json.dumps(ans, sort_keys=True, indent=4, separators=(',', ': ')))
     atomic_write(raw, PLUGINS)
     # Cleanup any extra .zip files
-    all_plugin_files = {p['file'] for p in ans.itervalues()}
+    all_plugin_files = {p['file'] for p in ans.values()}
     extra = set(glob.glob('*.zip')) - all_plugin_files
     for x in extra:
         os.unlink(x)
@@ -498,7 +498,7 @@ h1 { text-align: center }
         name, count = x
         return '<tr><td>%s</td><td>%s</td></tr>\n' % (escape(name), count)
 
-    pstats = map(plugin_stats, sorted(stats.iteritems(), reverse=True, key=lambda x:x[1]))
+    pstats = map(plugin_stats, sorted(stats.items(), reverse=True, key=lambda x:x[1]))
     stats = '''\
 <!DOCTYPE html>
 <html>
@@ -568,8 +568,11 @@ def update_stats():
         if m is not None:
             plugin = m.group(1).decode('utf-8')
             stats[plugin] = stats.get(plugin, 0) + 1
+    data = json.dumps(stats, indent=2)
+    if not isinstance(data, bytes):
+        data = data.encode('utf-8')
     with open('stats.json', 'wb') as f:
-        json.dump(stats, f, indent=2)
+        f.write(data)
     return stats
 
 
@@ -681,7 +684,7 @@ def test_parse():  # {{{
     new_entries = tuple(parse_index(raw))
     for i, entry in enumerate(old_entries):
         if entry != new_entries[i]:
-            print ('The new entry: %s != %s' % (new_entries[i], entry))
+            print('The new entry: %s != %s' % (new_entries[i], entry))
             raise SystemExit(1)
     pool = ThreadPool(processes=20)
     urls = [e.url for e in new_entries]
@@ -698,7 +701,7 @@ def test_parse():  # {{{
                 break
         new_url, aname = parse_plugin_zip_url(raw)
         if new_url != full_url:
-            print ('new url (%s): %s != %s for plugin at: %s' % (aname, new_url, full_url, url))
+            print('new url (%s): %s != %s for plugin at: %s' % (aname, new_url, full_url, url))
             raise SystemExit(1)
 
 # }}}

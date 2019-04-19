@@ -1,23 +1,29 @@
 #!/usr/bin/env python2
-from __future__ import with_statement
-from __future__ import print_function
+from __future__ import print_function, with_statement
+
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
 '''Read meta information from epub files'''
 
-import os, re, posixpath
-from cStringIO import StringIO
+
+import io
+import os
+import posixpath
+import re
 from contextlib import closing
 
-from calibre.utils.zipfile import ZipFile, BadZipfile, safe_replace
-from calibre.utils.localunzip import LocalZipFile
-from calibre.ebooks.BeautifulSoup import BeautifulStoneSoup
-from calibre.ebooks.metadata.opf import get_metadata as get_metadata_from_opf, set_metadata as set_metadata_opf
-from calibre.ebooks.metadata.opf2 import OPF
-from calibre.ptempfile import TemporaryDirectory
+from lxml import etree
+
 from calibre import CurrentDir, walk
 from calibre.constants import isosx
+from calibre.ebooks.metadata.opf import (
+    get_metadata as get_metadata_from_opf, set_metadata as set_metadata_opf
+)
+from calibre.ebooks.metadata.opf2 import OPF
+from calibre.ptempfile import TemporaryDirectory
+from calibre.utils.localunzip import LocalZipFile
+from calibre.utils.zipfile import BadZipfile, ZipFile, safe_replace
 
 
 class EPubException(Exception):
@@ -37,20 +43,17 @@ class Container(dict):
     def __init__(self, stream=None):
         if not stream:
             return
-        soup = BeautifulStoneSoup(stream.read())
-        container = soup.find(name=re.compile(r'container$', re.I))
-        if not container:
-            raise OCFException("<container> element missing")
+        container = etree.fromstring(stream.read())
         if container.get('version', None) != '1.0':
             raise EPubException("unsupported version of OCF")
-        rootfiles = container.find(re.compile(r'rootfiles$', re.I))
+        rootfiles = container.xpath('./*[local-name()="rootfiles"]')
         if not rootfiles:
             raise EPubException("<rootfiles/> element missing")
-        for rootfile in rootfiles.findAll(re.compile(r'rootfile$', re.I)):
-            try:
-                self[rootfile['media-type']] = rootfile['full-path']
-            except KeyError:
+        for rootfile in rootfiles[0].xpath('./*[local-name()="rootfile"]'):
+            mt, fp = rootfile.get('media-type'), rootfile.get('full-path')
+            if not mt or not fp:
                 raise EPubException("<rootfile/> element malformed")
+            self[mt] = fp
 
 
 class OCF(object):
@@ -89,11 +92,11 @@ class OCFReader(OCF):
 
     def __init__(self):
         try:
-            mimetype = self.open('mimetype').read().rstrip()
+            mimetype = self.open('mimetype').read().decode('utf-8').rstrip()
             if mimetype != OCF.MIMETYPE:
                 print('WARNING: Invalid mimetype declaration', mimetype)
         except:
-            print('WARNING: Epub doesn\'t contain a mimetype declaration')
+            print('WARNING: Epub doesn\'t contain a valid mimetype declaration')
 
         try:
             with closing(self.open(OCF.CONTAINER_PATH)) as f:
@@ -151,7 +154,7 @@ class OCFZipReader(OCFReader):
     def open(self, name, mode='r'):
         if isinstance(self.archive, LocalZipFile):
             return self.archive.open(name)
-        return StringIO(self.archive.read(name))
+        return io.BytesIO(self.archive.read(name))
 
     def read_bytes(self, name):
         return self.archive.read(name)
@@ -324,5 +327,3 @@ def set_metadata(stream, mi, apply_null=False, update_timestamp=False, force_ide
             os.remove(replacements[cpath].name)
     except:
         pass
-
-

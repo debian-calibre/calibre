@@ -15,6 +15,7 @@ from functools import partial
 from calibre.ebooks.htmlz.oeb2html import OEB2HTML
 from calibre.ebooks.oeb.base import XHTML, XHTML_NS, barename, namespace, rewrite_links
 from calibre.ebooks.oeb.stylizer import Stylizer
+from polyglot.builtins import unicode_type, string_or_bytes
 
 
 class MarkdownMLizer(OEB2HTML):
@@ -76,8 +77,8 @@ class MarkdownMLizer(OEB2HTML):
         text = re.sub('(?msu)\n{7,}', '\n' * 6, text)
 
         # Remove blank lines at beginning and end of document.
-        text = re.sub('^\s*', '', text)
-        text = re.sub('\s*$', '\n\n', text)
+        text = re.sub(r'^\s*', '', text)
+        text = re.sub(r'\s*$', '\n\n', text)
 
         return text
 
@@ -110,10 +111,10 @@ class MarkdownMLizer(OEB2HTML):
         '''
 
         # We can only processes tags. If there isn't a tag return any text.
-        if not isinstance(elem.tag, basestring) \
+        if not isinstance(elem.tag, string_or_bytes) \
            or namespace(elem.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, basestring) and namespace(p.tag) == XHTML_NS \
+            if p is not None and isinstance(p.tag, string_or_bytes) and namespace(p.tag) == XHTML_NS \
                     and elem.tail:
                 return [elem.tail]
             return ['']
@@ -225,7 +226,7 @@ class MarkdownMLizer(OEB2HTML):
                 text.append('+ ')
             elif li['name'] == 'ol':
                 li['num'] += 1
-                text.append(unicode(li['num']) + '. ')
+                text.append(unicode_type(li['num']) + '. ')
 
         # Process tags that contain text.
         if hasattr(elem, 'text') and elem.text:

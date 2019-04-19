@@ -9,7 +9,10 @@ __docformat__ = 'restructuredtext en'
 
 import time, re
 from threading import Thread
-from Queue import Queue, Empty
+try:
+    from queue import Empty, Queue
+except ImportError:
+    from Queue import Empty, Queue
 
 from calibre import as_unicode, random_user_agent
 from calibre.ebooks.metadata import check_isbn
@@ -31,7 +34,7 @@ def parse_html(raw):
 
 def astext(node):
     from lxml import etree
-    return etree.tostring(node, method='text', encoding=unicode,
+    return etree.tostring(node, method='text', encoding='unicode',
                           with_tail=False).strip()
 
 
@@ -110,7 +113,7 @@ class Worker(Thread):  # {{{
         for a in desc.xpath('descendant::a[@href]'):
             del a.attrib['href']
             a.tag = 'span'
-        desc = etree.tostring(desc, method='html', encoding=unicode).strip()
+        desc = etree.tostring(desc, method='html', encoding='unicode').strip()
 
         # remove all attributes from tags
         desc = re.sub(r'<([a-zA-Z0-9]+)\s[^>]+>', r'<\1>', desc)
@@ -160,7 +163,7 @@ def get_basic_data(browser, log, *skus):
             tags = []
         rating = 0
         for bar in row.xpath('descendant::*[contains(@class, "bgdColorCommunity")]/@style'):
-            m = re.search('width: (\d+)px;.*max-width: (\d+)px', bar)
+            m = re.search(r'width: (\d+)px;.*max-width: (\d+)px', bar)
             if m is not None:
                 rating = float(m.group(1)) / float(m.group(2))
                 break
@@ -231,7 +234,10 @@ class Edelweiss(Source):
     # }}}
 
     def create_query(self, log, title=None, authors=None, identifiers={}):
-        from urllib import urlencode
+        try:
+            from urllib.parse import urlencode
+        except ImportError:
+            from urllib import urlencode
         import time
         BASE_URL = ('https://www.edelweiss.plus/GetTreelineControl.aspx?'
         'controlName=/uc/listviews/controls/ListView_data.ascx&itemID=0&resultType=32&dashboardType=8&itemType=1&dataType=products&keywordSearch&')
@@ -283,7 +289,7 @@ class Edelweiss(Source):
             except Exception as e:
                 log.exception('Failed to make identify query: %r'%query)
                 return as_unicode(e)
-            items = re.search('window[.]items\s*=\s*(.+?);', raw)
+            items = re.search(r'window[.]items\s*=\s*(.+?);', raw)
             if items is None:
                 log.error('Failed to get list of matching items')
                 log.debug('Response text:')

@@ -5,11 +5,10 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
-from base64 import standard_b64decode
 from functools import partial
 from io import BytesIO
 
-from calibre import as_unicode, sanitize_file_name_unicode
+from calibre import as_unicode, sanitize_file_name
 from calibre.db.cli import module_for_cmd
 from calibre.ebooks.metadata.meta import get_metadata
 from calibre.srv.changes import books_added, books_deleted, metadata
@@ -19,6 +18,8 @@ from calibre.srv.routes import endpoint, json, msgpack_or_json
 from calibre.srv.utils import get_db, get_library_data
 from calibre.utils.imghdr import what
 from calibre.utils.serialize import MSGPACK_MIME, json_loads, msgpack_loads
+from polyglot.builtins import iteritems
+from polyglot.binary import from_base64_bytes
 
 receive_data_methods = {'GET', 'POST'}
 
@@ -76,7 +77,7 @@ def cdb_add_book(ctx, rd, job_id, add_duplicates, filename, library_id):
         raise HTTPForbidden('Cannot use the add book interface with a user who has per library restrictions')
     if not filename:
         raise HTTPBadRequest('An empty filename is not allowed')
-    sfilename = sanitize_file_name_unicode(filename)
+    sfilename = sanitize_file_name(filename)
     fmt = os.path.splitext(sfilename)[1]
     fmt = fmt[1:] if fmt else None
     if not fmt:
@@ -159,7 +160,7 @@ def cdb_set_fields(ctx, rd, book_id, library_id):
     if cdata is not False:
         if cdata is not None:
             try:
-                cdata = standard_b64decode(cdata.split(',', 1)[-1].encode('ascii'))
+                cdata = from_base64_bytes(cdata.split(',', 1)[-1])
             except Exception:
                 raise HTTPBadRequest('Cover data is not valid base64 encoded data')
             try:
@@ -170,7 +171,7 @@ def cdb_set_fields(ctx, rd, book_id, library_id):
                 raise HTTPBadRequest('Cover data must be either JPEG or PNG')
         dirtied |= db.set_cover({book_id: cdata})
 
-    for field, value in changes.iteritems():
+    for field, value in iteritems(changes):
         dirtied |= db.set_field(field, {book_id: value})
     ctx.notify_changes(db.backend.library_path, metadata(dirtied))
     all_ids = dirtied if all_dirtied else (dirtied & loaded_book_ids)

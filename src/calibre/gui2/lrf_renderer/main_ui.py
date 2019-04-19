@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.ui'
 #
-# Created by: PyQt5 UI code generator 5.8
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -40,7 +41,6 @@ class Ui_MainWindow(object):
         self.bar_page = QtWidgets.QWidget()
         self.bar_page.setObjectName("bar_page")
         self.vboxlayout1 = QtWidgets.QVBoxLayout(self.bar_page)
-        self.vboxlayout1.setContentsMargins(0, 0, 0, 0)
         self.vboxlayout1.setObjectName("vboxlayout1")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.vboxlayout1.addItem(spacerItem)
@@ -132,5 +132,6 @@ class Ui_MainWindow(object):
         self.action_open_ebook.setText(_("Open e-book"))
         self.action_configure.setText(_("Configure"))
 
-from bookview import BookView
+
+from calibre.gui2.lrf_renderer.bookview import BookView
 

@@ -18,6 +18,7 @@ from calibre.utils.zipfile import ZipFile
 from calibre import (extract, walk, isbytestring, filesystem_encoding,
         get_types_map)
 from calibre.constants import __version__
+from polyglot.builtins import unicode_type, string_or_bytes
 
 DEBUG_README=u'''
 This debug directory contains snapshots of the e-book as it passes through the
@@ -794,7 +795,7 @@ OptionRecommendation(name='search_replace',
     def unarchive(self, path, tdir):
         extract(path, tdir)
         files = list(walk(tdir))
-        files = [f if isinstance(f, unicode) else f.decode(filesystem_encoding)
+        files = [f if isinstance(f, unicode_type) else f.decode(filesystem_encoding)
                 for f in files]
         from calibre.customize.ui import available_input_formats
         fmts = set(available_input_formats())
@@ -820,7 +821,7 @@ OptionRecommendation(name='search_replace',
         if not html_files:
             raise ValueError(_('Could not find an e-book inside the archive'))
         html_files = [(f, os.stat(f).st_size) for f in html_files]
-        html_files.sort(cmp=lambda x, y: cmp(x[1], y[1]))
+        html_files.sort(key=lambda x: x[1])
         html_files = [f[0] for f in html_files]
         for q in ('toc', 'index'):
             for f in html_files:
@@ -915,19 +916,19 @@ OptionRecommendation(name='search_replace',
                     try:
                         val = parse_date(val, assume_utc=x=='timestamp')
                     except:
-                        self.log.exception(_('Failed to parse date/time') + ' ' + unicode(val))
+                        self.log.exception(_('Failed to parse date/time') + ' ' + unicode_type(val))
                         continue
                 setattr(mi, x, val)
 
     def download_cover(self, url):
         from calibre import browser
         from PIL import Image
-        from cStringIO import StringIO
+        import io
         from calibre.ptempfile import PersistentTemporaryFile
         self.log('Downloading cover from %r'%url)
         br = browser()
         raw = br.open_novisit(url).read()
-        buf = StringIO(raw)
+        buf = io.BytesIO(raw)
         pt = PersistentTemporaryFile('.jpg')
         pt.close()
         img = Image.open(buf)
@@ -1021,7 +1022,7 @@ OptionRecommendation(name='search_replace',
 
     def dump_input(self, ret, output_dir):
         out_dir = os.path.join(self.opts.debug_pipeline, 'input')
-        if isinstance(ret, basestring):
+        if isinstance(ret, string_or_bytes):
             shutil.copytree(output_dir, out_dir)
         else:
             if not os.path.exists(out_dir):
@@ -1213,7 +1214,7 @@ OptionRecommendation(name='search_replace',
         transform_css_rules = ()
         if self.opts.transform_css_rules:
             transform_css_rules = self.opts.transform_css_rules
-            if isinstance(transform_css_rules, basestring):
+            if isinstance(transform_css_rules, string_or_bytes):
                 transform_css_rules = json.loads(transform_css_rules)
         flattener = CSSFlattener(fbase=fbase, fkey=fkey,
                 lineh=line_height,

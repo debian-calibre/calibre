@@ -22,7 +22,9 @@ from __future__ import (unicode_literals, division, absolute_import,
 import os, stat
 import os.path as op
 from datetime import datetime
-from urllib import quote
+
+from polyglot.builtins import unicode_type
+from polyglot.urllib import quote
 
 FILES_DIR = 'files'
 INFO_DIR = 'info'
@@ -38,9 +40,9 @@ TOPDIR_FALLBACK = '.Trash-%s'%uid
 
 
 def uniquote(raw):
-    if isinstance(raw, unicode):
+    if isinstance(raw, unicode_type):
         raw = raw.encode('utf-8')
-    return quote(raw).decode('utf-8')
+    return unicode_type(quote(raw))
 
 
 def is_parent(parent, path):
@@ -90,7 +92,10 @@ def trash_move(src, dst, topdir=None):
 
     os.rename(src, op.join(filespath, destname))
     with open(op.join(infopath, destname + INFO_SUFFIX), 'wb') as f:
-        f.write(info_for(src, topdir))
+        data = info_for(src, topdir)
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
+        f.write(data)
 
 
 def find_mount_point(path):

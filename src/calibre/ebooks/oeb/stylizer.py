@@ -8,7 +8,8 @@ from __future__ import with_statement
 __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
 
-import os, re, logging, copy, unicodedata
+import os, re, logging, copy, unicodedata, numbers
+from operator import itemgetter
 from weakref import WeakKeyDictionary
 from xml.dom import SyntaxErr as CSSSyntaxError
 from css_parser.css import (CSSStyleRule, CSSPageRule, CSSFontFaceRule,
@@ -20,6 +21,7 @@ from calibre.ebooks import unit_convert
 from calibre.ebooks.oeb.base import XHTML, XHTML_NS, CSS_MIME, OEB_STYLES, xpath, urlnormalize
 from calibre.ebooks.oeb.normalize_css import DEFAULTS, normalizers
 from css_selectors import Select, SelectorError, INAPPROPRIATE_PSEUDO_CLASSES
+from polyglot.builtins import iteritems, unicode_type, filter
 from tinycss.media3 import CSSMedia3Parser
 
 css_parser_log.setLevel(logging.WARN)
@@ -214,7 +216,7 @@ class Stylizer(object):
                 else:
                     rules.extend(self.flatten_rule(rule, href, index, is_user_agent_sheet=sheet_index==0))
                     index = index + 1
-        rules.sort()
+        rules.sort(key=itemgetter(0))  # sort by specificity
         self.rules = rules
         self._styles = {}
         pseudo_pat = re.compile(u':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
@@ -237,7 +239,7 @@ class Stylizer(object):
                         for x in elem.iter('*'):
                             if x.text:
                                 punctuation_chars = []
-                                text = unicode(x.text)
+                                text = unicode_type(x.text)
                                 while text:
                                     category = unicodedata.category(text[0])
                                     if category[0] not in {'P', 'Z'}:
@@ -526,7 +528,7 @@ class Style(object):
                     result = size
             else:
                 result = self._unit_convert(value, base=base, font=base)
-                if not isinstance(result, (int, float, long)):
+                if not isinstance(result, numbers.Number):
                     return base
                 if result < 0:
                     result = normalize_fontsize("smaller", base)
@@ -561,20 +563,20 @@ class Style(object):
                 ans = self._unit_convert(str(img_size) + 'px', base=base)
             else:
                 x = self._unit_convert(x, base=base)
-                if isinstance(x, (float, int, long)):
+                if isinstance(x, numbers.Number):
                     ans = x
         if ans is None:
             x = self._element.get(attr)
             if x is not None:
                 x = self._unit_convert(x + 'px', base=base)
-                if isinstance(x, (float, int, long)):
+                if isinstance(x, numbers.Number):
                     ans = x
         if ans is None:
             ans = self._unit_convert(str(img_size) + 'px', base=base)
         maa = self._style.get('max-' + attr)
         if maa is not None:
             x = self._unit_convert(maa, base=base)
-            if isinstance(x, (int, float, long)) and (ans is None or x < ans):
+            if isinstance(x, numbers.Number) and (ans is None or x < ans):
                 ans = x
         return ans
 
@@ -606,12 +608,12 @@ class Style(object):
                 result = base
             else:
                 result = self._unit_convert(width, base=base)
-            if isinstance(result, (unicode, str, bytes)):
+            if isinstance(result, (unicode_type, bytes)):
                 result = self._profile.width
             self._width = result
             if 'max-width' in self._style:
                 result = self._unit_convert(self._style['max-width'], base=base)
-                if isinstance(result, (unicode, str, bytes)):
+                if isinstance(result, (unicode_type, bytes)):
                     result = self._width
                 if result < self._width:
                     self._width = result
@@ -643,12 +645,12 @@ class Style(object):
                 result = base
             else:
                 result = self._unit_convert(height, base=base)
-            if isinstance(result, (unicode, str, bytes)):
+            if isinstance(result, (unicode_type, bytes)):
                 result = self._profile.height
             self._height = result
             if 'max-height' in self._style:
                 result = self._unit_convert(self._style['max-height'], base=base)
-                if isinstance(result, (unicode, str, bytes)):
+                if isinstance(result, (unicode_type, bytes)):
                     result = self._height
                 if result < self._height:
                     self._height = result
@@ -752,7 +754,7 @@ class Style(object):
             self._get('padding-right'), base=self.parent_width)
 
     def __str__(self):
-        items = sorted(self._style.iteritems())
+        items = sorted(iteritems(self._style))
         return '; '.join("%s: %s" % (key, val) for key, val in items)
 
     def cssdict(self):
@@ -761,12 +763,12 @@ class Style(object):
     def pseudo_classes(self, filter_css):
         if filter_css:
             css = copy.deepcopy(self._pseudo_classes)
-            for psel, cssdict in css.iteritems():
+            for psel, cssdict in iteritems(css):
                 for k in filter_css:
                     cssdict.pop(k, None)
         else:
             css = self._pseudo_classes
-        return {k:v for k, v in css.iteritems() if v}
+        return {k:v for k, v in iteritems(css) if v}
 
     @property
     def is_hidden(self):

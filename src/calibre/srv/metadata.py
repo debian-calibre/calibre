@@ -10,7 +10,6 @@ from collections import namedtuple
 from datetime import datetime, time
 from functools import partial
 from threading import Lock
-from urllib import quote
 
 from calibre.constants import config_dir
 from calibre.db.categories import Tag
@@ -23,6 +22,8 @@ from calibre.utils.icu import collation_order
 from calibre.utils.localization import calibre_langcode_to_name
 from calibre.library.comments import comments_to_html, markdown
 from calibre.library.field_metadata import category_icon_map
+from polyglot.builtins import iteritems, itervalues, range, filter
+from polyglot.urllib import quote
 
 IGNORED_FIELDS = frozenset('cover ondevice path marked au_map size'.split())
 
@@ -182,16 +183,16 @@ def icon_map():
             from calibre.gui2 import gprefs
             _icon_map = category_icon_map.copy()
             custom_icons = gprefs.get('tags_browser_category_icons', {})
-            for k, v in custom_icons.iteritems():
+            for k, v in iteritems(custom_icons):
                 if os.access(os.path.join(config_dir, 'tb_icons', v), os.R_OK):
                     _icon_map[k] = '_' + quote(v)
             _icon_map['file_type_icons'] = {
-                k:'mimetypes/%s.png' % v for k, v in EXT_MAP.iteritems()
+                k:'mimetypes/%s.png' % v for k, v in iteritems(EXT_MAP)
             }
         return _icon_map
 
 
-def categories_settings(query, db):
+def categories_settings(query, db, gst_container=GroupedSearchTerms):
     dont_collapse = frozenset(query.get('dont_collapse', '').split(','))
     partition_method = query.get('partition_method', 'first letter')
     if partition_method not in {'first letter', 'disable', 'partition'}:
@@ -213,7 +214,7 @@ def categories_settings(query, db):
     hidden_categories = frozenset(db.pref('tag_browser_hidden_categories', set()))
     return CategoriesSettings(
         dont_collapse, collapse_model, collapse_at, sort_by, template,
-        using_hierarchy, GroupedSearchTerms(db.pref('grouped_search_terms', {})),
+        using_hierarchy, gst_container(db.pref('grouped_search_terms', {})),
         hidden_categories, query.get('hide_empty_categories') == 'yes')
 
 
@@ -303,7 +304,7 @@ categories_with_ratings = {'authors', 'series', 'publisher', 'tags'}
 
 
 def get_name_components(name):
-    components = filter(None, [t.strip() for t in name.split('.')])
+    components = list(filter(None, [t.strip() for t in name.split('.')]))
     if not components or '.'.join(components) != name:
         components = [name]
     return components
@@ -511,7 +512,7 @@ def fillout_tree(root, items, node_id_map, category_nodes, category_data, field_
                 count += 1
         item['avg_rating'] = float(total)/count if count else 0
 
-    for item_id, item in tag_map.itervalues():
+    for item_id, item in itervalues(tag_map):
         id_len = len(item.pop('id_set', ()))
         if id_len:
             item['count'] = id_len
@@ -532,9 +533,9 @@ def render_categories(opts, db, category_data):
     if opts.hidden_categories:
         # We have to remove hidden categories after all processing is done as
         # items from a hidden category could be in a user category
-        root['children'] = filter((lambda child:items[child['id']]['category'] not in opts.hidden_categories), root['children'])
+        root['children'] = list(filter((lambda child:items[child['id']]['category'] not in opts.hidden_categories), root['children']))
     if opts.hide_empty_categories:
-        root['children'] = filter((lambda child:items[child['id']]['count'] > 0), root['children'])
+        root['children'] = list(filter((lambda child:items[child['id']]['count'] > 0), root['children']))
     return {'root':root, 'item_map': items}
 
 
@@ -573,7 +574,7 @@ def dump_tags_model(m):
     def dump_node(index, level=-1):
         if level > -1:
             ans.append(indent*level + index.data(Qt.UserRole).dump_data())
-        for i in xrange(m.rowCount(index)):
+        for i in range(m.rowCount(index)):
             dump_node(m.index(i, 0, index), level + 1)
         if level == 0:
             ans.append('')

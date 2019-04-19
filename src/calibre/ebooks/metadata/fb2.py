@@ -8,7 +8,6 @@ __copyright__ = '2011, Roman Mukhin <ramses_ru at hotmail.com>, '\
 import os, random
 from functools import partial
 from string import ascii_letters, digits
-from base64 import b64encode
 
 from lxml import etree
 
@@ -18,6 +17,8 @@ from calibre.utils.imghdr import identify
 from calibre import guess_type, guess_all_extensions, prints, force_unicode
 from calibre.ebooks.metadata import MetaInformation, check_isbn
 from calibre.ebooks.chardet import xml_to_unicode
+from polyglot.builtins import unicode_type
+from polyglot.binary import as_base64_unicode
 
 
 NAMESPACES = {
@@ -26,7 +27,7 @@ NAMESPACES = {
     'xlink' :   'http://www.w3.org/1999/xlink'
 }
 
-tostring = partial(etree.tostring, method='text', encoding=unicode)
+tostring = partial(etree.tostring, method='text', encoding=unicode_type)
 
 
 def XLINK(tag):
@@ -112,7 +113,7 @@ def get_metadata(stream):
 
     # fallback for book_title
     if book_title:
-        book_title = unicode(book_title)
+        book_title = unicode_type(book_title)
     else:
         book_title = force_unicode(os.path.splitext(
             os.path.basename(getattr(stream, 'name',
@@ -236,7 +237,7 @@ def _parse_cover_data(root, imgid, mi, ctx):
             pic_data = elm_binary[0].text
             if pic_data:
                 cdata = base64_decode(pic_data.strip())
-                fmt = identify(bytes(cdata))[0]
+                fmt = identify(cdata)[0]
                 mi.cover_data = (fmt, cdata)
         else:
             prints("WARNING: Unsupported coverpage mime-type '%s' (id=#%s)" % (mimetype, imgid))
@@ -249,7 +250,7 @@ def _parse_tags(root, mi, ctx):
         # -- i18n Translations-- ?
         tags = ctx.XPath('//fb:%s/fb:genre/text()' % genre_sec)(root)
         if tags:
-            mi.tags = list(map(unicode, tags))
+            mi.tags = list(map(unicode_type, tags))
             break
 
 
@@ -301,7 +302,7 @@ def _parse_pubdate(root, mi, ctx):
     year = ctx.XPath('number(//fb:publish-info/fb:year/text())')(root)
     if float.is_integer(year):
         # only year is available, so use 2nd of June
-        mi.pubdate = parse_only_date(type(u'')(int(year)))
+        mi.pubdate = parse_only_date(unicode_type(int(year)))
 
 
 def _parse_language(root, mi, ctx):
@@ -382,7 +383,7 @@ def _rnd_pic_file_name(prefix='calibre_cover_', size=32, ext='jpg'):
 
 def _encode_into_jpeg(data):
     data = save_cover_data_to(data)
-    return b64encode(data)
+    return as_base64_unicode(data)
 
 
 def _set_cover(title_info, mi, ctx):
@@ -447,7 +448,7 @@ def ensure_namespace(doc):
                 break
     if bare_tags:
         import re
-        raw = etree.tostring(doc, encoding=unicode)
+        raw = etree.tostring(doc, encoding=unicode_type)
         raw = re.sub(r'''<(description|body)\s+xmlns=['"]['"]>''', r'<\1>', raw)
         doc = etree.fromstring(raw)
     return doc

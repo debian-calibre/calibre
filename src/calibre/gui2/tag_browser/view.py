@@ -7,9 +7,8 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import cPickle, os, re
+import os, re
 from functools import partial
-from itertools import izip
 
 from PyQt5.Qt import (
     QStyledItemDelegate, Qt, QTreeView, pyqtSignal, QSize, QIcon, QApplication,
@@ -17,13 +16,15 @@ from PyQt5.Qt import (
     QLinearGradient, QPalette, QColor, QPen, QBrush, QFont
 )
 
-from calibre import sanitize_file_name_unicode
+from calibre import sanitize_file_name
 from calibre.constants import config_dir
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2.tag_browser.model import (TagTreeItem, TAG_SEARCH_STATES,
         TagsModel, DRAG_IMAGE_ROLE, COUNT_ROLE)
 from calibre.gui2 import config, gprefs, choose_files, pixmap_to_data, rating_font, empty_index
 from calibre.utils.icu import sort_key
+from calibre.utils.serialize import json_loads
+from polyglot.builtins import unicode_type, range, zip
 
 
 class TagDelegate(QStyledItemDelegate):  # {{{
@@ -63,7 +64,7 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         text = index.data(Qt.DisplayRole)
         hover = option.state & style.State_MouseOver
         if hover or gprefs['tag_browser_show_counts']:
-            count = unicode(index.data(COUNT_ROLE))
+            count = unicode_type(index.data(COUNT_ROLE))
             width = painter.fontMetrics().boundingRect(count).width()
             r = QRect(tr)
             r.setRight(r.right() - 1), r.setLeft(r.right() - width - 4)
@@ -227,7 +228,7 @@ class TagsView(QTreeView):  # {{{
                     expanded_categories.append(category.category_key)
             states = [c.tag.state for c in category.child_tags()]
             names = [(c.tag.name, c.tag.category) for c in category.child_tags()]
-            state_map[category.category_key] = dict(izip(names, states))
+            state_map[category.category_key] = dict(zip(names, states))
         return expanded_categories, state_map
 
     def reread_collapse_parameters(self):
@@ -374,10 +375,10 @@ class TagsView(QTreeView):  # {{{
                         d = os.path.join(config_dir, 'tb_icons')
                         if not os.path.exists(d):
                             os.makedirs(d)
-                        with open(os.path.join(d, 'icon_' + sanitize_file_name_unicode(key)+'.png'), 'wb') as f:
+                        with open(os.path.join(d, 'icon_' + sanitize_file_name(key)+'.png'), 'wb') as f:
                             f.write(pixmap_to_data(p, format='PNG'))
                             path = os.path.basename(f.name)
-                        self._model.set_custom_category_icon(key, unicode(path))
+                        self._model.set_custom_category_icon(key, unicode_type(path))
                         self.recount()
                 except:
                     import traceback
@@ -480,12 +481,15 @@ class TagsView(QTreeView):  # {{{
 
     def show_context_menu(self, point):
         def display_name(tag):
+            ans = tag.name
             if tag.category == 'search':
                 n = tag.name
                 if len(n) > 45:
                     n = n[:45] + '...'
-                return "'" + n + "'"
-            return tag.name
+                ans = "'" + n + "'"
+            if ans:
+                ans = ans.replace('&', '&&')
+            return ans
 
         index = self.indexAt(point)
         self.context_menu = QMenu(self)
@@ -504,7 +508,7 @@ class TagsView(QTreeView):  # {{{
                 if not item.category_key.startswith('@'):
                     while item.parent != self._model.root_item:
                         item = item.parent
-                category = unicode(item.name or '')
+                category = unicode_type(item.name or '')
                 key = item.category_key
                 # Verify that we are working with a field that we know something about
                 if key not in self.db.field_metadata:
@@ -722,7 +726,7 @@ class TagsView(QTreeView):  # {{{
         if not index.isValid():
             return
         self.expand(index)
-        for r in xrange(self.model().rowCount(index)):
+        for r in range(self.model().rowCount(index)):
             self.expand_node_and_descendants(index.child(r, 0))
 
     def collapse_menu_hovered(self, action):
@@ -750,8 +754,8 @@ class TagsView(QTreeView):  # {{{
             if fm_dest['kind'] == 'user':
                 if src_is_tb:
                     if event.dropAction() == Qt.MoveAction:
-                        data = str(event.mimeData().data('application/calibre+from_tag_browser'))
-                        src = cPickle.loads(data)
+                        data = bytes(event.mimeData().data('application/calibre+from_tag_browser'))
+                        src = json_loads(data)
                         for s in src:
                             if s[0] == TagTreeItem.TAG and \
                                     (not s[1].startswith('@') or s[2]):

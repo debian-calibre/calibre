@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "março 08, 2019" "3.40.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "abril 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -77,6 +77,11 @@ Número de falhas de login para banimento.   O número de falhas de login depois
 .TP
 .B \-\-ban\-for
 Banir endereços IP que tem falhas de logins repetidas.      Proíbe temporariamente o acesso a endereços IP que tenham falhas de login repetidas pelo número de minutos especificado. Útil para evitar tentativas de adivinhar senhas. Se definido como zero, nenhum banimento é feito.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,7 +216,7 @@ A porta que escutará por conexões.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Caminho para um arquivo JSON contendo URLs para a função \fB"\fPPesquisar na internet\fB"\fP\&. O jeito mais fácil de criar este arquivo é ir em Preferências\->Compartilhar pela rede\->Pesquisar na internet, criar as URLs e exportá\-las.
 .UNINDENT
 .INDENT 0.0
 .TP

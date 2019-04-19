@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "марта 08, 2019" "3.40.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "апреля 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -81,6 +81,11 @@ calibre\-server [options] [path to library folder...]
 .TP
 .B \-\-ban\-for
 Запретить IP\-адреса с повторными ошибками входа.    Временно запрещает доступ для IP\-адресов с повторными ошибками входа в течение указанного количества минут. Полезно для предотвращения попыток подбора паролей. Если установлено в ноль, запрет не выполняется.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +220,7 @@ Zero\-copy передача файлов для увеличения произ�
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Путь к файлу JSON, содержащему URL\-адреса для функции Поиск в Интернет. Самый простой способ создать такой файл \- перейти в Настройки \-> Обмен через сеть \-> Поиск в Интернет, создать URL\-адреса и экспортировать их.
 .UNINDENT
 .INDENT 0.0
 .TP

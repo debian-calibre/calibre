@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
 '''
 Make strings safe for use as ASCII filenames, while trying to preserve as much
 meaning as possible.
@@ -14,28 +15,28 @@ from calibre.constants import (
     filesystem_encoding, iswindows, plugins, preferred_encoding, isosx
 )
 from calibre.utils.localization import get_udc
+from polyglot.builtins import iteritems, itervalues, unicode_type, range
 
 
 def ascii_text(orig):
     udc = get_udc()
     try:
         ascii = udc.decode(orig)
-    except:
-        if isinstance(orig, unicode):
+    except Exception:
+        if isinstance(orig, unicode_type):
             orig = orig.encode('ascii', 'replace')
-        ascii = orig.decode(preferred_encoding,
-                'replace').encode('ascii', 'replace')
+        ascii = orig.decode(preferred_encoding, 'replace')
+    if isinstance(ascii, bytes):
+        ascii = ascii.decode('ascii', 'replace')
     return ascii
 
 
 def ascii_filename(orig, substitute='_'):
-    ans = []
+    if isinstance(substitute, bytes):
+        substitute = substitute.decode(filesystem_encoding)
     orig = ascii_text(orig).replace('?', '_')
-    for x in orig:
-        if ord(x) < 32:
-            x = substitute
-        ans.append(x)
-    return sanitize_file_name(''.join(ans), substitute=substitute)
+    ans = ''.join(x if ord(x) >= 32 else substitute for x in orig)
+    return sanitize_file_name(ans, substitute=substitute)
 
 
 def shorten_component(s, by_what):
@@ -296,7 +297,7 @@ def windows_hardlink(src, dest):
     try:
         win32file.CreateHardLink(dest, src)
     except pywintypes.error as e:
-        msg = u'Creating hardlink from %s to %s failed: %%s' % (src, dest)
+        msg = 'Creating hardlink from %s to %s failed: %%s' % (src, dest)
         raise OSError(msg % e)
     src_size = os.path.getsize(src)
     # We open and close dest, to ensure its directory entry is updated
@@ -313,7 +314,7 @@ def windows_hardlink(src, dest):
 
     sz = windows_get_size(dest)
     if sz != src_size:
-        msg = u'Creating hardlink from %s to %s failed: %%s' % (src, dest)
+        msg = 'Creating hardlink from %s to %s failed: %%s' % (src, dest)
         raise OSError(msg % ('hardlink size: %d not the same as source size' % sz))
 
 
@@ -322,11 +323,11 @@ def windows_fast_hardlink(src, dest):
     try:
         win32file.CreateHardLink(dest, src)
     except pywintypes.error as e:
-        msg = u'Creating hardlink from %s to %s failed: %%s' % (src, dest)
+        msg = 'Creating hardlink from %s to %s failed: %%s' % (src, dest)
         raise OSError(msg % e)
     ssz, dsz = windows_get_size(src), windows_get_size(dest)
     if ssz != dsz:
-        msg = u'Creating hardlink from %s to %s failed: %%s' % (src, dest)
+        msg = 'Creating hardlink from %s to %s failed: %%s' % (src, dest)
         raise OSError(msg % ('hardlink size: %d not the same as source size: %s' % (dsz, ssz)))
 
 
@@ -368,7 +369,7 @@ class WindowsAtomicFolderMove(object):
         names = os.listdir(path)
         name_to_fileid = {x:windows_get_fileid(os.path.join(path, x)) for x in names}
         fileid_to_names = defaultdict(set)
-        for name, fileid in name_to_fileid.iteritems():
+        for name, fileid in iteritems(name_to_fileid):
             fileid_to_names[fileid].add(name)
 
         for x in names:
@@ -418,16 +419,16 @@ class WindowsAtomicFolderMove(object):
     def copy_path_to(self, path, dest):
         import win32file
         handle = None
-        for p, h in self.handle_map.iteritems():
+        for p, h in iteritems(self.handle_map):
             if samefile_windows(path, p):
                 handle = h
                 break
         if handle is None:
             if os.path.exists(path):
-                raise ValueError(u'The file %r did not exist when this move'
+                raise ValueError('The file %r did not exist when this move'
                         ' operation was started'%path)
             else:
-                raise ValueError(u'The file %r does not exist'%path)
+                raise ValueError('The file %r does not exist'%path)
         try:
             windows_hardlink(path, dest)
             return
@@ -439,7 +440,7 @@ class WindowsAtomicFolderMove(object):
             while True:
                 hr, raw = win32file.ReadFile(handle, 1024*1024)
                 if hr != 0:
-                    raise IOError(hr, u'Error while reading from %r'%path)
+                    raise IOError(hr, 'Error while reading from %r'%path)
                 if not raw:
                     break
                 f.write(raw)
@@ -447,26 +448,26 @@ class WindowsAtomicFolderMove(object):
     def release_file(self, path):
         ' Release the lock on the file pointed to by path. Will also release the lock on any hardlinks to path '
         key = None
-        for p, h in self.handle_map.iteritems():
+        for p, h in iteritems(self.handle_map):
             if samefile_windows(path, p):
                 key = (p, h)
                 break
         if key is not None:
             import win32file
             win32file.CloseHandle(key[1])
-            remove = [f for f, h in self.handle_map.iteritems() if h is key[1]]
+            remove = [f for f, h in iteritems(self.handle_map) if h is key[1]]
             for x in remove:
                 self.handle_map.pop(x)
 
     def close_handles(self):
         import win32file
-        for h in self.handle_map.itervalues():
+        for h in itervalues(self.handle_map):
             win32file.CloseHandle(h)
         self.handle_map = {}
 
     def delete_originals(self):
         import win32file
-        for path in self.handle_map.iterkeys():
+        for path in self.handle_map:
             win32file.DeleteFile(path)
         self.close_handles()
 
@@ -500,7 +501,7 @@ def atomic_rename(oldpath, newpath):
     are on different volumes. If succeeds, guaranteed to be atomic. newpath may
     or may not exist. If it exists, it is replaced. '''
     if iswindows:
-        for i in xrange(10):
+        for i in range(10):
             try:
                 rename_file(oldpath, newpath)
                 break
@@ -549,10 +550,10 @@ if iswindows:
     def expanduser(path):
         if isinstance(path, bytes):
             path = path.decode(filesystem_encoding)
-        if path[:1] != u'~':
+        if path[:1] != '~':
             return path
         i, n = 1, len(path)
-        while i < n and path[i] not in u'/\\':
+        while i < n and path[i] not in '/\\':
             i += 1
         from win32com.shell import shell, shellcon
         userhome = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
@@ -590,7 +591,8 @@ def copyfile(src, dest):
 def get_hardlink_function(src, dest):
     if iswindows:
         import win32file, win32api
-        root = dest[0] + b':'
+        colon = b':' if isinstance(dest, bytes) else ':'
+        root = dest[0] + colon
         try:
             is_suitable = win32file.GetDriveType(root) not in (win32file.DRIVE_REMOTE, win32file.DRIVE_CDROM)
             # See https://msdn.microsoft.com/en-us/library/windows/desktop/aa364993(v=vs.85).aspx

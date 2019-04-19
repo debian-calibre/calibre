@@ -7,8 +7,8 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import hashlib
-from polyglot.builtins import map
+import hashlib, numbers
+from polyglot.builtins import map, iteritems
 
 from PyQt5.Qt import QBuffer, QByteArray, QImage, Qt, QColor, qRgba, QPainter
 
@@ -19,6 +19,7 @@ from calibre.ebooks.pdf.render.common import (
 from calibre.ebooks.pdf.render.fonts import FontManager
 from calibre.ebooks.pdf.render.links import Links
 from calibre.utils.date import utcnow
+from polyglot.builtins import as_unicode
 
 PDFVER = b'%PDF-1.4'  # 1.4 is needed for XMP metadata
 
@@ -56,7 +57,7 @@ class IndirectObjects(object):
 
     def __getitem__(self, o):
         try:
-            return self._map[id(self._list[o] if isinstance(o, int) else o)]
+            return self._map[id(self._list[o] if isinstance(o, numbers.Integral) else o)]
         except (KeyError, IndexError):
             raise KeyError('The object %r was not found'%o)
 
@@ -119,24 +120,24 @@ class Page(Stream):
         r = Dictionary()
         if self.opacities:
             extgs = Dictionary()
-            for opref, name in self.opacities.iteritems():
+            for opref, name in iteritems(self.opacities):
                 extgs[name] = opref
             r['ExtGState'] = extgs
         if self.fonts:
             fonts = Dictionary()
-            for ref, name in self.fonts.iteritems():
+            for ref, name in iteritems(self.fonts):
                 fonts[name] = ref
             r['Font'] = fonts
         if self.xobjects:
             xobjects = Dictionary()
-            for ref, name in self.xobjects.iteritems():
+            for ref, name in iteritems(self.xobjects):
                 xobjects[name] = ref
             r['XObject'] = xobjects
         if self.patterns:
             r['ColorSpace'] = Dictionary({'PCSp':Array(
                 [Name('Pattern'), Name('DeviceRGB')])})
             patterns = Dictionary()
-            for ref, name in self.patterns.iteritems():
+            for ref, name in iteritems(self.patterns):
                 patterns[name] = ref
             r['Pattern'] = patterns
         if r:
@@ -355,7 +356,7 @@ class PDFStream(object):
                 self.current_page.write_line()
             for x in op:
                 self.current_page.write(
-                (fmtnum(x) if isinstance(x, (int, long, float)) else x) + ' ')
+                (fmtnum(x) if isinstance(x, numbers.Number) else x) + ' ')
 
     def draw_path(self, path, stroke=True, fill=False, fill_rule='winding'):
         if not path.ops:
@@ -520,7 +521,7 @@ class PDFStream(object):
         self.objects.pdf_serialize(self.stream)
         self.write_line()
         startxref = self.objects.write_xref(self.stream)
-        file_id = String(self.stream.hashobj.hexdigest().decode('ascii'))
+        file_id = String(as_unicode(self.stream.hashobj.hexdigest()))
         self.write_line('trailer')
         trailer = Dictionary({'Root':self.catalog, 'Size':len(self.objects)+1,
                               'ID':Array([file_id, file_id]), 'Info':inforef})

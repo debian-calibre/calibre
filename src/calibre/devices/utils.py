@@ -11,6 +11,7 @@ import os, time, re
 from functools import partial
 
 from calibre.devices.errors import DeviceError, WrongDestinationError, FreeSpaceError
+from polyglot.builtins import unicode_type
 
 
 def sanity_check(on_card, files, card_prefixes, free_space):
@@ -58,11 +59,11 @@ def build_template_regexp(template):
 
     try:
         template = template.rpartition('/')[2]
-        return re.compile(re.sub('{([^}]*)}', f, template) + '([_\d]*$)')
+        return re.compile(re.sub('{([^}]*)}', f, template) + r'([_\d]*$)')
     except:
         prints(u'Failed to parse template: %r'%template)
         template = u'{title} - {authors}'
-        return re.compile(re.sub('{([^}]*)}', f, template) + '([_\d]*$)')
+        return re.compile(re.sub('{([^}]*)}', f, template) + r'([_\d]*$)')
 
 
 def create_upload_path(mdata, fname, template, sanitize,
@@ -97,7 +98,7 @@ def create_upload_path(mdata, fname, template, sanitize,
     ext = path_type.splitext(fname)[1]
 
     opts = config().parse()
-    if not isinstance(template, unicode):
+    if not isinstance(template, unicode_type):
         template = template.decode('utf-8')
     app_id = str(getattr(mdata, 'application_id', ''))
     id_ = mdata.get('id', fname)

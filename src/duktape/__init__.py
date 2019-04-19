@@ -17,6 +17,7 @@ from polyglot.builtins import reraise
 
 from calibre.constants import iswindows
 from calibre.utils.filenames import atomic_rename
+from polyglot.builtins import error_message
 
 Context_, undefined = dukpy.Context, dukpy.undefined
 
@@ -122,7 +123,7 @@ def readfile(path, enc='utf-8'):
     except UnicodeDecodeError as e:
         return None, '', 'Failed to decode the file: %s with specified encoding: %s' % (path, enc)
     except EnvironmentError as e:
-        return [None, errno.errorcode[e.errno], 'Failed to read from file: %s with error: %s' % (path, e.message or e)]
+        return [None, errno.errorcode[e.errno], 'Failed to read from file: %s with error: %s' % (path, error_message(e) or e)]
 
 
 def atomic_write(name, raw):
@@ -143,7 +144,7 @@ def writefile(path, data, enc='utf-8'):
     except UnicodeEncodeError as e:
         return ['', 'Failed to encode the data for file: %s with specified encoding: %s' % (path, enc)]
     except EnvironmentError as e:
-        return [errno.errorcode[e.errno], 'Failed to write to file: %s with error: %s' % (path, e.message or e)]
+        return [errno.errorcode[e.errno], 'Failed to write to file: %s with error: %s' % (path, error_message(e) or e)]
     return [None, None]
 
 
@@ -201,7 +202,7 @@ class JSError(Exception):
                 if fn:
                     msg = type('')(fn) + ':' + msg
                 Exception.__init__(self, msg)
-                for k, v in e.iteritems():
+                for k, v in e.items():
                     if k != 'message':
                         setattr(self, k, v)
                     else:
@@ -217,7 +218,7 @@ class JSError(Exception):
     def as_dict(self):
         return {
             'name':self.name or undefined,
-            'message': self.js_message or self.message,
+            'message': self.js_message or error_message(self),
             'fileName': self.fileName or undefined,
             'lineNumber': self.lineNumber or undefined,
             'stack': self.stack or undefined
@@ -230,7 +231,7 @@ contexts = {}
 def create_context(base_dirs, *args):
     data = to_python(args[0]) if args else {}
     ctx = Context(base_dirs=base_dirs)
-    for k, val in data.iteritems():
+    for k, val in data.items():
         setattr(ctx.g, k, val)
     key = id(ctx)
     contexts[key] = ctx
@@ -280,7 +281,7 @@ class Context(object):
         if (!String.prototype.trim) {
             (function() {
                 // Make sure we trim BOM and NBSP
-                var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+                var rtrim = /^[\\s\uFEFF\xA0]+|[\\s\uFEFF\xA0]+$/g;
                 String.prototype.trim = function() {
                 return this.replace(rtrim, '');
                 };
@@ -289,7 +290,7 @@ class Context(object):
         if (!String.prototype.trimLeft) {
             (function() {
                 // Make sure we trim BOM and NBSP
-                var rtrim = /^[\s\uFEFF\xA0]+/g;
+                var rtrim = /^[\\s\uFEFF\xA0]+/g;
                 String.prototype.trimLeft = function() {
                 return this.replace(rtrim, '');
                 };
@@ -298,7 +299,7 @@ class Context(object):
         if (!String.prototype.trimRight) {
             (function() {
                 // Make sure we trim BOM and NBSP
-                var rtrim = /[\s\uFEFF\xA0]+$/g;
+                var rtrim = /[\\s\uFEFF\xA0]+$/g;
                 String.prototype.trimRight = function() {
                 return this.replace(rtrim, '');
                 };
@@ -366,7 +367,7 @@ def test_build():
 
     def load_tests(loader, suite, pattern):
         from duktape import tests
-        for x in vars(tests).itervalues():
+        for x in vars(tests).values():
             if isinstance(x, type) and issubclass(x, unittest.TestCase):
                 tests = loader.loadTestsFromTestCase(x)
                 suite.addTests(tests)

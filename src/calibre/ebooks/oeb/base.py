@@ -6,14 +6,14 @@ __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
 __docformat__ = 'restructuredtext en'
 
-import os, re, logging
+import os, re, logging, sys, numbers
 from collections import defaultdict
 from itertools import count
-from urlparse import urldefrag, urlparse, urlunparse, urljoin
-from urllib import unquote
+from operator import attrgetter
 
 from lxml import etree, html
-from calibre.constants import filesystem_encoding, __version__
+from calibre import force_unicode
+from calibre.constants import filesystem_encoding, __version__, ispy3
 from calibre.translations.dynamic import translate
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ebooks.conversion.preprocess import CSSPreProcessor
@@ -22,6 +22,9 @@ from calibre.ebooks.oeb.parse_utils import (barename, XHTML_NS, RECOVER_PARSER,
         namespace, XHTML, parse_html, NotHTML)
 from calibre.utils.cleantext import clean_xml_chars
 from calibre.utils.short_uuid import uuid4
+from polyglot.builtins import iteritems, unicode_type, string_or_bytes, range, itervalues, filter
+from polyglot.urllib import unquote as urlunquote, urldefrag, urljoin, urlparse, urlunparse
+from calibre.utils.icu import numeric_sort_key
 
 XML_NS       = 'http://www.w3.org/XML/1998/namespace'
 OEB_DOC_NS   = 'http://openebook.org/namespaces/oeb-document/1.0/'
@@ -106,13 +109,35 @@ self_closing_bad_tags = {'a', 'abbr', 'address', 'article', 'aside', 'audio', 'b
 'span', 'strong', 'sub', 'summary', 'sup', 'textarea', 'time', 'ul', 'var',
 'video', 'title', 'script', 'style'}
 
-_self_closing_pat = re.compile(
-    r'<(?P<tag>%s)(?=[\s/])(?P<arg>[^>]*)/>'%('|'.join(self_closing_bad_tags)),
-    re.IGNORECASE)
+
+def as_string_type(pat, for_unicode):
+    if for_unicode:
+        if isinstance(pat, bytes):
+            pat = pat.decode('utf-8')
+    else:
+        if isinstance(pat, unicode_type):
+            pat = pat.encode('utf-8')
+    return pat
+
+
+def self_closing_pat(for_unicode):
+    attr = 'unicode_ans' if for_unicode else 'bytes_ans'
+    ans = getattr(self_closing_pat, attr, None)
+    if ans is None:
+        sub = '|'.join(self_closing_bad_tags)
+        template = r'<(?P<tag>%s)(?=[\s/])(?P<arg>[^>]*)/>'
+        pat = template % sub
+        pat = as_string_type(pat, for_unicode)
+        ans = re.compile(pat, flags=re.IGNORECASE)
+        setattr(self_closing_pat, attr, ans)
+    return ans
 
 
 def close_self_closing_tags(raw):
-    return _self_closing_pat.sub(r'<\g<tag>\g<arg>></\g<tag>>', raw)
+    for_unicode = isinstance(raw, unicode_type)
+    repl = as_string_type(r'<\g<tag>\g<arg>></\g<tag>>', for_unicode)
+    pat = self_closing_pat(for_unicode)
+    return pat.sub(repl, raw)
 
 
 def uuid_id():
@@ -371,12 +396,8 @@ def xml2str(root, pretty_print=False, strip_comments=False, with_tail=True):
     return ans
 
 
-def xml2unicode(root, pretty_print=False):
-    return etree.tostring(root, pretty_print=pretty_print)
-
-
-def xml2text(elem):
-    return etree.tostring(elem, method='text', encoding=unicode, with_tail=False)
+def xml2text(elem, pretty_print=False):
+    return etree.tostring(elem, method='text', encoding=unicode_type, with_tail=False, pretty_print=pretty_print)
 
 
 def escape_cdata(root):
@@ -398,18 +419,18 @@ def serialize(data, media_type, pretty_print=False):
             # incorrectly by some browser based renderers
             ans = close_self_closing_tags(ans)
         return ans
-    if isinstance(data, unicode):
+    if isinstance(data, unicode_type):
         return data.encode('utf-8')
     if hasattr(data, 'cssText'):
         data = data.cssText
-        if isinstance(data, unicode):
+        if isinstance(data, unicode_type):
             data = data.encode('utf-8')
         return data + b'\n'
     return bytes(data)
 
 
-ASCII_CHARS   = set(chr(x) for x in xrange(128))
-UNIBYTE_CHARS = set(chr(x) for x in xrange(256))
+ASCII_CHARS   = set(chr(x) for x in range(128))
+UNIBYTE_CHARS = set(chr(x) for x in range(256))
 URL_SAFE      = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
                     'abcdefghijklmnopqrstuvwxyz'
                     '0123456789' '_.-/~')
@@ -421,30 +442,13 @@ def urlquote(href):
     That is, this function returns valid IRIs not valid URIs. In particular,
     IRIs can contain non-ascii characters.  """
     result = []
-    unsafe = 0 if isinstance(href, unicode) else 1
+    unsafe = 0 if isinstance(href, unicode_type) else 1
     unsafe = URL_UNSAFE[unsafe]
     for char in href:
         if char in unsafe:
             char = "%%%02x" % ord(char)
         result.append(char)
     return ''.join(result)
-
-
-def urlunquote(href, error_handling='strict'):
-    # unquote must run on a bytestring and will return a bytestring
-    # If it runs on a unicode object, it returns a double encoded unicode
-    # string: unquote(u'%C3%A4') != unquote(b'%C3%A4').decode('utf-8')
-    # and the latter is correct
-    want_unicode = isinstance(href, unicode)
-    if want_unicode:
-        href = href.encode('utf-8')
-    href = unquote(href)
-    if want_unicode:
-        # The quoted characters could have been in some encoding other than
-        # UTF-8, this often happens with old/broken web servers. There is no
-        # way to know what that encoding should be in this context.
-        href = href.decode('utf-8', error_handling)
-    return href
 
 
 def urlnormalize(href):
@@ -555,7 +559,7 @@ class DirContainer(object):
         # If it runs on a unicode object, it returns a double encoded unicode
         # string: unquote(u'%C3%A4') != unquote(b'%C3%A4').decode('utf-8')
         # and the latter is correct
-        if isinstance(path, unicode):
+        if isinstance(path, unicode_type):
             path = path.encode('utf-8')
         return urlunquote(path).decode('utf-8')
 
@@ -593,13 +597,13 @@ class DirContainer(object):
     def namelist(self):
         names = []
         base = self.rootdir
-        if isinstance(base, unicode):
+        if isinstance(base, unicode_type):
             base = base.encode(filesystem_encoding)
         for root, dirs, files in os.walk(base):
             for fname in files:
                 fname = os.path.join(root, fname)
                 fname = fname.replace('\\', '/')
-                if not isinstance(fname, unicode):
+                if not isinstance(fname, unicode_type):
                     try:
                         fname = fname.decode(filesystem_encoding)
                     except:
@@ -744,11 +748,15 @@ class Metadata(object):
             return 'Item(term=%r, value=%r, attrib=%r)' \
                 % (barename(self.term), self.value, self.attrib)
 
-        def __str__(self):
-            return unicode(self.value).encode('ascii', 'xmlcharrefreplace')
+        if ispy3:
+            def __str__(self):
+                return as_unicode(self.value)
+        else:
+            def __str__(self):
+                return unicode_type(self.value).encode('ascii', 'xmlcharrefreplace')
 
-        def __unicode__(self):
-            return as_unicode(self.value)
+            def __unicode__(self):
+                return as_unicode(self.value)
 
         def to_opf1(self, dcmeta=None, xmeta=None, nsrmap={}):
             attrib = {}
@@ -909,12 +917,10 @@ class Manifest(object):
             have a :attr:`spine_position` of `None`.
         """
 
-        NUM_RE = re.compile('^(.*)([0-9][0-9.]*)(?=[.]|$)')
-
         def __init__(self, oeb, id, href, media_type,
                      fallback=None, loader=str, data=None):
             if href:
-                href = unicode(href)
+                href = unicode_type(href)
             self.oeb = oeb
             self.id = id
             self.href = self.path = urlnormalize(href)
@@ -964,7 +970,7 @@ class Manifest(object):
 
             title = self.oeb.metadata.title
             if title:
-                title = unicode(title[0])
+                title = unicode_type(title[0])
             else:
                 title = _('Unknown')
 
@@ -997,7 +1003,7 @@ class Manifest(object):
                 self.oeb.logger.warn('CSS import of non-CSS file %r' % path)
                 return (None, None)
             data = item.data.cssText
-            enc = None if isinstance(data, unicode) else 'utf-8'
+            enc = None if isinstance(data, unicode_type) else 'utf-8'
             return (enc, data)
 
         # }}}
@@ -1028,7 +1034,7 @@ class Manifest(object):
                     mt = self.media_type.lower()
                 except Exception:
                     mt = 'application/octet-stream'
-                if not isinstance(data, basestring):
+                if not isinstance(data, string_or_bytes):
                     pass  # already parsed
                 elif mt in OEB_DOCS:
                     data = self._parse_xhtml(data)
@@ -1052,7 +1058,7 @@ class Manifest(object):
             return property(fget, fset, fdel, doc=doc)
 
         def unload_data_from_memory(self, memory=None):
-            if isinstance(self._data, (str, bytes)):
+            if isinstance(self._data, bytes):
                 if memory is None:
                     from calibre.ptempfile import PersistentTemporaryFile
                     pt = PersistentTemporaryFile(suffix='_oeb_base_mem_unloader.img')
@@ -1074,38 +1080,47 @@ class Manifest(object):
                     self._loader = loader2
                 self._data = None
 
-        def __str__(self):
-            return serialize(self.data, self.media_type, pretty_print=self.oeb.pretty_print)
-
-        def __unicode__(self):
+        @property
+        def unicode_representation(self):
             data = self.data
             if isinstance(data, etree._Element):
-                return xml2unicode(data, pretty_print=self.oeb.pretty_print)
-            if isinstance(data, unicode):
+                return xml2text(data, pretty_print=self.oeb.pretty_print)
+            if isinstance(data, unicode_type):
                 return data
             if hasattr(data, 'cssText'):
-                return data.cssText
-            return unicode(data)
+                return unicode_type(data.cssText, 'utf-8', 'replace')
+            return unicode_type(data)
+
+        @property
+        def bytes_representation(self):
+            return serialize(self.data, self.media_type, pretty_print=self.oeb.pretty_print)
+
+        if ispy3:
+            def __str__(self):
+                return self.unicode_representation
+        else:
+            def __unicode__(self):
+                return self.unicode_representation
+
+            def __str__(self):
+                return self.bytes_representation
 
         def __eq__(self, other):
-            return id(self) == id(other)
+            return self is other
 
         def __ne__(self, other):
-            return not self.__eq__(other)
+            return self is not other
 
-        def __cmp__(self, other):
-            result = cmp(self.spine_position, other.spine_position)
-            if result != 0:
-                return result
-            smatch = self.NUM_RE.search(self.href)
-            sref = smatch.group(1) if smatch else self.href
-            snum = float(smatch.group(2)) if smatch else 0.0
-            skey = (sref, snum, self.id)
-            omatch = self.NUM_RE.search(other.href)
-            oref = omatch.group(1) if omatch else other.href
-            onum = float(omatch.group(2)) if omatch else 0.0
-            okey = (oref, onum, other.id)
-            return cmp(skey, okey)
+        def __hash__(self):
+            return id(self)
+
+        @property
+        def sort_key(self):
+            href = self.href
+            if isinstance(href, bytes):
+                href = force_unicode(href)
+            sp = self.spine_position if isinstance(self.spine_position, numbers.Number) else sys.maxsize
+            return sp, (self.media_type or '').lower(), numeric_sort_key(href), self.id
 
         def relhref(self, href):
             """Convert the URL provided in :param:`href` from a book-absolute
@@ -1203,7 +1218,7 @@ class Manifest(object):
             while href.lower() in lhrefs:
                 href = base + str(index) + ext
                 index += 1
-        return id, unicode(href)
+        return id, unicode_type(href)
 
     def __iter__(self):
         for item in self.items:
@@ -1234,12 +1249,8 @@ class Manifest(object):
         return elem
 
     def to_opf2(self, parent=None):
-
-        def sort(x, y):
-            return cmp(x.href, y.href)
-
         elem = element(parent, OPF('manifest'))
-        for item in sorted(self.items, cmp=sort):
+        for item in sorted(self.items, key=attrgetter('sort_key')):
             media_type = item.media_type
             if media_type in OEB_DOCS:
                 media_type = XHTML_MIME
@@ -1283,7 +1294,7 @@ class Spine(object):
         self.page_progression_direction = None
 
     def _linear(self, linear):
-        if isinstance(linear, basestring):
+        if isinstance(linear, string_or_bytes):
             linear = linear.lower()
         if linear is None or linear in ('yes', 'true'):
             linear = True
@@ -1303,7 +1314,7 @@ class Spine(object):
         item.linear = self._linear(linear)
         item.spine_position = index
         self.items.insert(index, item)
-        for i in xrange(index, len(self.items)):
+        for i in range(index, len(self.items)):
             self.items[i].spine_position = i
         return item
 
@@ -1311,7 +1322,7 @@ class Spine(object):
         """Remove :param:`item` from the `Spine`."""
         index = item.spine_position
         self.items.pop(index)
-        for i in xrange(index, len(self.items)):
+        for i in range(index, len(self.items)):
             self.items[i].spine_position = i
         item.spine_position = None
 
@@ -1387,9 +1398,9 @@ class Guide(object):
                          ('notes', __('Notes')),
                          ('preface', __('Preface')),
                          ('text', __('Main text'))]
-        TYPES = set(t for t, _ in _TYPES_TITLES)  # noqa
         TITLES = dict(_TYPES_TITLES)
-        ORDER = dict((t, i) for i, (t, _) in enumerate(_TYPES_TITLES))  # noqa
+        TYPES = frozenset(TITLES)
+        ORDER = {t: i for i, (t, _) in enumerate(_TYPES_TITLES)}
 
         def __init__(self, oeb, type, title, href):
             self.oeb = oeb
@@ -1409,17 +1420,6 @@ class Guide(object):
                 % (self.type, self.title, self.href)
 
         @dynamic_property
-        def _order(self):
-            def fget(self):
-                return self.ORDER.get(self.type, self.type)
-            return property(fget=fget)
-
-        def __cmp__(self, other):
-            if not isinstance(other, Guide.Reference):
-                return NotImplemented
-            return cmp(self._order, other._order)
-
-        @dynamic_property
         def item(self):
             doc = """The manifest item associated with this reference."""
 
@@ -1436,7 +1436,7 @@ class Guide(object):
     def add(self, type, title, href):
         """Add a new reference to the `Guide`."""
         if href:
-            href = unicode(href)
+            href = unicode_type(href)
         ref = self.Reference(self.oeb, type, title, href)
         self.refs[type] = ref
         return ref
@@ -1445,7 +1445,7 @@ class Guide(object):
         return self.refs.pop(type, None)
 
     def remove_by_href(self, href):
-        remove = [r for r, i in self.refs.iteritems() if i.href == href]
+        remove = [r for r, i in iteritems(self.refs) if i.href == href]
         for r in remove:
             self.remove(r)
 
@@ -1455,7 +1455,7 @@ class Guide(object):
     __iter__ = iterkeys
 
     def values(self):
-        return sorted(self.refs.values())
+        return sorted(itervalues(self.refs), key=lambda ref: ref.ORDER.get(ref.type, 10000))
 
     def items(self):
         for type, ref in self.refs.items():
@@ -1615,11 +1615,15 @@ class TOC(object):
             ans.extend(child.get_lines(lvl+1))
         return ans
 
-    def __str__(self):
-        return b'\n'.join([x.encode('utf-8') for x in self.get_lines()])
+    if ispy3:
+        def __str__(self):
+            return u'\n'.join(self.get_lines())
+    else:
+        def __unicode__(self):
+            return u'\n'.join(self.get_lines())
 
-    def __unicode__(self):
-        return u'\n'.join(self.get_lines())
+        def __str__(self):
+            return b'\n'.join([x.encode('utf-8') for x in self.get_lines()])
 
     def to_opf1(self, tour):
         for node in self.nodes:
@@ -1707,7 +1711,7 @@ class PageList(object):
         TYPES = {'front', 'normal', 'special'}
 
         def __init__(self, name, href, type='normal', klass=None, id=None):
-            self.name = unicode(name)
+            self.name = unicode_type(name)
             self.href = urlnormalize(href)
             self.type = type if type in self.TYPES else 'normal'
             self.id = id
@@ -1744,7 +1748,7 @@ class PageList(object):
         for page in self.pages:
             id = page.id or uuid_id()
             type = page.type
-            value = str(values[type].next())
+            value = str(next(values[type]))
             attrib = {'id': id, 'value': value, 'type': type, 'playOrder': '0'}
             if page.klass:
                 attrib['class'] = page.klass
@@ -1845,7 +1849,7 @@ class OEBBook(object):
         """Automatically decode :param:`data` into a `unicode` object."""
         def fix_data(d):
             return d.replace('\r\n', '\n').replace('\r', '\n')
-        if isinstance(data, unicode):
+        if isinstance(data, unicode_type):
             return fix_data(data)
         bom_enc = None
         if data[:4] in ('\0\0\xfe\xff', '\xff\xfe\0\0'):
@@ -1923,14 +1927,14 @@ class OEBBook(object):
         return
 
     def _to_ncx(self):
-        lang = unicode(self.metadata.language[0])
+        lang = unicode_type(self.metadata.language[0])
         lang = lang.replace('_', '-')
         ncx = etree.Element(NCX('ncx'),
             attrib={'version': '2005-1', XML('lang'): lang},
             nsmap={None: NCX_NS})
         head = etree.SubElement(ncx, NCX('head'))
         etree.SubElement(head, NCX('meta'),
-            name='dtb:uid', content=unicode(self.uid))
+            name='dtb:uid', content=unicode_type(self.uid))
         etree.SubElement(head, NCX('meta'),
             name='dtb:depth', content=str(self.toc.depth()))
         generator = ''.join(['calibre (', __version__, ')'])
@@ -1942,7 +1946,7 @@ class OEBBook(object):
             name='dtb:maxPageNumber', content='0')
         title = etree.SubElement(ncx, NCX('docTitle'))
         text = etree.SubElement(title, NCX('text'))
-        text.text = unicode(self.metadata.title[0])
+        text.text = unicode_type(self.metadata.title[0])
         navmap = etree.SubElement(ncx, NCX('navMap'))
         self.toc.to_ncx(navmap)
         if len(self.pages) > 0:
@@ -1990,7 +1994,7 @@ def rel_href(base_href, href):
         return href
     if '/' not in base_href:
         return href
-    base = filter(lambda x: x and x != '.', os.path.dirname(os.path.normpath(base_href)).replace(os.sep, '/').split('/'))
+    base = list(filter(lambda x: x and x != '.', os.path.dirname(os.path.normpath(base_href)).replace(os.sep, '/').split('/')))
     while True:
         try:
             idx = base.index('..')
@@ -2005,7 +2009,7 @@ def rel_href(base_href, href):
     target, frag = urldefrag(href)
     target = target.split('/')
     index = 0
-    for index in xrange(min(len(base), len(target))):
+    for index in range(min(len(base), len(target))):
         if base[index] != target[index]:
             break
     else:

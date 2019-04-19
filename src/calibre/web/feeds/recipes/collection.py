@@ -18,6 +18,7 @@ from calibre.constants import numeric_version
 from calibre.utils.iso8601 import parse_iso8601
 from calibre.utils.date import now as nowf, utcnow, local_tz, isoformat, EPOCH, UNDEFINED_DATE
 from calibre.utils.recycle_bin import delete_file
+from polyglot.builtins import iteritems, unicode_type
 
 NS = 'http://calibre-ebook.com/recipe_collection'
 E = ElementMaker(namespace=NS, nsmap={None:NS})
@@ -41,7 +42,7 @@ def serialize_recipe(urn, recipe_class):
 
     def attr(n, d):
         ans = getattr(recipe_class, n, d)
-        if isinstance(ans, str):
+        if isinstance(ans, bytes):
             ans = ans.decode('utf-8', 'replace')
         return ans
 
@@ -65,7 +66,7 @@ def serialize_collection(mapping_of_recipe_classes):
     collection = E.recipe_collection()
     '''for u, x in mapping_of_recipe_classes.items():
         print 11111, u, repr(x.title)
-        if isinstance(x.title, str):
+        if isinstance(x.title, bytes):
             x.title.decode('ascii')
     '''
     for urn in sorted(mapping_of_recipe_classes.keys(),
@@ -92,7 +93,7 @@ def serialize_builtin_recipes():
             try:
                 recipe_class = compile_recipe(stream.read())
             except:
-                print ('Failed to compile: %s'%f)
+                print('Failed to compile: %s'%f)
                 raise
         if recipe_class is not None:
             recipe_mapping['builtin:'+rid] = recipe_class
@@ -109,7 +110,7 @@ def get_custom_recipe_collection(*args):
             custom_recipes
     bdir = os.path.dirname(custom_recipes.file_path)
     rmap = {}
-    for id_, x in custom_recipes.iteritems():
+    for id_, x in iteritems(custom_recipes):
         title, fname = x
         recipe = os.path.join(bdir, fname)
         try:
@@ -143,7 +144,7 @@ def update_custom_recipes(script_ids):
             fname = custom_recipe_filename(id_, title)
         else:
             fname = existing[1]
-        if isinstance(script, unicode):
+        if isinstance(script, unicode_type):
             script = script.encode('utf-8')
 
         custom_recipes[id_] = (title, fname)
@@ -163,16 +164,16 @@ def add_custom_recipes(script_map):
     from calibre.web.feeds.recipes import custom_recipes, \
             custom_recipe_filename
     id_ = 1000
-    keys = tuple(map(int, custom_recipes.iterkeys()))
+    keys = tuple(map(int, custom_recipes))
     if keys:
         id_ = max(keys)+1
     bdir = os.path.dirname(custom_recipes.file_path)
     with custom_recipes:
-        for title, script in script_map.iteritems():
+        for title, script in iteritems(script_map):
             fid = str(id_)
 
             fname = custom_recipe_filename(fid, title)
-            if isinstance(script, unicode):
+            if isinstance(script, unicode_type):
                 script = script.encode('utf-8')
 
             custom_recipes[fid] = (title, fname)
@@ -548,8 +549,8 @@ class SchedulerConfig(object):
                         username, password = c[k]
                     except:
                         username = password = ''
-                    self.set_account_info(urn, unicode(username),
-                            unicode(password))
+                    self.set_account_info(urn, unicode_type(username),
+                            unicode_type(password))
                 except:
                     continue
         del c

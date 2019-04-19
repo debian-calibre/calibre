@@ -9,11 +9,11 @@ Provides abstraction for metadata reading.writing from a variety of ebook format
 """
 import os, sys, re
 
-from urlparse import urlparse
-
 from calibre import relpath, guess_type, remove_bracketed_text, prints, force_unicode
-
 from calibre.utils.config_base import tweaks
+from polyglot.builtins import codepoint_to_chr, unicode_type, range, map
+from polyglot.urllib import quote, unquote, urlparse
+
 
 try:
     _author_pat = re.compile(tweaks['authors_split_regex'])
@@ -134,8 +134,8 @@ def get_title_sort_pat(lang=None):
     return ans
 
 
-_ignore_starts = u'\'"'+u''.join(unichr(x) for x in
-        range(0x2018, 0x201e)+[0x2032, 0x2033])
+_ignore_starts = u'\'"'+u''.join(codepoint_to_chr(x) for x in
+        list(range(0x2018, 0x201e))+[0x2032, 0x2033])
 
 
 def title_sort(title, order=None, lang=None):
@@ -203,7 +203,6 @@ class Resource(object):
     '''
 
     def __init__(self, href_or_path, basedir=os.getcwdu(), is_path=True):
-        from urllib import unquote
         self._href = None
         self._basedir = basedir
         self.path = None
@@ -218,7 +217,7 @@ class Resource(object):
             path = href_or_path
             if not os.path.isabs(path):
                 path = os.path.abspath(os.path.join(basedir, path))
-            if isinstance(path, str):
+            if isinstance(path, bytes):
                 path = path.decode(sys.getfilesystemencoding())
             self.path = path
         else:
@@ -227,7 +226,7 @@ class Resource(object):
                 self._href = href_or_path
             else:
                 pc = url[2]
-                if isinstance(pc, unicode):
+                if isinstance(pc, unicode_type):
                     pc = pc.encode('utf-8')
                 pc = unquote(pc).decode('utf-8')
                 self.path = os.path.abspath(os.path.join(basedir, pc.replace('/', os.sep)))
@@ -241,7 +240,6 @@ class Resource(object):
         `basedir`: If None, the basedir of this resource is used (see :method:`set_basedir`).
         If this resource has no basedir, then the current working directory is used as the basedir.
         '''
-        from urllib import quote
         if basedir is None:
             if self._basedir:
                 basedir = self._basedir
@@ -249,7 +247,7 @@ class Resource(object):
                 basedir = os.getcwdu()
         if self.path is None:
             return self._href
-        f = self.fragment.encode('utf-8') if isinstance(self.fragment, unicode) else self.fragment
+        f = self.fragment.encode('utf-8') if isinstance(self.fragment, unicode_type) else self.fragment
         frag = '#'+quote(f) if self.fragment else ''
         if self.path == basedir:
             return ''+frag
@@ -257,7 +255,7 @@ class Resource(object):
             rpath = relpath(self.path, basedir)
         except OSError:  # On windows path and basedir could be on different drives
             rpath = self.path
-        if isinstance(rpath, unicode):
+        if isinstance(rpath, unicode_type):
             rpath = rpath.encode('utf-8')
         return quote(rpath.replace(os.sep, '/'))+frag
 
@@ -339,26 +337,26 @@ def MetaInformation(title, authors=(_('Unknown'),)):
 
 def check_isbn10(isbn):
     try:
-        digits = map(int, isbn[:9])
+        digits = tuple(map(int, isbn[:9]))
         products = [(i+1)*digits[i] for i in range(9)]
         check = sum(products)%11
         if (check == 10 and isbn[9] == 'X') or check == int(isbn[9]):
             return isbn
-    except:
+    except Exception:
         pass
     return None
 
 
 def check_isbn13(isbn):
     try:
-        digits = map(int, isbn[:12])
+        digits = tuple(map(int, isbn[:12]))
         products = [(1 if i%2 ==0 else 3)*digits[i] for i in range(12)]
         check = 10 - (sum(products)%10)
         if check == 10:
             check = 0
         if str(check) == isbn[12]:
             return isbn
-    except:
+    except Exception:
         pass
     return None
 
@@ -382,7 +380,7 @@ def check_issn(issn):
         return None
     issn = re.sub(r'[^0-9X]', '', issn.upper())
     try:
-        digits = map(int, issn[:7])
+        digits = tuple(map(int, issn[:7]))
         products = [(8 - i) * d for i, d in enumerate(digits)]
         check = 11 - sum(products) % 11
         if (check == 10 and issn[7] == 'X') or check == int(issn[7]):

@@ -27,7 +27,7 @@ def get_cover(docx):
         if rid in rid_map:
             try:
                 raw = docx.read(rid_map[rid])
-                fmt, width, height = identify(bytes(raw))
+                fmt, width, height = identify(raw)
             except Exception:
                 continue
             if width < 0 or height < 0:
@@ -77,7 +77,8 @@ def set_metadata(stream, mi):
     stream.seek(0)
     safe_replace(stream, dp_name, BytesIO(xml2str(cp)), extra_replacements=replacements)
 
+
 if __name__ == '__main__':
     import sys
     with open(sys.argv[-1], 'rb') as stream:
-        print (get_metadata(stream))
+        print(get_metadata(stream))

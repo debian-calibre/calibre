@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "三月 08, 2019" "3.40.1" "calibre"
+.TH "CALIBREDB" "1" "四月 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -322,7 +322,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57\-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -430,9 +430,9 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an opf file). You can get id numbers from the search command.
+导出指定 id 的书籍至文件系统。ids 为以逗号分隔的列表。
+导出操作将保存书籍的所有格式，以及其封面和元数据(保存
+至一个 opf 文件)。你可以使用搜索命令来获得 id 号。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

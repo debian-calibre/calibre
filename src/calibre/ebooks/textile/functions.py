@@ -62,9 +62,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 import re
 import uuid
-from urlparse import urlparse
 
 from calibre.utils.smartypants import smartyPants
+from polyglot.urllib import urlopen, urlparse
 
 
 def _normalize_newlines(string):
@@ -96,13 +96,8 @@ def getimagesize(url):
             return None
 
     try:
-        import urllib2
-    except ImportError:
-        return None
-
-    try:
         p = ImageFile.Parser()
-        f = urllib2.urlopen(url)
+        f = urlopen(url)
         while True:
             s = f.read(1024)
             if not s:
@@ -128,11 +123,11 @@ class Textile(object):
 
     pnct = r'[-!"#$%&()*+,/:;<=>?@\'\[\\\]\.^_`{|}~]'
     # urlch = r'[\w"$\-_.+!*\'(),";/?:@=&%#{}|\\^~\[\]`]'
-    urlch = '[\w"$\-_.+*\'(),";\/?:@=&%#{}|\\^~\[\]`]'
+    urlch = r'[\w"$\-_.+*\'(),";\/?:@=&%#{}|\\^~\[\]`]'
 
     url_schemes = ('http', 'https', 'ftp', 'mailto')
 
-    btag = ('bq', 'bc', 'notextile', 'pre', 'h[1-6]', 'fn\d+', 'p')
+    btag = ('bq', 'bc', 'notextile', 'pre', 'h[1-6]', r'fn\d+', 'p')
     btag_lite = ('bq', 'bc', 'p')
 
     macro_defaults = [
@@ -292,7 +287,7 @@ class Textile(object):
         """
         self.html_type = html_type
 
-        # text = unicode(text)
+        # text = type(u'')(text)
         text = _normalize_newlines(text)
 
         if self.restricted:

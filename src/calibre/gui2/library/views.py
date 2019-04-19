@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 
 import itertools, operator
 from functools import partial
-from polyglot.builtins import map
+from polyglot.builtins import iteritems, map, unicode_type, range
 from collections import OrderedDict
 
 from PyQt5.Qt import (
@@ -73,7 +73,7 @@ class HeaderView(QHeaderView):  # {{{
         opt.orientation = self.orientation()
         opt.fontMetrics = self.fm
         model = self.parent().model()
-        opt.text = unicode(model.headerData(logical_index, opt.orientation, Qt.DisplayRole) or '')
+        opt.text = unicode_type(model.headerData(logical_index, opt.orientation, Qt.DisplayRole) or '')
         if opt.orientation == Qt.Vertical:
             try:
                 val = model.headerData(logical_index, opt.orientation, Qt.DecorationRole)
@@ -100,7 +100,7 @@ class HeaderView(QHeaderView):  # {{{
         if self.isSortIndicatorShown() and self.sortIndicatorSection() == logical_index:
             opt.sortIndicator = QStyleOptionHeader.SortDown if self.sortIndicatorOrder() == Qt.AscendingOrder else QStyleOptionHeader.SortUp
             margin += style.pixelMetric(style.PM_HeaderMarkSize, None, self)
-        opt.text = unicode(model.headerData(logical_index, opt.orientation, Qt.DisplayRole) or '')
+        opt.text = unicode_type(model.headerData(logical_index, opt.orientation, Qt.DisplayRole) or '')
         if self.textElideMode() != Qt.ElideNone:
             opt.text = opt.fontMetrics.elidedText(opt.text, Qt.ElideRight, rect.width() - margin)
         if self.isEnabled():
@@ -194,7 +194,7 @@ class PreserveViewState(object):  # {{{
                 'vscroll', 'hscroll')}
 
         def fset(self, state):
-            for k, v in state.iteritems():
+            for k, v in iteritems(state):
                 setattr(self, k, v)
             self.__exit__()
         return property(fget=fget, fset=fset)
@@ -436,10 +436,10 @@ class BooksView(QTableView):  # {{{
             m = ans.addMenu(_('Change text alignment for %s') % name)
             al = self._model.alignment_map.get(col, 'left')
             for x, t in (('left', _('Left')), ('right', _('Right')), ('center', _('Center'))):
-                    a = m.addAction(t, partial(handler, action='align_'+x))
-                    if al == x:
-                        a.setCheckable(True)
-                        a.setChecked(True)
+                a = m.addAction(t, partial(handler, action='align_'+x))
+                if al == x:
+                    a.setCheckable(True)
+                    a.setChecked(True)
             if not isinstance(view, DeviceBooksView):
                 col_font = self._model.styled_columns.get(col)
                 m = ans.addMenu(_('Change font style for %s') % name)
@@ -465,7 +465,7 @@ class BooksView(QTableView):  # {{{
         ans.addSeparator()
         if hidden_cols:
             m = ans.addMenu(_('Show column'))
-            hcols = [(hcol, unicode(self.model().headerData(hidx, Qt.Horizontal, Qt.DisplayRole) or '')) for hcol, hidx in hidden_cols.iteritems()]
+            hcols = [(hcol, unicode_type(self.model().headerData(hidx, Qt.Horizontal, Qt.DisplayRole) or '')) for hcol, hidx in iteritems(hidden_cols)]
             hcols.sort(key=lambda x: primary_sort_key(x[1]))
             for hcol, hname in hcols:
                 m.addAction(hname, partial(handler, action='show', column=hcol))
@@ -484,7 +484,7 @@ class BooksView(QTableView):  # {{{
         col = None
         if idx > -1 and idx < len(self.column_map):
             col = self.column_map[idx]
-            name = unicode(self.model().headerData(idx, Qt.Horizontal, Qt.DisplayRole) or '')
+            name = unicode_type(self.model().headerData(idx, Qt.Horizontal, Qt.DisplayRole) or '')
             view.column_header_context_menu = self.create_context_menu(col, name, view)
         has_context_menu = hasattr(view, 'column_header_context_menu')
         if self.is_library_view and has_context_menu:
@@ -576,7 +576,7 @@ class BooksView(QTableView):  # {{{
                 return
 
         for n,d in reversed(fields):
-            if n in self._model.db.field_metadata.keys():
+            if n in list(self._model.db.field_metadata.keys()):
                 sh.insert(0, (n, d))
         sh = self.cleanup_sort_history(sh, ignore_column_map=True)
         self._model.sort_history = [tuple(x) for x in sh]
@@ -625,7 +625,7 @@ class BooksView(QTableView):  # {{{
 
     def write_state(self, state):
         db = getattr(self.model(), 'db', None)
-        name = unicode(self.objectName())
+        name = unicode_type(self.objectName())
         if name and db is not None:
             db.new_api.set_pref(name + ' books view state', state)
 
@@ -688,7 +688,7 @@ class BooksView(QTableView):  # {{{
         # Because of a bug in Qt 5 we have to ensure that the header is actually
         # relaid out by changing this value, without this sometimes ghost
         # columns remain visible when changing libraries
-        for i in xrange(h.count()):
+        for i in range(h.count()):
             val = h.isSectionHidden(i)
             h.setSectionHidden(i, not val)
             h.setSectionHidden(i, val)
@@ -740,7 +740,7 @@ class BooksView(QTableView):  # {{{
 
     def get_old_state(self):
         ans = None
-        name = unicode(self.objectName())
+        name = unicode_type(self.objectName())
         if name:
             name += ' books view state'
             db = getattr(self.model(), 'db', None)
@@ -967,7 +967,7 @@ class BooksView(QTableView):  # {{{
     @property
     def visible_columns(self):
         h = self.horizontalHeader()
-        logical_indices = (x for x in xrange(h.count()) if not h.isSectionHidden(x))
+        logical_indices = (x for x in range(h.count()) if not h.isSectionHidden(x))
         rmap = {i:x for i, x in enumerate(self.column_map)}
         return (rmap[h.visualIndex(x)] for x in logical_indices if h.visualIndex(x) > -1)
 
@@ -1031,7 +1031,7 @@ class BooksView(QTableView):  # {{{
                     h.visualIndex(x) > -1]
             if not pairs:
                 pairs = [(0, 0)]
-            pairs.sort(cmp=lambda x,y:cmp(x[1], y[1]))
+            pairs.sort(key=lambda x: x[1])
             i = pairs[0][0]
             index = self.model().index(row, i)
             if for_sync:
@@ -1108,7 +1108,7 @@ class BooksView(QTableView):  # {{{
         row_map = OrderedDict()
         ids = frozenset(ids)
         m = self.model()
-        for row in xrange(m.rowCount(QModelIndex())):
+        for row in range(m.rowCount(QModelIndex())):
             if len(row_map) >= len(ids):
                 break
             c = m.id(row)
@@ -1128,7 +1128,7 @@ class BooksView(QTableView):  # {{{
             rows = set([])
             identifiers = set(identifiers)
             m = self.model()
-            for row in xrange(m.rowCount(QModelIndex())):
+            for row in range(m.rowCount(QModelIndex())):
                 if m.id(row) in identifiers:
                     rows.add(row)
         rows = list(sorted(rows))
@@ -1174,7 +1174,7 @@ class BooksView(QTableView):  # {{{
             if val is None:
                 return
             m = self.model()
-            for row in xrange(m.rowCount(QModelIndex())):
+            for row in range(m.rowCount(QModelIndex())):
                 if m.id(row) == val:
                     self.set_current_row(row, select=False)
                     break
@@ -1193,7 +1193,7 @@ class BooksView(QTableView):  # {{{
             i.isValid()])
         column = ci.column()
 
-        for i in xrange(ci.row()+1, self.row_count()):
+        for i in range(ci.row()+1, self.row_count()):
             if i in selected_rows:
                 continue
             try:
@@ -1202,7 +1202,7 @@ class BooksView(QTableView):  # {{{
                 pass
 
         # No unselected rows after the current row, look before
-        for i in xrange(ci.row()-1, -1, -1):
+        for i in range(ci.row()-1, -1, -1):
             if i in selected_rows:
                 continue
             try:
@@ -1308,14 +1308,14 @@ class DeviceBooksView(BooksView):  # {{{
 
     def get_old_state(self):
         ans = None
-        name = unicode(self.objectName())
+        name = unicode_type(self.objectName())
         if name:
             name += ' books view state'
             ans = gprefs.get(name, None)
         return ans
 
     def write_state(self, state):
-        name = unicode(self.objectName())
+        name = unicode_type(self.objectName())
         if name:
             gprefs.set(name + ' books view state', state)
 

@@ -14,6 +14,7 @@ from PyQt5.Qt import (QTimer, QDialog, QGridLayout, QCheckBox, QLabel,
 
 from calibre.gui2 import error_dialog, gprefs
 from calibre.gui2.actions import InterfaceAction
+from polyglot.builtins import iteritems, unicode_type
 
 SUPPORTED = {'EPUB', 'AZW3'}
 
@@ -55,7 +56,7 @@ class ChooseFormat(QDialog):  # {{{
         def fget(self):
             for b in self.buttons:
                 if b.isChecked():
-                    yield unicode(b.text())[1:]
+                    yield unicode_type(b.text())[1:]
 
         def fset(self, formats):
             formats = {x.upper() for x in formats}
@@ -129,7 +130,7 @@ class ToCEditAction(InterfaceAction):
         return self.get_supported_books(ans)
 
     def do_edit(self, book_id_map):
-        for book_id, fmts in book_id_map.iteritems():
+        for book_id, fmts in iteritems(book_id_map):
             if len(fmts) > 1:
                 d = ChooseFormat(fmts, self.gui)
                 if d.exec_() != d.Accepted:

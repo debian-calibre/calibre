@@ -4,7 +4,8 @@ __copyright__ = '2008, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import sys, os, re, time, random, warnings
-from polyglot.builtins import builtins
+from polyglot.builtins import (builtins, codepoint_to_chr, iteritems,
+        itervalues, unicode_type, range, filter)
 builtins.__dict__['dynamic_property'] = lambda func: func(None)
 from math import floor
 from functools import partial
@@ -77,7 +78,7 @@ def get_types_map():
 
 
 def to_unicode(raw, encoding='utf-8', errors='strict'):
-    if isinstance(raw, unicode):
+    if isinstance(raw, unicode_type):
         return raw
     return raw.decode(encoding, errors)
 
@@ -111,57 +112,28 @@ def confirm_config_name(name):
     return name + '_again'
 
 
-_filename_sanitize = re.compile(r'[\xae\0\\|\?\*<":>\+/]')
-_filename_sanitize_unicode = frozenset([u'\\', u'|', u'?', u'*', u'<',
-    u'"', u':', u'>', u'+', u'/'] + list(map(unichr, xrange(32))))
+_filename_sanitize_unicode = frozenset((u'\\', u'|', u'?', u'*', u'<',
+    u'"', u':', u'>', u'+', u'/') + tuple(map(codepoint_to_chr, range(32))))
 
 
-def sanitize_file_name(name, substitute='_', as_unicode=False):
+def sanitize_file_name(name, substitute=u'_'):
     '''
     Sanitize the filename `name`. All invalid characters are replaced by `substitute`.
     The set of invalid characters is the union of the invalid characters in Windows,
-    OS X and Linux. Also removes leading and trailing whitespace.
-    **WARNING:** This function also replaces path separators, so only pass file names
-    and not full paths to it.
-    *NOTE:* This function always returns byte strings, not unicode objects. The byte strings
-    are encoded in the filesystem encoding of the platform, or UTF-8.
-    '''
-    if isinstance(name, unicode):
-        name = name.encode(filesystem_encoding, 'ignore')
-    one = _filename_sanitize.sub(substitute, name)
-    one = re.sub(r'\s', ' ', one).strip()
-    bname, ext = os.path.splitext(one)
-    one = re.sub(r'^\.+$', '_', bname)
-    if as_unicode:
-        one = one.decode(filesystem_encoding)
-    one = one.replace('..', substitute)
-    one += ext
-    # Windows doesn't like path components that end with a period
-    if one and one[-1] in ('.', ' '):
-        one = one[:-1]+'_'
-    # Names starting with a period are hidden on Unix
-    if one.startswith('.'):
-        one = '_' + one[1:]
-    return one
-
-
-def sanitize_file_name_unicode(name, substitute='_'):
-    '''
-    Sanitize the filename `name`. All invalid characters are replaced by `substitute`.
-    The set of invalid characters is the union of the invalid characters in Windows,
-    OS X and Linux. Also removes leading and trailing whitespace.
+    macOS and Linux. Also removes leading and trailing whitespace.
     **WARNING:** This function also replaces path separators, so only pass file names
     and not full paths to it.
     '''
     if isbytestring(name):
-        return sanitize_file_name(name, substitute=substitute, as_unicode=True)
-    chars = [substitute if c in _filename_sanitize_unicode else c for c in
-            name]
+        name = name.decode(filesystem_encoding, 'replace')
+    if isbytestring(substitute):
+        substitute = substitute.decode(filesystem_encoding, 'replace')
+    chars = (substitute if c in _filename_sanitize_unicode else c for c in name)
     one = u''.join(chars)
-    one = re.sub(r'\s', ' ', one).strip()
+    one = re.sub(r'\s', u' ', one).strip()
     bname, ext = os.path.splitext(one)
-    one = re.sub(r'^\.+$', '_', bname)
-    one = one.replace('..', substitute)
+    one = re.sub(r'^\.+$', u'_', bname)
+    one = one.replace(u'..', substitute)
     one += ext
     # Windows doesn't like path components that end with a period or space
     if one and one[-1] in ('.', ' '):
@@ -172,14 +144,7 @@ def sanitize_file_name_unicode(name, substitute='_'):
     return one
 
 
-def sanitize_file_name2(name, substitute='_'):
-    '''
-    Sanitize filenames removing invalid chars. Keeps unicode names as unicode
-    and bytestrings as bytestrings
-    '''
-    if isbytestring(name):
-        return sanitize_file_name(name, substitute=substitute)
-    return sanitize_file_name_unicode(name, substitute=substitute)
+sanitize_file_name2 = sanitize_file_name_unicode = sanitize_file_name
 
 
 def prints(*args, **kwargs):
@@ -192,13 +157,18 @@ def prints(*args, **kwargs):
     Returns the number of bytes written.
     '''
     file = kwargs.get('file', sys.stdout)
-    sep  = bytes(kwargs.get('sep', ' '))
-    end  = bytes(kwargs.get('end', '\n'))
+    file = getattr(file, 'buffer', file)
     enc = 'utf-8' if 'CALIBRE_WORKER' in os.environ else preferred_encoding
+    sep  = kwargs.get('sep', ' ')
+    if not isinstance(sep, bytes):
+        sep = sep.encode(enc)
+    end  = kwargs.get('end', '\n')
+    if not isinstance(end, bytes):
+        end = end.encode(enc)
     safe_encode = kwargs.get('safe_encode', False)
     count = 0
     for i, arg in enumerate(args):
-        if isinstance(arg, unicode):
+        if isinstance(arg, unicode_type):
             if iswindows:
                 from calibre.utils.terminal import Detect
                 cs = Detect(file)
@@ -218,12 +188,12 @@ def prints(*args, **kwargs):
                     if not safe_encode:
                         raise
                     arg = repr(arg)
-        if not isinstance(arg, str):
+        if not isinstance(arg, bytes):
             try:
                 arg = str(arg)
             except ValueError:
-                arg = unicode(arg)
-            if isinstance(arg, unicode):
+                arg = unicode_type(arg)
+            if isinstance(arg, unicode_type):
                 try:
                     arg = arg.encode(enc)
                 except UnicodeEncodeError:
@@ -238,7 +208,7 @@ def prints(*args, **kwargs):
             file.write(arg)
             count += len(arg)
         except:
-            import repr as reprlib
+            from polyglot import reprlib
             arg = reprlib.repr(arg)
             file.write(arg)
             count += len(arg)
@@ -246,7 +216,7 @@ def prints(*args, **kwargs):
             file.write(sep)
             count += len(sep)
     file.write(end)
-    count += len(sep)
+    count += len(end)
     return count
 
 
@@ -288,7 +258,7 @@ def load_library(name, cdll):
 
 def filename_to_utf8(name):
     '''Return C{name} encoded in utf8. Unhandled characters are replaced. '''
-    if isinstance(name, unicode):
+    if isinstance(name, unicode_type):
         return name.encode('utf8')
     codec = 'cp1252' if iswindows else 'utf8'
     return name.decode(codec, 'replace').encode('utf8')
@@ -320,7 +290,7 @@ def extract(path, dir):
 
 
 def get_proxies(debug=True):
-    from urllib import getproxies
+    from polyglot.urllib import getproxies
     proxies = getproxies()
     for key, proxy in list(proxies.items()):
         if not proxy or '..' in proxy or key == 'auto':
@@ -382,10 +352,10 @@ def get_proxy_info(proxy_scheme, proxy_string):
     is not available in the string. If an exception occurs parsing the string
     this method returns None.
     '''
-    import urlparse
+    from polyglot.urllib import urlparse
     try:
         proxy_url = u'%s://%s'%(proxy_scheme, proxy_string)
-        urlinfo = urlparse.urlparse(proxy_url)
+        urlinfo = urlparse(proxy_url)
         ans = {
             u'scheme': urlinfo.scheme,
             u'hostname': urlinfo.hostname,
@@ -406,9 +376,9 @@ USER_AGENT_MOBILE = 'Mozilla/5.0 (Windows; U; Windows CE 5.1; rv:1.8.1a3) Gecko/
 def random_user_agent(choose=None, allow_ie=True):
     from calibre.utils.random_ua import common_user_agents
     ua_list = common_user_agents()
-    ua_list = filter(lambda x: 'Mobile/' not in x, ua_list)
+    ua_list = list(filter(lambda x: 'Mobile/' not in x, ua_list))
     if not allow_ie:
-        ua_list = filter(lambda x: 'Trident/' not in x and 'Edge/' not in x, ua_list)
+        ua_list = list(filter(lambda x: 'Trident/' not in x and 'Edge/' not in x, ua_list))
     return random.choice(ua_list) if choose is None else ua_list[choose]
 
 
@@ -467,27 +437,19 @@ def fit_image(width, height, pwidth, pheight):
 
 class CurrentDir(object):
 
-    def __init__(self, path, workaround_temp_folder_permissions=False):
+    def __init__(self, path):
         self.path = path
         self.cwd = None
-        self.workaround_temp_folder_permissions = workaround_temp_folder_permissions
 
     def __enter__(self, *args):
         self.cwd = os.getcwdu()
-        try:
-            os.chdir(self.path)
-        except OSError:
-            if not self.workaround_temp_folder_permissions:
-                raise
-            from calibre.ptempfile import reset_temp_folder_permissions
-            reset_temp_folder_permissions()
-            os.chdir(self.path)
+        os.chdir(self.path)
         return self.cwd
 
     def __exit__(self, *args):
         try:
             os.chdir(self.cwd)
-        except:
+        except EnvironmentError:
             # The previous CWD no longer exists
             pass
 
@@ -516,13 +478,6 @@ def detect_ncpus():
 
 relpath = os.path.relpath
 _spat = re.compile(r'^the\s+|^a\s+|^an\s+', re.IGNORECASE)
-
-
-def english_sort(x, y):
-    '''
-    Comapare two english phrases ignoring starting prepositions.
-    '''
-    return cmp(_spat.sub('', x), _spat.sub('', y))
 
 
 def walk(dir):
@@ -555,9 +510,11 @@ def strftime(fmt, t=None):
         fmt = fmt.replace(u'%e', u'%#d')
         ans = plugins['winutil'][0].strftime(fmt, t)
     else:
-        ans = time.strftime(fmt, t).decode(preferred_encoding, 'replace')
+        ans = time.strftime(fmt, t)
+        if isinstance(ans, bytes):
+            ans = ans.decode(preferred_encoding, 'replace')
     if early_year:
-        ans = ans.replace(u'_early year hack##', unicode(orig_year))
+        ans = ans.replace(u'_early year hack##', unicode_type(orig_year))
     return ans
 
 
@@ -604,7 +561,7 @@ def entity_to_unicode(match, exceptions=[], encoding='cp1252',
         if encoding is None or num > 255:
             return check(my_unichr(num))
         try:
-            return check(chr(num).decode(encoding))
+            return check(bytes(bytearray((num,))).decode(encoding))
         except UnicodeDecodeError:
             return check(my_unichr(num))
     from calibre.ebooks.html_entities import html5_entities
@@ -612,7 +569,7 @@ def entity_to_unicode(match, exceptions=[], encoding='cp1252',
         return check(html5_entities[ent])
     except KeyError:
         pass
-    from htmlentitydefs import name2codepoint
+    from polyglot.html_entities import name2codepoint
     try:
         return check(my_unichr(name2codepoint[ent]))
     except KeyError:
@@ -669,7 +626,7 @@ def force_unicode(obj, enc=preferred_encoding):
 def as_unicode(obj, enc=preferred_encoding):
     if not isbytestring(obj):
         try:
-            obj = unicode(obj)
+            obj = unicode_type(obj)
         except:
             try:
                 obj = str(obj)
@@ -706,7 +663,7 @@ def remove_bracketed_text(src,
     counts = Counter()
     buf = []
     src = force_unicode(src)
-    rmap = dict([(v, k) for k, v in brackets.iteritems()])
+    rmap = dict([(v, k) for k, v in iteritems(brackets)])
     for char in src:
         if char in brackets:
             counts[char] += 1
@@ -714,7 +671,7 @@ def remove_bracketed_text(src,
             idx = rmap[char]
             if counts[idx] > 0:
                 counts[idx] -= 1
-        elif sum(counts.itervalues()) < 1:
+        elif sum(itervalues(counts)) < 1:
             buf.append(char)
     return u''.join(buf)
 

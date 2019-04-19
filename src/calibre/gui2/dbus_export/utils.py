@@ -12,11 +12,14 @@ import dbus
 
 from PyQt5.Qt import QSize, QImage, Qt, QKeySequence, QBuffer, QByteArray
 
+from polyglot.builtins import unicode_type, iteritems
+
 
 def log(*args, **kw):
     kw['file'] = sys.stderr
     print('DBusExport:', *args, **kw)
     kw['file'].flush()
+
 
 from calibre.ptempfile import PersistentTemporaryDirectory
 
@@ -57,6 +60,7 @@ class IconCache(object):
         # Touch the theme path: GTK icon loading system checks the mtime of the
         # dir to decide whether it should look for new icons in the theme dir.
         os.utime(self.icon_theme_path, None)
+
 
 _icon_cache = None
 
@@ -106,7 +110,7 @@ def key_sequence_to_dbus_shortcut(qks):
         if key == -1 or key == Qt.Key_unknown:
             continue
         items = []
-        for mod, name in {Qt.META:'Super', Qt.CTRL:'Control', Qt.ALT:'Alt', Qt.SHIFT:'Shift'}.iteritems():
+        for mod, name in iteritems({Qt.META:'Super', Qt.CTRL:'Control', Qt.ALT:'Alt', Qt.SHIFT:'Shift'}):
             if key & mod == mod:
                 items.append(name)
         key &= int(~(Qt.ShiftModifier | Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier | Qt.KeypadModifier))
@@ -142,10 +146,10 @@ def set_X_window_properties(win_id, **properties):
     conn = xcb.connect()
     atoms = {name:conn.core.InternAtom(False, len(name), name) for name in properties}
     utf8_string_atom = None
-    for name, val in properties.iteritems():
+    for name, val in iteritems(properties):
         atom = atoms[name].reply().atom
         type_atom = xcb.xproto.Atom.STRING
-        if isinstance(val, unicode):
+        if isinstance(val, unicode_type):
             if utf8_string_atom is None:
                 utf8_string_atom = conn.core.InternAtom(True, len(b'UTF8_STRING'), b'UTF8_STRING').reply().atom
             type_atom = utf8_string_atom

@@ -8,7 +8,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os, time, re
 from collections import defaultdict
-from polyglot.builtins import map
+from polyglot.builtins import itervalues, map, unicode_type
 from contextlib import contextmanager
 from functools import partial
 
@@ -69,7 +69,7 @@ def metadata_extensions():
     # but not actually added)
     global _metadata_extensions
     if _metadata_extensions is None:
-        _metadata_extensions =  frozenset(map(unicode, BOOK_EXTENSIONS)) | {'opf'}
+        _metadata_extensions =  frozenset(map(unicode_type, BOOK_EXTENSIONS)) | {'opf'}
     return _metadata_extensions
 
 
@@ -137,17 +137,17 @@ def find_books_in_directory(dirpath, single_book_per_directory, compiled_rules=(
             if allow_path(path, ext, compiled_rules):
                 formats[ext] = path
         if formats_ok(formats):
-            yield list(formats.itervalues())
+            yield list(itervalues(formats))
     else:
         books = defaultdict(dict)
         for path in listdir_impl(dirpath, sort_by_mtime=True):
             key, ext = splitext(path)
             if allow_path(path, ext, compiled_rules):
-                books[icu_lower(key) if isinstance(key, unicode) else key.lower()][ext] = path
+                books[icu_lower(key) if isinstance(key, unicode_type) else key.lower()][ext] = path
 
-        for formats in books.itervalues():
+        for formats in itervalues(books):
             if formats_ok(formats):
-                yield list(formats.itervalues())
+                yield list(itervalues(formats))
 
 
 def create_format_map(formats):

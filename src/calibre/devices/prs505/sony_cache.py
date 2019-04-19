@@ -6,7 +6,6 @@ __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import os, time
-from base64 import b64decode
 from datetime import date
 
 from calibre import prints, guess_type, isbytestring, fsync
@@ -16,6 +15,7 @@ from calibre.constants import DEBUG, preferred_encoding
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ebooks.metadata import authors_to_string, title_sort, \
                                     authors_to_sort_string
+from polyglot.binary import from_base64_bytes
 
 '''
 cahceExt.xml
@@ -321,7 +321,7 @@ class XMLCache(object):
             # Only rebase ids of nodes that are immediate children of the
             # record root (that way playlist/itemnodes are unaffected
             items = root.xpath('child::*[@id]')
-            items.sort(cmp=lambda x,y:cmp(int(x.get('id')), int(y.get('id'))))
+            items.sort(key=lambda x: int(x.get('id')))
             idmap = {}
             for i, item in enumerate(items):
                 old = int(item.get('id'))
@@ -380,8 +380,8 @@ class XMLCache(object):
                             'descendant::*[local-name()="png"]'):
                         if img.text:
                             try:
-                                raw = b64decode(img.text.strip())
-                            except:
+                                raw = from_base64_bytes(img.text.strip())
+                            except Exception:
                                 continue
                             book.thumbnail = raw
                             break
@@ -705,8 +705,8 @@ class XMLCache(object):
                     child.text = '\n'+'\t'*(level+1)
                     for gc in child:
                         gc.tail = '\n'+'\t'*(level+1)
-                    child.iterchildren(reversed=True).next().tail = '\n'+'\t'*level
-            root.iterchildren(reversed=True).next().tail = '\n'+'\t'*(level-1)
+                    next(child.iterchildren(reversed=True)).tail = '\n'+'\t'*level
+            next(root.iterchildren(reversed=True)).tail = '\n'+'\t'*(level-1)
 
     def move_playlists_to_bottom(self):
         for root in self.record_roots.values():
@@ -799,4 +799,3 @@ class XMLCache(object):
                 self.namespaces[i] = ns
 
     # }}}
-

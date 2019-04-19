@@ -9,7 +9,7 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 import os
 from functools import partial
 from itertools import product
-from polyglot.builtins import map
+from polyglot.builtins import iteritems, itervalues, map, unicode_type, range
 
 from PyQt5.Qt import (
     QDockWidget, Qt, QLabel, QIcon, QAction, QApplication, QWidget, QEvent,
@@ -107,15 +107,15 @@ class Central(QStackedWidget):  # {{{
     @property
     def tab_order(self):
         ans = []
-        rmap = {v:k for k, v in editors.iteritems()}
-        for i in xrange(self.editor_tabs.count()):
+        rmap = {v:k for k, v in iteritems(editors)}
+        for i in range(self.editor_tabs.count()):
             name = rmap.get(self.editor_tabs.widget(i))
             if name is not None:
                 ans.append(name)
         return ans
 
     def rename_editor(self, editor, name):
-        for i in xrange(self.editor_tabs.count()):
+        for i in range(self.editor_tabs.count()):
             if self.editor_tabs.widget(i) is editor:
                 fname = name.rpartition('/')[2]
                 self.editor_tabs.setTabText(i, fname)
@@ -126,7 +126,7 @@ class Central(QStackedWidget):  # {{{
         self.editor_tabs.setCurrentWidget(editor)
 
     def close_editor(self, editor):
-        for i in xrange(self.editor_tabs.count()):
+        for i in range(self.editor_tabs.count()):
             if self.editor_tabs.widget(i) is editor:
                 self.editor_tabs.removeTab(i)
                 if self.editor_tabs.count() == 0:
@@ -136,7 +136,7 @@ class Central(QStackedWidget):  # {{{
 
     def editor_modified(self, *args):
         tb = self.editor_tabs.tabBar()
-        for i in xrange(self.editor_tabs.count()):
+        for i in range(self.editor_tabs.count()):
             editor = self.editor_tabs.widget(i)
             modified = getattr(editor, 'is_modified', False)
             tb.setTabIcon(i, self.modified_icon if modified else QIcon())
@@ -152,7 +152,7 @@ class Central(QStackedWidget):  # {{{
     def close_all_but(self, ed):
         close = []
         if ed is not None:
-            for i in xrange(self.editor_tabs.count()):
+            for i in range(self.editor_tabs.count()):
                 q = self.editor_tabs.widget(i)
                 if q is not None and q is not ed:
                     close.append(q)
@@ -166,7 +166,7 @@ class Central(QStackedWidget):  # {{{
     def save_state(self):
         tprefs.set('search-panel-visible', self.search_panel.isVisible())
         self.search_panel.save_state()
-        for ed in editors.itervalues():
+        for ed in itervalues(editors):
             ed.save_state()
         if self.current_editor is not None:
             self.current_editor.save_state()  # Ensure the current editor saves it state last
@@ -273,7 +273,7 @@ class Main(MainWindow):
         self.cursor_position_widget = CursorPositionWidget(self)
         self.status_bar.addPermanentWidget(self.cursor_position_widget)
         self.status_bar_default_msg = la = QLabel(' ' + _('{0} {1} created by {2}').format(__appname__, get_version(), 'Kovid Goyal'))
-        la.base_template = unicode(la.text())
+        la.base_template = unicode_type(la.text())
         self.status_bar.addWidget(la)
         f = self.status_bar.font()
         f.setBold(True)
@@ -324,7 +324,7 @@ class Main(MainWindow):
             if isinstance(keys, type('')):
                 keys = (keys,)
             self.keyboard.register_shortcut(
-                sid, unicode(ac.text()).replace('&', ''), default_keys=keys, description=description, action=ac, group=group)
+                sid, unicode_type(ac.text()).replace('&', ''), default_keys=keys, description=description, action=ac, group=group)
             self.addAction(ac)
             return ac
 
@@ -622,7 +622,7 @@ class Main(MainWindow):
 
         if self.plugin_menu_actions:
             e = b.addMenu(_('&Plugins'))
-            for ac in sorted(self.plugin_menu_actions, key=lambda x:sort_key(unicode(x.text()))):
+            for ac in sorted(self.plugin_menu_actions, key=lambda x:sort_key(unicode_type(x.text()))):
                 e.addAction(ac)
 
         e = b.addMenu(_('&Help'))
@@ -674,7 +674,7 @@ class Main(MainWindow):
                     bar.addAction(actions[ac])
                 except KeyError:
                     if DEBUG:
-                        prints('Unknown action for toolbar %r: %r' % (unicode(bar.objectName()), ac))
+                        prints('Unknown action for toolbar %r: %r' % (unicode_type(bar.objectName()), ac))
 
         for x in tprefs['global_book_toolbar']:
             add(self.global_bar, x)

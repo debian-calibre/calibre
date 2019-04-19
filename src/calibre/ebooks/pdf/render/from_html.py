@@ -7,8 +7,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import json, os
-from polyglot.builtins import map
+import json, os, numbers
 from math import floor
 from collections import defaultdict
 
@@ -25,6 +24,7 @@ from calibre.ebooks.pdf.render.common import (inch, cm, mm, pica, cicero,
 from calibre.ebooks.pdf.render.engine import PdfDevice
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.resources import load_hyphenator_dicts
+from polyglot.builtins import iteritems, itervalues, map, unicode_type
 
 
 def get_page_size(opts, for_comic=False):  # {{{
@@ -91,10 +91,10 @@ class Page(QWebPage):  # {{{
         self.longjs_counter = 0
 
     def javaScriptConsoleMessage(self, msg, lineno, msgid):
-        self.log.debug(u'JS:', unicode(msg))
+        self.log.debug(u'JS:', unicode_type(msg))
 
     def javaScriptAlert(self, frame, msg):
-        self.log(unicode(msg))
+        self.log(unicode_type(msg))
 
     @pyqtSlot(result=bool)
     def shouldInterruptJavaScript(self):
@@ -128,19 +128,19 @@ def draw_image_page(page_rect, painter, p, preserve_aspect_ratio=True):
 
 class PDFWriter(QObject):
 
-    @pyqtSlot(result=unicode)
+    @pyqtSlot(result=unicode_type)
     def title(self):
         return self.doc_title
 
-    @pyqtSlot(result=unicode)
+    @pyqtSlot(result=unicode_type)
     def author(self):
         return self.doc_author
 
-    @pyqtSlot(result=unicode)
+    @pyqtSlot(result=unicode_type)
     def section(self):
         return self.current_section
 
-    @pyqtSlot(result=unicode)
+    @pyqtSlot(result=unicode_type)
     def tl_section(self):
         return self.current_tl_section
 
@@ -280,7 +280,7 @@ class PDFWriter(QObject):
             self.loop.exit(1)
 
     def render_next(self):
-        item = unicode(self.render_queue.pop(0))
+        item = unicode_type(self.render_queue.pop(0))
 
         self.logger.debug('Processing %s...' % item)
         self.current_item = item
@@ -390,10 +390,10 @@ class PDFWriter(QObject):
         if self.paged_js is None:
             import uuid
             from calibre.utils.resources import compiled_coffeescript as cc
-            self.paged_js =  cc('ebooks.oeb.display.utils')
-            self.paged_js += cc('ebooks.oeb.display.indexing')
-            self.paged_js += cc('ebooks.oeb.display.paged')
-            self.paged_js += cc('ebooks.oeb.display.mathjax')
+            self.paged_js =  cc('ebooks.oeb.display.utils').decode('utf-8')
+            self.paged_js += cc('ebooks.oeb.display.indexing').decode('utf-8')
+            self.paged_js += cc('ebooks.oeb.display.paged').decode('utf-8')
+            self.paged_js += cc('ebooks.oeb.display.mathjax').decode('utf-8')
             if self.opts.pdf_hyphenate:
                 self.paged_js += P('viewer/hyphenate/Hyphenator.js', data=True).decode('utf-8')
                 hjs, self.hyphenate_lang = load_hyphenator_dicts({}, self.book_language)
@@ -417,7 +417,7 @@ class PDFWriter(QObject):
             except Exception:
                 doc_margins = None
             if doc_margins and isinstance(doc_margins, dict):
-                doc_margins = {k:float(v) for k, v in doc_margins.iteritems() if isinstance(v, (float, int)) and k in {'right', 'top', 'left', 'bottom'}}
+                doc_margins = {k:float(v) for k, v in iteritems(doc_margins) if isinstance(v, numbers.Number) and k in {'right', 'top', 'left', 'bottom'}}
                 if doc_margins:
                     margin_top = margin_bottom = 0
                     page_margins = self.convert_page_margins(doc_margins)
@@ -438,7 +438,7 @@ class PDFWriter(QObject):
 
         if not isinstance(amap, dict):
             amap = {'links':[], 'anchors':{}}  # Some javascript error occurred
-        for val in amap['anchors'].itervalues():
+        for val in itervalues(amap['anchors']):
             if isinstance(val, dict) and 'column' in val:
                 val['column'] = int(val['column'])
         for href, val in amap['links']:

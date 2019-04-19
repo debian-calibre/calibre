@@ -17,6 +17,7 @@ from PyQt5.Qt import (QFontInfo, QFontMetrics, Qt, QFont, QFontDatabase, QPen,
 
 from calibre.constants import config_dir
 from calibre.gui2 import choose_files, error_dialog, info_dialog, empty_index
+from polyglot.builtins import unicode_type, range
 
 
 def add_fonts(parent):
@@ -112,7 +113,7 @@ class FontFamilyDelegate(QStyledItemDelegate):
         painter.restore()
 
     def do_paint(self, painter, option, index):
-        text = unicode(index.data(Qt.DisplayRole) or '')
+        text = unicode_type(index.data(Qt.DisplayRole) or '')
         font = QFont(option.font)
         font.setPointSize(QFontInfo(font).pointSize() * 1.5)
         font2 = QFont(font)
@@ -264,10 +265,10 @@ class FontFamilyDialog(QDialog):
         i = self.view.currentIndex().row()
         if i < 0:
             i = 0
-        q = icu_lower(unicode(self.search.text())).strip()
+        q = icu_lower(unicode_type(self.search.text())).strip()
         if not q:
             return
-        r = (xrange(i-1, -1, -1) if backwards else xrange(i+1,
+        r = (range(i-1, -1, -1) if backwards else range(i+1,
             len(self.families)))
         for j in r:
             f = self.families[j]
@@ -286,7 +287,7 @@ class FontFamilyDialog(QDialog):
             self.families = list(self.font_scanner.find_font_families())
         except:
             self.families = []
-            print ('WARNING: Could not load fonts')
+            print('WARNING: Could not load fonts')
             import traceback
             traceback.print_exc()
         self.families.insert(0, _('None'))

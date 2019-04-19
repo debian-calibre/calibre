@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "března 08, 2019" "3.40.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "dubna 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -77,6 +77,11 @@ Počet chybných přihlášení pro zakázání.     Počet chybných přihláš
 .TP
 .B \-\-ban\-for
 Zakázat IP adresy, které mají opakovaná chybná přihlášení.  Dočasně zakáže přístup pro IP adresy, které mají opakovaná chybná přihlášení, na zadaný počet minut. Užitečné zabránění pokusům o odhadnutí hesel. Pokud je nastaveno na nulu, je zakazování vypnuto.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -211,7 +216,7 @@ Port, na kterém naslouchat pro připojení.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Cesta k souboru JSON obsahujícímu adresy URL pro funkci „Vyhledat na internetu“. Nejsnadnější způsob vytvoření takového souboru je přejít v Calibre do Předvolby\->Sdílení po síti\->Vyhledat na internetu, vytvořit adresy URL a exportovat je.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +241,7 @@ Cesta k souboru soukromého klíče SSL.
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Předpona, kterou předřadit všem URL.        Užitečné, pokud si přejete spustit tento server za reverzní proxy. Například použijte /calibre jako předponu URL.
+Předpona, kterou předřadit všem adresám URL.        Užitečné, pokud si přejete spustit tento server za reverzní proxy. Například použijte /calibre jako předponu URL.
 .UNINDENT
 .INDENT 0.0
 .TP
