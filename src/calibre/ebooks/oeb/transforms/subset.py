@@ -11,6 +11,7 @@ from collections import defaultdict
 
 from calibre.ebooks.oeb.base import urlnormalize
 from calibre.utils.fonts.sfnt.subset import subset, NoGlyphs, UnsupportedFont
+from polyglot.builtins import iteritems, itervalues, unicode_type, range
 from tinycss.fonts3 import parse_font_family
 
 
@@ -35,7 +36,7 @@ def get_font_properties(rule, default=None):
         except (IndexError, KeyError, AttributeError, TypeError, ValueError):
             val = None if q in {'src', 'font-family'} else default
         if q in {'font-weight', 'font-stretch', 'font-style'}:
-            val = unicode(val).lower() if (val or val == 0) else val
+            val = unicode_type(val).lower() if (val or val == 0) else val
             if val == 'inherit':
                 val = default
         if q == 'font-weight':
@@ -151,7 +152,7 @@ class SubsetFonts(object):
             else:
                 fonts[item.href] = font
 
-        for font in fonts.itervalues():
+        for font in itervalues(fonts):
             if not font['chars']:
                 self.log('The font %s is unused. Removing it.'%font['src'])
                 remove(font)
@@ -170,8 +171,8 @@ class SubsetFonts(object):
                 totals[1] += sz
             else:
                 font['item'].data = raw
-                nlen = sum(new_stats.itervalues())
-                olen = sum(old_stats.itervalues())
+                nlen = sum(itervalues(new_stats))
+                olen = sum(itervalues(old_stats))
                 self.log('Decreased the font %s to %.1f%% of its original size'%
                         (font['src'], nlen/olen *100))
                 totals[0] += nlen
@@ -207,7 +208,7 @@ class SubsetFonts(object):
                 if rule.type != rule.STYLE_RULE:
                     continue
                 props = {k:v for k,v in
-                        get_font_properties(rule).iteritems() if v}
+                        iteritems(get_font_properties(rule)) if v}
                 if not props:
                     continue
                 for sel in rule.selectorList:
@@ -236,7 +237,7 @@ class SubsetFonts(object):
         no match is found (can happen if no family matches).
         '''
         ff = style.get('font-family', [])
-        lnames = {unicode(x).lower() for x in ff}
+        lnames = {unicode_type(x).lower() for x in ff}
         matching_set = []
 
         # Filter on font-family
@@ -286,10 +287,10 @@ class SubsetFonts(object):
         elif fw == 500:
             q = [500, 400, 300, 200, 100, 600, 700, 800, 900]
         elif fw < 400:
-            q = [fw] + list(xrange(fw-100, -100, -100)) + list(xrange(fw+100,
+            q = [fw] + list(range(fw-100, -100, -100)) + list(range(fw+100,
                 100, 1000))
         else:
-            q = [fw] + list(xrange(fw+100, 100, 1000)) + list(xrange(fw-100,
+            q = [fw] + list(range(fw+100, 100, 1000)) + list(range(fw-100,
                 -100, -100))
         for wt in q:
             matches = [f for f in matching_set if f['weight'] == wt]
@@ -314,6 +315,3 @@ class SubsetFonts(object):
             chars = self.find_chars(elem)
             if chars:
                 font['chars'] |= chars
-
-
-

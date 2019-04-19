@@ -105,11 +105,9 @@ class FormatCollection(object):  # {{{
 
 def books_in_folder(folder, one_per_folder,  # {{{
         cancel_callback=lambda : False):
-    assert not isinstance(folder, unicode)
-
     dirpath = os.path.abspath(folder)
     if one_per_folder:
-        formats = set([])
+        formats = set()
         for path in os.listdir(dirpath):
             if cancel_callback():
                 return []

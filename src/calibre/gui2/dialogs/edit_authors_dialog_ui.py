@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_EditAuthorsDialog(object):
     def setupUi(self, EditAuthorsDialog):
@@ -91,5 +92,6 @@ class Ui_EditAuthorsDialog(object):
         self.auth_sort_to_author.setToolTip(_("Copy author sort to author for every author. You typically use this button\n"
 "after changing Preferences->Advanced->Tweaks->Author sort name algorithm"))
         self.auth_sort_to_author.setText(_("&Copy all author sort values to author"))
+
 
 from calibre.gui2.widgets import HistoryLineEdit

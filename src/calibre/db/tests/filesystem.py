@@ -55,7 +55,7 @@ class FilesystemTest(BaseTest):
         cache2 = self.init_cache(cl)
         for c in (cache, cache2):
             data = self.get_filesystem_data(c, 1)
-            ae(set(orig_data.iterkeys()), set(data.iterkeys()))
+            ae(set(orig_data), set(data))
             ae(orig_data, data, 'Filesystem data does not match')
             ae(c.field_for('path', 1), 'Moved/Moved (1)')
             ae(c.field_for('path', 3), 'Moved1/Moved1 (3)')

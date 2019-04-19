@@ -83,13 +83,13 @@ class Sfnt(object):
 
     def __iter__(self):
         '''Iterate over the table tags in order.'''
-        for x in sorted(self.tables.iterkeys()):
+        for x in sorted(self.tables):
             yield x
         # Although the optimal order is not alphabetical, the OTF spec says
         # they should be alphabetical, so we stick with that. See
         # http://partners.adobe.com/public/developer/opentype/index_recs.html
         # for optimal order.
-        # keys = list(self.tables.iterkeys())
+        # keys = list(self.tables)
         # order = {x:i for i, x in enumerate((b'head', b'hhea', b'maxp', b'OS/2',
         #     b'hmtx', b'LTSH', b'VDMX', b'hdmx', b'cmap', b'fpgm', b'prep',
         #     b'cvt ', b'loca', b'glyf', b'CFF ', b'kern', b'name', b'post',
@@ -166,7 +166,7 @@ def test_roundtrip(ff=None):
         raise ValueError('Roundtripping failed, size different (%d vs. %d)'%
                          (len(data), len(rd)))
 
+
 if __name__ == '__main__':
     import sys
     test_roundtrip(sys.argv[-1])
-

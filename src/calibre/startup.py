@@ -10,22 +10,23 @@ Perform various initialization tasks.
 import locale, sys
 
 # Default translation is NOOP
-from polyglot.builtins import builtins
+from polyglot.builtins import builtins, is_py3, unicode_type
 builtins.__dict__['_'] = lambda s: s
 
 # For strings which belong in the translation tables, but which shouldn't be
 # immediately translated to the environment language
 builtins.__dict__['__'] = lambda s: s
 
-from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd
+from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd, ispy3
 
 _run_once = False
 winutil = winutilerror = None
 
 if not _run_once:
     _run_once = True
+    from importlib import import_module
 
-    if not isfrozen:
+    if not isfrozen and not ispy3:
         # Prevent PyQt4 from being loaded
         class PyQt4Ban(object):
 
@@ -40,15 +41,28 @@ if not _run_once:
 
     class DeVendor(object):
 
-        def find_module(self, fullname, path=None):
-            if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
-                return self
+        if ispy3:
 
-        def load_module(self, fullname):
-            from importlib import import_module
-            if fullname == 'calibre.web.feeds.feedparser':
-                return import_module('feedparser')
-            return import_module(fullname[len('calibre.ebooks.'):])
+            def find_spec(self, fullname, path, target=None):
+                spec = None
+                if fullname == 'calibre.web.feeds.feedparser':
+                    m = import_module('feedparser')
+                    spec = m.__spec__
+                elif fullname.startswith('calibre.ebooks.markdown'):
+                    m = import_module(fullname[len('calibre.ebooks.'):])
+                    spec = m.__spec__
+                return spec
+
+        else:
+
+            def find_module(self, fullname, path=None):
+                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
+                    return self
+
+            def load_module(self, fullname):
+                if fullname == 'calibre.web.feeds.feedparser':
+                    return import_module('feedparser')
+                return import_module(fullname[len('calibre.ebooks.'):])
 
     sys.meta_path.insert(0, DeVendor())
 
@@ -58,7 +72,7 @@ if not _run_once:
         winutil, winutilerror = plugins['winutil']
         if not winutil:
             raise RuntimeError('Failed to load the winutil plugin: %s'%winutilerror)
-        if len(sys.argv) > 1 and not isinstance(sys.argv[1], unicode):
+        if len(sys.argv) > 1 and not isinstance(sys.argv[1], unicode_type):
             sys.argv[1:] = winutil.argv()[1-len(sys.argv):]
 
     #
@@ -75,7 +89,7 @@ if not _run_once:
     if isosx:
         enc = 'utf-8'
     for i in range(1, len(sys.argv)):
-        if not isinstance(sys.argv[i], unicode):
+        if not isinstance(sys.argv[i], unicode_type):
             sys.argv[i] = sys.argv[i].decode(enc, 'replace')
 
     #
@@ -125,7 +139,9 @@ if not _run_once:
             pass
 
     # local_open() opens a file that wont be inherited by child processes
-    if iswindows:
+    if is_py3:
+        local_open = open  # PEP 446
+    elif iswindows:
         def local_open(name, mode='r', bufsize=-1):
             mode += 'N'
             return open(name, mode, bufsize)
@@ -202,7 +218,7 @@ if not _run_once:
                     if name == 'Thread':
                         name = self.name
                 if name:
-                    if isinstance(name, unicode):
+                    if isinstance(name, unicode_type):
                         name = name.encode('ascii', 'replace').decode('ascii')
                     plugins['speedup'][0].set_thread_name(name[:15])
             except Exception:
@@ -223,6 +239,8 @@ def test_lopen():
             if win32api.GetHandleInformation(msvcrt.get_osfhandle(f.fileno())) & 0b1:
                 raise SystemExit('File handle is inheritable!')
     else:
+        import fcntl
+
         def assert_not_inheritable(f):
             if not fcntl.fcntl(f, fcntl.F_GETFD) & fcntl.FD_CLOEXEC:
                 raise SystemExit('File handle is inheritable!')
@@ -238,14 +256,14 @@ def test_lopen():
 
         print('O_CREAT tested')
         with copen(n, 'w+b') as f:
-            f.write('two')
+            f.write(b'two')
         with copen(n, 'r') as f:
             if f.read() == 'two':
                 print('O_TRUNC tested')
             else:
                 raise Exception('O_TRUNC failed')
         with copen(n, 'ab') as f:
-            f.write('three')
+            f.write(b'three')
         with copen(n, 'r+') as f:
             if f.read() == 'twothree':
                 print('O_APPEND tested')

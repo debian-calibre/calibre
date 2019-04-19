@@ -13,13 +13,13 @@ to get and set meta information. For example:
 >>> lrf.category = "History"
 """
 
-import struct, zlib, sys, os
+import io, struct, zlib, sys, os
 from shutil import copyfileobj
-from cStringIO import StringIO
 import xml.dom.minidom as dom
 from functools import wraps
 
 from calibre.ebooks.metadata import MetaInformation, string_to_authors
+from polyglot.builtins import unicode_type
 
 BYTE      = "<B"  #: Unsigned char little endian encoded in 1 byte
 WORD      = "<H"  #: Unsigned short little endian encoded in 2 bytes
@@ -47,11 +47,7 @@ class field(object):
         obj.pack(val, start=self._start, fmt=self._fmt)
 
     def __repr__(self):
-        typ = ""
-        if self._fmt == DWORD:
-            typ  = "unsigned int"
-        if self._fmt == QWORD:
-            typ = "unsigned long long"
+        typ = {DWORD: 'unsigned int', 'QWORD': 'unsigned long long', BYTE: 'unsigned char', WORD: 'unsigned short'}.get(self._fmt, '')
         return "An " + typ + " stored in " + \
         str(struct.calcsize(self._fmt)) + \
         " bytes starting at byte " + str(self._start)
@@ -63,17 +59,17 @@ class versioned_field(field):
         field.__init__(self, start=start, fmt=fmt)
         self.vfield, self.version = vfield, version
 
-    def enabled(self):
-        return self.vfield > self.version
+    def enabled(self, obj):
+        return self.vfield.__get__(obj) > self.version
 
     def __get__(self, obj, typ=None):
-        if self.enabled():
+        if self.enabled(obj):
             return field.__get__(self, obj, typ=typ)
         else:
             return None
 
     def __set__(self, obj, val):
-        if not self.enabled():
+        if not self.enabled(obj):
             raise LRFException("Trying to set disabled field")
         else:
             field.__set__(self, obj, val)
@@ -195,8 +191,8 @@ class xml_field(object):
 
         if not val:
             val = u''
-        if type(val).__name__ != 'unicode':
-            val = unicode(val, 'utf-8')
+        if not isinstance(val, unicode_type):
+            val = val.decode('utf-8')
 
         elems = document.getElementsByTagName(self.tag_name)
         elem = None
@@ -237,7 +233,7 @@ def insert_into_file(fileobj, data, start, end):
     @param end:     The position in fileobj of data that must not be overwritten
     @return:        C{start + len(data) - end}
     """
-    buffer = StringIO()
+    buffer = io.BytesIO()
     fileobj.seek(end)
     copyfileobj(fileobj, buffer, -1)
     buffer.flush()
@@ -374,9 +370,9 @@ class LRFMetaFile(object):
                 return res
             return restore_pos
         locals_ = func()
-        if locals_.has_key("fget"):  # noqa
+        if 'fget' in locals_:
             locals_["fget"] = decorator(locals_["fget"])
-        if locals_.has_key("fset"):  # noqa
+        if 'fset' in locals_:
             locals_["fset"] = decorator(locals_["fset"])
         return property(**locals_)
 

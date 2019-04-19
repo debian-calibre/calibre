@@ -41,18 +41,11 @@ class Unihandecoder(object):
             self.decoder = Unidecoder()
 
     def decode(self, text):
-        try:
-            unicode  # python2
-            if not isinstance(text, unicode):
-                try:
-                    text = unicode(text)
-                except:
-                    try:
-                        text = text.decode(self.preferred_encoding)
-                    except:
-                        text = text.decode('utf-8', 'replace')
-        except:  # python3, str is unicode
-            pass
+        if isinstance(text, bytes):
+            try:
+                text = text.decode(self.preferred_encoding)
+            except Exception:
+                text = text.decode('utf-8', 'replace')
         # at first unicode normalize it. (see Unicode standards)
         ntext = unicodedata.normalize('NFKC', text)
         return self.decoder.decode(ntext)

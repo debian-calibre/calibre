@@ -16,6 +16,7 @@ from calibre.constants import (config_dir, iswindows, isosx, plugins, DEBUG,
         isworker, filesystem_encoding)
 from calibre.utils.fonts.metadata import FontMetadata, UnsupportedFont
 from calibre.utils.icu import sort_key
+from polyglot.builtins import itervalues, unicode_type, filter
 
 
 class NoFonts(ValueError):
@@ -153,14 +154,14 @@ def path_significance(path, folders):
 
 def build_families(cached_fonts, folders, family_attr='font-family'):
     families = defaultdict(list)
-    for f in cached_fonts.itervalues():
+    for f in itervalues(cached_fonts):
         if not f:
             continue
         lf = icu_lower(f.get(family_attr) or '')
         if lf:
             families[lf].append(f)
 
-    for fonts in families.itervalues():
+    for fonts in itervalues(families):
         # Look for duplicate font files and choose the copy that is from a
         # more significant font directory (prefer user directories over
         # system directories).
@@ -185,7 +186,7 @@ def build_families(cached_fonts, folders, family_attr='font-family'):
 
     font_family_map = dict.copy(families)
     font_families = tuple(sorted((f[0]['font-family'] for f in
-            font_family_map.itervalues()), key=sort_key))
+            itervalues(font_family_map)), key=sort_key))
     return font_family_map, font_families
 # }}}
 
@@ -266,7 +267,7 @@ class FontScanner(Thread):
         '''
         from calibre.utils.fonts.utils import (supports_text,
                 panose_to_css_generic_family, get_printable_characters)
-        if not isinstance(text, unicode):
+        if not isinstance(text, unicode_type):
             raise TypeError(u'%r is not unicode'%text)
         text = get_printable_characters(text)
         found = {}
@@ -280,7 +281,7 @@ class FontScanner(Thread):
             return False
 
         for family in self.find_font_families():
-            faces = filter(filter_faces, self.fonts_for_family(family))
+            faces = list(filter(filter_faces, self.fonts_for_family(family)))
             if not faces:
                 continue
             generic_family = panose_to_css_generic_family(faces[0]['panose'])
@@ -397,6 +398,7 @@ class FontScanner(Thread):
                 prints()
             prints()
 
+
 font_scanner = FontScanner()
 font_scanner.start()
 
@@ -405,6 +407,7 @@ def force_rescan():
     font_scanner.join()
     font_scanner.force_rescan()
     font_scanner.run()
+
 
 if __name__ == '__main__':
     font_scanner.dump_fonts()

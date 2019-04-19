@@ -15,8 +15,8 @@ from xml.sax.saxutils import escape
 from lxml import etree
 
 from calibre.ebooks.oeb.base import XHTML_NS, extract
-from calibre.constants import ispy3
-from calibre.ebooks.mobi.utils import to_base
+from calibre.ebooks.mobi.utils import to_base, PolyglotDict
+from polyglot.builtins import iteritems, unicode_type, codepoint_to_chr as mychr
 
 CHUNK_SIZE = 8192
 
@@ -33,9 +33,9 @@ aid_able_tags = {'a', 'abbr', 'address', 'article', 'aside', 'audio', 'b',
 'span', 'strong', 'sub', 'summary', 'sup', 'textarea', 'time', 'ul', 'var',
 'video'}
 
-_self_closing_pat = re.compile(bytes(
-    r'<(?P<tag>%s)(?=[\s/])(?P<arg>[^>]*)/>'%('|'.join(aid_able_tags|{'script',
-        'style', 'title', 'head'}))),
+_self_closing_pat = re.compile(
+    br'<(?P<tag>%s)(?=[\s/])(?P<arg>[^>]*)/>'%('|'.join(aid_able_tags|{'script',
+        'style', 'title', 'head'})).encode('ascii'),
     re.IGNORECASE)
 
 
@@ -60,9 +60,6 @@ def node_from_path(root, path):
     return parent
 
 
-mychr = chr if ispy3 else unichr
-
-
 def tostring(raw, **kwargs):
     ''' lxml *sometimes* represents non-ascii characters as hex entities in
     attribute values. I can't figure out exactly what circumstances cause it.
@@ -72,7 +69,7 @@ def tostring(raw, **kwargs):
 
     xml_declaration = kwargs.pop('xml_declaration', False)
     encoding = kwargs.pop('encoding', 'UTF-8')
-    kwargs['encoding'] = unicode
+    kwargs['encoding'] = unicode_type
     kwargs['xml_declaration'] = False
     ans = etree.tostring(raw, **kwargs)
     if xml_declaration:
@@ -119,7 +116,7 @@ class Skeleton(object):
 
     def render(self, root):
         raw = tostring(root, xml_declaration=True)
-        raw = raw.replace(b'<html', bytes('<html xmlns="%s"'%XHTML_NS), 1)
+        raw = raw.replace(b'<html', ('<html xmlns="%s"'%XHTML_NS).encode('ascii'), 1)
         raw = close_self_closing_tags(raw)
         return raw
 
@@ -183,7 +180,7 @@ class Chunker(object):
                     with_tail=True))
                 orig_dumps[-1] = close_self_closing_tags(
                         orig_dumps[-1].replace(b'<html',
-                        bytes('<html xmlns="%s"'%XHTML_NS), 1))
+                        ('<html xmlns="%s"'%XHTML_NS).encode('ascii'), 1))
 
             # First pass: break up document into rendered strings of length no
             # more than CHUNK_SIZE
@@ -213,7 +210,7 @@ class Chunker(object):
 
     def remove_namespaces(self, root):
         lang = None
-        for attr, val in root.attrib.iteritems():
+        for attr, val in iteritems(root.attrib):
             if attr.rpartition('}')[-1] == 'lang':
                 lang = val
 
@@ -247,11 +244,11 @@ class Chunker(object):
                 tn = tag.tag
                 if tn is not None:
                     tn = tn.rpartition('}')[-1]
-                attrib = {k.rpartition('}')[-1]:v for k, v in tag.attrib.iteritems()}
+                attrib = {k.rpartition('}')[-1]:v for k, v in iteritems(tag.attrib)}
                 try:
                     elem = nroot.makeelement(tn, attrib=attrib)
                 except ValueError:
-                    attrib = {k:v for k, v in attrib.iteritems() if ':' not in k}
+                    attrib = {k:v for k, v in iteritems(attrib) if ':' not in k}
                     elem = nroot.makeelement(tn, attrib=attrib)
                 elem.text = tag.text
             elem.tail = tag.tail
@@ -369,7 +366,7 @@ class Chunker(object):
         # The first number is an index into the chunk table and the second is
         # an offset from the start of the chunk to the start of the tag pointed
         # to by the link.
-        aid_map = {}  # Map of aid to (fid, offset_from_start_of_chunk, offset_from_start_of_text)
+        aid_map = PolyglotDict()  # Map of aid to (fid, offset_from_start_of_chunk, offset_from_start_of_text)
         for match in re.finditer(br'<[^>]+? [ac]id=[\'"]([cA-Z0-9]+)[\'"]', rebuilt_text):
             offset = match.start()
             pos_fid = None
@@ -398,10 +395,10 @@ class Chunker(object):
         def to_placeholder(aid):
             pos, fid, _ = aid_map[aid]
             pos, fid = to_base(pos, min_num_digits=4), to_href(fid)
-            return bytes(':off:'.join((pos, fid)))
+            return ':off:'.join((pos, fid)).encode('utf-8')
 
-        placeholder_map = {bytes(k):to_placeholder(v) for k, v in
-                self.placeholder_map.iteritems()}
+        placeholder_map = {k:to_placeholder(v) for k, v in
+                iteritems(self.placeholder_map)}
 
         # Now update the links
         def sub(match):

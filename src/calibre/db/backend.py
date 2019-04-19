@@ -12,11 +12,12 @@ import os, shutil, uuid, json, glob, time, hashlib, errno, sys
 from functools import partial
 
 import apsw
-from polyglot.builtins import reraise
+from polyglot.builtins import (iteritems, itervalues,
+        unicode_type, reraise, string_or_bytes, cmp, native_string_type)
 
 from calibre import isbytestring, force_unicode, prints, as_unicode
 from calibre.constants import (iswindows, filesystem_encoding,
-        preferred_encoding)
+        preferred_encoding, ispy3)
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
 from calibre.db import SPOOL_SIZE
 from calibre.db.schema_upgrades import SchemaUpgrade
@@ -46,7 +47,7 @@ from calibre.db.tables import (OneToOneTable, ManyToOneTable, ManyToManyTable,
 Differences in semantics from pysqlite:
 
     1. execute/executemany operate in autocommit mode
-    2. There is no fetchone() method on cursor objects, instead use next()
+    2. There is no fetchone() method on cursor objects, instead use next(cursor)
     3. There is no executescript
 
 '''
@@ -93,7 +94,7 @@ class DBPrefs(dict):  # {{{
             dict.__setitem__(self, key, val)
 
     def raw_to_object(self, raw):
-        if not isinstance(raw, unicode):
+        if not isinstance(raw, unicode_type):
             raw = raw.decode(preferred_encoding)
         return json.loads(raw, object_hook=from_json)
 
@@ -120,7 +121,7 @@ class DBPrefs(dict):  # {{{
             raw = self.to_raw(val)
             with self.db.conn:
                 try:
-                    dbraw = self.db.execute('SELECT id,val FROM preferences WHERE key=?', (key,)).next()
+                    dbraw = next(self.db.execute('SELECT id,val FROM preferences WHERE key=?', (key,)))
                 except StopIteration:
                     dbraw = None
                 if dbraw is None or dbraw[1] != raw:
@@ -151,8 +152,11 @@ class DBPrefs(dict):  # {{{
     def write_serialized(self, library_path):
         try:
             to_filename = os.path.join(library_path, 'metadata_db_prefs_backup.json')
+            data = json.dumps(self, indent=2, default=to_json)
+            if not isinstance(data, bytes):
+                data = data.encode('utf-8')
             with open(to_filename, "wb") as f:
-                f.write(json.dumps(self, indent=2, default=to_json))
+                f.write(data)
         except:
             import traceback
             traceback.print_exc()
@@ -205,9 +209,14 @@ def Concatenate(sep=','):
             ctxt.append(value)
 
     def finalize(ctxt):
-        if not ctxt:
-            return None
-        return sep.join(ctxt)
+        try:
+            if not ctxt:
+                return None
+            return sep.join(ctxt)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
     return ([], step, finalize)
 
@@ -220,9 +229,14 @@ def SortedConcatenate(sep=','):
             ctxt[ndx] = value
 
     def finalize(ctxt):
-        if len(ctxt) == 0:
-            return None
-        return sep.join(map(ctxt.get, sorted(ctxt.iterkeys())))
+        try:
+            if len(ctxt) == 0:
+                return None
+            return sep.join(map(ctxt.get, sorted(ctxt)))
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
     return ({}, step, finalize)
 
@@ -234,7 +248,12 @@ def IdentifiersConcat():
         ctxt.append(u'%s:%s'%(key, val))
 
     def finalize(ctxt):
-        return ','.join(ctxt)
+        try:
+            return ','.join(ctxt)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
     return ([], step, finalize)
 
@@ -247,13 +266,18 @@ def AumSortedConcatenate():
             ctxt[ndx] = ':::'.join((author, sort, link))
 
     def finalize(ctxt):
-        keys = list(ctxt.iterkeys())
-        l = len(keys)
-        if l == 0:
-            return None
-        if l == 1:
-            return ctxt[keys[0]]
-        return ':#:'.join([ctxt[v] for v in sorted(keys)])
+        try:
+            keys = list(ctxt)
+            l = len(keys)
+            if l == 0:
+                return None
+            if l == 1:
+                return ctxt[keys[0]]
+            return ':#:'.join([ctxt[v] for v in sorted(keys)])
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
 
     return ({}, step, finalize)
 
@@ -271,7 +295,7 @@ class Connection(apsw.Connection):  # {{{
         self.execute('pragma cache_size=-5000')
         self.execute('pragma temp_store=2')
 
-        encoding = self.execute('pragma encoding').next()[0]
+        encoding = next(self.execute('pragma encoding'))[0]
         self.createcollation('PYNOCASE', partial(pynocase,
             encoding=encoding))
 
@@ -306,7 +330,7 @@ class Connection(apsw.Connection):  # {{{
         if kw.get('all', True):
             return ans.fetchall()
         try:
-            return ans.next()[0]
+            return next(ans)[0]
         except (StopIteration, IndexError):
             return None
 
@@ -561,10 +585,10 @@ class DB(object):
                 prints('found user category case overlap', catmap[uc])
                 cat = catmap[uc][0]
                 suffix = 1
-                while icu_lower((cat + unicode(suffix))) in catmap:
+                while icu_lower((cat + unicode_type(suffix))) in catmap:
                     suffix += 1
-                prints('Renaming user category %s to %s'%(cat, cat+unicode(suffix)))
-                user_cats[cat + unicode(suffix)] = user_cats[cat]
+                prints('Renaming user category %s to %s'%(cat, cat+unicode_type(suffix)))
+                user_cats[cat + unicode_type(suffix)] = user_cats[cat]
                 del user_cats[cat]
                 cats_changed = True
         if cats_changed:
@@ -670,23 +694,27 @@ class DB(object):
             if d['is_multiple']:
                 if x is None:
                     return []
-                if isinstance(x, (str, unicode, bytes)):
+                if isinstance(x, (unicode_type, bytes)):
                     x = x.split(d['multiple_seps']['ui_to_list'])
                 x = [y.strip() for y in x if y.strip()]
                 x = [y.decode(preferred_encoding, 'replace') if not isinstance(y,
-                    unicode) else y for y in x]
+                    unicode_type) else y for y in x]
                 return [u' '.join(y.split()) for y in x]
             else:
-                return x if x is None or isinstance(x, unicode) else \
+                return x if x is None or isinstance(x, unicode_type) else \
                         x.decode(preferred_encoding, 'replace')
 
         def adapt_datetime(x, d):
-            if isinstance(x, (str, unicode, bytes)):
+            if isinstance(x, (unicode_type, bytes)):
+                if isinstance(x, bytes):
+                    x = x.decode(preferred_encoding, 'replace')
                 x = parse_date(x, assume_utc=False, as_utc=False)
             return x
 
         def adapt_bool(x, d):
-            if isinstance(x, (str, unicode, bytes)):
+            if isinstance(x, (unicode_type, bytes)):
+                if isinstance(x, bytes):
+                    x = x.decode(preferred_encoding, 'replace')
                 x = x.lower()
                 if x == 'true':
                     x = True
@@ -707,7 +735,9 @@ class DB(object):
         def adapt_number(x, d):
             if x is None:
                 return None
-            if isinstance(x, (str, unicode, bytes)):
+            if isinstance(x, (unicode_type, bytes)):
+                if isinstance(x, bytes):
+                    x = x.decode(preferred_encoding, 'replace')
                 if x.lower() == 'none':
                     return None
             if d['datatype'] == 'int':
@@ -727,7 +757,7 @@ class DB(object):
         }
 
         # Create Tag Browser categories for custom columns
-        for k in sorted(self.custom_column_label_map.iterkeys()):
+        for k in sorted(self.custom_column_label_map):
             v = self.custom_column_label_map[k]
             if v['normalized']:
                 is_category = True
@@ -780,10 +810,10 @@ class DB(object):
             'last_modified':19, 'identifiers':20, 'languages':21,
         }
 
-        for k,v in self.FIELD_MAP.iteritems():
+        for k,v in iteritems(self.FIELD_MAP):
             self.field_metadata.set_field_record_index(k, v, prefer_custom=False)
 
-        base = max(self.FIELD_MAP.itervalues())
+        base = max(itervalues(self.FIELD_MAP))
 
         for label_ in sorted(self.custom_column_label_map):
             data = self.custom_column_label_map[label_]
@@ -869,7 +899,7 @@ class DB(object):
         if kw.get('all', True):
             return ans.fetchall()
         try:
-            return ans.next()[0]
+            return next(ans)[0]
         except (StopIteration, IndexError):
             return None
 
@@ -1083,7 +1113,7 @@ class DB(object):
 
     def dump_and_restore(self, callback=None, sql=None):
         import codecs
-        from calibre.utils.apsw_shell import Shell
+        from apsw import Shell
         from contextlib import closing
         if callback is None:
             callback = lambda x: x
@@ -1096,7 +1126,7 @@ class DB(object):
                     shell = Shell(db=self.conn, stdout=buf)
                     shell.process_command('.dump')
             else:
-                with open(fname, 'wb') as buf:
+                with lopen(fname, 'wb') as buf:
                     buf.write(sql if isinstance(sql, bytes) else sql.encode('utf-8'))
 
             with TemporaryFile(suffix='_tmpdb.db', dir=os.path.dirname(self.dbpath)) as tmpdb:
@@ -1169,8 +1199,8 @@ class DB(object):
         '''
         book_id = ' (%d)' % book_id
         l = self.PATH_LIMIT - (len(book_id) // 2) - 2
-        author = ascii_filename(author)[:l].decode('ascii', 'replace')
-        title  = ascii_filename(title.lstrip())[:l].decode('ascii', 'replace').rstrip()
+        author = ascii_filename(author)[:l]
+        title  = ascii_filename(title.lstrip())[:l].rstrip()
         if not title:
             title = 'Unknown'[:l]
         try:
@@ -1179,8 +1209,7 @@ class DB(object):
         except IndexError:
             author = ''
         if not author:
-            author = ascii_filename(_('Unknown')).decode(
-                    'ascii', 'replace')
+            author = ascii_filename(_('Unknown'))
         if author.upper() in WINDOWS_RESERVED_NAMES:
             author += 'w'
         return '%s/%s%s' % (author, title, book_id)
@@ -1197,15 +1226,15 @@ class DB(object):
         l = (self.PATH_LIMIT - (extlen // 2) - 2) if iswindows else ((self.PATH_LIMIT - extlen - 2) // 2)
         if l < 5:
             raise ValueError('Extension length too long: %d' % extlen)
-        author = ascii_filename(author)[:l].decode('ascii', 'replace')
-        title  = ascii_filename(title.lstrip())[:l].decode('ascii', 'replace').rstrip()
+        author = ascii_filename(author)[:l]
+        title  = ascii_filename(title.lstrip())[:l].rstrip()
         if not title:
             title = 'Unknown'[:l]
         name   = title + ' - ' + author
         while name.endswith('.'):
             name = name[:-1]
         if not name:
-            name = ascii_filename(_('Unknown')).decode('ascii', 'replace')
+            name = ascii_filename(_('Unknown'))
         return name
 
     # Database layer API {{{
@@ -1239,7 +1268,7 @@ class DB(object):
             return self._library_id_
 
         def fset(self, val):
-            self._library_id_ = unicode(val)
+            self._library_id_ = unicode_type(val)
             self.execute('''
                     DELETE FROM library_id;
                     INSERT INTO library_id (uuid) VALUES (?);
@@ -1257,7 +1286,7 @@ class DB(object):
         '''
 
         with self.conn:  # Use a single transaction, to ensure nothing modifies the db while we are reading
-            for table in self.tables.itervalues():
+            for table in itervalues(self.tables):
                 try:
                     table.read(self)
                 except:
@@ -1321,7 +1350,7 @@ class DB(object):
 
     def remove_formats(self, remove_map):
         paths = []
-        for book_id, removals in remove_map.iteritems():
+        for book_id, removals in iteritems(remove_map):
             for fmt, fname, path in removals:
                 path = self.format_abspath(book_id, fmt, fname, path)
                 if path is not None:
@@ -1342,7 +1371,7 @@ class DB(object):
     def copy_cover_to(self, path, dest, windows_atomic_move=None, use_hardlink=False, report_file_size=None):
         path = os.path.abspath(os.path.join(self.library_path, path, 'cover.jpg'))
         if windows_atomic_move is not None:
-            if not isinstance(dest, basestring):
+            if not isinstance(dest, string_or_bytes):
                 raise Exception("Error, you must pass the dest as a path when"
                         " using windows_atomic_move")
             if os.access(path, os.R_OK) and dest and not samefile(dest, path):
@@ -1432,7 +1461,7 @@ class DB(object):
         if path is None:
             return False
         if windows_atomic_move is not None:
-            if not isinstance(dest, basestring):
+            if not isinstance(dest, string_or_bytes):
                 raise Exception("Error, you must pass the dest as a path when"
                         " using windows_atomic_move")
             if dest:
@@ -1579,7 +1608,7 @@ class DB(object):
                     if samefile(spath, tpath):
                         # The format filenames may have changed while the folder
                         # name remains the same
-                        for fmt, opath in original_format_map.iteritems():
+                        for fmt, opath in iteritems(original_format_map):
                             npath = format_map.get(fmt, None)
                             if npath and os.path.abspath(npath.lower()) != os.path.abspath(opath.lower()) and samefile(opath, npath):
                                 # opath and npath are different hard links to the same file
@@ -1642,7 +1671,7 @@ class DB(object):
     def remove_books(self, path_map, permanent=False):
         self.executemany(
             'DELETE FROM books WHERE id=?', [(x,) for x in path_map])
-        paths = {os.path.join(self.library_path, x) for x in path_map.itervalues() if x}
+        paths = {os.path.join(self.library_path, x) for x in itervalues(path_map) if x}
         paths = {x for x in paths if os.path.exists(x) and self.is_deletable(x)}
         if permanent:
             for path in paths:
@@ -1657,7 +1686,7 @@ class DB(object):
         self.executemany(
             'INSERT OR REPLACE INTO books_plugin_data (book, name, val) VALUES (?, ?, ?)',
             [(book_id, name, json.dumps(val, default=to_json))
-                    for book_id, val in val_map.iteritems()])
+                    for book_id, val in iteritems(val_map)])
 
     def get_custom_book_data(self, name, book_ids, default=None):
         book_ids = frozenset(book_ids)
@@ -1715,8 +1744,15 @@ class DB(object):
             [(book_id, fmt.upper()) for book_id in book_ids])
 
     def set_conversion_options(self, options, fmt):
-        options = [(book_id, fmt.upper(), buffer(pickle_binary_string(data.encode('utf-8') if isinstance(data, unicode) else data)))
-                for book_id, data in options.iteritems()]
+        def map_data(x):
+            if not isinstance(x, string_or_bytes):
+                x = native_string_type(x)
+            x = x.encode('utf-8') if isinstance(x, unicode_type) else x
+            x = pickle_binary_string(x)
+            if not ispy3:
+                x = buffer(x)  # noqa
+            return x
+        options = [(book_id, fmt.upper(), map_data(data)) for book_id, data in iteritems(options)]
         self.executemany('INSERT OR REPLACE INTO conversion_options(book,format,data) VALUES (?,?,?)', options)
 
     def get_top_level_move_items(self, all_paths):
@@ -1754,7 +1790,7 @@ class DB(object):
                 copyfile_using_links(src, dest, dest_is_dir=False)
                 old_files.add(src)
             x = path_map[x]
-            if not isinstance(x, unicode):
+            if not isinstance(x, unicode_type):
                 x = x.decode(filesystem_encoding, 'replace')
             progress(x, i+1, total)
 

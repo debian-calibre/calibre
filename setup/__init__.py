@@ -46,6 +46,15 @@ def newer(targets, sources):
     return newest_source > oldest_target
 
 
+def dump_json(obj, path, indent=4):
+    import json
+    with open(path, 'wb') as f:
+        data = json.dumps(obj, indent=indent)
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
+        f.write(data)
+
+
 def download_securely(url):
     # We use curl here as on some OSes (OS X) when bootstrapping calibre,
     # python will be unable to validate certificates until after cacerts is
@@ -139,7 +148,7 @@ else:
         enc = preferred_encoding
         safe_encode = kwargs.get('safe_encode', False)
         for i, arg in enumerate(args):
-            if isinstance(arg, unicode):
+            if isinstance(arg, type(u'')):
                 try:
                     arg = arg.encode(enc)
                 except UnicodeEncodeError:
@@ -150,8 +159,8 @@ else:
                 try:
                     arg = str(arg)
                 except ValueError:
-                    arg = unicode(arg)
-                if isinstance(arg, unicode):
+                    arg = type(u'')(arg)
+                if isinstance(arg, type(u'')):
                     try:
                         arg = arg.encode(enc)
                     except UnicodeEncodeError:

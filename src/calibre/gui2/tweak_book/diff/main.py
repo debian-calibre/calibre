@@ -24,6 +24,7 @@ from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.gui2.widgets2 import HistoryLineEdit2
 from calibre.utils.filenames import samefile
 from calibre.utils.icu import numeric_sort_key
+from polyglot.builtins import iteritems, unicode_type
 
 
 class BusyWidget(QWidget):  # {{{
@@ -79,11 +80,11 @@ def changed_files(list_of_names1, list_of_names2, get_data1, get_data2):
     removals = list_of_names1 - common_names
     adds = set(list_of_names2 - common_names)
     adata, rdata = {a:get_data2(a) for a in adds}, {r:get_data1(r) for r in removals}
-    ahash = {a:hash(d) for a, d in adata.iteritems()}
-    rhash = {r:hash(d) for r, d in rdata.iteritems()}
+    ahash = {a:hash(d) for a, d in iteritems(adata)}
+    rhash = {r:hash(d) for r, d in iteritems(rdata)}
     renamed_names, removed_names, added_names = {}, set(), set()
-    for name, rh in rhash.iteritems():
-        for n, ah in ahash.iteritems():
+    for name, rh in iteritems(rhash):
+        for n, ah in iteritems(ahash):
             if ah == rh:
                 renamed_names[name] = n
                 adds.discard(n)
@@ -129,7 +130,7 @@ def get_decoded_raw(name):
 
 
 def string_diff(left, right, left_syntax=None, right_syntax=None, left_name='left', right_name='right'):
-    left, right = unicode(left), unicode(right)
+    left, right = unicode_type(left), unicode_type(right)
     cache = Cache()
     cache.set_left(left_name, left), cache.set_right(right_name, right)
     changed_names = {} if left == right else {left_name:right_name}
@@ -316,7 +317,7 @@ class Diff(Dialog):
                 pass
 
     def do_search(self, reverse):
-        text = unicode(self.search.text())
+        text = unicode_type(self.search.text())
         if not text.strip():
             return
         v = self.view.view.left if self.lb.isChecked() else self.view.view.right
@@ -419,7 +420,7 @@ class Diff(Dialog):
         kwargs = lambda name: {'context':self.context, 'beautify':self.beautify, 'syntax':syntax_map.get(name, None)}
 
         if isinstance(changed_names, dict):
-            for name, other_name in sorted(changed_names.iteritems(), key=lambda x:numeric_sort_key(x[0])):
+            for name, other_name in sorted(iteritems(changed_names), key=lambda x:numeric_sort_key(x[0])):
                 args = (name, other_name, cache.left(name), cache.right(other_name))
                 add(args, kwargs(name))
         else:
@@ -435,7 +436,7 @@ class Diff(Dialog):
             args = (name, _('[%s was removed]') % name, cache.left(name), None)
             add(args, kwargs(name))
 
-        for name, new_name in sorted(renamed_names.iteritems(), key=lambda x:numeric_sort_key(x[0])):
+        for name, new_name in sorted(iteritems(renamed_names), key=lambda x:numeric_sort_key(x[0])):
             args = (name, new_name, None, None)
             add(args, kwargs(name))
 

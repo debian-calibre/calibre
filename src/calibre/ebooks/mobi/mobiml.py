@@ -9,6 +9,7 @@ __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.cam>'
 
 import copy
 import re
+import numbers
 from lxml import etree
 from calibre.ebooks.oeb.base import namespace, barename
 from calibre.ebooks.oeb.base import XHTML, XHTML_NS, urlnormalize
@@ -16,6 +17,7 @@ from calibre.ebooks.oeb.stylizer import Stylizer
 from calibre.ebooks.oeb.transforms.flatcss import KeyMapper
 from calibre.ebooks.mobi.utils import convert_color_for_font_tag
 from calibre.utils.imghdr import identify
+from polyglot.builtins import unicode_type, string_or_bytes
 
 MBP_NS = 'http://mobipocket.com/ns/mbp'
 
@@ -44,7 +46,7 @@ COLLAPSE = re.compile(r'[ \t\r\n\v]+')
 
 
 def asfloat(value):
-    if not isinstance(value, (int, long, float)):
+    if not isinstance(value, numbers.Number):
         return 0.0
     return float(value)
 
@@ -143,7 +145,7 @@ class MobiMLizer(object):
         return self.fnums[self.fmap[ptsize]]
 
     def mobimlize_measure(self, ptsize):
-        if isinstance(ptsize, basestring):
+        if isinstance(ptsize, string_or_bytes):
             return ptsize
         embase = self.profile.fbase
         if round(ptsize) < embase:
@@ -151,7 +153,7 @@ class MobiMLizer(object):
         return "%dem" % int(round(ptsize / embase))
 
     def preize_text(self, text, pre_wrap=False):
-        text = unicode(text)
+        text = unicode_type(text)
         if pre_wrap:
             # Replace n consecutive spaces with n-1 NBSP + space
             text = re.sub(r' {2,}', lambda m:(u'\xa0'*(len(m.group())-1) + u' '), text)
@@ -186,7 +188,7 @@ class MobiMLizer(object):
             parent = bstate.nested[-1] if bstate.nested else bstate.body
             indent = istate.indent
             left = istate.left
-            if isinstance(indent, basestring):
+            if isinstance(indent, string_or_bytes):
                 indent = 0
             if indent < 0 and abs(indent) < left:
                 left += indent
@@ -228,7 +230,9 @@ class MobiMLizer(object):
                 while vspace > 0:
                     wrapper.addprevious(etree.Element(XHTML('br')))
                     vspace -= 1
-            if istate.halign != 'auto' and isinstance(istate.halign, (str, unicode)):
+            if istate.halign != 'auto' and isinstance(istate.halign, (bytes, unicode_type)):
+                if isinstance(istate.halign, bytes):
+                    istate.halign = istate.halign.decode('utf-8')
                 para.attrib['align'] = istate.halign
         istate.rendered = True
         pstate = bstate.istate
@@ -305,7 +309,7 @@ class MobiMLizer(object):
         inline = bstate.inline
         content = self.preize_text(text, pre_wrap=istate.pre_wrap) if istate.preserve or istate.pre_wrap else [text]
         for item in content:
-            if isinstance(item, basestring):
+            if isinstance(item, string_or_bytes):
                 if len(inline) == 0:
                     inline.text = (inline.text or '') + item
                 else:
@@ -316,7 +320,7 @@ class MobiMLizer(object):
 
     def mobimlize_elem(self, elem, stylizer, bstate, istates,
             ignore_valign=False):
-        if not isinstance(elem.tag, basestring) \
+        if not isinstance(elem.tag, string_or_bytes) \
            or namespace(elem.tag) != XHTML_NS:
             return
         style = stylizer.style(elem)
@@ -528,9 +532,9 @@ class MobiMLizer(object):
         valign = style['vertical-align']
         not_baseline = valign in ('super', 'sub', 'text-top',
                 'text-bottom', 'top', 'bottom') or (
-                isinstance(valign, (float, int)) and abs(valign) != 0)
+                isinstance(valign, numbers.Number) and abs(valign) != 0)
         issup = valign in ('super', 'text-top', 'top') or (
-            isinstance(valign, (float, int)) and valign > 0)
+            isinstance(valign, numbers.Number) and valign > 0)
         vtag = 'sup' if issup else 'sub'
         if not_baseline and not ignore_valign and tag not in NOT_VTAGS and not isblock:
             nroot = etree.Element(XHTML('html'), nsmap=MOBI_NSMAP)
@@ -567,17 +571,17 @@ class MobiMLizer(object):
             self.opts.mobi_ignore_margins = False
 
         if (text or tag in CONTENT_TAGS or tag in NESTABLE_TAGS or (
-            # We have an id but no text and no children, the id should still
-            # be added.
-            istate.ids and tag in ('a', 'span', 'i', 'b', 'u') and
-            len(elem)==0)):
-                if tag == 'li' and len(istates) > 1 and 'value' in elem.attrib:
-                    try:
-                        value = int(elem.attrib['value'])
-                        istates[-2].list_num = value - 1
-                    except:
-                        pass
-                self.mobimlize_content(tag, text, bstate, istates)
+                # We have an id but no text and no children, the id should still
+                # be added.
+                istate.ids and tag in ('a', 'span', 'i', 'b', 'u') and
+                len(elem)==0)):
+            if tag == 'li' and len(istates) > 1 and 'value' in elem.attrib:
+                try:
+                    value = int(elem.attrib['value'])
+                    istates[-2].list_num = value - 1
+                except:
+                    pass
+            self.mobimlize_content(tag, text, bstate, istates)
         for child in elem:
             self.mobimlize_elem(child, stylizer, bstate, istates)
             tail = None

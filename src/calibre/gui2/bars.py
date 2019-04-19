@@ -19,6 +19,7 @@ except ImportError:
 from calibre.constants import isosx
 from calibre.gui2 import gprefs, native_menubar_defaults, config
 from calibre.gui2.throbber import ThrobbingButton
+from polyglot.builtins import itervalues, unicode_type
 
 
 class RevealBar(QWidget):  # {{{
@@ -224,20 +225,21 @@ class ToolBar(QToolBar):  # {{{
         if ch is None:
             ch = self.child_bar.widgetForAction(ac)
         ch.setCursor(Qt.PointingHandCursor)
-        ch.setAutoRaise(True)
         if hasattr(ch, 'setText') and hasattr(ch, 'text'):
             self.all_widgets.append(ch)
-        m = ac.menu()
-        if m is not None:
-            if menu_mode is not None:
-                ch.setPopupMode(menu_mode)
-        return ch
+        if hasattr(ch, 'setAutoRaise'):  # is a QToolButton or similar
+            ch.setAutoRaise(True)
+            m = ac.menu()
+            if m is not None:
+                if menu_mode is not None:
+                    ch.setPopupMode(menu_mode)
+            return ch
 
     # support drag&drop from/to library, from/to reader/card, enabled plugins
     def check_iactions_for_drag(self, event, md, func):
         if self.added_actions:
             pos = event.pos()
-            for iac in self.gui.iactions.itervalues():
+            for iac in itervalues(self.gui.iactions):
                 if iac.accepts_drops:
                     aa = iac.qaction
                     w = self.widgetForAction(aa)
@@ -303,7 +305,7 @@ class ToolBar(QToolBar):  # {{{
 
         mime = 'application/calibre+from_device'
         if data.hasFormat(mime):
-            paths = [unicode(u.toLocalFile()) for u in data.urls()]
+            paths = [unicode_type(u.toLocalFile()) for u in data.urls()]
             if paths:
                 self.gui.iactions['Add Books'].add_books_from_device(
                         self.gui.current_view(), paths=paths)

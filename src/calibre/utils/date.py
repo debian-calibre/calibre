@@ -11,9 +11,10 @@ from datetime import datetime, time as dtime, timedelta, MINYEAR, MAXYEAR
 from functools import partial
 
 from calibre import strftime
-from calibre.constants import iswindows, isosx, plugins
+from calibre.constants import iswindows, isosx, plugins, preferred_encoding
 from calibre.utils.iso8601 import utc_tz, local_tz, UNDEFINED_DATE
 from calibre.utils.localization import lcdata
+from polyglot.builtins import unicode_type
 
 _utc_tz = utc_tz
 _local_tz = local_tz
@@ -100,6 +101,8 @@ def parse_date(date_string, assume_utc=False, as_utc=True, default=None):
     from dateutil.parser import parse
     if not date_string:
         return UNDEFINED_DATE
+    if isinstance(date_string, bytes):
+        date_string = date_string.decode(preferred_encoding, 'replace')
     if default is None:
         func = datetime.utcnow if assume_utc else datetime.now
         default = func().replace(day=15, hour=0, minute=0, second=0, microsecond=0,
@@ -186,13 +189,13 @@ def fromordinal(day, as_utc=True):
 
 def isoformat(date_time, assume_utc=False, as_utc=True, sep='T'):
     if not hasattr(date_time, 'tzinfo'):
-        return unicode(date_time.isoformat())
+        return unicode_type(date_time.isoformat())
     if date_time.tzinfo is None:
         date_time = date_time.replace(tzinfo=_utc_tz if assume_utc else
                 _local_tz)
     date_time = date_time.astimezone(_utc_tz if as_utc else _local_tz)
     # str(sep) because isoformat barfs with unicode sep on python 2.x
-    return unicode(date_time.isoformat(str(sep)))
+    return unicode_type(date_time.isoformat(str(sep)))
 
 
 def internal_iso_format_string():
@@ -205,7 +208,7 @@ def w3cdtf(date_time, assume_utc=False):
             date_time = date_time.replace(tzinfo=_utc_tz if assume_utc else
                     _local_tz)
         date_time = date_time.astimezone(_utc_tz if as_utc else _local_tz)
-    return unicode(date_time.strftime('%Y-%m-%dT%H:%M:%SZ'))
+    return unicode_type(date_time.strftime('%Y-%m-%dT%H:%M:%SZ'))
 
 
 def as_local_time(date_time, assume_utc=True):
@@ -475,7 +478,7 @@ def replace_months(datestr, clang):
     else:
         return datestr
 
-    for k in dictoen.iterkeys():
+    for k in dictoen:
         tmp = re.sub(k, dictoen[k], datestr)
         if tmp != datestr:
             break

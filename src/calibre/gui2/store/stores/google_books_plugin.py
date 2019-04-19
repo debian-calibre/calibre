@@ -7,8 +7,11 @@ __license__ = 'GPL 3'
 __copyright__ = '2011, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
 
-import urllib
 from contextlib import closing
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from lxml import html
 from PyQt5.Qt import QUrl
@@ -33,7 +36,7 @@ def parse_html(raw):
 
 
 def search_google(query, max_results=10, timeout=60, write_html_to=None):
-    url = 'https://www.google.com/search?tbm=bks&q=' + urllib.quote_plus(query)
+    url = 'https://www.google.com/search?tbm=bks&q=' + quote_plus(query)
 
     br = browser()
 
@@ -114,4 +117,4 @@ class GoogleBooksStore(BasicStoreConfig, StorePlugin):
 if __name__ == '__main__':
     import sys
     for result in search_google(' '.join(sys.argv[1:]), write_html_to='/t/google.html'):
-        print (result)
+        print(result)

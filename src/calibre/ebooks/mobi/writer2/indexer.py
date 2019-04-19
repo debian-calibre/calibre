@@ -2,18 +2,19 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-from polyglot.builtins import filter, map
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import numbers
 from struct import pack
-from cStringIO import StringIO
+import io
 from collections import OrderedDict, defaultdict
 
 from calibre.ebooks.mobi.utils import (encint, encode_number_as_hex,
         encode_tbs, align_block, RECORD_SIZE, CNCX as CNCX_)
+from polyglot.builtins import filter, iteritems, itervalues, map, range
 
 
 class CNCX(CNCX_):  # {{{
@@ -107,7 +108,7 @@ class IndexEntry(object):
             'author_offset': 71,
 
     }
-    RTAG_MAP = {v:k for k, v in TAG_VALUES.iteritems()}  # noqa
+    RTAG_MAP = {v:k for k, v in iteritems(TAG_VALUES)}  # noqa
 
     def __init__(self, offset, label_offset):
         self.offset, self.label_offset = offset, label_offset
@@ -164,8 +165,8 @@ class IndexEntry(object):
 
     @property
     def bytestring(self):
-        buf = StringIO()
-        if isinstance(self.index, int):
+        buf = io.BytesIO()
+        if isinstance(self.index, numbers.Integral):
             buf.write(encode_number_as_hex(self.index))
         else:
             raw = bytearray(self.index.encode('ascii'))
@@ -187,7 +188,7 @@ class IndexEntry(object):
         for tag in self.tag_nums:
             attr = self.attr_for_tag(tag)
             val = getattr(self, attr)
-            if isinstance(val, int):
+            if isinstance(val, numbers.Integral):
                 val = [val]
             for x in val:
                 buf.write(encint(x))
@@ -225,7 +226,7 @@ class SecondaryIndexEntry(IndexEntry):
         # The values for this index entry
         # I dont know what the 5 means, it is not the number of entries
         self.secondary = [5 if tag == min(
-            self.INDEX_MAP.itervalues()) else 0, 0, tag]
+            itervalues(self.INDEX_MAP)) else 0, 0, tag]
 
     @property
     def tag_nums(self):
@@ -237,7 +238,7 @@ class SecondaryIndexEntry(IndexEntry):
 
     @classmethod
     def entries(cls):
-        rmap = {v:k for k,v in cls.INDEX_MAP.iteritems()}
+        rmap = {v:k for k,v in iteritems(cls.INDEX_MAP)}
         for tag in sorted(rmap, reverse=True):
             yield cls(rmap[tag])
 
@@ -282,7 +283,7 @@ class TBS(object):  # {{{
                 for x in ('starts', 'ends', 'completes'):
                     for idx in data[x]:
                         depth_map[idx.depth].append(idx)
-                for l in depth_map.itervalues():
+                for l in itervalues(depth_map):
                     l.sort(key=lambda x:x.offset)
                 self.periodical_tbs(data, first, depth_map)
         else:
@@ -292,7 +293,7 @@ class TBS(object):  # {{{
                 self.book_tbs(data, first)
 
     def periodical_tbs(self, data, first, depth_map):
-        buf = StringIO()
+        buf = io.BytesIO()
 
         has_section_start = (depth_map[1] and
                 set(depth_map[1]).intersection(set(data['starts'])))
@@ -316,7 +317,7 @@ class TBS(object):  # {{{
             if first_node is not None and first_node.depth > 0:
                 parent_section_index = (first_node.index if first_node.depth == 1 else first_node.parent_index)
             else:
-                parent_section_index = max(self.section_map.iterkeys())
+                parent_section_index = max(iter(self.section_map))
 
         else:
             # Non terminal record
@@ -453,7 +454,7 @@ class Indexer(object):  # {{{
             self.is_periodical else 'book'))
         self.is_flat_periodical = False
         if self.is_periodical:
-            periodical_node = iter(oeb.toc).next()
+            periodical_node = next(iter(oeb.toc))
             sections = tuple(periodical_node)
             self.is_flat_periodical = len(sections) == 1
 
@@ -494,7 +495,7 @@ class Indexer(object):  # {{{
 
     def create_index_record(self, secondary=False):  # {{{
         header_length = 192
-        buf = StringIO()
+        buf = io.BytesIO()
         indices = list(SecondaryIndexEntry.entries()) if secondary else self.indices
 
         # Write index entries
@@ -537,7 +538,7 @@ class Indexer(object):  # {{{
     # }}}
 
     def create_header(self, secondary=False):  # {{{
-        buf = StringIO()
+        buf = io.BytesIO()
         if secondary:
             tagx_block = TAGX().secondary
         else:
@@ -601,7 +602,7 @@ class Indexer(object):  # {{{
 
         # The index of the last entry in the NCX
         idx = indices[-1].index
-        if isinstance(idx, int):
+        if isinstance(idx, numbers.Integral):
             idx = encode_number_as_hex(idx)
         else:
             idx = idx.encode('ascii')
@@ -679,7 +680,7 @@ class Indexer(object):  # {{{
     # }}}
 
     def create_periodical_index(self):  # {{{
-        periodical_node = iter(self.oeb.toc).next()
+        periodical_node = next(iter(self.oeb.toc))
         periodical_node_offset = self.serializer.body_start_offset
         periodical_node_size = (self.serializer.body_end_offset -
                 periodical_node_offset)
@@ -844,7 +845,7 @@ class Indexer(object):  # {{{
 
         deepest = max(i.depth for i in self.indices)
 
-        for i in xrange(self.number_of_text_records):
+        for i in range(self.number_of_text_records):
             offset = i * RECORD_SIZE
             next_offset = offset + RECORD_SIZE
             data = {'ends':[], 'completes':[], 'starts':[],
@@ -890,5 +891,3 @@ class Indexer(object):  # {{{
     # }}}
 
 # }}}
-
-

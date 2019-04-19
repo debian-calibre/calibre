@@ -6,9 +6,8 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, cPickle
+import os
 from functools import partial
-from binascii import hexlify
 
 from calibre import prepare_string_for_xml, force_unicode
 from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
@@ -20,6 +19,9 @@ from calibre.utils.icu import sort_key
 from calibre.utils.formatter import EvalFormatter
 from calibre.utils.date import is_date_undefined
 from calibre.utils.localization import calibre_langcode_to_name
+from calibre.utils.serialize import json_dumps
+from polyglot.builtins import unicode_type, filter
+from polyglot.binary import as_hex_unicode
 
 default_sort = ('title', 'title_sort', 'authors', 'author_sort', 'series', 'rating', 'pubdate', 'tags', 'publisher', 'identifiers')
 
@@ -53,7 +55,7 @@ def get_field_list(mi):
 
 def search_href(search_term, value):
     search = '%s:"=%s"' % (search_term, value.replace('"', '\\"'))
-    return prepare_string_for_xml('search:' + hexlify(search.encode('utf-8')), True)
+    return prepare_string_for_xml('search:' + as_hex_unicode(search.encode('utf-8')), True)
 
 
 DEFAULT_AUTHOR_LINK = 'search-{}'.format(DEFAULT_AUTHOR_SOURCE)
@@ -78,7 +80,7 @@ def author_search_href(which, title=None, author=None):
 
 
 def item_data(field_name, value, book_id):
-    return hexlify(cPickle.dumps((field_name, value, book_id), -1))
+    return as_hex_unicode(json_dumps((field_name, value, book_id)))
 
 
 def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=True, rating_font='Liberation Serif', rtl=False):
@@ -163,7 +165,7 @@ def mi_to_html(mi, field_list=None, default_author_link=None, use_roman_numbers=
                 path = force_unicode(mi.path, filesystem_encoding)
                 scheme = u'devpath' if isdevice else u'path'
                 url = prepare_string_for_xml(path if isdevice else
-                        unicode(book_id), True)
+                        unicode_type(book_id), True)
                 pathstr = _('Click to open')
                 extra = ''
                 if isdevice:

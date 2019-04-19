@@ -9,7 +9,6 @@ __docformat__ = 'restructuredtext en'
 
 import re, tempfile, os
 from functools import partial
-from itertools import izip
 
 from calibre.constants import islinux, isbsd
 from calibre.customize.conversion import (InputFormatPlugin,
@@ -17,6 +16,7 @@ from calibre.customize.conversion import (InputFormatPlugin,
 from calibre.utils.localization import get_lang
 from calibre.utils.filenames import ascii_filename
 from calibre.utils.imghdr import what
+from polyglot.builtins import unicode_type, zip
 
 
 def sanitize_file_name(x):
@@ -215,7 +215,7 @@ class HTMLInput(InputFormatPlugin):
         use = titles
         if len(titles) > len(set(titles)):
             use = headers
-        for title, item in izip(use, self.oeb.spine):
+        for title, item in zip(use, self.oeb.spine):
             if not item.linear:
                 continue
             toc.add(title, item.href)
@@ -225,7 +225,7 @@ class HTMLInput(InputFormatPlugin):
 
     def link_to_local_path(self, link_, base=None):
         from calibre.ebooks.html.input import Link
-        if not isinstance(link_, unicode):
+        if not isinstance(link_, unicode_type):
             try:
                 link_ = link_.decode('utf-8', 'error')
             except:
@@ -246,7 +246,7 @@ class HTMLInput(InputFormatPlugin):
         return link, frag
 
     def resource_adder(self, link_, base=None):
-        from urllib import quote
+        from polyglot.urllib import quote
         link, frag = self.link_to_local_path(link_, base=base)
         if link is None:
             return link_
@@ -289,9 +289,9 @@ class HTMLInput(InputFormatPlugin):
             # bhref refers to an already existing file. The read() method of
             # DirContainer will call unquote on it before trying to read the
             # file, therefore we quote it here.
-            if isinstance(bhref, unicode):
+            if isinstance(bhref, unicode_type):
                 bhref = bhref.encode('utf-8')
-            item.html_input_href = quote(bhref).decode('utf-8')
+            item.html_input_href = unicode_type(quote(bhref))
             if guessed in self.OEB_STYLES:
                 item.override_css_fetch = partial(
                         self.css_import_handler, os.path.dirname(link))

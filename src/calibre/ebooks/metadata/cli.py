@@ -16,6 +16,7 @@ from calibre.ebooks.metadata import string_to_authors, authors_to_sort_string, \
 from calibre.ebooks.lrf.meta import LRFMetaFile
 from calibre import prints
 from calibre.utils.date import parse_date
+from polyglot.builtins import iteritems, unicode_type
 
 USAGE=_('%prog ebook_file [options]\n') + \
 _('''
@@ -149,7 +150,7 @@ def do_set_metadata(opts, mi, stream, stream_type):
         if val:
             orig = mi.get_identifiers()
             orig.update(val)
-            val = {k:v for k, v in orig.iteritems() if k and v}
+            val = {k:v for k, v in iteritems(orig) if k and v}
             mi.set_identifiers(val)
 
     if getattr(opts, 'cover', None) is not None:
@@ -181,7 +182,7 @@ def main(args=sys.argv):
         mi = get_metadata(stream, stream_type, force_read_metadata=True)
     if trying_to_set:
         prints(_('Original metadata')+'::')
-    metadata = unicode(mi)
+    metadata = unicode_type(mi)
     if trying_to_set:
         metadata = '\t'+'\n\t'.join(metadata.split('\n'))
     prints(metadata, safe_encode=True)
@@ -198,7 +199,7 @@ def main(args=sys.argv):
                     lrf.book_id = opts.lrf_bookid
             mi = get_metadata(stream, stream_type, force_read_metadata=True)
         prints('\n' + _('Changed metadata') + '::')
-        metadata = unicode(mi)
+        metadata = unicode_type(mi)
         metadata = '\t'+'\n\t'.join(metadata.split('\n'))
         prints(metadata, safe_encode=True)
         if lrf is not None:

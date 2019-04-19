@@ -3,7 +3,6 @@ __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 """ The GUI """
 import glob
 import os
-import Queue
 import signal
 import sys
 import threading
@@ -35,6 +34,9 @@ from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.localization import get_lang
+from polyglot.builtins import (iteritems, itervalues, unicode_type,
+        string_or_bytes, range)
+from polyglot import queue
 
 try:
     NO_URL_FORMATTING = QUrl.None_
@@ -501,7 +503,7 @@ class FunctionDispatcher(QObject):
         if not queued:
             typ = Qt.AutoConnection if queued is None else Qt.DirectConnection
         self.dispatch_signal.connect(self.dispatch, type=typ)
-        self.q = Queue.Queue()
+        self.q = queue.Queue()
         self.lock = threading.Lock()
 
     def __call__(self, *args, **kwargs):
@@ -568,7 +570,7 @@ class FileIconProvider(QFileIconProvider):
         upath, bpath = I('mimetypes'), I('mimetypes', allow_user_override=False)
         if upath != bpath:
             # User has chosen to override mimetype icons
-            path_map = {v:I('mimetypes/%s.png' % v) for v in set(self.ICONS.itervalues())}
+            path_map = {v:I('mimetypes/%s.png' % v) for v in set(itervalues(self.ICONS))}
             icons = self.ICONS.copy()
             for uicon in glob.glob(os.path.join(upath, '*.png')):
                 ukey = os.path.basename(uicon).rpartition('.')[0].lower()
@@ -576,18 +578,18 @@ class FileIconProvider(QFileIconProvider):
                     path_map[ukey] = uicon
                     icons[ukey] = ukey
         else:
-            path_map = {v:os.path.join(bpath, v + '.png') for v in set(self.ICONS.itervalues())}
+            path_map = {v:os.path.join(bpath, v + '.png') for v in set(itervalues(self.ICONS))}
             icons = self.ICONS
-        self.icons = {k:path_map[v] for k, v in icons.iteritems()}
+        self.icons = {k:path_map[v] for k, v in iteritems(icons)}
         self.icons['calibre'] = I('lt.png', allow_user_override=False)
         for i in ('dir', 'default', 'zero'):
             self.icons[i] = QIcon(self.icons[i])
 
     def key_from_ext(self, ext):
-        key = ext if ext in self.icons.keys() else 'default'
+        key = ext if ext in list(self.icons.keys()) else 'default'
         if key == 'default' and ext.count('.') > 0:
             ext = ext.rpartition('.')[2]
-            key = ext if ext in self.icons.keys() else 'default'
+            key = ext if ext in list(self.icons.keys()) else 'default'
         return key
 
     def cached_icon(self, key):
@@ -612,7 +614,7 @@ class FileIconProvider(QFileIconProvider):
         if fileinfo.isDir():
             key = 'dir'
         else:
-            ext = unicode(fileinfo.completeSuffix()).lower()
+            ext = unicode_type(fileinfo.completeSuffix()).lower()
             key = self.key_from_ext(ext)
         return self.cached_icon(key)
 
@@ -732,7 +734,7 @@ class Translator(QTranslator):
 
     def translate(self, *args, **kwargs):
         try:
-            src = unicode(args[1])
+            src = unicode_type(args[1])
         except:
             return u''
         t = _
@@ -763,7 +765,7 @@ def load_builtin_fonts():
                 fid = QFontDatabase.addApplicationFontFromData(s.read())
                 if fid > -1:
                     fam = QFontDatabase.applicationFontFamilies(fid)
-                    fam = set(map(unicode, fam))
+                    fam = set(map(unicode_type, fam))
                     if u'calibre Symbols' in fam:
                         _rating_font = u'calibre Symbols'
 
@@ -821,8 +823,10 @@ class Application(QApplication):
                 args = sys.argv[:1]
             args.extend(['-platformpluginpath', sys.extensions_location, '-platform', 'headless'])
         self.headless = headless
-        qargs = [i.encode('utf-8') if isinstance(i, unicode) else i for i in args]
-        self.pi = plugins['progress_indicator'][0]
+        qargs = [i.encode('utf-8') if isinstance(i, unicode_type) else i for i in args]
+        self.pi, pi_err = plugins['progress_indicator']
+        if pi_err:
+            raise RuntimeError('Failed to load the progress_indicator C extension, with error: {}'.format(pi_err))
         if not isosx and not headless:
             # On OS X high dpi scaling is turned on automatically by the OS, so we dont need to set it explicitly
             setup_hidpi()
@@ -871,7 +875,7 @@ class Application(QApplication):
         self.line_height = max(12, QFontMetrics(self.font()).lineSpacing())
 
         dl = QLocale(get_lang())
-        if unicode(dl.bcp47Name()) != u'C':
+        if unicode_type(dl.bcp47Name()) != u'C':
             QLocale.setDefault(dl)
         global gui_thread, qt_app
         gui_thread = QThread.currentThread()
@@ -967,7 +971,7 @@ class Application(QApplication):
     def load_calibre_style(self):
         icon_map = self.__icon_map_memory_ = {}
         pcache = {}
-        for k, v in {
+        for k, v in iteritems({
             'DialogYesButton': u'ok.png',
             'DialogNoButton': u'window-close.png',
             'DialogCloseButton': u'window-close.png',
@@ -984,7 +988,7 @@ class Application(QApplication):
             'MessageBoxQuestion': u'dialog_question.png',
             'BrowserReload': u'view-refresh.png',
             'LineEditClearButton': u'clear_left.png',
-        }.iteritems():
+        }):
             if v not in pcache:
                 p = I(v)
                 if isinstance(p, bytes):
@@ -1009,7 +1013,7 @@ class Application(QApplication):
 
     def event(self, e):
         if callable(self.file_event_hook) and e.type() == QEvent.FileOpen:
-            path = unicode(e.file())
+            path = unicode_type(e.file())
             if os.access(path, os.R_OK):
                 with self._file_open_lock:
                     self._file_open_paths.append(path)
@@ -1024,11 +1028,11 @@ class Application(QApplication):
 
         def fget(self):
             return [col.getRgb() for col in
-                    (QColorDialog.customColor(i) for i in xrange(QColorDialog.customCount()))]
+                    (QColorDialog.customColor(i) for i in range(QColorDialog.customCount()))]
 
         def fset(self, colors):
             num = min(len(colors), QColorDialog.customCount())
-            for i in xrange(num):
+            for i in range(num):
                 QColorDialog.setCustomColor(i, QColor(*colors[i]))
         return property(fget=fget, fset=fset)
 
@@ -1096,7 +1100,7 @@ def sanitize_env_vars():
 
     originals = {x:os.environ.get(x, '') for x in env_vars}
     changed = {x:False for x in env_vars}
-    for var, suffix in env_vars.iteritems():
+    for var, suffix in iteritems(env_vars):
         paths = [x for x in originals[var].split(os.pathsep) if x]
         npaths = [] if suffix is None else [x for x in paths if x != (sys.frozen_path + suffix)]
         if len(npaths) < len(paths):
@@ -1109,7 +1113,7 @@ def sanitize_env_vars():
     try:
         yield
     finally:
-        for var, orig in originals.iteritems():
+        for var, orig in iteritems(originals):
             if changed[var]:
                 if orig:
                     os.environ[var] = orig
@@ -1124,7 +1128,7 @@ def open_url(qurl):
     # Qt 5 requires QApplication to be constructed before trying to use
     # QDesktopServices::openUrl()
     ensure_app()
-    if isinstance(qurl, basestring):
+    if isinstance(qurl, string_or_bytes):
         qurl = QUrl(qurl)
     with sanitize_env_vars():
         QDesktopServices.openUrl(qurl)
@@ -1241,7 +1245,7 @@ def elided_text(text, font=None, width=300, pos='middle'):
     chomp = {'middle':remove_middle, 'left':lambda x:(ellipsis + x[delta:]), 'right':lambda x:(x[:-delta] + ellipsis)}[pos]
     while len(text) > delta and fm.width(text) > width:
         text = chomp(text)
-    return unicode(text)
+    return unicode_type(text)
 
 
 def find_forms(srcdir):
@@ -1260,8 +1264,9 @@ def form_to_compiled_form(form):
 
 
 def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
-    import re, cStringIO
+    import re
     from PyQt5.uic import compileUi
+    from polyglot.io import PolyglotStringIO
     forms = find_forms(srcdir)
     if info is None:
         from calibre import prints
@@ -1285,7 +1290,7 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
         if force_compile or not os.path.exists(compiled_form) or os.stat(form).st_mtime > os.stat(compiled_form).st_mtime:
             if not summary:
                 info('\tCompiling form', form)
-            buf = cStringIO.StringIO()
+            buf = PolyglotStringIO()
             compileUi(form, buf)
             dat = buf.getvalue()
             dat = dat.replace('import images_rc', '')
@@ -1294,7 +1299,8 @@ def build_forms(srcdir, info=None, summary=False, check_for_migration=False):
             dat = dat.replace('_("MMM yyyy")', '"MMM yyyy"')
             dat = dat.replace('_("d MMM yyyy")', '"d MMM yyyy"')
             dat = pat.sub(sub, dat)
-
+            if not isinstance(dat, bytes):
+                dat = dat.encode('utf-8')
             open(compiled_form, 'wb').write(dat)
             num += 1
     if num:
@@ -1310,7 +1316,7 @@ if is_running_from_develop:
 def event_type_name(ev_or_etype):
     from PyQt5.QtCore import QEvent
     etype = ev_or_etype.type() if isinstance(ev_or_etype, QEvent) else ev_or_etype
-    for name, num in vars(QEvent).iteritems():
+    for name, num in iteritems(vars(QEvent)):
         if num == etype:
             return name
     return 'UnknownEventType'
@@ -1366,7 +1372,7 @@ def set_app_uid(val):
     AppUserModelID.argtypes = [wintypes.LPCWSTR]
     AppUserModelID.restype = wintypes.HRESULT
     try:
-        AppUserModelID(unicode(val))
+        AppUserModelID(unicode_type(val))
     except Exception as err:
         prints(u'Failed to set app uid with error:', as_unicode(err))
         return False
@@ -1375,7 +1381,7 @@ def set_app_uid(val):
 
 def add_to_recent_docs(path):
     from win32com.shell import shell, shellcon
-    path = unicode(path)
+    path = unicode_type(path)
     app_id = get_app_uid()
     if app_id is None:
         shell.SHAddToRecentDocs(shellcon.SHARD_PATHW, path)

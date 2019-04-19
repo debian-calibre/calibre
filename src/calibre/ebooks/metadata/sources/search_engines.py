@@ -8,8 +8,11 @@ import json
 import re
 import time
 from collections import defaultdict, namedtuple
-from urllib import quote_plus, urlencode
-from urlparse import parse_qs
+try:
+    from urllib.parse import parse_qs, quote_plus, urlencode
+except ImportError:
+    from urlparse import parse_qs
+    from urllib import quote_plus, urlencode
 
 from lxml import etree
 
@@ -26,7 +29,7 @@ Result = namedtuple('Result', 'url title cached_url')
 
 
 def tostring(elem):
-    return etree.tostring(elem, encoding=unicode, method='text', with_tail=False)
+    return etree.tostring(elem, encoding='unicode', method='text', with_tail=False)
 
 
 def browser():
@@ -41,7 +44,7 @@ def browser():
 
 
 def encode_query(**query):
-    q = {k.encode('utf-8'): v.encode('utf-8') for k, v in query.iteritems()}
+    q = {k.encode('utf-8'): v.encode('utf-8') for k, v in query.items()}
     return urlencode(q).decode('utf-8')
 
 
@@ -71,7 +74,10 @@ def query(br, url, key, dump_raw=None, limit=1, parser=parse_html, timeout=60):
 
 
 def quote_term(x):
-    return quote_plus(x.encode('utf-8')).decode('utf-8')
+    ans = quote_plus(x.encode('utf-8'))
+    if isinstance(ans, bytes):
+        ans = ans.decode('utf-8')
+    return ans
 
 
 # DDG + Wayback machine {{{

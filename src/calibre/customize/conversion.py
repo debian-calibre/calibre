@@ -2,10 +2,11 @@
 '''
 Defines the plugin system for conversions.
 '''
-import re, os, shutil
+import re, os, shutil, numbers
 
 from calibre import CurrentDir
 from calibre.customize import Plugin
+from polyglot.builtins import unicode_type
 
 
 class ConversionOption(object):
@@ -79,7 +80,7 @@ class OptionRecommendation(object):
                                                     self.option.choices:
             raise ValueError('OpRec: %s: Recommended value not in choices'%
                              self.option.name)
-        if not (isinstance(self.recommended_value, (int, float, str, unicode)) or self.recommended_value is None):
+        if not (isinstance(self.recommended_value, (numbers.Number, bytes, unicode_type)) or self.recommended_value is None):
             raise ValueError('OpRec: %s:'%self.option.name + repr(
                 self.recommended_value) + ' is not a string or a number')
 
@@ -236,7 +237,7 @@ class InputFormatPlugin(Plugin):
             # In case stdout is broken
             pass
 
-        with CurrentDir(output_dir, workaround_temp_folder_permissions=True):
+        with CurrentDir(output_dir):
             for x in os.listdir('.'):
                 shutil.rmtree(x) if os.path.isdir(x) else os.remove(x)
 
@@ -340,7 +341,7 @@ class OutputFormatPlugin(Plugin):
     @property
     def is_periodical(self):
         return self.oeb.metadata.publication_type and \
-            unicode(self.oeb.metadata.publication_type[0]).startswith('periodical:')
+            unicode_type(self.oeb.metadata.publication_type[0]).startswith('periodical:')
 
     def specialize_options(self, log, opts, input_fmt):
         '''

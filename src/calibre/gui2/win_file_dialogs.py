@@ -9,6 +9,7 @@ from threading import Thread
 from uuid import uuid4
 
 from PyQt5.Qt import pyqtSignal, QEventLoop, Qt
+from polyglot.builtins import string_or_bytes, filter
 
 is64bit = sys.maxsize > (1 << 32)
 base = sys.extensions_location if hasattr(sys, 'new_app_layout') else os.path.dirname(sys.executable)
@@ -76,7 +77,7 @@ def serialize_file_types(file_types):
         buf.append(struct.pack(b'=H%ds' % len(x), len(x), x))
     for name, extensions in file_types:
         add(name or _('Files'))
-        if isinstance(extensions, basestring):
+        if isinstance(extensions, string_or_bytes):
             extensions = extensions.split()
         add('; '.join('*.' + ext.lower() for ext in extensions))
     return b''.join(buf)
@@ -358,7 +359,7 @@ def test(helper=HELPER):
     if server.err_msg is not None:
         raise RuntimeError(server.err_msg)
     server.join(2)
-    parts = filter(None, server.data.split(b'\0'))
+    parts = list(filter(None, server.data.split(b'\0')))
     if parts[0] != secret:
         raise RuntimeError('Did not get back secret: %r != %r' % (secret, parts[0]))
     q = parts[1].decode('utf-8')

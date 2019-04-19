@@ -6,6 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
+import numbers
 from collections import Counter, defaultdict
 from operator import attrgetter
 
@@ -14,6 +15,7 @@ from lxml import etree
 from calibre.ebooks import parse_css_length
 from calibre.ebooks.docx.writer.utils import convert_color, int_or_zero
 from calibre.utils.localization import lang_as_iso639_1
+from polyglot.builtins import iteritems, unicode_type, filter
 from tinycss.css21 import CSS21Parser
 
 css_parser = CSS21Parser()
@@ -45,7 +47,7 @@ def bmap(x):
 
 
 def is_dropcaps(html_tag, tag_style):
-    return len(html_tag) < 2 and len(etree.tostring(html_tag, method='text', encoding=unicode, with_tail=False)) < 5 and tag_style['float'] == 'left'
+    return len(html_tag) < 2 and len(etree.tostring(html_tag, method='text', encoding=unicode_type, with_tail=False)) < 5 and tag_style['float'] == 'left'
 
 
 class CombinedStyle(object):
@@ -156,7 +158,7 @@ class DOCXStyle(object):
             getattr(self, x) for x in self.ALL_PROPS))
 
     def makeelement(self, parent, name, **attrs):
-        return parent.makeelement(self.w(name), **{self.w(k):v for k, v in attrs.iteritems()})
+        return parent.makeelement(self.w(name), **{self.w(k):v for k, v in iteritems(attrs)})
 
     def __hash__(self):
         return self._hash
@@ -231,7 +233,7 @@ class TextStyle(DOCXStyle):
         except (ValueError, TypeError, AttributeError):
             self.spacing = None
         va = css.first_vertical_align
-        if isinstance(va, (int, float)):
+        if isinstance(va, numbers.Number):
             self.vertical_align = str(int(va * 2))
         else:
             val = {
@@ -253,7 +255,7 @@ class TextStyle(DOCXStyle):
                 elif self.padding != padding:
                     self.padding = ignore
                 val = css['border-%s-width' % edge]
-                if not isinstance(val, (float, int, long)):
+                if not isinstance(val, numbers.Number):
                     val = {'thin':0.2, 'medium':1, 'thick':2}.get(val, 0)
                 val = min(96, max(2, int(val * 8)))
                 if self.border_width is None:
@@ -363,7 +365,7 @@ class DescendantTextStyle(object):
         p = []
 
         def add(name, **props):
-            p.append((name, frozenset(props.iteritems())))
+            p.append((name, frozenset(iteritems(props))))
 
         def vals(attr):
             return getattr(parent_style, attr), getattr(child_style, attr)
@@ -466,7 +468,7 @@ def read_css_block_borders(self, css, store_css_style=False):
                 setattr(self, 'margin_' + edge, 0)  # for e.g.: margin: auto
             setattr(self, 'css_margin_' + edge, css._style.get('margin-' + edge, ''))
             val = css['border-%s-width' % edge]
-            if not isinstance(val, (float, int, long)):
+            if not isinstance(val, numbers.Number):
                 val = {'thin':0.2, 'medium':1, 'thick':2}.get(val, 0)
             val = min(96, max(2, int(val * 8)))
             setattr(self, 'border_%s_width' % edge, val)
@@ -560,7 +562,7 @@ class BlockStyle(DOCXStyle):
     def serialize_properties(self, pPr, normal_style):
         makeelement, w = self.makeelement, self.w
         spacing = makeelement(pPr, 'spacing')
-        for edge, attr in {'top':'before', 'bottom':'after'}.iteritems():
+        for edge, attr in iteritems({'top':'before', 'bottom':'after'}):
             getter = attrgetter('css_margin_' + edge)
             css_val, css_unit = parse_css_length(getter(self))
             if css_unit in ('em', 'ex'):
@@ -694,13 +696,13 @@ class StylesManager(object):
 
         counts = Counter()
         smap = {}
-        for (bs, rs), blocks in used_pairs.iteritems():
+        for (bs, rs), blocks in iteritems(used_pairs):
             s = CombinedStyle(bs, rs, blocks, self.namespace)
             smap[(bs, rs)] = s
             counts[s] += sum(1 for b in blocks if not b.is_empty())
         for i, heading_tag in enumerate(sorted(heading_styles)):
             styles = sorted((smap[k] for k in heading_styles[heading_tag]), key=counts.__getitem__)
-            styles = filter(lambda s:s.outline_level is None, styles)
+            styles = list(filter(lambda s:s.outline_level is None, styles))
             if styles:
                 heading_style = styles[-1]
                 heading_style.outline_level = i
@@ -719,7 +721,7 @@ class StylesManager(object):
                     heading_styles.append(style)
                 style.id = style.name = val
             style.seq = i
-        self.combined_styles = sorted(counts.iterkeys(), key=attrgetter('seq'))
+        self.combined_styles = sorted(counts, key=attrgetter('seq'))
         [ls.apply() for ls in self.combined_styles]
 
         descendant_style_map = {}

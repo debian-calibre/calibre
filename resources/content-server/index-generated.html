@@ -8242,6 +8242,7 @@ return parser;
             ρσ_d["gui_last_modified_display_format"] = "dd MMM yyyy";
             ρσ_d["use_roman_numerals_for_series_number"] = true;
             ρσ_d["default_library_id"] = null;
+            ρσ_d["default_book_list_mode"] = defaults.view_mode;
             ρσ_d["library_map"] = null;
             ρσ_d["search_the_net_urls"] = ρσ_list_decorate([]);
             ρσ_d["donate_link"] = "https://calibre-ebook.com/donate";
@@ -8631,6 +8632,7 @@ return this.__repr__();
             ρσ_d["ok"] = false;
             ρσ_d["error_html"] = null;
             ρσ_d["current_fetch"] = null;
+            ρσ_d["http_error_code"] = 0;
             return ρσ_d;
         }).call(this);
         library_data = (function(){
@@ -8750,6 +8752,7 @@ return this.__repr__();
             load_status.loading = false;
             load_status.ok = true;
             load_status.error_html = null;
+            load_status.http_error_code = 0;
             library_data.previous_book_ids = [];
             if (library_data.for_library !== current_library_id()) {
                 library_data.field_names = Object.create(null);
@@ -8817,6 +8820,7 @@ return this.__repr__();
                 load_status.ok = false;
                 load_status.loading = false;
                 load_status.error_html = msg || xhr.error_html;
+                load_status.http_error_code = xhr.status;
             };
             if (!bad_load.__argnames__) Object.defineProperties(bad_load, {
                 __argnames__ : {value: ["msg"]}
@@ -8850,6 +8854,7 @@ return this.__repr__();
             load_status.loading = true;
             load_status.ok = false;
             load_status.error_html = null;
+            load_status.http_error_code = 0;
             load_status.current_fetch = ρσ_interpolate_kwargs.call(this, ajax, ["interface-data/books-init", on_data_loaded].concat([ρσ_desugar_kwargs({query: query})]));
             load_status.current_fetch.send();
         };
@@ -12454,7 +12459,7 @@ return this.__repr__();
                     if (!p || p.nodeType > Node.COMMENT_NODE) {
                         break;
                     }
-                    if (!(ρσ_in(p.nodeType, [Node.ATTRIBUTE_NODE, Node.COMMENT_NODE])) && p.nodeValue && p.nodeValue.length) {
+                    if (!ρσ_in(p.nodeType, [Node.ATTRIBUTE_NODE, Node.COMMENT_NODE]) && p.nodeValue && p.nodeValue.length) {
                         offset += p.nodeValue.length;
                     }
                     node = p;
@@ -12655,13 +12660,13 @@ return this.__repr__();
                     return null;
                 }
                 name = target.localName;
-                if (!(ρσ_in(name, (function(){
+                if (!ρσ_in(name, (function(){
                     var s = ρσ_set();
                     s.jsset.add("iframe");
                     s.jsset.add("embed");
                     s.jsset.add("object");
                     return s;
-                })()))) {
+                })())) {
                     break;
                 }
                 cd = target.contentDocument;
@@ -17143,7 +17148,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.40.1";
+        CALIBRE_VERSION = "3.41.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -20907,21 +20912,21 @@ return this.__repr__();
 
         var add_books_panel = ρσ_modules["book_list.add"].add_books_panel;
 
-        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].description;
         var cover_grid_append_item = ρσ_modules["book_list.cover_grid"].append_item;
         var cover_grid_css = ρσ_modules["book_list.cover_grid"].cover_grid_css;
         var create_cover_grid_item = ρσ_modules["book_list.cover_grid"].create_item;
+        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].description;
         var init_cover_grid = ρσ_modules["book_list.cover_grid"].init;
 
-        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].description;
         var custom_list_append_item = ρσ_modules["book_list.custom_list"].append_item;
         var create_custom_list_item = ρσ_modules["book_list.custom_list"].create_item;
         var custom_list_css = ρσ_modules["book_list.custom_list"].custom_list_css;
+        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].description;
         var init_custom_list = ρσ_modules["book_list.custom_list"].init;
 
-        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].description;
         var details_list_append_item = ρσ_modules["book_list.details_list"].append_item;
         var create_details_list_item = ρσ_modules["book_list.details_list"].create_item;
+        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].description;
         var details_list_css = ρσ_modules["book_list.details_list"].details_list_css;
         var init_details_list = ρσ_modules["book_list.details_list"].init;
 
@@ -21134,8 +21139,18 @@ return this.__repr__();
             __argnames__ : {value: ["book_ids"]}
         });
 
+        function get_view_mode() {
+            var idata, mode;
+            idata = get_interface_data();
+            mode = get_session_data().get("view_mode", idata.default_book_list_mode);
+            if (!ρσ_in(mode, ["cover_grid", "details_list", "custom_list"])) {
+                mode = DEFAULT_MODE;
+            }
+            return mode;
+        };
+
         function setup_view_mode(mode, book_list_data) {
-            if (!(ρσ_in(mode, ALLOWED_MODES))) {
+            if (!ρσ_in(mode, ALLOWED_MODES)) {
                 mode = DEFAULT_MODE;
             }
             book_list_data.mode = mode;
@@ -21309,7 +21324,7 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "book_list"})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "more_button"})]));
             show_top_message();
-            apply_view_mode(get_session_data().get("view_mode"));
+            apply_view_mode(get_view_mode());
             create_more_button(container.lastChild);
             ρσ_interpolate_kwargs.call(this, add_button, [container.parentNode].concat([ρσ_desugar_kwargs({icon: "plus", action: show_subsequent_panel.bind(null, "book_list^add"), tooltip: _("Add books")})]));
             ρσ_interpolate_kwargs.call(this, add_button, [container.parentNode].concat([ρσ_desugar_kwargs({icon: "sort-amount-desc", action: show_subsequent_panel.bind(null, "book_list^sort"), tooltip: _("Sort books")})]));
@@ -21339,15 +21354,22 @@ return this.__repr__();
         });
 
         function check_for_books_loaded() {
-            var container, err;
+            var container, container_id, err;
             container = this;
+            container_id = container.id;
             if (load_status.loading) {
-                conditional_timeout(container.id, 5, check_for_books_loaded);
+                conditional_timeout(container_id, 5, check_for_books_loaded);
                 return;
             }
             container = container.lastChild;
             clear(container);
             if (!load_status.ok) {
+                if (load_status.http_error_code === 401) {
+                    container.appendChild(E.div(_("Username/password required, retrying...")));
+                    ensure_current_library_data();
+                    conditional_timeout(container_id, 100, check_for_books_loaded);
+                    return;
+                }
                 err = E.div();
                 safe_set_inner_html(err, load_status.error_html);
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("Failed to load books from calibre library, with error:")), err, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Go back to the home page")].concat([ρσ_desugar_kwargs({onclick: function () {
@@ -21533,7 +21555,7 @@ return this.__repr__();
             container = document.getElementById(container_id);
             ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Choose book list mode…"), action: back, icon: "close"})]));
             items = ρσ_list_decorate([]);
-            current_mode = get_session_data().get("view_mode");
+            current_mode = get_view_mode();
             function ci(title, desc, name) {
                 var ic;
                 ic = (name === current_mode) ? "check" : null;
@@ -21619,6 +21641,7 @@ return this.__repr__();
         ρσ_modules["book_list.views"].create_image = create_image;
         ρσ_modules["book_list.views"].render_id = render_id;
         ρσ_modules["book_list.views"].render_ids = render_ids;
+        ρσ_modules["book_list.views"].get_view_mode = get_view_mode;
         ρσ_modules["book_list.views"].setup_view_mode = setup_view_mode;
         ρσ_modules["book_list.views"].apply_view_mode = apply_view_mode;
         ρσ_modules["book_list.views"].update_fetching_status = update_fetching_status;
@@ -21904,7 +21927,7 @@ return this.__repr__();
         function adjusting_sandboxed_html(html) {
             var css, ans;
             css = "html, body {{ overflow: hidden; color: {} }}".format(get_color("window-foreground"));
-            ans = sandboxed_html(html, css, "allow-same-origin allow-popups");
+            ans = sandboxed_html(html, css, "allow-same-origin allow-popups allow-popups-to-escape-sandbox");
             ans.addEventListener("load", (function() {
                 var ρσ_anonfunc = function (ev) {
                     setup_iframe(ev.target);
@@ -26022,7 +26045,7 @@ return this.__repr__();
             right_margin = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-right")].concat([ρσ_desugar_kwargs({style: "width:{}px;".format(sd.get("margin_right", 20)), class_: "book-side-margin", id: "book-right-margin", onclick: self.right_margin_clicked})]));
             set_right_margin_handler(right_margin);
             iframe_id = unique_id("read-book-iframe");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: "allow-popups allow-scripts", style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin")].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; min-height: 100%; display:none", id: "book-metadata-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: "allow-popups allow-scripts allow-popups-to-escape-sandbox", style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin")].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; min-height: 100%; display:none", id: "book-metadata-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
             handlers = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["ready"] = self.on_iframe_ready;
@@ -27948,7 +27971,6 @@ return this.__repr__();
         var _ = ρσ_modules.gettext.gettext;
 
         var get_db = ρσ_modules["book_list.globals"].get_db;
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
         var home = ρσ_modules["book_list.router"].home;
         var open_book = ρσ_modules["book_list.router"].open_book;
@@ -27959,6 +27981,7 @@ return this.__repr__();
 
         var DEFAULT_MODE = ρσ_modules["book_list.views"].DEFAULT_MODE;
         var setup_view_mode = ρσ_modules["book_list.views"].setup_view_mode;
+        var get_view_mode = ρσ_modules["book_list.views"].get_view_mode;
 
         var clear = ρσ_modules.dom.clear;
         var ensure_id = ρσ_modules.dom.ensure_id;
@@ -28157,7 +28180,7 @@ return this.__repr__();
             book_list_data.mode = null;
             book_list_data.thumbnail_cache = Object.create(null);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "book_list"})]));
-            apply_view_mode(get_session_data().get("view_mode"));
+            apply_view_mode(get_view_mode());
         };
         if (!create_books_list.__argnames__) Object.defineProperties(create_books_list, {
             __argnames__ : {value: ["container", "books"]}
@@ -30201,7 +30224,7 @@ return this.__repr__();
             var ρσ_Iter8 = ρσ_Iterable(Object.keys(library_data.field_metadata));
             for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
                 other_field = ρσ_Iter8[ρσ_Index8];
-                if (!added_fields[(typeof other_field === "number" && other_field < 0) ? added_fields.length + other_field : other_field] && allowed_fields(other_field) && !(ρσ_in(other_field, IGNORED_FIELDS))) {
+                if (!added_fields[(typeof other_field === "number" && other_field < 0) ? added_fields.length + other_field : other_field] && allowed_fields(other_field) && !ρσ_in(other_field, IGNORED_FIELDS)) {
                     fields.push(other_field);
                 }
             }

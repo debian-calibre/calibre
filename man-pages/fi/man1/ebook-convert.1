@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "maaliskuuta 08, 2019" "3.40.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "huhtikuuta 19, 2019" "3.41.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -35,59 +35,52 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-convert input_file output_file [options]
+ebook\-convert lähdetiedosto kohdetiedosto [vaihtoehdot]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Muunna ekirja formaatista toiseen.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+Lähdetiedosto on alkupiste ja kohdetiedosto on tulos. Molemmat on ilmoitettava komennon alkuarvoina.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a directory and an "open e\-book" (OEB) consisting of HTML files is written to that directory. These files are the files that would normally have been passed to the output plugin.
+Ekirjan formaatti päätellään kohdetiedoston nimen tiedostopäätteestä. Kohdetiedoston voi määritellä myös arvolla .PÄÄTE, jolloin PÄÄTE on haluttu kohdetiedoston tiedostoformaattipääte, ja tiedoston nimi muodostetaan lähdetiedostosta. Huomaa, että tiedostojen nimet eivät saa alkaa väliviivalla. Jos kohdetiedostolle ei ilmoiteta formaattia, se tulkitaan kansioksi, ja tulos on "avoin ekirja" (OEB) joka koostuu HTML\-tiedostoista tuossa kansiossa. Nämä tiedostot vietäisiin normaalisti edelleen kohdetiedostoformaattiin.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Lähde\- ja kohdetiedostojen jälkeen voit asettaa komentoon vaihtoehtoja toiminnon mukauttamiseksi. Vaihtoehdot riippuvat tiedostoformaateista. Saat tietoja niistä asettamalla lähde\- ja kohdetiedostojen jälkeen valinta \-h.
 .sp
-For full documentation of the conversion system see
+Täysi dokumentaatio toiminnolle
 conversion
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
+Vaihtoehdot ja oletusarvot asetuksille vaihtuvat sekä lähde\- että kohdeformaatin mukaan, joten tarkasta aina:
 .INDENT 0.0
 .INDENT 3.5
-.sp
-.nf
-.ft C
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
 .UNINDENT
 .UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+Alla on kaikille formaateille yhteiset vaihtoehdot, ja niiden jälkeen kunkin formaatin käytössä olevat lähde\- ja kohdevaihtoehdot.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%INPUT\-VALINNAT\fP
 .IP \(bu 2
 \fI\%ULOSTULO\-ASETUKSET\fP
 .IP \(bu 2
-\fI\%LOOK AND FEEL\fP
+\fI\%ILME\fP
 .IP \(bu 2
-\fI\%HEURISTIC PROCESSING\fP
+\fI\%HEURISTINEN PROSESSOINTI\fP
 .IP \(bu 2
-\fI\%SEARCH AND REPLACE\fP
+\fI\%ETSI JA KORVAA\fP
 .IP \(bu 2
-\fI\%STRUCTURE DETECTION\fP
+\fI\%RAKENTEEN TUNNISTUS\fP
 .IP \(bu 2
-\fI\%TABLE OF CONTENTS\fP
+\fI\%SISÄLLYSLUETTELO\fP
 .IP \(bu 2
-\fI\%METADATA\fP
+\fI\%METATIEDOT\fP
 .IP \(bu 2
-\fI\%DEBUG\fP
+\fI\%VIRHEENETSINTÄ\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,12 +95,12 @@ Määritä syöttöprofiili. Syöttöprofiili antaa käännökselle järjestelm�
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB"\fPRecipe Name.recipe\fB"\fP output.epub
+Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänrakennetulla reseptillä komennolla: ebook\-convert \fB"\fPReseptin Nimi.recipe\fB"\fP kohdenimi.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device (such as by resizing images for the device screen size). In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Aseta vientiprofiili. Vientiprofiilissa määritetään muunnettavan dokumentin optimointi kohdelaitteelle (kuten kuvien skaalaus näytön kokoon). Joissakin tapauksissa vientiprofiililla voidaan optimoida vienti tietylle laitteelle, mutta tämä on harvoin tarpeellista. Vaihtoehdot ovat:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,58 +178,58 @@ Mikäli määritelty, lisäosa yrittää luoda tuloksen, joka on mahdollisimman 
 .B \-\-toc\-title
 Luotavan inline\-sisällysluettelon otsikko.
 .UNINDENT
-.SH LOOK AND FEEL
+.SH ILME
 .sp
 Asetukset, joilla kontrolloidaan ulostulon ulkoasua
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate unicode characters to an ASCII representation. Use with care because this will replace unicode characters with ASCII. For instance it will replace \fB"\fPМихаил Горбачёв\fB"\fP with \fB"\fPMikhail Gorbachiov\fB"\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Translitteroi unicode\-merkistö ASCII\-merkeiksi. Käytä varoen \- esimerkiksi \fB"\fPМихаил Горбачёв\fB"\fP:n korvaa \fB"\fPMikhail Gorbachiov\fB"\fP\&. Jos merkistä on useampia versioita (esimerkiksi kiinan ja japanin versiot), valitaan nykyisen calibre\-käyttöliittymän kielivalinta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Normaali tekstin koko pisteinä (pt). Kaikki teksti tuotetaan tätä kokoa skaalaamalla. Suurempi koko suurentaa kaikkia tekstejä, ja toisinpäin. Oletuksena, jos arvona on 0, käytetään vientiprofiilissa asetettua arvoa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Change text justification. A value of \fB"\fPleft\fB"\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB"\fPjustify\fB"\fP converts all unjustified text to justified. A value of \fB"\fPoriginal\fB"\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
+Vaihda tekstin tasaus. Arvo \fB"\fPleft\fB"\fP muuntaa kaiken tekstin vasemmalle tasatuksi. Arvo \fB"\fPjustify\fB"\fP muuntaa kaiken tekstin tasapalstaksi. Arvo \fB"\fPoriginal\fB"\fP (oletus) säilyttää alkuperäisen tasauksen lähdetiedostosta. Huomaa, että vain jotkin kohdeformaatit tukevat tasapalstaa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-Disable all rescaling of font sizes.
+Kytke tekstikoon skaalaus pois päältä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+Upota kaikki dokumentissa viitatut fontit jos ne eivät ole jo upotettuina. Fontteja etsitään järjestelmästäsi, ja läydetyt fontit upotetaan. Upottaminen toimii vain sitä tukevissa formaateissa, kuten EPUB, AZW3, DOCX ja PDF. Varmistathan, että sinulla on lisenssi fontin upottamiseen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB"\fPbase\fB"\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+Upota valittu fonttitiedosto kirjaan. Tästä tulee kirjan \fB"\fPperusfontti\fB"\fP\&. Jos lähdetiedostossa on omat fonttinsa, ne voivat ohittaa tämän fontin. Voit käyttää tyyliasetusten suodatusta lähdetiedoston fonttien poistamiseen. Huomaa, että fontin upottaminen toimii vain joissakin formaateissa, kuten EPUB, AZW3 ja DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Oletuksena calibre käyttää CSS\-määritysten lyhennettyjä muotoja, mm. margin, padding, border jne. Valinta kytkee käyttöön täydet, laajennetut muodot. Nook ei pysty käsittelemään lyhennettyjä muotoja, ja Nookin muunnosprofiilit käyttävät aina laajennettua muotoa EPUB\-tiedostoissa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Either the path to a CSS stylesheet or raw CSS. This CSS will be appended to the style rules from the source file, so it can be used to override those rules.
+Polku CSS\-stylesheetiin tai suoraan CSS:ää. Tämä CSS lisätään lähdetiedoston tyylisääntöihin, jotta se voi ohittaa noita sääntöjä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+Pilkuin erotettu lista CSS\-määreitä, jotka poistetaan kaikista CSS\-säännöistä. Hyödyllistä, jos jonkin tyylimäärityksen ohittaminen ei muuten onnistu. Esimerkiksi: font\-family,color,margin\-left,margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapping from CSS font names to font sizes in pts. An example setting is 12,12,14,16,18,20,22,24. These are the mappings for the sizes xx\-small to xx\-large, with the final size being for huge fonts. The font rescaling algorithm uses these sizes to intelligently rescale fonts. The default is to use a mapping based on the output profile you chose.
+CSS\-tekstikokojen vastavuus tekstikokoihin pisteinä (pt). Esimerkkiarvo on 12,12,14,16,18,20,22,24, joka vastaa kokoja xx\-small\->xx\-large. Tekstinskaalausalgoritmi käyttää näitä kokoja tekstikoon älykkääseen skaalaukseen. Oletuksena käytetään vastaavuutta, joka perustuu valitsemaasi vientiprofiiliin.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,244 +239,248 @@ Lisää tyhjä rivi kappaleiden väliin. Ei toimi, jos lähdetiedosto ei käytä
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Set the height of the inserted blank lines (in em). The height of the lines between paragraphs will be twice the value set here.
+Aseta tyhjien lisättyjen rivien korkeus (em). Rivien korkeus on kaksi kertaa tämä arvo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserve ligatures present in the input document. A ligature is a special rendering of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. This option will preserve them instead.
+Säilytä ligatuurit lähdetiedostosta. Ligatuuri on erityinen kahden merkin typografinen yhdistelmä, kuten ff, fi, fl jne. Useimmat elukijat eivät tue ligatuureja, joten ne eivät yleensä näy oikein. Oletuksen calibre muuntaa ligatuurin vastaaviksi vakiomerkeiksi. Tämä valinta säilyttää ligatuurit.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+Rivinkorkeus pisteinä (pt). Tekstirivien välistys. Koskee vain elementtejä, jotka eivät määrittele omaa rivinkorkeuttaan. Useimmiten minimirivinkorkeus on hyödyllisempi asetus. Oletuksena ei suoriteta mitään rivinkorkeuden muokkausta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-Some badly designed documents use tables to control the layout of text on the page. When converted these documents often have text that runs off the page and other artifacts. This option will extract the content from the tables and present it in a linear fashion.
+Jotkin huonosti suunnitellut dokumentit käyttävät taulukoita tekstin asetteluun sivulle. Muunnoksessa niiden rivit usein venyvät sivun ulkopuolelle yms. Tämä valinta purkaa sisällön taulukoista ja esittää sen rivitetyssä muodossa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Aseta alamarginaali pisteinä (pt). Oletus on 5.0. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Aseta vasen marginaali pisteinä (pt). Oletus on 5.0. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Aseta oikea marginaali pisteinä (pt). Oletus on 5.0. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Aseta ylämarginaali pisteinä (pt). Oletus on 5.0. Nollaa pienempi luku estää marginaalin asettamisen (jolloin säilytetään alkuperäisen dokumentin marginaali). Huom: Sivupohjaisilla formaateilla kuten DOCX ja PDF on omat marginaalisetuksensa, jotka ohittavat tämän.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB"\fPdouble spaced\fB"\fP text by setting this to 240.
+Rivinkorkeuden minimi, prosenttiarvona lasketusta tekstielementin korkeudesta. calibre tarkastaa, että kaikilla elementeillä on vähintään tämä rivinkorkeus, riippumatta lähdetiedoston asetuksista. Aseta 0 poistaaksesi käytöstä. Oletus on 120%. Käytä tätä asetusta suoran rivikorkeuden sijaan, ellet ole varma että haluat tehdä toisin. Esimerkiksi \fB"\fPtuplarivin\fB"\fP saat asettamalla arvoksi 240.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Remove spacing between paragraphs. Also sets an indent on paragraphs of 1.5em. Spacing removal will not work if the source file does not use paragraphs (<p> or <div> tags).
+Poista kappaleiden väliset tyhjät rivit. Asettaa myös 1.5 em sisennyksen kappaleisiin. Välistyksen poistaminen ei toimi, jos lähdetiedosto ei käytä kappaleita (<p> tai <div> tägi).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-When calibre removes blank lines between paragraphs, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent (in em). If you set this value negative, then the indent specified in the input document is used, that is, calibre does not change the indentation.
+Kun calibre poistaa tyhjiä rivejä kappaleiden välistä, se asettaa myös kappalesisennyksen, jotta kappaleet ovat erotettavissa. Arvo asettaa sisennyksen leveyden (em). Jos asetat negatiivisen arvon, säilytetään lähdetiedoston kappalesisennys.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP
+Muunna tavalliset lainausmerkit, väliviivat ja perättäiset pisteet typografisesti oikeiksi välimerkeiksi. Katso lisätietoja: \fI\%https://daringfireball.net/projects/smartypants\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+Osita kaikki upotetut fontit. Kaikki fontit rajataan vain dokumentissa käytettyihin merkkeihin. Tämä pienentää fonttitiedostojen kokoa. Etenkin erittäin suuria fonttitiedostoja käyttäessä tämä on hyvin hyödyllistä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB"\fPLook & feel\->Transform styles\fB"\fP section of the conversion dialog. Once you create the rules, you can use the \fB"\fPExport\fB"\fP button to save them to a file.
+Polku tiedostoon jossa on sääntöjä käytettäväksi kirjan CSS\-tyylien  muunnoksessa. Helpoin tapa tällaisen tiedoston luomiseen on käyttää graafisen käyttöliittymän aputoimintoa sääntöjen luomiseen, \fB"\fPIlme \-> Muunnostyylit\fB"\fP\-osassa muunnosikkunaa. Kun olet määritellyt säännöt, voit tallentaa ne tiedostoon \fB"\fPVie\fB"\fP\-painikkeella.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+Muunna typografisesti tarkat lainausmerkit, väliviivat ja perättäiset pisteet niiden tavanomaisiksi vastineiksi.
 .UNINDENT
-.SH HEURISTIC PROCESSING
+.SH HEURISTINEN PROSESSOINTI
 .sp
-Modify the document text and structure using common patterns. Disabled by default. Use \-\-enable\-heuristics to enable.  Individual actions can be disabled with the \-\-disable\-* options.
+Muokkaa dokumentin tekstiä ja rakennetta yleisillä sääntömalleilla. Oletuksen poissa käytöstä. Käytä \-\-enable\-heuristics ottaaksesi käyttöön. Yksittäisiä toimintoja voi sammuttaa \-\-disable\-
+.nf
+*
+.fi
+\-valinnoilla.
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
-Analyze hyphenated words throughout the document.  The document itself is used as a dictionary to determine whether hyphens should be retained or removed.
+Analysoi dokumentin tavutetut sanat. Dokumentin omaa sisältöä käytetään tunnistamaan tulisiko väliviiva poistaa vai säilyttää.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-Remove empty paragraphs from the document when they exist between every other paragraph
+Poista tyhjät kappaleet kappaleiden välistä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-Turn indentation created from multiple non\-breaking space entities into CSS indents.
+Muunna perättäisistä sitovista välilyönneistä tehdyt sisennykset CSS\-sisennyksiksi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+Vasempaan tasatut kohtausten vaihdokset keskitetään. Korvaa useilla tyhjillä riveillä tehdyn kohtausten vaihdoksen vaakaviivalla.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-italicize\-common\-cases
-Look for common words and patterns that denote italics and italicize them.
+Etsi yleisiä sanoja sekä rakenteita joilla merkitään kursivointeja ja kursivoi nämä kohdat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+Tunnista muotoilemattomat lukujen otsikot ja alaotsikot. Muuntaa ne h2 ja h3 tägeiksi. Tästä ei vielä muodostu sisällysluetteloa, mutta toimintoa voidaan hyödyntää rakenteen luomisessa sisällyluettelon generoimisen yhteydessä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-Looks for occurrences of sequential <h1> or <h2> tags. The tags are renumbered to prevent splitting in the middle of chapter headings.
+Etsii perättäisiä <h1> tai <h2> tägejä. Tägit numeroidaan uusiksi, jotta lukujen otsikot eivät katkea kesken.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-unwrap\-lines
-Unwrap lines using punctuation and other formatting clues.
+Poista turhat rivinvaihdot päättelemällä kappaleet välimerkeistä ja muista muista muotoiluista.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-Enable heuristic processing. This option must be set for any heuristic processing to take place.
+Ota heuristinen prosessointi käyttöön. Valinta vaaditaan, jotta heuristista prosessointia suoritetaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Scale used to determine the length at which a line should be unwrapped. Valid values are a decimal between 0 and 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+Pituuden suhdeluku, jolla arvioida mistä riveistä tulisi poistaa rivitys. Käyvät arvot ovat desimaalilukuja välillä 0\-1. Oletus on 0.4, hiukan rivipituuksien mediaanin alapuolella. Jos vain harvoista dokumentin riveistä tarvitsee poistaa rivitys, tarvitaan pienempi suhdeluku.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
-Replace scene breaks with the specified text. By default, the text from the input document is used.
+Korvaa kohtausten vaihdokset asetetulla tekstillä. Oletuksena käytetään lähdetiedoston tekstiä.
 .UNINDENT
-.SH SEARCH AND REPLACE
+.SH ETSI JA KORVAA
 .sp
-Modify the document text and structure using user defined patterns.
+Muokkaka dokumentin tekstiä ja rakennetta käyttäjän asettamilla säännöillä.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Polku tiedostoon jossa on etsi ja korvaa \-regular expressionit. Tiedoston tulee muodostua perättäisistä riveistä, hakulauseke ja korvauslauseke (joka voi olla myös tyhjä rivi). Lausekkeen tulee noudattaa Python regex \-syntaksia ja tiedoston tulee käyttää UTF\-8\-merkistöä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-Replacement to replace the text found with sr1\-search.
+Korvaava teksti sr1\-searchilla löydetylle tekstille.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-Search pattern (regular expression) to be replaced with sr1\-replace.
+Hakulauseke (regular expression) joka korvataan sr1\-replacella.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-Replacement to replace the text found with sr2\-search.
+Korvaava teksti sr2\-searchilla löydetylle tekstille.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-search
-Search pattern (regular expression) to be replaced with sr2\-replace.
+Hakulauseke (regular expression) joka korvataan sr2\-replacella.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-Replacement to replace the text found with sr3\-search.
+Korvaava teksti sr3\-searchilla löydetylle tekstille.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-search
-Search pattern (regular expression) to be replaced with sr3\-replace.
+Hakulauseke (regular expression) joka korvataan sr3\-replacella.
 .UNINDENT
-.SH STRUCTURE DETECTION
+.SH RAKENTEEN TUNNISTUS
 .sp
 Kontrolloi asiakirjan rakenteen automaattista tunnistusta.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+XPath\-lauseke lukujen otsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP tai \fB"\fPpart\fB"\fP lukujen otsikoiksi, kuten myös tägit joiden class=\fB"\fPchapter\fB"\fP\&. Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \fB"\fP/\fB"\fP\&.  Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specify how to mark detected chapters. A value of \fB"\fPpagebreak\fB"\fP will insert page breaks before chapters. A value of \fB"\fPrule\fB"\fP will insert a line before chapters. A value of \fB"\fPnone\fB"\fP will disable chapter marking and a value of \fB"\fPboth\fB"\fP will use both page breaks and lines to mark chapters.
+Aseta lukujen merkintätapa. Arvo \fB"\fPpagebreak\fB"\fP lisää sivunvaihdot ennen lukuja. Arvo \fB"\fPrule\fB"\fP lisää vaakaviivan ennen lukuja. Arvo \fB"\fPnone\fB"\fP estää lukujen merkitsemisen ja arvo \fB"\fPboth\fB"\fP lisää sekä sivunvaihdon että vaakaviivan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Some documents specify page margins by specifying a left and right margin on each individual paragraph. calibre will try to detect and remove these margins. Sometimes, this can cause the removal of margins that should not have been removed. In this case you can disable the removal.
+Joissakin dokumenteissa oikea ja vasen marginaali on ilmoitettu jokaiselle kappaleelle erikseen. calibre pyrkii etsimään ja poistamaan tällaiset marginaalit. Joskus kuitenkin poistuu vääriä marginaaliasetuksia Voit estää poiston tällä valinnalla.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Lisää metatiedot kirjan alkuun. Hyödyllistä, jos lukulaitteesi ei tue metatietojen normaalia esittämistä/hakua.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+XPath\-lauseke. Lisää sivunvaihdot ennen tiettyjä elementtejä. Poista käytöstä lausekkeella: /
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-Use the cover detected from the source file in preference to the specified cover.
+Käytä lähdetiedostosta havaittua kansikuvaa erikseen määritellyn kansikuvan sijaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Poista ekirjan ensimmäinen kuva. Hyödyllistä, jos lähdetiedostossa on kansikuva, jota ei tunnisteta kanneksi.  Jos asetat oman kansikuvan sen sijaan, tämä valinta estää kahden kannen muodostumisen kirjaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+XPath\-lauseke lukemisen aloituskohdan löytämiseen dokumentista. Jotkin lukuohjelmat (etenkin Kindle) käyttävät tätä kohtaa kirjan avaamiseen. Katso lisäominaisuuksia XPath\-opastuksesta calibre\-käyttöohjeesta.
 .UNINDENT
-.SH TABLE OF CONTENTS
+.SH SISÄLLYSLUETTELO
 .sp
 Kontrolloi Sisällysluettelon automaattista luomista. Oletuksena, jos lähdetiedostolla on Sisällysluettelo, sitä käytetään automaattisesti luodun sijaan.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-When creating a TOC from links in the input document, allow duplicate entries, i.e. allow more than one entry with the same text, provided that they point to a different location.
+Salli sisällysluettelossa toistuvat rivit, eli samansisältöiset rivit, kunhan ne osoittavat eri kohtiin dokumentissa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 1. Asetus tässä ohittaa kaikki muut automaattisesti tunnistetut otsikot. Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 2. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 3. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Maximum number of links to insert into the TOC. Set to 0 to disable. Default is: 50. Links are only added to the TOC if less than the threshold number of chapters were detected.
+Maksimimäärä linkkejä sisällysluettelossa. 0 poistaa rajan käytöstä. Oletus: 50. Linkit lisätään sisällysluetteloon vain jos lukuja on tätä arvoa vähemmän.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -493,45 +490,45 @@ Maximum number of links to insert into the TOC. Set to 0 to disable. Default is:
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Remove entries from the Table of Contents whose titles match the specified regular expression. Matching entries and all their children are removed.
+Poista sisällysluettelosta rivit, joiden sisältö vastaa asetettua regexp\-lauseketta. Nämä rivit sekä niiden alarivit karsitaan luettelosta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-If fewer than this number of chapters is detected, then links are added to the Table of Contents. Default: 6
+Jos lukuja löydetään vähemmän kuin tämä lukumäärä, sisällysluetteloon asetetaan linkit. Oletus: 6
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-Normally, if the source file already has a Table of Contents, it is used in preference to the auto\-generated one. With this option, the auto\-generated one is always used.
+Yleensä, jos tiedostossa on jo sisällysluettelo, sitä käytetään automaattisesti luodun sijaan. Valinta asettaa aina käyttöön automaattisesti luodun sisällysluettelon.
 .UNINDENT
-.SH METADATA
+.SH METATIEDOT
 .sp
 Asetukset ulostulon metatiedoille
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-String to be used when sorting by author.
+Teksti jota käytetään tekijän mukaan järjestämiseen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors
-Set the authors. Multiple authors should be separated by ampersands.
+Aseta tekijät. Useammat tekijät erotetaan puolipisteillä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-producer
-Set the book producer.
+Aseta kirjan tuottaja.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+Aseta kirjan kuvaus.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover
-Set the cover to the specified file or URL
+Aseta kansi osoitetusta tiedostosta tai URL:stä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -546,42 +543,42 @@ Anna kieli
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Aseta julkaisupäivämäärä (oletetaan käyttävän paikallista aikavyöhykettä, ellei aikavyöhykettä ilmoiteta erikseen)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+Aseta kirjan julkaisija.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating
-Set the rating. Should be a number between 1 and 5.
+Aseta arvosana. Luku 1\-5
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Read metadata from the specified OPF file. Metadata read from this file will override any metadata in the source file.
+Lue metatiedot osoitetusta OPF\-tiedostosta. Luetut metatiedot ohittavat lähdetiedostosta löytyvät tiedot.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+Aseta sarja johon kirja kuuluu.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-Set the index of the book in this series.
+Aseta kirjan järjestysnumero sarjassa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags
-Set the tags for the book. Should be a comma separated list.
+Aseta kirjan tägit. Muotona pilkuin erotettu lista.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timestamp
-Set the book timestamp (no longer used anywhere)
+Aseta kirja aikaleima (ei enää käytössä missään)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,9 +588,9 @@ Anna otsikko
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-The version of the title to be used for sorting.
+Nimen muoto jota käytetään järjestämiseen.
 .UNINDENT
-.SH DEBUG
+.SH VIRHEENETSINTÄ
 .sp
 Asetukset, joilla muunnoksen vianmääritystä helpotetaan
 .INDENT 0.0
@@ -604,7 +601,7 @@ Tallenna käännöksen eri vaiheiden tulos määriteltyyn kansioon. Käytännöl
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Kuvausten tarkkuustaso. Useampi määrittely tuottaa yksityiskohtaisemmat kuvaukset. Kaksinkertainen asetus tuottaa täyden tarkkuustason, yksi kerta keskimääräisen ja nolla kertaa vähäisimman tarkkuustason.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

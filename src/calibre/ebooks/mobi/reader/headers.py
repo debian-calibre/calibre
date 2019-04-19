@@ -16,6 +16,7 @@ from calibre.ebooks.mobi.langcodes import main_language, sub_language, mobi2iana
 from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
 from calibre.utils.localization import canonicalize_lang
 from calibre.utils.config_base import tweaks
+from polyglot.builtins import unicode_type
 
 NULL_INDEX = 0xffffffff
 
@@ -184,7 +185,7 @@ class BookHeader(object):
         self.compression_type = raw[:2]
         self.records, self.records_size = struct.unpack('>HH', raw[8:12])
         self.encryption_type, = struct.unpack('>H', raw[12:14])
-        if ident == 'TEXTREAD':
+        if ident == b'TEXTREAD':
             self.codepage = 1252
         if len(raw) <= 16:
             self.codec = 'cp1252'
@@ -215,14 +216,14 @@ class BookHeader(object):
             # 2.9?). See https://bugs.launchpad.net/bugs/1179144
             max_header_length = 500  # We choose 500 for future versions of kindlegen
 
-            if (ident == 'TEXTREAD' or self.length < 0xE4 or
+            if (ident == b'TEXTREAD' or self.length < 0xE4 or
                     self.length > max_header_length or
                     (try_extra_data_fix and self.length == 0xE4)):
                 self.extra_flags = 0
             else:
                 self.extra_flags, = struct.unpack('>H', raw[0xF2:0xF4])
 
-            if self.compression_type == 'DH':
+            if self.compression_type == b'DH':
                 self.huff_offset, self.huff_number = struct.unpack('>LL',
                         raw[0x70:0x78])
 
@@ -239,7 +240,7 @@ class BookHeader(object):
 
             self.exth_flag, = struct.unpack('>L', raw[0x80:0x84])
             self.exth = None
-            if not isinstance(self.title, unicode):
+            if not isinstance(self.title, unicode_type):
                 self.title = self.title.decode(self.codec, 'replace')
             if self.exth_flag & 0x40:
                 try:
@@ -308,7 +309,7 @@ class MetadataHeader(BookHeader):
     def identity(self):
         self.stream.seek(60)
         ident = self.stream.read(8).upper()
-        if ident not in ['BOOKMOBI', 'TEXTREAD']:
+        if ident not in [b'BOOKMOBI', b'TEXTREAD']:
             raise MobiError('Unknown book type: %s' % ident)
         return ident
 

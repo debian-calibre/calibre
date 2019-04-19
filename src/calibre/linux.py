@@ -1,6 +1,8 @@
-from __future__ import print_function
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
+#!/usr/bin/env python2
+# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+# License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 ''' Post installation script for linux '''
 
@@ -9,10 +11,11 @@ from subprocess import check_call, check_output
 from functools import partial
 
 from calibre import __appname__, prints, guess_type
-from calibre.constants import islinux, isbsd
+from calibre.constants import islinux, isbsd, ispy3
 from calibre.customize.ui import all_input_formats
 from calibre.ptempfile import TemporaryDirectory
 from calibre import CurrentDir
+from polyglot.builtins import iteritems, unicode_type
 
 
 entry_points = {
@@ -43,7 +46,17 @@ entry_points = {
       }
 
 
-class PreserveMIMEDefaults(object):
+def polyglot_write(stream):
+    stream_write = stream.write
+
+    def write(x):
+        if not isinstance(x, bytes):
+            x = x.encode('utf-8')
+        return stream_write(x)
+    return write
+
+
+class PreserveMIMEDefaults(object):  # {{{
 
     def __init__(self):
         self.initial_values = {}
@@ -70,7 +83,7 @@ class PreserveMIMEDefaults(object):
                 self.initial_values[x] = None
 
     def __exit__(self, *args):
-        for path, val in self.initial_values.iteritems():
+        for path, val in iteritems(self.initial_values):
             if val is None:
                 try:
                     os.remove(path)
@@ -86,12 +99,14 @@ class PreserveMIMEDefaults(object):
                 except EnvironmentError as e:
                     if e.errno != errno.EACCES:
                         raise
+# }}}
 
 # Uninstall script {{{
 
 
 UNINSTALL = '''\
 #!{python}
+# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import print_function, unicode_literals
 euid = {euid}
 
@@ -210,7 +225,7 @@ class ZshCompleter(object):  # {{{
             h = opt.help or ''
             h = h.replace('"', "'").replace('[', '(').replace(
                 ']', ')').replace('\n', ' ').replace(':', '\\:').replace('`', "'")
-            h = h.replace('%default', type(u'')(opt.default))
+            h = h.replace('%default', unicode_type(opt.default))
             arg = ''
             if opt.takes_value():
                 arg = ':"%s":'%h
@@ -266,7 +281,7 @@ class ZshCompleter(object):  # {{{
         output_fmts = set(available_output_formats())
         iexts = {x.upper() for x in input_fmts}.union(input_fmts)
         oexts = {x.upper() for x in output_fmts}.union(output_fmts)
-        w = lambda x: f.write(x if isinstance(x, bytes) else x.encode('utf-8'))
+        w = polyglot_write(f)
         # Arg 1
         w('\n_ebc_input_args() {')
         w('\n  local extras; extras=(')
@@ -368,12 +383,12 @@ class ZshCompleter(object):  # {{{
             h = opt.help or ''
             h = h.replace('"', "'").replace('[', '(').replace(
                 ']', ')').replace('\n', ' ').replace(':', '\\:').replace('`', "'")
-            h = h.replace('%default', type(u'')(opt.default))
+            h = h.replace('%default', unicode_type(opt.default))
             help_txt = u'"[%s]"'%h
             opt_lines.append(ostrings + help_txt + ' \\')
         opt_lines = ('\n' + (' ' * 8)).join(opt_lines)
 
-        f.write((u'''
+        polyglot_write(f)((u'''
 _ebook_edit() {
     local curcontext="$curcontext" state line ebookfile expl
     typeset -A opt_args
@@ -400,7 +415,7 @@ _ebook_edit() {
 
     return 1
 }
-''' % (opt_lines, '|'.join(tweakable_fmts)) + '\n\n').encode('utf-8'))
+''' % (opt_lines, '|'.join(tweakable_fmts)) + '\n\n'))
 
     def do_calibredb(self, f):
         from calibre.db.cli.main import COMMANDS, option_parser_for
@@ -413,16 +428,17 @@ _ebook_edit() {
                      not x.strip().startswith('%prog')]
             descs[command] = lines[0]
 
-        f.write('\n_calibredb_cmds() {\n  local commands; commands=(\n')
-        f.write('    {-h,--help}":Show help"\n')
-        f.write('    "--version:Show version"\n')
-        for command, desc in descs.iteritems():
-            f.write('    "%s:%s"\n'%(
+        w = polyglot_write(f)
+        w('\n_calibredb_cmds() {\n  local commands; commands=(\n')
+        w('    {-h,--help}":Show help"\n')
+        w('    "--version:Show version"\n')
+        for command, desc in iteritems(descs):
+            w('    "%s:%s"\n'%(
                 command, desc.replace(':', '\\:').replace('"', '\'')))
-        f.write('  )\n  _describe -t commands "calibredb command" commands \n}\n')
+        w('  )\n  _describe -t commands "calibredb command" commands \n}\n')
 
         subcommands = []
-        for command, parser in parsers.iteritems():
+        for command, parser in iteritems(parsers):
             exts = []
             if command == 'catalog':
                 exts = [x.lower() for x in available_catalog_formats()]
@@ -440,8 +456,8 @@ _ebook_edit() {
             subcommands.append(txt)
             subcommands.append(';;')
 
-        f.write('\n_calibredb() {')
-        f.write((
+        w('\n_calibredb() {')
+        w((
             r'''
     local state line state_descr context
     typeset -A opt_args
@@ -464,26 +480,24 @@ _ebook_edit() {
     esac
 
     return ret
-    '''%'\n    '.join(subcommands)).encode('utf-8'))
-        f.write('\n}\n\n')
+    '''%'\n    '.join(subcommands)))
+        w('\n}\n\n')
 
     def write(self):
+
         if self.dest:
             for c in ('calibredb', 'ebook-convert', 'ebook-edit'):
                 self.commands[c] = ' _%s "$@"' % c.replace('-', '_')
             with open(self.dest, 'wb') as f:
-                f.write('#compdef ' + ' '.join(self.commands)+'\n')
+                w = polyglot_write(f)
+                w('#compdef ' + ' '.join(self.commands)+'\n')
                 self.do_ebook_convert(f)
                 self.do_calibredb(f)
                 self.do_ebook_edit(f)
-                f.write('case $service in\n')
-                for c, txt in self.commands.iteritems():
-                    if isinstance(txt, type(u'')):
-                        txt = txt.encode('utf-8')
-                    if isinstance(c, type(u'')):
-                        c = c.encode('utf-8')
-                    f.write(b'%s)\n%s\n;;\n'%(c, txt))
-                f.write('esac\n')
+                w('case $service in\n')
+                for c, txt in iteritems(self.commands):
+                    w('%s)\n%s\n;;\n'%(c, txt))
+                w('esac\n')
 # }}}
 
 
@@ -492,7 +506,7 @@ def get_bash_completion_path(root, share, info):
         # Try to get the system bash completion dir since we are installing to
         # /usr
         try:
-            path = check_output('pkg-config --variable=completionsdir bash-completion'.split()).strip().partition(os.pathsep)[0]
+            path = check_output('pkg-config --variable=completionsdir bash-completion'.split()).decode('utf-8').strip().partition(os.pathsep)[0]
         except Exception:
             info('Failed to find directory to install bash completions, using default.')
             path = '/usr/share/bash-completion/completions'
@@ -529,15 +543,17 @@ def write_completion(bash_comp_dest, zsh):
         complete = os.path.join(getattr(sys, 'frozen_path'), complete)
 
     with open(bash_comp_dest or os.devnull, 'wb') as f:
+        w = polyglot_write(f)
+
         def o_and_e(*args, **kwargs):
-            f.write(opts_and_exts(*args, **kwargs))
+            w(opts_and_exts(*args, **kwargs))
             zsh.opts_and_exts(*args, **kwargs)
 
         def o_and_w(*args, **kwargs):
-            f.write(opts_and_words(*args, **kwargs))
+            w(opts_and_words(*args, **kwargs))
             zsh.opts_and_words(*args, **kwargs)
 
-        f.write('# calibre Bash Shell Completion\n')
+        w('# calibre Bash Shell Completion\n')
         o_and_e('calibre', guiop, BOOK_EXTENSIONS)
         o_and_e('lrf2lrs', lrf2lrsop, ['lrf'], file_map={'--output':['lrs']})
         o_and_e('ebook-meta', metaop,
@@ -560,7 +576,7 @@ def write_completion(bash_comp_dest, zsh):
             '--inspect-mobi':['mobi', 'azw', 'azw3'],
             '--viewer':sorted(available_input_formats()),
         })
-        f.write(textwrap.dedent('''
+        w(textwrap.dedent('''
         _ebook_device_ls()
         {
         local pattern search listing prefix
@@ -651,7 +667,7 @@ class PostInstall:
         print('\n'+'_'*20, 'WARNING','_'*20)
         prints(*args, **kwargs)
         print('_'*50)
-        print ('\n')
+        print('\n')
         self.warnings.append((args, kwargs))
         sys.stdout.flush()
 
@@ -732,7 +748,7 @@ class PostInstall:
             appdata_resources=self.appdata_resources, frozen_path=getattr(sys, 'frozen_path', None))
         try:
             with open(dest, 'wb') as f:
-                f.write(raw)
+                polyglot_write(f)(raw)
             os.chmod(dest, stat.S_IRWXU|stat.S_IRGRP|stat.S_IROTH)
             if os.geteuid() == 0:
                 os.chown(dest, 0, 0)
@@ -799,7 +815,7 @@ class PostInstall:
                     for size in sizes:
                         install_single_icon(iconsrc, basename, size, context, is_last_icon and size is sizes[-1])
 
-                icons = filter(None, [x.strip() for x in '''\
+                icons = list(filter(None, [x.strip() for x in '''\
                     mimetypes/lrf.png application-lrf mimetypes
                     mimetypes/lrf.png text-lrs mimetypes
                     mimetypes/mobi.png application-x-mobipocket-ebook mimetypes
@@ -809,7 +825,7 @@ class PostInstall:
                     lt.png calibre-gui apps
                     viewer.png calibre-viewer apps
                     tweak.png calibre-ebook-edit apps
-                    '''.splitlines()])
+                    '''.splitlines()]))
                 for line in icons:
                     iconsrc, basename, context = line.split()
                     install_icons(iconsrc, basename, context, is_last_icon=line is icons[-1])
@@ -822,25 +838,22 @@ class PostInstall:
                 mimetypes.discard('application/octet-stream')
 
                 def write_mimetypes(f):
-                    f.write('MimeType=%s;\n'%';'.join(mimetypes))
+                    polyglot_write(f)('MimeType=%s;\n'%';'.join(mimetypes))
 
                 from calibre.ebooks.oeb.polish.main import SUPPORTED
                 from calibre.ebooks.oeb.polish.import_book import IMPORTABLE
-                f = open('calibre-lrfviewer.desktop', 'wb')
-                f.write(VIEWER)
-                f.close()
-                f = open('calibre-ebook-viewer.desktop', 'wb')
-                f.write(EVIEWER)
-                write_mimetypes(f)
-                f = open('calibre-ebook-edit.desktop', 'wb')
-                f.write(ETWEAK)
-                mt = {guess_type('a.' + x.lower())[0] for x in (SUPPORTED|IMPORTABLE)} - {None, 'application/octet-stream'}
-                f.write('MimeType=%s;\n'%';'.join(mt))
-                f.close()
-                f = open('calibre-gui.desktop', 'wb')
-                f.write(GUI)
-                write_mimetypes(f)
-                f.close()
+                with open('calibre-lrfviewer.desktop', 'wb') as f:
+                    polyglot_write(f)(VIEWER)
+                with open('calibre-ebook-viewer.desktop', 'wb') as f:
+                    polyglot_write(f)(EVIEWER)
+                    write_mimetypes(f)
+                with open('calibre-ebook-edit.desktop', 'wb') as f:
+                    polyglot_write(f)(ETWEAK)
+                    mt = {guess_type('a.' + x.lower())[0] for x in (SUPPORTED|IMPORTABLE)} - {None, 'application/octet-stream'}
+                    polyglot_write(f)('MimeType=%s;\n'%';'.join(mt))
+                with open('calibre-gui.desktop', 'wb') as f:
+                    polyglot_write(f)(GUI)
+                    write_mimetypes(f)
                 des = ('calibre-gui.desktop', 'calibre-lrfviewer.desktop',
                         'calibre-ebook-viewer.desktop', 'calibre-ebook-edit.desktop')
                 appdata = os.path.join(os.path.dirname(self.opts.staging_sharedir), 'metainfo')
@@ -930,7 +943,7 @@ def opts_and_words(name, op, words, takes_files=False):
     esac
 
 }
-complete -F _'''%(opts, words) + fname + ' ' + name +"\n\n").encode('utf-8')
+complete -F _'''%(opts, words) + fname + ' ' + name +"\n\n")
 
 
 pics = {'jpg', 'jpeg', 'gif', 'png', 'bmp'}
@@ -1101,8 +1114,8 @@ def write_appdata(key, entry, base, translators):
     description = E.description()
     for para in entry['description']:
         description.append(E.p(para))
-        for lang, t in translators.iteritems():
-            tp = t.ugettext(para)
+        for lang, t in iteritems(translators):
+            tp = getattr(t, 'gettext' if ispy3 else 'ugettext')(para)
             if tp != para:
                 description.append(E.p(tp))
                 description[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
@@ -1118,8 +1131,8 @@ def write_appdata(key, entry, base, translators):
         screenshots,
         type='desktop'
     )
-    for lang, t in translators.iteritems():
-        tp = t.ugettext(entry['summary'])
+    for lang, t in iteritems(translators):
+        tp = getattr(t, 'gettext' if ispy3 else 'ugettext')(entry['summary'])
         if tp != entry['summary']:
             root.append(E.summary(tp))
             root[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "mars 08, 2019" "3.40.1" "calibre"
+.TH "CALIBREDB" "1" "apríl 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -163,13 +163,13 @@ sýna útgáfunúmer forrits og hætta
 .sp
 .nf
 .ft C
-calibredb list [options]
+calibredb list [valkostir]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-List the books available in the calibre database.
+Telur upp allar tiltækar bækur í Calibre\-gagnagrunninum.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -477,7 +477,7 @@ Skipta út biltáknum fyrir &undirstrik.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single directory
+Flytja allar bækur út í eina möppu
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -497,7 +497,7 @@ Export books to the specified directory. Default is .
 .INDENT 0.0
 .TP
 .B \-\-to\-lowercase
-Convert paths to lowercase.
+Umbreyta slóðum í lágstafi.
 .UNINDENT
 .SH CATALOG
 .INDENT 0.0
@@ -749,20 +749,20 @@ If the column stores multiple values, append the specified values to the existin
 .sp
 .nf
 .ft C
-calibredb restore_database [val]
+calibredb restore_database [valkostir]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Endurræsa þessum gagnagrunni og nota lýsigögn geymd í OPF skrá í
-öllum calibre forritamöppum. Þetta er gagnlegt ef metadata.db skráin
-hefur spillst.
+Endurheimta þennan gagnagrunn út frá lýsigögnum sem geymd í OPF\-skrám
+í hverri möppu Calibre\-safnsins. Þetta er gagnlegt ef metadata.db skráin
+hefur skemmst.
 .sp
-VIÐVÖRUN: Þessi skipun endurgerir gagnagrunninn þinn. Þú munt tapa öllum
-vistuðum leitum, notendaflokkum, tengispjöldum, vistuðum bókaumbreytingum
-stillingum og notendauppskriftum. Endurræst lýsigögn verða aðeins eins góð
-og OPF skrárnar gefa tilefni til.
+VIÐVÖRUN: Þessi skipun endurgerir gagnagrunninn þinn. Þú munt tapa
+öllum vistuðum leitum, notendaflokkum, tengispjöldum, vistuðum bókaumbreytingum
+stillingum og notendauppskriftum. Endurheimt lýsigögn verða aðeins eins nákvæm
+og OPF\-skrárnar gefa tilefni til.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -788,22 +788,22 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Frálag í CSV
+Úttak í CSV
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_extensions, \-e
-Comma\-separated list of extensions to ignore. Default: all
+Kommu\-aðgreindur listi yfir skráarendingar sem á að hunsa. Sjálfgefið: allt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Comma\-separated list of names to ignore. Default: all
+Kommu\-aðgreindur listi yfir nöfn sem á að hunsa. Sjálfgefið: allt
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-report, \-r
-Comma\-separated list of reports. Default: all
+Kommu\-aðgreindur listi yfir skýrslur. Sjálfgefið: allt
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -829,7 +829,7 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Frálag í CSV
+Úttak í CSV
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -902,9 +902,9 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Uppfærir lýsigögn í sjálfum bókaskránum sem geymd eru í calibre safninu með
+Uppfærir lýsigögn í sjálfum bókaskránum sem geymd eru í Calibre\-safninu með
 lýsigögnum úr calibre gagnagrunninum.  Venjulega eru lýsigögn einungis uppfærð
-þegar skrár eru teknar úr calibre, þessi skipun er notadrjúg ef þú vilt að skrárnar
+þegar skrár eru teknar úr Calibre, þessi skipun er notadrjúg ef þú vilt að skrárnar
 verði uppfærðar þar sem þær eru. Taktu eftir að mismunandi skráasnið styðja
 mismikil lýsigögn. Þú getur notað \(aqall\(aq í stað book_id til að uppfæra lýsigögn í
 öllum bókum. Þú getur líka tilgreint auðkenni (id) margra bóka aðskilin með bilum

@@ -17,6 +17,7 @@ from calibre.gui2.tweak_book import tprefs, editors, current_container
 from calibre.gui2.tweak_book.search import get_search_regex, InvalidRegex, initialize_search_request
 from calibre.gui2.tweak_book.widgets import BusyCursor
 from calibre.gui2.widgets2 import HistoryComboBox
+from polyglot.builtins import iteritems, unicode_type, error_message
 
 # UI {{{
 
@@ -78,7 +79,7 @@ class WhereBox(QComboBox):
             return wm[self.currentIndex()]
 
         def fset(self, val):
-            self.setCurrentIndex({v:k for k, v in wm.iteritems()}[val])
+            self.setCurrentIndex({v:k for k, v in iteritems(wm)}[val])
         return property(fget=fget, fset=fset)
 
     def showPopup(self):
@@ -165,7 +166,7 @@ def run_text_search(search, current_editor, current_editor_name, searchable_name
     except InvalidRegex as e:
         return error_dialog(gui_parent, _('Invalid regex'), '<p>' + _(
             'The regular expression you entered is invalid: <pre>{0}</pre>With error: {1}').format(
-                prepare_string_for_xml(e.regex), e.message), show=True)
+                prepare_string_for_xml(e.regex), error_message(e)), show=True)
     editor, where, files, do_all, marked = initialize_search_request(search, 'count', current_editor, current_editor_name, searchable_names)
     with BusyCursor():
         if editor is not None:
@@ -173,7 +174,7 @@ def run_text_search(search, current_editor, current_editor_name, searchable_name
                 return True
             if not files and editor.find_text(pat, wrap=True):
                 return True
-        for fname, syntax in files.iteritems():
+        for fname, syntax in iteritems(files):
             ed = editors.get(fname, None)
             if ed is not None:
                 if ed.find_text(pat, complete=True):
@@ -182,7 +183,7 @@ def run_text_search(search, current_editor, current_editor_name, searchable_name
             else:
                 root = current_container().parsed(fname)
                 if hasattr(root, 'xpath'):
-                    raw = tostring(root, method='text', encoding=unicode, with_tail=True)
+                    raw = tostring(root, method='text', encoding=unicode_type, with_tail=True)
                 else:
                     raw = current_container().raw_data(fname)
                 if pat.search(raw) is not None:

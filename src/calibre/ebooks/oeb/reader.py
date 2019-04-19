@@ -7,10 +7,7 @@ from __future__ import print_function
 __license__   = 'GPL v3'
 __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
 
-import sys, os, uuid, copy, re, cStringIO
-from itertools import izip
-from urlparse import urldefrag, urlparse
-from urllib import unquote as urlunquote
+import sys, os, uuid, copy, re, io
 from collections import defaultdict
 
 from lxml import etree
@@ -30,6 +27,8 @@ from calibre.utils.localization import get_lang
 from calibre.ptempfile import TemporaryDirectory
 from calibre.constants import __appname__, __version__
 from calibre import guess_type, xml_replace_entities
+from polyglot.builtins import unicode_type, zip
+from polyglot.urllib import unquote, urldefrag, urlparse
 
 __all__ = ['OEBReader']
 
@@ -124,9 +123,9 @@ class OEBReader(object):
                     opf = etree.fromstring(data)
                     self.logger.warn('OPF contains invalid tours section')
                 except etree.XMLSyntaxError:
+                    self.logger.warn('OPF contains invalid markup, trying to parse it anyway')
                     from calibre.ebooks.oeb.parse_utils import RECOVER_PARSER
                     opf = etree.fromstring(data, parser=RECOVER_PARSER)
-                    self.logger.warn('OPF contains invalid markup, trying to parse it anyway')
 
         ns = namespace(opf.tag)
         if ns not in ('', OPF1_NS, OPF2_NS):
@@ -137,7 +136,7 @@ class OEBReader(object):
     def _metadata_from_opf(self, opf):
         from calibre.ebooks.metadata.opf2 import OPF
         from calibre.ebooks.oeb.transforms.metadata import meta_info_to_oeb_metadata
-        stream = cStringIO.StringIO(etree.tostring(opf, xml_declaration=True, encoding='utf-8'))
+        stream = io.BytesIO(etree.tostring(opf, xml_declaration=True, encoding='utf-8'))
         o = OPF(stream)
         pwm = o.primary_writing_mode
         if pwm:
@@ -429,7 +428,7 @@ class OEBReader(object):
                     'descendant::calibre:meta[@name = "description"]')
             if descriptionElement:
                 description = etree.tostring(descriptionElement[0],
-                method='text', encoding=unicode).strip()
+                method='text', encoding=unicode_type).strip()
                 if not description:
                     description = None
             else:
@@ -454,7 +453,7 @@ class OEBReader(object):
         ncx = item.data
         title = ''.join(xpath(ncx, 'ncx:docTitle/ncx:text/text()'))
         title = COLLAPSE_RE.sub(' ', title.strip())
-        title = title or unicode(self.oeb.metadata.title[0])
+        title = title or unicode_type(self.oeb.metadata.title[0])
         toc = self.oeb.toc
         toc.title = title
         navmaps = xpath(ncx, 'ncx:navMap')
@@ -541,7 +540,7 @@ class OEBReader(object):
         use = titles
         if len(titles) > len(set(titles)):
             use = headers
-        for title, item in izip(use, self.oeb.spine):
+        for title, item in zip(use, self.oeb.spine):
             if not item.linear:
                 continue
             toc.add(title, item.href)
@@ -631,7 +630,7 @@ class OEBReader(object):
         with TemporaryDirectory('_html_cover') as tdir:
             writer = OEBWriter()
             writer(self.oeb, tdir)
-            path = os.path.join(tdir, urlunquote(hcover.href))
+            path = os.path.join(tdir, unquote(hcover.href))
             data = render_html_svg_workaround(path, self.logger)
             if not data:
                 data = ''
@@ -641,7 +640,7 @@ class OEBReader(object):
 
     def _locate_cover_image(self):
         if self.oeb.metadata.cover:
-            id = unicode(self.oeb.metadata.cover[0])
+            id = unicode_type(self.oeb.metadata.cover[0])
             item = self.oeb.manifest.ids.get(id, None)
             if item is not None and item.media_type in OEB_IMAGES:
                 return item

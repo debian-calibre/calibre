@@ -9,7 +9,6 @@ Transform OEB content into FB2 markup
 '''
 
 import re, textwrap, uuid
-from base64 import b64encode
 from datetime import datetime
 
 from lxml import etree
@@ -19,6 +18,8 @@ from calibre.constants import __appname__, __version__
 from calibre.utils.localization import lang_as_iso639_1
 from calibre.utils.img import save_cover_data_to
 from calibre.ebooks.oeb.base import urlnormalize
+from polyglot.builtins import unicode_type, string_or_bytes
+from polyglot.binary import as_base64_unicode
 
 
 class FB2MLizer(object):
@@ -64,7 +65,7 @@ class FB2MLizer(object):
         output = self.clean_text(u''.join(output))
 
         if self.opts.pretty_print:
-            return u'<?xml version="1.0" encoding="UTF-8"?>\n%s' % etree.tostring(etree.fromstring(output), encoding=unicode, pretty_print=True)
+            return u'<?xml version="1.0" encoding="UTF-8"?>\n%s' % etree.tostring(etree.fromstring(output), encoding=unicode_type, pretty_print=True)
         else:
             return u'<?xml version="1.0" encoding="UTF-8"?>' + output
 
@@ -140,7 +141,7 @@ class FB2MLizer(object):
             metadata['author'] = u'<author><first-name></first-name><last-name></last-name></author>'
 
         metadata['keywords'] = u''
-        tags = list(map(unicode, self.oeb_book.metadata.subject))
+        tags = list(map(unicode_type, self.oeb_book.metadata.subject))
         if tags:
             tags = ', '.join(prepare_string_for_xml(x) for x in tags)
             metadata['keywords'] = '<keywords>%s</keywords>'%tags
@@ -155,8 +156,8 @@ class FB2MLizer(object):
         year = publisher = isbn = u''
         identifiers = self.oeb_book.metadata['identifier']
         for x in identifiers:
-            if x.get(OPF('scheme'), None).lower() == 'uuid' or unicode(x).startswith('urn:uuid:'):
-                metadata['id'] = unicode(x).split(':')[-1]
+            if x.get(OPF('scheme'), None).lower() == 'uuid' or unicode_type(x).startswith('urn:uuid:'):
+                metadata['id'] = unicode_type(x).split(':')[-1]
                 break
         if metadata['id'] is None:
             self.log.warn('No UUID identifier found')
@@ -229,8 +230,8 @@ class FB2MLizer(object):
         cover_href = None
 
         # Get the raster cover if it's available.
-        if self.oeb_book.metadata.cover and unicode(self.oeb_book.metadata.cover[0]) in self.oeb_book.manifest.ids:
-            id = unicode(self.oeb_book.metadata.cover[0])
+        if self.oeb_book.metadata.cover and unicode_type(self.oeb_book.metadata.cover[0]) in self.oeb_book.manifest.ids:
+            id = unicode_type(self.oeb_book.metadata.cover[0])
             cover_item = self.oeb_book.manifest.ids[id]
             if cover_item.media_type in OEB_RASTER_IMAGES:
                 cover_href = cover_item.href
@@ -307,9 +308,9 @@ class FB2MLizer(object):
                 try:
                     if item.media_type != 'image/jpeg':
                         imdata = save_cover_data_to(item.data, compression_quality=70)
-                        raw_data = b64encode(imdata)
+                        raw_data = as_base64_unicode(imdata)
                     else:
-                        raw_data = b64encode(item.data)
+                        raw_data = as_base64_unicode(item.data)
                     # Don't put the encoded image on a single line.
                     data = ''
                     col = 1
@@ -395,9 +396,9 @@ class FB2MLizer(object):
         elem = elem_tree
 
         # Ensure what we are converting is not a string and that the fist tag is part of the XHTML namespace.
-        if not isinstance(elem_tree.tag, basestring) or namespace(elem_tree.tag) != XHTML_NS:
+        if not isinstance(elem_tree.tag, string_or_bytes) or namespace(elem_tree.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, basestring) and namespace(p.tag) == XHTML_NS \
+            if p is not None and isinstance(p.tag, string_or_bytes) and namespace(p.tag) == XHTML_NS \
                     and elem.tail:
                 return [elem.tail]
             return []

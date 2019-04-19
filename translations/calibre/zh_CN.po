@@ -4,6 +4,7 @@
 # Translators:
 # Alex Chen <alex.szchen@gmail.com>, 2016
 # Andrew Chen <751970186@qq.com>, 2016
+# hjings <hjings@gmail.com>, 2019
 # Ben Luo <benluo@gmail.com>, 2015
 # Bohua L <lbohua@gmail.com>, 2016
 # caron chen <chentingjia@163.com>, 2016
@@ -14,7 +15,7 @@
 # Cye3s <cye3s.cy@gmail.com>, 2014,2016-2017
 # Cye3s <cye3s.cy@gmail.com>, 2017
 # Dingyuan Wang <abcdoyle888@gmail.com>, 2016-2018
-# Dz Chen <wsxy162@gmail.com>, 2016
+# Dz Chen <wsxy162@gmail.com>, 2016,2019
 # elfmm <omo818@gmail.com>, 2014,2016
 # Farr Parrish <zyfdegg@gmail.com>, 2018
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009
@@ -69,6 +70,7 @@
 # 申 公豹 <jasonfromspace@163.com>, 2016
 # 胡洪军 <huhongjun@gmail.com>, 2017
 # 袁瑞迪 <234284714@qq.com>, 2016
+# 读客 读客 <hu_miin@sina.com>, 2019
 # 雪 碧 <cibe01@gmail.com>, 2018
 # 高垚鑫, 2016-2017
 # 高垚鑫, 2017
@@ -78,9 +80,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2019-03-07 10:34+IST\n"
-"PO-Revision-Date: 2019-03-07 05:01+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-03-08 11:44+IST\n"
+"PO-Revision-Date: 2019-04-15 14:53+0000\n"
+"Last-Translator: Dz Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,13 +272,13 @@ msgstr "不做修改"
 #: /home/kovid/work/calibre/src/calibre/ebooks/txt/processor.py:144
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:550
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:558
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:304
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:651
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:653
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:312
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:372
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:427
-#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:902
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:904
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/__init__.py:52
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:141
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:160
@@ -294,7 +296,7 @@ msgstr "不做修改"
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:387
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:402
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:533
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:743
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:744
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:606
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1325
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1553
@@ -1626,7 +1628,7 @@ msgid ""
 "Export the books specified by ids (a comma separated list) to the filesystem.\n"
 "The export operation saves all formats of the book, its cover and metadata (in\n"
 "an opf file). You can get id numbers from the search command.\n"
-msgstr ""
+msgstr "%prog export [options] ids\n\n导出指定 id 的书籍至文件系统。ids 为以逗号分隔的列表。\n导出操作将保存书籍的所有格式，以及其封面和元数据(保存\n至一个 opf 文件)。你可以使用搜索命令来获得 id 号。\n"
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_export.py:57
 msgid "Export all books in database, ignoring the list of ids."
@@ -1745,7 +1747,7 @@ msgid ""
 "%prog remove ids\n"
 "\n"
 "Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57-85 (when specifying a range, the last number in the range is not included).\n"
-msgstr ""
+msgstr "%prog remove ids\n\n从数据库移除指定 id 的书籍。ids 应为以逗号分隔的 id 号列表（你可以使用搜索命令来获得 id 号）。例如，23,34,57-85（如果指定一个区间，该区间的最后一个数字不会被包括在内）。\n"
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_remove.py:39
 msgid "Do not use the recycle bin"
@@ -2916,7 +2918,7 @@ msgid ""
 msgstr "你的 Kobo 正在运行升级了固件/数据库的版本。由于 calibre 不支持此更新后的固件，为避免破坏将禁用数据库编辑功能。你依然可以使用 calibre 向 Kobo 发送电子书，但禁止删除书籍和管理书集。如果你想尝试，并且知道如何将 Kobo 重置为出厂设置，你可以通过右击 calibre 中的设备图标，选择“配置此设备 → 尝试支持新固件”选项来覆盖此检查。这样做可能需要你将 Kobo 恢复为出厂设置。"
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:730
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:523
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:568
 msgid "Not Implemented"
 msgstr "尚未实现"
 
@@ -3164,7 +3166,7 @@ msgstr "Kobo 设备上的书籍列表可以显示丛书信息。设备不会读�
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/kobotouch_config.py:456
 msgid "Update metadata on Book Details pages"
-msgstr ""
+msgstr "更新书籍详情页中的元数据"
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/kobotouch_config.py:457
 msgid ""
@@ -6581,7 +6583,7 @@ msgid ""
 "different places where it is cached. Choose the source you prefer."
 msgstr "Amazon已经开始阻止尝试从服务器下载元数据。为了解决这个问题，calibre 可以从许多不同的地方的缓存获取Amazon数据。选择你喜欢的资源。"
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1229
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1232
 msgid "Amazon timed out. Try again later."
 msgstr "Amazon 网站访问超时，请稍候再试。"
 
@@ -8267,7 +8269,7 @@ msgid "Comics"
 msgstr "漫画"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:40
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:249
 msgid "Archives"
 msgstr "压缩文档"
 
@@ -8328,19 +8330,23 @@ msgid "Add files to selected book records"
 msgstr "添加文件到选中的书籍记录中"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:81
+msgid "Add files to selected book records from clipboard"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:83
 msgid "Add an empty file to selected book records"
 msgstr "添加一个空白文件到选中的书籍记录中"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:84
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:86
 msgid "Add empty {}"
 msgstr "添加空的 {}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:88
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:90
 msgid "Control the adding of books"
 msgstr "设置"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:109
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:111
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:204
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/annotate.py:122
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/catalog.py:41
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/convert.py:151
@@ -8360,15 +8366,24 @@ msgstr "设置"
 msgid "No books selected"
 msgstr "未选择书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:110
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:112
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:205
 msgid "Cannot add files as no books are selected"
 msgstr "没有选中书籍，无法添加文件"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:115
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:139
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:166
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:181
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:134
+msgid "No files in clipboard"
+msgstr "剪贴板中没有文件"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:135
+msgid "No files have been copied to the clipboard"
+msgstr "没有文件被拷贝到剪贴板"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:141
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:165
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:184
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:211
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:226
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:34
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:463
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/unpack_book.py:163
@@ -8397,102 +8412,107 @@ msgstr "没有选中书籍，无法添加文件"
 msgid "Are you sure?"
 msgstr "你确定吗？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:116
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:142
+#, python-format
+msgid "Are you sure you want to set the same cover for all %d books?"
+msgstr "你确定将所有%d本图书的封面设置为相同的封面？"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:158
+msgid "Select book files"
+msgstr "选择书籍文件"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:166
 #, python-format
 msgid ""
 "Are you sure you want to add the same files to all %d books? If the format "
 "already exists for a book, it will be replaced."
 msgstr "你确定要将相同的文件加入到全部 %d 本书籍？如果那本书已经有这种格式，原文件将会被覆盖。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:122
-msgid "Select book files"
-msgstr "选择书籍文件"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:136
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:179
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:181
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:224
 #, python-brace-format
 msgid "The {0} format will be replaced in the book {1}. Are you sure?"
 msgid_plural "The {0} formats will be replaced in the book {1}. Are you sure?"
 msgstr[0] "书籍 {1} 中的 {0} 格式将被替换。确定吗？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:167
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:212
 #, python-format
 msgid ""
 "Are you sure you want to add the same empty file to all %d books? If the "
 "format already exists for a book, it will be replaced."
 msgstr "你确定要将相同的空文件加入到全部 %d 本书籍？如果那本书已经有这种格式，原文件将会被覆盖。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:203
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:248
 msgid "Choose archive file"
 msgstr "选择压缩文件"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:210
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:255
 msgid "Select root folder"
 msgstr "选择根文件夹"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:215
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:260
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.py:299
 msgid "Cannot add"
 msgstr "无法添加"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:216
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:261
 #, python-format
 msgid ""
 "Cannot add books from the folder: %s as it contains the currently opened "
 "calibre library"
 msgstr "无法从文件夹 %s 添加书籍，因为它包含当前打开的 calibre 书库"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:301
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:346
 msgid "Adding"
 msgstr "添加中"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:302
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:347
 msgid "Creating book records from ISBNs"
 msgstr "根据ISBN添加书籍记录"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:382
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:427
 #, python-format
 msgid ""
 "You have dropped some files onto the book <b>%s</b>. This will add or "
 "replace the files for this book. Do you want to proceed?"
 msgstr "你已经拖动某些文件到书籍 <b>%s</b>。此操作将会添加或替换该书籍中的文件。你确定要继续吗？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:404
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:458
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:449
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:503
 msgid "Uploading books to device."
 msgstr "正在上传书籍到设备。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:423
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:468
 msgid "Supported books"
 msgstr "支持的书"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:426
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:471
 msgid "Select books"
 msgstr "选择书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:474
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:519
 msgid "The following duplicate book was found."
 msgid_plural "The following {} duplicate books were found."
 msgstr[0] "发现了下列 {} 组相同的书籍。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:477
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:522
 msgid "Merged some books"
 msgstr "合并书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:478
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:523
 msgid ""
 "Incoming book formats were processed and merged into your calibre database "
 "according to your auto-merge settings. Click \"Show details\" to see the "
 "list of merged books."
 msgstr "根据您的自动合并设置，输入的图书格式被处理并合并到您的 calibre 数据库中。单击“显示详细信息”查看合并书籍的列表。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:502
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:507
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:527
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:547
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:552
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:572
 msgid "Add to library"
 msgstr "添加到书库"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:507
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:552
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:166
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:90
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:107
@@ -8504,32 +8524,32 @@ msgstr "添加到书库"
 msgid "No book selected"
 msgstr "未选择书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:521
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:566
 msgid ""
 "The following books are virtual and cannot be added to the calibre library:"
 msgstr "下列书籍是虚拟的，不能添加到 calibre 书库中。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:527
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:572
 msgid "No book files found"
 msgstr "未找到书籍文件"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:533
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:578
 msgid "Downloading books"
 msgstr "正在下载书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:534
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:579
 msgid "Downloading books from device"
 msgstr "正在从设备下载书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:553
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:598
 msgid "Could not download files from the device"
 msgstr "无法从设备下载书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:556
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:601
 msgid "Could not download some files from the device"
 msgstr "无法下载设备上的一些文件"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:605
 msgid "Could not download files"
 msgstr "无法下载文件"
 
@@ -8952,7 +8972,7 @@ msgstr "你的书库中的文件和数据库信息相符合。"
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:631
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:636
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:642
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:530
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:529
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/save_to_disk.py:93
 #: /home/kovid/work/calibre/src/calibre/gui2/library/views.py:1333
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/image.py:207
@@ -9220,22 +9240,22 @@ msgstr "无法复制书籍： "
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:486
 #, python-brace-format
 msgid "Moved the book to {loc}"
-msgstr ""
+msgstr "已把图书移动到了 {loc}"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:487
 #, python-brace-format
 msgid "Moved {num} books to {loc}"
-msgstr "已把这本书移动到 {loc}{num}"
+msgstr "已把 {num} 本书移动到了 {loc}"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:489
 #, python-brace-format
 msgid "Copied the book to {loc}"
-msgstr ""
+msgstr "已把图书复制到了 {loc}"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:490
 #, python-brace-format
 msgid "Copied {num} books to {loc}"
-msgstr "已把这本书复制到 {loc}{num}"
+msgstr "已把 {num} 本书复制到了 {loc}"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:495
 msgid "Auto merged"
@@ -9249,35 +9269,35 @@ msgid ""
 "books."
 msgstr "有些书被自动合并到目标库中的现有记录中。单击“显示细节”以查看有哪些细节。此行为操作由首选项->导入/导出->添加书籍中的自动合并选项控制。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:517
 #, python-brace-format
 msgid ""
 "Copying: {0} failed, with error:\n"
 "{1}"
 msgstr "复制 {0} 出错：\n{1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:519
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
 msgid "Could not copy some books, click \"Show Details\" for more information."
 msgstr "不能拷贝某些图书，请单击“显示详细信息”来查看更多。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:519
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:518
 msgid "Failed to copy some books"
 msgstr "一些书籍无法复制"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:521
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:520
 msgid "Failed to copy a book, see below for details"
 msgid_plural "Failed to copy {} books, see below for details"
 msgstr[0] "无法复制 {} 本书籍，错误详情请见下方。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:524
 msgid "Could not copy any books, click \"Show Details\" for more information."
 msgstr "无法复制任何书籍，点击“详细信息”以获取更多信息。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:524
 msgid "Failed to copy books"
 msgstr "无法复制书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:531
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:530
 msgid ""
 "You cannot use other libraries while using the environment variable "
 "CALIBRE_OVERRIDE_DATABASE_PATH."
@@ -11297,8 +11317,12 @@ msgstr "编辑作者映射规则"
 #: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:319
 #, python-brace-format
 msgid "Added a book automatically from {src}"
-msgid_plural "Added {num} books automatically from {src}"
-msgstr[0] "自动从 {src} 添加 {num} 本书籍"
+msgstr "自动从{src}添加的图书"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/auto_add.py:319
+#, python-brace-format
+msgid "Added {num} books automatically from {src}"
+msgstr "自动从 {src} 添加 {num} 本书籍"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/bars.py:426
 #: /home/kovid/work/calibre/src/calibre/gui2/bars.py:515
@@ -11454,6 +11478,10 @@ msgstr "路径"
 #, python-format
 msgid "Cover size: %(width)d x %(height)d pixels"
 msgstr "封面大小：%(width)d x %(height)d 像素"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:581
+msgid "Edit identifiers for this book"
+msgstr "编辑书籍的标识码"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex.py:17
 msgid "BibTeX options"
@@ -15115,7 +15143,7 @@ msgid "No help available for this output format."
 msgstr "没有此输出格式的帮助信息。"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:376
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:377
 msgid "Generate catalog"
 msgstr "编制书目"
 
@@ -16290,8 +16318,8 @@ msgid "Failed to import data."
 msgstr "导入数据失败。"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:936
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:949
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:937
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:950
 msgid "Active jobs"
 msgstr "活动的任务"
 
@@ -18135,12 +18163,12 @@ msgstr "高级搜索"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/select_formats.py:39
 msgid "There is one book with the {} format"
-msgstr ""
+msgstr "有 1 本格式为 {} 的图书"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/select_formats.py:40
 #, python-brace-format
 msgid "There are {count} books with the {fmt} format"
-msgstr "有 {count} 本书带有{fmt}格式"
+msgstr "有 {count} 本格式为 {fmt} 的书"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/select_formats.py:58
 msgid "Choose formats"
@@ -19329,17 +19357,17 @@ msgstr "布局"
 msgid "Show and hide various parts of the calibre main window"
 msgstr "显示和隐藏 calibre 主窗口的各个部分"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:741
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:742
 #, python-format
 msgid "No %s format"
 msgstr "无%s格式"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:742
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:743
 #, python-brace-format
 msgid "The book {0} does not have the {1} format"
 msgstr "书籍 {0} 没有 {1} 格式"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/init.py:777
+#: /home/kovid/work/calibre/src/calibre/gui2/init.py:778
 #, python-format
 msgid "Restore %s"
 msgstr "恢复%s"
@@ -24095,17 +24123,17 @@ msgstr "显示服务器日志(&L)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:385
 msgid "Do not start calibre automatically when computer is started"
-msgstr ""
+msgstr "请勿开机启动 calibre"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:386
 msgid "Start calibre when the computer is started"
-msgstr ""
+msgstr "开机启动 calibre"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:389
 msgid ""
 "Currently calibre is set to run automatically when the\n"
 "            computer starts.  Use this button to disable that."
-msgstr ""
+msgstr "当前设置为计算机启动时自动启动calibre，点击按钮关闭自动启动。"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:391
 msgid ""
@@ -24369,7 +24397,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1046
 msgid "URL:"
-msgstr "超链接"
+msgstr "URL:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1091
 msgid "Missing author placeholder"
@@ -24396,15 +24424,15 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1122
 msgid "&Add URL"
-msgstr ""
+msgstr "添加URL(&A)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1125
 msgid "Export URLs"
-msgstr ""
+msgstr "导出URL"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1128
 msgid "Import URLs"
-msgstr ""
+msgstr "导入URL"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1194
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1201
@@ -26632,49 +26660,52 @@ msgid "This book has no actual e-book files"
 msgstr "此书没有实际的电子书文件"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tools.py:120
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:258
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:259
 msgid "Could not convert some books"
 msgstr "无法转换某些书籍"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tools.py:122
-#, python-brace-format
 msgid ""
 "Could not convert the book because no supported source format was found"
-msgid_plural ""
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:124
+#, python-brace-format
+msgid ""
 "Could not convert {num} of {tot} books, because no supported source formats "
 "were found."
-msgstr[0] "无法转换 {tot}书的{num}，因为没有找到支持的源格式"
+msgstr "没有找到支持的源格式，{tot} 本书中的 {num} 本未能转换。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:161
 msgid "Queueing books for bulk conversion"
 msgstr "为批处理排队书籍"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:232
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:233
 msgid "Queueing "
 msgstr "正在排队 "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:233
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:234
 #, python-format
 msgid "Convert book %(num)d of %(tot)d (%(title)s)"
 msgstr "转换书籍 第 %(num)d 本，共 %(tot)d 本 (%(title)s)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:260
 #, python-format
 msgid ""
 "Could not convert %(num)d of %(tot)d books, because no suitable source "
 "format was found."
 msgstr "由于无法找到合适的来源文件格式，无法转换第 %(num)d 本书籍(共 %(tot)d 本)。"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:315
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:316
 #, python-format
 msgid "Fetch news from %s"
 msgstr "抓取新闻，来源于 %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:390
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:391
 msgid "Convert existing"
 msgstr "转换现有"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:391
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:392
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -29794,7 +29825,7 @@ msgstr[0] ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:539
 msgid "Paste files from other editor instance"
-msgstr ""
+msgstr "从其他编辑器中粘贴文件"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:549
 msgid "Link &stylesheets..."
@@ -32896,40 +32927,40 @@ msgstr "已禁用清单"
 msgid "<b>Failed</b>"
 msgstr "<b>失败</b>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:929
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:930
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "仍有任务运行。你是否希望退出？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:932
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:933
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr " 正在与设备通讯！<br>\n                      退出可能导致设备损坏。<br>\n                      确定退出么？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:940
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:941
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "正在等待书库更新。你是否希望退出？"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:941
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:942
 msgid "Library updates waiting"
 msgstr "等待书库更新"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:946
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:947
 msgid ""
 "Some deleted books are still being moved to the Recycle Bin, if you quit "
 "now, they will be left behind. Are you sure you want to quit?"
 msgstr "一些已删除的书籍仍在回收站中，如果你现在退出，它们会继续存在。你确定要退出吗?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:962
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:963
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "运行数据库关闭插件。这可能需要几秒钟…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1016
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1017
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "正在关闭内容服务器。这可能需要一些时间…"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1050
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:1051
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -34322,7 +34353,7 @@ msgstr "选择你的电子书阅读设备。如果你的设备不在列表中，
 msgid ""
 "If you are moving calibre from an old computer to a new one, please read <a "
 "href=\"{0}\">the instructions</a>."
-msgstr ""
+msgstr "如果你要把 calibre 从旧电脑迁移至新电脑，请阅读<a href=\"{0}\">指引</a>。"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/__init__.py:732
 msgid "Select location for books"

@@ -8,6 +8,7 @@ Miscelleaneous utilities.
 '''
 
 from time import time
+from polyglot.builtins import as_bytes
 
 
 def join_with_timeout(q, timeout=2):
@@ -28,10 +29,10 @@ def join_with_timeout(q, timeout=2):
 def unpickle_binary_string(data):
     # Maintains compatibility with python's pickle module protocol version 2
     import struct
-    from pickle import PROTO, SHORT_BINSTRING, BINSTRING
+    PROTO, SHORT_BINSTRING, BINSTRING = b'\x80', b'U', b'T'
     if data.startswith(PROTO + b'\x02'):
         offset = 2
-        which = data[offset]
+        which = data[offset:offset+1]
         offset += 1
         if which == BINSTRING:
             sz, = struct.unpack_from(b'<i', data, offset)
@@ -47,6 +48,6 @@ def unpickle_binary_string(data):
 def pickle_binary_string(data):
     # Maintains compatibility with python's pickle module protocol version 2
     import struct
-    from pickle import PROTO, BINSTRING, STOP
-    data = bytes(data)
+    PROTO, STOP, BINSTRING = b'\x80', b'.', b'T'
+    data = as_bytes(data)
     return PROTO + b'\x02' + BINSTRING + struct.pack(b'<i', len(data)) + data + STOP

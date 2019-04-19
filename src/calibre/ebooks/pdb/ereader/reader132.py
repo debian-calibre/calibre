@@ -18,6 +18,7 @@ from calibre.ebooks import DRMError
 from calibre.ebooks.metadata.opf2 import OPFCreator
 from calibre.ebooks.pdb.ereader import EreaderError
 from calibre.ebooks.pdb.formatreader import FormatReader
+from polyglot.builtins import unicode_type
 
 
 class HeaderRecord(object):
@@ -113,7 +114,7 @@ class Reader132(FormatReader):
             os.makedirs(output_dir)
 
         title = self.mi.title
-        if not isinstance(title, unicode):
+        if not isinstance(title, unicode_type):
             title = title.decode('utf-8', 'replace')
         html = u'<html><head><title>%s</title></head><body>' % title
 
@@ -128,7 +129,7 @@ class Reader132(FormatReader):
         if self.header_record.footnote_count > 0:
             html += '<br /><h1>%s</h1>' % _('Footnotes')
             footnoteids = re.findall(
-                '\w+(?=\x00)', self.section_data(self.header_record.footnote_offset).decode('cp1252' if self.encoding is None else self.encoding))
+                '\\w+(?=\x00)', self.section_data(self.header_record.footnote_offset).decode('cp1252' if self.encoding is None else self.encoding))
             for fid, i in enumerate(range(self.header_record.footnote_offset + 1, self.header_record.footnote_offset + self.header_record.footnote_count)):
                 self.log.debug('Extracting footnote page %i' % i)
                 if fid < len(footnoteids):
@@ -140,7 +141,7 @@ class Reader132(FormatReader):
         if self.header_record.sidebar_count > 0:
             html += '<br /><h1>%s</h1>' % _('Sidebar')
             sidebarids = re.findall(
-                '\w+(?=\x00)', self.section_data(self.header_record.sidebar_offset).decode('cp1252' if self.encoding is None else self.encoding))
+                '\\w+(?=\x00)', self.section_data(self.header_record.sidebar_offset).decode('cp1252' if self.encoding is None else self.encoding))
             for sid, i in enumerate(range(self.header_record.sidebar_offset + 1, self.header_record.sidebar_offset + self.header_record.sidebar_count)):
                 self.log.debug('Extracting sidebar page %i' % i)
                 if sid < len(sidebarids):
@@ -217,4 +218,3 @@ class Reader132(FormatReader):
                 name, img = self.get_image(self.header_record.image_data_offset + i)
                 with open(name, 'wb') as imgf:
                     imgf.write(img)
-

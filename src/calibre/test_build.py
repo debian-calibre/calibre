@@ -2,7 +2,6 @@
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
-from polyglot.builtins import map
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -13,7 +12,10 @@ Test a binary calibre build to ensure that all needed binary images/libraries ha
 '''
 
 import os, ctypes, sys, unittest, time
-from calibre.constants import plugins, iswindows, islinux, isosx
+
+from calibre.constants import plugins, iswindows, islinux, isosx, ispy3
+from polyglot.builtins import iteritems, map, unicode_type
+
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
@@ -71,6 +73,19 @@ class BuildTest(unittest.TestCase):
         from html5_parser import parse
         parse('<p>xxx')
 
+    def test_bs4(self):
+        import soupsieve, bs4
+        del soupsieve, bs4
+
+    def test_zeroconf(self):
+        if ispy3:
+            import zeroconf as z, ifaddr
+        else:
+            import calibre.utils.Zeroconf as z
+            ifaddr = None
+        del z
+        del ifaddr
+
     def test_plugins(self):
         exclusions = set()
         if is_ci:
@@ -97,7 +112,7 @@ class BuildTest(unittest.TestCase):
         from calibre.utils.cleantext import test_clean_xml_chars
         test_clean_xml_chars()
         from lxml import etree
-        raw = '<a/>'
+        raw = b'<a/>'
         root = etree.fromstring(raw)
         self.assertEqual(etree.tostring(root), raw)
 
@@ -112,7 +127,7 @@ class BuildTest(unittest.TestCase):
             s = msgpack_dumps(obj)
             self.assertEqual(obj, msgpack_loads(s))
         self.assertEqual(type(msgpack_loads(msgpack_dumps(b'b'))), bytes)
-        self.assertEqual(type(msgpack_loads(msgpack_dumps(u'b'))), type(u''))
+        self.assertEqual(type(msgpack_loads(msgpack_dumps(u'b'))), unicode_type)
         large = b'x' * (100 * 1024 * 1024)
         msgpack_loads(msgpack_dumps(large))
 
@@ -128,7 +143,7 @@ class BuildTest(unittest.TestCase):
         winutil = plugins['winutil'][0]
 
         def au(x, name):
-            self.assertTrue(isinstance(x, unicode), name + '() did not return a unicode string')
+            self.assertTrue(isinstance(x, unicode_type), name + '() did not return a unicode string')
         for x in winutil.argv():
             au(x, 'argv')
         for x in 'username temp_path locale_name'.split():
@@ -136,10 +151,10 @@ class BuildTest(unittest.TestCase):
         d = winutil.localeconv()
         au(d['thousands_sep'], 'localeconv')
         au(d['decimal_point'], 'localeconv')
-        for k, v in d.iteritems():
+        for k, v in iteritems(d):
             au(v, k)
         for k in os.environ.keys():
-            au(winutil.getenv(unicode(k)), 'getenv-' + k)
+            au(winutil.getenv(unicode_type(k)), 'getenv-' + k)
         os.environ['XXXTEST'] = 'YYY'
         self.assertEqual(winutil.getenv(u'XXXTEST'), u'YYY')
         del os.environ['XXXTEST']
@@ -149,7 +164,7 @@ class BuildTest(unittest.TestCase):
         for fmt in (fmt, fmt.encode('ascii')):
             x = strftime(fmt, t)
             au(x, 'strftime')
-            self.assertEqual(unicode(time.strftime(fmt.replace('%e', '%#d'), t)), x)
+            self.assertEqual(unicode_type(time.strftime(fmt.replace('%e', '%#d'), t)), x)
 
     def test_sqlite(self):
         import sqlite3
@@ -173,7 +188,7 @@ class BuildTest(unittest.TestCase):
         # it should just work because the hard-coded paths of the Qt
         # installation should work. If they do not, then it is a distro
         # problem.
-        fmts = set(map(unicode, QImageReader.supportedImageFormats()))
+        fmts = set(map(lambda x: x.data().decode('utf-8'), QImageReader.supportedImageFormats()))
         testf = {'jpg', 'png', 'svg', 'ico', 'gif'}
         self.assertEqual(testf.intersection(fmts), testf, "Qt doesn't seem to be able to load some of its image plugins. Available plugins: %s" % fmts)
         data = P('images/blank.png', allow_user_override=False, data=True)
@@ -252,7 +267,7 @@ class BuildTest(unittest.TestCase):
 
     def test_netifaces(self):
         import netifaces
-        self.assertGreaterEqual(netifaces.interfaces(), 1, 'netifaces could find no network interfaces')
+        self.assertGreaterEqual(len(netifaces.interfaces()), 1, 'netifaces could find no network interfaces')
 
     def test_psutil(self):
         import psutil
@@ -267,6 +282,10 @@ class BuildTest(unittest.TestCase):
     def test_terminal(self):
         import readline
         del readline
+
+    def test_html2text(self):
+        import html2text
+        del html2text
 
     def test_markdown(self):
         from calibre.ebooks.txt.processor import create_markdown_object

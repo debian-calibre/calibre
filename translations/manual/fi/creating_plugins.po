@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Pekka Tuominen <pekka.tuominen@iki.fi>, 2019
 # Timo Virtanen <pompila@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-01 23:16+0530\n"
-"PO-Revision-Date: 2019-03-04 17:52+0000\n"
+"POT-Creation-Date: 2019-03-08 11:42+0530\n"
+"PO-Revision-Date: 2019-03-20 20:40+0000\n"
 "Last-Translator: Pekka Tuominen <pekka.tuominen@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/calibre/calibre/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr ""
+msgstr "Omien lisäosien luominen calibren ominaisuuksia laajentamaan"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:6
 msgid ""
@@ -36,26 +37,26 @@ msgstr "Calibren rakenne on hyvin modulaarinen. Lähes kaikki toiminnot on toteu
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr ""
+msgstr "Tässä opastamme sinua omien lisäosien tekemisessä uusien toimintojen lisäämiseksi calibreen"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
-msgstr ""
+msgstr "Sisältö"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
-msgstr ""
+msgstr "Koskee vain calibre versioita <=0.8.60"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr ""
+msgstr "calibre-lisäosan rakenne"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr ""
+msgstr "calibre-lisäosa on hyvi yksinkertainen, ZIP-tiedostossa hiukan Python-koodia ja mahdolliset lisäosan tarvitsemat lisäresurssit, kuten kuvia. Katsotaanpa sitten yksinkertaista esimerkkiä."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -65,13 +66,13 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr ""
+msgstr "Jos vaikkapa käytät calibrea omien e-dokumenttiesi julkaisuun EPUB. tai MOBI-formaatissa, ja haluat asettaa kaikkiin calibren tuottamiin tiedostoihin julkaisijaksi \"Hello world\", tee näin. Luo tiedosto nimellä :file:'__init__.py' (lisäosan päätiedosto on aina tämän niminen) ja kirjoita siihen tämä Python-koodi:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the directory in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "Siinä kaikki. Koodi tulee calibreen lisäosaksi suorittamalla seuraava kansiossa johon tallensit :file:'__ini__.py' tiedoston::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -79,13 +80,13 @@ msgid ""
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in "
 ":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr ""
+msgstr "MacOS:ssä komentorivityökalut ovat calibren sisällä, esimerkiksi asennuskansion ollessa :file:'/Applications' komentorivit löytyvät polusta :file:'/Applications/calibre.app/Contents/console.app/Content/MacOS/'."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
-msgstr ""
+msgstr "Voit ladata Hello World -lisäosan osoitteesta `helloworld_plugin.zip <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -93,7 +94,7 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, lets move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr ""
+msgstr "Aina muuntaessa kirjan calibrella, lisäosan :meth:'run'-metodia kutsutaan ja muunnetun kirjan julkaisijaksi asetetaan \"Hello World\". Tämän yksinkertaisen lisäosan myötä voimme siirtyä mutkikkaampaan lisäosaan, joka tuo uuden komponentin käyttöliittymään."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
@@ -106,20 +107,20 @@ msgid ""
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr ""
+msgstr "Lisäosa muodostuu muutamasta tiedostosta (jotta koodi säilyy selkeänä). Se esittelee sinulle tavat hakea resursseja (kuvia tai tietoja) lisäosan ZIP-tiedostosta, sallia käyttäjien muokata lisäosan asetuksia, kuinka lisätä käyttöliittymään elementtejä sekä miten calibre-tietokantaan tehdään kyselyjä."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
-msgstr ""
+msgstr "Lisäosan voit ladata osoitteesta `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr ""
+msgstr "Ensimmäisenä huomaat että ZIPissä on paljon enemmän tiedostoja - nämä kuvataan alla, mutta kiinnitä huomiota erityisesti tiedostoon ``plugin-import-name-interface_demo.txt``."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
@@ -133,7 +134,7 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr ""
+msgstr "Tyhjä tekstitiedosto, joka mahdollistaa usean tiedoston lisäosatoiminnan. Tämän tiedoston on oltava kaikissa enempää kuin yhtä .py-tiedostoa käyttävissä lisäosissa. Se pidetään tyhjänä ja nimen on oltava muotoa: ``plugin-import-name-**jokin_nimi**.txt``. Tiedoston läsnäolo mahdollistaa koodin tuomisen ZIPin .py-tiedostoista, käyttämällä komentoja kuten::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
 msgid ""
@@ -144,14 +145,14 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-directory), and everything should "
 "\"just work\"."
-msgstr ""
+msgstr "Alkuosa \"calibre_plugins\" on pakollinen. \"jokin_nimi\" noudattaa tyhjän tekstitiedoston nimeämistä. \"jokin_moduuli\" viittaa tiedostoon :file:'jokin_moduuli.py' ZIPissä. Huomaa, että tällainen tuominen on yhtä toimivaa kuin tavalliset Python-liittämiset. Voit luoda paketteja ja alipaketteja .py-moduuleihin ZIPissä, aivan kuten normaalisti (määrittelisit __init__.py:n kuhunkin alakansioon), ja kaiken pitäisi toimi yhtälailla."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr ""
+msgstr "Nimi jonka annat \"jokin_nimi\"-kohtaan tulee lisäosien jaettuun nimiavaruuteen, **joten tee siitä mahdollisimman yksilöllinen**. Muista kuitenkin noudattaa luvallisia Python-tunnistemuotoa (vain aakkosia, numeroita ja alaviiva)."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
@@ -159,7 +160,7 @@ msgstr "**__init__.py**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
-msgstr ""
+msgstr "Kuten edellä, lisäosan luokan määrittävä tiedosto"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
@@ -167,7 +168,7 @@ msgstr "**main.py**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
-msgstr ""
+msgstr "Tämä tiedosto sisältää varsinaisen toiminnallisen koodin"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
@@ -175,15 +176,15 @@ msgstr "**ui.py**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
-msgstr ""
+msgstr "Tämä tiedosto määritää lisäosan käyttöliittymän"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
-msgstr ""
+msgstr "**images/icon.png**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
-msgstr ""
+msgstr "Lisäosan kuvake"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
@@ -191,7 +192,7 @@ msgstr "**about.txt**"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
-msgstr ""
+msgstr "Tekstitiedosto jossa on tietoa lisäosasta"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
@@ -201,11 +202,11 @@ msgstr "**translations**"
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr ""
+msgstr "Kansio .mo-tiedostoja joissa on lisäosasi käyttöliittymän käännökset eri kielille. Katso lisätietoja alta."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
-msgstr ""
+msgstr "Katsotaan nyt koodia."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
@@ -213,7 +214,7 @@ msgstr "__init__.py"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr ""
+msgstr "Ensin, pakollinen \"__init__.py\" joka määrittää lisäosan metatiedot:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:109
 msgid ""
@@ -223,19 +224,19 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr ""
+msgstr "- Ainoa huomionarvoinen ominaisuus on kenttä :attr:`actual_plugin`. Koska calibressa on sekä komentorivi- että GUI-käyttöliittymät, tällaisten lisäosien ei pitäisi ladata käyttöliittymäkirjastoja __init__.py:ssä. Sen sijaan kenttä actual_plugin vastaa tästä, kertomalla calibrelle, että varsinainen lisäosa löytyy toisesta tiedostosta ZIPissä, ja se ladataan vain GUI-kontekstissa."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
-msgstr ""
+msgstr "Muista että toiminnan ehtona lisäosan ZIPissä on oltava tiedosto plugin-import-name-jokin_nimi.txt, kuten yllä mainittiin."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
-msgstr ""
+msgstr "Pari metodia mahdollistaa käyttäjäasetusten tekemisen. Niistä lisää alla."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
@@ -245,7 +246,7 @@ msgstr "ui.py"
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
-msgstr ""
+msgstr "Seuraavaksi ui.py:stä, joka määrittää GUI-lisäosan. Tämä lähdekoodi on perusteellisesti kommentoitu ja sen pitäisi olla aika selkeä:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:128
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:212
@@ -254,17 +255,17 @@ msgstr "main.py"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
-msgstr ""
+msgstr "Varsinainen logiikka, jolla Interface Plugin Demo -ikkuna suoritetaan."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
-msgstr ""
+msgstr "Resurssien hakeminen lisäosan ZIP-tiedostosta"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr ""
+msgstr "calibren lisäosien lataustoiminto tarjoaa pari sisäänrakennettua funktiota joilla voit sujuvasti hakea tiedostoja lisäosa-ZIPistä."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:145
 msgid "**get_resources(name_or_list_of_names)**"
@@ -280,7 +281,7 @@ msgid ""
 "found in the ZIP file. If you pass in more than one name then it returns a "
 "dict mapping the names to bytes. If a name is not found, it will not be "
 "present in the returned dict."
-msgstr ""
+msgstr "Tätä funktiota kutsuttaessa käytetään listaa poluista ZIPin sisäisiin tiedostoihin. Esimerkiksi images-kansion icon.png:tä kutsut: \"images/icon.png\". Käytä aina kauttaviivaa poluissa, myös Windowsissa. Kun kutsut yhtä tiedostonimeä, funktio palauttaa tuon tiedoston raakatavut tai None jos nimeä ei löytynyt. Useamman nimen kutsuminen palauttaa dict-mappauksen nimistä tavuihin. Jos nimeä ei löydy, se jää pois dict-mappauksesta."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:149
 msgid "**get_icons(name_or_list_of_names)**"
@@ -291,40 +292,40 @@ msgid ""
 "A convenience wrapper for get_resources() that creates QIcon objects from "
 "the raw bytes returned by get_resources. If a name is not found in the ZIP "
 "file the corresponding QIcon will be null."
-msgstr ""
+msgstr "Käärefunktio get_resources():lle joka luo QIcon objekteja get_resourcesin palauttamista raakatavuista. Jos nimeä ei löydy ZIPistä, vastaava QIcon on null."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:152
 msgid "Enabling user configuration of your plugin"
-msgstr ""
+msgstr "Käyttäjäasetusten salliminen lisäosassa"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:154
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr ""
+msgstr "Jotta lisäosan asetukset ovat käyttäjien muokattavissa, vaaditaan kolmen metodin määrittäminen lisäosan base-luokassa, **is_customizable**, **config_widget** ja **save_settings** alla olevan esimerkin mukaisesti:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:165
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
-msgstr ""
+msgstr "calibrella on useita keinoja tallentaa asetustietoja (kiitos pitkän historiansa). Suositeltu tapa on **JSONConfig**-luokan käyttäminen, jolloin asetustiedot tallentuvat .json-tiedostoon."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:167
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
-msgstr ""
+msgstr "Asetustietojen hallintakoodi on demo-lisäosan config.py:ssä:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:172
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr ""
+msgstr "\"prefs\"-objekti on nyt käytettävissä lisäosakoodista käyttäen yksinkertaista::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:177
 msgid "You can see the ``prefs`` object being used in main.py:"
-msgstr ""
+msgstr "\"prefs\"-objektin käytöstä näet esimerkin main.py:ssä:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:184
 msgid "Edit book plugins"
@@ -336,20 +337,20 @@ msgid ""
 "to the calibre book editor. The plugin is available here: "
 "`editor_demo_plugin.zip  <https://calibre-"
 "ebook.com/downloads/editor_demo_plugin.zip>`_."
-msgstr ""
+msgstr "Katsotaanpa sitten hetken aikaa lisäosan luomista calibren kirjamuokkaimen lisätyökaluksi. Lisäosa löytyy osoitteesta: `editor_demo_plugin.zip <https://calibre-ebook.com/downloads/editor_demo_plugin.zip>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:190
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr ""
+msgstr "Ensimmäinen askel, kuten kaikille lisäosille, on luoda tuontinimen tyhjä txt-tiedosto, kuten kerrottu :ref:'yllä <import_name_txt>'. Nimetään tämä ``plugin-import-name-editor_plugin_demo.txt``."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
-msgstr ""
+msgstr "Sitten luodaan pakollinen \"__init__.py\"-tiedosto jossa on lisäosan metatiedot - sen nimi, tekijä, versio jne."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:200
 msgid ""
@@ -357,7 +358,7 @@ msgid ""
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
 "the editor. These can have sub-menus in case the tool has multiple related "
 "actions."
-msgstr ""
+msgstr "Yksittäinen muokkauslisäosa voi tarjota useampia työkaluja joista kukin vastaa yhtä työkalurivin painiketta ja riviä muokkaimen :guilabel:'Lisäosat'-valikossa. Myös alivalikoita voi asettaa jos työkalulla on rinnakkaisia toimintoja."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:204
 msgid ""
@@ -367,7 +368,7 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr ""
+msgstr "Kaikki työkalut määritellään lisäosasi \"main.py\":ssä. Kukin työkalu on luokka, joka perii :class:`calibre.gui2.tweak_book.plugin.Tool` luokan. Käydään läpi demo-lisäosan \"main.py\", jonka koodi on perusteellisesti kuvattu ja helposti ymmärrettävä. Lue API-dokumentaatio class:`calibre.gui2.tweak_book.plugin.Tool` -luokalle saadaksesi tarkempia tietoja."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:214
 msgid ""
@@ -375,20 +376,20 @@ msgid ""
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr ""
+msgstr "Tämä määrittely on yksittäinen työkalu, joka monistaa kaikki tekstikoot kirjassa käyttäjän asettamalla kertoimella. Työkalu demonstroi useita tärkeitä konsepteja joita tarvitset omien lisäosiesi luomisessa, joten perehty lähdekoodin kuvauksiin huolellisesti."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
-msgstr ""
+msgstr "Käydään läpi \"main.py\". Se määrittää yhden työkalun, nimeltä \"Magnify fonts\". Työkalu kysyy käyttäjältä lukua ja kertoo sillä kaikki kirjan tekstikoot."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:226
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
-msgstr ""
+msgstr "Ensimmäinen huomattava asia on, että työkalun nimen tulee olla suhteellisen uniikki lauseke, sillä se toimii työkalun tunnuksena."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:229
 msgid ""
@@ -399,7 +400,7 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr ""
+msgstr "Toiseksi, tärkein lähtöpiste on :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Tämä metodi luo QAction-objektit jotka näkyvät lisäosatyökalurivillä ja lisäosavalikossa. Sen avulla voi myös asettaa näppäinoikotien jonka käyttäjä voi mukauttaa. QActionin kutsuma signaali liittyy ask_user() metodiin joka pyytää käyttäjältä tekstikoon kerrointa, ja suorittaa sitten skaalauskoodin."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:237
 msgid ""
@@ -408,7 +409,7 @@ msgid ""
 "and the editor *Boss* as ``self.boss``. The *Boss* is the object that "
 "controls the editor user interface. It has many useful methods, that are "
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
-msgstr ""
+msgstr "Skaalauskoodi on kuvattu perusteellisesti ja aika yksinkertainen. Huomaa erityisesti viittaaminen muokkainikkunaan \"self.gui\":na ja muokkain *Boss*iin \"self.boss\":na. *Boss* on objekti joka ohjaa muokkaimen käyttöliittymää. Sillä on paljon hyödyllisiä metodeja, jotka on kuvattu :class:`calibre.gui2.tweak_book.boss.Boss` luokassa."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:243
 msgid ""
@@ -419,7 +420,7 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr ""
+msgstr "Lopuksi, \"self.current_container\" joka viittaa muokattavaan kirjaan :class:`calibre.ebooks.oeb.polish.container.Container`-objektina. Sen kautta kirja näkyy kokoelmana HTML/CSS/kuvatiedostojaan, ja sisältää metodeja moniin hyödyllisiin toimintoihin. container-objekti ja käytännöllisiä aputoimintoja joita voit käyttää lisäosakoodissasi on dokumentoitu :ref:`polish_api`:ssa."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
 msgid "Adding translations to your plugin"
@@ -429,13 +430,13 @@ msgstr "Lisätään käännös liitännäiseen"
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr ""
+msgstr "Kaikki käyttöliittymätekstit voidaan kääntää ja esittää millä tahansa kielellä jota calibren käyttöliittymä on asetettu käyttämään."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:257
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr ""
+msgstr "Käy ensin läpi lisäosan koodi ja merkitse kaikki teksti käännettäviksi ympäröimällä ne _():lla. Esimerkiksi::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:262
 msgid ""
@@ -443,17 +444,17 @@ msgid ""
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`poedit <https://poedit.net/>`_ program for this."
-msgstr ""
+msgstr "Luo sitten sopivalla ohjelmalla .po-tiedostot lisäosakoodistasi. Jokaista käännettävää kieltä varten pitää olla oma .po-tiedosto. Esimerkiksi de.po saksalle, fr.po ranskalle jne. `poedit <https://poedit.net/>`_ on tähän hyvä ohjelma."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use poedit for that, or just do::"
-msgstr ""
+msgstr "Lähetä .po-tiedosto kääntäjällesi. Kun saat ne takaisin, koosta .mo-tiedostot. Tähän toimii jälleen poedit, tai::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:272
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr ""
+msgstr "Laita .mo-tiedostot lisäosasi \"translations\"-kansioon."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:274
 msgid ""
@@ -462,19 +463,19 @@ msgid ""
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr ""
+msgstr "Viimeinen vaihe on kutsua funktiota `load_translations()` lisäosasi .py-tiedostojen alussa. Suorituskykysyistä tee kutsu vain niissä .py-tiedostoissa joissa on käännettävää tekstiä. Eli tavallisesti kutsuisit käännöstä \"ui.py\":ssä, mutta et \"__init__.py\":ssä."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
-msgstr ""
+msgstr "Testaa lisäosiesi käännöksiä vaihtamalla kieliasetusta :guilabel:'Asetukset->Käyttöliittymä->Ilme' tai käynnistämällä calibre näin::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
-msgstr ""
+msgstr "Korvaa \"de\" haluamasi kielen kielikoodilla."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid "The plugin API"
@@ -486,36 +487,36 @@ msgid ""
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr ""
+msgstr "Kuten ehkä huomasit, lisäosa on calibressa luokka. Erityyppisille lisöosille on calibressa eri luokat. Lisätietoja luokista löytyy kohdasta :ref:'plugins'."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr ""
+msgstr "Lisäosasi käyttää melko varmasti calibren koodia. Oppiaksesi calibren koodikannan toiminnoista, lue calibren :ref:`code_layout`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Debugging plugins"
-msgstr ""
+msgstr "Lisäosien virheenetsintä"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
-msgstr ""
+msgstr "Ensinnäkin, käynnistä calibre virheenetsintätilassa. Se onnistuu komentoriviltä kutsulla::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the `Ctrl+Shift+R` keyboard shortcut."
-msgstr ""
+msgstr "Tai calibren sisällä joko klikkaamalla oikealla hiirennapilla :guilabel:'Asetukset'-painiketta tai `Ctrl+Shift+R`-näppäinoikotiellä."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr ""
+msgstr "Komentoriviltä käynnistettynä virheenetsintäraportti tulostuu komentorivi-ikkunaan, calibren sisällä käynnistettynä raportointi tulee txt-tiedostoon."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
 msgid ""
@@ -523,19 +524,19 @@ msgid ""
 "output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr ""
+msgstr "Voit asettaa lisäosaasi mihin tahansa print-lausekkeen, jolloin ne tallentuvat virheenetsintätilassa. Muista, tämä on Python, printin pitäisi riittää virheenetsintään ;) Olen rakentanut koko calibren pelkästään sen avulla."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
-msgstr ""
+msgstr "Lisäosan muutoksia voi nopeasti testata komentoriviltä näin::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr ""
+msgstr "calibre sammutetaan, sammumisen jälkeen lisäosa päivitetään ja calibre käynnistyy uudestaan."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:319
 msgid "More plugin examples"
@@ -545,7 +546,7 @@ msgstr "Lisää esimerkkejä liitännäisistä"
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
-msgstr ""
+msgstr "Lista hienoista calibre-lisäosista löytyy `tästä <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:324
 msgid "Sharing your plugins with others"
@@ -556,4 +557,4 @@ msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
-msgstr ""
+msgstr "Jos haluat jakaa lisäosasi muille käyttäjille, lataa lisäosasi uuteen ketjuun `calibre plugins forumilla <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."

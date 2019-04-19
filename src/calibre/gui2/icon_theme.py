@@ -6,15 +6,11 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
-import os, errno, json, importlib, math, httplib, bz2, shutil, sys
+import os, errno, json, importlib, math, bz2, shutil, sys
 from itertools import count
 from io import BytesIO
-from polyglot.builtins import map
-from Queue import Queue, Empty
 from threading import Thread, Event
 from multiprocessing.pool import ThreadPool
-
-from polyglot.builtins import reraise
 
 from PyQt5.Qt import (
     QImageReader, QFormLayout, QVBoxLayout, QSplitter, QGroupBox, QListWidget,
@@ -39,6 +35,9 @@ from calibre.utils.img import image_from_data, Canvas, optimize_png, optimize_jp
 from calibre.utils.zipfile import ZipFile, ZIP_STORED
 from calibre.utils.filenames import atomic_rename
 from lzma.xz import compress, decompress
+from polyglot.builtins import iteritems, map, range, reraise, filter
+from polyglot import http_client
+from polyglot.queue import Queue, Empty
 
 IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 THEME_COVER = 'icon-theme-cover.jpg'
@@ -191,7 +190,7 @@ def create_cover(report, icons=(), cols=5, size=120, padding=16):
 def verify_theme(report):
     must_use_qt()
     report.bad = bad = {}
-    for name, path in report.name_map.iteritems():
+    for name, path in iteritems(report.name_map):
         reader = QImageReader(os.path.join(report.path, path))
         img = reader.read()
         if img.isNull():
@@ -261,8 +260,11 @@ class ThemeCreateDialog(Dialog):
         }
 
     def save_metadata(self):
+        data = json.dumps(self.metadata, indent=2)
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
         with open(os.path.join(self.report.path, THEME_METADATA), 'wb') as f:
-            json.dump(self.metadata, f, indent=2)
+            f.write(data)
 
     def refresh(self):
         self.save_metadata()
@@ -364,7 +366,7 @@ def create_themeball(report, progress=None, abort=None):
         except Exception:
             return sys.exc_info()
 
-    errors = tuple(filter(None, pool.map(optimize, tuple(report.name_map.iterkeys()))))
+    errors = tuple(filter(None, pool.map(optimize, tuple(report.name_map))))
     pool.close(), pool.join()
     if abort is not None and abort.is_set():
         return
@@ -441,7 +443,7 @@ def download_cover(cover_url, etag=None, cached=b''):
         etag = response.getheader('ETag', None) or None
         return cached, etag
     except HTTPError as e:
-        if etag and e.code == httplib.NOT_MODIFIED:
+        if etag and e.code == http_client.NOT_MODIFIED:
             return cached, etag
         raise
 
@@ -496,7 +498,7 @@ def get_covers(themes, callback, num_of_workers=8):
             else:
                 callback(metadata, cdata)
 
-    for w in xrange(num_of_workers):
+    for w in range(num_of_workers):
         t = Thread(name='IconThemeCover', target=run)
         t.daemon = True
         t.start()
@@ -703,7 +705,7 @@ class ChooseTheme(Dialog):
         get_covers(self.themes, self.cover_downloaded.emit)
 
     def __iter__(self):
-        for i in xrange(self.theme_list.count()):
+        for i in range(self.theme_list.count()):
             yield self.theme_list.item(i)
 
     def item_from_name(self, name):

@@ -7,6 +7,7 @@ __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import copy, zipfile
+from functools import total_ordering
 
 from PyQt5.Qt import QAbstractItemModel, Qt, QColor, QFont, QIcon, \
         QModelIndex, pyqtSignal, QPixmap
@@ -18,7 +19,10 @@ from calibre.web.feeds.recipes.collection import \
         SchedulerConfig, download_builtin_recipe, update_custom_recipe, \
         update_custom_recipes, add_custom_recipe, add_custom_recipes, \
         remove_custom_recipe, get_custom_recipe, get_builtin_recipe
+from calibre import force_unicode
+from calibre.utils.icu import primary_sort_key
 from calibre.utils.search_query_parser import ParseException
+from polyglot.builtins import iteritems, unicode_type
 
 
 class NewsTreeItem(object):
@@ -58,12 +62,19 @@ class NewsTreeItem(object):
                 child.parent = None
 
 
+@total_ordering
 class NewsCategory(NewsTreeItem):
 
     def __init__(self, category, builtin, custom, scheduler_config, parent):
         NewsTreeItem.__init__(self, builtin, custom, scheduler_config, parent)
         self.category = category
         self.cdata = get_language(self.category)
+        if self.category == _('Scheduled'):
+            self.sortq = 0, ''
+        elif self.category == _('Custom'):
+            self.sortq = 1, ''
+        else:
+            self.sortq = 2, self.cdata
         self.bold_font = QFont()
         self.bold_font.setBold(True)
         self.bold_font = (self.bold_font)
@@ -80,25 +91,23 @@ class NewsCategory(NewsTreeItem):
     def flags(self):
         return Qt.ItemIsEnabled
 
-    def __cmp__(self, other):
-        def decorate(x):
-            if x == _('Scheduled'):
-                x = '0' + x
-            elif x == _('Custom'):
-                x = '1' + x
-            else:
-                x = '2' + x
-            return x
+    def __eq__(self, other):
+        return self.cdata == other.cdata
 
-        return cmp(decorate(self.cdata), decorate(getattr(other, 'cdata', '')))
+    def __lt__(self, other):
+        return self.sortq < getattr(other, 'sortq', (3, ''))
 
 
+@total_ordering
 class NewsItem(NewsTreeItem):
 
     def __init__(self, urn, title, default_icon, custom_icon, favicons, zf,
             builtin, custom, scheduler_config, parent):
         NewsTreeItem.__init__(self, builtin, custom, scheduler_config, parent)
         self.urn, self.title = urn, title
+        if isinstance(self.title, bytes):
+            self.title = force_unicode(self.title)
+        self.sortq = primary_sort_key(self.title)
         self.icon = self.default_icon = None
         self.default_icon = default_icon
         self.favicons, self.zf = favicons, zf
@@ -125,8 +134,11 @@ class NewsItem(NewsTreeItem):
             return self.icon
         return None
 
-    def __cmp__(self, other):
-        return cmp(self.title.lower(), getattr(other, 'title', '').lower())
+    def __eq__(self, other):
+        return self.urn == other.urn
+
+    def __lt__(self, other):
+        return self.sortq < other.sortq
 
 
 class AdaptSQP(SearchQueryParser):
@@ -181,7 +193,7 @@ class RecipeModel(QAbstractItemModel, AdaptSQP):
 
     def update_custom_recipes(self, script_urn_map):
         script_ids = []
-        for urn, title_script in script_urn_map.iteritems():
+        for urn, title_script in iteritems(script_urn_map):
             id_ = int(urn[len('custom:'):])
             (title, script) = title_script
             script_ids.append((id_, title, script))
@@ -296,7 +308,7 @@ class RecipeModel(QAbstractItemModel, AdaptSQP):
     def search(self, query):
         results = []
         try:
-            query = unicode(query).strip()
+            query = unicode_type(query).strip()
             if query:
                 results = self.parse(query)
                 if not results:
@@ -413,6 +425,3 @@ class RecipeModel(QAbstractItemModel, AdaptSQP):
             for recipe in self.scheduler_config.iter_recipes():
                 ans.append(recipe.get('id'))
         return ans
-
-
-

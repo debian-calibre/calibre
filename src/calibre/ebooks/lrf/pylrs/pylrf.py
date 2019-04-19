@@ -5,11 +5,12 @@
 """
 import struct
 import zlib
-import StringIO
+import io
 import codecs
 import os
 
-from pylrfopt import tagListOptimizer
+from .pylrfopt import tagListOptimizer
+from polyglot.builtins import iteritems, string_or_bytes
 
 PYLRF_VERSION = "1.0"
 
@@ -129,7 +130,7 @@ def writeLineWidth(f, width):
 
 
 def writeUnicode(f, string, encoding):
-    if isinstance(string, str):
+    if isinstance(string, bytes):
         string = string.decode(encoding)
     string = string.encode("utf-16-le")
     length = len(string)
@@ -140,7 +141,7 @@ def writeUnicode(f, string, encoding):
 
 
 def writeRaw(f, string, encoding):
-    if isinstance(string, str):
+    if isinstance(string, bytes):
         string = string.decode(encoding)
 
     string = string.encode("utf-16-le")
@@ -397,7 +398,7 @@ class LrfTag(object):
         for f in self.format:
             if isinstance(f, dict):
                 p = f[p]
-            elif isinstance(f, str):
+            elif isinstance(f, string_or_bytes):
                 if isinstance(p, tuple):
                     writeString(lrf, struct.pack(f, *p))
                 else:
@@ -473,7 +474,7 @@ class LrfTagStream(LrfStreamBase):
 
     def getStreamTags(self, encoding,
             optimizeTags=False, optimizeCompression=False):
-        stream = StringIO.StringIO()
+        stream = io.BytesIO()
         if optimizeTags:
             tagListOptimizer(self.tags)
 
@@ -489,7 +490,7 @@ class LrfFileStream(LrfStreamBase):
 
     def __init__(self, streamFlags, filename):
         LrfStreamBase.__init__(self, streamFlags)
-        f = file(filename, "rb")
+        f = open(filename, "rb")
         self.streamData = f.read()
         f.close()
 
@@ -526,7 +527,7 @@ class LrfObject(object):
         # belongs somewhere, so here it is.
         #
         composites = {}
-        for name, value in tagDict.iteritems():
+        for name, value in iteritems(tagDict):
             if name == 'rubyAlignAndAdjust':
                 continue
             if name in {
@@ -587,7 +588,7 @@ class LrfToc(LrfObject):
         self.tags.extend(stream.getStreamTags())
 
     def _makeTocStream(self, toc, se):
-        stream = StringIO.StringIO()
+        stream = io.BytesIO()
         nEntries = len(toc)
 
         writeDWord(stream, nEntries)
@@ -651,7 +652,7 @@ class LrfWriter(object):
         return self.sourceEncoding
 
     def toUnicode(self, string):
-        if type(string) is str:
+        if isinstance(string, bytes):
             string = string.decode(self.sourceEncoding)
 
         return string
@@ -685,7 +686,7 @@ class LrfWriter(object):
         self.tocObjId = obj.objId
 
     def setThumbnailFile(self, filename, encoding=None):
-        f = file(filename, "rb")
+        f = open(filename, "rb")
         self.thumbnailData = f.read()
         f.close()
 
@@ -770,4 +771,3 @@ class LrfWriter(object):
     def writeObjectTable(self, lrf):
         for tableEntry in self.objectTable:
             tableEntry.write(lrf)
-

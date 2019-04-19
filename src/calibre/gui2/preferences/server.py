@@ -4,6 +4,7 @@
 
 import errno
 import json
+import numbers
 import os
 import sys
 import textwrap
@@ -31,6 +32,7 @@ from calibre.srv.users import (
     UserManager, create_user_data, validate_password, validate_username
 )
 from calibre.utils.icu import primary_sort_key
+from polyglot.binary import unicode_type
 
 try:
     from PyQt5 import sip
@@ -188,7 +190,7 @@ class Text(QLineEdit):
         return self.text().strip() or None
 
     def set(self, val):
-        self.setText(type(u'')(val or ''))
+        self.setText(unicode_type(val or ''))
 
 
 class Path(QWidget):
@@ -217,7 +219,7 @@ class Path(QWidget):
         return self.text.text().strip() or None
 
     def set(self, val):
-        self.text.setText(type(u'')(val or ''))
+        self.text.setText(unicode_type(val or ''))
 
     def choose(self):
         ans = choose_files(self, 'choose_path_srv_opts_' + self.dname, _('Choose a file'), select_only_single_file=True)
@@ -267,9 +269,9 @@ class AdvancedTab(QWidget):
                 w = Choices
             elif isinstance(opt.default, bool):
                 w = Bool
-            elif isinstance(opt.default, (int, long)):
+            elif isinstance(opt.default, numbers.Integral):
                 w = Int
-            elif isinstance(opt.default, float):
+            elif isinstance(opt.default, numbers.Real):
                 w = Float
             else:
                 w = Text

@@ -26,12 +26,13 @@ from calibre.utils.date import utcnow
 from calibre.utils.network import internet_connected
 from calibre import force_unicode
 from calibre.utils.localization import get_lang, canonicalize_lang
+from polyglot.builtins import iteritems, unicode_type, range
 
 
 def convert_day_time_schedule(val):
     day_of_week, hour, minute = val
     if day_of_week == -1:
-        return (tuple(xrange(7)), hour, minute)
+        return (tuple(range(7)), hour, minute)
     return ((day_of_week,), hour, minute)
 
 
@@ -72,7 +73,7 @@ class DaysOfWeek(Base):
     def __init__(self, parent=None):
         Base.__init__(self, parent)
         self.days = [QCheckBox(force_unicode(calendar.day_abbr[d]),
-            self) for d in xrange(7)]
+            self) for d in range(7)]
         for i, cb in enumerate(self.days):
             row = i % 2
             col = i // 2
@@ -151,7 +152,7 @@ class DaysOfMonth(Base):
 
     @property
     def schedule(self):
-        parts = [x.strip() for x in unicode(self.days.text()).split(',') if
+        parts = [x.strip() for x in unicode_type(self.days.text()).split(',') if
                 x.strip()]
         try:
             days_of_month = tuple(map(int, parts))
@@ -313,7 +314,7 @@ class SchedulerDialog(QDialog):
         g.addWidget(spw, 2, 0, 1, 2)
         self.rla = la = QLabel(_("For the scheduling to work, you must leave calibre running."))
         vt.addWidget(la)
-        for b, c in self.SCHEDULE_TYPES.iteritems():
+        for b, c in iteritems(self.SCHEDULE_TYPES):
             b = getattr(self, b)
             b.toggled.connect(self.schedule_type_selected)
             b.setToolTip(textwrap.dedent(c.HELP))
@@ -455,7 +456,7 @@ class SchedulerDialog(QDialog):
             return True
 
         if self.account.isVisible():
-            un, pw = map(unicode, (self.username.text(), self.password.text()))
+            un, pw = map(unicode_type, (self.username.text(), self.password.text()))
             un, pw = un.strip(), pw.strip()
             if not un and not pw and self.schedule.isChecked():
                 if not getattr(self, 'subscription_optional', False):
@@ -478,8 +479,8 @@ class SchedulerDialog(QDialog):
         add_title_tag = self.add_title_tag.isChecked()
         keep_issues = u'0'
         if self.keep_issues.isEnabled():
-            keep_issues = unicode(self.keep_issues.value())
-        custom_tags = unicode(self.custom_tags.text()).strip()
+            keep_issues = unicode_type(self.keep_issues.value())
+        custom_tags = unicode_type(self.custom_tags.text()).strip()
         custom_tags = [x.strip() for x in custom_tags.split(',')]
         self.recipe_model.customize_recipe(urn, add_title_tag, custom_tags, keep_issues)
         return True

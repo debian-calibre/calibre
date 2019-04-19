@@ -11,8 +11,8 @@ from zlib import compress
 from itertools import chain
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
-from setup import Command, basenames, __appname__, download_securely
-from polyglot.builtins import itervalues, iteritems
+from setup import Command, basenames, __appname__, download_securely, dump_json
+from polyglot.builtins import codepoint_to_chr, itervalues, iteritems
 
 
 def get_opts_from_parser(parser):
@@ -64,7 +64,7 @@ class Coffee(Command):  # {{{
         for src in self.COFFEE_DIRS:
             for f in glob.glob(self.j(self.SRC, __appname__, src,
                 '*.coffee')):
-                bn = os.path.basename(f).rpartition('.')[0]
+                bn = self.b(f).rpartition('.')[0]
                 arcname = src.replace('/', '.') + '.' + bn + '.js'
                 try:
                     with open(f, 'rb') as fs:
@@ -90,12 +90,12 @@ class Coffee(Command):  # {{{
         updated = {}
         for arcname in todo:
             name = arcname.rpartition('.')[0]
-            print ('\t%sCompiling %s'%(time.strftime('[%H:%M:%S] ') if
+            print('\t%sCompiling %s'%(time.strftime('[%H:%M:%S] ') if
                         timestamp else '', name))
             src, sig = src_files[arcname]
             js, errors = compile_coffeescript(open(src, 'rb').read(), filename=src)
             if errors:
-                print ('\n\tCompilation of %s failed'%name)
+                print('\n\tCompilation of %s failed'%name)
                 for line in errors:
                     print(line, file=sys.stderr)
                 if ignore_errors:
@@ -105,8 +105,8 @@ class Coffee(Command):  # {{{
             else:
                 if opts.show_js:
                     self.show_js(js)
-                    print ('#'*80)
-                    print ('#'*80)
+                    print('#'*80)
+                    print('#'*80)
             zi = zipfile.ZipInfo()
             zi.filename = arcname
             zi.date_time = time.localtime()[:6]
@@ -145,7 +145,7 @@ class Kakasi(Command):  # {{{
         if self.newer(dest, src):
             self.info('\tGenerating Kanwadict')
 
-            for line in open(src, "r"):
+            for line in open(src, "rb"):
                 self.parsekdict(line)
             self.kanwaout(dest)
 
@@ -167,13 +167,13 @@ class Kakasi(Command):  # {{{
 
     def mkitaiji(self, src, dst):
         dic = {}
-        for line in open(src, "r"):
-            line = line.decode("utf-8").strip()
+        for line in open(src, "rb"):
+            line = line.decode('utf-8').strip()
             if line.startswith(';;'):  # skip comment
                 continue
             if re.match(r"^$",line):
                 continue
-            pair = re.sub(r'\\u([0-9a-fA-F]{4})', lambda x:unichr(int(x.group(1),16)), line)
+            pair = re.sub(r'\\u([0-9a-fA-F]{4})', lambda x:codepoint_to_chr(int(x.group(1),16)), line)
             dic[pair[0]] = pair[1]
         from calibre.utils.serialize import msgpack_dumps
         with open(dst, 'wb') as f:
@@ -181,8 +181,8 @@ class Kakasi(Command):  # {{{
 
     def mkkanadict(self, src, dst):
         dic = {}
-        for line in open(src, "r"):
-            line = line.decode("utf-8").strip()
+        for line in open(src, "rb"):
+            line = line.decode('utf-8').strip()
             if line.startswith(';;'):  # skip comment
                 continue
             if re.match(r"^$",line):
@@ -194,7 +194,7 @@ class Kakasi(Command):  # {{{
             f.write(msgpack_dumps(dic))
 
     def parsekdict(self, line):
-        line = line.decode("utf-8").strip()
+        line = line.decode('utf-8').strip()
         if line.startswith(';;'):  # skip comment
             return
         (yomi, kanji) = line.split(' ')
@@ -270,7 +270,7 @@ class RecentUAs(Command):  # {{{
         from setup.browser_data import get_data
         data = get_data()
         with open(self.UA_PATH, 'wb') as f:
-            f.write(json.dumps(data, indent=2))
+            f.write(json.dumps(data, indent=2, ensure_ascii=False, sort_keys=True).encode('utf-8'))
 # }}}
 
 
@@ -300,7 +300,7 @@ class Resources(Command):  # {{{
 
         dest = self.j(self.RESOURCES, 'scripts.calibre_msgpack')
         if self.newer(dest, self.j(self.SRC, 'calibre', 'linux.py')):
-            self.info('\tCreating ' + os.path.basename(dest))
+            self.info('\tCreating ' + self.b(dest))
             with open(dest, 'wb') as f:
                 f.write(msgpack_dumps(scripts))
 
@@ -325,7 +325,7 @@ class Resources(Command):  # {{{
             with zipfile.ZipFile(dest, 'w', zipfile.ZIP_STORED) as zf:
                 for n in sorted(files, key=self.b):
                     with open(n, 'rb') as f:
-                        zf.writestr(os.path.basename(n), f.read())
+                        zf.writestr(self.b(n), f.read())
 
         dest = self.j(self.RESOURCES, 'ebook-convert-complete.calibre_msgpack')
         files = []
@@ -334,7 +334,7 @@ class Resources(Command):  # {{{
                 if f.endswith('.py'):
                     files.append(self.j(x[0], f))
         if self.newer(dest, files):
-            self.info('\tCreating ebook-convert-complete.pickle')
+            self.info('\tCreating ' + self.b(dest))
             complete = {}
             from calibre.ebooks.conversion.plumber import supported_input_formats
             complete['input_fmts'] = set(supported_input_formats())
@@ -374,8 +374,7 @@ class Resources(Command):  # {{{
                 continue
             lines = ''.join(lines)
             function_dict[obj.name] = lines
-        import json
-        json.dump(function_dict, open(dest, 'wb'), indent=4)
+        dump_json(function_dict, dest)
 
         self.info('\tCreating editor-functions.json')
         dest = self.j(self.RESOURCES, 'editor-functions.json')
@@ -386,18 +385,18 @@ class Resources(Command):  # {{{
                 src = ''.join(inspect.getsourcelines(func)[0][1:])
             except Exception:
                 continue
-            src = src.replace('def ' + func.func_name, 'def replace')
+            src = src.replace('def ' + func.__name__, 'def replace')
             imports = ['from %s import %s' % (x.__module__, x.__name__) for x in func.imports]
             if imports:
                 src = '\n'.join(imports) + '\n\n' + src
             function_dict[func.name] = src
-        json.dump(function_dict, open(dest, 'wb'), indent=4)
+        dump_json(function_dict, dest)
         self.info('\tCreating user-manual-translation-stats.json')
         d = {}
         for lc, stats in iteritems(json.load(open(self.j(self.d(self.SRC), 'manual', 'locale', 'completed.json')))):
             total = sum(itervalues(stats))
             d[lc] = stats['translated'] / float(total)
-        json.dump(d, open(self.j(self.RESOURCES, 'user-manual-translation-stats.json'), 'wb'), indent=4)
+        dump_json(d, self.j(self.RESOURCES, 'user-manual-translation-stats.json'))
 
     def clean(self):
         for x in ('scripts', 'ebook-convert-complete'):

@@ -19,6 +19,7 @@ from calibre.ebooks.docx.writer.lists import ListsManager
 from calibre.ebooks.oeb.stylizer import Stylizer as Sz, Style as St
 from calibre.ebooks.oeb.base import XPath, barename
 from calibre.utils.localization import lang_as_iso639_1
+from polyglot.builtins import unicode_type, string_or_bytes
 
 
 def lang_for_tag(tag):
@@ -439,8 +440,8 @@ class Convert(object):
         if self.add_toc:
             self.links_manager.process_toc_links(self.oeb)
 
-        if self.add_cover and self.oeb.metadata.cover and unicode(self.oeb.metadata.cover[0]) in self.oeb.manifest.ids:
-            cover_id = unicode(self.oeb.metadata.cover[0])
+        if self.add_cover and self.oeb.metadata.cover and unicode_type(self.oeb.metadata.cover[0]) in self.oeb.manifest.ids:
+            cover_id = unicode_type(self.oeb.metadata.cover[0])
             item = self.oeb.manifest.ids[cover_id]
             self.cover_img = self.images_manager.read_image(item.href)
 
@@ -527,7 +528,7 @@ class Convert(object):
                     self.add_block_tag(tagname, html_tag, tag_style, stylizer, float_spec=float_spec)
 
             for child in html_tag.iterchildren():
-                if isinstance(getattr(child, 'tag', None), basestring):
+                if isinstance(getattr(child, 'tag', None), string_or_bytes):
                     self.process_tag(child, stylizer, float_spec=float_spec)
                 else:  # Comment/PI/etc.
                     tail = getattr(child, 'tail', None)

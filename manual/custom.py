@@ -179,7 +179,7 @@ def generate_ebook_convert_help(preamble, app):
     raw += '\n\n.. contents::\n  :local:'
 
     raw += '\n\n' + options
-    for pl in sorted(input_format_plugins(), key=lambda x:x.name):
+    for pl in sorted(input_format_plugins(), key=lambda x: x.name):
         parser, plumber = create_option_parser(['ebook-convert',
             'dummyi.'+sorted(pl.file_types)[0], 'dummyo.epub', '-h'], default_log)
         groups = [(pl.name+ ' Options', '', g.option_list) for g in
@@ -198,7 +198,7 @@ def generate_ebook_convert_help(preamble, app):
 
 
 def update_cli_doc(name, raw, app):
-    if isinstance(raw, unicode):
+    if isinstance(raw, type(u'')):
         raw = raw.encode('utf-8')
     path = 'generated/%s/%s.rst' % (app.config.language, name)
     old_raw = open(path, 'rb').read() if os.path.exists(path) else ''
@@ -279,7 +279,7 @@ def cli_docs(app):
     info(bold('creating CLI documentation...'))
     documented_cmds, undocumented_cmds = get_cli_docs()
 
-    documented_cmds.sort(cmp=lambda x, y: cmp(x[0], y[0]))
+    documented_cmds.sort(key=lambda x: x[0])
     undocumented_cmds.sort()
 
     documented = [' '*4 + c[0] for c in documented_cmds]

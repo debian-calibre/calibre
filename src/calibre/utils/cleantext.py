@@ -2,8 +2,9 @@ __license__ = 'GPL 3'
 __copyright__ = '2010, sengian <sengian1@gmail.com>'
 __docformat__ = 'restructuredtext en'
 
-import re, htmlentitydefs
-from polyglot.builtins import map
+import re
+from polyglot.builtins import codepoint_to_chr, map, range, filter
+from polyglot.html_entities import name2codepoint
 from calibre.constants import plugins, preferred_encoding
 
 try:
@@ -16,7 +17,19 @@ else:
             x = x.decode(preferred_encoding)
         return _ncxc(x)
 
-_ascii_pat = None
+
+def ascii_pat(for_binary=False):
+    attr = 'binary' if for_binary else 'text'
+    ans = getattr(ascii_pat, attr, None)
+    if ans is None:
+        chars = set(range(32)) - {9, 10, 13}
+        chars.add(127)
+        pat = u'|'.join(map(codepoint_to_chr, chars))
+        if for_binary:
+            pat = pat.encode('ascii')
+        ans = re.compile(pat)
+        setattr(ascii_pat, attr, ans)
+    return ans
 
 
 def clean_ascii_chars(txt, charlist=None):
@@ -24,21 +37,18 @@ def clean_ascii_chars(txt, charlist=None):
     Remove ASCII control chars.
     This is all control chars except \t, \n and \r
     '''
+    is_binary = isinstance(txt, bytes)
+    empty = b'' if is_binary else u''
     if not txt:
-        return ''
-    global _ascii_pat
-    if _ascii_pat is None:
-        chars = set(xrange(32))
-        chars.add(127)
-        for x in (9, 10, 13):
-            chars.remove(x)
-        _ascii_pat = re.compile(u'|'.join(map(unichr, chars)))
+        return empty
 
     if charlist is None:
-        pat = _ascii_pat
+        pat = ascii_pat(is_binary)
     else:
-        pat = re.compile(u'|'.join(map(unichr, charlist)))
-    return pat.sub('', txt)
+        pat = u'|'.join(map(codepoint_to_chr, charlist))
+        if is_binary:
+            pat = pat.encode('utf-8')
+    return pat.sub(empty, txt)
 
 
 def allowed(x):
@@ -72,15 +82,15 @@ def unescape(text, rm=False, rchar=u''):
             # character reference
             try:
                 if text[:3] == "&#x":
-                    return unichr(int(text[3:-1], 16))
+                    return codepoint_to_chr(int(text[3:-1], 16))
                 else:
-                    return unichr(int(text[2:-1]))
+                    return codepoint_to_chr(int(text[2:-1]))
             except ValueError:
                 pass
         else:
             # named entity
             try:
-                text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
+                text = codepoint_to_chr(name2codepoint[text[1:-1]])
             except KeyError:
                 pass
         if rm:

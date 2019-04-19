@@ -17,6 +17,7 @@ from lxml import etree
 
 from calibre.gui2 import choose_files, error_dialog
 from calibre.utils.icu import sort_key
+from polyglot.builtins import unicode_type
 
 Group = namedtuple('Group', 'title feeds')
 
@@ -48,7 +49,7 @@ def import_opml(raw, preserve_groups=True):
                         break
         groups[parent].append((title, url))
 
-    for title in sorted(groups.iterkeys(), key=sort_key):
+    for title in sorted(groups, key=sort_key):
         yield Group(title, uniq(groups[title], kmap=itemgetter(1)))
 
 
@@ -125,7 +126,7 @@ class ImportOPML(QDialog):
             self.path.setText(opml_files[0])
 
     def accept(self):
-        path = unicode(self.path.text())
+        path = unicode_type(self.path.text())
         if not path:
             return error_dialog(self, _('Path not specified'), _(
                 'You must specify the path to the OPML file to import'), show=True)
@@ -138,10 +139,11 @@ class ImportOPML(QDialog):
 
         QDialog.accept(self)
 
+
 if __name__ == '__main__':
     import sys
     for group in import_opml(open(sys.argv[-1], 'rb').read()):
-        print (group.title)
+        print(group.title)
         for title, url in group.feeds:
-            print ('\t%s - %s' % (title, url))
-        print ()
+            print('\t%s - %s' % (title, url))
+        print()

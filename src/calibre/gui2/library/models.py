@@ -5,7 +5,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import functools, re, os, traceback, errno, time
+import functools, re, os, traceback, errno, time, numbers
 from collections import defaultdict, namedtuple
 from itertools import groupby
 
@@ -30,6 +30,7 @@ from calibre.constants import filesystem_encoding, DEBUG, config_dir
 from calibre.gui2.library import DEFAULT_SORT
 from calibre.utils.localization import calibre_langcode_to_name
 from calibre.library.coloring import color_row_key
+from polyglot.builtins import iteritems, itervalues, unicode_type, string_or_bytes, range
 
 Counts = namedtuple('Counts', 'library_total total current')
 
@@ -262,7 +263,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             if alignment != 'left':
                 self.alignment_map[colname] = alignment
             col = self.column_map.index(colname)
-            for row in xrange(self.rowCount(QModelIndex())):
+            for row in range(self.rowCount(QModelIndex())):
                 self.dataChanged.emit(self.index(row, col), self.index(row,
                     col))
 
@@ -277,7 +278,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 old[colname] = font_type
             self.db.new_api.set_pref('styled_columns', old)
             col = self.column_map.index(colname)
-            for row in xrange(self.rowCount(QModelIndex())):
+            for row in range(self.rowCount(QModelIndex())):
                 self.dataChanged.emit(self.index(row, col), self.index(row,
                     col))
 
@@ -306,7 +307,7 @@ class BooksModel(QAbstractTableModel):  # {{{
 
         if db:
             style_map = {'bold': self.bold_font, 'bi': self.bi_font, 'italic': self.italic_font}
-            self.styled_columns = {k: style_map.get(v, None) for k, v in db.new_api.pref('styled_columns', {}).iteritems()}
+            self.styled_columns = {k: style_map.get(v, None) for k, v in iteritems(db.new_api.pref('styled_columns', {}))}
         self.alignment_map = {}
         self.ids_to_highlight_set = set()
         self.current_highlighted_idx = None
@@ -322,7 +323,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 return 100000
             return self.db.field_metadata[name]['rec_index']
 
-        self.column_map.sort(cmp=lambda x,y: cmp(col_idx(x), col_idx(y)))
+        self.column_map.sort(key=lambda x: col_idx(x))
         for col in self.column_map:
             if col in self.orig_headers:
                 self.headers[col] = self.orig_headers[col]
@@ -508,7 +509,7 @@ class BooksModel(QAbstractTableModel):  # {{{
         self._sort(label, order, reset)
 
     def sort_by_named_field(self, field, order, reset=True):
-        if field in self.db.field_metadata.keys():
+        if field in list(self.db.field_metadata.keys()):
             self._sort(field, order, reset)
 
     def _sort(self, label, order, reset):
@@ -579,7 +580,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 return data
 
     def get_book_info(self, index):
-        if isinstance(index, int):
+        if isinstance(index, numbers.Integral):
             index = self.index(index, 0)
         # If index is not valid returns None
         data = self.current_changed(index, None, False)
@@ -777,7 +778,7 @@ class BooksModel(QAbstractTableModel):  # {{{
 
                 def func(idx):
                     val = fffunc(field_obj, idfunc(idx), default_value=0) or 0
-                    if val is 0:
+                    if val == 0:
                         return None
                     ans = u'%.1f' % (val * sz_mult)
                     return (u'<0.1' if ans == u'0.0' else ans)
@@ -878,7 +879,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                     ans += '.5'
                 return _('%s stars') % ans
             return f
-        for f, allow_half in rating_fields.iteritems():
+        for f, allow_half in iteritems(rating_fields):
             tc[f] = stars_tooltip(self.dc[f], allow_half)
         # build a index column to data converter map, to remove the string lookup in the data loop
         self.column_to_dc_map = [self.dc[col] for col in self.column_map]
@@ -942,7 +943,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 cc = self.custom_columns[self.column_map[col]]['display']
                 colors = cc.get('enum_colors', [])
                 values = cc.get('enum_values', [])
-                txt = unicode(index.data(Qt.DisplayRole) or '')
+                txt = unicode_type(index.data(Qt.DisplayRole) or '')
                 if len(colors) > 0 and txt in values:
                     try:
                         color = QColor(colors[values.index(txt)])
@@ -1026,8 +1027,8 @@ class BooksModel(QAbstractTableModel):  # {{{
                 return (self.headers[self.column_map[section]])
             return None
         if DEBUG and role == Qt.ToolTipRole and orientation == Qt.Vertical:
-                col = self.db.field_metadata['uuid']['rec_index']
-                return (_('This book\'s UUID is "{0}"').format(self.db.data[section][col]))
+            col = self.db.field_metadata['uuid']['rec_index']
+            return (_('This book\'s UUID is "{0}"').format(self.db.data[section][col]))
 
         if role == Qt.DisplayRole:  # orientation is vertical
             return (section+1)
@@ -1055,10 +1056,10 @@ class BooksModel(QAbstractTableModel):  # {{{
         label=self.db.field_metadata.key_to_label(colhead)
         s_index = None
         if typ in ('text', 'comments'):
-            val = unicode(value or '').strip()
+            val = unicode_type(value or '').strip()
             val = val if val else None
         elif typ == 'enumeration':
-            val = unicode(value or '').strip()
+            val = unicode_type(value or '').strip()
             if not val:
                 val = None
         elif typ == 'bool':
@@ -1069,7 +1070,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             if value == 0:
                 val = '0'
             else:
-                val = unicode(value or '').strip()
+                val = unicode_type(value or '').strip()
             if not val:
                 val = None
         elif typ == 'datetime':
@@ -1081,7 +1082,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                     return False
                 val = qt_to_dt(val, as_utc=False)
         elif typ == 'series':
-            val = unicode(value or '').strip()
+            val = unicode_type(value or '').strip()
             if val:
                 pat = re.compile(r'\[([.0-9]+)\]')
                 match = pat.search(val)
@@ -1095,7 +1096,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                         s_index = self.db.get_next_cc_series_num_for(val,
                                                         label=label, num=None)
         elif typ == 'composite':
-            tmpl = unicode(value or '').strip()
+            tmpl = unicode_type(value or '').strip()
             disp = cc['display']
             disp['composite_template'] = tmpl
             self.db.set_custom_column_metadata(cc['colnum'], display=disp,
@@ -1151,7 +1152,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 return False
             val = (int(value) if column == 'rating' else
                     value if column in ('timestamp', 'pubdate')
-                    else re.sub(u'\\s', u' ', unicode(value or '').strip()))
+                    else re.sub(u'\\s', u' ', unicode_type(value or '').strip()))
             id = self.db.id(row)
             books_to_refresh = {id}
             if column == 'rating':
@@ -1281,7 +1282,7 @@ class OnDeviceSearch(SearchQueryParser):  # {{{
                     vals = accessor(row)
                     if vals is None:
                         vals = ''
-                    if isinstance(vals, basestring):
+                    if isinstance(vals, string_or_bytes):
                         vals = vals.split(',') if locvalue == 'collections' else [vals]
                     if _match(query, vals, m, use_primary_find_in_search=upf):
                         matches.add(index)
@@ -1399,7 +1400,7 @@ class DeviceBooksModel(BooksModel):  # {{{
             return False
 
         path = getattr(item, 'path', None)
-        for items in self.marked_for_deletion.itervalues():
+        for items in itervalues(self.marked_for_deletion):
             for x in items:
                 if x is item or (path and path == getattr(x, 'path', None)):
                     return True
@@ -1648,7 +1649,7 @@ class DeviceBooksModel(BooksModel):  # {{{
                 return (authors_to_string(au))
             elif cname == 'size':
                 size = self.db[self.map[row]].size
-                if not isinstance(size, (float, int)):
+                if not isinstance(size, numbers.Number):
                     size = 0
                 return (human_readable(size))
             elif cname == 'timestamp':
@@ -1714,7 +1715,7 @@ class DeviceBooksModel(BooksModel):  # {{{
             cname = self.column_map[col]
             if cname in ('size', 'timestamp', 'inlibrary'):
                 return False
-            val = unicode(value or '').strip()
+            val = unicode_type(value or '').strip()
             idx = self.map[row]
             if cname == 'collections':
                 tags = [i.strip() for i in val.split(',')]

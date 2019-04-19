@@ -12,10 +12,12 @@ from struct import calcsize, unpack, unpack_from
 from collections import namedtuple
 
 from calibre.utils.fonts.utils import get_font_names2, get_font_characteristics
+from polyglot.builtins import range, unicode_type
 
 
 class UnsupportedFont(ValueError):
     pass
+
 
 FontCharacteristics = namedtuple('FontCharacteristics',
     'weight, is_italic, is_bold, is_regular, fs_type, panose, width, is_oblique, is_wws, os2_version')
@@ -47,7 +49,7 @@ class FontMetadata(object):
         elif wt == 700:
             wt = 'bold'
         else:
-            wt = type(u'')(wt)
+            wt = unicode_type(wt)
         self.font_weight = wt
 
         self.font_stretch = ('ultra-condensed', 'extra-condensed',
@@ -70,7 +72,7 @@ class FontMetadata(object):
         sz = calcsize(table_record)
         self.tables = {}
         block = f.read(sz * num_tables)
-        for i in xrange(num_tables):
+        for i in range(num_tables):
             table_tag, table_checksum, table_offset, table_length = \
                     unpack_from(table_record, block, i*sz)
             self.tables[table_tag.lower()] = (table_offset, table_length,
@@ -111,6 +113,7 @@ class FontMetadata(object):
         for f in self.characteristics._fields:
             ans[f] = getattr(self.characteristics, f)
         return ans
+
 
 if __name__ == '__main__':
     import sys

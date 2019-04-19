@@ -11,7 +11,10 @@ Fetch metadata using Overdrive Content Reserve
 '''
 import re, random, copy, json
 from threading import RLock
-from Queue import Queue, Empty
+try:
+    from queue import Empty, Queue
+except ImportError:
+    from Queue import Empty, Queue
 
 
 from calibre.ebooks.metadata import check_isbn
@@ -26,7 +29,7 @@ base_url = 'https://search.overdrive.com/'
 class OverDrive(Source):
 
     name = 'Overdrive'
-    version = (1, 0, 0)
+    version = (1, 0, 1)
     minimum_calibre_version = (2, 80, 0)
     description = _('Downloads metadata and covers from Overdrive\'s Content Reserve')
 
@@ -233,7 +236,7 @@ class OverDrive(Source):
             xreq.add_header('Referer', q_init_search)
             xreq.add_header('Accept', 'application/json, text/javascript, */*')
             raw = br.open_novisit(xreq).read()
-            for m in re.finditer(unicode(r'"iTotalDisplayRecords":(?P<displayrecords>\d+).*?"iTotalRecords":(?P<totalrecords>\d+)'), raw):
+            for m in re.finditer(type(u'')(r'"iTotalDisplayRecords":(?P<displayrecords>\d+).*?"iTotalRecords":(?P<totalrecords>\d+)'), raw):
                 if int(m.group('totalrecords')) == 0:
                     return ''
                 elif int(m.group('displayrecords')) >= 1:
@@ -401,9 +404,9 @@ class OverDrive(Source):
                     cover_url)
 
     def get_book_detail(self, br, metadata_url, mi, ovrdrv_id, log):
+        from html5_parser import parse
         from lxml import html
         from calibre.ebooks.chardet import xml_to_unicode
-        from calibre.utils.soupparser import fromstring
         from calibre.library.comments import sanitize_comments_html
 
         try:
@@ -415,9 +418,10 @@ class OverDrive(Source):
             raise
         raw = xml_to_unicode(raw, strip_encoding_pats=True,
                 resolve_entities=True)[0]
+
         try:
-            root = fromstring(raw)
-        except:
+            root = parse(raw, maybe_xhtml=False, sanitize_names=True)
+        except Exception:
             return False
 
         pub_date = root.xpath("//div/label[@id='ctl00_ContentPlaceHolder1_lblPubDate']/text()")
@@ -450,7 +454,7 @@ class OverDrive(Source):
 
         if desc:
             desc = desc[0]
-            desc = html.tostring(desc, method='html', encoding=unicode).strip()
+            desc = html.tostring(desc, method='html', encoding='unicode').strip()
             # remove all attributes from tags
             desc = re.sub(r'<([a-zA-Z0-9]+)\s[^>]+>', r'<\1>', desc)
             # Remove comments

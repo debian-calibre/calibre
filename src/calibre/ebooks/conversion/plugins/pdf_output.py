@@ -14,6 +14,7 @@ from calibre.constants import iswindows
 from calibre.customize.conversion import (OutputFormatPlugin,
     OptionRecommendation)
 from calibre.ptempfile import TemporaryDirectory
+from polyglot.builtins import iteritems, unicode_type
 
 UNITS = ['millimeter', 'centimeter', 'point', 'inch' , 'pica' , 'didot',
          'cicero', 'devicepixel']
@@ -202,8 +203,8 @@ class PDFOutput(OutputFormatPlugin):
 
     def get_cover_data(self):
         oeb = self.oeb
-        if (oeb.metadata.cover and unicode(oeb.metadata.cover[0]) in oeb.manifest.ids):
-            cover_id = unicode(oeb.metadata.cover[0])
+        if (oeb.metadata.cover and unicode_type(oeb.metadata.cover[0]) in oeb.manifest.ids):
+            cover_id = unicode_type(oeb.metadata.cover[0])
             item = oeb.manifest.ids[cover_id]
             self.cover_data = item.data
 
@@ -262,7 +263,7 @@ class PDFOutput(OutputFormatPlugin):
         self.process_fonts()
         if self.opts.pdf_use_document_margins and self.stored_page_margins:
             import json
-            for href, margins in self.stored_page_margins.iteritems():
+            for href, margins in iteritems(self.stored_page_margins):
                 item = oeb_book.manifest.hrefs.get(href)
                 if item is not None:
                     root = item.data

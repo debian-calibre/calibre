@@ -25,6 +25,7 @@ from calibre.gui2.actions import InterfaceAction
 from calibre.gui2 import question_dialog
 from calibre.ebooks.metadata import MetaInformation
 from calibre.ptempfile import PersistentTemporaryFile
+from polyglot.builtins import iteritems, string_or_bytes, range
 
 
 def get_filters():
@@ -187,7 +188,7 @@ class AddAction(InterfaceAction):
         fmt_map = {os.path.splitext(fpath)[1][1:].upper():fpath for fpath in paths}
 
         for id_ in ids:
-            for fmt, fpath in fmt_map.iteritems():
+            for fmt, fpath in iteritems(fmt_map):
                 if fmt:
                     db.add_format_with_hooks(id_, fmt, fpath, index_is_id=True,
                         notify=True)
@@ -310,7 +311,7 @@ class AddAction(InterfaceAction):
                     book_id = db.id(index.row())
                     orig_fmts = tuple(db.new_api.format(book_id, fmt, as_path=True) for fmt in db.new_api.formats(book_id))
 
-            for x in xrange(num):
+            for x in range(num):
                 if dlg.duplicate_current_book:
                     mi = origmi
                 else:
@@ -436,7 +437,7 @@ class AddAction(InterfaceAction):
             self.gui.refresh_cover_browser()
 
     def __add_filesystem_book(self, paths, allow_device=True):
-        if isinstance(paths, basestring):
+        if isinstance(paths, string_or_bytes):
             paths = [paths]
         books = [path for path in map(os.path.abspath, paths) if os.access(path,
             os.R_OK)]
@@ -591,7 +592,7 @@ class AddAction(InterfaceAction):
             self.gui.device_job_exception(job)
             return
         paths = job.result
-        ok_paths = [x for x in paths if isinstance(x, basestring)]
+        ok_paths = [x for x in paths if isinstance(x, string_or_bytes)]
         failed_paths = [x for x in paths if isinstance(x, tuple)]
         if failed_paths:
             if not ok_paths:

@@ -8,6 +8,8 @@ __docformat__ = 'restructuredtext en'
 
 import os, re
 
+from polyglot.builtins import unicode_type
+
 
 def node_mountpoint(node):
 
@@ -48,7 +50,7 @@ class UDisks(object):
     def mount(self, device_node_path):
         d = self.device(device_node_path)
         try:
-            return unicode(d.FilesystemMount('',
+            return unicode_type(d.FilesystemMount('',
                 ['auth_no_user_interaction', 'rw', 'noexec', 'nosuid',
                  'nodev', 'uid=%d'%os.geteuid(), 'gid=%d'%os.getegid()]))
         except:
@@ -112,7 +114,7 @@ class UDisks2(object):
         devs = self.bus.get_object('org.freedesktop.UDisks2',
                         '/org/freedesktop/UDisks2/block_devices')
         xml = devs.Introspect(dbus_interface='org.freedesktop.DBus.Introspectable')
-        for dev in re.finditer(r'name=[\'"](.+?)[\'"]', type(u'')(xml)):
+        for dev in re.finditer(r'name=[\'"](.+?)[\'"]', unicode_type(xml)):
             bd = self.bus.get_object('org.freedesktop.UDisks2',
                 '/org/freedesktop/UDisks2/block_devices/%s2'%dev.group(1))
             try:
@@ -131,7 +133,7 @@ class UDisks2(object):
         mount_options = ['rw', 'noexec', 'nosuid',
                 'nodev', 'uid=%d'%os.geteuid(), 'gid=%d'%os.getegid()]
         try:
-            return unicode(d.Mount(
+            return unicode_type(d.Mount(
                 {
                     'auth.no_user_interaction':True,
                     'options':','.join(mount_options)

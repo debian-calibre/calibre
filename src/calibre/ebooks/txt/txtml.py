@@ -11,6 +11,7 @@ Transform OEB content into plain text
 import re
 
 from lxml import etree
+from polyglot.builtins import unicode_type, string_or_bytes
 
 
 BLOCK_TAGS = [
@@ -72,7 +73,7 @@ class TXTMLizer(object):
             for x in item.data.iterdescendants(etree.Comment):
                 if x.text and '--' in x.text:
                     x.text = x.text.replace('--', '__')
-            content = unicode(etree.tostring(item.data, encoding=unicode))
+            content = unicode_type(etree.tostring(item.data, encoding=unicode_type))
             content = self.remove_newlines(content)
             content = etree.fromstring(content)
             stylizer = Stylizer(content, item.href, self.oeb_book, self.opts, self.opts.output_profile)
@@ -191,10 +192,10 @@ class TXTMLizer(object):
         '''
         from calibre.ebooks.oeb.base import XHTML_NS, barename, namespace
 
-        if not isinstance(elem.tag, basestring) \
+        if not isinstance(elem.tag, string_or_bytes) \
            or namespace(elem.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, basestring) and namespace(p.tag) == XHTML_NS \
+            if p is not None and isinstance(p.tag, string_or_bytes) and namespace(p.tag) == XHTML_NS \
                     and elem.tail:
                 return [elem.tail]
             return ['']

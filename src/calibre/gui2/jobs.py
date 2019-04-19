@@ -8,7 +8,6 @@ Job management.
 '''
 
 import re, time
-from Queue import Empty, Queue
 
 from PyQt5.Qt import (QAbstractTableModel, QModelIndex, Qt, QPainter,
     QTimer, pyqtSignal, QIcon, QDialog, QAbstractItemDelegate, QApplication,
@@ -30,6 +29,8 @@ from calibre.gui2.threaded_jobs import ThreadedJobServer, ThreadedJob
 from calibre.gui2.widgets2 import Dialog
 from calibre.utils.search_query_parser import SearchQueryParser, ParseException
 from calibre.utils.icu import lower
+from polyglot.builtins import unicode_type, range
+from polyglot.queue import Empty, Queue
 
 
 class AdaptSQP(SearchQueryParser):
@@ -300,7 +301,7 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
     def show_hidden_jobs(self):
         for j in self.jobs:
             j.hidden_in_gui = False
-        for r in xrange(len(self.jobs)):
+        for r in range(len(self.jobs)):
             self.dataChanged.emit(self.index(r, 0), self.index(r, 0))
 
     def kill_job(self, job, view):
@@ -557,7 +558,7 @@ class JobsButton(QWidget):  # {{{
         self.pi.stopAnimation()
 
     def jobs(self):
-        src = unicode(self._jobs.text())
+        src = unicode_type(self._jobs.text())
         return int(re.search(r'\d+', src).group())
 
     def tray_tooltip(self, num=0):
@@ -573,7 +574,7 @@ class JobsButton(QWidget):  # {{{
 
     def job_added(self, nnum):
         jobs = self._jobs
-        src = unicode(jobs.text())
+        src = unicode_type(jobs.text())
         num = self.jobs()
         text = src.replace(str(num), str(nnum))
         jobs.setText(text)
@@ -582,7 +583,7 @@ class JobsButton(QWidget):  # {{{
 
     def job_done(self, nnum):
         jobs = self._jobs
-        src = unicode(jobs.text())
+        src = unicode_type(jobs.text())
         num = self.jobs()
         text = src.replace(str(num), str(nnum))
         jobs.setText(text)
@@ -709,7 +710,7 @@ class JobsDialog(QDialog, Ui_JobsDialog):
         self.proxy_model.beginResetModel(), self.proxy_model.endResetModel()
 
     def hide_all(self, *args):
-        self.model.hide_jobs(list(xrange(0,
+        self.model.hide_jobs(list(range(0,
             self.model.rowCount(QModelIndex()))))
         self.proxy_model.beginResetModel(), self.proxy_model.endResetModel()
 

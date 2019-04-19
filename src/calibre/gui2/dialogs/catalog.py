@@ -14,6 +14,7 @@ from calibre.customize.ui import config
 from calibre.gui2.dialogs.catalog_ui import Ui_Dialog
 from calibre.gui2 import dynamic, info_dialog
 from calibre.customize.ui import catalog_plugins
+from polyglot.builtins import unicode_type
 
 
 class Catalog(QDialog, Ui_Dialog):
@@ -21,7 +22,7 @@ class Catalog(QDialog, Ui_Dialog):
     ''' Catalog Dialog builder'''
 
     def __init__(self, parent, dbspec, ids, db):
-        import re, cStringIO
+        import re, io
         from calibre import prints as info
         from PyQt5.uic import compileUi
 
@@ -30,7 +31,7 @@ class Catalog(QDialog, Ui_Dialog):
         self.dbspec, self.ids = dbspec, ids
 
         # Display the number of books we've been passed
-        self.count.setText(unicode(self.count.text()).format(len(ids)))
+        self.count.setText(unicode_type(self.count.text()).format(len(ids)))
 
         # Display the last-used title
         self.title.setText(dynamic.get('catalog_last_used_title',
@@ -67,7 +68,7 @@ class Catalog(QDialog, Ui_Dialog):
                     # Compile the .ui form provided in plugin.zip
                     if not os.path.exists(compiled_form):
                         # info('\tCompiling form', form)
-                        buf = cStringIO.StringIO()
+                        buf = io.BytesIO()
                         compileUi(form, buf)
                         dat = buf.getvalue()
                         dat = re.compile(r'QtGui.QApplication.translate\(.+?,\s+"(.+?)(?<!\\)",.+?\)',
@@ -92,7 +93,7 @@ class Catalog(QDialog, Ui_Dialog):
                 else:
                     info("No dynamic tab resources found for %s" % name)
 
-        self.widgets = sorted(self.widgets, cmp=lambda x,y:cmp(x.TITLE, y.TITLE))
+        self.widgets = sorted(self.widgets, key=lambda x: x.TITLE)
 
         # Generate a sorted list of installed catalog formats/sync_enabled pairs
         fmts = sorted([x[0] for x in self.fmts])
@@ -150,7 +151,7 @@ class Catalog(QDialog, Ui_Dialog):
         return ans
 
     def show_plugin_tab(self, idx):
-        cf = unicode(self.format.currentText()).lower()
+        cf = unicode_type(self.format.currentText()).lower()
         while self.tabs.count() > 1:
             self.tabs.removeTab(1)
         for pw in self.widgets:
@@ -168,7 +169,7 @@ class Catalog(QDialog, Ui_Dialog):
             self.buttonBox.button(self.buttonBox.Help).setVisible(False)
 
     def format_changed(self, idx):
-        cf = unicode(self.format.currentText())
+        cf = unicode_type(self.format.currentText())
         if cf in self.sync_enabled_formats:
             self.sync.setEnabled(True)
         else:
@@ -179,7 +180,7 @@ class Catalog(QDialog, Ui_Dialog):
         '''
         When title/format change, invalidate Preset in E-book options tab
         '''
-        cf = unicode(self.format.currentText()).lower()
+        cf = unicode_type(self.format.currentText()).lower()
         if cf in ['azw3', 'epub', 'mobi'] and hasattr(self.options_widget, 'settings_changed'):
             self.options_widget.settings_changed("title/format")
 
@@ -192,9 +193,9 @@ class Catalog(QDialog, Ui_Dialog):
         return ans
 
     def save_catalog_settings(self):
-        self.catalog_format = unicode(self.format.currentText())
+        self.catalog_format = unicode_type(self.format.currentText())
         dynamic.set('catalog_preferred_format', self.catalog_format)
-        self.catalog_title = unicode(self.title.text())
+        self.catalog_title = unicode_type(self.title.text())
         dynamic.set('catalog_last_used_title', self.catalog_title)
         self.catalog_sync = bool(self.sync.isChecked())
         dynamic.set('catalog_sync_to_device', self.catalog_sync)

@@ -8,6 +8,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2009, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
 
+import io
 import re
 import struct
 import zlib
@@ -18,11 +19,10 @@ try:
 except ImportError:
     import Image
 
-import cStringIO
-
 from calibre.ebooks.pdb.formatwriter import FormatWriter
 from calibre.ebooks.pdb.header import PdbHeaderBuilder
 from calibre.ebooks.pml.pmlml import PMLMLizer
+from polyglot.builtins import unicode_type
 
 IDENTITY = 'PNRdPPrs'
 
@@ -39,7 +39,7 @@ class Writer(FormatWriter):
 
     def write_content(self, oeb_book, out_stream, metadata=None):
         pmlmlizer = PMLMLizer(self.log)
-        pml = unicode(pmlmlizer.extract_content(oeb_book, self.opts)).encode('cp1252', 'replace')
+        pml = unicode_type(pmlmlizer.extract_content(oeb_book, self.opts)).encode('cp1252', 'replace')
 
         text, text_sizes = self._text(pml)
         chapter_index = self._index_item(r'(?s)\\C(?P<val>[0-4])="(?P<text>.+?)"', pml)
@@ -140,10 +140,10 @@ class Writer(FormatWriter):
         for item in manifest:
             if item.media_type in OEB_RASTER_IMAGES and item.href in image_hrefs.keys():
                 try:
-                    im = Image.open(cStringIO.StringIO(item.data)).convert('P')
+                    im = Image.open(io.BytesIO(item.data)).convert('P')
                     im.thumbnail((300,300), Image.ANTIALIAS)
 
-                    data = cStringIO.StringIO()
+                    data = io.BytesIO()
                     im.save(data, 'PNG')
                     data = data.getvalue()
 
@@ -249,4 +249,3 @@ class Writer(FormatWriter):
             record += struct.pack('>H', 0)                  # [54:132]
 
         return record
-

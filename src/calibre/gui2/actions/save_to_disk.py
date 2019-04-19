@@ -5,9 +5,9 @@ __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os
+import os, numbers
 from functools import partial
-from polyglot.builtins import map
+from polyglot.builtins import itervalues, map
 
 
 from calibre.utils.config import prefs
@@ -121,9 +121,9 @@ class SaveToDiskAction(InterfaceAction):
                     Dispatcher(self.books_saved), paths, path)
 
     def save_library_format_by_ids(self, book_ids, fmt, single_dir=True):
-        if isinstance(book_ids, int):
+        if isinstance(book_ids, numbers.Integral):
             book_ids = [book_ids]
-        rows = list(self.gui.library_view.ids_to_rows(book_ids).itervalues())
+        rows = list(itervalues(self.gui.library_view.ids_to_rows(book_ids)))
         rows = [self.gui.library_view.model().index(r, 0) for r in rows]
         self.save_to_disk(True, single_dir=single_dir, single_format=fmt,
                 rows=rows, write_opf=False, save_cover=False)

@@ -7,13 +7,14 @@ __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import copy, os, re
-from polyglot.builtins import map
-from urlparse import urlparse
+from polyglot.builtins import map, string_or_bytes, range
 
 from calibre.ebooks.oeb.base import barename, XPNSMAP, XPath, OPF, XHTML, OEB_DOCS
 from calibre.ebooks.oeb.polish.errors import MalformedMarkup
 from calibre.ebooks.oeb.polish.toc import node_from_loc
 from calibre.ebooks.oeb.polish.replace import LinkRebaser
+from polyglot.builtins import iteritems
+from polyglot.urllib import urlparse
 
 
 class AbortError(ValueError):
@@ -241,7 +242,7 @@ def split(container, name, loc_or_xpath, before=True, totals=None):
                         a.set('href', '#' + purl.fragment)
 
     # Fix all links in the container that point to anchors in the bottom tree
-    for fname, media_type in container.mime_map.iteritems():
+    for fname, media_type in iteritems(container.mime_map):
         if fname not in {name, bottom_name}:
             repl = SplitLinkReplacer(fname, anchors_in_bottom, name, bottom_name, container)
             container.replace_links(fname, repl)
@@ -286,7 +287,7 @@ def multisplit(container, name, xpath, before=True):
 
     current = name
     all_names = [name]
-    for i in xrange(len(nodes)):
+    for i in range(len(nodes)):
         current = split(container, current, '//*[@calibre-split-point="%d"]' % i, before=before)
         all_names.append(current)
 
@@ -395,9 +396,9 @@ def merge_html(container, names, master):
 
         first_child = ''
         for first_child in children:
-            if not isinstance(first_child, basestring):
+            if not isinstance(first_child, string_or_bytes):
                 break
-        if isinstance(first_child, basestring):
+        if isinstance(first_child, string_or_bytes):
             # body contained only text, no tags
             first_child = body.makeelement(XHTML('p'))
             first_child.text, children[0] = children[0], first_child
@@ -429,7 +430,7 @@ def merge_html(container, names, master):
                 a.set('href', '#' + amap[q])
 
         for child in children:
-            if isinstance(child, basestring):
+            if isinstance(child, string_or_bytes):
                 add_text(master_body, child)
             else:
                 master_body.append(copy.deepcopy(child))
@@ -437,7 +438,7 @@ def merge_html(container, names, master):
         container.remove_item(name, remove_from_guide=False)
 
     # Fix all links in the container that point to merged files
-    for fname, media_type in container.mime_map.iteritems():
+    for fname, media_type in iteritems(container.mime_map):
         repl = MergeLinkReplacer(fname, anchor_map, master, container)
         container.replace_links(fname, repl)
 
@@ -468,7 +469,7 @@ def merge_css(container, names, master):
 
     # Remove links to merged stylesheets in the html files, replacing with a
     # link to the master sheet
-    for name, mt in container.mime_map.iteritems():
+    for name, mt in iteritems(container.mime_map):
         if mt in OEB_DOCS:
             removed = False
             root = p(name)

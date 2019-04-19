@@ -5,6 +5,7 @@ __copyright__ = '2009, John Schember <john@nachtimwald.com>'
 __docformat__ = 'restructuredtext en'
 
 import os, re, time, sys
+from functools import cmp_to_key
 
 from calibre.ebooks.metadata import title_sort
 from calibre.ebooks.metadata.book.base import Metadata
@@ -14,6 +15,7 @@ from calibre.constants import preferred_encoding
 from calibre import isbytestring, force_unicode
 from calibre.utils.config_base import tweaks
 from calibre.utils.icu import sort_key
+from polyglot.builtins import string_or_bytes, iteritems, itervalues, cmp
 
 
 class Book(Metadata):
@@ -255,10 +257,10 @@ class CollectionsBookList(BookList):
                     elif is_series:
                         if doing_dc:
                             collections[cat_name][lpath] = \
-                                (book, book.get('series_index', sys.maxint), tsval)
+                                (book, book.get('series_index', sys.maxsize), tsval)
                         else:
                             collections[cat_name][lpath] = \
-                                (book, book.get(attr+'_index', sys.maxint), tsval)
+                                (book, book.get(attr+'_index', sys.maxsize), tsval)
                     else:
                         if lpath not in collections[cat_name]:
                             collections[cat_name][lpath] = (book, tsval, tsval)
@@ -291,7 +293,7 @@ class CollectionsBookList(BookList):
                 return 1
             if y is None:
                 return -1
-            if isinstance(x, basestring) and isinstance(y, basestring):
+            if isinstance(x, string_or_bytes) and isinstance(y, string_or_bytes):
                 x, y = sort_key(force_unicode(x)), sort_key(force_unicode(y))
             try:
                 c = cmp(x, y)
@@ -305,9 +307,8 @@ class CollectionsBookList(BookList):
             except TypeError:
                 return 0
 
-        for category, lpaths in collections.items():
-            books = lpaths.values()
-            books.sort(cmp=none_cmp)
+        for category, lpaths in iteritems(collections):
+            books = sorted(itervalues(lpaths), key=cmp_to_key(none_cmp))
             result[category] = [x[0] for x in books]
         return result
 

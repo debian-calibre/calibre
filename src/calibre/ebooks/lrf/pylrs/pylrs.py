@@ -37,17 +37,12 @@ from __future__ import print_function
 #                           Plot, Image (outside of ImageBlock),
 #                           EmpLine, EmpDots
 
-import os, re, codecs, operator
+import os, re, codecs, operator, io
 from xml.sax.saxutils import escape
 from datetime import date
-try:
-    from elementtree.ElementTree import (Element, SubElement)
-    Element, SubElement
-except ImportError:
-    from xml.etree.ElementTree import (Element, SubElement)
+from xml.etree.ElementTree import Element, SubElement, ElementTree
 
-from elements import ElementWriter
-from pylrf import (LrfWriter, LrfObject, LrfTag, LrfToc,
+from .pylrf import (LrfWriter, LrfObject, LrfTag, LrfToc,
         STREAM_COMPRESSED, LrfTagStream, LrfStreamBase, IMAGE_TYPE_ENCODING,
         BINDING_DIRECTION_ENCODING, LINE_TYPE_ENCODING, LrfFileStream,
         STREAM_FORCE_COMPRESSED)
@@ -58,6 +53,7 @@ DEFAULT_GENREADING      = "fs"          # default is yes to both lrf and lrs
 
 from calibre import __appname__, __version__
 from calibre import entity_to_unicode
+from polyglot.builtins import string_or_bytes, unicode_type
 
 
 class LrsError(Exception):
@@ -96,7 +92,7 @@ def ElementWithReading(tag, text, reading=False):
 
     if text is None:
         readingText = ""
-    elif isinstance(text, basestring):
+    elif isinstance(text, string_or_bytes):
         readingText = text
     else:
         # assumed to be a sequence of (name, sortas)
@@ -155,7 +151,7 @@ class Delegator(object):
 
             """
             for setting in d.getSettings():
-                if isinstance(setting, basestring):
+                if isinstance(setting, string_or_bytes):
                     setting = (d, setting)
                 delegates = \
                         self.delegatedSettingsDict.setdefault(setting[1], [])
@@ -293,7 +289,7 @@ class LrsContainer(object):
                     (content.__class__.__name__,
                     self.__class__.__name__))
 
-        if convertText and isinstance(content, basestring):
+        if convertText and isinstance(content, string_or_bytes):
             content = Text(content)
 
         content.setParent(self)
@@ -587,15 +583,15 @@ class Book(Delegator):
             ts.attrs['baselineskip'] = rescale(ts.attrs['baselineskip'])
 
     def renderLrs(self, lrsFile, encoding="UTF-8"):
-        if isinstance(lrsFile, basestring):
+        if isinstance(lrsFile, string_or_bytes):
             lrsFile = codecs.open(lrsFile, "wb", encoding=encoding)
         self.render(lrsFile, outputEncodingName=encoding)
         lrsFile.close()
 
     def renderLrf(self, lrfFile):
         self.appendReferencedObjects(self)
-        if isinstance(lrfFile, basestring):
-            lrfFile = file(lrfFile, "wb")
+        if isinstance(lrfFile, string_or_bytes):
+            lrfFile = open(lrfFile, "wb")
         lrfWriter = LrfWriter(self.sourceencoding)
 
         lrfWriter.optimizeTags = self.optimizeTags
@@ -623,12 +619,8 @@ class Book(Delegator):
         # now, add some newlines to make it easier to look at
 
         _formatXml(root)
-
-        writer = ElementWriter(root, header=True,
-                               sourceEncoding=self.sourceencoding,
-                               spaceBeforeClose=False,
-                               outputEncodingName=outputEncodingName)
-        writer.write(f)
+        tree = ElementTree(element=root)
+        tree.write(f, encoding=outputEncodingName, xml_declaration=True)
 
 
 class BookInformation(Delegator):
@@ -678,9 +670,10 @@ class Info(Delegator):
 
         # fix up the doc info to match the LRF format
         # NB: generates an encoding attribute, which lrs2lrf does not
-        xmlInfo = ElementWriter(info, header=True, sourceEncoding=lrfWriter.getSourceEncoding(),
-                                spaceBeforeClose=False).toString()
-
+        tree = ElementTree(element=info)
+        f = io.BytesIO()
+        tree.write(f, encoding='utf-8', xml_declaration=True)
+        xmlInfo = f.getvalue().decode('utf-8')
         xmlInfo = re.sub(r"<CThumbnail.*?>\n", "", xmlInfo)
         xmlInfo = xmlInfo.replace("SumPage>", "Page>")
         lrfWriter.docInfoXml = xmlInfo
@@ -1160,7 +1153,7 @@ class TextStyle(LrsStyle):
                  "rubyadjust", "rubyalign", "rubyoverhang",
                  "empdotsposition", 'emplinetype', 'emplineposition']
 
-    validSettings = baseDefaults.keys() + alsoAllow
+    validSettings = list(baseDefaults) + alsoAllow
 
     defaults = baseDefaults.copy()
 
@@ -1221,7 +1214,7 @@ class PageStyle(LrsStyle):
     alsoAllow = ["header", "evenheader", "oddheader",
                  "footer", "evenfooter", "oddfooter"]
 
-    validSettings = baseDefaults.keys() + alsoAllow
+    validSettings = list(baseDefaults) + alsoAllow
     defaults = baseDefaults.copy()
 
     @classmethod
@@ -1493,9 +1486,9 @@ class Paragraph(LrsContainer):
 
     def __init__(self, text=None):
         LrsContainer.__init__(self, [Text, CR, DropCaps, CharButton,
-                                     LrsSimpleChar1, basestring])
+                                     LrsSimpleChar1, bytes, unicode_type])
         if text is not None:
-            if isinstance(text, basestring):
+            if isinstance(text, string_or_bytes):
                 text = Text(text)
             self.append(text)
 
@@ -1528,7 +1521,7 @@ class Paragraph(LrsContainer):
 class LrsTextTag(LrsContainer):
 
     def __init__(self, text, validContents):
-        LrsContainer.__init__(self, [Text, basestring] + validContents)
+        LrsContainer.__init__(self, [Text, bytes, unicode_type] + validContents)
         if text is not None:
             self.append(text)
 
@@ -1720,7 +1713,7 @@ class Text(LrsContainer):
 
     def toLrfContainer(self, lrfWriter, parent):
         if self.text:
-            if isinstance(self.text, str):
+            if isinstance(self.text, bytes):
                 parent.appendLrfTag(LrfTag("rawtext", self.text))
             else:
                 parent.appendLrfTag(LrfTag("textstring", self.text))
@@ -1792,7 +1785,7 @@ class Box(LrsSimpleChar1, LrsContainer):
     """
 
     def __init__(self, linetype="solid"):
-        LrsContainer.__init__(self, [Text, basestring])
+        LrsContainer.__init__(self, [Text, bytes, unicode_type])
         if linetype not in LINE_TYPE_ENCODING:
             raise LrsError(linetype + " is not a valid line type")
         self.linetype = linetype
@@ -1812,9 +1805,9 @@ class Box(LrsSimpleChar1, LrsContainer):
 class Span(LrsSimpleChar1, LrsContainer):
 
     def __init__(self, text=None, **attrs):
-        LrsContainer.__init__(self, [LrsSimpleChar1, Text, basestring])
+        LrsContainer.__init__(self, [LrsSimpleChar1, Text, bytes, unicode_type])
         if text is not None:
-            if isinstance(text, basestring):
+            if isinstance(text, string_or_bytes):
                 text = Text(text)
             self.append(text)
 
@@ -1956,7 +1949,7 @@ class CharButton(LrsSimpleChar1, LrsContainer):
     """
 
     def __init__(self, button, text=None):
-        LrsContainer.__init__(self, [basestring, Text, LrsSimpleChar1])
+        LrsContainer.__init__(self, [bytes, unicode_type, Text, LrsSimpleChar1])
         self.button = None
         if button is not None:
             self.setButton(button)
@@ -2275,7 +2268,7 @@ class ImageStream(LrsObject, LrsContainer):
         self.encoding = encoding
 
     def toLrf(self, lrfWriter):
-        imageFile = file(self.filename, "rb")
+        imageFile = open(self.filename, "rb")
         imageData = imageFile.read()
         imageFile.close()
 

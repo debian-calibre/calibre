@@ -21,6 +21,7 @@ from calibre.gui2 import (gprefs, min_available_height, available_width,
 from calibre.gui2.dialogs.message_box import Icon
 from calibre.gui2.preferences import init_gui, AbortCommit, get_plugin
 from calibre.customize.ui import preferences_plugins
+from polyglot.builtins import unicode_type
 
 ICON_SIZE = 32
 
@@ -170,7 +171,7 @@ class Browser(QScrollArea):  # {{{
         self.category_names = category_names
 
         categories = list(category_map.keys())
-        categories.sort(cmp=lambda x, y: cmp(category_map[x], category_map[y]))
+        categories.sort(key=lambda x: category_map[x])
 
         self.category_map = OrderedDict()
         for c in categories:
@@ -180,7 +181,7 @@ class Browser(QScrollArea):  # {{{
             self.category_map[plugin.category].append(plugin)
 
         for plugins in self.category_map.values():
-            plugins.sort(cmp=lambda x, y: cmp(x.name_order, y.name_order))
+            plugins.sort(key=lambda x: x.name_order)
 
         self.widgets = []
         self._layout = QVBoxLayout()
@@ -293,8 +294,8 @@ class Preferences(QDialog):
                 if isinstance(g, QLabel):
                     buddy = g.buddy()
                     if buddy is not None and hasattr(buddy, 'toolTip'):
-                        htext = unicode(buddy.toolTip()).strip()
-                        etext = unicode(g.toolTip()).strip()
+                        htext = unicode_type(buddy.toolTip()).strip()
+                        etext = unicode_type(g.toolTip()).strip()
                         if htext and not etext:
                             g.setToolTip(htext)
                             g.setWhatsThis(htext)

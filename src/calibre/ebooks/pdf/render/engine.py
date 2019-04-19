@@ -20,6 +20,7 @@ from calibre.ebooks.pdf.render.common import inch, A4, fmtnum
 from calibre.ebooks.pdf.render.graphics import convert_path, Graphics
 from calibre.utils.fonts.sfnt.container import Sfnt, UnsupportedFont
 from calibre.utils.fonts.sfnt.metrics import FontMetrics
+from polyglot.builtins import codepoint_to_chr, itervalues
 
 Point = namedtuple('Point', 'x y')
 ColorState = namedtuple('ColorState', 'color opacity do')
@@ -258,7 +259,7 @@ class PdfEngine(QPaintEngine):
         ans.ignore_glyphs = set()
         for uc, glyph_id in enumerate(glyph_map):
             if glyph_id not in gm:
-                gm[glyph_id] = unichr(uc)
+                gm[glyph_id] = codepoint_to_chr(uc)
                 if uc in (0xad, 0x200b):
                     ans.ignore_glyphs.add(glyph_id)
         ans.full_glyph_map = gm
@@ -339,7 +340,7 @@ class PdfEngine(QPaintEngine):
         self.pdf.links.add_outline(toc)
 
     def add_links(self, current_item, start_page, links, anchors):
-        for pos in anchors.itervalues():
+        for pos in itervalues(anchors):
             pos['left'], pos['top'] = self.pdf_system.map(pos['left'], pos['top'])
         for link in links:
             pos = link[1]
@@ -386,7 +387,7 @@ class PdfDevice(QPaintDevice):  # {{{
         if m == self.PdmDepth:
             return 32
         if m == self.PdmNumColors:
-            return sys.maxint
+            return sys.maxsize
         if m == self.PdmWidthMM:
             return int(round(self.body_width * 0.35277777777778))
         if m == self.PdmHeightMM:

@@ -6,13 +6,14 @@ from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
 from functools import partial
 from collections import OrderedDict
-import operator
+import operator, numbers
 
 from css_parser.css import Property, CSSRule
 
 from calibre import force_unicode
 from calibre.ebooks import parse_css_length
 from calibre.ebooks.oeb.normalize_css import normalizers, safe_parser
+from polyglot.builtins import iteritems
 
 
 def compile_pat(pat):
@@ -44,7 +45,7 @@ class StyleDeclaration(object):
                 yield p, None
             else:
                 if p not in self.expanded_properties:
-                    self.expanded_properties[p] = [Property(k, v, p.literalpriority) for k, v in n(p.name, p.propertyValue).iteritems()]
+                    self.expanded_properties[p] = [Property(k, v, p.literalpriority) for k, v in iteritems(n(p.name, p.propertyValue))]
                 for ep in self.expanded_properties[p]:
                     yield ep, p
 
@@ -123,7 +124,7 @@ def unit_convert(value, unit, dpi=96.0, body_font_size=12):
 
 
 def parse_css_length_or_number(raw, default_unit=None):
-    if isinstance(raw, (int, long, float)):
+    if isinstance(raw, numbers.Number):
         return raw, default_unit
     try:
         return float(raw), default_unit
@@ -338,7 +339,7 @@ def export_rules(serialized_rules):
     lines = []
     for rule in serialized_rules:
         lines.extend('# ' + l for l in rule_to_text(rule).splitlines())
-        lines.extend('%s: %s' % (k, v.replace('\n', ' ')) for k, v in rule.iteritems() if k in allowed_keys)
+        lines.extend('%s: %s' % (k, v.replace('\n', ' ')) for k, v in iteritems(rule) if k in allowed_keys)
         lines.append('')
     return '\n'.join(lines).encode('utf-8')
 

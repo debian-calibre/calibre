@@ -4,17 +4,16 @@ __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import os, glob, re, functools
-from urlparse import urlparse
-from urllib import unquote
 from collections import Counter
 
 from lxml import etree
 from lxml.builder import ElementMaker
 
 from calibre.constants import __appname__, __version__
-from calibre.ebooks.BeautifulSoup import BeautifulSoup
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.utils.cleantext import clean_xml_chars
+from polyglot.builtins import unicode_type
+from polyglot.urllib import unquote, urlparse
 
 NCX_NS = "http://www.daisy.org/z3986/2005/ncx/"
 CALIBRE_NS = "http://calibre.kovidgoyal.net/2009/metadata"
@@ -27,6 +26,26 @@ NSMAP = {
 E = ElementMaker(namespace=NCX_NS, nsmap=NSMAP)
 
 C = ElementMaker(namespace=CALIBRE_NS, nsmap=NSMAP)
+
+
+def parse_html_toc(data):
+    from html5_parser import parse
+    from calibre.utils.cleantext import clean_xml_chars
+    from lxml import etree
+    if isinstance(data, bytes):
+        data = xml_to_unicode(data, strip_encoding_pats=True, resolve_entities=True)[0]
+    root = parse(clean_xml_chars(data), maybe_xhtml=True, keep_doctype=False, sanitize_names=True)
+    for a in root.xpath('//*[@href and local-name()="a"]'):
+        purl = urlparse(unquote(a.get('href')))
+        href, fragment = purl[2], purl[5]
+        if not fragment:
+            fragment = None
+        else:
+            fragment = fragment.strip()
+        href = href.strip()
+
+        txt = etree.tostring(a, method='text', encoding='unicode')
+        yield href, fragment, txt
 
 
 class TOC(list):
@@ -194,7 +213,7 @@ class TOC(list):
                 text = u''
                 for txt in txt_path(nl):
                     text += etree.tostring(txt, method='text',
-                            encoding=unicode, with_tail=False)
+                            encoding=unicode_type, with_tail=False)
                 content = content_path(np)
                 if content and text:
                     content = content[0]
@@ -217,19 +236,7 @@ class TOC(list):
 
     def read_html_toc(self, toc):
         self.base_path = os.path.dirname(toc)
-        soup = BeautifulSoup(open(toc, 'rb').read(), convertEntities=BeautifulSoup.HTML_ENTITIES)
-        for a in soup.findAll('a'):
-            if not a.has_key('href'):  # noqa
-                continue
-            purl = urlparse(unquote(a['href']))
-            href, fragment = purl[2], purl[5]
-            if not fragment:
-                fragment = None
-            else:
-                fragment = fragment.strip()
-            href = href.strip()
-
-            txt = ''.join([unicode(s).strip() for s in a.findAll(text=True)])
+        for href, fragment, txt in parse_html_toc(lopen(toc, 'rb').read()):
             add = True
             for i in self.flat():
                 if i.href == href and i.fragment == fragment:
@@ -264,7 +271,7 @@ class TOC(list):
             text = clean_xml_chars(text)
             elem = E.navPoint(
                     E.navLabel(E.text(re.sub(r'\s+', ' ', text))),
-                    E.content(src=unicode(np.href)+(('#' + unicode(np.fragment))
+                    E.content(src=unicode_type(np.href)+(('#' + unicode_type(np.fragment))
                         if np.fragment else '')),
                     id=item_id,
                     playOrder=str(np.play_order)

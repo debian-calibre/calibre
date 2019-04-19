@@ -15,6 +15,7 @@ from PyQt5.Qt import (
 
 from calibre.gui2 import gprefs
 from calibre.ebooks.metadata import authors_to_string
+from polyglot.builtins import unicode_type, range
 
 
 class DuplicatesQuestion(QDialog):
@@ -69,12 +70,12 @@ class DuplicatesQuestion(QDialog):
         QApplication.clipboard().setText(self.as_text)
 
     def select_all(self):
-        for i in xrange(self.dup_list.topLevelItemCount()):
+        for i in range(self.dup_list.topLevelItemCount()):
             x = self.dup_list.topLevelItem(i)
             x.setCheckState(0, Qt.Checked)
 
     def select_none(self):
-        for i in xrange(self.dup_list.topLevelItemCount()):
+        for i in range(self.dup_list.topLevelItemCount()):
             x = self.dup_list.topLevelItem(i)
             x.setCheckState(0, Qt.Unchecked)
 
@@ -133,7 +134,7 @@ class DuplicatesQuestion(QDialog):
 
     @property
     def duplicates(self):
-        for i in xrange(self.dup_list.topLevelItemCount()):
+        for i in range(self.dup_list.topLevelItemCount()):
             x = self.dup_list.topLevelItem(i)
             if x.checkState(0) == Qt.Checked:
                 yield x.data(0, Qt.UserRole)
@@ -141,13 +142,13 @@ class DuplicatesQuestion(QDialog):
     @property
     def as_text(self):
         entries = []
-        for i in xrange(self.dup_list.topLevelItemCount()):
+        for i in range(self.dup_list.topLevelItemCount()):
             x = self.dup_list.topLevelItem(i)
             check = '✓' if x.checkState(0) == Qt.Checked else '✗'
-            title = '%s %s' % (check, unicode(x.text(0)))
+            title = '%s %s' % (check, unicode_type(x.text(0)))
             dups = []
-            for child in (x.child(j) for j in xrange(x.childCount())):
-                dups.append('\t' + unicode(child.text(0)))
+            for child in (x.child(j) for j in range(x.childCount())):
+                dups.append('\t' + unicode_type(child.text(0)))
             entries.append(title + '\n' + '\n'.join(dups))
         return '\n\n'.join(entries)
 
@@ -160,4 +161,4 @@ if __name__ == '__main__':
     db = db()
     d = DuplicatesQuestion(db, [(M('Life of Pi', ['Yann Martel']), None, None),
                             (M('Heirs of the blade', ['Adrian Tchaikovsky']), None, None)])
-    print (tuple(d.duplicates))
+    print(tuple(d.duplicates))

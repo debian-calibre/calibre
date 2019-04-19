@@ -8,6 +8,7 @@ import os, re
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 from calibre import guess_type
+from polyglot.builtins import iteritems, unicode_type
 
 FB2NS  = 'http://www.gribuser.ru/xml/fictionbook/2.0'
 FB21NS = 'http://www.gribuser.ru/xml/fictionbook/2.1'
@@ -70,7 +71,7 @@ class FB2Input(InputFormatPlugin):
         stylesheets = doc.xpath('//*[local-name() = "stylesheet" and @type="text/css"]')
         css = ''
         for s in stylesheets:
-            css += etree.tostring(s, encoding=unicode, method='text',
+            css += etree.tostring(s, encoding=unicode_type, method='text',
                     with_tail=False) + '\n\n'
         if css:
             import css_parser, logging
@@ -82,7 +83,7 @@ class FB2Input(InputFormatPlugin):
             log.debug('Parsing stylesheet...')
             stylesheet = parser.parseString(text)
             stylesheet.namespaces['h'] = XHTML_NS
-            css = unicode(stylesheet.cssText).replace('h|style', 'h|span')
+            css = unicode_type(stylesheet.cssText).replace('h|style', 'h|span')
             css = re.sub(r'name\s*=\s*', 'class=', css)
         self.extract_embedded_content(doc)
         log.debug('Converting XML to HTML...')
@@ -102,7 +103,7 @@ class FB2Input(InputFormatPlugin):
         notes = {a.get('href')[1:]: a for a in result.xpath('//a[@link_note and @href]') if a.get('href').startswith('#')}
         cites = {a.get('link_cite'): a for a in result.xpath('//a[@link_cite]') if not a.get('href', '')}
         all_ids = {x for x in result.xpath('//*/@id')}
-        for cite, a in cites.iteritems():
+        for cite, a in iteritems(cites):
             note = notes.get(cite, None)
             if note:
                 c = 1

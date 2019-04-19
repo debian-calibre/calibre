@@ -4,7 +4,6 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import cPickle
 import hashlib
 import random
 import shutil
@@ -29,6 +28,8 @@ from calibre.utils.config import prefs, tweaks
 from calibre.utils.icu import sort_key, numeric_sort_key
 from calibre.utils.localization import get_lang, lang_map_for_ui, localize_website_link
 from calibre.utils.search_query_parser import ParseException
+from calibre.utils.serialize import json_dumps
+from polyglot.builtins import iteritems, itervalues
 
 POSTABLE = frozenset({'GET', 'POST', 'HEAD'})
 
@@ -67,7 +68,9 @@ def console_print(ctx, rd):
         raise HTTPForbidden('console printing is not allowed')
     with print_lock:
         print(rd.remote_addr, end=' ')
-        shutil.copyfileobj(rd.request_body_file, sys.stdout)
+        stdout = getattr(sys.stdout, 'buffer', sys.stdout)
+        shutil.copyfileobj(rd.request_body_file, stdout)
+        stdout.flush()
     return ''
 
 
@@ -150,6 +153,7 @@ def basic_interface_data(ctx, rd):
         'custom_list_template': getattr(ctx, 'custom_list_template', None) or custom_list_template(),
         'search_the_net_urls': getattr(ctx, 'search_the_net_urls', None) or [],
         'num_per_page': rd.opts.num_per_page,
+        'default_book_list_mode': rd.opts.book_list_mode,
         'donate_link': localize_website_link('https://calibre-ebook.com/donate')
     }
     ans['library_map'], ans['default_library_id'] = ctx.library_info(rd)
@@ -195,7 +199,7 @@ def get_library_init_data(ctx, rd, db, num, sorts, orders, vl):
         sf.pop('ondevice', None)
         ans['sortable_fields'] = sorted(
             ((sanitize_sort_field_name(db.field_metadata, k), v)
-             for k, v in sf.iteritems()),
+             for k, v in iteritems(sf)),
             key=lambda field_name: sort_key(field_name[1])
         )
         ans['field_metadata'] = db.field_metadata.all_metadata()
@@ -382,9 +386,9 @@ def tag_browser(ctx, rd):
               &collapse_at=25&dont_collapse=&hide_empty_categories=&vl=''
     '''
     db, library_id = get_library_data(ctx, rd)[:2]
-    opts = categories_settings(rd.query, db)
+    opts = categories_settings(rd.query, db, gst_container=tuple)
     vl = rd.query.get('vl') or ''
-    etag = cPickle.dumps([db.last_modified().isoformat(), rd.username, library_id, vl, list(opts)], -1)
+    etag = json_dumps([db.last_modified().isoformat(), rd.username, library_id, vl, list(opts)])
     etag = hashlib.sha1(etag).hexdigest()
 
     def generate():
@@ -396,7 +400,7 @@ def tag_browser(ctx, rd):
 def all_lang_names():
     ans = getattr(all_lang_names, 'ans', None)
     if ans is None:
-        ans = all_lang_names.ans = tuple(sorted(lang_map_for_ui().itervalues(), key=numeric_sort_key))
+        ans = all_lang_names.ans = tuple(sorted(itervalues(lang_map_for_ui()), key=numeric_sort_key))
     return ans
 
 

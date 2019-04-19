@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "mars 08, 2019" "3.40.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "april 19, 2019" "3.41.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -78,6 +78,11 @@ Antal misslyckande inloggningsförsök för bannlysning.       Antal misslyckade
 .TP
 .B \-\-ban\-for
 Bannlys IP\-adresser som har upprepade misslyckade inloggningsförsök.        Bannlyser tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen bannlysning.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -212,7 +217,7 @@ Port att lyssna på för anslutningar.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Sökväg till en JSON\-fil som innehåller webbadresser för funktionen \fB"\fPSök på internet\fB"\fP\&. Det enklaste sättet att skapa en sådan fil är att gå till Inställningar\->Dela via nätet\->Sök på internet i calibre, skapa webbadresserna och exportera dem.
 .UNINDENT
 .INDENT 0.0
 .TP

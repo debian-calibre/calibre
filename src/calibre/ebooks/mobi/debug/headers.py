@@ -7,13 +7,14 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import struct, datetime, os
+import struct, datetime, os, numbers
 
 from calibre.utils.date import utc_tz
 from calibre.ebooks.mobi.reader.headers import NULL_INDEX
 from calibre.ebooks.mobi.langcodes import main_language, sub_language
 from calibre.ebooks.mobi.debug import format_bytes
 from calibre.ebooks.mobi.utils import get_trailing_data
+from polyglot.builtins import iteritems, range, as_bytes
 
 # PalmDB {{{
 
@@ -207,7 +208,7 @@ class EXTHRecord(object):
             else:
                 self.data, = struct.unpack(b'>L', self.data)
         elif self.type in {209, 300}:
-            self.data = bytes(self.data.encode('hex'))
+            self.data = as_bytes(self.data.encode('hex'))
 
     def __str__(self):
         return '%s (%d): %r'%(self.name, self.type, self.data)
@@ -224,7 +225,7 @@ class EXTHHeader(object):
 
         pos = 12
         self.records = []
-        for i in xrange(self.count):
+        for i in range(self.count):
             pos = self.read_record(pos)
         self.records.sort(key=lambda x:x.type)
         self.rmap = {x.type:x for x in self.records}
@@ -517,7 +518,7 @@ class MOBIFile(object):
 
         self.record_headers = []
         self.records = []
-        for i in xrange(self.palmdb.number_of_records):
+        for i in range(self.palmdb.number_of_records):
             pos = 78 + i * 8
             offset, a1, a2, a3, a4 = struct.unpack(b'>LBBBB', self.raw[pos:pos+8])
             flags, val = a1, a2 << 16 | a3 << 8 | a4
@@ -557,7 +558,7 @@ class MOBIFile(object):
             from calibre.ebooks.mobi.huffcdic import HuffReader
 
             def huffit(off, cnt):
-                huffman_record_nums = list(xrange(off, off+cnt))
+                huffman_record_nums = list(range(off, off+cnt))
                 huffrecs = [self.records[r].raw for r in huffman_record_nums]
                 huffs = HuffReader(huffrecs)
                 return huffman_record_nums, huffs.unpack
@@ -596,9 +597,9 @@ class TextRecord(object):  # {{{
             self.trailing_data['uncrossable_breaks'] = self.trailing_data.pop(2)
         self.trailing_data['raw_bytes'] = raw_trailing_bytes
 
-        for typ, val in self.trailing_data.iteritems():
-            if isinstance(typ, int):
-                print ('Record %d has unknown trailing data of type: %d : %r'%
+        for typ, val in iteritems(self.trailing_data):
+            if isinstance(typ, numbers.Integral):
+                print('Record %d has unknown trailing data of type: %d : %r'%
                         (idx, typ, val))
 
         self.idx = idx
@@ -608,7 +609,7 @@ class TextRecord(object):  # {{{
         with open(os.path.join(folder, name+'.txt'), 'wb') as f:
             f.write(self.raw)
         with open(os.path.join(folder, name+'.trailing_data'), 'wb') as f:
-            for k, v in self.trailing_data.iteritems():
+            for k, v in iteritems(self.trailing_data):
                 raw = '%s : %r\n\n'%(k, v)
                 f.write(raw.encode('utf-8'))
 
@@ -616,5 +617,3 @@ class TextRecord(object):  # {{{
         return len(self.raw)
 
 # }}}
-
-

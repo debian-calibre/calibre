@@ -21,9 +21,8 @@
 #
 from __future__ import division
 
-import zipfile, re
+import zipfile, re, io
 import xml.sax.saxutils
-from cStringIO import StringIO
 
 from odf.namespaces import OFFICENS, DCNS, METANS
 from odf.opendocument import load as odLoad
@@ -33,6 +32,7 @@ from calibre.ebooks.metadata import MetaInformation, string_to_authors, check_is
 from calibre.utils.imghdr import identify
 from calibre.utils.date import parse_date
 from calibre.utils.localization import canonicalize_lang
+from polyglot.builtins import string_or_bytes
 
 whitespace = re.compile(r'\s+')
 
@@ -125,7 +125,7 @@ class odfmetaparser(xml.sax.saxutils.XMLGenerator):
         if name == (OFFICENS,u'meta'):
             for k,v in self.addfields.items():
                 if len(v) > 0:
-                    if isinstance(k, basestring):
+                    if isinstance(k, string_or_bytes):
                         xml.sax.saxutils.XMLGenerator.startElementNS(self,(METANS,u'user-defined'),None,{(METANS,u'name'):k})
                         xml.sax.saxutils.XMLGenerator.characters(self, v)
                         xml.sax.saxutils.XMLGenerator.endElementNS(self, (METANS,u'user-defined'),None)
@@ -167,7 +167,7 @@ def get_metadata(stream, extract_cover=True):
     parser.setFeature(xml.sax.handler.feature_external_ges, False)
     parser.setContentHandler(odfs)
     content = zin.read('meta.xml')
-    parser.parse(StringIO(content))
+    parser.parse(io.BytesIO(content))
     data = odfs.seenfields
     mi = MetaInformation(None, [])
     if 'title' in data:
@@ -241,7 +241,7 @@ def read_cover(stream, zin, mi, opfmeta, extract_cover):
         except KeyError:
             continue
         try:
-            fmt, width, height = identify(bytes(raw))
+            fmt, width, height = identify(raw)
         except Exception:
             continue
         imgnum += 1
@@ -264,10 +264,9 @@ def read_cover(stream, zin, mi, opfmeta, extract_cover):
             if not cover_data:
                 raw = zin.read(cover_href)
                 try:
-                    fmt = identify(bytes(raw))[0]
+                    fmt = identify(raw)[0]
                 except Exception:
                     pass
                 else:
                     cover_data = (fmt, raw)
             mi.cover_data = cover_data
-

@@ -29,10 +29,11 @@ from calibre.gui2.viewer.toc import TOC
 from calibre.gui2.viewer.ui import Main as MainWindow
 from calibre.gui2.widgets import ProgressIndicator
 from calibre.ptempfile import reset_base_dir
-from calibre.utils.config import Config, JSONConfig, StringConfig
+from calibre.utils.config import JSONConfig, StringConfig
 from calibre.utils.ipc import RC, viewer_socket_address
 from calibre.utils.localization import canonicalize_lang, get_lang, lang_as_iso639_1
 from calibre.utils.zipfile import BadZipfile
+from polyglot.builtins import unicode_type
 
 try:
     from calibre.utils.monotonic import monotonic
@@ -419,7 +420,7 @@ class EbookViewer(MainWindow):
                 at_start=True)
 
     def lookup(self, word):
-        from urllib import quote
+        from polyglot.urllib import quote
         word = word.replace(u'\u00ad', '')
         word = quote(word.encode('utf-8'))
         lang = canonicalize_lang(self.view.current_language) or get_lang() or 'en'
@@ -672,11 +673,11 @@ class EbookViewer(MainWindow):
         tt = '%(action)s [%(sc)s]\n'+_('Current magnification: %(mag).1f')
         sc = _(' or ').join(self.view.shortcuts.get_shortcuts('Font larger'))
         self.action_font_size_larger.setToolTip(
-                tt %dict(action=unicode(self.action_font_size_larger.text()),
+                tt %dict(action=unicode_type(self.action_font_size_larger.text()),
                          mag=val, sc=sc))
         sc = _(' or ').join(self.view.shortcuts.get_shortcuts('Font smaller'))
         self.action_font_size_smaller.setToolTip(
-                tt %dict(action=unicode(self.action_font_size_smaller.text()),
+                tt %dict(action=unicode_type(self.action_font_size_smaller.text()),
                          mag=val, sc=sc))
         self.action_font_size_larger.setEnabled(self.view.multiplier < 3)
         self.action_font_size_smaller.setEnabled(self.view.multiplier > 0.2)
@@ -703,10 +704,10 @@ class EbookViewer(MainWindow):
         self.load_path(self.iterator.spine[index])
 
     def find_next(self):
-        self.find(unicode(self.search.text()), repeat=True)
+        self.find(unicode_type(self.search.text()), repeat=True)
 
     def find_previous(self):
-        self.find(unicode(self.search.text()), repeat=True, backwards=True)
+        self.find(unicode_type(self.search.text()), repeat=True, backwards=True)
 
     def do_search(self, text, backwards):
         self.pending_search = None
@@ -725,7 +726,7 @@ class EbookViewer(MainWindow):
             self.history.add(self.pos.value())
             path = self.iterator.spine[self.iterator.spine.index(path)]
             if url.hasFragment():
-                frag = unicode(url.fragment())
+                frag = unicode_type(url.fragment())
             if path != self.current_page:
                 self.pending_anchor = frag
                 self.load_path(path)
@@ -931,7 +932,7 @@ class EbookViewer(MainWindow):
             num += 1
         title, ok = QInputDialog.getText(self, _('Add bookmark'),
                 _('Enter title for bookmark:'), text=bm)
-        title = unicode(title).strip()
+        title = unicode_type(title).strip()
         if ok and title:
             bm = self.view.bookmark()
             bm['spine'] = self.current_index
@@ -1082,13 +1083,22 @@ class EbookViewer(MainWindow):
                             self.pending_goto_page = open_at
                         else:
                             self.goto_page(open_at, loaded_check=False)
-                    elif open_at.startswith('toc:'):
-                        index = self.toc_model.search(open_at[4:])
-                        if index.isValid():
+                    else:
+                        target_index = None
+                        if open_at.startswith('toc:'):
+                            index = self.toc_model.search(open_at[4:])
+                            if index.isValid():
+                                target_index = index
+                        elif open_at.startswith('toc-href:'):
+                            for index in self.toc_model.find_indices_by_href(open_at[len('toc-href:'):]):
+                                if index.isValid():
+                                    target_index = index
+                                    break
+                        if target_index is not None:
                             if self.resize_in_progress:
-                                self.pending_toc_click = index
+                                self.pending_toc_click = target_index
                             else:
-                                self.toc_clicked(index, force=True)
+                                self.toc_clicked(target_index, force=True)
 
     def set_vscrollbar_value(self, pagenum):
         self.vertical_scrollbar.blockSignals(True)
@@ -1184,6 +1194,7 @@ class EbookViewer(MainWindow):
             self.iterator.__exit__(*args)
 
     def read_settings(self):
+        from calibre.gui2.viewer.config import config
         c = config().parse()
         if c.remember_window_size:
             wg = vprefs.get('viewer_window_geometry', None)
@@ -1201,10 +1212,7 @@ class EbookViewer(MainWindow):
 
 def config(defaults=None):
     desc = _('Options to control the e-book viewer')
-    if defaults is None:
-        c = Config('viewer', desc)
-    else:
-        c = StringConfig(defaults, desc)
+    c = StringConfig(defaults or '', desc)
 
     c.add_opt('raise_window', ['--raise-window'], default=False,
               help=_('If specified, viewer window will try to come to the '
@@ -1220,7 +1228,9 @@ def config(defaults=None):
         help=_('The position at which to open the specified book. The position is '
                'a location as displayed in the top left corner of the viewer. '
                'Alternately, you can use the form toc:something and it will open '
-               'at the location of the first Table of Contents entry that contains the string "something".'))
+               'at the location of the first Table of Contents entry that contains '
+               'the string "something". You can also use toc-href:something '
+               'to go to a location matching an internal file/id of the book.'))
     c.add_opt('continue_reading', ['--continue'], default=False,
         help=_('Continue reading at the previously opened book'))
 
@@ -1307,7 +1317,7 @@ def main(args=sys.argv):
     opts, args = parser.parse_args(args)
     open_at = None
     if opts.open_at is not None:
-        if opts.open_at.startswith('toc:'):
+        if ':' in opts.open_at:
             open_at = opts.open_at
         else:
             open_at = float(opts.open_at.replace(',', '.'))
