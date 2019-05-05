@@ -15,7 +15,7 @@ from collections import OrderedDict
 from lxml.etree import XPath as _XPath
 from lxml import etree
 
-from calibre import as_unicode
+from calibre import as_unicode, force_unicode
 from calibre.ebooks.epub import rules
 from calibre.ebooks.oeb.base import (OEB_STYLES, XPNSMAP as NAMESPACES,
         urldefrag, rewrite_links, urlunquote, XHTML, urlnormalize)
@@ -76,7 +76,7 @@ class Split(object):
         if splitter.was_split:
             am = splitter.anchor_map
             self.map[item.href] = collections.defaultdict(
-                    am.default_factory, **am)
+                    am.default_factory, am)
 
     def find_page_breaks(self, item):
         if self.page_break_selectors is None:
@@ -84,10 +84,10 @@ class Split(object):
             stylesheets = [x.data for x in self.oeb.manifest if x.media_type in
                     OEB_STYLES]
             for rule in rules(stylesheets):
-                before = getattr(rule.style.getPropertyCSSValue(
-                    'page-break-before'), 'cssText', '').strip().lower()
-                after  = getattr(rule.style.getPropertyCSSValue(
-                    'page-break-after'), 'cssText', '').strip().lower()
+                before = force_unicode(getattr(rule.style.getPropertyCSSValue(
+                    'page-break-before'), 'cssText', '').strip().lower())
+                after  = force_unicode(getattr(rule.style.getPropertyCSSValue(
+                    'page-break-after'), 'cssText', '').strip().lower())
                 try:
                     if before and before not in {'avoid', 'auto', 'inherit'}:
                         self.page_break_selectors.add((rule.selectorText, True))

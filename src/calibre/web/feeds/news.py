@@ -530,7 +530,7 @@ class BasicNewsRecipe(Recipe):
 
     @property
     def cloned_browser(self):
-        if self.get_browser.im_func is BasicNewsRecipe.get_browser.im_func:
+        if hasattr(self.get_browser, 'is_base_class_implementation'):
             # We are using the default get_browser, which means no need to
             # clone
             br = BasicNewsRecipe.get_browser(self)
@@ -972,6 +972,9 @@ class BasicNewsRecipe(Recipe):
                                              extra_css=self.get_extra_css() or '')
                 elem = BeautifulSoup(templ.render(doctype='xhtml').decode('utf-8')).find('div')
                 body.insert(0, elem)
+                # This is needed because otherwise inserting elements into
+                # the soup breaks find()
+                soup = BeautifulSoup(soup.decode_contents())
         if self.remove_javascript:
             for script in list(soup.findAll('script')):
                 script.extract()
@@ -1117,7 +1120,7 @@ class BasicNewsRecipe(Recipe):
 
     def _fetch_article(self, url, dir_, f, a, num_of_feeds):
         br = self.browser
-        if self.get_browser.im_func is BasicNewsRecipe.get_browser.im_func:
+        if hasattr(self.get_browser, 'is_base_class_implementation'):
             # We are using the default get_browser, which means no need to
             # clone
             br = BasicNewsRecipe.get_browser(self)
@@ -1184,12 +1187,16 @@ class BasicNewsRecipe(Recipe):
 
     def build_index(self):
         self.report_progress(0, _('Fetching feeds...'))
+        feeds = None
         try:
             feeds = feeds_from_index(self.parse_index(), oldest_article=self.oldest_article,
                                      max_articles_per_feed=self.max_articles_per_feed,
                                      log=self.log)
             self.report_progress(0, _('Got feeds from index page'))
         except NotImplementedError:
+            pass
+
+        if feeds is None:
             feeds = self.parse_feeds()
 
         if not feeds:
@@ -1787,6 +1794,7 @@ class CalibrePeriodical(BasicNewsRecipe):
                     ' the calibre Periodicals service.'))
 
         return br
+    get_browser.is_base_class_implementation = True
 
     def download(self):
         self.log('Fetching downloaded recipe')
