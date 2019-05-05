@@ -47,4 +47,4 @@ Subject: Use packaged instead of bundled feedparser Python module
 -    from calibre.web.feeds.feedparser import parse
      # Handle unclosed escaped entities. They trip up feedparser and HBR for one
      # generates them
-     raw_xml = re.sub(r'(&amp;#\d+)([^0-9;])', r'\1;\2', raw_xml)
+     raw_xml = re.sub(br'(&amp;#\d+)([^0-9;])', br'\1;\2', raw_xml)
