@@ -4,7 +4,7 @@ __license__ = 'GPL 3'
 __copyright__ = '2010, Li Fanxi <lifanxi@freemindworld.com>'
 __docformat__ = 'restructuredtext en'
 
-import os, string
+import os
 
 from calibre.customize.conversion import OutputFormatPlugin, OptionRecommendation
 from calibre.ptempfile import TemporaryDirectory
@@ -142,7 +142,7 @@ class SNBOutput(OutputFormatPlugin):
 
             for tocitem in oeb_book.toc:
                 if tocitem.href.find('#') != -1:
-                    item = string.split(tocitem.href, '#')
+                    item = tocitem.href.split('#')
                     if len(item) != 2:
                         log.error('Error in TOC item: %s' % tocitem)
                     else:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -138,35 +137,33 @@ class ConditionEditor(QWidget):  # {{{
             b.setSizeAdjustPolicy(b.AdjustToMinimumContentsLengthWithIcon)
             b.setMinimumContentsLength(20)
 
-    @dynamic_property
+    @property
     def current_col(self):
-        def fget(self):
-            idx = self.column_box.currentIndex()
-            return unicode_type(self.column_box.itemData(idx) or '')
+        idx = self.column_box.currentIndex()
+        return unicode_type(self.column_box.itemData(idx) or '')
 
-        def fset(self, val):
-            for idx in range(self.column_box.count()):
-                c = unicode_type(self.column_box.itemData(idx) or '')
-                if c == val:
-                    self.column_box.setCurrentIndex(idx)
-                    return
-            raise ValueError('Column %r not found'%val)
-        return property(fget=fget, fset=fset)
+    @current_col.setter
+    def current_col(self, val):
+        for idx in range(self.column_box.count()):
+            c = unicode_type(self.column_box.itemData(idx) or '')
+            if c == val:
+                self.column_box.setCurrentIndex(idx)
+                return
+        raise ValueError('Column %r not found'%val)
 
-    @dynamic_property
+    @property
     def current_action(self):
-        def fget(self):
-            idx = self.action_box.currentIndex()
-            return unicode_type(self.action_box.itemData(idx) or '')
+        idx = self.action_box.currentIndex()
+        return unicode_type(self.action_box.itemData(idx) or '')
 
-        def fset(self, val):
-            for idx in range(self.action_box.count()):
-                c = unicode_type(self.action_box.itemData(idx) or '')
-                if c == val:
-                    self.action_box.setCurrentIndex(idx)
-                    return
-            raise ValueError('Action %r not valid for current column'%val)
-        return property(fget=fget, fset=fset)
+    @current_action.setter
+    def current_action(self, val):
+        for idx in range(self.action_box.count()):
+            c = unicode_type(self.action_box.itemData(idx) or '')
+            if c == val:
+                self.action_box.setCurrentIndex(idx)
+                return
+        raise ValueError('Action %r not valid for current column'%val)
 
     @property
     def current_val(self):
@@ -176,26 +173,24 @@ class ConditionEditor(QWidget):  # {{{
             ans = rmap.get(lower(ans), ans)
         return ans
 
-    @dynamic_property
+    @property
     def condition(self):
 
-        def fget(self):
-            c, a, v = (self.current_col, self.current_action,
-                    self.current_val)
-            if not c or not a:
-                return None
-            return (c, a, v)
+        c, a, v = (self.current_col, self.current_action,
+                self.current_val)
+        if not c or not a:
+            return None
+        return (c, a, v)
 
-        def fset(self, condition):
-            c, a, v = condition
-            if not v:
-                v = ''
-            v = v.strip()
-            self.current_col = c
-            self.current_action = a
-            self.value_box.setText(v)
-
-        return property(fget=fget, fset=fset)
+    @condition.setter
+    def condition(self, condition):
+        c, a, v = condition
+        if not v:
+            v = ''
+        v = v.strip()
+        self.current_col = c
+        self.current_action = a
+        self.value_box.setText(v)
 
     def init_action_box(self):
         self.action_box.blockSignals(True)
@@ -429,7 +424,7 @@ class RuleEditor(QDialog):  # {{{
                 b.setMinimumContentsLength(15)
 
         for key in sorted(displayable_columns(fm),
-                          key=lambda k: sort_key(fm[k]['name']) if k != color_row_key else 0):
+                          key=lambda k: sort_key(fm[k]['name']) if k != color_row_key else b''):
             if key == color_row_key and self.rule_kind != 'color':
                 continue
             name = all_columns_string if key == color_row_key else fm[key]['name']

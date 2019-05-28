@@ -2,24 +2,39 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(658, 603)
+        Form.resize(742, 663)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
         Form.setSizePolicy(sizePolicy)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.catalogPresets = QtWidgets.QGroupBox(Form)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout(Form)
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.scrollArea = QtWidgets.QScrollArea(Form)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 740, 661))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.widget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
+        self.widget.setObjectName("widget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.catalogPresets = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -42,8 +57,8 @@ class Ui_Form(object):
         self.preset_delete_pb = QtWidgets.QPushButton(self.catalogPresets)
         self.preset_delete_pb.setObjectName("preset_delete_pb")
         self.horizontalLayout_9.addWidget(self.preset_delete_pb)
-        self.verticalLayout.addWidget(self.catalogPresets)
-        self.includedSections = QtWidgets.QGroupBox(Form)
+        self.verticalLayout_2.addWidget(self.catalogPresets)
+        self.includedSections = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -112,8 +127,8 @@ class Ui_Form(object):
         self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_8.setObjectName("line_8")
         self.gridLayout_2.addWidget(self.line_8, 3, 2, 1, 1)
-        self.verticalLayout.addWidget(self.includedSections)
-        self.prefix_rules_gb = QtWidgets.QGroupBox(Form)
+        self.verticalLayout_2.addWidget(self.includedSections)
+        self.prefix_rules_gb = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -125,8 +140,8 @@ class Ui_Form(object):
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.horizontalLayout_8.addLayout(self.horizontalLayout_6)
-        self.verticalLayout.addWidget(self.prefix_rules_gb)
-        self.exclusion_rules_gb = QtWidgets.QGroupBox(Form)
+        self.verticalLayout_2.addWidget(self.prefix_rules_gb)
+        self.exclusion_rules_gb = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -139,8 +154,8 @@ class Ui_Form(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.horizontalLayout_4.addLayout(self.horizontalLayout_3)
-        self.verticalLayout.addWidget(self.exclusion_rules_gb)
-        self.excludedGenres = QtWidgets.QGroupBox(Form)
+        self.verticalLayout_2.addWidget(self.exclusion_rules_gb)
+        self.excludedGenres = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -192,8 +207,8 @@ class Ui_Form(object):
         self.exclude_genre_results.setWordWrap(True)
         self.exclude_genre_results.setObjectName("exclude_genre_results")
         self.gridLayout.addWidget(self.exclude_genre_results, 1, 1, 1, 1)
-        self.verticalLayout.addWidget(self.excludedGenres)
-        self.otherOptions = QtWidgets.QGroupBox(Form)
+        self.verticalLayout_2.addWidget(self.excludedGenres)
+        self.otherOptions = QtWidgets.QGroupBox(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -318,7 +333,10 @@ class Ui_Form(object):
         self.cross_reference_authors.setObjectName("cross_reference_authors")
         self.cross_references_hl.addWidget(self.cross_reference_authors)
         self.gridLayout_3.addLayout(self.cross_references_hl, 0, 1, 1, 1)
-        self.verticalLayout.addWidget(self.otherOptions)
+        self.verticalLayout_2.addWidget(self.otherOptions)
+        self.horizontalLayout_11.addWidget(self.widget)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.horizontalLayout_10.addWidget(self.scrollArea)
         self.label.setBuddy(self.exclude_genre)
         self.regex_results_label.setBuddy(self.exclude_genre)
         self.label_9.setBuddy(self.merge_source_field)
@@ -383,4 +401,5 @@ class Ui_Form(object):
         self.thumb_width.setSuffix(_(" inch"))
         self.label_2.setText(_("Author cross-references:"))
         self.cross_reference_authors.setText(_("For books with multiple authors, list each author separately"))
+
 

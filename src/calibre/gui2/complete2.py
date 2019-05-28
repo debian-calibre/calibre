@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -333,23 +332,21 @@ class LineEdit(QLineEdit, LineEditECM):
     def set_add_separator(self, what):
         self.add_separator = bool(what)
 
-    @dynamic_property
+    @property
     def all_items(self):
-        def fget(self):
-            return self.mcompleter.model().all_items
+        return self.mcompleter.model().all_items
 
-        def fset(self, items):
-            self.mcompleter.model().set_items(items)
-        return property(fget=fget, fset=fset)
+    @all_items.setter
+    def all_items(self, items):
+        self.mcompleter.model().set_items(items)
 
-    @dynamic_property
+    @property
     def disable_popup(self):
-        def fget(self):
-            return self.mcompleter.disable_popup
+        return self.mcompleter.disable_popup
 
-        def fset(self, val):
-            self.mcompleter.disable_popup = bool(val)
-        return property(fget=fget, fset=fset)
+    @disable_popup.setter
+    def disable_popup(self, val):
+        self.mcompleter.disable_popup = bool(val)
     # }}}
 
     def event(self, ev):
@@ -471,23 +468,21 @@ class EditWithComplete(EnComboBox):
         self.setText(what)
         self.lineEdit().selectAll()
 
-    @dynamic_property
+    @property
     def all_items(self):
-        def fget(self):
-            return self.lineEdit().all_items
+        return self.lineEdit().all_items
 
-        def fset(self, val):
-            self.lineEdit().all_items = val
-        return property(fget=fget, fset=fset)
+    @all_items.setter
+    def all_items(self, val):
+        self.lineEdit().all_items = val
 
-    @dynamic_property
+    @property
     def disable_popup(self):
-        def fget(self):
-            return self.lineEdit().disable_popup
+        return self.lineEdit().disable_popup
 
-        def fset(self, val):
-            self.lineEdit().disable_popup = bool(val)
-        return property(fget=fget, fset=fset)
+    @disable_popup.setter
+    def disable_popup(self, val):
+        self.lineEdit().disable_popup = bool(val)
     # }}}
 
     def text(self):

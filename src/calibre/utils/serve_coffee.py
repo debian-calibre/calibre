@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -17,7 +16,7 @@ from threading import Lock, local
 
 from polyglot import socketserver
 from polyglot.http_server import HTTPServer, SimpleHTTPRequestHandler
-from polyglot.builtins import error_message
+from polyglot.builtins import error_message, getcwd
 
 # Compiler {{{
 
@@ -272,7 +271,7 @@ def serve(resources={}, port=8000, host='0.0.0.0'):
     Handler.special_resources = resources
     Handler.compiler = compile_coffeescript
     httpd = Server((host, port), Handler)
-    print('serving %s at %s:%d with PID=%d'%(os.getcwdu(), host, port, os.getpid()))
+    print('serving %s at %s:%d with PID=%d'%(getcwd(), host, port, os.getpid()))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

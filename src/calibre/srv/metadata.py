@@ -2,8 +2,7 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 import os
 from copy import copy
 from collections import namedtuple
@@ -22,7 +21,7 @@ from calibre.utils.icu import collation_order
 from calibre.utils.localization import calibre_langcode_to_name
 from calibre.library.comments import comments_to_html, markdown
 from calibre.library.field_metadata import category_icon_map
-from polyglot.builtins import iteritems, itervalues, range, filter
+from polyglot.builtins import iteritems, itervalues, range, filter, unicode_type
 from polyglot.urllib import quote
 
 IGNORED_FIELDS = frozenset('cover ondevice path marked au_map size'.split())
@@ -117,7 +116,7 @@ def category_as_json(items, category, display_name, count, tooltip=None, parent=
         ans['is_user_category'] = True
     if is_first_letter:
         ans['is_first_letter'] = True
-    item_id = 'c' + str(len(items))
+    item_id = 'c' + unicode_type(len(items))
     items[item_id] = ans
     return item_id
 

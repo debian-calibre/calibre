@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -16,6 +16,10 @@ builtins.__dict__['_'] = lambda s: s
 # For strings which belong in the translation tables, but which shouldn't be
 # immediately translated to the environment language
 builtins.__dict__['__'] = lambda s: s
+
+# For backwards compat with some third party plugins
+builtins.__dict__['dynamic_property'] = lambda func: func(None)
+
 
 from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd, ispy3
 
@@ -229,7 +233,7 @@ if not _run_once:
 def test_lopen():
     from calibre.ptempfile import TemporaryDirectory
     from calibre import CurrentDir
-    n = u'f\xe4llen'
+    n = 'f\xe4llen'
     print('testing lopen()')
 
     if iswindows:

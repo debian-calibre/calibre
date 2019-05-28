@@ -110,7 +110,7 @@ UNINSTALL = '''\
 from __future__ import print_function, unicode_literals
 euid = {euid}
 
-import os, subprocess, shutil
+import os, subprocess, shutil, tempfile
 
 try:
     raw_input
@@ -126,14 +126,19 @@ frozen_path = {frozen_path!r}
 if not frozen_path or not os.path.exists(os.path.join(frozen_path, 'resources', 'calibre-mimetypes.xml')):
     frozen_path = None
 
+dummy_mime_path = tempfile.mkdtemp(prefix='mime-hack.')
 for f in {mime_resources!r}:
-    cmd = ['xdg-mime', 'uninstall', f]
-    print ('Removing mime resource:', os.path.basename(f))
+    # dummyfile
+    f = os.path.basename(f)
+    file = os.path.join(dummy_mime_path, f)
+    open(file, 'w').close()
+    cmd = ['xdg-mime', 'uninstall', file]
+    print ('Removing mime resource:', f)
     ret = subprocess.call(cmd, shell=False)
     if ret != 0:
         print ('WARNING: Failed to remove mime resource', f)
 
-for x in tuple({manifest!r}) + tuple({appdata_resources!r}) + (os.path.abspath(__file__), __file__, frozen_path):
+for x in tuple({manifest!r}) + tuple({appdata_resources!r}) + (os.path.abspath(__file__), __file__, frozen_path, dummy_mime_path):
     if not x or not os.path.exists(x):
         continue
     print ('Removing', x)
@@ -218,10 +223,10 @@ class ZshCompleter(object):  # {{{
                 lo = [x+'=' for x in lo]
                 so = [x+'+' for x in so]
             ostrings = lo + so
-            ostrings = u'{%s}'%','.join(ostrings) if len(ostrings) > 1 else ostrings[0]
-            exclude = u''
+            ostrings = '{%s}'%','.join(ostrings) if len(ostrings) > 1 else ostrings[0]
+            exclude = ''
             if opt.dest is None:
-                exclude = u"'(- *)'"
+                exclude = "'(- *)'"
             h = opt.help or ''
             h = h.replace('"', "'").replace('[', '(').replace(
                 ']', ')').replace('\n', ' ').replace(':', '\\:').replace('`', "'")
@@ -249,8 +254,8 @@ class ZshCompleter(object):  # {{{
                     arg += "'_files -g \"%s\"'"%(' '.join('*.%s'%x for x in
                                 tuple(pics) + tuple(x.upper() for x in pics)))
 
-            help_txt = u'"[%s]"'%h
-            yield u'%s%s%s%s '%(exclude, ostrings, help_txt, arg)
+            help_txt = '"[%s]"'%h
+            yield '%s%s%s%s '%(exclude, ostrings, help_txt, arg)
 
     def opts_and_exts(self, name, op, exts, cover_opts=('--cover',),
                       opf_opts=('--opf',), file_map={}):
@@ -290,7 +295,7 @@ class ZshCompleter(object):  # {{{
         w('\n    "--list-recipes:List builtin recipe names"')
         for recipe in sorted(set(get_builtin_recipe_titles())):
             recipe = recipe.replace(':', '\\:').replace('"', '\\"')
-            w(u'\n    "%s.recipe"'%(recipe))
+            w('\n    "%s.recipe"'%(recipe))
         w('\n  ); _describe -t recipes "ebook-convert builtin recipes" extras')
         w('\n  _files -g "%s"'%' '.join(('*.%s'%x for x in iexts)))
         w('\n}\n')
@@ -379,16 +384,16 @@ class ZshCompleter(object):  # {{{
                 lo = [x+'=' for x in lo]
                 so = [x+'+' for x in so]
             ostrings = lo + so
-            ostrings = u'{%s}'%','.join(ostrings) if len(ostrings) > 1 else '"%s"'%ostrings[0]
+            ostrings = '{%s}'%','.join(ostrings) if len(ostrings) > 1 else '"%s"'%ostrings[0]
             h = opt.help or ''
             h = h.replace('"', "'").replace('[', '(').replace(
                 ']', ')').replace('\n', ' ').replace(':', '\\:').replace('`', "'")
             h = h.replace('%default', unicode_type(opt.default))
-            help_txt = u'"[%s]"'%h
+            help_txt = '"[%s]"'%h
             opt_lines.append(ostrings + help_txt + ' \\')
         opt_lines = ('\n' + (' ' * 8)).join(opt_lines)
 
-        polyglot_write(f)((u'''
+        polyglot_write(f)(('''
 _ebook_edit() {
     local curcontext="$curcontext" state line ebookfile expl
     typeset -A opt_args
@@ -688,13 +693,19 @@ class PostInstall:
         self.opts.staging_etc = '/etc' if self.opts.staging_root == '/usr' else \
                 os.path.join(self.opts.staging_root, 'etc')
 
+        prefix = getattr(self.opts, 'prefix', None)
+        if prefix and prefix != self.opts.staging_root:
+            self.opts.staged_install = True
+            os.environ['XDG_DATA_DIRS'] = os.path.join(self.opts.staging_root, 'share')
+            os.environ['XDG_UTILS_INSTALL_MODE'] = 'system'
+
         from calibre.utils.serialize import msgpack_loads
         scripts = msgpack_loads(P('scripts.calibre_msgpack', data=True))
         self.manifest = manifest or []
         if getattr(sys, 'frozen_path', False):
             if os.access(self.opts.staging_bindir, os.W_OK):
                 self.info('Creating symlinks...')
-                for exe in scripts.keys():
+                for exe in scripts:
                     dest = os.path.join(self.opts.staging_bindir, exe)
                     if os.path.lexists(dest):
                         os.unlink(dest)
@@ -716,7 +727,8 @@ class PostInstall:
             self.setup_completion()
         if islinux or isbsd:
             self.setup_desktop_integration()
-        self.create_uninstaller()
+        if not getattr(self.opts, 'staged_install', False):
+            self.create_uninstaller()
 
         from calibre.utils.config import config_dir
         if os.path.exists(config_dir):
@@ -770,7 +782,7 @@ class PostInstall:
                 self.manifest.append(bash_comp_dest)
             write_completion(bash_comp_dest, zsh)
         except TypeError as err:
-            if 'resolve_entities' in str(err):
+            if 'resolve_entities' in unicode_type(err):
                 print('You need python-lxml >= 2.0.5 for calibre')
                 sys.exit(1)
             raise
@@ -799,23 +811,31 @@ class PostInstall:
                 env['LD_LIBRARY_PATH'] = os.pathsep.join(npaths)
                 cc = partial(check_call, env=env)
 
+            if getattr(self.opts, 'staged_install', False):
+                for d in {'applications', 'desktop-directories', 'icons/hicolor', 'mime/packages'}:
+                    try:
+                        os.makedirs(os.path.join(self.opts.staging_root, 'share', d))
+                    except OSError:
+                        # python2 does not have exist_ok=True, failure will be reported by xdg-utils
+                        pass
+
             with TemporaryDirectory() as tdir, CurrentDir(tdir), PreserveMIMEDefaults():
 
                 def install_single_icon(iconsrc, basename, size, context, is_last_icon=False):
                     filename = '%s-%s.png' % (basename, size)
                     render_img(iconsrc, filename, width=int(size), height=int(size))
-                    cmd = ['xdg-icon-resource', 'install', '--noupdate', '--context', context, '--size', str(size), filename, basename]
+                    cmd = ['xdg-icon-resource', 'install', '--noupdate', '--context', context, '--size', unicode_type(size), filename, basename]
                     if is_last_icon:
                         del cmd[2]
                     cc(cmd)
-                    self.icon_resources.append((context, basename, str(size)))
+                    self.icon_resources.append((context, basename, unicode_type(size)))
 
                 def install_icons(iconsrc, basename, context, is_last_icon=False):
                     sizes = (16, 32, 48, 64, 128, 256)
                     for size in sizes:
                         install_single_icon(iconsrc, basename, size, context, is_last_icon and size is sizes[-1])
 
-                icons = list(filter(None, [x.strip() for x in '''\
+                icons = [x.strip() for x in '''\
                     mimetypes/lrf.png application-lrf mimetypes
                     mimetypes/lrf.png text-lrs mimetypes
                     mimetypes/mobi.png application-x-mobipocket-ebook mimetypes
@@ -825,7 +845,7 @@ class PostInstall:
                     lt.png calibre-gui apps
                     viewer.png calibre-viewer apps
                     tweak.png calibre-ebook-edit apps
-                    '''.splitlines()]))
+                    '''.splitlines() if x.strip()]
                 for line in icons:
                     iconsrc, basename, context = line.split()
                     install_icons(iconsrc, basename, context, is_last_icon=line is icons[-1])
@@ -876,10 +896,15 @@ class PostInstall:
                     ak = x.partition('.')[0]
                     if ak in APPDATA and os.access(appdata, os.W_OK):
                         self.appdata_resources.append(write_appdata(ak, APPDATA[ak], appdata, translators))
-                cc(['xdg-desktop-menu', 'forceupdate'])
-                MIME = P('calibre-mimetypes.xml')
-                self.mime_resources.append(MIME)
-                cc(['xdg-mime', 'install', MIME])
+                MIME_BASE = 'calibre-mimetypes.xml'
+                MIME = P(MIME_BASE)
+                self.mime_resources.append(MIME_BASE)
+                if not getattr(self.opts, 'staged_install', False):
+                    cc(['xdg-mime', 'install', MIME])
+                    cc(['xdg-desktop-menu', 'forceupdate'])
+                else:
+                    from shutil import copyfile
+                    copyfile(MIME, os.path.join(env['XDG_DATA_DIRS'], 'mime', 'packages', MIME_BASE))
         except Exception:
             if self.opts.fatal_errors:
                 raise
@@ -1108,7 +1133,7 @@ def write_appdata(key, entry, base, translators):
     fpath = os.path.join(base, '%s.appdata.xml' % key)
     screenshots = E.screenshots()
     for w, h, url in entry['screenshots']:
-        s = E.screenshot(E.image(url, width=str(w), height=str(h)))
+        s = E.screenshot(E.image(url, width=unicode_type(w), height=unicode_type(h)))
         screenshots.append(s)
     screenshots[0].set('type', 'default')
     description = E.description()

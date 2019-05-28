@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, absolute_import, print_function, division
 #########################################################################
 #                                                                       #
 #                                                                       #
@@ -14,6 +15,7 @@ import os, re
 
 from calibre.ebooks.rtf2xml import copy, check_brackets
 from calibre.ptempfile import better_mktemp
+from . import open_for_read, open_for_write
 
 
 class ProcessTokens:
@@ -784,10 +786,10 @@ class ProcessTokens:
     def process_tokens(self):
         """Main method for handling other methods. """
         line_count = 0
-        with open(self.__file, 'r') as read_obj:
-            with open(self.__write_to, 'wb') as write_obj:
+        with open_for_read(self.__file) as read_obj:
+            with open_for_write(self.__write_to) as write_obj:
                 for line in read_obj:
-                    token = line.replace("\n","")
+                    token = line.replace("\n", "")
                     line_count += 1
                     if line_count == 1 and token != '\\{':
                         msg = '\nInvalid RTF: document doesn\'t start with {\n'
@@ -802,12 +804,6 @@ class ProcessTokens:
                             % line_count
                         raise self.__exception_handler(msg)
                     elif token[:1] == "\\":
-                        try:
-                            token.decode('us-ascii')
-                        except UnicodeError as msg:
-                            msg = '\nInvalid RTF: Tokens not ascii encoded.\n%s\nError at line %d'\
-                                % (str(msg), line_count)
-                            raise self.__exception_handler(msg)
                         line = self.process_cw(token)
                         if line is not None:
                             write_obj.write(line)

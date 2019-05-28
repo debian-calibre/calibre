@@ -1,4 +1,4 @@
-from __future__ import with_statement
+from __future__ import with_statement, unicode_literals
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 '''
@@ -29,7 +29,7 @@ from calibre.utils.icu import numeric_sort_key
 from calibre.utils.img import save_cover_data_to, add_borders_to_image, image_to_data
 from calibre.utils.localization import canonicalize_lang
 from calibre.utils.logging import ThreadSafeWrapper
-from polyglot.builtins import unicode_type, string_or_bytes
+from polyglot.builtins import unicode_type, string_or_bytes, getcwd
 from polyglot.urllib import urlparse, urlsplit
 
 
@@ -54,7 +54,7 @@ class BasicNewsRecipe(Recipe):
 
     #: A couple of lines that describe the content this recipe downloads.
     #: This will be used primarily in a GUI that presents a list of recipes.
-    description = u''
+    description = ''
 
     #: The author of this recipe
     __author__             = __appname__
@@ -288,7 +288,7 @@ class BasicNewsRecipe(Recipe):
     #: The CSS that is used to style the templates, i.e., the navigation bars and
     #: the Tables of Contents. Rather than overriding this variable, you should
     #: use `extra_css` in your recipe to customize look and feel.
-    template_css = u'''
+    template_css = '''
             .article_date {
                 color: gray; font-family: monospace;
             }
@@ -446,7 +446,7 @@ class BasicNewsRecipe(Recipe):
         so, override in your subclass.
         '''
         if not self.feeds:
-            raise NotImplementedError
+            raise NotImplementedError()
         if self.test:
             return self.feeds[:self.test[0]]
         return self.feeds
@@ -462,7 +462,7 @@ class BasicNewsRecipe(Recipe):
                 return url + '?&pagewanted=print'
 
         '''
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @classmethod
     def image_url_processor(cls, baseurl, url):
@@ -665,7 +665,7 @@ class BasicNewsRecipe(Recipe):
 
         `url_or_raw`: Either a URL or the downloaded index page as a string
         '''
-        if re.match(r'\w+://', url_or_raw):
+        if re.match((br'\w+://' if isinstance(url_or_raw, bytes) else r'\w+://'), url_or_raw):
             # We may be called in a thread (in the skip_ad_pages method), so
             # clone the browser to be safe. We cannot use self.cloned_browser
             # as it may or may not actually clone the browser, depending on if
@@ -698,9 +698,7 @@ class BasicNewsRecipe(Recipe):
         if as_tree:
             from html5_parser import parse
             return parse(_raw)
-        else:
-            return BeautifulSoup(_raw)
-            return parse(_raw, return_root=False)
+        return BeautifulSoup(_raw)
 
     def extract_readable_article(self, html, url):
         '''
@@ -725,12 +723,12 @@ class BasicNewsRecipe(Recipe):
             root = frag
         elif frag.tag == 'body':
             root = document_fromstring(
-                u'<html><head><title>%s</title></head></html>' %
+                '<html><head><title>%s</title></head></html>' %
                 extracted_title)
             root.append(frag)
         else:
             root = document_fromstring(
-                u'<html><head><title>%s</title></head><body/></html>' %
+                '<html><head><title>%s</title></head><body/></html>' %
                 extracted_title)
             root.xpath('//body')[0].append(frag)
 
@@ -745,7 +743,7 @@ class BasicNewsRecipe(Recipe):
             heading.text = extracted_title
             body.insert(0, heading)
 
-        raw_html = tostring(root, encoding=unicode_type)
+        raw_html = tostring(root, encoding='unicode')
 
         return raw_html
 
@@ -794,7 +792,7 @@ class BasicNewsRecipe(Recipe):
         calibre show the user a simple message instead of an error, call
         :meth:`abort_recipe_processing`.
         '''
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def abort_recipe_processing(self, msg):
         '''
@@ -815,7 +813,7 @@ class BasicNewsRecipe(Recipe):
         This method is typically useful for sites that try to make it difficult to
         access article content automatically.
         '''
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def add_toc_thumbnail(self, article, src):
         '''
@@ -870,7 +868,7 @@ class BasicNewsRecipe(Recipe):
             self.title = unicode_type(self.title, 'utf-8', 'replace')
 
         self.debug = options.verbose > 1
-        self.output_dir = os.path.abspath(os.getcwdu())
+        self.output_dir = os.path.abspath(getcwd())
         self.verbose = options.verbose
         self.test = options.test
         if self.test and not isinstance(self.test, tuple):
@@ -902,9 +900,9 @@ class BasicNewsRecipe(Recipe):
         self.css_map = {}
 
         web2disk_cmdline = ['web2disk',
-            '--timeout', str(self.timeout),
-            '--max-recursions', str(self.recursions),
-            '--delay', str(self.delay),
+            '--timeout', unicode_type(self.timeout),
+            '--max-recursions', unicode_type(self.recursions),
+            '--delay', unicode_type(self.delay),
             ]
 
         if self.verbose:
@@ -1068,10 +1066,10 @@ class BasicNewsRecipe(Recipe):
         src = force_unicode(src, 'utf-8')
         pos = cls.summary_length
         fuzz = 50
-        si = src.find(u';', pos)
+        si = src.find(';', pos)
         if si > 0 and si-pos > fuzz:
             si = -1
-        gi = src.find(u'>', pos)
+        gi = src.find('>', pos)
         if gi > 0 and gi-pos > fuzz:
             gi = -1
         npos = max(si, gi)
@@ -1081,7 +1079,7 @@ class BasicNewsRecipe(Recipe):
         if len(ans) < len(src):
             from calibre.utils.cleantext import clean_xml_chars
             # Truncating the string could cause a dangling UTF-16 half-surrogate, which will cause lxml to barf, clean it
-            ans = clean_xml_chars(ans) + u'\u2026'
+            ans = clean_xml_chars(ans) + '\u2026'
         return ans
 
     def feed2index(self, f, feeds):
@@ -1457,7 +1455,7 @@ class BasicNewsRecipe(Recipe):
         mp = getattr(self, 'masthead_path', None)
         if mp is not None and os.access(mp, os.R_OK):
             from calibre.ebooks.metadata.opf2 import Guide
-            ref = Guide.Reference(os.path.basename(self.masthead_path), os.getcwdu())
+            ref = Guide.Reference(os.path.basename(self.masthead_path), getcwd())
             ref.type = 'masthead'
             ref.title = 'Masthead Image'
             opf.guide.append(ref)
@@ -1590,7 +1588,7 @@ class BasicNewsRecipe(Recipe):
         article.sub_pages  = result[1][1:]
         self.jobs_done += 1
         self.report_progress(float(self.jobs_done)/len(self.jobs),
-            _(u'Article downloaded: %s')%force_unicode(article.title))
+            _('Article downloaded: %s')%force_unicode(article.title))
         if result[2]:
             self.partial_failures.append((request.feed.title, article.title, article.url, result[2]))
 
@@ -1669,7 +1667,7 @@ class BasicNewsRecipe(Recipe):
             return tag
         if callable(getattr(tag, 'xpath', None)) and not hasattr(tag, 'contents'):  # a lxml tag
             from lxml.etree import tostring
-            ans = tostring(tag, method='text', encoding=unicode_type, with_tail=False)
+            ans = tostring(tag, method='text', encoding='unicode', with_tail=False)
         else:
             strings = []
             for item in tag.contents:
@@ -1684,7 +1682,7 @@ class BasicNewsRecipe(Recipe):
                             strings.append(item['alt'])
                         except KeyError:
                             pass
-            ans = u''.join(strings)
+            ans = ''.join(strings)
         if normalize_whitespace:
             ans = re.sub(r'\s+', ' ', ans)
         return ans

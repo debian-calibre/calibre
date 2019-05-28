@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -12,7 +11,7 @@ from math import ceil
 from functools import partial
 from collections import namedtuple, OrderedDict
 from difflib import SequenceMatcher
-from polyglot.builtins import iteritems, unicode_type, zip, range, as_bytes
+from polyglot.builtins import iteritems, unicode_type, zip, range, as_bytes, map
 
 import regex
 from PyQt5.Qt import (
@@ -66,7 +65,7 @@ def beautify_text(raw, syntax):
     else:
         root = parse(raw, line_numbers=False)
         pretty_html_tree(None, root)
-    return etree.tostring(root, encoding=unicode_type)
+    return etree.tostring(root, encoding='unicode')
 
 
 class LineNumberMap(dict):  # {{{

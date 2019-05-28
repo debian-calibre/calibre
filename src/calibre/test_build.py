@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -13,8 +12,8 @@ Test a binary calibre build to ensure that all needed binary images/libraries ha
 
 import os, ctypes, sys, unittest, time
 
-from calibre.constants import plugins, iswindows, islinux, isosx, ispy3
-from polyglot.builtins import iteritems, map, unicode_type
+from calibre.constants import plugins, iswindows, islinux, isosx, ispy3, plugins_loc
+from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
 
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -28,7 +27,7 @@ class BuildTest(unittest.TestCase):
         for x in os.listdir(base):
             if x.lower().endswith('.dll'):
                 try:
-                    ctypes.WinDLL(str(os.path.join(base, x)))
+                    ctypes.WinDLL(native_string_type(os.path.join(base, x)))
                 except Exception as err:
                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
 
@@ -103,7 +102,7 @@ class BuildTest(unittest.TestCase):
             if name in exclusions:
                 if name in ('libusb', 'libmtp'):
                     # Just check that the DLL can be loaded
-                    ctypes.CDLL(os.path.join(sys.extensions_location, name + ('.dylib' if isosx else '.so')))
+                    ctypes.CDLL(os.path.join(plugins_loc, name + ('.dylib' if isosx else '.so')))
                 continue
             mod, err = plugins[name]
             self.assertFalse(err or not mod, 'Failed to load plugin: ' + name + ' with error:\n' + err)
@@ -127,7 +126,7 @@ class BuildTest(unittest.TestCase):
             s = msgpack_dumps(obj)
             self.assertEqual(obj, msgpack_loads(s))
         self.assertEqual(type(msgpack_loads(msgpack_dumps(b'b'))), bytes)
-        self.assertEqual(type(msgpack_loads(msgpack_dumps(u'b'))), unicode_type)
+        self.assertEqual(type(msgpack_loads(msgpack_dumps('b'))), unicode_type)
         large = b'x' * (100 * 1024 * 1024)
         msgpack_loads(msgpack_dumps(large))
 
@@ -153,14 +152,14 @@ class BuildTest(unittest.TestCase):
         au(d['decimal_point'], 'localeconv')
         for k, v in iteritems(d):
             au(v, k)
-        for k in os.environ.keys():
-            au(winutil.getenv(unicode_type(k)), 'getenv-' + k)
+        for k in os.environ:
+            au(getenv(k), 'getenv-' + k)
         os.environ['XXXTEST'] = 'YYY'
-        self.assertEqual(winutil.getenv(u'XXXTEST'), u'YYY')
+        self.assertEqual(getenv('XXXTEST'), 'YYY')
         del os.environ['XXXTEST']
-        self.assertIsNone(winutil.getenv(u'XXXTEST'))
+        self.assertIsNone(getenv('XXXTEST'))
         t = time.localtime()
-        fmt = u'%Y%a%b%e%H%M'
+        fmt = '%Y%a%b%e%H%M'
         for fmt in (fmt, fmt.encode('ascii')):
             x = strftime(fmt, t)
             au(x, 'strftime')
@@ -179,7 +178,8 @@ class BuildTest(unittest.TestCase):
 
     @unittest.skipIf('SKIP_QT_BUILD_TEST' in os.environ, 'Skipping Qt build test as it causes crashes in the macOS VM')
     def test_qt(self):
-        from PyQt5.Qt import QImageReader, QNetworkAccessManager, QFontDatabase
+        from PyQt5.QtGui import QImageReader, QFontDatabase
+        from PyQt5.QtNetwork import QNetworkAccessManager
         from calibre.utils.img import image_from_data, image_to_data, test
         # Ensure that images can be read before QApplication is constructed.
         # Note that this requires QCoreApplication.libraryPaths() to return the
@@ -188,7 +188,7 @@ class BuildTest(unittest.TestCase):
         # it should just work because the hard-coded paths of the Qt
         # installation should work. If they do not, then it is a distro
         # problem.
-        fmts = set(map(lambda x: x.data().decode('utf-8'), QImageReader.supportedImageFormats()))
+        fmts = set(map(lambda x: x.data().decode('utf-8'), QImageReader.supportedImageFormats()))  # no2to3
         testf = {'jpg', 'png', 'svg', 'ico', 'gif'}
         self.assertEqual(testf.intersection(fmts), testf, "Qt doesn't seem to be able to load some of its image plugins. Available plugins: %s" % fmts)
         data = P('images/blank.png', allow_user_override=False, data=True)
@@ -308,7 +308,7 @@ class BuildTest(unittest.TestCase):
         if isosx:
             cafile = ssl.get_default_verify_paths().cafile
             if not cafile or not cafile.endswith('/mozilla-ca-certs.pem') or not os.access(cafile, os.R_OK):
-                self.assert_('Mozilla CA certs not loaded')
+                raise AssertionError('Mozilla CA certs not loaded')
 
 
 def find_tests():

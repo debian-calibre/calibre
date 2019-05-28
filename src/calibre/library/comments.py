@@ -128,7 +128,7 @@ def comments_to_html(comments):
     for p in container.findAll('p'):
         p['class'] = 'description'
 
-    return container.decode_contents().replace('<br></br>', '<br>')
+    return container.decode_contents()
 
 
 def markdown(val):
@@ -163,7 +163,7 @@ def find_tests():
                         '<p class="description">lineone</p>\n<p class="description">linetwo</p>'),
 
                     ('a <b>b&c</b>\nf',
-                        '<p class="description">a <b>b&amp;c</b><br>f</p>'),
+                        '<p class="description">a <b>b&amp;c</b><br/>f</p>'),
 
                     ('a <?xml asd> b\n\ncd',
                         '<p class="description">a  b</p><p class="description">cd</p>'),

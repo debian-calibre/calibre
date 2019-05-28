@@ -22,7 +22,7 @@ from calibre import as_unicode, prints
 from calibre.constants import (
     DEBUG, __appname__ as APP_UID, __version__, config_dir, filesystem_encoding,
     is_running_from_develop, isbsd, isfrozen, islinux, isosx, iswindows, isxp,
-    plugins
+    plugins, plugins_loc
 )
 from calibre.ebooks.metadata import MetaInformation
 from calibre.gui2.linux_file_dialogs import (
@@ -35,7 +35,7 @@ from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.localization import get_lang
 from polyglot.builtins import (iteritems, itervalues, unicode_type,
-        string_or_bytes, range)
+        string_or_bytes, range, map)
 from polyglot import queue
 
 try:
@@ -321,7 +321,7 @@ def default_author_link():
 
 def available_heights():
     desktop  = QCoreApplication.instance().desktop()
-    return map(lambda x: x.height(), map(desktop.availableGeometry, range(desktop.screenCount())))
+    return list(map(lambda x: x.height(), map(desktop.availableGeometry, range(desktop.screenCount()))))
 
 
 def available_height():
@@ -821,7 +821,7 @@ class Application(QApplication):
         if headless:
             if not args:
                 args = sys.argv[:1]
-            args.extend(['-platformpluginpath', sys.extensions_location, '-platform', 'headless'])
+            args.extend(['-platformpluginpath', plugins_loc, '-platform', 'headless'])
         self.headless = headless
         qargs = [i.encode('utf-8') if isinstance(i, unicode_type) else i for i in args]
         self.pi, pi_err = plugins['progress_indicator']
@@ -1022,19 +1022,19 @@ class Application(QApplication):
         else:
             return QApplication.event(self, e)
 
-    @dynamic_property
+    @property
     def current_custom_colors(self):
-        from PyQt5.Qt import QColorDialog, QColor
+        from PyQt5.Qt import QColorDialog
 
-        def fget(self):
-            return [col.getRgb() for col in
+        return [col.getRgb() for col in
                     (QColorDialog.customColor(i) for i in range(QColorDialog.customCount()))]
 
-        def fset(self, colors):
-            num = min(len(colors), QColorDialog.customCount())
-            for i in range(num):
-                QColorDialog.setCustomColor(i, QColor(*colors[i]))
-        return property(fget=fget, fset=fset)
+    @current_custom_colors.setter
+    def current_custom_colors(self, colors):
+        from PyQt5.Qt import QColorDialog, QColor
+        num = min(len(colors), QColorDialog.customCount())
+        for i in range(num):
+            QColorDialog.setCustomColor(i, QColor(*colors[i]))
 
     def read_custom_colors(self):
         colors = self.color_prefs.get('custom_colors_for_color_dialog', None)
@@ -1167,7 +1167,7 @@ def ensure_app(headless=True):
             args = sys.argv[:1]
             has_headless = isosx or islinux or isbsd
             if headless and has_headless:
-                args += ['-platformpluginpath', sys.extensions_location, '-platform', 'headless']
+                args += ['-platformpluginpath', plugins_loc, '-platform', 'headless']
             _store_app = QApplication(args)
             if headless and has_headless:
                 _store_app.headless = True

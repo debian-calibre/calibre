@@ -8,7 +8,7 @@ import os, re
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 from calibre import guess_type
-from polyglot.builtins import iteritems, unicode_type
+from polyglot.builtins import iteritems, getcwd
 
 FB2NS  = 'http://www.gribuser.ru/xml/fictionbook/2.0'
 FB21NS = 'http://www.gribuser.ru/xml/fictionbook/2.1'
@@ -71,7 +71,7 @@ class FB2Input(InputFormatPlugin):
         stylesheets = doc.xpath('//*[local-name() = "stylesheet" and @type="text/css"]')
         css = ''
         for s in stylesheets:
-            css += etree.tostring(s, encoding=unicode_type, method='text',
+            css += etree.tostring(s, encoding='unicode', method='text',
                     with_tail=False) + '\n\n'
         if css:
             import css_parser, logging
@@ -90,7 +90,8 @@ class FB2Input(InputFormatPlugin):
             css = re.sub(r'name\s*=\s*', 'class=', css)
         self.extract_embedded_content(doc)
         log.debug('Converting XML to HTML...')
-        ss = open(P('templates/fb2.xsl'), 'rb').read()
+        with open(P('templates/fb2.xsl'), 'rb') as f:
+            ss = f.read().decode('utf-8')
         ss = ss.replace("__FB_NS__", fb_ns)
         if options.no_inline_fb2_toc:
             log('Disabling generation of inline FB2 TOC')
@@ -124,8 +125,10 @@ class FB2Input(InputFormatPlugin):
             src = img.get('src')
             img.set('src', self.binary_map.get(src, src))
         index = transform.tostring(result)
-        open(u'index.xhtml', 'wb').write(index)
-        open(u'inline-styles.css', 'wb').write(css)
+        with open(u'index.xhtml', 'wb') as f:
+            f.write(index.encode('utf-8'))
+        with open(u'inline-styles.css', 'wb') as f:
+            f.write(css.encode('utf-8'))
         stream.seek(0)
         mi = get_metadata(stream, 'fb2')
         if not mi.title:
@@ -146,7 +149,7 @@ class FB2Input(InputFormatPlugin):
                     cpath = os.path.abspath(href)
                     break
 
-        opf = OPFCreator(os.getcwdu(), mi)
+        opf = OPFCreator(getcwd(), mi)
         entries = [(f2, guess_type(f2)[0]) for f2 in os.listdir(u'.')]
         opf.create_manifest(entries)
         opf.create_spine([u'index.xhtml'])
@@ -154,7 +157,7 @@ class FB2Input(InputFormatPlugin):
             opf.guide.set_cover(cpath)
         with open(u'metadata.opf', 'wb') as f:
             opf.render(f)
-        return os.path.join(os.getcwdu(), u'metadata.opf')
+        return os.path.join(getcwd(), u'metadata.opf')
 
     def extract_embedded_content(self, doc):
         from calibre.ebooks.fb2 import base64_decode

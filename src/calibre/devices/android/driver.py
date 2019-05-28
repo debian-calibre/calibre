@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -424,7 +425,7 @@ class WEBOS(USBMS):
             im.thumbnail((52, 69), Image.ANTIALIAS)
 
             x, y = im.size
-            cover.paste(im, ((52-x)/2, (69-y)/2))
+            cover.paste(im, ((52-x)//2, (69-y)//2))
 
         cover2 = cover.resize((52, 69), Image.ANTIALIAS).convert('RGB')
 

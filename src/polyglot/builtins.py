@@ -4,14 +4,16 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import os
 import sys
 
 is_py3 = sys.version_info.major >= 3
 native_string_type = str
+iterkeys = iter
 
 
-def iterkeys(d):
-    return iter(d)
+def hasenv(x):
+    return getenv(x) is not None
 
 
 def as_bytes(x, encoding='utf-8'):
@@ -33,6 +35,19 @@ def as_unicode(x, encoding='utf-8', errors='strict'):
     if isinstance(x, bytes):
         return x.decode(encoding, errors)
     return unicode_type(x)
+
+
+def only_unicode_recursive(x, encoding='utf-8', errors='strict'):
+    # Convert any bytestrings in sets/lists/tuples/dicts to unicode
+    if isinstance(x, bytes):
+        return x.decode(encoding, errors)
+    if isinstance(x, unicode_type):
+        return x
+    if isinstance(x, (set, list, tuple, frozenset)):
+        return type(x)(only_unicode_recursive(i, encoding, errors) for i in x)
+    if isinstance(x, dict):
+        return {only_unicode_recursive(k, encoding, errors): only_unicode_recursive(v, encoding, errors) for k, v in iteritems(x)}
+    return x
 
 
 if is_py3:
@@ -59,6 +74,8 @@ if is_py3:
     string_or_bytes = str, bytes
     long_type = int
     raw_input = input
+    getcwd = os.getcwd
+    getenv = os.getenv
 
     def error_message(exc):
         args = getattr(exc, 'args', None)
@@ -114,6 +131,7 @@ else:
     raw_input = builtins.raw_input
     cmp = builtins.cmp
     int_to_byte = chr
+    getcwd = os.getcwdu
 
     def error_message(exc):
         ans = exc.message
@@ -131,6 +149,22 @@ else:
         if isinstance(x, unicode_type):
             x = x.encode('utf-8')
         return x
+
+    if hasattr(sys, 'getwindowsversion'):
+        def getenv(x, default=None):
+            from win32api import GetEnvironmentVariableW
+            if isinstance(x, bytes):
+                x = x.decode('mbcs', 'replace')
+            ans = GetEnvironmentVariableW(x)
+            if ans is None:
+                ans = default
+            return ans
+    else:
+        def getenv(x, default=None):
+            ans = os.getenv(x, default)
+            if isinstance(ans, bytes):
+                ans = ans.decode('utf-8', 'replace')
+            return ans
 
     def reload(module):
         return builtins.reload(module)

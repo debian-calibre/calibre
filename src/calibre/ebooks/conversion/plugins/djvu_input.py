@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL 3'
 __copyright__ = '2011, Anthon van der Neut <anthon@mnt.org>'
@@ -11,6 +10,7 @@ import os
 from io import BytesIO
 
 from calibre.customize.conversion import InputFormatPlugin
+from polyglot.builtins import getcwd
 
 
 class DJVUInput(InputFormatPlugin):
@@ -37,7 +37,7 @@ class DJVUInput(InputFormatPlugin):
         for opt in html_input.options:
             setattr(options, opt.option.name, opt.recommended_value)
         options.input_encoding = 'utf-8'
-        base = os.getcwdu()
+        base = getcwd()
         fname = os.path.join(base, 'index.html')
         c = 0
         while os.path.exists(fname):

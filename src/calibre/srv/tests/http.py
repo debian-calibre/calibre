@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -15,7 +14,7 @@ from calibre.constants import ispy3
 from calibre.srv.tests.base import BaseTest, TestServer
 from calibre.srv.utils import eintr_retry_call
 from calibre.utils.monotonic import monotonic
-from polyglot.builtins import iteritems, range
+from polyglot.builtins import iteritems, range, unicode_type
 from polyglot import http_client
 
 is_ci = os.environ.get('CI', '').lower() == 'true'
@@ -172,7 +171,7 @@ class TestHTTP(BaseTest):
             r = conn.getresponse()
             self.ae(r.status, http_client.NOT_FOUND)
             self.assertIsNotNone(r.getheader('Date', None))
-            self.ae(r.getheader('Content-Length'), str(len(body)))
+            self.ae(r.getheader('Content-Length'), unicode_type(len(body)))
             self.ae(r.getheader('Content-Type'), 'text/plain; charset=UTF-8')
             self.ae(len(r.getheaders()), 3)
             self.ae(r.read(), b'')
@@ -338,7 +337,7 @@ class TestHTTP(BaseTest):
             conn = server.connect()
             conn.request('GET', '/an_etagged_path', headers={'Accept-Encoding':'gzip'})
             r = conn.getresponse()
-            self.ae(str(len(raw)), r.getheader('Calibre-Uncompressed-Length'))
+            self.ae(unicode_type(len(raw)), r.getheader('Calibre-Uncompressed-Length'))
             self.ae(r.status, http_client.OK), self.ae(zlib.decompress(r.read(), 16+zlib.MAX_WBITS), raw)
 
             # Test dynamic etagged content

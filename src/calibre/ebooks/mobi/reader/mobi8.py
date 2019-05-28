@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -24,7 +23,7 @@ from calibre.ebooks.metadata.toc import TOC
 from calibre.ebooks.mobi.utils import read_font_record
 from calibre.ebooks.oeb.parse_utils import parse_html
 from calibre.ebooks.oeb.base import XPath, XHTML, xml2text
-from polyglot.builtins import range, zip, unicode_type
+from polyglot.builtins import range, zip, unicode_type, getcwd, as_unicode
 from polyglot.urllib import urldefrag
 
 Part = namedtuple('Part',
@@ -358,7 +357,7 @@ class Mobi8Reader(object):
                 if isinstance(idtext, bytes):
                     idtext = idtext.decode(self.header.codec)
                 linktgt += '#' + idtext
-            g = Guide.Reference(linktgt, os.getcwdu())
+            g = Guide.Reference(linktgt, getcwd())
             g.title, g.type = ref_title, ref_type
             if g.title == 'start' or g.type == 'text':
                 has_start = True
@@ -372,7 +371,7 @@ class Mobi8Reader(object):
                 linktgt = fi.filename
                 if idtext:
                     linktgt += '#' + idtext
-                g = Guide.Reference('%s/%s'%(fi.type, linktgt), os.getcwdu())
+                g = Guide.Reference('%s/%s'%(fi.type, linktgt), getcwd())
                 g.title, g.type = 'start', 'text'
                 guide.append(g)
 
@@ -391,7 +390,7 @@ class Mobi8Reader(object):
                 fi = self.get_file_info(pos)
                 if fi.filename is None:
                     raise ValueError('Index entry has invalid pos: %d'%pos)
-                idtag = self.get_id_tag(pos).decode(self.header.codec)
+                idtag = self.get_id_tag(pos)
                 href = '%s/%s'%(fi.type, fi.filename)
             else:
                 try:
@@ -403,7 +402,7 @@ class Mobi8Reader(object):
                     continue
 
             entry['href'] = href
-            entry['idtag'] = idtag
+            entry['idtag'] = as_unicode(idtag, self.header.codec or 'utf-8')
 
         for e in remove:
             index_entries.remove(e)
@@ -486,7 +485,7 @@ class Mobi8Reader(object):
                         except:
                             self.log.exception('Failed to read inline ToC')
 
-        opf = OPFCreator(os.getcwdu(), mi)
+        opf = OPFCreator(getcwd(), mi)
         opf.guide = guide
 
         def exclude(path):
@@ -506,7 +505,7 @@ class Mobi8Reader(object):
             except:
                 pass
 
-        opf.create_manifest_from_files_in([os.getcwdu()], exclude=exclude)
+        opf.create_manifest_from_files_in([getcwd()], exclude=exclude)
         for entry in opf.manifest:
             if entry.mime_type == 'text/html':
                 entry.mime_type = 'application/xhtml+xml'

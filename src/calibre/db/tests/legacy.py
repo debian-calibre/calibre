@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -13,7 +12,7 @@ from operator import itemgetter
 
 from calibre.library.field_metadata import fm_as_dict
 from calibre.db.tests.base import BaseTest
-from polyglot.builtins import iteritems, range
+from polyglot.builtins import iteritems, range, zip
 from polyglot import reprlib
 
 # Utils {{{
@@ -130,18 +129,18 @@ class LegacyTest(BaseTest):
                     ans[label] = tuple(set(x.split(',')) if x else x for x in ans[label])
                 if label == 'series_sort':
                     # The old db code did not take book language into account
-                    # when generating series_sort values (the first book has
-                    # lang=deu)
-                    ans[label] = ans[label][1:]
+                    # when generating series_sort values
+                    ans[label] = None
             return ans
+
+        db = self.init_legacy()
+        new_vals = get_values(db)
+        db.close()
 
         old = self.init_old()
         old_vals = get_values(old)
         old.close()
         old = None
-        db = self.init_legacy()
-        new_vals = get_values(db)
-        db.close()
         self.assertEqual(old_vals, new_vals)
 
     # }}}

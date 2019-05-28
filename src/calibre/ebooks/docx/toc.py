@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -13,7 +12,7 @@ from lxml.etree import tostring
 
 from calibre.ebooks.metadata.toc import TOC
 from calibre.ebooks.oeb.polish.toc import elem_to_toc_text
-from polyglot.builtins import iteritems, unicode_type, range
+from polyglot.builtins import iteritems, range
 
 
 def from_headings(body, log, namespace):
@@ -94,7 +93,7 @@ def link_to_txt(a, styles, object_map):
                 if rs.css.get('display', None) == 'none':
                     a.remove(child)
 
-    return tostring(a, method='text', with_tail=False, encoding=unicode_type).strip()
+    return tostring(a, method='text', with_tail=False, encoding='unicode').strip()
 
 
 def from_toc(docx, link_map, styles, object_map, log, namespace):

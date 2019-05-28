@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "abril 29, 2019" "3.42.0" "calibre"
+.TH "CALIBREDB" "1" "maio 28, 2019" "3.43.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -752,8 +752,8 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restaurar esta base de dados a partir dos metadados armazenados em arquivos OPF em cada
-pasta da biblioteca do Calibre. Isto é útil se o seu arquivo metadata.db
+Restaurar esta base de dados a partir dos metadados armazenados em ficheiros OPF em cada
+pasta da biblioteca do Calibre. Isto é útil se o seu ficheiro metadata.db
 tiver sido corrompido.
 .sp
 AVISO: Este comando regenera completamente a sua base de dados. Vai perder
@@ -779,7 +779,7 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-Executar algumas verificações no sistema de arquivos representando uma biblioteca. Os relatórios são invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+Executar algumas verificações no sistema de ficheiros representando uma biblioteca. Os relatórios são invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -855,12 +855,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup dos metadados armazenados na base de dados em ficheiros OPF individuais em cada
-diretório de livros. Isso normalmente acontece automaticamente, mas pode executar este
-comando para forçar uma nova geração dos arquivos OPF, com a opção \-\-all.
+Cópia de segurança dos metadados armazenados na base de dados em ficheiros OPF individuais em cada
+diretório de livros. Isto normalmente acontece automaticamente, mas pode executar este
+comando para forçar uma nova geração dos ficheiros OPF, com a opção \-\-all.
 .sp
-Note que normalmente não há necessidade de fazer isso, pois os arquivos OPF são copiados
-automaticamente, toda vez que os metadados são alterados.
+Note que normalmente não há necessidade de fazer isto, pois os ficheiros OPF são copiados
+automaticamente, sempre que os metadados sejam alterados.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0
@@ -884,7 +884,7 @@ Criar um \fBclone\fP da biblioteca atual. Isto cria uma nova biblioteca vazia qu
 colunas personalizadas, bibliotecas virtuais e outros ajustes da biblioteca atual.
 .sp
 A biblioteca clonada não contêm livros. Se quiser criar uma cópia completa, incluindo
-todos os livros, use em seguida as ferramentas do sistema de arquivos para copiar a pasta da biblioteca.
+todos os livros, use em seguida as ferramentas do sistema de ficheiros para copiar a pasta da biblioteca.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .SH EMBED_METADATA

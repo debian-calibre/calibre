@@ -108,11 +108,11 @@ def writeQWord(f, qword):
 
 
 def writeZeros(f, nZeros):
-    f.write("\x00" * nZeros)
+    f.write(b"\0" * nZeros)
 
 
-def writeString(f, str):
-    f.write(str)
+def writeString(f, s):
+    f.write(s)
 
 
 def writeIdList(f, idList):
@@ -177,7 +177,7 @@ def writeRuledLine(f, lineInfo):
     writeColor(f, lineColor)
 
 
-LRF_SIGNATURE = "L\x00R\x00F\x00\x00\x00"
+LRF_SIGNATURE = b"L\x00R\x00F\x00\x00\x00"
 
 # XOR_KEY = 48
 XOR_KEY = 65024  # that's what lrf2lrs says -- not used, anyway...
@@ -729,7 +729,7 @@ class LrfWriter(object):
         writeZeros(lrf, 20)  # 0x30 unknown
         writeDWord(lrf, self.tocObjId)
         writeDWord(lrf, 0)  # 0x48 tocObjectOffset -- will be updated
-        docInfoXml = codecs.BOM_LE + self.docInfoXml.encode("utf-16-le")
+        docInfoXml = codecs.BOM_UTF8 + self.docInfoXml.encode("utf-8")
         compDocInfo = zlib.compress(docInfoXml)
         writeWord(lrf, len(compDocInfo) + 4)
         writeWord(lrf, IMAGE_TYPE_ENCODING[self.thumbnailEncoding])

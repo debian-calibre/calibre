@@ -14,7 +14,7 @@ import time
 import unicodedata
 import uuid
 from collections import defaultdict
-from polyglot.builtins import iteritems, unicode_type, zip, as_bytes
+from polyglot.builtins import iteritems, unicode_type, zip, map
 from io import BytesIO
 from itertools import count
 
@@ -801,7 +801,7 @@ class Container(ContainerBase):  # {{{
         imap = {name:item_id for item_id, name in iteritems(imap)}
         items = [item for item, name, linear in self.spine_iter]
         tail, last_tail = (items[0].tail, items[-1].tail) if items else ('\n    ', '\n  ')
-        map(self.remove_from_xml, items)
+        tuple(map(self.remove_from_xml, items))
         spine = self.opf_xpath('//opf:spine')[0]
         spine.text = tail
         for name, linear in spine_items:
@@ -1290,7 +1290,7 @@ class EpubContainer(Container):
                     (item.text and item.text.startswith('urn:uuid:')):
                 try:
                     key = item.text.rpartition(':')[-1]
-                    key = uuid.UUID(as_bytes(key)).bytes
+                    key = uuid.UUID(key).bytes
                 except Exception:
                     self.log.exception('Failed to parse obfuscation key')
                     key = None
@@ -1369,14 +1369,13 @@ class EpubContainer(Container):
                 with self.open(name, 'wb') as f:
                     f.write(data)
 
-    @dynamic_property
+    @property
     def path_to_ebook(self):
-        def fget(self):
-            return self.pathtoepub
+        return self.pathtoepub
 
-        def fset(self, val):
-            self.pathtoepub = val
-        return property(fget=fget, fset=fset)
+    @path_to_ebook.setter
+    def path_to_ebook(self, val):
+        self.pathtoepub = val
 
 # }}}
 
@@ -1496,14 +1495,13 @@ class AZW3Container(Container):
             outpath = self.pathtoazw3
         opf_to_azw3(self.name_path_map[self.opf_name], outpath, self)
 
-    @dynamic_property
+    @property
     def path_to_ebook(self):
-        def fget(self):
-            return self.pathtoazw3
+        return self.pathtoazw3
 
-        def fset(self, val):
-            self.pathtoazw3 = val
-        return property(fget=fget, fset=fset)
+    @path_to_ebook.setter
+    def path_to_ebook(self, val):
+        self.pathtoazw3 = val
 
     @property
     def names_that_must_not_be_changed(self):

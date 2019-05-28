@@ -135,7 +135,7 @@ class PMLMLizer(object):
         text = [u'']
         for item in self.oeb_book.spine:
             self.log.debug('Converting %s to PML markup...' % item.href)
-            content = unicode_type(etree.tostring(item.data, encoding=unicode_type))
+            content = etree.tostring(item.data, encoding='unicode')
             content = self.prepare_text(content)
             content = etree.fromstring(content)
             stylizer = Stylizer(content, item.href, self.oeb_book, self.opts, self.opts.output_profile)
@@ -174,8 +174,8 @@ class PMLMLizer(object):
         return text
 
     def prepare_text(self, text):
-        # Replace empty paragraphs with \c pml codes used to denote emtpy lines.
-        text = re.sub(unicode_type(r'(?<=</p>)\s*<p[^>]*>[\xc2\xa0\s]*</p>'), '\\c\n\\c', text)
+        # Replace empty paragraphs with \c pml codes used to denote empty lines.
+        text = re.sub(unicode_type(r'(?<=</p>)\s*<p[^>]*>[\xc2\xa0\s]*</p>'), r'\\c\n\\c', text)
         return text
 
     def clean_text(self, text):
@@ -207,7 +207,7 @@ class PMLMLizer(object):
         text = re.sub('[ ]{2,}', ' ', text)
 
         # Condense excessive \c empty line sequences.
-        text = re.sub('(\\c\\s*\\c\\s*){2,}', '\\c \n\\c\n', text)
+        text = re.sub(r'(\\c\s*\\c\s*){2,}', r'\\c \n\\c\n', text)
 
         # Remove excessive newlines.
         text = re.sub('\n[ ]+\n', '\n\n', text)

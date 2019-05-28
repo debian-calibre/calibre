@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -22,7 +21,7 @@ from calibre.utils.shared_file import share_open, raise_winerror
 from polyglot.builtins import iteritems, map, range
 from polyglot import reprlib
 from polyglot.http_cookie import SimpleCookie
-from polyglot.builtins import unicode_type
+from polyglot.builtins import is_py3, unicode_type, as_bytes, as_unicode
 from polyglot.urllib import parse_qs, quote as urlquote
 from polyglot.binary import as_hex_unicode as encode_name, from_hex_unicode as decode_name
 
@@ -530,10 +529,10 @@ def get_use_roman():
     return _use_roman
 
 
-if iswindows:
+if iswindows and not is_py3:
     def fast_now_strftime(fmt):
-        fmt = fmt.encode('mbcs')
+        fmt = as_bytes(fmt, encoding='mbcs')
         return time.strftime(fmt).decode('mbcs', 'replace')
 else:
     def fast_now_strftime(fmt):
-        return time.strftime(fmt).decode('utf-8', 'replace')
+        return as_unicode(time.strftime(fmt), errors='replace')
