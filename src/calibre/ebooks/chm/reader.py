@@ -1,4 +1,5 @@
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 ''' CHM File decoding support '''
 __license__ = 'GPL v3'
 __copyright__  = '2008, Kovid Goyal <kovid at kovidgoyal.net>,' \
@@ -14,7 +15,7 @@ from calibre.utils.chm.chm import CHMFile
 from calibre.constants import plugins
 from calibre.ebooks.metadata.toc import TOC
 from calibre.ebooks.chardet import xml_to_unicode
-from polyglot.builtins import unicode_type
+from polyglot.builtins import unicode_type, getcwd
 
 
 chmlib, chmlib_err = plugins['chmlib']
@@ -70,7 +71,7 @@ class CHMReader(CHMFile):
             self.root, ext = os.path.splitext(self.topics.lstrip('/'))
             self.hhc_path = self.root + ".hhc"
 
-    def _parse_toc(self, ul, basedir=os.getcwdu()):
+    def _parse_toc(self, ul, basedir=getcwd()):
         toc = TOC(play_order=self._playorder, base_path=basedir, text='')
         self._playorder += 1
         for li in ul('li', recursive=False):
@@ -104,8 +105,8 @@ class CHMReader(CHMFile):
             raise CHMError("'%s' is zero bytes in length!"%(path,))
         return data
 
-    def ExtractFiles(self, output_dir=os.getcwdu(), debug_dump=False):
-        html_files = set([])
+    def ExtractFiles(self, output_dir=getcwd(), debug_dump=False):
+        html_files = set()
         try:
             x = self.get_encoding()
             codecs.lookup(x)
@@ -288,5 +289,5 @@ class CHMReader(CHMFile):
         if not os.path.isdir(dir):
             os.makedirs(dir)
 
-    def extract_content(self, output_dir=os.getcwdu(), debug_dump=False):
+    def extract_content(self, output_dir=getcwd(), debug_dump=False):
         self.ExtractFiles(output_dir=output_dir, debug_dump=debug_dump)

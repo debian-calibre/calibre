@@ -10,9 +10,10 @@ __all__ = [
         'pot', 'translations', 'get_translations', 'iso639', 'iso3166',
         'build', 'mathjax', 'man_pages',
         'gui',
+        'git_version',
         'develop', 'install',
         'kakasi', 'coffee', 'rapydscript', 'cacerts', 'recent_uas', 'resources',
-        'check', 'test',
+        'check', 'to3', 'unicode_check', 'iterators_check', 'test',
         'sdist', 'bootstrap',
         'manual', 'tag_release',
         'upload_to_server',
@@ -40,6 +41,9 @@ build = Build()
 from setup.mathjax import MathJax
 mathjax = MathJax()
 
+from setup.git_version import GitVersion
+git_version = GitVersion()
+
 from setup.install import Develop, Install, Sdist, Bootstrap
 develop = Develop()
 install = Install()
@@ -51,6 +55,10 @@ gui = GUI()
 
 from setup.check import Check
 check = Check()
+from setup.port import To3, UnicodeCheck, IteratorsCheck
+to3 = To3()
+unicode_check = UnicodeCheck()
+iterators_check = IteratorsCheck()
 
 from setup.test import Test
 test = Test()

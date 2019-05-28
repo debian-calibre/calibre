@@ -8011,7 +8011,10 @@ return parser;
             ρσ_d["gui_last_modified_display_format"] = "dd MMM yyyy";
             ρσ_d["use_roman_numerals_for_series_number"] = true;
             ρσ_d["default_library_id"] = null;
+            ρσ_d["default_book_list_mode"] = defaults.view_mode;
             ρσ_d["library_map"] = null;
+            ρσ_d["search_the_net_urls"] = ρσ_list_decorate([]);
+            ρσ_d["donate_link"] = "https://calibre-ebook.com/donate";
             ρσ_d["icon_map"] = Object.create(null);
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
@@ -8243,6 +8246,7 @@ return this.__repr__();
             ρσ_d["ok"] = false;
             ρσ_d["error_html"] = null;
             ρσ_d["current_fetch"] = null;
+            ρσ_d["http_error_code"] = 0;
             return ρσ_d;
         }).call(this);
         library_data = (function(){
@@ -8364,6 +8368,7 @@ return this.__repr__();
             load_status.loading = false;
             load_status.ok = true;
             load_status.error_html = null;
+            load_status.http_error_code = 0;
             library_data.previous_book_ids = [];
             if (library_data.for_library !== current_library_id()) {
                 library_data.field_names = Object.create(null);
@@ -8433,6 +8438,7 @@ return this.__repr__();
                 load_status.ok = false;
                 load_status.loading = false;
                 load_status.error_html = msg || xhr.error_html;
+                load_status.http_error_code = xhr.status;
             };
             if (!bad_load.__argnames__) Object.defineProperties(bad_load, {
                 __argnames__ : {value: ["msg"]}
@@ -8466,6 +8472,7 @@ return this.__repr__();
             load_status.loading = true;
             load_status.ok = false;
             load_status.error_html = null;
+            load_status.http_error_code = 0;
             load_status.current_fetch = ρσ_interpolate_kwargs.call(this, ajax, ["interface-data/books-init", on_data_loaded].concat([ρσ_desugar_kwargs({query: query})]));
             load_status.current_fetch.send();
         };
@@ -9398,10 +9405,10 @@ return this.__repr__();
             book.is_complete = false;
             if (get_interface_data().username) {
                 newest_epoch = newest_pos = null;
-                var ρσ_Iter3 = manifest.last_read_positions;
-                ρσ_Iter3 = ((typeof ρσ_Iter3[Symbol.iterator] === "function") ? (ρσ_Iter3 instanceof Map ? ρσ_Iter3.keys() : ρσ_Iter3) : Object.keys(ρσ_Iter3));
-                for (var ρσ_Index3 of ρσ_Iter3) {
-                    pos = ρσ_Index3;
+                var ρσ_Iter0 = manifest.last_read_positions;
+                ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+                for (var ρσ_Index0 of ρσ_Iter0) {
+                    pos = ρσ_Index0;
                     if (newest_epoch === null || pos.epoch > newest_epoch) {
                         newest_epoch = pos.epoch;
                         newest_pos = pos.cfi;
@@ -11047,10 +11054,10 @@ return this.__repr__();
         }).call(this);
         register_callback(function () {
             var scheme, key;
-            var ρσ_Iter4 = default_color_schemes;
-            ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
-            for (var ρσ_Index4 of ρσ_Iter4) {
-                key = ρσ_Index4;
+            var ρσ_Iter0 = default_color_schemes;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                key = ρσ_Index0;
                 scheme = default_color_schemes[(typeof key === "number" && key < 0) ? default_color_schemes.length + key : key];
                 scheme.name = gt(scheme.name);
             }
@@ -11915,7 +11922,7 @@ return this.__repr__();
                     if (!p || p.nodeType > Node.COMMENT_NODE) {
                         break;
                     }
-                    if (!(ρσ_in(p.nodeType, [Node.ATTRIBUTE_NODE, Node.COMMENT_NODE])) && p.nodeValue && p.nodeValue.length) {
+                    if (!ρσ_in(p.nodeType, [Node.ATTRIBUTE_NODE, Node.COMMENT_NODE]) && p.nodeValue && p.nodeValue.length) {
                         offset += p.nodeValue.length;
                     }
                     node = p;
@@ -12116,13 +12123,13 @@ return this.__repr__();
                     return null;
                 }
                 name = target.localName;
-                if (!(ρσ_in(name, (function(){
+                if (!ρσ_in(name, (function(){
                     var s = ρσ_set();
                     s.jsset.add("iframe");
                     s.jsset.add("embed");
                     s.jsset.add("object");
                     return s;
-                })()))) {
+                })())) {
                     break;
                 }
                 cd = target.contentDocument;
@@ -13166,10 +13173,10 @@ return this.__repr__();
             function do_one() {
                 var k, name, data;
                 if (!pending_resources.length) {
-                    var ρσ_Iter5 = previous_resources;
-                    ρσ_Iter5 = ((typeof ρσ_Iter5[Symbol.iterator] === "function") ? (ρσ_Iter5 instanceof Map ? ρσ_Iter5.keys() : ρσ_Iter5) : Object.keys(ρσ_Iter5));
-                    for (var ρσ_Index5 of ρσ_Iter5) {
-                        k = ρσ_Index5;
+                    var ρσ_Iter0 = previous_resources;
+                    ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+                    for (var ρσ_Index0 of ρσ_Iter0) {
+                        k = ρσ_Index0;
                         delete previous_resources[k];
                     }
                     if ((ρσ_expr_temp = book.manifest.files)[(typeof root_name === "number" && root_name < 0) ? ρσ_expr_temp.length + root_name : root_name].has_maths) {
@@ -13271,10 +13278,10 @@ return this.__repr__();
             link_pat = create_link_pat(book);
             mathjax = resource_data["..mathjax-files.."];
             delete resource_data["..mathjax-files.."];
-            var ρσ_Iter6 = resource_data;
-            ρσ_Iter6 = ((typeof ρσ_Iter6[Symbol.iterator] === "function") ? (ρσ_Iter6 instanceof Map ? ρσ_Iter6.keys() : ρσ_Iter6) : Object.keys(ρσ_Iter6));
-            for (var ρσ_Index6 of ρσ_Iter6) {
-                name = ρσ_Index6;
+            var ρσ_Iter1 = resource_data;
+            ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
+            for (var ρσ_Index1 of ρσ_Iter1) {
+                name = ρσ_Index1;
                 ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 data = ρσ_unpack[0];
@@ -13283,10 +13290,10 @@ return this.__repr__();
                     blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name] = window.URL.createObjectURL(data);
                 }
             }
-            var ρσ_Iter7 = blob_url_map;
-            ρσ_Iter7 = ((typeof ρσ_Iter7[Symbol.iterator] === "function") ? (ρσ_Iter7 instanceof Map ? ρσ_Iter7.keys() : ρσ_Iter7) : Object.keys(ρσ_Iter7));
-            for (var ρσ_Index7 of ρσ_Iter7) {
-                name = ρσ_Index7;
+            var ρσ_Iter2 = blob_url_map;
+            ρσ_Iter2 = ((typeof ρσ_Iter2[Symbol.iterator] === "function") ? (ρσ_Iter2 instanceof Map ? ρσ_Iter2.keys() : ρσ_Iter2) : Object.keys(ρσ_Iter2));
+            for (var ρσ_Index2 of ρσ_Iter2) {
+                name = ρσ_Index2;
                 delete resource_data[name];
             }
             function add_virtualized_resource(name, text, mimetype) {
@@ -13328,10 +13335,10 @@ return this.__repr__();
                         unresolved_deps.add(dname);
                     }
                 }
-                var ρσ_Iter8 = reversed(replacements);
-                ρσ_Iter8 = ((typeof ρσ_Iter8[Symbol.iterator] === "function") ? (ρσ_Iter8 instanceof Map ? ρσ_Iter8.keys() : ρσ_Iter8) : Object.keys(ρσ_Iter8));
-                for (var ρσ_Index8 of ρσ_Iter8) {
-                    ρσ_unpack = ρσ_flatten(ρσ_Index8);
+                var ρσ_Iter3 = reversed(replacements);
+                ρσ_Iter3 = ((typeof ρσ_Iter3[Symbol.iterator] === "function") ? (ρσ_Iter3 instanceof Map ? ρσ_Iter3.keys() : ρσ_Iter3) : Object.keys(ρσ_Iter3));
+                for (var ρσ_Index3 of ρσ_Iter3) {
+                    ρσ_unpack = ρσ_flatten(ρσ_Index3);
                     index = ρσ_unpack[0];
                     sz = ρσ_unpack[1];
                     repl = ρσ_unpack[2];
@@ -13350,10 +13357,10 @@ return this.__repr__();
                 if (!deps || !deps.length) {
                     return false;
                 }
-                var ρσ_Iter9 = deps;
-                ρσ_Iter9 = ((typeof ρσ_Iter9[Symbol.iterator] === "function") ? (ρσ_Iter9 instanceof Map ? ρσ_Iter9.keys() : ρσ_Iter9) : Object.keys(ρσ_Iter9));
-                for (var ρσ_Index9 of ρσ_Iter9) {
-                    x = ρσ_Index9;
+                var ρσ_Iter4 = deps;
+                ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
+                for (var ρσ_Index4 of ρσ_Iter4) {
+                    x = ρσ_Index4;
                     if (!blob_url_map[(typeof x === "number" && x < 0) ? blob_url_map.length + x : x]) {
                         return true;
                     }
@@ -13367,10 +13374,10 @@ return this.__repr__();
             while (true) {
                 resolved = [];
                 num = 0;
-                var ρσ_Iter10 = resource_data;
-                ρσ_Iter10 = ((typeof ρσ_Iter10[Symbol.iterator] === "function") ? (ρσ_Iter10 instanceof Map ? ρσ_Iter10.keys() : ρσ_Iter10) : Object.keys(ρσ_Iter10));
-                for (var ρσ_Index10 of ρσ_Iter10) {
-                    name = ρσ_Index10;
+                var ρσ_Iter5 = resource_data;
+                ρσ_Iter5 = ((typeof ρσ_Iter5[Symbol.iterator] === "function") ? (ρσ_Iter5 instanceof Map ? ρσ_Iter5.keys() : ρσ_Iter5) : Object.keys(ρσ_Iter5));
+                for (var ρσ_Index5 of ρσ_Iter5) {
+                    name = ρσ_Index5;
                     if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                         num += 1;
                         ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
@@ -13407,10 +13414,10 @@ return this.__repr__();
                         return ρσ_Result;
                     })();
                     print("ERROR: Could not resolve all dependencies of {} because of a cyclic dependency. Remaining deps: {}".format(root_name, unresolved));
-                    var ρσ_Iter11 = resource_data;
-                    ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
-                    for (var ρσ_Index11 of ρσ_Iter11) {
-                        name = ρσ_Index11;
+                    var ρσ_Iter6 = resource_data;
+                    ρσ_Iter6 = ((typeof ρσ_Iter6[Symbol.iterator] === "function") ? (ρσ_Iter6 instanceof Map ? ρσ_Iter6.keys() : ρσ_Iter6) : Object.keys(ρσ_Iter6));
+                    for (var ρσ_Index6 of ρσ_Iter6) {
+                        name = ρσ_Index6;
                         if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                             ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -13422,10 +13429,10 @@ return this.__repr__();
                     }
                     break;
                 }
-                var ρσ_Iter12 = resolved;
-                ρσ_Iter12 = ((typeof ρσ_Iter12[Symbol.iterator] === "function") ? (ρσ_Iter12 instanceof Map ? ρσ_Iter12.keys() : ρσ_Iter12) : Object.keys(ρσ_Iter12));
-                for (var ρσ_Index12 of ρσ_Iter12) {
-                    name = ρσ_Index12;
+                var ρσ_Iter7 = resolved;
+                ρσ_Iter7 = ((typeof ρσ_Iter7[Symbol.iterator] === "function") ? (ρσ_Iter7 instanceof Map ? ρσ_Iter7.keys() : ρσ_Iter7) : Object.keys(ρσ_Iter7));
+                for (var ρσ_Index7 of ρσ_Iter7) {
+                    name = ρσ_Index7;
                     delete resource_data[name];
                 }
             }
@@ -13472,10 +13479,10 @@ return this.__repr__();
             if (!attributes) {
                 return;
             }
-            var ρσ_Iter13 = attributes;
-            ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
-            for (var ρσ_Index13 of ρσ_Iter13) {
-                a = ρσ_Index13;
+            var ρσ_Iter8 = attributes;
+            ρσ_Iter8 = ((typeof ρσ_Iter8[Symbol.iterator] === "function") ? (ρσ_Iter8 instanceof Map ? ρσ_Iter8.keys() : ρσ_Iter8) : Object.keys(ρσ_Iter8));
+            for (var ρσ_Index8 of ρσ_Iter8) {
+                a = ρσ_Index8;
                 if (a[2]) {
                     ns = ns_map[ρσ_bound_index(a[2], ns_map)];
                     elem.setAttributeNS(ns, get_prefix(ns) + a[0], a[1]);
@@ -13507,10 +13514,10 @@ return this.__repr__();
                     if (ρσ_not_equals(attr.indexOf(":"), -1)) {
                         attr = attr.replace("xlink:", "");
                     }
-                    var ρσ_Iter14 = src.a || [];
-                    ρσ_Iter14 = ((typeof ρσ_Iter14[Symbol.iterator] === "function") ? (ρσ_Iter14 instanceof Map ? ρσ_Iter14.keys() : ρσ_Iter14) : Object.keys(ρσ_Iter14));
-                    for (var ρσ_Index14 of ρσ_Iter14) {
-                        a = ρσ_Index14;
+                    var ρσ_Iter9 = src.a || [];
+                    ρσ_Iter9 = ((typeof ρσ_Iter9[Symbol.iterator] === "function") ? (ρσ_Iter9 instanceof Map ? ρσ_Iter9.keys() : ρσ_Iter9) : Object.keys(ρσ_Iter9));
+                    for (var ρσ_Index9 of ρσ_Iter9) {
+                        a = ρσ_Index9;
                         if (a[0] === attr) {
                             loadable = a[1].startswith("blob:");
                             resource_urls[ρσ_bound_index(a[1], resource_urls)] = true;
@@ -14250,10 +14257,10 @@ return this.__repr__();
 
         function postprocess(link_uid, proceed) {
             var href, a;
-            var ρσ_Iter15 = document.getElementsByTagName("a");
-            ρσ_Iter15 = ((typeof ρσ_Iter15[Symbol.iterator] === "function") ? (ρσ_Iter15 instanceof Map ? ρσ_Iter15.keys() : ρσ_Iter15) : Object.keys(ρσ_Iter15));
-            for (var ρσ_Index15 of ρσ_Iter15) {
-                a = ρσ_Index15;
+            var ρσ_Iter0 = document.getElementsByTagName("a");
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                a = ρσ_Index0;
                 href = a.getAttribute("href");
                 if (href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
@@ -17333,6 +17340,8 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
+        var get_interface_data = ρσ_modules.session.get_interface_data;
+
         bar_counter = 0;
         CLASS_NAME = "main-top-bar";
         SPACING = "0.75em";
@@ -17406,13 +17415,14 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "title_tooltip")){
                 title_tooltip = ρσ_kwargs_obj.title_tooltip;
             }
-            var bars, left, title_elem, a, ρσ_unpack, i, bar;
+            var bars, interface_data, left, title_elem, a, ρσ_unpack, i, bar;
             bars = get_bars(container);
             if (icon === "heart") {
                 if (!tooltip) {
                     tooltip = _("Donate to support calibre development");
                 }
             }
+            interface_data = get_interface_data();
             var ρσ_Iter1 = enumerate(bars);
             ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
             for (var ρσ_Index1 of ρσ_Iter1) {
@@ -17429,7 +17439,7 @@ return this.__repr__();
                     if (icon === "heart") {
                         ρσ_interpolate_kwargs.call(this, set_css, [a].concat([ρσ_desugar_kwargs({animation_name: THROBBER_NAME, animation_duration: "1s", animation_timing_function: "ease-in-out", animation_iteration_count: "5", animation_play_state: (run_animation) ? "running" : "paused"})]));
                         ρσ_interpolate_kwargs.call(this, set_css, [a.firstChild].concat([ρσ_desugar_kwargs({color: get_color("heart")})]));
-                        a.setAttribute("href", "https://calibre-ebook.com/donate");
+                        a.setAttribute("href", interface_data.donate_link);
                         a.setAttribute("target", "donate-to-calibre");
                     }
                     if (action !== null) {
@@ -19062,6 +19072,9 @@ return this.__repr__();
 
         function render_field(field, mi, book_id) {
             var field_metadata, fm, val, interface_data, name, datatype, func, ans, join, fmt;
+            if (field === "id") {
+                return book_id + "";
+            }
             field_metadata = library_data.field_metadata;
             fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
             if (!fm) {
@@ -20678,21 +20691,21 @@ return this.__repr__();
 
         var add_books_panel = ρσ_modules["book_list.add"].add_books_panel;
 
-        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].description;
         var cover_grid_append_item = ρσ_modules["book_list.cover_grid"].append_item;
         var cover_grid_css = ρσ_modules["book_list.cover_grid"].cover_grid_css;
         var create_cover_grid_item = ρσ_modules["book_list.cover_grid"].create_item;
+        var COVER_GRID_DESCRIPTION = ρσ_modules["book_list.cover_grid"].description;
         var init_cover_grid = ρσ_modules["book_list.cover_grid"].init;
 
-        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].description;
         var custom_list_append_item = ρσ_modules["book_list.custom_list"].append_item;
         var create_custom_list_item = ρσ_modules["book_list.custom_list"].create_item;
         var custom_list_css = ρσ_modules["book_list.custom_list"].custom_list_css;
+        var CUSTOM_LIST_DESCRIPTION = ρσ_modules["book_list.custom_list"].description;
         var init_custom_list = ρσ_modules["book_list.custom_list"].init;
 
-        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].description;
         var details_list_append_item = ρσ_modules["book_list.details_list"].append_item;
         var create_details_list_item = ρσ_modules["book_list.details_list"].create_item;
+        var DETAILS_LIST_DESCRIPTION = ρσ_modules["book_list.details_list"].description;
         var details_list_css = ρσ_modules["book_list.details_list"].details_list_css;
         var init_details_list = ρσ_modules["book_list.details_list"].init;
 
@@ -20906,8 +20919,18 @@ return this.__repr__();
             __argnames__ : {value: ["book_ids"]}
         });
 
+        function get_view_mode() {
+            var idata, mode;
+            idata = get_interface_data();
+            mode = get_session_data().get("view_mode", idata.default_book_list_mode);
+            if (!ρσ_in(mode, ["cover_grid", "details_list", "custom_list"])) {
+                mode = DEFAULT_MODE;
+            }
+            return mode;
+        };
+
         function setup_view_mode(mode, book_list_data) {
-            if (!(ρσ_in(mode, ALLOWED_MODES))) {
+            if (!ρσ_in(mode, ALLOWED_MODES)) {
                 mode = DEFAULT_MODE;
             }
             book_list_data.mode = mode;
@@ -21082,7 +21105,7 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "book_list"})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "more_button"})]));
             show_top_message();
-            apply_view_mode(get_session_data().get("view_mode"));
+            apply_view_mode(get_view_mode());
             create_more_button(container.lastChild);
             ρσ_interpolate_kwargs.call(this, add_button, [container.parentNode].concat([ρσ_desugar_kwargs({icon: "plus", action: show_subsequent_panel.bind(null, "book_list^add"), tooltip: _("Add books")})]));
             ρσ_interpolate_kwargs.call(this, add_button, [container.parentNode].concat([ρσ_desugar_kwargs({icon: "sort-amount-desc", action: show_subsequent_panel.bind(null, "book_list^sort"), tooltip: _("Sort books")})]));
@@ -21112,15 +21135,22 @@ return this.__repr__();
         });
 
         function check_for_books_loaded() {
-            var container, err;
+            var container, container_id, err;
             container = this;
+            container_id = container.id;
             if (load_status.loading) {
-                conditional_timeout(container.id, 5, check_for_books_loaded);
+                conditional_timeout(container_id, 5, check_for_books_loaded);
                 return;
             }
             container = container.lastChild;
             clear(container);
             if (!load_status.ok) {
+                if (load_status.http_error_code === 401) {
+                    container.appendChild(E.div(_("Username/password required, retrying...")));
+                    ensure_current_library_data();
+                    conditional_timeout(container_id, 100, check_for_books_loaded);
+                    return;
+                }
                 err = E.div();
                 safe_set_inner_html(err, load_status.error_html);
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("Failed to load books from calibre library, with error:")), err, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Go back to the home page")].concat([ρσ_desugar_kwargs({onclick: function () {
@@ -21308,7 +21338,7 @@ return this.__repr__();
             container = document.getElementById(container_id);
             ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Choose book list mode…"), action: back, icon: "close"})]));
             items = ρσ_list_decorate([]);
-            current_mode = get_session_data().get("view_mode");
+            current_mode = get_view_mode();
             function ci(title, desc, name) {
                 var ic;
                 ic = (name === current_mode) ? "check" : null;
@@ -21394,6 +21424,7 @@ return this.__repr__();
         ρσ_modules["book_list.views"].create_image = create_image;
         ρσ_modules["book_list.views"].render_id = render_id;
         ρσ_modules["book_list.views"].render_ids = render_ids;
+        ρσ_modules["book_list.views"].get_view_mode = get_view_mode;
         ρσ_modules["book_list.views"].setup_view_mode = setup_view_mode;
         ρσ_modules["book_list.views"].apply_view_mode = apply_view_mode;
         ρσ_modules["book_list.views"].update_fetching_status = update_fetching_status;
@@ -21684,7 +21715,7 @@ return this.__repr__();
         function adjusting_sandboxed_html(html) {
             var css, ans;
             css = "html, body {{ overflow: hidden; color: {} }}".format(get_color("window-foreground"));
-            ans = sandboxed_html(html, css, "allow-same-origin allow-popups");
+            ans = sandboxed_html(html, css, "allow-same-origin allow-popups allow-popups-to-escape-sandbox");
             ans.addEventListener("load", (function() {
                 var ρσ_anonfunc = function (ev) {
                     setup_iframe(ev.target);
@@ -22193,8 +22224,8 @@ return this.__repr__();
             render_book.title = metadata.title;
             set_title(c, metadata.title);
             authors = (metadata.authors) ? metadata.authors.join(" & ") : _("Unknown");
-            alt = _("{} by {}").format(metadata.title, authors);
-            imgdiv = E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({alt: alt, title: alt, data_title: metadata.title, data_authors: authors, style: "border-radius: 20px; max-width: calc(100vw - 2em); max-height: calc(100vh - 4ex - {}); display: block; width:auto; height:auto; border-radius: 20px".format(get_font_size("title"))})]));
+            alt = _("{} by {}\nClick to read").format(metadata.title, authors);
+            imgdiv = E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({alt: alt, title: alt, data_title: metadata.title, data_authors: authors, onclick: read_book.bind(null, book_id), style: "cursor: pointer; border-radius: 20px; max-width: calc(100vw - 2em); max-height: calc(100vh - 4ex - {}); display: block; width:auto; height:auto; border-radius: 20px".format(get_font_size("title"))})]));
             imgdiv.firstChild.onerror = on_img_err;
             imgdiv.firstChild.src = cover_url(book_id);
             c = c.lastChild;
@@ -22218,7 +22249,7 @@ return this.__repr__();
                 if (next_book_id) {
                     q = parse_url_params();
                     q.book_id = next_book_id + "";
-                    ρσ_interpolate_kwargs.call(this, show_panel, ["book_details"].concat([ρσ_desugar_kwargs({query: q})]));
+                    ρσ_interpolate_kwargs.call(this, show_panel, ["book_details"].concat([ρσ_desugar_kwargs({query: q, replace: true})]));
                 }
             };
             if (!next_book.__argnames__) Object.defineProperties(next_book, {
@@ -22486,7 +22517,7 @@ return this.__repr__();
         });
 
         function search_internet(container_id) {
-            var container, mi, data;
+            var container, mi, data, interface_data, author_links, book_links, links, entry, ρσ_unpack, name, url;
             if (!render_book.book_id || !book_metadata(render_book.book_id)) {
                 return return_to_book_details();
             }
@@ -22499,6 +22530,7 @@ return this.__repr__();
                 ρσ_d["author"] = (mi.authors) ? mi.authors[0] : _("Unknown");
                 return ρσ_d;
             }).call(this);
+            interface_data = get_interface_data();
             function link_for(name, template) {
                 return ρσ_interpolate_kwargs.call(E, E.a, [name].concat([ρσ_desugar_kwargs({class_: "simple-link", href: url_for(template, data), target: "_blank"})]));
             };
@@ -22506,7 +22538,37 @@ return this.__repr__();
                 __argnames__ : {value: ["name", "template"]}
             });
 
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [safe_set_inner_html(E.h2(), _("Search for the author <i>{}</i> at:").format(data.author)), E.ul(E.li(link_for(_("Goodreads"), "https://www.goodreads.com/book/author/{author}")), E.li(link_for(_("Wikipedia"), "https://en.wikipedia.org/w/index.php?search={author}")), E.li(link_for(_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"))), E.hr(), safe_set_inner_html(E.h2(), _("Search for the book <i>{}</i> at:").format(data.title)), E.ul(E.li(link_for(_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books")), E.li(link_for(_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22")), E.li(link_for(_("Amazon"), "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}")))].concat([ρσ_desugar_kwargs({class_: SEARCH_INTERNET_CLASS})])));
+            author_links = E.ul();
+            book_links = E.ul();
+            if (interface_data.search_the_net_urls) {
+                var ρσ_Iter10 = interface_data.search_the_net_urls;
+                ρσ_Iter10 = ((typeof ρσ_Iter10[Symbol.iterator] === "function") ? (ρσ_Iter10 instanceof Map ? ρσ_Iter10.keys() : ρσ_Iter10) : Object.keys(ρσ_Iter10));
+                for (var ρσ_Index10 of ρσ_Iter10) {
+                    entry = ρσ_Index10;
+                    links = (entry.type === "book") ? book_links : author_links;
+                    links.appendChild(E.li(link_for(entry.name, entry.url)));
+                }
+            }
+            var ρσ_Iter11 = ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
+            "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]);
+            ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
+            for (var ρσ_Index11 of ρσ_Iter11) {
+                ρσ_unpack = ρσ_Index11;
+                name = ρσ_unpack[0];
+                url = ρσ_unpack[1];
+                author_links.appendChild(E.li(link_for(name, url)));
+            }
+            var ρσ_Iter12 = ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google books"), 
+            "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22"], [_("Amazon"), 
+            "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}"] ]);
+            ρσ_Iter12 = ((typeof ρσ_Iter12[Symbol.iterator] === "function") ? (ρσ_Iter12 instanceof Map ? ρσ_Iter12.keys() : ρσ_Iter12) : Object.keys(ρσ_Iter12));
+            for (var ρσ_Index12 of ρσ_Iter12) {
+                ρσ_unpack = ρσ_Index12;
+                name = ρσ_unpack[0];
+                url = ρσ_unpack[1];
+                book_links.appendChild(E.li(link_for(name, url)));
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [safe_set_inner_html(E.h2(), _("Search for the author <i>{}</i> at:").format(data.author)), author_links, E.hr(), safe_set_inner_html(E.h2(), _("Search for the book <i>{}</i> at:").format(data.title)), book_links].concat([ρσ_desugar_kwargs({class_: SEARCH_INTERNET_CLASS})])));
         };
         if (!search_internet.__argnames__) Object.defineProperties(search_internet, {
             __argnames__ : {value: ["container_id"]}
@@ -22633,10 +22695,10 @@ return this.__repr__();
             }
             container.appendChild(E.h2(_("Choose the library to copy to below")));
             items = ρσ_list_decorate([]);
-            var ρσ_Iter10 = libraries;
-            ρσ_Iter10 = ((typeof ρσ_Iter10[Symbol.iterator] === "function") ? (ρσ_Iter10 instanceof Map ? ρσ_Iter10.keys() : ρσ_Iter10) : Object.keys(ρσ_Iter10));
-            for (var ρσ_Index10 of ρσ_Iter10) {
-                ρσ_unpack = ρσ_Index10;
+            var ρσ_Iter13 = libraries;
+            ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
+            for (var ρσ_Index13 of ρσ_Iter13) {
+                ρσ_unpack = ρσ_Index13;
                 library_id = ρσ_unpack[0];
                 library_name = ρσ_unpack[1];
                 if (library_id === current_library_id()) {
@@ -25810,7 +25872,7 @@ return this.__repr__();
             right_margin = ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-right")].concat([ρσ_desugar_kwargs({style: "width:{}px;".format(sd.get("margin_right", 20)), class_: "book-side-margin", id: "book-right-margin", onclick: self.right_margin_clicked})]));
             set_right_margin_handler(right_margin);
             iframe_id = unique_id("read-book-iframe");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: "allow-popups allow-scripts", style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin")].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; min-height: 100%; display:none", id: "book-metadata-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: "allow-popups allow-scripts allow-popups-to-escape-sandbox", style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin")].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; min-height: 100%; display:none", id: "book-metadata-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
             handlers = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["ready"] = self.on_iframe_ready;
@@ -25971,14 +26033,14 @@ return this.__repr__();
             }
             names = [];
             item_groups = (data.backwards) ? ρσ_list_decorate([ range(idx - 1, -1, -1), range(spine.length - 1, idx, -1) ]) : ρσ_list_decorate([ range(idx + 1, spine.length), range(idx) ]);
-            var ρσ_Iter16 = item_groups;
-            ρσ_Iter16 = ((typeof ρσ_Iter16[Symbol.iterator] === "function") ? (ρσ_Iter16 instanceof Map ? ρσ_Iter16.keys() : ρσ_Iter16) : Object.keys(ρσ_Iter16));
-            for (var ρσ_Index16 of ρσ_Iter16) {
-                items = ρσ_Index16;
-                var ρσ_Iter17 = items;
-                ρσ_Iter17 = ((typeof ρσ_Iter17[Symbol.iterator] === "function") ? (ρσ_Iter17 instanceof Map ? ρσ_Iter17.keys() : ρσ_Iter17) : Object.keys(ρσ_Iter17));
-                for (var ρσ_Index17 of ρσ_Iter17) {
-                    i = ρσ_Index17;
+            var ρσ_Iter0 = item_groups;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                items = ρσ_Index0;
+                var ρσ_Iter1 = items;
+                ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
+                for (var ρσ_Index1 of ρσ_Iter1) {
+                    i = ρσ_Index1;
                     names.push(spine[(typeof i === "number" && i < 0) ? spine.length + i : i]);
                 }
             }
@@ -26118,10 +26180,10 @@ return this.__repr__();
             var ans, m, s, which;
             ans = resolve_color_scheme();
             if (apply_to_margins) {
-                var ρσ_Iter18 = "left top right bottom".split(" ");
-                ρσ_Iter18 = ((typeof ρσ_Iter18[Symbol.iterator] === "function") ? (ρσ_Iter18 instanceof Map ? ρσ_Iter18.keys() : ρσ_Iter18) : Object.keys(ρσ_Iter18));
-                for (var ρσ_Index18 of ρσ_Iter18) {
-                    which = ρσ_Index18;
+                var ρσ_Iter2 = "left top right bottom".split(" ");
+                ρσ_Iter2 = ((typeof ρσ_Iter2[Symbol.iterator] === "function") ? (ρσ_Iter2 instanceof Map ? ρσ_Iter2.keys() : ρσ_Iter2) : Object.keys(ρσ_Iter2));
+                for (var ρσ_Index2 of ρσ_Iter2) {
+                    which = ρσ_Index2;
                     m = document.getElementById("book-{}-margin".format(which));
                     s = m.style;
                     if (which === "top" || which === "bottom") {
@@ -26532,10 +26594,10 @@ return this.__repr__();
                         div.lastChild.style.display = "block";
                     }
                 } else {
-                    var ρσ_Iter19 = div.childNodes;
-                    ρσ_Iter19 = ((typeof ρσ_Iter19[Symbol.iterator] === "function") ? (ρσ_Iter19 instanceof Map ? ρσ_Iter19.keys() : ρσ_Iter19) : Object.keys(ρσ_Iter19));
-                    for (var ρσ_Index19 of ρσ_Iter19) {
-                        c = ρσ_Index19;
+                    var ρσ_Iter3 = div.childNodes;
+                    ρσ_Iter3 = ((typeof ρσ_Iter3[Symbol.iterator] === "function") ? (ρσ_Iter3 instanceof Map ? ρσ_Iter3.keys() : ρσ_Iter3) : Object.keys(ρσ_Iter3));
+                    for (var ρσ_Index3 of ρσ_Iter3) {
+                        c = ρσ_Index3;
                         c.style.display = "none";
                     }
                 }
@@ -26795,10 +26857,10 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter20 = get_mathjax_files_stage2.files_to_get;
-            ρσ_Iter20 = ((typeof ρσ_Iter20[Symbol.iterator] === "function") ? (ρσ_Iter20 instanceof Map ? ρσ_Iter20.keys() : ρσ_Iter20) : Object.keys(ρσ_Iter20));
-            for (var ρσ_Index20 of ρσ_Iter20) {
-                filename = ρσ_Index20;
+            var ρσ_Iter0 = get_mathjax_files_stage2.files_to_get;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                filename = ρσ_Index0;
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();

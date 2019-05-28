@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "4月 29, 2019" "3.42.0" "calibre"
+.TH "CALIBREDB" "1" "5月 28, 2019" "3.43.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -135,7 +135,7 @@ details and examples.
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-顯示此幫助信息並退出
+顯示說明訊息並退出
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -150,12 +150,12 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-用於登入Calibre網路伺服器的使用者名稱
+登入Calibre網路伺服器時所用之使用者名稱
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-顯示程序版本號並退出
+顯示程式版本編號並退出
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -169,7 +169,7 @@ calibredb list [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出 calibre 資料庫中可用書籍。
+列出 calibre 資料庫中可用書本。
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -229,76 +229,76 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-添加指定文件爲書籍到資料庫。您可以指定目錄，請查看下面目錄相關選項。
+將特定檔案當作書本加入至資料庫，亦可選擇目錄，請檢閱下方目錄相關選項。
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
-設定已添加書籍的作者
+編輯已加入的書本作者
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-設定已添加書籍的封面路徑
+供已加入書本使用之書本封面路徑
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-即使書籍已經存在於資料庫仍然添加。通過書名進行區分。
+在資料庫已經存在相同書名時依然加入。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-empty, \-e
-加入空的電子書（沒有格式的書籍）
+加入空的電子書（沒有格式的書本）
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-編輯書籍的書號。例如：\-I asin:XXX \-I isbn:YYY
+編輯書本識別碼。例如：\-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn, \-i
-設定已添加書籍的 ISBN
+編輯已加入的書本 ISBN
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-以逗號分隔的語言清單(請使用ISO639所規範的語言格式)
+以逗號分隔的語言清單(最好使用ISO639所規範的語言格式，不過有些語言的名稱也能夠識別)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-為加入的書籍設定系列
+編輯已加入的書本系列
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index, \-S
-為加入的書籍設定系列編號
+編輯已加入的書本編號
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-設定已添加書籍的標籤
+編輯已加入的書本標籤
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-title, \-t
-設定已添加書籍的標題
+編輯已加入的書本標題
 .UNINDENT
 .SS 從目錄中加入
 .sp
-用來控制從目錄中添加書籍的選項。預設情況下，只會添加具有已知電子書文件副檔名的檔案。
+用來控制從目錄中添加書本的選項。預設情況下，只會添加具有已知電子書文件副檔名的檔案。
 .INDENT 0.0
 .TP
 .B \-\-add
-文件名（全局）模式，當掃描文件目錄時，即使它們不是已知的電子書檔案類型，匹配此模式的文件將被加入，可以多次指定多個模式。
+檔案名（glob）模式，當掃描檔案目錄時，即使是未知電子書檔案類型，與此模式相符者依然會被加入，可以同時指定多個模式。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-文件名（全局）模式，當掃描文件目錄時，匹配此模式的文件將被忽略。可以多次指定多個模式，例如：* .pdf將會忽略所有pdf文件
+檔案名（glob）模式，當掃描檔案目錄時，與此模式相符者將被忽略。可以同時指定多個模式，例如：* .pdf將會忽略所有pdf檔案
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +308,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-循環處理目錄
+遞迴地處理目錄
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -328,7 +328,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-略過資源回收筒
+不使用資源回收桶
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -348,7 +348,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-不要取代已經存在的格式
+在格式已存在時不要取代
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -436,7 +436,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-導出資料庫中所有的書籍，忽略 id 列表。
+導出資料庫中所有的書本，忽略 id 列表。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -461,7 +461,7 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-formats
-每本書籍的格式列表，逗號間隔。默認保存所有可用格式。
+每本書本的格式列表，逗號間隔。默認保存所有可用格式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -476,7 +476,7 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-將所有書籍匯出到單一目錄
+將所有書本匯出到單一目錄
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -491,7 +491,7 @@ The template to control the filename and directory structure of the saved files.
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-將書籍匯出到指定的目錄。預設值為 .
+將書本匯出到指定的目錄。預設值為 .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -715,7 +715,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
-不要詢問確認
+不需要進行詢問確認
 .UNINDENT
 .SH SET_CUSTOM
 .INDENT 0.0
@@ -738,7 +738,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-如果欄儲存多重數值，將指定數值加入現有的裡面，而非取代它們。
+如果欄位可存多值，將選定的屬性加入現有屬性中，而非取代。
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -836,7 +836,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-只列出每個分類中的書籍總數，而不是列出每個分類中的書籍。
+只列出每個分類中的書本總數，而不是列出每個分類中的書本。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -866,7 +866,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-此命令通常僅對於過時的OPT文件進行操作，此選項會使它在所有的書籍上操作。
+此命令通常僅對於過時的OPT文件進行操作，此選項會使它在所有的書本上操作。
 .UNINDENT
 .SH CLONE
 .INDENT 0.0

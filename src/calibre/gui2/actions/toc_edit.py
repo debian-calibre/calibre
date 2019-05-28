@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -51,18 +50,17 @@ class ChooseFormat(QDialog):  # {{{
             b.setChecked(True)
         self.accept()
 
-    @dynamic_property
+    @property
     def formats(self):
-        def fget(self):
-            for b in self.buttons:
-                if b.isChecked():
-                    yield unicode_type(b.text())[1:]
+        for b in self.buttons:
+            if b.isChecked():
+                yield unicode_type(b.text())[1:]
 
-        def fset(self, formats):
-            formats = {x.upper() for x in formats}
-            for b in self.buttons:
-                b.setChecked(b.text()[1:] in formats)
-        return property(fget=fget, fset=fset)
+    @formats.setter
+    def formats(self, formats):
+        formats = {x.upper() for x in formats}
+        for b in self.buttons:
+            b.setChecked(b.text()[1:] in formats)
 
 # }}}
 

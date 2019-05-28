@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -22,7 +21,7 @@ from calibre.gui2.tweak_book import tprefs
 from calibre.gui2.tweak_book.widgets import Dialog, BusyCursor
 from calibre.utils.icu import safe_chr as chr
 from calibre.utils.unicode_names import character_name_from_code, points_for_word
-from polyglot.builtins import unicode_type, range
+from polyglot.builtins import unicode_type, range, map
 
 ROOT = QModelIndex()
 
@@ -529,7 +528,7 @@ class CharModel(QAbstractListModel):
     def dropMimeData(self, md, action, row, column, parent):
         if action != Qt.MoveAction or not md.hasFormat('application/calibre_charcode_indices') or row < 0 or column != 0:
             return False
-        indices = map(int, bytes(md.data('application/calibre_charcode_indices')).decode('ascii').split(','))
+        indices = list(map(int, bytes(md.data('application/calibre_charcode_indices')).decode('ascii').split(',')))
         codes = [self.chars[x] for x in indices]
         for x in indices:
             self.chars[x] = None

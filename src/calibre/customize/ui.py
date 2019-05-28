@@ -1,5 +1,4 @@
-from __future__ import with_statement
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
@@ -362,7 +361,7 @@ def metadata_readers():
 
 
 def metadata_writers():
-    ans = set([])
+    ans = set()
     for plugins in _metadata_writers.values():
         for plugin in plugins:
             ans.add(plugin)
@@ -558,7 +557,7 @@ def plugin_for_output_format(fmt):
 
 
 def available_output_formats():
-    formats = set([])
+    formats = set()
     for plugin in output_format_plugins():
         if not is_disabled(plugin):
             formats.add(plugin.file_type)
@@ -752,16 +751,16 @@ def build_plugin(path):
     from calibre.utils.zipfile import ZipFile, ZIP_STORED
     path = unicode_type(path)
     names = frozenset(os.listdir(path))
-    if u'__init__.py' not in names:
+    if '__init__.py' not in names:
         prints(path, ' is not a valid plugin')
         raise SystemExit(1)
     t = PersistentTemporaryFile(u'.zip')
-    with ZipFile(t, u'w', ZIP_STORED) as zf:
+    with ZipFile(t, 'w', ZIP_STORED) as zf:
         zf.add_dir(path, simple_filter=lambda x:x in {'.git', '.bzr', '.svn', '.hg'})
     t.close()
     plugin = add_plugin(t.name)
     os.remove(t.name)
-    prints(u'Plugin updated:', plugin.name, plugin.version)
+    prints('Plugin updated:', plugin.name, plugin.version)
 
 
 def option_parser():

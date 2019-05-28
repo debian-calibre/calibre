@@ -20,20 +20,20 @@
 #
 
 # This script lists the content of the manifest.xml file
-from __future__ import print_function
+from __future__ import print_function, unicode_literals, absolute_import, division
 import zipfile
 from xml.sax import make_parser,handler
 from xml.sax.xmlreader import InputSource
-import xml.sax.saxutils
 import io
 
 MANIFESTNS="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0"
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 # ODFMANIFESTHANDLER
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 class ODFManifestHandler(handler.ContentHandler):
     """ The ODFManifestHandler parses a manifest file and produces a list of
@@ -80,14 +80,14 @@ class ODFManifestHandler(handler.ContentHandler):
     def s_file_entry(self, tag, attrs):
         m = attrs.get((MANIFESTNS, 'media-type'),"application/octet-stream")
         p = attrs.get((MANIFESTNS, 'full-path'))
-        self.manifest[p] = { 'media-type':m, 'full-path':p }
+        self.manifest[p] = {'media-type':m, 'full-path':p}
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 # Reading the file
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 def manifestlist(manifestxml):
     odhandler = ODFManifestHandler()
@@ -103,11 +103,13 @@ def manifestlist(manifestxml):
 
     return odhandler.manifest
 
+
 def odfmanifest(odtfile):
     z = zipfile.ZipFile(odtfile)
     manifest = z.read('META-INF/manifest.xml')
     z.close()
     return manifestlist(manifest)
+
 
 if __name__ == "__main__":
     import sys

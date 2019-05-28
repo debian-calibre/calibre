@@ -2,8 +2,7 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>, John Howell <jhowell@acm.org>'
 
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Based on work of John Howell reversing the KFX format
 # https://www.mobileread.com/forums/showpost.php?p=3176029&postcount=89
@@ -271,7 +270,7 @@ def extract_metadata(container_data):
             metadata[COVER_KEY] = entity_value
 
     for key, value in metadata_entity.items():
-        if key in METADATA_PROPERTIES:
+        if key in METADATA_PROPERTIES and METADATA_PROPERTIES[key] not in metadata:
             metadata[METADATA_PROPERTIES[key]].append(value)
 
     return metadata

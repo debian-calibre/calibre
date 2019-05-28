@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -124,6 +123,7 @@ class MetadataSingleDialogBase(QDialog):
             self.restoreGeometry(bytes(geom))
         else:
             self.resize(self.sizeHint())
+        self.restore_widget_settings()
     # }}}
 
     def sizeHint(self):
@@ -376,6 +376,12 @@ class MetadataSingleDialogBase(QDialog):
 
     def do_layout(self):
         raise NotImplementedError()
+
+    def save_widget_settings(self):
+        pass
+
+    def restore_widget_settings(self):
+        pass
 
     def data_changed(self):
         self.was_data_edited = True
@@ -657,6 +663,7 @@ class MetadataSingleDialogBase(QDialog):
     def save_state(self):
         try:
             gprefs['metasingle_window_geometry3'] = bytearray(self.saveGeometry())
+            self.save_widget_settings()
         except:
             # Weird failure, see https://bugs.launchpad.net/bugs/995271
             import traceback
@@ -872,11 +879,20 @@ class MetadataSingleDialog(MetadataSingleDialogBase):  # {{{
 
         self.tabs[0].gb2 = gb = QGroupBox(_('Co&mments'), self)
         gb.l = l = QVBoxLayout()
+        l.setContentsMargins(0, 0, 0, 0)
         gb.setLayout(l)
         l.addWidget(self.comments)
         self.splitter.addWidget(gb)
 
         self.set_custom_metadata_tab_order()
+
+    def save_widget_settings(self):
+        gprefs['basic_metadata_widget_splitter_state'] = bytearray(self.splitter.saveState())
+
+    def restore_widget_settings(self):
+        s = gprefs.get('basic_metadata_widget_splitter_state')
+        if s is not None:
+            self.splitter.restoreState(s)
 
 # }}}
 

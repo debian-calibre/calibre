@@ -1,4 +1,7 @@
-from __future__ import print_function
+#!/usr/bin/env python2
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 """
@@ -15,6 +18,7 @@ from calibre.devices.errors import ArgumentError, DeviceError, DeviceLocked
 from calibre.customize.ui import device_plugins
 from calibre.devices.scanner import DeviceScanner
 from calibre.utils.config import device_prefs
+from polyglot.builtins import unicode_type
 from polyglot.io import PolyglotBytesIO
 
 MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
@@ -31,73 +35,55 @@ class FileFormatter(object):
         self.name        = file.name
         self.path        = file.path
 
-    @dynamic_property
+    @property
     def mode_string(self):
-        doc=""" The mode string for this file. There are only two modes read-only and read-write """
+        """ The mode string for this file. There are only two modes read-only and read-write """
+        mode, x = "-", "-"
+        if self.is_dir:
+            mode, x = "d", "x"
+        if self.is_readonly:
+            mode += "r-"+x+"r-"+x+"r-"+x
+        else:
+            mode += "rw"+x+"rw"+x+"rw"+x
+        return mode
 
-        def fget(self):
-            mode, x = "-", "-"
-            if self.is_dir:
-                mode, x = "d", "x"
-            if self.is_readonly:
-                mode += "r-"+x+"r-"+x+"r-"+x
-            else:
-                mode += "rw"+x+"rw"+x+"rw"+x
-            return mode
-        return property(doc=doc, fget=fget)
-
-    @dynamic_property
+    @property
     def isdir_name(self):
-        doc='''Return self.name + '/' if self is a directory'''
+        '''Return self.name + '/' if self is a directory'''
+        name = self.name
+        if self.is_dir:
+            name += '/'
+        return name
 
-        def fget(self):
-            name = self.name
-            if self.is_dir:
-                name += '/'
-            return name
-        return property(doc=doc, fget=fget)
-
-    @dynamic_property
+    @property
     def name_in_color(self):
-        doc=""" The name in ANSI text. Directories are blue, ebooks are green """
+        """ The name in ANSI text. Directories are blue, ebooks are green """
+        cname = self.name
+        blue, green, normal = "", "", ""
+        if self.term:
+            blue, green, normal = self.term.BLUE, self.term.GREEN, self.term.NORMAL
+        if self.is_dir:
+            cname = blue + self.name + normal
+        else:
+            ext = self.name[self.name.rfind("."):]
+            if ext in (".pdf", ".rtf", ".lrf", ".lrx", ".txt"):
+                cname = green + self.name + normal
+        return cname
 
-        def fget(self):
-            cname = self.name
-            blue, green, normal = "", "", ""
-            if self.term:
-                blue, green, normal = self.term.BLUE, self.term.GREEN, self.term.NORMAL
-            if self.is_dir:
-                cname = blue + self.name + normal
-            else:
-                ext = self.name[self.name.rfind("."):]
-                if ext in (".pdf", ".rtf", ".lrf", ".lrx", ".txt"):
-                    cname = green + self.name + normal
-            return cname
-        return property(doc=doc, fget=fget)
-
-    @dynamic_property
+    @property
     def human_readable_size(self):
-        doc=""" File size in human readable form """
+        """ File size in human readable form """
+        return human_readable(self.size)
 
-        def fget(self):
-            return human_readable(self.size)
-        return property(doc=doc, fget=fget)
-
-    @dynamic_property
+    @property
     def modification_time(self):
-        doc=""" Last modified time in the Linux ls -l format """
+        """ Last modified time in the Linux ls -l format """
+        return time.strftime("%Y-%m-%d %H:%M", time.localtime(self.wtime))
 
-        def fget(self):
-            return time.strftime("%Y-%m-%d %H:%M", time.localtime(self.wtime))
-        return property(doc=doc, fget=fget)
-
-    @dynamic_property
+    @property
     def creation_time(self):
-        doc=""" Last modified time in the Linux ls -l format """
-
-        def fget(self):
-            return time.strftime("%Y-%m-%d %H:%M", time.localtime(self.ctime))
-        return property(doc=doc, fget=fget)
+        """ Last modified time in the Linux ls -l format """
+        return time.strftime("%Y-%m-%d %H:%M", time.localtime(self.ctime))
 
 
 def info(dev):
@@ -110,7 +96,7 @@ def info(dev):
 
 def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
     def col_split(l, cols):  # split list l into columns
-        rows = len(l) / cols
+        rows = len(l) // cols
         if len(l) % cols:
             rows += 1
         m = []
@@ -140,7 +126,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
         maxlen = 0
         if ll:  # Calculate column width for size column
             for file in files:
-                size = len(str(file.size))
+                size = len(unicode_type(file.size))
                 if human_readable_size:
                     file = FileFormatter(file)
                     size = len(file.human_readable_size)
@@ -152,14 +138,14 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
             lsoutput.append(name)
             lscoloutput.append(name)
             if ll:
-                size = str(file.size)
+                size = unicode_type(file.size)
                 if human_readable_size:
                     size = file.human_readable_size
-                prints(file.mode_string, ("%"+str(maxlen)+"s")%size, file.modification_time, name, file=output)
+                prints(file.mode_string, ("%"+unicode_type(maxlen)+"s")%size, file.modification_time, name, file=output)
         if not ll and len(lsoutput) > 0:
             trytable = []
             for colwidth in range(MINIMUM_COL_WIDTH, cols):
-                trycols = int(cols/colwidth)
+                trycols = int(cols//colwidth)
                 trytable = col_split(lsoutput, trycols)
                 works = True
                 for row in trytable:
@@ -259,7 +245,7 @@ def main():
             print("Filesystem\tSize \tUsed \tAvail \tUse%")
             for i in range(3):
                 print("%-10s\t%s\t%s\t%s\t%s"%(where[i], human_readable(total[i]), human_readable(total[i]-free[i]), human_readable(free[i]),
-                                                                            str(0 if total[i]==0 else int(100*(total[i]-free[i])/(total[i]*1.)))+"%"))
+                                                                            unicode_type(0 if total[i]==0 else int(100*(total[i]-free[i])/(total[i]*1.)))+"%"))
         elif command == 'eject':
             dev.eject()
         elif command == "books":

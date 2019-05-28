@@ -49,8 +49,7 @@ $PYTHON -c "import sys; script_launch=lambda:sys.exit('Download of installer fai
 # HEREDOC_START
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -68,18 +67,20 @@ enc = getattr(sys.stdout, 'encoding', 'utf-8') or 'utf-8'
 if enc.lower() == 'ascii':
     enc = 'utf-8'
 calibre_version = signature = None
-urllib = __import__('urllib.request' if py3 else 'urllib', fromlist=1)
 has_ssl_verify = hasattr(ssl, 'create_default_context')
 
 if py3:
     unicode = str
     raw_input = input
     from urllib.parse import urlparse
+    from urllib.request import BaseHandler, build_opener, Request, urlopen, getproxies, addinfourl
     import http.client as httplib
     encode_for_subprocess = lambda x:x
 else:
     from future_builtins import map
     from urlparse import urlparse
+    from urllib import urlopen, getproxies, addinfourl
+    from urllib2 import BaseHandler, build_opener, Request
     import httplib
 
     def encode_for_subprocess(x):
@@ -315,33 +316,38 @@ def check_signature(dest, signature):
         return raw
 
 
-class URLOpener(urllib.FancyURLopener):
+class RangeHandler(BaseHandler):
 
-    def http_error_206(self, url, fp, errcode, errmsg, headers, data=None):
-        ''' 206 means partial content, ignore it '''
-        pass
+    def http_error_206(self, req, fp, code, msg, hdrs):
+        # 206 Partial Content Response
+        r = addinfourl(fp, hdrs, req.get_full_url())
+        r.code = code
+        r.msg = msg
+        return r
+    https_error_206 = http_error_206
 
 
 def do_download(dest):
     prints('Will download and install', os.path.basename(dest))
     reporter = Reporter(os.path.basename(dest))
     offset = 0
-    urlopener = URLOpener()
     if os.path.exists(dest):
         offset = os.path.getsize(dest)
 
     # Get content length and check if range is supported
-    rq = urllib.urlopen(DLURL)
+    rq = urlopen(DLURL)
     headers = rq.info()
     size = int(headers['content-length'])
     accepts_ranges = headers.get('accept-ranges', None) == 'bytes'
     mode = 'wb'
     if accepts_ranges and offset > 0:
-        rurl = rq.geturl()
+        req = Request(rq.geturl())
+        req.add_header('Range', 'bytes=%s-'%offset)
         mode = 'ab'
         rq.close()
-        urlopener.addheader('Range', 'bytes=%s-'%offset)
-        rq = urlopener.open(rurl)
+        handler = RangeHandler()
+        opener = build_opener(handler)
+        rq = opener.open(req)
     with open(dest, mode) as f:
         while f.tell() < size:
             raw = rq.read(8192)
@@ -368,7 +374,7 @@ def download_tarball():
     dest = os.path.join(cache, fname)
     raw = check_signature(dest, signature)
     if raw is not None:
-        print ('Using previously downloaded', fname)
+        print('Using previously downloaded', fname)
         return raw
     cached_sigf = dest +'.signature'
     cached_sig = None
@@ -401,7 +407,7 @@ def download_tarball():
 # Get tarball signature securely {{{
 
 def get_proxies(debug=True):
-    proxies = urllib.getproxies()
+    proxies = getproxies()
     for key, proxy in list(proxies.items()):
         if not proxy or '..' in proxy:
             del proxies[key]
@@ -706,7 +712,7 @@ def download_and_extract(destdir):
 def check_version():
     global calibre_version
     if calibre_version == '%version':
-        calibre_version = urllib.urlopen('http://code.calibre-ebook.com/latest').read()
+        calibre_version = urlopen('http://code.calibre-ebook.com/latest').read()
 
 
 def run_installer(install_dir, isolated, bin_dir, share_dir):
@@ -720,7 +726,7 @@ def run_installer(install_dir, isolated, bin_dir, share_dir):
         if not os.path.isdir(destdir):
             prints(destdir, 'exists and is not a directory. Choose a location like /opt or /usr/local')
             return 1
-    print ('Installing to', destdir)
+    print('Installing to', destdir)
 
     download_and_extract(destdir)
 

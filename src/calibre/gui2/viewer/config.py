@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -236,17 +235,16 @@ class ConfigDialog(QDialog, Ui_Dialog):
         from calibre.gui2.viewer.main import dprefs
         self.word_lookups = dprefs['word_lookups']
 
-    @dynamic_property
+    @property
     def word_lookups(self):
-        def fget(self):
-            return dict(self.dictionary_list.item(i).data(Qt.UserRole) for i in range(self.dictionary_list.count()))
+        return dict(self.dictionary_list.item(i).data(Qt.UserRole) for i in range(self.dictionary_list.count()))
 
-        def fset(self, wl):
-            self.dictionary_list.clear()
-            for langcode, url in sorted(iteritems(wl), key=lambda lc_url:sort_key(calibre_langcode_to_name(lc_url[0]))):
-                i = QListWidgetItem('%s: %s' % (calibre_langcode_to_name(langcode), url), self.dictionary_list)
-                i.setData(Qt.UserRole, (langcode, url))
-        return property(fget=fget, fset=fset)
+    @word_lookups.setter
+    def word_lookups(self, wl):
+        self.dictionary_list.clear()
+        for langcode, url in sorted(iteritems(wl), key=lambda lc_url:sort_key(calibre_langcode_to_name(lc_url[0]))):
+            i = QListWidgetItem('%s: %s' % (calibre_langcode_to_name(langcode), url), self.dictionary_list)
+            i.setData(Qt.UserRole, (langcode, url))
 
     def add_dictionary_website(self):
         class AD(QDialog):

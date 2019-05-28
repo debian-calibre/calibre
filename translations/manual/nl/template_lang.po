@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Alex, 2016
-# M. de Boer <de.boer.melle@gmail.com>, 2018
+# M. de Boer <de.boer.melle@gmail.com>, 2018-2019
 # math1985 <transifex@matthijsmelissen.nl>, 2016
 # Volluta <volluta@tutanota.com>, 2016
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 07:58+0530\n"
-"PO-Revision-Date: 2018-09-28 02:21+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-04-29 14:17+0530\n"
+"PO-Revision-Date: 2019-05-09 14:26+0000\n"
+"Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +75,7 @@ msgid ""
 "If a particular book does not have a particular piece of metadata, the field"
 " in the template is automatically removed for that book. Consider, for "
 "example::"
-msgstr ""
+msgstr "Als een bepaald boek geen bepaald stuk metagegevens bevat, wordt het veld in de sjabloon automatisch voor dat boek verwijderd. Overweeg bijvoorbeeld:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:36
 msgid "If a book has a series, the template will produce::"
@@ -100,7 +100,7 @@ msgid ""
 "You can do more than just simple substitution with the templates. You can "
 "also conditionally include text and control how the substituted data is "
 "formatted."
-msgstr ""
+msgstr "U kunt meer doen dan alleen maar vervangen door de sjablonen. U kunt ook voorwaardelijk tekst opnemen en bepalen hoe de gesubstitueerde gegevens worden opgemaakt."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:51
 msgid ""
@@ -113,7 +113,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:53
 msgid "For example, assume you want to use the template::"
-msgstr ""
+msgstr "Als voorbeeld, Stel dat u de sjabloon wilt gebruiken::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:57
 msgid ""
@@ -125,18 +125,18 @@ msgid ""
 "will be the empty string (nothing); the prefix and suffix are ignored. The "
 "prefix and suffix can contain blanks. **Do not use subtemplates (`{ ... }`) "
 "or functions (see below) as the prefix or the suffix.**"
-msgstr ""
+msgstr "Als het boek geen series bevat, is het antwoord `` - - titel``. Veel mensen zouden liever het resultaat gewoon `` titel`` zijn, zonder de koppeltekens. Gebruik hiervoor de uitgebreide syntaxis ``{field:|prefix_text|suffix_text}``. Wanneer u deze syntaxis gebruikt en veld de waarde SERIES heeft, is het resultaat ``prefix_textSERIESsuffix_text``. Als veld geen waarde heeft, dan is het resultaat de lege reeks (niets); het voorvoegsel en het achtervoegsel worden genegeerd. Het voorvoegsel en het achtervoegsel kunnen spaties bevatten. **Gebruik geen subtemplates (`{...}`) of functies (zie hieronder) als prefix of achtervoegsel. **"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:59
 msgid ""
 "Using this syntax, we can solve the above series problem with the template::"
-msgstr ""
+msgstr "Met behulp van deze syntaxis kunnen we het bovenstaande reeksprobleem met de sjabloon oplossen:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:63
 msgid ""
 "The hyphens will be included only if the book has a series index, which it "
 "will have only if it has a series."
-msgstr ""
+msgstr "De koppeltekens worden alleen opgenomen als het boek een serie-index heeft, die alleen beschikbaar is als het een reeks bevat."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:65
 msgid ""
@@ -145,18 +145,18 @@ msgid ""
 " in ``{field:| - }``, is not allowed. It is OK not to provide any text for "
 "one side or the other, such as in ``{series:|| - }``. Using ``{title:||}`` "
 "is the same as using ``{title}``."
-msgstr ""
+msgstr "Opmerkingen: u moet het teken: opnemen als u een voorvoegsel of achtervoegsel wilt gebruiken. U moet geen \\| gebruiken karakters of beide; met behulp van een, zoals in ``{veld:|-}`` is niet toegestaan. Het is OKEE om geen tekst voor de ene of de andere kant op te geven, zoals in ``{series:||-}``. Het gebruik van ``{titel: ||}`` is hetzelfde als het gebruik van `` titel} ``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:67
 msgid ""
 "Second: formatting. Suppose you wanted to ensure that the series_index is "
 "always formatted as three digits with leading zeros. This would do the "
 "trick::"
-msgstr ""
+msgstr "Ten tweede: formatteren. Stel dat u ervoor wilt zorgen dat de reeks_index altijd wordt opgemaakt als drie cijfers met voorloopnullen. Dit zou het volgende doen:"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:71
 msgid "If instead of leading zeros you want leading spaces, use::"
-msgstr ""
+msgstr "Als u in plaats van voorloopnullen toonaangevende spaties wilt gebruiken, gebruikt::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:75
 msgid "For trailing zeros, use::"
@@ -168,7 +168,7 @@ msgid ""
 "ensure that the decimal points line up. For example, you might want the "
 "indices 1 and 2.5 to appear as 01.00 and 02.50 so that they will sort "
 "correctly. To do this, use::"
-msgstr ""
+msgstr "Als u reeksindices gebruikt met subwaarden (bijvoorbeeld 1,1), kunt u ervoor zorgen dat de decimalen in de rij staan. U wilt bijvoorbeeld dat de indices 1 en 2.5 worden weergegeven als 01.00 en 02.50, zodat ze correct sorteren. Om dit te doen  Gebruik::"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:83
 msgid "If you want only the first two letters of the data, use::"
@@ -206,7 +206,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:97
 msgid "Composite columns can use any template option, including formatting."
-msgstr ""
+msgstr "Samengestelde kolommen kunnen elke sjabloonoptie gebruiken, inclusief opmaak."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:99
 msgid ""
@@ -214,11 +214,11 @@ msgid ""
 "composite column by double-clicking on any item, you will open the template "
 "for editing, not the underlying data. Editing the template on the GUI is a "
 "quick way of testing and changing composite columns."
-msgstr ""
+msgstr "U kunt de gegevens in een samengestelde kolom niet wijzigen. Als u een samengestelde kolom bewerkt door op een item te dubbelklikken, opent u de sjabloon voor bewerking en niet de onderliggende gegevens. Het bewerken van de sjabloon in de GUI is een snelle manier om samengestelde kolommen te testen en te wijzigen."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:102
 msgid "Using functions in templates - single-function mode"
-msgstr ""
+msgstr "Functies in sjablonen gebruiken - modus met één functie"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:104
 msgid ""
@@ -227,7 +227,7 @@ msgid ""
 "using the functions available for templates. For example, to display the "
 "title in upper case, use ``{title:uppercase()}``. To display it in title "
 "case, use ``{title:titlecase()}``."
-msgstr ""
+msgstr "Stel dat u de waarde van een veld in hoofdletters wilt weergeven, wanneer dat veld normaal gesproken in hoofdletters staat. U kunt dit (en nog veel meer dingen) doen met behulp van de functies die beschikbaar zijn voor sjablonen. Als u de titel bijvoorbeeld in hoofdletters wilt weergeven, gebruikt u `` {titel:hoofdletters()}``. Gebruik ``{titel:titelcase()} `` om het in titel te tonen."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:106
 msgid ""

@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import (unicode_literals, division, absolute_import,
-                        print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -13,7 +12,7 @@ from PyQt5.Qt import (
     QContextMenuEvent, QDialog, QDialogButtonBox, QLabel, QVBoxLayout)
 
 from calibre.constants import iswindows
-from polyglot.builtins import itervalues
+from polyglot.builtins import itervalues, map
 
 touch_supported = False
 if iswindows and sys.getwindowsversion()[:2] >= (6, 2):  # At least windows 7

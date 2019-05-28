@@ -1,4 +1,4 @@
-from __future__ import with_statement
+from __future__ import print_function, unicode_literals, absolute_import, division
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -19,7 +19,7 @@ from odf.namespaces import TEXTNS as odTEXTNS
 
 from calibre import CurrentDir, walk
 from calibre.ebooks.oeb.base import _css_logger
-from polyglot.builtins import unicode_type, string_or_bytes, filter
+from polyglot.builtins import unicode_type, string_or_bytes, filter, getcwd, as_bytes
 
 
 class Extract(ODF2XHTML):
@@ -292,12 +292,12 @@ class Extract(ODF2XHTML):
             except:
                 log.exception('Failed to filter CSS, conversion may be slow')
             with open('index.xhtml', 'wb') as f:
-                f.write(html.encode('utf-8'))
+                f.write(as_bytes(html))
             zf = ZipFile(stream, 'r')
             self.extract_pictures(zf)
-            opf = OPFCreator(os.path.abspath(os.getcwdu()), mi)
+            opf = OPFCreator(os.path.abspath(getcwd()), mi)
             opf.create_manifest([(os.path.abspath(f2), None) for f2 in
-                walk(os.getcwdu())])
+                walk(getcwd())])
             opf.create_spine([os.path.abspath('index.xhtml')])
             with open('metadata.opf', 'wb') as f:
                 opf.render(f)

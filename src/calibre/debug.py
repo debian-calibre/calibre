@@ -1,5 +1,5 @@
 #!/usr/bin/env  python2
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -11,7 +11,7 @@ import sys, os, functools
 from calibre.utils.config import OptionParser
 from calibre.constants import iswindows
 from calibre import prints
-from polyglot.builtins import exec_path, raw_input, unicode_type
+from polyglot.builtins import exec_path, raw_input, unicode_type, getcwd
 
 
 def get_debug_executable():
@@ -165,8 +165,8 @@ def reinit_db(dbpath):
 def debug_device_driver():
     from calibre.devices import debug
     debug(ioreg_to_tmp=True, buf=sys.stdout)
-    if iswindows:
-        raw_input('Press Enter to continue...')
+    if iswindows:  # no2to3
+        raw_input('Press Enter to continue...')  # no2to3
 
 
 def add_simple_plugin(path_to_plugin):
@@ -174,7 +174,7 @@ def add_simple_plugin(path_to_plugin):
     tdir = tempfile.mkdtemp()
     open(os.path.join(tdir, 'custom_plugin.py'),
             'wb').write(open(path_to_plugin, 'rb').read())
-    odir = os.getcwdu()
+    odir = getcwd()
     os.chdir(tdir)
     zf = zipfile.ZipFile('plugin.zip', 'w')
     zf.write('custom_plugin.py')
