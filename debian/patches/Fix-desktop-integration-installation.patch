@@ -5,12 +5,12 @@ Subject: Fix desktop integration installation
 Don't use xdg-mime and xdg-desktop-menu because they hard-code
 gnome_app_dir etc which cannot be overridden, and replace with install calls.
 ---
- src/calibre/linux.py |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ src/calibre/linux.py |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- calibre-debian.git.orig/src/calibre/linux.py
 +++ calibre-debian.git/src/calibre/linux.py
-@@ -869,17 +869,18 @@ class PostInstall:
+@@ -889,8 +889,9 @@ class PostInstall:
                      translators = dict(get_all_translators())
  
                  APPDATA = get_appdata()
@@ -21,14 +21,3 @@ gnome_app_dir etc which cannot be overridden, and replace with install calls.
                      cc(' '.join(cmd), shell=True)
                      self.menu_resources.append(x)
                      ak = x.partition('.')[0]
-                     if ak in APPDATA and os.access(appdata, os.W_OK):
-                         self.appdata_resources.append(write_appdata(ak, APPDATA[ak], appdata, translators))
--                cc(['xdg-desktop-menu', 'forceupdate'])
-                 MIME = P('calibre-mimetypes.xml')
-                 self.mime_resources.append(MIME)
--                cc(['xdg-mime', 'install', MIME])
-+                cc(['install', '-o', 'root', '-g', 'root', '-m', '0644', MIME, xdgdir + '/mime/packages'])
-+
-         except Exception:
-             if self.opts.fatal_errors:
-                 raise

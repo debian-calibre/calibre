@@ -4,8 +4,8 @@ Subject: Use packaged instead of bundled feedparser Python module
 
 ---
  recipes/lenta_ru.recipe           |    4 +++-
- src/calibre/web/feeds/__init__.py |    8 +++++---
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ src/calibre/web/feeds/__init__.py |    5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
 --- calibre-debian.git.orig/recipes/lenta_ru.recipe
 +++ calibre-debian.git/recipes/lenta_ru.recipe
@@ -26,21 +26,18 @@ Subject: Use packaged instead of bundled feedparser Python module
      impl = getattr(soup, 'new_tag', None)
 --- calibre-debian.git.orig/src/calibre/web/feeds/__init__.py
 +++ calibre-debian.git/src/calibre/web/feeds/__init__.py
-@@ -13,8 +13,11 @@ from calibre import entity_to_unicode, s
+@@ -13,6 +13,10 @@ from calibre import entity_to_unicode, s
  from calibre.utils.date import dt_factory, utcnow, local_tz
  from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
- from polyglot.builtins import unicode_type, string_or_bytes
--
--
+ from polyglot.builtins import unicode_type, string_or_bytes, map
 +from feedparser import parse
 +from functools import partial
 + 
 +parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
-+ 
- class Article(object):
  
-     def __init__(self, id, title, url, author, summary, published, content):
-@@ -338,7 +341,6 @@ def feed_from_xml(raw_xml, title=None, o
+ 
+ class Article(object):
+@@ -335,7 +339,6 @@ def feed_from_xml(raw_xml, title=None, o
                    max_articles_per_feed=100,
                    get_article_url=lambda item: item.get('link', None),
                    log=default_log):
