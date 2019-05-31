@@ -294,12 +294,12 @@ def test(return_tests=False):
 
             start = memory()
             for i in range(10):
-                doit(str(i))
+                doit(unicode_type(i))
             gc.collect()
             used10 = memory() - start
             start = memory()
             for i in range(100):
-                doit(str(i))
+                doit(unicode_type(i))
             gc.collect()
             used100 = memory() - start
             if used100 > 0 and used10 > 0:
