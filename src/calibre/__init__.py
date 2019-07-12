@@ -18,7 +18,7 @@ except EnvironmentError:
 
 from calibre.constants import (iswindows, isosx, islinux, isfrozen,
         isbsd, preferred_encoding, __appname__, __version__, __author__,
-        win32event, win32api, winerror, fcntl,
+        win32event, win32api, winerror, fcntl, ispy3,
         filesystem_encoding, plugins, config_dir)
 from calibre.startup import winutil, winutilerror
 from calibre.utils.icu import safe_chr
@@ -249,14 +249,6 @@ def load_library(name, cdll):
     return cdll.LoadLibrary(name+'.so')
 
 
-def filename_to_utf8(name):
-    '''Return C{name} encoded in utf8. Unhandled characters are replaced. '''
-    if isinstance(name, unicode_type):
-        return name.encode('utf8')
-    codec = 'cp1252' if iswindows else 'utf8'
-    return name.decode(codec, 'replace').encode('utf8')
-
-
 def extract(path, dir):
     extractor = None
     # First use the file header to identify its type
@@ -454,23 +446,30 @@ class CurrentDir(object):
 _ncpus = None
 
 
-def detect_ncpus():
-    """Detects the number of effective CPUs in the system"""
-    global _ncpus
-    if _ncpus is None:
-        if iswindows:
-            import win32api
-            ans = win32api.GetSystemInfo()[5]
-        else:
-            import multiprocessing
-            ans = -1
-            try:
-                ans = multiprocessing.cpu_count()
-            except Exception:
-                from PyQt5.Qt import QThread
-                ans = QThread.idealThreadCount()
-        _ncpus = max(1, ans)
-    return _ncpus
+if ispy3:
+    def detect_ncpus():
+        global _ncpus
+        if _ncpus is None:
+            _ncpus = max(1, os.cpu_count() or 1)
+        return _ncpus
+else:
+    def detect_ncpus():
+        """Detects the number of effective CPUs in the system"""
+        global _ncpus
+        if _ncpus is None:
+            if iswindows:
+                import win32api
+                ans = win32api.GetSystemInfo()[5]
+            else:
+                import multiprocessing
+                ans = -1
+                try:
+                    ans = multiprocessing.cpu_count()
+                except Exception:
+                    from PyQt5.Qt import QThread
+                    ans = QThread.idealThreadCount()
+            _ncpus = max(1, ans)
+        return _ncpus
 
 
 relpath = os.path.relpath
@@ -661,3 +660,21 @@ def ipython(user_ns=None):
 def fsync(fileobj):
     fileobj.flush()
     os.fsync(fileobj.fileno())
+    if islinux and getattr(fileobj, 'name', None):
+        # On Linux kernels after 5.1.9 and 4.19.50 using fsync without any
+        # following activity causes Kindles to eject. Instead of fixing this in
+        # the obvious way, which is to have the kernel send some harmless
+        # filesystem activity after the FSYNC, the kernel developers seem to
+        # think the correct solution is to disable FSYNC using a mount flag
+        # which users will have to turn on manually. So instead we create some
+        # harmless filesystem activity, and who cares about performance.
+        # See https://bugs.launchpad.net/calibre/+bug/1834641
+        # and https://bugzilla.kernel.org/show_bug.cgi?id=203973
+        # To check for the existence of the bug, simply run:
+        # python -c "p = '/run/media/kovid/Kindle/driveinfo.calibre'; f = open(p, 'r+b'); os.fsync(f.fileno());"
+        # this will cause the Kindle to disconnect.
+        try:
+            os.utime(fileobj.name, None)
+        except Exception:
+            import traceback
+            traceback.print_exc()

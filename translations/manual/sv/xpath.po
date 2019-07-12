@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
+# Jonatan Nyberg, 2019
 # Jonatan Nyberg, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 10:31+0530\n"
-"PO-Revision-Date: 2018-10-30 05:48+0000\n"
+"POT-Creation-Date: 2019-05-31 09:25+0530\n"
+"PO-Revision-Date: 2019-06-06 12:12+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -41,27 +42,27 @@ msgstr "Innehåll"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
-msgstr "Väljer efter etikettnamn"
+msgstr "Väljer efter taggnamn"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr "Den enklaste formen av val är att välja etikett efter namnet. Anta till exempel att du vill välja alla ``<h2>`` etiketter i ett dokument. XPath-förfråga till detta är helt enkelt::"
+msgstr "Den enklaste formen av val är att välja tagg efter namnet. Anta till exempel att du vill välja alla ``<h2>`` taggar i ett dokument. XPath-förfråga till detta är helt enkelt::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr "Prefixet `//` betyder *söka på alla nivåer i dokumentet*. Anta nu att du vill söka efter ``<span>`` etiketter som är inne ``<a>`` etiketter. Detta kan uppnås med::"
+msgstr "Prefixet `//` betyder *söka på alla nivåer i dokumentet*. Anta nu att du vill söka efter ``<span>`` taggar som är inne ``<a>`` taggar. Detta kan uppnås med::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr "Om du vill söka efter etiketter på en viss nivå i dokumentet, ändrar prefixet::"
+msgstr "Om du vill söka efter taggar på en viss nivå i dokumentet, ändrar prefixet::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:39
 msgid ""
@@ -71,7 +72,7 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr "Detta kommer bara matcha ``<p>En mycket kort e-bok för att demonstrera användningen av XPath.</p>`` i :ref:`sample_ebook` men inte någon annan av de andra ``<p>`` etiketterna. ``h:`` prefix i ovan exempel behövs för att passa XHTML-etiketter. Detta för att internt, calibre representerar allt innehåll som XHTML. I XHTML-etiketter finns en  *namnrymd*, och ``h:`` är namnrymdsprefix för HTML-etiketter."
+msgstr "Detta kommer bara matcha ``<p>En mycket kort e-bok för att demonstrera användningen av XPath.</p>`` i :ref:`sample_ebook` men inte någon annan av de andra ``<p>`` taggarna. ``h:`` prefix i ovan exempel behövs för att passa XHTML-taggar. Detta för att internt, calibre representerar allt innehåll som XHTML. I XHTML-taggar finns en  *namnrymd*, och ``h:`` är namnrymdsprefix för HTML-taggar."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:45
 msgid ""
@@ -80,7 +81,7 @@ msgid ""
 " test that is used to select tags. Tests can be arbitrarily powerful and as "
 "this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "Anta nu att du vill välja både ``<h1>`` och ``<h2>`` etiketter. För att göra det behöver vi en XPath konstruktion som kallas *predikat*. En : dfn: 'predikat' är helt enkelt ett test som används för att välja etiketter. Tester kan vara godtyckligt kraftfullt och som denna handledning fortskrider, kommer du att se mer kraftfulla exempel. Ett predikat skapas genom att innesluta test uttryck inom hakparenteser::"
+msgstr "Anta nu att du vill välja både ``<h1>`` och ``<h2>`` taggar. För att göra det behöver vi en XPath konstruktion som kallas *predikat*. En : dfn: 'predikat' är helt enkelt ett test som används för att välja taggar. Tester kan vara godtyckligt kraftfullt och som denna handledning fortskrider, kommer du att se mer kraftfulla exempel. Ett predikat skapas genom att innesluta test uttryck inom hakparenteser::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:53
 msgid ""
@@ -92,7 +93,7 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr "Det finns flera nya funktioner i detta XPath-uttryck. Den första är användningen av tecknet ``*``. Det betyder *matchar alla etiketter*. Titta nu på prov uttrycket ``name()=\"h1\" eller name()= 'h2'``. :term:`name()` är ett exempel på en *inbyggd funktion*. Den utvärderar endast namnet på etiketten. Så genom att använda det, kan vi välja etiketter vars namn är antingen `h1` eller `h2`. Observera att :term:`name()`-funktionen ignorerar namespaces, så att det inte finns något behov av ``h:``-prefixet. XPath har flera användbara inbyggda funktioner. Några fler kommer att introduceras i den här guiden."
+msgstr "Det finns flera nya funktioner i detta XPath-uttryck. Den första är användningen av tecknet ``*``. Det betyder *matchar alla taggar*. Titta nu på prov uttrycket ``name()=\"h1\" eller name()= 'h2'``. :term:`name()` är ett exempel på en *inbyggd funktion*. Den utvärderar endast namnet på taggen. Så genom att använda det, kan vi välja taggar vars namn är antingen `h1` eller `h2`. Observera att :term:`name()`-funktionen ignorerar namespaces, så att det inte finns något behov av ``h:``-prefixet. XPath har flera användbara inbyggda funktioner. Några fler kommer att introduceras i den här guiden."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
@@ -102,31 +103,31 @@ msgstr "Väljer baserat på attribut"
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr "För att välja etiketter baserat på deras attribut, användning av predikat krävs::"
+msgstr "För att välja taggar baserat på deras attribut, användning av predikat krävs::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr "Här hänvisar ``@`` operatören attributen för etiketten. Du kan använda en del av de `XPath inbyggda funktioner` _ att utföra mer avancerad matchning på attributvärden."
+msgstr "Här hänvisar ``@`` operatören attributen för taggen. Du kan använda en del av de `XPath inbyggda funktioner` _ att utföra mer avancerad matchning på attributvärden."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
-msgstr "Väljer baserat på etikettinnehåll"
+msgstr "Väljer baserat på tagginnehåll"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr "Med hjälp av XPath kan du även välja etiketter som baseras på text de innehåller. Det bästa sättet att göra detta är att använda kraften i *reguljära uttryck* via den inbyggda funktionen: term:`re:test()`::"
+msgstr "Med hjälp av XPath kan du även välja taggar som baseras på text de innehåller. Det bästa sättet att göra detta är att använda kraften i *reguljära uttryck* via den inbyggda funktionen: term:`re:test()`::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr "Här hänvisar ``.`` operatör till innehållet i etiketten, precis som ``@`` operatör avser dess attribut."
+msgstr "Här hänvisar ``.`` operatör till innehållet i taggen, precis som ``@`` operatör avser dess attribut."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
@@ -142,7 +143,7 @@ msgstr "name()"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
-msgstr "Namnet på den aktuella etiketten."
+msgstr "Namnet på den aktuella taggen."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:102
 msgid "contains()"

@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/viewer/config.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.1
+# Created by: PyQt5 UI code generator 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -609,6 +610,4 @@ class Ui_Dialog(object):
         self.remove_dictionary_website_button.setText(_("&Remove website"))
         self.change_dictionary_website_button.setText(_("&Change website"))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_5), _("&Dictionaries"))
-
-
 

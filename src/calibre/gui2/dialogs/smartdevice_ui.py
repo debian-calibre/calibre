@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/smartdevice.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -80,7 +82,7 @@ class Ui_Dialog(object):
 
         Dialog.setWindowTitle(_("Smart device control"))
         self.msg.setText(_("<p>Start wireless device connections. Currently used only\n"
-"       by <a href=\"http://www.multipie.co.uk/calibre-companion/\">Calibre Companion</a>.\n"
+"       by <a href=\"https://calibrecompanion.co?utm_source=Calibre&utm_medium=Software&utm_campaign=Main&utm_term=WirelessDeviceDialog\">Calibre Companion</a>.\n"
 "       <p>You may see some messages from your computer\'s firewall or anti-virus manager asking you if it is OK for calibre to connect to the network. <b>Please answer yes</b>. If you do not, wireless connections will not work."))
         self.label_23.setText(_("calibre IP addresses:"))
         self.ip_addresses.setText(_("Possibe IP addresses:"))
@@ -91,5 +93,4 @@ class Ui_Dialog(object):
         self.fixed_port.setPlaceholderText(_("Optional port number"))
         self.use_fixed_port.setText(_("&Use a fixed port"))
         self.autostart_box.setText(_("&Automatically allow connections at calibre startup"))
-
 

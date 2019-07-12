@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "WEB2DISK" "1" "5月 31, 2019" "3.44.0" "calibre"
+.TH "WEB2DISK" "1" "7月 12, 2019" "3.45.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .
@@ -53,7 +53,7 @@ Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose 
 .INDENT 0.0
 .TP
 .B \-\-delay
-持續接收的最小間隔秒數。預設值為 0 秒
+持續接收的最小間隔秒數。預設值為 0 s
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -63,12 +63,12 @@ Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose 
 .INDENT 0.0
 .TP
 .B \-\-encoding
-您嘗試下載的網站的字元編碼。預設值為嘗試猜測其編碼。
+您嘗試下載的網站的字元編碼。預設會進行猜測。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-將忽略任何匹配此正則表達式的鏈接。只要鏈接匹配正則表達式即可反復使用此選項。默認情況下不忽略任何鏈接地址。如果同時匹配過濾器的正則表達式和這裡的表達式，則優先使用過濾器的正則表達式。
+任何符合規則運算式的連結將會被忽略。這個選項可以多次指定，只要要有連結符合任何運算式都會被忽略。預設情況下不會有任何連結被忽略。如果忽略以及追蹤的運算式同時都符合，將套用忽略設定。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,22 +78,22 @@ Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose 
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-只有符合這個正規表示式的連結才會跟隨。這個選項可以多次指定，只要有連結符合任何正規表示式，它就會被跟隨。預設值為所有連結都會被跟隨。
+只有符合這個規則運算式的連結才會進行追隨。這個選項可以多次指定，只要有連結符合任何運算式，進會進行追隨。預設將會追蹤所有的連結。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-文件下載最大值。僅對來自於 <a href> 標籤的文件有效。默認爲 9223372036854775807
+檔案下載數量的最大值。僅對來自含有 <a href> 標籤的檔案有效。預設為: 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-循環層數的最大值，即跟隨連結的深度。預設值為 1
+遞迴層級的深度的最大值，即跟隨連結的深度。預設值為: 1
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-等候伺服器回應的預設逾時時間。預設值：10.0 秒
+等待伺服器回應的預設逾時時間。預設值：10.0 秒
 .UNINDENT
 .INDENT 0.0
 .TP

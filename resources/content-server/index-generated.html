@@ -17148,7 +17148,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "3.44.0";
+        CALIBRE_VERSION = "3.45.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -22172,7 +22172,10 @@ return this.__repr__();
                 var fmt;
                 if (val) {
                     fmt = interface_data[ρσ_bound_index("gui_" + field + "_display_format", interface_data)] || (fm["display"] || Object.create(null)).date_format;
-                    add_row(name, format_date(val, fmt));
+                    val = format_date(val, fmt);
+                    if (val) {
+                        add_row(name, val);
+                    }
                 }
             };
             if (!process_datetime.__argnames__) Object.defineProperties(process_datetime, {
@@ -22787,7 +22790,7 @@ return this.__repr__();
                     return;
                 }
                 if (end_type !== "load") {
-                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), xhr.error_html);
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\". Click \"Show details\" for more information.").format(title), xhr.error_html);
                     return;
                 }
                 try {
@@ -22798,12 +22801,12 @@ return this.__repr__();
                 } catch (ρσ_Exception) {
                     ρσ_last_exception = ρσ_Exception;
                     {
-                        error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" got an invalid response from calibre").format(title));
+                        error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" because of an invalid response from calibre").format(title));
                         return;
                     } 
                 }
                 if (!response.ok) {
-                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), response.payload);
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\". Click \"Show details\" for more information.").format(title), response.payload);
                     return;
                 }
                 if (response.action === "duplicate") {
@@ -29310,7 +29313,6 @@ return this.__repr__();
         CLASS_NAME = "edit-metadata-panel";
         IGNORED_FIELDS = (function(){
             var s = ρσ_set();
-            s.jsset.add("formats");
             s.jsset.add("sort");
             s.jsset.add("uuid");
             s.jsset.add("id");
@@ -29361,6 +29363,36 @@ return this.__repr__();
         };
         if (!resolved_metadata.__argnames__) Object.defineProperties(resolved_metadata, {
             __argnames__ : {value: ["mi", "field"]}
+        });
+
+        function resolved_formats(val) {
+            var ext, data, fmt;
+            val = list(val || []);
+            if (changes.added_formats) {
+                var ρσ_Iter0 = ρσ_Iterable(changes.added_formats);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    data = ρσ_Iter0[ρσ_Index0];
+                    ext = data.ext.toUpperCase();
+                    if (ext && !ρσ_in(ext, val)) {
+                        val.push(ext);
+                    }
+                }
+            }
+            if (changes.removed_formats) {
+                var ρσ_Iter1 = ρσ_Iterable(changes.removed_formats);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    fmt = ρσ_Iter1[ρσ_Index1];
+                    fmt = fmt.toUpperCase();
+                    if (ρσ_in(fmt, val)) {
+                        val.remove(fmt);
+                    }
+                }
+            }
+            val.sort();
+            return val;
+        };
+        if (!resolved_formats.__argnames__) Object.defineProperties(resolved_formats, {
+            __argnames__ : {value: ["val"]}
         });
 
         function truncated_html(val) {
@@ -29589,9 +29621,9 @@ return this.__repr__();
             clear(div);
             completions = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "completions"})]);
             div.appendChild(completions);
-            var ρσ_Iter0 = ρσ_Iterable(enumerate(names));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter2 = ρσ_Iterable(enumerate(names));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                ρσ_unpack = ρσ_Iter2[ρσ_Index2];
                 i = ρσ_unpack[0];
                 name = ρσ_unpack[1];
                 completions.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [name].concat([ρσ_desugar_kwargs({onclick: add_completion.bind(null, container_id, name)})])));
@@ -29719,7 +29751,7 @@ return this.__repr__();
                         var seen, ans, x;
                         seen = Object.create(null);
                         ans = [];
-                        var ρσ_Iter1 = ρσ_Iterable((function() {
+                        var ρσ_Iter3 = ρσ_Iterable((function() {
                             var ρσ_Iter = ρσ_Iterable(raw.split(ui_to_list)), ρσ_Result = [], a;
                             for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
                                 a = ρσ_Iter[ρσ_Index];
@@ -29730,8 +29762,8 @@ return this.__repr__();
                             ρσ_Result = ρσ_list_constructor(ρσ_Result);
                             return ρσ_Result;
                         })());
-                        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                            x = ρσ_Iter1[ρσ_Index1];
+                        for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                            x = ρσ_Iter3[ρσ_Index3];
                             if (!seen[(typeof x === "number" && x < 0) ? seen.length + x : x]) {
                                 seen[(typeof x === "number" && x < 0) ? seen.length + x : x] = true;
                                 ans.push(x);
@@ -29863,9 +29895,9 @@ return this.__repr__();
         function identifiers_get_value(container) {
             var ans, ρσ_unpack, n, v, li;
             ans = Object.create(null);
-            var ρσ_Iter2 = ρσ_Iterable(container.querySelectorAll(".identifiers-edit > li"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                li = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter4 = ρσ_Iterable(container.querySelectorAll(".identifiers-edit > li"));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                li = ρσ_Iter4[ρσ_Index4];
                 ρσ_unpack = li.querySelectorAll("input");
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 n = ρσ_unpack[0];
@@ -29894,9 +29926,9 @@ return this.__repr__();
             bc.insertBefore(document.createTextNode(" "), bc.lastChild);
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Edit the \"{}\" below.").format(name)].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
             div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [form].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 1rem"})])));
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(val));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                k = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter5 = ρσ_Iterable(Object.keys(val));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                k = ρσ_Iter5[ρσ_Index5];
                 add_identifier(container_id, k, val[(typeof k === "number" && k < 0) ? val.length + k : k]);
             }
             value_to_json = identity;
@@ -29915,9 +29947,9 @@ return this.__repr__();
         function set_rating(evt) {
             var li, nli;
             li = evt.currentTarget;
-            var ρσ_Iter4 = ρσ_Iterable(li.closest("ul").childNodes);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                nli = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter6 = ρσ_Iterable(li.closest("ul").childNodes);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                nli = ρσ_Iter6[ρσ_Index6];
                 nli.classList.remove("current-rating");
             }
             li.classList.add("current-rating");
@@ -29932,9 +29964,9 @@ return this.__repr__();
             numbers = (ρσ_exists.d(fm.display).allow_half_stars) ? list(range(11)) : list(range(0, 11, 2));
             name = fm.name || field;
             c = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({class_: "rating-edit-container"})]);
-            var ρσ_Iter5 = ρσ_Iterable(numbers);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                n = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter7 = ρσ_Iterable(numbers);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                n = ρσ_Iter7[ρσ_Index7];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -29967,9 +29999,9 @@ return this.__repr__();
             val = resolved_metadata(mi, field) || "";
             name = fm.name || field;
             c = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({class_: "rating-edit-container"})]);
-            var ρσ_Iter6 = ρσ_Iterable([""].concat(fm.display.enum_values));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                n = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter8 = ρσ_Iterable([""].concat(fm.display.enum_values));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                n = ρσ_Iter8[ρσ_Index8];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -30007,9 +30039,9 @@ return this.__repr__();
                 ρσ_d["n"] = _("No");
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter7 = ρσ_Iterable(['', 'y', 'n']);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                n = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter9 = ρσ_Iterable(['', 'y', 'n']);
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                n = ρσ_Iter9[ρσ_Index9];
                 s = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_desugar_kwargs({data_rating: n + "", onclick: set_rating})]);
                 c.appendChild(s);
                 if (n === val) {
@@ -30077,6 +30109,82 @@ return this.__repr__();
             __argnames__ : {value: ["container_id", "book_id", "field", "fm", "div", "mi"]}
         });
 
+        function format_added(top_container_id, book_id, container_id, files) {
+            var container, added, ext, data, r, file;
+            container = document.getElementById(container_id);
+            if (!container) {
+                return;
+            }
+            if (!files[0]) {
+                return;
+            }
+            added = changes.added_formats || [];
+            var ρσ_Iter10 = ρσ_Iterable(files);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                file = ρσ_Iter10[ρσ_Index10];
+                ext = (ρσ_expr_temp = file.name.rpartition("."))[ρσ_expr_temp.length-1];
+                data = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["name"] = file.name;
+                    ρσ_d["size"] = file.size;
+                    ρσ_d["type"] = file.type;
+                    ρσ_d["data_url"] = null;
+                    ρσ_d["ext"] = ext;
+                    return ρσ_d;
+                }).call(this);
+                added.push(data);
+                r = new FileReader;
+                r.onload = (function() {
+                    var ρσ_anonfunc = function (evt) {
+                        data.data_url = evt.target.result;
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["evt"]}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                r.readAsDataURL(file);
+            }
+            changes.added_formats = added;
+            has_changes = true;
+            on_close(top_container_id);
+        };
+        if (!format_added.__argnames__) Object.defineProperties(format_added, {
+            __argnames__ : {value: ["top_container_id", "book_id", "container_id", "files"]}
+        });
+
+        function remove_format(top_container_id, book_id, fmt) {
+            var removed_formats;
+            has_changes = true;
+            removed_formats = changes.removed_formats || [];
+            removed_formats.push(fmt.toUpperCase());
+            changes.removed_formats = removed_formats;
+            on_close(top_container_id);
+        };
+        if (!remove_format.__argnames__) Object.defineProperties(remove_format, {
+            __argnames__ : {value: ["top_container_id", "book_id", "fmt"]}
+        });
+
+        function formats_edit(container_id, book_id, field, fm, div, mi) {
+            var remove_buttons, formats, ρσ_unpack, i, fmt;
+            ρσ_interpolate_kwargs.call(this, upload_files_widget, [div, format_added.bind(null, container_id, book_id), _("Add a format by <a>selecting the book file</a> or drag and drop of the book file here.")].concat([ρσ_desugar_kwargs({single_file: true})]));
+            remove_buttons = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1rem; display: flex; flex-wrap: wrap; align-content: flex-start"})]);
+            formats = resolved_formats(mi.formats);
+            var ρσ_Iter11 = ρσ_Iterable(enumerate(formats));
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                ρσ_unpack = ρσ_Iter11[ρσ_Index11];
+                i = ρσ_unpack[0];
+                fmt = ρσ_unpack[1];
+                remove_buttons.appendChild(ρσ_interpolate_kwargs.call(this, create_button, [_("Remove {}").format(fmt.upper())].concat([ρσ_desugar_kwargs({action: remove_format.bind(null, container_id, book_id, fmt.upper())})])));
+                remove_buttons.lastChild.style.marginBottom = "1ex";
+                remove_buttons.lastChild.style.marginRight = "1rem";
+            }
+            div.appendChild(remove_buttons);
+        };
+        if (!formats_edit.__argnames__) Object.defineProperties(formats_edit, {
+            __argnames__ : {value: ["container_id", "book_id", "field", "fm", "div", "mi"]}
+        });
+
         function edit_field(container_id, book_id, field) {
             var fm, c, mi, d, ias;
             fm = (ρσ_expr_temp = library_data.field_metadata)[(typeof field === "number" && field < 0) ? ρσ_expr_temp.length + field : field];
@@ -30097,6 +30205,8 @@ return this.__repr__();
                 multiple_line_edit(" & ", "&", container_id, book_id, field, fm, d, mi);
             } else if (field === "cover") {
                 cover_edit(container_id, book_id, field, fm, d, mi);
+            } else if (field === "formats") {
+                formats_edit(container_id, book_id, field, fm, d, mi);
             } else if (fm.datatype === "series") {
                 series_edit(container_id, book_id, field, fm, d, mi);
             } else if (fm.datatype === "datetime") {
@@ -30221,9 +30331,9 @@ return this.__repr__();
                 added_fields.title = true;
                 fields.insert(0, "title");
             }
-            var ρσ_Iter8 = ρσ_Iterable(Object.keys(library_data.field_metadata));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                other_field = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter12 = ρσ_Iterable(Object.keys(library_data.field_metadata));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                other_field = ρσ_Iter12[ρσ_Index12];
                 if (!added_fields[(typeof other_field === "number" && other_field < 0) ? added_fields.length + other_field : other_field] && allowed_fields(other_field) && !ρσ_in(other_field, IGNORED_FIELDS)) {
                     fields.push(other_field);
                 }
@@ -30266,9 +30376,9 @@ return this.__repr__();
                     if (!join) {
                         add_val(val);
                     } else {
-                        var ρσ_Iter9 = ρσ_Iterable(val);
-                        for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                            v = ρσ_Iter9[ρσ_Index9];
+                        var ρσ_Iter13 = ρσ_Iterable(val);
+                        for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                            v = ρσ_Iter13[ρσ_Index13];
                             add_val(v);
                             if (v !== val[val.length-1]) {
                                 table.lastChild.lastChild.appendChild(document.createTextNode(join));
@@ -30318,8 +30428,8 @@ return this.__repr__();
                 stars = E.span();
                 val = int(val || 0);
                 if (val > 0) {
-                    for (var ρσ_Index10 = 0; ρσ_Index10 < Math.floor(val / 2); ρσ_Index10++) {
-                        i = ρσ_Index10;
+                    for (var ρσ_Index14 = 0; ρσ_Index14 < Math.floor(val / 2); ρσ_Index14++) {
+                        i = ρσ_Index14;
                         stars.appendChild(svgicon("star"));
                     }
                     if (fm.display.allow_half_stars && val % 2) {
@@ -30341,9 +30451,9 @@ return this.__repr__();
                     if (keys.length) {
                         table.appendChild(ρσ_interpolate_kwargs.call(E, E.tr, [E.td(name + ":"), E.td()].concat([ρσ_desugar_kwargs({onclick: current_edit_action})])));
                         td = table.lastChild.lastChild;
-                        var ρσ_Iter11 = ρσ_Iterable(keys);
-                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                            k = ρσ_Iter11[ρσ_Index11];
+                        var ρσ_Iter15 = ρσ_Iterable(keys);
+                        for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                            k = ρσ_Iter15[ρσ_Index15];
                             if (td.childNodes.length) {
                                 td.appendChild(document.createTextNode(", "));
                             }
@@ -30363,9 +30473,9 @@ return this.__repr__();
                 if (val && val.length) {
                     table.appendChild(ρσ_interpolate_kwargs.call(E, E.tr, [E.td(name + ":"), E.td()].concat([ρσ_desugar_kwargs({onclick: current_edit_action})])));
                     td = table.lastChild.lastChild;
-                    var ρσ_Iter12 = ρσ_Iterable(val);
-                    for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                        k = ρσ_Iter12[ρσ_Index12];
+                    var ρσ_Iter16 = ρσ_Iterable(val);
+                    for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                        k = ρσ_Iter16[ρσ_Index16];
                         lang = (ρσ_expr_temp = mi.lang_names)[(typeof k === "number" && k < 0) ? ρσ_expr_temp.length + k : k] || k;
                         td.appendChild(document.createTextNode(lang));
                         if (k !== val[val.length-1]) {
@@ -30419,6 +30529,20 @@ return this.__repr__();
                 __argnames__ : {value: ["field", "fm", "name", "val"]}
             });
 
+            function process_formats(field, fm, name, val) {
+                var join;
+                val = resolved_formats(val);
+                if (val.length) {
+                    join = (fm.is_multiple) ? fm.is_multiple.list_to_ui : null;
+                    ρσ_interpolate_kwargs.call(this, add_row, [name, val].concat([ρσ_desugar_kwargs({join: join})]));
+                } else {
+                    add_row(name, null);
+                }
+            };
+            if (!process_formats.__argnames__) Object.defineProperties(process_formats, {
+                __argnames__ : {value: ["field", "fm", "name", "val"]}
+            });
+
             function process_field(field, fm) {
                 var name, datatype, val, func, join, fmt;
                 name = fm.name || field;
@@ -30441,6 +30565,8 @@ return this.__repr__();
                     func = process_publisher;
                 } else if (field === "languages") {
                     func = process_languages;
+                } else if (field === "formats") {
+                    func = process_formats;
                 } else if (datatype === "datetime") {
                     func = process_datetime;
                 } else if (datatype === "series") {
@@ -30477,9 +30603,9 @@ return this.__repr__();
                 __argnames__ : {value: ["field", "fm"]}
             });
 
-            var ρσ_Iter13 = ρσ_Iterable(fields);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                field = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter17 = ρσ_Iterable(fields);
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                field = ρσ_Iter17[ρσ_Index17];
                 fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
                 if (!fm) {
                     continue;
@@ -30552,9 +30678,9 @@ return this.__repr__();
                     throw ρσ_Exception;
                 }
             }
-            var ρσ_Iter14 = ρσ_Iterable(dirtied);
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                bid = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter18 = ρσ_Iterable(dirtied);
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                bid = ρσ_Iter18[ρσ_Index18];
                 set_book_metadata(bid, dirtied[(typeof book_id === "number" && book_id < 0) ? dirtied.length + book_id : book_id]);
             }
             on_close(container_id);
@@ -30721,6 +30847,7 @@ return this.__repr__();
         ρσ_modules["book_list.edit_metadata"].has_changes = has_changes;
         ρσ_modules["book_list.edit_metadata"].identity = identity;
         ρσ_modules["book_list.edit_metadata"].resolved_metadata = resolved_metadata;
+        ρσ_modules["book_list.edit_metadata"].resolved_formats = resolved_formats;
         ρσ_modules["book_list.edit_metadata"].truncated_html = truncated_html;
         ρσ_modules["book_list.edit_metadata"].onsubmit_field2 = onsubmit_field2;
         ρσ_modules["book_list.edit_metadata"].onsubmit_field = onsubmit_field;
@@ -30758,6 +30885,9 @@ return this.__repr__();
         ρσ_modules["book_list.edit_metadata"].cover_chosen = cover_chosen;
         ρσ_modules["book_list.edit_metadata"].remove_cover = remove_cover;
         ρσ_modules["book_list.edit_metadata"].cover_edit = cover_edit;
+        ρσ_modules["book_list.edit_metadata"].format_added = format_added;
+        ρσ_modules["book_list.edit_metadata"].remove_format = remove_format;
+        ρσ_modules["book_list.edit_metadata"].formats_edit = formats_edit;
         ρσ_modules["book_list.edit_metadata"].edit_field = edit_field;
         ρσ_modules["book_list.edit_metadata"].render_metadata = render_metadata;
         ρσ_modules["book_list.edit_metadata"].changes_submitted = changes_submitted;

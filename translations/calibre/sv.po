@@ -20,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2019-05-28 09:37+IST\n"
-"PO-Revision-Date: 2019-05-28 04:07+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-05-31 09:27+IST\n"
+"PO-Revision-Date: 2019-06-16 20:04+0000\n"
+"Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -483,7 +483,7 @@ msgstr "Visa en lista med relaterade böcker"
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:908
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:15
 msgid "Filter/transform the tags for books in the library"
-msgstr "Filtrera/omvandla etiketterna från böcker i biblioteket"
+msgstr "Filtrera/omvandla taggarna från böcker i biblioteket"
 
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:914
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/author_mapper.py:15
@@ -712,7 +712,7 @@ msgstr "Anpassa hur calibre överför filer till din läsenhet"
 
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1239
 msgid "Metadata plugboards"
-msgstr "Kontrollpanel för metadata"
+msgstr "Metadatapluggbrädor"
 
 #: /home/kovid/work/calibre/src/calibre/customize/builtins.py:1245
 msgid "Change metadata fields before saving/sending"
@@ -1124,7 +1124,7 @@ msgstr "Katalog"
 #: /home/kovid/work/calibre/src/calibre/db/fields.py:717
 #: /home/kovid/work/calibre/src/calibre/db/fields.py:732
 #: /home/kovid/work/calibre/src/calibre/db/tests/legacy.py:402
-#: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:127
+#: /home/kovid/work/calibre/src/calibre/devices/nook/driver.py:128
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/sony_cache.py:456
 #: /home/kovid/work/calibre/src/calibre/devices/prs505/sony_cache.py:479
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:778
@@ -1353,7 +1353,7 @@ msgstr "%prog add_custom_column [alternativ] label name datatype\n\nSkapa en ege
 msgid ""
 "This column stores tag like data (i.e. multiple comma separated values). "
 "Only applies if datatype is text."
-msgstr "Denna kolumn lagrar etiketter som data (d.v.s. flera kommaseparerade värden). Gäller endast om datatypen är text."
+msgstr "Denna kolumn lagrar taggar som data (d.v.s. flera kommaseparerade värden). Gäller endast om datatypen är text."
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_add_custom_column.py:49
 msgid ""
@@ -1753,7 +1753,7 @@ msgid ""
 "settings, and custom recipes. Restored metadata will only be as accurate as\n"
 "what is found in the OPF files.\n"
 "    "
-msgstr "%prog restore_database [alternativ]\n\nÅterställ databasen från metadata lagrat i OPF-filer i varje katalog av \ncalibre-biblioteket. Detta är användbart om din metadata.db-fil\nhar blivit skadad.\n\nVARNING: Detta kommando återskapar helt databasen. Du kommer att förlora\nalla sparade sökningar, användarkategorier, kontrollpaneler, lagra-per-bok konverteringsinställningar och anpassade recept. Återställd metadata kommer \nbara vara så korrekta som vad finns i OPF-filer.\n    "
+msgstr "%prog restore_database [alternativ]\n\nÅterställ databasen från metadata lagrat i OPF-filer i varje katalog av \ncalibre-biblioteket. Detta är användbart om din metadata.db-fil\nhar blivit skadad.\n\nVARNING: Detta kommando återskapar helt databasen. Du kommer att förlora\nalla sparade sökningar, användarkategorier, pluggbrädor, lagra-per-bok konverteringsinställningar och anpassade recept. Återställd metadata kommer \nbara vara så korrekta som vad finns i OPF-filer.\n    "
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_restore_database.py:43
 msgid ""
@@ -1900,7 +1900,7 @@ msgid ""
 "must use the ISO639 language codes (e.g. en for English, fr for French and "
 "so on). For identifiers, the syntax is {0} {2}. For boolean (yes/no) fields "
 "use true and false or yes and no."
-msgstr "Fältet för att ställa in. Format är field_name:value, till exempel: {0} etiketter: etikett1, etikett2. Använd {1} för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639 språkkoder (t.ex. EN för engelska, fr för franska och så vidare). För identifierare, är syntaxen {0} {2}. För boolean (ja/nej) fält använder sann och falsk eller ja och nej."
+msgstr "Fältet för att ställa in. Format är field_name:value, till exempel: {0} taggar: tagg1, tagg2. Använd {1} för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639 språkkoder (t.ex. EN för engelska, fr för franska och så vidare). För identifierare, är syntaxen {0} {2}. För boolean (ja/nej) fält använder sann och falsk eller ja och nej."
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_set_metadata.py:96
 msgid "List the metadata field names that can be used with the --field option"
@@ -2675,7 +2675,7 @@ msgid ""
 " <li>accurate: Based on the number of chapters, paragraphs, and visible lines in the book. This method is designed to simulate an average paperback book where there are 32 lines per page and a maximum of 70 characters per line.\n"
 "\n"
 " <li>pagebreak: The \"pagebreak\" method uses the presence of <mbp:pagebreak> tags within the book to determine pages.</ul>Methods other than \"fast\" are going to be much slower. Further, if \"pagebreak\" fails to determine a page count accurate will be used, and if  \"accurate\" fails fast will be used."
-msgstr "Det finns flera sätt att generera sidnummerinformationen. Om ett sidantal ges då kommer boken att delas upp i så många sidor. Annars kommer antalet sidor approximeras med hjälp av någon av följande metoder.<ul> <li>snabb: 2300 tecken av okomprimerad text per sida.\n\n<li>exakt: Baserat på antal kapitel, stycken och synliga linjer i boken. Denna metod är utformad för att simulera en genomsnittlig pocketbok där det finns 32 rader per sida och högst 70 tecken per rad.\n\n<li>sidbrytning: \"Sidbrytning\"-metoden använder närvaron av <mbp:pagebreak>-etiketter inom boken för att avgöra sidor.</ul>Andra metoder än \"snabbt\" kommer att vara mycket långsammare. Vidare, om \"sidbrytning\" misslyckas med att bestämma sidantal som kommer att användas, och om \"exakt\" misslyckas kommer snabbt att användas."
+msgstr "Det finns flera sätt att generera sidnummerinformationen. Om ett sidantal ges då kommer boken att delas upp i så många sidor. Annars kommer antalet sidor approximeras med hjälp av någon av följande metoder.<ul> <li>snabb: 2300 tecken av okomprimerad text per sida.\n\n<li>exakt: Baserat på antal kapitel, stycken och synliga linjer i boken. Denna metod är utformad för att simulera en genomsnittlig pocketbok där det finns 32 rader per sida och högst 70 tecken per rad.\n\n<li>sidbrytning: \"Sidbrytning\"-metoden använder närvaron av <mbp:pagebreak>-taggar inom boken för att avgöra sidor.</ul>Andra metoder än \"snabbt\" kommer att vara mycket långsammare. Vidare, om \"sidbrytning\" misslyckas med att bestämma sidantal som kommer att användas, och om \"exakt\" misslyckas kommer snabbt att användas."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kindle/driver.py:354
 msgid "Custom column name to retrieve page counts from"
@@ -2733,7 +2733,7 @@ msgstr "Kobo stöder flera samlingar, inklusive "
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:116
 msgid "Create tags for automatic management"
-msgstr "Skapa etiketter för automatisk hantering"
+msgstr "Skapa taggar för automatisk hantering"
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:117
 msgid "Upload covers for books (newer readers)"
@@ -2970,7 +2970,7 @@ msgstr "Samlingskolumner:"
 msgid ""
 "The Kobo from firmware V2.0.0 supports bookshelves. These are created on the"
 " Kobo. Specify a tags type column for automatic management."
-msgstr "Kobo med firmware från V2.0.0 stödjer bokhyllor. Dessa skapas på Kobo. Ange en etikettypskolumn för automatisk hantering."
+msgstr "Kobo med firmware från V2.0.0 stödjer bokhyllor. Dessa skapas på Kobo. Ange en taggtypskolumn för automatisk hantering."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/kobotouch_config.py:247
 msgid "Create collections"
@@ -3524,7 +3524,7 @@ msgid ""
 "Set this option if you want the author on the Sony to appear the same way "
 "the T1 sets it. This means it will only show the first author for books with"
 " multiple authors. Leave this disabled if you use Metadata Plugboards."
-msgstr "Ange det här alternativet om du vill att författaren på Sony ska synas på samma sätt T1 ställer den. Detta innebär att det endast kommer att visa den första författare till böcker med flera författare. Lämna detta funktionshinder om du använder metadata kontrollpanel."
+msgstr "Ange det här alternativet om du vill att författaren på Sony ska synas på samma sätt T1 ställer den. Detta innebär att det endast kommer att visa den första författare till böcker med flera författare. Lämna detta funktionshinder om du använder metadatapluggbrädor."
 
 #: /home/kovid/work/calibre/src/calibre/devices/smart_device_app/driver.py:175
 msgid "Wireless Device"
@@ -3873,7 +3873,7 @@ msgid "Sending metadata to device..."
 msgstr "Överför metadata till enheten..."
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:39
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:74
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:75
 msgid "USB Vendor ID (in hex)"
 msgstr "USB leverantörs-ID (i hex)"
 
@@ -3886,12 +3886,12 @@ msgid ""
 msgstr "Få detta ID med Inställningar -> Övrigt -> Hämta information för att ställa in den användardefinierade enheten"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:42
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:76
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:77
 msgid "USB Product ID (in hex)"
 msgstr "USB produkts-ID (i hex)"
 
 #: /home/kovid/work/calibre/src/calibre/devices/user_defined/driver.py:45
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:78
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:79
 msgid "USB Revision ID (in hex)"
 msgstr "USB revisions-ID (i hex)"
 
@@ -4568,7 +4568,7 @@ msgid ""
 "effect on the conversion. It is used only when sending MOBI files to a "
 "device. If the file being sent has the specified tag, it will be marked as a"
 " personal document when sent to the Kindle."
-msgstr "Etikett för MOBI-filer som ska markeras som personliga dokument. Detta alternativ har ingen effekt på konverteringen. Det används bara när du skickar MOBI-filer till en enhet. Om filen skickas har den angivna etiketten, kommer det att markeras som ett personligt dokument när de skickas till Kindle."
+msgstr "Tagg för MOBI-filer som ska markeras som personliga dokument. Detta alternativ har ingen effekt på konverteringen. Det används bara när du skickar MOBI-filer till en enhet. Om filen skickas har den angivna taggen, kommer det att markeras som ett personligt dokument när de skickas till Kindle."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:73
 msgid ""
@@ -4874,7 +4874,7 @@ msgstr "Stöd tillrättavisningar"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:17
 msgid "Add attribute to HTML tags"
-msgstr "Lägg till attribut i HTML-etiketter"
+msgstr "Lägg till attribut i HTML-taggar"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:18
 msgid "Add code highlighting via Pygments"
@@ -5503,7 +5503,7 @@ msgstr "Ange ISBN för boken."
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:604
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:73
 msgid "Set the tags for the book. Should be a comma separated list."
-msgstr "Ange etiketter för boken. Skall vara en kommaseparerad lista."
+msgstr "Ange taggar för boken. Skall vara en kommaseparerad lista."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:608
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/cli.py:75
@@ -5536,7 +5536,7 @@ msgid ""
 "Detect unformatted chapter headings and sub headings. Change them to h2 and "
 "h3 tags.  This setting will not create a TOC, but can be used in conjunction"
 " with structure detection to create one."
-msgstr "Identifiera oformaterade huvud- och underrubriker. Ändra dem till H2- och H3-etiketter. Den här inställningen kommer inte att skapa en innehållsförteckning, men kan användas i kombination med strukturidentifiering för att skapa ett."
+msgstr "Identifiera oformaterade huvud- och underrubriker. Ändra dem till H2- och H3-taggar. Den här inställningen kommer inte att skapa en innehållsförteckning, men kan användas i kombination med strukturidentifiering för att skapa ett."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:636
 msgid ""
@@ -5590,7 +5590,7 @@ msgstr "Analysera avstavade ord i hela dokumentet. Själva dokumentet används s
 msgid ""
 "Looks for occurrences of sequential <h1> or <h2> tags. The tags are "
 "renumbered to prevent splitting in the middle of chapter headings."
-msgstr "Letar efter förekomster av sekventiella <h1> eller <h2>-etiketter. Etiketterna ska numreras för att förhindra uppdelning i mitten av kapitelrubrikerna."
+msgstr "Letar efter förekomster av sekventiella <h1> eller <h2>-taggar. Taggarna ska numreras för att förhindra uppdelning i mitten av kapitelrubrikerna."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plumber.py:686
 msgid "Search pattern (regular expression) to be replaced with sr1-replace."
@@ -6023,7 +6023,7 @@ msgid "Do not save embedded image and font files to disk"
 msgstr "Spara inte inbäddade bild- och typsnittsfiler till hårddisken"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/lrf/lrfparser.py:146
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:229
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:230
 msgid "Be more verbose"
 msgstr "Var mer informativ"
 
@@ -6210,7 +6210,7 @@ msgstr "Kommentarer"
 #: /home/kovid/work/calibre/src/calibre/srv/tests/ajax.py:71
 #: /home/kovid/work/calibre/src/calibre/srv/tests/ajax.py:73
 msgid "Tags"
-msgstr "Etiketter"
+msgstr "Taggar"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:777
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:296
@@ -6534,7 +6534,7 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "Aktivera det här alternativet för att söka efter metadata med en ASIN-identifierare från MOBI-filen på den aktuella landswebbplatsen, såvida inte något annat amazon-id är tillgängligt. Observera att om MOBI-filen kom från ett annat Amazon-landsbutik kan du få felaktiga resultat."
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1265
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1270
 msgid "Amazon timed out. Try again later."
 msgstr "Amazon tidsbegränsning löpte ut. Försök igen senare."
 
@@ -6684,7 +6684,7 @@ msgid ""
 "the e-book ISBN. Collecting this data is disabled by default due to the "
 "extra time required. Check the download all metadata option below to enable "
 "downloading this data."
-msgstr "Ytterligare metadata kan tas från Overdrives bokdetaljsida. Detta omfattar en begränsad uppsättning etiketter som används av bibliotek, kommentarer, språk och e-bok ISBN. Insamling av dessa data är som standard inaktiverat på grund av den extra tid det tar. Kryssa alternativet hämta all metadata nedan för att aktivera hämtning av dessa data."
+msgstr "Ytterligare metadata kan tas från Overdrives bokdetaljsida. Detta omfattar en begränsad uppsättning taggar som används av bibliotek, kommentarer, språk och e-bok ISBN. Insamling av dessa data är som standard inaktiverat på grund av den extra tid det tar. Kryssa alternativet hämta all metadata nedan för att aktivera hämtning av dessa data."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/ozon.py:29
 msgid "Downloads metadata and covers from OZON.ru (updated)"
@@ -6953,7 +6953,7 @@ msgstr "Denna länk hänvisar till en fil utanför boken. Det fungerar inte om b
 msgid ""
 "This link is empty. This is almost always a mistake. Either fill in the link"
 " destination or remove the link tag."
-msgstr "Denna länk är tom. Det är nästan alltid ett misstag. Antingen fyll i länkens destination eller ta bort länketiketten."
+msgstr "Denna länk är tom. Det är nästan alltid ett misstag. Antingen fyll i länkens destination eller ta bort länktaggen."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/links.py:117
 msgid ""
@@ -7096,14 +7096,14 @@ msgstr "idref=\"%s\" hänvisar till ett id som inte finns i OPF"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:37
 msgid "The meta cover tag points to an non-existent item"
-msgstr "De metaomslagsetiketten pekar på en icke-existerande objekt"
+msgstr "De metaomslagstaggen pekar på en icke-existerande objekt"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:39
 #, python-format
 msgid ""
 "The meta cover tag points to an item with id=\"%s\" which does not exist in "
 "the manifest"
-msgstr "Metaomslagsetiketten pekar på ett objekt med id =\"%s\", som inte finns i manifestet"
+msgstr "Metaomslagstaggen pekar på ett objekt med id =\"%s\", som inte finns i manifestet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:45
 msgid ""
@@ -7118,7 +7118,7 @@ msgstr "Flytta namnattributet före innehållsattributet."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:51
 msgid "The meta cover tag has content before name"
-msgstr "Metaomslagsetiketten har innehåll före namnet"
+msgstr "Metaomslagstaggen har innehåll före namnet"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:64
 #, python-format
@@ -7162,7 +7162,7 @@ msgid ""
 "this reference, the table of contents will not work in most readers. The "
 "reference should look like <spine toc=\"id of manifest item for the ncx "
 "file\">."
-msgstr "Den <spine> etiketten har ingen hänvisning till NCX innehållförteckningsfil. Utan denna hänvisning, kommer innehållsförteckningen inte fungerar i de flesta läsenheter. Hänvisningen ska se ut så här <spine toc=\"id of manifest item for the ncx file\">."
+msgstr "Den <spine> taggen har ingen hänvisning till NCX innehållförteckningsfil. Utan denna hänvisning, kommer innehållsförteckningen inte fungerar i de flesta läsenheter. Hänvisningen ska se ut så här <spine toc=\"id of manifest item for the ncx file\">."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:96
 msgid "Add the reference to the NCX file"
@@ -7248,11 +7248,11 @@ msgstr "Posten {0} finns mer än en gång i {2} i {1}. Detta är inte tillåtet.
 msgid ""
 "There is more than one <meta name=\"cover\"> tag defined. There should be "
 "only one."
-msgstr "Det finns mer än en <meta namn=\"omslag\">-etikett definiera. Det ska bara finnas en."
+msgstr "Det finns mer än en <meta namn=\"omslag\">-tagg definiera. Det ska bara finnas en."
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:203
 msgid "Remove all but the first meta cover tag"
-msgstr "Ta bort alla utom den första metaomslagsetiketten"
+msgstr "Ta bort alla utom den första metaomslagstaggen"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/opf.py:206
 msgid "There is more than one cover defined"
@@ -7318,7 +7318,7 @@ msgstr "ODFn saknar en version"
 msgid ""
 "The <package> tag in the OPF must have a version attribute. This is usually "
 "version=\"2.0\" for EPUB2 and AZW3 and version=\"3.0\" for EPUB3"
-msgstr "Den <package> etiketten i OPF måste ha ett versionsattribut. Detta är vanligtvis version=\"2.0\" för EPUB2 och AZW3 och version=\"3.0\" för EPUB3"
+msgstr "Den <package> taggen i OPF måste ha ett versionsattribut. Detta är vanligtvis version=\"2.0\" för EPUB2 och AZW3 och version=\"3.0\" för EPUB3"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/parsing.py:32
 msgid ""
@@ -7525,17 +7525,17 @@ msgstr "id {0} är inte en giltig id. ID måste börja med en bokstav ([A-Za-z])
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/parsing.py:402
 msgid "Wrap the bare text in a p tag"
-msgstr "Omslut den rena texten med en p-etikett"
+msgstr "Omslut den rena texten med en p-tagg"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/parsing.py:403
 msgid ""
 "You cannot have bare text inside the body tag. The text must be placed "
 "inside some other tag, such as p or div"
-msgstr "Du kan inte ha ren text inuti huvudetiketten. Texten ska placeras inuti en annan etikett, såsom p eller div"
+msgstr "Du kan inte ha ren text inuti brödtaggen. Texten ska placeras inuti en annan tagg, såsom p eller div"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/parsing.py:407
 msgid "Bare text in body tag"
-msgstr "Ren text i brödetikett"
+msgstr "Ren text i brödtagg"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.py:1466
 msgid ""
@@ -7702,7 +7702,7 @@ msgid ""
 "<p>Insert a \"book jacket\" page at the start of the book that contains\n"
 "all the book metadata such as title, tags, authors, series, comments,\n"
 "etc. Any previous book jacket will be replaced.</p>"
-msgstr "<p>Sätt ett \"bokomslag\" i början av boken som innehåller \nallt om bokens metadata som titel, etiketter, författare, serier, kommentarer, \no.s.v. Eventuellt tidigare bokomslag kommer att ersättas.</p>"
+msgstr "<p>Sätt ett \"bokomslag\" i början av boken som innehåller \nallt om bokens metadata som titel, taggar, författare, serier, kommentarer, \no.s.v. Eventuellt tidigare bokomslag kommer att ersättas.</p>"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/main.py:94
 msgid "<p>Remove a previous inserted book jacket page.</p>\n"
@@ -7722,7 +7722,7 @@ msgid ""
 "created from production templates can have a large number of extra CSS rules\n"
 "that dont match any actual content. These extra rules can slow down readers\n"
 "that need to parse them all.</p>\n"
-msgstr "<p>Ta bort alla oanvända CSS-regler från formatmallar och &lt;format&gt;etiketter.  Vissa böcker \nskapade från produktionsmallar kan ha ett stort antal extra CSS-regler \nsom inte matchar något av det faktiska innehållet. Dessa extra regler kan slöa ner läsare \nnär den behöver tolka dem alla.</p>\n"
+msgstr "<p>Ta bort alla oanvända CSS-regler från formatmallar och &lt;format&gt;taggar.  Vissa böcker \nskapade från produktionsmallar kan ha ett stort antal extra CSS-regler \nsom inte matchar något av det faktiska innehållet. Dessa extra regler kan slöa ner läsare \nnär den behöver tolka dem alla.</p>\n"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/main.py:112
 msgid ""
@@ -8016,7 +8016,7 @@ msgstr "Använd romerska siffror för serienummer"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:214
 msgid "Sort tags list by name, popularity, or rating"
-msgstr "Sortera etikettlista efter namn, popularitet eller betyg"
+msgstr "Sortera tagglista efter namn, popularitet eller betyg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:216
 msgid "Match tags by any or all."
@@ -8097,7 +8097,7 @@ msgstr "Högst antal samtidiga hämtningsjobb för konvertering/nyheter. Detta a
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:279
 msgid "Download social metadata (tags/rating/etc.)"
-msgstr "Hämta sociala metadata (etiketter/betyg/o.s.v.)"
+msgstr "Hämta sociala metadata (taggar/betyg/o.s.v.)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:281
 msgid "Overwrite author and title with new metadata"
@@ -8119,7 +8119,7 @@ msgstr "Utformningen av användargränssnittet. Bred har bokdetaljpanelen till h
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:291
 msgid "Show the average rating per item indication in the Tag browser"
-msgstr "Visa snittbetyg per objekt i Etikettbläddraren"
+msgstr "Visa snittbetyg per objekt i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:293
 msgid "Disable UI animations"
@@ -8127,7 +8127,7 @@ msgstr "Inaktivera användargränssnittets animeringar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:298
 msgid "tag browser categories not to display"
-msgstr "etikettbläddrarkategorier som inte ska visas"
+msgstr "taggbläddrarkategorier som inte ska visas"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:370
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/embed.py:108
@@ -10538,7 +10538,7 @@ msgstr "Böcker av det här förlaget"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/similar_books.py:30
 msgid "Books with the same tags"
-msgstr "Böcker med samma etiketter"
+msgstr "Böcker med samma taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/sort.py:31
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:522
@@ -10637,13 +10637,13 @@ msgstr "Om hämta böcker"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:15
 msgid "Tag mapper"
-msgstr "Etikettkartläggare"
+msgstr "Taggkartläggare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tag_mapper.py:36
 msgid "Map tags for one book in the library"
 msgid_plural "Map tags for {} books in the library"
-msgstr[0] "Kartlägg etiketter för en bok i biblioteket"
-msgstr[1] "Kartlägg etiketter för {} böcker i biblioteket"
+msgstr[0] "Kartlägg taggar för en bok i biblioteket"
+msgstr[1] "Kartlägg taggar för {} böcker i biblioteket"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/toc_edit.py:25
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:22
@@ -11139,7 +11139,7 @@ msgstr "Du måste ange ett värde för filnamnet för att matcha"
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:45
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:138
 msgid "A comma separated list of tags"
-msgstr "En kommaseparerad lista med etiketter"
+msgstr "En kommaseparerad lista med taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/add_filters.py:48
 msgid "Matching is case-insensitive"
@@ -11581,7 +11581,7 @@ msgstr "BibTeX-posttyp:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex_ui.py:77
 msgid "Create a citation tag?"
-msgstr "Skapa citationsetikett?"
+msgstr "Skapa citationstagg?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex_ui.py:78
 msgid "Add file paths with formats?"
@@ -11589,7 +11589,7 @@ msgstr "Lägg till filsökvägar med format?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex_ui.py:79
 msgid "Expression to form the BibTeX citation tag:"
-msgstr "Uttryck för att forma BibTeX-citationsetiketten:"
+msgstr "Uttryck för att forma BibTeX-citationstaggen:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_bibtex_ui.py:80
 msgid ""
@@ -11600,7 +11600,7 @@ msgid ""
 " -For list types ie authors and tags, only the first element\n"
 "   will be selected.\n"
 " -For time field, only the date will be used. "
-msgstr "En liten förklaring om mallen:\n -De tillgängliga fälten är 'author_sort', 'authors', 'id',\n    'isbn', 'pubdate', 'publisher', 'series_index', 'series',\n   'tags', 'timestamp', 'title', 'uuid', 'title_sort'\n -För listtyper, d.v.s. författare och etiketter, kommer\n   bara det första elementet väljs.\n -För tidsfältet kommer bara datumet användas. "
+msgstr "En liten förklaring om mallen:\n -De tillgängliga fälten är 'author_sort', 'authors', 'id',\n    'isbn', 'pubdate', 'publisher', 'series_index', 'series',\n   'tags', 'timestamp', 'title', 'uuid', 'title_sort'\n -För listtyper, d.v.s. författare och taggar, kommer\n   bara det första elementet väljs.\n -För tidsfältet kommer bara datumet användas. "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_csv_xml.py:36
 msgid "CSV/XML options"
@@ -11855,7 +11855,7 @@ msgstr "Uteslutna böcker"
 msgid ""
 "A regular expression describing genres to be excluded from the generated catalog. Genres are derived from the tags applied to your books.\n"
 "The default pattern \\[.+\\]|\\+ excludes tags of the form [tag], e.g., [Test book], and '+', the default tag for a read book."
-msgstr "Ett reguljärt uttryck som beskriver genrer som ska exkluderas från den genererade katalogen. Genrer härrörs från de etiketter som gäller för dina böcker.\nStandardmönster \\[.+\\]|\\+ utsluter etiketter [tag], t.ex., [Test book], och '+', standardetikett för en läst bok."
+msgstr "Ett reguljärt uttryck som beskriver genrer som ska exkluderas från den genererade katalogen. Genrer härrörs från de taggar som gäller för dina böcker.\nStandardmönster \\[.+\\]|\\+ utsluter taggar [tag], t.ex., [Test book], och '+', standardtagg för en läst bok."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:379
 msgid "Excluded genres"
@@ -11919,7 +11919,7 @@ msgstr "Resultat av regex:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:384
 msgid "Tags that will be excluded as genres"
-msgstr "Etiketter som ska uteslutas som genrer"
+msgstr "Taggar som ska uteslutas som genrer"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:385
 msgid "Other options"
@@ -12663,7 +12663,7 @@ msgstr "Identifiera och markera oformaterade kapitelrubriker och underrubriker"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/heuristics_ui.py:114
 msgid "Renumber sequences of <h1> or <h2> tags to prevent splitting"
-msgstr "Numrera sekvenser av <h1> eller <h2> etiketter för att förhindra uppdelning"
+msgstr "Numrera sekvenser av <h1> eller <h2> taggar för att förhindra uppdelning"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/heuristics_ui.py:115
 msgid "Delete blank lines between paragraphs"
@@ -13049,7 +13049,7 @@ msgstr "F&örlag: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:166
 msgid "Ta&gs: "
-msgstr "Etikett&er: "
+msgstr "Tagg&er: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:167
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:636
@@ -13057,7 +13057,7 @@ msgstr "Etikett&er: "
 msgid ""
 "Tags categorize the book. This is particularly useful while searching. "
 "<br><br>They can be any words or phrases, separated by commas."
-msgstr "Etiketterna kategoriserar boken. Detta är särskilt användbart när du använder sökfunktionen. <br><br>De kan vara ord eller fraser och separeras med kommatecken."
+msgstr "Taggarna kategoriserar boken. Detta är särskilt användbart när du använder sökfunktionen. <br><br>De kan vara ord eller fraser och separeras med kommatecken."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:168
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:136
@@ -13101,7 +13101,7 @@ msgstr "MOBI-fil&typ:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/mobi_output_ui.py:84
 msgid "Personal Doc tag:"
-msgstr "Etikett för personliga dokument:"
+msgstr "Tagg för personliga dokument:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/mobi_output_ui.py:86
 msgid ""
@@ -13839,7 +13839,7 @@ msgstr "Markdown, Textile"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/txt_output_ui.py:94
 msgid "Do not remove links (<a> tags) before processing"
-msgstr "Ta inte bort länkar (<a> etiketter) före bearbetning"
+msgstr "Ta inte bort länkar (<a> taggar) före bearbetning"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/txt_output_ui.py:95
 msgid "Do not remove image &references before processing"
@@ -13864,7 +13864,7 @@ msgstr "Använd en guide som hjälp att konstruera reguljära uttryck"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/xpath_wizard_ui.py:68
 msgid "Match HTML &tags with tag name:"
-msgstr "Jämför HTML &etiketter med etikettnamn:"
+msgstr "Jämför HTML &taggar med taggnamn:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/xpath_wizard_ui.py:69
 msgid "*"
@@ -13935,7 +13935,7 @@ msgid ""
 "leaving value blank will match any value. Setting tag to * will match any "
 "tag.</p><p>To learn more advanced usage of XPath see the <a "
 "href=\"%s\">XPath Tutorial</a>."
-msgstr "<p>Till exempel, för att matcha alla h2-etiketter som har class=\"chapter\", sätt etikett till <i>h2</i>, attributet till <i>class</i> och värdet till <i>chapter</i>.</p><p>Att lämna attribut tomt kommer att matcha alla attribut och att lämna värdet tomt kommer att matcha alla värden. Ställa in etikett till * kommer att matcha alla etiketter.</p><p>Om du vill veta mera om avancerad användning av XPath, se <a href=\"%s\">XPath handledningen</a>."
+msgstr "<p>Till exempel, för att matcha alla h2-taggar som har class=\"chapter\", sätt tagg till <i>h2</i>, attributet till <i>class</i> och värdet till <i>chapter</i>.</p><p>Att lämna attribut tomt kommer att matcha alla attribut och att lämna värdet tomt kommer att matcha alla värden. Ställa in tagg till * kommer att matcha alla taggar.</p><p>Om du vill veta mera om avancerad användning av XPath, se <a href=\"%s\">XPath handledningen</a>."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/cover_flow.py:241
 msgid "Browse by covers"
@@ -14104,7 +14104,7 @@ msgid ""
 "templates for bold, italic and line breaks, respectively. The default "
 "templates use the title, series and authors. You can change them to use "
 "whatever metadata you like."
-msgstr "Texten på den genererade omslaget tas från metadata av boken. Detta styrs via mallar. Du kan använda <b>, <i> och <br> etiketter i mallarna för respektive fet, kursiv och radbrytningar. Standardmallarna använder titel, serier och författare. Du kan ändra dem för att använda de metadata som du vill."
+msgstr "Texten på den genererade omslaget tas från metadata av boken. Detta styrs via mallar. Du kan använda <b>, <i> och <br> taggar i mallarna för respektive fet, kursiv och radbrytningar. Standardmallarna använder titel, serier och författare. Du kan ändra dem för att använda de metadata som du vill."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:253
 msgid "Change the &title template"
@@ -14172,11 +14172,11 @@ msgstr "En exempelserie"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:483
 msgid "Tag One"
-msgstr "Etikett ett"
+msgstr "Tagg ett"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:483
 msgid "Tag Two"
-msgstr "Etikett två"
+msgstr "Tagg två"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:484
 msgid "Some publisher"
@@ -14451,15 +14451,15 @@ msgstr "Uppräkningen \"{0}\" innehåller ogiltiga värden som inte kommer att v
 
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1262
 msgid "Remove all tags"
-msgstr "Ta bort alla etiketter"
+msgstr "Ta bort alla taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1284
 msgid "tags to add"
-msgstr "etiketter att lägga till"
+msgstr "taggar att lägga till"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1293
 msgid "tags to remove"
-msgstr "etiketter att ta bort"
+msgstr "taggar att ta bort"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1375
 msgid ""
@@ -15019,7 +15019,7 @@ msgstr "<p>Ange en lista med ISBN i rutan till vänster, en per rad. calibre kom
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/add_from_isbn.py:63
 msgid "&Tags to set on created book entries:"
-msgstr "&Etiketter att lägga till skapade bokposter:"
+msgstr "&Taggar att lägga till skapade bokposter:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/add_from_isbn.py:110
 msgid "Some invalid ISBNs"
@@ -15449,7 +15449,7 @@ msgstr "&Skapa ett tomt bibliotek på den nya platsen"
 msgid ""
 "Copy the custom columns, saved searches, column widths, plugboards,\n"
 "user categories, and other information from the old to the new library"
-msgstr "Kopiera anpassade kolumner, sparade sökningar, kolumnbredd, kontrollpanel,\nkategorier av användare och annan information från det gamla till det nya biblioteket"
+msgstr "Kopiera anpassade kolumner, sparade sökningar, kolumnbredd, pluggbrädor,\nkategorier av användare och annan information från det gamla till det nya biblioteket"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_library_ui.py:81
 msgid "&Copy structure from the current library"
@@ -16645,7 +16645,7 @@ msgstr "&Växla titel och författare"
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:592
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:235
 msgid "Open Tag editor"
-msgstr "Öppna Etikettredigeraren"
+msgstr "Öppna Taggredigeraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:593
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1327
@@ -16682,15 +16682,15 @@ msgstr "&Återställ till original, om tillgänglig"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:605
 msgid "Comma separated list of tags to remove from the books. "
-msgstr "Kommaseparerad lista med etiketter att ta bort från böckerna. "
+msgstr "Kommaseparerad lista med taggar att ta bort från böckerna. "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:608
 msgid "&Remove tags:"
-msgstr "&Ta bort etiketter:"
+msgstr "&Ta bort taggar:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:609
 msgid "Add ta&gs: "
-msgstr "Lägg till &etiketter: "
+msgstr "Lägg till &taggar: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:610
 msgid "Author s&ort: "
@@ -16761,7 +16761,7 @@ msgstr "Ange hur författar(en/na) till denna bok bör sorteras. Exempel: Charle
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:638
 msgid "Check this box to remove all tags from the books."
-msgstr "Markera den här rutan för att ta bort alla etiketter från böckerna."
+msgstr "Markera den här rutan för att ta bort alla taggar från böckerna."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:640
 msgid ""
@@ -17597,7 +17597,7 @@ msgid ""
 "You can create a <i>Saved search</i>, for frequently used searches here. The"
 " search will be visible under <i>Searches</i> in the Tag browser, using the "
 "name that you specify here."
-msgstr "Du kan skapa en <i>Sparad sökning</i>, för flitigt använda sökningar här. Sökningen kommer att visas under <i>Sökningar</i> i Etikettbläddraren med namnet du anger här."
+msgstr "Du kan skapa en <i>Sparad sökning</i>, för flitigt använda sökningar här. Sökningen kommer att visas under <i>Sökningar</i> i Taggbläddraren med namnet du anger här."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/saved_search_editor.py:52
 msgid "The Saved search name"
@@ -17823,11 +17823,11 @@ msgstr "A&vancerat"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:327
 msgid "Add &title as tag"
-msgstr "Lägg till &titel som etikett"
+msgstr "Lägg till &titel som tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:329
 msgid "&Extra tags:"
-msgstr "&Extra etiketter:"
+msgstr "&Extra taggar:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:333
 msgid "&Keep at most:"
@@ -17844,7 +17844,7 @@ msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
-msgstr "<p>När valt, kommer detta alternativ få calibre  att hålla på sin höjd, behålla angivet antal utgåvor av denna tidskrift. Varje gång en ny utgåva hämtas, tas den äldsta bort, om den sammanlagda summan är större än denna siffra.\n<p>Observera att denna funktion fungerar bara om du har möjlighet att lägga till titeln som incheckad etikett, ovan.\n<p>Även inställningen för att radera tidskrifter äldre än ett visst antal dagar, nedan, har prioritet över denna inställning."
+msgstr "<p>När valt, kommer detta alternativ få calibre  att hålla på sin höjd, behålla angivet antal utgåvor av denna tidskrift. Varje gång en ny utgåva hämtas, tas den äldsta bort, om den sammanlagda summan är större än denna siffra.\n<p>Observera att denna funktion fungerar bara om du har möjlighet att lägga till titeln som incheckad tagg, ovan.\n<p>Även inställningen för att radera tidskrifter äldre än ett visst antal dagar, nedan, har prioritet över denna inställning."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:344
 msgid " issues"
@@ -18069,12 +18069,12 @@ msgstr "Serier att söka efter"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:139
 msgid "The tags to search for"
-msgstr "Etiketter att söka efter"
+msgstr "Taggar att söka efter"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:141
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1362
 msgid "Ta&gs:"
-msgstr "&Etiketter:"
+msgstr "&Taggar:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:161
 msgid "&Date searches"
@@ -18293,7 +18293,7 @@ msgstr "Det namnet används redan, kanske med annan användning."
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.py:259
 msgid ""
 "The current tag category will be <b>permanently deleted</b>. Are you sure?"
-msgstr "Den nuvarande etikettkategorin kommer att <b>tas bort permanent</b>. Är du säker?"
+msgstr "Den nuvarande taggkategorin kommer att <b>tas bort permanent</b>. Är du säker?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:165
 msgid "User categories editor"
@@ -18309,7 +18309,7 @@ msgstr "Välj en kategori att redigera"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:168
 msgid "Delete this selected tag category"
-msgstr "Ta bort den valda etikettkategorin"
+msgstr "Ta bort den valda taggkategorin"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:170
 msgid "Enter a category name, then use the add button or the rename button"
@@ -18350,7 +18350,7 @@ msgstr "&Tillgängliga poster"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:182
 msgid "Apply tags to current tag category"
-msgstr "Tillämpa etiketter till aktuell etikettkategori"
+msgstr "Tillämpa taggar till aktuell taggkategori"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:184
 msgid "Applied &items"
@@ -18358,7 +18358,7 @@ msgstr "Tillämpade &poster"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories_ui.py:185
 msgid "Unapply (remove) tag from current tag category"
-msgstr "Sluta tillämpa (ta bort) etikett från den aktuella etikettkategorin"
+msgstr "Sluta tillämpa (ta bort) tagg från den aktuella taggkategorin"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor.py:31
 #, python-format
@@ -18373,67 +18373,67 @@ msgstr "Är du säker?"
 msgid ""
 "The following tags are used by one or more books. Are you certain you want "
 "to delete them?"
-msgstr "Följande etiketter används av en eller flera böcker. Är du säker på att du vill ta bort dem?"
+msgstr "Följande taggar används av en eller flera böcker. Är du säker på att du vill ta bort dem?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:124
 msgid "Tag editor"
-msgstr "Etikettredigerare"
+msgstr "Taggredigerare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:125
 msgid "&Add tag:"
-msgstr "&Lägg till etikett:"
+msgstr "&Lägg till tagg:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:126
 msgid ""
 "If the tag you want is not in the available list, you can add it here. "
 "Accepts a comma separated list of tags."
-msgstr "Om etiketten du vill använda inte finns på listan, kan du lägga till den här. Accepterar en kommaseparerad lista med etiketter."
+msgstr "Om taggen du vill använda inte finns på listan, kan du lägga till den här. Accepterar en kommaseparerad lista med taggar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:127
 msgid "Add tag to available tags and apply it to current book"
-msgstr "Lägg till etikett till tillgängliga etiketter och tillämpa den på aktuell bok"
+msgstr "Lägg till tagg till tillgängliga taggar och tillämpa den på aktuell bok"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:129
 msgid "Filter the available tags"
-msgstr "Filtrera tillgängliga etiketter"
+msgstr "Filtrera tillgängliga taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:130
 msgid ""
 "Delete tag from database. This will unapply the tag from all books and then "
 "remove it from the database."
-msgstr "Ta bort etiketten från databasen. Detta kommer avtillämpa etiketten från alla böcker och sedan ta bort den från databasen."
+msgstr "Ta bort taggen från databasen. Detta kommer avtillämpa taggen från alla böcker och sedan ta bort den från databasen."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:131
 msgid "&Delete tag"
-msgstr "&Ta bort etikett"
+msgstr "&Ta bort tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:132
 msgid "Ava&ilable tags"
-msgstr "&Tillgängliga etiketter"
+msgstr "&Tillgängliga taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:133
 msgid "Apply tag to current book"
-msgstr "Tillämpa etikett på aktuell bok"
+msgstr "Tillämpa tagg på aktuell bok"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:135
 msgid "Filter the applied tags"
-msgstr "Filtrera tillämpade etiketterna"
+msgstr "Filtrera tillämpade taggarna"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:136
 msgid "Applied &tags"
-msgstr "Tillämpade &etiketter"
+msgstr "Tillämpade &taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:137
 msgid "Unapply (remove) tag from current book"
-msgstr "Sluta tillämpa (ta bort) etikett från aktuell bok"
+msgstr "Sluta tillämpa (ta bort) tagg från aktuell bok"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor_ui.py:138
 msgid "&Unapply tag"
-msgstr "&Sluta tillämpa etikett"
+msgstr "&Sluta tillämpa tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:194
 msgid "Tag"
-msgstr "Etikett"
+msgstr "Tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:197
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/spell.py:613
@@ -18466,7 +18466,7 @@ msgstr "Kategoriredigerare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:93
 msgid "Search for an item in the Tag column"
-msgstr "Sök efter ett objekt i etikettkolumnen"
+msgstr "Sök efter ett objekt i Taggkolumnen"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor_ui.py:94
 msgid "Display items containing the search string"
@@ -18499,11 +18499,11 @@ msgstr "Författarsortering"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.py:279
 msgid "Tag 1"
-msgstr "Etikett 1"
+msgstr "Tagg 1"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.py:279
 msgid "Tag 2"
-msgstr "Etikett 2"
+msgstr "Tagg 2"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.py:337
 msgid "Template language tutorial"
@@ -19211,7 +19211,7 @@ msgstr "Omslagsbläddrare"
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:519
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:566
 msgid "Tag browser"
-msgstr "Etikettbläddrare"
+msgstr "Taggbläddrare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:230
 msgid "See what's new in this calibre release"
@@ -19591,7 +19591,7 @@ msgstr "Sortera"
 msgid ""
 "<p>Search the list of books by title, author, publisher, tags, comments, "
 "etc.<br><br>Words separated by spaces are ANDed"
-msgstr "<p>Sök i listan med böcker efter titel, författare, förlag, etiketter, kommentarer, o.s.v.<br><br>Ord separerade med blanksteg får relationen AND"
+msgstr "<p>Sök i listan med böcker efter titel, författare, förlag, taggar, kommentarer, o.s.v.<br><br>Ord separerade med blanksteg får relationen AND"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:250
 msgid "Do Quick Search (you can also press the Enter key)"
@@ -20339,13 +20339,13 @@ msgstr "Betyg för denna bok. 0-5 stjärnor"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1402
 msgid "Tags changed"
-msgstr "Etiketterna har ändrats"
+msgstr "Taggarna har ändrats"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1403
 msgid ""
 "You have changed the tags. In order to use the tags editor, you must either "
 "discard or apply these changes. Apply changes?"
-msgstr "Du har ändrat etiketterna. För att kunna använda Etikettredigeraren, måste du kassera eller tillämpa dessa förändringar. Tillämpa ändringar?"
+msgstr "Du har ändrat taggarna. För att kunna använda Taggredigeraren, måste du kassera eller tillämpa dessa förändringar. Tillämpa ändringar?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1431
 msgid "A comma separated list of languages for this book"
@@ -20527,7 +20527,7 @@ msgstr "Sammanfoga identifierare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/diff.py:458
 msgid "Merge tags"
-msgstr "Sammanfoga etiketter"
+msgstr "Sammanfoga taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/diff.py:550
 msgid "Compare metadata"
@@ -20654,7 +20654,7 @@ msgstr "Rensa betygsbedömning"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:239
 msgid "Clear all tags"
-msgstr "Rensa alla etiketter"
+msgstr "Rensa alla taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:248
 msgid "Clear Ids"
@@ -21166,7 +21166,7 @@ msgstr "&Eiketter att tillämpa vid tilläggning av en bok:"
 msgid ""
 "A comma-separated list of tags that will be applied to books added to the "
 "library"
-msgstr "En komma-avgränsad lista med etiketter kommer att tillämpas på böcker som läggs till biblioteket"
+msgstr "En komma-avgränsad lista med taggar kommer att tillämpas på böcker som läggs till biblioteket"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:233
 msgid "Contro&l how tags are processed:"
@@ -21176,7 +21176,7 @@ msgstr "St&yr hur taggar bearbetas:"
 msgid ""
 "Create rules that can filter or transform tags on added books automatically "
 "as soon as they are added. "
-msgstr "Skapa regler som kan filtrera eller omvandla etiketter hos tillagda böcker automatiskt så snart de läggs till. "
+msgstr "Skapa regler som kan filtrera eller omvandla taggar hos tillagda böcker automatiskt så snart de läggs till. "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/adding_ui.py:235
 msgid "&Rules to filter tags read from metadata"
@@ -21836,7 +21836,7 @@ msgstr "Ja/Nej med text"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns.py:138
 msgid "Ampersand separated text, shown in the Tag browser"
-msgstr "Et-teckenseparerad text, som visas i Etikettbläddraren"
+msgstr "Et-teckenseparerad text, som visas i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/columns.py:144
 #, python-brace-format
@@ -21895,15 +21895,15 @@ msgstr "Återställ till standardvärden. Endast inställningarna för den valda
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:30
 msgid "Text, column shown in the Tag browser"
-msgstr "Text, kolumn som visas i Etikettbläddraren"
+msgstr "Text, kolumn som visas i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:35
 msgid "Comma separated text, like tags, shown in the Tag browser"
-msgstr "Kommaseparerad text, t.ex. liksom etiketter som visas i Etikettbläddraren"
+msgstr "Kommaseparerad text, t.ex. liksom taggar som visas i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:40
 msgid "Long text, like comments, not shown in the Tag browser"
-msgstr "Lång texten, liksom kommentarer, som inte visas i Etikettbläddraren"
+msgstr "Lång texten, liksom kommentarer, som inte visas i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:45
 msgid "Text column for keeping series-like information"
@@ -21938,7 +21938,7 @@ msgstr "Kolumn byggs från andra kolumner"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:85
 msgid "Column built from other columns, behaves like tags"
-msgstr "Kolumn byggs från andra kolumner, beter sig som etiketter"
+msgstr "Kolumn byggs från andra kolumner, beter sig som taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:94
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:95
@@ -21972,7 +21972,7 @@ msgstr "Format"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:203
 msgid "My Tags"
-msgstr "Mina etiketter"
+msgstr "Mina taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:204
 msgid "My Series"
@@ -22019,7 +22019,7 @@ msgstr "&Uppslagsnamn"
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:276
 msgid ""
 "Column heading in the library view and category name in the Tag browser"
-msgstr "Kolumntitel i biblioteksvyn och kategorinamn i Etikettbläddraren"
+msgstr "Kolumntitel i biblioteksvyn och kategorinamn i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:277
 msgid "Column &heading"
@@ -22161,7 +22161,7 @@ msgstr "Hur denna kolumn ska hanteras i grafiska gränssnittet vid sortering och
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:372
 msgid "Show in Tag browser"
-msgstr "Visa i Etikettbläddraren"
+msgstr "Visa i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/create_custom_column.py:373
 msgid "If checked, this column will appear in the Tag browser as a category"
@@ -22336,7 +22336,7 @@ msgstr "Se till att din enhet är urkopplad, tryck sedan på OK"
 msgid "Ensure your device is connected, then press OK"
 msgstr "Se till att din enhet är ansluten, tryck sedan på OK"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:81
+#: /home/kovid/work/calibre/src/calibre/gui2/preferences/device_user_defined.py:82
 msgid ""
 "Copy these values to the clipboard, paste them into an editor, then enter "
 "them into the USER_DEVICE by customizing the device plugin in "
@@ -22397,7 +22397,7 @@ msgstr "Skicka automatiskt"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/emailp.py:33
 msgid "Auto send only tags"
-msgstr "Skicka automatiskt endast etiketter"
+msgstr "Skicka automatiskt endast taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/emailp.py:38
 msgid "Formats to email. The first matching format will be sent."
@@ -22416,7 +22416,7 @@ msgid ""
 "If checked, downloaded news will be automatically mailed to this email "
 "address (provided it is in one of the listed formats and has not been "
 "filtered by tags)."
-msgstr "Om kryssad, kommer nyhetshämtningar automatiskt skickas till denna e-postadress (förutsatt att det är i en av de listade formaten och inte har filtrerats av etiketter)."
+msgstr "Om kryssad, kommer nyhetshämtningar automatiskt skickas till denna e-postadress (förutsatt att det är i en av de listade formaten och inte har filtrerats av taggar)."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/emailp.py:46
 msgid "Friendly name to use for this email address"
@@ -22427,7 +22427,7 @@ msgid ""
 "If specified, only news with one of these tags will be sent to this email "
 "address. All news downloads have their title as a tag, so you can use this "
 "to easily control which news downloads are sent to this email address."
-msgstr "Om satt kommer endast nyheter med en av dessa etiketter att skickas till denna e-postadress. Alla nyhetshämtningar har sin titel som en etikett, så du kan använda detta för att enkelt styra vilka nyhetshämtningar som skickas till denna e-postadress."
+msgstr "Om satt kommer endast nyheter med en av dessa taggar att skickas till denna e-postadress. Alla nyhetshämtningar har sin titel som en tagg, så du kan använda detta för att enkelt styra vilka nyhetshämtningar som skickas till denna e-postadress."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/emailp.py:176
 msgid "new email address"
@@ -23009,7 +23009,7 @@ msgstr "&Dölj om fler poster än:"
 msgid ""
 "If a Tag browser category has more than this number of items, it is divided\n"
 "up into subcategories. If the partition method is set to disable, this value is ignored."
-msgstr "Om en etikettbläddrarkategori har mer än detta antal objekt, är det uppdelat\ni underkategorier. Om partitionsmetoden är inställd på inaktivera, kommer detta värde ignoreras."
+msgstr "Om en taggbläddrarkategori har mer än detta antal objekt, är det uppdelat\ni underkategorier. Om partitionsmetoden är inställd på inaktivera, kommer detta värde ignoreras."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:631
 msgid "Categories &not to partition:"
@@ -23036,11 +23036,11 @@ msgid ""
 "and 'Mystery.Thriller' will be displayed with English and Thriller\n"
 "both under 'Mystery'. If 'tags' is not in this box,\n"
 "then the tags will be displayed each on their own line."
-msgstr "En kommaseparerad lista över kategorier i vilka poster som\ninnehåller perioder visas i Etikettläsar-träden. Till exempel, om\nden här rutan innehåller \"etiketter\" så kommer etiketter av både\nformen \"Mystery.English\" och \"Mystery.Thriller\" att visas med\nEnglish och Thriller under \"Mystery\". Om \"etiketter\" inte finns i denna\nrutan, så kommer etiketterna att visas var för sig på sin egen rad."
+msgstr "En kommaseparerad lista över kategorier i vilka poster som\ninnehåller perioder visas i Taggbläddrar-träden. Till exempel, om\nden här rutan innehåller \"taggar\" så kommer taggar av både\nformen \"Mysterium.Svenska\" och \"Mysterium.Thriller\" att visas med\nSvenska och Thriller under \"Mysterium\". Om \"taggar\" inte finns i denna\nrutan, så kommer taggarna att visas var för sig på sin egen rad."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:644
 msgid "Use &alternating row colors in the Tag browser"
-msgstr "Använd &alternerande radfärger i Etikettbläddraren"
+msgstr "Använd &alternerande radfärger i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:645
 msgid ""
@@ -23052,7 +23052,7 @@ msgstr "Om kryssad, kommer calibre automatiskt dölja varje kategori\n(en kolumn
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:649
 msgid "Hi&de empty categories (columns) in the Tag browser"
-msgstr "&Dölj tomma kategorier (kolumner) i Etikettbläddraren"
+msgstr "&Dölj tomma kategorier (kolumner) i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:650
 msgid ""
@@ -23061,26 +23061,26 @@ msgid ""
 "letter to see an A, B, C list. Choose partitioned to\n"
 "have a list of fixed-sized groups. Set to disabled\n"
 "if you never want subcategories"
-msgstr "Välj hur Etikettbläddrarens underkategorier visas när\ndet finns fler objekt än begränsat. Välj efter första \nbokstav för att se en A, B, C lista. Välj partitionerade för\natt ha en lista av grupper fastställda storlekar. Ställ in \nsom inaktiverad om du aldrig vill ha underkategorier"
+msgstr "Välj hur Taggbläddrarens underkategorier visas när\ndet finns fler objekt än begränsat. Välj efter första \nbokstav för att se en A, B, C lista. Välj partitionerade för\natt ha en lista av grupper fastställda storlekar. Ställ in \nsom inaktiverad om du aldrig vill ha underkategorier"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:655
 msgid "&Tag browser category partitioning method:"
-msgstr "Etikettbläddrarens kategoripartitioneringsmetod:"
+msgstr "Taggbläddrarens kategoripartitioneringsmetod:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:656
 msgid "Show &average ratings in the Tag browser"
-msgstr "Visa &medelbetyg i Etikettbläddraren"
+msgstr "Visa &medelbetyg i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:657
 msgid ""
 "Show counts for items in the Tag browser. Such as the number of books\n"
 "by each author, the number of authors, etc. If you turn it off, you can still\n"
 "see the counts by hovering your mouse over any item."
-msgstr "Visa räknare för objekt i Etikettbläddraren. Såsom antalet böcker\nav varje författare, antalet författare, etc. Om du stänger av den, kan du fortfarande\nse räknare genom att hålla muspekaren över ett objekt."
+msgstr "Visa räknare för objekt i Taggbläddraren. Såsom antalet böcker\nav varje författare, antalet författare, etc. Om du stänger av den, kan du fortfarande\nse räknare genom att hålla muspekaren över ett objekt."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:660
 msgid "Show &counts in the Tag browser"
-msgstr "Visa &antal i Etikettbläddraren"
+msgstr "Visa &antal i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:661
 msgid "Spacing between &items:"
@@ -23091,7 +23091,7 @@ msgid ""
 "The spacing between consecutive items in the Tag browser. In units of (ex) "
 "which is the approximate height of the letter 'x' in the currently used "
 "font. "
-msgstr "Avståndet mellan poster i Etikettbläddraren. I enheter av (ex) som är den ungefärliga höjden av bokstaven \"x\" i den nuvarande typsnittet."
+msgstr "Avståndet mellan poster i Taggbläddraren. I enheter av (ex) som är den ungefärliga höjden av bokstaven \"x\" i den nuvarande typsnittet."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:663
 msgid " ex"
@@ -23099,11 +23099,11 @@ msgstr " ex"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:664
 msgid "Show &tooltips in the Tag browser"
-msgstr "Visa &verktygstips i Etikettbläddraren"
+msgstr "Visa &verktygstips i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:665
 msgid "&Tag browser"
-msgstr "&Etikettbläddrare"
+msgstr "&Taggbläddrare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:666
 msgid ""
@@ -23344,7 +23344,7 @@ msgstr "Konvertera alla &hämtade kommentarer till enkel text"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:158
 msgid "Max. &number of tags to download:"
-msgstr "Max. &antal etiketter att hämta:"
+msgstr "Max. &antal taggar att hämta:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:159
 msgid "Max. &time to wait after first match is found:"
@@ -23401,20 +23401,20 @@ msgstr "behåll mer än en post per källa"
 msgid ""
 "<p>Different metadata sources have different sets of tags for the same book. If this option is checked, then calibre will use the smaller tag sets. These tend to be more like genres, while the larger tag sets tend to describe the books content.\n"
 "<p>Note that this option will only make a practical difference if one of the metadata sources has a genre like tag set for the book you are searching for. Most often, they all have large tag sets."
-msgstr "<p>Olika metadatakällor har olika uppsättningar av etiketter för samma bok. Om alternativet är kryssat, kommer calibre att använda mindre markeringsgrupp. Dessa tenderar att vara mer som genrer, medan de större markeringsgrupperna tenderar att beskriva böckerna innehållet.\n<p>Observera att detta alternativ bara kommer att göra en praktisk skillnad om någon av metadatakällorna har en genre som markering för boken du söker efter. Oftast har de alla stora markeringsuppsättningar."
+msgstr "<p>Olika metadatakällor har olika uppsättningar av taggar för samma bok. Om alternativet är kryssat, kommer calibre att använda mindre markeringsgrupp. Dessa tenderar att vara mer som genrer, medan de större markeringsgrupperna tenderar att beskriva böckerna innehållet.\n<p>Observera att detta alternativ bara kommer att göra en praktisk skillnad om någon av metadatakällorna har en genre som markering för boken du söker efter. Oftast har de alla stora markeringsuppsättningar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:172
 msgid ""
 "Prefer smaller tag sets when picking tags from different metadata sources"
-msgstr "Föredra mindre etiketter när metadataetiketter plockas från olika källor"
+msgstr "Föredra mindre taggar när metadatataggar plockas från olika källor"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:173
 msgid "Prefer &fewer tags"
-msgstr "Föredra &färre etiketter"
+msgstr "Föredra &färre taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:174
 msgid "Create &rules to filter/transform tags"
-msgstr "Skapa &regler för att filtrera/omvandla etiketter"
+msgstr "Skapa &regler för att filtrera/omvandla taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:175
 msgid "Create rules to &transform author names"
@@ -23483,48 +23483,48 @@ msgstr "Ansluten enhet: ingen"
 msgid ""
 "That format has no metadata writers enabled. A plugboard will probably have "
 "no effect."
-msgstr "Formatet har ingen metadataskrivare aktiverad. En kontrollpanel kommer troligen inte att ha någon effekt."
+msgstr "Formatet har ingen metadataskrivare aktiverad. En pluggbräda kommer troligen inte att ha någon effekt."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:206
 msgid "That format and device already has a plugboard."
-msgstr "Formatet och enheten har redan en kontrollpanel."
+msgstr "Formatet och enheten har redan en pluggbräda."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:218
 msgid "Possibly override plugboard?"
-msgstr "Möjligen åsidosätta kontrollpanel?"
+msgstr "Möjligen åsidosätta pluggbräda?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:219
 msgid ""
 "A more general plugboard already exists for that format and device. Are you "
 "sure you want to add the new plugboard?"
-msgstr "En mer generell kontrollpanel finns redan för det formatet och enheten. Är du säker på att du vill lägga till ny kontrollpanel?"
+msgstr "En mer generell pluggbräda finns redan för det formatet och enheten. Är du säker på att du vill lägga till nya pluggbrädan?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:231
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:253
 msgid "Add possibly overridden plugboard?"
-msgstr "Tillsätt eventuellt åsidosatt kontrollpanel?"
+msgstr "Tillsätt eventuellt åsidosatt pluggbräda?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:232
 msgid ""
 "More specific device plugboards exist for that format. Are you sure you want"
 " to add the new plugboard?"
-msgstr "Mer specifik enhetskontrollpanel finns för det formatet. Är du säker på att du vill lägga till nya kontrollpanelen?"
+msgstr "Mer specifika enhetspluggbrädor finns för det formatet. Är du säker på att du vill lägga till nya pluggbräda?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:243
 msgid "Really add plugboard?"
-msgstr "Ska kontrollpanel verkligen läggas till?"
+msgstr "Ska pluggbräda verkligen läggas till?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:244
 msgid ""
 "A different plugboard matches that format and device combination. Are you "
 "sure you want to add the new plugboard?"
-msgstr "En annan kontrollpanel matchar format- och enhetskombinationen. Är du säker på att du vill lägga till nya kontrollpanelen?"
+msgstr "En annan pluggbräda matchar format- och enhetskombinationen. Är du säker på att du vill lägga till nya pluggbrädan?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:254
 msgid ""
 "More specific format and device plugboards already exist. Are you sure you "
 "want to add the new plugboard?"
-msgstr "Mer specifika format-och enhetskontrollpaneler finns redan. Är du säker på att du vill lägga till nya kontrollpanelen?"
+msgstr "Mer specifika formats- och enhetspluggbrädor finns redan. Är du säker på att du vill lägga till nya pluggbrädan?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:265
 #, python-brace-format
@@ -23546,14 +23546,14 @@ msgstr "Målfältet får inte lämnas tomt"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:320
 msgid "Plugboard modifies Comments"
-msgstr "Kontrollpanel modifierar Kommentarer"
+msgstr "Pluggbräda ändrar Kommentarer"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:321
 msgid ""
 "This plugboard modifies the Comments metadata. If the Comments are set to "
 "invalid HTML, it could cause problems on the device. Are you sure you wish "
 "to save this plugboard?"
-msgstr "Den här kontrollpanelen modifierar metadata för Kommentarer. Kommentarer med ogiltig HTML kan orsaka problem på enheten. Är du säker på att du vill spara den här kontrollpanelen?"
+msgstr "Den här pluggbrädan ändrar metadata för Kommentarer. Kommentarer med ogiltig HTML kan orsaka problem på enheten. Är du säker på att du vill spara den här pluggbrädan?"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard.py:352
 #, python-brace-format
@@ -23569,7 +23569,7 @@ msgid ""
 "Often templates will contain simple references to composite columns, but this is not necessary. You can use any template in a source box that you can use elsewhere in calibre.\n"
 "\n"
 "One possible use for a plugboard is to alter the title to contain series information. Another would be to change the author sort, something that mobi users might do to force it to use the ';' that the kindle requires. A third would be to specify the language."
-msgstr "Här kan du ändra metadata calibre använder för att uppdatera en bok när den sparas till disk eller skickas till en enhet.\n\nAnvänd den här dialogrutan för att definiera en 'kontrollpanel' för ett format (eller alla format) och en enhet (eller alla enheter). Kontrollpanelen anger vilken mall som är kopplad till vilket fältet. Mallen används för att beräkna ett värde och det värdet tilldelas det anslutna fältet.\n\nOfta kommer mallar att innehålla enkla hänvisningar till sammansatta kolumner, men det är inte nödvändigt. Du kan använda någon av mallarna i en källruta som du kan använda på andra håll i calibre.\n\nEn möjlig användning för en kontrollpanel är att ändra titeln att innehålla serieinformation. En annan skulle vara att ändra författarsorteringen, något som mobi användare kan göra för att tvinga den att använda ';' som Kindle kräver. Ett tredje skulle vara att ange språket."
+msgstr "Här kan du ändra metadata calibre använder för att uppdatera en bok när den sparas till disk eller skickas till en enhet.\n\nAnvänd den här dialogrutan för att definiera en 'pluggbräda' för ett format (eller alla format) och en enhet (eller alla enheter). Pluggbrädan anger vilken mall som är kopplad till vilket fältet. Mallen används för att beräkna ett värde och det värdet tilldelas det anslutna fältet.\n\nOfta kommer mallar att innehålla enkla hänvisningar till sammansatta kolumner, men det är inte nödvändigt. Du kan använda någon av mallarna i en källruta som du kan använda på andra håll i calibre.\n\nEn möjlig användning för en pluggbräda är att ändra titeln att innehålla serieinformation. En annan skulle vara att ändra författarsorteringen, något som mobi användare kan göra för att tvinga den att använda ';' som Kindle kräver. Ett tredje skulle vara att ange språket."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:119
 msgid "Format (choose first)"
@@ -23581,15 +23581,15 @@ msgstr "Enhet (välj andra)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:121
 msgid "Add &new plugboard:"
-msgstr "Lägg till &ny kontrollpanel:"
+msgstr "Lägg till &ny pluggbräda:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:122
 msgid "Edit &existing plugboard:"
-msgstr "Redigera &befintlig kontrollpanel:"
+msgstr "Redigera &befintlig pluggbräda:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:123
 msgid "Existing &plugboards:"
-msgstr "Befintliga &kontrollpaneler:"
+msgstr "Befintliga &pluggbrädor:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:124
 msgid "Source template"
@@ -23601,11 +23601,11 @@ msgstr "Destinationsfält"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:126
 msgid "&Save plugboard"
-msgstr "&Spara kontrollpanel"
+msgstr "&Spara pluggbräda"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugboard_ui.py:127
 msgid "&Delete plugboard"
-msgstr "&Ta bort kontrollpanel"
+msgstr "&Ta bort pluggbräda"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:201
 #, python-format
@@ -23825,7 +23825,7 @@ msgid ""
 "<code>#myseries</code>, and <code>#myseries2</code>. This can be useful to "
 "check for duplicates, to find which column contains a particular item, or to"
 " have hierarchical categories (categories that contain categories)."
-msgstr "<b>Grupperade söktermer</b> är söknamn som tillåter en förfrågan för att automatiskt söka i mer än en kolumn. Till exempel, om du skapar en grupperad sökterm <code>allseries</code> med värdet <code>serier, #minaserier, #minaserier2</code>, kommer förfrågan <code>allseries:adhoc</code> att hitta 'adhoc' i någon av <code>serier</code>-kolumnerna , <code>#minaserier</code> och <code>#minaserier2</code>. <p>Skriv namnet på den grupperade söktermen i rullgardinsrutan, ange listan med kolumner för att söka i värde-rutan, tryck sedan på knappen Spara. <p>Observera: Sökbegrepp tvingas till gemener; <code>MinSökning</code> och <code>minsökning</code> är samma term.<p>Du kan få din grupperade sökterm att visas som Användarkategorier i Etikettbläddraren. Lägg bara till de grupperade söktermsnamnen i Gör Användarkategorier från ruta. Du kan lägga till flera termer separerade med kommatecken. Den nya Användarkategorin kommer automatiskt med alla poster i kategorierna som ingår i den grupperade söktermen. <p>Automatiska Användarkategorier tillåter dig att enkelt se alla kategoriföremål som är i kolumnerna som ingår i den grupperade söktermen. Med hjälp av ovanstående <code>allaserier</code> exemplet, den automatiskt genererade Användarkategorin kommer att innehålla alla de serier som nämns i <code>serier</code>, <code>#minaserier</code>, och <code>#minaserier2</code>. Detta kan vara användbart för att finna dubbletter, hitta vilken kolumn innehåller en särskild post, eller att ha hierarkiska kategorier (kategorier som innehåller kategorier)."
+msgstr "<b>Grupperade söktermer</b> är söknamn som tillåter en förfrågan för att automatiskt söka i mer än en kolumn. Till exempel, om du skapar en grupperad sökterm <code>allseries</code> med värdet <code>serier, #minaserier, #minaserier2</code>, kommer förfrågan <code>allseries:adhoc</code> att hitta 'adhoc' i någon av <code>serier</code>-kolumnerna , <code>#minaserier</code> och <code>#minaserier2</code>. <p>Skriv namnet på den grupperade söktermen i rullgardinsrutan, ange listan med kolumner för att söka i värde-rutan, tryck sedan på knappen Spara. <p>Observera: Sökbegrepp tvingas till gemener; <code>MinSökning</code> och <code>minsökning</code> är samma term.<p>Du kan få din grupperade sökterm att visas som Användarkategorier i Taggbläddraren. Lägg bara till de grupperade söktermsnamnen i Gör Användarkategorier från ruta. Du kan lägga till flera termer separerade med kommatecken. Den nya Användarkategorin kommer automatiskt med alla poster i kategorierna som ingår i den grupperade söktermen. <p>Automatiska Användarkategorier tillåter dig att enkelt se alla kategoriföremål som är i kolumnerna som ingår i den grupperade söktermen. Med hjälp av ovanstående <code>allaserier</code> exemplet, den automatiskt genererade Användarkategorin kommer att innehålla alla de serier som nämns i <code>serier</code>, <code>#minaserier</code>, och <code>#minaserier2</code>. Detta kan vara användbart för att finna dubbletter, hitta vilken kolumn innehåller en särskild post, eller att ha hierarkiska kategorier (kategorier som innehåller kategorier)."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/search.py:82
 msgid "Enter new or select existing name"
@@ -23903,7 +23903,7 @@ msgid ""
 "search all metadata for matches. For example, entering, \"asimov\" will "
 "search not just authors but title/tags/series/comments/etc. Use these "
 "options if you would like to change this behavior."
-msgstr "När du anger ett sökterm utan ett prefix kommer calibre som standard söka igenom all metadata efter träffar. Till exempel, genom att ange \"Asimov\" kommer inte bara författare sökas utan också titel/etiketter/serier/kommentarer/o.s.v. Använd dessa alternativ om du vill ändra detta beteende."
+msgstr "När du anger ett sökterm utan ett prefix kommer calibre som standard söka igenom all metadata efter träffar. Till exempel, genom att ange \"Asimov\" kommer inte bara författare sökas utan också titel/taggar/serier/kommentarer/o.s.v. Använd dessa alternativ om du vill ändra detta beteende."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/search_ui.py:222
 msgid "&Limit the searched metadata"
@@ -24027,7 +24027,7 @@ msgstr "Liknande &serier: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/search_ui.py:260
 msgid "Similar &tags: "
-msgstr "Liknande &etiketter: "
+msgstr "Liknande &taggar: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/search_ui.py:261
 msgid "Simi&lar publishers: "
@@ -24356,7 +24356,7 @@ msgid ""
 "replaced by the actual metadata, if available. For custom columns use the "
 "column lookup name, for example: #mytags. You can use {0} as a separator to "
 "split a line into multiple columns."
-msgstr "Mallen nedan kommer att tolkas som HTML och alla {{fields}} kommer att ersättas av faktiska metadata, om tillgänglig. För egna kolumner använd kolumnens uppslagsnamn, till exempel: #minaetiketter. Du kan använda {0} som separator för att dela upp en rad i flera kolumner."
+msgstr "Mallen nedan kommer att tolkas som HTML och alla {{fields}} kommer att ersättas av faktiska metadata, om tillgänglig. För egna kolumner använd kolumnens uppslagsnamn, till exempel: #minataggar. Du kan använda {0} som separator för att dela upp en rad i flera kolumner."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:949
 msgid "&Import template"
@@ -25118,7 +25118,7 @@ msgid ""
 "            <p>More information and examples are available in the\n"
 "            <a href=\"%s\">User Manual</a>.</p>\n"
 "            "
-msgstr "\n<h2>Virtuella bibliotek</h2>\n\n<p>Med <i>virtuella bibliotek</i> kan du begränsa calibre till att bara visa \ndina böcker som matchar en sökning. När ett virtuellt bibliotek är aktivt, beter\ncalibre sig som att biblioteket bara innehåller de matchade böckerna. Etikettbläddraren\nvisar bara etiketter/författare/serier/o.s.v. som tillhör gruppen av matchade böcker och\ngodtycklig sökning kommer bara att ske bland böckerna i ditt virtuella bibliotek. Detta\när ett bra sätt att partitionera ditt stora biblioteket i mindre och lättare undergrupper att arbeta\nmed.</p>\n\n<p>Till exempel kan du använda ett virtuellt bibliotek för att bara visa dina böcker med etiketten <i>\"Oläst\"</i>\neller bara böcker med <i>\"Min favoritförfattare\"</i> eller bara böcker i en viss serie.</p>\n\n<p>Mer information och exempel finns tillgängliga i\n<a href=\"%s\">användarhandboken</a>.</p>"
+msgstr "\n<h2>Virtuella bibliotek</h2>\n\n<p>Med <i>virtuella bibliotek</i> kan du begränsa calibre till att bara visa \ndina böcker som matchar en sökning. När ett virtuellt bibliotek är aktivt, beter\ncalibre sig som att biblioteket bara innehåller de matchade böckerna. Taggbläddraren\nvisar bara taggar/författare/serier/o.s.v. som tillhör gruppen av matchade böcker och\ngodtycklig sökning kommer bara att ske bland böckerna i ditt virtuella bibliotek. Detta\när ett bra sätt att partitionera ditt stora biblioteket i mindre och lättare undergrupper att arbeta\nmed.</p>\n\n<p>Till exempel kan du använda ett virtuellt bibliotek för att bara visa dina böcker med taggen <i>\"Oläst\"</i>\neller bara böcker med <i>\"Min favoritförfattare\"</i> eller bara böcker i en viss serie.</p>\n\n<p>Mer information och exempel finns tillgängliga i\n<a href=\"%s\">användarhandboken</a>.</p>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:187
 msgid "Saved searches recognized in the expression:"
@@ -25270,7 +25270,7 @@ msgstr "Startar, var god vänta..."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/store/basic_config_widget_ui.py:33
 msgid "Added tags:"
-msgstr "Tillagda etiketter:"
+msgstr "Tillagda taggar:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/store/basic_config_widget_ui.py:34
 msgid "Open store in external web browser"
@@ -25843,7 +25843,7 @@ msgstr "Ta bort objekt"
 msgid ""
 "Change how the Tag browser works, such as, how it is sorted, what happens "
 "when you click items, etc."
-msgstr "Ändra hur Etikettbläddraren fungerar, till exempel hur den sorteras, vad som händer när du klickar på poster o.s.v."
+msgstr "Ändra hur Taggbläddraren fungerar, till exempel hur den sorteras, vad som händer när du klickar på poster o.s.v."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:390
 msgid ""
@@ -25853,7 +25853,7 @@ msgid ""
 "tags:foo will find foo in any tag, but not in authors etc. Entering\n"
 "*foo will filter all categories at once, showing only those items\n"
 "containing the text \"foo\""
-msgstr "Sök efter post. Detta är en \"innehåll\"-sökning; poster som innehåller\ntexten någonstans i namnet kommer att hittas. Du kan begränsa sökningen\nför särskilda kategorier med syntax som liknar sökningen. Till exempel,\nEtikett: foo hittar foo i någon etikett, men inte i författare o.s.v. Ange\n*foo kommer att filtrera alla kategorier på en gång, endast de poster\nsom innehåller texten \"foo\" visas"
+msgstr "Sök efter post. Detta är en \"innehåll\"-sökning; poster som innehåller\ntexten någonstans i namnet kommer att hittas. Du kan begränsa sökningen\nför särskilda kategorier med syntax som liknar sökningen. Till exempel,\nTagg: foo hittar foo i någon tagg, men inte i författare o.s.v. Ange\n*foo kommer att filtrera alla kategorier på en gång, endast de poster\nsom innehåller texten \"foo\" visas"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:407
 msgid "Find the first/next matching item"
@@ -25861,7 +25861,7 @@ msgstr "Hitta första/nästa träff"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:411
 msgid "Find in Tag browser"
-msgstr "Hitta i Etikettbläddraren"
+msgstr "Hitta i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:418
 msgid "Find"
@@ -25869,7 +25869,7 @@ msgstr "Hitta"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:423
 msgid "Search for items in the Tag browser"
-msgstr "Sök efter ett post i Etikettbläddraren"
+msgstr "Sök efter ett post i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:496
 msgid "No More Matches.</b><p> Click Find again to go to first match"
@@ -25881,7 +25881,7 @@ msgstr "Dölj alla"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:518
 msgid "Configure Tag browser"
-msgstr "Anpassa Etikettbläddrare"
+msgstr "Anpassa Taggbläddrare"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:528
 msgid "Number of books"
@@ -25893,7 +25893,7 @@ msgstr "Medelbetyg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:536
 msgid "Set the sort order for entries in the Tag browser"
-msgstr "Ange sorteringsordning för poster i Etikettbläddraren"
+msgstr "Ange sorteringsordning för poster i Taggbläddraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:539
 msgid "Search type when selecting multiple items"
@@ -25910,11 +25910,11 @@ msgstr "Matcha någon av posterna"
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:552
 msgid ""
 "When selecting multiple entries in the Tag browser match any or all of them"
-msgstr "När flera poster väljs i Etikettbläddraren, matcha någon eller alla av dem"
+msgstr "När flera poster väljs i Taggbläddraren, matcha någon eller alla av dem"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:556
 msgid "Manage authors, tags, etc."
-msgstr "Hantera författare, etiketter, o.s.v."
+msgstr "Hantera författare, taggar, o.s.v."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/ui.py:557
 msgid ""
@@ -26080,20 +26080,20 @@ msgstr "Dela"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:63
 msgid "Create the rule below, the rule can be used to remove or replace tags"
-msgstr "Skapa regeln nedan, regeln kan användas för ta bort eller ersätta etiketter"
+msgstr "Skapa regeln nedan, regeln kan användas för ta bort eller ersätta taggar"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:64
 msgid "the tag, if it"
-msgstr "etiketten, om den"
+msgstr "taggen, om den"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:65
 msgid "You must provide a value for the tag to match"
-msgstr "Du måste ange värde för etikett att matcha"
+msgstr "Du måste ange värde för tagg att matcha"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:66
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:232
 msgid "with the tag:"
-msgstr "med etiketten:"
+msgstr "med taggen:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:67
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:234
@@ -26105,14 +26105,14 @@ msgid ""
 "The character on which to split tags. Note that technically you can specify "
 "a sub-string, not just a single character. Then splitting will happen on the"
 " sub-string."
-msgstr "Tecknet för att dela etiketter. Observera att tekniskt kan du ange en delsträng, inte bara ett enda tecken. Uppdelning kommer då att ske på delsträng."
+msgstr "Tecknet för att dela taggar. Observera att tekniskt kan du ange en delsträng, inte bara ett enda tecken. Uppdelning kommer då att ske på delsträng."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:72
 msgid ""
 "What to replace the tag with. Note that if you use a pattern to match tags, "
 "you can replace with parts of the matched pattern. See  the User Manual on "
 "how to use regular expressions for details."
-msgstr "Vad etiketten ska ersättas med. Observera att om du använder ett mönster för att matcha etiketter, kan du ersätta med delar av den matchande mönster. Se användarhandboken om hur man använder reguljära uttryck för mer information."
+msgstr "Vad taggen ska ersättas med. Observera att om du använder ett mönster för att matcha taggar, kan du ersätta med delar av den matchande mönster. Se användarhandboken om hur man använder reguljära uttryck för mer information."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:75
 #, python-format
@@ -26122,27 +26122,27 @@ msgstr "För hjälp med reguljära uttrycksmatchning, se <a href=\"%s\">använda
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:104
 msgid "Edit the list of tags with the Tag editor"
-msgstr "Redigera listan med etiketter med Etikettredigeraren"
+msgstr "Redigera listan med taggar med Taggredigeraren"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:145
 msgid "Tags that contain this string will match"
-msgstr "Etiketten som innehåller denna sträng kommer att matcha"
+msgstr "Taggen som innehåller denna sträng kommer att matcha"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:153
 msgid "Use the Tag editor to edit the list of tags"
-msgstr "Använd Etikettredigeraren för att redigera etikettlistan"
+msgstr "Använd Taggredigeraren för att redigera tagglistan"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:229
 #, python-brace-format
 msgid "<b>{action}</b> the tag, if it <i>{match_type}</i>: <b>{query}</b>"
-msgstr "<b>{action}</b> etiketten, om det <i>{match_type}</i>: <b>{query}</b>"
+msgstr "<b>{action}</b> taggen, om det <i>{match_type}</i>: <b>{query}</b>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:273
 msgid ""
 "You can specify rules to filter/transform tags here. Click the \"Add rule\" "
 "button below to get started. The rules will be processed in order for every "
 "tag until either a \"remove\" or a \"keep\" rule matches."
-msgstr "Du kan ange regler för filtrera/omvandla etiketter här. Klicka på knappen \"Lägg till regel\" nedan för att komma igång. Reglerna kommer att bearbetas i ordning för varje etikett tills antingen en \"ta bort\"- eller en \"behåll\"-regel matchar."
+msgstr "Du kan ange regler för filtrera/omvandla taggar här. Klicka på knappen \"Lägg till regel\" nedan för att komma igång. Reglerna kommer att bearbetas i ordning för varje tagg tills antingen en \"ta bort\"- eller en \"behåll\"-regel matchar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:283
 msgid "You can <b>change an existing rule</b> by double clicking it"
@@ -26162,16 +26162,16 @@ msgstr "Testa etkettmappsregler"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:387
 msgid "Enter a comma separated list of &tags to test:"
-msgstr "Ange en kommaseparerad lista med &etiketter för test:"
+msgstr "Ange en kommaseparerad lista med &taggar för test:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:388
 msgid "Enter tags and click the \"Test\" button"
-msgstr "Ange etiketter och klicka på knappen \"Testa\""
+msgstr "Ange taggar och klicka på knappen \"Testa\""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:422
 #, python-format
 msgid "<b>Resulting tags:</b> %s"
-msgstr "<b>Resulterande etiketter:</b> %s"
+msgstr "<b>Resulterande taggar:</b> %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:435
 msgid "Cannot save as no rules have been created"
@@ -26200,7 +26200,7 @@ msgstr "Inga sparade regeluppsättningar tillgängliga"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:479
 msgid "Edit tag mapper rules"
-msgstr "Redigera etikettmappningsregler"
+msgstr "Redigera taggmappningsregler"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/location.py:111
 msgid "Select a destination for the Table of Contents entry"
@@ -26360,7 +26360,7 @@ msgid ""
 "Generate a Table of Contents from the major headings in the book. This will "
 "work if the book identifies its headings using HTML heading tags. Uses the "
 "<h1>, <h2> and <h3> tags."
-msgstr "Generera en innehållsförteckning från de stora rubriker i boken. Detta kommer att fungera om boken identifierar sina rubriker med HTML-rubrikmarkeringar. Använder <h1>, <h2> och <h3>-etiketter."
+msgstr "Generera en innehållsförteckning från de stora rubriker i boken. Detta kommer att fungera om boken identifierar sina rubriker med HTML-rubrikmarkeringar. Använder <h1>, <h2> och <h3>-taggar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:178
 msgid "Generate ToC from &all headings"
@@ -26371,7 +26371,7 @@ msgid ""
 "Generate a Table of Contents from all the headings in the book. This will "
 "work if the book identifies its headings using HTML heading tags. Uses the "
 "<h1-6> tags."
-msgstr "Generera en innehållsförteckning från alla rubriker i boken. Detta kommer att fungera om boken identifierar sina rubriker med HTML-rubriketiketter. Använder <h1-6>-etiketter."
+msgstr "Generera en innehållsförteckning från alla rubriker i boken. Detta kommer att fungera om boken identifierar sina rubriker med HTML-rubriktaggar. Använder <h1-6>-taggar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:186
 msgid "Generate ToC from &links"
@@ -29011,7 +29011,7 @@ msgstr "Ogiltig markup"
 msgid ""
 "The current block tag has an existing unclosed style attribute. Run the Fix "
 "HTML tool first."
-msgstr "Den aktuella blocketiketten har ett befintligt oavslutad stilattribut. Kör Reparera HTML verktyget först."
+msgstr "Den aktuella blocktaggen har ett befintligt oavslutad stilattribut. Kör Reparera HTML verktyget först."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/smarts/html.py:383
 msgid "Invalid HTML"
@@ -29022,7 +29022,7 @@ msgstr "Ogiltig HTML"
 msgid ""
 "There is an unclosed %s tag. You should run the Fix HTML tool before trying "
 "to rename tags."
-msgstr "Det finns en oavslutad markering %s. Du bör köra verktyget Reparera HTML innan du försöker att byta namn på etiketter."
+msgstr "Det finns en oavslutad markering %s. Du bör köra verktyget Reparera HTML innan du försöker att byta namn på taggar."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/smarts/html.py:388
 msgid "No found"
@@ -29048,11 +29048,11 @@ msgstr "Infoga fyllnadstext"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:64
 msgid "Insert a tag"
-msgstr "Infoga en etikett"
+msgstr "Infoga en tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:69
 msgid "Insert a self closing tag"
-msgstr "Infoga en självstängande etikett"
+msgstr "Infoga en självstängande tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:74
 msgid "Insert a HTML link"
@@ -29064,7 +29064,7 @@ msgstr "Infoga en HTML-bild"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:84
 msgid "Insert a HTML tag with a class"
-msgstr "Infoga en HTML-etikett med en klass"
+msgstr "Infoga en HTML-tagg med en klass"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:421
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:75
@@ -29214,7 +29214,7 @@ msgstr "Ett okodat > är inte tillåtet. Ersätt det med &gt;"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:551
 msgid "/ not allowed except at the end of the tag"
-msgstr "/ tillåts inte, utom vid slutet av etiketten"
+msgstr "/ tillåts inte, utom vid slutet av taggen"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:552
 msgid "Unknown character"
@@ -29222,7 +29222,7 @@ msgstr "Okänt tecken"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:553
 msgid "A closing tag must contain only the tag name and nothing else"
-msgstr "En avslutande etikett måste innehålla endast etikettnamn och inget annat"
+msgstr "En avslutande tagg måste innehålla endast taggnamn och inget annat"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:554
 msgid "Expecting an attribute value"
@@ -29230,7 +29230,7 @@ msgstr "Förväntar sig ett attributvärde"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:555
 msgid "A tag name cannot end with a colon"
-msgstr "Ett etikettnamn kan inte sluta med ett kolon"
+msgstr "Ett taggnamn kan inte sluta med ett kolon"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/text.py:439
 msgid ""
@@ -29357,7 +29357,7 @@ msgid ""
 "    line-height: 1.2;\n"
 "}}\n"
 "</style>\n"
-msgstr "<h2>Skapa ett eget tema</h2>\n\n<p id=\"attribute\" lang=\"und\"> ​​Du kan skapa ett anpassad syntaxmarkeringstema, med egna färger och typsnitt. De viktigaste typerna av markeringsregler beskrivs nedan. Observera att inte varje regel stödjer alla typer av anpassning, till exempel, reglerna ändra typsnitt eller regeln att understryka stilar för <code>markören</code> har inte någon effekt eftersom regeln endast används för färga den blinkande markören.</p>\n\n<p>När du gör ändringar i ditt tema till vänster, kommer ändringarna att återspeglas direkt i denna panel.</p>\n\n<p xml:lang=\"und\">\n{}\nDen viktigaste regeln. Ställer in för- och bakgrundsfärger samt stil för redigeraren med \"normal\" text, det vill säga text som inte passar mot någon speciell syntax.\n\n {}\n Definierar färger för text som väljs med musen.\n\n {}\n Definierar färgen för linjen som innehåller markören.\n\n {}\n Definierar färger för linjenumrena till vänster.\n\n {}\n Definierar färgerna för att passa mot etiketter i HTML och mot\n klamrar i CSS.\n\n {}\n Används för att lyfta fram etiketter i HTML\n\n {}\n Används för att lyfta fram attribut i HTML\n\n {}\n Etikettnamn i HTML\n\n {}\n Namnrymdsprefix i XML och konstanter i CSS\n \n {}\n Icke-brytande blanksteg/bindestreck i HTML\n\n {}\n Syntaxfel såsom <här <>\n\n {}\n Felstavade ord såsom <span lang = \"en\">thisword</span>\n\n {}\n Kommentarer som <! - Här ->\n </p>\n\n <style type=\"text/css\">\n /* Några CSS så att du kan se hur belysningsregler påverkar den */\n\n p.someclass {{\n font-family: serif;\n font-size: 12px;\n line-height: 1,2;\n }}\n </style>\n"
+msgstr "<h2>Skapa ett eget tema</h2>\n\n<p id=\"attribute\" lang=\"und\"> ​​Du kan skapa ett anpassad syntaxmarkeringstema, med egna färger och typsnitt. De viktigaste typerna av markeringsregler beskrivs nedan. Observera att inte varje regel stödjer alla typer av anpassning, till exempel, reglerna ändra typsnitt eller regeln att understryka stilar för <code>markören</code> har inte någon effekt eftersom regeln endast används för färga den blinkande markören.</p>\n\n<p>När du gör ändringar i ditt tema till vänster, kommer ändringarna att återspeglas direkt i denna panel.</p>\n\n<p xml:lang=\"und\">\n{}\nDen viktigaste regeln. Ställer in för- och bakgrundsfärger samt stil för redigeraren med \"normal\" text, det vill säga text som inte passar mot någon speciell syntax.\n\n {}\n Definierar färger för text som väljs med musen.\n\n {}\n Definierar färgen för linjen som innehåller markören.\n\n {}\n Definierar färger för linjenumrena till vänster.\n\n {}\n Definierar färgerna för att passa mot taggar i HTML och mot\n klamrar i CSS.\n\n {}\n Används för att lyfta fram taggar i HTML\n\n {}\n Används för att lyfta fram attribut i HTML\n\n {}\n Taggnamn i HTML\n\n {}\n Namnrymdsprefix i XML och konstanter i CSS\n \n {}\n Icke-brytande blanksteg/bindestreck i HTML\n\n {}\n Syntaxfel såsom <här <>\n\n {}\n Felstavade ord såsom <span lang = \"en\">thisword</span>\n\n {}\n Kommentarer som <! - Här ->\n </p>\n\n <style type=\"text/css\">\n /* Några CSS så att du kan se hur belysningsregler påverkar den */\n\n p.someclass {{\n font-family: serif;\n font-size: 12px;\n line-height: 1,2;\n }}\n </style>\n"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/themes.py:555
 msgid "Create/edit custom theme"
@@ -29589,29 +29589,29 @@ msgstr "Ändra skiftläge av vald text: %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:112
 msgid "Insert &tag"
-msgstr "Infoga &etikett"
+msgstr "Infoga &tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:112
 msgid "Insert tag"
-msgstr "Infoga etikett"
+msgstr "Infoga tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:113
 msgid ""
 "<h3>Insert tag</h3>Insert a tag, if some text is selected the tag will be "
 "inserted around the selected text"
-msgstr "<h3>Infoga etikett</h3>Infoga en etikett, om någon text är vald infogas etikett runt den valda texten"
+msgstr "<h3>Infoga tagg</h3>Infoga en tagg, om någon text är vald infogas tagg runt den valda texten"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:115
 msgid "Remove &tag"
-msgstr "Ta bort &etikett"
+msgstr "Ta bort &tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:115
 msgid "Remove tag"
-msgstr "Ta bort etikett"
+msgstr "Ta bort tagg"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:116
 msgid "<h3>Remove tag</h3>Remove the currently highlighted tag"
-msgstr "<h3>Ta bort etikett</h3>Ta bort den markerade etiketten"
+msgstr "<h3>Ta bort tagg</h3>Ta bort den markerade taggen"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:122
 msgid "Change paragraph to heading"
@@ -30070,7 +30070,7 @@ msgstr "Ingen stilinformation hittades"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/live_css.py:402
 msgid ""
 "Move the cursor inside a HTML tag to see what styles apply to that tag."
-msgstr "Flytta markören i en HTML-etikett för att se vilka stilar gäller för den etiketten."
+msgstr "Flytta markören i en HTML-tagg för att se vilka stilar gäller för den taggen."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/main.py:26
 msgid ""
@@ -30318,13 +30318,13 @@ msgstr "Med det här alternativet satt kommer, varje gång du skriver in en komp
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:203
 msgid "Auto close t&ags when typing </"
-msgstr "Stäng automatiskt &etiketter när </ skrivs"
+msgstr "Stäng automatiskt &taggar när </ skrivs"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:205
 msgid ""
 "With this option, every time you type </ the current HTML closing tag is "
 "auto-completed"
-msgstr "Med detta alternativ, kommer aktuell HTML-avslutningsetikett att autokompletteras varje gång du skriver </"
+msgstr "Med detta alternativ, kommer aktuell HTML-avslutningstagg att autokompletteras varje gång du skriver </"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:209
 msgid ""
@@ -30624,7 +30624,7 @@ msgstr "Ogiltig plats"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:315
 msgid "Cannot split on the body tag"
-msgstr "Det går inte att dela upp huvudetikett"
+msgstr "Det går inte att dela upp brödtaggen"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:385
 msgid ""
@@ -32521,11 +32521,11 @@ msgstr "Det är inget ställe att jämföra det aktuella tillståndet med"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:54
 msgid "Choose tag name"
-msgstr "Välj etikettnamn"
+msgstr "Välj taggnamn"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:61
 msgid "Specify the name of the &tag to insert:"
-msgstr "Ange namnet på &etiketten att infoga:"
+msgstr "Ange namnet på &taggen att infoga:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:88
 msgid "Text (HTML) files"
@@ -34861,7 +34861,7 @@ msgid ""
 "Regex describing tags to exclude as genres.\n"
 "Default: '%default' excludes bracketed tags, e.g. '[Project Gutenberg]', and '+', the default tag for read books.\n"
 "Applies to: AZW3, EPUB, MOBI output formats"
-msgstr "Regex beskriver etiketter för att utesluta som genrer.\nStandard: '%default' utesluter parentesetiketter, t.ex. '[Project Gutenberg]', och '+', standard-etikett för lästa böcker.\nGäller: AZW3-, EPUB-, MOBI-utdataformat"
+msgstr "Regex beskriver taggar för att utesluta som genrer.\nStandard: '%default' utesluter parentestaggar, t.ex. '[Project Gutenberg]', och '+', standard-tagg för lästa böcker.\nGäller: AZW3-, EPUB-, MOBI-utdataformat"
 
 #: /home/kovid/work/calibre/src/calibre/library/catalogs/epub_mobi.py:73
 #, python-format
@@ -34877,7 +34877,7 @@ msgid ""
 "Default: \n"
 "\"%default\"\n"
 "Applies to: AZW3, EPUB, MOBI output formats"
-msgstr "Anger de regler som används för att utesluta böcker från den genererade katalogen.\nModellen för en undantagsregel är antingen\n('<regel namn>','Etiketter\",'<komma-separerad lista med etiketter>') eller\n('<regel namn>','<anpassad column>','<mönster>').\nTill exempel:\n((\"Arkiverade böcker\", \"# status\", \"Arkiverade\"),)\nkommer att utesluta en bok med ett värde på \"status\" \"Arkiverat\" i den anpassade kolumnen.\nNär flera regler är definierade, kommer alla regler tillämpas.\nStandard:\n\"%default\"\nGäller: AZW3-, EPUB-, MOBI-utdataformat"
+msgstr "Anger de regler som används för att utesluta böcker från den genererade katalogen.\nModellen för en undantagsregel är antingen\n('<regel namn>','Taggar\",'<komma-separerad lista med taggar>') eller\n('<regel namn>','<anpassad column>','<mönster>').\nTill exempel:\n((\"Arkiverade böcker\", \"# status\", \"Arkiverade\"),)\nkommer att utesluta en bok med ett värde på \"status\" \"Arkiverat\" i den anpassade kolumnen.\nNär flera regler är definierade, kommer alla regler tillämpas.\nStandard:\n\"%default\"\nGäller: AZW3-, EPUB-, MOBI-utdataformat"
 
 #: /home/kovid/work/calibre/src/calibre/library/catalogs/epub_mobi.py:86
 #, python-format
@@ -35284,7 +35284,7 @@ msgstr "Författarsorteringsfältet. För att endast använda den första boksta
 
 #: /home/kovid/work/calibre/src/calibre/library/save_to_disk.py:37
 msgid "The tags"
-msgstr "Etiketterna"
+msgstr "Taggarna"
 
 #: /home/kovid/work/calibre/src/calibre/library/save_to_disk.py:38
 msgid "The series"
@@ -35742,7 +35742,7 @@ msgstr "BETYG: %s<br />"
 #: /home/kovid/work/calibre/src/calibre/srv/opds.py:189
 #, python-format
 msgid "TAGS: %s<br />"
-msgstr "ETIKETTER: %s<br />"
+msgstr "TAGGAR: %s<br />"
 
 #: /home/kovid/work/calibre/src/calibre/srv/opds.py:191
 #, python-format
@@ -35893,7 +35893,7 @@ msgstr "Högsta antal ogrupperade objekt i OPDS-flöden"
 msgid ""
 "Group items in categories such as author/tags by first letter when there are"
 " more than this number of items. Set to zero to disable."
-msgstr "Gruppera objekt i kategorier som författare/etiketter från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera."
+msgstr "Gruppera objekt i kategorier som författare/taggar från första bokstaven när det finns mer än detta antal objekt. Använd noll för att inaktivera."
 
 #: /home/kovid/work/calibre/src/calibre/srv/opts.py:113
 msgid "The interface on which to listen for connections"
@@ -36149,14 +36149,14 @@ msgstr "Du måste ange åtminstone ett calibre-bibliotek"
 
 #: /home/kovid/work/calibre/src/calibre/srv/tests/ajax.py:71
 msgid "Composite Tags"
-msgstr ""
+msgstr "Sammansatta taggar"
 
 #: /home/kovid/work/calibre/src/calibre/srv/tests/ajax.py:71
 msgid "Enum"
-msgstr ""
+msgstr "Uppräkningstyp"
 
 #: /home/kovid/work/calibre/src/calibre/srv/tests/ajax.py:130
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:244
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:245
 msgid "Invalid syntax. Expected a lookup name or a word"
 msgstr "Ogiltig syntax. Förväntas ett uppslagsnamn eller ett ord"
 
@@ -36254,7 +36254,7 @@ msgstr "Leta efter dubbletter vid kopiering till ett annat bibliotek"
 
 #: /home/kovid/work/calibre/src/calibre/utils/config_base.py:511
 msgid "Tags to apply to books added to the library"
-msgstr "Etiketter att tillämpa för böcker som har lagts till biblioteket"
+msgstr "Taggar att tillämpa för böcker som har lagts till biblioteket"
 
 #: /home/kovid/work/calibre/src/calibre/utils/config_base.py:513
 msgid ""
@@ -36268,7 +36268,7 @@ msgstr "Lista med namngivna sparade sökningar"
 
 #: /home/kovid/work/calibre/src/calibre/utils/config_base.py:518
 msgid "User-created Tag browser categories"
-msgstr "Användarskapade Etikettbläddrarkategorier"
+msgstr "Användarskapade Taggbläddrarkategorier"
 
 #: /home/kovid/work/calibre/src/calibre/utils/config_base.py:520
 msgid "How and when calibre updates metadata on the device."
@@ -36311,56 +36311,56 @@ msgstr "Inställningar och insticksmodul"
 msgid "File is open in another process"
 msgstr "Filen är öppen av en annan process"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:33
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:34
 #, python-brace-format
 msgid "failed to scan program. Invalid input {0}"
 msgstr "misslyckades med att genomsöka program. Ogiltig inmatning {0}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:41
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:42
 msgid " near "
 msgstr " nära "
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:47
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:48
 msgid "end of program"
 msgstr "slut av programmet"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:109
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:110
 msgid "syntax error - program ends before EOF"
 msgstr "syntaxfel - programmet avslutas innan EOF"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:136
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:137
 msgid "Unknown identifier "
 msgstr "Okänd identifierare "
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:143
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:144
 #, python-brace-format
 msgid "unknown function {0}"
 msgstr "okänd funktion {0}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:163
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:164
 msgid "missing closing parenthesis"
 msgstr "högerparentes saknas"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:175
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:176
 msgid "expression is not function or constant"
 msgstr "uttryck är inte funktion eller konstant"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:210
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:211
 #, python-brace-format
 msgid "format: type {0} requires an integer value, got {1}"
 msgstr "format: typ {0} kräver ett heltalsvärde, fick {1}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:216
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:217
 #, python-brace-format
 msgid "format: type {0} requires a decimal (float) value, got {1}"
 msgstr "format: typ {0} kräver ett decimaltal (flyt) värde, fick {1}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:332
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:333
 #, python-format
 msgid "%s: unknown function"
 msgstr "%s: okänd funktion"
 
-#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:411
+#: /home/kovid/work/calibre/src/calibre/utils/formatter.py:412
 msgid "No such variable "
 msgstr "Ingen sådan variabel "
 
@@ -37311,34 +37311,34 @@ msgstr "Stäng utan att spara"
 msgid "Close Tab"
 msgstr "Stäng flik"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:208
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:209
 msgid "Extra characters at end of search"
 msgstr "Extra tecken i slutet av sökningen"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:241
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:242
 msgid "missing )"
 msgstr "saknar )"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:357
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:358
 #, python-format
 msgid "Failed to parse query, recursion limit reached: %s"
 msgstr "Misslyckades med att tolka förfråga, rekursionsgräns nådd: %s"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:403
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:404
 #, python-brace-format
 msgid "Recursive saved search: {0}"
 msgstr "Sparad rekursiv sökning: {0}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:408
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:409
 msgid "Unknown saved search: {}"
 msgstr "Okänd sparad sökning: {}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:415
+#: /home/kovid/work/calibre/src/calibre/utils/search_query_parser.py:416
 #, python-brace-format
 msgid "Unknown error in saved search: {0}"
 msgstr "Okänt fel i sparad sökning: {0}"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:177
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:178
 msgid ""
 "%prog [options] [from to text]\n"
 "\n"
@@ -37354,53 +37354,53 @@ msgid ""
 "are only used in the SMTP negotiation, the message headers are not modified.\n"
 msgstr "%prog [alternativ] [from to text]\n\nSkicka post genom använda SMTP-protokollet. %prog har två lägen av utförande. I läget komponera anger du från- och till-text som används för att bygga och skicka ett e-postmeddelande.\nI läget filtrera, läser %prog ett komplett e-postmeddelande från STDIN och skickar det.\n\ntext är huvudtexten av e-postmeddelandet.\nOm text inte anges, läses ett komplett e-postmeddelande från STDIN.\nfrån är avsändare och till är mottagare av e-postmeddelandet. När ett komplett e-postmeddelande är läst från STDIN, används bara från och till i SMTP-förhandlingen, meddelandehuvuden modifieras inte.\n"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:192
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:193
 msgid "Options to compose an email. Ignored if text is not specified"
 msgstr "Alternativ för att komponera e-post. Ignoreras om ingen text anges"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:193
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:194
 msgid "File to attach to the email"
 msgstr "Fil att bifoga till e-posten"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:194
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:195
 msgid "Subject of the email"
 msgstr "Ämnesrad för e-posten"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:197
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:198
 msgid "Host name of localhost. Used when connecting to SMTP server."
 msgstr "Värdnamn av lokalvärden. Används vid anslutning till SMTP-server."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:200
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:201
 msgid ""
 "Options to use an SMTP relay server to send mail. calibre will try to send "
 "the email directly unless --relay is specified."
 msgstr "Alternativ vid användning av en SMTP-reläserver för att skicka post. calibre kommer försöka skicka direkt om inte --relay anges."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:203
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:204
 msgid "An SMTP relay server to use to send mail."
 msgstr "En SMTP-reläserver för att skicka post."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:205
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:206
 msgid ""
 "Port to connect to on relay server. Default is to use 465 if encryption "
 "method is SSL and 25 otherwise."
 msgstr "Port att ansluta till reläserver. Standard är att använda 465 om krypteringsmetod är SSL och annars 25."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:207
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:208
 msgid "Username for relay"
 msgstr "Användarnamn för reläserver"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:208
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:209
 msgid "Password for relay"
 msgstr "Lösenord för reläserver"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:211
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:212
 msgid ""
 "Encryption method to use when connecting to relay. Choices are TLS, SSL and "
 "NONE. Default is TLS. WARNING: Choosing NONE is highly insecure"
 msgstr "Krypteringsmetod att använda vid anslutning till reläserver. Valen är TLS, SSL och INGEN. Standard är TLS. VARNING: Att välja INGEN är högst osäkert"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:214
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:215
 msgid ""
 "Do not verify the server certificate when connecting using TLS. This used to"
 " be the default behavior in calibre versions before 3.27. If you are using a"
@@ -37408,28 +37408,28 @@ msgid ""
 " option to restore the pre 3.27 behavior"
 msgstr "Verifiera inte serverns certifikat när du ansluter med TLS. Detta brukade vara standardbeteendet i calibre versioner före 3.27. Om du använder en relä med ett självsignerat eller på annat sätt ogiltigt certifikat, kan du använda det här alternativet för att återställa beteendet före 3.27"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:219
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:220
 msgid ""
 "Path to a file of concatenated CA certificates in PEM format, used to verify"
 " the server certificate when using TLS. By default, the system CA "
 "certificates are used."
 msgstr "Sökväg till en fil med sammanförda CA-certifikat i PEM-format som används för att verifiera servercertifikatet när du använder TLS. Systemets CA-certifikat används som standard."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:221
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:222
 msgid "Path to maildir folder to store failed email messages in."
 msgstr "Sökväg till maildir-mappen för att lagra misslyckade leveranser av postmeddelande i."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:224
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:225
 msgid ""
 "Fork and deliver message in background. If you use this option, you should "
 "also use --outbox to handle delivery failures."
 msgstr "Dela upp och leverera meddelande i bakgrunden. Om du använder detta alternativ bör du också använda --outbox för hantera misslyckade leveranser."
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:227
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:228
 msgid "Timeout for connection"
 msgstr "Tidsbegränsning för förbindelse"
 
-#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:313
+#: /home/kovid/work/calibre/src/calibre/utils/smtp.py:314
 msgid "Control email delivery"
 msgstr "Anpassa e-postleverering"
 
@@ -37665,7 +37665,7 @@ msgstr "Högsta antal nivåer, d.v.s. länkdjup, att följa. Grundinställning %
 msgid ""
 "The maximum number of files to download. This only applies to files from <a "
 "href> tags. Default is %default"
-msgstr "Högsta antal filer att hämta. Endast för filer med <a href> etiketter. Grundinställning är %default"
+msgstr "Högsta antal filer att hämta. Endast för filer med <a href> taggar. Grundinställning är %default"
 
 #: /home/kovid/work/calibre/src/calibre/web/fetch/simple.py:598
 #, python-format
@@ -37924,7 +37924,7 @@ msgstr "Som standard delar calibre en sträng som innehåller flera författarna
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:80
 msgid "Use author sort in Tag browser"
-msgstr "Använd författarsortering i Etikettbläddraren"
+msgstr "Använd författarsortering i Taggbläddraren"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:81
 msgid ""
@@ -37940,11 +37940,11 @@ msgid ""
 "Examples:\n"
 "categories_use_field_for_author_name = 'author'\n"
 "categories_use_field_for_author_name = 'author_sort'"
-msgstr "Ange vilket författarfält som ska visas i etikettrutan (listan med författare,\nserien, förlag o.s.v. på vänster sida). Alternativen är författare och\nauthor_sort. Detta justering påverkar bara vad som visas under författar-\nkategori i etikettpanelen och Innehållsservern. Observera att om du ställer in\ntill author_sort är det möjligt att se dubblett namn i listan eftersom,\näven om det är garanterat att författarnamn är unika, finns det ingen sådan\ngaranti för author_sort-värden. Att visa dubbletter kommer inte att förstöra något, men\nden kan leda till viss förvirring. När du använder 'author_sort', kommer en inforuta att\nvisa författarens namn.\nExempel:\ncategories_use_field_for_author_name = 'author'\ncategories_use_field_for_author_name = 'author_sort'"
+msgstr "Ange vilket författarfält som ska visas i taggrutan (listan med författare,\nserien, förlag o.s.v. på vänster sida). Alternativen är författare och\nauthor_sort. Detta justering påverkar bara vad som visas under författar-\nkategori i taggpanelen och Innehållsservern. Observera att om du ställer in\ntill author_sort är det möjligt att se dubblett namn i listan eftersom,\näven om det är garanterat att författarnamn är unika, finns det ingen sådan\ngaranti för author_sort-värden. Att visa dubbletter kommer inte att förstöra något, men\nden kan leda till viss förvirring. När du använder 'author_sort', kommer en inforuta att\nvisa författarens namn.\nExempel:\ncategories_use_field_for_author_name = 'author'\ncategories_use_field_for_author_name = 'author_sort'"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:95
 msgid "Control partitioning of Tag browser"
-msgstr "Anpassa uppdelning av Etikettbläddrare"
+msgstr "Anpassa uppdelning av Taggbläddrare"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:96
 msgid ""
@@ -37965,11 +37965,11 @@ msgid ""
 "Note that the \"r'\" in front of the { is necessary if there are backslashes\n"
 "(\\ characters) in the template. It doesn't hurt anything to leave it there\n"
 "even if there aren't any backslashes."
-msgstr "Vid partitionering av Etikettbläddraren så är formatet på underkategorietikett\nstyrd av en mall: categories_collapsed_name_template om sortering efter\nnamn, categories_collapsed_rating_template om sortering efter genomsnittliga betyget, och\ncategories_collapsed_popularity_template om sortering efter popularitet. Det finns\ntvå variabler tillgängliga för mallen: första och sista. Variabeln 'first'\när den första posten i underkategorin och variabeln 'last' är den sista\nobjekt i underkategorin. Båda variablerna är 'objects', de har flera\nvärden som erhålls med hjälp av ett suffix. Till exempel, first.name för en\nFörfattares kategori kommer att vara namnet på författaren. Sub-values är tillgängliga:\nname: den utskrivbara namnet på objektet\nantal: antalet böcker som refererar denna post\navg_rating: det genomsnittliga betyget för alla de böcker som hänvisar till detta objekt\nsort: sorteringsvärde. För författare är detta author_sort för upphovsmannen\ncategory: den kategori (t.ex. författare, serie) som objektet är i.\nObservera att \"r\" framför { är nödvändig om det finns omvända snedstreck\n(\\-tecken) i mallen. Det skadar inte att lämna den där\näven om det inte finns några bakstreck."
+msgstr "Vid partitionering av Taggbläddraren så är formatet på underkategorietikett\nstyrd av en mall: categories_collapsed_name_template om sortering efter\nnamn, categories_collapsed_rating_template om sortering efter genomsnittliga betyget, och\ncategories_collapsed_popularity_template om sortering efter popularitet. Det finns\ntvå variabler tillgängliga för mallen: första och sista. Variabeln 'first'\när den första posten i underkategorin och variabeln 'last' är den sista\nobjekt i underkategorin. Båda variablerna är 'objects', de har flera\nvärden som erhålls med hjälp av ett suffix. Till exempel, first.name för en\nFörfattares kategori kommer att vara namnet på författaren. Sub-values är tillgängliga:\nname: den utskrivbara namnet på objektet\nantal: antalet böcker som refererar denna post\navg_rating: det genomsnittliga betyget för alla de böcker som hänvisar till detta objekt\nsort: sorteringsvärde. För författare är detta author_sort för upphovsmannen\ncategory: den kategori (t.ex. författare, serie) som objektet är i.\nObservera att \"r\" framför { är nödvändig om det finns omvända snedstreck\n(\\-tecken) i mallen. Det skadar inte att lämna den där\näven om det inte finns några bakstreck."
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:117
 msgid "Control order of categories in the Tag browser"
-msgstr "Anpassa ordning av kategorier i Etikettbläddraren"
+msgstr "Anpassa ordning av kategorier i Taggbläddraren"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:118
 msgid ""
@@ -37980,7 +37980,7 @@ msgid ""
 "using the default order; the one used when the dict is empty.\n"
 "Example: tag_browser_category_order = {'series':1, 'tags':2, '*':3}\n"
 "resulting in the order series, tags, then everything else in default order."
-msgstr "Ändra följande \"dict\" till ändra ordningen som kategorierna visas i\nEtikettbläddraren. Objekt namnges med sina uppslagsnamn, och kommer att sorteras\nmed medföljande numret. Uppslagsnamnet '*' står för alla namn som\nannars inte visas. Två namn med samma värde kommer att sorteras\ngenom att använda standardordning, den ena används när dict är tom.\nExempel: tag_browser_category_order = {'series':1, 'tags':2, '*':3}\nresulterar i ordningen serien, etiketter, sedan kommer allt annat i standard-ordning."
+msgstr "Ändra följande \"dict\" till ändra ordningen som kategorierna visas i\nTaggbläddraren. Objekt namnges med sina uppslagsnamn, och kommer att sorteras\nmed medföljande numret. Uppslagsnamnet '*' står för alla namn som\nannars inte visas. Två namn med samma värde kommer att sorteras\ngenom att använda standardordning, den ena används när dict är tom.\nExempel: tag_browser_category_order = {'series':1, 'tags':2, '*':3}\nresulterar i ordningen serien, taggar, sedan kommer allt annat i standard-ordning."
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:128
 msgid "Specify columns to sort the booklist by on startup"
@@ -38163,7 +38163,7 @@ msgid ""
 "The resulting two tweaks are:\n"
 "sony_collection_renaming_rules={'series':'Series', 'tags':'Tag'}\n"
 "sony_collection_name_template='{category:||: }{value}'"
-msgstr "Ange ändring av namngivningsregler för sony-samling. Denna justering är bara tillämplig om\nmetadatahanteringen är satt till automatisk. Sony-samlingar är namngivna\nberoende på om fältet är standard eller anpassat. En samling från\nstandardfält är namngivna enligt värdet i det fältet. Till exempel om\nstandard  'serie'-kolumn innehåller värdet \"Darkover\", så är samlingsnamnet\n\"Darkover\". En samling från anpassat fält kommer att ha namnet på fältet  tillagt till värdet.\nTill exempel, om en anpassad seriekolumn är 'Mina Serier' så kommer samlingen namnges\ntill \"Darkover (Mina Serier)\". Syftet av denna dokumentation, 'Darkover' kallas \nvärdet och 'Mina Serier' kallas för kategori.\nOm två böcker har fält som genererar samma samlingsnamn så kommer\nbåda böckerna finnas i den samlingen.\nDenna uppstättning justeringar låter dig ange normal eller anpassad fält som\nstyr hur samlingar namnges. Du kan använda detta för att lägga till en beskrivning\ntill ett normalt fält, till exempel 'Foo (markering)' i stället för \"Foo\". Du\nkan också använda detta för att tvinga multipla fält att hamna i samma samling.\nTill exempel, du kan tvinga värden i 'serier', '#mina_serier_1' och '#mina_serier_2'\natt hamna i samma samling namngiven 'några_värden (serier)', därefter sammanfoga\nalla fält till en uppsättning samlingar.\nDet finns två relaterade justeringar. Den första bestämmer kategorinamnet \nsom används för ett metadatafält. Den andra är en mall, som används för att\nbestämma hur värdet och kategorin kombineras för att skapa samlingsnamnet.\nSyntaxen för den första justeringen, sony_collection_renaming_rules, är:\n{'field_lookup_name':'category_name_to_use', 'lookup_name':'name', ...}\nDen andra justeringen, sony_collection_name_template, är en mall. Den använder\nsamma mallspråk som kontrollpanelen och sparar mallar.\nDenna justering styr hur värdet och kategorin kombineras ihop för att\nskapa samlingsnamnet.\nDe två tillgängliga fälten är {category} och {value}. {value} fältet är\naldrig tomt. {category} fältet kan vara tomt. Standard är att sätta värdet\nförst, sedan kategorin omsluten av parentes, det är aldrig tomt:\n'{value} {category:|(|)}'\nExempel: Första tre exempel antar att den andra justeringen inte har ändrats.\n1. Jag vill att tre seriekolumner slås samman till en uppsätting samlingar.\nKolumnuppslagsnamnen är 'serier', '#serier_1' and '#serier_2'. Jag vill inte\nha något i parenteser. Värdet att användas i justeringen blir då: \nsony_collection_renaming_rules={'serier':'', '#serier_1':'', '#serier_2':''}\n2. Jag vill att ordet '(Serier)' förekommer i samlingar gjorda från serier, och\nordet '(markering)' förekommer i samlingar gjorda från markeringar. Använd:\nsony_collection_renaming_rules={'serier':'Serier', 'markeringar':'Markering'}\n3. Jag vill att 'serier' och '#minaserier' sammanfogas och att samlingsnamnet\nhar ändelsen '(Serier)' tillagd. Namngivnings regeln är:\nsony_collection_renaming_rules={'serier':'Serier', '#minaserier':'Serier'}\n4. Samma som exempel 2, men i stället för att ha kategorinamn i parentes och\nlägga till anpassavärde, vill jag infoga före och separera med ett kolon så som\nSerier: Darkover. Jag måste ändra mallen för att formatera kategorinamnet.\nJustering blir då:\nsony_collection_renaming_rules={'serier':'Serier', 'markeringar':'Markering'}\nsony_collection_name_template='{kategori:||: }{värde}'"
+msgstr "Ange ändring av namngivningsregler för sony-samling. Denna justering är bara tillämplig om\nmetadatahanteringen är satt till automatisk. Sony-samlingar är namngivna\nberoende på om fältet är standard eller anpassat. En samling från\nstandardfält är namngivna enligt värdet i det fältet. Till exempel om\nstandard  'serie'-kolumn innehåller värdet \"Darkover\", så är samlingsnamnet\n\"Darkover\". En samling från anpassat fält kommer att ha namnet på fältet  tillagt till värdet.\nTill exempel, om en anpassad seriekolumn är 'Mina Serier' så kommer samlingen namnges\ntill \"Darkover (Mina Serier)\". Syftet av denna dokumentation, 'Darkover' kallas \nvärdet och 'Mina Serier' kallas för kategori.\nOm två böcker har fält som genererar samma samlingsnamn så kommer\nbåda böckerna finnas i den samlingen.\nDenna uppstättning justeringar låter dig ange normal eller anpassad fält som\nstyr hur samlingar namnges. Du kan använda detta för att lägga till en beskrivning\ntill ett normalt fält, till exempel 'Foo (markering)' i stället för \"Foo\". Du\nkan också använda detta för att tvinga multipla fält att hamna i samma samling.\nTill exempel, du kan tvinga värden i 'serier', '#mina_serier_1' och '#mina_serier_2'\natt hamna i samma samling namngiven 'några_värden (serier)', därefter sammanfoga\nalla fält till en uppsättning samlingar.\nDet finns två relaterade justeringar. Den första bestämmer kategorinamnet \nsom används för ett metadatafält. Den andra är en mall, som används för att\nbestämma hur värdet och kategorin kombineras för att skapa samlingsnamnet.\nSyntaxen för den första justeringen, sony_collection_renaming_rules, är:\n{'field_lookup_name':'category_name_to_use', 'lookup_name':'name', ...}\nDen andra justeringen, sony_collection_name_template, är en mall. Den använder\nsamma mallspråk som pluggbrädor och sparar mallar.\nDenna justering styr hur värdet och kategorin kombineras ihop för att\nskapa samlingsnamnet.\nDe två tillgängliga fälten är {category} och {value}. {value} fältet är\naldrig tomt. {category} fältet kan vara tomt. Standard är att sätta värdet\nförst, sedan kategorin omsluten av parentes, det är aldrig tomt:\n'{value} {category:|(|)}'\nExempel: Första tre exempel antar att den andra justeringen inte har ändrats.\n1. Jag vill att tre seriekolumner slås samman till en uppsätting samlingar.\nKolumnuppslagsnamnen är 'serier', '#serier_1' and '#serier_2'. Jag vill inte\nha något i parenteser. Värdet att användas i justeringen blir då: \nsony_collection_renaming_rules={'serier':'', '#serier_1':'', '#serier_2':''}\n2. Jag vill att ordet '(Serier)' förekommer i samlingar gjorda från serier, och\nordet '(markering)' förekommer i samlingar gjorda från markeringar. Använd:\nsony_collection_renaming_rules={'serier':'Serier', 'markeringar':'Markering'}\n3. Jag vill att 'serier' och '#minaserier' sammanfogas och att samlingsnamnet\nhar ändelsen '(Serier)' tillagd. Namngivnings regeln är:\nsony_collection_renaming_rules={'serier':'Serier', '#minaserier':'Serier'}\n4. Samma som exempel 2, men i stället för att ha kategorinamn i parentes och\nlägga till anpassavärde, vill jag infoga före och separera med ett kolon så som\nSerier: Darkover. Jag måste ändra mallen för att formatera kategorinamnet.\nJustering blir då:\nsony_collection_renaming_rules={'serier':'Serier', 'markeringar':'Markering'}\nsony_collection_name_template='{kategori:||: }{värde}'"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:325
 msgid "Specify how SONY collections are sorted"
@@ -38186,7 +38186,7 @@ msgid ""
 "Note that the bracketing and parentheses are required. The syntax is\n"
 "[ ( [list of fields], sort field ) , ( [ list of fields ] , sort field ) ]\n"
 "Default: empty (no rules), so no collection attributes are named."
-msgstr "Ange hur Sony-samlingar ska sorteras. Denna inställning gäller bara om\nmetadatahanteringen är inställd på automatisk. Du kan ange vilka metadata ska\nanvändas för att sortera på en samling-för-samling basis. Formatet på inställningen\när en lista med metadatafält från vilka samlingar görs, följt av\nnamn på metadatafält som innehåller detta typvärde.\nExempel: Följande visar att samlingar byggs från pubDate och etiketter\nska sorteras efter värdet i den anpassade kolumnen '#mydate', att samlingar\nbyggd från 'serie' ska sorteras med 'series_index', och att alla andra\nsamlingar ska sorteras efter titel. Om en samling metadatafält är inte\nnamngivna, så om det är en seriebaserad uppsamling är det en sorterad serieordning,\nannars är det sorterade efter rubrik ordning.\n(['pubdate', 'tags'],'#mydate'), (['series'],'series_index'), (['*'], 'title')]\nObservera att klamrar och parenteser krävs. Syntaxen är\n( [list of fields], sort field ) , ( [ list of fields ] , sort field ) ]\nStandard: tomt (inga regler) så ingen insamling av attribut är namngivna."
+msgstr "Ange hur Sony-samlingar ska sorteras. Denna inställning gäller bara om\nmetadatahanteringen är inställd på automatisk. Du kan ange vilka metadata ska\nanvändas för att sortera på en samling-för-samling basis. Formatet på inställningen\när en lista med metadatafält från vilka samlingar görs, följt av\nnamn på metadatafält som innehåller detta typvärde.\nExempel: Följande visar att samlingar byggs från pubDate och taggar\nska sorteras efter värdet i den anpassade kolumnen '#mydate', att samlingar\nbyggd från 'serie' ska sorteras med 'series_index', och att alla andra\nsamlingar ska sorteras efter titel. Om en samling metadatafält är inte\nnamngivna, så om det är en seriebaserad uppsamling är det en sorterad serieordning,\nannars är det sorterade efter rubrik ordning.\n(['pubdate', 'tags'],'#mydate'), (['series'],'series_index'), (['*'], 'title')]\nObservera att klamrar och parenteser krävs. Syntaxen är\n( [list of fields], sort field ) , ( [ list of fields ] , sort field ) ]\nStandard: tomt (inga regler) så ingen insamling av attribut är namngivna."
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:343
 msgid "Control how tags are applied when copying books to another library"
@@ -38196,7 +38196,7 @@ msgstr "Anpassa hur märkningar är tillämpade vid kopiering av böcker till et
 msgid ""
 "Set this to True to ensure that tags in 'Tags to add when adding\n"
 "a book' are added when copying books to another library"
-msgstr "Ställ in denna som True för att se till att etiketterna i 'Etiketter att lägga till när en bok läggs till'\nläggs till vid kopiering av böcker till ett annat bibliotek"
+msgstr "Ställ in denna som True för att se till att taggarna i 'Taggar att lägga till när en bok läggs till'\nläggs till vid kopiering av böcker till ett annat bibliotek"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:348
 msgid ""
@@ -38224,7 +38224,7 @@ msgid ""
 "To display all fields except #mycomments:\n"
 "content_server_will_display = ['*']\n"
 "content_server_wont_display['#mycomments']"
-msgstr "Anpassar vilka fält som visas när du klickar på knappen \"Sök\" i\nwebbläsaren för att söka i ditt calibre bibliotek.\ncontent_server_will_display är en lista med anpassade fält som ska visas.\ncontent_server_wont_display är en lista med egna fält som inte ska visas.\nwont_display har högre prioritet än will_display.\nDet särskilda värdet \"*\" alla egna fält. Värdet [] innebär inga poster.\nStandardvärden:\ncontent_server_will_display = ['*']\ncontent_server_wont_display = []\n\nExempel:\n\nDu bara vill visa de anpassade fälten #minaetiketter och #genre:\ncontent_server_will_display = ['#minaetiketter',\" '#genre']\ncontent_server_wont_display = []\n\nFör att visa alla fält utom #minakommentarer:\ncontent_server_will_display = ['*']\ncontent_server_wont_display['#minakommentarer']"
+msgstr "Anpassar vilka fält som visas när du klickar på knappen \"Sök\" i\nwebbläsaren för att söka i ditt calibre bibliotek.\ncontent_server_will_display är en lista med anpassade fält som ska visas.\ncontent_server_wont_display är en lista med egna fält som inte ska visas.\nwont_display har högre prioritet än will_display.\nDet särskilda värdet \"*\" alla egna fält. Värdet [] innebär inga poster.\nStandardvärden:\ncontent_server_will_display = ['*']\ncontent_server_wont_display = []\n\nExempel:\n\nDu bara vill visa de anpassade fälten #minataggar och #genre:\ncontent_server_will_display = ['#minataggar',\" '#genre']\ncontent_server_wont_display = []\n\nFör att visa alla fält utom #minakommentarer:\ncontent_server_will_display = ['*']\ncontent_server_wont_display['#minakommentarer']"
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:371
 msgid "Set the maximum number of sort 'levels'"
@@ -38430,7 +38430,7 @@ msgstr "Justeringsmöjligheter i calibre möjliggör direkt redigering av ett bo
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:501
 msgid "Do not preselect a completion when editing authors/tags/series/etc."
-msgstr "Förvälj inte ett slutförande vid redigering av författare/etiketter/serier/o.s.v."
+msgstr "Förvälj inte ett slutförande vid redigering av författare/taggar/serier/o.s.v."
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:502
 msgid ""
@@ -38443,7 +38443,7 @@ msgstr "Detta innebär att du kan göra ändringar, trycka på Retur och dina ä
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:509
 msgid "Completion mode when editing authors/tags/series/etc."
-msgstr "Kompletteringsläge vid redigering av författare/etiketter/serier/o.s.v."
+msgstr "Kompletteringsläge vid redigering av författare/taggar/serier/o.s.v."
 
 #: /home/kovid/work/calibre/resources/default_tweaks.py:510
 msgid ""

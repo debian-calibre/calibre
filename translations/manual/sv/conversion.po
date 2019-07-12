@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2018
+# Jonatan Nyberg, 2018-2019
 # Jonatan Nyberg, 2017-2018
 # Jonatan Nyberg, 2017
 # Merarom <merarom@yahoo.es>, 2014-2016
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 10:31+0530\n"
-"PO-Revision-Date: 2018-11-04 11:47+0000\n"
+"POT-Creation-Date: 2019-05-31 09:25+0530\n"
+"PO-Revision-Date: 2019-06-06 12:11+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -327,7 +327,7 @@ msgid ""
 "set the option and be sure that it performs as advertised, irrespective of "
 "how messy the input file is. The one exception is when the input file uses "
 "hard line breaks to implement inter-paragraph spacing."
-msgstr "Normalt ska stycker/paragrafer i XHTML återges med en tom rad mellan dem och ingen ledande textindrag. calibre har ett par alternativ för att anpassa detta. :guilabel:`Ta bort blankrad mellan stycken`  ser med kraft till att alla stycken har någon bland paragraf/styckesavstånd. Den sätter också textindraget till 1.5em (kan ändras) för att markera början på varje punkt. :guilabel:`Infoga tom rad` gör det motsatta, som garanterar att det finns exakt en tom rad mellan varje par av stycken. Båda dessa alternativ är mycket omfattande, avlägsna avstånd, eller sätta in den för alla stycken (tekniskt <p> och <div> etiketter). Det är så att du bara kan ställa in alternativet och vara säker på att den presterar som utlovat, oavsett hur rörig indatafilen är. Det enda undantaget är när indatafilen använder hårda radbrytningar att genomföra interstyckeavstånd."
+msgstr "Normalt ska stycker/paragrafer i XHTML återges med en tom rad mellan dem och ingen ledande textindrag. calibre har ett par alternativ för att anpassa detta. :guilabel:`Ta bort blankrad mellan stycken`  ser med kraft till att alla stycken har någon bland paragraf/styckesavstånd. Den sätter också textindraget till 1.5em (kan ändras) för att markera början på varje punkt. :guilabel:`Infoga tom rad` gör det motsatta, som garanterar att det finns exakt en tom rad mellan varje par av stycken. Båda dessa alternativ är mycket omfattande, avlägsna avstånd, eller sätta in den för alla stycken (tekniskt <p> och <div> taggar). Det är så att du bara kan ställa in alternativet och vara säker på att den presterar som utlovat, oavsett hur rörig indatafilen är. Det enda undantaget är när indatafilen använder hårda radbrytningar att genomföra interstyckeavstånd."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:201
 msgid ""
@@ -507,7 +507,7 @@ msgid ""
 "attempt detection them and surround them with heading tags. <h2> tags are "
 "used for chapter headings; <h3> tags are used for any titles that are "
 "detected."
-msgstr "Om dokumentet inte har kapitelrubriker och titlar formaterade annorlunda från resten av texten, kan calibre använda det här alternativet för att försöka detektera dem och omge dem med rubriketiketter. <h2>etiketter används för kapitelrubriker; <h3>etiketter används för några titlar som upptäcks."
+msgstr "Om dokumentet inte har kapitelrubriker och titlar formaterade annorlunda från resten av texten, kan calibre använda det här alternativet för att försöka detektera dem och omge dem med rubriktaggar. <h2>taggar används för kapitelrubriker; <h3>taggar används för några titlar som upptäcks."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:303
 msgid ""
@@ -524,7 +524,7 @@ msgid ""
 "The inserted headings are not formatted, to apply formatting use the "
 ":guilabel:`Extra CSS` option under the Look and Feel conversion settings.  "
 "For example, to center heading tags, use the following::"
-msgstr "De insatta rubriker är inte formaterad, för att tillämpa formatering använd :guilabel:`Extra CSS` alternativet under konverteringsinställningar under Utseende och känsla. Till exempel, för att centrera rubriketiketter, använd följande::"
+msgstr "De insatta rubriker är inte formaterad, för att tillämpa formatering använd :guilabel:`Extra CSS` alternativet under konverteringsinställningar under Utseende och känsla. Till exempel, för att centrera rubriktaggar, använd följande::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:316
 msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
@@ -536,7 +536,7 @@ msgid ""
 "sequentially. calibre's default conversion settings will cause such titles "
 "to be split into two pieces.  This option will re-number the heading tags to"
 " prevent splitting."
-msgstr "Vissa förlag formaterar kapitelrubriker som använder flera <h1> eller <h2> etiketter sekventiellt. calibres standardkonverteringsinställningar kommer orsaka att sådana titlar delas upp i två delar. Detta alternativ kommer att numrera rubriketiketterna för att undvika delning."
+msgstr "Vissa förlag formaterar kapitelrubriker som använder flera <h1> eller <h2> taggar sekventiellt. calibres standardkonverteringsinställningar kommer orsaka att sådana titlar delas upp i två delar. Detta alternativ kommer att numrera rubriktaggarna för att undvika delning."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:323
 msgid ":guilabel:`Delete blank lines between paragraphs`"
@@ -586,13 +586,13 @@ msgid ""
 "setting, otherwise the style information will be discarded.  Image tags can "
 "used, but calibre does not provide the ability to add the image during "
 "conversion, this must be done after the fact using the 'Edit book' feature."
-msgstr "Generellt bör man undvika att använda html-etiketter, calibre kommer bortse från några etiketter och använda fördefinierade uppmärkning. <hr /> etiketter, det vill säga övergripande regler och <img> etiketter undantages. Horisontella regler kan eventuellt fås med stilar, om du väljer att lägga till din egen stil se till att inkludera \"bredd\"-inställning, annars informations stilen kommer att slängas. Bildetiketter kan användas, men calibre ger inte möjlighet att lägga till bilden under konverteringen, måste detta ske i efterhand med hjälp av \"Redigera bok\" funktionen."
+msgstr "Generellt bör man undvika att använda html-taggar, calibre kommer bortse från några taggar och använda fördefinierade uppmärkning. <hr /> taggar, det vill säga övergripande regler och <img> taggar undantages. Horisontella regler kan eventuellt fås med stilar, om du väljer att lägga till din egen stil se till att inkludera \"bredd\"-inställning, annars informations stilen kommer att slängas. Bildtaggar kan användas, men calibre ger inte möjlighet att lägga till bilden under konverteringen, måste detta ske i efterhand med hjälp av \"Redigera bok\" funktionen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:341
 msgid ""
 "Example image tag (place the image within an 'Images' folder inside the epub"
 " after conversion):"
-msgstr "Exempel bildetiketter (placera bilden i en \"Bilder\"-mapp inne i epub:en efter konvertering):"
+msgstr "Exempel bildtaggar (placera bilden i en \"Bilder\"-mapp inne i epub:en efter konvertering):"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:341
 msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
@@ -730,7 +730,7 @@ msgid ""
 "chapters start at either `<h1>` or `<h2>` tags that have any of the words "
 "`(chapter, book, section or part)` in them or that have the "
 "`class=\"chapter\"` attribute."
-msgstr "Detta uttryck är ganska komplicerat, eftersom det försöker hantera ett antal gemensamma fall samtidigt. Vad det betyder är att calibre antar att kapitel börjar på antingen `<h1>` eller `<h2>` etiketter som har något av orden `(chapter, book, section eller part)` i dem eller som har `class = \"chapter\"` attribut."
+msgstr "Detta uttryck är ganska komplicerat, eftersom det försöker hantera ett antal gemensamma fall samtidigt. Vad det betyder är att calibre antar att kapitel börjar på antingen `<h1>` eller `<h2>` taggar som har något av orden `(chapter, book, section eller part)` i dem eller som har `class = \"chapter\"` attribut."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:409
 msgid ""
@@ -748,7 +748,7 @@ msgstr "Standardinställningen för detektering av sidbrytningar är::"
 msgid ""
 "which means that calibre will insert page breaks before every `<h1>` and "
 "`<h2>` tag by default."
-msgstr "vilket innebär att calibre kommer att infoga sidbrytningar före varje `<h1>` och `<h2` etikett som standard."
+msgstr "vilket innebär att calibre kommer att infoga sidbrytningar före varje `<h1>` och `<h2` tagg som standard."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:421
 msgid ""
@@ -775,7 +775,7 @@ msgid ""
 "comments, etc. This option will create a single page with all this metadata "
 "and insert it into the converted e-book, typically just after the cover. "
 "Think of it as a way to create your own customised book jacket."
-msgstr "En av de bästa sakerna med calibre är att det tillåter dig att behålla mycket komplett metadata om alla dina böcker, till exempel, ett betyg, etiketter, kommentarer, o.s.v. Detta alternativ kommer att skapa en enda sida med all denna metadata och sätta in den i den konverterade e-boken, typiskt just efter omslaget. Se det som ett sätt att skapa egna bokomslag."
+msgstr "En av de bästa sakerna med calibre är att det tillåter dig att behålla mycket komplett metadata om alla dina böcker, till exempel, ett betyg, taggar, kommentarer, o.s.v. Detta alternativ kommer att skapa en enda sida med all denna metadata och sätta in den i den konverterade e-boken, typiskt just efter omslaget. Se det som ett sätt att skapa egna bokomslag."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:439
 msgid ":guilabel:`Remove first image`"
@@ -868,7 +868,7 @@ msgid ""
 " to each option is a button that launches a wizard to help with the creation"
 " of basic XPath expressions. The following simple example illustrates how to"
 " use these options."
-msgstr "Med :guilabel:`Nivå 1,2,3 innehållsförteckning`-alternativet kan du skapa en sofistikerad flera nivåer Innehållsförteckning. De är XPath-uttryck som passar etiketter i medan XHTML produceras av konverteringsrörledningen. Se  :ref:`conversion-introduction` för hur du får tillgång till denna XHTML. Läs också :ref:`xpath-tutorial`, att lära sig att konstruera XPath-uttryck. Bredvid varje alternativ finns en knapp som startar en guide för att hjälpa till med att skapa grundläggande XPath-uttryck. Följande enkla exempel visar hur man använder de här alternativen."
+msgstr "Med :guilabel:`Nivå 1,2,3 innehållsförteckning`-alternativet kan du skapa en sofistikerad flera nivåer Innehållsförteckning. De är XPath-uttryck som passar taggar i medan XHTML produceras av konverteringsrörledningen. Se  :ref:`conversion-introduction` för hur du får tillgång till denna XHTML. Läs också :ref:`xpath-tutorial`, att lära sig att konstruera XPath-uttryck. Bredvid varje alternativ finns en knapp som startar en guide för att hjälpa till med att skapa grundläggande XPath-uttryck. Följande enkla exempel visar hur man använder de här alternativen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:489
 msgid ""
@@ -908,12 +908,12 @@ msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
 "two, calibre will take the title from the value of the ``title`` attribute "
 "on the ``<h2>`` tag, since the tag has no text."
-msgstr "Ändra :guilabel:`Nivå 1 innehållsförteckning` inställning till ``//h:h2``. Då, för kapitel två, kommer calibre ta titeln från värdet av ``titel``-attribut på ``<h2> `` etikett, eftersom etiketten inte har någon text."
+msgstr "Ändra :guilabel:`Nivå 1 innehållsförteckning` inställning till ``//h:h2``. Då, för kapitel två, kommer calibre ta titeln från värdet av ``titel``-attribut på ``<h2> `` tagg, eftersom taggen inte har någon text."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:550
 msgid ""
 "Using tag attributes to supply the text for entries in the Table of Contents"
-msgstr "Använda etikettattribut för att leverera texten för posterna i innehållsförteckningen"
+msgstr "Använda taggattribut för att leverera texten för posterna i innehållsförteckningen"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:552
 msgid ""
@@ -929,7 +929,7 @@ msgid ""
 "``<h2>`` tags, instead of using the text inside the tag. Note the trailing "
 "``/@title`` on the XPath expression, you can use this form to tell calibre "
 "to get the text from any attribute you like."
-msgstr "Ändra :guilabel:`Nivå 1 TOC` inställning till ``//h:h2/@titel``. Då tar calibre titeln från värdet på ``titel`` attribut på ``<h2>`` etiketter, istället för att använda texten i etiketten. Observera den avslutande ``/@titel`` på XPath-uttryck kan du använda det här formuläret för att berätta calibre för att få text från alla attribut du vill."
+msgstr "Ändra :guilabel:`Nivå 1 TOC` inställning till ``//h:h2/@titel``. Då tar calibre titeln från värdet på ``titel`` attribut på ``<h2>`` taggar, istället för att använda texten i taggen. Observera den avslutande ``/@titel`` på XPath-uttryck kan du använda det här formuläret för att berätta calibre för att få text från alla attribut du vill."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:574
 msgid "How options are set/saved for Conversion"
@@ -1321,7 +1321,7 @@ msgid ""
 "1' equates to the HTML tag <h1>, 'Heading 2' to <h2> etc). When you convert "
 "in calibre you can enter which style you used into the 'Detect chapters at' "
 "box. Example:"
-msgstr "Om du vill aktivera automatisk detektering av kapitlen, måste du markera dem med inbyggd stilar som kallas \"Rubrik 1\", \"Rubrik 2\", ..., \"Rubrik 6 '(' Rubrik 1\" motsvarar HTML-etiketten <h1> , \"Rubrik 2\" till <h2> o.s.v.). När du konverterar i calibre kan du ange vilken stil du använde i \"Identifiera kapitel på\" rutan. Exempel:"
+msgstr "Om du vill aktivera automatisk detektering av kapitlen, måste du markera dem med inbyggd stilar som kallas \"Rubrik 1\", \"Rubrik 2\", ..., \"Rubrik 6 '(' Rubrik 1\" motsvarar HTML-taggen <h1> , \"Rubrik 2\" till <h2> o.s.v.). När du konverterar i calibre kan du ange vilken stil du använde i \"Identifiera kapitel på\" rutan. Exempel:"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:790
 msgid ""

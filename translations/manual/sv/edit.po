@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-20 07:43+0530\n"
-"PO-Revision-Date: 2019-04-20 09:11+0000\n"
+"POT-Creation-Date: 2019-05-31 09:25+0530\n"
+"PO-Revision-Date: 2019-06-06 12:17+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -312,7 +312,7 @@ msgid ""
 "As a convenience, you can select multiple HTML files in the File browser, "
 "right click and choose Link stylesheets to have calibre automatically insert"
 " the <link> tags for those stylesheets into all the selected HTML files."
-msgstr "Som en bekvämlighet kan du välja flera HTML-filer i filhanteraren, högerklicka och välj Länka formatmallar för att ha calibre automatiskt infoga <link> etiketter för dessa formatmallar i alla markerade HTML-filer."
+msgstr "Som en bekvämlighet kan du välja flera HTML-filer i filhanteraren, högerklicka och välj Länka formatmallar för att ha calibre automatiskt infoga <link> taggar för dessa formatmallar i alla markerade HTML-filer."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:216
 msgid "Search & replace"
@@ -400,7 +400,7 @@ msgstr "Med funktionsläget kan du skriva godtyckliga och starka Python-funktion
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:272
 msgid "Search ignoring HTML tags"
-msgstr "Sök ignorerar HTML-etiketter"
+msgstr "Sök ignorerar HTML-taggar"
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:274
 msgid ""
@@ -409,7 +409,7 @@ msgid ""
 "<i>word</i>.`` you can search for ``on a word`` and it will be found even "
 "though there is an ``<i>`` tag in the middle. Use this tool via the "
 ":guilabel:`Search->Search ignoring HTML markup` menu item."
-msgstr "Det finns också en särskild verktyg för att söka efter text, ignorerar alla HTML-etiketter i mellan. Till exempel, om boken har HTML ``Empahisis on a <i>word</i>.`` Kan du söka efter ``on a word`` och det kommer att finnas även om det finns en ``<i>`` etikett i mitten. Använd detta verktyg via :guilabel:'Sök->Sök ignorera HTML-kod` menyalternativet."
+msgstr "Det finns också en särskild verktyg för att söka efter text, ignorerar alla HTML-taggar i mellan. Till exempel, om boken har HTML ``Empahisis on a <i>word</i>.`` Kan du söka efter ``on a word`` och det kommer att finnas även om det finns en ``<i>`` tagg i mitten. Använd detta verktyg via :guilabel:'Sök->Sök ignorera HTML-kod` menyalternativet."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:281
 msgid "Automated tools"
@@ -498,7 +498,7 @@ msgid ""
 "properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
 "reported. CSS is checked in all stylesheets, inline style attributes and "
 "<style> tags in HTML files."
-msgstr "Felaktiga eller okända CSS-format. Alla CSS som inte är giltig eller som har egenskaper som inte är definierade i standarden CSS 2.1 (plus några från CSS 3) rapporteras. CSS kontrolleras i alla formatmallar, formatattribut på raden och <style> etiketter i HTML-filer."
+msgstr "Felaktiga eller okända CSS-format. Alla CSS som inte är giltig eller som har egenskaper som inte är definierade i standarden CSS 2.1 (plus några från CSS 3) rapporteras. CSS kontrolleras i alla formatmallar, formatattribut på raden och <style> taggar i HTML-filer."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:349
 msgid ""
@@ -517,7 +517,7 @@ msgid ""
 "Various common problems in OPF files such as duplicate spine or manifest "
 "items, broken idrefs or meta cover tags, missing required sections and so "
 "on."
-msgstr "Olika vanliga problem i OPF-filer såsom dubbletter av bokryggar eller uppenbara objekt, trasiga idrefs eller metaomslagsetiketter, saknade nödvändiga sektioner och så vidare."
+msgstr "Olika vanliga problem i OPF-filer såsom dubbletter av bokryggar eller uppenbara objekt, trasiga idrefs eller metaomslagstaggar, saknade nödvändiga sektioner och så vidare."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:359
 msgid ""
@@ -620,7 +620,7 @@ msgid ""
 " that don't match any actual content. These extra rules can slow down "
 "readers that need to process them all. Accessed via :guilabel:`Tools->Remove"
 " unused CSS`."
-msgstr "Ta bort alla oanvända CSS-regler från formatmallar och <style> etiketter. Några böcker som skapas från produktionsmallar kan ha ett stort antal extra CSS-regler som inte matchar något materiellt innehåll. Dessa extra regler kan bromsa läsenheter som behöver bearbeta dem alla. Nås via :guilabel:`Verktyg->Ta bort oanvända CSS`."
+msgstr "Ta bort alla oanvända CSS-regler från formatmallar och <style> taggar. Några böcker som skapas från produktionsmallar kan ha ett stort antal extra CSS-regler som inte matchar något materiellt innehåll. Dessa extra regler kan bromsa läsenheter som behöver bearbeta dem alla. Nås via :guilabel:`Verktyg->Ta bort oanvända CSS`."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:426
 msgid "Fixing HTML"
@@ -664,7 +664,7 @@ msgid ""
 "beautify as it has no suitable block level tags. In such cases you can try "
 "different beautification tools, that are less careful, for example: `HTML "
 "Tidy <https://infohound.net/tidy/>`_."
-msgstr "I HTML kan finnas text med betydande mängd whitespace, via CSS-blank direktivet. Därför skulle försköning eventuellt ändra framställningen av HTML. För att undvika detta så långt som möjligt, försköningsalgoritmen förskönar bara på blocknivå etiketter som innehåller andra blocknivåetiketter. Så, till exempel, text i en <p> tag kommer inte att ha sina whitespace förändrade. Men en <body> etiketter som innehåller bara andra <p> och <div> etiketter kommer att förskönas. Detta kan ibland innebära att en viss fil inte kommer att påverkas av försköning eftersom den inte har lämpliga blocknivåetiketter. I sådana fall kan du prova olika försköning verktyg, som är mindre försiktiga, till exempel: `HTML Tidy <https://infohound.net/tidy/>`_."
+msgstr "I HTML kan finnas text med betydande mängd whitespace, via CSS-blank direktivet. Därför skulle försköning eventuellt ändra framställningen av HTML. För att undvika detta så långt som möjligt, försköningsalgoritmen förskönar bara på blocknivå taggar som innehåller andra blocknivåtaggar. Så, till exempel, text i en <p> tag kommer inte att ha sina whitespace förändrade. Men en <body> taggar som innehåller bara andra <p> och <div> taggar kommer att förskönas. Detta kan ibland innebära att en viss fil inte kommer att påverkas av försköning eftersom den inte har lämpliga blocknivåtaggar. I sådana fall kan du prova olika försköning verktyg, som är mindre försiktiga, till exempel: `HTML Tidy <https://infohound.net/tidy/>`_."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:461
 msgid "Inserting an inline Table of Contents"
@@ -715,7 +715,7 @@ msgid ""
 "``style`` attributes. After removing the style information, a summary of all"
 " the changes made is displayed so you can see exactly what was changed. The "
 "tool can be accessed via :guilabel:`Tools->Filter style information`."
-msgstr "Detta verktyg kan användas för att enkelt ta bort specificerade CSS-formatmallar från hela boken. Du kan tala om vilka egenskaper du vill ha bort, till exempel ``color, background-color, line-height`` och det kommer att ta bort dem överallt de inträffar --- formatmallar, ``<style>`` etiketter och radformatattribut. Efter borttag av formatformationen, en sammanfattning av alla de ändringar som gjorts visas så att du kan se exakt vad som ändrats. Verktyget kan nås via :guilabel:`Verktyg->Filtrera formatinformation`."
+msgstr "Detta verktyg kan användas för att enkelt ta bort specificerade CSS-formatmallar från hela boken. Du kan tala om vilka egenskaper du vill ha bort, till exempel ``color, background-color, line-height`` och det kommer att ta bort dem överallt de inträffar --- formatmallar, ``<style>`` taggar och radformatattribut. Efter borttag av formatformationen, en sammanfattning av alla de ändringar som gjorts visas så att du kan se exakt vad som ändrats. Verktyget kan nås via :guilabel:`Verktyg->Filtrera formatinformation`."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:496
 msgid "Upgrading the book's internals"
@@ -839,7 +839,7 @@ msgid ""
 ":guilabel:`Split at multiple locations`. This will allow you to easily split"
 " a large file at all heading tags or all tags having a certain class and so "
 "on."
-msgstr "Du kan också dela upp en enda HTML-fil på flera platser automatiskt, genom att högerklicka inne i filen i redigeraren och välja  :guilabel:`Dela upp på flera ställen`. Detta gör att du enkelt delar upp en stor fil på alla rubriketiketter eller alla etiketter som har en viss klass och så vidare."
+msgstr "Du kan också dela upp en enda HTML-fil på flera platser automatiskt, genom att högerklicka inne i filen i redigeraren och välja  :guilabel:`Dela upp på flera ställen`. Detta gör att du enkelt delar upp en stor fil på alla rubriktaggar eller alla taggar som har en viss klass och så vidare."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:590
 msgid "The Live CSS panel"
@@ -851,7 +851,7 @@ msgid ""
 "the tag you are currently editing. The name of tag, along with its line "
 "number in the editor are displayed, followed by a list of matching style "
 "rules."
-msgstr ":guilabel:`Gälllande CSS` visar alla stilregler som gäller för etiketten som du för närvarande redigerar. Namnet på etiketten, tillsammans med dess radnummer i redigeraren visas, följt av en lista med matchande stilregler."
+msgstr ":guilabel:`Gälllande CSS` visar alla stilregler som gäller för taggen som du för närvarande redigerar. Namnet på taggen, tillsammans med dess radnummer i redigeraren visas, följt av en lista med matchande stilregler."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:601
 msgid ""
@@ -860,14 +860,14 @@ msgid ""
 "location where the style was defined, in case you wish to make any changes "
 "to the style rules. Style rules that apply directly to the tag, as well as "
 "rules that are inherited from parent tags are shown."
-msgstr "Det är ett bra sätt att snabbt se vilken stilregler som gäller för varje etikett. Visningen har också klickbara länkar (i blått), som tar dig direkt till den plats där stilen definierades, om du vill göra några ändringar i stilregler. Stilregler som gäller direkt på etiketten, liksom regler som ärvs från överetiketter visas."
+msgstr "Det är ett bra sätt att snabbt se vilken stilregler som gäller för varje tagg. Visningen har också klickbara länkar (i blått), som tar dig direkt till den plats där stilen definierades, om du vill göra några ändringar i stilregler. Stilregler som gäller direkt på taggen, liksom regler som ärvs från övertaggar visas."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:607
 msgid ""
 "The panel also shows you what the finally calculated styles for the tag are."
 " Properties in the list that are superseded by higher priority rules are "
 "shown with a line through them."
-msgstr "Panelen visar även hur de slutligen beräknade stilar för etiketten är. Egenskaper i listan som ersätts av högre prioriteringsregler visas med en linje genom dem."
+msgstr "Panelen visar även hur de slutligen beräknade stilar för taggen är. Egenskaper i listan som ersätts av högre prioriteringsregler visas med en linje genom dem."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:611
 msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
@@ -1121,14 +1121,14 @@ msgstr "HTML-redigeraren har mycket sofistikerad syntaxmarkering. Funktioner ink
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:802
 msgid "The text inside bold, italic and heading tags is made bold/italic"
-msgstr "Texten inne i fet, kursiv och rubriketiketter görs fet/kursiv"
+msgstr "Texten inne i fet, kursiv och rubriktaggar görs fet/kursiv"
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:803
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
 "keyboard shortcuts :kbd:`Ctrl+{` and :kbd:`Ctrl+}`"
-msgstr "När du flyttar markören genom HTML markeras de matchande HTML-etiketterna och du kan hoppa till öppnings- eller stängningsetiketten med tangentbordsgenvägarna :kbd:`Ctrl+{` and :kbd:`Ctrl+}`"
+msgstr "När du flyttar markören genom HTML markeras de matchande HTML-taggarna och du kan hoppa till öppnings- eller stängningstaggen med tangentbordsgenvägarna :kbd:`Ctrl+{` and :kbd:`Ctrl+}`"
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:806
 msgid "Invalid HTML is highlighted with a red underline"
@@ -1139,11 +1139,11 @@ msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the lang attribute of the current tag and the overall book language."
-msgstr "Stavfel i texten inuti HTML-etiketter och attribut som titel är markerade. Stavningskontrollen är språkmedveten, baserat på värdet av lang-attributet av den aktuella etiketten och det övergripande bokspråket."
+msgstr "Stavfel i texten inuti HTML-taggar och attribut som titel är markerade. Stavningskontrollen är språkmedveten, baserat på värdet av lang-attributet av den aktuella taggen och det övergripande bokspråket."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:810
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
-msgstr "CSS inbäddade inuti ``<style>`` etiketter är markerad"
+msgstr "CSS inbäddade inuti ``<style>`` taggar är markerad"
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:811
 msgid ""
@@ -1156,7 +1156,7 @@ msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
-msgstr "Länkar till andra filer i ``<a>`` etiketter, ``<img>``- och ``<link>`` etiketter har alla filnamnen markerade. Om filnamnet de hänvisar till finns inte, markeras filnamnet med en röd understrykning."
+msgstr "Länkar till andra filer i ``<a>`` taggar, ``<img>``- och ``<link>`` taggar har alla filnamnen markerade. Om filnamnet de hänvisar till finns inte, markeras filnamnet med en röd understrykning."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:818
 msgid "Context sensitive help"
@@ -1166,13 +1166,13 @@ msgstr "Sammanhangsberoende hjälp"
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
-msgstr "Du kan högerklicka på ett HTML-etikettnamn eller ett CSS-egenskapsnamn för att få hjälp för den etiketten eller egenskapen."
+msgstr "Du kan högerklicka på ett HTML-taggnamn eller ett CSS-egenskapsnamn för att få hjälp för den taggen eller egenskapen."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:822
 msgid ""
 "You can also hold down the Ctrl key and click on any filename inside a link "
 "tag to open that file in the editor automatically."
-msgstr "Du kan också hålla nere Ctrl-tangenten och klicka på godtyckligt filnamn inuti en länketikett för att automatiskt öppna filen i redigeraren."
+msgstr "Du kan också hålla nere Ctrl-tangenten och klicka på godtyckligt filnamn inuti en länktagg för att automatiskt öppna filen i redigeraren."
 
 #: ../../home/kovid/work/calibre/manual/edit.rst:828
 msgid "Auto-complete"

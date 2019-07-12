@@ -84,7 +84,7 @@
         "windows_libraries": "ChmLib",
         "inc_dirs": "!chmlib_inc_dirs",
         "lib_dirs": "!chmlib_lib_dirs",
-        "defines": "SWIG_COBJECT_TYPES"
+        "defines": "SWIG_COBJECT_TYPES SWIG_PYTHON_STRICT_BYTE_CHAR"
     },
     {
         "name": "lzx",
@@ -139,7 +139,7 @@
     },
     {
         "name": "imageops",
-        "sources": "calibre/utils/imageops/imageops.cpp calibre/utils/imageops/quantize.cpp",
+        "sources": "calibre/utils/imageops/imageops.cpp calibre/utils/imageops/quantize.cpp calibre/utils/imageops/ordered_dither.cpp",
         "headers": "calibre/utils/imageops/imageops.h",
         "sip_files": "calibre/utils/imageops/imageops.sip",
         "inc_dirs": "calibre/utils/imageops"
@@ -161,7 +161,7 @@
     {
         "name": "winutil",
         "only": "windows",
-        "sources": "calibre/utils/windows/winutil.c",
+        "sources": "calibre/utils/windows/winutil.c calibre/utils/windows/winutilpp.cpp",
         "libraries": "shell32 wininet advapi32",
         "cflags": "/X"
     },
