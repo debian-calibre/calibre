@@ -2,11 +2,100 @@
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import print_function
+
 import json
 import os
 import re
+import subprocess
+import sys
 
-from bypy.constants import SRC as CALIBRE_DIR
+from bypy.constants import (
+    LIBDIR, PREFIX, PYTHON, SRC as CALIBRE_DIR, build_dir, islinux, ismacos,
+    iswindows, worker_env
+)
+from bypy.utils import run_shell
+
+dlls = [
+    'Core',
+    'Concurrent',
+    'Gui',
+    'Network',
+    # 'NetworkAuth',
+    'Location',
+    'PrintSupport',
+    'WebChannel',
+    # 'WebSockets',
+    # 'WebView',
+    'Positioning',
+    'Sensors',
+    'Sql',
+    'Svg',
+    'WebEngineCore',
+    'WebEngine',
+    'WebEngineWidgets',
+    'Widgets',
+    # 'Multimedia',
+    'OpenGL',
+    # 'MultimediaWidgets',
+    'Xml',
+    # 'XmlPatterns',
+]
+
+if islinux:
+    dlls += ['X11Extras', 'XcbQpa', 'WaylandClient', 'DBus']
+elif ismacos:
+    dlls += ['MacExtras', 'DBus']
+elif iswindows:
+    dlls += ['WinExtras']
+
+QT_DLLS = frozenset(
+    'Qt5' + x for x in dlls
+)
+
+QT_PLUGINS = [
+    'imageformats',
+    'iconengines',
+    # 'mediaservice',
+    'platforms',
+    'platformthemes',
+    # 'playlistformats',
+    'sqldrivers',
+    # 'styles',
+    # 'webview',
+    # 'audio', 'printsupport', 'bearer', 'position',
+]
+
+if not ismacos and not iswindows:
+    QT_PLUGINS.append('platforminputcontexts')
+
+if islinux:
+    QT_PLUGINS += [
+        'wayland-decoration-client',
+        'wayland-graphics-integration-client',
+        'wayland-shell-integration',
+        'xcbglintegrations',
+    ]
+
+PYQT_MODULES = (
+    'Qt',
+    'QtCore',
+    'QtGui',
+    'QtNetwork',
+    # 'QtMultimedia', 'QtMultimediaWidgets',
+    'QtPrintSupport',
+    'QtSensors',
+    'QtSvg',
+    'QtWidgets',
+    'QtWebEngine',
+    'QtWebEngineCore',
+    'QtWebEngineWidgets',
+    # 'QtWebChannel',
+)
+del dlls
+
+if iswindows:
+    PYQT_MODULES += ('QtWinExtras',)
 
 
 def read_cal_file(name):
@@ -59,6 +148,39 @@ def initialize_constants():
     ).group(1)
     calibre_constants['book_extensions'] = json.loads(be.replace("'", '"'))
     return calibre_constants
+
+
+def run(*args, **extra_env):
+    env = os.environ.copy()
+    env.update(worker_env)
+    env.update(extra_env)
+    env['SW'] = PREFIX
+    env['LD_LIBRARY_PATH'] = LIBDIR
+    env['SIP_BIN'] = os.path.join(PREFIX, 'bin', 'sip')
+    env['QMAKE'] = os.path.join(PREFIX, 'qt', 'bin', 'qmake')
+    return subprocess.call(list(args), env=env, cwd=CALIBRE_DIR)
+
+
+def build_c_extensions(ext_dir):
+    bdir = os.path.join(build_dir(), 'calibre-extension-objects')
+    if run(
+        PYTHON, 'setup.py', 'build',
+        '--output-dir', ext_dir, '--build-dir', bdir,
+        COMPILER_CWD=bdir
+    ) != 0:
+        print('Building of calibre C extensions failed', file=sys.stderr)
+        os.chdir(CALIBRE_DIR)
+        run_shell()
+        raise SystemExit('Building of calibre C extensions failed')
+
+
+def run_tests(path_to_calibre_debug, cwd_on_failure):
+    if run(path_to_calibre_debug, '--test-build') != 0:
+        os.chdir(cwd_on_failure)
+        print(
+            'running calibre build tests failed with:', path_to_calibre_debug, file=sys.stderr)
+        run_shell()
+        raise SystemExit('running calibre build tests failed')
 
 
 if __name__ == 'program':

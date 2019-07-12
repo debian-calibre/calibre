@@ -3,7 +3,7 @@
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-store_version = 16  # Needed for dynamic plugin loading
+store_version = 17  # Needed for dynamic plugin loading
 
 from contextlib import closing
 try:
@@ -69,7 +69,7 @@ def search_amazon(query, max_results=10, timeout=60,
                 continue
 
             cover_url = ''.join(result.xpath('.//img/@src'))
-            title = etree.tostring(result.xpath('.//h5')[0], method='text', encoding='unicode')
+            title = etree.tostring(result.xpath('.//h2')[0], method='text', encoding='unicode')
             adiv = result.xpath('.//div[contains(@class, "a-color-secondary")]')[0]
             aparts = etree.tostring(adiv, method='text', encoding='unicode').split()
             idx = aparts.index('|')
@@ -120,5 +120,6 @@ class AmazonKindleStore(StorePlugin):
 
 if __name__ == '__main__':
     import sys
+
     for result in search_amazon(' '.join(sys.argv[1:]), write_html_to='/t/amazon.html'):
         print(result)

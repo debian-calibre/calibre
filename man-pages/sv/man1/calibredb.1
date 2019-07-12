@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maj 31, 2019" "3.44.0" "calibre"
+.TH "CALIBREDB" "1" "juli 12, 2019" "3.45.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -410,7 +410,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP etiketter: etikett1, etikett2. Använd \fI\%\-\-list\-fields\fP för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639 språkkoder (t.ex. EN för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
+Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP taggar: tagg1, tagg2. Använd \fI\%\-\-list\-fields\fP för att få en lista med alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639 språkkoder (t.ex. EN för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -550,12 +550,12 @@ Spara utdata från olika stadier av konverteringen till den angivna katalogen. A
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex beskriver etiketter för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentesetiketter, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-etikett för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Regex beskriver taggar för att utesluta som genrer. Standard: \fB\(aq\fP[.+]|^+$\fB\(aq\fP utesluter parentestaggar, t.ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, och \fB\(aq\fP+\fB\(aq\fP, standard\-tagg för lästa böcker. Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPEtiketter\fB"\fP,\fB\(aq\fP<komma\-separerad lista med etiketter>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Anger de regler som används för att utesluta böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB"\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB"\fPArkiverade böcker\fB"\fP, \fB"\fP# status\fB"\fP, \fB"\fPArkiverade\fB"\fP),) kommer att utesluta en bok med ett värde på \fB"\fPstatus\fB"\fP \fB"\fPArkiverat\fB"\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -590,7 +590,7 @@ Inkludera sektionen \fB\(aq\fPTitlar\fB\(aq\fP i katalogen. Standard: \fB\(aq\fP
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPEtiketter\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
+Källfältet för \fB"\fPGenrer\fB"\fP sektion. Standard: \fB\(aq\fPTaggar\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utdataformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -677,7 +677,7 @@ En ordbok med alternativ för att anpassa hur data i denna kolumn ska tolkas. De
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Denna kolumn lagrar etiketter som data (d.v.s. flera kommaseparerade värden). Gäller endast om datatypen är text.
+Denna kolumn lagrar taggar som data (d.v.s. flera kommaseparerade värden). Gäller endast om datatypen är text.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -760,7 +760,7 @@ calibre\-biblioteket. Detta är användbart om din metadata.db\-fil
 har blivit skadad.
 .sp
 VARNING: Detta kommando återskapar helt databasen. Du kommer att förlora
-alla sparade sökningar, användarkategorier, kontrollpaneler, lagra\-per\-bok konverteringsinställningar och anpassade recept. Återställd metadata kommer
+alla sparade sökningar, användarkategorier, pluggbrädor, lagra\-per\-bok konverteringsinställningar och anpassade recept. Återställd metadata kommer
 bara vara så korrekta som vad finns i OPF\-filer.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"

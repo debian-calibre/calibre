@@ -1,11 +1,11 @@
 [
     {
         "name": "nasm",
-        "os": "macos",
+        "os": "macos,windows",
         "unix": {
-            "filename": "nasm-2.12.02.tar.xz",
-            "hash": "sha1:a0e6e655d04009178d4b7c15d935a46a691a617c",
-            "urls": ["http://www.nasm.us/pub/nasm/releasebuilds/2.12.02/{filename}"]
+            "filename": "nasm-2.14.02.tar.xz",
+            "hash": "sha256:e24ade3e928f7253aa8c14aa44726d1edf3f98643f87c9d72ec1df44b26be8f5",
+            "urls": ["https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/{filename}"]
         }
     },
 
@@ -13,9 +13,39 @@
         "name": "cmake",
         "os": "macos",
         "unix": {
-            "filename": "cmake-3.6.0.tar.gz",
-            "hash": "sha1:6b0d2d7d93c2e74f8890c4b8b824deb3b36d24b6",
-            "urls": ["https://cmake.org/files/v3.6/{filename}"]
+            "filename": "cmake-3.14.4.tar.gz",
+            "hash": "sha256:00b4dc9b0066079d10f16eed32ec592963a44e7967371d2f5077fd1670ff36d9",
+            "urls": ["https://github.com/Kitware/CMake/releases/download/v3.14.4/{filename}"]
+        }
+    },
+
+    {
+        "name": "autoconf",
+        "os": "macos",
+        "unix": {
+            "filename": "autoconf-2.69.tar.xz",
+            "hash": "sha256:64ebcec9f8ac5b2487125a86a7760d2591ac9e1d3dbd59489633f9de62a57684",
+            "urls": ["ftp://ftp.gnu.org/gnu/autoconf/{filename}"]
+        }
+    },
+
+    {
+        "name": "automake",
+        "os": "macos",
+        "unix": {
+            "filename": "automake-1.16.tar.xz",
+            "hash": "sha256:f98f2d97b11851cbe7c2d4b4eaef498ae9d17a3c2ef1401609b7b4ca66655b8a",
+            "urls": ["ftp://ftp.gnu.org/gnu/automake/{filename}"]
+        }
+    },
+
+    {
+        "name": "libtool",
+        "os": "macos",
+        "unix": {
+            "filename": "libtool-2.4.6.tar.xz",
+            "hash": "sha256:7c87a8c2c8c0fc9cd5019e402bed4292462d00a718a7cd5f11218153bf28b26f",
+            "urls": ["ftp://ftp.gnu.org/gnu/libtool/{filename}"]
         }
     },
 
@@ -23,9 +53,9 @@
         "name": "easylzma",
         "os": "windows",
         "windows": {
-            "filename": "easylzma-1753f61f673abdebc08fcf4a37eedd6da8a67ba1.tar.bz2",
-            "hash": "git:1753f61f673abdebc08fcf4a37eedd6da8a67ba1",
-            "urls": ["https://github.com/lloyd/easylzma.git"]
+            "filename": "easylzma-1753f61f673abdebc08fcf4a37eedd6da8a67ba1.tar.gz",
+            "hash": "sha256:7664240898fe09bce8b39cd428407dd24ac3b87200e6b40d4007c78f2c725254",
+            "urls": ["github:lloyd/easylzma"]
         }
     },
 
@@ -123,35 +153,25 @@
             "urls": ["https://www.python.org/ftp/python/2.7.16/{filename}"]
         },
         "windows": {
-            "filename":"python-1948b35e654e0b69ac93e31e3c3405172a6a1b91.tar.bz2",
-            "hash":"git:1948b35e654e0b69ac93e31e3c3405172a6a1b91",
-            "urls":["https://github.com/kovidgoyal/cpython.git"]
-        }
-    },
-
-    {
-        "name": "pywin32",
-        "os": "windows",
-        "python": 2,
-        "windows": {
-            "filename":"pywin32-dd5760063f88a300403c74f3e81f3437b8396d8f.tar.bz2",
-            "hash":"git:dd5760063f88a300403c74f3e81f3437b8396d8f",
-            "urls":["https://github.com/kovidgoyal/pywin32.git"]
+            "filename":"python-584870604fd8524e17bc2c067595b0210411319e.tar.gz",
+            "hash":"sha256:4f1833cac526f209de5b428d517cbd7a7923f13b89ba056e239dd8aa15894b7d",
+            "urls":["github:kovidgoyal/cpython"]
         }
     },
 
     {
         "name": "icu",
         "unix": {
-            "filename": "icu4c-64_1-src.tgz",
-            "hash": "sha256:92f1b7b9d51b396679c17f35a2112423361b8da3c1b9de00aa94fd768ae296e6",
-            "urls": ["http://download.icu-project.org/files/icu4c/64.1/{filename}"]
+            "filename": "icu4c-64_2-src.tgz",
+            "hash": "sha256:627d5d8478e6d96fc8c90fed4851239079a561a6a8b9e48b0892f24e82d31d6c",
+            "urls": ["http://download.icu-project.org/files/icu4c/64.2/{filename}"]
         },
         "windows": {
-            "filename": "icu4c-64_1-src.zip",
-            "hash": "sha1:aaa014177845c16deba888450c0c34e8bd57e736",
-            "urls": ["http://download.icu-project.org/files/icu4c/64.1/{filename}"]
+            "filename": "icu4c-64_2-src.zip",
+            "hash": "sha256:c8df046a9944003dae744197648e0fa6c745478b7d7b4e2b05f6a390868b5752",
+            "urls": ["http://download.icu-project.org/files/icu4c/64.2/{filename}"]
         }
+
     },
 
     {
@@ -354,25 +374,110 @@
     },
 
     {
-        "name": "qt",
-        "unix": {
-            "filename": "qt-everywhere-src-5.12.3.tar.xz",
-            "hash": "sha256:6462ac74c00ff466487d8ef8d0922971aa5b1d5b33c0753308ec9d57711f5a42",
-            "urls": ["https://download.qt.io/official_releases/qt/5.12/5.12.3/single/{filename}"]
-        },
-        "windows": {
-            "filename": "qt-everywhere-src-5.12.3.zip",
-            "hash": "md5:b684a2f37b1beebd421b3b7d1eca15dc",
-            "urls": ["https://download.qt.io/official_releases/qt/5.12/5.12.3/single/{filename}"]
+        "name": "gnuwin32",
+        "os": "windows",
+		"windows": {
+			"filename": "gnuwin32.zip",
+			"hash": "sha256:4a9dc893cc0a1695a16102a42ef47ef2e228652891f4afea67fadd452b63656b",
+			"urls": ["http://download.qt.io/development_releases/gnuwin32/{filename}"]
+		}
+    },
+
+    {
+        "name": "qt-base",
+        "version": "5.12.3",
+        "hashes": {
+            "unix": "sha256:fddfd8852ef7503febeed67b876d1425160869ae2b1ae8e10b3fb0fedc5fe701",
+            "w": "sha256:f7a14e5e7156988e1673a7c64ac1e25353c238c2e3008e4c0b91778f14d8c70c"
         }
     },
 
     {
-        "name": "webkit",
-        "unix": {
-            "filename":"qtwebkit-95401fe3908e0b4eebc9447e678298d768617bc7.tar.xz",
-            "hash":"git:95401fe3908e0b4eebc9447e678298d768617bc7",
-            "urls":["https://github.com/kovidgoyal/webkit.git"]
+        "name": "qt-svg",
+        "hashes": {
+            "unix": "sha256:f666438dbf6816b7534e539b95e3fa4405f11d7e2e2bbcde34f2db5ae0f27dc2",
+            "w": "sha256:a39476cf3355e315311afb523c5d6da9153ba8434dc770b81407c4a3180c47a5"
+        }
+    },
+
+    {
+        "name": "qt-declarative",
+        "hashes": {
+            "unix": "sha256:839881cd6996e35c351bc7d560372ebb91e61f3688957c33248c4f31ea007fa7",
+            "w": "sha256:9df94bdba58f6c136a93a4c3786b07f67a217343225d48f3da38f51c68f2ee1f"
+        }
+    },
+
+    {
+        "name": "qt-imageformats",
+        "hashes": {
+            "unix": "sha256:db5a9e784f9c327c1e6830b1550311024cc91202d3b8dde82cd0944164298be2",
+            "w": "sha256:ade8a611d7f61971bbd87b205d5083d88b00300887a50c8ba92ec6268003824f"
+        }
+    },
+
+    {
+        "name": "qt-webchannel",
+        "hashes": {
+            "unix": "sha256:72d1620bcc94e14caa91ddf344c84cd1288aa9479e00b1bb3b5e51f92efe088a",
+            "w": "sha256:f3de125c163a27a8683f5fcdf9bbb4af91461c8854976a9609b951f43a8fbad5"
+        }
+    },
+
+    {
+        "name": "qt-location",
+        "hashes": {
+            "unix": "sha256:52d589be2852ada0c000b06cc411b61e521cd0797470be567fd1625bcc9d75c6",
+            "w": "sha256:47d329bf32b37023759353347431d8d7f7248b399e917e3717b2d20da4526b1f"
+        }
+    },
+
+    {
+        "name": "qt-x11extras",
+        "os": "linux",
+        "hashes": {
+            "unix": "sha256:85e3ae5177970c2d8656226d7535d0dff5764c100e55a79a59161d80754ba613"
+        }
+    },
+
+    {
+        "name": "qt-wayland",
+        "os": "linux",
+        "hashes": {
+            "unix": "sha256:f0b45ad84180730e2d5a1249eb20c6357869b4b78f45eb266c2f2b17f77d86ff"
+        }
+    },
+
+    {
+        "name": "qt-sensors",
+        "hashes": {
+            "unix": "sha256:7f63fedf60fdf110a3fc529568c7226d7acd59cc5eaee908f4d5a969e34005fc",
+            "w": "sha256:5f1e9d8e1add61ba20b6499dd4335d9b157bb99793ed16319c142569625c546d"
+        }
+    },
+
+    {
+        "name": "qt-macextras",
+        "os": "macos",
+        "hashes": {
+            "unix": "sha256:38dedd29d07ea9e4e92a7ef28f9e03c06cf9a1525aee4f8084310c519f5b47ed"
+        }
+    },
+
+    {
+        "name": "qt-winextras",
+        "os": "windows",
+        "hashes": {
+            "unix": "sha256:2b6319f7dd19fc19b028685c163a69f0a10e610d7554411d4660c1b5e42ada3b"
+        }
+    },
+
+
+    {
+        "name": "qt-webengine",
+        "hashes": {
+            "unix": "sha256:3ff3bac12d75aa0f3fd993bb7077fe411f7b0e6a3993af6f8b039d48e3dc4317",
+            "w": "sha256:dec39e37480cb8644d628a75bb13c124a799277ab8851864781d17739a4c573d"
         }
     },
 
@@ -391,6 +496,17 @@
             "filename": "six-1.12.0.tar.gz",
             "hash": "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73",
             "urls": ["pypi"]
+        }
+    },
+
+    {
+        "name": "pywin32",
+        "os": "windows",
+        "python": 2,
+        "windows": {
+            "filename":"pywin32-224.zip",
+            "hash":"sha256:fa01a3b9f5e6afd0412013b216d40120b92bbc575dbb3d1a0afb45d8bc1c88d8",
+            "urls":["https://github.com/mhammond/pywin32/archive/b224.zip"]
         }
     },
 
@@ -661,11 +777,6 @@
             "filename": "sip-4.19.16.tar.gz",
             "hash": "sha256:184c790d58e9527fc6bdac2bbf8638f3d1b41dea922cad8eb83172b4ba70c620",
             "urls": ["https://www.riverbankcomputing.com/static/Downloads/sip/4.19.16/{filename}"]
-        },
-        "windows": {
-            "filename": "sip-4.19.16.zip",
-            "hash": "sha1:2c0844ea0304d11343168ee25a9ff11df1646c76",
-            "urls": ["https://www.riverbankcomputing.com/static/Downloads/sip/4.19.16/{filename}"]
         }
     },
 
@@ -675,13 +786,18 @@
             "filename": "PyQt5_gpl-5.12.1.tar.gz",
             "hash": "sha256:3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf",
             "urls": ["https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.1/{filename}"]
-        },
-        "windows": {
-            "filename": "PyQt5_gpl-5.12.1.zip",
-            "hash": "sha1:adc7cd647b23c438788f62e1e804ca2ee0ad1529",
-            "urls": ["https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.1/{filename}"]
         }
     },
+
+    {
+        "name": "pyqt-webengine",
+        "unix": {
+            "filename": "PyQtWebEngine_gpl-5.12.1.tar.gz",
+            "hash": "sha256:860704672ea1b616e1347be1f347bc1c749e64ed378370863fe209e84e9bd473",
+            "urls": ["https://www.riverbankcomputing.com/static/Downloads/PyQtWebEngine/5.12.1/{filename}"]
+        }
+    },
+
 
     {
         "name": "macfsevents",

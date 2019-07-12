@@ -10,19 +10,15 @@ import os
 import shutil
 import stat
 import subprocess
-import sys
 import tarfile
 import time
 from functools import partial
 
 from bypy.constants import (
-    LIBDIR, PREFIX, PYTHON, SRC as CALIBRE_DIR, SW, build_dir, is64bit,
-    python_major_minor_version, worker_env
+    OUTPUT_DIR, PREFIX, SRC as CALIBRE_DIR, is64bit, python_major_minor_version
 )
-from bypy.pkgs.qt import PYQT_MODULES, QT_DLLS, QT_PLUGINS
 from bypy.utils import (
-    create_job, get_dll_path, mkdtemp, parallel_build, py_compile, run, run_shell,
-    walk
+    create_job, get_dll_path, mkdtemp, parallel_build, py_compile, run, walk
 )
 
 j = os.path.join
@@ -31,7 +27,9 @@ arch = 'x86_64' if is64bit else 'i686'
 
 py_ver = '.'.join(map(str, python_major_minor_version()))
 QT_PREFIX = os.path.join(PREFIX, 'qt')
-calibre_constants = globals()['init_env']['calibre_constants']
+iv = globals()['init_env']
+calibre_constants = iv['calibre_constants']
+QT_DLLS, QT_PLUGINS, PYQT_MODULES = iv['QT_DLLS'], iv['QT_PLUGINS'], iv['PYQT_MODULES']
 qt_get_dll_path = partial(get_dll_path, loc=os.path.join(QT_PREFIX, 'lib'))
 
 
@@ -43,7 +41,8 @@ def binary_includes():
         ] + list(map(
             get_dll_path,
             ('usb-1.0 mtp expat sqlite3 ffi z poppler dbus-1 iconv xml2 xslt jpeg png16'
-             ' webp exslt ncursesw readline chm icudata icui18n icuuc icuio gcrypt gpg-error'
+             ' webp webpmux webpdemux exslt ncursesw readline chm'
+             ' icudata icui18n icuuc icuio gcrypt gpg-error'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
             get_dll_path('podofo', 3), get_dll_path('bz2', 2), j(PREFIX, 'lib', 'libunrar.so'),
@@ -255,7 +254,7 @@ def strip_binaries(env):
 
 def create_tarfile(env, compression_level='9'):
     print('Creating archive...')
-    base = os.path.join(SW, 'dist')
+    base = OUTPUT_DIR
     try:
         shutil.rmtree(base)
     except EnvironmentError as err:
@@ -282,36 +281,12 @@ def create_tarfile(env, compression_level='9'):
         os.path.basename(ans), os.stat(ans).st_size / (1024.**2)))
 
 
-def run_tests(path_to_calibre_debug, cwd_on_failure):
-    p = subprocess.Popen([path_to_calibre_debug, '--test-build'])
-    if p.wait() != 0:
-        os.chdir(cwd_on_failure)
-        print('running calibre build tests failed', file=sys.stderr)
-        run_shell()
-        raise SystemExit(p.wait())
-
-
-def build_extensions(env, ext_dir):
-    wenv = os.environ.copy()
-    wenv.update(worker_env)
-    wenv['LD_LIBRARY_PATH'] = LIBDIR
-    wenv['QMAKE'] = os.path.join(QT_PREFIX, 'bin', 'qmake')
-    wenv['SW'] = PREFIX
-    wenv['SIP_BIN'] = os.path.join(PREFIX, 'bin', 'sip')
-    p = subprocess.Popen([PYTHON, 'setup.py', 'build', '--build-dir=' + build_dir(), '--output-dir=' + ext_dir], env=wenv, cwd=CALIBRE_DIR)
-    if p.wait() != 0:
-        os.chdir(CALIBRE_DIR)
-        print('building calibre extensions failed', file=sys.stderr)
-        run_shell()
-        raise SystemExit(p.returncode)
-
-
 def main():
     args = globals()['args']
     ext_dir = globals()['ext_dir']
+    run_tests = iv['run_tests']
     env = Env()
     copy_libs(env)
-    build_extensions(env, ext_dir)
     copy_python(env, ext_dir)
     build_launchers(env)
     if not args.skip_tests:

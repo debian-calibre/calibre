@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import (absolute_import, print_function)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -75,7 +75,7 @@ class EXTHHeader(object):  # {{{
                 # they are messed up in the PDB header
                 try:
                     title = self.decode(content)
-                except:
+                except Exception:
                     pass
             elif idx == 524:  # Lang code
                 try:
@@ -83,7 +83,7 @@ class EXTHHeader(object):  # {{{
                     lang = canonicalize_lang(lang)
                     if lang:
                         self.mi.language = lang
-                except:
+                except Exception:
                     pass
             elif idx == 525:
                 try:
@@ -138,8 +138,8 @@ class EXTHHeader(object):  # {{{
             self.mi.tags = list(set(self.mi.tags))
         elif idx == 106:
             try:
-                self.mi.pubdate = parse_date(content, as_utc=False)
-            except:
+                self.mi.pubdate = parse_date(self.decode(content), as_utc=False)
+            except Exception:
                 pass
         elif idx == 108:
             self.mi.book_producer = clean_xml_chars(self.decode(content).strip())
@@ -165,7 +165,7 @@ class EXTHHeader(object):  # {{{
             try:
                 self.uuid = content.decode('ascii')
                 self.mi.set_identifier('mobi-asin', self.uuid)
-            except:
+            except Exception:
                 self.uuid = None
         elif idx == 116:
             self.start_offset, = struct.unpack(b'>L', content)
@@ -294,22 +294,22 @@ class MetadataHeader(BookHeader):
     def kf8_type(self):
         if (self.mobi_version == 8 and getattr(self, 'skelidx', NULL_INDEX) !=
                 NULL_INDEX):
-            return u'standalone'
+            return 'standalone'
 
         kf8_header_index = getattr(self.exth, 'kf8_header', None)
         if kf8_header_index is None:
             return None
         try:
             if self.section_data(kf8_header_index-1) == b'BOUNDARY':
-                return u'joint'
-        except:
+                return 'joint'
+        except Exception:
             pass
         return None
 
     def identity(self):
         self.stream.seek(60)
         ident = self.stream.read(8).upper()
-        if ident not in [b'BOOKMOBI', b'TEXTREAD']:
+        if ident not in (b'BOOKMOBI', b'TEXTREAD'):
             raise MobiError('Unknown book type: %s' % ident)
         return ident
 

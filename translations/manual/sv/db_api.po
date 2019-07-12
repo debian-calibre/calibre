@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2018
+# Jonatan Nyberg, 2018-2019
 # Jonatan Nyberg, 2017-2018
 # Merarom <merarom@yahoo.es>, 2014-2017
 # Sebastian Rasmussen <sebras@gmail.com>, 2018
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 10:31+0530\n"
-"PO-Revision-Date: 2018-10-30 05:48+0000\n"
+"POT-Creation-Date: 2019-05-31 09:25+0530\n"
+"PO-Revision-Date: 2019-06-06 12:13+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -407,7 +407,7 @@ msgstr "Återge tupel av alla format för den specifika boken. Om verify_formats
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
-msgstr "Används internt för att implementera Etikettbläddraren"
+msgstr "Används internt för att implementera Taggbläddraren"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
@@ -575,7 +575,7 @@ msgstr "Radera alla objekt i det angivna fältet med de angivna id. Återger upp
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr "Byt namn på objekt från många-en eller många-många fält som etiketter eller serier."
+msgstr "Byt namn på objekt från många-en eller många-många fält som taggar eller serier."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
@@ -691,7 +691,7 @@ msgid ""
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr "Om True, i fall det rör sig om många-en eller många-många fälten förändras. Till exempel, om en bok har etiketten ``tag1`` och du anger etiketten för en annan bok till ``Tag1`` då kommer båda böckerna att ha etiketten ``Tag1`` om allow_case_change är True, annars kommer de båda ha etiketten ``tag1``."
+msgstr "Om True, i fall det rör sig om många-en eller många-många fälten förändras. Till exempel, om en bok har taggen ``tag1`` och du anger taggen för en annan bok till ``Tag1`` då kommer båda böckerna att ha taggen ``Tag1`` om allow_case_change är True, annars kommer de båda ha taggen ``tag1``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
@@ -715,7 +715,7 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr "När man sätter force_changes=True tvingas set_metadata att uppdatera fält, även om mi innehåller tomma värden. I det här fallet är \"None\" skiljt från \"empty\". Om mi.XXX är None ersätts XXX inte, annars görs det. Etiketter, identifierare, och omslagsattribut är specialfall. Etiketter och identifierare kan inte ställas in på None för då kommer de alltid ersättas om force_changes är True. Du måste se till att mi innehåller de värden som du vill att boken ska ha. Omlslag förändras alltid om ett nytt omslag finns, men de raderas aldrig . Observera också att force_changes har ingen effekt på inställningen titel eller författare."
+msgstr "När man sätter force_changes=True tvingas set_metadata att uppdatera fält, även om mi innehåller tomma värden. I det här fallet är \"None\" skiljt från \"empty\". Om mi.XXX är None ersätts XXX inte, annars görs det. Taggar, identifierare, och omslagsattribut är specialfall. Taggar och identifierare kan inte ställas in på None för då kommer de alltid ersättas om force_changes är True. Du måste se till att mi innehåller de värden som du vill att boken ska ha. Omlslag förändras alltid om ett nytt omslag finns, men de raderas aldrig . Observera också att force_changes har ingen effekt på inställningen titel eller författare."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
@@ -728,20 +728,20 @@ msgstr "Ange angivna förval till de angivna värdet. Se också :meth:`pref`."
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr "Återge id av alla böcker som har etiketten ``etikett`` som är äldre än den angivna tiden. etikettjämförelse är skiftlägesoberoende."
+msgstr "Återge id av alla böcker som har taggen ``tagg`` som är äldre än den angivna tiden. taggjämförelse är skiftlägesoberoende."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr "En timedelta-objekt eller None. Om None kommer alla id:ar med etiketten återges."
+msgstr "En timedelta-objekt eller None. Om None kommer alla id:ar med taggen återges."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr "Om inte None listan av träffar kommer begränsas till böcker som har denna etikett"
+msgstr "Om inte None listan av träffar kommer begränsas till böcker som har denna tagg"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10

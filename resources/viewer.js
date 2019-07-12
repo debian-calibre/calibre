@@ -21965,7 +21965,10 @@ return this.__repr__();
                 var fmt;
                 if (val) {
                     fmt = interface_data[ρσ_bound_index("gui_" + field + "_display_format", interface_data)] || (fm["display"] || Object.create(null)).date_format;
-                    add_row(name, format_date(val, fmt));
+                    val = format_date(val, fmt);
+                    if (val) {
+                        add_row(name, val);
+                    }
                 }
             };
             if (!process_datetime.__argnames__) Object.defineProperties(process_datetime, {
@@ -22585,7 +22588,7 @@ return this.__repr__();
                     return;
                 }
                 if (end_type !== "load") {
-                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), xhr.error_html);
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\". Click \"Show details\" for more information.").format(title), xhr.error_html);
                     return;
                 }
                 try {
@@ -22596,12 +22599,12 @@ return this.__repr__();
                 } catch (ρσ_Exception) {
                     ρσ_last_exception = ρσ_Exception;
                     {
-                        error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" got an invalid response from calibre").format(title));
+                        error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" because of an invalid response from calibre").format(title));
                         return;
                     } 
                 }
                 if (!response.ok) {
-                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\" click \"Show details\" for more information.").format(title), response.payload);
+                    error_dialog(_("Failed to copy book"), _("Failed to copy the book \"{}\". Click \"Show details\" for more information.").format(title), response.payload);
                     return;
                 }
                 if (response.action === "duplicate") {

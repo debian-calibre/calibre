@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "五月 31, 2019" "3.44.0" "calibre"
+.TH "CALIBREDB" "1" "七月 12, 2019" "3.45.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -746,20 +746,13 @@ calibredb set_custom [options] column id value
 .sp
 .nf
 .ft C
-calibredb restore_database [options]
+从calibre书库每个目录中OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-directory of the calibre library. This is useful if your metadata.db file
-has been corrupted.
-.sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+警告：此命令会完全重新生成数据库。你会丢失所有已保存的搜索，用户类别，插板，已保存的每本书的版本设置和自定义配方。恢复的元数据和OPF文件中的一样准确。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
