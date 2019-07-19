@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -101,12 +103,12 @@ class Ui_Form(object):
         self.verticalLayout_2.addWidget(self.actions_widget)
         self.help_text = QtWidgets.QLabel(Form)
         self.help_text.setText("")
+        self.help_text.setWordWrap(True)
         self.help_text.setObjectName("help_text")
         self.verticalLayout_2.addWidget(self.help_text)
         self.spacer_widget = QtWidgets.QWidget(Form)
         self.spacer_widget.setObjectName("spacer_widget")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.spacer_widget)
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         spacerItem2 = QtWidgets.QSpacerItem(20, 224, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_5.addItem(spacerItem2)
@@ -131,5 +133,4 @@ class Ui_Form(object):
         self.action_down_button.setToolTip(_("Move selected action down"))
         self.action_down_button.setText(_("..."))
         self.action_down_button.setShortcut(_("Ctrl+S"))
-
 
