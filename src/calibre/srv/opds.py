@@ -26,9 +26,10 @@ from calibre import force_unicode
 
 from calibre.srv.errors import HTTPNotFound, HTTPInternalServerError
 from calibre.srv.routes import endpoint
+from calibre.srv.http_request import parse_uri
 from calibre.srv.utils import get_library_data, http_date, Offsets
 from polyglot.builtins import iteritems, unicode_type, filter, as_bytes
-from polyglot.urllib import urlencode
+from polyglot.urllib import urlencode, unquote_plus
 from polyglot.binary import as_hex_unicode, from_hex_unicode
 
 
@@ -182,7 +183,7 @@ def ACQUISITION_ENTRY(book_id, updated, request_context):
     field_metadata = request_context.db.field_metadata
     mi = request_context.db.get_metadata(book_id)
     extra = []
-    if mi.rating > 0:
+    if (mi.rating or 0) > 0:
         rating = rating_to_stars(mi.rating)
         extra.append(_('RATING: %s<br />')%rating)
     if mi.tags:
@@ -566,7 +567,7 @@ def opds_category(ctx, rd, category, which):
     q = category
     if q == 'news':
         q = 'tags'
-    ids = rc.db.get_books_for_category(q, which)
+    ids = rc.db.get_books_for_category(q, which) & rc.allowed_book_ids()
     sort_by = 'series' if category == 'series' else 'title'
 
     return get_acquisition_feed(rc, ids, offset, page_url, up_url, 'calibre-category:'+category+':'+unicode_type(which), sort_by=sort_by)
@@ -624,6 +625,11 @@ def opds_search(ctx, rd, query):
         raise HTTPNotFound('Not found')
 
     rc = RequestContext(ctx, rd)
+    if query:
+        path = parse_uri(rd.request_original_uri, parse_query=False, unquote_func=unquote_plus)[1]
+        query = path[-1]
+        if isinstance(query, bytes):
+            query = query.decode('utf-8')
     try:
         ids = rc.search(query)
     except Exception:

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "7月 19, 2019" "3.46.0" "calibre"
+.TH "CALIBREDB" "1" "8月 30, 2019" "3.47.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -190,7 +190,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-limit
-結果顯示的最大數目。默認；全部
+結果顯示的最大數目。預設：全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -289,7 +289,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .UNINDENT
 .SS 從目錄中加入
 .sp
-用來控制從目錄中添加書本的選項。預設情況下，只會添加具有已知電子書文件副檔名的檔案。
+用來控制從目錄中添加書本的選項。預設情況下，只會添加具有已知電子書檔案副檔名的檔案。
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -384,7 +384,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-以 OPF 表單 (XML) 列印詮釋資料
+以 OPF 表單 (XML) 列印元資料
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -414,7 +414,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-列出所有 \fI\%\-\-field\fP 可使用的詮釋資料欄位
+列出所有 \fI\%\-\-field\fP 可使用的元資料欄位
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -451,17 +451,17 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-通常calibre將會更新從書庫中所儲存的詮釋資料，這會讓儲存至磁碟變慢。 指定這個開關會關閉這個行為。
+通常calibre將會更新從書庫中所儲存的元資料，這會讓儲存至磁碟變慢。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-通常calibre會把詮釋資料寫入個別的OPF檔，和真實的電子書分離。 指定這個開關會關閉這個行為。
+通常calibre會把元資料寫入個別的OPF檔，和真實的電子書分離。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-每本書本的格式列表，逗號間隔。默認保存所有可用格式。
+每本書本的格式列表，逗號間隔。預設保存所有可用格式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -523,7 +523,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-爲搜尋查詢過濾結果。搜尋查詢格式請參見用戶手冊中搜尋相關內容。默認：不過濾
+為搜尋查詢過濾結果。搜尋查詢格式請參見使用者手冊中搜尋相關內容。預設：不過濾
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -866,7 +866,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-此命令通常僅對於過時的OPT文件進行操作，此選項會使它在所有的書本上操作。
+此命令通常僅對於過時的OPT檔案進行操作，此選項會使它在所有的書本上操作。
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
@@ -911,7 +911,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-只更新特定格式檔案的詮釋資料，可以多次指定多個檔案格式。預設會更新所有格式的檔案。
+只更新特定格式檔案的元資料，可以多次指定多個檔案格式。預設會更新所有格式的檔案。
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -936,7 +936,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-結果回傳結果的最大數目。默認回傳全部結果
+結果回傳結果的最大數目。預設回傳全部結果
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -209,7 +211,7 @@ class Ui_Form(object):
         self.opt_mark_new_books.setText(_("&Mark newly added books"))
         self.opt_preserve_date_on_ctl.setText(_("When using the  \"&Copy to library\" action to copy books between libraries, preserve the date"))
         self.opt_check_for_dupes_on_ctl.setText(_("When using the \"Copy to library\" action check for &duplicates with the same title, author and language"))
-        self.opt_manual_add_auto_convert.setText(_("Automatically &convert added books to the current output format"))
+        self.opt_manual_add_auto_convert.setText(_("Automatically &convert added books to the preferred output format"))
         self.opt_auto_convert_same_fmt.setToolTip(_("This will force an automatic conversion even if the file being added is the same format as the output format. For example, if you set your output format to EPUB and add an EPUB file, an EPUB to EPUB conversion will be run."))
         self.opt_auto_convert_same_fmt.setText(_("When auto-converting, convert even if the format being added is the &same as the output format"))
         self.opt_add_formats_to_existing.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
@@ -246,7 +248,7 @@ class Ui_Form(object):
         self.opt_auto_add_path.setPlaceholderText(_("Folder to automatically add files from"))
         self.auto_add_browse_button.setToolTip(_("Browse for folder"))
         self.auto_add_browse_button.setText(_("..."))
-        self.opt_auto_add_auto_convert.setText(_("Automatically &convert added files to the current output format"))
+        self.opt_auto_add_auto_convert.setText(_("Automatically &convert added files to the preferred output format"))
         self.label_3.setText(_("<b>Ignore</b> files with the following &extensions when automatically adding "))
         self.label.setText(_("Specify a &folder. Any files you put into this folder will be automatically added to calibre (restart required)."))
         self.label_2.setText(_("<b>WARNING:</b> Files in the above folder will be deleted after being added to calibre."))
@@ -256,5 +258,4 @@ class Ui_Form(object):
 " you want to add it anyway."))
         self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when automatically adding files"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic adding"))
-
 
