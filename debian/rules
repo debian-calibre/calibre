@@ -56,7 +56,7 @@ debian/tmp:
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
 
 	# fix "env python2" style hashbangs
-	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
+	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
 
 install/calibre::
 	# Create and install some of the man pages
