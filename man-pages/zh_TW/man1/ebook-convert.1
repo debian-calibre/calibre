@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "7月 19, 2019" "3.46.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "8月 30, 2019" "3.47.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -85,7 +85,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%目錄\fP
 .IP \(bu 2
-\fI\%詮釋資料\fP
+\fI\%元資料\fP
 .IP \(bu 2
 \fI\%除錯\fP
 .UNINDENT
@@ -97,7 +97,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-指定輸入設定檔。輸入設定檔會提供轉換系統關於如何轉譯輸入文件中各類資訊的方式。例如關係解析度的長度（以像素計的長度）。選擇有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+指定輸入設定檔。輸入設定檔會提供轉換系統關於如何轉譯輸入檔案中各類資訊的方式。例如關係解析度的長度（以像素計的長度）。選擇有：cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,7 +153,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-將產生 EPUB 文件的內容解壓縮到指定文件夾，請注意該文件夾會先被清空。
+將產生 EPUB 檔案的內容解壓縮到指定資料夾，請注意該資料夾會先被清空。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-把 Unicode 字元轉換爲 ASCII 表達型式。請謹慎使用這個功能，因爲它會把所有的 Unicode 字元取代爲 ASCII 字元。比如：它會把 \fB"\fPМихаил Горбачёв\fB"\fP 取代為 \fB"\fPMikhail Gorbachiov\fB"\fP。並且當一個字元可能有多種表示方式時（比如中文和日文中一些共用的字元）， calibre 會根據當前設定的介面語言類型決定如何去轉換這類字元。
+把 Unicode 字元轉換為 ASCII 表達型式。請謹慎使用這個功能，因為它會把所有的 Unicode 字元取代為 ASCII 字元。比如：它會把 \fB"\fPМихаил Горбачёв\fB"\fP 取代為 \fB"\fPMikhail Gorbachiov\fB"\fP。並且當一個字元可能有多種表示方式時（比如中文和日文中一些共用的字元）， calibre 會根據當前設定的介面語言類型決定如何去轉換這類字元。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,7 +201,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-更改文本對齊方式。 使用值\fB"\fPleft\fB"\fP 將轉換資源中所有的文本爲左對齊。 (如：未對齊) 使用值\fB"\fPjustify\fB"\fP 將轉換資源中所有的未對齊的文本爲對齊。使用值\fB"\fPoriginal\fB"\fP(默認)則不更改源文件的對齊方式。請注意，僅部分輸出格式支持對齊方式。
+更改文本對齊方式。 使用值\fB"\fPleft\fB"\fP 將轉換資源中所有的文本為左對齊。 (如：未對齊) 使用值\fB"\fPjustify\fB"\fP 將轉換資源中所有的未對齊的文本為對齊。使用值\fB"\fPoriginal\fB"\fP(預設)則不更改源檔案的對齊方式。請注意，僅部分輸出格式支持對齊方式。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,17 +251,17 @@ CSS 樣式表或原生 CSS 的路徑。這個 CSS 會添加到來源檔案的樣
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-保留輸入文檔中的「印刷連字」。所謂「印刷連字」是指對於ff, fi, fl之類的字母組合的一種特殊的展示方式。大部分閱讀器在使用默認字體時無法支持「印刷連字」，所以常常無法正常顯示。默認情況下，calibre會把「印刷連字」轉換成對應的字母組合。本選項用於選擇保留「印刷連字」。
+保留輸入文件中的「印刷連字」。所謂「印刷連字」是指對於ff, fi, fl之類的字母組合的一種特殊的展示方式。大部分閱讀器在使用預設字體時無法支持「印刷連字」，所以常常無法正常顯示。預設情況下，calibre會把「印刷連字」轉換成對應的字母組合。本選項用於選擇保留「印刷連字」。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素。大多數情況下，最小行高值更加有用。默認不進行行高操控。
+pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素。大多數情況下，最小行高值更加有用。預設不進行行高操控。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-有些設計不良的文件會使用表格來控制頁面文字的排版。在轉換這些文件時常會發生文字超出頁面的問題。這個選項會將表格的內容讀取出來，並重新以直線的方式呈現它。
+有些設計不良的檔案會使用表格來控制頁面文字的排版。在轉換這些檔案時常會發生文字超出頁面的問題。這個選項會將表格的內容讀取出來，並重新以直線的方式呈現它。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,17 +286,17 @@ Set the top margin in pts. Default is 5.0. Setting this to less than zero will c
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-最小行高，元素字體計算值的百分比。calibre 將保證行中所有元素至少有此高度，無論輸入文檔如何定義。設爲零即禁用。默認 120%。首選項中也有此設定，請注意。否則可能出現雙倍行高，達 240%。
+最小行高，元素字體計算值的百分比。calibre 將保證行中所有元素至少有此高度，無論輸入文件如何定義。設為零即禁用。預設 120%。首選項中也有此設定，請注意。否則可能出現雙倍行高，達 240%。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-移除段落之間的空行. 同時設定段落縮進爲1.5em. 如果源文件不使用段落標記 (<p>或者<div>標籤)程序將不執行段落空行移除.
+移除段落之間的空行. 同時設定段落縮進為1.5em. 如果源檔案不使用段落標記 (<p>或者<div>標籤)程序將不執行段落空行移除.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-當 calibre 移除段落間的空白列時，它會自動設定段落縮排，以確保能容易的辨別段落。這個選項控制了縮排的寬度 (以 em 計)。如果您將這個數值設定為負值，則會使用輸入文件中所指定的縮排，亦即，calibre 不會改變文件的縮排。
+當 calibre 移除段落間的空白列時，它會自動設定段落縮排，以確保能容易的辨別段落。這個選項控制了縮排的寬度 (以 em 計)。如果您將這個數值設定為負值，則會使用輸入檔案中所指定的縮排，亦即，calibre 不會改變檔案的縮排。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -306,7 +306,7 @@ Convert plain quotes, dashes and ellipsis to their typographically correct equiv
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-嵌入所有字體中用到的字。每種嵌入字體縮減到只包含文檔中用到的字型。這能減小字體文件的體積。在嵌入某個特別大的，包含大量未使用字的字體時有用(如中文)。
+嵌入所有字體中用到的字。每種嵌入字體縮減到只包含文件中用到的字型。這能減小字體檔案的體積。在嵌入某個特別大的，包含大量未使用字的字體時有用(如中文)。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -316,7 +316,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-轉換各種形式的引號、破折號和省略號到它們的標准形式。
+轉換各種形式的引號、破折號和省略號到它們的標準形式。
 .UNINDENT
 .SH 探索式處理
 .sp
@@ -324,12 +324,12 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
-分析整份文件的連字符。會使用文件本身做為字典以便判斷連字符應該保留或刪除。
+分析整份檔案的連字符。會使用檔案本身做為字典以便判斷連字符應該保留或刪除。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-當每個段落之間存在空白段落時將它們從文件中移除
+當每個段落之間存在空白段落時將它們從檔案中移除
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -339,7 +339,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-對齊左對齊的小節分節符。把多個空白行表示小節分節符取代爲水平橫線。
+對齊左對齊的小節分節符。把多個空白行表示小節分節符取代為水平橫線。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -349,7 +349,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-檢測未格式化的章節標題和子標題。把它們從二級標題 (<h2>) 標籤轉換爲三級標題 (<h3>) 標籤。這個選項不會創建目錄，但可以與文檔結構檢測功能一起使用並創建目錄。
+檢測未格式化的章節標題和子標題。把它們從二級標題 (<h2>) 標籤轉換為三級標題 (<h3>) 標籤。這個選項不會創建目錄，但可以與文件結構檢測功能一起使用並創建目錄。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -359,7 +359,7 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-disable\-unwrap\-lines
-決定某行是否爲段落內的換行時，使用標點符號和其它格式做爲線索。
+決定某行是否為段落內的換行時，使用標點符號和其它格式做為線索。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -369,12 +369,12 @@ Path to a file containing rules to transform the CSS styles in this book. The ea
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-決定一行字元是否能成爲一個新的段落的因子，有效值爲 0 到 1 之間的小數，預設值是 0.4，即略小於半行的長度。如果文檔中只有很少的行需要消除段落內換行，應當減小這個設定值。
+決定一行字元是否能成為一個新的段落的因子，有效值為 0 到 1 之間的小數，預設值是 0.4，即略小於半行的長度。如果文件中只有很少的行需要消除段落內換行，應當減小這個設定值。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
-把小節分節符取代爲指定的文字。在默認情況下，會使用輸入文件中的文字。
+把小節分節符取代為指定的文字。在預設情況下，會使用輸入檔案中的文字。
 .UNINDENT
 .SH 搜尋與取代
 .sp
@@ -430,7 +430,7 @@ An XPath expression to detect chapter titles. The default is to consider <h1> or
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-有些文檔通過在每一頁上指定左右頁邊距來指定頁面邊框大小。 Calibre 會嘗試檢測並移除這些頁邊距。有時候 Calibre 會錯誤的移除不應該移除的頁邊距，在這種情況下，您可以禁用這項功能。
+有些文件通過在每一頁上指定左右頁邊距來指定頁面邊框大小。 Calibre 會嘗試檢測並移除這些頁邊距。有時候 Calibre 會錯誤的移除不應該移除的頁邊距，在這種情況下，您可以禁用這項功能。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -445,7 +445,7 @@ XPath 表示式。換頁符號要插入在指定元素之前。要停用則使�
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-使用從來源檔案中檢測到的封面文件.
+使用從來源檔案中檢測到的封面檔案.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -463,22 +463,22 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-在基於輸入文檔中的鏈接創建目錄時，允許創建重復項。即在目錄中允許出現名稱重復的項，但它們指向文檔中不同的位置。
+在基於輸入文件中的鏈接創建目錄時，允許創建重復項。即在目錄中允許出現名稱重復的項，但它們指向文件中不同的位置。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-指定應添加到目錄級別1的所有標籤的 XPath 表達式。如果指定此項，它會優先於其他自動檢測形式。可查閱 calibre 用戶手冊中的 XPath 向導。
+指定應添加到目錄級別1的所有標籤的 XPath 表達式。如果指定此項，它會優先於其他自動檢測形式。可查閱 calibre 使用者手冊中的 XPath 向導。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath 表達式指定所有標籤應添加在二級目錄表。每個條目加入到一級目錄條目下。請參閱 calibre 用戶手冊中 XPath 教學的例子。
+XPath 表達式指定所有標籤應添加在二級目錄表。每個條目加入到一級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加入到二級目錄條目下。請參閱 calibre 用戶手冊中 XPath 教學的例子。
+XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加入到二級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -488,7 +488,7 @@ XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-不將自動偵測到的章節增加到文件目錄。
+不將自動偵測到的章節增加到檔案目錄。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -505,9 +505,9 @@ XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加�
 .B \-\-use\-auto\-toc
 一般而言，如果來源檔案已經有目錄，它會被優先用於自動產生的目錄中。使用這個選項，則會強制使用自動產生的目錄。
 .UNINDENT
-.SH 詮釋資料
+.SH 元資料
 .sp
-設定輸出的詮釋資料選項
+設定輸出的元資料選項
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -561,7 +561,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-從指定的 OPF 檔案讀取詮釋資料。從這個檔案讀取的詮釋資料會覆蓋來源檔案中的任何詮釋資料。
+從指定的 OPF 檔案讀取元資料。從這個檔案讀取的元資料會覆蓋來源檔案中的任何元資料。
 .UNINDENT
 .INDENT 0.0
 .TP

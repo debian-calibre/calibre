@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "juli 19, 2019" "3.46.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "augustus 30, 2019" "3.47.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,10 +41,10 @@ calibre\-debug [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Verscheidene commandoregel interfaces nuttig voor debugging calibre. Zonder opties start dit commando een geintegreerde python interpreter. Men kan ook de main
-calibre GUI gebruiken, het calibre leesvenster en de calibre editor in de debug modus.
+Verscheidene commandoregel interfaces nuttig voor foutoplossen Calibre. Zonder opties start dit commando een geintegreerde python interpreter. Men kan ook de main
+Calibre GUI gebruiken, het Calibre leesvenster en de Calibre editor in de debug modus.
 .sp
-Het bevat ook interfaces voor verschillende onderdelen van  calibre die geen specifieke
+Het bevat ook interfaces voor verschillende onderdelen van  Calibre die geen specifieke
 commandoregel tools hebben, zoals font subsetting, de E\-boek diff tool enzovoort.
 .sp
 Men kan ook \fBcalibre\-debug\fP gebruiken om op zichzelf staande scripts te draaien. Om dat te doen moet dit zo gebruikt worden:
@@ -81,12 +81,12 @@ Calibre (af)melden als Windows standaard programma. \fI\%\-\-default\-programs\f
 .INDENT 0.0
 .TP
 .B \-\-diff
-Draait de calibre diff tool. Bijvoorbeeld: calibre\-debug \fI\%\-\-diff\fP bestand1 bestand2
+Draait de Calibre diff tool. Bijvoorbeeld: Calibre\-debug \fI\%\-\-diff\fP bestand1 bestand2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Start het calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
+Start het Calibre \fB"\fPBewerk Boek\fB"\fP tool in debug modus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,12 +96,12 @@ Python code in het bestand uitvoeren.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explodeer het boek (exporteert het boek als een collectie HTML\-bestanden en metadata, welke bewerkt kan worden met een standaard HTML\-editor en dan het bestand opnieuw opbouwt van de bewerkte HTML\fB\(aq\fPs. Het maakt geen aanvullende veranderingen aan het HTML\-bestand in tegenstelling een volledige calibre conversie).
+Explodeer het boek (exporteert het boek als een collectie HTML\-bestanden en metagegevens, welke bewerkt kan worden met een standaard HTML\-editor en dan het bestand opnieuw opbouwt van de bewerkte HTML\fB\(aq\fPs. Het maakt geen aanvullende veranderingen aan het HTML\-bestand in tegenstelling een volledige Calibre conversie).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exporteer alle calibre gegevens (boeken / instellingen / plug\-ins). Normaal gesproken wordt u gevraagd om de exporteermap en de bibliotheken te exporteren. U kunt ze ook opgeven als opdrachtregelargumenten om de vragen over te slaan. Gebruik absolute paden voor de exporteermap en \-bibliotheken. Het speciale trefwoord \fB"\fPalle\fB"\fP kan worden gebruikt om alle bibliotheken te exporteren.
+Exporteer alle Calibre gegevens (boeken / instellingen / plug\-ins). Normaal gesproken wordt u gevraagd om de exporteermap en de bibliotheken te exporteren. U kunt ze ook opgeven als opdrachtregelargumenten om de vragen over te slaan. Gebruik absolute paden voor de exporteermap en \-bibliotheken. Het speciale trefwoord \fB"\fPalle\fB"\fP kan worden gebruikt om alle bibliotheken te exporteren.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,7 +126,7 @@ Opnieuw comprimeren van een eerder gedecomprimeerd boek. Gebruik: \-i output_dir
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Importeer eerder geëxporteerde calibre gegevens
+Importeer eerder geëxporteerde Calibre gegevens
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,22 +136,22 @@ Inspecteer MOBI\-bestand(en) in opgegeven pad(en)
 .INDENT 0.0
 .TP
 .B \-\-paths
-Output van de paden de nodig zijn voor de installatie van de calibre omgeving
+Output van de paden de nodig zijn voor de installatie van de Calibre omgeving
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-Opnieuw initiëren van de sqlite calibre database op het opgegeven pad. Nuttig om te herstellen van een corrupte database.
+Opnieuw initiëren van de sqlite Calibre gegevensbank op het opgegeven pad. Nuttig om te herstellen van een corrupte gegevensbank.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Voer een plugin uit welke via opdracht\-prompt kan starten. Bijvoorbeeld: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP bestand1 \fB\-\-option1\fP Alles na de \fB\-\-\fP zal worden meegegeven aan de plugin als argumenten.
+Voer een plugin uit welke via opdracht\-prompt kan starten. Bijvoorbeeld: Calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP bestand1 \fB\-\-option1\fP Alles na de \fB\-\-\fP zal worden meegegeven aan de plugin als argumenten.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Sluit, indien aanwezig, een actieve calibre\-instantie af. Bedenk dat eventuele draaiende taken zonder melding worden afgebroken. Gebruik deze optie voorzichtig.
+Sluit, indien aanwezig, een actieve Calibre\-instantie af. Bedenk dat eventuele draaiende taken zonder melding worden afgebroken. Gebruik deze optie voorzichtig.
 .UNINDENT
 .INDENT 0.0
 .TP

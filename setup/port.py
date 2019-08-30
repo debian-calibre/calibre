@@ -72,7 +72,8 @@ class Base(Command):
     def get_files(self):
         from calibre import walk
         for path in walk(os.path.join(self.SRC, 'calibre')):
-            if path.endswith('.py') and not os.path.basename(path) in self.EXCLUDED_BASENAMES:
+            if (path.endswith('.py') and not path.endswith('_ui.py') and not
+                    os.path.basename(path) in self.EXCLUDED_BASENAMES):
                 yield path
 
     def file_hash(self, f):
@@ -210,7 +211,8 @@ class IteratorsCheck(Base):
 
     def get_errors_in_file(self, f):
         pat = re.compile(r'\b(range|map|filter|zip)\(')
-        text = open(f, 'rb').read().decode('utf-8')
+        with open(f, 'rb') as f:
+            text = f.read().decode('utf-8')
         matches = tuple(pat.finditer(text))
         if not matches:
             return []
