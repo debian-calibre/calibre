@@ -1,11 +1,14 @@
 #!/usr/bin/make -f
 
-SETUP=python2.7 setup.py
+# try building with python3
+export CALIBRE_PY3_PORT=1
+SETUP=python3 setup.py
 
 # build hardening
 DPKG_EXPORT_BUILDFLAGS = 1
 export DEB_BUILD_MAINT_OPTIONS=hardening=+relro
 include /usr/share/dpkg/buildflags.mk
+
 
 # This filters out *.so for the package "calibre". With this, we can
 # install usr/lib in calibre.install and just leave out the binary
