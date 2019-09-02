@@ -13879,7 +13879,7 @@ return this.__repr__();
             before = window.pageYOffset;
             func.apply(obj, args);
             if (window.pageYOffset === before) {
-                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: arguments[0] < 0})])));
+                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: args[0] < 0})])));
                 return false;
             }
             if (report) {
@@ -13995,13 +13995,13 @@ return this.__repr__();
 
         
         var scroll_by_page = check_for_scroll_end_and_report((function() {
-            var ρσ_anonfunc = function scroll_by_page(backward) {
+            var ρσ_anonfunc = function scroll_by_page(direction) {
                 var h;
                 h = scroll_viewport.height() - 10;
-                window.scrollBy(0, (backward) ? -h : h);
+                window.scrollBy(0, h * direction);
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                __argnames__ : {value: ["backward"]}
+                __argnames__ : {value: ["direction"]}
             });
             return ρσ_anonfunc;
         })());
@@ -14040,11 +14040,11 @@ return this.__repr__();
                 return true;
             }
             if (sc_name === "pageup") {
-                scroll_by_page(true);
+                scroll_by_page(-1);
                 return true;
             }
             if (sc_name === "pagedown") {
-                scroll_by_page(false);
+                scroll_by_page(1);
                 return true;
             }
             return false;
@@ -14168,9 +14168,9 @@ return this.__repr__();
                     flick_animator.start(gesture);
                 }
             } else if (gesture.type === "prev-page") {
-                scroll_by_page(true);
+                scroll_by_page(-1);
             } else if (gesture.type === "next-page") {
-                scroll_by_page(false);
+                scroll_by_page(1);
             } else if (gesture.type === "long-tap") {
                 r = word_at_point(gesture.viewport_x, gesture.viewport_y);
                 if (r) {
@@ -16959,6 +16959,7 @@ return this.__repr__();
         var current_book = ρσ_modules["read_book.globals"].current_book;
         var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
         var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
+        var runtime = ρσ_modules["read_book.globals"].runtime;
         var set_boss = ρσ_modules["read_book.globals"].set_boss;
         var set_current_spine_item = ρσ_modules["read_book.globals"].set_current_spine_item;
         var set_layout_mode = ρσ_modules["read_book.globals"].set_layout_mode;
@@ -17589,6 +17590,14 @@ return this.__repr__();
             for (var ρσ_Index2 of ρσ_Iter2) {
                 a = ρσ_Index2;
                 a.addEventListener("click", self.link_activated);
+            }
+            if (runtime.is_standalone_viewer) {
+                var ρσ_Iter3 = document.body.querySelectorAll("a[target]");
+                ρσ_Iter3 = ((typeof ρσ_Iter3[Symbol.iterator] === "function") ? (ρσ_Iter3 instanceof Map ? ρσ_Iter3.keys() : ρσ_Iter3) : Object.keys(ρσ_Iter3));
+                for (var ρσ_Index3 of ρσ_Iter3) {
+                    a = ρσ_Index3;
+                    a.removeAttribute("target");
+                }
             }
         };
         IframeBoss.prototype.link_activated = function link_activated(evt) {
@@ -28534,10 +28543,10 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter0 = get_mathjax_files_stage2.files_to_get;
-            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
-            for (var ρσ_Index0 of ρσ_Iter0) {
-                filename = ρσ_Index0;
+            var ρσ_Iter4 = get_mathjax_files_stage2.files_to_get;
+            ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
+            for (var ρσ_Index4 of ρσ_Iter4) {
+                filename = ρσ_Index4;
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();
