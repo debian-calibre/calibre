@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "juli 19, 2019" "3.46.0" "calibre"
+.TH "CALIBREDB" "1" "september 02, 2019" "3.47.1" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,17 +140,17 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Pad naar calibrebibliotheek. Standaard wordt het pad gebruikt dat is opgeslagen in de instellingen. Je kan ook verbinden met een calibre Content server om wijzigingen te maken in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \fI\%http://hostname:port/#library_id\fP bijvoorbeeld, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is de id van de bibliotheek waarmee je wilt verbinden op de Content server. Je kan de speciale library_id of gebruiken om een lijst te krijgen van alle beschikbare ids op de server. Voor meer informatie over het toegang krijgen tot een Content server, zie \fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\&.
+Pad naar calibrebibliotheek. Standaard wordt het pad gebruikt dat is opgeslagen in de instellingen. Je kan ook verbinden met een Calibre Content server om wijzigingen te maken in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \fI\%http://hostname:port/#library_id\fP bijvoorbeeld, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is de id van de bibliotheek waarmee je wilt verbinden op de Content server. Je kan de speciale library_id of gebruiken om een lijst te krijgen van alle beschikbare ids op de server. Voor meer informatie over het toegang krijgen tot een Content server, zie \fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Wachtwoord om verbinding te maken met een calibre\-contentserver. Gebruik de speciale waarde: <stdin> om het wachtwoord van de standaardinvoer te lezen. Om het wachtwoord van een bestand te lezen, gebruikt u: <f:/path/to/file> (d.w.z. <f: gevolgd door het volledige pad naar het bestand en een trailing>). De punthaken in het bovenstaande zijn vereist, onthoud om eraan te ontsnappen of gebruik aanhalingstekens voor je shell.
+Wachtwoord om verbinding te maken met een Calibre\-contentserver. Gebruik de speciale waarde: <stdin> om het wachtwoord van de standaardinvoer te lezen. Om het wachtwoord van een bestand te lezen, gebruikt u: <f:/path/to/file> (d.w.z. <f: gevolgd door het volledige pad naar het bestand en een trailing>). De punthaken in het bovenstaande zijn vereist, onthoud om eraan te ontsnappen of gebruik aanhalingstekens voor je shell.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Gebruikersnaam voor het verbinden met een calibre Content server
+Gebruikersnaam voor het verbinden met een Calibre Content server
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,7 +169,7 @@ calibredb list [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Geef de beschikbare boeken in de calibre\-database weer.
+Geef de beschikbare boeken in de Calibre\-gegevensbank weer.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -180,7 +180,7 @@ Sorteer resultaten in oplopende volgorde
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-De velden die zichtbaar zijn bij het opzoeken van boeken in de database. Dit is een lijst met komma\-gescheiden waarden. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standaard: title,authors. Het speciale veld ‘all’ kan worden gebruikt om alle velden te selecteren. Heeft alleen een resultaat in txt\-uitvoerformaat.
+De velden die zichtbaar zijn bij het opzoeken van boeken in de gegevensbank. Dit is een lijst met komma\-gescheiden waarden. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standaard: title,authors. Het speciale veld ‘all’ kan worden gebruikt om alle velden te selecteren. Heeft alleen een resultaat in txt\-uitvoerformaat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -229,7 +229,7 @@ calibredb add [opties] bestand1 bestand2 bestand3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Voeg de opgegeven bestanden als boeken aan de database toe. Mappen kunnen ook worden
+Voeg de opgegeven bestanden als boeken aan de gegevensbank toe. Mappen kunnen ook worden
 opgegeven, zie de opties over mappen hieronder.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -246,7 +246,7 @@ Pad naar de omslag voor het toegevoegde boek
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Voeg boeken toe aan de database, zelfs als deze al bestaan. Vergelijking is gebaseerd op de boektitels.
+Voeg boeken toe aan de gegevensbank, zelfs als deze al bestaan. Vergelijking is gebaseerd op de boektitels.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -281,7 +281,7 @@ Stel het nummer in de reeks in voor toegevoegde boek(en)
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-Stel tags in voor toegevoegde boek(en)
+Stel labels in voor toegevoegde boek(en)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,7 +323,7 @@ calibredb verwijder ID\(aqs
 .UNINDENT
 .UNINDENT
 .sp
-Verwijder de boek indentificatioren van de database. ID\(aqs is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
+Verwijder de boek indentificatioren van de gegevensbank. ID\(aqs is een komma\-gescheiden lijst van ID nummers (u kan ID nummers verkrijgen door het zoek commando te gebruiken). Bijvoorbeeld: 23,34,57\-85 (bij opgave van een reeks, wordt het laatste nummer niet opgenomen).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -378,14 +378,14 @@ calibredb show_metadata [opties] id
 .UNINDENT
 .UNINDENT
 .sp
-Geef de metadata weer die in de calibre\-database zijn opgeslagen voor het boek dat bij de id hoort.
+Geef de metagegevens weer die in de Calibre\-gegevensbank zijn opgeslagen voor het boek dat bij de id hoort.
 id is een nummer verkregen met het zoek\-commando.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-Metadata in OPF\-formaat (XML) afdrukken
+Metagegevens in OPF\-formaat (XML) afdrukken
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -393,16 +393,16 @@ Metadata in OPF\-formaat (XML) afdrukken
 .sp
 .nf
 .ft C
-calibredb set_metadata [options] id [/path/to/metadata.opf]
+calibredb set_metadata [options] id [/path/to/metagegevens.opf]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Instellen metadata opgeslagen in de calibre database voor het boek geïdentificeerd door id
-van het OPF\-bestand metadata.opf. id is een id nummer van het zoekcommando (ls). U
+Instellen metagegevens opgeslagen in de Calibre gegevensbank voor het boek geïdentificeerd door id
+van het OPF\-bestand metagegevens.opf. id is een id nummer van het zoekcommando (ls). U
 kunt een idee krijgen van het OPF formaat door de \-\-as\-opf parameter te gebruiken
-voor het show_metadata commando. U kunt ook de metadata van individuele velden instellen
+voor het show_metadata commando. U kunt ook de metagegevens van individuele velden instellen
 met de \-\-field optie. Wanneer u de \-\-field optie gebruikt, is er geen noodzaak een OPF\-bestand
 te specificeren.
 .sp
@@ -415,7 +415,7 @@ Het veld om te zetten. Formaat is veld_naam:waarde, bijvoorbeeld: \fI\%\-\-field
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Toon de metadata veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP optie
+Toon de metagegevens veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP optie
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -430,34 +430,34 @@ calibredb export [opties] ids
 .UNINDENT
 .sp
 Exporteer de boeken gespecificeerd door ids (een lijst gescheiden door komma\(aqs) naar het bestandssysteem.
-De exportoperatie bewaard alle formaten van het boek, de omslag en metadata (in een opf\-bestand).
+De exportoperatie bewaard alle formaten van het boek, de omslag en metagegevens (in een opf\-bestand).
 U kunt id\-nummers met het zoek\-commando vinden.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-all
-Exporteer alle boeken in de database, negeer de lijst met id\fB\(aq\fPs.
+Exporteer alle boeken in de gegevensbank, negeer de lijst met id\fB\(aq\fPs.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Normaal gesproken zal calibre voor bestandsnamen alle niet\-Engelse tekens automatisch omzetten naar Engelse equivalenten. WAARSCHUWING: als u dit uitschakelt kunt u tijdens het opslaan fouten tegenkomen, afhankelijk van hoe goed uw bestandssysteem unicode ondersteunt. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal gesproken zal Calibre voor bestandsnamen alle niet\-Engelse tekens automatisch omzetten naar Engelse equivalenten. WAARSCHUWING: als u dit uitschakelt kunt u tijdens het opslaan fouten tegenkomen, afhankelijk van hoe goed uw bestandssysteem unicode ondersteunt. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normaal slaat calibre de omslag op in een apart bestand samen met de overige boekbestanden van het bijbehorende boek. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal slaat Calibre de omslag op in een apart bestand samen met de overige boekbestanden van het bijbehorende boek. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normaal gesproken zal calibre de metadata in opgeslagen bestanden bijwerken aan de hand van de informatie in de calibre\-bibliotheek. Dit maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal gesproken zal Calibre de metagegevens in opgeslagen bestanden bijwerken aan de hand van de informatie in de Calibre\-bibliotheek. Dit maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normaal gesproken, zal calibre de metadata in een apart OPF\-bestand opslaan, samen met de daadwerkelijke E\-boekbestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal gesproken, zal Calibre de metagegevens in een apart OPF\-bestand opslaan, samen met de daadwerkelijke E\-boekbestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -487,7 +487,7 @@ De sjabloon waarmee de bestandsnaam en mapstructuur van de opgeslagen bestanden 
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-Het formaat om data weer te geven. %d \- dag, %b \- maand, %m \- maandnummer, %Y \- jaar. Standaard is: %b, %Y
+Het formaat om gegevens weer te geven. %d \- dag, %b \- maand, %m \- maandnummer, %Y \- jaar. Standaard is: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -519,7 +519,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Kommagescheiden lijst met database\-ID\fB\(aq\fPs om te catalogiseren. Indien gebruikt, zal \fI\%\-\-search\fP genegeerd worden. Standaard: all
+Kommagescheiden lijst met gegevensbank\-ID\fB\(aq\fPs om te catalogiseren. Indien gebruikt, zal \fI\%\-\-search\fP genegeerd worden. Standaard: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -639,7 +639,7 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Beheer de opgeslagen zoekopdrachten in\ deze database.
+Beheer de opgeslagen zoekopdrachten in\ deze gegevensbank.
 Als u een zoekopdracht met dezelfde naam wil opslaan, dan zal de
 oude\ vervangen worden.
 .sp
@@ -658,14 +658,14 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb add_custom_column [opties] label naam datatype
+calibredb add_custom_column [opties] label naam gegevenstype
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
 Creëer een zelf gedefinieerde kolom. label is de naam van de kolom die door de computer wordt gebruikt. Dit label mag geen spaties of dubbelepunten bevatten. name is de aan de menselijke taal aangepaste naam van de kolom.
-datatype één van: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+gegevenstype één van: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -676,7 +676,7 @@ Een woordenboek van opties voor het aanpassen van hoe de gegevens in deze kolom 
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Deze kolom slaat informatie op als bij labels (waarden gescheiden door komma\fB\(aq\fPs). Van toepassing op datatype tekst.
+Deze kolom slaat informatie op als bij labels (waarden gescheiden door komma\fB\(aq\fPs). Van toepassing op gegevenstype tekst.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -752,12 +752,12 @@ calibredb restore_database [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Herstel deze database met de metadata die opgeslagen zijn in de OPF\-bestanden
-in elke map van de bibliotheek. Dit is nuttig als uw metadata.db\-bestand corrupt is.
+Herstel deze gegevensbank met de metagegevens die opgeslagen zijn in de OPF\-bestanden
+in elke map van de bibliotheek. Dit is nuttig als uw metagegevens.db\-bestand corrupt is.
 .sp
-WAARSCHUWING: Dit zal uw database compleet herbouwen. U raakt alle
+WAARSCHUWING: Dit zal uw gegevensbank compleet herbouwen. U raakt alle
 bewaarde zoektermen, gebruikerscategorieën, adapters, conversie\-instellingen
-en recepten kwijt. Herstelde metadata zullen slechts zo accuraat zijn als wat er
+en recepten kwijt. Herstelde metagegevens zullen slechts zo accuraat zijn als wat er
 gevonden is in de OPF\-bestanden.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -813,7 +813,7 @@ calibredb list_categories [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Maak een rapport van de categorie\-informatie in de database. De
+Maak een rapport van de categorie\-informatie in de gegevensbank. De
 informatie is gelijk aan wat er in het labelpaneel staat.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
@@ -854,12 +854,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Maak van de metadata opgeslagen in de database individuele reserve OPF bestanden
+Maak van de metagegevens opgeslagen in de gegevensbank individuele reserve OPF bestanden
 in de map van elk boek. Normaal gebeurt dit automatisch, maar u kunt dit
 commando gebruiken om re\-generatie van OPF files te forceren, met de \-\-all optie.
 .sp
 Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+automatically, every time metagegevens is changed.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -898,11 +898,11 @@ calibredb ingevoegde_metadata [opties] boek_id
 .UNINDENT
 .UNINDENT
 .sp
-Update de metadata in het eigenlijke boek file opgeslagen in calibre bibliotheek vanuit
-de metadata in de calibre databank. Normaal wordt metadata enkel geupdate wanneer
-files uit calibre worden geexporteerd, dit command is nuttig indien u wilt dat de bestanden worden
+Update de metagegevens in het eigenlijke boek file opgeslagen in Calibre bibliotheek vanuit
+de metagegevens in de Calibre gegevensbank. Normaal wordt metagegevens enkel geupdate wanneer
+files uit Calibre worden geexporteerd, dit command is nuttig indien u wilt dat de bestanden worden
 geupdate in de plaats. Opgelet dat verschillende formaten verschillende hoeveelheden
-metadata ondersteuenen. U kan de speciale waarde "all" in plaats van boek_id om de metadata
+metagegevens ondersteuenen. U kan de speciale waarde "all" in plaats van boek_id om de metagegevens
 van alle boeken aan te passen. U kan ook verschillende boek IDs meegeven gescheiden door spaties en ID reeksen
 gesepareerd door koppeltekens. Bijvoorbeeld: calibredb ingevoegde_metadata 1 2 10\-15 23
 .sp
@@ -910,7 +910,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
+Update alleen de metagegevens in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0

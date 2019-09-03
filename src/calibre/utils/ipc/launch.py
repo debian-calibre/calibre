@@ -23,7 +23,7 @@ if iswindows:
     except:
         raise RuntimeError('NUL file missing in windows. This indicates a'
                 ' corrupted windows. You should contact Microsoft'
-                ' for assistance and/or follow the steps described here: http://bytes.com/topic/net/answers/264804-compile-error-null-device-missing')
+                ' for assistance and/or follow the steps described here: https://bytes.com/topic/net/answers/264804-compile-error-null-device-missing')
 
 
 def renice(niceness):
@@ -47,16 +47,6 @@ class Worker(object):
     '''
 
     exe_name = 'calibre-parallel'
-
-    @property
-    def osx_interpreter(self):
-        exe = os.path.basename(sys.executable)
-        return exe if 'python' in exe else 'python'
-
-    @property
-    def osx_contents_dir(self):
-        fd = os.path.realpath(getattr(sys, 'frameworks_dir'))
-        return os.path.dirname(fd)
 
     @property
     def executable(self):

@@ -12,7 +12,7 @@ Bug-Debian: http://bugs.debian.org/640026
 
 --- calibre-debian.git.orig/src/calibre/gui2/actions/preferences.py
 +++ calibre-debian.git/src/calibre/gui2/actions/preferences.py
-@@ -29,8 +29,6 @@
+@@ -30,8 +30,6 @@ class PreferencesAction(InterfaceAction)
              pm.addAction(QIcon(I('config.png')), _('Preferences'), self.do_config)
          cm('welcome wizard', _('Run Welcome &wizard'),
                  icon='wizard.png', triggered=self.gui.run_wizard)
