@@ -38,7 +38,7 @@ from calibre.utils.img import image_from_data, Canvas, optimize_png, optimize_jp
 from calibre.utils.zipfile import ZipFile, ZIP_STORED
 from calibre.utils.filenames import atomic_rename
 from lzma.xz import compress, decompress
-from polyglot.builtins import iteritems, map, range, reraise, filter, as_bytes
+from polyglot.builtins import iteritems, map, range, reraise, filter, as_bytes, unicode_type
 from polyglot import http_client
 from polyglot.queue import Queue, Empty
 
@@ -613,7 +613,7 @@ class ChooseTheme(Dialog):
         w.l = l = QGridLayout(w)
 
         def add_row(x, y=None):
-            if isinstance(x, type('')):
+            if isinstance(x, unicode_type):
                 x = QLabel(x)
             row = l.rowCount()
             if y is None:

@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -22,13 +23,13 @@ def sort_key_for_action(ac):
         q = ac.name if q is None else q[0]
         return primary_sort_key(force_unicode(q))
     except Exception:
-        return primary_sort_key(u'')
+        return primary_sort_key('')
 
 
 class FakeAction(object):
 
     def __init__(self, name, gui_name, icon, tooltip=None,
-            dont_add_to=frozenset([]), dont_remove_from=frozenset([])):
+            dont_add_to=frozenset(), dont_remove_from=frozenset()):
         self.name = name
         self.action_spec = (gui_name, icon, tooltip, None)
         self.dont_remove_from = dont_remove_from
@@ -131,7 +132,7 @@ class AllModel(BaseModel):
 
     def remove(self, indices, allowed):
         rows = [i.row() for i in indices]
-        remove = set([])
+        remove = set()
         for row in rows:
             ac = self._data[row]
             if ac.name.startswith('---'):
@@ -181,7 +182,7 @@ class CurrentModel(BaseModel):
 
     def add(self, names):
         actions = []
-        reject = set([])
+        reject = set()
         for name in names:
             ac = self.name_to_action(name, self.gui)
             if self.key in ac.dont_add_to:
@@ -196,7 +197,7 @@ class CurrentModel(BaseModel):
 
     def remove(self, indices):
         rows = [i.row() for i in indices]
-        remove, rejected = set([]), set([])
+        remove, rejected = set(), set()
         for row in rows:
             ac = self._data[row]
             if self.key in ac.dont_remove_from:

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -693,6 +695,5 @@ class Ui_Form(object):
         self.qv_up_button.setToolTip(_("Move up"))
         self.qv_down_button.setToolTip(_("Move down"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.quickview_tab), _("&Quickview"))
-
 from calibre.gui2.complete2 import EditWithComplete
 
