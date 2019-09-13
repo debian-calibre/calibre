@@ -4,7 +4,6 @@
     var ρσ_kwargs_symbol = (typeof Symbol === "function") ? Symbol("kwargs-object") : "kwargs-object-Symbol-5d0927e5554349048cf0e3762a228256";
     var ρσ_cond_temp, ρσ_expr_temp, ρσ_last_exception;
     var ρσ_object_counter = 0;
-    if( typeof HTMLCollection !== "undefined" && typeof Symbol === "function") NodeList.prototype[Symbol.iterator] = HTMLCollection.prototype[Symbol.iterator] = NamedNodeMap.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 var ρσ_len;
 function ρσ_bool(val) {
     return !!val;
@@ -3744,6 +3743,7 @@ var str = ρσ_str, repr = ρσ_repr;;
             s.jsset.add("audio");
             s.jsset.add("b");
             s.jsset.add("big");
+            s.jsset.add("body");
             s.jsset.add("blockquote");
             s.jsset.add("br");
             s.jsset.add("button");
@@ -3782,6 +3782,7 @@ var str = ρσ_str, repr = ρσ_repr;;
             s.jsset.add("h5");
             s.jsset.add("h6");
             s.jsset.add("hr");
+            s.jsset.add("head");
             s.jsset.add("i");
             s.jsset.add("iframe");
             s.jsset.add("img");
@@ -3917,10 +3918,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (kwargs !== null && typeof kwargs === "object" && kwargs [ρσ_kwargs_symbol] === true) args.pop();
             var ans, vattr, val, attr, arg;
             ans = this.createElement(tag);
-            var ρσ_Iter0 = kwargs;
-            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
-            for (var ρσ_Index0 of ρσ_Iter0) {
-                attr = ρσ_Index0;
+            var ρσ_Iter0 = ρσ_Iterable(kwargs);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                attr = ρσ_Iter0[ρσ_Index0];
                 vattr = str.replace(str.rstrip(attr, "_"), "_", "-");
                 val = kwargs[(typeof attr === "number" && attr < 0) ? kwargs.length + attr : attr];
                 if (callable(val)) {
@@ -3934,10 +3934,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                     ans.setAttribute(vattr, val);
                 }
             }
-            var ρσ_Iter1 = args;
-            ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
-            for (var ρσ_Index1 of ρσ_Iter1) {
-                arg = ρσ_Index1;
+            var ρσ_Iter1 = ρσ_Iterable(args);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                arg = ρσ_Iter1[ρσ_Index1];
                 if (typeof arg === "string") {
                     arg = this.createTextNode(arg);
                 }
@@ -3954,10 +3953,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var E;
             E = _makeelement.bind(document);
             Object.defineProperties(E, (function() {
-                var ρσ_Iter = html5_tags, ρσ_Result = {}, tag;
-                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                for (var ρσ_Index of ρσ_Iter) {
-                    tag = ρσ_Index;
+                var ρσ_Iter = ρσ_Iterable(html5_tags), ρσ_Result = {}, tag;
+                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                    tag = ρσ_Iter[ρσ_Index];
                     ρσ_Result[tag] = ((function(){
                         var ρσ_d = {};
                         ρσ_d["value"] = _makeelement.bind(document, tag);
@@ -4140,10 +4138,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var sourceline, tags, elem;
             sourceline = parseInt(node.dataset.lnum);
             tags = [];
-            var ρσ_Iter0 = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
-            for (var ρσ_Index0 of ρσ_Iter0) {
-                elem = ρσ_Index0;
+            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                elem = ρσ_Iter0[ρσ_Index0];
                 tags.push(elem.tagName.toLowerCase());
                 if (elem === node) {
                     break;
@@ -4241,10 +4238,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }
                 parts = st.split(",");
                 if (parts.length > 1) {
-                    var ρσ_Iter2 = parts;
-                    ρσ_Iter2 = ((typeof ρσ_Iter2[Symbol.iterator] === "function") ? (ρσ_Iter2 instanceof Map ? ρσ_Iter2.keys() : ρσ_Iter2) : Object.keys(ρσ_Iter2));
-                    for (var ρσ_Index2 of ρσ_Iter2) {
-                        q = ρσ_Index2;
+                    var ρσ_Iter2 = ρσ_Iterable(parts);
+                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                        q = ρσ_Iter2[ρσ_Index2];
                         if (node.matches(q)) {
                             st = q;
                             break;
@@ -4382,10 +4378,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         ToPython.prototype._register_signals = function _register_signals(signals) {
             var self = this;
             var signal_name;
-            var ρσ_Iter0 = signals;
-            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
-            for (var ρσ_Index0 of ρσ_Iter0) {
-                signal_name = ρσ_Index0;
+            var ρσ_Iter0 = ρσ_Iterable(signals);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                signal_name = ρσ_Iter0[ρσ_Index0];
                 self[(typeof signal_name === "number" && signal_name < 0) ? self.length + signal_name : signal_name] = signal.bind(signal_name);
             }
         };
@@ -4520,10 +4515,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         }).call(this);
         function go_to_line(lnum) {
             var node;
-            var ρσ_Iter4 = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]");
-            ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
-            for (var ρσ_Index4 of ρσ_Iter4) {
-                node = ρσ_Index4;
+            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                node = ρσ_Iter0[ρσ_Index0];
                 if (is_hidden(node)) {
                     continue;
                 }
@@ -4540,8 +4534,8 @@ var str = ρσ_str, repr = ρσ_repr;;
             var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags) {
                 var nodes, node, index;
                 nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                for (var ρσ_Index5 = 0; ρσ_Index5 < nodes.length; ρσ_Index5++) {
-                    index = ρσ_Index5;
+                for (var ρσ_Index1 = 0; ρσ_Index1 < nodes.length; ρσ_Index1++) {
+                    index = ρσ_Index1;
                     node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
                     if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
                         break;
@@ -4562,10 +4556,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var found_body, ans, node;
             found_body = false;
             ans = [];
-            var ρσ_Iter6 = document.getElementsByTagName("*");
-            ρσ_Iter6 = ((typeof ρσ_Iter6[Symbol.iterator] === "function") ? (ρσ_Iter6 instanceof Map ? ρσ_Iter6.keys() : ρσ_Iter6) : Object.keys(ρσ_Iter6));
-            for (var ρσ_Index6 of ρσ_Iter6) {
-                node = ρσ_Index6;
+            var ρσ_Iter2 = ρσ_Iterable(document.getElementsByTagName("*"));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                node = ρσ_Iter2[ρσ_Index2];
                 if (!found_body && node.tagName.toLowerCase() === "body") {
                     found_body = true;
                 }
@@ -4581,10 +4574,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (state.blocks_found) {
                 return;
             }
-            var ρσ_Iter7 = document.body.getElementsByTagName("*");
-            ρσ_Iter7 = ((typeof ρσ_Iter7[Symbol.iterator] === "function") ? (ρσ_Iter7 instanceof Map ? ρσ_Iter7.keys() : ρσ_Iter7) : Object.keys(ρσ_Iter7));
-            for (var ρσ_Index7 of ρσ_Iter7) {
-                elem = ρσ_Index7;
+            var ρσ_Iter3 = ρσ_Iterable(document.body.getElementsByTagName("*"));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                elem = ρσ_Iter3[ρσ_Index3];
                 if (is_block(elem) && !in_table(elem)) {
                     elem.setAttribute("data-is-block", "1");
                 }
@@ -4645,7 +4637,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                     href = e.getAttribute("href");
                     e = e.parentNode;
                 }
-                to_python.request_sync(tn, href, address);
+                if (to_python.request_sync) {
+                    to_python.request_sync(tn, href, address);
+                }
             }
             return false;
         };
@@ -4664,7 +4658,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 if (elem) {
                     elem.scrollIntoView();
                     address = get_sourceline_address(elem);
-                    to_python.request_sync("", "", address);
+                    if (to_python.request_sync) {
+                        to_python.request_sync("", "", address);
+                    }
                 }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -4689,13 +4685,14 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }).call(this);
                 target = null;
                 i = 0;
-                var ρσ_Iter8 = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                ρσ_Iter8 = ((typeof ρσ_Iter8[Symbol.iterator] === "function") ? (ρσ_Iter8 instanceof Map ? ρσ_Iter8.keys() : ρσ_Iter8) : Object.keys(ρσ_Iter8));
-                for (var ρσ_Index8 of ρσ_Iter8) {
-                    node = ρσ_Index8;
+                var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    node = ρσ_Iter4[ρσ_Index4];
                     tn = (node.tagName) ? node.tagName.toLowerCase() : "";
                     if (tn !== tags[(typeof i === "number" && i < 0) ? tags.length + i : i]) {
-                        to_python.live_css_data(ans);
+                        if (to_python.live_css_data) {
+                            to_python.live_css_data(ans);
+                        }
                         return;
                     }
                     i += 1;
@@ -4721,7 +4718,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                     target = target.parentNode;
                     ancestor_specificity += 1;
                 }
-                to_python.live_css_data(ans);
+                if (to_python.live_css_data) {
+                    to_python.live_css_data(ans);
+                }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                 __argnames__ : {value: ["editor_name", "sourceline", "tags"]}
