@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -496,7 +497,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         choices |= {'search'}
         self.opt_categories_using_hierarchy.update_items_cache(choices)
         r('categories_using_hierarchy', db.prefs, setting=CommaSeparatedList,
-          choices=sorted(list(choices), key=sort_key))
+          choices=sorted(choices, key=sort_key))
 
         fm = db.field_metadata
         choices = sorted(((fm[k]['name'], k) for k in fm.displayable_field_keys() if fm[k]['name']),

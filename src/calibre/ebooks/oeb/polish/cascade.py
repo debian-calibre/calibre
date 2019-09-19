@@ -18,7 +18,7 @@ from calibre.ebooks.oeb.base import OEB_STYLES, XHTML, css_text
 from calibre.ebooks.oeb.normalize_css import normalizers, DEFAULTS
 from calibre.ebooks.oeb.stylizer import media_ok, INHERITED
 from tinycss.fonts3 import serialize_font_family, parse_font_family
-from polyglot.builtins import iteritems, itervalues
+from polyglot.builtins import iteritems, itervalues, unicode_type
 
 _html_css_stylesheet = None
 
@@ -165,7 +165,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     style_map = defaultdict(list)
     pseudo_style_map = defaultdict(list)
     rule_index_counter = count()
-    pseudo_pat = re.compile(u':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
+    pseudo_pat = re.compile(':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
 
     def process_sheet(sheet, sheet_name):
         if sheet_callback is not None:
@@ -233,8 +233,7 @@ _defvals = None
 def defvals():
     global _defvals
     if _defvals is None:
-        u = type('')
-        _defvals = {k:Values(Property(k, u(val)).propertyValue) for k, val in iteritems(DEFAULTS)}
+        _defvals = {k:Values(Property(k, unicode_type(val)).propertyValue) for k, val in iteritems(DEFAULTS)}
     return _defvals
 
 

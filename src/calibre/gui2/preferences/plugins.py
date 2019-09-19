@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -64,7 +65,7 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
             plugins.sort(key=lambda x: x.name.lower())
 
     def universal_set(self):
-        ans = set([])
+        ans = set()
         for c, category in enumerate(self.categories):
             ans.add((c, -1))
             for p, plugin in enumerate(self._data[category]):
@@ -74,7 +75,7 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
     def get_matches(self, location, query, candidates=None):
         if candidates is None:
             candidates = self.universal_set()
-        ans = set([])
+        ans = set()
         if not query:
             return ans
         query = lower(query)
@@ -204,7 +205,7 @@ class PluginModel(QAbstractItemModel, AdaptSQP):  # {{{
             plugin = self.index_to_plugin(index)
             disabled = is_disabled(plugin)
             if role == Qt.DisplayRole:
-                ver = '.'.join(map(str, plugin.version))
+                ver = '.'.join(map(unicode_type, plugin.version))
                 desc = '\n'.join(textwrap.wrap(plugin.description, 100))
                 ans='%s (%s) %s %s\n%s'%(plugin.name, ver, _('by'), plugin.author, desc)
                 c = plugin_customization(plugin)
