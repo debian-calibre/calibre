@@ -41,7 +41,7 @@ def binary_includes():
         ] + list(map(
             get_dll_path,
             ('usb-1.0 mtp expat sqlite3 ffi z poppler dbus-1 iconv xml2 xslt jpeg png16'
-             ' webp webpmux webpdemux exslt ncursesw readline chm'
+             ' webp webpmux webpdemux exslt ncursesw readline chm hunspell-1.7'
              ' icudata icui18n icuuc icuio gcrypt gpg-error'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
@@ -115,11 +115,14 @@ def copy_libs(env):
             stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
     base = j(QT_PREFIX, 'plugins')
-    dest = j(env.lib_dir, 'qt_plugins')
+    dest = j(env.lib_dir, '..', 'plugins')
     os.mkdir(dest)
     for x in QT_PLUGINS:
         if x not in ('audio', 'printsupport'):
             shutil.copytree(j(base, x), j(dest, x))
+    dest = j(env.lib_dir, '..', 'libexec')
+    os.mkdir(dest)
+    shutil.copy2(os.path.join(QT_PREFIX, 'libexec', 'QtWebEngineProcess'), dest)
 
 
 def copy_python(env, ext_dir):
@@ -129,7 +132,7 @@ def copy_python(env, ext_dir):
     for x in os.listdir(srcdir):
         y = j(srcdir, x)
         ext = os.path.splitext(x)[1]
-        if os.path.isdir(y) and x not in ('test', 'hotshot', 'distutils',
+        if os.path.isdir(y) and x not in ('test', 'hotshot',
                                           'site-packages', 'idlelib', 'lib2to3', 'dist-packages'):
             shutil.copytree(y, j(env.py_dir, x), ignore=ignore_in_lib)
         if os.path.isfile(y) and ext in ('.py', '.so'):
@@ -159,6 +162,10 @@ def copy_python(env, ext_dir):
         shutil.copy2(x, j(pdir, os.path.basename(x)))
 
     shutil.copytree(j(env.src_root, 'resources'), j(env.base, 'resources'))
+    for pak in glob.glob(j(QT_PREFIX, 'resources', '*.pak')):
+        shutil.copy2(pak, j(env.base, 'resources'))
+    os.mkdir(j(env.base, 'translations'))
+    shutil.copytree(j(QT_PREFIX, 'translations', 'qtwebengine_locales'), j(env.base, 'translations', 'qtwebengine_locales'))
     sitepy = j(self_dir, 'site.py')
     shutil.copy2(sitepy, j(env.py_dir, 'site.py'))
 
@@ -245,6 +252,7 @@ def strip_binaries(env):
         x = os.path.realpath(x)
         if x not in files and is_elf(x):
             files.add(x)
+    files.add(j(env.lib_dir, '..', 'libexec', 'QtWebEngineProcess'))
     print('Stripping %d files...' % len(files))
     before = sum(os.path.getsize(x) for x in files)
     strip_files(files)

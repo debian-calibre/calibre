@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 11:42+0530\n"
-"PO-Revision-Date: 2019-03-20 20:40+0000\n"
-"Last-Translator: Pekka Tuominen <pekka.tuominen@iki.fi>\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-16 05:47+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Finnish (http://www.transifex.com/calibre/calibre/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,9 +78,8 @@ msgstr "Siinä kaikki. Koodi tulee calibreen lisäosaksi suorittamalla seuraava 
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
-"are in "
-":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr "MacOS:ssä komentorivityökalut ovat calibren sisällä, esimerkiksi asennuskansion ollessa :file:'/Applications' komentorivit löytyvät polusta :file:'/Applications/calibre.app/Contents/console.app/Content/MacOS/'."
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
+msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
@@ -423,22 +422,52 @@ msgid ""
 msgstr "Lopuksi, \"self.current_container\" joka viittaa muokattavaan kirjaan :class:`calibre.ebooks.oeb.polish.container.Container`-objektina. Sen kautta kirja näkyy kokoelmana HTML/CSS/kuvatiedostojaan, ja sisältää metodeja moniin hyödyllisiin toimintoihin. container-objekti ja käytännöllisiä aputoimintoja joita voit käyttää lisäosakoodissasi on dokumentoitu :ref:`polish_api`:ssa."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+msgid "Running User Interface plugins in a separate process"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+msgid ""
+"If you are writing a user interface plugin that needs to make use of Qt "
+"WebEngine, it cannot be run in the main calibre process as it is not "
+"possible to use WebEngine there. Instead you can copy the data your plugin "
+"needs to a temporary directory and run the plugin with that data in a "
+"separate process. A simple example plugin follows that shows how to do this."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+msgid ""
+"You can download the plugin from `webengine_demo_plugin.zip  <https"
+"://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+msgid "The important part of the plugin is in two functions:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+msgid ""
+"The ``show_demo()`` function asks the user for a URL and then runs the "
+"``main()`` function passing it that URL. The ``main()`` function displays "
+"the URL in a ``QWebEngineView``."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Lisätään käännös liitännäiseen"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Kaikki käyttöliittymätekstit voidaan kääntää ja esittää millä tahansa kielellä jota calibren käyttöliittymä on asetettu käyttämään."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:257
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "Käy ensin läpi lisäosan koodi ja merkitse kaikki teksti käännettäviksi ympäröimällä ne _():lla. Esimerkiksi::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:262
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -446,17 +475,17 @@ msgid ""
 "`poedit <https://poedit.net/>`_ program for this."
 msgstr "Luo sitten sopivalla ohjelmalla .po-tiedostot lisäosakoodistasi. Jokaista käännettävää kieltä varten pitää olla oma .po-tiedosto. Esimerkiksi de.po saksalle, fr.po ranskalle jne. `poedit <https://poedit.net/>`_ on tähän hyvä ohjelma."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use poedit for that, or just do::"
 msgstr "Lähetä .po-tiedosto kääntäjällesi. Kun saat ne takaisin, koosta .mo-tiedostot. Tähän toimii jälleen poedit, tai::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:272
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Laita .mo-tiedostot lisäosasi \"translations\"-kansioon."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:274
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -465,23 +494,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Viimeinen vaihe on kutsua funktiota `load_translations()` lisäosasi .py-tiedostojen alussa. Suorituskykysyistä tee kutsu vain niissä .py-tiedostoissa joissa on käännettävää tekstiä. Eli tavallisesti kutsuisit käännöstä \"ui.py\":ssä, mutta et \"__init__.py\":ssä."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Testaa lisäosiesi käännöksiä vaihtamalla kieliasetusta :guilabel:'Asetukset->Käyttöliittymä->Ilme' tai käynnistämällä calibre näin::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Korvaa \"de\" haluamasi kielen kielikoodilla."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "Liitännäinen API"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:291
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -489,36 +518,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Kuten ehkä huomasit, lisäosa on calibressa luokka. Erityyppisille lisöosille on calibressa eri luokat. Lisätietoja luokista löytyy kohdasta :ref:'plugins'."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Lisäosasi käyttää melko varmasti calibren koodia. Oppiaksesi calibren koodikannan toiminnoista, lue calibren :ref:`code_layout`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Lisäosien virheenetsintä"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Ensinnäkin, käynnistä calibre virheenetsintätilassa. Se onnistuu komentoriviltä kutsulla::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the `Ctrl+Shift+R` keyboard shortcut."
 msgstr "Tai calibren sisällä joko klikkaamalla oikealla hiirennapilla :guilabel:'Asetukset'-painiketta tai `Ctrl+Shift+R`-näppäinoikotiellä."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Komentoriviltä käynnistettynä virheenetsintäraportti tulostuu komentorivi-ikkunaan, calibren sisällä käynnistettynä raportointi tulee txt-tiedostoon."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -526,33 +555,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Voit asettaa lisäosaasi mihin tahansa print-lausekkeen, jolloin ne tallentuvat virheenetsintätilassa. Muista, tämä on Python, printin pitäisi riittää virheenetsintään ;) Olen rakentanut koko calibren pelkästään sen avulla."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Lisäosan muutoksia voi nopeasti testata komentoriviltä näin::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "calibre sammutetaan, sammumisen jälkeen lisäosa päivitetään ja calibre käynnistyy uudestaan."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:319
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Lisää esimerkkejä liitännäisistä"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Lista hienoista calibre-lisäosista löytyy `tästä <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:324
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Jaa liitännäinen "
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

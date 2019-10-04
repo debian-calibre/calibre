@@ -16,9 +16,9 @@ from threading import Lock, RLock
 from PyQt5.Qt import (
     QT_VERSION, QApplication, QBuffer, QByteArray, QCoreApplication, QDateTime,
     QDesktopServices, QDialog, QEvent, QFileDialog, QFileIconProvider, QFileInfo,
-    QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale, QObject,
-    QSettings, QSocketNotifier, QStringListModel, Qt, QThread, QTimer, QTranslator,
-    QUrl, pyqtSignal
+    QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale,
+    QNetworkProxyFactory, QObject, QSettings, QSocketNotifier, QStringListModel, Qt,
+    QThread, QTimer, QTranslator, QUrl, pyqtSignal
 )
 from PyQt5.QtWidgets import QStyle  # Gives a nicer error message than import from Qt
 
@@ -38,9 +38,10 @@ from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.localization import get_lang
-from polyglot.builtins import (iteritems, itervalues, unicode_type,
-        string_or_bytes, range, map)
 from polyglot import queue
+from polyglot.builtins import (
+    iteritems, itervalues, range, string_or_bytes, unicode_type, map
+)
 
 try:
     NO_URL_FORMATTING = QUrl.None_
@@ -746,22 +747,22 @@ class Translator(QTranslator):
 
 
 gui_thread = None
-
 qt_app = None
 
-builtin_fonts_loaded = False
+
+def calibre_font_files():
+    return glob.glob(P('fonts/liberation/*.?tf')) + [P('fonts/calibreSymbols.otf')] + \
+            glob.glob(os.path.join(config_dir, 'fonts', '*.?tf'))
 
 
 def load_builtin_fonts():
     global _rating_font, builtin_fonts_loaded
     # Load the builtin fonts and any fonts added to calibre by the user to
     # Qt
-    if builtin_fonts_loaded:
+    if hasattr(load_builtin_fonts, 'done'):
         return
-    builtin_fonts_loaded = True
-    for ff in glob.glob(P('fonts/liberation/*.?tf')) + \
-            [P('fonts/calibreSymbols.otf')] + \
-            glob.glob(os.path.join(config_dir, 'fonts', '*.?tf')):
+    load_builtin_fonts.done = True
+    for ff in calibre_font_files():
         if ff.rpartition('.')[-1].lower() in {'ttf', 'otf'}:
             with open(ff, 'rb') as s:
                 # Windows requires font files to be executable for them to be
@@ -812,11 +813,34 @@ def setup_hidpi():
         prints('Not controlling automatic hidpi scaling')
 
 
+def setup_unix_signals(self):
+    if hasattr(os, 'pipe2'):
+        read_fd, write_fd = os.pipe2(os.O_CLOEXEC | os.O_NONBLOCK)
+    else:
+        import fcntl
+        read_fd, write_fd = os.pipe()
+        cloexec_flag = getattr(fcntl, 'FD_CLOEXEC', 1)
+        for fd in (read_fd, write_fd):
+            flags = fcntl.fcntl(fd, fcntl.F_GETFD)
+            fcntl.fcntl(fd, fcntl.F_SETFD, flags | cloexec_flag | os.O_NONBLOCK)
+
+    original_handlers = {}
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        original_handlers[sig] = signal.signal(sig, lambda x, y: None)
+        signal.siginterrupt(sig, False)
+    signal.set_wakeup_fd(write_fd)
+    self.signal_notifier = QSocketNotifier(read_fd, QSocketNotifier.Read, self)
+    self.signal_notifier.setEnabled(True)
+    self.signal_notifier.activated.connect(self.signal_received, type=Qt.QueuedConnection)
+    return original_handlers
+
+
 class Application(QApplication):
 
     shutdown_signal_received = pyqtSignal()
 
     def __init__(self, args, force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs, windows_app_uid=None):
+        QNetworkProxyFactory.setUseSystemConfiguration(True)
         if iswindows:
             self.windows_app_uid = None
             if windows_app_uid:
@@ -846,7 +870,10 @@ class Application(QApplication):
         QApplication.setApplicationName(APP_UID)
         if override_program_name and hasattr(QApplication, 'setDesktopFileName'):
             QApplication.setDesktopFileName(override_program_name)
+        QApplication.setAttribute(Qt.AA_ShareOpenGLContexts, True)  # needed for webengine
         QApplication.__init__(self, qargs)
+        if isosx:
+            plugins['cocoa'][0].disable_cocoa_ui_elements()
         self.setAttribute(Qt.AA_UseHighDpiPixmaps)
         self.setAttribute(Qt.AA_SynthesizeTouchForUnhandledMouseEvents, False)
         try:
@@ -1064,23 +1091,7 @@ class Application(QApplication):
         self.setQuitOnLastWindowClosed(True)
 
     def setup_unix_signals(self):
-        import fcntl
-        if hasattr(os, 'pipe2'):
-            read_fd, write_fd = os.pipe2(os.O_CLOEXEC | os.O_NONBLOCK)
-        else:
-            read_fd, write_fd = os.pipe()
-            cloexec_flag = getattr(fcntl, 'FD_CLOEXEC', 1)
-            for fd in (read_fd, write_fd):
-                flags = fcntl.fcntl(fd, fcntl.F_GETFD)
-                fcntl.fcntl(fd, fcntl.F_SETFD, flags | cloexec_flag | os.O_NONBLOCK)
-
-        for sig in (signal.SIGINT, signal.SIGTERM):
-            signal.signal(sig, lambda x, y: None)
-            signal.siginterrupt(sig, False)
-        signal.set_wakeup_fd(write_fd)
-        self.signal_notifier = QSocketNotifier(read_fd, QSocketNotifier.Read, self)
-        self.signal_notifier.setEnabled(True)
-        self.signal_notifier.activated.connect(self.signal_received, type=Qt.QueuedConnection)
+        setup_unix_signals(self)
 
     def signal_received(self, read_fd):
         try:
@@ -1099,12 +1110,12 @@ def sanitize_env_vars():
     is needed to prevent library conflicts when launching external utilities.'''
 
     if islinux and isfrozen:
-        env_vars = {'LD_LIBRARY_PATH':'/lib', 'QT_PLUGIN_PATH':'/lib/qt_plugins'}
+        env_vars = {'LD_LIBRARY_PATH':'/lib'}
     elif iswindows:
-        env_vars = {k:None for k in 'QT_PLUGIN_PATH'.split()}
+        env_vars = {}
     elif isosx:
         env_vars = {k:None for k in (
-                    'FONTCONFIG_FILE FONTCONFIG_PATH QT_PLUGIN_PATH SSL_CERT_FILE').split()}
+                    'FONTCONFIG_FILE FONTCONFIG_PATH SSL_CERT_FILE').split()}
     else:
         env_vars = {}
 
@@ -1150,7 +1161,7 @@ def safe_open_url(qurl):
     if qurl.scheme() in ('', 'file'):
         path = qurl.toLocalFile()
         ext = os.path.splitext(path)[-1].lower()[1:]
-        if ext in ('exe', 'com', 'cmd', 'bat', 'sh', 'psh', 'ps1', 'vbs', 'js', 'wsf', 'vba', 'py', 'rb', 'pl'):
+        if ext in ('exe', 'com', 'cmd', 'bat', 'sh', 'psh', 'ps1', 'vbs', 'js', 'wsf', 'vba', 'py', 'rb', 'pl', 'app'):
             prints('Refusing to open file:', path)
             return
     open_url(qurl)
@@ -1190,6 +1201,10 @@ def ensure_app(headless=True):
             has_headless = isosx or islinux or isbsd
             if headless and has_headless:
                 args += ['-platformpluginpath', plugins_loc, '-platform', 'headless']
+                if isosx:
+                    os.environ['QT_MAC_DISABLE_FOREGROUND_APPLICATION_TRANSFORM'] = '1'
+            if headless and iswindows:
+                QApplication.setAttribute(Qt.AA_UseSoftwareOpenGL, True)
             _store_app = QApplication(args)
             if headless and has_headless:
                 _store_app.headless = True
@@ -1209,6 +1224,12 @@ def ensure_app(headless=True):
                 except:
                     pass
             sys.excepthook = eh
+    return _store_app
+
+
+def destroy_app():
+    global _store_app
+    _store_app = None
 
 
 def app_is_headless():
@@ -1342,23 +1363,6 @@ def event_type_name(ev_or_etype):
         if num == etype:
             return name
     return 'UnknownEventType'
-
-
-def secure_web_page(qwebpage_or_qwebsettings):
-    from PyQt5.QtWebKit import QWebSettings
-    settings = qwebpage_or_qwebsettings if isinstance(qwebpage_or_qwebsettings, QWebSettings) else qwebpage_or_qwebsettings.settings()
-    settings.setAttribute(QWebSettings.JavaEnabled, False)
-    settings.setAttribute(QWebSettings.PluginsEnabled, False)
-    settings.setAttribute(QWebSettings.JavascriptCanOpenWindows, False)
-    settings.setAttribute(QWebSettings.JavascriptCanAccessClipboard, False)
-    settings.setAttribute(QWebSettings.LocalContentCanAccessFileUrls, False)  # ensure javascript cannot read from local files
-    settings.setAttribute(QWebSettings.NotificationsEnabled, False)
-    settings.setThirdPartyCookiePolicy(QWebSettings.AlwaysBlockThirdPartyCookies)
-    settings.setAttribute(QWebSettings.OfflineStorageDatabaseEnabled, False)
-    settings.setAttribute(QWebSettings.LocalStorageEnabled, False)
-    QWebSettings.setOfflineStorageDefaultQuota(0)
-    QWebSettings.setOfflineStoragePath(None)
-    return settings
 
 
 empty_model = QStringListModel([''])

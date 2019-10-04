@@ -1,22 +1,23 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
-__license__ = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import weakref
 
 from PyQt5.Qt import (
-    QPushButton, QPixmap, QIcon, QColor, Qt, QColorDialog, pyqtSignal,
-    QKeySequence, QToolButton, QDialog, QDialogButtonBox, QComboBox, QFont,
-    QAbstractListModel, QModelIndex, QApplication, QStyledItemDelegate,
-    QUndoCommand, QUndoStack, QLayout, QRect, QSize, QStyle, QSizePolicy,
-    QPoint, QWidget, QLabel, QCheckBox)
+    QAbstractListModel, QApplication, QCheckBox, QColor, QColorDialog, QComboBox,
+    QDialog, QDialogButtonBox, QFont, QIcon, QKeySequence, QLabel, QLayout,
+    QModelIndex, QPalette, QPixmap, QPoint, QPushButton, QRect, QSize, QSizePolicy,
+    QStyle, QStyledItemDelegate, Qt, QTextBrowser, QToolButton, QUndoCommand, QFontInfo,
+    QUndoStack, QWidget, pyqtSignal
+)
 
 from calibre.ebooks.metadata import rating_to_stars
+from calibre.utils.config_base import tweaks
 from calibre.gui2 import gprefs, rating_font
-from calibre.gui2.complete2 import LineEdit, EditWithComplete
+from calibre.gui2.complete2 import EditWithComplete, LineEdit
 from calibre.gui2.widgets import history
 from polyglot.builtins import unicode_type
 
@@ -425,6 +426,36 @@ class FlowLayout(QLayout):  # {{{
         l.addWidget(cb)
         return w
 # }}}
+
+
+class HTMLDisplay(QTextBrowser):
+
+    anchor_clicked = pyqtSignal(object)
+
+    def __init__(self, parent=None):
+        QTextBrowser.__init__(self, parent)
+        font = self.font()
+        f = QFontInfo(font)
+        delta = tweaks['change_book_details_font_size_by'] + 1
+        if delta:
+            font.setPixelSize(f.pixelSize() + delta)
+            self.setFont(font)
+        self.setFrameShape(self.NoFrame)
+        self.setOpenLinks(False)
+        self.setAttribute(Qt.WA_OpaquePaintEvent, False)
+        palette = self.palette()
+        palette.setBrush(QPalette.Base, Qt.transparent)
+        self.setPalette(palette)
+        self.setAcceptDrops(False)
+        self.anchorClicked.connect(self.on_anchor_clicked)
+
+    def on_anchor_clicked(self, qurl):
+        if not qurl.scheme() and qurl.hasFragment() and qurl.toString().startswith('#'):
+            frag = qurl.fragment(qurl.FullyDecoded)
+            if frag:
+                self.scrollToAnchor(frag)
+                return
+        self.anchor_clicked.emit(qurl)
 
 
 if __name__ == '__main__':

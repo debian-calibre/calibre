@@ -7,29 +7,33 @@ from gettext import gettext as _
 
 from iframe_comm import IframeClient
 from read_book.cfi import at_current, scroll_to as scroll_to_cfi
+from read_book.extract import get_elements
 from read_book.flow_mode import (
-    anchor_funcs as flow_anchor_funcs, flow_onkeydown, flow_onwheel,
-    flow_to_scroll_fraction, handle_gesture as flow_handle_gesture,
+    anchor_funcs as flow_anchor_funcs, flow_onwheel, flow_to_scroll_fraction,
+    handle_gesture as flow_handle_gesture, handle_shortcut as flow_handle_shortcut,
     layout as flow_layout, scroll_by_page as flow_scroll_by_page
 )
 from read_book.footnotes import is_footnote_link
 from read_book.globals import (
-    current_book, current_layout_mode, current_spine_item, set_boss,
+    current_book, current_layout_mode, current_spine_item, runtime, set_boss,
     set_current_spine_item, set_layout_mode
 )
 from read_book.mathjax import apply_mathjax
 from read_book.paged_mode import (
     anchor_funcs as paged_anchor_funcs, calc_columns_per_screen,
-    handle_gesture as paged_handle_gesture, jump_to_cfi as paged_jump_to_cfi,
-    layout as paged_layout, onkeydown as paged_onkeydown, onwheel as paged_onwheel,
-    progress_frac, reset_paged_mode_globals, scroll_by_page as paged_scroll_by_page,
-    scroll_to_elem, scroll_to_fraction as paged_scroll_to_fraction,
-    snap_to_selection
+    handle_gesture as paged_handle_gesture, handle_shortcut as paged_handle_shortcut,
+    jump_to_cfi as paged_jump_to_cfi, layout as paged_layout,
+    onwheel as paged_onwheel, progress_frac, reset_paged_mode_globals,
+    scroll_by_page as paged_scroll_by_page, scroll_to_elem,
+    scroll_to_fraction as paged_scroll_to_fraction, snap_to_selection
 )
 from read_book.resources import finalize_resources, unserialize_html
 from read_book.settings import (
     apply_colors, apply_font_size, apply_settings, apply_stylesheet, opts,
     update_settings
+)
+from read_book.shortcuts import (
+    create_shortcut_map, keyevent_as_shortcut, shortcut_for_key_event
 )
 from read_book.toc import update_visible_toc_anchors
 from read_book.touch import create_handlers as create_touch_handlers
@@ -71,11 +75,11 @@ class IframeBoss:
         window.navigator.epubReadingSystem = EPUBReadingSystem()
         self.last_cfi = None
         self.replace_history_on_next_cfi_update = True
-        self.encrypted_communications = False
         self.blob_url_map = {}
         self.resource_urls = {}
         self.content_ready = False
         self.last_window_width = self.last_window_height = -1
+        self.forward_keypresses = False
         set_boss(self)
         handlers = {
             'initialize':self.initialize,
@@ -87,19 +91,25 @@ class IframeBoss:
             'gesture_from_margin': self.gesture_from_margin,
             'find': self.find,
             'window_size': self.received_window_size,
+            'get_current_cfi': self.get_current_cfi,
+            'set_forward_keypresses': self.set_forward_keypresses,
         }
         self.comm = IframeClient(handlers)
         self.last_window_ypos = 0
         self.length_before = None
+
+    def set_forward_keypresses(self, data):
+        self.forward_keypresses = data.forward
 
     def initialize(self, data):
         scroll_viewport.update_window_size(data.width, data.height)
         window.onerror = self.onerror
         window.addEventListener('scroll', debounce(self.onscroll, 1000))
         window.addEventListener('resize', debounce(self.onresize, 500))
-        window.addEventListener('wheel', self.onwheel)
-        window.addEventListener('keydown', self.onkeydown)
-        document.documentElement.addEventListener('contextmenu', self.oncontextmenu)
+        window.addEventListener('wheel', self.onwheel, {'passive': False})
+        window.addEventListener('keydown', self.onkeydown, {'passive': False})
+        document.documentElement.addEventListener('contextmenu', self.oncontextmenu, {'passive': False})
+        document.addEventListener('selectionchange', self.onselectionchange)
         self.color_scheme = data.color_scheme
         create_touch_handlers()
 
@@ -130,6 +140,7 @@ class IframeBoss:
         self.content_ready = False
         self.replace_history_on_next_cfi_update = True
         self.book = current_book.book = data.book
+        self.is_titlepage = data.is_titlepage
         spine = self.book.manifest.spine
         index = spine.indexOf(data.name)
         reset_paged_mode_globals()
@@ -137,7 +148,7 @@ class IframeBoss:
         if current_layout_mode() is 'flow':
             self.do_layout = flow_layout
             self.handle_wheel = flow_onwheel
-            self.handle_keydown = flow_onkeydown
+            self.handle_navigation_shortcut = flow_handle_shortcut
             self._handle_gesture = flow_handle_gesture
             self.to_scroll_fraction = flow_to_scroll_fraction
             self.jump_to_cfi = scroll_to_cfi
@@ -145,12 +156,13 @@ class IframeBoss:
         else:
             self.do_layout = paged_layout
             self.handle_wheel = paged_onwheel
-            self.handle_keydown = paged_onkeydown
+            self.handle_navigation_shortcut = paged_handle_shortcut
             self.to_scroll_fraction = paged_scroll_to_fraction
             self.jump_to_cfi = paged_jump_to_cfi
             self._handle_gesture = paged_handle_gesture
             self.anchor_funcs = paged_anchor_funcs
         update_settings(data.settings)
+        self.keyboard_shortcut_map = create_shortcut_map(data.settings.keyboard_shortcuts)
         set_current_spine_item({'name':data.name, 'is_first':index is 0, 'is_last':index is spine.length - 1, 'initial_position':data.initial_position})
         self.last_cfi = None
         for name in self.blob_url_map:
@@ -201,13 +213,42 @@ class IframeBoss:
             opts.color_scheme = data.color_scheme
             apply_colors()
 
+    def fix_fullscreen_svg_images(self):
+        # Full screen images using SVG no longer render correctly
+        # webengine. This is because it sets the width to the
+        # viewport width and simply adjusts the height accordingly
+        # So we replace 100% with 100vw and 100vh to get the desired
+        # rendering
+        child_names = v'[]'
+        for node in document.body.childNodes:
+            if node.tagName:
+                name = node.tagName.toLowerCase()
+                if name is not 'style' and name is not 'script':
+                    child_names.push(name)
+                if child_names.length > 1:
+                    break
+        if child_names.length is 1 and child_names[0] is 'div':
+            names = []
+            svg = None
+            for node in document.body.querySelectorAll('*'):
+                if node.tagName:
+                    name = node.tagName.toLowerCase()
+                    if name is not 'style' and name is not 'script':
+                        names.push(name)
+                        if name is 'svg':
+                            svg = node
+            if names == ['div', 'svg', 'image'] or names == ['svg', 'image']:
+                if svg.getAttribute('width') is '100%' and svg.getAttribute('height') is '100%':
+                    svg.setAttribute('width', '100vw')
+                    svg.setAttribute('height', '100vh')
+
     def content_loaded(self):
         document.documentElement.style.overflow = 'hidden'
-        # document.body.appendChild(
-        #     E.style()  # TODO: User style sheet
-        # )
+        if self.is_titlepage and not opts.cover_preserve_aspect_ratio:
+            document.body.classList.add('cover-fill')
         self.last_window_width, self.last_window_height = scroll_viewport.width(), scroll_viewport.height()
         apply_settings()
+        self.fix_fullscreen_svg_images()
         self.do_layout()
         if self.mathjax:
             return apply_mathjax(self.mathjax, self.book.manifest.link_uid, self.content_loaded_stage2)
@@ -262,6 +303,22 @@ class IframeBoss:
             return 0
         return self.calculate_progress_frac(current_name, index)
 
+    def get_current_cfi(self, data):
+        cfi = at_current()
+        selected_text = window.getSelection().toString()
+        if cfi:
+            spine = self.book.manifest.spine
+            current_name = current_spine_item().name
+            index = spine.indexOf(current_name)
+            if index > -1:
+                cfi = 'epubcfi(/{}{})'.format(2*(index+1), cfi)
+                self.send_message(
+                    'report_cfi', cfi=cfi, progress_frac=self.calculate_progress_frac(current_name, index),
+                    file_progress_frac=progress_frac(), request_id=data.request_id, selected_text=selected_text)
+                return
+        self.send_message(
+            'report_cfi', cfi=None, progress_frac=0, file_progress_frac=0, selected_text=selected_text, request_id=data.request_id)
+
     def update_cfi(self):
         cfi = at_current()
         if cfi:
@@ -270,10 +327,13 @@ class IframeBoss:
             index = spine.indexOf(current_name)
             if index > -1:
                 cfi = 'epubcfi(/{}{})'.format(2*(index+1), cfi)
-                if cfi != self.last_cfi:
+                if cfi is not self.last_cfi:
                     self.last_cfi = cfi
-                    self.send_message('update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update,
-                                      progress_frac=self.calculate_progress_frac(current_name, index), file_progress_frac=progress_frac())
+                    selected_text = window.getSelection().toString()
+                    self.send_message(
+                        'update_cfi', cfi=cfi, replace_history=self.replace_history_on_next_cfi_update,
+                        progress_frac=self.calculate_progress_frac(current_name, index),
+                        file_progress_frac=progress_frac(), selected_text=selected_text)
                     self.replace_history_on_next_cfi_update = True
 
     def update_toc_position(self):
@@ -293,6 +353,10 @@ class IframeBoss:
                 # so we wait for the reply from request_size
                 return
             self.onresize_stage2()
+
+    def onselectionchange(self):
+        if self.content_ready:
+            self.send_message('selectionchange', text=document.getSelection().toString())
 
     def onresize_stage2(self):
         if scroll_viewport.width() is self.last_window_width and scroll_viewport.height() is self.last_window_height:
@@ -316,16 +380,31 @@ class IframeBoss:
     def onwheel(self, evt):
         if self.content_ready:
             evt.preventDefault()
-            self.handle_wheel(evt)
+            if evt.deltaY and evt.ctrlKey and not evt.shiftKey and not evt.altKey and not evt.metaKey:
+                self.send_message('handle_shortcut', name='increase_font_size' if evt.deltaY < 0 else 'decrease_font_size')
+            else:
+                self.handle_wheel(evt)
 
     def onkeydown(self, evt):
+        if current_layout_mode() is not 'flow' and evt.key is 'Tab':
+            # Prevent the TAB key from shifting focus as it causes partial scrolling
+            evt.preventDefault()
+        if self.forward_keypresses:
+            self.send_message('handle_keypress', evt=keyevent_as_shortcut(evt))
+            evt.preventDefault(), evt.stopPropagation()
+            return
         if self.content_ready:
-            self.handle_keydown(evt)
+            sc_name = shortcut_for_key_event(evt, self.keyboard_shortcut_map)
+            if sc_name:
+                if self.handle_navigation_shortcut(sc_name, evt):
+                    evt.preventDefault()
+                else:
+                    self.send_message('handle_shortcut', name=sc_name)
 
     def oncontextmenu(self, evt):
         if self.content_ready:
             evt.preventDefault()
-            self.send_message('show_chrome')
+            self.send_message('show_chrome', elements=get_elements(evt.clientX, evt.clientY))
 
     def send_message(self, action, **data):
         self.comm.send_message(action, data)
@@ -334,6 +413,10 @@ class IframeBoss:
         link_attr = 'data-' + self.book.manifest.link_uid
         for a in document.body.querySelectorAll('a[{}]'.format(link_attr)):
             a.addEventListener('click', self.link_activated)
+        if runtime.is_standalone_viewer:
+            # links with a target get turned into requests to open a new window by Qt
+            for a in document.body.querySelectorAll('a[target]'):
+                a.removeAttribute('target')
 
     def link_activated(self, evt):
         link_attr = 'data-' + self.book.manifest.link_uid
@@ -375,7 +458,7 @@ class IframeBoss:
     def find(self, data, from_load):
         if data.searched_in_spine:
             window.getSelection().removeAllRanges()
-        if window.find(data.text, False, data.backwards):
+        if window.find(data.text, False, data.backwards, from_load and data.backwards):
             if current_layout_mode() is not 'flow':
                 snap_to_selection()
         else:

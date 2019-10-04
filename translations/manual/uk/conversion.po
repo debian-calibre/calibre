@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2018
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 08:26+0530\n"
-"PO-Revision-Date: 2018-08-10 06:47+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-16 07:33+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -1395,60 +1395,66 @@ msgstr "Ви можете вставити довільний верхній і 
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:839
 msgid ""
-"calibre will automatically replace _PAGENUM_ with the current page number. "
-"You can even put different content on even and odd pages, for example the "
-"following header template will show the title on odd pages and the author on"
-" even pages::"
-msgstr "calibre автоматично замінить _PAGENUM_ на номер поточної сторінки. Ви навіть можете розташувати різні дані на парних і непарних сторінках. Наприклад, наведений нижче шаблон верхнього колонтитула показуватиме назву книги на непарних сторінках і назву книги на парних сторінках::"
+"calibre will automatically replace :code:`_PAGENUM_` with the current page "
+"number. You can even put different content on even and odd pages, for "
+"example the following header template will show the title on odd pages and "
+"the author on even pages::"
+msgstr "calibre автоматично замінить :code:`_PAGENUM_` на номер поточної сторінки. Ви навіть можете розташувати різні дані на парних і непарних сторінках. Наприклад, наведений нижче шаблон верхнього колонтитула показуватиме назву книги на непарних сторінках і назву книги на парних сторінках::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:845
+#: ../../home/kovid/work/calibre/manual/conversion.rst:848
 msgid ""
-"calibre will automatically replace _TITLE_ and _AUTHOR_ with the title and "
-"author of the document being converted.  You can also display text at the "
-"left and right edges and change the font size, as demonstrated with this "
-"header template::"
-msgstr "calibre автоматично замінить _TITLE_ і _AUTHOR_ вмістом полів назви і автора документа, який ви перетворюєте. Ви також можете наказати програмі розмістити текст ліворуч і праворуч та змінити розмір шрифту, як це продемонстровано цим шаблоном верхнього колонтитула::"
+"calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
+" the title and author of the document being converted. Setting :code"
+":`justify-content` to :code:`flex-end` will cause the text to be right "
+"aligned."
+msgstr "calibre автоматично замінить :code:`_TITLE_` і :code:`_AUTHOR_` вмістом полів назви і автора документа, який ви перетворюєте. Встановлення для параметра code:`justify-content` значення :code:`flex-end` призведе до вирівнювання тексту праворуч."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:852
+#: ../../home/kovid/work/calibre/manual/conversion.rst:853
+msgid ""
+"You can also display text at the left and right edges and change the font "
+"size, as demonstrated with this header template::"
+msgstr "Ви також можете наказати програмі розмістити текст ліворуч і праворуч та змінити розмір шрифту, як це продемонстровано цим шаблоном верхнього колонтитула::"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:861
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr "У результаті назву книги буде показано ліворуч, а ім’я автора — праворуч, шрифтом, який буде меншим за шрифт основного тексту книги."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:855
+#: ../../home/kovid/work/calibre/manual/conversion.rst:864
 msgid "You can also use the current section in templates, as shown below::"
 msgstr "Ви також можете скористатися поточним розділом у шаблонах, як це показано нижче::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:859
+#: ../../home/kovid/work/calibre/manual/conversion.rst:868
 msgid ""
-"_SECTION_ is replaced by whatever the name of the current section is. These "
-"names are taken from the metadata Table of Contents in the document (the PDF"
-" Outline). If the document has no table of contents then it will be replaced"
-" by empty text. If a single PDF page has multiple sections, the first "
-"section on the page will be used. Similarly, there is a variable named "
-"_TOP_LEVEL_SECTION_ that can be used to get the name of the current top-"
-"level section."
-msgstr "_SECTION_ буде замінено назвою поточного розділу. Ці назви буде взято із метаданих списку змісту документа (ескізу PDF). Якщо у документі немає списку змісту, цей рядок буде замінено порожнім. Якщо на одній сторінці PDF розміщено декілька розділів, буде використано назву першого з розділів на сторінці. Так само, передбачено змінну із назвою _TOP_LEVEL_SECTION_, якою можна скористатися для отримання назви поточного розділу найвищого рівня."
+":code:`_SECTION_` is replaced by whatever the name of the current section "
+"is. These names are taken from the metadata Table of Contents in the "
+"document (the PDF Outline). If the document has no table of contents then it"
+" will be replaced by empty text. If a single PDF page has multiple sections,"
+" the first section on the page will be used. Similarly, there is a variable "
+"named :code:`_TOP_LEVEL_SECTION_` that can be used to get the name of the "
+"current top-level section."
+msgstr ":code:`_SECTION_` буде замінено назвою поточного розділу. Ці назви буде взято із метаданих списку змісту документа (ескізу PDF). Якщо у документі немає списку змісту, цей рядок буде замінено порожнім. Якщо на одній сторінці PDF розміщено декілька розділів, буде використано назву першого з розділів на сторінці. Так само, передбачено змінну із назвою :code:`_TOP_LEVEL_SECTION_`, якою можна скористатися для отримання назви поточного розділу найвищого рівня."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:866
+#: ../../home/kovid/work/calibre/manual/conversion.rst:875
 msgid ""
-"You can even use javascript inside the header and footer templates, for "
+"You can even use JavaScript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
-msgstr "Ви навіть можете скористатися кодом javascript у шаблонах верхнього і нижнього колонтитулів. Наприклад, використання наведеного нижче шаблона призведе до того, що нумерація сторінок починатиметься з 4, а не з 1::"
+msgstr "Ви навіть можете скористатися кодом JavaScript у шаблонах верхнього і нижнього колонтитулів. Наприклад, використання наведеного нижче шаблона призведе до того, що нумерація сторінок починатиметься з 4, а не з 1::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:872
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
-"margins to large enough values, under the Page setup section of the "
-"conversion dialog."
-msgstr "Якщо ви додаватимете верхні і нижні колонтитули, не забудьте збільшити верхнє і нижнє поля сторінок за допомогою розділу :guilabel:`Налаштування сторінки` діалогового вікна перетворення."
+"margins to large enough values, under the :guilabel:`PDF Output` section of "
+"the conversion dialog."
+msgstr "Якщо ви додаватимете верхні і нижні колонтитули, не забудьте збільшити верхнє і нижнє поля сторінок за допомогою розділу :guilabel:`Виведення до PDF` діалогового вікна перетворення."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:877
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
 msgid "Printable Table of Contents"
 msgstr "Придатний до друку список змісту"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:879
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1457,10 +1463,29 @@ msgid ""
 " default."
 msgstr "Ви також можете додати придатний до друку список змісту наприкінці файла PDF, де буде наведено дані щодо номера сторінки для кожного з розділів. Це буде доволі корисно, якщо ви захочете надрукувати PDF на папері. Якщо ви маєте намір читати PDF на електронному пристрої, зміст типово буде створено автоматично, потреби у додаткових сторінках немає."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+#: ../../home/kovid/work/calibre/manual/conversion.rst:896
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
 "dialog. The default css used is listed below, simply copy it and make "
 "whatever changes you like."
 msgstr "Ви можете скоригувати вигляд створеного списку змісту за допомогою параметра перетворення «Додаткове CSS» у розділі «Вигляд та поведінка» діалогового вікна перетворення. Типову використану CSS наведено нижче, просто скопіюйте її і внесіть потрібні вам зміни."
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:916
+msgid "Custom page margins for individual HTML files"
+msgstr "Нетипові поля сторінок для окремих файлів HTML"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:918
+msgid ""
+"If you are converting an EPUB of AZW3 file with multiple individual HTML "
+"files inside it and you want to change the page margins for a particular "
+"HTML file you can add the following style block to the HTML file using the "
+"calibre editor:"
+msgstr "Якщо ви виконуєте перетворення до формату EPUB файла AZW3 із декількома окремими файлами HTML всередині і хочете змінити поля сторінок для окремого файла HTML, ви можете додати такий стильовий блок до файла HTML за допомогою редактора calibre:"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:935
+msgid ""
+"Then, in the PDF output section of the conversion dialog, turn on the option"
+" to :guilabel:`Use page margins from the document being converted`. Now all "
+"pages generated from this HTML file will have ``10pt`` margins."
+msgstr "Далі, у розділі виведення до PDF діалогового вікна перетворення позначте пункт :guilabel:`Використовувати поля сторінок з перетворюваного документа`. Тепер усі сторінки, які буде створено з цього файла HTML, матимуть поля у ``10pt`` (10 пунктів)."

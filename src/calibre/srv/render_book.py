@@ -9,6 +9,7 @@ import os
 import re
 import sys
 from collections import OrderedDict, defaultdict
+from datetime import datetime
 from functools import partial
 from itertools import count
 
@@ -28,10 +29,17 @@ from calibre.ebooks.oeb.polish.cover import find_cover_image, set_epub_cover
 from calibre.ebooks.oeb.polish.css import transform_css
 from calibre.ebooks.oeb.polish.toc import get_landmarks, get_toc
 from calibre.ebooks.oeb.polish.utils import extract, guess_type
+from calibre.srv.metadata import encode_datetime
+from calibre.utils.date import EPOCH
+from calibre.utils.iso8601 import parse_iso8601
 from calibre.utils.logging import default_log
+from calibre.utils.serialize import json_loads
 from calibre.utils.short_uuid import uuid4
-from polyglot.binary import as_base64_unicode as encode_component, from_base64_unicode as decode_component
-from polyglot.builtins import iteritems, map, is_py3, unicode_type
+from polyglot.binary import (
+    as_base64_unicode as encode_component, from_base64_bytes,
+    from_base64_unicode as decode_component
+)
+from polyglot.builtins import is_py3, iteritems, map, unicode_type
 from polyglot.urllib import quote, urlparse
 
 RENDER_VERSION = 1
@@ -85,10 +93,36 @@ def transform_declaration(decl):
     return changed
 
 
+def replace_epub_type_selector(m):
+    which = m.group(2)
+    roleval = EPUB_TYPE_MAP.get(which)
+    if roleval is None:
+        return m.group()
+    return 'role{}"{}"'.format(m.group(1), roleval)
+
+
+def epub_type_pat():
+    ans = getattr(epub_type_pat, 'ans', None)
+    if ans is None:
+        ans = epub_type_pat.ans = re.compile(r'epub\|type([$*~]?=)"(\S+)"')
+    return ans
+
+
+def transform_selector(rule):
+    selector = rule.selectorText
+    if 'epub|type' in selector:
+        ns, num = epub_type_pat().subn(replace_epub_type_selector, selector)
+        if num > 0 and ns != selector:
+            rule.selectorText = ns
+            return True
+
+
 def transform_sheet(sheet):
     changed = False
     for rule in sheet.cssRules.rulesOfType(CSSRule.STYLE_RULE):
         if transform_declaration(rule.style):
+            changed = True
+        if transform_selector(rule):
             changed = True
     return changed
 
@@ -167,10 +201,17 @@ class Container(ContainerBase):
 
     tweak_mode = True
 
-    def __init__(self, path_to_ebook, tdir, log=None, book_hash=None):
+    def __init__(self, path_to_ebook, tdir, log=None, book_hash=None, save_bookmark_data=False, book_metadata=None):
         log = log or default_log
         book_fmt, opfpath, input_fmt = extract_book(path_to_ebook, tdir, log=log)
         ContainerBase.__init__(self, tdir, opfpath, log)
+        self.book_metadata = book_metadata
+        if save_bookmark_data:
+            bm_file = 'META-INF/calibre_bookmarks.txt'
+            self.bookmark_data = None
+            if self.exists(bm_file):
+                with self.open(bm_file, 'rb') as f:
+                    self.bookmark_data = f.read()
         # We do not add zero byte sized files as the IndexedDB API in the
         # browser has no good way to distinguish between zero byte files and
         # load failures.
@@ -187,6 +228,7 @@ class Container(ContainerBase):
         self.book_render_data = data = {
             'version': RENDER_VERSION,
             'toc':toc,
+            'book_format': book_fmt,
             'spine':spine,
             'link_uid': uuid4(),
             'book_hash': book_hash,
@@ -242,32 +284,56 @@ class Container(ContainerBase):
         <head><style>
         html, body, img { height: 100vh; display: block; margin: 0; padding: 0; border-width: 0; }
         img {
-            width: auto; height: auto;
+            width: 100%%; height: 100%%;
+            object-fit: contain;
             margin-left: auto; margin-right: auto;
-            max-width: 100vw; max-height: 100vh
+            max-width: 100vw; max-height: 100vh;
+            top: 50vh; transform: translateY(-50%%);
+            position: relative;
         }
+        body.cover-fill img { object-fit: fill; }
         </style></head><body><img src="%s"/></body></html>
         '''
+
+        def generic_cover():
+            if self.book_metadata is not None:
+                from calibre.ebooks.covers import create_cover
+                mi = self.book_metadata
+                return create_cover(mi.title, mi.authors, mi.series, mi.series_index)
+            return BLANK_JPEG
+
         if input_fmt == 'epub':
+
+            def image_callback(cover_image, wrapped_image):
+                if cover_image:
+                    image_callback.cover_data = self.raw_data(cover_image, decode=False)
+                if wrapped_image and not getattr(image_callback, 'cover_data', None):
+                    image_callback.cover_data = self.raw_data(wrapped_image, decode=False)
+
             def cover_path(action, data):
                 if action == 'write_image':
-                    data.write(BLANK_JPEG)
-            return set_epub_cover(self, cover_path, (lambda *a: None), options={'template':templ})
-        raster_cover_name = find_cover_image(self, strict=True)
-        if raster_cover_name is None:
-            item = self.generate_item(name='cover.jpeg', id_prefix='cover')
-            raster_cover_name = self.href_to_name(item.get('href'), self.opf_name)
-        with self.open(raster_cover_name, 'wb') as dest:
-            dest.write(BLANK_JPEG)
-        item = self.generate_item(name='titlepage.html', id_prefix='titlepage')
-        titlepage_name = self.href_to_name(item.get('href'), self.opf_name)
-        raw = templ % prepare_string_for_xml(self.name_to_href(raster_cover_name, titlepage_name), True)
-        with self.open(titlepage_name, 'wb') as f:
-            f.write(raw.encode('utf-8'))
-        spine = self.opf_xpath('//opf:spine')[0]
-        ref = spine.makeelement(OPF('itemref'), idref=item.get('id'))
-        self.insert_into_xml(spine, ref, index=0)
-        self.dirty(self.opf_name)
+                    cdata = getattr(image_callback, 'cover_data', None) or generic_cover()
+                    data.write(cdata)
+
+            raster_cover_name, titlepage_name = set_epub_cover(
+                    self, cover_path, (lambda *a: None), options={'template':templ},
+                    image_callback=image_callback)
+        else:
+            raster_cover_name = find_cover_image(self, strict=True)
+            if raster_cover_name is None:
+                item = self.generate_item(name='cover.jpeg', id_prefix='cover')
+                raster_cover_name = self.href_to_name(item.get('href'), self.opf_name)
+                with self.open(raster_cover_name, 'wb') as dest:
+                    dest.write(generic_cover())
+            item = self.generate_item(name='titlepage.html', id_prefix='titlepage')
+            titlepage_name = self.href_to_name(item.get('href'), self.opf_name)
+            raw = templ % prepare_string_for_xml(self.name_to_href(raster_cover_name, titlepage_name), True)
+            with self.open(titlepage_name, 'wb') as f:
+                f.write(raw.encode('utf-8'))
+            spine = self.opf_xpath('//opf:spine')[0]
+            ref = spine.makeelement(OPF('itemref'), idref=item.get('id'))
+            self.insert_into_xml(spine, ref, index=0)
+            self.dirty(self.opf_name)
         return raster_cover_name, titlepage_name
 
     def transform_css(self):
@@ -300,6 +366,7 @@ class Container(ContainerBase):
         resource_template = link_uid + '|{}|'
         xlink_xpath = XPath('//*[@xl:href]')
         link_xpath = XPath('//h:a[@href]')
+        img_xpath = XPath('//h:img[@src]')
         res_link_xpath = XPath('//h:link[@href]')
 
         def link_replacer(base, url):
@@ -339,6 +406,11 @@ class Container(ContainerBase):
             elif mt in OEB_DOCS:
                 self.virtualized_names.add(name)
                 root = self.parsed(name)
+                for img in img_xpath(root):
+                    img_name = self.href_to_name(img.get('src'), name)
+                    if img_name:
+                        img.set('data-calibre-src', img_name)
+                        changed.add(name)
                 for link in res_link_xpath(root):
                     ltype = (link.get('type') or 'text/css').lower()
                     rel = (link.get('rel') or 'stylesheet').lower()
@@ -390,6 +462,7 @@ def split_name(name):
 
 boolean_attributes = frozenset('allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,truespeed,typemustmatch,visible'.split(','))  # noqa
 
+# see https://idpf.github.io/epub-guides/epub-aria-authoring/
 EPUB_TYPE_MAP = {k:'doc-' + k for k in (
     'abstract acknowledgements afterword appendix biblioentry bibliography biblioref chapter colophon conclusion cover credit'
     ' credits dedication epigraph epilogue errata footnote footnotes forward glossary glossref index introduction link noteref notice'
@@ -398,6 +471,7 @@ for k in 'figure term definition directory list list-item table row cell'.split(
     EPUB_TYPE_MAP[k] = k
 
 EPUB_TYPE_MAP['help'] = 'doc-tip'
+EPUB_TYPE_MAP['page-list'] = 'doc-pagelist'
 
 
 def map_epub_type(epub_type, attribs, elem):
@@ -419,7 +493,12 @@ def map_epub_type(epub_type, attribs, elem):
         if in_attribs is None:
             attribs.append(['role', role])
         else:
-            attribs[i] = ['role', role]
+            attribs[in_attribs] = ['role', role]
+        return True
+    return False
+
+
+known_tags = ('img', 'script', 'link', 'image', 'style')
 
 
 def serialize_elem(elem, nsmap):
@@ -429,7 +508,7 @@ def serialize_elem(elem, nsmap):
         ns, name = None, 'epub-' + name
     if nl == 'meta':
         return  # Filter out <meta> tags as they have unknown side-effects
-    if name.lower() in {'img', 'script', 'link', 'image', 'style'}:
+    if nl in known_tags:
         name = nl
     ans = {'n':name}
     if elem.text:
@@ -522,9 +601,75 @@ def html_as_dict(root):
     return {'ns_map':ns_map, 'tag_map':tags, 'tree':tree}
 
 
-def render(pathtoebook, output_dir, book_hash=None):
-    Container(pathtoebook, output_dir, book_hash=book_hash)
+def serialize_datetimes(d):
+    for k in tuple(d):
+        v = d[k]
+        if isinstance(v, datetime):
+            v = encode_datetime(v)
+            d[k] = v
+
+
+EPUB_FILE_TYPE_MAGIC = b'encoding=json+base64:\n'
+
+
+def parse_annotation(annot):
+    ts = annot['timestamp']
+    if hasattr(ts, 'rstrip'):
+        annot['timestamp'] = parse_iso8601(ts, assume_utc=True)
+    return annot
+
+
+def parse_annotations(raw):
+    for annot in json_loads(raw):
+        yield parse_annotation(annot)
+
+
+def get_stored_annotations(container):
+    raw = container.bookmark_data or b''
+    if not raw:
+        return
+    if raw.startswith(EPUB_FILE_TYPE_MAGIC):
+        raw = raw[len(EPUB_FILE_TYPE_MAGIC):].replace(b'\n', b'')
+        for annot in parse_annotations(from_base64_bytes(raw)):
+            yield annot
+        return
+
+    from calibre.ebooks.oeb.iterator.bookmarks import parse_bookmarks
+    for bm in parse_bookmarks(raw):
+        if bm['type'] == 'cfi' and isinstance(bm['pos'], unicode_type):
+            spine_index = (1 + bm['spine']) * 2
+            epubcfi = 'epubcfi(/{}/{})'.format(spine_index, bm['pos'].lstrip('/'))
+            title = bm.get('title')
+            if title and title != 'calibre_current_page_bookmark':
+                yield {'type': 'bookmark', 'title': title, 'pos': epubcfi, 'pos_type': 'epubcfi', 'timestamp': EPOCH}
+            else:
+                yield {'type': 'last-read', 'pos': epubcfi, 'pos_type': 'epubcfi', 'timestamp': EPOCH}
+
+
+def render(pathtoebook, output_dir, book_hash=None, serialize_metadata=False, extract_annotations=False):
+    mi = None
+    if serialize_metadata:
+        from calibre.ebooks.metadata.meta import get_metadata
+        from calibre.customize.ui import quick_metadata
+        with lopen(pathtoebook, 'rb') as f, quick_metadata:
+            mi = get_metadata(f, os.path.splitext(pathtoebook)[1][1:].lower())
+    container = Container(pathtoebook, output_dir, book_hash=book_hash, save_bookmark_data=extract_annotations, book_metadata=mi)
+    if serialize_metadata:
+        from calibre.utils.serialize import json_dumps
+        from calibre.ebooks.metadata.book.serialize import metadata_as_dict
+        d = metadata_as_dict(mi)
+        d.pop('cover_data', None)
+        serialize_datetimes(d), serialize_datetimes(d.get('user_metadata', {}))
+        with lopen(os.path.join(output_dir, 'calibre-book-metadata.json'), 'wb') as f:
+            f.write(json_dumps(d))
+    if extract_annotations:
+        annotations = None
+        if container.bookmark_data:
+            annotations = json_dumps(tuple(get_stored_annotations(container)))
+        if annotations:
+            with lopen(os.path.join(output_dir, 'calibre-book-annotations.json'), 'wb') as f:
+                f.write(annotations)
 
 
 if __name__ == '__main__':
-    render(sys.argv[-2], sys.argv[-1])
+    render(sys.argv[-2], sys.argv[-1], serialize_metadata=True)

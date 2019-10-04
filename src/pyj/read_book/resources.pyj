@@ -5,7 +5,9 @@ from __python__ import hash_literals
 from elementmaker import E
 from encodings import base64decode, utf8_decode
 
-from dom import clear
+from dom import clear, remove_all_attributes
+from read_book.globals import runtime, ui_operations
+from read_book.settings import opts
 
 JSON_XHTML_MIMETYPE = 'application/calibre+xhtml+json'
 
@@ -19,7 +21,7 @@ def decode_url(x):
 def create_link_pat(book):
     return RegExp(book.manifest.link_uid + r'\|([^|]+)\|', 'g')
 
-def load_resources(db, book, root_name, previous_resources, proceed):
+def load_resources(book, root_name, previous_resources, proceed):
     ans = Object.create(None)
     pending_resources = v'[root_name]'
     link_pat = create_link_pat(book)
@@ -29,7 +31,7 @@ def load_resources(db, book, root_name, previous_resources, proceed):
             for k in previous_resources:
                 v'delete previous_resources[k]'
             if book.manifest.files[root_name].has_maths:
-                return load_mathjax(db, book, ans, proceed)
+                return load_mathjax(book, ans, proceed)
             return proceed(ans)
         name = pending_resources.shift()
         if ans[name]:
@@ -39,7 +41,7 @@ def load_resources(db, book, root_name, previous_resources, proceed):
             if jstype(data[0]) is 'string':
                 find_virtualized_resources(data[0])
             return setTimeout(do_one, 0)
-        db.get_file(book, name, got_one)
+        ui_operations.get_file(book, name, got_one)
 
     def got_one(data, name, mimetype):
         if False and name is book.manifest.title_page_name:
@@ -68,9 +70,9 @@ def load_resources(db, book, root_name, previous_resources, proceed):
 
 mathjax_data = None
 
-def load_mathjax(db, book, resource_data, proceed):
+def load_mathjax(book, resource_data, proceed):
     if mathjax_data is None:
-        db.get_mathjax_files(def(data):
+        ui_operations.get_mathjax_files(def(data):
             nonlocal mathjax_data
             mathjax_data = data
             resource_data['..mathjax-files..'] = data
@@ -163,10 +165,11 @@ def finalize_resources(book, root_name, resource_data):
 
     return root_data, mathjax, blob_url_map
 
-js_types = set('text/javascript text/ecmascript application/javascript application/ecmascript'.split(' '))
+js_types = {k: True for k in 'text/javascript text/ecmascript application/javascript application/ecmascript'.split(' ')}
 resource_tag_names = {'script':'src', 'link':'href', 'img':'src', 'image':'xlink:href'}
 ns_rmap = {'http://www.w3.org/2000/svg':'svg', 'http://www.w3.org/1999/xlink':'xlink', 'http://www.w3.org/1998/Math/MathML':'math', 'http://www.w3.org/XML/1998/namespace': 'xml'}
 ns_count = 0
+hide_tooltips = False
 
 def get_prefix(ns):
     nonlocal ns_count
@@ -185,6 +188,8 @@ def apply_attributes(src, elem, ns_map):
             ns = ns_map[a[2]]
             elem.setAttributeNS(ns, get_prefix(ns) + a[0], a[1])
         else:
+            if hide_tooltips and (a[0] is 'title' or a[0] is 'alt'):
+                continue
             elem.setAttribute(a[0], a[1])
 
 def process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls):
@@ -200,11 +205,12 @@ def process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls):
         if attr:
             if attr.indexOf(':') != -1:
                 attr = attr.replace('xlink:', '')
-            for a in (src.a or v'[]'):
-                if a[0] is attr:
-                    loadable = a[1].startswith('blob:')
-                    resource_urls[a[1]] = True
-                    break
+            if src.a:
+                for a in src.a:
+                    if a[0] is attr:
+                        loadable = a[1].startswith('blob:')
+                        resource_urls[a[1]] = True
+                        break
         if loadable:
             load_required.add(node[0])
             elem.addEventListener('load', onload.bind(node[0]))
@@ -213,7 +219,7 @@ def process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls):
         apply_attributes(src, elem, ns_map)
         parent.appendChild(elem)
         if src.x:
-            if src.n is 'script' and (elem.getAttribute('type') or 'text/javascript').toLowerCase() in js_types:
+            if src.n is 'script' and js_types[(elem.getAttribute('type') or 'text/javascript').toLowerCase()] is True:
                 elem.text = src.x
             else:
                 elem.appendChild(document.createTextNode(src.x))
@@ -223,19 +229,26 @@ def process_stack(stack, tag_map, ns_map, load_required, onload, resource_urls):
             stack.push(v'[node[i], elem]')
 
 def unserialize_html(serialized_data, proceed, postprocess_dom):
+    nonlocal hide_tooltips
     tag_map = serialized_data.tag_map
     tree = serialized_data.tree
     ns_map = serialized_data.ns_map
     html = tag_map[0]
+    remove_all_attributes(document.documentElement)
     apply_attributes(html, document.documentElement, ns_map)
     head, body = tree[1], tree[2]  # noqa: unused-local
     clear(document.head, document.body)
+    remove_all_attributes(document.head, document.body)
     # Default stylesheet
-    document.head.appendChild(E.style(type='text/css', 'html {{ font-family: {} }}'.format(window.default_font_family or "sans-serif")))
+    if not runtime.is_standalone_viewer:
+        # for the standalone viewer the default font family is set
+        # in the viewer settings
+        document.head.appendChild(E.style(type='text/css', 'html {{ font-family: {} }}'.format(window.default_font_family or "sans-serif")))
     resource_urls = {}
     load_required = set()
     proceeded = False
     hang_timeout = 5
+    hide_tooltips = opts.hide_tooltips
 
     def hangcheck():
         nonlocal proceeded

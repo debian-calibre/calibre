@@ -2558,7 +2558,8 @@ function all(iterable) {
 if (!all.__argnames__) Object.defineProperties(all, {
     __argnames__ : {value: ["iterable"]}
 });
-var define_str_func, ρσ_unpack, ρσ_orig_split, ρσ_orig_replace;
+var decimal_sep, define_str_func, ρσ_unpack, ρσ_orig_split, ρσ_orig_replace;
+decimal_sep = 1.1.toLocaleString()[1];
 function ρσ_repr_js_builtin(x, as_array) {
     var ans, b, keys, key;
     ans = [];
@@ -2935,7 +2936,7 @@ define_str_func("format", function () {
                     value = value.toExponential(prec - 1);
                 }
                 value = value.replace(/0+$/g, "");
-                if (value[value.length-1] === ".") {
+                if (value[value.length-1] === decimal_sep) {
                     value = value.slice(0, -1);
                 }
                 if (ftype === "G") {
@@ -4213,6 +4214,32 @@ var str = ρσ_str, repr = ρσ_repr;;
             __argnames__ : {value: ["sheet"]}
         });
 
+        function selector_matches(node, selector) {
+            var sanitized_sel;
+            try {
+                return node.matches(selector);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    if (ρσ_in("epub|", selector)) {
+                        sanitized_sel = str.replace(selector, "epub|", "*|");
+                        try {
+                            return node.matches(sanitized_sel);
+                        } catch (ρσ_Exception) {
+                            ρσ_last_exception = ρσ_Exception;
+                            {
+                                return false;
+                            } 
+                        }
+                    }
+                    return false;
+                } 
+            }
+        };
+        if (!selector_matches.__argnames__) Object.defineProperties(selector_matches, {
+            __argnames__ : {value: ["node", "selector"]}
+        });
+
         function process_rules(node, rules, address, sheet, sheet_index, all_properties, node_style, is_ancestor, ans) {
             var rule, rule_address, st, type, href, parts, q, properties, data, rule_index;
             for (var ρσ_Index1 = 0; ρσ_Index1 < rules.length; ρσ_Index1++) {
@@ -4227,7 +4254,7 @@ var str = ρσ_str, repr = ρσ_repr;;
                     continue;
                 }
                 st = rule.selectorText;
-                if (!node.matches(st)) {
+                if (!selector_matches(node, st)) {
                     continue;
                 }
                 type = "sheet";
@@ -4241,7 +4268,7 @@ var str = ρσ_str, repr = ρσ_repr;;
                     var ρσ_Iter2 = ρσ_Iterable(parts);
                     for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                         q = ρσ_Iter2[ρσ_Index2];
-                        if (node.matches(q)) {
+                        if (selector_matches(node, q)) {
                             st = q;
                             break;
                         }
@@ -4304,6 +4331,7 @@ var str = ρσ_str, repr = ρσ_repr;;
         ρσ_modules.live_css.get_color = get_color;
         ρσ_modules.live_css.get_style_properties = get_style_properties;
         ρσ_modules.live_css.get_sheet_rules = get_sheet_rules;
+        ρσ_modules.live_css.selector_matches = selector_matches;
         ρσ_modules.live_css.process_rules = process_rules;
         ρσ_modules.live_css.get_matched_css = get_matched_css;
     })();
