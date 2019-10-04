@@ -41,12 +41,8 @@ debian/tmp:
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
 
 	# use system mathjax
-	rm -rf debian/tmp/usr/share/calibre/viewer/mathjax
-	ln -s /usr/share/javascript/mathjax debian/tmp/usr/share/calibre/viewer/mathjax
-
-	# use system coffee-script
-	rm -rf debian/tmp/usr/share/calibre/coffee-script.js
-	ln -s /usr/share/javascript/coffeescript/coffee-script.min.js debian/tmp/usr/share/calibre/coffee-script.js
+	rm -rf debian/tmp/usr/share/calibre/mathjax
+	ln -s /usr/share/javascript/mathjax debian/tmp/usr/share/calibre/mathjax
 
 	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
@@ -80,6 +76,5 @@ get-orig-source:
 	\
 	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
 	rm -r calibre*/resources/mathjax; \
-	rm -r calibre*/resources/coffee-script.js; \
 	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
 	cd ../..; rm -r debian/orig
