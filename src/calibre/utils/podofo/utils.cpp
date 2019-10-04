@@ -18,7 +18,7 @@ pdf::podofo_set_exception(const PdfError &err) {
     const TDequeErrorInfo &s = err.GetCallstack();
     for (TDequeErrorInfo::const_iterator it = s.begin(); it != s.end(); it++) {
         const PdfErrorInfo &info = (*it);
-        stream << "File: " << info.GetFilename() << "Line: " << info.GetLine() << " " << info.GetInformation() << "\n";
+        stream << "File: " << info.GetFilename() << " Line: " << info.GetLine() << " " << info.GetInformation() << "\n";
     }
     PyErr_SetString(Error, stream.str().c_str());
 }
@@ -33,10 +33,8 @@ pdf::podofo_convert_pystring(PyObject *val) {
 #if PY_MAJOR_VERSION > 2
     return PdfString(reinterpret_cast<const pdf_utf8*>(PyUnicode_AsUTF8(val)));
 #else
-    PyObject *temp = PyUnicode_AsUTF8String(val);
+    pyunique_ptr temp(PyUnicode_AsUTF8String(val));
     if (!temp) throw std::bad_alloc();
-    PdfString s(reinterpret_cast<const pdf_utf8*>(PyBytes_AS_STRING(temp)));
-    Py_DECREF(temp);
-    return s;
+    return PdfString(reinterpret_cast<const pdf_utf8*>(PyBytes_AS_STRING(temp.get())));
 #endif
 }

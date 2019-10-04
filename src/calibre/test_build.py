@@ -46,6 +46,10 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(regex.findall(r'(?i)(a)(b)', 'ab cd AB 1a1b'), [('a', 'b'), ('A', 'B')])
         self.assertEqual(regex.escape('a b', literal_spaces=True), 'a b')
 
+    def test_hunspell(self):
+        from calibre.spell.dictionary import build_test
+        build_test()
+
     def test_chardet(self):
         from chardet import detect
         raw = 'mūsi Füße'.encode('utf-8')
@@ -87,14 +91,6 @@ class BuildTest(unittest.TestCase):
 
     def test_plugins(self):
         exclusions = set()
-        if is_ci:
-            if isosx:
-                # The compiler version on OS X is different between the
-                # machine on which the dependencies are built and the
-                # machine on which the calibre modules are built, which causes
-                # C++ name mangling incompatibilities preventing some modules
-                # from loading
-                exclusions.update(set('podofo'.split()))
         if islinux and (not os.path.exists('/dev/bus/usb') and not os.path.exists('/proc/bus/usb')):
             # libusb fails to initialize in containers without USB subsystems
             exclusions.update(set('libusb libmtp'.split()))
@@ -182,16 +178,19 @@ class BuildTest(unittest.TestCase):
 
     @unittest.skipIf('SKIP_QT_BUILD_TEST' in os.environ, 'Skipping Qt build test as it causes crashes in the macOS VM')
     def test_qt(self):
+        from PyQt5.QtCore import QTimer
+        from PyQt5.QtWidgets import QApplication
+        from PyQt5.QtWebEngineWidgets import QWebEnginePage
         from PyQt5.QtGui import QImageReader, QFontDatabase
         from PyQt5.QtNetwork import QNetworkAccessManager
         from calibre.utils.img import image_from_data, image_to_data, test
         # Ensure that images can be read before QApplication is constructed.
         # Note that this requires QCoreApplication.libraryPaths() to return the
         # path to the Qt plugins which it always does in the frozen build,
-        # because the QT_PLUGIN_PATH env var is set. On non-frozen builds,
-        # it should just work because the hard-coded paths of the Qt
-        # installation should work. If they do not, then it is a distro
-        # problem.
+        # because Qt is patched to know the layout of the calibre application
+        # package. On non-frozen builds, it should just work because the
+        # hard-coded paths of the Qt installation should work. If they do not,
+        # then it is a distro problem.
         fmts = set(map(lambda x: x.data().decode('utf-8'), QImageReader.supportedImageFormats()))  # no2to3
         testf = {'jpg', 'png', 'svg', 'ico', 'gif'}
         self.assertEqual(testf.intersection(fmts), testf, "Qt doesn't seem to be able to load some of its image plugins. Available plugins: %s" % fmts)
@@ -204,21 +203,41 @@ class BuildTest(unittest.TestCase):
         # Run the imaging tests
         test()
 
-        from calibre.gui2 import Application
+        from calibre.gui2 import ensure_app, destroy_app
         os.environ.pop('DISPLAY', None)
-        has_headless = isosx or islinux
-        app = Application([], headless=has_headless)
+        ensure_app()
         self.assertGreaterEqual(len(QFontDatabase().families()), 5, 'The QPA headless plugin is not able to locate enough system fonts via fontconfig')
-        if has_headless:
-            from calibre.ebooks.covers import create_cover
-            create_cover('xxx', ['yyy'])
+        from calibre.ebooks.covers import create_cover
+        create_cover('xxx', ['yyy'])
         na = QNetworkAccessManager()
         self.assertTrue(hasattr(na, 'sslErrors'), 'Qt not compiled with openssl')
         if iswindows:
             from PyQt5.Qt import QtWin
             QtWin
+        p = QWebEnginePage()
+
+        def callback(result):
+            callback.result = result
+            if hasattr(print_callback, 'result'):
+                QApplication.instance().quit()
+
+        def print_callback(result):
+            print_callback.result = result
+            if hasattr(callback, 'result'):
+                QApplication.instance().quit()
+
+        p.runJavaScript('1 + 1', callback)
+        p.printToPdf(print_callback)
+        QTimer.singleShot(5000, lambda: QApplication.instance().quit())
+        QApplication.instance().exec_()
+        test_flaky = isosx and not is_ci
+        if not test_flaky:
+            self.assertEqual(callback.result, 2, 'Simple JS computation failed')
+            self.assertIn(b'Skia/PDF', bytes(print_callback.result), 'Print to PDF failed')
+        del p
         del na
-        del app
+        destroy_app()
+        del QWebEnginePage
 
     def test_imaging(self):
         from PIL import Image
@@ -229,6 +248,8 @@ class BuildTest(unittest.TestCase):
             from PIL import _imaging, _imagingmath, _imagingft
         _imaging, _imagingmath, _imagingft
         i = Image.open(I('lt.png', allow_user_override=False))
+        self.assertGreaterEqual(i.size, (20, 20))
+        i = Image.open(P('catalog/DefaultCover.jpg', allow_user_override=False))
         self.assertGreaterEqual(i.size, (20, 20))
 
     @unittest.skipUnless(iswindows and not is_ci, 'File dialog helper only used on windows (non-continuous-itegration)')
@@ -274,7 +295,6 @@ class BuildTest(unittest.TestCase):
         import psutil
         psutil.Process(os.getpid())
 
-    @unittest.skipIf(is_ci and isosx, 'Currently there is a C++ ABI incompatibility until the osx-build machine is moved to OS X 10.9')
     def test_podofo(self):
         from calibre.utils.podofo import test_podofo as dotest
         dotest()
@@ -316,8 +336,6 @@ def find_tests():
     ans = unittest.defaultTestLoader.loadTestsFromTestCase(BuildTest)
     from calibre.utils.icu_test import find_tests
     ans.addTests(find_tests())
-    import duktape.tests as dtests
-    ans.addTests(unittest.defaultTestLoader.loadTestsFromModule(dtests))
     from tinycss.tests.main import find_tests
     ans.addTests(find_tests())
     from calibre.spell.dictionary import find_tests

@@ -81,6 +81,30 @@ def ebook_viewer(args=sys.argv):
         main(args)
 
 
+def store_dialog(args=sys.argv):
+    detach_gui()
+    init_dbus()
+    from calibre.gui2.store.web_store import main
+    main(args)
+
+
+def webengine_dialog(**kw):
+    detach_gui()
+    init_dbus()
+    from calibre.debug import load_user_plugins
+    load_user_plugins()
+    import importlib
+    m = importlib.import_module(kw.pop('module'))
+    getattr(m, kw.pop('entry_func', 'main'))(**kw)
+
+
+def toc_dialog(**kw):
+    detach_gui()
+    init_dbus()
+    from calibre.gui2.toc.main import main
+    main(**kw)
+
+
 def gui_ebook_edit(path=None, notify=None):
     ' For launching the editor from inside calibre '
     init_dbus()

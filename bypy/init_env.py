@@ -28,6 +28,7 @@ dlls = [
     # 'WebSockets',
     # 'WebView',
     'Positioning',
+    'PositioningQuick',
     'Sensors',
     'Sql',
     'Svg',
@@ -37,6 +38,9 @@ dlls = [
     'Widgets',
     # 'Multimedia',
     'OpenGL',
+    'Quick',
+    'QuickWidgets',
+    'Qml',
     # 'MultimediaWidgets',
     'Xml',
     # 'XmlPatterns',
@@ -61,21 +65,20 @@ QT_PLUGINS = [
     'platformthemes',
     # 'playlistformats',
     'sqldrivers',
-    # 'styles',
     # 'webview',
     # 'audio', 'printsupport', 'bearer', 'position',
 ]
 
-if not ismacos and not iswindows:
-    QT_PLUGINS.append('platforminputcontexts')
-
 if islinux:
     QT_PLUGINS += [
+        'platforminputcontexts',
         'wayland-decoration-client',
         'wayland-graphics-integration-client',
         'wayland-shell-integration',
         'xcbglintegrations',
     ]
+else:
+    QT_PLUGINS.append('styles')
 
 PYQT_MODULES = (
     'Qt',
@@ -90,7 +93,7 @@ PYQT_MODULES = (
     'QtWebEngine',
     'QtWebEngineCore',
     'QtWebEngineWidgets',
-    # 'QtWebChannel',
+    'QtWebChannel',
 )
 del dlls
 
@@ -161,24 +164,28 @@ def run(*args, **extra_env):
     return subprocess.call(list(args), env=env, cwd=CALIBRE_DIR)
 
 
-def build_c_extensions(ext_dir):
+def build_c_extensions(ext_dir, args):
     bdir = os.path.join(build_dir(), 'calibre-extension-objects')
-    if run(
+    cmd = [
         PYTHON, 'setup.py', 'build',
         '--output-dir', ext_dir, '--build-dir', bdir,
-        COMPILER_CWD=bdir
-    ) != 0:
+    ]
+    if args.build_only:
+        cmd.extend(('--only', args.build_only))
+    if run(*cmd, COMPILER_CWD=bdir) != 0:
         print('Building of calibre C extensions failed', file=sys.stderr)
         os.chdir(CALIBRE_DIR)
         run_shell()
         raise SystemExit('Building of calibre C extensions failed')
+    return ext_dir
 
 
 def run_tests(path_to_calibre_debug, cwd_on_failure):
-    if run(path_to_calibre_debug, '--test-build') != 0:
+    ret = run(path_to_calibre_debug, '--test-build')
+    if ret != 0:
         os.chdir(cwd_on_failure)
         print(
-            'running calibre build tests failed with:', path_to_calibre_debug, file=sys.stderr)
+            'running calibre build tests failed with return code:', ret, 'and exe:', path_to_calibre_debug, file=sys.stderr)
         run_shell()
         raise SystemExit('running calibre build tests failed')
 

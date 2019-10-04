@@ -33,13 +33,12 @@ QT_DLLS, QT_PLUGINS, PYQT_MODULES = iv['QT_DLLS'], iv['QT_PLUGINS'], iv['PYQT_MO
 py_ver = '.'.join(map(str, python_major_minor_version()))
 sign_app = runpy.run_path(join(dirname(abspath(__file__)), 'sign.py'))['sign_app']
 
-QT_PREFIX = os.path.join(PREFIX, 'qt')
+QT_PREFIX = join(PREFIX, 'qt')
 QT_FRAMEWORKS = [x.replace('5', '') for x in QT_DLLS]
 
 ENV = dict(
     FONTCONFIG_PATH='@executable_path/../Resources/fonts',
     FONTCONFIG_FILE='@executable_path/../Resources/fonts/fonts.conf',
-    QT_PLUGIN_PATH='@executable_path/../MacOS/qt-plugins',
     PYTHONIOENCODING='UTF-8',
     SSL_CERT_FILE='@executable_path/../Resources/resources/mozilla-ca-certs.pem',
 )
@@ -158,15 +157,18 @@ class Freeze(object):
 
     FID = '@executable_path/../Frameworks'
 
-    def __init__(self, build_dir, ext_dir, test_runner, test_launchers=False, dont_strip=False, sign_installers=False):
-        self.build_dir = build_dir
+    def __init__(self, build_dir, ext_dir, test_runner, test_launchers=False, dont_strip=False, sign_installers=False, notarize=False):
+        self.build_dir = os.path.realpath(build_dir)
         self.sign_installers = sign_installers
-        self.ext_dir = ext_dir
+        self.notarize = notarize
+        self.ext_dir = os.path.realpath(ext_dir)
         self.test_runner = test_runner
         self.dont_strip = dont_strip
         self.contents_dir = join(self.build_dir, 'Contents')
         self.resources_dir = join(self.contents_dir, 'Resources')
         self.frameworks_dir = join(self.contents_dir, 'Frameworks')
+        self.exe_dir = join(self.contents_dir, 'MacOS')
+        self.helpers_dir = join(self.contents_dir, 'utils.app', 'Contents', 'MacOS')
         self.site_packages = join(self.resources_dir, 'Python', 'site-packages')
         self.to_strip = []
         self.warnings = []
@@ -201,7 +203,6 @@ class Freeze(object):
         if not test_launchers and not self.dont_strip:
             self.strip_files()
         if not test_launchers:
-            self.create_console_app()
             self.create_gui_apps()
 
         self.run_tests()
@@ -211,12 +212,11 @@ class Freeze(object):
 
     @flush
     def run_tests(self):
-        cc_dir = os.path.join(self.contents_dir, 'calibre-debug.app', 'Contents')
-        self.test_runner(join(cc_dir, 'MacOS', 'calibre-debug'), self.contents_dir)
+        self.test_runner(join(self.contents_dir, 'MacOS', 'calibre-debug'), self.contents_dir)
 
     @flush
     def add_resources(self):
-        shutil.copytree('resources', os.path.join(self.resources_dir,
+        shutil.copytree('resources', join(self.resources_dir,
                                                   'resources'))
 
     @flush
@@ -259,8 +259,6 @@ class Freeze(object):
     def get_local_dependencies(self, path_to_lib):
         for x, is_id in self.get_dependencies(path_to_lib):
             if x.startswith('@rpath/Qt'):
-                yield x, x[len('@rpath/'):], is_id
-            elif x.startswith('@rpath/libjpeg'):
                 yield x, x[len('@rpath/'):], is_id
             else:
                 for y in (PREFIX + '/lib/', PREFIX + '/python/Python.framework/'):
@@ -315,7 +313,7 @@ class Freeze(object):
         for f in QT_FRAMEWORKS:
             self.add_qt_framework(f)
         pdir = join(QT_PREFIX, 'plugins')
-        ddir = join(self.contents_dir, 'MacOS', 'qt-plugins')
+        ddir = join(self.contents_dir, 'PlugIns')
         os.mkdir(ddir)
         for x in QT_PLUGINS:
             shutil.copytree(join(pdir, x), join(ddir, x))
@@ -323,6 +321,12 @@ class Freeze(object):
             self.fix_dependencies_in_lib(l)
             x = os.path.relpath(l, ddir)
             self.set_id(l, '@executable_path/' + x)
+        webengine_process = join(
+            self.frameworks_dir, 'QtWebEngineCore.framework/Versions/5/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess')
+        self.fix_dependencies_in_lib(webengine_process)
+        cdir = dirname(dirname(webengine_process))
+        dest = join(cdir, 'Frameworks')
+        os.symlink(os.path.relpath(self.frameworks_dir, cdir), dest)
 
     def add_qt_framework(self, f):
         libname = f
@@ -356,6 +360,33 @@ class Freeze(object):
             subprocess.check_call([
                 'iconutil', '-c', 'icns', x, '-o', join(
                     self.resources_dir, basename(x).partition('.')[0] + '.icns')])
+        for helpers in (self.helpers_dir,):
+            os.makedirs(helpers)
+            cdir = dirname(helpers)
+            dest = join(cdir, 'Frameworks')
+            src = self.frameworks_dir
+            os.symlink(os.path.relpath(src, cdir), dest)
+            dest = join(cdir, 'Resources')
+            src = self.resources_dir
+            os.symlink(os.path.relpath(src, cdir), dest)
+            pl = dict(
+                CFBundleDevelopmentRegion='English',
+                CFBundleDisplayName=APPNAME + ' - utils',
+                CFBundleName=APPNAME + '-utils',
+                CFBundleIdentifier='com.calibre-ebook.utils',
+                LSBackgroundOnly='1',
+                CFBundleVersion=VERSION,
+                CFBundleShortVersionString=VERSION,
+                CFBundlePackageType='APPL',
+                CFBundleSignature='????',
+                CFBundleExecutable='pdftohtml',
+                LSMinimumSystemVersion='10.14.0',
+                LSRequiresNativeExecution=True,
+                NSAppleScriptEnabled=False,
+                CFBundleIconFile='',
+            )
+            with open(join(cdir, 'Info.plist'), 'wb') as p:
+                plistlib.dump(pl, p)
 
     @flush
     def add_calibre_plugins(self):
@@ -393,7 +424,7 @@ class Freeze(object):
             CFBundleSignature='????',
             CFBundleExecutable='calibre',
             CFBundleDocumentTypes=docs,
-            LSMinimumSystemVersion='10.9.5',
+            LSMinimumSystemVersion='10.14.0',
             LSRequiresNativeExecution=True,
             NSAppleScriptEnabled=False,
             NSHumanReadableCopyright=time.strftime('Copyright %Y, Kovid Goyal'),
@@ -408,12 +439,14 @@ class Freeze(object):
             plistlib.dump(pl, p)
 
     @flush
-    def install_dylib(self, path, set_id=True):
-        shutil.copy2(path, self.frameworks_dir)
+    def install_dylib(self, path, set_id=True, dest=None):
+        dest = dest or self.frameworks_dir
+        os.makedirs(dest, exist_ok=True)
+        shutil.copy2(path, dest)
         if set_id:
-            self.set_id(join(self.frameworks_dir, basename(path)),
+            self.set_id(join(dest, basename(path)),
                         self.FID + '/' + basename(path))
-        self.fix_dependencies_in_lib(join(self.frameworks_dir, basename(path)))
+        self.fix_dependencies_in_lib(join(dest, basename(path)))
 
     @flush
     def add_podofo(self):
@@ -425,32 +458,34 @@ class Freeze(object):
     def add_poppler(self):
         print('\nAdding poppler')
         for x in ('libpoppler.87.dylib',):
-            self.install_dylib(os.path.join(PREFIX, 'lib', x))
+            self.install_dylib(join(PREFIX, 'lib', x))
         for x in ('pdftohtml', 'pdftoppm', 'pdfinfo'):
-            self.install_dylib(os.path.join(PREFIX, 'bin', x), False)
+            self.install_dylib(
+                join(PREFIX, 'bin', x), set_id=False, dest=self.helpers_dir)
 
     @flush
     def add_imaging_libs(self):
         print('\nAdding libjpeg, libpng, libwebp, optipng and mozjpeg')
         for x in ('jpeg.8', 'png16.16', 'webp.7', 'webpmux.3', 'webpdemux.2'):
-            self.install_dylib(os.path.join(PREFIX, 'lib', 'lib%s.dylib' % x))
+            self.install_dylib(join(PREFIX, 'lib', 'lib%s.dylib' % x))
         for x in 'optipng', 'JxrDecApp':
-            self.install_dylib(os.path.join(PREFIX, 'bin', x), False)
+            self.install_dylib(join(PREFIX, 'bin', x), set_id=False, dest=self.helpers_dir)
         for x in ('jpegtran', 'cjpeg'):
-            self.install_dylib(os.path.join(PREFIX, 'private', 'mozjpeg', 'bin', x), False)
+            self.install_dylib(
+                join(PREFIX, 'private', 'mozjpeg', 'bin', x), set_id=False, dest=self.helpers_dir)
 
     @flush
     def add_fontconfig(self):
         print('\nAdding fontconfig')
         for x in ('fontconfig.1', 'freetype.6', 'expat.1'):
-            src = os.path.join(PREFIX, 'lib', 'lib' + x + '.dylib')
+            src = join(PREFIX, 'lib', 'lib' + x + '.dylib')
             self.install_dylib(src)
-        dst = os.path.join(self.resources_dir, 'fonts')
+        dst = join(self.resources_dir, 'fonts')
         if os.path.exists(dst):
             shutil.rmtree(dst)
-        src = os.path.join(PREFIX, 'etc', 'fonts')
+        src = join(PREFIX, 'etc', 'fonts')
         shutil.copytree(src, dst, symlinks=False)
-        fc = os.path.join(dst, 'fonts.conf')
+        fc = join(dst, 'fonts.conf')
         with open(fc, 'rb') as f:
             raw = f.read().decode('utf-8')
         raw = raw.replace('<dir>/usr/share/fonts</dir>', '''\
@@ -466,7 +501,7 @@ class Freeze(object):
     @flush
     def add_misc_libraries(self):
         for x in (
-                'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0',
+                'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
                 'icudata.64', 'icui18n.64', 'icuio.64', 'icuuc.64',
                 'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar',
                 'crypto.1.0.0', 'ssl.1.0.0', 'iconv.2',  # 'ltdl.7'
@@ -506,7 +541,7 @@ class Freeze(object):
                 if tdir is not None:
                     shutil.rmtree(tdir)
         try:
-            shutil.rmtree(os.path.join(self.site_packages, 'calibre', 'plugins'))
+            shutil.rmtree(join(self.site_packages, 'calibre', 'plugins'))
         except OSError as err:
             if err.errno != errno.ENOENT:
                 raise
@@ -520,7 +555,7 @@ class Freeze(object):
     @flush
     def add_modules_from_dir(self, src):
         for x in glob.glob(join(src, '*.py')) + glob.glob(join(src, '*.so')):
-            dest = os.path.join(self.site_packages, os.path.basename(x))
+            dest = join(self.site_packages, os.path.basename(x))
             shutil.copy2(x, dest)
             if x.endswith('.so'):
                 self.fix_dependencies_in_lib(dest)
@@ -606,9 +641,10 @@ class Freeze(object):
         base = join(self.resources_dir, 'Python')
         py_compile(base)
 
-    def create_app_clone(self, name, specialise_plist, remove_doc_types=True):
+    def create_app_clone(self, name, specialise_plist, remove_doc_types=False, base_dir=None):
         print('\nCreating ' + name)
-        cc_dir = os.path.join(self.contents_dir, name, 'Contents')
+        base_dir = base_dir or self.contents_dir
+        cc_dir = join(base_dir, name, 'Contents')
         exe_dir = join(cc_dir, 'MacOS')
         os.makedirs(exe_dir)
         for x in os.listdir(self.contents_dir):
@@ -632,42 +668,51 @@ class Freeze(object):
                     plistlib.dump(plist, p)
             elif x == 'MacOS':
                 for item in os.listdir(join(self.contents_dir, 'MacOS')):
-                    os.symlink('../../../MacOS/' + item, join(exe_dir, item))
+                    src = join(self.contents_dir, x, item)
+                    os.symlink(os.path.relpath(src, exe_dir), join(exe_dir, item))
             else:
-                os.symlink(join('../..', x), join(cc_dir, x))
-
-    @flush
-    def create_console_app(self):
-        def specialise_plist(plist):
-            plist['LSBackgroundOnly'] = '1'
-            plist['CFBundleIdentifier'] = 'com.calibre-ebook.console'
-            plist['CFBundleExecutable'] = 'calibre-parallel'
-        self.create_app_clone('console.app', specialise_plist)
+                src = join(self.contents_dir, x)
+                os.symlink(os.path.relpath(src, cc_dir), join(cc_dir, x))
 
     @flush
     def create_gui_apps(self):
-        input_formats = sorted(set(json.loads(
-            subprocess.check_output([
-                join(self.contents_dir, 'MacOS', 'calibre-debug'), '-c',
-                'from calibre.customize.ui import all_input_formats; import sys, json; sys.stdout.write(json.dumps(tuple(all_input_formats())))'
-            ])
-        )))
 
-        def specialise_plist(launcher, remove_types, plist):
+        def get_data(cmd):
+            return json.loads(subprocess.check_output([join(self.contents_dir, 'MacOS', 'calibre-debug'), '-c', cmd]))
+
+        data = get_data(
+            'from calibre.customize.ui import all_input_formats; import sys, json; from calibre.ebooks.oeb.polish.main import SUPPORTED;'
+            'sys.stdout.write(json.dumps({"i": tuple(all_input_formats()), "e": tuple(SUPPORTED)}))'
+        )
+        input_formats = sorted(set(data['i']))
+        edit_formats = sorted(set(data['e']))
+
+        def specialise_plist(launcher, formats, plist):
             plist['CFBundleDisplayName'] = plist['CFBundleName'] = {
-                'ebook-viewer': 'E-book Viewer', 'ebook-edit': 'Edit Book', 'calibre-debug': 'calibre (debug)',
+                'ebook-viewer': 'E-book Viewer', 'ebook-edit': 'Edit Book',
             }[launcher]
             plist['CFBundleExecutable'] = launcher
-            if launcher != 'calibre-debug':
-                plist['CFBundleIconFile'] = launcher + '.icns'
             plist['CFBundleIdentifier'] = 'com.calibre-ebook.' + launcher
-            if not remove_types:
-                e = plist['CFBundleDocumentTypes'][0]
-                exts = 'epub azw3'.split() if launcher == 'ebook-edit' else input_formats
-                e['CFBundleTypeExtensions'] = exts
-        for launcher in ('ebook-viewer', 'ebook-edit', 'calibre-debug'):
-            remove_types = launcher == 'calibre-debug'
-            self.create_app_clone(launcher + '.app', partial(specialise_plist, launcher, remove_types), remove_doc_types=remove_types)
+            plist['CFBundleIconFile'] = launcher + '.icns'
+            e = plist['CFBundleDocumentTypes'][0]
+            e['CFBundleTypeExtensions'] = [x.lower() for x in formats]
+
+        self.create_app_clone('ebook-viewer.app', partial(specialise_plist, 'ebook-viewer', input_formats))
+        self.create_app_clone('ebook-edit.app', partial(specialise_plist, 'ebook-edit', edit_formats),
+                base_dir=join(self.contents_dir, 'ebook-viewer.app', 'Contents'))
+        # We need to move the webengine resources into the deepest sub-app
+        # because the sandbox gets set to the nearest enclosing app which
+        # means that WebEngine will fail to access its resources when running
+        # in the sub-apps unless they are present inside the sub app bundle
+        # somewhere
+        base_dest = join(self.contents_dir, 'ebook-viewer.app', 'Contents', 'ebook-edit.app', 'Contents', 'SharedSupport')
+        os.mkdir(base_dest)
+        base_src = os.path.realpath(join(self.frameworks_dir, 'QtWebEngineCore.framework/Resources'))
+        items = [join(base_src, 'qtwebengine_locales')] + glob.glob(join(base_src, '*.pak')) + glob.glob(join(base_src, '*.dat'))
+        for src in items:
+            dest = join(base_dest, os.path.basename(src))
+            os.rename(src, dest)
+            os.symlink(os.path.relpath(dest, base_src), src)
 
     @flush
     def copy_site(self):
@@ -676,7 +721,7 @@ class Freeze(object):
                                                  'lib', 'python' + py_ver))
 
     @flush
-    def makedmg(self, d, volname, internet_enable=True, format='ULFO'):
+    def makedmg(self, d, volname, internet_enable=True):
         ''' Copy a directory d into a dmg named volname '''
         print('\nSigning...')
         sys.stdout.flush()
@@ -687,19 +732,20 @@ class Freeze(object):
             if err.errno != errno.ENOENT:
                 raise
         os.mkdir(destdir)
-        dmg = os.path.join(destdir, volname + '.dmg')
+        dmg = join(destdir, volname + '.dmg')
         if os.path.exists(dmg):
             os.unlink(dmg)
         tdir = tempfile.mkdtemp()
-        appdir = os.path.join(tdir, os.path.basename(d))
+        appdir = join(tdir, os.path.basename(d))
         shutil.copytree(d, appdir, symlinks=True)
-        if self.sign_installers:
+        if self.sign_installers or self.notarize:
             with timeit() as times:
-                sign_app(appdir)
+                sign_app(appdir, self.notarize)
             print('Signing completed in %d minutes %d seconds' % tuple(times))
-        os.symlink('/Applications', os.path.join(tdir, 'Applications'))
+        os.symlink('/Applications', join(tdir, 'Applications'))
         size_in_mb = int(subprocess.check_output(['du', '-s', '-k', tdir]).decode('utf-8').split()[0]) / 1024.
-        cmd = ['/usr/bin/hdiutil', 'create', '-srcfolder', tdir, '-volname', volname, '-format', format]
+        # UDBZ gives the best compression, better than ULFO
+        cmd = ['/usr/bin/hdiutil', 'create', '-srcfolder', tdir, '-volname', volname, '-format', 'UDBZ']
         if 190 < size_in_mb < 250:
             # We need -size 255m because of a bug in hdiutil. When the size of
             # srcfolder is close to 200MB hdiutil fails with
@@ -721,7 +767,7 @@ def main(args, ext_dir, test_runner):
     build_dir = abspath(join(mkdtemp('frozen-'), APPNAME + '.app'))
     if args.skip_tests:
         test_runner = lambda *a: None
-    Freeze(build_dir, ext_dir, test_runner, dont_strip=args.dont_strip, sign_installers=args.sign_installers)
+    Freeze(build_dir, ext_dir, test_runner, dont_strip=args.dont_strip, sign_installers=args.sign_installers, notarize=args.notarize)
 
 
 if __name__ == '__main__':

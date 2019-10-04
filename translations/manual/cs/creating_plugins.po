@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Trottel <trottel09@gmail.com>, 2014-2017
+# Trottel <trottel09@gmail.com>, 2014-2017,2019
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: 2018-06-15 01:02+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-17 08:05+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -77,9 +77,8 @@ msgstr "To je vše. Pro přidání tohoto kódu do Calibre jako modulu stačí s
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
-"are in "
-":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr "Na macOS jsou nástroje příkazového řádku uvnitř sady Calibre, například pokud jste nainstalovali Calibre do :file:`/Applications`, nástroje příkazového řádku jsou v :file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
+msgstr "Na macOS jsou nástroje příkazového řádku uvnitř sady Calibre, například pokud jste nainstalovali Calibre do :file:`/Applications`, nástroje příkazového řádku jsou v :file:`/Applications/calibre.app/Contents/MacOS/`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
@@ -422,22 +421,52 @@ msgid ""
 msgstr "Nakonec je zde ``self.current_container``, což je odkaz na knihu upravovanou jako objekt :class:`calibre.ebooks.oeb.polish.container.Container`. Znázorňuje knihu jako kolekci jejích základních souborů HTML, CSS nebo obrázků a má pohodlné metody pro provádění mnoha užitečných věcí. Objekt kontejneru a různé užitečné funkce nástrojů, které mohou být znovu použity v kódu vašeho modulu, jsou popsány v :ref:`polish_api`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+msgid "Running User Interface plugins in a separate process"
+msgstr "Spouštění modulů Uživatelského rozhraní v samostatném procesu"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+msgid ""
+"If you are writing a user interface plugin that needs to make use of Qt "
+"WebEngine, it cannot be run in the main calibre process as it is not "
+"possible to use WebEngine there. Instead you can copy the data your plugin "
+"needs to a temporary directory and run the plugin with that data in a "
+"separate process. A simple example plugin follows that shows how to do this."
+msgstr "Pokud píšete modul uživatelského rozhraní, který potřebuje využívat Qt WebEngine, nelze jej spustit v hlavním procesu Calibre, protože tam není možné použít WebEngine. Místo toho můžete zkopírovat data, která váš modul potřebuje, do dočasného adresáře a spustit modul s těmito daty v samostatném procesu. Následuje jednoduchý příklad modulu, který ukazuje, jak to udělat."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+msgid ""
+"You can download the plugin from `webengine_demo_plugin.zip  <https"
+"://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+msgstr "Tento modul můžete stáhnout z `webengine_demo_plugin.zip <https://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+msgid "The important part of the plugin is in two functions:"
+msgstr "Důležitá část modulu je ve dvou funkcích:"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+msgid ""
+"The ``show_demo()`` function asks the user for a URL and then runs the "
+"``main()`` function passing it that URL. The ``main()`` function displays "
+"the URL in a ``QWebEngineView``."
+msgstr "Funkce ``show_demo()`` požádá uživatele o URL a pak spustí funkci ``main()`` předávající tuto URL. Funkce ``main()`` zobrazí URL v ``QWebEngineView``."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Přidávání překladů do vašeho modulu"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Všechny řetězce uživatelského rozhraní ve svém modulu můžete mít přeloženy a zobrazeny v jakémkoliv jazyce, který je nastaven pro hlavní uživatelské rozhraní Calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:257
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "Prvním krokem je projít zdrojový kód svého modulu a označit všechny řetězce viditelné uživatelem jako přeložitelné jejich obklopením _(). Například::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:262
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -445,17 +474,17 @@ msgid ""
 "`poedit <https://poedit.net/>`_ program for this."
 msgstr "Pak použijte nějaký program pro vygenerování souborů .po ze zdrojového kódu vašeho doplňku. Měl by být jeden soubor .po pro každý jazyk, do kterého chcete překládat. Například: cs.po pro češtinu, de.po pro němčinu, fr.po pro francouzštinu a tak dále. K tomu můžete použít program `Poedit <https://poedit.net/>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use poedit for that, or just do::"
 msgstr "Tyto soubory .po pošlete svým překladatelům. Jakmile je dostanete zpátky, zkompilovat je do souborů .mo. K tomu můžete znovu použít Poedit, nebo prostě udělejte::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:272
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Soubory .mo umístěte do složky ``translations`` ve svém modulu."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:274
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -464,23 +493,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Posledním krokem je jednoduše zavolat funkci `load_translations()` na začátku souborů .py vašeho modulu. Z výkonnostních důvodů byste měli volat tuto funkci pouze v těch souborech .py, které skutečně mají přeložitelné řetězce. Takže v typickém modulu uživatelského rozhraní byste ji volali na začátku ``ui.py`` ale ne ``__init__.py``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Překlady svých modulů můžete otestovat změnou jazyka uživatelského rozhraní v Calibre pod :guilabel:`Předvolby->Rozhraní->Vzhled a chování`  nebo spuštěním Calibre takto::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Nahraďte ``de`` kódem jazyka, který chcete otestovat."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "Rozhraní API modulu"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:291
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -488,36 +517,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Jak jste si možná všimli výše, modul Calibre je třída. V Calibre existují různé třídy pro různé typy modulů. Podrobnosti o každé třídě, včetně základní třídy všech modulů, lze nalézt v :ref:`moduly <plugins>`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Váš modul téměř určitě bude používat kód z Calibre. Abyste zjistili, jak najít různé kousky funkcí v základním kódu Calibre, přečtěte si část o :ref:`code_layout` Calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Ladění modulů"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Prvním a nejdůležitějším krokem je spuštění Calibre v režimu ladění. To můžete udělat z příkazového řádku pomocí::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the `Ctrl+Shift+R` keyboard shortcut."
 msgstr "Nebo z Calibre kliknutím pravým tlačítkem myši na tlačítko :guilabel:`Předvolby` nebo pomocí klávesové zkratky `Ctrl+Shift+R`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Při spuštění z příkazového řádku, bude výstup ladění vypsán do konzole, při spuštění z Calibre, půjde výstup do textového souboru."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -525,33 +554,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Do kódu svého modulu můžete kamkoliv vložit příkazy tisku, budou mít výstup v režimu ladění. Nezapomeňte, že je to Python, neměli byste opravdu potřebovat nic víc než příkazy tisku pro ladění ;) Celé Celibre jsem vytvořil pouze pomocí této techniky ladění."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Změny ve svém modulu můžete rychle testovat pomocí následujícího příkazového řádku::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Toto vypne spuštěné Calibre, počkejte až bude vypnutí dokončeno, a pak aktualizujte svůj modul v Calibre a znovu spusťte Calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:319
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Další příklady modulů"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Seznam mnoha propracovaných modulů Calibre můžete nalézt `zde <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:324
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Sdílení vašeho modulu s ostatními"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017,2019
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: 2018-06-15 01:02+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-16 07:20+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -79,9 +79,8 @@ msgstr "Ось і усе. Щоб додати цей код до calibre як д
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
-"are in "
-":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr "У macOS засоби керування за допомогою командного рядка є частиною пакунка calibre. Наприклад, якщо calibre встановлено до :file:`/Applications`, засоби керування за допомогою командного рядка зберігатимуться у каталозі :file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
+msgstr "У macOS засоби керування за допомогою командного рядка є частиною пакунка calibre. Наприклад, якщо calibre встановлено до :file:`/Applications`, засоби керування за допомогою командного рядка зберігатимуться у каталозі :file:`/Applications/calibre.app/Contents/MacOS/`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
@@ -424,22 +423,52 @@ msgid ""
 msgstr "Нарешті, у коді бачимо ``self.current_container``, який є посиланням на книгу, яка редагується, як об’єкт :class:`calibre.ebooks.oeb.polish.container.Container`. Він представляє книгу як збірку його складових файлів HTML, CSS, зображень та містить зручні методи для виконання багатьох корисних речей. Об’єкт контейнера та різні корисні допоміжні функції, якими ви можете скористатися у коді вашого власного додатка, документовано у розділі :ref:`polish_api`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+msgid "Running User Interface plugins in a separate process"
+msgstr "Запуск додатків інтерфейсу користувача у окремому процесі"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+msgid ""
+"If you are writing a user interface plugin that needs to make use of Qt "
+"WebEngine, it cannot be run in the main calibre process as it is not "
+"possible to use WebEngine there. Instead you can copy the data your plugin "
+"needs to a temporary directory and run the plugin with that data in a "
+"separate process. A simple example plugin follows that shows how to do this."
+msgstr "Якщо ви пишете додаток інтерфейсу користувача, який має використовувати WebEngine з Qt, додаток не зможе працювати у основному процесі calibre, оскільки у цьому процесі не можна використовувати WebEngine. Щоб вирішити цю проблему, ви можете скопіювати дані, які потрібні для роботи вашого додатка, до тимчасового каталогу і запустити додаток для обробки цих даних у окремому процесі. Нижче наведено посилання на простий приклад додатка, який демонструє реалізацію цього підходу."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+msgid ""
+"You can download the plugin from `webengine_demo_plugin.zip  <https"
+"://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+msgstr "Отримати цей додаток можна як `webengine_demo_plugin.zip  <https://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+msgid "The important part of the plugin is in two functions:"
+msgstr "Важливою частиною додатка є дві функції:"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+msgid ""
+"The ``show_demo()`` function asks the user for a URL and then runs the "
+"``main()`` function passing it that URL. The ``main()`` function displays "
+"the URL in a ``QWebEngineView``."
+msgstr "Функція ``show_demo()`` надсилає користувачеві запит щодо адреси, а потім запускає функцію ``main()``, передаючи їй отриману адресу. Функція ``main()`` показує дані за вказаною адресою у ``QWebEngineView``."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Додавання перекладів вашого додатка"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Ви можете зробити усі рядки у інтерфейсі вашого додатка придатними для перекладу з можливістю показу будь-якою мовою, якою перекладено основний інтерфейс користувача calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:257
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "Спочатку слід пройтися програмним кодом вашого додатка і позначити усі видимі для користувача рядки як придатні для перекладу за допомогою обгортання їх конструкцією _(). Приклад::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:262
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -447,17 +476,17 @@ msgid ""
 "`poedit <https://poedit.net/>`_ program for this."
 msgstr "Далі, скористайтеся якоюсь програмою для створення файлів .po на основі початкового коду вашого додатка. Для кожної мови, якою ви перекладатимете програму, має бути окремий файл .po. Приклади: de.po для німецької, fr.po для французької тощо. Для виконання цієї дії ви можете скористатися програмою `poedit <https://poedit.net/>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use poedit for that, or just do::"
 msgstr "Надішліть ці файли .po вашим перекладачам. Отримавши від них переклади, зберіть з них файли .mo. Для цього ви знову можете скористатися poedit або віддати команду::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:272
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Розташуйте файли .mo у теці «translations» дерева коду вашого додатка."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:274
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -466,23 +495,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Останнім кроком буде простий виклик функції `load_translations()` у початковій частині файлів .py вашого додатка. З міркувань швидкодії вам варто викликати цю функцію лише у тих файлах .py, які насправді містять рядки для перекладу. Отже, у типовому додатку з інтерфейсом для користувача вам слід викликати цю функцію на початку ``ui.py``, а не на початку ``__init__.py``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Ви можете перевірити переклад ваших додатків, змінивши мову інтерфейсу користувача у calibre за допомогою сторінки :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд` або запустивши calibre ось так::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Замініть «de» на код мови, яку ви хочете тестувати."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "Програмний інтерфейс для роботи з додатками"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:291
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -490,36 +519,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Як ви вже могли помітити раніше, додаток у calibre є класом. У calibre різним класам відповідають різні типи додатків. Подробиці щодо усіх класів, зокрема назви базових класів усіх додатків, наведено у розділі :ref:`plugins`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Ваш додаток, майже напевне, використовуватиме код з calibre. Щоб навчитися шукати потрібні вам частини у програмному коді calibre, ознайомтеся із розділом :ref:`code_layout`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Діагностування проблем у додатках"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Першим, найважливішим кроком є запуск calibre у режимі діагностики. Зробити це можна за допомогою такої команди, відданої з командного рядка::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the `Ctrl+Shift+R` keyboard shortcut."
 msgstr "Або з вікна calibre: натиснути стрілку праворуч від кнопки :guilabel:`Налаштування` або скористатися комбінацією клавіш :kbd:`Ctrl+Shift+R`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Якщо додаток запущено з командного рядка, діагностичні повідомлення виводитимуться до консолі. Якщо ж запуск виконувався з calibre, виведені дані буде записано до текстового файла."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -527,33 +556,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Ви можете вставити інструкції виведення даних (print) будь-де у вашому коді додатка. Ці інструкції виводитимуть дані у режимі діагностики. Не забувайте, це Python, отже для діагностики вам не потрібно нічого окрім інструкцій print ;) Усі додатки, створені автором calibre, було написано з використанням саме цієї методики діагностики."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Ви можете швидко виконати тестування змін у вашому додатку за допомогою такої команди::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Ця команда завершить роботу запущеної програми calibre, зачекає на завершення роботи, далі оновить ваш додаток у calibre і перезапустить calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:319
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Інші приклади додатків"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Список багатьох складних додатків до calibre можна знайти `тут <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:324
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Оприлюднення ваших додатків для використання іншими користувачами"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
