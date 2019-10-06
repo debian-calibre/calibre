@@ -31,7 +31,11 @@ int main(int argc, char **argv) {
 
     /* qt-at-spi causes crashes and performance issues in various distros, so disable it */
     SET("QT_ACCESSIBILITY", "0")
-	SET("CALIBRE_QT_PREFIX", base)
+    memset(buf, 0, PATHLEN);
+    ldp = getenv("QT_PLUGIN_PATH");
+    if (ldp == NULL) snprintf(buf, PATHLEN, "%s/qt_plugins", lib);
+    else snprintf(buf, PATHLEN, "%s/qt_plugins:%s", lib, ldp);
+    SET("QT_PLUGIN_PATH", buf);
 
     memset(buf, 0, PATHLEN);
     ldp = getenv("LD_LIBRARY_PATH");

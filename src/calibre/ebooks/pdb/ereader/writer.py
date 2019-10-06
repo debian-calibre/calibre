@@ -14,7 +14,11 @@ import re
 import struct
 import zlib
 
-from PIL import Image
+try:
+    from PIL import Image
+    Image
+except ImportError:
+    import Image
 
 from calibre.ebooks.pdb.formatwriter import FormatWriter
 from calibre.ebooks.pdb.header import PdbHeaderBuilder

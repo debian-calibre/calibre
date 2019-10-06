@@ -82,7 +82,7 @@ def read_info(outputdir, get_cover):
     return ans
 
 
-def page_images(pdfpath, outputdir='.', first=1, last=1, image_format='jpeg', prefix='page-images'):
+def page_images(pdfpath, outputdir, first=1, last=1):
     pdftoppm = get_tools()[1]
     outputdir = os.path.abspath(outputdir)
     args = {}
@@ -90,10 +90,9 @@ def page_images(pdfpath, outputdir='.', first=1, last=1, image_format='jpeg', pr
         import win32process as w
         args['creationflags'] = w.HIGH_PRIORITY_CLASS | w.CREATE_NO_WINDOW
     try:
-        subprocess.check_call([
-            pdftoppm, '-cropbox', '-' + image_format, '-f', unicode_type(first),
-            '-l', unicode_type(last), pdfpath, os.path.join(outputdir, prefix)
-        ], **args)
+        subprocess.check_call([pdftoppm, '-cropbox', '-jpeg', '-f', unicode_type(first),
+                               '-l', unicode_type(last), pdfpath,
+                               os.path.join(outputdir, 'page-images')], **args)
     except subprocess.CalledProcessError as e:
         raise ValueError('Failed to render PDF, pdftoppm errorcode: %s'%e.returncode)
 

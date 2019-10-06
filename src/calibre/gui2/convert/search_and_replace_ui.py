@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -153,5 +152,7 @@ class Ui_Form(object):
         self.sr_up.setToolTip(_("Move expression up."))
         self.sr_down.setToolTip(_("Move expression down."))
         self.rh_label.setText(_("<p>Search and replace uses <i>regular expressions</i>. See the <a href=\"%s\">regular expressions tutorial</a> to get started with regular expressions. Also clicking the wizard button below will allow you to test your regular expression against the current input document. When you are happy with an expression, click the Add button to add it to the list of expressions."))
+
+
 from calibre.gui2.convert.regex_builder import RegexEdit
 

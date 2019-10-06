@@ -34,8 +34,7 @@ def popen(cmd, **kw):
 
 
 if isosx and hasattr(sys, 'frameworks_dir'):
-    base = os.path.join(os.path.dirname(sys.frameworks_dir), 'utils.app', 'Contents', 'MacOS')
-    PDFTOHTML = os.path.join(base, PDFTOHTML)
+    PDFTOHTML = os.path.join(getattr(sys, 'frameworks_dir'), PDFTOHTML)
 if iswindows and hasattr(sys, 'frozen'):
     base = sys.extensions_location if hasattr(sys, 'new_app_layout') else os.path.dirname(sys.executable)
     PDFTOHTML = os.path.join(base, 'pdftohtml.exe')

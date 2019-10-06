@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/config/chooser/chooser_widget.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -76,6 +75,8 @@ class Ui_Form(object):
         self.enable_all.setText(_("&All"))
         self.enable_none.setText(_("&None"))
         self.enable_invert.setText(_("&Invert"))
+
+
 from calibre.gui2.store.config.chooser.results_view import ResultsView
 from calibre.gui2.widgets import HistoryLineEdit
 

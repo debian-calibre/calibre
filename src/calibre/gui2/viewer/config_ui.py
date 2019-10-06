@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/viewer/config.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -112,7 +112,7 @@ class Ui_Dialog(object):
         self.formLayout_2.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.minimum_font_size)
         self.toolBox.addItem(self.page, "")
         self.page_5 = QtWidgets.QWidget()
-        self.page_5.setGeometry(QtCore.QRect(0, 0, 371, 312))
+        self.page_5.setGeometry(QtCore.QRect(0, 0, 799, 354))
         self.page_5.setObjectName("page_5")
         self.formLayout_5 = QtWidgets.QFormLayout(self.page_5)
         self.formLayout_5.setFieldGrowthPolicy(QtWidgets.QFormLayout.ExpandingFieldsGrow)
@@ -180,7 +180,7 @@ class Ui_Dialog(object):
         self.formLayout_5.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.opt_cols_per_screen_landscape)
         self.toolBox.addItem(self.page_5, "")
         self.page_2 = QtWidgets.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 395, 212))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 799, 354))
         self.page_2.setObjectName("page_2")
         self.formLayout = QtWidgets.QFormLayout(self.page_2)
         self.formLayout.setObjectName("formLayout")
@@ -218,7 +218,7 @@ class Ui_Dialog(object):
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.max_fs_height)
         self.toolBox.addItem(self.page_2, "")
         self.page_6 = QtWidgets.QWidget()
-        self.page_6.setGeometry(QtCore.QRect(0, 0, 349, 76))
+        self.page_6.setGeometry(QtCore.QRect(0, 0, 799, 354))
         self.page_6.setObjectName("page_6")
         self.formLayout_6 = QtWidgets.QFormLayout(self.page_6)
         self.formLayout_6.setObjectName("formLayout_6")
@@ -289,7 +289,7 @@ class Ui_Dialog(object):
         self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_29)
         self.opt_wheel_scroll_fraction = QtWidgets.QSpinBox(self.groupBox)
         self.opt_wheel_scroll_fraction.setMinimum(1)
-        self.opt_wheel_scroll_fraction.setMaximum(100)
+        self.opt_wheel_scroll_fraction.setMaximum(1000)
         self.opt_wheel_scroll_fraction.setSingleStep(5)
         self.opt_wheel_scroll_fraction.setObjectName("opt_wheel_scroll_fraction")
         self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.opt_wheel_scroll_fraction)
@@ -298,7 +298,7 @@ class Ui_Dialog(object):
         self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_30)
         self.opt_line_scroll_fraction = QtWidgets.QSpinBox(self.groupBox)
         self.opt_line_scroll_fraction.setMinimum(1)
-        self.opt_line_scroll_fraction.setMaximum(100)
+        self.opt_line_scroll_fraction.setMaximum(1000)
         self.opt_line_scroll_fraction.setSingleStep(5)
         self.opt_line_scroll_fraction.setObjectName("opt_line_scroll_fraction")
         self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_line_scroll_fraction)
@@ -306,7 +306,7 @@ class Ui_Dialog(object):
         self.vlayout123.addLayout(self.formLayout_4)
         self.toolBox.addItem(self.page_3, "")
         self.page_4 = QtWidgets.QWidget()
-        self.page_4.setGeometry(QtCore.QRect(0, 0, 505, 304))
+        self.page_4.setGeometry(QtCore.QRect(0, 0, 799, 354))
         self.page_4.setObjectName("page_4")
         self.gridLayout = QtWidgets.QGridLayout(self.page_4)
         self.gridLayout.setObjectName("gridLayout")

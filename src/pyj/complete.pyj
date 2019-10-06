@@ -4,6 +4,7 @@ from __python__ import hash_literals, bound_methods
 
 from dom import ensure_id
 from elementmaker import E
+from keycodes import get_key
 from session import local_storage
 from popups import CompletionPopup
 from utils import uniq
@@ -33,14 +34,15 @@ class EditWithComplete:
             return True
 
     def onkeydown(self, event):
-        if self.completion_popup.is_visible and self.completion_popup.handle_keydown(event):
+        k = get_key(event)
+        if self.completion_popup.is_visible and self.completion_popup.handle_keydown(k):
             event.preventDefault(), event.stopPropagation()
             return
-        if event.key is 'Enter':
+        if k is 'enter':
             if self.onenterkey:
                 event.preventDefault(), event.stopPropagation()
                 self.onenterkey()
-        elif event.key is 'Tab':
+        elif k is 'tab':
             if self.completion_popup.is_visible:
                 if self.apply_completion(self.completion_popup.current_text):
                     self.completion_popup.hide()

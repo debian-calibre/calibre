@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/library.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_WizardPage(object):
     def setupUi(self, WizardPage):
@@ -56,9 +54,10 @@ class Ui_WizardPage(object):
     def retranslateUi(self, WizardPage):
 
         WizardPage.setWindowTitle(_("WizardPage"))
-        WizardPage.setTitle(_("Welcome to calibre"))
+        WizardPage.setTitle(_("Welcome &to calibre"))
         WizardPage.setSubTitle(_("The one stop solution to all your e-book needs."))
         self.label_3.setText(_("Choose your &language:"))
         self.button_change.setText(_("&Change"))
         self.libloc_label2.setText(_("If a calibre library already exists at the new location, calibre will use it automatically."))
         self.libloc_label1.setText(_("<p>Choose a location for your books. When you add books to calibre, they will be copied here. Use an <b>empty folder</b> for a new calibre library:"))
+

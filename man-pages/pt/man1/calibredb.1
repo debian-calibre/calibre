@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "outubro 04, 2019" "4.0.0" "calibre"
+.TH "CALIBREDB" "1" "setembro 13, 2019" "3.48.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -479,7 +479,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-Modelo para controlar a estrutura do nome de ficheiro e pastas dos ficheiros guardados. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai guardar os livros numa subpasta por autor e com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura de nome de ficheiro e pasta dos ficheiros guardados. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai guardar os livros numa subpasta por autor com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -602,7 +602,7 @@ Campo personalizado que contém texto de notas para inserir no cabeçalho \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Especifica um perfil de saída para um dispositivo. Em alguns casos, um perfil de saída é necessário para otimizar o catálogo para um dispositivo específico. Por exemplo, \fB\(aq\fPkindle\fB\(aq\fP ou \fB\(aq\fPkindle_dx\fB\(aq\fP cria um índice com secções e artigos. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
+Especifica um perfil de saída para equipamento. Em alguns casos, um perfil de saída é necessário para otimizar o catálogo para um equipamento específico. Por exemplo, \fB\(aq\fPkindle\fB\(aq\fP ou \fB\(aq\fPkindle_dx\fB\(aq\fP cria um índice com secções e artigos. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -723,15 +723,16 @@ Não solicitar confirmação
 .sp
 .nf
 .ft C
-calibredb set_custom [opções] valor ID coluna
+calibredb set_custom [opções] identificador livro_id valor
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Define o conteúdo de um coluna personalizada para o livro identificado pelo ID.
+Define o conteúdo de um coluna personalizada do livro identificado pelo ID.
 Pode obter uma lista dos ID usando o comando search.
-Pode obter uma lista de colunas personalizadas usando o comando custom_columns.
+Pode obter uma lista de colunas personalizadas usando o
+comando custom_columns.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

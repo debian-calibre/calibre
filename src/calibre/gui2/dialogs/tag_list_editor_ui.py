@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -107,5 +106,7 @@ class Ui_TagListEditor(object):
         self.undo_button.setToolTip(_("Undo any deletes or edits on the selected lines"))
         self.undo_button.setText(_("..."))
         self.undo_button.setShortcut(_("Ctrl+U"))
+
+
 from calibre.gui2.widgets import HistoryLineEdit
 

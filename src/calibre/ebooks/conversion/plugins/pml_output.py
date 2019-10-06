@@ -56,7 +56,11 @@ class PMLOutput(OutputFormatPlugin):
             pmlz.add_dir(tdir)
 
     def write_images(self, manifest, image_hrefs, out_dir, opts):
-        from PIL import Image
+        try:
+            from PIL import Image
+            Image
+        except ImportError:
+            import Image
 
         from calibre.ebooks.oeb.base import OEB_RASTER_IMAGES
         for item in manifest:

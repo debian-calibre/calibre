@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-VIEWER" "1" "октября 04, 2019" "4.0.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "сентября 13, 2019" "3.48.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .
@@ -52,6 +52,11 @@ ebook\-viewer [options] file
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-debug\-javascript
+Выводить предупреждения javascript и консольные сообщения в консоли
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-detach
 Отвязаться от управляющего терминала (только Linux)
 .UNINDENT
@@ -68,7 +73,7 @@ ebook\-viewer [options] file
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location you can get by using the Goto action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&.
+Позиция, в которой открывается указанная книга. Позиция \- это местоположение, отображаемое в верхнем левом углу окна просмотра. Кроме того, вы можете использовать форму toc:something, и она откроется в месте первой записи Оглавления, содержащей строку \fB"\fPsomething\fB"\fP\&. Вы также можете использовать toc\-href:something, для перехода в местоположение, соответствующее внутреннему файлу/идентификатору книги.
 .UNINDENT
 .INDENT 0.0
 .TP

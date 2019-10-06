@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -402,3 +401,5 @@ class Ui_Form(object):
         self.thumb_width.setSuffix(_(" inch"))
         self.label_2.setText(_("Author cross-references:"))
         self.cross_reference_authors.setText(_("For books with multiple authors, list each author separately"))
+
+

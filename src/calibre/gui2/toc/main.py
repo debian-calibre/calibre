@@ -1,37 +1,29 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
-
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import os
-import sys
-import textwrap
-from functools import partial
+__license__   = 'GPL v3'
+__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
+__docformat__ = 'restructuredtext en'
+
+import sys, os, textwrap
 from threading import Thread
+from functools import partial
 
-from PyQt5.Qt import (
-    QCheckBox, QCursor, QDialog, QDialogButtonBox, QFrame, QGridLayout, QIcon,
-    QInputDialog, QItemSelectionModel, QKeySequence, QLabel, QMenu, QPushButton,
-    QSize, QSizePolicy, QStackedWidget, Qt, QToolButton, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
-)
+from PyQt5.Qt import (QPushButton, QFrame, QMenu, QInputDialog, QCheckBox,
+    QDialog, QVBoxLayout, QDialogButtonBox, QSize, QStackedWidget, QWidget,
+    QLabel, Qt, pyqtSignal, QIcon, QTreeWidget, QGridLayout, QTreeWidgetItem,
+    QToolButton, QItemSelectionModel, QCursor, QKeySequence, QSizePolicy)
 
-from calibre.constants import TOC_DIALOG_APP_UID, islinux, iswindows
-from calibre.ebooks.oeb.polish.container import AZW3Container, get_container
+from calibre.ebooks.oeb.polish.container import get_container, AZW3Container
 from calibre.ebooks.oeb.polish.toc import (
-    TOC, add_id, commit_toc, from_files, from_links, from_xpaths, get_toc
-)
-from calibre.gui2 import (
-    Application, error_dialog, gprefs, info_dialog, question_dialog, set_app_uid
-)
-from calibre.gui2.convert.xpath_wizard import XPathEdit
+    get_toc, add_id, TOC, commit_toc, from_xpaths, from_links, from_files)
+from calibre.gui2 import Application, error_dialog, gprefs, info_dialog, question_dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
 from calibre.gui2.toc.location import ItemEdit
-from calibre.ptempfile import reset_base_dir
-from calibre.utils.lock import ExclusiveFile
+from calibre.gui2.convert.xpath_wizard import XPathEdit
 from calibre.utils.logging import GUILog
-from polyglot.builtins import map, range, unicode_type
+from polyglot.builtins import map, unicode_type, range
 
 ICON_SIZE = 24
 
@@ -1125,30 +1117,10 @@ class TOCEditor(QDialog):  # {{{
 # }}}
 
 
-def main(path=None, title=None):
-    # Ensure we can continue to function if GUI is closed
-    os.environ.pop('CALIBRE_WORKER_TEMP_DIR', None)
-    reset_base_dir()
-    if iswindows:
-        # Ensure that all instances are grouped together in the task bar. This
-        # prevents them from being grouped with viewer/editor process when
-        # launched from within calibre, as both use calibre-parallel.exe
-        set_app_uid(TOC_DIALOG_APP_UID)
-
-    with ExclusiveFile(path + '.lock') as wf:
-        override = 'calibre-gui' if islinux else None
-        app = Application([], override_program_name=override)
-        d = TOCEditor(path, title=title)
-        d.start()
-        ret = 1
-        if d.exec_() == d.Accepted:
-            ret = 0
-        wf.write('{}'.format(ret).encode('ascii'))
-    del d
-    del app
-    raise SystemExit(ret)
-
-
 if __name__ == '__main__':
-    main(path=sys.argv[-1], title='test')
-    os.remove(sys.argv[-1] + '.lock')
+    app = Application([], force_calibre_style=True)
+    app
+    d = TOCEditor(sys.argv[-1])
+    d.start()
+    d.exec_()
+    del d  # Needed to prevent sigsegv in exit cleanup

@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -175,4 +173,5 @@ class Ui_Form(object):
         self.opt_fewer_tags.setText(_("Prefer &fewer tags"))
         self.tag_map_rules_button.setText(_("Create &rules to filter/transform tags"))
         self.author_map_rules_button.setText(_("Create rules to &transform author names"))
+
 

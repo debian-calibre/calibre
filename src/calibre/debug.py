@@ -15,23 +15,14 @@ from polyglot.builtins import exec_path, raw_input, unicode_type, getcwd
 
 
 def get_debug_executable():
-    exe_name = 'calibre-debug' + ('.exe' if iswindows else '')
     if hasattr(sys, 'frameworks_dir'):
         base = os.path.dirname(sys.frameworks_dir)
-        return [os.path.join(base, 'MacOS', exe_name)]
-    if getattr(sys, 'run_local', None):
-        return [sys.run_local, exe_name]
-    nearby = os.path.join(os.path.dirname(os.path.abspath(sys.executable)), exe_name)
+        if 'calibre-debug.app' not in base:
+            base = os.path.join(base, 'calibre-debug.app', 'Contents')
+        return os.path.join(base, 'MacOS', 'calibre-debug')
     if getattr(sys, 'frozen', False):
-        return [nearby]
-    exloc = getattr(sys, 'executables_location', None)
-    if exloc:
-        ans = os.path.join(exloc, exe_name)
-        if os.path.exists(ans):
-            return [ans]
-    if os.path.exists(nearby):
-        return [nearby]
-    return [exe_name]
+        return os.path.join(os.path.dirname(os.path.abspath(sys.executable)), 'calibre-debug' + ('.exe' if iswindows else ''))
+    return 'calibre-debug'
 
 
 def run_calibre_debug(*args, **kw):
@@ -40,7 +31,8 @@ def run_calibre_debug(*args, **kw):
     if iswindows:
         import win32process
         creationflags = win32process.CREATE_NO_WINDOW
-    cmd = get_debug_executable() + list(args)
+    exe = get_debug_executable()
+    cmd = [exe] + list(args)
     kw['creationflags'] = creationflags
     return subprocess.Popen(cmd, **kw)
 
@@ -279,7 +271,7 @@ def main(args=sys.argv):
         run_debug_gui(opts.gui_debug)
     elif opts.viewer:
         from calibre.gui_launch import ebook_viewer
-        ebook_viewer(['ebook-viewer'] + args[1:])
+        ebook_viewer(['ebook-viewer', '--debug-javascript'] + args[1:])
     elif opts.command:
         sys.argv = args
         exec(opts.command)

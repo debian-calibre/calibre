@@ -117,7 +117,8 @@ class LRFOutput(OutputFormatPlugin):
         ),
         OptionRecommendation(name='render_tables_as_images',
             recommended_value=False,
-            help=_('This option has no effect')
+            help=_('Render tables in the HTML as images (useful if the '
+                'document has large or complex tables)')
         ),
         OptionRecommendation(name='text_size_multiplier_for_rendered_tables',
             recommended_value=1.0,

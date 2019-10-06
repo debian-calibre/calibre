@@ -357,7 +357,7 @@ def remove_name_attributes(root):
         elem.set('id', elem.attrib.pop('name'))
 
 
-def merge_html(container, names, master, insert_page_breaks=False):
+def merge_html(container, names, master):
     p = container.parsed
     root = p(master)
 
@@ -372,7 +372,6 @@ def merge_html(container, names, master, insert_page_breaks=False):
     master_body = p(master).findall('h:body', namespaces=XPNSMAP)[-1]
     master_base = os.path.dirname(master)
     anchor_map = {n:{} for n in names if n != master}
-    first_anchor_map = {}
 
     for name in names:
         if name == master:
@@ -420,10 +419,6 @@ def merge_html(container, names, master, insert_page_breaks=False):
         if 'id' not in first_child.attrib:
             first_child.set('id', unique_anchor(seen_anchors, 'top'))
             seen_anchors.add(first_child.get('id'))
-        first_anchor_map[name] = first_child.get('id')
-
-        if insert_page_breaks:
-            first_child.set('style', first_child.get('style', '') + '; page-break-before: always')
 
         amap[''] = first_child.get('id')
 
@@ -445,8 +440,6 @@ def merge_html(container, names, master, insert_page_breaks=False):
     for fname, media_type in iteritems(container.mime_map):
         repl = MergeLinkReplacer(fname, anchor_map, master, container)
         container.replace_links(fname, repl)
-
-    return first_anchor_map
 
 
 def merge_css(container, names, master):

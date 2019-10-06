@@ -3,7 +3,6 @@
 from __python__ import hash_literals
 
 from elementmaker import E
-from read_book.globals import runtime
 
 opts = {}
 
@@ -15,25 +14,18 @@ def update_settings(settings):
     opts.color_scheme = settings.color_scheme
     opts.base_font_size = max(8, min(settings.base_font_size or 16, 64))
     opts.user_stylesheet = settings.user_stylesheet or ''
-    opts.hide_tooltips = settings.hide_tooltips
-    opts.cover_preserve_aspect_ratio = settings.cover_preserve_aspect_ratio
-    opts.bg_image_fade = settings.bg_image_fade or 'transparent'
 
 update_settings()
 
 
 def apply_font_size():
-    if not runtime.is_standalone_viewer:
-        document.documentElement.style.fontSize = '{}px'.format(opts.base_font_size)
+    document.documentElement.style.fontSize = document.body.style.fontSize = '{}px'.format(opts.base_font_size)
 
 
 def apply_colors():
     for elem in (document.documentElement, document.body):
         elem.style.color = opts.color_scheme.foreground
-        # set background color to transparent so that the users background
-        # color which is set on the iframe is used instead
-        elem.style.backgroundColor = 'transparent'
-    document.documentElement.style.backgroundColor = opts.bg_image_fade
+        elem.style.backgroundColor = opts.color_scheme.background
     ss = document.getElementById('calibre-color-scheme-style-overrides')
     if not ss:
         ss = E.style(id='calibre-color-scheme-style-overrides', type='text/css')
@@ -46,13 +38,12 @@ def apply_colors():
 
 
 def apply_stylesheet():
-    if opts.user_stylesheet:
-        sid = 'calibre-browser-viewer-user-stylesheet'
-        style = document.getElementById(sid)
-        if not style:
-            style = E.style(type='text/css', id=sid)
-            document.documentElement.appendChild(style)
-        style.textContent = opts.user_stylesheet
+    sid = 'calibre-browser-viewer-user-stylesheet'
+    style = document.getElementById(sid)
+    if not style:
+        style = E.style(type='text/css', id=sid)
+        document.body.appendChild(style)
+    style.textContent = opts.user_stylesheet or ''
 
 
 def apply_settings():

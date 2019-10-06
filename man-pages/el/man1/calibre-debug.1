@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "Οκτωβρίου 04, 2019" "4.0.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "Σεπτεμβρίου 13, 2019" "3.48.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -123,7 +123,7 @@ Run the GUI with a debug console, logging to the specified path. For internal us
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Σύμπτυξη ενός βιβλίου που αναπτύχθηκε προηγουμένως. Χρήση: \-i output_dir file.epub Εισάγει το βιβλίο από τα αρχεία του φάκελου output_dir, ο οποίος πρέπει να έχει δημιουργηθεί από μια προηγούμενη κλήση της \fI\%\-\-explode\-book\fP\&. Επιβεβαιώστε ότι καθορίζετε τον ίδιο τύπο αρχείου με αυτόν που χρησιμοποιήσατε όταν κάνατε την αναπτυξη.
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,7 +143,7 @@ Output the paths necessary to setup the calibre environment
 .INDENT 0.0
 .TP
 .B \-\-reinitialize\-db
-Επαναρχικοποίηση της βάσης δεδομένων sqlite του calibre στην καθορισμένη διαδρομή. Χρησιμεύει στην ανάκτηση μιας διαβρωμένης βάσης δεδομένων.
+Re\-initialize the sqlite calibre database at the specified path. Useful to recover from db corruption.
 .UNINDENT
 .INDENT 0.0
 .TP

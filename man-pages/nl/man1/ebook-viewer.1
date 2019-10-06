@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-VIEWER" "1" "oktober 04, 2019" "4.0.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "september 13, 2019" "3.48.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .
@@ -52,6 +52,11 @@ Zet lezen voort van het vorig geopende boek
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-debug\-javascript
+Print javascript waarschuwingen en console berichten op de console
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-detach
 Loskoppelen van de controleterminal, indien aanwezig (alleen Linux)
 .UNINDENT
@@ -68,7 +73,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location you can get by using the Goto action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&.
+The position at which to open the specified book. The position is a location as displayed in the top left corner of the viewer. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&. You can also use toc\-href:something to go to a location matching an internal file/id of the book.
 .UNINDENT
 .INDENT 0.0
 .TP

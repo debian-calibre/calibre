@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "10月 04, 2019" "4.0.0" "calibre"
+.TH "CALIBREDB" "1" "9月 13, 2019" "3.48.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-用來連線至 calibre 伺服器的密碼。要使用標準輸入中讀取密碼，請使用特殊值:<stdin>。如果要從檔案中讀取密碼，請使用:<f:/path/to/file>( 例如: <f: 檔案的完整路徑以及後置 >)。前方所寫的角括號是必須使用的，請記得在命令介面中使用跳脫字元或是引號。
+Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -384,7 +384,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-以 OPF 格式(XML) 列印詮釋資料
+以 OPF 表單 (XML) 列印元資料
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -414,7 +414,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-列出所有 \fI\%\-\-field\fP 選項所可以使用的詮釋資料欄位
+列出所有 \fI\%\-\-field\fP 可使用的元資料欄位
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -451,12 +451,12 @@ Normally, calibre will save the cover in a separate file along with the actual e
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-通常calibre將會更新從書庫中所儲存的詮釋資料，這會讓儲存至磁碟變慢。 指定這個開關會關閉這個行為。
+通常calibre將會更新從書庫中所儲存的元資料，這會讓儲存至磁碟變慢。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-通常calibre會把詮釋資料寫入個別的OPF檔，和真實的電子書分離。 指定這個開關會關閉這個行為。
+通常calibre會把元資料寫入個別的OPF檔，和真實的電子書分離。 指定這個開關會關閉這個行為。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -911,7 +911,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-只更新特定格式檔案的詮釋資料，可以指定多個檔案格式。預設值將會更新所有格式的檔案。
+只更新特定格式檔案的元資料，可以多次指定多個檔案格式。預設會更新所有格式的檔案。
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0

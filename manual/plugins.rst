@@ -183,3 +183,13 @@ Preferences plugins
 .. autoclass:: calibre.gui2.preferences.ConfigWidgetBase
    :members:
    :member-order: bysource
+
+Viewer plugins
+----------------
+
+.. autoclass:: calibre.customize.ViewerPlugin
+   :show-inheritance:
+   :members:
+   :member-order: bysource
+
+

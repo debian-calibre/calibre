@@ -10,7 +10,7 @@ from calibre.customize import (CatalogPlugin, FileTypePlugin, PluginNotFound,
                               MetadataReaderPlugin, MetadataWriterPlugin,
                               InterfaceActionBase as InterfaceAction,
                               PreferencesPlugin, platform, InvalidPlugin,
-                              StoreBase as Store, EditBookToolPlugin,
+                              StoreBase as Store, ViewerPlugin, EditBookToolPlugin,
                               LibraryClosedPlugin)
 from calibre.customize.conversion import InputFormatPlugin, OutputFormatPlugin
 from calibre.customize.zipplugin import loader
@@ -642,6 +642,15 @@ def patch_metadata_plugins(possibly_updated_plugins):
                     patches[i].initialize()
     for i, pup in iteritems(patches):
         _initialized_plugins[i] = pup
+# }}}
+
+# Viewer plugins {{{
+
+
+def all_viewer_plugins():
+    for plugin in _initialized_plugins:
+        if isinstance(plugin, ViewerPlugin):
+            yield plugin
 # }}}
 
 # Editor plugins {{{

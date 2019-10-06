@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -132,5 +131,7 @@ class Ui_MainWindow(object):
         self.action_next_match.setText(_("Next match"))
         self.action_open_ebook.setText(_("Open e-book"))
         self.action_configure.setText(_("Configure"))
+
+
 from calibre.gui2.lrf_renderer.bookview import BookView
 
