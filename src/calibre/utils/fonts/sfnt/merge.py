@@ -8,6 +8,10 @@ from collections import OrderedDict
 from functools import partial
 
 
+class GlyphSizeMismatch(ValueError):
+    pass
+
+
 def merge_truetype_fonts_for_pdf(*fonts):
     # only merges the glyf and loca tables, ignoring all other tables
     all_glyphs = {}
@@ -23,8 +27,8 @@ def merge_truetype_fonts_for_pdf(*fonts):
                 if prev_glyph_data is None:
                     all_glyphs[glyph_id] = glyf.glyph_data(offset, sz, as_raw=True)
                 else:
-                    if sz != len(prev_glyph_data):
-                        raise Exception('Size mismatch for glyph id: {}'.format(glyph_id))
+                    if abs(sz - len(prev_glyph_data)) > 4:
+                        raise GlyphSizeMismatch('Size mismatch for glyph id: {} prev_sz: {} sz: {}'.format(glyph_id, len(prev_glyph_data), sz))
 
     glyf = ans[b'glyf']
     head = ans[b'head']

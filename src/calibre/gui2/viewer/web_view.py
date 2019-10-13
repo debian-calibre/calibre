@@ -186,7 +186,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
 def get_session_pref(name, default=None, group='standalone_misc_settings'):
     sd = vprefs['session_data']
-    g = sd.get(group, {})
+    g = sd.get(group, {}) if group else sd
     return g.get(name, default)
 
 
@@ -222,6 +222,7 @@ class ViewerBridge(Bridge):
     toggle_bookmarks = from_js()
     toggle_inspector = from_js()
     toggle_lookup = from_js()
+    quit = from_js()
     update_current_toc_nodes = from_js(object, object)
     toggle_full_screen = from_js()
     report_cfi = from_js(object, object)
@@ -229,7 +230,9 @@ class ViewerBridge(Bridge):
     selection_changed = from_js(object)
     copy_selection = from_js(object)
     view_image = from_js(object)
+    copy_image = from_js(object)
     change_background_image = from_js(object)
+    overlay_visibility_changed = from_js(object)
 
     create_view = to_js()
     show_preparing_message = to_js()
@@ -240,6 +243,7 @@ class ViewerBridge(Bridge):
     get_current_cfi = to_js()
     show_home_page = to_js()
     background_image_changed = to_js()
+    goto_frac = to_js()
 
 
 def apply_font_settings(page_or_view):
@@ -364,11 +368,14 @@ class WebView(RestartingWebEngineView):
     toggle_bookmarks = pyqtSignal()
     toggle_inspector = pyqtSignal()
     toggle_lookup = pyqtSignal()
+    quit = pyqtSignal()
     update_current_toc_nodes = pyqtSignal(object, object)
     toggle_full_screen = pyqtSignal()
     ask_for_open = pyqtSignal(object)
     selection_changed = pyqtSignal(object)
     view_image = pyqtSignal(object)
+    copy_image = pyqtSignal(object)
+    overlay_visibility_changed = pyqtSignal(object)
 
     def __init__(self, parent=None):
         self._host_widget = None
@@ -388,11 +395,14 @@ class WebView(RestartingWebEngineView):
         self.bridge.toggle_bookmarks.connect(self.toggle_bookmarks)
         self.bridge.toggle_inspector.connect(self.toggle_inspector)
         self.bridge.toggle_lookup.connect(self.toggle_lookup)
+        self.bridge.quit.connect(self.quit)
         self.bridge.update_current_toc_nodes.connect(self.update_current_toc_nodes)
         self.bridge.toggle_full_screen.connect(self.toggle_full_screen)
         self.bridge.ask_for_open.connect(self.ask_for_open)
         self.bridge.selection_changed.connect(self.selection_changed)
         self.bridge.view_image.connect(self.view_image)
+        self.bridge.copy_image.connect(self.copy_image)
+        self.bridge.overlay_visibility_changed.connect(self.overlay_visibility_changed)
         self.bridge.report_cfi.connect(self.call_callback)
         self.bridge.change_background_image.connect(self.change_background_image)
         self.pending_bridge_ready_actions = {}
@@ -519,3 +529,6 @@ class WebView(RestartingWebEngineView):
                 shutil.copyfileobj(src, dest)
             background_image.ans = None
             self.execute_when_ready('background_image_changed', img_id)
+
+    def goto_frac(self, frac):
+        self.execute_when_ready('goto_frac', frac)

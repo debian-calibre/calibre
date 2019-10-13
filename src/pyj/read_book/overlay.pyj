@@ -28,6 +28,7 @@ class LoadingMessage:  # {{{
     def __init__(self, msg, current_color_scheme):
         self.msg = msg or ''
         self.current_color_scheme = current_color_scheme
+        self.is_not_escapable = True  # prevent Esc key from closing
 
     def show(self, container):
         self.container_id = container.getAttribute('id')
@@ -302,6 +303,9 @@ class MainOverlay:  # {{{
                 copy_actions.appendChild(ac(_('View image'), _('View the current image'), def():
                     self.overlay.hide(), ui_operations.view_image(self.elements.img)
                 , 'image'))
+                copy_actions.appendChild(ac(_('Copy image'), _('View the current image'), def():
+                    self.overlay.hide(), ui_operations.copy_image(self.elements.img)
+                , 'copy'))
             if copy_actions.childNodes.length:
                 actions_div.appendChild(copy_actions)
 
@@ -417,7 +421,10 @@ class PrefsOverlay: # {{{
     def show(self, container):
         self.changes_occurred = False
         container.style.backgroundColor = get_color('window-background')
-        create_prefs_panel(container, self.overlay.hide_current_panel, def():self.changes_occurred=True;)
+        self.prefs = create_prefs_panel(container, self.overlay.hide_current_panel, def():self.changes_occurred=True;)
+
+    def handle_escape(self):
+        self.prefs.onclose()
 
     def on_hide(self):
         if self.changes_occurred:
@@ -440,6 +447,7 @@ class OpenBook: # {{{
     def __init__(self, overlay, closeable):
         self.overlay = overlay
         self.closeable = closeable
+        self.is_not_escapable = not closeable  # prevent Esc key from closing
 
     def on_container_click(self, evt):
         pass  # Dont allow panel to be closed by a click
@@ -466,7 +474,12 @@ class Overlay:
         self.view = view
         c = self.clear_container()
         c.addEventListener('click', self.container_clicked)
+        c.addEventListener('contextmenu', self.oncontextmenu, {'passive': False})
         self.panels = []
+
+    def oncontextmenu(self, evt):
+        evt.preventDefault()
+        self.handle_escape()
 
     def clear_container(self):
         c = self.container
@@ -515,6 +528,17 @@ class Overlay:
         if p and callable(p.on_hide):
             p.on_hide()
         self.show_current_panel()
+
+    def handle_escape(self):
+        if self.panels.length:
+            p = self.panels[-1]
+            if not p.is_not_escapable:
+                if p.handle_escape:
+                    p.handle_escape()
+                else:
+                    self.hide_current_panel()
+                return True
+        return False
 
     def show_current_panel(self):
         if self.panels.length:

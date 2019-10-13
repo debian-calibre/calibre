@@ -12,8 +12,8 @@ from hashlib import sha256
 from threading import Thread
 
 from PyQt5.Qt import (
-    QDockWidget, QEvent, QModelIndex, QPixmap, Qt, QUrl, QVBoxLayout, QWidget,
-    pyqtSignal
+    QApplication, QDockWidget, QEvent, QMimeData, QModelIndex, QPixmap, QScrollBar,
+    Qt, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre import prints
@@ -33,6 +33,7 @@ from calibre.gui2.viewer.web_view import (
     vprefs
 )
 from calibre.utils.date import utcnow
+from calibre.utils.img import image_from_path
 from calibre.utils.ipc.simple_worker import WorkerError
 from calibre.utils.serialize import json_loads
 from polyglot.builtins import as_bytes, itervalues
@@ -58,6 +59,13 @@ def path_key(path):
     return sha256(as_bytes(path)).hexdigest()
 
 
+class ScrollBar(QScrollBar):
+
+    def paintEvent(self, ev):
+        if self.isEnabled():
+            return QScrollBar.paintEvent(self, ev)
+
+
 class EbookViewer(MainWindow):
 
     msg_from_anotherinstance = pyqtSignal(object)
@@ -66,6 +74,7 @@ class EbookViewer(MainWindow):
 
     def __init__(self, open_at=None, continue_reading=None):
         MainWindow.__init__(self, None)
+        self.maximized_at_last_fullscreen = False
         self.pending_open_at = open_at
         self.base_window_title = _('E-book viewer')
         self.setWindowTitle(self.base_window_title)
@@ -118,11 +127,13 @@ class EbookViewer(MainWindow):
         self.web_view.toggle_bookmarks.connect(self.toggle_bookmarks)
         self.web_view.toggle_inspector.connect(self.toggle_inspector)
         self.web_view.toggle_lookup.connect(self.toggle_lookup)
+        self.web_view.quit.connect(self.quit)
         self.web_view.update_current_toc_nodes.connect(self.toc.update_current_toc_nodes)
         self.web_view.toggle_full_screen.connect(self.toggle_full_screen)
         self.web_view.ask_for_open.connect(self.ask_for_open, type=Qt.QueuedConnection)
         self.web_view.selection_changed.connect(self.lookup_widget.selected_text_changed, type=Qt.QueuedConnection)
         self.web_view.view_image.connect(self.view_image, type=Qt.QueuedConnection)
+        self.web_view.copy_image.connect(self.copy_image, type=Qt.QueuedConnection)
         self.setCentralWidget(self.web_view)
         self.restore_state()
         if continue_reading:
@@ -152,9 +163,13 @@ class EbookViewer(MainWindow):
     # Fullscreen {{{
     def set_full_screen(self, on):
         if on:
+            self.maximized_at_last_fullscreen = self.isMaximized()
             self.showFullScreen()
         else:
-            self.showNormal()
+            if self.maximized_at_last_fullscreen:
+                self.showMaximized()
+            else:
+                self.showNormal()
 
     def changeEvent(self, ev):
         if ev.type() == QEvent.WindowStateChange:
@@ -207,6 +222,22 @@ class EbookViewer(MainWindow):
         else:
             error_dialog(self, _('Image not found'), _(
                     "Failed to find the image {}").format(name), show=True)
+
+    def copy_image(self, name):
+        path = get_path_for_name(name)
+        if not path:
+            return error_dialog(self, _('Image not found'), _(
+                "Failed to find the image {}").format(name), show=True)
+        try:
+            img = image_from_path(path)
+        except Exception:
+            return error_dialog(self, _('Invalid image'), _(
+                "Failed to load the image {}").format(name), show=True)
+        url = QUrl.fromLocalFile(path)
+        md = QMimeData()
+        md.setImageData(img)
+        md.setUrls([url])
+        QApplication.instance().clipboard().setMimeData(md)
     # }}}
 
     # Load book {{{
@@ -355,6 +386,9 @@ class EbookViewer(MainWindow):
         if state:
             self.restoreState(state, self.MAIN_WINDOW_STATE_VERSION)
             self.inspector_dock.setVisible(False)
+
+    def quit(self):
+        self.close()
 
     def closeEvent(self, ev):
         try:

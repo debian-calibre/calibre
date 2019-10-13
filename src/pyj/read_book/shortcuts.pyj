@@ -67,6 +67,11 @@ def key_as_text(evt):
     mods = v'[]'
     for x in ('alt', 'ctrl', 'meta', 'shift'):
         if evt[x + 'Key']:
+            if 'macos' in window.navigator.userAgent:
+                if x is 'alt':
+                    x = 'option'
+                elif x is 'meta':
+                    x = '⌘'
             mods.push(x.capitalize())
     mods = '+'.join(mods)
     if mods:
@@ -216,6 +221,12 @@ SHORTCUTS = {
         _('Toggle full screen'),
     ),
 
+    'toggle_paged_mode': desc(
+        'Ctrl+m',
+        'ui',
+        _('Toggle between Paged mode and Flow mode for text layout')
+    ),
+
     'reload_book': desc(
         v"['F5', 'Ctrl+r']",
         'ui',
@@ -237,6 +248,7 @@ SHORTCUTS = {
 
 
 def add_standalone_viewer_shortcuts():
+    ismacos = 'macos' in window.navigator.userAgent
     SHORTCUTS['toggle_bookmarks'] = desc(
         v"['Ctrl+b']",
         'ui',
@@ -255,6 +267,12 @@ def add_standalone_viewer_shortcuts():
         _('Show/hide the word lookup panel'),
     )
 
+    quit_shortcut = 'Meta+q' if ismacos else 'Ctrl+q'
+    SHORTCUTS['quit'] = desc(
+        quit_shortcut,
+        'ui',
+        _('Quit the viewer'),
+    )
 
 def create_shortcut_map(custom_shortcuts):
     ans = {}

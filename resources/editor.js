@@ -4543,9 +4543,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         }).call(this);
         function go_to_line(lnum) {
             var node;
-            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                node = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                node = ρσ_Iter4[ρσ_Index4];
                 if (is_hidden(node)) {
                     continue;
                 }
@@ -4562,8 +4562,8 @@ var str = ρσ_str, repr = ρσ_repr;;
             var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags) {
                 var nodes, node, index;
                 nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                for (var ρσ_Index1 = 0; ρσ_Index1 < nodes.length; ρσ_Index1++) {
-                    index = ρσ_Index1;
+                for (var ρσ_Index5 = 0; ρσ_Index5 < nodes.length; ρσ_Index5++) {
+                    index = ρσ_Index5;
                     node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
                     if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
                         break;
@@ -4584,9 +4584,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var found_body, ans, node;
             found_body = false;
             ans = [];
-            var ρσ_Iter2 = ρσ_Iterable(document.getElementsByTagName("*"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                node = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter6 = ρσ_Iterable(document.getElementsByTagName("*"));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                node = ρσ_Iter6[ρσ_Index6];
                 if (!found_body && node.tagName.toLowerCase() === "body") {
                     found_body = true;
                 }
@@ -4602,9 +4602,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (state.blocks_found) {
                 return;
             }
-            var ρσ_Iter3 = ρσ_Iterable(document.body.getElementsByTagName("*"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                elem = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter7 = ρσ_Iterable(document.body.getElementsByTagName("*"));
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                elem = ρσ_Iter7[ρσ_Index7];
                 if (is_block(elem) && !in_table(elem)) {
                     elem.setAttribute("data-is-block", "1");
                 }
@@ -4713,9 +4713,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }).call(this);
                 target = null;
                 i = 0;
-                var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    node = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter8 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    node = ρσ_Iter8[ρσ_Index8];
                     tn = (node.tagName) ? node.tagName.toLowerCase() : "";
                     if (tn !== tags[(typeof i === "number" && i < 0) ? tags.length + i : i]) {
                         if (to_python.live_css_data) {

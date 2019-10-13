@@ -8,11 +8,12 @@ from gettext import gettext as _
 import read_book.iframe  # noqa
 from ajax import ajax_send
 from book_list.globals import get_session_data
-from book_list.theme import color_to_rgba, get_color
+from book_list.theme import cached_color_to_rgba, get_color
 from dom import add_extra_css, build_rule, set_css, svgicon, unique_id
 from iframe_comm import IframeWrapper
 from modals import error_dialog, warning_dialog
 from read_book.content_popup import ContentPopupOverlay
+from read_book.scrollbar import BookScrollbar
 from read_book.globals import (
     current_book, runtime, set_current_spine_item, ui_operations
 )
@@ -150,7 +151,8 @@ class View:
         self.report_cfi_callbacks = {}
         self.show_chrome_counter = 0
         self.show_loading_callback_timer = None
-        self.clock_timer_id = 0
+        self.timer_ids = {'clock': 0}
+        self.book_scrollbar = BookScrollbar(self)
         sd = get_session_data()
         self.keyboard_shortcut_map = create_shortcut_map(sd.get('keyboard_shortcuts'))
         left_margin = E.div(svgicon('caret-left'), style='width:{}px;'.format(sd.get('margin_left', 20)), class_='book-side-margin', id='book-left-margin', onclick=self.left_margin_clicked)
@@ -166,9 +168,10 @@ class View:
                         E.div(style='flex-grow:2; display:flex; align-items:stretch; flex-direction: column', # container for top and bottom margins
                             margin_elem(sd, 'margin_top', 'book-top-margin', self.top_margin_clicked),
                             E.iframe(id=iframe_id, seamless=True, sandbox='allow-popups allow-scripts allow-popups-to-escape-sandbox', style='flex-grow: 2', allowfullscreen='true'),
-                            margin_elem(sd, 'margin_bottom', 'book-bottom-margin'),
+                            margin_elem(sd, 'margin_bottom', 'book-bottom-margin', self.bottom_margin_clicked),
                         ),
                         right_margin,
+                        self.book_scrollbar.create(),
                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-overlay'),  # main overlay
@@ -186,6 +189,7 @@ class View:
             'goto_doc_boundary': def(data): self.goto_doc_boundary(data.start);,
             'scroll_to_anchor': self.on_scroll_to_anchor,
             'update_cfi': self.on_update_cfi,
+            'update_progress_frac': self.on_update_progress_frac,
             'report_cfi': self.on_report_cfi,
             'update_toc_position': self.on_update_toc_position,
             'content_loaded': self.on_content_loaded,
@@ -225,17 +229,26 @@ class View:
     def left_margin_clicked(self, event):
         if event.button is 0:
             event.preventDefault(), event.stopPropagation()
-            self.iframe_wrapper.send_message('next_screen', backwards=True)
+            sd = get_session_data()
+            self.iframe_wrapper.send_message('next_screen', backwards=True, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+        self.focus_iframe()
 
     def right_margin_clicked(self, event):
         if event.button is 0:
             event.preventDefault(), event.stopPropagation()
-            self.iframe_wrapper.send_message('next_screen', backwards=False)
+            sd = get_session_data()
+            self.iframe_wrapper.send_message('next_screen', backwards=False, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+        self.focus_iframe()
 
     def top_margin_clicked(self, event):
         if event.button is 0:
             event.preventDefault(), event.stopPropagation()
             self.show_chrome()
+        else:
+            self.focus_iframe()
+
+    def bottom_margin_clicked(self, event):
+        self.focus_iframe()
 
     def forward_gesture(self, gesture):
         self.iframe_wrapper.send_message('gesture_from_margin', gesture=gesture)
@@ -272,14 +285,15 @@ class View:
 
     def handle_keypress(self, evt):
         if self.overlay.is_visible and evt.key is 'Escape':
-            self.overlay.hide_current_panel()
-            if evt.preventDefault:
-                evt.preventDefault(), evt.stopPropagation()
-            return
+            if self.overlay.handle_escape():
+                if evt.preventDefault:
+                    evt.preventDefault(), evt.stopPropagation()
 
     def overlay_visibility_changed(self, visible):
         if self.iframe_wrapper.send_message:
             self.iframe_wrapper.send_message('set_forward_keypresses', forward=v'!!visible')
+        if ui_operations.overlay_visibility_changed:
+            ui_operations.overlay_visibility_changed(visible)
 
     def on_handle_shortcut(self, data):
         if data.name is 'back':
@@ -296,6 +310,10 @@ class View:
             ui_operations.toggle_inspector()
         elif data.name is 'toggle_lookup':
             ui_operations.toggle_lookup()
+        elif data.name is 'toggle_paged_mode':
+            self.toggle_paged_mode()
+        elif data.name is 'quit':
+            ui_operations.quit()
         elif data.name is 'start_search':
             self.show_search()
         elif data.name is 'next_match':
@@ -323,6 +341,13 @@ class View:
         self.currently_showing.selected_text = data.text
         if ui_operations.selection_changed:
             ui_operations.selection_changed(data.text)
+
+    def toggle_paged_mode(self):
+        sd = get_session_data()
+        mode = sd.get('read_mode')
+        new_mode = 'flow' if mode is 'paged' else 'paged'
+        sd.set('read_mode', new_mode)
+        ui_operations.redisplay_book()
 
     def find(self, text, backwards):
         self.iframe_wrapper.send_message('find', text=text, backwards=backwards, searched_in_spine=False)
@@ -469,6 +494,8 @@ class View:
 
             m.parentNode.style.backgroundColor = ans.background  # this is needed on iOS where the bottom margin has its own margin, so we dont want the body background color to bleed through
             self.content_popup_overlay.apply_color_scheme(ans.background, ans.foreground)
+            self.book_scrollbar.apply_color_scheme(ans)
+            self.iframe.parentNode.parentNode.style.backgroundColor = ans.background
         return ans
 
     def on_resize(self):
@@ -482,6 +509,8 @@ class View:
 
     def show_loading(self):
         msg = _('Loading next section from <i>{title}</i>, please wait…').format(title=self.book.metadata.title)
+        if self.show_loading_callback_timer is not None:
+            clearTimeout(self.show_loading_callback_timer)
         self.show_loading_callback_timer = setTimeout(self.show_loading_message.bind(None, msg), 200)
 
     def hide_loading(self):
@@ -550,6 +579,7 @@ class View:
         # redisplay_book() is called when settings are changed
         sd = get_session_data()
         self.keyboard_shortcut_map = create_shortcut_map(sd.get('keyboard_shortcuts'))
+        self.book_scrollbar.apply_visibility()
         self.display_book(self.book)
 
     def iframe_settings(self, name):
@@ -558,7 +588,7 @@ class View:
         cs = self.get_color_scheme(True)
         fade = int(sd.get('background_image_fade'))
         if self.iframe.style.backgroundImage is not 'none' and fade > 0:
-            rgba = color_to_rgba(cs.background)
+            rgba = cached_color_to_rgba(cs.background)
             bg_image_fade = f'rgba({rgba[0]}, {rgba[1]}, {rgba[2]}, {fade/100})'
         return {
             'margin_left': 0 if name is self.book.manifest.title_page_name else sd.get('margin_left'),
@@ -572,6 +602,7 @@ class View:
             'keyboard_shortcuts': sd.get('keyboard_shortcuts'),
             'hide_tooltips': sd.get('hide_tooltips'),
             'cover_preserve_aspect_ratio': sd.get('cover_preserve_aspect_ratio'),
+            'paged_wheel_scrolls_by_screen': sd.get('paged_wheel_scrolls_by_screen'),
         }
 
     def show_name(self, name, initial_position=None):
@@ -598,6 +629,34 @@ class View:
     def goto_doc_boundary(self, start):
         name = self.book.manifest.spine[0 if start else self.book.manifest.spine.length - 1]
         self.show_name(name, initial_position={'type':'frac', 'frac':0 if start else 1, 'replace_history':False})
+
+    def goto_frac(self, frac):
+        if not self.book or not self.book.manifest:
+            return
+        chapter_start_page = 0
+        total_length = self.book.manifest.spine_length
+        page = total_length * frac
+        chapter_frac = 0
+        chapter_name = None
+        for name in self.book.manifest.spine:
+            chapter_length = self.book.manifest.files[name]?.length or 0
+            chapter_end_page = chapter_start_page + chapter_length
+            if chapter_start_page <= page <= chapter_end_page:
+                num_pages = chapter_end_page - chapter_start_page - 1
+                if num_pages > 0:
+                    chapter_frac = (page - chapter_start_page) / num_pages
+                else:
+                    chapter_frac = 0
+                chapter_name = name
+                break
+            chapter_start_page = chapter_end_page
+        if not chapter_name:
+            chapter_name = self.book.manifest.spine[-1]
+        chapter_frac = max(0, min(chapter_frac, 1))
+        if self.currently_showing.name is chapter_name:
+            self.iframe_wrapper.send_message('scroll_to_frac', frac=chapter_frac)
+        else:
+            self.show_name(chapter_name, initial_position={'type':'frac', 'frac':chapter_frac, 'replace_history':True})
 
     def on_scroll_to_anchor(self, data):
         self.show_name(data.name, initial_position={'type':'anchor', 'anchor':data.frag, 'replace_history':False})
@@ -676,8 +735,7 @@ class View:
         if not self.book.last_read_position:
             self.book.last_read_position = {}
         self.book.last_read_position[unkey] = data.cfi
-        self.current_progress_frac = data.progress_frac
-        self.current_file_progress_frac = data.file_progress_frac
+        self.set_progress_frac(data.progress_frac, data.file_progress_frac)
         self.update_header_footer()
         if ui_operations.update_last_read_time:
             ui_operations.update_last_read_time(self.book)
@@ -693,6 +751,10 @@ class View:
                 'selected_text': data.selected_text,
             })
             v'delete self.report_cfi_callbacks[data.request_id]'
+
+    def on_update_progress_frac(self, data):
+        self.set_progress_frac(data.progress_frac, data.file_progress_frac)
+        self.update_header_footer()
 
     def on_update_cfi(self, data):
         overlay_shown = not self.processing_spine_item_display and self.overlay.is_visible
@@ -719,11 +781,12 @@ class View:
         has_clock = False
 
         if self.book?.manifest:
-            book_length = self.book.manifest.total_length or 0
+            book_length = self.book.manifest.spine_length or 0
             name = self.currently_showing.name
             chapter_length = self.book.manifest.files[name]?.length or 0
         else:
             book_length = chapter_length = 0
+        pos = {'current_progress_frac': self.current_progress_frac, 'book_length': book_length, 'chapter_length': chapter_length, 'current_file_progress_frac': self.current_file_progress_frac}
         book_length *= max(0, 1 - self.current_progress_frac)
         chapter_length *=  max(0, 1 - self.current_file_progress_frac)
         book_time = self.timers.time_for(book_length)
@@ -733,9 +796,9 @@ class View:
             nonlocal has_clock
             if sd.get(sz_attr, 20) > 5:
                 mi = self.book.metadata
-                texta, hca = render_head_foot(div.firstChild, name, 'left', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
-                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
-                textc, hcc = render_head_foot(div.lastChild, name, 'right', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time)
+                texta, hca = render_head_foot(div.firstChild, name, 'left', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                textc, hcc = render_head_foot(div.lastChild, name, 'right', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
                 has_clock = hca or hcb or hcc
                 if textc and not textb and not texta:
                     # Want right-aligned
@@ -756,12 +819,12 @@ class View:
         if div:
             render_template(div, 'margin_top', 'header')
         if has_clock:
-            if not self.clock_timer_id:
-                self.clock_timer_id = window.setInterval(self.update_header_footer, 60000)
+            if not self.timer_ids.clock:
+                self.timer_ids.clock = window.setInterval(self.update_header_footer, 60000)
         else:
-            if self.clock_timer_id:
-                window.clearInterval(self.clock_timer_id)
-                self.clock_timer_id = 0
+            if self.timer_ids.clock:
+                window.clearInterval(self.timer_ids.clock)
+                self.timer_ids.clock = 0
 
     def on_update_toc_position(self, data):
         update_visible_toc_nodes(data.visible_anchors)
@@ -792,10 +855,14 @@ class View:
     def on_content_loaded(self, data):
         self.processing_spine_item_display = False
         self.hide_loading()
-        frac = data.progress_frac or 0
-        self.current_progress_frac = frac
+        self.set_progress_frac(data.progress_frac, data.file_progress_frac)
         self.update_header_footer()
         window.scrollTo(0, 0)  # ensure window is at 0 on mobile where the navbar causes issues
+
+    def set_progress_frac(self, progress_frac, file_progress_frac):
+        self.current_progress_frac = progress_frac or 0
+        self.current_file_progress_frac = file_progress_frac or 0
+        self.book_scrollbar.sync_to_contents(self.current_progress_frac)
 
     def update_font_size(self):
         self.iframe_wrapper.send_message('change_font_size', base_font_size=get_session_data().get('base_font_size'))

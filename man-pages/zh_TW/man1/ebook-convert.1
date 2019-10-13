@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "10月 04, 2019" "4.0.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "10月 08, 2019" "4.1.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -392,7 +392,7 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-要以 sr1\-replace 取代的搜尋模式 (正規表示式)。
+要以 sr1\-replace 取代的搜尋模式 ( 規則運算式 )。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -402,7 +402,7 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-sr2\-search
-要以 sr2\-replace 取代的搜尋模式 (正規表示式)。
+要以 sr2\-replace 取代的搜尋模式 ( 規則運算式 )。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -412,7 +412,7 @@ Path to a file containing search and replace regular expressions. The file must 
 .INDENT 0.0
 .TP
 .B \-\-sr3\-search
-要以 sr3\-replace 取代的搜尋模式 (正規表示式)。
+要以 sr3\-replace 取代的搜尋模式 ( 規則運算式 )。
 .UNINDENT
 .SH 結構偵測
 .sp
@@ -440,7 +440,7 @@ Insert the book metadata at the start of the book. This is useful if your e\-boo
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-XPath 表示式。換頁符號要插入在指定元素之前。要停用則使用表示式：/
+XPath 運算式。換頁符號要插入在指定元素之前。要停用則使用運算式：/
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -473,12 +473,12 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath 表達式指定所有標籤應添加在二級目錄表。每個條目加入到一級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
+XPath 運算式指定所有標籤應添加在二級目錄表。每個條目加入到一級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加入到二級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
+XPath 運算式指定所有標籤應添加在三級目錄表。每個條目加入到二級目錄條目下。請參閱 calibre 使用者手冊中 XPath 教學的例子。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -493,7 +493,7 @@ XPath 表達式指定所有標籤應添加在三級目錄表。每個條目加�
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-將標題符合指定正規表示式的項目自目錄頁中移除。符合的項目以及它們的子項目都會一起被移除。
+將標題符合指定規則運算式的項目自目錄頁中移除。符合的項目以及它們的子項目都會一起被移除。
 .UNINDENT
 .INDENT 0.0
 .TP
