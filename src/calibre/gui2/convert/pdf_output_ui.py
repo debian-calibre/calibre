@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -176,4 +178,3 @@ class Ui_Form(object):
         self.label_12.setText(_("&Header template:"))
         self.label_13.setText(_("&Footer template:"))
         self.opt_pdf_hyphenate.setText(_("&Break long words at the end of lines"))
-

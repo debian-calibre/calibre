@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: 2018-06-15 01:02+0000\n"
+"POT-Creation-Date: 2019-10-04 06:02+0530\n"
+"PO-Revision-Date: 2019-10-04 00:32+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Sardinian (http://www.transifex.com/calibre/calibre/language/sc/)\n"
 "MIME-Version: 1.0\n"
@@ -340,10 +340,24 @@ msgid ""
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/server.rst:223
-msgid "Managing user accounts from the command-line only"
+msgid "Enabling offline support"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/server.rst:225
+msgid ""
+"Browser makers have been trying to force people to use SSL by disabling "
+"advanced features in their browsers for plain HTTP connections. One such "
+"casualty is offline support. So you may need to enable HTTPS on the server "
+"to get offline support working. In addition, in Firefox on Android, you will"
+" need to type ``about:config`` and search for ``browser.tabs.useCache`` and "
+"toggle it to ``true``."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:233
+msgid "Managing user accounts from the command-line only"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/server.rst:235
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -352,28 +366,28 @@ msgid ""
 "line."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:230
+#: ../../home/kovid/work/calibre/manual/server.rst:240
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the directory ``/srv/calibre``, then you create it by running::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:237
+#: ../../home/kovid/work/calibre/manual/server.rst:247
 msgid ""
 "Just follow the prompts to create user accounts, set their permission, etc. "
 "Once you are done, you can run the server as::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:242
+#: ../../home/kovid/work/calibre/manual/server.rst:252
 msgid "It will use the user accounts you created in the previous step."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:246
+#: ../../home/kovid/work/calibre/manual/server.rst:256
 msgid "Integrating the calibre Content server into other servers"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:248
+#: ../../home/kovid/work/calibre/manual/server.rst:258
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -382,7 +396,7 @@ msgid ""
 "server."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:253
+#: ../../home/kovid/work/calibre/manual/server.rst:263
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -391,36 +405,36 @@ msgid ""
 "with your main server."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:260
+#: ../../home/kovid/work/calibre/manual/server.rst:270
 msgid "Using a full virtual host"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:262
+#: ../../home/kovid/work/calibre/manual/server.rst:272
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:267
+#: ../../home/kovid/work/calibre/manual/server.rst:277
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:278
+#: ../../home/kovid/work/calibre/manual/server.rst:288
 msgid "Or, for Apache::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:293
+#: ../../home/kovid/work/calibre/manual/server.rst:303
 msgid "Using a URL prefix"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:295
+#: ../../home/kovid/work/calibre/manual/server.rst:305
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:300
+#: ../../home/kovid/work/calibre/manual/server.rst:310
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -428,17 +442,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:302
+#: ../../home/kovid/work/calibre/manual/server.rst:312
 msgid "With nginx, the required configuration is::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:315
+#: ../../home/kovid/work/calibre/manual/server.rst:325
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:320
+#: ../../home/kovid/work/calibre/manual/server.rst:330
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -446,7 +460,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:327
+#: ../../home/kovid/work/calibre/manual/server.rst:337
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -455,7 +469,7 @@ msgid ""
 "transparently."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:332
+#: ../../home/kovid/work/calibre/manual/server.rst:342
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -463,7 +477,7 @@ msgid ""
 "from the reverse proxy."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:339
+#: ../../home/kovid/work/calibre/manual/server.rst:349
 msgid ""
 "If you have setup SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -471,11 +485,11 @@ msgid ""
 "server``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:348
+#: ../../home/kovid/work/calibre/manual/server.rst:358
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:350
+#: ../../home/kovid/work/calibre/manual/server.rst:360
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -483,7 +497,7 @@ msgid ""
 "the contents shown below::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:369
+#: ../../home/kovid/work/calibre/manual/server.rst:379
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -493,25 +507,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:376
+#: ../../home/kovid/work/calibre/manual/server.rst:386
 msgid "Now run::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:380
+#: ../../home/kovid/work/calibre/manual/server.rst:390
 msgid "to start the server. Check its status with::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:384
+#: ../../home/kovid/work/calibre/manual/server.rst:394
 msgid "To make it start at boot, run::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:390
+#: ../../home/kovid/work/calibre/manual/server.rst:400
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/server.rst:395
+#: ../../home/kovid/work/calibre/manual/server.rst:405
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."

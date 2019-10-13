@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/comicconf.ui'
 #
-# Created by: PyQt5 UI code generator 5.12
+# Created by: PyQt5 UI code generator 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -103,7 +104,5 @@ class Ui_Dialog(object):
         self.opt_despeckle.setText(_("De&speckle"))
         self.opt_wide.setText(_("&Wide"))
         self.opt_disable_trim.setText(_("Disable &trimming"))
-
-
 from calibre.gui2.widgets import EnLineEdit
 

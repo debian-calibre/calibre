@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# dario hereñu <magallania@gmail.com>, 2014
-# Jellby <jellby@yahoo.com>, 2014-2017
+# Darío Hereñú, 2014
+# Jellby <jellby@yahoo.com>, 2014-2017,2019
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: 2018-06-15 01:02+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-16 16:18+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -78,9 +78,8 @@ msgstr "Eso es todo. Para agregar este código a calibre como un complemento, si
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
-"are in "
-":file:`/Applications/calibre.app/Contents/console.app/Contents/MacOS/`."
-msgstr "En macOS, las herramientas de línea de órdenes están dentro del paquete calibre, por ejemplo, si ha instalado calibre en :file:`/Aplicaciones` las herramientas de línea de órdenes están en :file:/Aplicaciones/calibre.app/Contents/console.app/Contents/MacOS/`."
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
+msgstr "En macOS, las herramientas de línea de órdenes están dentro del paquete calibre, por ejemplo, si ha instalado calibre en :file:`/Aplicaciones` las herramientas de línea de órdenes están en :file:/Aplicaciones/calibre.app/Contents/MacOS/`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:42
 msgid ""
@@ -423,22 +422,52 @@ msgid ""
 msgstr "Finalmente está ``self.current_container``, que es una referencia al libro que se está editando como un objeto :class:`calibre.ebooks.oeb.polish.container.Container`. Éste representa el libro como una colección de archivos HTML, CSS e imágenes y posee diversos métodos prácticos para hacer varias cosas útiles. El objeto contenedor y varias funciones utilitarias que se pueden reutilizar en el código de los complementos están documentados en :ref:`polish_api`. "
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
+msgid "Running User Interface plugins in a separate process"
+msgstr "Ejecutar complementos de interfaz de usuario como un proceso aparte"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+msgid ""
+"If you are writing a user interface plugin that needs to make use of Qt "
+"WebEngine, it cannot be run in the main calibre process as it is not "
+"possible to use WebEngine there. Instead you can copy the data your plugin "
+"needs to a temporary directory and run the plugin with that data in a "
+"separate process. A simple example plugin follows that shows how to do this."
+msgstr "Si está creando un complemento de interfaz de usuario que hace uso de Qt WebEngine, no puede ejecutarse en el proceso principal de calibre, puesto que no es posible usar WebEngine ahí. En lugar de ello, puede copiar los datos que necesite el complemento a un directorio temporal y ejecutar el complemento con esos datos en un proceso aparte. A continuación se muestra un complemento de ejemplo que muestra cómo hacerlo."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
+msgid ""
+"You can download the plugin from `webengine_demo_plugin.zip  <https"
+"://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
+msgstr "Puede descargar este complemento desde `webengine_demo_plugin.zip <https://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
+msgid "The important part of the plugin is in two functions:"
+msgstr "La parte importante del complemento reside en dos funciones:"
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
+msgid ""
+"The ``show_demo()`` function asks the user for a URL and then runs the "
+"``main()`` function passing it that URL. The ``main()`` function displays "
+"the URL in a ``QWebEngineView``."
+msgstr "La función ``show_demo()`` pide al usuario un URL y luego ejecuta la función ``main()`` pasándole el URL. La función ``main()`` muestra el URL en un elemento ``QWebEngineWiew``."
+
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
 msgstr "Añadir traducciones al complemento"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Puede traducir todos los textos de la interfaz de usuario del complemento y mostrarlos en el idioma en que está configurada la interfaz principal de calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:257
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "El primer paso es ir al código fuente del complemento y marcar todos los textos visibles por el usuario como traducibles, encerrándolos con _(). Por ejemplo::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:262
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -446,17 +475,17 @@ msgid ""
 "`poedit <https://poedit.net/>`_ program for this."
 msgstr "Después utilice algún programa para generar archivos .po para el código fuente del complemento. Debe haber un archivo .po para cada idioma al que lo quiera traducir. Por ejemplo: de.po para el alemán, fr.po para el francés, etc. Puede utilizar el programa `poedit <https://poedit.net/>`_ para esto."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:267
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use poedit for that, or just do::"
 msgstr "Envíe estos archivos .po a los traductores. Cuando reciba los archivos traducidos, compílelos en archivos .mo. Puede utilizar nuevamente poedit para ello, o simplemente ejecutar::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:272
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Ponga los archivos .mo en la carpeta ``translations`` del complemento."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:274
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -465,23 +494,23 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "El último paso es simplemente ejecutar la función `load_translations()` al principio de los archivos .py del complemento. Por motivos de rendimiento, sólo debe llamar a esta función en aquellos archivos .py que realmente poseen textos traducibles. Así que en un complemento de interfaz de usuario típico, la ejecutaría en ``ui.py`` pero no en ``__init__.py``."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:280
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre like this::"
 msgstr "Puede probar las traducciones del complemento cambiando el idioma de la interfaz de usuario en calibre bajo :guilabel:`Preferencias > Interfaz > Apariencia` o ejecutando calibre así::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:286
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:313
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Sustituya ``de`` por el código del idioma que desea probar."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
 msgid "The plugin API"
 msgstr "La API del complemento"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:291
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:318
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -489,36 +518,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Como ya se habrá dado cuenta, un complemento en calibre es una clase. Hay diferentes clases para los diferentes tipos de complementos en calibre. Los detalles de cada clase, incluyendo la clase base de todos los complementos, se pueden encontrar en :ref:`plugins`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Es casi seguro que el complemento va a usar el código de calibre. Para saber cómo encontrar los distintos elementos de funcionalidad en el código base de calibre, lea la sección :ref:`code_layout`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
 msgid "Debugging plugins"
 msgstr "Depurar complementos"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:328
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "El primer paso, el más importante, es ejecutar calibre en modo de depuración. Puede hacer esto desde la línea de órdenes con::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:305
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:332
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the `Ctrl+Shift+R` keyboard shortcut."
 msgstr "O desde el mismo calibre, pulsando con el botón derecho en :guilabel:`Preferencias` o usando el atajo de teclado `Ctrl+Shift+R`."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:307
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:334
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Cuando se ejecuta desde la línea de órdenes, la salida de depuración se enviará a la consola, si se ejecuta dentro de calibre, la salida irá a un archivo txt."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:309
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:336
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -526,33 +555,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Puede insertar sentencias de impresión en cualquier lugar en el código fuente del complemento, tendrán efecto en el modo de depuración. Recuerde, esto es Python, no debe necesitar más que sentencias de impresión para depurar ;) He desarrollado todo calibre usando sólo esta técnica de depuración."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:311
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:338
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Puede probar rápidamente los cambios en el complemento con la siguiente orden::"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:316
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:343
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Esto cerrará calibre, esperará hasta que se cierre completamente, después actualiza el complemento en calibre y vuelve a iniciar calibre."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:319
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"
 msgstr "Más ejemplos de complementos"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:321
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:348
 msgid ""
 "You can find a list of many, sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Puede encontrar una lista de muchos complementos de calibre más complejos `aqui <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:324
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:351
 msgid "Sharing your plugins with others"
 msgstr "Compartir sus complementos con otros"
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:326
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:353
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "

@@ -112,6 +112,8 @@ def find_tests(which_tests=None):
         a(find_tests())
         from calibre.ebooks.metadata.html import find_tests
         a(find_tests())
+        from calibre.ebooks.pdf.test_html_writer import find_tests
+        a(find_tests())
     if ok('misc'):
         from calibre.ebooks.metadata.tag_mapper import find_tests
         a(find_tests())
@@ -129,10 +131,11 @@ def find_tests(which_tests=None):
         a(find_tests())
         from calibre.ebooks.compression.palmdoc import find_tests
         a(find_tests())
+        from calibre.gui2.viewer.convert_book import find_tests
+        a(find_tests())
         if iswindows:
             from calibre.utils.windows.wintest import find_tests
             a(find_tests())
-
         a(unittest.defaultTestLoader.loadTestsFromTestCase(TestImports))
     if ok('dbcli'):
         from calibre.db.cli.tests import find_tests
