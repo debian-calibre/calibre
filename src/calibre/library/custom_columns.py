@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -136,7 +136,7 @@ class CustomColumns(object):
                 x = [y.strip() for y in x if y.strip()]
                 x = [y.decode(preferred_encoding, 'replace') if not isinstance(y,
                     unicode_type) else y for y in x]
-                return [u' '.join(y.split()) for y in x]
+                return [' '.join(y.split()) for y in x]
             else:
                 return x if x is None or isinstance(x, unicode_type) else \
                         x.decode(preferred_encoding, 'replace')
@@ -536,7 +536,7 @@ class CustomColumns(object):
         if num is not None:
             data = self.custom_column_num_map[num]
         if data['datatype'] == 'composite':
-            return set([])
+            return set()
         if not data['editable']:
             raise ValueError('Column %r is not editable'%data['label'])
         table, lt = self.custom_table_names(data['num'])
@@ -549,7 +549,7 @@ class CustomColumns(object):
             if extra is None:
                 extra = 1.0
 
-        books_to_refresh = set([])
+        books_to_refresh = set()
         if data['normalized']:
             if data['datatype'] == 'enumeration' and (
                     val and val not in data['display']['enum_values']):
@@ -563,7 +563,7 @@ class CustomColumns(object):
             set_val = val if data['is_multiple'] else [val]
             existing = getter()
             if not existing:
-                existing = set([])
+                existing = set()
             else:
                 existing = set(existing)
             # preserve the order in set_val

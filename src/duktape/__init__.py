@@ -12,11 +12,10 @@ import errno, os, sys, numbers, hashlib, json
 from functools import partial
 
 import dukpy
-from polyglot.builtins import reraise
 
 from calibre.constants import iswindows
 from calibre.utils.filenames import atomic_rename
-from polyglot.builtins import error_message, getcwd
+from polyglot.builtins import error_message, getcwd, reraise, unicode_type
 
 Context_, undefined = dukpy.Context, dukpy.undefined
 
@@ -112,7 +111,7 @@ def load_file(base_dirs, builtin_modules, name):
                     raise
         raise EnvironmentError('No module named: %s found in the base directories: %s' % (name, os.pathsep.join(base_dirs)))
     except Exception as e:
-        return [False, str(e)]
+        return [False, unicode_type(e)]
 
 
 def readfile(path, enc='utf-8'):
@@ -137,7 +136,7 @@ def writefile(path, data, enc='utf-8'):
     if enc == undefined:
         enc = 'utf-8'
     try:
-        if isinstance(data, type('')):
+        if isinstance(data, unicode_type):
             data = data.encode(enc or 'utf-8')
         atomic_write(path, data)
     except UnicodeEncodeError as e:
@@ -156,7 +155,7 @@ class Function(object):
     def __repr__(self):
         # For some reason x._Formals is undefined in duktape
         x = self.func
-        return str('[Function: %s(...) from file: %s]' % (x.name, x.fileName))
+        return unicode_type('[Function: %s(...) from file: %s]' % (x.name, x.fileName))
 
     def __call__(self, *args, **kwargs):
         try:
@@ -170,8 +169,8 @@ class Function(object):
 
 def to_python(x):
     try:
-        if isinstance(x, (numbers.Number, type(''), bytes, bool)):
-            if isinstance(x, type('')):
+        if isinstance(x, (numbers.Number, unicode_type, bytes, bool)):
+            if isinstance(x, unicode_type):
                 x = x.encode('utf-8')
             if isinstance(x, numbers.Integral):
                 x = int(x)
@@ -195,11 +194,11 @@ class JSError(Exception):
         if isinstance(e, dict):
             if 'message' in e:
                 fn, ln = e.get('fileName'), e.get('lineNumber')
-                msg = type('')(e['message'])
+                msg = unicode_type(e['message'])
                 if ln:
-                    msg = type('')(ln) + ':' + msg
+                    msg = unicode_type(ln) + ':' + msg
                 if fn:
-                    msg = type('')(fn) + ':' + msg
+                    msg = unicode_type(fn) + ':' + msg
                 Exception.__init__(self, msg)
                 for k, v in e.items():
                     if k != 'message':
@@ -207,11 +206,11 @@ class JSError(Exception):
                     else:
                         setattr(self, 'js_message', v)
             else:
-                Exception.__init__(self, type('')(to_python(e)))
+                Exception.__init__(self, unicode_type(to_python(e)))
         else:
             # Happens if js code throws a string or integer rather than a
             # subclass of Error
-            Exception.__init__(self, type('')(e))
+            Exception.__init__(self, unicode_type(e))
             self.name = self.js_message = self.fileName = self.lineNumber = self.stack = None
 
     def as_dict(self):
@@ -246,7 +245,7 @@ def run_in_context(code, ctx, options=None):
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return [False, {'message':type('')(e)}]
+        return [False, {'message':unicode_type(e)}]
     return [True, to_python(ans)]
 
 

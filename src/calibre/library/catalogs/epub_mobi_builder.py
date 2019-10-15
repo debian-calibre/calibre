@@ -1,8 +1,7 @@
 #!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2010, Greg Riker
-
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime
 import os
@@ -15,18 +14,19 @@ import zlib
 from copy import deepcopy
 from xml.sax.saxutils import escape
 
+from lxml import etree
+
 from calibre import (
-    as_unicode, force_unicode, isbytestring, replace_entities, strftime,
-    xml_replace_entities
+    as_unicode, force_unicode, isbytestring, prepare_string_for_xml,
+    replace_entities, strftime, xml_replace_entities
 )
 from calibre.constants import cache_dir, isosx
 from calibre.customize.conversion import DummyReporter
 from calibre.customize.ui import output_profiles
-from calibre.ebooks.BeautifulSoup import (
-    BeautifulSoup, BeautifulStoneSoup, NavigableString, prettify
-)
+from calibre.ebooks.BeautifulSoup import BeautifulSoup, NavigableString, prettify
 from calibre.ebooks.chardet import substitute_entites
 from calibre.ebooks.metadata import author_to_author_sort
+from calibre.ebooks.oeb.polish.pretty import pretty_opf, pretty_xml_tree
 from calibre.library.catalogs import (
     AuthorSortMismatchException, EmptyCatalogException,
     InvalidGenresSourceFieldException
@@ -42,9 +42,19 @@ from calibre.utils.icu import capitalize, collation_order, sort_key
 from calibre.utils.img import scale_image
 from calibre.utils.localization import get_lang, lang_as_iso639_1
 from calibre.utils.zipfile import ZipFile
-from polyglot.builtins import unicode_type, iteritems, map, zip
+from polyglot.builtins import iteritems, map, unicode_type, zip
 
-NBSP = u'\u00a0'
+NBSP = '\u00a0'
+
+
+def makeelement(tag_name, parent, **attrs):
+    ans = parent.makeelement(tag_name)
+    for k, v in attrs.items():
+        k = k.replace('_', '-').rstrip('-')
+        ans.set(k, unicode_type(v))
+    parent.append(ans)
+    ans.tail = '\n'
+    return ans
 
 
 class Formatter(TemplateFormatter):
@@ -178,7 +188,7 @@ class CatalogBuilder(object):
         self.individual_authors = None
         self.merge_comments_rule = dict(zip(['field', 'position', 'hr'],
                                             _opts.merge_comments_rule.split(':')))
-        self.ncx_soup = None
+        self.ncx_root = None
         self.output_profile = self.get_output_profile(_opts)
         self.play_order = 1
         self.prefix_rules = self.get_prefix_rules()
@@ -241,7 +251,7 @@ class CatalogBuilder(object):
             index = book['series_index']
             integer = int(index)
             fraction = index - integer
-            series_index = '%04d%s' % (integer, str('%0.4f' % fraction).lstrip('0'))
+            series_index = '%04d%s' % (integer, unicode_type('%0.4f' % fraction).lstrip('0'))
             key = '%s ~%s %s' % (self._kf_author_to_author_sort(book['author']),
                                     self.generate_sort_title(book['series']),
                                     series_index)
@@ -260,15 +270,15 @@ class CatalogBuilder(object):
          (str): sort key
         """
         if not book['series']:
-            fs = u'{:<%d}!{!s}' % longest_author_sort
+            fs = '{:<%d}!{!s}' % longest_author_sort
             key = fs.format(capitalize(book['author_sort']),
                             capitalize(book['title_sort']))
         else:
             index = book['series_index']
             integer = int(index)
             fraction = index - integer
-            series_index = u'%04d%s' % (integer, str(u'%0.4f' % fraction).lstrip(u'0'))
-            fs = u'{:<%d}~{!s}{!s}' % longest_author_sort
+            series_index = '%04d%s' % (integer, unicode_type('%0.4f' % fraction).lstrip('0'))
+            fs = '{:<%d}~{!s}{!s}' % longest_author_sort
             key = fs.format(capitalize(book['author_sort']),
                             self.generate_sort_title(book['series']),
                             series_index)
@@ -278,7 +288,7 @@ class CatalogBuilder(object):
         index = book['series_index']
         integer = int(index)
         fraction = index - integer
-        series_index = '%04d%s' % (integer, str('%0.4f' % fraction).lstrip('0'))
+        series_index = '%04d%s' % (integer, unicode_type('%0.4f' % fraction).lstrip('0'))
         key = '%s %s' % (self.generate_sort_title(book['series']),
                          series_index)
         return key
@@ -373,8 +383,8 @@ class CatalogBuilder(object):
                 self.thumb_height = self.thumb_width * 1.33
                 if 'kindle' in x.short_name and self.opts.fmt == 'mobi':
                     # Kindle DPI appears to be off by a factor of 2
-                    self.thumb_width = self.thumb_width / 2
-                    self.thumb_height = self.thumb_height / 2
+                    self.thumb_width = self.thumb_width // 2
+                    self.thumb_height = self.thumb_height // 2
                 break
         if self.opts.verbose:
             self.opts.log(" Thumbnails:")
@@ -677,9 +687,9 @@ class CatalogBuilder(object):
         # Hack to force the cataloged leading letter to be
         # an unadorned character if the accented version sorts before the unaccented
         exceptions = {
-                        u'Ä':   u'A',
-                        u'Ö':   u'O',
-                        u'Ü':   u'U'
+                        'Ä':   'A',
+                        'Ö':   'O',
+                        'Ü':   'U'
                      }
 
         if key is not None:
@@ -699,7 +709,7 @@ class CatalogBuilder(object):
                 # Hackhackhackhackhack
                 # icu returns bogus results with curly apostrophes, maybe others under OS X 10.6.x
                 # When we see the magic combo of 0/-1 for ordnum/ordlen, special case the logic
-                last_c = u''
+                last_c = ''
                 if ordnum == 0 and ordlen == -1:
                     if icu_upper(c[0]) != last_c:
                         last_c = icu_upper(c[0])
@@ -955,7 +965,7 @@ class CatalogBuilder(object):
             if is_date_undefined(record['pubdate']):
                 this_title['date'] = None
             else:
-                this_title['date'] = strftime(u'%B %Y', as_local_time(record['pubdate']).timetuple())
+                this_title['date'] = strftime('%B %Y', as_local_time(record['pubdate']).timetuple())
 
             this_title['timestamp'] = record['timestamp']
 
@@ -1091,11 +1101,11 @@ class CatalogBuilder(object):
         from calibre.devices.kindle.bookmark import Bookmark
         from calibre.ebooks.metadata import MetaInformation
 
-        MBP_FORMATS = [u'azw', u'mobi', u'prc', u'txt']
+        MBP_FORMATS = ['azw', 'mobi', 'prc', 'txt']
         mbp_formats = set(MBP_FORMATS)
-        PDR_FORMATS = [u'pdf']
+        PDR_FORMATS = ['pdf']
         pdr_formats = set(PDR_FORMATS)
-        TAN_FORMATS = [u'tpz', u'azw1']
+        TAN_FORMATS = ['tpz', 'azw1']
         tan_formats = set(TAN_FORMATS)
 
         class BookmarkDevice(Device):
@@ -1174,7 +1184,7 @@ class CatalogBuilder(object):
                             book['percent_read'] = min(float(100 * myBookmark.last_read / myBookmark.book_length), 100)
                         except:
                             book['percent_read'] = 0
-                        dots = int((book['percent_read'] + 5) / 10)
+                        dots = int((book['percent_read'] + 5) // 10)
                         dot_string = self.SYMBOL_PROGRESS_READ * dots
                         empty_dots = self.SYMBOL_PROGRESS_UNREAD * (10 - dots)
                         book['reading_progress'] = '%s%s' % (dot_string, empty_dots)
@@ -1229,11 +1239,11 @@ class CatalogBuilder(object):
               clipped to max_len
             """
 
-            normalized = massaged = re.sub('\\s', '', ascii_text(tag).lower())
-            if re.search('\\W', normalized):
+            normalized = massaged = re.sub(r'\s', '', ascii_text(tag).lower())
+            if re.search(r'\W', normalized):
                 normalized = ''
                 for c in massaged:
-                    if re.search('\\W', c):
+                    if re.search(r'\W', c):
                         normalized += self.generate_unicode_name(c)
                     else:
                         normalized += c
@@ -1396,7 +1406,7 @@ class CatalogBuilder(object):
         Return:
          (str): asciized version of author
         """
-        return re.sub("\\W", "", ascii_text(author))
+        return re.sub(r"\W", "", ascii_text(author))
 
     def generate_format_args(self, book):
         """ Generate the format args for template substitution.
@@ -1411,7 +1421,7 @@ class CatalogBuilder(object):
         Return:
          (dict): formatted args for templating
         """
-        series_index = str(book['series_index'])
+        series_index = unicode_type(book['series_index'])
         if series_index.endswith('.0'):
             series_index = series_index[:-2]
         args = dict(
@@ -1661,7 +1671,7 @@ class CatalogBuilder(object):
                     key=lambda x: sort_key(self._kf_books_by_author_sorter_author_sort(x, len(las))))
 
                 # Create a new month anchor
-                date_string = strftime(u'%B %Y', current_date.timetuple())
+                date_string = strftime('%B %Y', current_date.timetuple())
                 pIndexTag = soup.new_tag("p")
                 pIndexTag['class'] = "date_index"
                 aTag = soup.new_tag("a")
@@ -1919,7 +1929,7 @@ class CatalogBuilder(object):
         def _add_books_to_html_by_day(todays_list, dtc):
             if len(todays_list):
                 # Create a new day anchor
-                date_string = strftime(u'%A, %B %d', current_date.timetuple())
+                date_string = strftime('%A, %B %d', current_date.timetuple())
                 pIndexTag = soup.new_tag("p")
                 pIndexTag['class'] = "date_index"
                 aTag = soup.new_tag("a")
@@ -1981,7 +1991,7 @@ class CatalogBuilder(object):
                     ptc = 0
 
                     # Percent read
-                    dots = int((new_entry['percent_read'] + 5) / 10)
+                    dots = int((new_entry['percent_read'] + 5) // 10)
                     dot_string = self.SYMBOL_PROGRESS_READ * dots
                     empty_dots = self.SYMBOL_PROGRESS_UNREAD * (10 - dots)
                     pBookTag.insert(ptc, NavigableString('%s%s' % (dot_string, empty_dots)))
@@ -2690,7 +2700,7 @@ class CatalogBuilder(object):
         series_index = ''
         if book['series']:
             series = book['series']
-            series_index = str(book['series_index'])
+            series_index = unicode_type(book['series_index'])
             if series_index.endswith('.0'):
                 series_index = series_index[:-2]
 
@@ -2754,7 +2764,7 @@ class CatalogBuilder(object):
             publisher = book['publisher']
 
         # Rating
-        stars = int(book['rating']) / 2
+        stars = int(book['rating']) // 2
         rating = ''
         if stars:
             star_string = self.SYMBOL_FULL_RATING * stars
@@ -2958,10 +2968,11 @@ class CatalogBuilder(object):
             font = ImageFont.truetype(default_font, 48)
         text = self.opts.catalog_title.encode('utf-8')
         width, height = draw.textsize(text, font=font)
-        left = max(int((MI_WIDTH - width) / 2.), 0)
-        top = max(int((MI_HEIGHT - height) / 2.), 0)
+        left = max(int((MI_WIDTH - width) / 2), 0)
+        top = max(int((MI_HEIGHT - height) / 2), 0)
         draw.text((left, top), text, fill=(0, 0, 0), font=font)
-        img.save(open(out_path, 'wb'), 'GIF')
+        with open(out_path, 'wb') as f:
+            img.save(f, 'GIF')
 
     def generate_ncx_header(self):
         """ Generate the basic NCX file.
@@ -2975,70 +2986,69 @@ class CatalogBuilder(object):
          play_order (int)
 
         Outputs:
-         ncx_soup (file): NCX foundation
+         ncx_root (file): NCX foundation
         """
 
         self.update_progress_full_step(_("NCX header"))
 
         header = '''
-            <?xml version="1.0" encoding="utf-8"?>
             <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" version="2005-1" xml:lang="en">
+            <navMap/>
             </ncx>
         '''
-        soup = BeautifulStoneSoup(header)
-
-        ncx = soup.find('ncx')
-        navMapTag = soup.new_tag('navMap')
+        root = self.ncx_root = etree.fromstring(header)
+        navMapTag = root[0]
 
         if self.generate_for_kindle_mobi:
             # Build a top-level navPoint for Kindle periodicals
-            navPointTag = soup.new_tag('navPoint')
-            navPointTag['class'] = "periodical"
-            navPointTag['id'] = "title"
-            navPointTag['playOrder'] = self.play_order
+            navPointTag = makeelement('navPoint', navMapTag, class_='periodical', id='title', playOrder=self.play_order)
             self.play_order += 1
-            navLabelTag = soup.new_tag('navLabel')
-            textTag = soup.new_tag('text')
-            textTag.insert(0, NavigableString(self.opts.catalog_title))
-            navLabelTag.insert(0, textTag)
-            navPointTag.insert(0, navLabelTag)
+            makeelement('{http://calibre.kovidgoyal.net/2009/metadata}meta-img', navPointTag, id="mastheadImage", src="images/mastheadImage.gif")
+            navLabelTag = makeelement('navLabel', navPointTag)
+            makeelement('text', navLabelTag).text = self.opts.catalog_title
 
             if self.opts.generate_authors:
-                contentTag = soup.new_tag('content')
-                contentTag['src'] = "content/ByAlphaAuthor.html"
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="content/ByAlphaAuthor.html")
             elif self.opts.generate_titles:
-                contentTag = soup.new_tag('content')
-                contentTag['src'] = "content/ByAlphaTitle.html"
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="content/ByAlphaTitle.html")
             elif self.opts.generate_series:
-                contentTag = soup.new_tag('content')
-                contentTag['src'] = "content/BySeries.html"
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="content/BySeries.html")
             elif self.opts.generate_genres:
-                contentTag = soup.new_tag('content')
-                # contentTag['src'] = "content/ByGenres.html"
-                contentTag['src'] = "%s" % self.genres[0]['file']
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="%s" % self.genres[0]['file'])
             elif self.opts.generate_recently_added:
-                contentTag = soup.new_tag('content')
-                contentTag['src'] = "content/ByDateAdded.html"
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="content/ByDateAdded.html")
             elif self.opts.generate_descriptions:
                 # Descriptions only
-                contentTag = soup.new_tag('content')
-                contentTag['src'] = "content/book_%d.html" % int(self.books_by_description[0]['id'])
-                navPointTag.insert(1, contentTag)
+                makeelement('content', navPointTag, src="content/book_%d.html" % int(self.books_by_description[0]['id']))
 
-            if self.generate_for_kindle_mobi:
-                cmiTag = soup.new_tag('calibre:meta-img')
-                cmiTag['id'] = "mastheadImage"
-                cmiTag['src'] = "images/mastheadImage.gif"
-                navPointTag.insert(2, cmiTag)
-            navMapTag.insert(0, navPointTag)
+    def generate_ncx_section_header(self, section_id, section_header, content_src):
+        root = self.ncx_root
+        if self.generate_for_kindle_mobi:
+            body = root.xpath('//*[local-name()="navPoint"]')[0]
+        else:
+            body = root.xpath('//*[local-name()="navMap"]')[0]
+        navPointTag = makeelement('navPoint', body, id=section_id, playOrder=self.play_order)
+        if self.generate_for_kindle_mobi:
+            navPointTag.set('class', 'section')
+        self.play_order += 1
+        navLabelTag = makeelement('navLabel', navPointTag)
+        textTag = makeelement('text', navLabelTag)
+        textTag.text = section_header
+        makeelement('content', navPointTag, src=content_src)
+        return navPointTag
 
-        ncx.insert(0, navMapTag)
-        self.ncx_soup = soup
+    def generate_ncx_subsection(self, navPointTag, section_id, section_text, content_src, cm_tags={}):
+        navPointVolumeTag = makeelement('navPoint', navPointTag, id=section_id, playOrder=self.play_order)
+        if self.generate_for_kindle_mobi:
+            navPointVolumeTag.set('class', "article")
+        self.play_order += 1
+        navLabelTag = makeelement("navLabel", navPointVolumeTag)
+        makeelement("text", navLabelTag).text = section_text
+        makeelement("content", navPointVolumeTag, src=content_src)
+
+        if self.generate_for_kindle_mobi:
+            for name, text in cm_tags.items():
+                makeelement('{http://calibre.kovidgoyal.net/2009/metadata}meta', navPointVolumeTag, name=name).text = text
 
     def generate_ncx_descriptions(self, tocTitle):
         """ Add Descriptions to the basic NCX file.
@@ -3054,62 +3064,31 @@ class CatalogBuilder(object):
         Outputs:
          ncx_soup (file): updated
         """
+        section_header = '%s [%d]' % (tocTitle, len(self.books_by_description))
+        if self.generate_for_kindle_mobi:
+            section_header = tocTitle
+        navPointTag = self.generate_ncx_section_header('bydescription-ID', section_header, "content/book_%d.html" % int(self.books_by_description[0]['id']))
 
         self.update_progress_full_step(_("NCX for Descriptions"))
 
         # --- Construct the 'Descriptions' section ---
-        ncx_soup = self.ncx_soup
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
-
         # Add the section navPoint
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
-        navPointTag['id'] = "bydescription-ID"
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
-        section_header = '%s [%d]' % (tocTitle, len(self.books_by_description))
-        if self.generate_for_kindle_mobi:
-            section_header = tocTitle
-        textTag.insert(0, NavigableString(section_header))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "content/book_%d.html" % int(self.books_by_description[0]['id'])
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
-
         # Loop over the titles
 
         for book in self.books_by_description:
-            navPointVolumeTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointVolumeTag['class'] = "article"
-            navPointVolumeTag['id'] = "book%dID" % int(book['id'])
-            navPointVolumeTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag("navLabel")
-            textTag = ncx_soup.new_tag("text")
+            sec_id = "book%dID" % int(book['id'])
             if book['series']:
-                series_index = str(book['series_index'])
+                series_index = unicode_type(book['series_index'])
                 if series_index.endswith('.0'):
                     series_index = series_index[:-2]
                 if self.generate_for_kindle_mobi:
                     # Don't include Author for Kindle
-                    textTag.insert(0, NavigableString(self.format_ncx_text('%s (%s [%s])' %
-                                    (book['title'], book['series'], series_index), dest='title')))
+                    sec_text = self.format_ncx_text('%s (%s [%s])' %
+                                    (book['title'], book['series'], series_index), dest='title')
                 else:
                     # Include Author for non-Kindle
-                    textTag.insert(0, NavigableString(self.format_ncx_text('%s (%s [%s]) · %s ' %
-                                    (book['title'], book['series'], series_index, book['author']), dest='title')))
+                    sec_text = self.format_ncx_text('%s (%s [%s]) · %s ' %
+                                    (book['title'], book['series'], series_index, book['author']), dest='title')
             else:
                 if self.generate_for_kindle_mobi:
                     # Don't include Author for Kindle
@@ -3122,50 +3101,29 @@ class CatalogBuilder(object):
                         title_str += ' %s%s' % (dot_string,empty_dots)
                         '''
                         title_str += '*'
-                    textTag.insert(0, NavigableString(title_str))
+                    sec_text = title_str
                 else:
                     # Include Author for non-Kindle
-                    textTag.insert(0, NavigableString(self.format_ncx_text('%s · %s' %
-                                                    (book['title'], book['author']), dest='title')))
-            navLabelTag.insert(0, textTag)
-            navPointVolumeTag.insert(0, navLabelTag)
+                    sec_text = self.format_ncx_text('%s · %s' %
+                                                    (book['title'], book['author']), dest='title')
 
-            contentTag = ncx_soup.new_tag("content")
-            contentTag['src'] = "content/book_%d.html#book%d" % (int(book['id']), int(book['id']))
-            navPointVolumeTag.insert(1, contentTag)
+            content_src="content/book_%d.html#book%d" % (int(book['id']), int(book['id']))
+            cm_tags = {}
 
-            if self.generate_for_kindle_mobi:
-                # Add the author tag
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "author"
+            if book['date']:
+                navStr = '%s | %s' % (self.format_ncx_text(book['author'], dest='author'),
+                        book['date'].split()[1])
+            else:
+                navStr = '%s' % (self.format_ncx_text(book['author'], dest='author'))
 
-                if book['date']:
-                    navStr = '%s | %s' % (self.format_ncx_text(book['author'], dest='author'),
-                            book['date'].split()[1])
-                else:
-                    navStr = '%s' % (self.format_ncx_text(book['author'], dest='author'))
+            if 'tags' in book and len(book['tags']):
+                navStr = self.format_ncx_text(navStr + ' | ' + ' · '.join(sorted(book['tags'])), dest='author')
+            cm_tags['author'] = navStr
 
-                if 'tags' in book and len(book['tags']):
-                    navStr = self.format_ncx_text(navStr + ' | ' + ' · '.join(sorted(book['tags'])), dest='author')
-                cmTag.insert(0, NavigableString(navStr))
-                navPointVolumeTag.insert(2, cmTag)
-
-                # Add the description tag
-                if book['short_description']:
-                    cmTag = ncx_soup.new_tag('calibre:meta')
-                    cmTag['name'] = "description"
-                    cmTag.insert(0, NavigableString(self.format_ncx_text(book['short_description'], dest='description')))
-                    navPointVolumeTag.insert(3, cmTag)
-
-            # Add this volume to the section tag
-            navPointTag.insert(nptc, navPointVolumeTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-
-        self.ncx_soup = ncx_soup
+            # Add the description tag
+            if book['short_description']:
+                cm_tags['description'] = self.format_ncx_text(book['short_description'], dest='description')
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_series(self, tocTitle):
         """ Add Series to the basic NCX file.
@@ -3189,35 +3147,12 @@ class CatalogBuilder(object):
             current_series_list = self.format_ncx_text(current_series_list, dest="description")
             series_by_letter.append(current_series_list)
 
-        ncx_soup = self.ncx_soup
-        output = "BySeries"
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
-
         # --- Construct the 'Books By Series' section ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
-        navPointTag['id'] = "byseries-ID"
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
         section_header = '%s [%d]' % (tocTitle, len(self.all_series))
         if self.generate_for_kindle_mobi:
             section_header = tocTitle
-        textTag.insert(0, NavigableString(section_header))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "content/%s.html#section_start" % (output)
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        output = "BySeries"
+        navPointTag = self.generate_ncx_section_header('byseries-ID', section_header, "content/%s.html#section_start" % (output))
 
         series_by_letter = []
         # Establish initial letter equivalencies
@@ -3258,45 +3193,19 @@ class CatalogBuilder(object):
 
         # Add *article* entries for each populated series title letter
         for (i, books) in enumerate(series_by_letter):
-            navPointByLetterTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByLetterTag['class'] = "article"
-            navPointByLetterTag['id'] = "%sSeries-ID" % (title_letters[i].upper())
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
+            sec_id = "%sSeries-ID" % (title_letters[i].upper())
             if len(title_letters[i]) > 1:
-                fmt_string = _(u"Series beginning with %s")
+                fmt_string = _("Series beginning with %s")
             else:
-                fmt_string = _(u"Series beginning with '%s'")
-            textTag.insert(0, NavigableString(fmt_string %
-                (title_letters[i] if len(title_letters[i]) > 1 else title_letters[i])))
-            navLabelTag.insert(0, textTag)
-            navPointByLetterTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
-            # contentTag['src'] = "content/%s.html#%s_series" % (output, title_letters[i])
+                fmt_string = _("Series beginning with '%s'")
+            sec_text = fmt_string % (title_letters[i] if len(title_letters[i]) > 1 else title_letters[i])
             if title_letters[i] == self.SYMBOLS:
-                contentTag['src'] = "content/%s.html#%s_series" % (output, self.SYMBOLS)
+                content_src = "content/%s.html#%s_series" % (output, self.SYMBOLS)
             else:
-                contentTag['src'] = "content/%s.html#%s_series" % (output, self.generate_unicode_name(title_letters[i]))
+                content_src = "content/%s.html#%s_series" % (output, self.generate_unicode_name(title_letters[i]))
 
-            navPointByLetterTag.insert(1, contentTag)
-
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(self.format_ncx_text(books, dest='description')))
-                navPointByLetterTag.insert(2, cmTag)
-
-            navPointTag.insert(nptc, navPointByLetterTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-
-        self.ncx_soup = ncx_soup
+            cm_tags = {'description': self.format_ncx_text(books, dest='description')}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_title(self, tocTitle):
         """ Add Titles to the basic NCX file.
@@ -3320,35 +3229,12 @@ class CatalogBuilder(object):
             current_book_list = self.format_ncx_text(current_book_list, dest="description")
             books_by_letter.append(current_book_list)
 
-        ncx_soup = self.ncx_soup
-        output = "ByAlphaTitle"
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
-
         # --- Construct the 'Books By Title' section ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
-        navPointTag['id'] = "byalphatitle-ID"
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
         section_header = '%s [%d]' % (tocTitle, len(self.books_by_title))
         if self.generate_for_kindle_mobi:
             section_header = tocTitle
-        textTag.insert(0, NavigableString(section_header))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "content/%s.html#section_start" % (output)
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        output = "ByAlphaTitle"
+        navPointTag = self.generate_ncx_section_header("byalphatitle-ID", section_header, "content/%s.html#section_start" % (output))
 
         books_by_letter = []
 
@@ -3391,43 +3277,19 @@ class CatalogBuilder(object):
 
         # Add *article* entries for each populated title letter
         for (i, books) in enumerate(books_by_letter):
-            navPointByLetterTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByLetterTag['class'] = "article"
-            navPointByLetterTag['id'] = "%sTitles-ID" % (title_letters[i].upper())
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
+            sec_id = "%sTitles-ID" % (title_letters[i].upper())
             if len(title_letters[i]) > 1:
                 fmt_string = _(u"Titles beginning with %s")
             else:
                 fmt_string = _(u"Titles beginning with '%s'")
-            textTag.insert(0, NavigableString(fmt_string %
-                (title_letters[i] if len(title_letters[i]) > 1 else title_letters[i])))
-            navLabelTag.insert(0, textTag)
-            navPointByLetterTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
+            sec_text = fmt_string % (title_letters[i] if len(title_letters[i]) > 1 else title_letters[i])
             if title_letters[i] == self.SYMBOLS:
-                contentTag['src'] = "content/%s.html#%s_titles" % (output, self.SYMBOLS)
+                content_src = "content/%s.html#%s_titles" % (output, self.SYMBOLS)
             else:
-                contentTag['src'] = "content/%s.html#%s_titles" % (output, self.generate_unicode_name(title_letters[i]))
-            navPointByLetterTag.insert(1, contentTag)
+                content_src = "content/%s.html#%s_titles" % (output, self.generate_unicode_name(title_letters[i]))
 
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(self.format_ncx_text(books, dest='description')))
-                navPointByLetterTag.insert(2, cmTag)
-
-            navPointTag.insert(nptc, navPointByLetterTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-
-        self.ncx_soup = ncx_soup
+            cm_tags = {'description': self.format_ncx_text(books, dest='description')}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_author(self, tocTitle):
         """ Add Authors to the basic NCX file.
@@ -3451,37 +3313,15 @@ class CatalogBuilder(object):
             current_author_list = self.format_ncx_text(current_author_list, dest="description")
             master_author_list.append((current_author_list, current_letter))
 
-        ncx_soup = self.ncx_soup
         HTML_file = "content/ByAlphaAuthor.html"
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
 
         # --- Construct the 'Books By Author' *section* ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
         file_ID = "%s" % tocTitle.lower()
         file_ID = file_ID.replace(" ", "")
-        navPointTag['id'] = "%s-ID" % file_ID
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
         section_header = '%s [%d]' % (tocTitle, len(self.individual_authors))
         if self.generate_for_kindle_mobi:
             section_header = tocTitle
-        textTag.insert(0, NavigableString(section_header))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "%s#section_start" % HTML_file
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        navPointTag = self.generate_ncx_section_header("%s-ID" % file_ID, section_header, "%s#section_start" % HTML_file)
 
         # Create an NCX article entry for each populated author index letter
         # Loop over the sorted_authors list, find start of each letter,
@@ -3514,42 +3354,19 @@ class CatalogBuilder(object):
         # Add *article* entries for each populated author initial letter
         # master_author_list{}: [0]:author list [1]:Initial letter
         for authors_by_letter in master_author_list:
-            navPointByLetterTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByLetterTag['class'] = "article"
-            navPointByLetterTag['id'] = "%sauthors-ID" % (authors_by_letter[1])
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
+            sec_id = "%sauthors-ID" % (authors_by_letter[1])
             if authors_by_letter[1] == self.SYMBOLS:
                 fmt_string = _(u"Authors beginning with %s")
             else:
                 fmt_string = _(u"Authors beginning with '%s'")
-            textTag.insert(0, NavigableString(fmt_string % authors_by_letter[1]))
-            navLabelTag.insert(0, textTag)
-            navPointByLetterTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
+            sec_text = fmt_string % authors_by_letter[1]
             if authors_by_letter[1] == self.SYMBOLS:
-                contentTag['src'] = "%s#%s_authors" % (HTML_file, authors_by_letter[1])
+                content_src = "%s#%s_authors" % (HTML_file, authors_by_letter[1])
             else:
-                contentTag['src'] = "%s#%s_authors" % (HTML_file, self.generate_unicode_name(authors_by_letter[1]))
-            navPointByLetterTag.insert(1, contentTag)
+                content_src = "%s#%s_authors" % (HTML_file, self.generate_unicode_name(authors_by_letter[1]))
 
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(authors_by_letter[0]))
-                navPointByLetterTag.insert(2, cmTag)
-
-            navPointTag.insert(nptc, navPointByLetterTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-
-        self.ncx_soup = ncx_soup
+            cm_tags = {'description': authors_by_letter[0]}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_date_added(self, tocTitle):
         """ Add Recently Added to the basic NCX file.
@@ -3580,34 +3397,12 @@ class CatalogBuilder(object):
             current_titles_list = self.format_ncx_text(current_titles_list, dest='description')
             master_date_range_list.append((current_titles_list, date_range, book_count))
 
-        ncx_soup = self.ncx_soup
         HTML_file = "content/ByDateAdded.html"
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
 
         # --- Construct the 'Recently Added' *section* ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
         file_ID = "%s" % tocTitle.lower()
         file_ID = file_ID.replace(" ", "")
-        navPointTag['id'] = "%s-ID" % file_ID
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
-        textTag.insert(0, NavigableString('%s' % tocTitle))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "%s#section_start" % HTML_file
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        navPointTag = self.generate_ncx_section_header("%s-ID" % file_ID, tocTitle, "%s#section_start" % HTML_file)
 
         # Create an NCX article entry for each date range
         current_titles_list = []
@@ -3634,38 +3429,14 @@ class CatalogBuilder(object):
         # Add *article* entries for each populated date range
         # master_date_range_list{}: [0]:titles list [1]:datestr
         for books_by_date_range in master_date_range_list:
-            navPointByDateRangeTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByDateRangeTag['class'] = "article"
-            navPointByDateRangeTag['id'] = "%s-ID" % books_by_date_range[1].replace(' ', '')
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
-            textTag.insert(0, NavigableString(books_by_date_range[1]))
-            navLabelTag.insert(0, textTag)
-            navPointByDateRangeTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
-            contentTag['src'] = "%s#bda_%s" % (HTML_file,
+            sec_id = "%s-ID" % books_by_date_range[1].replace(' ', '')
+            sec_text = books_by_date_range[1]
+            content_src = "%s#bda_%s" % (HTML_file,
                 books_by_date_range[1].replace(' ', ''))
-
-            navPointByDateRangeTag.insert(1, contentTag)
-
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(books_by_date_range[0]))
-                navPointByDateRangeTag.insert(2, cmTag)
-
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "author"
-                navStr = '%d titles' % books_by_date_range[2] if books_by_date_range[2] > 1 else \
-                            '%d title' % books_by_date_range[2]
-                cmTag.insert(0, NavigableString(navStr))
-                navPointByDateRangeTag.insert(3, cmTag)
-
-            navPointTag.insert(nptc, navPointByDateRangeTag)
-            nptc += 1
+            navStr = '%d titles' % books_by_date_range[2] if books_by_date_range[2] > 1 else \
+                        '%d title' % books_by_date_range[2]
+            cm_tags = {'description': books_by_date_range[0], 'author': navStr}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
         # Create an NCX article entry for each populated month
         # Loop over the booksByDate list, find start of each month,
@@ -3693,44 +3464,15 @@ class CatalogBuilder(object):
         # Add *article* entries for each populated month
         # master_months_list{}: [0]:titles list [1]:date
         for books_by_month in master_month_list:
-            datestr = strftime(u'%B %Y', books_by_month[1].timetuple())
-            navPointByMonthTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByMonthTag['class'] = "article"
-            navPointByMonthTag['id'] = "bda_%s-%s-ID" % (books_by_month[1].year, books_by_month[1].month)
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
-            textTag.insert(0, NavigableString(datestr))
-            navLabelTag.insert(0, textTag)
-            navPointByMonthTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
-            contentTag['src'] = "%s#bda_%s-%s" % (HTML_file,
+            datestr = strftime('%B %Y', books_by_month[1].timetuple())
+            sec_id = "bda_%s-%s-ID" % (books_by_month[1].year, books_by_month[1].month)
+            sec_text = datestr
+            content_src = "%s#bda_%s-%s" % (HTML_file,
                 books_by_month[1].year, books_by_month[1].month)
-
-            navPointByMonthTag.insert(1, contentTag)
-
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(books_by_month[0]))
-                navPointByMonthTag.insert(2, cmTag)
-
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "author"
-                navStr = '%d titles' % books_by_month[2] if books_by_month[2] > 1 else \
-                            '%d title' % books_by_month[2]
-                cmTag.insert(0, NavigableString(navStr))
-                navPointByMonthTag.insert(3, cmTag)
-
-            navPointTag.insert(nptc, navPointByMonthTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-        self.ncx_soup = ncx_soup
+            navStr = '%d titles' % books_by_month[2] if books_by_month[2] > 1 else \
+                        '%d title' % books_by_month[2]
+            cm_tags = {'description': books_by_month[0], 'author': navStr}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_date_read(self, tocTitle):
         """ Add By Date Read to the basic NCX file.
@@ -3764,34 +3506,12 @@ class CatalogBuilder(object):
         if not self.bookmarked_books_by_date_read:
             return
 
-        ncx_soup = self.ncx_soup
         HTML_file = "content/ByDateRead.html"
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
 
         # --- Construct the 'Recently Read' *section* ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
         file_ID = "%s" % tocTitle.lower()
         file_ID = file_ID.replace(" ", "")
-        navPointTag['id'] = "%s-ID" % file_ID
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
-        textTag.insert(0, NavigableString('%s' % tocTitle))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "%s#section_start" % HTML_file
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        navPointTag = self.generate_ncx_section_header("%s-ID" % file_ID, tocTitle, "%s#section_start" % HTML_file)
 
         # Create an NCX article entry for each date range
         current_titles_list = []
@@ -3843,48 +3563,19 @@ class CatalogBuilder(object):
         # Add *article* entries for each populated day
         # master_day_list{}: [0]:titles list [1]:date
         for books_by_day in master_day_list:
-            datestr = strftime(u'%A, %B %d', books_by_day[1].timetuple())
-            navPointByDayTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointByDayTag['class'] = "article"
-            navPointByDayTag['id'] = "bdr_%s-%s-%sID" % (books_by_day[1].year,
+            datestr = strftime('%A, %B %d', books_by_day[1].timetuple())
+            sec_id = "bdr_%s-%s-%sID" % (books_by_day[1].year,
                                                             books_by_day[1].month,
                                                             books_by_day[1].day)
-            navPointTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag('navLabel')
-            textTag = ncx_soup.new_tag('text')
-            textTag.insert(0, NavigableString(datestr))
-            navLabelTag.insert(0, textTag)
-            navPointByDayTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag('content')
-            contentTag['src'] = "%s#bdr_%s-%s-%s" % (HTML_file,
+            sec_text = datestr
+            content_src = "%s#bdr_%s-%s-%s" % (HTML_file,
                                                         books_by_day[1].year,
                                                         books_by_day[1].month,
                                                         books_by_day[1].day)
-
-            navPointByDayTag.insert(1, contentTag)
-
-            if self.generate_for_kindle_mobi:
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-                cmTag.insert(0, NavigableString(books_by_day[0]))
-                navPointByDayTag.insert(2, cmTag)
-
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "author"
-                navStr = '%d titles' % books_by_day[2] if books_by_day[2] > 1 else \
-                            '%d title' % books_by_day[2]
-                cmTag.insert(0, NavigableString(navStr))
-                navPointByDayTag.insert(3, cmTag)
-
-            navPointTag.insert(nptc, navPointByDayTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-        self.ncx_soup = ncx_soup
+            navStr = '%d titles' % books_by_day[2] if books_by_day[2] > 1 else \
+                        '%d title' % books_by_day[2]
+            cm_tags = {'description': books_by_day[0], 'author': navStr}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_ncx_by_genre(self, tocTitle):
         """ Add Genres to the basic NCX file.
@@ -3908,105 +3599,36 @@ class CatalogBuilder(object):
                                 " No Genre section added to Catalog")
             return
 
-        ncx_soup = self.ncx_soup
-        if self.generate_for_kindle_mobi:
-            body = ncx_soup.find("navPoint")
-        else:
-            body = ncx_soup.find('navMap')
-        btc = len(body.contents)
-
         # --- Construct the 'Books By Genre' *section* ---
-        navPointTag = ncx_soup.new_tag('navPoint')
-        if self.generate_for_kindle_mobi:
-            navPointTag['class'] = "section"
         file_ID = "%s" % tocTitle.lower()
         file_ID = file_ID.replace(" ", "")
-        navPointTag['id'] = "%s-ID" % file_ID
-        navPointTag['playOrder'] = self.play_order
-        self.play_order += 1
-        navLabelTag = ncx_soup.new_tag('navLabel')
-        textTag = ncx_soup.new_tag('text')
         section_header = '%s [%d]' % (tocTitle, len(self.genres))
         if self.generate_for_kindle_mobi:
             section_header = tocTitle
-        textTag.insert(0, NavigableString(section_header))
-        navLabelTag.insert(0, textTag)
-        nptc = 0
-        navPointTag.insert(nptc, navLabelTag)
-        nptc += 1
-        contentTag = ncx_soup.new_tag("content")
-        contentTag['src'] = "content/Genre_%s.html#section_start" % self.genres[0]['tag']
-        navPointTag.insert(nptc, contentTag)
-        nptc += 1
+        navPointTag = self.generate_ncx_section_header("%s-ID" % file_ID, section_header, "content/Genre_%s.html#section_start" % self.genres[0]['tag'])
 
         for genre in self.genres:
             # Add an article for each genre
-            navPointVolumeTag = ncx_soup.new_tag('navPoint')
-            if self.generate_for_kindle_mobi:
-                navPointVolumeTag['class'] = "article"
-            navPointVolumeTag['id'] = "genre-%s-ID" % genre['tag']
-            navPointVolumeTag['playOrder'] = self.play_order
-            self.play_order += 1
-            navLabelTag = ncx_soup.new_tag("navLabel")
-            textTag = ncx_soup.new_tag("text")
-
+            sec_id = "genre-%s-ID" % genre['tag']
             # GwR *** Can this be optimized?
             normalized_tag = None
             for friendly_tag in self.genre_tags_dict:
                 if self.genre_tags_dict[friendly_tag] == genre['tag']:
                     normalized_tag = self.genre_tags_dict[friendly_tag]
                     break
-            textTag.insert(0, self.format_ncx_text(NavigableString(friendly_tag), dest='description'))
-            navLabelTag.insert(0, textTag)
-            navPointVolumeTag.insert(0, navLabelTag)
-            contentTag = ncx_soup.new_tag("content")
-            contentTag['src'] = "content/Genre_%s.html#Genre_%s" % (normalized_tag, normalized_tag)
-            navPointVolumeTag.insert(1, contentTag)
-
-            if self.generate_for_kindle_mobi:
-                # Build the author tag
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "author"
-                # First - Last author
-
-                if len(genre['titles_spanned']) > 1:
-                    author_range = "%s - %s" % (genre['titles_spanned'][0][0], genre['titles_spanned'][1][0])
-                else:
-                    author_range = "%s" % (genre['titles_spanned'][0][0])
-
-                cmTag.insert(0, NavigableString(author_range))
-                navPointVolumeTag.insert(2, cmTag)
-
-                # Build the description tag
-                cmTag = ncx_soup.new_tag('calibre:meta')
-                cmTag['name'] = "description"
-
-                if False:
-                    # Form 1: Titles spanned
-                    if len(genre['titles_spanned']) > 1:
-                        title_range = "%s -\n%s" % (genre['titles_spanned'][0][1], genre['titles_spanned'][1][1])
-                    else:
-                        title_range = "%s" % (genre['titles_spanned'][0][1])
-                    cmTag.insert(0, NavigableString(self.format_ncx_text(title_range, dest='description')))
-                else:
-                    # Form 2: title • title • title ...
-                    titles = []
-                    for title in genre['books']:
-                        titles.append(title['title'])
-                    titles = sorted(titles, key=lambda x: (self.generate_sort_title(x), self.generate_sort_title(x)))
-                    titles_list = self.generate_short_description(u" • ".join(titles), dest="description")
-                    cmTag.insert(0, NavigableString(self.format_ncx_text(titles_list, dest='description')))
-
-                navPointVolumeTag.insert(3, cmTag)
-
-            # Add this volume to the section tag
-            navPointTag.insert(nptc, navPointVolumeTag)
-            nptc += 1
-
-        # Add this section to the body
-        body.insert(btc, navPointTag)
-        btc += 1
-        self.ncx_soup = ncx_soup
+            sec_text = self.format_ncx_text(NavigableString(friendly_tag), dest='description')
+            content_src = "content/Genre_%s.html#Genre_%s" % (normalized_tag, normalized_tag)
+            if len(genre['titles_spanned']) > 1:
+                author_range = "%s - %s" % (genre['titles_spanned'][0][0], genre['titles_spanned'][1][0])
+            else:
+                author_range = "%s" % (genre['titles_spanned'][0][0])
+            titles = []
+            for title in genre['books']:
+                titles.append(title['title'])
+            titles = sorted(titles, key=lambda x: (self.generate_sort_title(x), self.generate_sort_title(x)))
+            titles_list = self.generate_short_description(" • ".join(titles), dest="description")
+            cm_tags = {'author': author_range, 'description': self.format_ncx_text(titles_list, dest='description')}
+            self.generate_ncx_subsection(navPointTag, sec_id, sec_text, content_src, cm_tags)
 
     def generate_opf(self):
         """ Generate the OPF file.
@@ -4032,159 +3654,78 @@ class CatalogBuilder(object):
             lang = lang_as_iso639_1(lang)
 
         header = '''\
-<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="calibre_id">
-    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf"
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
             xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <dc:language>LANG</dc:language>
+        <dc:title>{title}</dc:title>
+        <dc:creator>{creator}</dc:creator>
+        <dc:language>{lang}</dc:language>
+        <meta name="calibre:publication_type" content="{pt}"/>
     </metadata>
     <manifest></manifest>
     <spine toc="ncx"></spine>
     <guide></guide>
 </package>
-            '''.replace('LANG', lang)
-        # Add the supplied metadata tags
-        soup = BeautifulStoneSoup(header)
-        metadata = soup.find('metadata')
-        mtc = 0
-
-        titleTag = soup.new_tag("dc:title")
-        titleTag.insert(0, NavigableString(self.opts.catalog_title))
-        metadata.insert(mtc, titleTag)
-        mtc += 1
-
-        creatorTag = soup.new_tag("dc:creator")
-        creatorTag.insert(0, self.opts.creator)
-        metadata.insert(mtc, creatorTag)
-        mtc += 1
-
-        if self.generate_for_kindle_mobi:
-            periodicalTag = soup.new_tag("meta")
-            periodicalTag['name'] = "calibre:publication_type"
-            periodicalTag['content'] = "periodical:default"
-            metadata.insert(mtc, periodicalTag)
-            mtc += 1
+            '''.format(
+                title=prepare_string_for_xml(self.opts.catalog_title),
+                creator=prepare_string_for_xml(self.opts.creator),
+                lang=prepare_string_for_xml(lang),
+                pt="periodical:default" if self.generate_for_kindle_mobi else ""
+        )
+        root = etree.fromstring(header)
+        manifest = root.xpath('//*[local-name()="manifest"]')[0]
+        spine = root.xpath('//*[local-name()="spine"]')[0]
+        guide = root.xpath('//*[local-name()="guide"]')[0]
 
         # Create the OPF tags
-        manifest = soup.find('manifest')
-        mtc = 0
-        spine = soup.find('spine')
-        stc = 0
-        guide = soup.find('guide')
+        def manifest_item(id, href, media_type, add_to_spine=False):
+            ans = makeelement('item', manifest, id=id, href=href, media_type=media_type)
+            if add_to_spine:
+                makeelement('itemref', spine, idref=id)
+            return ans
 
-        itemTag = soup.new_tag("item")
-        itemTag['id'] = "ncx"
-        itemTag['href'] = '%s.ncx' % self.opts.basename
-        itemTag['media-type'] = "application/x-dtbncx+xml"
-        manifest.insert(mtc, itemTag)
-        mtc += 1
-
-        itemTag = soup.new_tag("item")
-        itemTag['id'] = 'stylesheet'
-        itemTag['href'] = self.stylesheet
-        itemTag['media-type'] = 'text/css'
-        manifest.insert(mtc, itemTag)
-        mtc += 1
+        manifest_item(id='ncx', href='%s.ncx' % self.opts.basename, media_type="application/x-dtbncx+xml")
+        manifest_item(id='stylesheet', href=self.stylesheet, media_type='text/css')
 
         if self.generate_for_kindle_mobi:
-            itemTag = soup.new_tag("item")
-            itemTag['id'] = 'mastheadimage-image'
-            itemTag['href'] = "images/mastheadImage.gif"
-            itemTag['media-type'] = 'image/gif'
-            manifest.insert(mtc, itemTag)
-            mtc += 1
+            manifest_item('mastheadimage-image', "images/mastheadImage.gif", 'image/gif')
 
         # Write the thumbnail images, descriptions to the manifest
         if self.opts.generate_descriptions:
             for thumb in self.thumbs:
-                itemTag = soup.new_tag("item")
-                itemTag['href'] = "images/%s" % (thumb)
                 end = thumb.find('.jpg')
-                itemTag['id'] = "%s-image" % thumb[:end]
-                itemTag['media-type'] = 'image/jpeg'
-                manifest.insert(mtc, itemTag)
-                mtc += 1
+                manifest_item("%s-image" % thumb[:end], "images/%s" % (thumb), 'image/jpeg')
 
         # Add html_files to manifest and spine
-
         for file in self.html_filelist_1:
             # By Author, By Title, By Series,
-            itemTag = soup.new_tag("item")
             start = file.find('/') + 1
             end = file.find('.')
-            itemTag['href'] = file
-            itemTag['id'] = file[start:end].lower()
-            itemTag['media-type'] = "application/xhtml+xml"
-            manifest.insert(mtc, itemTag)
-            mtc += 1
-
-            # spine
-            itemrefTag = soup.new_tag("itemref")
-            itemrefTag['idref'] = file[start:end].lower()
-            spine.insert(stc, itemrefTag)
-            stc += 1
+            manifest_item(file[start:end].lower(), file, "application/xhtml+xml", add_to_spine=True)
 
         # Add genre files to manifest and spine
         for genre in self.genres:
-            itemTag = soup.new_tag("item")
             start = genre['file'].find('/') + 1
             end = genre['file'].find('.')
-            itemTag['href'] = genre['file']
-            itemTag['id'] = genre['file'][start:end].lower()
-            itemTag['media-type'] = "application/xhtml+xml"
-            manifest.insert(mtc, itemTag)
-            mtc += 1
-
-            # spine
-            itemrefTag = soup.new_tag("itemref")
-            itemrefTag['idref'] = genre['file'][start:end].lower()
-            spine.insert(stc, itemrefTag)
-            stc += 1
+            manifest_item(genre['file'][start:end].lower(), genre['file'], "application/xhtml+xml", add_to_spine=True)
 
         for file in self.html_filelist_2:
             # By Date Added, By Date Read
-            itemTag = soup.new_tag("item")
             start = file.find('/') + 1
             end = file.find('.')
-            itemTag['href'] = file
-            itemTag['id'] = file[start:end].lower()
-            itemTag['media-type'] = "application/xhtml+xml"
-            manifest.insert(mtc, itemTag)
-            mtc += 1
-
-            # spine
-            itemrefTag = soup.new_tag("itemref")
-            itemrefTag['idref'] = file[start:end].lower()
-            spine.insert(stc, itemrefTag)
-            stc += 1
+            manifest_item(file[start:end].lower(), file, "application/xhtml+xml", add_to_spine=True)
 
         for book in self.books_by_description:
             # manifest
-            itemTag = soup.new_tag("item")
-            itemTag['href'] = "content/book_%d.html" % int(book['id'])
-            itemTag['id'] = "book%d" % int(book['id'])
-            itemTag['media-type'] = "application/xhtml+xml"
-            manifest.insert(mtc, itemTag)
-            mtc += 1
-
-            # spine
-            itemrefTag = soup.new_tag("itemref")
-            itemrefTag['idref'] = "book%d" % int(book['id'])
-            spine.insert(stc, itemrefTag)
-            stc += 1
+            manifest_item("book%d" % int(book['id']), "content/book_%d.html" % int(book['id']), "application/xhtml+xml", add_to_spine=True)
 
         # Guide
         if self.generate_for_kindle_mobi:
-            referenceTag = soup.new_tag("reference")
-            referenceTag['type'] = 'masthead'
-            referenceTag['title'] = 'mastheadimage-image'
-            referenceTag['href'] = 'images/mastheadImage.gif'
-            guide.insert(0, referenceTag)
+            makeelement('reference', guide, type='masthead', title='masthead-image', href='images/mastheadImage.gif')
 
         # Write the OPF file
-        output = soup.prettify(encoding='utf-8')
-        if isinstance(output, unicode_type):
-            output = output.encode('utf-8')
+        pretty_opf(root), pretty_xml_tree(root)
+        output = etree.tostring(root, encoding='utf-8')
         with lopen("%s/%s.opf" % (self.catalog_path, self.opts.basename), 'wb') as outfile:
             outfile.write(output.strip())
 
@@ -4204,7 +3745,7 @@ class CatalogBuilder(object):
         rating = ''
         try:
             if 'rating' in book:
-                stars = int(book['rating']) / 2
+                stars = int(book['rating']) // 2
                 if stars:
                     star_string = self.SYMBOL_FULL_RATING * stars
                     empty_stars = self.SYMBOL_EMPTY_RATING * (5 - stars)
@@ -4228,9 +3769,9 @@ class CatalogBuilder(object):
 
         # Generate a legal XHTML id/href string
         if self.letter_or_symbol(series) == self.SYMBOLS:
-            return "symbol_%s_series" % re.sub('\\W', '', series).lower()
+            return "symbol_%s_series" % re.sub(r'\W', '', series).lower()
         else:
-            return "%s_series" % re.sub('\\W', '', ascii_text(series)).lower()
+            return "%s_series" % re.sub(r'\W', '', ascii_text(series)).lower()
 
     def generate_short_description(self, description, dest=None):
         """ Generate a truncated version of the supplied string.
@@ -4311,7 +3852,7 @@ class CatalogBuilder(object):
                 else:
                     if re.match('[0-9]+', word[0]):
                         word = word.replace(',', '')
-                        suffix = re.search('[\\D]', word)
+                        suffix = re.search(r'[\D]', word)
                         if suffix:
                             word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                         else:
@@ -4327,7 +3868,7 @@ class CatalogBuilder(object):
             else:
                 if re.search('[0-9]+', word[0]):
                     word = word.replace(',', '')
-                    suffix = re.search('[\\D]', word)
+                    suffix = re.search(r'[\D]', word)
                     if suffix:
                         word = '%10.0f%s' % (float(word[:suffix.start()]), word[suffix.start():])
                     else:
@@ -4488,7 +4029,7 @@ class CatalogBuilder(object):
         Return:
          (str): legal XHTML anchor string of unicode character name
         """
-        fullname = u''.join(unicodedata.name(unicode_type(cc)) for cc in c)
+        fullname = ''.join(unicodedata.name(unicode_type(cc)) for cc in c)
         terms = fullname.split()
         return "_".join(terms)
 
@@ -4520,7 +4061,7 @@ class CatalogBuilder(object):
                 matched = list(set(record['tags']) & set(excluded_tags))
                 if matched:
                     for rule in self.opts.exclusion_rules:
-                        if rule[1] == _('Tags') and rule[2] == str(matched[0]):
+                        if rule[1] == _('Tags') and rule[2] == unicode_type(matched[0]):
                             self.opts.log.info("  - '%s' by %s (Exclusion rule '%s')" %
                                 (record['title'], record['authors'][0], rule[0]))
 
@@ -4807,12 +4348,12 @@ class CatalogBuilder(object):
             self.progress_int = 0.01
         self.reporter(self.progress_int, self.progress_string)
         if self.opts.cli_environment:
-            log_msg = u"%3.0f%% %s" % (self.progress_int * 100, self.progress_string)
+            log_msg = "%3.0f%% %s" % (self.progress_int * 100, self.progress_string)
             if self.opts.verbose:
-                log_msg += " (%s)" % str(datetime.timedelta(seconds=int(time.time() - self.opts.start_time)))
+                log_msg += " (%s)" % unicode_type(datetime.timedelta(seconds=int(time.time() - self.opts.start_time)))
         else:
             log_msg = ("%s (%s)" % (self.progress_string,
-                str(datetime.timedelta(seconds=int(time.time() - self.opts.start_time)))))
+                unicode_type(datetime.timedelta(seconds=int(time.time() - self.opts.start_time)))))
         self.opts.log(log_msg)
 
     def update_progress_micro_step(self, description, micro_step_pct):
@@ -4851,9 +4392,7 @@ class CatalogBuilder(object):
         """
 
         self.update_progress_full_step(_("Saving NCX"))
-        ncx = self.ncx_soup.prettify(encoding='utf-8')
-        if isinstance(ncx, unicode_type):
-            ncx = ncx.encode('utf-8')
-
+        pretty_xml_tree(self.ncx_root)
+        ncx = etree.tostring(self.ncx_root, encoding='utf-8')
         with lopen("%s/%s.ncx" % (self.catalog_path, self.opts.basename), 'wb') as outfile:
-            outfile.write(ncx.strip())
+            outfile.write(ncx)
