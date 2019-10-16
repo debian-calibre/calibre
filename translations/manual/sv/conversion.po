@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 09:25+0530\n"
-"PO-Revision-Date: 2019-06-06 12:11+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-27 14:08+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -1189,7 +1189,7 @@ msgid ""
 "just under the median line length. Lower this value to include more text in "
 "the unwrapping. Increase to include less. You can adjust this value in the "
 "conversion settings under :guilabel:`PDF Input`."
-msgstr "PDF-dokument är en av de värsta format att konvertera från. De är en fast sidstorlek och textplaceringsformat. Mening, är det mycket svårt att avgöra var en stycke slutar och en annat börjar. calibre kommer att försöka packa stycken med en konfigurerbar, :guilabel:`Radbrytningsfaktor`. Detta är en skala som används för att bestämma längden, vid vilken en rad bör radbruten. Giltiga värden är ett decimaltal mellan 0 och 1. Standardinställningen är 0,45, strax under medianradslängden. Sänk detta värde att inkludera mer text i uppackning. Öka till att omfatta mindre. Du kan justera detta värde i konverteringsinställningarna under :guilabel:`PDF-indata`."
+msgstr "PDF-dokument är en av de värsta format att konvertera från. De är en fast sidstorlek och textplaceringsformat. Mening, är det mycket svårt att avgöra var en stycke slutar och en annat börjar. calibre kommer att försöka packa stycken med en konfigurerbar, :guilabel:`Radbrytningsfaktor`. Detta är en skala som används för att bestämma längden, vid vilken en rad bör radbruten. Giltiga värden är ett decimaltal mellan 0 och 1. Standardinställningen är 0,45, strax under medianradslängden. Sänk detta värde för att inkludera mer text i uppackning. Öka för att omfatta mindre. Du kan justera detta värde i konverteringsinställningarna under :guilabel:`PDF-indata`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:729
 msgid ""
@@ -1250,7 +1250,7 @@ msgid ""
 "To re-iterate **PDF is a really, really bad** format to use as input. If you"
 " absolutely must use PDF, then be prepared for an output ranging anywhere "
 "from decent to unusable, depending on the input PDF."
-msgstr "För att återupprepa **PDF är en riktigt, riktigt dåligt** format att användas som indata. Om du absolut måste använda PDF, sedan förberedas för ett utdata som varierar allt från anständigt att oanvändbara, beroende på indata PDF."
+msgstr "För att återiterera **PDF är ett riktigt, riktigt dålig** format att använda som indata. Om du absolut måste använda PDF, var beredd på utdata som sträcker sig allt från anständigt till oanvändbar, beroende på PDF-indata."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:748
 msgid "Comic book collections"
@@ -1400,60 +1400,66 @@ msgstr "Du kan infoga godtyckliga rubrik och sidfot på varje sida i PDF genom a
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:839
 msgid ""
-"calibre will automatically replace _PAGENUM_ with the current page number. "
-"You can even put different content on even and odd pages, for example the "
-"following header template will show the title on odd pages and the author on"
-" even pages::"
-msgstr "calibre ersätter automatiskt _PAGENUM_ med det aktuella sidnumret. Du kan även sätta olika innehåll på jämna och udda sidor, till exempel följande rubrikmall visar titeln på udda sidor och författaren på jämna sidor::"
+"calibre will automatically replace :code:`_PAGENUM_` with the current page "
+"number. You can even put different content on even and odd pages, for "
+"example the following header template will show the title on odd pages and "
+"the author on even pages::"
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:845
+#: ../../home/kovid/work/calibre/manual/conversion.rst:848
 msgid ""
-"calibre will automatically replace _TITLE_ and _AUTHOR_ with the title and "
-"author of the document being converted.  You can also display text at the "
-"left and right edges and change the font size, as demonstrated with this "
-"header template::"
-msgstr "calibre ersätter automatiskt _TITLE_ och _AUTHOR_ med titel och författare av dokumentet som konverteras. Du kan även visa text på vänster och höger sida och ändra teckenstorlek, vilket visas med den här rubrikmallen::"
+"calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
+" the title and author of the document being converted. Setting :code"
+":`justify-content` to :code:`flex-end` will cause the text to be right "
+"aligned."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:852
+#: ../../home/kovid/work/calibre/manual/conversion.rst:853
+msgid ""
+"You can also display text at the left and right edges and change the font "
+"size, as demonstrated with this header template::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:861
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr "Detta kommer att visa titeln till vänster och författare till höger, i en teckenstorlek som är mindre än huvudtexten."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:855
+#: ../../home/kovid/work/calibre/manual/conversion.rst:864
 msgid "You can also use the current section in templates, as shown below::"
 msgstr "Du kan också använda det aktuella avsnittet i mallar, enligt nedan::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:859
+#: ../../home/kovid/work/calibre/manual/conversion.rst:868
 msgid ""
-"_SECTION_ is replaced by whatever the name of the current section is. These "
-"names are taken from the metadata Table of Contents in the document (the PDF"
-" Outline). If the document has no table of contents then it will be replaced"
-" by empty text. If a single PDF page has multiple sections, the first "
-"section on the page will be used. Similarly, there is a variable named "
-"_TOP_LEVEL_SECTION_ that can be used to get the name of the current top-"
-"level section."
-msgstr "_SECTION_ Ersätts med oavsett vad namnet på det aktuella avsnittet är. Dessa namn är tagna från metadata Innehåll i dokumentet (PDF Outline). Om dokumentet inte har någon innehållsförteckning då det kommer att ersättas av tom text. Om en enda PDF-sida har flera sektioner, kommer det första avsnittet på sidan användas. Likaså finns det en variabel med namnet _TOP_LEVEL_SECTION_ som kan användas för att ge namnet på den nuvarande toppnivåsektionen."
+":code:`_SECTION_` is replaced by whatever the name of the current section "
+"is. These names are taken from the metadata Table of Contents in the "
+"document (the PDF Outline). If the document has no table of contents then it"
+" will be replaced by empty text. If a single PDF page has multiple sections,"
+" the first section on the page will be used. Similarly, there is a variable "
+"named :code:`_TOP_LEVEL_SECTION_` that can be used to get the name of the "
+"current top-level section."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:866
+#: ../../home/kovid/work/calibre/manual/conversion.rst:875
 msgid ""
-"You can even use javascript inside the header and footer templates, for "
+"You can even use JavaScript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
-msgstr "Du kan även använda javascript inne i rubrik och sidfot mallar, till exempel, kommer följande mall resultera i att  sidnummer börjar vid 4 istället för på 1::"
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:872
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
-"margins to large enough values, under the Page setup section of the "
-"conversion dialog."
-msgstr "När du lägger till rubrik och sidfot se till att du ställa in sidan övre och nedre marginal till tillräckligt stora värden, under avsnittet Sidinställningar i konverteringsdialogrutan."
+"margins to large enough values, under the :guilabel:`PDF Output` section of "
+"the conversion dialog."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:877
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
 msgid "Printable Table of Contents"
 msgstr "Utskrivbar/tryckbar innehållsförteckning"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:879
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1462,10 +1468,29 @@ msgid ""
 " default."
 msgstr "Du kan också infoga en utskrift/tryckbar innehållsförteckning i slutet av PDF som listar sidnummer för varje avsnitt. Detta är mycket användbart om du tänker skriva ut PDF till papper. Om du vill använda PDF på en elektronisk produkt, ger PDF Outline denna funktionalitet och är genererad som standard."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+#: ../../home/kovid/work/calibre/manual/conversion.rst:896
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
 "dialog. The default css used is listed below, simply copy it and make "
 "whatever changes you like."
 msgstr "Du kan anpassa utseendet på den genererade Innehållsförteckningen med hjälp av extra CSS-konverteringsinställningen under Utseende och känsla delen av konverteringsdialogen. Standard css som används är listade nedan, helt enkelt kopiera den och gör de ändringar du vill."
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:916
+msgid "Custom page margins for individual HTML files"
+msgstr "Anpassade sidmarginaler för enskilda HTML-filer"
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:918
+msgid ""
+"If you are converting an EPUB of AZW3 file with multiple individual HTML "
+"files inside it and you want to change the page margins for a particular "
+"HTML file you can add the following style block to the HTML file using the "
+"calibre editor:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:935
+msgid ""
+"Then, in the PDF output section of the conversion dialog, turn on the option"
+" to :guilabel:`Use page margins from the document being converted`. Now all "
+"pages generated from this HTML file will have ``10pt`` margins."
+msgstr ""

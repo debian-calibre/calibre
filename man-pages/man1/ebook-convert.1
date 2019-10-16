@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "September 13, 2019" "3.48.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "October 08, 2019" "4.1.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -1191,7 +1191,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-render\-tables\-as\-images
-Render tables in the HTML as images (useful if the document has large or complex tables)
+This option has no effect
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1310,7 +1310,7 @@ Custom size of the document. Use the form widthxheight e.g. \fI123x321\fP to spe
 .INDENT 0.0
 .TP
 .B \-\-paper\-size
-The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are [u\fB\(aq\fPa0\fB\(aq\fP, u\fB\(aq\fPa1\fB\(aq\fP, u\fB\(aq\fPa2\fB\(aq\fP, u\fB\(aq\fPa3\fB\(aq\fP, u\fB\(aq\fPa4\fB\(aq\fP, u\fB\(aq\fPa5\fB\(aq\fP, u\fB\(aq\fPa6\fB\(aq\fP, u\fB\(aq\fPb0\fB\(aq\fP, u\fB\(aq\fPb1\fB\(aq\fP, u\fB\(aq\fPb2\fB\(aq\fP, u\fB\(aq\fPb3\fB\(aq\fP, u\fB\(aq\fPb4\fB\(aq\fP, u\fB\(aq\fPb5\fB\(aq\fP, u\fB\(aq\fPb6\fB\(aq\fP, u\fB\(aq\fPlegal\fB\(aq\fP, u\fB\(aq\fPletter\fB\(aq\fP]
+The size of the paper. This size will be overridden when a non default output profile is used. Default is letter. Choices are a0, a1, a2, a3, a4, a5, a6, b0, b1, b2, b3, b4, b5, b6, legal, letter
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1345,7 +1345,7 @@ Surround all links with a red box, useful for debugging.
 .INDENT 0.0
 .TP
 .B \-\-pdf\-mono\-family
-The font family used to render monospace fonts
+The font family used to render monospace fonts. Will work only if the font is available system\-wide.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1385,12 +1385,12 @@ Add page numbers to the bottom of every page in the generated PDF file. If you s
 .INDENT 0.0
 .TP
 .B \-\-pdf\-sans\-family
-The font family used to render sans\-serif fonts
+The font family used to render sans\-serif fonts. Will work only if the font is available system\-wide.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pdf\-serif\-family
-The font family used to render serif fonts
+The font family used to render serif fonts. Will work only if the font is available system\-wide.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1420,12 +1420,12 @@ Title for generated table of contents.
 .INDENT 0.0
 .TP
 .B \-\-uncompressed\-pdf
-Generate an uncompressed PDF, useful for debugging, only works with the new PDF engine.
+Generate an uncompressed PDF, useful for debugging.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-unit, \-u
-The unit of measure for page sizes. Default is inch. Choices are [u\fB\(aq\fPmillimeter\fB\(aq\fP, u\fB\(aq\fPcentimeter\fB\(aq\fP, u\fB\(aq\fPpoint\fB\(aq\fP, u\fB\(aq\fPinch\fB\(aq\fP, u\fB\(aq\fPpica\fB\(aq\fP, u\fB\(aq\fPdidot\fB\(aq\fP, u\fB\(aq\fPcicero\fB\(aq\fP, u\fB\(aq\fPdevicepixel\fB\(aq\fP] Note: This does not override the unit for margins!
+The unit of measure for page sizes. Default is inch. Choices are millimeter, centimeter, point, inch, pica, didot, cicero, devicepixel Note: This does not override the unit for margins!
 .UNINDENT
 .INDENT 0.0
 .TP

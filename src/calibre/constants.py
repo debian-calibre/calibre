@@ -6,7 +6,7 @@ from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (3, 48, 0)
+numeric_version = (4, 1, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -39,10 +39,12 @@ is64bit = sys.maxsize > (1 << 32)
 isworker = hasenv('CALIBRE_WORKER') or hasenv('CALIBRE_SIMPLE_WORKER')
 if isworker:
     os.environ.pop(environ_item('CALIBRE_FORCE_ANSI'), None)
-FAKE_PROTOCOL, FAKE_HOST = 'https', 'calibre-internal.invalid'
+FAKE_PROTOCOL, FAKE_HOST = 'clbr', 'internal.invalid'
 VIEWER_APP_UID = 'com.calibre-ebook.viewer'
 EDITOR_APP_UID = 'com.calibre-ebook.edit-book'
 MAIN_APP_UID = 'com.calibre-ebook.main-gui'
+STORE_DIALOG_APP_UID = 'com.calibre-ebook.store-dialog'
+TOC_DIALOG_APP_UID = 'com.calibre-ebook.toc-editor'
 try:
     preferred_encoding = locale.getpreferredencoding()
     codecs.lookup(preferred_encoding)
@@ -144,7 +146,7 @@ def _get_cache_dir():
 def cache_dir():
     ans = getattr(cache_dir, 'ans', None)
     if ans is None:
-        ans = cache_dir.ans = _get_cache_dir()
+        ans = cache_dir.ans = os.path.realpath(_get_cache_dir())
     return ans
 
 
@@ -174,7 +176,6 @@ class Plugins(collections.Mapping):
                 'html',
                 'freetype',
                 'imageops',
-                'qt_hack',
                 'hunspell',
                 '_patiencediff_c',
                 'bzzdec',

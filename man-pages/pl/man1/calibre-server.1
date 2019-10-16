@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "września 13, 2019" "3.48.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "października 08, 2019" "4.1.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -51,7 +51,7 @@ Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, e
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Ścieżka do pliku dziennika dostępu. Ten dziennik zawiera informacje o klientach łączących się z serwerem i wysyłających żądania. Domyślnie rejestrowanie dostępu nie jest wykonywane.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,7 +66,7 @@ Wybierz rodzaj używanego uwierzytelnienia.  Set the HTTP authentication mode us
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+Automatycznie przeładuj serwer, gdy zmieni się kod źródłowy. Przydatny do rozwoju. Należy również podać niewielką wartość limitu czasu wyłączenia.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ Blokuj adresy IP, z których dokonano wielokrotnych nieudanych logowań.      Ty
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Wybierz domyślny tryb wyświetlania książek.         Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Wybierz domyślny tryb wyświetlania książek.         Ustaw domyślny tryb listy książek, który będzie używany dla nowych użytkowników. Poszczególni użytkownicy mogą zastąpić ustawienia domyślne we własnych ustawieniach. Domyślnie jest używana siatka okładki.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -96,7 +96,7 @@ Minimum size for which responses use data compression (in bytes).
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Uruchom proces w tle jako daemon (tylko Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +136,7 @@ Reklamuj kanały OPDS przez BonJour.         Advertise the OPDS feeds via the Bo
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Domyślnie ta opcja jest włączona.
+Przesyłanie plików bez kopiowania w celu zwiększenia wydajności.    This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -156,12 +156,12 @@ Interfejs, na którym będziemy nasłuchiwać połączeń.         Domyślnie se
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Ścieżka do pliku dziennika dla dziennika serwera. Ten dziennik zawiera informacje o serwerze i błędy, a nie dzienniki dostępu. Domyślnie jest zapisywany na standardowe wyjście.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. See also the \fI\%\-\-userdb\fP option.
+Zarządzaj bazą danych użytkowników, którzy mogą łączyć się z tym serwerem. Zobacz także opcję \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP

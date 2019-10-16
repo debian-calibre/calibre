@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 08:26+0530\n"
-"PO-Revision-Date: 2018-08-10 02:57+0000\n"
+"POT-Creation-Date: 2019-09-17 16:00+0530\n"
+"PO-Revision-Date: 2019-09-16 05:48+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -1398,60 +1398,66 @@ msgstr "Başlık ve altbilgi şablonları belirleyerek PDF'in her sayfasına key
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:839
 msgid ""
-"calibre will automatically replace _PAGENUM_ with the current page number. "
-"You can even put different content on even and odd pages, for example the "
-"following header template will show the title on odd pages and the author on"
-" even pages::"
-msgstr "calibre _PAGENUM_ u otomatik olarak mevcut sayfa numarasıyla değiştirir. Hatta tek ve çift sayfalar için değişik içerik bile koyabilirsiniz, örneğin aşağıdaki başlık şablonu tek sayfalarda başlığı, çift sayfalarda yazarı gösterir::"
+"calibre will automatically replace :code:`_PAGENUM_` with the current page "
+"number. You can even put different content on even and odd pages, for "
+"example the following header template will show the title on odd pages and "
+"the author on even pages::"
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:845
+#: ../../home/kovid/work/calibre/manual/conversion.rst:848
 msgid ""
-"calibre will automatically replace _TITLE_ and _AUTHOR_ with the title and "
-"author of the document being converted.  You can also display text at the "
-"left and right edges and change the font size, as demonstrated with this "
-"header template::"
-msgstr "calibre _TITLE_ ve _AUTHOR_ kelimelerini otomatik olarak dönüştürülen belgenin başlığı ve yazarı ile değiştirir.  Aynı zamanda aşağıdaki başlık şablonunda gösterildiği gibi metni sol ve sağ köşelerde gösterebilir, yazı tipi boyutunu değiştirebilirsiniz::"
+"calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
+" the title and author of the document being converted. Setting :code"
+":`justify-content` to :code:`flex-end` will cause the text to be right "
+"aligned."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:852
+#: ../../home/kovid/work/calibre/manual/conversion.rst:853
+msgid ""
+"You can also display text at the left and right edges and change the font "
+"size, as demonstrated with this header template::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:861
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr "Bu başlığı solda, yazarı sağda ana metinden küçük bir boyutta gösterir."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:855
+#: ../../home/kovid/work/calibre/manual/conversion.rst:864
 msgid "You can also use the current section in templates, as shown below::"
 msgstr "Mevcut kısmı da şablonlarda aşağıda gösterildiği gibi kullanabilirsiniz::"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:859
+#: ../../home/kovid/work/calibre/manual/conversion.rst:868
 msgid ""
-"_SECTION_ is replaced by whatever the name of the current section is. These "
-"names are taken from the metadata Table of Contents in the document (the PDF"
-" Outline). If the document has no table of contents then it will be replaced"
-" by empty text. If a single PDF page has multiple sections, the first "
-"section on the page will be used. Similarly, there is a variable named "
-"_TOP_LEVEL_SECTION_ that can be used to get the name of the current top-"
-"level section."
-msgstr "_SECTION_ mevcut kısmın adı neyse onunla değiştirilir. Bu isimler belgenin İçindekiler metadatasından alınır (PDF Özeti). Belgenin İçindekileri yoksa boş metinle değiştirilir. Tek bir PDF sayfasının birden çok bölümü varsa, sayfadaki ilk bölüm kullanılacaktır. Benzer bir şekilde, _TOP_LEVEL_SECTION_ adında, mevcut en üst bölümün adını almak için kullanılabilen bir değişken vardır. "
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:866
-msgid ""
-"You can even use javascript inside the header and footer templates, for "
-"example, the following template will cause page numbers to start at 4 "
-"instead of 1::"
-msgstr "Başlık ve altbilgi içinde javascript bile kullanabilirsiniz, örneğin, aşağıdaki şablon sayfa numaralarının 1 yerine 4 den başlamasını sağlar::"
-
-#: ../../home/kovid/work/calibre/manual/conversion.rst:872
-msgid ""
-"When adding headers and footers make sure you set the page top and bottom "
-"margins to large enough values, under the Page setup section of the "
-"conversion dialog."
+":code:`_SECTION_` is replaced by whatever the name of the current section "
+"is. These names are taken from the metadata Table of Contents in the "
+"document (the PDF Outline). If the document has no table of contents then it"
+" will be replaced by empty text. If a single PDF page has multiple sections,"
+" the first section on the page will be used. Similarly, there is a variable "
+"named :code:`_TOP_LEVEL_SECTION_` that can be used to get the name of the "
+"current top-level section."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:877
+#: ../../home/kovid/work/calibre/manual/conversion.rst:875
+msgid ""
+"You can even use JavaScript inside the header and footer templates, for "
+"example, the following template will cause page numbers to start at 4 "
+"instead of 1::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+msgid ""
+"When adding headers and footers make sure you set the page top and bottom "
+"margins to large enough values, under the :guilabel:`PDF Output` section of "
+"the conversion dialog."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:889
 msgid "Printable Table of Contents"
 msgstr "Yazdırılabilir İçindekiler"
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:879
+#: ../../home/kovid/work/calibre/manual/conversion.rst:891
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1460,10 +1466,29 @@ msgid ""
 " default."
 msgstr "Ayrıca PDF sonuna her kısmın sayfa numaralarını içeren y azdırılabilir bir İçindekiler ekleyebilirsiniz. PDF'i sayfaya yazdırmaya niyetiniz varsa çok faydalıdır. PDF'i elektronik cihazda kullanacaksanız, PDF Özeti bu işlevselliği sağlar ve ön tanımlı olarak üretilir."
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:884
+#: ../../home/kovid/work/calibre/manual/conversion.rst:896
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
 "dialog. The default css used is listed below, simply copy it and make "
 "whatever changes you like."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:916
+msgid "Custom page margins for individual HTML files"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:918
+msgid ""
+"If you are converting an EPUB of AZW3 file with multiple individual HTML "
+"files inside it and you want to change the page margins for a particular "
+"HTML file you can add the following style block to the HTML file using the "
+"calibre editor:"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/conversion.rst:935
+msgid ""
+"Then, in the PDF output section of the conversion dialog, turn on the option"
+" to :guilabel:`Use page margins from the document being converted`. Now all "
+"pages generated from this HTML file will have ``10pt`` margins."
 msgstr ""

@@ -17,7 +17,7 @@ from io import BytesIO
 from PyQt5.Qt import (
     QStyledItemDelegate, QTextDocument, QRectF, QIcon, Qt, QApplication,
     QDialog, QVBoxLayout, QLabel, QDialogButtonBox, QStyle, QStackedWidget,
-    QWidget, QTableView, QGridLayout, QFontInfo, QPalette, QTimer, pyqtSignal,
+    QWidget, QTableView, QGridLayout, QPalette, QTimer, pyqtSignal,
     QAbstractTableModel, QSize, QListView, QPixmap, QModelIndex,
     QAbstractListModel, QRect, QTextBrowser, QStringListModel, QMenu,
     QCursor, QHBoxLayout, QPushButton, QSizePolicy)
@@ -30,11 +30,11 @@ from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf2 import OPF
 from calibre.gui2 import error_dialog, rating_font, gprefs
 from calibre.gui2.progress_indicator import draw_snake_spinner
+from calibre.gui2.widgets2 import HTMLDisplay
 from calibre.utils.date import (utcnow, fromordinal, format_date,
         UNDEFINED_DATE, as_utc)
 from calibre.library.comments import comments_to_html
 from calibre import force_unicode
-from calibre.utils.config import tweaks
 from calibre.utils.ipc.simple_worker import fork_job, WorkerError
 from calibre.ptempfile import TemporaryDirectory
 from polyglot.builtins import iteritems, itervalues, unicode_type, range, getcwd
@@ -312,10 +312,10 @@ class ResultsView(QTableView):  # {{{
 # }}}
 
 
-class Comments(QTextBrowser):  # {{{
+class Comments(HTMLDisplay):  # {{{
 
     def __init__(self, parent=None):
-        QTextBrowser.__init__(self, parent)
+        HTMLDisplay.__init__(self, parent)
         self.setAcceptDrops(False)
         self.setMaximumWidth(300)
         self.setMinimumWidth(300)
@@ -323,14 +323,9 @@ class Comments(QTextBrowser):  # {{{
         self.wait_timer.timeout.connect(self.update_wait)
         self.wait_timer.setInterval(800)
         self.dots_count = 0
+        self.anchor_clicked.connect(self.link_activated)
 
-        palette = self.palette()
-        palette.setBrush(QPalette.Base, Qt.transparent)
-        self.setPalette(palette)
-        self.setAttribute(Qt.WA_OpaquePaintEvent, False)
-        self.anchorClicked.connect(self.link_clicked)
-
-    def link_clicked(self, url):
+    def link_activated(self, url):
         from calibre.gui2 import open_url
         if url.scheme() in {'http', 'https'}:
             open_url(url)
@@ -359,19 +354,13 @@ class Comments(QTextBrowser):  # {{{
                     ans = unicode_type(col.name())
             return ans
 
-        fi = QFontInfo(QApplication.font(self.parent()))
-        f = fi.pixelSize()+1+int(tweaks['change_book_details_font_size_by'])
-        fam = unicode_type(fi.family()).strip().replace('"', '')
-        if not fam:
-            fam = 'sans-serif'
-
         c = color_to_string(QApplication.palette().color(QPalette.Normal,
                         QPalette.WindowText))
         templ = '''\
         <html>
             <head>
             <style type="text/css">
-                body, td {background-color: transparent; font-family: "%s"; font-size: %dpx; color: %s }
+                body, td {background-color: transparent; color: %s }
                 a { text-decoration: none; color: blue }
                 div.description { margin-top: 0; padding-top: 0; text-indent: 0 }
                 table { margin-bottom: 0; padding-bottom: 0; }
@@ -383,7 +372,7 @@ class Comments(QTextBrowser):  # {{{
             </div>
             </body>
         <html>
-        '''%(fam, f, c)
+        '''%(c,)
         self.setHtml(templ%html)
 
     def sizeHint(self):
@@ -797,12 +786,19 @@ class CoversView(QListView):  # {{{
 
         self.delegate = CoverDelegate(self)
         self.setItemDelegate(self.delegate)
-        self.delegate.needs_redraw.connect(self.viewport().update,
+        self.delegate.needs_redraw.connect(self.redraw_spinners,
                 type=Qt.QueuedConnection)
 
         self.doubleClicked.connect(self.chosen, type=Qt.QueuedConnection)
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_context_menu)
+
+    def redraw_spinners(self):
+        m = self.model()
+        for r in range(m.rowCount()):
+            idx = m.index(r)
+            if bool(m.data(idx, Qt.UserRole)):
+                m.dataChanged.emit(idx, idx)
 
     def select(self, num):
         current = self.model().index(num)
@@ -841,7 +837,7 @@ class CoversView(QListView):  # {{{
         if pmap is None and idx.row() == 0:
             pmap = self.model().cc
         if pmap is not None:
-            from calibre.gui2.viewer.image_popup import ImageView
+            from calibre.gui2.image_popup import ImageView
             d = ImageView(self, pmap, unicode_type(idx.data(Qt.DisplayRole) or ''), geom_name='metadata_download_cover_popup_geom')
             d(use_exec=True)
 
