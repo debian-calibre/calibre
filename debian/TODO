@@ -1,0 +1,12 @@
+calibre building gives warning
+	CDBS WARNING:    DEB_DH_INSTALL_ARGS is deprecated since 0.4.85
+
+switch to dh_python
+
+Python3 -> experimental branch
+Calibre4 -> master-4.0 branch
+both -> python3-calibre4 branch
+
+do not use dh_installman for all the 600 man pages, since it
+recodes each and everyone from UTF-8 to UTF-8, eating billions
+of CPU cycles, not really necessary, save the world!
