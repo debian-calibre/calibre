@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -150,5 +152,4 @@ class Ui_Form(object):
         self.relay_use_gmx.setText(_("Use &GMX"))
         self.relay_use_hotmail.setText(_("Use &Hotmail"))
         self.test_email_button.setText(_("&Test email"))
-
 

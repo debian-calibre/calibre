@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/finish.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_WizardPage(object):
     def setupUi(self, WizardPage):
@@ -44,4 +46,3 @@ class Ui_WizardPage(object):
         self.finish_text.setText(_("<h2>Congratulations!</h2> You have successfully setup calibre. Press the %s button to apply your settings."))
         self.label_2.setText(_("<h2>Demo videos</h2>Videos demonstrating the various features of calibre are available <a href=\"https://calibre-ebook.com/demo\">online</a>."))
         self.um_label.setText(_("<h2>User Manual</h2>A User Manual is also available <a href=\"%s\">online</a>."))
-

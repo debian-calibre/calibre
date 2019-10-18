@@ -87,7 +87,7 @@ def show_controls_help():
         div = div.nextSibling
         safe_set_inner_html(div, _('Use the <b>PageUp/PageDn</b> or <b>Arrow keys</b> to turn pages'))
         div = div.nextSibling
-        safe_set_inner_html(div, _('Press the <b>Esc</b> key or <b>{} click</b> to show the viewer controls').format(
+        safe_set_inner_html(div, _('Press the <b>Esc</b> key or <b>{} click</b> or <b>tap on the top third</b> of the text area to show the viewer controls').format(
             'control' if 'macos' in window.navigator.userAgent else _('right')
         ))
         div = div.nextSibling
@@ -121,7 +121,7 @@ def show_controls_help():
 
 # }}}
 
-def margin_elem(sd, which, id, onclick):
+def margin_elem(sd, which, id, onclick, oncontextmenu):
     sz = sd.get(which, 20)
     fsz = min(max(0, sz - 6), 12)
     s = '; text-overflow: ellipsis; white-space: nowrap; overflow: hidden'
@@ -132,6 +132,8 @@ def margin_elem(sd, which, id, onclick):
     )
     if onclick:
         ans.addEventListener('click', onclick)
+    if oncontextmenu:
+        ans.addEventListener('contextmenu', onclick)
     if is_ios and which is 'margin_bottom' and not window.navigator.standalone and not /CriOS\//.test(window.navigator.userAgent):
         # On iOS Safari 100vh includes the size of the navbar and there is no way to
         # go fullscreen, so to make the bottom bar visible we add a margin to
@@ -155,20 +157,31 @@ class View:
         self.book_scrollbar = BookScrollbar(self)
         sd = get_session_data()
         self.keyboard_shortcut_map = create_shortcut_map(sd.get('keyboard_shortcuts'))
-        left_margin = E.div(svgicon('caret-left'), style='width:{}px;'.format(sd.get('margin_left', 20)), class_='book-side-margin', id='book-left-margin', onclick=self.left_margin_clicked)
+        if ui_operations.export_shortcut_map:
+            ui_operations.export_shortcut_map(self.keyboard_shortcut_map)
+        left_margin = E.div(
+            svgicon('caret-left'), style='width:{}px;'.format(sd.get('margin_left', 20)),
+            class_='book-side-margin', id='book-left-margin', onclick=self.left_margin_clicked,
+            oncontextmenu=self.margin_context_menu.bind(None, 'left'))
         set_left_margin_handler(left_margin)
-        right_margin = E.div(svgicon('caret-right'), style='width:{}px;'.format(sd.get('margin_right', 20)), class_='book-side-margin', id='book-right-margin', onclick=self.right_margin_clicked)
+        right_margin = E.div(
+            svgicon('caret-right'), style='width:{}px;'.format(sd.get('margin_right', 20)),
+            class_='book-side-margin', id='book-right-margin', onclick=self.right_margin_clicked,
+            oncontextmenu=self.margin_context_menu.bind(None, 'right'))
         set_right_margin_handler(right_margin)
         iframe_id = unique_id('read-book-iframe')
+        sandbox = 'allow-popups allow-scripts allow-popups-to-escape-sandbox'
+        if runtime.is_standalone_viewer:
+            sandbox += '  allow-same-origin'
         container.appendChild(
             E.div(style='max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch',  # container for horizontally aligned panels
                   E.div(style='max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2',  # container for iframe and any other panels in the same column
                     E.div(style='max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch',  # container for iframe and its overlay
                         left_margin,
                         E.div(style='flex-grow:2; display:flex; align-items:stretch; flex-direction: column', # container for top and bottom margins
-                            margin_elem(sd, 'margin_top', 'book-top-margin', self.top_margin_clicked),
-                            E.iframe(id=iframe_id, seamless=True, sandbox='allow-popups allow-scripts allow-popups-to-escape-sandbox', style='flex-grow: 2', allowfullscreen='true'),
-                            margin_elem(sd, 'margin_bottom', 'book-bottom-margin', self.bottom_margin_clicked),
+                            margin_elem(sd, 'margin_top', 'book-top-margin', self.top_margin_clicked, self.margin_context_menu.bind(None, 'top')),
+                            E.iframe(id=iframe_id, seamless=True, sandbox=sandbox, style='flex-grow: 2', allowfullscreen='true'),
+                            margin_elem(sd, 'margin_bottom', 'book-bottom-margin', self.bottom_margin_clicked, self.margin_context_menu.bind(None, 'bottom')),
                         ),
                         right_margin,
                         self.book_scrollbar.create(),
@@ -208,13 +221,16 @@ class View:
         if runtime.is_standalone_viewer:
             document.documentElement.addEventListener('keydown', self.handle_keypress, {'passive': False})
         self.current_color_scheme = resolve_color_scheme()
-        self.iframe_wrapper = IframeWrapper(handlers, document.getElementById(iframe_id), entry_point, _('Bootstrapping book reader...'), runtime.FAKE_PROTOCOL, runtime.FAKE_HOST)
+        self.iframe_wrapper = IframeWrapper(
+            handlers, document.getElementById(iframe_id), entry_point, _('Bootstrapping book reader...'),
+            f'{runtime.FAKE_PROTOCOL}://{runtime.SANDBOX_HOST}/book/__index__')
         self.search_overlay = SearchOverlay(self)
         self.content_popup_overlay = ContentPopupOverlay(self)
         self.overlay = Overlay(self)
         self.processing_spine_item_display = False
         self.pending_load = None
         self.currently_showing = {}
+        self.book_scrollbar.apply_visibility()
 
     @property
     def iframe(self):
@@ -231,6 +247,9 @@ class View:
             event.preventDefault(), event.stopPropagation()
             sd = get_session_data()
             self.iframe_wrapper.send_message('next_screen', backwards=True, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+        elif event.button is 2:
+            event.preventDefault(), event.stopPropagation()
+            window.setTimeout(self.show_chrome, 0)
         self.focus_iframe()
 
     def right_margin_clicked(self, event):
@@ -238,17 +257,27 @@ class View:
             event.preventDefault(), event.stopPropagation()
             sd = get_session_data()
             self.iframe_wrapper.send_message('next_screen', backwards=False, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+        elif event.button is 2:
+            event.preventDefault(), event.stopPropagation()
+            window.setTimeout(self.show_chrome, 0)
         self.focus_iframe()
 
     def top_margin_clicked(self, event):
-        if event.button is 0:
+        if event.button is 0 or event.button is 2:
             event.preventDefault(), event.stopPropagation()
             self.show_chrome()
         else:
             self.focus_iframe()
 
     def bottom_margin_clicked(self, event):
+        if event.button is 2:
+            event.preventDefault(), event.stopPropagation()
+            window.setTimeout(self.show_chrome, 0)
         self.focus_iframe()
+
+    def margin_context_menu(self, which, event):
+        event.preventDefault(), event.stopPropagation()
+        self.show_chrome()
 
     def forward_gesture(self, gesture):
         self.iframe_wrapper.send_message('gesture_from_margin', gesture=gesture)
@@ -447,7 +476,7 @@ class View:
                 # margin goes off the screen.
                 m.nextSibling.style.maxWidth = 'calc(100vw - {}px)'.format(margin_left + margin_right)
             set_css(m, width=val + 'px')
-            val = min(val, 75)
+            val = min(val, 25)
             m.firstChild.style.width = val + 'px'
             m.firstChild.style.height = val + 'px'
         side_margin('left', margin_left), side_margin('right', margin_right)
@@ -475,27 +504,30 @@ class View:
                 s.color = ans.foreground
                 s.backgroundColor = ans.background
             sd = get_session_data()
-            self.iframe.style.backgroundColor = ans.background or 'white'
+            iframe = self.iframe
+            iframe.style.backgroundColor = ans.background or 'white'
             bg_image = sd.get('background_image')
             if bg_image:
-                self.iframe.style.backgroundImage = f'url({READER_BACKGROUND_URL}?{Date().getTime()})' if runtime.is_standalone_viewer else f'url({bg_image})'
+                iframe.style.backgroundImage = f'url({READER_BACKGROUND_URL}?{Date().getTime()})' if runtime.is_standalone_viewer else f'url({bg_image})'
             else:
-                self.iframe.style.backgroundImage = 'none'
+                iframe.style.backgroundImage = 'none'
             if sd.get('background_image_style') is 'scaled':
-                self.iframe.style.backgroundSize = '100% 100%'
-                self.iframe.style.backgroundRepeat = 'no-repeat'
-                self.iframe.style.backgroundAttachment = 'scroll'
-                self.iframe.style.backgroundPosition = 'center'
+                iframe.style.backgroundSize = '100% 100%'
+                iframe.style.backgroundRepeat = 'no-repeat'
+                iframe.style.backgroundAttachment = 'scroll'
+                iframe.style.backgroundPosition = 'center'
             else:
-                self.iframe.style.backgroundSize = 'auto'
-                self.iframe.style.backgroundRepeat = 'repeat'
-                self.iframe.style.backgroundAttachment = 'scroll'
-                self.iframe.style.backgroundPosition = '0 0'
+                iframe.style.backgroundSize = 'auto'
+                iframe.style.backgroundRepeat = 'repeat'
+                iframe.style.backgroundAttachment = 'scroll'
+                iframe.style.backgroundPosition = '0 0'
 
-            m.parentNode.style.backgroundColor = ans.background  # this is needed on iOS where the bottom margin has its own margin, so we dont want the body background color to bleed through
             self.content_popup_overlay.apply_color_scheme(ans.background, ans.foreground)
             self.book_scrollbar.apply_color_scheme(ans)
-            self.iframe.parentNode.parentNode.style.backgroundColor = ans.background
+            # this is needed on iOS where the bottom margin has its own margin,
+            # so we dont want the body background color to bleed through
+            iframe.parentNode.style.backgroundColor = ans.background
+            iframe.parentNode.parentNode.style.backgroundColor = ans.background
         return ans
 
     def on_resize(self):
@@ -517,7 +549,9 @@ class View:
         if self.show_loading_callback_timer is not None:
             clearTimeout(self.show_loading_callback_timer)
             self.show_loading_callback_timer = None
+        self.iframe.style.visibility = 'visible'
         self.overlay.hide_loading_message()
+        self.focus_iframe()
 
     def parse_cfi(self, encoded_cfi, book):
         name = cfi = None
@@ -579,6 +613,8 @@ class View:
         # redisplay_book() is called when settings are changed
         sd = get_session_data()
         self.keyboard_shortcut_map = create_shortcut_map(sd.get('keyboard_shortcuts'))
+        if ui_operations.export_shortcut_map:
+            ui_operations.export_shortcut_map(self.keyboard_shortcut_map)
         self.book_scrollbar.apply_visibility()
         self.display_book(self.book)
 
@@ -776,19 +812,29 @@ class View:
                         print('Failed to update last read position, AJAX call did not succeed')
             )
 
-    def update_header_footer(self):
-        sd = get_session_data()
-        has_clock = False
-
+    @property
+    def current_position_data(self):
         if self.book?.manifest:
             book_length = self.book.manifest.spine_length or 0
             name = self.currently_showing.name
             chapter_length = self.book.manifest.files[name]?.length or 0
         else:
             book_length = chapter_length = 0
-        pos = {'current_progress_frac': self.current_progress_frac, 'book_length': book_length, 'chapter_length': chapter_length, 'current_file_progress_frac': self.current_file_progress_frac}
-        book_length *= max(0, 1 - self.current_progress_frac)
-        chapter_length *=  max(0, 1 - self.current_file_progress_frac)
+        pos = {
+            'progress_frac': self.current_progress_frac,
+            'book_length': book_length, 'chapter_length': chapter_length,
+            'file_progress_frac': self.current_file_progress_frac,
+            'cfi': self.currently_showing?.bookpos
+        }
+        return pos
+
+    def update_header_footer(self):
+        sd = get_session_data()
+        has_clock = False
+        pos = self.current_position_data
+
+        book_length = pos.book_length * max(0, 1 - pos.progress_frac)
+        chapter_length =  pos.chapter_length * max(0, 1 - pos.file_progress_frac)
         book_time = self.timers.time_for(book_length)
         chapter_time = self.timers.time_for(chapter_length)
 
@@ -796,9 +842,9 @@ class View:
             nonlocal has_clock
             if sd.get(sz_attr, 20) > 5:
                 mi = self.book.metadata
-                texta, hca = render_head_foot(div.firstChild, name, 'left', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                textc, hcc = render_head_foot(div.lastChild, name, 'right', self.current_progress_frac, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                texta, hca = render_head_foot(div.firstChild, name, 'left', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                textc, hcc = render_head_foot(div.lastChild, name, 'right', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
                 has_clock = hca or hcb or hcc
                 if textc and not textb and not texta:
                     # Want right-aligned
@@ -845,6 +891,7 @@ class View:
         # We cannot encrypt this message because the resource data contains
         # Blob objects which do not survive encryption
         self.processing_spine_item_display = True
+        self.iframe.style.visibility = 'hidden'
         self.iframe_wrapper.send_unencrypted_message('display',
             resource_data=resource_data, book=self.book, name=self.currently_showing.name,
             initial_position=self.currently_showing.initial_position,

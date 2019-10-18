@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "października 08, 2019" "4.1.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "października 18, 2019" "4.2.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -86,7 +86,7 @@ Wybierz domyślny tryb wyświetlania książek.         Ustaw domyślny tryb lis
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Minimalny rozmiar, dla którego odpowiedzi wykorzystują kompresję danych (w bajtach).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Uwierzytelnianie na podstawie hasła w celu uzyskania dostępu do serwera.    Do
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Domyślnie ta opcja jest włączona.
+Powrót do automatycznie wykrywanego interfejsu.     If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Domyślnie ta opcja jest włączona.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -166,17 +166,17 @@ Zarządzaj bazą danych użytkowników, którzy mogą łączyć się z tym serwe
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Max. rozmiar pojedynczego nagłówka HTTP (w KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Maksymalny czas na procesy robocze.         Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maksymalna liczba procesów roboczych.       Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -196,7 +196,7 @@ Maksymalna liczba niepogrupowanych elementów w kanałach OPDS.       Grupuj ele
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Max. dozwolony rozmiar plików przesłanych na serwer (w MB).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Czas (w sekundach), po którym bezczynne połączenie zostanie zamknięte.
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Prefiks poprzedzający wszystkie adresy URL.         Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Wyświetla wersję programu i kończy działanie
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Liczba wątków roboczych używanych do przetwarzania żądań.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

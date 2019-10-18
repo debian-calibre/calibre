@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/search.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -260,6 +262,5 @@ class Ui_Form(object):
         self.label_223.setText(_("Similar &tags: "))
         self.label_224.setText(_("Simi&lar publishers: "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _("&Similar books"))
-
 from calibre.gui2.complete2 import EditWithComplete
 

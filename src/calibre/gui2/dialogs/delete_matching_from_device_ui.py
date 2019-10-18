@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_DeleteMatchingFromDeviceDialog(object):
     def setupUi(self, DeleteMatchingFromDeviceDialog):
@@ -47,4 +49,3 @@ class Ui_DeleteMatchingFromDeviceDialog(object):
     def retranslateUi(self, DeleteMatchingFromDeviceDialog):
 
         DeleteMatchingFromDeviceDialog.setWindowTitle(_("Delete from device"))
-

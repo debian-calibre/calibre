@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/debug.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -52,5 +54,4 @@ class Ui_Form(object):
         self.button_debug_dir.setText(_("..."))
         self.button_clear.setText(_("..."))
         self.label_2.setText(_("The debug process outputs the intermediate HTML generated at various stages of the conversion process. This HTML can sometimes serve as a good starting point for hand editing a conversion."))
-
 

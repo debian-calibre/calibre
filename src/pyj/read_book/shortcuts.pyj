@@ -51,8 +51,12 @@ def get_key_text(evt):
         cc = key.charCodeAt(0)
         # on windows in webengine pressing ctrl+ascii char gives us an ascii
         # control code
-        if 0 < cc < 32 and evt.ctrlKey and not evt.metaKey and not evt.shiftKey and not evt.altKey:
-            key = chr(96 + cc)
+        if (0 < cc < 32 or key is 'Enter') and evt.ctrlKey and not evt.metaKey and not evt.shiftKey and not evt.altKey:
+            if key is 'Enter':
+                if evt.code and evt.code is not 'Enter':
+                    key = 'm'
+            else:
+                key = chr(96 + cc)
     return key
 
 
@@ -204,13 +208,13 @@ SHORTCUTS = {
     ),
 
     'increase_font_size': desc(
-        v"['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=']",
+        v"['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+=']",
         'ui',
         _('Increase font size'),
     ),
 
     'decrease_font_size': desc(
-        v"['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_']",
+        v"['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_']",
         'ui',
         _('Decrease font size'),
     ),

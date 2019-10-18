@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/misc.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -76,4 +78,3 @@ class Ui_Form(object):
         self.opt_worker_max_time.setSpecialValueText(_("Never abort"))
         self.opt_worker_max_time.setSuffix(_(" minutes"))
         self.icon_theme_button.setText(_("Create a calibre &icon theme"))
-

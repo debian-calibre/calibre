@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Quickview(object):
     def setupUi(self, Quickview):
@@ -94,4 +96,3 @@ class Ui_Quickview(object):
         self.refresh_button.setText(_("&Refresh"))
         self.refresh_button.setToolTip(_("When Quickview is locked, refresh the window using the last selected book and that book\'s value in the last selected column."))
         self.close_button.setText(_("&Close"))
-

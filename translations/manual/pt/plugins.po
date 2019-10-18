@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-04 06:02+0530\n"
-"PO-Revision-Date: 2019-10-05 11:22+0000\n"
+"POT-Creation-Date: 2019-10-08 07:08+0530\n"
+"PO-Revision-Date: 2019-10-15 20:17+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -377,7 +377,7 @@ msgid ""
 "file will remain available even after being closed and will only be removed "
 "on interpreter shutdown. Use the ``name`` member of the returned object to "
 "access the full path to the created temporary file."
-msgstr "Devolve um objeto afim de um ficheiro que é um ficheiro temporário no sistema de ficheiros. Este ficheiro permanecerá disponível mesmo depois de ser fechado e apenas será removido aquando do terminar do interpretador. Use o membro ``name`` do objeto devolvido para aceder ao caminho completo do ficheiro temporário assim criado."
+msgstr "Devolve um objeto tipo ficheiro que é um ficheiro temporário no sistema de ficheiros. Este ficheiro permanecerá disponível mesmo depois de ser fechado e apenas será removido ao se desligar o interpretador. Use o membro ``name`` do objeto devolvido para aceder ao caminho completo do ficheiro temporário assim criado."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.temporary_file:6
@@ -660,7 +660,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:64
 msgid "Metadata download plugins"
-msgstr ""
+msgstr "Plugins de descarregamento de metadados"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.capabilities:1
@@ -881,7 +881,7 @@ msgid ""
 "which the results were returned by the metadata source for this query. This "
 "integer will be used by :meth:`compare_identify_results`. If the order is "
 "unimportant, set it to zero for every result."
-msgstr "Cada objeto de metadados colocado na result_queue por este método tem de ter um atributo de `source_relevance` que consiste num inteiro que indica a ordem pela qual os resultados foram retornados pela fonte de metadados para esta consulta à base de dados. Este inteiro será usado por :meth:`compare_identify_results`. Se a ordem é irrelevante, coloque-o a zero para cada resultado."
+msgstr "Cada objeto de metadados colocado na result_queue por este método tem de ter um atributo de `source_relevance` que consiste num valor inteiro que indica a ordem pela qual os resultados foram devolvidos pela fonte de metadados para esta consulta. Este valor inteiro será usado por :meth:`compare_identify_results`. Se a ordem for irrelevante, defina-o para zero em cada resultado."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:19
@@ -893,14 +893,14 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:22
 msgid "A log object, use it to output debugging information/errors"
-msgstr "Um objeto de registo de actividade. Use-o para produzir informação de depuração/erros"
+msgstr "Um objeto de registo de atividade. Use-o para produzir informação de depuração/erros"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:23
 msgid ""
 "A result Queue, results should be put into it. Each result is a Metadata "
 "object"
-msgstr "Uma Queue de resultados; Os resultados devem ser nela colocados. Cada resultado é um objeto de metadados."
+msgstr "Uma fila de resultados, onde os resultados devem ser colocados. Cada resultado é um objeto de metadados."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:25
@@ -928,14 +928,14 @@ msgstr "Um dicionário de outros identificadores, sendo os mais comuns {'isbn':'
 #: of calibre.ebooks.metadata.sources.base.Source.identify:31
 msgid ""
 "Timeout in seconds, no network request should hang for longer than timeout."
-msgstr "Timeout em segundos, nenhum pedido à rede deve ficar em espera por mais tempo de que timeout."
+msgstr "Tempo de espera em segundos, nenhum pedido à rede deve ficar em espera por mais tempo de que o tempo de espera."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:33
 msgid ""
 "None if no errors occurred, otherwise a unicode representation of the error "
 "suitable for showing to the user"
-msgstr "Nenhum se não ocorreram erros, senão a representação em Unicode do erro adequada para mostrar ao utilizador."
+msgstr "Nenhum se não ocorrerem erros, caso contrário a representação em Unicode do erro adequada para mostrar ao utilizador."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:1
@@ -951,14 +951,14 @@ msgid ""
 "This method should use cached cover URLs for efficiency whenever possible. "
 "When cached data is not present, most plugins simply call identify and use "
 "its results."
-msgstr "Este método deve, sempre que possível e por motivos de eficiência, usar URLs de capas que estejam em cache. Quando não estejam presentes dados em cache, a maioria das extensões simplesmente invoca o método identify e usa os respetivos resultados."
+msgstr "Este método deve, sempre que possível e por motivos de eficiência, usar URL de capa que esteja em cache. Quando não estejam presentes dados em cache, a maioria dos plugins simplesmente invoca o método identify e usa os respetivos resultados."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:9
 msgid ""
 "If the parameter get_best_cover is True and this plugin can get multiple "
 "covers, it should only get the \"best\" one."
-msgstr "Se o parâmetro get_best_cover for True e esta extensão puder obter múltiplas capas, deve apenas obter a \"melhor\" delas."
+msgstr "Se o parâmetro get_best_cover for True e este plugin puder obter múltiplas capas, deve apenas obter a \"melhor\" delas."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:1
@@ -1857,7 +1857,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:13
 msgid "None or a single plugboard instance."
-msgstr ""
+msgstr "Nenhum ou um quadro de conexões individual"
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_driveinfo_name:1
@@ -2414,7 +2414,7 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_add_menu:1
 msgid "If True, a menu is automatically created and added to self.qaction"
-msgstr "Se True, um menú é automaticamente criado e adicionado a self.qaction"
+msgstr "Se True, um menu será criado e adicionado automaticamente a self.qaction"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_menu_clone_qaction:1
@@ -2422,7 +2422,7 @@ msgid ""
 "If True, a clone of self.qaction is added to the menu of self.qaction If you"
 " want the text of this action to be different from that of self.qaction, set"
 " this variable to the new text"
-msgstr "Se True, um clone de self.qaction é adicionado ao menú de self.qaction. Se pretender que o texto desta ação seja diferente do de self.qaction, modifique esta variável de modo a ficar com o novo texto"
+msgstr "Se True, um clone de self.qaction é adicionado ao menu de self.qaction. Se pretender que o texto desta ação seja diferente do de self.qaction, modifique esta variável para o novo texto"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.dont_add_to:1
@@ -2444,7 +2444,7 @@ msgid ""
 "Type of action 'current' means acts on the current view 'global' means an "
 "action that does not act on the current view, but rather on calibre as a "
 "whole"
-msgstr "Tipo de ação 'corrente' significa que ações na vista 'global' corrente implicam uma ação que não se repercute na vista corrente, mas sim no calibre como um todo"
+msgstr "Tipo de ação 'corrente' significa que ações na vista 'global' atual implicam uma ação que não se repercute na vista atual, mas sim no Calibre como um todo"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.accepts_drops:1

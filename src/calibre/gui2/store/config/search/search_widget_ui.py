@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/store/config/search/search_widget.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -102,4 +104,3 @@ class Ui_Form(object):
         self.label_5.setText(_("Number of cache update threads to use:"))
         self.label_6.setText(_("Number of cover download threads to use:"))
         self.label_7.setText(_("Number of details threads to use:"))
-

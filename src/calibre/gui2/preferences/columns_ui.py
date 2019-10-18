@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/columns.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -94,5 +96,4 @@ class Ui_Form(object):
         self.column_down.setToolTip(_("Move column down"))
         self.column_down.setText(_("..."))
         self.add_col_button.setText(_("Add &custom column"))
-
 

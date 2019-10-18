@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MetadataBulkDialog(object):
     def setupUi(self, MetadataBulkDialog):
@@ -705,7 +707,6 @@ class Ui_MetadataBulkDialog(object):
         self.xlabel_31.setText(_("Test result"))
         self.label_31.setText(_("Your &test:"))
         self.central_widget.setTabText(self.central_widget.indexOf(self.tabWidgetPage3), _("&Search and replace"))
-
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.languages import LanguagesEdit
 from calibre.gui2.widgets import EnLineEdit, HistoryLineEdit

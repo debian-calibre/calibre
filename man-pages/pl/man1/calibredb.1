@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "października 08, 2019" "4.1.0" "calibre"
+.TH "CALIBREDB" "1" "października 18, 2019" "4.2.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Hasło do połączenia z serwerem treści calibre. Aby odczytać hasło ze standardowego wejścia, użyj specjalnej wartości: <stdin>. Aby odczytać hasło z pliku, użyj: <f:/path/to/file> (tj. <f: followed by the full path to the file and a trailing >). Wymagane są nawiasy kątowe podane powyżej, pamiętaj, aby je uciec lub użyj cudzysłowu dla swojej powłoki.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Posortuj wyniki rosnąco
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Pola do wyświetlenia podczas wyświetlania książek w bazie danych. Powinna być oddzielona przecinkami lista pól Dostępne pola: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Domyślnie: % domyślnie. Do wybrania wszystkich pól można użyć specjalnego pola „wszystkie”. Oprócz wbudowanych pól powyżej pola niestandardowe są również dostępne jako *nazwa_pola, na przykład dla niestandardowego pola #oceń, użyj nazwy: *ocena
 .UNINDENT
 .INDENT 0.0
 .TP

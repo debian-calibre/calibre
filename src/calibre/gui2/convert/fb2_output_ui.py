@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/fb2_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -40,4 +42,3 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.label.setText(_("&Sectionize:"))
         self.label_2.setText(_("&Genre:"))
-
