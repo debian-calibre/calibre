@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/config.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_ViewerConfig(object):
     def setupUi(self, ViewerConfig):
@@ -48,5 +50,4 @@ class Ui_ViewerConfig(object):
         self.white_background.setText(_("Use white background"))
         self.hyphenate.setText(_("Hyphenate"))
         self.label.setText(_("<b>Changes will only take effect after a restart.</b>"))
-
 

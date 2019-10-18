@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_TagEditor(object):
     def setupUi(self, TagEditor):
@@ -17,7 +19,7 @@ class Ui_TagEditor(object):
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setContentsMargins(0, 11, 0, 11)
+        self.horizontalLayout_4.setContentsMargins(0, -1, 0, -1)
         self.horizontalLayout_4.setSpacing(6)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -43,11 +45,9 @@ class Ui_TagEditor(object):
         self.line_2.setObjectName("line_2")
         self.verticalLayout.addWidget(self.line_2)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setContentsMargins(11, 11, 11, 11)
         self.horizontalLayout.setSpacing(6)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
         self.gridLayout.setSpacing(6)
         self.gridLayout.setObjectName("gridLayout")
         self.available_filter_input = QtWidgets.QLineEdit(TagEditor)
@@ -77,7 +77,6 @@ class Ui_TagEditor(object):
         self.apply_button.setObjectName("apply_button")
         self.horizontalLayout.addWidget(self.apply_button)
         self.gridLayout_2 = QtWidgets.QGridLayout()
-        self.gridLayout_2.setContentsMargins(11, 11, 11, 11)
         self.gridLayout_2.setSpacing(6)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.applied_filter_input = QtWidgets.QLineEdit(TagEditor)
@@ -136,6 +135,5 @@ class Ui_TagEditor(object):
         self.label_2.setText(_("Applied &tags"))
         self.unapply_button.setToolTip(_("Unapply (remove) tag from current book"))
         self.unapply_button.setText(_("&Unapply tag"))
-
 from calibre.gui2.widgets import EnLineEdit
 

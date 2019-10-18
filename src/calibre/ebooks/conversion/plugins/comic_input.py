@@ -185,8 +185,11 @@ class ComicInput(InputFormatPlugin):
             pages = self.get_pages(fname, cdir)
             if not pages:
                 continue
-            wrappers = self.create_wrappers(pages)
-            comics.append((title, pages, wrappers))
+            if self.for_viewer:
+                comics.append((title, pages, [self.create_viewer_wrapper(pages)]))
+            else:
+                wrappers = self.create_wrappers(pages)
+                comics.append((title, pages, wrappers))
 
         if not comics:
             raise ValueError('No comic pages found in %s'%stream.name)
@@ -201,10 +204,13 @@ class ComicInput(InputFormatPlugin):
                 return os.path.basename(x)
             return '/'.join(x.split(os.sep)[-2:])
 
+        cover_href = None
         for comic in comics:
             pages, wrappers = comic[1:]
-            entries += [(w, None) for w in map(href, wrappers)] + \
-                    [(x, None) for x in map(href, pages)]
+            page_entries = [(x, None) for x in map(href, pages)]
+            entries += [(w, None) for w in map(href, wrappers)] + page_entries
+            if cover_href is None and page_entries:
+                cover_href = page_entries[0][0]
         opf.create_manifest(entries)
         spine = []
         for comic in comics:
@@ -213,6 +219,8 @@ class ComicInput(InputFormatPlugin):
         for comic in comics:
             self._images.extend(comic[1])
         opf.create_spine(spine)
+        if self.for_viewer and cover_href:
+            opf.guide.set_cover(cover_href)
         toc = TOC()
         if len(comics) == 1:
             wrappers = comics[0][2]
@@ -265,3 +273,38 @@ class ComicInput(InputFormatPlugin):
                 f.write(wrapper.encode('utf-8'))
             wrappers.append(page)
         return wrappers
+
+    def create_viewer_wrapper(self, pages):
+        from calibre.ebooks.oeb.base import XHTML_NS
+
+        def page(src):
+            return '<img src="{}"></img>'.format(os.path.basename(src))
+
+        pages = '\n'.join(map(page, pages))
+        base = os.path.dirname(pages[0])
+        wrapper = '''
+        <html xmlns="%s">
+            <head>
+                <meta charset="utf-8"/>
+                <style type="text/css">
+                html, body, img { height: 100vh; display: block; margin: 0; padding: 0; border-width: 0; }
+                img {
+                    width: 100%%; height: 100%%;
+                    object-fit: contain;
+                    margin-left: auto; margin-right: auto;
+                    max-width: 100vw; max-height: 100vh;
+                    top: 50vh; transform: translateY(-50%%);
+                    position: relative;
+                    page-break-after: always;
+                }
+                </style>
+            </head>
+            <body>
+            %s
+            </body>
+        </html>
+        ''' % (XHTML_NS, pages)
+        path = os.path.join(base, 'wrapper.xhtml')
+        with open(path, 'wb') as f:
+            f.write(wrapper.encode('utf-8'))
+        return path

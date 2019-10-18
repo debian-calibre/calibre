@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/save_template.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -53,5 +55,4 @@ class Ui_Form(object):
         self.help_label.setText(_("By adjusting the template below, you can control what folders the files are saved in and what filenames they are given. You can use the / character to indicate sub-folders. Available metadata variables are described below. If a particular book does not have some metadata, the variable will be replaced by the empty string."))
         self.label_5.setText(_("Available variables:"))
         self.open_editor.setText(_("Template &editor"))
-
 from calibre.gui2.preferences.history import HistoryBox

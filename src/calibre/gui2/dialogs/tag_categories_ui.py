@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_TagCategories(object):
     def setupUi(self, TagCategories):
@@ -184,5 +186,4 @@ class Ui_TagCategories(object):
         self.label_2.setText(_("Applied &items"))
         self.unapply_button.setToolTip(_("Unapply (remove) tag from current tag category"))
         self.unapply_button.setText(_("..."))
-
 

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/device_drivers/configwidget.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_ConfigWidget(object):
     def setupUi(self, ConfigWidget):
@@ -80,5 +82,4 @@ class Ui_ConfigWidget(object):
         self.opt_use_subdirs.setText(_("Use sub-directories"))
         self.opt_use_author_sort.setText(_("Use author sort for author"))
         self.label.setText(_("Save &template:"))
-
 

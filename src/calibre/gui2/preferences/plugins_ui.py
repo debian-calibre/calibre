@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -112,6 +114,5 @@ class Ui_Form(object):
         self.button_plugin_new.setText(_("Get &new plugins"))
         self.button_plugin_updates.setText(_("Check for &updated plugins"))
         self.button_plugin_add.setText(_("&Load plugin from file"))
-
 from calibre.gui2.search_box import SearchBox2
 

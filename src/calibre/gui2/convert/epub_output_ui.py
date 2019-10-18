@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/epub_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -81,4 +83,3 @@ class Ui_Form(object):
         self.opt_epub_flatten.setText(_("&Flatten EPUB file structure"))
         self.label_2.setText(_("&Title for inserted ToC:"))
         self.label_3.setText(_("EP&UB version:"))
-

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -282,7 +284,6 @@ class Ui_Form(object):
         self.filter_css_others.setToolTip(_("Comma separated list of CSS properties to remove. For example: display, color, font-family"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_3), _("&Styling"))
         self.MainTabs.setTabText(self.MainTabs.indexOf(self.tab_4), _("&Transform styles"))
-
 from calibre.gui2.css_transform_rules import RulesWidget
 from calibre.gui2.font_family_chooser import FontFamilyChooser
 from calibre.gui2.widgets import EncodingComboBox

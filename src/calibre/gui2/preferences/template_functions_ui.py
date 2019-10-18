@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -98,4 +100,3 @@ class Ui_Form(object):
         self.replace_button.setText(_("&Replace"))
         self.create_button.setText(_("C&reate"))
         self.label_41.setText(_("&Program code (Follow Python indenting rules):"))
-

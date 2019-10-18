@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/heuristics.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -118,4 +120,3 @@ class Ui_Form(object):
         self.opt_dehyphenate.setText(_("Remove unnecessary hyphens"))
         self.opt_italicize_common_cases.setText(_("Italicize common words and patterns"))
         self.opt_fix_indents.setText(_("Replace entity indents with CSS indents"))
-

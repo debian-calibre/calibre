@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_library.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -81,6 +83,5 @@ class Ui_Dialog(object):
         self.copy_structure.setText(_("&Copy structure from the current library"))
         self.move_library.setText(_("&Move current library to new location"))
         self.browse_button.setText(_("..."))
-
 from calibre.gui2.widgets import HistoryLineEdit
 

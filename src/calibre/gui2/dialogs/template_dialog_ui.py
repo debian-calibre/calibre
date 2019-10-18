@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_TemplateDialog(object):
     def setupUi(self, TemplateDialog):
@@ -22,7 +24,6 @@ class Ui_TemplateDialog(object):
         self.color_layout = QtWidgets.QWidget(TemplateDialog)
         self.color_layout.setObjectName("color_layout")
         self.gridlayout = QtWidgets.QGridLayout(self.color_layout)
-        self.gridlayout.setContentsMargins(0, 0, 0, 0)
         self.gridlayout.setObjectName("gridlayout")
         self.colored_field_label = QtWidgets.QLabel(self.color_layout)
         self.colored_field_label.setObjectName("colored_field_label")
@@ -46,7 +47,6 @@ class Ui_TemplateDialog(object):
         self.icon_layout = QtWidgets.QWidget(TemplateDialog)
         self.icon_layout.setObjectName("icon_layout")
         self.gridlayout1 = QtWidgets.QGridLayout(self.icon_layout)
-        self.gridlayout1.setContentsMargins(0, 0, 0, 0)
         self.gridlayout1.setObjectName("gridlayout1")
         self.hboxlayout = QtWidgets.QHBoxLayout()
         self.hboxlayout.setObjectName("hboxlayout")
@@ -69,7 +69,6 @@ class Ui_TemplateDialog(object):
         self.widget = QtWidgets.QWidget(self.icon_layout)
         self.widget.setObjectName("widget")
         self.hboxlayout1 = QtWidgets.QHBoxLayout(self.widget)
-        self.hboxlayout1.setContentsMargins(0, 0, 0, 0)
         self.hboxlayout1.setObjectName("hboxlayout1")
         self.icon_files = QtWidgets.QComboBox(self.widget)
         self.icon_files.setObjectName("icon_files")
@@ -177,5 +176,4 @@ class Ui_TemplateDialog(object):
         self.label2.setText(_("Function &name:"))
         self.label_2.setText(_("&Documentation:"))
         self.label_3.setText(_("Python &code:"))
-
 from calibre.gui2.widgets2 import ColorButton

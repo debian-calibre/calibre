@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/mobi_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -84,4 +86,3 @@ class Ui_Form(object):
         self.label_3.setText(_("Personal Doc tag:"))
         self.opt_share_not_sync.setText(_("Enable &sharing of book content via Facebook, etc. WARNING: Disables last read syncing"))
         self.label_4.setText(_("<b>WARNING:</b> Various Kindle devices have trouble displaying the new or both MOBI filetypes. If you wish to use the new format on your device, convert to AZW3 instead of MOBI."))
-

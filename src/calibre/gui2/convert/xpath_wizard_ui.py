@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/xpath_wizard.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -82,4 +84,3 @@ class Ui_Form(object):
         self.label_3.setText(_("With &value:"))
         self.label_4.setText(_("(A regular expression)"))
         self.example_label.setText(_("<p>For example, to match all h2 tags that have class=\"chapter\", set tag to <i>h2</i>, attribute to <i>class</i> and value to <i>chapter</i>.</p><p>Leaving attribute blank will match any attribute and leaving value blank will match any value. Setting tag to * will match any tag.</p><p>To learn more advanced usage of XPath see the <a href=\"%s\">XPath Tutorial</a>."))
-

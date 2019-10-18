@@ -21,6 +21,7 @@ from calibre.utils.short_uuid import uuid4
 from polyglot.builtins import as_bytes, as_unicode, iteritems
 
 DAY = 24 * 3600
+VIEWER_VERSION = 1
 
 
 def book_cache_dir():
@@ -33,7 +34,7 @@ def cache_lock():
 
 def book_hash(path, size, mtime):
     path = os.path.normcase(os.path.abspath(path))
-    raw = json.dumps((path, size, mtime, RENDER_VERSION))
+    raw = json.dumps((path, size, mtime, RENDER_VERSION, VIEWER_VERSION))
     if not isinstance(raw, bytes):
         raw = raw.encode('utf-8')
     return as_unicode(sha1(raw).hexdigest())
@@ -120,7 +121,7 @@ def prepare_convert(temp_path, key, st):
 def do_convert(path, temp_path, key, instance):
     tdir = os.path.join(temp_path, instance['path'])
     fork_job('calibre.srv.render_book', 'render', args=(
-        path, tdir, {'size': instance['file_size'], 'mtime': instance['file_mtime'], 'hash': key}, True, True,
+        path, tdir, {'size': instance['file_size'], 'mtime': instance['file_mtime'], 'hash': key}, True, True, False,
         ), timeout=3000, no_output=True
     )
     size = 0
@@ -133,7 +134,7 @@ def save_metadata(metadata, f):
     f.seek(0), f.truncate(), f.write(as_bytes(json.dumps(metadata, indent=2)))
 
 
-def prepare_book(path, convert_func=do_convert, max_age=30 * DAY, force=False):
+def prepare_book(path, convert_func=do_convert, max_age=30 * DAY, force=False, prepare_notify=None):
     st = os.stat(path)
     key = book_hash(path, st.st_size, st.st_mtime)
     finished_path = safe_makedirs(os.path.join(book_cache_dir(), 'f'))
@@ -155,6 +156,8 @@ def prepare_book(path, convert_func=do_convert, max_age=30 * DAY, force=False):
                     instance['atime'] = time.time()
                     save_metadata(metadata, f)
                     return os.path.join(finished_path, instance['path'])
+        if prepare_notify:
+            prepare_notify()
         instance = prepare_convert(temp_path, key, st)
         instances.append(instance)
         save_metadata(metadata, f)

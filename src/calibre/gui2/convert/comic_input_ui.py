@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/comic_input.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -113,4 +115,3 @@ class Ui_Form(object):
         self.opt_dont_grayscale.setText(_("Disable conversion of images to &black and white"))
         self.label_2.setText(_("Override image &size:"))
         self.opt_dont_add_comic_pages_to_toc.setText(_("Don\'t add links to &pages to the Table of Contents for CBC files"))
-

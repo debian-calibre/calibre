@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-04 06:02+0530\n"
-"PO-Revision-Date: 2019-10-05 10:58+0000\n"
+"POT-Creation-Date: 2019-10-08 07:08+0530\n"
+"PO-Revision-Date: 2019-10-15 08:22+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr "As ferramentas de edição de ebooks consistem num objecto contentor :cl
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
-msgstr "Obtém um objecto contentor para um livro residente num caminho como este::"
+msgstr "Obtém um objecto contentor para um livro num caminho como este::"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:20
 msgid ""
@@ -69,7 +69,7 @@ msgid ""
 "of as canonical identifiers for files in the book. Most methods on the "
 "container object work with names. Names are always in the NFC unicode normal"
 " form."
-msgstr "Nomes: Estes são caminhos para os ficheiros do livro relativos ao directório de raiz. Contêm sempre caracteres POSIX  e não têm aspas. Pode pensar-se neles como sendo identificadores canónicos para os ficheiros no livro. A maior parte dos métodos no objecto contentor trabalha com nomes. Os nomes estão sempre na forma normal NFC Unicode."
+msgstr "Nomes: Estes são caminhos para os ficheiros de livros relativos à pasta raiz. Contêm sempre caracteres POSIX e não têm aspas. Pode pensar-se neles como sendo identificadores canónicos para os ficheiros no livro. A maior parte dos métodos no objecto contentor trabalha com nomes. Os nomes estão sempre na forma normal NFC Unicode."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -143,14 +143,14 @@ msgstr "O directório base. Por padrão, é usada a raiz deste objecto contentor
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr "Adiciona um ficheiro a este contentor. Entradas para o ficheiro são automaticamente criadas no manifesto OPF e na lombada (se o ficheiro for um documento de texto)"
+msgstr "Adiciona um ficheiro a este contentor. Entradas para o ficheiro são criadas automaticamente no manifesto OPF e na lombada (se o ficheiro for um documento de texto)"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr "Adiciona uma entrada ao manifesto para um ficheiro com o nome especificado. Devolve o id do manifesto."
+msgstr "Adiciona uma entrada ao manifesto para um ficheiro com o nome especificado. Devolve o ID do manifesto."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
@@ -220,7 +220,7 @@ msgstr "Verdadeiro se e só se existe um ficheiro/directório correspondente ao 
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr "Devolve o tamanho em bytes do ficheiro representado pelo nome canónico especificado. Manipula automaticamente os objectos com falhas lexicograficas. Ver também: :meth:`parsed`"
+msgstr "Devolve o tamanho em bytes do ficheiro representado pelo nome canónico especificado. Manipula automaticamente os objectos analisados como impuros. Ver também: :meth:`parsed`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
@@ -235,12 +235,12 @@ msgstr "Adiciona um item ao manifesto com um href derivado do nome fornecido. As
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr "Similar a open() excepto que devolve o caminho para um ficheiro, em vez de um objecto ficheiro aberto."
+msgstr "Similar a open() exceto por devolver o caminho de um ficheiro em vez de um objecto de ficheiro aberto."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
 msgid "Mapping of guide type to canonical name"
-msgstr "Mapeamento de tipo guia para nome canónico"
+msgstr "Mapeamento de tipo de guia para o nome canónico"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.has_name:1
@@ -293,7 +293,7 @@ msgstr "Devolve Verdadeiro se o manifesto tiver uma entrada correspondente ao no
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
-msgstr "Mapeamento de id do manifesto para nomes canónicos"
+msgstr "Mapeamento de ID do manifesto para nomes canónicos"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
@@ -321,19 +321,19 @@ msgid ""
 "The metadata of this book as a Metadata object. Note that this object is "
 "constructed on the fly every time this property is requested, so use it "
 "sparingly."
-msgstr "Os metadados deste livro sob a forma de um objecto Metadata. Note que este objecto é construído no momento de cada vez que esta propriedade é solicitada, portanto não abuse do seu uso."
+msgstr "Os metadados deste livro sob a forma de um objecto Metadados. Note que este objecto é construído em tempo real de cada vez que esta propriedade é solicitada, portanto não abuse do seu uso."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
 msgid "Convert a canonical name to an absolute OS dependant path"
-msgstr "Converte um nome canónico para um caminho absoluto, de modo dependente do sistema operativo subjacente"
+msgstr "Converte um nome canónico para um caminho absoluto dependente do sistema operativo"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_href:1
 msgid ""
 "Convert a name to a href relative to base, which must be a name or None in "
 "which case self.root is used as the base"
-msgstr "Converte um nome para um href relativo à base, que tem de ser ou um nome ou None, caso em que self.root é usado como base"
+msgstr "Converte um nome para um href relativo à base, que tem de ser um nome ou None, caso em que self.root é usado como base"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -365,7 +365,7 @@ msgid ""
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr "Abre o ficheiro apontado por nome para leitura/escrita directa. Note que isto efectuará as alterações ao ficheiro se o mesmo se encontrar deteriorado e removê-lo-à da cache do interpretador. É imperativo terminar o trabalho com este ficheiro antes de aceder novamente à sua versão interpretada, ou coisas estranhas certamente acontecerão."
+msgstr "Abre o ficheiro apontado por nome para leitura/escrita direta. Note que isto efectuará as alterações ao ficheiro se o mesmo se encontrar deteriorado e removê-lo-à da cache do interpretador. É imperativo terminar o trabalho neste ficheiro antes de aceder novamente à sua versão interpretada, ou coisas estranhas certamente acontecerão."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
@@ -378,7 +378,7 @@ msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
-msgstr "Método de conveniência que ou retorna o primeiro element XML com o nome especificado ou o cria debaixo do elemento opf:package e que, de seguida, o retorna, no caso de ainda não existir."
+msgstr "Método de conveniência que devolve o primeiro element XML com o nome especificado ou então cria-o debaixo do elemento opf:package e devolve-o de seguida no caso de ainda não existir."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
@@ -405,7 +405,7 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr "Devolve uma representação analizada lexicograficamente do ficheiro especificado pelo nome. Para ficheiros HTML e XML é devolvida uma árvore lxml. Paraficheiros CSS é devolvida uma folha de estilo do tipo css_parser. Note que os objectos analisados ficam em cache para melhorar a performance. Se fizer quaisquer mudanças ao objecto analisado, tem de invocar :meth:`dirty` de modo a que o contentor saiba que tem de actualizar a cache. Veja também :meth:`replace`."
+msgstr "Devolve uma representação analisada lexicograficamente do ficheiro especificado pelo nome. Para ficheiros HTML e XML é devolvida uma árvore lxml. Para ficheiros CSS é devolvida uma folha de estilo do tipo css_parser. Note que os objectos analisados ficam em cache para melhorar a performance. Se fizer quaisquer mudanças ao objecto analisado, tem de invocar :meth:`dirty` de modo a que o contentor saiba que tem de actualizar a cache. Veja também :meth:`replace`."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
@@ -424,7 +424,7 @@ msgstr "Se Verdadeiro e se o ficheiro tem um tipo MIME baseado em texto, descodi
 msgid ""
 "If True the returned unicode object is normalized to the NFC normal form as "
 "is required for the EPUB and AZW3 file formats."
-msgstr "Se Verdadeiro o objecto Unicode devolvido é normalizado sob a forma normal NFC tal como requerido pelos formatos de ficheiro EPUB e AZW3."
+msgstr "Se Verdadeiro o objeto Unicode devolvido é normalizado sob a forma normal NFC tal como requerido pelos formatos de ficheiro EPUB e AZW3."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
@@ -447,7 +447,7 @@ msgstr "Remove os itens especificados (por nome canónico) da lombada. Se ``remo
 msgid ""
 "Removes item from parent, fixing indentation (works only with self closing "
 "items)"
-msgstr "Remove o item do ascendente, ajustando a indentação (funciona apenas com itens que se auto-fecham)."
+msgstr "Remove o item do contentor, ajustando a indentação (funciona apenas com itens que se auto-fecham)."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_item:1
@@ -464,7 +464,7 @@ msgid ""
 "links inside the file if the directory the file is in changes. Note however,"
 " that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr "Modifica o nome de current_name para new_name. Modifica automaticamente as bases de todas as ligações dentro do ficheiro se o directório onde se encontra o ficheiro sofre alguma mudança. Note contudo que as ligações não são actualizadas nos outros ficheiros que podem conter referências para este. Tal é feito tendo em vista a performance donde estas actualizações devem ser feitas de uma vez, em bloco."
+msgstr "Modifica o nome de current_name para new_name. Redefine automaticamente a base de todas as ligações dentro do ficheiro caso a pasta onde se encontra o ficheiro sofrer alguma mudança. Note contudo que as ligações não são atualizadas nos ficheiros que possam conter referências para este ficheiro. Tal é feito tendo em vista a performance pelo que estas actualizações devem ser feitas de uma vez, em lote."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
@@ -684,7 +684,7 @@ msgid ""
 "Merge the specified files into a single file, automatically migrating all "
 "links and references to the affected files. The file must all either be HTML"
 " or CSS files."
-msgstr "Funde os ficheiros especificados num único ficheiro, com a migração automática de todas as ligações e referências dos ficheiros afectados. Os ficheiros têm todos de ser HTML ou CSS."
+msgstr "Funde os ficheiros especificados num único ficheiro, com a migração automática de todas as ligações e referências dos ficheiros afetados. Os ficheiros têm todos de ser HTML ou CSS."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:4
@@ -718,7 +718,7 @@ msgid ""
 "Either the absolute path to an image file or the canonical name of an image "
 "in the book. When using an image in the book, you must also set options, see"
 " below."
-msgstr "Ou o caminho absoluto para um ficheiro de imagem ou o nome canónico de uma imagem no livro. Quando usa uma imagem no livro, tem também de definer opções, como abaixo."
+msgstr "O caminho absoluto para um ficheiro de imagem ou o nome canónico de uma imagem no livro. Quando usa uma imagem no livro tem também de definir opções, ver abaixo."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:6
@@ -735,7 +735,7 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr "Vazio, ou um dicionário que controla como a capa é criada. O dicionário pode conter as entradas: **keep_aspect**: Verdadeiro ou Falso (Preserva a proporção das imagens da capas no EPUB) **no_svg**: Verdadeiro ou Falso (Usa um wrapper SVG para a capa na página de título do EPUB) **existing**: Verdadeiro ou Falso (``cover_path`` refere-se a uma imagem existente no livro)"
+msgstr "Vazio, ou um dicionário que controla como a capa é criada. O dicionário pode conter as entradas: **keep_aspect**: Verdadeiro ou Falso (Preservar a proporção das imagens de capa no EPUB) **no_svg**: Verdadeiro ou Falso (Usar um embrulho SVG para a capa na página de título do EPUB) **existing**: Verdadeiro ou Falso (``cover_path`` refere-se a uma imagem existente no livro)"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
@@ -984,7 +984,7 @@ msgstr "Uma descrição mais detalhada desta ação, que será usada na entrada 
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr "Cria uma QAction que será adicionada à barra de ferramentas das extensões ou ao menu de extensões, dependendo valor de ``for_toolbar``. Por exemplo::"
+msgstr "Cria uma QAction que será adicionada à barra de ferramentas dos plugins ou ao menu de plugins, dependendo valor de ``for_toolbar``. Por exemplo::"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.create_action:19

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_JobsDialog(object):
     def setupUi(self, JobsDialog):
@@ -71,6 +73,5 @@ class Ui_JobsDialog(object):
         self.show_button.setText(_("Show &all jobs"))
         self.stop_all_jobs_button.setText(_("Stop &all non device jobs"))
         self.hide_all_button.setText(_("&Hide all jobs"))
-
 from calibre.gui2.search_box import SearchBox2
 
