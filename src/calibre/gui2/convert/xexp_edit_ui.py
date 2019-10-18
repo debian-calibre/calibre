@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/xexp_edit.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -50,6 +52,5 @@ class Ui_Form(object):
         self.msg.setText(_("TextLabel"))
         self.button.setToolTip(_("Use a wizard to help construct the Regular expression"))
         self.button.setText(_("..."))
-
 from calibre.gui2.widgets import HistoryLineEdit
 

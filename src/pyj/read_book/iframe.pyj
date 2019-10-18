@@ -5,8 +5,9 @@ from __python__ import bound_methods, hash_literals
 import traceback
 from gettext import gettext as _
 
+from fs_images import fix_fullscreen_svg_images
 from iframe_comm import IframeClient
-from read_book.cfi import at_current, scroll_to as scroll_to_cfi
+from read_book.cfi import scroll_to as scroll_to_cfi
 from read_book.extract import get_elements
 from read_book.flow_mode import (
     anchor_funcs as flow_anchor_funcs, flow_onwheel, flow_to_scroll_fraction,
@@ -20,7 +21,7 @@ from read_book.globals import (
 )
 from read_book.mathjax import apply_mathjax
 from read_book.paged_mode import (
-    anchor_funcs as paged_anchor_funcs, calc_columns_per_screen,
+    anchor_funcs as paged_anchor_funcs, calc_columns_per_screen, current_cfi,
     handle_gesture as paged_handle_gesture, handle_shortcut as paged_handle_shortcut,
     jump_to_cfi as paged_jump_to_cfi, layout as paged_layout,
     onwheel as paged_onwheel, progress_frac, reset_paged_mode_globals,
@@ -45,6 +46,10 @@ CALIBRE_VERSION = '__CALIBRE_VERSION__'
 ERS_SUPPORTED_FEATURES = {'dom-manipulation', 'layout-changes', 'touch-events', 'mouse-events', 'keyboard-events', 'spine-scripting'}
 
 
+def layout_style():
+    return 'scrolling' if current_layout_mode() is 'flow' else 'paginated'
+
+
 class EPUBReadingSystem:
 
     @property
@@ -57,7 +62,7 @@ class EPUBReadingSystem:
 
     @property
     def layoutStyle(self):
-        return 'scrolling' if current_layout_mode() is 'flow' else 'paginated'
+        return layout_style()
 
     def hasFeature(self, feature, version):
         return feature in ERS_SUPPORTED_FEATURES
@@ -76,7 +81,6 @@ class IframeBoss:
         self.last_cfi = None
         self.replace_history_on_next_cfi_update = True
         self.blob_url_map = {}
-        self.resource_urls = {}
         self.content_ready = False
         self.last_window_width = self.last_window_height = -1
         self.forward_keypresses = False
@@ -104,7 +108,7 @@ class IframeBoss:
 
     def initialize(self, data):
         scroll_viewport.update_window_size(data.width, data.height)
-        window.onerror = self.onerror
+        window.addEventListener('error', self.onerror)
         window.addEventListener('scroll', debounce(self.onscroll, 1000))
         window.addEventListener('scroll', self.no_latency_onscroll)
         window.addEventListener('resize', debounce(self.onresize, 500))
@@ -115,7 +119,13 @@ class IframeBoss:
         self.color_scheme = data.color_scheme
         create_touch_handlers()
 
-    def onerror(self, msg, script_url, line_number, column_number, error_object):
+    def onerror(self, evt):
+        msg = evt.message
+        script_url = evt.filename
+        line_number = evt.lineno
+        column_number = evt.colno
+        error_object = evt.error
+        evt.stopPropagation(), evt.preventDefault()
         if error_object is None:
             # This happens for cross-domain errors (probably javascript injected
             # into the browser via extensions/ userscripts and the like). It also
@@ -123,15 +133,16 @@ class IframeBoss:
             # type of error
             console.log(f'Unhandled error from external javascript, ignoring: {msg} {script_url} {line_number}')
             return
-        is_internal_error = not self.resource_urls[script_url]
+        is_internal_error = script_url in ('about:srcdoc', 'userscript:viewer.js')
         if is_internal_error:  # dont report errors from scripts in the book itself
-            console.log(error_object)
+            console.log(f'{script_url}: {error_object}')
             try:
                 fname = script_url.rpartition('/')[-1] or script_url
                 msg = msg + '<br><span style="font-size:smaller">' + 'Error at {}:{}:{}'.format(fname, line_number, column_number or '') + '</span>'
                 details = traceback.format_exception(error_object).join('') if error_object else ''
+                if details:
+                    console.log(details)
                 self.send_message('error', title=_('Unhandled error'), details=details, msg=msg)
-                return True
             except:
                 console.log('There was an error in the iframe unhandled exception handler')
         else:
@@ -171,7 +182,7 @@ class IframeBoss:
             window.URL.revokeObjectURL(self.blob_url_map[name])
         document.body.style.removeProperty('font-family')
         root_data, self.mathjax, self.blob_url_map = finalize_resources(self.book, data.name, data.resource_data)
-        self.resource_urls = unserialize_html(root_data, self.content_loaded)
+        unserialize_html(root_data, self.content_loaded, None, data.name)
 
     def on_scroll_to_frac(self, data):
         self.to_scroll_fraction(data.frac)
@@ -200,7 +211,7 @@ class IframeBoss:
     def on_next_screen(self, data):
         backwards = data.backwards
         if current_layout_mode() is 'flow':
-            flow_scroll_by_page(backwards)
+            flow_scroll_by_page(-1 if backwards else 1)
         else:
             paged_scroll_by_page(backwards, data.all_pages_on_screen)
 
@@ -218,54 +229,27 @@ class IframeBoss:
             opts.color_scheme = data.color_scheme
             apply_colors()
 
-    def fix_fullscreen_svg_images(self):
-        # Full screen images using SVG no longer render correctly
-        # webengine. This is because it sets the width to the
-        # viewport width and simply adjusts the height accordingly
-        # So we replace 100% with 100vw and 100vh to get the desired
-        # rendering
-        child_names = v'[]'
-        for node in document.body.childNodes:
-            if node.tagName:
-                name = node.tagName.toLowerCase()
-                if name is not 'style' and name is not 'script':
-                    child_names.push(name)
-                if child_names.length > 1:
-                    break
-        if child_names.length is 1 and child_names[0] is 'div':
-            names = []
-            svg = None
-            for node in document.body.querySelectorAll('*'):
-                if node.tagName:
-                    name = node.tagName.toLowerCase()
-                    if name is not 'style' and name is not 'script':
-                        names.push(name)
-                        if name is 'svg':
-                            svg = node
-            if names == ['div', 'svg', 'image'] or names == ['svg', 'image']:
-                if svg.getAttribute('width') is '100%' and svg.getAttribute('height') is '100%':
-                    svg.setAttribute('width', '100vw')
-                    svg.setAttribute('height', '100vh')
-
     def content_loaded(self):
         document.documentElement.style.overflow = 'hidden'
         if self.is_titlepage and not opts.cover_preserve_aspect_ratio:
             document.body.classList.add('cover-fill')
+        document.body.classList.add(f'calibre-viewer-{layout_style()}')
         self.last_window_width, self.last_window_height = scroll_viewport.width(), scroll_viewport.height()
         apply_settings()
-        self.fix_fullscreen_svg_images()
-        self.do_layout()
+        fix_fullscreen_svg_images()
+        self.do_layout(self.is_titlepage)
         if self.mathjax:
             return apply_mathjax(self.mathjax, self.book.manifest.link_uid, self.content_loaded_stage2)
+        # window.setTimeout(self.content_loaded_stage2, 1000)
         self.content_loaded_stage2()
 
     def content_loaded_stage2(self):
-        # this is the loading styles used to suppress scrollbars during load
-        # added in unserialize_html
-        document.head.firstChild.textContent = ''
-
         self.connect_links()
         self.content_ready = True
+        # this is the loading styles used to suppress scrollbars during load
+        # added in unserialize_html
+        document.head.removeChild(document.head.firstChild)
+
         csi = current_spine_item()
         if csi.initial_position:
             ipos = csi.initial_position
@@ -305,7 +289,7 @@ class IframeBoss:
         return ans
 
     def get_current_cfi(self, data):
-        cfi = at_current()
+        cfi = current_cfi()
         selected_text = window.getSelection().toString()
         if cfi:
             spine = self.book.manifest.spine
@@ -321,7 +305,7 @@ class IframeBoss:
             'report_cfi', cfi=None, progress_frac=0, file_progress_frac=0, selected_text=selected_text, request_id=data.request_id)
 
     def update_cfi(self):
-        cfi = at_current()
+        cfi = current_cfi()
         if cfi:
             spine = self.book.manifest.spine
             current_name = current_spine_item().name

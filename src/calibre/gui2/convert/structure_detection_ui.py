@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/structure_detection.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -60,5 +62,4 @@ class Ui_Form(object):
         self.opt_insert_metadata.setText(_("Insert &metadata as page at start of book"))
         self.label.setText(_("Chapter &mark:"))
         self.opt_remove_first_image.setText(_("Remove first &image"))
-
 from calibre.gui2.convert.xpath_wizard import XPathEdit

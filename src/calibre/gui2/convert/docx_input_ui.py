@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/docx_input.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -35,4 +37,3 @@ class Ui_Form(object):
         self.opt_docx_no_cover.setText(_("Do not try to autodetect a &cover from images in the document"))
         self.opt_docx_no_pagebreaks_between_notes.setText(_("Do not add a page after every &endnote"))
         self.opt_docx_inline_subsup.setText(_("Render &superscripts and subscripts so that they do not affect the line height."))
-

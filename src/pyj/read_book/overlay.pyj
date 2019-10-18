@@ -276,6 +276,8 @@ class MainOverlay:  # {{{
             text = _('Exit full screen') if runtime.viewer_in_full_screen else _('Enter full screen')
             full_screen_actions.push(
                 ac(text, '', def(): self.overlay.hide(), ui_operations.toggle_full_screen();, 'full-screen'))
+            full_screen_actions.push(
+                ac(_('Print'), _('Print book to PDF'), def(): self.overlay.hide(), ui_operations.print_book();, 'print'))
         else:
             if not full_screen_element() and not is_ios:
                 # No fullscreen on iOS, see http://caniuse.com/#search=fullscreen
@@ -515,13 +517,19 @@ class Overlay:
             self.hide_current_panel()
 
     def show_loading_message(self, msg):
-        lm = LoadingMessage(msg, self.view.current_color_scheme)
-        self.panels.push(lm)
-        self.show_current_panel()
+        if ui_operations.show_loading_message:
+            ui_operations.show_loading_message(msg)
+        else:
+            lm = LoadingMessage(msg, self.view.current_color_scheme)
+            self.panels.push(lm)
+            self.show_current_panel()
 
     def hide_loading_message(self):
-        self.panels = [p for p in self.panels if not isinstance(p, LoadingMessage)]
-        self.show_current_panel()
+        if ui_operations.show_loading_message:
+            ui_operations.show_loading_message(None)
+        else:
+            self.panels = [p for p in self.panels if not isinstance(p, LoadingMessage)]
+            self.show_current_panel()
 
     def hide_current_panel(self):
         p = self.panels.pop()
@@ -593,7 +601,7 @@ class Overlay:
 
     def show_goto(self):
         self.hide_current_panel()
-        self.panels.push(TOCOverlay(self, create_goto_panel.bind(None, self.view.currently_showing.bookpos), _('Go to…')))
+        self.panels.push(TOCOverlay(self, create_goto_panel.bind(None, self.view.current_position_data), _('Go to…')))
         self.show_current_panel()
 
     def show_metadata(self):
@@ -615,7 +623,7 @@ class Overlay:
     def show_ask_for_location(self):
         self.hide_current_panel()
         self.panels.push(SimpleOverlay(
-            self, create_location_overlay.bind(None, self.view.currently_showing.bookpos), _('Go to location…')))
+            self, create_location_overlay.bind(None, self.view.current_position_data), _('Go to location…')))
         self.show_current_panel()
 
     def show_search(self):

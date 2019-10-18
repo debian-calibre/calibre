@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/pmlz_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -43,5 +45,4 @@ class Ui_Form(object):
         self.opt_inline_toc.setText(_("&Inline TOC"))
         self.opt_full_image_depth.setText(_("Do not &reduce image size and depth"))
         self.label.setText(_("Output &encoding:"))
-
 from calibre.gui2.widgets import EncodingComboBox

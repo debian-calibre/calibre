@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/match_books.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MatchBooks(object):
     def setupUi(self, MatchBooks):
@@ -71,5 +73,4 @@ class Ui_MatchBooks(object):
         self.search_button.setText(_("Search"))
         self.label.setText(_("Do a search to find the book you want to match"))
         self.label1.setText(_("<p>Remember to update metadata on the device when you are done (Right click the device icon and select <i>Update cached metadata</i>)</p>"))
-
 from calibre.gui2.widgets import HistoryLineEdit

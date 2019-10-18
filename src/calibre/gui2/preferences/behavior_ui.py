@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -178,5 +180,4 @@ class Ui_Form(object):
         self.reset_confirmation_button.setText(_("Reset all disabled &confirmation dialogs"))
         self.groupBox_3.setTitle(_("Use internal &viewer for:"))
         self.label_170.setText(_("Virtual library to apply when the current &library is opened:"))
-
 

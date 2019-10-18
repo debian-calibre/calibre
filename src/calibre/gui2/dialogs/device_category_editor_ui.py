@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/device_category_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_DeviceCategoryEditor(object):
     def setupUi(self, DeviceCategoryEditor):
@@ -76,4 +78,3 @@ class Ui_DeviceCategoryEditor(object):
         self.rename_button.setToolTip(_("Rename the item in every book where it is used."))
         self.rename_button.setText(_("..."))
         self.rename_button.setShortcut(_("Ctrl+S"))
-

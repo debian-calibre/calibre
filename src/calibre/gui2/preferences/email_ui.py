@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/email.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -85,6 +87,5 @@ class Ui_Form(object):
 "Useful to allow the recipient to see a summary of the\n"
 "book before opening it."))
         self.opt_add_comments_to_email.setText(_("Add &comments metadata as text to the email"))
-
 from calibre.gui2.wizard.send_email import SendEmail
 

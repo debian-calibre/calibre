@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/txt_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -94,5 +96,4 @@ class Ui_Form(object):
         self.opt_keep_links.setText(_("Do not remove links (<a> tags) before processing"))
         self.opt_keep_image_references.setText(_("Do not remove image &references before processing"))
         self.opt_keep_color.setText(_("Keep text &color, when possible"))
-
 from calibre.gui2.widgets import EncodingComboBox

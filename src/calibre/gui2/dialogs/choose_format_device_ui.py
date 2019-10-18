@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format_device.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_ChooseFormatDeviceDialog(object):
     def setupUi(self, ChooseFormatDeviceDialog):
@@ -45,5 +47,4 @@ class Ui_ChooseFormatDeviceDialog(object):
         self.formats.headerItem().setText(0, _("Format"))
         self.formats.headerItem().setText(1, _("Existing"))
         self.formats.headerItem().setText(2, _("Convertible"))
-
 

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/device.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_WizardPage(object):
     def setupUi(self, WizardPage):
@@ -51,5 +53,4 @@ class Ui_WizardPage(object):
         WizardPage.setSubTitle(_("The one stop solution to all your e-book needs."))
         self.groupBox.setTitle(_("&Manufacturers"))
         self.groupBox_2.setTitle(_("&Devices"))
-
 

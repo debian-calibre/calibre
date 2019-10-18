@@ -40,9 +40,11 @@ try:
 except ImportError:
     import sip
 
+SANDBOX_HOST = FAKE_HOST.rpartition('.')[0] + '.sandbox'
 vprefs = JSONConfig('viewer-webengine')
 viewer_config_dir = os.path.join(config_dir, 'viewer')
 vprefs.defaults['session_data'] = {}
+vprefs.defaults['local_storage'] = {}
 vprefs.defaults['main_window_state'] = None
 vprefs.defaults['main_window_geometry'] = None
 vprefs.defaults['old_prefs_migrated'] = False
@@ -115,25 +117,32 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
         QWebEngineUrlSchemeHandler.__init__(self, parent)
         self.mathjax_dir = P('mathjax', allow_user_override=False)
         self.mathjax_manifest = None
+        self.allowed_hosts = (FAKE_HOST, SANDBOX_HOST)
 
     def requestStarted(self, rq):
         if bytes(rq.requestMethod()) != b'GET':
-            rq.fail(rq.RequestDenied)
-            return
+            return self.fail_request(rq, rq.RequestDenied)
         url = rq.requestUrl()
-        if url.host() != FAKE_HOST or url.scheme() != FAKE_PROTOCOL:
-            rq.fail(rq.UrlNotFound)
-            return
+        host = url.host()
+        if host not in self.allowed_hosts or url.scheme() != FAKE_PROTOCOL:
+            return self.fail_request(rq)
         name = url.path()[1:]
+        if host == SANDBOX_HOST and not name.startswith('book/'):
+            return self.fail_request(rq)
         if name.startswith('book/'):
             name = name.partition('/')[2]
+            if name == '__index__':
+                send_reply(rq, 'text/html', b'<div>\xa0</div>')
+                return
+            elif name == '__popup__':
+                send_reply(rq, 'text/html', b'<div id="calibre-viewer-footnote-iframe">\xa0</div>')
+                return
             try:
                 data, mime_type = get_data(name)
                 if data is None:
                     rq.fail(rq.UrlNotFound)
                     return
-                if isinstance(data, type('')):
-                    data = data.encode('utf-8')
+                data = as_bytes(data)
                 mime_type = {
                     # Prevent warning in console about mimetype of fonts
                     'application/vnd.ms-opentype':'application/x-font-ttf',
@@ -144,7 +153,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
             except Exception:
                 import traceback
                 traceback.print_exc()
-                rq.fail(rq.RequestFailed)
+                return self.fail_request(rq, rq.RequestFailed)
         elif name == 'manifest':
             data = b'[' + set_book_path.manifest + b',' + set_book_path.metadata + b']'
             send_reply(rq, set_book_path.manifest_mime, data)
@@ -160,9 +169,9 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
                 if self.mathjax_manifest is None:
                     import json
                     from calibre.srv.books import get_mathjax_manifest
-                    self.mathjax_manifest = json.dumps(get_mathjax_manifest()['files'])
-                    send_reply(rq, 'application/json', self.mathjax_manifest)
-                    return
+                    self.mathjax_manifest = as_bytes(json.dumps(get_mathjax_manifest()['files']))
+                send_reply(rq, 'application/json', self.mathjax_manifest)
+                return
             path = os.path.abspath(os.path.join(self.mathjax_dir, '..', name))
             if path.startswith(self.mathjax_dir):
                 mt = guess_type(name)
@@ -171,8 +180,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
                         raw = f.read()
                 except EnvironmentError as err:
                     prints("Failed to get mathjax file: {} with error: {}".format(name, err))
-                    rq.fail(rq.RequestFailed)
-                    return
+                    return self.fail_request(rq, rq.RequestFailed)
                 if 'MathJax.js' in name:
                     # raw = open(os.path.expanduser('~/work/mathjax/unpacked/MathJax.js')).read()
                     raw = monkeypatch_mathjax(raw.decode('utf-8')).encode('utf-8')
@@ -180,6 +188,14 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
                 send_reply(rq, mt, raw)
         elif not name:
             send_reply(rq, 'text/html', viewer_html())
+        else:
+            return self.fail_request(rq)
+
+    def fail_request(self, rq, fail_code=None):
+        if fail_code is None:
+            fail_code = rq.UrlNotFound
+        rq.fail(fail_code)
+        prints("Blocking FAKE_PROTOCOL request: {}".format(rq.requestUrl().toString()))
 
 # }}}
 
@@ -217,6 +233,7 @@ def create_profile():
 class ViewerBridge(Bridge):
 
     set_session_data = from_js(object, object)
+    set_local_storage = from_js(object, object)
     reload_book = from_js()
     toggle_toc = from_js()
     toggle_bookmarks = from_js()
@@ -233,9 +250,12 @@ class ViewerBridge(Bridge):
     copy_image = from_js(object)
     change_background_image = from_js(object)
     overlay_visibility_changed = from_js(object)
+    show_loading_message = from_js(object)
+    show_error = from_js(object, object, object)
+    export_shortcut_map = from_js(object)
+    print_book = from_js()
 
     create_view = to_js()
-    show_preparing_message = to_js()
     start_book_load = to_js()
     goto_toc_node = to_js()
     goto_cfi = to_js()
@@ -295,10 +315,6 @@ class WebPage(QWebEnginePage):
             self.triggerAction(self.Copy)
 
     def javaScriptConsoleMessage(self, level, msg, linenumber, source_id):
-        if level >= QWebEnginePage.ErrorMessageLevel and source_id == 'userscript:viewer.js':
-            error_dialog(self.parent(), _('Unhandled error'), _(
-                'There was an unhandled error: {} at line: {} of {}').format(
-                    msg, linenumber, source_id.partition(':')[2]), show=True)
         prefix = {QWebEnginePage.InfoMessageLevel: 'INFO', QWebEnginePage.WarningMessageLevel: 'WARNING'}.get(
                 level, 'ERROR')
         prints('%s: %s:%s: %s' % (prefix, source_id, linenumber, msg), file=sys.stderr)
@@ -376,6 +392,9 @@ class WebView(RestartingWebEngineView):
     view_image = pyqtSignal(object)
     copy_image = pyqtSignal(object)
     overlay_visibility_changed = pyqtSignal(object)
+    show_loading_message = pyqtSignal(object)
+    show_error = pyqtSignal(object, object, object)
+    print_book = pyqtSignal()
 
     def __init__(self, parent=None):
         self._host_widget = None
@@ -386,10 +405,12 @@ class WebView(RestartingWebEngineView):
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
         w = QApplication.instance().desktop().availableGeometry(self).width()
+        self.show_home_page_on_ready = True
         self._size_hint = QSize(int(w/3), int(w/2))
         self._page = WebPage(self)
         self.bridge.bridge_ready.connect(self.on_bridge_ready)
         self.bridge.set_session_data.connect(self.set_session_data)
+        self.bridge.set_local_storage.connect(self.set_local_storage)
         self.bridge.reload_book.connect(self.reload_book)
         self.bridge.toggle_toc.connect(self.toggle_toc)
         self.bridge.toggle_bookmarks.connect(self.toggle_bookmarks)
@@ -403,6 +424,11 @@ class WebView(RestartingWebEngineView):
         self.bridge.view_image.connect(self.view_image)
         self.bridge.copy_image.connect(self.copy_image)
         self.bridge.overlay_visibility_changed.connect(self.overlay_visibility_changed)
+        self.bridge.show_loading_message.connect(self.show_loading_message)
+        self.bridge.show_error.connect(self.show_error)
+        self.bridge.print_book.connect(self.print_book)
+        self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
+        self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
         self.bridge.change_background_image.connect(self.change_background_image)
         self.pending_bridge_ready_actions = {}
@@ -413,6 +439,9 @@ class WebView(RestartingWebEngineView):
         if parent is not None:
             self.inspector = Inspector(parent.inspector_dock.toggleViewAction(), self)
             parent.inspector_dock.setWidget(self.inspector)
+
+    def set_shortcut_map(self, smap):
+        self.shortcut_map = smap
 
     def url_changed(self, url):
         if url.hasFragment():
@@ -465,8 +494,8 @@ class WebView(RestartingWebEngineView):
         f = QApplication.instance().font()
         fi = QFontInfo(f)
         self.bridge.create_view(
-            vprefs['session_data'], QFontDatabase().families(), field_metadata.all_metadata(),
-            f.family(), '{}px'.format(fi.pixelSize()))
+            vprefs['session_data'], vprefs['local_storage'], QFontDatabase().families(), field_metadata.all_metadata(),
+            f.family(), '{}px'.format(fi.pixelSize()), self.show_home_page_on_ready)
         for func, args in iteritems(self.pending_bridge_ready_actions):
             getattr(self.bridge, func)(*args)
 
@@ -479,10 +508,6 @@ class WebView(RestartingWebEngineView):
             getattr(self.bridge, action)(*args)
         else:
             self.pending_bridge_ready_actions[action] = args
-
-    def show_preparing_message(self):
-        msg = _('Preparing book for first read, please wait') + '…'
-        self.execute_when_ready('show_preparing_message', msg)
 
     def goto_toc_node(self, node_id):
         self.execute_when_ready('goto_toc_node', node_id)
@@ -503,6 +528,14 @@ class WebView(RestartingWebEngineView):
             vprefs['session_data'] = sd
             if key in ('standalone_font_settings', 'base_font_size'):
                 apply_font_settings(self._page)
+
+    def set_local_storage(self, key, val):
+        if key == '*' and val is None:
+            vprefs['local_storage'] = {}
+        elif key != '*':
+            sd = vprefs['local_storage']
+            sd[key] = val
+            vprefs['local_storage'] = sd
 
     def do_callback(self, func_name, callback):
         cid = next(self.callback_id_counter)

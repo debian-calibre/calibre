@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/toc.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -83,5 +85,4 @@ class Ui_Form(object):
 " which will allow you to manually edit the Table of Contents, to fix any errors\n"
 " caused by automatic generation."))
         self.manually_fine_tune_toc.setText(_("&Manually fine-tune the ToC after conversion is completed"))
-
 from calibre.gui2.convert.xpath_wizard import XPathEdit

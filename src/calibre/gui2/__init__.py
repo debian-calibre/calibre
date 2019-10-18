@@ -16,7 +16,7 @@ from threading import Lock, RLock
 from PyQt5.Qt import (
     QT_VERSION, QApplication, QBuffer, QByteArray, QCoreApplication, QDateTime,
     QDesktopServices, QDialog, QEvent, QFileDialog, QFileIconProvider, QFileInfo,
-    QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale,
+    QFont, QFontDatabase, QFontInfo, QFontMetrics, QIcon, QLocale, QColor,
     QNetworkProxyFactory, QObject, QSettings, QSocketNotifier, QStringListModel, Qt,
     QThread, QTimer, QTranslator, QUrl, pyqtSignal
 )
@@ -666,6 +666,13 @@ else:
     choose_files, choose_images, choose_dir, choose_save_file
 
 
+def is_dark_theme():
+    pal = QApplication.instance().palette()
+    col = pal.color(pal.Window)
+    h, s, v, a = col.getHsvF()
+    return v < 0.45
+
+
 def choose_osx_app(window, name, title, default_dir='/Applications'):
     fd = FileDialog(title=title, parent=window, name=name, mode=QFileDialog.ExistingFile,
             default_dir=default_dir)
@@ -838,8 +845,10 @@ def setup_unix_signals(self):
 class Application(QApplication):
 
     shutdown_signal_received = pyqtSignal()
+    palette_changed = pyqtSignal()
 
     def __init__(self, args, force_calibre_style=False, override_program_name=None, headless=False, color_prefs=gprefs, windows_app_uid=None):
+        self.ignore_palette_changes = False
         QNetworkProxyFactory.setUseSystemConfiguration(True)
         if iswindows:
             self.windows_app_uid = None
@@ -1004,6 +1013,40 @@ class Application(QApplication):
             prints('Using calibre Qt style:', self.using_calibre_style)
         if self.using_calibre_style:
             self.load_calibre_style()
+        self.paletteChanged.connect(self.on_palette_change)
+        self.on_palette_change()
+
+    def fix_dark_theme_colors(self):
+        self.is_dark_theme = is_dark_theme()
+        if self.is_dark_theme:
+            pal = self.palette()
+            # dark blue is unreadable when using dark backgrounds
+            pal.setColor(pal.Link, QColor('#6CB4EE'))
+            # alternating row colors look awful in most dark mode themes
+            pal.setColor(pal.AlternateBase, pal.color(pal.Base))
+            if isosx and self.using_calibre_style:
+                # Workaround for https://bugreports.qt.io/browse/QTBUG-75321
+                # Buttontext is set to black for some reason
+                pal.setColor(pal.ButtonText, pal.color(pal.WindowText))
+            self.set_palette(pal)
+
+    def set_palette(self, pal):
+        self.ignore_palette_changes = True
+        self.setPalette(pal)
+        # Needed otherwise Qt does not emit the paletteChanged signal when
+        # appearance is changed.
+        self.setAttribute(Qt.AA_SetPalette, False)
+        self.ignore_palette_changes = False
+
+    def on_palette_change(self):
+        if self.ignore_palette_changes:
+            return
+        self.fix_dark_theme_colors()
+        self.palette_changed.emit()
+
+    def stylesheet_for_line_edit(self, is_error=False):
+        return 'QLineEdit { border: 2px solid %s; border-radius: 3px }' % (
+            '#FF2400' if is_error else '#50c878')
 
     def load_calibre_style(self):
         icon_map = self.__icon_map_memory_ = {}
