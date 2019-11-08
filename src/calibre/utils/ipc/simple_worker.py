@@ -6,7 +6,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, traceback, time, importlib
+import os, time, traceback, importlib
 from multiprocessing.connection import Client
 from threading import Thread
 from contextlib import closing
@@ -15,6 +15,7 @@ from calibre.constants import iswindows
 from calibre.utils.ipc import eintr_retry_call
 from calibre.utils.ipc.launch import Worker
 from calibre.utils.serialize import msgpack_loads, msgpack_dumps
+from calibre.utils.monotonic import monotonic
 from polyglot.builtins import unicode_type, string_or_bytes, environ_item
 from polyglot.binary import as_hex_unicode, from_hex_bytes
 
@@ -94,12 +95,12 @@ def communicate(ans, worker, listener, args, timeout=300, heartbeat=None,
         abort=None):
     cw = ConnectedWorker(listener, args)
     cw.start()
-    st = time.time()
+    st = monotonic()
     check_heartbeat = callable(heartbeat)
 
     while worker.is_alive and cw.is_alive():
         cw.join(0.01)
-        delta = time.time() - st
+        delta = monotonic() - st
         if not cw.accepted and delta > min(10, timeout):
             break
         hung = not heartbeat() if check_heartbeat else delta > timeout
@@ -169,7 +170,42 @@ def start_pipe_worker(command, env=None, priority='normal', **process_args):
     return p
 
 
-def fork_job(mod_name, func_name, args=(), kwargs={}, timeout=300,  # seconds
+def two_part_fork_job(env=None, priority='normal', cwd=None):
+    env = env or {}
+    listener, w = create_worker(env, priority, cwd)
+
+    def run_job(
+        mod_name, func_name, args=(), kwargs=None, timeout=300,  # seconds
+        no_output=False, heartbeat=None, abort=None, module_is_source_code=False
+    ):
+        ans = {'result':None, 'stdout_stderr':None}
+        kwargs = kwargs or {}
+        try:
+            communicate(ans, w, listener, (mod_name, func_name, args, kwargs,
+                module_is_source_code), timeout=timeout, heartbeat=heartbeat,
+                abort=abort)
+        except WorkerError as e:
+            if not no_output:
+                e.log_path = w.log_path
+            raise
+        finally:
+            t = Thread(target=w.kill)
+            t.daemon=True
+            t.start()
+            if no_output:
+                try:
+                    os.remove(w.log_path)
+                except:
+                    pass
+        if not no_output:
+            ans['stdout_stderr'] = w.log_path
+        return ans
+    run_job.worker = w
+
+    return run_job
+
+
+def fork_job(mod_name, func_name, args=(), kwargs=None, timeout=300,  # seconds
         cwd=None, priority='normal', env={}, no_output=False, heartbeat=None,
         abort=None, module_is_source_code=False):
     '''
@@ -220,29 +256,11 @@ def fork_job(mod_name, func_name, args=(), kwargs={}, timeout=300,  # seconds
     path to a file that contains the stdout and stderr of the worker process.
     If you set no_output=True, then this will not be present.
     '''
-
-    ans = {'result':None, 'stdout_stderr':None}
-    listener, w = create_worker(env, priority, cwd)
-    try:
-        communicate(ans, w, listener, (mod_name, func_name, args, kwargs,
-            module_is_source_code), timeout=timeout, heartbeat=heartbeat,
-            abort=abort)
-    except WorkerError as e:
-        if not no_output:
-            e.log_path = w.log_path
-        raise
-    finally:
-        t = Thread(target=w.kill)
-        t.daemon=True
-        t.start()
-        if no_output:
-            try:
-                os.remove(w.log_path)
-            except:
-                pass
-    if not no_output:
-        ans['stdout_stderr'] = w.log_path
-    return ans
+    return two_part_fork_job(env, priority, cwd)(
+        mod_name, func_name, args=args, kwargs=kwargs, timeout=timeout,
+        no_output=no_output, heartbeat=heartbeat, abort=abort,
+        module_is_source_code=module_is_source_code
+    )
 
 
 def offload_worker(env={}, priority='normal', cwd=None):

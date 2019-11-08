@@ -10,7 +10,7 @@
 # Mar, 2015
 # Mario Moens <marimo.it4u@gmail.com>, 2017
 # 05a0224220b7eaac7e017feaa81ae85c, 2015
-# M. de Boer <de.boer.melle@gmail.com>, 2018
+# M. de Boer <de.boer.melle@gmail.com>, 2018-2019
 # Meteor 0id, 2019
 # Rodolfo_Jadon, 2014-2015
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 16:00+0530\n"
-"PO-Revision-Date: 2019-09-16 05:48+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-11-02 09:49+0530\n"
+"PO-Revision-Date: 2019-10-29 14:32+0000\n"
+"Last-Translator: M. de Boer <de.boer.melle@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,7 +81,7 @@ msgid ""
 " format. Some formats convert much better than others. A list of the best "
 "source formats for conversion is available :ref:`here <best-source-"
 "formats>`."
-msgstr ""
+msgstr "Het invoerformaat wordt eerst geconverteerd naar XHTML door de juiste *Input plugin*. Deze HTML wordt vervolgens *getransformeerd*. In de laatste stap wordt de verwerkte XHTML geconverteerd naar het opgegeven uitvoerformaat door de juiste *Uitvoer plugin*. De resultaten van de conversie kunnen sterk variëren, op basis van het invoerformaat. Sommige formaten converteren veel beter dan andere. Een lijst met de beste bronformaten voor conversie is beschikbaar: ref:`hier <best-source-formats>`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:56
 msgid ""
@@ -95,7 +95,7 @@ msgid ""
 "XHTML internally, the various transforms will be applied to the XHTML and "
 "then the *Output plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
-msgstr ""
+msgstr "De transformaties die werken op de XHTML-uitvoer zijn waar al het werk gebeurt. Er zijn verschillende transformaties, bijvoorbeeld om boekmetagegevens in te voegen als een pagina aan het begin van het boek, om hoofdstukkoppen te detecteren en automatisch een inhoudsopgave te maken, om de lettergroottes proportioneel aan te passen, enzovoort. Het is belangrijk om te onthouden dat alle transformaties op de XHTML-uitvoer door de * Input-plug-in * werken, niet op het invoerbestand zelf. Dus als u bijvoorbeeld calibre vraagt om een RTF-bestand naar EPUB te converteren, wordt het eerst intern naar XHTML geconverteerd, de verschillende transformaties worden op de XHTML toegepast en vervolgens maakt de * Uitgangsplugin * het EPUB-bestand, dat automatisch wordt gegenereerd alle metadata, inhoudsopgave, et cetera."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:65
 msgid ""
@@ -126,7 +126,7 @@ msgstr "invoer"
 msgid ""
 "This contains the HTML output by the Input plugin. Use this to debug the "
 "Input plugin."
-msgstr ""
+msgstr "Dit bevat de HTML-uitvoer door de invoegtoepassing. Gebruik dit om de invoegtoepassing te debuggen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:76
 msgid "parsed"
@@ -136,7 +136,7 @@ msgstr "doorlopen"
 msgid ""
 "The result of pre-processing and converting to XHTML the output from the "
 "Input plugin. Use to debug structure detection."
-msgstr ""
+msgstr "Het resultaat van voorbewerking en converteren naar XHTML de uitvoer van de invoer Plugin. Gebruik om structuur-detectie te debuggen."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:77
 msgid "structure"
@@ -156,7 +156,7 @@ msgstr "verwerkt"
 msgid ""
 "Just before the e-book is passed to the Output plugin. Use to debug the "
 "Output plugin."
-msgstr ""
+msgstr "Net voor het e-boek wordt doorgegeven aan de output plugin. Gebruik om de output plugin te debuggen"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:81
 msgid ""
@@ -1409,7 +1409,7 @@ msgid ""
 "number. You can even put different content on even and odd pages, for "
 "example the following header template will show the title on odd pages and "
 "the author on even pages::"
-msgstr ""
+msgstr "Calibre zal automatisch :code:`_PAGENUM_` vervangen door de huidige paginanummer. U kunt zelfs andere inhoud op even en oneven pagina's plaatsen, zo zal het volgende koptekst-sjabloon de titel zien op oneven pagina's en de auteur op even pagina's::"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:848
 msgid ""
@@ -1417,13 +1417,13 @@ msgid ""
 " the title and author of the document being converted. Setting :code"
 ":`justify-content` to :code:`flex-end` will cause the text to be right "
 "aligned."
-msgstr ""
+msgstr "calibre zal automatisch: code: `_TITLE_` en :code:` _AUTHOR_` vervangen door de titel en auteur van het document dat wordt geconverteerd. Instelling: code: `justify-content` to: code:` flex-end` zorgt ervoor dat de tekst goed wordt uitgelijnd."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:853
 msgid ""
 "You can also display text at the left and right edges and change the font "
 "size, as demonstrated with this header template::"
-msgstr ""
+msgstr "U kunt ook tekst aan de linker en rechter rand weergeven en de lettergrootte wijzigen, zoals aangetoond met deze koptekst sjabloon:"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:861
 msgid ""

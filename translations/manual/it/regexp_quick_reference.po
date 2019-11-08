@@ -3,14 +3,20 @@
 # This file is distributed under the same license as the calibre package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Maurizio Malagoli <malagoli.maurizio@gmail.com>, 2017
+# Volo Libero <massimocastiglia@alice.it>, 2017
+# Vincenzo Reale <vinx.reale@gmail.com>, 2018
+# Francesco G., 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 3.26.1\n"
+"Project-Id-Version: calibre 4.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 12:28+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Vincenzo Reale <vinx.reale@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-11-02 09:49+0530\n"
+"PO-Revision-Date: 2017-12-15 03:02+0000\n"
+"Last-Translator: Francesco G., 2019\n"
 "Language-Team: Italian (https://www.transifex.com/calibre/teams/19337/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,8 +53,8 @@ msgid ""
 "Character classes are useful to represent different groups of characters, "
 "succinctly."
 msgstr ""
-"Le classi di caratteri sono utili per rappresentare diversi gruppi di "
-"caratteri, in modo succinto."
+"Le classi di caratteri sono utili per rappresentare diversi gruppi in modo "
+"coinciso."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:20
 msgid "Examples:"
@@ -75,18 +81,19 @@ msgid ""
 "Lowercase letters. Does not include characters with accent mark and "
 "ligatures"
 msgstr ""
+"Lettere minuscole. Non include caratteri accentati, segnati e legature"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:29
 msgid "``[a-z0-9]``"
-msgstr ""
+msgstr "``[a-z0-9]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:29
 msgid "Lowercase letters from a to z or numbers from 0 to 9"
-msgstr ""
+msgstr "Lettere minuscole dalla a alla z da 0 a 9"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:32
 msgid "``[A-Za-z-]``"
-msgstr ""
+msgstr "``[A-Za-z-]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:32
 msgid ""
@@ -94,98 +101,109 @@ msgid ""
 "you must put it at the beginning or at the end so as not to confuse it with "
 "the hyphen that specifies a range of characters"
 msgstr ""
+"Lettere maiuscole, minuscole o un trattino. Per includere il trattino in una"
+" classe devi metterlo all'inizio oppure alla fine per non confonderlo con "
+"quello che specifica un intervallo di caratteri."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:35
 msgid "``[^0-9]``"
-msgstr ""
+msgstr "``[^0-9]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:35
 msgid ""
 "Any character except a digit. The caret (^) placed at the beginning of the "
 "class excludes the characters of the class (complemented class)"
 msgstr ""
+"Qualsiasi carattere tranne una cifra. Il segno di omissione (^) all'inizio "
+"della classe esclude i caratteri della classe (classe integrata)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
 msgid "``[[a-z]--[aeiouy]]``"
-msgstr ""
+msgstr "``[[a-z]--[aeiouy]]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
 msgid ""
 "The lowercase consonants. A class can be included in a class. The characters"
 " ``--`` exclude what follows them"
 msgstr ""
+"Consonanti minuscole. Una classe può essere inclusa in una classe. I "
+"caratteri `--` escludono ciò che li segue"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
 msgid "``[\\w--[\\d_]]``"
-msgstr ""
+msgstr "``[\\w--[\\d_]]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
 msgid ""
 "All letters (including foreign accented characters). Abbreviated classes can"
 " be used inside a class"
 msgstr ""
+"Tutte le lettere inclusi i caratteri accentati stranieri. Le classi "
+"abbreviate possono essere utilizzate all'interno di una classe"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:46
 msgid "Example::"
-msgstr ""
+msgstr "Esempio::"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:51
 msgid "Shorthand character classes"
-msgstr ""
+msgstr "Classi di caratteri abbreviati"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:57
 msgid "``\\d``"
-msgstr ""
+msgstr "``\\d``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:57
 msgid "A digit (same as ``[0-9]``)"
-msgstr ""
+msgstr "Una cifra (uguale a ``[0-9]``)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:60
 msgid "``\\D``"
-msgstr ""
+msgstr "``\\D``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:60
 msgid "Any non-numeric character (same as ``[^0-9]``)"
-msgstr ""
+msgstr "Ogni carattere non numerico (uguale a ``[^0-9]``)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:63
 msgid "``\\w``"
-msgstr ""
+msgstr "``\\w``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:63
 msgid ""
 "An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
 " mark and ligatures"
 msgstr ""
+"Un carattere alfanumerico (``[a-zA-Z0-9]``) inclusi caratteri con accenti, "
+"segni e legature."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
 msgid "``\\W``"
-msgstr ""
+msgstr "``\\W``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
 msgid "Any “non-word” character"
-msgstr ""
+msgstr "Qualsiasi carattere \"non-parola\""
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
 msgid "``\\s``"
-msgstr ""
+msgstr "``\\s``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
 msgid "Space, non-breaking space, tab, return line"
-msgstr ""
+msgstr "Spazio, spazio non-interruzione, tabulazione, linea di rientro"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
 msgid "``\\S``"
-msgstr ""
+msgstr "``\\S``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
 msgid "Any “non-whitespace” character"
-msgstr ""
+msgstr "Qualsiasi carattere \"non-vuoto\""
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:75
 msgid "``.``"
-msgstr ""
+msgstr "``.``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:75
 msgid ""

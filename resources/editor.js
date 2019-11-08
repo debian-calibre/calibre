@@ -4034,6 +4034,24 @@ var str = ρσ_str, repr = ρσ_repr;;
 
     (function(){
         var __name__ = "fs_images";
+        function is_svg_fs_markup(names, svg) {
+            if (svg !== null) {
+                if (names.length === 2 || names.length === 3) {
+                    if (names[names.length-1] === "image" && names[names.length-2] === "svg") {
+                        if (names.length === 2 || names[0] === "div") {
+                            if (svg.width === "100%" && svg.height === "100%") {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        };
+        if (!is_svg_fs_markup.__argnames__) Object.defineProperties(is_svg_fs_markup, {
+            __argnames__ : {value: ["names", "svg"]}
+        });
+
         function fix_fullscreen_svg_images() {
             var child_names, name, node, names, svg;
             child_names = [];
@@ -4050,8 +4068,8 @@ var str = ρσ_str, repr = ρσ_repr;;
                     }
                 }
             }
-            if (child_names.length === 1 && child_names[0] === "div") {
-                names = ρσ_list_decorate([]);
+            if (child_names.length === 1 && (child_names[0] === "div" || child_names[0] === "svg")) {
+                names = [];
                 svg = null;
                 var ρσ_Iter1 = ρσ_Iterable(document.body.querySelectorAll("*"));
                 for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
@@ -4066,15 +4084,14 @@ var str = ρσ_str, repr = ρσ_repr;;
                         }
                     }
                 }
-                if (ρσ_equals(names, ρσ_list_decorate([ "div", "svg", "image" ])) || ρσ_equals(names, ρσ_list_decorate([ "svg", "image" ]))) {
-                    if (svg.getAttribute("width") === "100%" && svg.getAttribute("height") === "100%") {
-                        svg.setAttribute("width", "100vw");
-                        svg.setAttribute("height", "100vh");
-                    }
+                if (is_svg_fs_markup(names, svg)) {
+                    svg.setAttribute("width", "100vw");
+                    svg.setAttribute("height", "100vh");
                 }
             }
         };
 
+        ρσ_modules.fs_images.is_svg_fs_markup = is_svg_fs_markup;
         ρσ_modules.fs_images.fix_fullscreen_svg_images = fix_fullscreen_svg_images;
     })();
 

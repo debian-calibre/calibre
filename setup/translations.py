@@ -326,6 +326,59 @@ class Translations(POT):  # {{{
             if handle_stats is not None:
                 handle_stats(src, nums)
 
+    def auto_fix_iso639_files(self, files):
+
+        class Fix(object):
+
+            def __init__(self):
+                self.seen = set()
+                self.bad = set()
+                self.msgid = None
+
+            def __call__(self, match):
+                if match.group(1) == 'msgid':
+                    self.msgid = match.group(2)
+                    return match.group()
+                msgstr = match.group(2)
+                if msgstr:
+                    if msgstr in self.seen:
+                        if self.msgid == msgstr:
+                            self.bad.add(msgstr)
+                            return match.group()
+                        self.seen.add(self.msgid)
+                        return 'msgstr "{}"'.format(self.msgid)
+                    self.seen.add(msgstr)
+                return match.group()
+
+        class Fix2(object):
+
+            def __init__(self, fix1):
+                self.bad = fix1.bad
+                self.msgid = None
+
+            def __call__(self, match):
+                if match.group(1) == 'msgid':
+                    self.msgid = match.group(2)
+                    return match.group()
+                msgstr = match.group(2)
+                if msgstr:
+                    if msgstr and msgstr in self.bad:
+                        self.bad.discard(msgstr)
+                        return 'msgstr "{}"'.format(self.msgid)
+                return match.group()
+
+        for (po_path, mo_path) in files:
+            with open(po_path, 'r+b') as f:
+                raw = f.read().decode('utf-8')
+                f.seek(0)
+                fx = Fix()
+                nraw, num = re.subn(r'^(msgid|msgstr)\s+"(.*?)"', fx, raw, flags=re.M)
+                nraw, nnum = re.subn(r'^(msgid|msgstr)\s+"(.*?)"', Fix2(fx), nraw, flags=re.M)
+                if num + nnum > 0:
+                    f.truncate()
+                    f.write(nraw.encode('utf-8'))
+        raise SystemExit(1)
+
     def compile_main_translations(self):
         l = {}
         lc_dataf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lc_data.py')
@@ -369,6 +422,7 @@ class Translations(POT):  # {{{
                 files.append((iso639, self.j(self.d(dest), 'iso639.mo')))
             elif locale not in skip_iso:
                 self.warn('No ISO 639 translations for locale:', locale)
+        # self.auto_fix_iso639_files(files)
         self.compile_group(files, file_ok=self.check_iso639)
 
         if self.iso639_errors:
@@ -726,7 +780,7 @@ class ISO639(Command):  # {{{
             'iso639.calibre_msgpack')
 
     def run(self, opts):
-        src = self.j(self.d(self.SRC), 'setup', 'iso_639_3.xml')
+        src = self.j(self.d(self.SRC), 'setup', 'iso_639-3.json')
         if not os.path.exists(src):
             raise Exception(src + ' does not exist')
         dest = self.DEST
@@ -737,29 +791,24 @@ class ISO639(Command):  # {{{
             self.info('Packed code is up to date')
             return
         self.info('Packing ISO-639 codes to', dest)
-        from lxml import etree
-        root = etree.fromstring(open(src, 'rb').read())
+        with open(src, 'rb') as f:
+            root = json.load(f)
+        entries = root['639-3']
         by_2 = {}
-        by_3b = {}
-        by_3t = {}
+        by_3 = {}
         m2to3 = {}
         m3to2 = {}
-        m3bto3t = {}
         nm = {}
-        codes2, codes3t, codes3b = set(), set(), set()
+        codes2, codes3 = set(), set()
         unicode_type = type(u'')
-        for x in root.xpath('//iso_639_3_entry'):
-            two = x.get('part1_code', None)
+        for x in entries:
+            two = x.get('alpha_2')
             if two:
                 two = unicode_type(two)
-            threet = x.get('id')
-            if threet:
-                threet = unicode_type(threet)
-            threeb = x.get('part2_code', None)
+            threeb = x.get('alpha_3')
             if threeb:
                 threeb = unicode_type(threeb)
             if threeb is None:
-                # Only recognize languages in ISO-639-2
                 continue
             name = x.get('name')
             if name:
@@ -768,20 +817,16 @@ class ISO639(Command):  # {{{
             if two is not None:
                 by_2[two] = name
                 codes2.add(two)
-                m2to3[two] = threet
-                m3to2[threeb] = m3to2[threet] = two
-            by_3b[threeb] = name
-            by_3t[threet] = name
-            if threeb != threet:
-                m3bto3t[threeb] = threet
-            codes3b.add(threeb)
-            codes3t.add(threet)
+                m2to3[two] = threeb
+                m3to2[threeb] = two
+            codes3.add(threeb)
+            by_3[threeb] = name
             base_name = name.lower()
-            nm[base_name] = threet
+            nm[base_name] = threeb
 
-        x = {u'by_2':by_2, u'by_3b':by_3b, u'by_3t':by_3t, u'codes2':codes2,
-                u'codes3b':codes3b, u'codes3t':codes3t, u'2to3':m2to3,
-                u'3to2':m3to2, u'3bto3t':m3bto3t, u'name_map':nm}
+        x = {u'by_2':by_2, u'by_3':by_3, u'codes2':codes2,
+                u'codes3':codes3, u'2to3':m2to3,
+                u'3to2':m3to2, u'name_map':nm}
         from calibre.utils.serialize import msgpack_dumps
         with open(dest, 'wb') as f:
             f.write(msgpack_dumps(x))
@@ -800,7 +845,7 @@ class ISO3166(ISO639):  # {{{
             'iso3166.calibre_msgpack')
 
     def run(self, opts):
-        src = self.j(self.d(self.SRC), 'setup', 'iso3166.xml')
+        src = self.j(self.d(self.SRC), 'setup', 'iso_3166-1.json')
         if not os.path.exists(src):
             raise Exception(src + ' does not exist')
         dest = self.DEST
@@ -811,21 +856,21 @@ class ISO3166(ISO639):  # {{{
             self.info('Packed code is up to date')
             return
         self.info('Packing ISO-3166 codes to', dest)
-        from lxml import etree
-        root = etree.fromstring(open(src, 'rb').read())
+        with open(src, 'rb') as f:
+            db = json.load(f)
         codes = set()
         three_map = {}
         name_map = {}
         unicode_type = type(u'')
-        for x in root.xpath('//iso_3166_entry'):
-            two = x.get('alpha_2_code')
+        for x in db['3166-1']:
+            two = x.get('alpha_2')
             if two:
                 two = unicode_type(two)
             codes.add(two)
             name_map[two] = x.get('name')
             if name_map[two]:
                 name_map[two] = unicode_type(name_map[two])
-            three = x.get('alpha_3_code')
+            three = x.get('alpha_3')
             if three:
                 three_map[unicode_type(three)] = two
         x = {u'names':name_map, u'codes':frozenset(codes), u'three_map':three_map}

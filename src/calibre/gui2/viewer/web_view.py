@@ -211,11 +211,13 @@ def create_profile():
     if ans is None:
         ans = QWebEngineProfile(QApplication.instance())
         osname = 'windows' if iswindows else ('macos' if isosx else 'linux')
+        # DO NOT change the user agent as it is used to workaround
+        # Qt bugs see workaround_qt_bug() in ajax.pyj
         ua = 'calibre-viewer {} {}'.format(__version__, osname)
         ans.setHttpUserAgent(ua)
         if is_running_from_develop:
             from calibre.utils.rapydscript import compile_viewer
-            print('Compiling viewer code...')
+            prints('Compiling viewer code...')
             compile_viewer()
         js = P('viewer.js', data=True, allow_user_override=False)
         translations_json = get_translations_data() or b'null'
@@ -254,6 +256,8 @@ class ViewerBridge(Bridge):
     show_error = from_js(object, object, object)
     export_shortcut_map = from_js(object)
     print_book = from_js()
+    clear_history = from_js()
+    reset_interface = from_js()
 
     create_view = to_js()
     start_book_load = to_js()
@@ -264,6 +268,8 @@ class ViewerBridge(Bridge):
     show_home_page = to_js()
     background_image_changed = to_js()
     goto_frac = to_js()
+    trigger_shortcut = to_js()
+    set_system_palette = to_js()
 
 
 def apply_font_settings(page_or_view):
@@ -318,7 +324,10 @@ class WebPage(QWebEnginePage):
         prefix = {QWebEnginePage.InfoMessageLevel: 'INFO', QWebEnginePage.WarningMessageLevel: 'WARNING'}.get(
                 level, 'ERROR')
         prints('%s: %s:%s: %s' % (prefix, source_id, linenumber, msg), file=sys.stderr)
-        sys.stderr.flush()
+        try:
+            sys.stderr.flush()
+        except EnvironmentError:
+            pass
 
     def acceptNavigationRequest(self, url, req_type, is_main_frame):
         if req_type == self.NavigationTypeReload:
@@ -376,6 +385,15 @@ class Inspector(QWidget):
         return QSize(600, 1200)
 
 
+def system_colors():
+    pal = QApplication.instance().palette()
+    return {
+        'background': pal.color(pal.Base).name(),
+        'foreground': pal.color(pal.Text).name(),
+        'link': pal.color(pal.Link).name(),
+    }
+
+
 class WebView(RestartingWebEngineView):
 
     cfi_changed = pyqtSignal(object)
@@ -395,6 +413,10 @@ class WebView(RestartingWebEngineView):
     show_loading_message = pyqtSignal(object)
     show_error = pyqtSignal(object, object, object)
     print_book = pyqtSignal()
+    reset_interface = pyqtSignal()
+    shortcuts_changed = pyqtSignal(object)
+    paged_mode_changed = pyqtSignal()
+    standalone_misc_settings_changed = pyqtSignal(object)
 
     def __init__(self, parent=None):
         self._host_widget = None
@@ -405,6 +427,7 @@ class WebView(RestartingWebEngineView):
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
         w = QApplication.instance().desktop().availableGeometry(self).width()
+        QApplication.instance().palette_changed.connect(self.palette_changed)
         self.show_home_page_on_ready = True
         self._size_hint = QSize(int(w/3), int(w/2))
         self._page = WebPage(self)
@@ -427,6 +450,8 @@ class WebView(RestartingWebEngineView):
         self.bridge.show_loading_message.connect(self.show_loading_message)
         self.bridge.show_error.connect(self.show_error)
         self.bridge.print_book.connect(self.print_book)
+        self.bridge.clear_history.connect(self.clear_history)
+        self.bridge.reset_interface.connect(self.reset_interface)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -442,6 +467,7 @@ class WebView(RestartingWebEngineView):
 
     def set_shortcut_map(self, smap):
         self.shortcut_map = smap
+        self.shortcuts_changed.emit(smap)
 
     def url_changed(self, url):
         if url.hasFragment():
@@ -493,15 +519,21 @@ class WebView(RestartingWebEngineView):
     def on_bridge_ready(self):
         f = QApplication.instance().font()
         fi = QFontInfo(f)
+        ui_data = {
+            'all_font_families': QFontDatabase().families(),
+            'ui_font_family': f.family(),
+            'ui_font_sz': '{}px'.format(fi.pixelSize()),
+            'show_home_page_on_ready': self.show_home_page_on_ready,
+            'system_colors': system_colors(),
+        }
         self.bridge.create_view(
-            vprefs['session_data'], vprefs['local_storage'], QFontDatabase().families(), field_metadata.all_metadata(),
-            f.family(), '{}px'.format(fi.pixelSize()), self.show_home_page_on_ready)
+            vprefs['session_data'], vprefs['local_storage'], field_metadata.all_metadata(), ui_data)
         for func, args in iteritems(self.pending_bridge_ready_actions):
             getattr(self.bridge, func)(*args)
 
-    def start_book_load(self, initial_cfi=None, initial_toc_node=None):
+    def start_book_load(self, initial_cfi=None, initial_toc_node=None, initial_bookpos=None):
         key = (set_book_path.path,)
-        self.execute_when_ready('start_book_load', key, initial_cfi, initial_toc_node, set_book_path.pathtoebook)
+        self.execute_when_ready('start_book_load', key, initial_cfi, initial_toc_node, initial_bookpos, set_book_path.pathtoebook)
 
     def execute_when_ready(self, action, *args):
         if self.bridge.ready:
@@ -522,12 +554,18 @@ class WebView(RestartingWebEngineView):
         if key == '*' and val is None:
             vprefs['session_data'] = {}
             apply_font_settings(self._page)
+            self.paged_mode_changed.emit()
+            self.standalone_misc_settings_changed.emit()
         elif key != '*':
             sd = vprefs['session_data']
             sd[key] = val
             vprefs['session_data'] = sd
             if key in ('standalone_font_settings', 'base_font_size'):
                 apply_font_settings(self._page)
+            elif key == 'read_mode':
+                self.paged_mode_changed.emit()
+            elif key == 'standalone_misc_settings':
+                self.standalone_misc_settings_changed.emit(val)
 
     def set_local_storage(self, key, val):
         if key == '*' and val is None:
@@ -565,3 +603,12 @@ class WebView(RestartingWebEngineView):
 
     def goto_frac(self, frac):
         self.execute_when_ready('goto_frac', frac)
+
+    def clear_history(self):
+        self._page.history().clear()
+
+    def trigger_shortcut(self, which):
+        self.execute_when_ready('trigger_shortcut', which)
+
+    def palette_changed(self):
+        self.execute_when_ready('set_system_palette', system_colors())
