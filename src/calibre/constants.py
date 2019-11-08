@@ -6,7 +6,7 @@ from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (4, 2, 0)
+numeric_version = (4, 3, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -172,6 +172,7 @@ class Plugins(collections.Mapping):
                 'chmlib',
                 'icu',
                 'speedup',
+                'html_as_json',
                 'unicode_names',
                 'html',
                 'freetype',

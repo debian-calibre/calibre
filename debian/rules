@@ -1,20 +1,17 @@
 #!/usr/bin/make -f
 
-# try building with python3
-export CALIBRE_PY3_PORT=1
-SETUP=python3 setup.py
+SETUP=python2.7 setup.py
 
 # build hardening
 DPKG_EXPORT_BUILDFLAGS = 1
 export DEB_BUILD_MAINT_OPTIONS=hardening=+relro
 include /usr/share/dpkg/buildflags.mk
 
-
 # This filters out *.so for the package "calibre". With this, we can
 # install usr/lib in calibre.install and just leave out the binary
 # bits.
 DEB_DH_INSTALL_ARGS = -Xusr/etc/bash_completion.d $(if $(findstring -bin,$(cdbs_curpkg)),,-X*.so) --fail-missing
-DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
+DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python-pyqt5)
 
 export QT_SELECT=qt5
 
@@ -52,7 +49,7 @@ debian/tmp:
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
 
 	# fix "env python2" style hashbangs
-	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
+	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
 
 install/calibre::
 	# Create and install some of the man pages

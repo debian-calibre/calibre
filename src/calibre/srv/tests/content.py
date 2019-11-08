@@ -225,3 +225,41 @@ class ContentTest(LibraryBaseTest):
             self.ae(zlib.decompress(raw, 16+zlib.MAX_WBITS), data)
 
     # }}}
+
+    def test_char_count(self):  # {{{
+        from calibre.srv.render_book import get_length
+        from calibre.ebooks.oeb.parse_utils import html5_parse
+
+        root = html5_parse('<p>a b\nc\td\re')
+        self.ae(get_length(root), 5)
+        root = html5_parse('<script>xyz</script>a<iMg>b')
+        self.ae(get_length(root), 1002)
+        root = html5_parse('<p><!-- abc -->m')
+        self.ae(get_length(root), 1)
+    # }}}
+
+    def test_html_as_json(self):  # {{{
+        from calibre.srv.render_book import html_as_json
+        from calibre.ebooks.oeb.parse_utils import html5_parse
+
+        def t(html, body_children, nsmap=('http://www.w3.org/1999/xhtml',)):
+            root = html5_parse(html)
+            raw = html_as_json(root)
+            # print(raw.decode('utf-8'))
+            data = json.loads(raw)
+            self.ae(data['version'], 1)
+            self.ae(tuple(data['ns_map']), nsmap)
+            bc = data['tree']['c'][1]['c']
+            self.ae(bc, body_children)
+
+        t('<p>a<!--c-->t</p>l', [{"n":"p","x":"a","l":"l","c":[{"s":"c","x":"c","l":"t"}]}])
+        t('<p class="foo" id="bar">a', [{"n":"p","x":"a","a":[['class','foo'],['id','bar']]}])
+        t(
+            '<svg xlink:href="h"></svg>', [{'n': 'svg', 's': 1, 'a': [['href', 'h', 2]]}],
+            ('http://www.w3.org/1999/xhtml', 'http://www.w3.org/2000/svg', 'http://www.w3.org/1999/xlink')
+        )
+        text = '🐈\n\t\\mūs"'
+        t("<p id='{}'>Peña".format(text), [{"n":"p","x":"Peña","a":[['id',text]]}])
+        text = 'a' * (127 * 1024)
+        t('<p>{0}<p>{0}'.format(text), [{"n":"p","x":text}, {'n':'p','x':text}])
+    # }}}

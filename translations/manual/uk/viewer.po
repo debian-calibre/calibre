@@ -4,21 +4,21 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2017
+# Yuri Chornoivan <yurchor@ukr.net>, 2017,2019
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 09:23+0530\n"
-"PO-Revision-Date: 2017-09-20 05:41+0000\n"
+"POT-Creation-Date: 2019-11-02 09:49+0530\n"
+"PO-Revision-Date: 2019-11-02 09:56+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: ../../home/kovid/work/calibre/manual/viewer.rst:4
 msgid "The E-book viewer"
@@ -40,134 +40,171 @@ msgid ""
 "You can view any of the books in your calibre library by selecting the book "
 "and pressing the :guilabel:`View` button. This will open up the book in the "
 "E-book viewer. You can also launch the E-book viewer by itself from the "
-"Start menu in Windows or using the command :command:`ebook-viewer` in Linux "
-"and macOS (you have to install the command line tools on macOS first by "
-"going to :guilabel:`Preferences->Advanced->Miscellaneous`)."
-msgstr "Ви можете переглядати будь-які книжки з вашої бібліотеки calibre, вибравши книжку та натиснувши кнопку :guilabel:`Переглянути`. У відповідь книгу буде відкрито у програмі для перегляду. Також ви можете запустити саму програму для перегляду книг за допомогою меню Windows або команди :command:`ebook-viewer` у Linux та macOS (для macOS потрібно спочатку встановити інструменти командного рядка через :guilabel:`Налаштування->Додатково->Різне`)."
+"Start menu in Windows.  On macOS, you can pin it to the dock and launch it "
+"from there. On Linux you can use its launcher in the desktop menus or run "
+"the command :command:`ebook-viewer`."
+msgstr "Ви можете переглядати будь-які книжки з вашої бібліотеки calibre, вибравши книжку та натиснувши кнопку :guilabel:`Переглянути`. У відповідь книгу буде відкрито у програмі для перегляду. Також ви можете запустити саму програму для перегляду книг за допомогою меню Windows. У macOS, ви можете пришпилити кнопку програми на бічну панель і запускати програму за допомогою цієї кнопки. У Linux ви можете скористатися засобом запуску у меню стільниці або командою :command:`ebook-viewer`."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:22
+#: ../../home/kovid/work/calibre/manual/viewer.rst:25
 msgid "Navigating around an e-book"
 msgstr "Навігація електронною книгою"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:39
-msgid ""
-"You can \"turn pages\" in a book by using the :guilabel:`Page previous` "
-"|prev| and :guilabel:`Page next` |next| buttons, or by pressing the "
-":guilabel:`Page down`/:guilabel:`Page up` keys. Unlike most e-book viewers, "
-"calibre does not force you to view books in paged mode. You can switch to "
-"flow mode by clicking on the scroll mode button |scroll| at the top right. "
-"You can then scroll by amounts less than a page by using the scroll bar or "
-"various customizable keyboard shortcuts."
-msgstr "Ви можете «гортати сторінки» у книжці, використовуючи кнопки :guilabel:`Попередня сторінка` |prev| і :guilabel:Наступна сторінка` |next| або натискаючи клавіші :guilabel:`Page down`/:guilabel:`Page up`. На відміну від більшості переглядачів електронних книжок, у calibre не обов’язково читати у сторінковому вигляді. Ви можете перемкнути програму у режим безперервної сторінки натисканням кнопки режиму гортання |scroll| у верхньому правому куті вікна програми. Ви можете прогортувати обсяг тексту, менший за сторінку, використовуючи смужку гортання або комбінацію клавіш, яку ви можете налаштувати."
+#: ../../home/kovid/work/calibre/manual/viewer.rst:27
+msgid "You can \"turn pages\" in a book by either:"
+msgstr "«Гортати» сторінки у книзі можна так:"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:45
+#: ../../home/kovid/work/calibre/manual/viewer.rst:29
+msgid "Clicking in the left or right margin or the page with the mouse"
+msgstr "Клацанням кнопкою миші на лівому або правому полі сторінки"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:30
+msgid ""
+"Pressing the :kbd:`spacebar`, :kbd:`page up`, :kbd:`page down` or arrow keys"
+msgstr "Натисканням клавіш :kbd:`Пробіл`, :kbd:`Page Up`, :kbd:`Page Down` або клавіш зі стрілками"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:31
+msgid "On a touchscreen tapping on the text or swiping left and right"
+msgstr "На сенсорному екрані торканням тексту або проведенням пальцем по екрану ліворуч або праворуч"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:34
+msgid "You can access the viewer controls by either:"
+msgstr "Доступ до інструментів керування переглядом можна отримати так:"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:36
+msgid "Right clicking on the text"
+msgstr "Клацанням правою кнопкою миші на тексті"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:37
+msgid "Pressing the :kbd:`Esc` or :kbd:`Menu` keys"
+msgstr "Натисканням клавіші :kbd:`Esc` або :kbd:`Menu`"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:38
+msgid "On a touchscreen by tapping the top 1/3rd or the screen"
+msgstr "Торканням до верхньої третини екрана на сенсорному екрані"
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:41
+msgid ""
+"The viewer has two modes, \"paged\" and \"flow\". In paged mode the book "
+"content is presented as pages, similar to a paper book. In flow mode the "
+"text is presented continuously, like in a web browser. You can switch "
+"between them using the viewer Preferences under :guilabel:`Page layout` or "
+"by pressing the :kbd:`ctrl+m` key."
+msgstr "Засіб перегляду книг може працювати у двох режимах — із поділом на сторінки і неперервному режимі. У режимі поділу на сторінки вміст книги буде представлено у форматі сторінок, подібно до звичайної паперової книги. У режимі неперервного перегляду текст буде показано на неперервному «сувої», подібно до тексту у браузері. Перемикатися між режимами можна за допомогою панелі налаштувань засобу перегляду, а саме, розділу :guilabel:`Компонування сторінки`, або за допомогою натискання комбінації клавіш :kbd:`Ctrl+M`."
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:49
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:47
+#: ../../home/kovid/work/calibre/manual/viewer.rst:51
 msgid ""
 "When you are in the middle of a book and close the viewer, it will remember "
 "where you stopped reading and return there the next time you open the book. "
-"You can also set bookmarks in the book by using the :guilabel:`Bookmark` "
-"button |bookmi|. When viewing EPUB format books, these bookmarks are "
-"actually saved in the EPUB file itself. You can add bookmarks, then send the"
-" file to a friend. When they open the file, they will be able to see your "
-"bookmarks."
-msgstr "Якщо ви почали читати книгу, а потім закрили вікно засобу перегляду, програма запам’ятає місце, на якому ви зупинилися, і повернеться до нього, коли ви відкриєте книгу наступного разу. Крім того, ви можете встановити у книзі закладки за допомогою кнопки :guilabel:`Закладка` |bookmi|. Якщо ви читаєте книгу у форматі EPUB, закладки зберігатимуться у самому файлі EPUB. Ви можете додати закладки, а потім надіслати файл другові чи подрузі. Коли надісланий файл буде відкрито, читач зможе побачити ваші закладки."
+"You can also set bookmarks in the book by using the :guilabel:`Bookmarks` "
+"button in the viewer controls or pressing :kbd:`ctrl+b`.  When viewing EPUB "
+"format books, these bookmarks are actually saved in the EPUB file itself. "
+"You can add bookmarks, then send the file to a friend.  When they open the "
+"file, they will be able to see your bookmarks. You can turn off this "
+"behavior in the :guilabel:`Miscellaneous` section of the viewer preferences."
+msgstr "Якщо ви почали читати книгу, а потім закрили вікно засобу перегляду, програма запам’ятає місце, на якому ви зупинилися, і повернеться до нього, коли ви відкриєте книгу наступного разу. Крім того, ви можете встановити у книзі закладки за допомогою кнопки :guilabel:`Закладки` на панелі засобів керування переглядом або комбінації клавіш :kbd:`Ctrl+B`. Якщо ви читаєте книгу у форматі EPUB, закладки зберігатимуться у самому файлі EPUB. Ви можете додати закладки, а потім надіслати файл другові чи подрузі. Коли надісланий файл буде відкрито, читач зможе побачити ваші закладки. Ви можете вимкнути цю поведінку у розділі :guilabel:`Різне` у налаштуваннях засобу перегляду."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:53
+#: ../../home/kovid/work/calibre/manual/viewer.rst:62
 msgid "Table of Contents"
 msgstr "Зміст"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:55
+#: ../../home/kovid/work/calibre/manual/viewer.rst:64
 msgid ""
 "If the book you are reading defines a Table of Contents, you can access it "
-"by pressing the :guilabel:`Table of Contents` button |toci|. This will bring"
-" up a list of sections in the book. You can click on any of them to jump to "
-"that portion of the book."
-msgstr "Якщо у книзі, яку ви читаєте, є таблиця вмісту, ви можете відкрити її натисканням кнопки :guilabel:`Зміст` |toci|. У відповідь програма покаже список розділів книги. Ви можете натиснути будь-який з пунктів цього списку, щоб перейти безпосередньо до відповідної частини книги."
+"by pressing the :guilabel:`Table of Contents` button.  This will bring up a "
+"list of sections in the book. You can click on any of them to jump to that "
+"portion of the book."
+msgstr "Якщо у книзі, яку ви читаєте, є таблиця вмісту, ви можете відкрити її натисканням кнопки :guilabel:`Зміст`. У відповідь програма покаже список розділів книги. Ви можете натиснути будь-який з пунктів цього списку, щоб перейти безпосередньо до відповідної частини книги."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:59
+#: ../../home/kovid/work/calibre/manual/viewer.rst:70
 msgid "Navigating by location"
 msgstr "Навігація за місцем"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:61
+#: ../../home/kovid/work/calibre/manual/viewer.rst:72
 msgid ""
-"E-books, unlike paper books, have no concept of pages. Instead, as you read "
-"through the book, you will notice that your position in the book is "
-"displayed in the upper left corner in a box like this |navposi|. This is "
-"both your current position and the total length of the book. These numbers "
-"are independent of the screen size and font size you are viewing the book "
-"at, and they play a similar role to page numbers in paper books. You can "
-"enter any number you like to go to the corresponding location in the book."
-msgstr "На відміну від звичайних книг, у електронних книгах немає чіткого поділу на сторінки. Замість сторінок, під час читання ви можете слідкувати за позицією поточного місця у книзі за допомогою інформаційної панелі, розташованої у верхньому лівому куті вікна програми, ось так: |navposi|. На цій панелі буде наведено дані як щодо поточного місця у книзі, так і щодо загального обсягу книги. Наведені числа є незалежними від розмірів вікна та шрифту, за допомогою якого ви переглядаєте книгу, вони відіграють ту саму роль, що і номери сторінок у паперових книгах. Ви можете ввести у відповідне поле приблизний «номер» сторінки, щоб перейти до відповідного місця у книзі."
+"E-books, unlike paper books, have no concept of pages. You can refer to "
+"precise locations in e-books using the :guilabel:`Go to->Location` "
+"functionality in the viewer controls."
+msgstr "У електронній книзі, на відміну від звичайної, немає сторінок. Ви можете перейти до якогось певного місця у електронній книзі за допомогою пункту меню :guilabel:`Перейти до -> Місце` на панелі керування переглядом."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:67
+#: ../../home/kovid/work/calibre/manual/viewer.rst:76
 msgid ""
-"calibre also has a very handy reference mode. You can turn it on by clicking"
-" the :guilabel:`Reference mode` button |refmi|. Once you do this, every time"
-" you move your mouse over a paragraph, calibre will display a unique number "
-"made up of the section and paragraph numbers."
-msgstr "Крім того, у calibre передбачено дуже зручний режим посилань. Увімкнути його можна натисканням кнопки :guilabel:`Режим посилань` |refmi|. Після вмикання цього режиму ви можете навести вказівник на абзац у книзі, і calibre покаже унікальний номер абзацу, що складатиметься із номеру розділу та номеру абзацу у ньому."
+"You can use this location information to unambiguously refer to parts of the"
+" books when discussing it with friends or referring to it in other works. "
+"You can enter these locations under :guilabel:`Go to->Location` in the "
+"viewer controls."
+msgstr "Ви можете скористатися цими даними щодо місця для створення однозначних посилань на частини книги, коли обговорюватимете вміст книги з друзями або посилатиметесь на неї у інших роботах. Ви можете ввести дані цих місць за допомогою пункту :guilabel:`Перейти до -> Місце` на панелі засобів керування переглядом."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:74
-msgid ""
-"You can use this number to unambiguously refer to parts of the books when "
-"discussing it with friends or referring to it in other works. You can enter "
-"these numbers in the box marked Go to at the top of the window to go to a "
-"particular reference location."
-msgstr "Ви можете скористатися цим номером для створення однозначних посилань на частини книги, коли обговорюватимете вміст книги з друзями або посилатиметесь на неї у інших роботах. Ви можете ввести показані числа у поле із підписом «Перейти» у верхній частині вікна програми, щоб перейти до відповідного місця у книзі."
-
-#: ../../home/kovid/work/calibre/manual/viewer.rst:78
+#: ../../home/kovid/work/calibre/manual/viewer.rst:81
 msgid ""
 "If you click on links inside the e-book to take you to different parts of "
 "the book, such as an endnote, you can use the :guilabel:`Back` and "
-":guilabel:`Forward` buttons in the top left corner to return to where you "
-"were. These buttons behave just like those in a web browser."
-msgstr "Якщо під час читання ви скористаєтеся посиланнями у електронній книзі, які переноситимуть вас до інших частин книги, наприклад кінцевої примітки, ви зможете за допомогою кнопок :guilabel:`Назад` і :guilabel:`Вперед` швидко переходити між початковою частиною книги і частиною посилання. Ці кнопки розташовано у верхньому лівому куті вікна програми. Вони працюють так само, як відповідні кнопки програми для перегляду сторінок інтернету."
+":guilabel:`Forward` buttons in the top left corner of the viewer controls. "
+"These buttons behave just like those in a web browser."
+msgstr "Якщо під час читання ви скористаєтеся посиланнями у електронній книзі, які переноситимуть вас до інших частин книги, наприклад кінцевої примітки, ви зможете за допомогою кнопок :guilabel:`Назад` і :guilabel:`Вперед` швидко переходити між початковою частиною книги і частиною посилання. Ці кнопки розташовано у верхньому лівому куті панелі засобів керування переглядом. Вони працюють так само, як відповідні кнопки програми для перегляду сторінок інтернету."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:82
+#: ../../home/kovid/work/calibre/manual/viewer.rst:87
 msgid "Customizing the look and feel of your reading experience"
 msgstr "Налаштовування вигляду і поведінки програми під час читання"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:90
+#: ../../home/kovid/work/calibre/manual/viewer.rst:89
 msgid ""
-"You can change font sizes on the fly by using the font size buttons "
-"|fontsizei|. You can also make the viewer full screen by pressing the Full "
-"Screen button |fsi|. By clicking the Preferences button |prefbi|, you can "
-"change the default fonts used by the viewer to ones you like as well as the "
-"default font size when the viewer starts up."
-msgstr "Змінювати розмір символів шрифту можна за допомогою кнопок розмірів шрифту |fontsizei|. Ви можете перевести програму у режим повноекранного перегляду за допомогою кнопки «Увімкнути повноекранний режим» |fsi|. За допомогою кнопки «Налаштування» |prefbi| ви можете відкрити вікно, у якому можна змінити типові шрифти, які використовуються у програмі для перегляду, а також типовий розмір шрифту, який програма використовуватиме одразу після запуску."
+"You can change font sizes on the fly by using :guilabel:`Font size` in the "
+"viewer controls or :kbd:`Ctrl++` or :kbd:`Ctrl+-` or holding the :kbd:`Ctrl`"
+" key and using the mouse wheel."
+msgstr "Змінити розмір символів шрифту «на льоту» можна за допомогою пункту :guilabel:`Розмір шрифту` на панелі засобів керування переглядом, або натискання комбінацій клавіш :kbd:`Ctrl++` чи :kbd:`Ctrl+-`, або утримуванням натиснутою клавіші :kbd:`Ctrl` із одночасним прокручуванням коліщатка миші."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:94
+#: ../../home/kovid/work/calibre/manual/viewer.rst:93
 msgid ""
-"More advanced customization can be achieved by the :guilabel:`User "
-"stylesheet` setting. This is a stylesheet you can set that will be applied "
-"to every book. Using it you can do things like have white text on a black "
-"background, change paragraph styles, text justification, etc. For examples "
-"of custom stylesheets used by calibre's users, see `the forums "
-"<https://www.mobileread.com/forums/showthread.php?t=51500>`_."
-msgstr "Доступ до ширшого спектра налаштувань можна отримати за допомогою таблиці стилів книги. Цю таблицю стилів програма застосовуватиме до усіх книг, які ви у ній відкриватимете. За її допомогою ви зможете змінити кольори так, щоб білий текст було показано на чорному тлі, змінити стилі абзаців, вирівнювання тексту тощо. Приклади нетипових таблиць стилів, які використовуються користувачами calibre, можна знайти на `форумі програми <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
+"Colors can be changed in the :guilabel:`Colors` section of the viewer "
+"preferences."
+msgstr "Кольори можна змінити за допомогою пункту :guilabel:`Кольори` у налаштуваннях засобу перегляду книг."
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:96
+msgid ""
+"You can change the number of pages displayed on the screen as well as page "
+"margins in :guilabel:`Page layout` in the viewer preferences."
+msgstr "Ви можете змінити кількість показаних на екрані сторінок, а також розміри полів сторінки за допомогою розділу :guilabel:`Компонування сторінки` у налаштуваннях засобу перегляду."
 
 #: ../../home/kovid/work/calibre/manual/viewer.rst:99
+msgid ""
+"You can display custom headers and footers such as time left to read, "
+"current chapter title, book position, etc. via the :guilabel:`Headers and "
+"footers` section of the viewer preferences."
+msgstr "Ви можете наказати програмі показувати нетипові верхні і нижні колонтитули, зокрема час до завершення читання книги, назву поточної глави, позицію у книзі тощо, за допомогою розділу :guilabel:`Верхні і нижні колонтитули` налаштувань засобу читання."
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:103
+msgid ""
+"More advanced customization can be achieved by the :guilabel:`Styles` "
+"settings. Here you can specify a background image to display under the text "
+"and also a stylesheet you can set that will be applied to every book. Using "
+"it you can do things like change paragraph styles, text justification, etc."
+"  For examples of custom stylesheets used by calibre's users, see `the "
+"forums <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
+msgstr "Доступ до ширшого спектра налаштувань можна отримати за допомогою розділу :guilabel:`Стилі`. За допомогою цього розділу ви можете вказати зображення тла, яке буде показано під текстом, а також таблицю стилів програма застосовуватиме до усіх книг, які ви у ній відкриватимете. За її допомогою ви зможете змінити стилі абзаців, вирівнювання тексту тощо. Приклади нетипових таблиць стилів, які використовуються користувачами calibre, можна знайти на `форумі програми <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
+
+#: ../../home/kovid/work/calibre/manual/viewer.rst:111
 msgid "Dictionary lookup"
 msgstr "Пошук у словнику"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:101
+#: ../../home/kovid/work/calibre/manual/viewer.rst:113
 msgid ""
-"You can look up the meaning of words in the current book by right clicking "
-"on a word. calibre uses the publicly available dictionary server at "
-"``dict.org`` to look up words. The definition is displayed in a small box at"
-" the bottom of the screen."
-msgstr "Ви можете дізнаватися про значення слів у поточній книзі. Достатньо навести на позначене слово вказівник миші і клацнути правою кнопкою, а потім вибрати відповідний пункт у контекстному меню. Для пошуку значень calibre використовує загальнодоступний сервер словників ``dict.org``. Значення слова буде показано на невеличкій панелі у нижній частині вікна програми."
+"You can look up the meaning of words in the current book by opening the "
+":guilabel:`Lookup/search panel` via the viewer controls. Then simply double "
+"click on any word and its definition will be displayed in the lookup panel."
+msgstr "Ви можете пошукати значення слів у поточній книзі за допомогою пункту :guilabel:`Панель пошуку` на панелі засобів керування переглядом. Відкрийте панель пошуку, а потім двічі клацніть на будь-якому слові у книзі, щоб побачити його визначення на панелі пошуку."
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:105
+#: ../../home/kovid/work/calibre/manual/viewer.rst:119
 msgid "Copying text and images"
 msgstr "Копіювання тексту та малюнків"
 
-#: ../../home/kovid/work/calibre/manual/viewer.rst:107
+#: ../../home/kovid/work/calibre/manual/viewer.rst:121
 msgid ""
 "You can select text and images by dragging the content with your mouse and "
-"then right clicking to copy to the clipboard. The copied material can be "
-"pasted into another application as plain text and images."
-msgstr "Ви можете вибрати текст та малюнки перетягуючи вміст вашою мишкою та натискаючи праву кнопку для копіювання у буфер обміну. Скопійований матеріал може бути вставлений у іншу програму як простий текст та малюнки."
+"then right clicking and selecting \"Copy\" to copy to the clipboard.  The "
+"copied material can be pasted into another application as plain text and "
+"images."
+msgstr "Ви можете вибрати текст та малюнки, позначивши фрагмент за допомогою миші, потім клацнувши правою кнопкою миші і вибравши пункт «Копіювати» для копіювання даних до буфера обміну. Скопійований матеріал може бути вставлений у іншу програму як неформатований текст та малюнки."

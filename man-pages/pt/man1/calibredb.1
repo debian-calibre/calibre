@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "outubro 18, 2019" "4.2.0" "calibre"
+.TH "CALIBREDB" "1" "novembro 08, 2019" "4.3.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -185,7 +185,7 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Gerar ficheiro de saída no formato JSON, que é mais adequado para analise da maquina. isto fará com que a linha de largura e as opções de separador sejam ignorados.
+Gerar ficheiro de saída no formato JSON que é mais adequado para análise de máquina. Isto fará com que a largura de linha e as opções de separador sejam ignorados.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -205,7 +205,7 @@ O prefixo para todos os caminhos para os ficheiros. A predefinição é usar o c
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filtrar resultados pela pesquisa. Para o formato da pesquisa, veja a documentação relacionada com as pesquisas no Manual do Utilizador. A pré\-definição é não filtrar.
+Filtrar resultados pela expressão de pesquisa. Sobre o formato da expressão de pesquisa, veja a documentação relacionada com as pesquisas no Manual do utilizador. A predefinição é não filtrar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -265,7 +265,7 @@ Definir o ISBN do(s)  livro(s) adicionado(s)
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-Uma lista de idiomas separada por vírgulas (melhor utilizar códigos de idioma ISO639, apesar de alguns nomes de idiomas poderem ser reconhecidos)
+Uma lista de idiomas separada por vírgulas (é melhor utilizar códigos de idioma ISO639, apesar de alguns nomes de idiomas poderem ser reconhecidos)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -444,7 +444,7 @@ Normalmente o Calibre converte todos os caracteres não ingleses para equivalent
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normalmente o Calibre guarda a capa num ficheiro separado, junto dos outros ficheiros do livro. Especificar este parâmetro irá desligar este comportamento.
+Normalmente o Calibre guarda a capa num ficheiro separado, junto aos ficheiros do livro em causa. Especificar este parâmetro irá desligar este comportamento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -547,7 +547,7 @@ Guarda o resultado, na pasta especificada, dos diferentes estágios da cadeia de
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Etiquetas descritivas Regex a excluir como géneros. Padrão: \fB\(aq\fP[.+]|^+$\fB\(aq\fP exclui etiquetas com chaveta, por ex. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, e \fB\(aq\fP+\fB\(aq\fP, a etiqueta padrão para ler livros. Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Expressão regular descrevendo etiquetas a excluir como géneros. Padrão: \fB\(aq\fP[.+]|^+$\fB\(aq\fP exclui etiquetas com colchetes, por ex. \fB\(aq\fP[Projeto Gutenberg]\fB\(aq\fP, e ainda \fB\(aq\fP+\fB\(aq\fP, a etiqueta padrão para livros lidos. Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -882,8 +882,8 @@ calibredb clone path/to/new/library
 Criar um \fBclone\fP da biblioteca atual. Isto cria uma nova biblioteca vazia que contém as mesmas
 colunas personalizadas, bibliotecas virtuais e outros ajustes da biblioteca atual.
 .sp
-A biblioteca clonada não contêm livros. Se quiser criar uma cópia completa, incluindo
-todos os livros, use em seguida as ferramentas do sistema de ficheiros para copiar a pasta da biblioteca.
+A biblioteca clonada não contém livros. Se quiser criar uma cópia completa, incluindo
+todos os livros, use as ferramentas do sistema operativo para copiar a pasta da biblioteca.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .SH EMBED_METADATA
