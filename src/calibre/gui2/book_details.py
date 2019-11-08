@@ -230,6 +230,11 @@ def add_item_specific_entries(menu, data, book_info):
         add_format_entries(menu, data, book_info)
     elif dt == 'author':
         author = data['name']
+        if data['url'] != 'calibre':
+            ac = book_info.copy_link_action
+            ac.current_url = data['url']
+            ac.setText(_('&Copy author link'))
+            menu.addAction(ac)
         menu.addAction(init_manage_action(book_info.manage_action, 'authors', author))
         if hasattr(book_info, 'search_internet'):
             menu.sia = sia = create_search_internet_menu(book_info.search_internet, author)
@@ -251,13 +256,18 @@ def add_item_specific_entries(menu, data, book_info):
         field = data.get('field')
         if field is not None:
             book_id = int(data['book_id'])
-            value = data['value']
+            value = remove_value = data['value']
             if field == 'identifiers':
+                ac = book_info.copy_link_action
+                ac.current_url = value
+                ac.setText(_('&Copy identifier'))
+                menu.addAction(ac)
                 menu.addAction(book_info.edit_identifiers_action)
+                remove_value = data['id_type']
             elif field in ('tags', 'series', 'publisher') or is_category(field):
                 menu.addAction(init_manage_action(book_info.manage_action, field, value))
             ac = book_info.remove_item_action
-            ac.data = (field, value, book_id)
+            ac.data = (field, remove_value, book_id)
             ac.setText(_('Remove %s from this book') % value)
             menu.addAction(ac)
     return search_internet_added
@@ -835,7 +845,7 @@ class BookDetails(QWidget):  # {{{
         typ, val = link.partition(':')[::2]
 
         def search_term(field, val):
-            self.search_requested.emit('{}:="{}"'.format(field, val.replace('"', '\\"')))
+            self.search_requested.emit('{}:"={}"'.format(field, val.replace('"', '\\"')))
 
         def browse(url):
             try:

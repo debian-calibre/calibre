@@ -344,175 +344,118 @@ class CSSPreProcessor(object):
         return '\n'.join(ans)
 
 
+def accent_regex(accent_maps, letter_before=False):
+    accent_cat = set()
+    letters = set()
+
+    for accent in tuple(accent_maps):
+        accent_cat.add(accent)
+        k, v = accent_maps[accent].split(':', 1)
+        if len(k) != len(v):
+            raise ValueError('Invalid mapping for: {} -> {}'.format(k, v))
+        accent_maps[accent] = lmap = dict(zip(k, v))
+        letters |= set(lmap)
+
+    if letter_before:
+        args = ''.join(letters), ''.join(accent_cat)
+        accent_group, letter_group = 2, 1
+    else:
+        args = ''.join(accent_cat), ''.join(letters)
+        accent_group, letter_group = 1, 2
+
+    pat = re.compile(r'([{}])\s*(?:<br[^>]*>){{0,1}}\s*([{}])'.format(*args), re.UNICODE)
+
+    def sub(m):
+        lmap = accent_maps[m.group(accent_group)]
+        return lmap.get(m.group(letter_group)) or m.group()
+
+    return pat, sub
+
+
+def html_preprocess_rules():
+    ans = getattr(html_preprocess_rules, 'ans', None)
+    if ans is None:
+        ans = html_preprocess_rules.ans = [
+        # Remove huge block of contiguous spaces as they slow down
+        # the following regexes pretty badly
+        (re.compile(r'\s{10000,}'), ''),
+        # Some idiotic HTML generators (Frontpage I'm looking at you)
+        # Put all sorts of crap into <head>. This messes up lxml
+        (re.compile(r'<head[^>]*>\n*(.*?)\n*</head>', re.IGNORECASE|re.DOTALL),
+        sanitize_head),
+        # Convert all entities, since lxml doesn't handle them well
+        (re.compile(r'&(\S+?);'), convert_entities),
+        # Remove the <![if/endif tags inserted by everybody's darling, MS Word
+        (re.compile(r'</{0,1}!\[(end){0,1}if\]{0,1}>', re.IGNORECASE), ''),
+    ]
+    return ans
+
+
+def pdftohtml_rules():
+    ans = getattr(pdftohtml_rules, 'ans', None)
+    if ans is None:
+        ans = pdftohtml_rules.ans = [
+        accent_regex({
+            '¨': 'aAeEiIoOuU:äÄëËïÏöÖüÜ',
+            '`': 'aAeEiIoOuU:àÀèÈìÌòÒùÙ',
+            '´': 'aAcCeEiIlLoOnNrRsSuUzZ:áÁćĆéÉíÍĺĹóÓńŃŕŔśŚúÚźŹ',
+            'ˆ': 'aAeEiIoOuU:âÂêÊîÎôÔûÛ',
+            '¸': 'cC:çÇ',
+            '˛': 'aAeE:ąĄęĘ',
+            '˙': 'zZ:żŻ',
+            'ˇ': 'cCdDeElLnNrRsStTzZ:čČďĎěĚľĽňŇřŘšŠťŤžŽ',
+            '°': 'uU:ůŮ',
+        }),
+
+        accent_regex({'`': 'aAeEiIoOuU:àÀèÈìÌòÒùÙ'}, letter_before=True),
+
+        # If pdf printed from a browser then the header/footer has a reliable pattern
+        (re.compile(r'((?<=</a>)\s*file:/{2,4}[A-Z].*<br>|file:////?[A-Z].*<br>(?=\s*<hr>))', re.IGNORECASE), lambda match: ''),
+
+        # Center separator lines
+        (re.compile(r'<br>\s*(?P<break>([*#•✦=] *){3,})\s*<br>'), lambda match: '<p>\n<p style="text-align:center">' + match.group('break') + '</p>'),
+
+        # Remove <hr> tags
+        (re.compile(r'<hr.*?>', re.IGNORECASE), ''),
+
+        # Remove gray background
+        (re.compile(r'<BODY[^<>]+>'), '<BODY>'),
+
+        # Convert line breaks to paragraphs
+        (re.compile(r'<br[^>]*>\s*'), '</p>\n<p>'),
+        (re.compile(r'<body[^>]*>\s*'), '<body>\n<p>'),
+        (re.compile(r'\s*</body>'), '</p>\n</body>'),
+
+        # Clean up spaces
+        (re.compile(r'(?<=[\.,;\?!”"\'])[\s^ ]*(?=<)'), ' '),
+        # Add space before and after italics
+        (re.compile(r'(?<!“)<i>'), ' <i>'),
+        (re.compile(r'</i>(?=\w)'), '</i> '),
+    ]
+    return ans
+
+
+def book_designer_rules():
+    ans = getattr(book_designer_rules, 'ans', None)
+    if ans is None:
+        ans = book_designer_rules.ans = [
+        # HR
+        (re.compile('<hr>', re.IGNORECASE),
+        lambda match : '<span style="page-break-after:always"> </span>'),
+        # Create header tags
+        (re.compile(r'<h2[^><]*?id=BookTitle[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
+        lambda match : '<h1 id="BookTitle" align="%s">%s</h1>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
+        (re.compile(r'<h2[^><]*?id=BookAuthor[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
+        lambda match : '<h2 id="BookAuthor" align="%s">%s</h2>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
+        (re.compile('<span[^><]*?id=title[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
+        lambda match : '<h2 class="title">%s</h2>'%(match.group(1),)),
+        (re.compile('<span[^><]*?id=subtitle[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
+        lambda match : '<h3 class="subtitle">%s</h3>'%(match.group(1),)),
+    ]
+    return None
+
+
 class HTMLPreProcessor(object):
-
-    PREPROCESS = [
-                  # Remove huge block of contiguous spaces as they slow down
-                  # the following regexes pretty badly
-                  (re.compile(r'\s{10000,}'), lambda m: ''),
-                  # Some idiotic HTML generators (Frontpage I'm looking at you)
-                  # Put all sorts of crap into <head>. This messes up lxml
-                  (re.compile(r'<head[^>]*>\n*(.*?)\n*</head>', re.IGNORECASE|re.DOTALL),
-                   sanitize_head),
-                  # Convert all entities, since lxml doesn't handle them well
-                  (re.compile(r'&(\S+?);'), convert_entities),
-                  # Remove the <![if/endif tags inserted by everybody's darling, MS Word
-                  (re.compile(r'</{0,1}!\[(end){0,1}if\]{0,1}>', re.IGNORECASE),
-                   lambda match: ''),
-                  ]
-
-    # Fix pdftohtml markup
-    PDFTOHTML  = [
-                  # Fix umlauts
-                  (re.compile(r'¨\s*(<br.*?>)*\s*a', re.UNICODE), lambda match: 'ä'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*A', re.UNICODE), lambda match: 'Ä'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'ë'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'Ë'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*i', re.UNICODE), lambda match: 'ï'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*I', re.UNICODE), lambda match: 'Ï'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*o', re.UNICODE), lambda match: 'ö'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*O', re.UNICODE), lambda match: 'Ö'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*u', re.UNICODE), lambda match: 'ü'),
-                  (re.compile(r'¨\s*(<br.*?>)*\s*U', re.UNICODE), lambda match: 'Ü'),
-
-                  # Fix accents
-                  # `
-                  (re.compile(r'`\s*(<br.*?>)*\s*a', re.UNICODE), lambda match: 'à'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*A', re.UNICODE), lambda match: 'À'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'è'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'È'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*i', re.UNICODE), lambda match: 'ì'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*I', re.UNICODE), lambda match: 'Ì'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*o', re.UNICODE), lambda match: 'ò'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*O', re.UNICODE), lambda match: 'Ò'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*u', re.UNICODE), lambda match: 'ù'),
-                  (re.compile(r'`\s*(<br.*?>)*\s*U', re.UNICODE), lambda match: 'Ù'),
-
-                  # ` with letter before
-                  (re.compile(r'a\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'à'),
-                  (re.compile(r'A\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'À'),
-                  (re.compile(r'e\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'è'),
-                  (re.compile(r'E\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'È'),
-                  (re.compile(r'i\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'ì'),
-                  (re.compile(r'I\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'Ì'),
-                  (re.compile(r'o\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'ò'),
-                  (re.compile(r'O\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'Ò'),
-                  (re.compile(r'u\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'ù'),
-                  (re.compile(r'U\s*(<br.*?>)*\s*`', re.UNICODE), lambda match: 'Ù'),
-
-                  # ´
-                  (re.compile(r'´\s*(<br.*?>)*\s*a', re.UNICODE), lambda match: 'á'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*A', re.UNICODE), lambda match: 'Á'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*c', re.UNICODE), lambda match: 'ć'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*C', re.UNICODE), lambda match: 'Ć'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'é'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'É'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*i', re.UNICODE), lambda match: 'í'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*I', re.UNICODE), lambda match: 'Í'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*l', re.UNICODE), lambda match: 'ĺ'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*L', re.UNICODE), lambda match: 'Ĺ'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*o', re.UNICODE), lambda match: 'ó'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*O', re.UNICODE), lambda match: 'Ó'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*n', re.UNICODE), lambda match: 'ń'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*N', re.UNICODE), lambda match: 'Ń'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*r', re.UNICODE), lambda match: 'ŕ'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*R', re.UNICODE), lambda match: 'Ŕ'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*s', re.UNICODE), lambda match: 'ś'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*S', re.UNICODE), lambda match: 'Ś'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*u', re.UNICODE), lambda match: 'ú'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*U', re.UNICODE), lambda match: 'Ú'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*z', re.UNICODE), lambda match: 'ź'),
-                  (re.compile(r'´\s*(<br.*?>)*\s*Z', re.UNICODE), lambda match: 'Ź'),
-
-                  # ˆ
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*a', re.UNICODE), lambda match: 'â'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*A', re.UNICODE), lambda match: 'Â'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'ê'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'Ê'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*i', re.UNICODE), lambda match: 'î'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*I', re.UNICODE), lambda match: 'Î'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*o', re.UNICODE), lambda match: 'ô'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*O', re.UNICODE), lambda match: 'Ô'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*u', re.UNICODE), lambda match: 'û'),
-                  (re.compile(r'ˆ\s*(<br.*?>)*\s*U', re.UNICODE), lambda match: 'Û'),
-
-                  # ¸
-                  (re.compile(r'¸\s*(<br.*?>)*\s*c', re.UNICODE), lambda match: 'ç'),
-                  (re.compile(r'¸\s*(<br.*?>)*\s*C', re.UNICODE), lambda match: 'Ç'),
-
-                  # ˛
-                  (re.compile(r'\s*˛\s*(<br.*?>)*\s*a', re.UNICODE), lambda match: 'ą'),
-                  (re.compile(r'\s*˛\s*(<br.*?>)*\s*A', re.UNICODE), lambda match: 'Ą'),
-                  (re.compile(r'˛\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'ę'),
-                  (re.compile(r'˛\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'Ę'),
-
-                  # ˙
-                  (re.compile(r'˙\s*(<br.*?>)*\s*z', re.UNICODE), lambda match: 'ż'),
-                  (re.compile(r'˙\s*(<br.*?>)*\s*Z', re.UNICODE), lambda match: 'Ż'),
-
-                  # ˇ
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*c', re.UNICODE), lambda match: 'č'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*C', re.UNICODE), lambda match: 'Č'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*d', re.UNICODE), lambda match: 'ď'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*D', re.UNICODE), lambda match: 'Ď'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*e', re.UNICODE), lambda match: 'ě'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*E', re.UNICODE), lambda match: 'Ě'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*l', re.UNICODE), lambda match: 'ľ'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*L', re.UNICODE), lambda match: 'Ľ'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*n', re.UNICODE), lambda match: 'ň'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*N', re.UNICODE), lambda match: 'Ň'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*r', re.UNICODE), lambda match: 'ř'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*R', re.UNICODE), lambda match: 'Ř'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*s', re.UNICODE), lambda match: 'š'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*S', re.UNICODE), lambda match: 'Š'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*t', re.UNICODE), lambda match: 'ť'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*T', re.UNICODE), lambda match: 'Ť'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*z', re.UNICODE), lambda match: 'ž'),
-                  (re.compile(r'ˇ\s*(<br.*?>)*\s*Z', re.UNICODE), lambda match: 'Ž'),
-
-                  # °
-                  (re.compile(r'°\s*(<br.*?>)*\s*u', re.UNICODE), lambda match: 'ů'),
-                  (re.compile(r'°\s*(<br.*?>)*\s*U', re.UNICODE), lambda match: 'Ů'),
-
-                  # If pdf printed from a browser then the header/footer has a reliable pattern
-                  (re.compile(r'((?<=</a>)\s*file:/{2,4}[A-Z].*<br>|file:////?[A-Z].*<br>(?=\s*<hr>))', re.IGNORECASE), lambda match: ''),
-
-                  # Center separator lines
-                  (re.compile(r'<br>\s*(?P<break>([*#•✦=] *){3,})\s*<br>'), lambda match: '<p>\n<p style="text-align:center">' + match.group('break') + '</p>'),
-
-                  # Remove <hr> tags
-                  (re.compile(r'<hr.*?>', re.IGNORECASE), lambda match: ''),
-
-                  # Remove gray background
-                  (re.compile(r'<BODY[^<>]+>'), lambda match : '<BODY>'),
-
-                  # Convert line breaks to paragraphs
-                  (re.compile(r'<br[^>]*>\s*'), lambda match : '</p>\n<p>'),
-                  (re.compile(r'<body[^>]*>\s*'), lambda match : '<body>\n<p>'),
-                  (re.compile(r'\s*</body>'), lambda match : '</p>\n</body>'),
-
-                  # Clean up spaces
-                  (re.compile(r'(?<=[\.,;\?!”"\'])[\s^ ]*(?=<)'), lambda match: ' '),
-                  # Add space before and after italics
-                  (re.compile(r'(?<!“)<i>'), lambda match: ' <i>'),
-                  (re.compile(r'</i>(?=\w)'), lambda match: '</i> '),
-                 ]
-
-    # Fix Book Designer markup
-    BOOK_DESIGNER = [
-                     # HR
-                     (re.compile('<hr>', re.IGNORECASE),
-                      lambda match : '<span style="page-break-after:always"> </span>'),
-                     # Create header tags
-                     (re.compile(r'<h2[^><]*?id=BookTitle[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
-                      lambda match : '<h1 id="BookTitle" align="%s">%s</h1>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
-                     (re.compile(r'<h2[^><]*?id=BookAuthor[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
-                      lambda match : '<h2 id="BookAuthor" align="%s">%s</h2>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
-                     (re.compile('<span[^><]*?id=title[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
-                      lambda match : '<h2 class="title">%s</h2>'%(match.group(1),)),
-                     (re.compile('<span[^><]*?id=subtitle[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
-                      lambda match : '<h3 class="subtitle">%s</h3>'%(match.group(1),)),
-                     ]
 
     def __init__(self, log=None, extra_opts=None, regex_wizard_callback=None):
         self.log = log
@@ -539,9 +482,9 @@ class HTMLPreProcessor(object):
         if self.is_baen(html):
             rules = []
         elif self.is_book_designer(html):
-            rules = self.BOOK_DESIGNER
+            rules = book_designer_rules()
         elif is_pdftohtml:
-            rules = self.PDFTOHTML
+            rules = pdftohtml_rules()
         else:
             rules = []
 
@@ -607,7 +550,7 @@ class HTMLPreProcessor(object):
                         r'\s*[\w\d$(])') % length, re.UNICODE), wrap_lines),
                 )
 
-        for rule in self.PREPROCESS + start_rules:
+        for rule in html_preprocess_rules() + start_rules:
             html = rule[0].sub(rule[1], html)
 
         if self.regex_wizard_callback is not None:

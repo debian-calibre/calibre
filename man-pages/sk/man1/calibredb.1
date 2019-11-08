@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "októbra 18, 2019" "4.2.0" "calibre"
+.TH "CALIBREDB" "1" "novembra 08, 2019" "4.3.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -86,7 +86,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%PRIDÁVANIE Z ADRESÁROV\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%VOĽBY EPUB\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -266,7 +266,7 @@ Nastaviť ISBN pridávaných kníh
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+Čiarkami oddelený zoznam jazykov (najlepší je použiť kódy jazyka ISO639, aj keď niektoré názvy jazykov môžu byť tiež rozpoznané)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,18 +288,18 @@ Nastaviť značky pridávaných kníh
 .B \-\-title, \-t
 Nastaviť názov pridanej knihy(kníh)
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS PRIDÁVANIE Z ADRESÁROV
 .sp
 Možnosti na ovládanie pridávania kníh z adresárov. V predvolenom nastavení sa pridávajú len súbory s príponami známych typov súborov e\-kníh.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Vzor názvu súboru (glob), súbory zodpovedajúce tomuto vzoru budú pridané pri prehľadávaní súborov v adresároch, dokonca i keď nie sú známeho typu súboru e\-knihy. Môže byť zadaný viac krát pre rôzne vzory.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+Vzor názvu súboru (glob), súbory zodpovedajúce tomuto vzoru budú ignorované pri prehľadávaní súborov v adresároch. Môže byť zadaný viac krát pre viac vzorov: Napr.: *.pdf bude ignorovať všetky súbory pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -531,7 +531,7 @@ Filtrovať výsledky podľa vyhľadávacieho dotazu. Formát dotazu si prosím p
 .B \-\-verbose, \-v
 Zobraziť podrobné výstupné informácie. Užitočné pri hľadaní chýb v programe
 .UNINDENT
-.SS EPUB OPTIONS
+.SS VOĽBY EPUB
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title

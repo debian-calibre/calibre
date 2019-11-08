@@ -13,7 +13,7 @@ from itertools import chain
 from lxml import etree
 
 from css_selectors.errors import ExpressionError
-from css_selectors.parser import parse, ascii_lower, Element
+from css_selectors.parser import parse, ascii_lower, Element, FunctionalPseudoElement
 from css_selectors.ordered_set import OrderedSet
 
 from polyglot.builtins import iteritems, itervalues
@@ -87,8 +87,8 @@ def normalize_language_tag(tag):
     return taglist
 
 
-INAPPROPRIATE_PSEUDO_CLASSES = frozenset([
-    'active', 'after', 'disabled', 'visited', 'link', 'before', 'focus', 'first-letter', 'enabled', 'first-line', 'hover', 'checked', 'target'])
+INAPPROPRIATE_PSEUDO_CLASSES = frozenset((
+    'active', 'after', 'disabled', 'visited', 'link', 'before', 'focus', 'first-letter', 'enabled', 'first-line', 'hover', 'checked', 'target'))
 
 
 class Select(object):
@@ -182,8 +182,7 @@ class Select(object):
         seen = set()
         if root is not None:
             root = frozenset(self.itertag(root))
-        for selector in get_parsed_selector(selector):
-            parsed_selector = selector.parsed_tree
+        for parsed_selector in get_parsed_selector(selector):
             for item in self.iterparsedselector(parsed_selector):
                 if item not in seen and (root is None or item in root):
                     yield item
@@ -571,33 +570,65 @@ def select_nth_last_of_type(cache, function, elem):
 # Pseudo elements {{{
 
 
-def select_pseudo(cache, pseudo):
-    try:
-        func = cache.dispatch_map[pseudo.ident.replace('-', '_')]
-    except KeyError:
-        if pseudo.ident == 'root':
-            yield cache.root
-            return
+def pseudo_func(f):
+    f.is_pseudo = True
+    return f
 
-        if pseudo.ident in cache.ignore_inappropriate_pseudo_classes:
-            def func(cache, item):
-                return True
-            func.is_pseudo = True
+
+@pseudo_func
+def allow_all(cache, item):
+    return True
+
+
+def get_func_for_pseudo(cache, ident):
+    try:
+        func = cache.dispatch_map[ident.replace('-', '_')]
+    except KeyError:
+        if ident in cache.ignore_inappropriate_pseudo_classes:
+            func = allow_all
         else:
             raise ExpressionError(
-                "The pseudo-class :%s is not supported" % pseudo.ident)
+                "The pseudo-class :%s is not supported" % ident)
 
     try:
         func.is_pseudo
     except AttributeError:
         raise ExpressionError(
-            "The pseudo-class :%s is invalid" % pseudo.ident)
+            "The pseudo-class :%s is invalid" % ident)
+    return func
+
+
+def select_selector(cache, selector):
+    if selector.pseudo_element is None:
+        for item in cache.iterparsedselector(selector.parsed_tree):
+            yield item
+        return
+    if isinstance(selector.pseudo_element, FunctionalPseudoElement):
+        raise ExpressionError(
+            "The pseudo-element ::%s is not supported" % selector.pseudo_element.name)
+    func = get_func_for_pseudo(cache, selector.pseudo_element)
+    for item in cache.iterparsedselector(selector.parsed_tree):
+        if func(cache, item):
+            yield item
+
+
+def select_pseudo(cache, pseudo):
+    func = get_func_for_pseudo(cache, pseudo.ident)
+    if func is select_root:
+        yield cache.root
+        return
 
     for item in cache.iterparsedselector(pseudo.selector):
         if func(cache, item):
             yield item
 
 
+@pseudo_func
+def select_root(cache, elem):
+    return elem is cache.root
+
+
+@pseudo_func
 def select_first_child(cache, elem):
     try:
         return cache.sibling_count(elem) == 0
@@ -605,9 +636,7 @@ def select_first_child(cache, elem):
         return False
 
 
-select_first_child.is_pseudo = True
-
-
+@pseudo_func
 def select_last_child(cache, elem):
     try:
         return cache.sibling_count(elem, before=False) == 0
@@ -615,9 +644,7 @@ def select_last_child(cache, elem):
         return False
 
 
-select_last_child.is_pseudo = True
-
-
+@pseudo_func
 def select_only_child(cache, elem):
     try:
         return cache.all_sibling_count(elem) == 0
@@ -625,9 +652,7 @@ def select_only_child(cache, elem):
         return False
 
 
-select_only_child.is_pseudo = True
-
-
+@pseudo_func
 def select_first_of_type(cache, elem):
     try:
         return cache.sibling_count(elem, same_type=True) == 0
@@ -635,9 +660,7 @@ def select_first_of_type(cache, elem):
         return False
 
 
-select_first_of_type.is_pseudo = True
-
-
+@pseudo_func
 def select_last_of_type(cache, elem):
     try:
         return cache.sibling_count(elem, before=False, same_type=True) == 0
@@ -645,9 +668,7 @@ def select_last_of_type(cache, elem):
         return False
 
 
-select_last_of_type.is_pseudo = True
-
-
+@pseudo_func
 def select_only_of_type(cache, elem):
     try:
         return cache.all_sibling_count(elem, same_type=True) == 0
@@ -655,14 +676,10 @@ def select_only_of_type(cache, elem):
         return False
 
 
-select_only_of_type.is_pseudo = True
-
-
+@pseudo_func
 def select_empty(cache, elem):
     return cache.is_empty(elem)
 
-
-select_empty.is_pseudo = True
 
 # }}}
 

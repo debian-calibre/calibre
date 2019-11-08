@@ -167,7 +167,7 @@ class SyncBook:  # {{{
         if ans is not None:
             cfi = ans.cfi
             if cfi:
-                self.overlay.view.goto_bookpos(cfi)
+                self.overlay.view.goto_cfi(cfi)
 
 
 # }}}
@@ -305,7 +305,7 @@ class MainOverlay:  # {{{
                 copy_actions.appendChild(ac(_('View image'), _('View the current image'), def():
                     self.overlay.hide(), ui_operations.view_image(self.elements.img)
                 , 'image'))
-                copy_actions.appendChild(ac(_('Copy image'), _('View the current image'), def():
+                copy_actions.appendChild(ac(_('Copy image'), _('Copy the current image'), def():
                     self.overlay.hide(), ui_operations.copy_image(self.elements.img)
                 , 'copy'))
             if copy_actions.childNodes.length:
@@ -313,7 +313,9 @@ class MainOverlay:  # {{{
 
             actions_div.appendChild(E.ul(
                 ac(_('Inspector'), _('Show the content inspector'),
-                   def(): self.overlay.hide(), ui_operations.toggle_inspector();, 'bug')
+                   def(): self.overlay.hide(), ui_operations.toggle_inspector();, 'bug'),
+                ac(_('Reset interface'), _('Reset viewer panels, toolbars and scrollbars to defaults'),
+                   def(): self.overlay.hide(), ui_operations.reset_interface();, 'remove'),
             ))
         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
             onclick=def (evt):evt.stopPropagation();,
@@ -423,7 +425,10 @@ class PrefsOverlay: # {{{
     def show(self, container):
         self.changes_occurred = False
         container.style.backgroundColor = get_color('window-background')
-        self.prefs = create_prefs_panel(container, self.overlay.hide_current_panel, def():self.changes_occurred=True;)
+        self.prefs = create_prefs_panel(container, self.overlay.hide_current_panel, self.on_change)
+
+    def on_change(self):
+        self.changes_occurred = True
 
     def handle_escape(self):
         self.prefs.onclose()
@@ -623,7 +628,7 @@ class Overlay:
     def show_ask_for_location(self):
         self.hide_current_panel()
         self.panels.push(SimpleOverlay(
-            self, create_location_overlay.bind(None, self.view.current_position_data), _('Go to location…')))
+            self, create_location_overlay.bind(None, self.view.current_position_data), _('Go to location or position…')))
         self.show_current_panel()
 
     def show_search(self):

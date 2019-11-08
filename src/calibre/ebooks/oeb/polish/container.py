@@ -60,6 +60,7 @@ exists, join, relpath = os.path.exists, os.path.join, os.path.relpath
 
 OEB_FONTS = {guess_type('a.ttf'), guess_type('b.otf'), guess_type('a.woff'), 'application/x-font-ttf', 'application/x-font-otf', 'application/font-sfnt'}
 OPF_NAMESPACES = {'opf':OPF2_NS, 'dc':DC11_NS}
+null = object()
 
 
 class CSSPreProcessor(cssp):
@@ -261,6 +262,7 @@ class Container(ContainerBase):  # {{{
         self.pretty_print = set()
         self.cloned = False
         self.cache_names = ('parsed_cache', 'mime_map', 'name_path_map', 'encoding_map', 'dirtied', 'pretty_print')
+        self.href_to_name_cache = {}
 
         if clone_data is not None:
             self.cloned = True
@@ -298,10 +300,8 @@ class Container(ContainerBase):  # {{{
                 # some epubs include the opf in the manifest with an incorrect mime type
                 self.mime_map[name] = item.get('media-type')
 
-    def clone_data(self, dest_dir):
-        Container.commit(self, keep_parsed=True)
-        self.cloned = True
-        clone_dir(self.root, dest_dir)
+    def data_for_clone(self, dest_dir=None):
+        dest_dir = dest_dir or self.root
         return {
             'root': dest_dir,
             'opf_name': self.opf_name,
@@ -313,6 +313,12 @@ class Container(ContainerBase):  # {{{
                 name:os.path.join(dest_dir, os.path.relpath(path, self.root))
                 for name, path in iteritems(self.name_path_map)}
         }
+
+    def clone_data(self, dest_dir):
+        Container.commit(self, keep_parsed=True)
+        self.cloned = True
+        clone_dir(self.root, dest_dir)
+        return self.data_for_clone(dest_dir)
 
     def add_name_to_manifest(self, name, process_manifest_item=None):
         ' Add an entry to the manifest for a file with the specified name. Returns the manifest id. '
@@ -520,7 +526,11 @@ class Container(ContainerBase):  # {{{
         Convert an href (relative to base) to a name. base must be a name or
         None, in which case self.root is used.
         '''
-        return href_to_name(href, self.root, base=base)
+        key = href, base
+        ans = self.href_to_name_cache.get(key, null)
+        if ans is null:
+            ans = self.href_to_name_cache[key] = href_to_name(href, self.root, base=base)
+        return ans
 
     def name_to_href(self, name, base=None):
         '''Convert a name to a href relative to base, which must be a name or

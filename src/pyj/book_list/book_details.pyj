@@ -45,15 +45,20 @@ def sort_formats_key(fmt):
         ans = FORMAT_PRIORITIES.length
     return ans
 
-def get_preferred_format(metadata, output_format, input_formats):
+def get_preferred_format(metadata, output_format, input_formats, for_download):
     formats = (metadata and metadata.formats) or v'[]'
     formats = [f.toUpperCase() for f in formats]
     fmt = 'EPUB' if output_format is 'PDF' else output_format
     if formats.length and formats.indexOf(fmt) is -1:
-        for q in sorted(formats, key=sort_formats_key):
+        found = False
+        formats = sorted(formats, key=sort_formats_key)
+        for q in formats:
             if input_formats[q]:
                 fmt = q
+                found = True
                 break
+        if for_download and not found and formats.length:
+            fmt = formats[0]
     return fmt.toUpperCase()
 
 IGNORED_FIELDS = {'title', 'sort', 'uuid', 'id', 'urls_from_identifiers', 'lang_names', 'last_modified', 'path'}
@@ -409,9 +414,9 @@ def on_img_err(err):
     if img.parentNode:
         img.parentNode.style.display = 'none'
 
-def preferred_format(book_id):
+def preferred_format(book_id, for_download):
     interface_data = get_interface_data()
-    return get_preferred_format(book_metadata(book_id), interface_data.output_format, interface_data.input_formats)
+    return get_preferred_format(book_metadata(book_id), interface_data.output_format, interface_data.input_formats, for_download)
 
 
 def read_format(book_id, fmt):
@@ -428,7 +433,7 @@ def download_format(book_id, fmt):
 
 
 def download_book(book_id):
-    fmt = preferred_format(book_id)
+    fmt = preferred_format(book_id, True)
     download_format(book_id, fmt)
 
 
@@ -485,7 +490,7 @@ def render_book(container_id, book_id):
     ))
     container = c.lastChild.firstChild
     read_button = create_button(_('Read'), 'book', read_book.bind(None, book_id), _('Read this book'))
-    fmt = preferred_format(book_id)
+    fmt = preferred_format(book_id, True)
     download_button = create_button(_('Download'), 'cloud-download', download_url(book_id, fmt),
         _('Download this book in the {0} format ({1})').format(fmt, human_readable(metadata.format_sizes[fmt] or 0)),
         download_filename=f'{metadata.title}.{fmt.toLowerCase()}')
@@ -600,7 +605,7 @@ def check_for_books_loaded():
     create_book_details(container)
 
 
-def onkeydown(container_id, ev):
+def onkeydown(container_id, close_action, ev):
     if render_book.book_id:
         if not ev.altKey and not ev.ctrlKey and not ev.metaKey and not ev.shiftKey:
             if ev.key is 'ArrowLeft':
@@ -609,6 +614,9 @@ def onkeydown(container_id, ev):
             elif ev.key is 'ArrowRight':
                 next_book(render_book.book_id, 1)
                 ev.preventDefault(), ev.stopPropagation()
+            elif ev.key is 'Escape':
+                ev.preventDefault(), ev.stopPropagation()
+                close_action()
 
 
 def init(container_id):
@@ -624,7 +632,7 @@ def init(container_id):
     create_top_bar(container, title=_('Book details'), action=close_action, icon=close_icon)
     window.scrollTo(0, 0)  # Ensure we are at the top of the window
     container.appendChild(E.div(class_=CLASS_NAME, tabindex='0'))
-    container.lastChild.addEventListener('keydown', onkeydown.bind(None, container_id), {'passive': False, 'capture': True})
+    container.lastChild.addEventListener('keydown', onkeydown.bind(None, container_id, close_action), {'passive': False, 'capture': True})
     container.lastChild.focus()
     container.lastChild.appendChild(E.div(_('Loading books from the calibre library, please wait...'), style='margin: 1ex 1em'))
     conditional_timeout(container_id, 5, check_for_books_loaded)

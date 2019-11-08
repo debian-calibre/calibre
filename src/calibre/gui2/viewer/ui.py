@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import json
 import os
+import re
 import sys
 from collections import defaultdict, namedtuple
 from hashlib import sha256
@@ -13,7 +14,7 @@ from threading import Thread
 
 from PyQt5.Qt import (
     QApplication, QDockWidget, QEvent, QMimeData, QModelIndex, QPixmap, QScrollBar,
-    Qt, QUrl, QVBoxLayout, QWidget, pyqtSignal
+    Qt, QToolBar, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre import prints
@@ -27,10 +28,13 @@ from calibre.gui2.viewer.annotations import (
     merge_annotations, parse_annotations, save_annots_to_epub, serialize_annotations
 )
 from calibre.gui2.viewer.bookmarks import BookmarkManager
-from calibre.gui2.viewer.convert_book import prepare_book, update_book
+from calibre.gui2.viewer.convert_book import (
+    clean_running_workers, prepare_book, update_book
+)
 from calibre.gui2.viewer.lookup import Lookup
 from calibre.gui2.viewer.overlay import LoadingOverlay
 from calibre.gui2.viewer.toc import TOC, TOCSearch, TOCView
+from calibre.gui2.viewer.toolbars import ActionsToolBar
 from calibre.gui2.viewer.web_view import (
     WebView, get_path_for_name, get_session_pref, set_book_path, viewer_config_dir,
     vprefs
@@ -40,9 +44,18 @@ from calibre.utils.img import image_from_path
 from calibre.utils.ipc.simple_worker import WorkerError
 from calibre.utils.monotonic import monotonic
 from calibre.utils.serialize import json_loads
-from polyglot.builtins import as_bytes, itervalues
+from polyglot.builtins import as_bytes, iteritems, itervalues
 
 annotations_dir = os.path.join(viewer_config_dir, 'annots')
+
+
+def is_float(x):
+    try:
+        float(x)
+        return True
+    except Exception:
+        pass
+    return False
 
 
 def dock_defs():
@@ -77,8 +90,9 @@ class EbookViewer(MainWindow):
     book_prepared = pyqtSignal(object, object)
     MAIN_WINDOW_STATE_VERSION = 1
 
-    def __init__(self, open_at=None, continue_reading=None):
+    def __init__(self, open_at=None, continue_reading=None, force_reload=False):
         MainWindow.__init__(self, None)
+        self.force_reload = force_reload
         connect_lambda(self.book_preparation_started, self, lambda self: self.loading_overlay(_(
             'Preparing book for first read, please wait')), type=Qt.QueuedConnection)
         self.maximized_at_last_fullscreen = False
@@ -87,6 +101,9 @@ class EbookViewer(MainWindow):
         self.setWindowTitle(self.base_window_title)
         self.in_full_screen_mode = None
         self.image_popup = ImagePopup(self)
+        self.actions_toolbar = at = ActionsToolBar(self)
+        at.open_book_at_path.connect(self.ask_for_open)
+        self.addToolBar(Qt.LeftToolBarArea, at)
         try:
             os.makedirs(annotations_dir)
         except EnvironmentError:
@@ -145,11 +162,21 @@ class EbookViewer(MainWindow):
         self.web_view.show_loading_message.connect(self.show_loading_message)
         self.web_view.show_error.connect(self.show_error)
         self.web_view.print_book.connect(self.print_book, type=Qt.QueuedConnection)
+        self.web_view.reset_interface.connect(self.reset_interface, type=Qt.QueuedConnection)
+        self.web_view.shortcuts_changed.connect(self.shortcuts_changed)
+        self.actions_toolbar.initialize(self.web_view)
         self.setCentralWidget(self.web_view)
         self.loading_overlay = LoadingOverlay(self)
         self.restore_state()
+        self.actions_toolbar.update_visibility()
         if continue_reading:
             self.continue_reading()
+
+    def shortcuts_changed(self, smap):
+        rmap = defaultdict(list)
+        for k, v in iteritems(smap):
+            rmap[v].append(k)
+        self.actions_toolbar.set_tooltips(rmap)
 
     def toggle_inspector(self):
         visible = self.inspector_dock.toggleViewAction().isChecked()
@@ -180,8 +207,10 @@ class EbookViewer(MainWindow):
     def set_full_screen(self, on):
         if on:
             self.maximized_at_last_fullscreen = self.isMaximized()
+            self.actions_toolbar.setVisible(False)
             self.showFullScreen()
         else:
+            self.actions_toolbar.update_visibility()
             if self.maximized_at_last_fullscreen:
                 self.showMaximized()
             else:
@@ -277,6 +306,19 @@ class EbookViewer(MainWindow):
         from .printing import print_book
         print_book(set_book_path.pathtoebook, book_title=self.current_book_data['metadata']['title'], parent=self)
 
+    def reset_interface(self):
+        for dock in self.findChildren(QDockWidget):
+            dock.setFloating(False)
+            area = self.dock_defs[dock.objectName().partition('-')[0]].initial_area
+            self.removeDockWidget(dock)
+            self.addDockWidget(area, dock)
+            dock.setVisible(False)
+
+        for toolbar in self.findChildren(QToolBar):
+            toolbar.setVisible(False)
+            self.removeToolBar(toolbar)
+            self.addToolBar(Qt.LeftToolBarArea, toolbar)
+
     def ask_for_open(self, path=None):
         if path is None:
             files = choose_files(
@@ -302,7 +344,7 @@ class EbookViewer(MainWindow):
         self.loading_overlay(_('Loading book, please wait'))
         self.save_annotations()
         self.current_book_data = {}
-        t = Thread(name='LoadBook', target=self._load_ebook_worker, args=(pathtoebook, open_at, reload_book))
+        t = Thread(name='LoadBook', target=self._load_ebook_worker, args=(pathtoebook, open_at, reload_book or self.force_reload))
         t.daemon = True
         t.start()
 
@@ -323,7 +365,7 @@ class EbookViewer(MainWindow):
         else:
             if DEBUG:
                 print('Book prepared in {:.2f} seconds'.format(monotonic() - start_time))
-            self.book_prepared.emit(True, {'base': ans, 'pathtoebook': pathtoebook, 'open_at': open_at})
+            self.book_prepared.emit(True, {'base': ans, 'pathtoebook': pathtoebook, 'open_at': open_at, 'reloaded': reload_book})
 
     def prepare_notify(self):
         self.book_preparation_started.emit()
@@ -332,31 +374,40 @@ class EbookViewer(MainWindow):
         open_at, self.pending_open_at = self.pending_open_at, None
         if not ok:
             self.setWindowTitle(self.base_window_title)
-            tb = data['tb']
+            tb = data['tb'].strip()
+            tb = re.split(r'^calibre\.gui2\.viewer\.convert_book\.ConversionFailure:\s*', tb, maxsplit=1, flags=re.M)[-1]
             last_line = tuple(tb.strip().splitlines())[-1]
             if last_line.startswith('calibre.ebooks.DRMError'):
                 DRMErrorMessage(self).exec_()
             else:
                 error_dialog(self, _('Loading book failed'), _(
                     'Failed to open the book at {0}. Click "Show details" for more info.').format(data['pathtoebook']),
-                    det_msg=data['tb'], show=True)
+                    det_msg=tb, show=True)
             self.loading_overlay.hide()
             self.web_view.show_home_page()
             return
-        set_book_path(data['base'], data['pathtoebook'])
+        try:
+            set_book_path(data['base'], data['pathtoebook'])
+        except Exception:
+            if data['reloaded']:
+                raise
+            self.load_ebook(data['pathtoebook'], open_at=data['open_at'], reload_book=True)
+            return
         self.current_book_data = data
         self.current_book_data['annotations_map'] = defaultdict(list)
         self.current_book_data['annotations_path_key'] = path_key(data['pathtoebook']) + '.json'
         self.load_book_data()
         self.update_window_title()
         initial_cfi = self.initial_cfi_for_current_book()
-        initial_toc_node = None
+        initial_toc_node = initial_bookpos = None
         if open_at:
             if open_at.startswith('toc:'):
                 initial_toc_node = self.toc_model.node_id_for_text(open_at[len('toc:'):])
             elif open_at.startswith('epubcfi(/'):
                 initial_cfi = open_at
-        self.web_view.start_book_load(initial_cfi=initial_cfi, initial_toc_node=initial_toc_node)
+            elif is_float(open_at):
+                initial_bookpos = float(open_at)
+        self.web_view.start_book_load(initial_cfi=initial_cfi, initial_toc_node=initial_toc_node, initial_bookpos=initial_bookpos)
 
     def load_book_data(self):
         self.load_book_annotations()
@@ -446,5 +497,6 @@ class EbookViewer(MainWindow):
         except Exception:
             import traceback
             traceback.print_exc()
+        clean_running_workers()
         return MainWindow.closeEvent(self, ev)
     # }}}
