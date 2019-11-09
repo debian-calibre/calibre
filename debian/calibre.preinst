@@ -2,10 +2,17 @@
 
 set -eu
 
-# Unbreak MathJax path upgrade.
-# Replace directory symbolic link to normal file tree.
-if [ -h /usr/share/calibre/mathjax ] ; then
-    rm /usr/share/calibre/mathjax
-fi
+case "$1" in
+    install|upgrade)
+	# Unbreak MathJax path upgrade.
+	# Replace directory symbolic link to normal file tree.
+	if [ -h /usr/share/calibre/mathjax ] ; then
+	    rm /usr/share/calibre/mathjax
+	fi
+	;;
+    *)
+	# Nothing to do
+	;;
+esac
 
 #DEBHELPER#
