@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -eu
+
+# Unbreak MathJax path upgrade.
+# Replace directory symbolic link to normal file tree.
+if [ -h /usr/share/calibre/mathjax ] ; then
+    rm /usr/share/calibre/mathjax
+fi
+
+#DEBHELPER#
