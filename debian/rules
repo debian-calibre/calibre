@@ -17,8 +17,10 @@ export QT_SELECT=qt5
 
 -include /usr/share/cdbs/1/rules/debhelper.mk
 
-common-build-arch::
+pre-build::
 	$(SETUP) mathjax --system-mathjax --path-to-mathjax=/usr/share/javascript/mathjax
+
+common-build-arch::
 	[ -d build ] || $(SETUP) build
 
 common-install-arch common-install-indep:: debian/tmp
