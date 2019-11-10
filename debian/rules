@@ -17,6 +17,10 @@ export QT_SELECT=qt5
 
 -include /usr/share/cdbs/1/rules/debhelper.mk
 
+pre-build::
+	# use system mathjax
+	$(SETUP) mathjax --system-mathjax --path-to-mathjax=/usr/share/javascript/mathjax
+
 common-build-arch::
 	[ -d build ] || $(SETUP) build
 
@@ -40,10 +44,6 @@ debian/tmp:
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
 
-	# use system mathjax
-	rm -rf debian/tmp/usr/share/calibre/mathjax
-	ln -s /usr/share/javascript/mathjax debian/tmp/usr/share/calibre/mathjax
-
 	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
 	find debian/tmp/usr/share/calibre/images -type f | xargs chmod a-x
@@ -59,6 +59,7 @@ install/calibre::
 clean::
 	rm -rf debian/orig
 	[ ! -d build ] || $(SETUP) build -c
+	$(SETUP) mathjax --clean
 	find . -name *.pyc -delete
 	find . -name *.so -delete
 	find . -name *.qrc -delete
