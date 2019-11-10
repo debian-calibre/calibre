@@ -2,6 +2,8 @@
 
 set -eu
 
+dpkg-maintscript-helper symlink_to_dir /usr/share/calibre/mathjax ../javascript/mathjax 4.3.0+dfsg-1+git-1~ calibre -- "$@"
+
 #
 # deal with .py[co] files that are left overs from pre-pycompile switch
 # since we drop regexp etc files
@@ -28,7 +30,5 @@ esac
 if which pycompile >/dev/null 2>&1; then
   pycompile -p calibre /usr/lib/calibre -V 2.7-2.9
 fi
-
-dpkg-maintscript-helper symlink_to_dir /usr/share/calibre/mathjax ../javascript/mathjax 4.3.0+dfsg-1+git-1~ calibre -- "$@"
 
 #DEBHELPER#
