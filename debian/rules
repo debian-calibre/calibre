@@ -20,12 +20,12 @@ override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
 override_dh_install:
-	dh_buildinfo -O--buildsystem=makefile
-	dh_sip -pcalibre-bin -O--buildsystem=makefile
-	dh_install -O--buildsystem=makefile
+	dh_buildinfo
+	dh_sip -pcalibre-bin
+	dh_install
 
 override_dh_missing:
-	dh_missing -O--buildsystem=makefile --fail-missing
+	dh_missing --fail-missing
 
 override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
@@ -64,7 +64,7 @@ override_dh_auto_clean:
 	find . -name '*.qrc' -delete
 
 override_dh_gencontrol:
-	dh_gencontrol -O--buildsystem=makefile $(DEB_DH_GENCONTROL_ARGS)
+	dh_gencontrol $(DEB_DH_GENCONTROL_ARGS)
 
 # Downloads the current upstream release according to debian/changelog, removes
 # some bundled software copies, non-free image and replaces the non-free prs500
