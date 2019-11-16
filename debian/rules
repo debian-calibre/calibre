@@ -24,6 +24,9 @@ override_dh_install:
 	dh_sip -pcalibre-bin -O--buildsystem=makefile
 	dh_install -O--buildsystem=makefile
 
+override_dh_missing:
+	dh_missing -O--buildsystem=makefile --fail-missing
+
 override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
