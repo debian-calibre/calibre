@@ -56,9 +56,9 @@ override_dh_auto_clean:
 	rm -rf debian/orig
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
-	find . -name *.pyc -delete
-	find . -name *.so -delete
-	find . -name *.qrc -delete
+	find . -name '*.pyc' -delete
+	find . -name '*.so'  -delete
+	find . -name '*.qrc' -delete
 
 override_dh_gencontrol:
 	dh_gencontrol -O--buildsystem=makefile $(DEB_DH_GENCONTROL_ARGS)
