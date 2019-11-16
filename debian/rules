@@ -21,7 +21,7 @@ override_dh_auto_build:
 
 override_dh_install:
 	dh_buildinfo -O--buildsystem=makefile
-	dh_sip -O--buildsystem=makefile
+	dh_sip -pcalibre-bin -O--buildsystem=makefile
 	dh_install -O--buildsystem=makefile
 
 override_dh_auto_install:
