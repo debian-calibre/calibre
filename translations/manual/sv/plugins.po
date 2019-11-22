@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 16:00+0530\n"
-"PO-Revision-Date: 2019-09-16 05:49+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-11-08 06:52+0530\n"
+"PO-Revision-Date: 2019-11-17 20:11+0000\n"
+"Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -180,7 +180,7 @@ msgid ""
 "Implement this method and :meth:`save_settings` in your plugin to use a "
 "custom configuration dialog, rather then relying on the simple string based "
 "default customization."
-msgstr "Implementera denna metod och :meth:`save_settings` i ditt insticksmodul för att anpassa en konfigurationsdialog, snarare än att förlita sig på en enkel strängbaserad standard anpassning."
+msgstr "Implementera denna metod och :meth:`save_settings` i din insticksmodul för att anpassa en konfigurationsdialog, snarare än att förlita sig på en enkel strängbaserad standardanpassning."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:5
@@ -393,7 +393,7 @@ msgid ""
 "This method is the main entry point for your plugins command line interface."
 " It is called when the user does: calibre-debug -r \"Plugin Name\". Any "
 "arguments passed are present in the args variable."
-msgstr "Denna metod är den viktigaste inkörsporten för dina insticksmoduls kommandoradsgränssnitt. Det kallas när användaren utför calibre-debug -r \"Namn för insticksmodul\". Alla argument som skickas finns i variabeln args."
+msgstr "Denna metod är den viktigaste inkörsporten för dina insticksmodulskommandoradsgränssnitt. Det kallas när användaren utför: calibre-debug -r \"Namn på insticksmodul\". Eventuella argument som skickas finns i args-variabeln."
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:28
 msgid "FileTypePlugin"
@@ -682,7 +682,7 @@ msgstr "Lista med metadatafält som potentiellt kan hämtas av detta insticksmod
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.has_html_comments:1
 msgid "Set this to True if your plugin returns HTML formatted comments"
-msgstr "Ange detta som True om ditt insticksmodul återger HTML-formaterade kommentarer"
+msgstr "Ange detta som True om din insticksmodul återger HTML-formaterade kommentarer"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of
@@ -746,7 +746,7 @@ msgstr "Om värdet är True, och denna källa återger flera resultat för en f�
 msgid ""
 "Return False if your plugin needs to be configured before it can be used. "
 "For example, it might need a username/password/API key."
-msgstr "Återge False om ditt insticksmodul måste anpassas innan det kan användas. Till exempel kan det behöva ett användarnamn/lösenord/API-nyckel."
+msgstr "Återge False om din insticksmodul måste anpassas innan den kan användas. Till exempel kan den behöva ett användarnamn/lösenord/API-nyckel."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_author_tokens:1
@@ -782,7 +782,7 @@ msgid ""
 "Call this method in your plugin's identify method to normalize metadata "
 "before putting the Metadata object into result_queue. You can of course, use"
 " a custom algorithm suited to your metadata source."
-msgstr "Anropa den här metoden i ditt insticksmodul för att identifiera metod att normalisera metadata innan metadataobjektet läggs i result_queue. Du kan naturligtvis använda en anpassad algoritm som matchar din metadatakälla."
+msgstr "Anropa den här metoden i din insticksmodul för att identifiera metod att normalisera metadata innan metadataobjektet läggs i result_queue. Du kan naturligtvis använda en anpassad algoritm som matchar din metadatakälla."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_url:1
@@ -851,7 +851,7 @@ msgid ""
 "For details on the default algorithm see "
 ":class:`InternalMetadataCompareKeyGen`. Re-implement this function in your "
 "plugin if the default algorithm is not suitable."
-msgstr "Mer information om standardalgoritmen, se: klass :class:`InternalMetadataCompareKeyGen`. Åter implementera denna funktion i ditt insticksmodul om standardalgoritmen inte är lämplig."
+msgstr "För mer information om standardalgoritmen, se: klass :class:`InternalMetadataCompareKeyGen`. Återimplementera denna funktion i din insticksmodul om standardalgoritmen inte är lämplig."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:1
@@ -2360,7 +2360,7 @@ msgstr "Underklasser bör implementera :meth:`genesis`, :meth:`library_changed`,
 msgid ""
 "Once initialized, this plugin has access to the main calibre GUI via the "
 ":attr:`gui` member. You can access other plugins by name, for example::"
-msgstr "När initierats, har detta insticksmodul tillgång till calibre-huvudanvändargränssnittet via :attr:`gui` medlem. Du kan komma åt andra insticksmodul med namn, till exempel::"
+msgstr "När initierats, har denna insticksmodul tillgång till calibres huvudanvändargränssnitt via :attr:`gui` medlem. Du kan komma åt andra insticksmodul med namn, till exempel::"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:22
@@ -2558,7 +2558,7 @@ msgstr "Ställ in detta insticksmodul. Endast anropas en gång under initieringe
 msgid ""
 "Called whenever the book list being displayed in calibre changes. Currently "
 "values for loc are: ``library, main, card and cardb``."
-msgstr "Anropas när boken listan som visas i calibre förändringas. För närvarande är värden för loc: ``bibliotek, huvud, kort och cardb``."
+msgstr "Anropas när boklistan som visas i calibre ändras. För närvarande är värden för loc: ``library, main, card och cardb``."
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.location_selected:4
@@ -2731,7 +2731,7 @@ msgstr "Anropas en gång innan gränssnittskomponent visas, borde utföra alla n
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:4
 msgid "The main calibre graphical user interface"
-msgstr "calibre huvudanvändargränssnittet"
+msgstr "calibres huvudanvändargränssnitt"
 
 #: ../../home/kovid/work/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.initialize:1
