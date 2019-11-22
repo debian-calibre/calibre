@@ -92,6 +92,7 @@ class EbookViewer(MainWindow):
 
     def __init__(self, open_at=None, continue_reading=None, force_reload=False):
         MainWindow.__init__(self, None)
+        self.shutting_down = False
         self.force_reload = force_reload
         connect_lambda(self.book_preparation_started, self, lambda self: self.loading_overlay(_(
             'Preparing book for first read, please wait')), type=Qt.QueuedConnection)
@@ -371,7 +372,10 @@ class EbookViewer(MainWindow):
         self.book_preparation_started.emit()
 
     def load_finished(self, ok, data):
+        if self.shutting_down:
+            return
         open_at, self.pending_open_at = self.pending_open_at, None
+        self.web_view.clear_caches()
         if not ok:
             self.setWindowTitle(self.base_window_title)
             tb = data['tb'].strip()
@@ -403,6 +407,10 @@ class EbookViewer(MainWindow):
         if open_at:
             if open_at.startswith('toc:'):
                 initial_toc_node = self.toc_model.node_id_for_text(open_at[len('toc:'):])
+            elif open_at.startswith('toc-href:'):
+                initial_toc_node = self.toc_model.node_id_for_href(open_at[len('toc-href:'):], exact=True)
+            elif open_at.startswith('toc-href-contains:'):
+                initial_toc_node = self.toc_model.node_id_for_href(open_at[len('toc-href-contains:'):], exact=False)
             elif open_at.startswith('epubcfi(/'):
                 initial_cfi = open_at
             elif is_float(open_at):
@@ -491,6 +499,7 @@ class EbookViewer(MainWindow):
         self.close()
 
     def closeEvent(self, ev):
+        self.shutting_down = True
         try:
             self.save_annotations()
             self.save_state()

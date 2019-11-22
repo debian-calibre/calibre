@@ -7,7 +7,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import json
 import os
 import re
-import shutil
 import sys
 import time
 from collections import defaultdict
@@ -15,10 +14,10 @@ from datetime import datetime
 from functools import partial
 from itertools import count
 from math import ceil
-from lxml.etree import Comment
 
 from css_parser import replaceUrls
 from css_parser.css import CSSRule
+from lxml.etree import Comment
 
 from calibre import detect_ncpus, force_unicode, prepare_string_for_xml
 from calibre.constants import iswindows, plugins
@@ -41,6 +40,7 @@ from calibre.ptempfile import PersistentTemporaryDirectory
 from calibre.srv.metadata import encode_datetime
 from calibre.srv.opts import grouper
 from calibre.utils.date import EPOCH
+from calibre.utils.filenames import rmtree
 from calibre.utils.ipc.simple_worker import start_pipe_worker
 from calibre.utils.iso8601 import parse_iso8601
 from calibre.utils.logging import default_log
@@ -52,7 +52,7 @@ from polyglot.binary import (
     as_base64_unicode as encode_component, from_base64_bytes,
     from_base64_unicode as decode_component
 )
-from polyglot.builtins import as_bytes, is_py3, iteritems, map, unicode_type
+from polyglot.builtins import as_bytes, iteritems, map, unicode_type
 from polyglot.urllib import quote, urlparse
 
 RENDER_VERSION = 1
@@ -448,11 +448,11 @@ class RenderManager(object):
                     p.kill()
         del self.workers
         try:
-            shutil.rmtree(self.tdir)
+            rmtree(self.tdir)
         except EnvironmentError:
             time.sleep(0.1)
             try:
-                shutil.rmtree(self.tdir)
+                rmtree(self.tdir)
             except EnvironmentError:
                 pass
         del self.tdir
@@ -705,38 +705,6 @@ known_tags = ('img', 'script', 'link', 'image', 'style')
 discarded_tags = ('meta', 'base')
 
 
-def serialize_elem(elem, nsmap):
-    ns, name = split_name(elem.tag)
-    nl = name.lower()
-    if nl in discarded_tags:
-        # Filter out <meta> tags as they have unknown side-effects
-        # Filter out <base> tags as the viewer uses <base> for URL resolution
-        return
-    if nl in known_tags:
-        name = nl
-    ans = {'n':name}
-    if elem.text:
-        ans['x'] = elem.text
-    if elem.tail:
-        ans['l'] = elem.tail
-    if ns:
-        ns = nsmap[ns]
-        if ns:
-            ans['s'] = ns
-    attribs = []
-    for attr, val in elem.items():
-        attr_ns, aname = split_name(attr)
-        attrib = aname, val
-        if attr_ns:
-            attr_ns = nsmap[attr_ns]
-            if attr_ns:
-                attrib = aname, val, attr_ns
-        attribs.append(attrib)
-    if attribs:
-        ans['a'] = attribs
-    return ans
-
-
 def ensure_body(root):
     # Make sure we have only a single <body>
     bodies = list(root.iterchildren(XHTML('body')))
@@ -759,54 +727,18 @@ def html_as_json(root):
     if ns not in (None, XHTML_NS):
         raise ValueError('HTML tag must be in empty or XHTML namespace')
     ensure_body(root)
+    pl, err = plugins['html_as_json']
+    if err:
+        raise SystemExit('Failed to load html_as_json plugin with error: {}'.format(err))
     try:
-        serialize = plugins['html_as_json'][0].serialize
-    except (KeyError, AttributeError):
-        return as_bytes(json.dumps(html_as_dict(root), ensure_ascii=False, separators=(',', ':')))
+        serialize = pl.serialize
+    except AttributeError:
+        raise SystemExit('You are running calibre from source, you need to also update the main calibre installation to version >=4.3')
     for child in tuple(root.iterchildren('*')):
         if child.tag.partition('}')[-1] not in ('head', 'body'):
             root.remove(child)
     root.text = root.tail = None
     return serialize(root, Comment)
-
-
-def html_as_dict(root):
-    for child in tuple(root.iterchildren('*')):
-        if child.tag.partition('}')[-1] not in ('head', 'body'):
-            root.remove(child)
-    root.text = root.tail = None
-    if is_py3:
-        nsmap = defaultdict(count().__next__)
-    else:
-        nsmap = defaultdict(count().next)
-    nsmap[XHTML_NS]
-    tags = [serialize_elem(root, nsmap)]
-    tree = [0]
-    stack = [(root, tree)]
-    while stack:
-        elem, node = stack.pop()
-        prev_child_node = None
-        for child in elem.iterchildren():
-            tag = getattr(child, 'tag', None)
-            if tag is None or callable(tag):
-                tail = getattr(child, 'tail', None)
-                if tail:
-                    if prev_child_node is None:
-                        parent_node = node[-1]
-                        parent_node = tags[parent_node]
-                        parent_node['x'] = parent_node.get('x', '') + tail
-                    else:
-                        prev_child_node['l'] = prev_child_node.get('l', '') + tail
-            else:
-                cnode = serialize_elem(child, nsmap)
-                if cnode is not None:
-                    tags.append(cnode)
-                    child_tree_node = [len(tags)-1]
-                    node.append(child_tree_node)
-                    stack.append((child, child_tree_node))
-                    prev_child_node = cnode
-    ns_map = [ns for ns, nsnum in sorted(iteritems(nsmap), key=lambda x: x[1])]
-    return {'ns_map':ns_map, 'tag_map':tags, 'tree':tree}
 
 
 def serialize_datetimes(d):
@@ -855,6 +787,7 @@ def get_stored_annotations(container, bookmark_data):
 
 
 def render(pathtoebook, output_dir, book_hash=None, serialize_metadata=False, extract_annotations=False, virtualize_resources=True, max_workers=1):
+    pathtoebook = os.path.abspath(pathtoebook)
     with RenderManager(max_workers) as render_manager:
         mi = None
         if serialize_metadata:

@@ -187,7 +187,7 @@ class View:
                         self.book_scrollbar.create(),
                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
-                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-overlay'),  # main overlay
+                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none', id='book-overlay'),  # main overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='controls-help-overlay'),  # controls help overlay
                     )
                 )
@@ -350,6 +350,8 @@ class View:
             ui_operations.toggle_full_screen()
         elif data.name is 'toggle_paged_mode':
             self.toggle_paged_mode()
+        elif data.name is 'toggle_toolbar':
+            self.toggle_toolbar()
         elif data.name is 'quit':
             ui_operations.quit()
         elif data.name is 'start_search':
@@ -403,6 +405,12 @@ class View:
         new_mode = 'flow' if mode is 'paged' else 'paged'
         sd.set('read_mode', new_mode)
         ui_operations.redisplay_book()
+
+    def toggle_toolbar(self):
+        sd = get_session_data()
+        misc = sd.get('standalone_misc_settings')
+        misc.show_actions_toolbar = v'!misc.show_actions_toolbar'
+        sd.set('standalone_misc_settings', misc)
 
     def find(self, text, backwards):
         self.iframe_wrapper.send_message('find', text=text, backwards=backwards, searched_in_spine=False)
@@ -499,8 +507,9 @@ class View:
             if which is 'left':
                 # Explicitly set the width of the central panel. This is needed
                 # on small screens with chrome, without it sometimes the right
-                # margin goes off the screen.
-                m.nextSibling.style.maxWidth = 'calc(100vw - {}px)'.format(margin_left + margin_right)
+                # margin/scrollbar goes off the screen.
+                m.nextSibling.style.maxWidth = 'calc(100vw - {}px)'.format(
+                    margin_left + margin_right + self.book_scrollbar.effective_width)
             set_css(m, width=val + 'px')
             val = min(val, 25)
             m.firstChild.style.width = val + 'px'
@@ -631,7 +640,9 @@ class View:
         if not navigated and jstype(initial_bookpos) is 'number':
             navigated = True
             self.goto_book_position(initial_bookpos)
-        if not navigated:
+        if navigated:
+            self.hide_loading()
+        else:
             self.show_name(name, initial_position=pos)
         sd = get_session_data()
         c = sd.get('controls_help_shown_count', 0)
@@ -876,18 +887,10 @@ class View:
             nonlocal has_clock
             if sd.get(sz_attr, 20) > 5:
                 mi = self.book.metadata
-                texta, hca = render_head_foot(div.firstChild, name, 'left', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                textb, hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
-                textc, hcc = render_head_foot(div.lastChild, name, 'right', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                hca = render_head_foot(div.firstChild, name, 'left', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                hcb = render_head_foot(div.firstChild.nextSibling, name, 'middle', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
+                hcc = render_head_foot(div.lastChild, name, 'right', mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos)
                 has_clock = hca or hcb or hcc
-                if textc and not textb and not texta:
-                    # Want right-aligned
-                    div.firstChild.style.display = 'block'
-                    div.firstChild.nextSibling.style.display = 'block'
-                elif not texta and not textc and textb:
-                    # Want centered
-                    div.firstChild.style.display = 'block'
-                    div.lastChild.style.display = 'block'
             else:
                 for c in div.childNodes:
                     c.style.display = 'none'
