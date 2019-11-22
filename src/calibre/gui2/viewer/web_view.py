@@ -258,6 +258,7 @@ class ViewerBridge(Bridge):
     print_book = from_js()
     clear_history = from_js()
     reset_interface = from_js()
+    customize_toolbar = from_js()
 
     create_view = to_js()
     start_book_load = to_js()
@@ -386,12 +387,19 @@ class Inspector(QWidget):
 
 
 def system_colors():
-    pal = QApplication.instance().palette()
-    return {
+    app = QApplication.instance()
+    is_dark_theme = app.is_dark_theme
+    pal = app.palette()
+    ans = {
         'background': pal.color(pal.Base).name(),
         'foreground': pal.color(pal.Text).name(),
-        'link': pal.color(pal.Link).name(),
     }
+    if is_dark_theme:
+        # only override link colors for dark themes
+        # since if the book specifies its own link colors
+        # they will likely work well with light themes
+        ans['link'] = pal.color(pal.Link).name()
+    return ans
 
 
 class WebView(RestartingWebEngineView):
@@ -414,6 +422,7 @@ class WebView(RestartingWebEngineView):
     show_error = pyqtSignal(object, object, object)
     print_book = pyqtSignal()
     reset_interface = pyqtSignal()
+    customize_toolbar = pyqtSignal()
     shortcuts_changed = pyqtSignal(object)
     paged_mode_changed = pyqtSignal()
     standalone_misc_settings_changed = pyqtSignal(object)
@@ -452,6 +461,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.print_book.connect(self.print_book)
         self.bridge.clear_history.connect(self.clear_history)
         self.bridge.reset_interface.connect(self.reset_interface)
+        self.bridge.customize_toolbar.connect(self.customize_toolbar)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -606,6 +616,9 @@ class WebView(RestartingWebEngineView):
 
     def clear_history(self):
         self._page.history().clear()
+
+    def clear_caches(self):
+        self._page.profile().clearHttpCache()
 
     def trigger_shortcut(self, which):
         self.execute_when_ready('trigger_shortcut', which)

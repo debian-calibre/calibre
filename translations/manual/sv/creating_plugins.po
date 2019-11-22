@@ -4,16 +4,16 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2018
+# Jonatan Nyberg, 2018-2019
 # Jonatan Nyberg, 2018
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 16:00+0530\n"
-"PO-Revision-Date: 2019-09-16 05:47+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-11-08 06:52+0530\n"
+"PO-Revision-Date: 2019-11-12 19:39+0000\n"
+"Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -203,7 +203,7 @@ msgstr "**översättningar**"
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr "En  mapp innehåller .mo filer med översättningar av användargränssnittet i ditt insticksmodul till olika språk. Se nedan för detaljer."
+msgstr "En mapp innehåller .mo-filer med översättningar av användargränssnittet i din insticksmodul till olika språk. Se nedan för detaljer."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
@@ -225,7 +225,7 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "Det enda anmärkningsvärda funktionen är planen :attr:`actual_plugin`. Eftersom calibre har både kommandorad och användargränssnitt bör användargränssnitts insticksmoduler som denna inte läsa in några biblioteketsanvändargränssnitt i __init__.py. actual_plugin fältet gör detta åt dig, genom att berätta för calibre att den egentliga insticksmodulen finns i en annan fil i ditt ZIP-arkiv, som endast kommer att läsas in i ett användargränssnittssammanhang."
+msgstr "Det enda anmärkningsvärda funktionen är fältet :attr:`actual_plugin`. Eftersom calibre har både kommandorad och användargränssnitt bör användargränssnittsinsticksmoduler som denna inte läsa in några biblioteketsanvändargränssnitt i __init__.py. Fältet actual_plugin gör detta åt dig, genom att berätta för calibre att den egentliga insticksmodulen finns i en annan fil i ditt ZIP-arkiv, som endast kommer att läsas in i ett användargränssnittssammanhang."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:114
 msgid ""
@@ -369,7 +369,7 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr "Verktygen bör definieras i filen ``main.py`` i ditt insticksmodul. Varje verktyg är en klass som ärver från :class:`calibre.gui2.tweak_book.plugin.Tool` klass. Låt oss titta på ``main.py`` från demo insticksmodulen, källkoden är tungt kommenterade och bör vara självförklarande. Läs API handlingar: class: `calibre.gui2.tweak_book.plugin.Tool` klass för mer information."
+msgstr "Verktygen bör definieras i filen ``main.py`` i din insticksmodul. Varje verktyg är en klass som ärver från :class:`calibre.gui2.tweak_book.plugin.Tool` klass. Låt oss titta på ``main.py`` från demo insticksmodulen, källkoden är tungt kommenterade och bör vara självförklarande. Läs API handlingar: class: `calibre.gui2.tweak_book.plugin.Tool` klass för mer information."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:214
 msgid ""
@@ -421,11 +421,11 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr "Slutligen finns det ``self.current_container`` som är en referens till boken som redigeras som :class:`calibre.ebooks.oeb.polish.container.Container` objekt. Detta representerar boken som en samling av sina konstituerande HTML/CSS/bildfiler och har bekvämliga metoder för att göra många användbara saker. Objektbehållaren och olika användbara nyttofunktioner som kan återanvändas i ditt insticksmodul kod är dokumenterade i :ref:`polish_api`."
+msgstr "Slutligen finns det ``self.current_container`` som är en referens till boken som redigeras som :class:`calibre.ebooks.oeb.polish.container.Container` objekt. Detta representerar boken som en samling av sina konstituerande HTML/CSS/bildfiler och har bekvämliga metoder för att göra många användbara saker. Objektbehållaren och olika användbara nyttofunktioner som kan återanvändas i din insticksmodulskod är dokumenterade i :ref:`polish_api`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:252
 msgid "Running User Interface plugins in a separate process"
-msgstr ""
+msgstr "Kör användargränssnittsinsticksmoduler i en separat process"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:254
 msgid ""
@@ -434,40 +434,40 @@ msgid ""
 "possible to use WebEngine there. Instead you can copy the data your plugin "
 "needs to a temporary directory and run the plugin with that data in a "
 "separate process. A simple example plugin follows that shows how to do this."
-msgstr ""
+msgstr "Om du skriver ett användargränssnittsinsticksmodul som behöver använda Qt WebEngine, det kan inte köras i calibre-huvudprocessen eftersom det inte är möjligt att använda WebEngine där. Istället kan du kopiera data din insticksmodul behöver en tillfällig katalog och köra insticksmodulen med dessa data i en separat process. Ett enkelt insticksmodulsexempel följer som visar hur man gör detta."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can download the plugin from `webengine_demo_plugin.zip  <https"
 "://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
-msgstr ""
+msgstr "Du kan hämta insticksmodulen från `webengine_demo_plugin.zip  <https://calibre-ebook.com/downloads/webengine_demo_plugin.zip>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:264
 msgid "The important part of the plugin is in two functions:"
-msgstr ""
+msgstr "Den viktiga delen av insticksmodulen är i två funktioner:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:273
 msgid ""
 "The ``show_demo()`` function asks the user for a URL and then runs the "
 "``main()`` function passing it that URL. The ``main()`` function displays "
 "the URL in a ``QWebEngineView``."
-msgstr ""
+msgstr "Funktionen ``show_demo()`` frågar användaren om en webbadress och kör sedan funktionen ``main()`` som skickar den till webbadressen. Funktionen ``main()`` visar webbadressen i en ``QWebEngineView``."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:279
 msgid "Adding translations to your plugin"
-msgstr "Lägger till översättningar till ditt insticksmodul"
+msgstr "Lägger till översättningar till din insticksmodul"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:281
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr "Du kan ha alla användargränssnitts strängar i ditt insticksmodul översatta och visas i vilket språk som är satt för huvudanvändargränssnitt i calibre."
+msgstr "Du kan ha alla användargränssnittsträngar i din insticksmodul översatta och visas på vilket språk som är inställt för huvudanvändargränssnittet i calibre."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:284
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr "Det första steget är att gå igenom ditt insticksmodul källkod och markera alla användarsynliga strängar som översättningsbara, genom att omge dem _(). Till exempel::"
+msgstr "Det första steget är att gå igenom din insticksmoduls källkod och markera alla användarsynliga strängar som översättningsbara, genom att omge dem _(). Till exempel::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:289
 msgid ""
@@ -475,7 +475,7 @@ msgid ""
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`poedit <https://poedit.net/>`_ program for this."
-msgstr "Använd sedan något program för att generera .po-filer från ditt insticksmodul källkod. Det bör finnas en .po-fil för varje språk du vill översätta till. Till exempel: de.po för tyska, fr.po för franska och så vidare. Du kan använda `poedit <https://poedit.net/>` _ programmet för detta."
+msgstr "Använd sedan något program för att generera .po-filer från din insticksmodulskällkod. Det bör finnas en .po-fil för varje språk du vill översätta till. Till exempel: de.po för tyska, fr.po för franska och så vidare. Du kan använda programmet `poedit <https://poedit.net/>` _ för detta."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:294
 msgid ""
@@ -485,7 +485,7 @@ msgstr "Skicka dessa .po filer till översättarna. När du får tillbaka dem, s
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:299
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr "Placera .mo filer i ``translations``-mappen i ditt insticksmodul."
+msgstr "Placera .mo-filer i ``translations``-mappen i din insticksmodul."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:301
 msgid ""
@@ -567,7 +567,7 @@ msgstr "Du kan snabbt testa ändringar i din insticksmodul med hjälp av följan
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr "Detta kommer att stänga en körande calibre, vänta på avstängning för att slutföra och sedan uppdatera ditt insticksmodul i calibre och starta om calibre."
+msgstr "Detta kommer att stänga en körande calibre, vänta på avstängning är slutförd och sedan uppdatera din insticksmodul i calibre och starta om calibre."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:346
 msgid "More plugin examples"

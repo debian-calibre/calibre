@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "novembra 08, 2019" "4.3.0" "calibre"
+.TH "CALIBREDB" "1" "novembra 22, 2019" "4.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -190,7 +190,7 @@ Generate output in JSON format, which is more suitable for machine parsing. Caus
 .INDENT 0.0
 .TP
 .B \-\-limit
-The maximum number of results to display. Default: all
+Maximálny počet výsledkov k zobrazeniu. Predvolená hodnota: všetky
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ Reťazec, ktorým budú oddelené jednotlivé polia. Štandardne je to medzera.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Pole, podľa ktorého triediť výsledky. Dostupné polia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Predvolené: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -467,7 +467,7 @@ Zoznam formátov oddelených čiarkami, ktoré ukladať pre každú knihu. Vo v�
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Správa o priebehu
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -834,7 +834,7 @@ Výstup do CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Typ súboru CSV, ktorý sa má vytvoriť. Možnosti: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -869,7 +869,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Normálne tento príkaz funguje iba u kníh, ktoré majú zastarané súbory OPF. Táto možnosť umožňuje fungovanie u všetkých kníh.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
