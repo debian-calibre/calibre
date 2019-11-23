@@ -70,7 +70,7 @@ override_dh_gencontrol:
 # original non-minimized javascript source for some minified JavaScript.
 get-orig-source:
 	set -e; \
-	V=`dpkg-parsechangelog | sed -rn '/^Version:/ {s/^Version: ([0-9.]+).*$$/\1/; p}'`; \
+	V=`dpkg-parsechangelog --show-field=Version | cut --delimiter=+ --field=1`; \
 	mkdir -p debian/orig; cd debian/orig; \
 	wget -O - https://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
 	\
