@@ -22,7 +22,7 @@ tar -Jxf ${c_file}
 
 rm -f ${c_dir}/src/odf/thumbnail.py
 rm -r ${c_dir}/resources/mathjax
-XZ_OPT="-9" tar -Jcf ../../../calibre_${V}+dfsg.orig.tar.xz ${c_dir}
+tar --use-compress-program="xz -9" -cf ../../../calibre_${V}+dfsg.orig.tar.xz ${c_dir}
 
 cd ../..
 rm -r debian/orig
