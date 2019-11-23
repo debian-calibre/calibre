@@ -72,7 +72,7 @@ V = $(shell dpkg-parsechangelog --show-field=Version | cut --delimiter=+ --field
 get-orig-source:
 	set -e; \
 	mkdir -p debian/orig; cd debian/orig; \
-	wget -O - https://download.calibre-ebook.com/${V}/calibre-${V}.tar.xz | xz -cd | tar x; \
+	wget -O - https://download.calibre-ebook.com/${V}/calibre-${V}.tar.xz | tar -Jx; \
 	\
 	D=`pwd`; rm -f calibre-${V}/src/odf/thumbnail.py; \
 	rm -r calibre-${V}/resources/mathjax; \
