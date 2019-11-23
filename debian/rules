@@ -76,5 +76,5 @@ get-orig-source:
 	\
 	D=`pwd`; rm -f calibre-${V}/src/odf/thumbnail.py; \
 	rm -r calibre-${V}/resources/mathjax; \
-	cd $$D; tar c * | xz -9 > ../../../calibre_${V}+dfsg.orig.tar.xz; \
+	cd $$D; XZ_OPT="-9" tar -Jcf ../../../calibre_${V}+dfsg.orig.tar.xz calibre-${V}; \
 	cd ../..; rm -r debian/orig
