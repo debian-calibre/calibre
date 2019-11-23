@@ -475,6 +475,12 @@ class Build(Command):
         if not os.path.exists(src_dir):
             os.makedirs(src_dir)
         sip = self.build_sip_files(ext, src_dir)
+
+        from subprocess import check_output
+        deb_CFLAGS   = subprocess.check_output(["dpkg-buildflags", "--get", "CFLAGS"  ])
+        deb_CXXFLAGS = subprocess.check_output(["dpkg-buildflags", "--get", "CXXFLAGS"])
+        deb_LDFLAGS  = subprocess.check_output(["dpkg-buildflags", "--get", "LDFLAGS" ])
+
         pro = textwrap.dedent(
         '''\
         TEMPLATE = lib
@@ -492,11 +498,16 @@ class Build(Command):
         macx {{
             QMAKE_LFLAGS += "-undefined dynamic_lookup"
         }}
-        QMAKE_CXXFLAGS += -g -fstack-protector-strong -Wformat -Werror=format-security
+        QMAKE_CFLAGS   += {CFLAGS}
+        QMAKE_CXXFLAGS += {CXXFLAGS}
+        QMAKE_LFLAGS   += {LFLAGS}
         ''').format(
             target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
             sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
-            ver=__version__
+            ver=__version__,
+            CFLAGS   = deb_CFLAGS,
+            CXXFLAGS = deb_CXXFLAGS,
+            LFLAGS   = deb_LDFLAGS
         )
         for incdir in ext.inc_dirs:
             pro += '\nINCLUDEPATH += ' + incdir
