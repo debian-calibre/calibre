@@ -3,7 +3,7 @@
 SETUP=python2.7 setup.py
 
 # build hardening
-export DEB_BUILD_MAINT_OPTIONS=hardening=+relro
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 
 %:
 	dh $@ --buildsystem=makefile
