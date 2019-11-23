@@ -492,6 +492,7 @@ class Build(Command):
         macx {{
             QMAKE_LFLAGS += "-undefined dynamic_lookup"
         }}
+        QMAKE_CXXFLAGS += -g -fstack-protector-strong -Wformat -Werror=format-security
         ''').format(
             target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
             sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
