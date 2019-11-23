@@ -44,7 +44,7 @@ override_dh_auto_install:
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
 
 	# fix executable permissions
-	find debian/tmp/usr/lib/calibre/calibre -type f | xargs chmod a-x
+	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs chmod a-x
 
 	# fix "env python2" style hashbangs
 	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
