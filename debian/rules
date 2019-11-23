@@ -68,13 +68,13 @@ override_dh_gencontrol:
 # TTFs with symlinks to their free liberation fonts counterparts. This also
 # updates the unpacked source tree to the new upstream version and adds the
 # original non-minimized javascript source for some minified JavaScript.
+V = $(shell dpkg-parsechangelog --show-field=Version | cut --delimiter=+ --field=1)
 get-orig-source:
 	set -e; \
-	V=`dpkg-parsechangelog --show-field=Version | cut --delimiter=+ --field=1`; \
 	mkdir -p debian/orig; cd debian/orig; \
-	wget -O - https://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
+	wget -O - https://download.calibre-ebook.com/${V}/calibre-${V}.tar.xz | xz -cd | tar x; \
 	\
-	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
-	rm -r calibre*/resources/mathjax; \
-	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
+	D=`pwd`; rm -f calibre-${V}/src/odf/thumbnail.py; \
+	rm -r calibre-${V}/resources/mathjax; \
+	cd $$D; tar c * | xz -9 > ../../../calibre_${V}+dfsg.orig.tar.xz; \
 	cd ../..; rm -r debian/orig
