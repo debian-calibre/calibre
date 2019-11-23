@@ -10,14 +10,19 @@ set -eu
 
 V=$(dpkg-parsechangelog --show-field=Version | cut --delimiter=+ --field=1)
 
+c_dir=calibre-${V}
+c_file=calibre-${V}.tar.xz
+
 mkdir -p debian/orig
 cd debian/orig
 
-wget -O - https://download.calibre-ebook.com/${V}/calibre-${V}.tar.xz | tar -Jx
+wget -O ${c_file} https://download.calibre-ebook.com/${V}/${c_file}
 
-rm -f calibre-${V}/src/odf/thumbnail.py
-rm -r calibre-${V}/resources/mathjax
-XZ_OPT="-9" tar -Jcf ../../../calibre_${V}+dfsg.orig.tar.xz calibre-${V}
+tar -Jxf ${c_file}
+
+rm -f ${c_dir}/src/odf/thumbnail.py
+rm -r ${c_dir}/resources/mathjax
+XZ_OPT="-9" tar -Jcf ../../../calibre_${V}+dfsg.orig.tar.xz ${c_dir}
 
 cd ../..
 rm -r debian/orig
