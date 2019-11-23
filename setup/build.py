@@ -425,9 +425,16 @@ class Build(Command):
             DESTDIR = {destdir}
             CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
             QMAKE_LIBS_PRIVATE += {glib} {fontconfig}
+            QMAKE_CFLAGS   += {CFLAGS}
+            QMAKE_CXXFLAGS += {CXXFLAGS}
+            QMAKE_LFLAGS   += {LFLAGS}
             ''').format(
                 headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
-                    target), glib=glib_flags, fontconfig=fontconfig_flags, freetype=' '.join(ft_inc_dirs))
+                    target), glib=glib_flags, fontconfig=fontconfig_flags, freetype=' '.join(ft_inc_dirs),
+                CFLAGS   = os.environ.get('CFLAGS',   ''),
+                CXXFLAGS = os.environ.get('CXXFLAGS', ''),
+                LFLAGS   = os.environ.get('LDFLAGS',  '')
+            )
         bdir = self.j(self.build_dir, 'headless')
         if not os.path.exists(bdir):
             os.makedirs(bdir)
@@ -475,12 +482,6 @@ class Build(Command):
         if not os.path.exists(src_dir):
             os.makedirs(src_dir)
         sip = self.build_sip_files(ext, src_dir)
-
-        from subprocess import check_output
-        deb_CFLAGS   = subprocess.check_output(["dpkg-buildflags", "--get", "CFLAGS"  ])
-        deb_CXXFLAGS = subprocess.check_output(["dpkg-buildflags", "--get", "CXXFLAGS"])
-        deb_LDFLAGS  = subprocess.check_output(["dpkg-buildflags", "--get", "LDFLAGS" ])
-
         pro = textwrap.dedent(
         '''\
         TEMPLATE = lib
@@ -505,9 +506,9 @@ class Build(Command):
             target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
             sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
             ver=__version__,
-            CFLAGS   = deb_CFLAGS,
-            CXXFLAGS = deb_CXXFLAGS,
-            LFLAGS   = deb_LDFLAGS
+            CFLAGS   = os.environ.get('CFLAGS',   ''),
+            CXXFLAGS = os.environ.get('CXXFLAGS', ''),
+            LFLAGS   = os.environ.get('LDFLAGS',  '')
         )
         for incdir in ext.inc_dirs:
             pro += '\nINCLUDEPATH += ' + incdir
