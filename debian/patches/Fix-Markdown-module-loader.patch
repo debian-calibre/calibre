@@ -5,7 +5,8 @@ Subject: [PATCH] Fix Markdown module loader
 ---
  src/calibre/ebooks/txt/processor.py |    2 +-
  src/calibre/linux.py                |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ src/calibre/startup.py              |   22 ----------------------
+ 3 files changed, 2 insertions(+), 24 deletions(-)
 
 Index: b/src/calibre/ebooks/txt/processor.py
 ===================================================================
@@ -33,3 +34,36 @@ Index: b/src/calibre/linux.py
               'web2disk             = calibre.web.fetch.simple:main',
               'calibre-server       = calibre.srv.standalone:main',
               'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
+Index: b/src/calibre/startup.py
+===================================================================
+--- a/src/calibre/startup.py
++++ b/src/calibre/startup.py
+@@ -43,28 +43,6 @@ if not _run_once:
+ 
+         sys.meta_path.insert(0, PyQt4Ban())
+ 
+-    class DeVendor(object):
+-
+-        if ispy3:
+-
+-            def find_spec(self, fullname, path, target=None):
+-                spec = None
+-                if fullname.startswith('calibre.ebooks.markdown'):
+-                    m = import_module(fullname[len('calibre.ebooks.'):])
+-                    spec = m.__spec__
+-                return spec
+-
+-        else:
+-
+-            def find_module(self, fullname, path=None):
+-                if fullname.startswith('calibre.ebooks.markdown'):
+-                    return self
+-
+-            def load_module(self, fullname):
+-                return import_module(fullname[len('calibre.ebooks.'):])
+-
+-    sys.meta_path.insert(0, DeVendor())
+-
+     #
+     # Platform specific modules
+     if iswindows:
