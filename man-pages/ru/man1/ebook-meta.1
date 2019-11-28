@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-META" "1" "ноября 22, 2019" "4.4.0" "calibre"
+.TH "EBOOK-META" "1" "ноября 29, 2019" "4.5.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .
@@ -35,20 +35,20 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-meta ebook_file [параметры]
+ebook\-meta файл_электронной_книги [опции]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Читать/Писать метаданные из/в e\-book файлы.
+Читать / писать метаданные из / в файлы электронных книг.
 .sp
 Поддерживаемые форматы для чтения метаданных: azw, azw1, azw3, azw4, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
 Поддерживаемые форматы для записи метаданных: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Разные типы файлов поддерживают разные виды метаданных. При попытке установить
-неподдерживаемые типы метаданных, они будут молчаливо проигнорированы
+Разные типы файлов поддерживают разные виды метаданных. Если вы попытаетесь задать
+для файла метаданные, которые он не поддерживает, они будут молча проигнорированы.
 .sp
 Когда вы передаёте аргументы с пробелами в \fBebook\-meta\fP, заключайте их в кавычки. Например: "/some path/with spaces"
 .SH [ПАРАМЕТРЫ]
@@ -105,7 +105,7 @@ ebook\-meta ebook_file [параметры]
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Установка идентификаторов для книги, может быть указана несколько раз. Например: \fI\%\-\-identifier\fP uri: https: //acme.com \fI\%\-\-identifier\fP isbn: 12345 Чтобы удалить идентификатор, не указывайте значение, \fI\%\-\-identifier\fP isbn: обратите внимание, что для файлов EPUB идентификатор, помеченный как идентификатор пакета, не может быть удален.
+Установить идентификаторы книги, могут быть указаны несколько раз. Например: «\fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345». Чтобы удалить идентификатор, не указывайте значение: «\fI\%\-\-identifier\fP isbn:». Обратите внимание, что для файлов EPUB идентификатор, помеченный как идентификатор пакета, не может быть удалён.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -135,7 +135,7 @@ ebook\-meta ebook_file [параметры]
 .INDENT 0.0
 .TP
 .B \-\-rating, \-r
-Указать рейтинг. Может быть числом от 1 до 5.
+Поставьте оценку. Должна быть числом от 1 до 5.
 .UNINDENT
 .INDENT 0.0
 .TP

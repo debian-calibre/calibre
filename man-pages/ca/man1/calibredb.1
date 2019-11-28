@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de novembre 22, 2019" "4.4.0" "calibre"
+.TH "CALIBREDB" "1" "de novembre 29, 2019" "4.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,12 +140,12 @@ mostra aquest missatge d\fB\(aq\fPajuda i surt
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Camí a la biblioteca de calibre. Per defecte, s\fB\(aq\fPutilitza el camí emmagatzemat als ajusts. També és possible connectar\-se a un servidor de contingut de calibre per realitzar operacions en biblioteques remotes. Per fer\-ho, utilitzeu l\fB\(aq\fPURL de la manera següent: \fI\%http:nomdelservidor:port/#biblioteca_id\fP per exemple, \fI\%http:localhost:8080/#lamevabiblioteca\fP\&. Bilioteca_id és l\fB\(aq\fPid. de la biblioteca a la qual us voleu connectar al servidor de continguts. Podeu utilitzar el valor especial «libray_id value of», per obtenir una llista dels id. de les biblioteques disponibles al servidor. Per més informació sobre com configurar l\fB\(aq\fPaccés a través del servidor de continguts, vegeu: \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Camí a la biblioteca de calibre. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Contrasenya per connectar a un servidor de continguts de calibre. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Ordena els resultats en ordre ascendent
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Els camps que es mostraran quan es mostra la llista de llibres a la base de dades. Hauria de ser una llista de camps separats per coma. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: title,authors. El camp especial «all» serveix per seleccionar tots els camps. A més dels camps ja predefinits descrits abans, també es disposa de camps personalitzats amb el format *nom_del_camp, com per exemple, per a un camp personalitzat #valoració, s\fB\(aq\fPutilitzaria el nom *valoració
+Els camps que es mostraran quan es llistin els llibres a la base de dades. Hauria de ser una llista de camps separada per comes. Camps disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Per defecte: %per defecte. El camp especial \fB"\fPtots\fB"\fP es pot utilitzar per seleccionar tots els camps. A més dels camps predefinits abans, hi ha camps personalitzats disponibles amb *nom_del_camp, per exemple, per a un camp personalitzat #valoració, utilitzaríeu el nom: *valoració
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,7 +246,7 @@ Camí a la portada que s\fB\(aq\fPutilitzarà per al llibre afegit
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Afegeix els llibres a la base de dades encara que ja existeixin. La comparació es fa mitjançant els títols dels llibres.
+Afegeix els llibres a la base de dades encara que ja existeixin. La comparació es fa a partir dels títols dels llibres.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -290,7 +290,7 @@ Estableix el títol del(s) llibre(s) afegit(s)
 .UNINDENT
 .SS ADDICIÓ DES DELS DIRECTORIS
 .sp
-Les opcions per controlar l\(aqaddició de llibres des dels directoris. De manera predeterminada només s\(aqafegeixen els fitxers que tenen extensions conegudes de tipus de fitxer de llibres electrònics.
+Opcions per controlar l\(aqaddició de llibres des dels directoris. Per defecte només s\(aqafegiran els fitxers que tinguin extensions conegudes de tipus de fitxers de llibres electrònics.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -299,7 +299,7 @@ Un patró (glob) de nom de fitxer, els fitxers que coincideixin amb aquest patr�
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Un patró (glob) de nom de fitxer, els fitxers que coincideixin amb aquest patró seran ignorats quan s\fB\(aq\fPexplorin els directoris per als fitxers. Es pot especificar diverses vegades per a diversos patrons. P. ex.: *.pdf ignorarà tots els fitxers pdf
+Un patró de nom de fitxer (glob), els fitxers que coincideixin amb aquest patró s’ignoraran quan s’escanegi el directori per fitxers. Es pot especificar diverses vegades per diversos patrons. Per exemple: *.pdf ignorarà tots els fitxers pdf
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -410,7 +410,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP tags:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camp. Podeu especificar aquesta opció diversos cops per establir diversos camps. Nota: per a les llengües heu d\fB\(aq\fPutilitzar els codis ISO639 (per exemple «ca» per al català, «en» per a l\fB\(aq\fPanglès...). Per als identificadors la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps booleans (sí/no) utilitzeu «true» i «false» o «yes» i «no».
+The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). Per identificadors, la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -492,7 +492,7 @@ El format en què es visualitzaran les dates. %d: dia, %b: mes, %m: nombre del m
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Exporta els llibres al directori especificat. Per defecte és .
+Exporta els llibres al directori que s\fB\(aq\fPindica. Per defecte és .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -529,7 +529,7 @@ Filtra els resultats segons la consulta de cerca. Per al format de la cerca vege
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Mostra informació de sortida detallada. Útil per a depurar
+Mostra informació detallada de sortida. Útil per depurar
 .UNINDENT
 .SS EPUB OPCIONS
 .INDENT 0.0
@@ -658,20 +658,20 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .sp
 .nf
 .ft C
-calibredb add_custom_column [opcions] etiqueta nom tipus_de_dades
+calibredb add_custom_column [options] label name datatype
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Crea una columna personalitzada. L\(aqetiqueta és el nom intern de la columna. No ha de tenir
-espais ni dos punts. El nom és el nom visible de la columna. El tipus de dades és un de: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Create a custom column. label is the machine friendly name of the column. No hauria de contenir espais o dos punts. name is the human friendly name of the column.
+datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
-Un diccionari d\fB\(aq\fPopcions per personalitzar com s\fB\(aq\fPinterpreten les dades en aquesta columna. És una cadena JSON. Per a columnes d\fB\(aq\fPenumeració utilitzeu \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Hi ha moltes opcions que poden anar amb la variable «display». Les opcions per tipus de columna són: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  La millor manera de trobar una combinació legal és crear una columna personalitzada del tipus adequat a la interfície gràfica i cercar un llibre al fitxer de còpia de seguretat OPF (assegureu\-vos que s\fB\(aq\fPha creat un OPF nou després d\fB\(aq\fPafegir la columna). Veureu la cadena JSON per al «display» de la nova columna a l\fB\(aq\fPOPF.
+A dictionary of options to customize how the data in this column will be interpreted. Això és una cadena JSON. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -795,7 +795,7 @@ Llista de les extensions que s\fB\(aq\fPignoraran separada per comes. Per defect
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Llista de noms que s\fB\(aq\fPignoraran separats per comes. Per defecte: tots
+Llista de noms a ignorar separada per comes. Per defecte: tot
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -875,19 +875,16 @@ Normalment aquesta ordre només actua en llibres que tenen fitxers OPF obsolets.
 .sp
 .nf
 .ft C
-calibredb clone camí/a/la/biblioteca/nova
+calibredb clone camí/a/nova/biblioteca
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Crea un clon de la biblioteca actual. Això crea una biblioteca buida nova amb totes les
-mateixes columnes personalitzades, biblioteques virtuals i altres ajusts que la
-biblioteca actual.
+Crea un clon de la biblioteca actual. Això crea una nova biblioteca buida que té les mateixes columnes personalitzades, biblioteques virtuals i altres configuracions que la biblioteca actual.
 .sp
-La biblioteca clonada no contindrà llibres. Si voleu crear un duplicat complet, incloent\-hi
-tots els llibres, només cal que utilitzeu les eines del sistema de fitxers per copiar la
-carpeta de la biblioteca.
+La biblioteca clonada no contindrà cap llibre. Si voleu crear un duplicat complet, incloent\-hi
+tots els llibres, simplement utilitzeu les eines del sistema de fitxers per copiar la carpeta de la biblioteca.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -914,7 +911,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Només actualitza les metadades als fitxers del format especificat. Especifiqueu\-ho diverses vegades per a diversos formats. Per defecte, s\fB\(aq\fPactualitzen tots els formats.
+Només actualitza les metadades als fitxers del format especificat. Especifiqueu\-ho diverses vegades per diversos formats. Per defecte, tots els formats s\fB\(aq\fPactualitzen.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -939,7 +936,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-El nombre màxim de resultats a retornar. Per defecte són tots els resultats.
+El nombre màxim de resultats que retornarà. Default is all results.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
