@@ -1,0 +1,35 @@
+From: YOKOTA Hiroshi <qykth-git@users.noreply.github.com>
+Date: Mon, 25 Nov 2019 08:52:10 +0900
+Subject: [PATCH] Fix Markdown module loader
+
+---
+ src/calibre/ebooks/txt/processor.py |    2 +-
+ src/calibre/linux.py                |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+Index: b/src/calibre/ebooks/txt/processor.py
+===================================================================
+--- a/src/calibre/ebooks/txt/processor.py
++++ b/src/calibre/ebooks/txt/processor.py
+@@ -111,7 +111,7 @@ DEFAULT_MD_EXTENSIONS = ('footnotes', 't
+ def create_markdown_object(extensions):
+     # Need to load markdown extensions without relying on pkg_resources
+     import importlib
+-    from calibre.ebooks.markdown import Markdown
++    from markdown import Markdown
+     from markdown import Extension
+ 
+     class NotBrainDeadMarkdown(Markdown):
+Index: b/src/calibre/linux.py
+===================================================================
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -24,7 +24,7 @@ entry_points = {
+              'ebook-meta           = calibre.ebooks.metadata.cli:main',
+              'ebook-convert        = calibre.ebooks.conversion.cli:main',
+              'ebook-polish         = calibre.ebooks.oeb.polish.main:main',
+-             'markdown-calibre     = calibre.ebooks.markdown.__main__:run',
++             'markdown-calibre     = markdown.__main__:run',
+              'web2disk             = calibre.web.fetch.simple:main',
+              'calibre-server       = calibre.srv.standalone:main',
+              'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
