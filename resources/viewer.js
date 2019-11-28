@@ -15898,7 +15898,7 @@ return this.__repr__();
                     ρσ_d["forward"] = desc(['Alt+ArrowRight', 'Shift+ArrowRight'], "scroll", _("Forward"));
                     ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
                     ρσ_d["start_search"] = desc(['/', 'Ctrl+f'], "ui", _("Start search"));
-                    ρσ_d["next_match"] = desc(['F3'], "ui", _("Find next"));
+                    ρσ_d["next_match"] = desc(['F3', 'Enter'], "ui", _("Find next"));
                     ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
                     ρσ_d["increase_font_size"] = desc(['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+='], "ui", _("Increase font size"));
                     ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
@@ -19445,7 +19445,7 @@ return this.__repr__();
                     if (ρσ_in("/", fname)) {
                         fname = (ρσ_expr_temp = fname.rpartition("/"))[ρσ_expr_temp.length-1];
                     }
-                    items.push(create_item(entry.title, ui_operations.ask_for_open.bind(null, entry.pathtoebook), fname));
+                    items.push(create_item(entry.title || _("Unknown"), ui_operations.ask_for_open.bind(null, entry.pathtoebook), fname));
                 }
                 create_item_list(c.lastChild, items);
                 c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem"})]));
@@ -26034,7 +26034,7 @@ return this.__repr__();
                 container.lastChild.appendChild(E.tr(E.td(labels[(typeof which === "number" && which < 0) ? labels.length + which : which]), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", min: "0", step: "1", name: which, value: str(sd.get("margin_" + which))})]))));
             }
             function sec(text) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 2ex 1rem; padding-top:2ex; border-top: solid 1px; max-width: 70em"})])));
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 2ex 1rem; padding-top:2ex; border-top: solid 1px; max-width: 50em"})])));
             };
             if (!sec.__argnames__) Object.defineProperties(sec, {
                 __argnames__ : {value: ["text"]}
@@ -29336,7 +29336,7 @@ return this.__repr__();
         View.prototype.show_loading = function show_loading() {
             var self = this;
             var msg;
-            msg = (ρσ_expr_temp = _("Loading next section from <i>{title}</i>, please wait…"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({title: self.book.metadata.title})]));
+            msg = (ρσ_expr_temp = _("Loading next section from <i>{title}</i>, please wait…"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({title: self.book.metadata.title || _("Unknown")})]));
             if (self.show_loading_callback_timer !== null) {
                 clearTimeout(self.show_loading_callback_timer);
             }
@@ -30145,9 +30145,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter1 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                filename = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                filename = ρσ_Iter0[ρσ_Index0];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();

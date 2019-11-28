@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "November 22, 2019" "4.4.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "November 29, 2019" "4.5.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -1351,6 +1351,11 @@ The font family used to render monospace fonts. Will work only if the font is av
 .TP
 .B \-\-pdf\-mono\-font\-size
 The default font size for monospaced text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-odd\-even\-offset
+Shift the text horizontally by the specified offset (in pts). On odd numbered pages, it is shifted to the right and on even numbered pages to the left. Use negative numbers for the opposite effect. Note that this setting is ignored on pages where the margins are smaller than the specified offset. Shifting is done by setting the PDF CropBox, not all software respects the CropBox.
 .UNINDENT
 .INDENT 0.0
 .TP

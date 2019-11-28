@@ -2,11 +2,11 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from __future__ import print_function, unicode_literals
-from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv
+from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv, as_unicode, native_string_type
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (4, 4, 0)
+numeric_version = (4, 5, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -213,7 +213,10 @@ class Plugins(collections.Mapping):
             p = importlib.import_module(name)
         except Exception as err:
             p = None
-            plugin_err = unicode_type(err)
+            try:
+                plugin_err = unicode_type(err)
+            except Exception:
+                plugin_err = as_unicode(native_string_type(err), encoding=preferred_encoding, errors='replace')
         self._plugins[name] = p, plugin_err
         sys.path.remove(plugins_loc)
 

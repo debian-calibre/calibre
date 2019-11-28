@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(638, 634)
+        Form.resize(638, 665)
         self.formLayout = QtWidgets.QFormLayout(Form)
         self.formLayout.setObjectName("formLayout")
         self.opt_use_profile_size = QtWidgets.QCheckBox(Form)
@@ -109,7 +109,7 @@ class Ui_Form(object):
         self.formLayout.setWidget(16, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_page_number_map)
         self.page_margins_box = QtWidgets.QGroupBox(Form)
         self.page_margins_box.setObjectName("page_margins_box")
-        self.formLayout.setWidget(17, QtWidgets.QFormLayout.SpanningRole, self.page_margins_box)
+        self.formLayout.setWidget(18, QtWidgets.QFormLayout.SpanningRole, self.page_margins_box)
         self.template_box = QtWidgets.QGroupBox(Form)
         self.template_box.setObjectName("template_box")
         self.formLayout_2 = QtWidgets.QFormLayout(self.template_box)
@@ -131,10 +131,19 @@ class Ui_Form(object):
         self.opt_pdf_footer_template = QtWidgets.QLineEdit(self.template_box)
         self.opt_pdf_footer_template.setObjectName("opt_pdf_footer_template")
         self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_footer_template)
-        self.formLayout.setWidget(18, QtWidgets.QFormLayout.SpanningRole, self.template_box)
+        self.formLayout.setWidget(19, QtWidgets.QFormLayout.SpanningRole, self.template_box)
         self.opt_pdf_hyphenate = QtWidgets.QCheckBox(Form)
         self.opt_pdf_hyphenate.setObjectName("opt_pdf_hyphenate")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.SpanningRole, self.opt_pdf_hyphenate)
+        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2.setObjectName("label_2")
+        self.formLayout.setWidget(17, QtWidgets.QFormLayout.LabelRole, self.label_2)
+        self.opt_pdf_odd_even_offset = QtWidgets.QDoubleSpinBox(Form)
+        self.opt_pdf_odd_even_offset.setDecimals(1)
+        self.opt_pdf_odd_even_offset.setMinimum(-100000.0)
+        self.opt_pdf_odd_even_offset.setMaximum(100000.0)
+        self.opt_pdf_odd_even_offset.setObjectName("opt_pdf_odd_even_offset")
+        self.formLayout.setWidget(17, QtWidgets.QFormLayout.FieldRole, self.opt_pdf_odd_even_offset)
         self.label.setBuddy(self.opt_paper_size)
         self.label_3.setBuddy(self.opt_custom_size)
         self.label_11.setBuddy(self.opt_unit)
@@ -148,6 +157,7 @@ class Ui_Form(object):
         self.label_91.setBuddy(self.opt_pdf_page_number_map)
         self.label_12.setBuddy(self.opt_pdf_header_template)
         self.label_13.setBuddy(self.opt_pdf_footer_template)
+        self.label_2.setBuddy(self.opt_pdf_odd_even_offset)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -178,3 +188,5 @@ class Ui_Form(object):
         self.label_12.setText(_("&Header template:"))
         self.label_13.setText(_("&Footer template:"))
         self.opt_pdf_hyphenate.setText(_("&Break long words at the end of lines"))
+        self.label_2.setText(_("Odd/even &offset:"))
+        self.opt_pdf_odd_even_offset.setSuffix(_(" pt"))
