@@ -320,7 +320,7 @@ class BuildTest(unittest.TestCase):
         sanitize_comments_html(b'''<script>moo</script>xxx<img src="http://moo.com/x.jpg">''')
 
     def test_feedparser(self):
-        from feedparser import parse
+        from calibre.web.feeds.feedparser import parse
         # sgmllib is needed for feedparser parsing malformed feeds
         # on python3 you can get it by taking it from python2 stdlib and
         # running 2to3 on it
