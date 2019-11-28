@@ -168,7 +168,6 @@ def init_env():
         ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
         ldflags = shlex.split(ldflags)
         cflags += shlex.split(os.environ.get('CFLAGS', ''))
-        cflags += shlex.split(os.environ.get('CPPFLAGS', ''))
         ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
         cflags += ['-fvisibility=hidden']
 
@@ -426,17 +425,9 @@ class Build(Command):
             DESTDIR = {destdir}
             CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
             QMAKE_LIBS_PRIVATE += {glib} {fontconfig}
-            QMAKE_CFLAGS   += {CFLAGS}   {CPPFLAGS}
-            QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
-            QMAKE_LFLAGS   += {LFLAGS}
             ''').format(
                 headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
-                    target), glib=glib_flags, fontconfig=fontconfig_flags, freetype=' '.join(ft_inc_dirs),
-                CFLAGS   = os.environ.get('CFLAGS',   ''),
-                CXXFLAGS = os.environ.get('CXXFLAGS', ''),
-                CPPFLAGS = os.environ.get('CPPFLAGS', ''),
-                LFLAGS   = os.environ.get('LDFLAGS',  '')
-            )
+                    target), glib=glib_flags, fontconfig=fontconfig_flags, freetype=' '.join(ft_inc_dirs))
         bdir = self.j(self.build_dir, 'headless')
         if not os.path.exists(bdir):
             os.makedirs(bdir)
@@ -501,17 +492,10 @@ class Build(Command):
         macx {{
             QMAKE_LFLAGS += "-undefined dynamic_lookup"
         }}
-        QMAKE_CFLAGS   += {CFLAGS}   {CPPFLAGS}
-        QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
-        QMAKE_LFLAGS   += {LFLAGS}
         ''').format(
             target=sip['target'], headers=' '.join(sip['headers'] + ext.headers), sources=' '.join(ext.sources + sip['sources']),
             sipinc=pyqt['sip_inc_dir'], pyinc=sysconfig.get_python_inc(), py_lib=py_lib,
-            ver=__version__,
-            CFLAGS   = os.environ.get('CFLAGS',   ''),
-            CXXFLAGS = os.environ.get('CXXFLAGS', ''),
-            CPPFLAGS = os.environ.get('CPPFLAGS', ''),
-            LFLAGS   = os.environ.get('LDFLAGS',  '')
+            ver=__version__
         )
         for incdir in ext.inc_dirs:
             pro += '\nINCLUDEPATH += ' + incdir
