@@ -111,7 +111,7 @@ DEFAULT_MD_EXTENSIONS = ('footnotes', 'tables', 'toc')
 def create_markdown_object(extensions):
     # Need to load markdown extensions without relying on pkg_resources
     import importlib
-    from markdown import Markdown
+    from calibre.ebooks.markdown import Markdown
     from markdown import Extension
 
     class NotBrainDeadMarkdown(Markdown):
