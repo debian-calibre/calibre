@@ -4,9 +4,10 @@ Subject: Use packaged instead of bundled feedparser Python module
 
 ---
  recipes/lenta_ru.recipe           |    4 ++--
+ src/calibre/startup.py            |    9 ++-------
  src/calibre/test_build.py         |    2 +-
  src/calibre/web/feeds/__init__.py |    4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
 Index: b/recipes/lenta_ru.recipe
 ===================================================================
@@ -61,3 +62,33 @@ Index: b/src/calibre/test_build.py
          # sgmllib is needed for feedparser parsing malformed feeds
          # on python3 you can get it by taking it from python2 stdlib and
          # running 2to3 on it
+Index: b/src/calibre/startup.py
+===================================================================
+--- a/src/calibre/startup.py
++++ b/src/calibre/startup.py
+@@ -49,10 +49,7 @@ if not _run_once:
+ 
+             def find_spec(self, fullname, path, target=None):
+                 spec = None
+-                if fullname == 'calibre.web.feeds.feedparser':
+-                    m = import_module('feedparser')
+-                    spec = m.__spec__
+-                elif fullname.startswith('calibre.ebooks.markdown'):
++                if fullname.startswith('calibre.ebooks.markdown'):
+                     m = import_module(fullname[len('calibre.ebooks.'):])
+                     spec = m.__spec__
+                 return spec
+@@ -60,12 +57,10 @@ if not _run_once:
+         else:
+ 
+             def find_module(self, fullname, path=None):
+-                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
++                if fullname.startswith('calibre.ebooks.markdown'):
+                     return self
+ 
+             def load_module(self, fullname):
+-                if fullname == 'calibre.web.feeds.feedparser':
+-                    return import_module('feedparser')
+                 return import_module(fullname[len('calibre.ebooks.'):])
+ 
+     sys.meta_path.insert(0, DeVendor())

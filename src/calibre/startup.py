@@ -49,7 +49,10 @@ if not _run_once:
 
             def find_spec(self, fullname, path, target=None):
                 spec = None
-                if fullname.startswith('calibre.ebooks.markdown'):
+                if fullname == 'calibre.web.feeds.feedparser':
+                    m = import_module('feedparser')
+                    spec = m.__spec__
+                elif fullname.startswith('calibre.ebooks.markdown'):
                     m = import_module(fullname[len('calibre.ebooks.'):])
                     spec = m.__spec__
                 return spec
@@ -57,10 +60,12 @@ if not _run_once:
         else:
 
             def find_module(self, fullname, path=None):
-                if fullname.startswith('calibre.ebooks.markdown'):
+                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
                     return self
 
             def load_module(self, fullname):
+                if fullname == 'calibre.web.feeds.feedparser':
+                    return import_module('feedparser')
                 return import_module(fullname[len('calibre.ebooks.'):])
 
     sys.meta_path.insert(0, DeVendor())
