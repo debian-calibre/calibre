@@ -3,45 +3,47 @@ Date: Mon, 14 Nov 2016 22:41:23 +0100
 Subject: Use packaged instead of bundled feedparser Python module
 
 ---
- recipes/lenta_ru.recipe           |    4 +++-
- src/calibre/web/feeds/__init__.py |    5 ++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ recipes/lenta_ru.recipe           |    4 ++--
+ src/calibre/web/feeds/__init__.py |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- calibre-debian.git.orig/recipes/lenta_ru.recipe
-+++ calibre-debian.git/recipes/lenta_ru.recipe
-@@ -4,11 +4,13 @@
+Index: b/recipes/lenta_ru.recipe
+===================================================================
+--- a/recipes/lenta_ru.recipe
++++ b/recipes/lenta_ru.recipe
+@@ -4,7 +4,7 @@
  Lenta.ru
  '''
  
 -from calibre.web.feeds.feedparser import parse
++from feedparser import parse
  from calibre.ebooks.BeautifulSoup import Tag
  from calibre.web.feeds.news import BasicNewsRecipe
-+from feedparser import parse
-+from functools import partial
  import re
+@@ -63,7 +63,7 @@ class LentaRURecipe(BasicNewsRecipe):
  
-+parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
- 
- def new_tag(soup, name, attrs=()):
-     impl = getattr(soup, 'new_tag', None)
---- calibre-debian.git.orig/src/calibre/web/feeds/__init__.py
-+++ calibre-debian.git/src/calibre/web/feeds/__init__.py
-@@ -13,6 +13,10 @@ from calibre import entity_to_unicode, s
- from calibre.utils.date import dt_factory, utcnow, local_tz
- from calibre.utils.cleantext import clean_ascii_chars, clean_xml_chars
- from polyglot.builtins import unicode_type, string_or_bytes, map
-+from feedparser import parse
-+from functools import partial
-+ 
-+parse = partial(parse, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
- 
- 
- class Article(object):
-@@ -329,7 +333,6 @@ def feed_from_xml(raw_xml, title=None, o
+     def parse_index(self):
+         try:
+-            feedData = parse(self.feeds[0])
++            feedData = parse(self.feeds[0], agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
+             if not feedData:
+                 raise NotImplementedError
+             self.log("parse_index: Feed loaded successfully.")
+Index: b/src/calibre/web/feeds/__init__.py
+===================================================================
+--- a/src/calibre/web/feeds/__init__.py
++++ b/src/calibre/web/feeds/__init__.py
+@@ -329,11 +329,11 @@ def feed_from_xml(raw_xml, title=None, o
                    max_articles_per_feed=100,
                    get_article_url=lambda item: item.get('link', None),
                    log=default_log):
 -    from calibre.web.feeds.feedparser import parse
++    from feedparser import parse
      # Handle unclosed escaped entities. They trip up feedparser and HBR for one
      # generates them
      raw_xml = re.sub(br'(&amp;#\d+)([^0-9;])', br'\1;\2', raw_xml)
+-    feed = parse(raw_xml)
++    feed = parse(raw_xml, agent='Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11')
+     pfeed = Feed(get_article_url=get_article_url, log=log)
+     pfeed.populate_from_feed(feed, title=title,
+                             oldest_article=oldest_article,
