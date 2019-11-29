@@ -54,8 +54,8 @@ override_dh_auto_install:
 
 override_dh_installman:
 	# Create and install some of the man pages
-	dh_installman man-pages/man1/*.1
-	for i in man-pages/?? man-pages/??_?? ; do ll=`basename $$i`; dh_installman --language $$ll $$i/man1/*.1 ; done
+	dh_installman -pcalibre man-pages/man1/*.1
+	for i in man-pages/?? man-pages/??_?? ; do ll=`basename $$i`; dh_installman -pcalibre --language $$ll $$i/man1/*.1 ; done
 
 override_dh_auto_clean:
 	rm -rf debian/orig
