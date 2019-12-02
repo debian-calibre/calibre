@@ -3,25 +3,14 @@ Date: Mon, 14 Nov 2016 22:41:23 +0100
 Subject: Use packaged instead of bundled feedparser Python module
 
 ---
- recipes/lenta_ru.recipe           |    4 ++--
- src/calibre/startup.py            |    9 ++-------
- src/calibre/test_build.py         |    2 +-
- src/calibre/web/feeds/__init__.py |    4 ++--
- 4 files changed, 7 insertions(+), 12 deletions(-)
+ recipes/lenta_ru.recipe           |    2 +-
+ src/calibre/web/feeds/__init__.py |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 Index: b/recipes/lenta_ru.recipe
 ===================================================================
 --- a/recipes/lenta_ru.recipe
 +++ b/recipes/lenta_ru.recipe
-@@ -4,7 +4,7 @@
- Lenta.ru
- '''
- 
--from calibre.web.feeds.feedparser import parse
-+from feedparser import parse
- from calibre.ebooks.BeautifulSoup import Tag
- from calibre.web.feeds.news import BasicNewsRecipe
- import re
 @@ -63,7 +63,7 @@ class LentaRURecipe(BasicNewsRecipe):
  
      def parse_index(self):
@@ -35,12 +24,7 @@ Index: b/src/calibre/web/feeds/__init__.py
 ===================================================================
 --- a/src/calibre/web/feeds/__init__.py
 +++ b/src/calibre/web/feeds/__init__.py
-@@ -329,11 +329,11 @@ def feed_from_xml(raw_xml, title=None, o
-                   max_articles_per_feed=100,
-                   get_article_url=lambda item: item.get('link', None),
-                   log=default_log):
--    from calibre.web.feeds.feedparser import parse
-+    from feedparser import parse
+@@ -333,7 +333,7 @@ def feed_from_xml(raw_xml, title=None, o
      # Handle unclosed escaped entities. They trip up feedparser and HBR for one
      # generates them
      raw_xml = re.sub(br'(&amp;#\d+)([^0-9;])', br'\1;\2', raw_xml)
@@ -49,46 +33,3 @@ Index: b/src/calibre/web/feeds/__init__.py
      pfeed = Feed(get_article_url=get_article_url, log=log)
      pfeed.populate_from_feed(feed, title=title,
                              oldest_article=oldest_article,
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -320,7 +320,7 @@ class BuildTest(unittest.TestCase):
-         sanitize_comments_html(b'''<script>moo</script>xxx<img src="http://moo.com/x.jpg">''')
- 
-     def test_feedparser(self):
--        from calibre.web.feeds.feedparser import parse
-+        from feedparser import parse
-         # sgmllib is needed for feedparser parsing malformed feeds
-         # on python3 you can get it by taking it from python2 stdlib and
-         # running 2to3 on it
-Index: b/src/calibre/startup.py
-===================================================================
---- a/src/calibre/startup.py
-+++ b/src/calibre/startup.py
-@@ -49,10 +49,7 @@ if not _run_once:
- 
-             def find_spec(self, fullname, path, target=None):
-                 spec = None
--                if fullname == 'calibre.web.feeds.feedparser':
--                    m = import_module('feedparser')
--                    spec = m.__spec__
--                elif fullname.startswith('calibre.ebooks.markdown'):
-+                if fullname.startswith('calibre.ebooks.markdown'):
-                     m = import_module(fullname[len('calibre.ebooks.'):])
-                     spec = m.__spec__
-                 return spec
-@@ -60,12 +57,10 @@ if not _run_once:
-         else:
- 
-             def find_module(self, fullname, path=None):
--                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
-+                if fullname.startswith('calibre.ebooks.markdown'):
-                     return self
- 
-             def load_module(self, fullname):
--                if fullname == 'calibre.web.feeds.feedparser':
--                    return import_module('feedparser')
-                 return import_module(fullname[len('calibre.ebooks.'):])
- 
-     sys.meta_path.insert(0, DeVendor())
