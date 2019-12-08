@@ -65,18 +65,6 @@ override_dh_auto_clean:
 override_dh_gencontrol:
 	dh_gencontrol $(DEB_DH_GENCONTROL_ARGS)
 
-# Downloads the current upstream release according to debian/changelog, removes
-# some bundled software copies, non-free image and replaces the non-free prs500
-# TTFs with symlinks to their free liberation fonts counterparts. This also
-# updates the unpacked source tree to the new upstream version and adds the
-# original non-minimized javascript source for some minified JavaScript.
+.PHONY: get-orig-source
 get-orig-source:
-	set -e; \
-	V=`dpkg-parsechangelog | sed -rn '/^Version:/ {s/^Version: ([0-9.]+).*$$/\1/; p}'`; \
-	mkdir -p debian/orig; cd debian/orig; \
-	wget -O - https://download.calibre-ebook.com/$$V/calibre-$$V.tar.xz | xz -cd | tar x; \
-	\
-	D=`pwd`; rm -f calibre*/src/odf/thumbnail.py; \
-	rm -r calibre*/resources/mathjax; \
-	cd $$D; tar c * | xz -9 > ../../../calibre_$$V+dfsg.orig.tar.xz; \
-	cd ../..; rm -r debian/orig
+	./debian/get-orig-source.sh
