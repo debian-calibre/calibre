@@ -15,6 +15,14 @@
         "needs_py2": true
     },
     {
+        "name": "hyphen",
+        "sources": "calibre/utils/hyphenation/hyphen.c",
+		"libraries": "hyphen",
+        "inc_dirs": "!hyphen_inc_dirs",
+        "lib_dirs": "!hyphen_lib_dirs",
+		"needs_c99": true
+    },
+    {
         "name": "unicode_names",
         "headers": "unicode_names/names.h unicode_names/data-types.h",
         "sources": "unicode_names/unicode_names.c",
@@ -44,7 +52,7 @@
         "lib_dirs": "!openssl_lib_dirs"
     },
     {
-        "name": "html",
+        "name": "html_syntax_highlighter",
         "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
     },
     {
@@ -153,8 +161,8 @@
     },
     {
         "name": "lzma_binding",
-        "sources": "lzma/*.c",
-        "headers": "lzma/*.h",
+        "sources": "calibre_lzma/*.c",
+        "headers": "calibre_lzma/*.h",
         "defines": "_7ZIP_ST"
     },
     {

@@ -37,7 +37,7 @@ from calibre.utils.icu import numeric_sort_key as sort_key
 from calibre.utils.img import image_from_data, Canvas, optimize_png, optimize_jpeg
 from calibre.utils.zipfile import ZipFile, ZIP_STORED
 from calibre.utils.filenames import atomic_rename
-from lzma.xz import compress, decompress
+from calibre_lzma.xz import compress, decompress
 from polyglot.builtins import iteritems, map, range, reraise, filter, as_bytes, unicode_type
 from polyglot import http_client
 from polyglot.queue import Queue, Empty
@@ -855,8 +855,7 @@ def install_icon_theme(theme, f):
             theme['files'].add(name)
 
     theme['files'] = tuple(theme['files'])
-    buf = BytesIO()
-    json.dump(theme, buf, indent=2)
+    buf = BytesIO(as_bytes(json.dumps(theme, indent=2)))
     buf.seek(0)
     safe_copy(buf, metadata_file)
 

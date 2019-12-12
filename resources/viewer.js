@@ -3762,6 +3762,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.mathjax"] = {};
     ρσ_modules["read_book.paged_mode"] = {};
+    ρσ_modules["read_book.referencing"] = {};
     ρσ_modules["read_book.shortcuts"] = {};
     ρσ_modules.complete = {};
     ρσ_modules.widgets = {};
@@ -11483,7 +11484,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.globals";
-        var _boss, uid, default_color_schemes, runtime, ui_operations;
+        var _boss, dark_link_color, uid, default_color_schemes, runtime, ui_operations;
         var random_bytes = ρσ_modules.aes.random_bytes;
 
         var hexlify = ρσ_modules.encodings.hexlify;
@@ -11493,6 +11494,7 @@ return this.__repr__();
         var gt = ρσ_modules.gettext.gettext;
 
         _boss = null;
+        dark_link_color = "#6cb4ee";
         function set_boss(b) {
             _boss = b;
         };
@@ -11624,7 +11626,7 @@ return this.__repr__();
                     var ρσ_d = Object.create(null);
                     ρσ_d["background"] = "#111";
                     ρσ_d["foreground"] = "#ddd";
-                    ρσ_d["link"] = "#6cb4ee";
+                    ρσ_d["link"] = dark_link_color;
                     return ρσ_d;
                 }).call(this));
             }
@@ -11655,6 +11657,7 @@ return this.__repr__();
             return ρσ_d;
         }).call(this);
         ρσ_modules["read_book.globals"]._boss = _boss;
+        ρσ_modules["read_book.globals"].dark_link_color = dark_link_color;
         ρσ_modules["read_book.globals"].uid = uid;
         ρσ_modules["read_book.globals"].default_color_schemes = default_color_schemes;
         ρσ_modules["read_book.globals"].runtime = runtime;
@@ -15724,6 +15727,90 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.referencing";
+        var get_boss = ρσ_modules["read_book.globals"].get_boss;
+
+        function elem_for_ref(refnum) {
+            var p;
+            refnum = int(refnum);
+            p = (ρσ_expr_temp = document.getElementsByTagName("p"))[ρσ_bound_index(refnum - 1, ρσ_expr_temp)];
+            return p;
+        };
+        if (!elem_for_ref.__argnames__) Object.defineProperties(elem_for_ref, {
+            __argnames__ : {value: ["refnum"]}
+        });
+
+        function on_mouse_over(ev) {
+            var p, refnum;
+            p = this;
+            if (p.dataset.calibreRefNum) {
+                refnum = int(p.dataset.calibreRefNum);
+                get_boss().reference_item_changed(refnum);
+            }
+        };
+        if (!on_mouse_over.__argnames__) Object.defineProperties(on_mouse_over, {
+            __argnames__ : {value: ["ev"]}
+        });
+
+        function on_mouse_out(ev) {
+            get_boss().reference_item_changed(null);
+        };
+        if (!on_mouse_out.__argnames__) Object.defineProperties(on_mouse_out, {
+            __argnames__ : {value: ["ev"]}
+        });
+
+        function start_reference_mode() {
+            var i, p;
+            i = 0;
+            var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("p"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                p = ρσ_Iter0[ρσ_Index0];
+                i += 1;
+                if (!p.dataset.calibreRefNum) {
+                    p.dataset.calibreRefNum = i + "";
+                    p.addEventListener("mouseover", on_mouse_over, (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["passive"] = true;
+                        return ρσ_d;
+                    }).call(this));
+                    p.addEventListener("mouseout", on_mouse_out, (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["passive"] = true;
+                        return ρσ_d;
+                    }).call(this));
+                }
+            }
+        };
+
+        function end_reference_mode() {
+            var p;
+            var ρσ_Iter1 = ρσ_Iterable(document.getElementsByTagName("p"));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                p = ρσ_Iter1[ρσ_Index1];
+                if (p.dataset.calibreRefNum) {
+                    p.removeEventListener("mouseover", on_mouse_over, (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["passive"] = true;
+                        return ρσ_d;
+                    }).call(this));
+                    p.removeEventListener("mouseout", on_mouse_out, (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["passive"] = true;
+                        return ρσ_d;
+                    }).call(this));
+                    delete p.dataset.calibreRefNum;
+                }
+            }
+        };
+
+        ρσ_modules["read_book.referencing"].elem_for_ref = elem_for_ref;
+        ρσ_modules["read_book.referencing"].on_mouse_over = on_mouse_over;
+        ρσ_modules["read_book.referencing"].on_mouse_out = on_mouse_out;
+        ρσ_modules["read_book.referencing"].start_reference_mode = start_reference_mode;
+        ρσ_modules["read_book.referencing"].end_reference_mode = end_reference_mode;
+    })();
+
+    (function(){
         var __name__ = "read_book.shortcuts";
         var _ = ρσ_modules.gettext.gettext;
 
@@ -15904,6 +15991,7 @@ return this.__repr__();
                     ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
                     ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+F'], "ui", _("Toggle full screen"));
                     ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
+                    ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
                     ρσ_d["reload_book"] = desc(['F5', 'Ctrl+r'], "ui", _("Reload book"));
                     ρσ_d["search_for_selection"] = desc(['Ctrl+s'], "ui", _("Search for next occurrence of selected text"));
                     ρσ_d["show_chrome"] = desc(['Escape', 'ContextMenu'], "ui", _("Show the viewer controls"));
@@ -17530,6 +17618,10 @@ return this.__repr__();
         var paged_scroll_to_fraction = ρσ_modules["read_book.paged_mode"].scroll_to_fraction;
         var snap_to_selection = ρσ_modules["read_book.paged_mode"].snap_to_selection;
 
+        var elem_for_ref = ρσ_modules["read_book.referencing"].elem_for_ref;
+        var end_reference_mode = ρσ_modules["read_book.referencing"].end_reference_mode;
+        var start_reference_mode = ρσ_modules["read_book.referencing"].start_reference_mode;
+
         var finalize_resources = ρσ_modules["read_book.resources"].finalize_resources;
         var unserialize_html = ρσ_modules["read_book.resources"].unserialize_html;
 
@@ -17667,13 +17759,18 @@ return this.__repr__();
             this.connect_links = IframeBoss.prototype.connect_links.bind(this);
             this.link_activated = IframeBoss.prototype.link_activated.bind(this);
             this.scroll_to_anchor = IframeBoss.prototype.scroll_to_anchor.bind(this);
+            this.scroll_to_ref = IframeBoss.prototype.scroll_to_ref.bind(this);
+            this.on_scroll_to_ref = IframeBoss.prototype.on_scroll_to_ref.bind(this);
             this.find = IframeBoss.prototype.find.bind(this);
+            this.reference_item_changed = IframeBoss.prototype.reference_item_changed.bind(this);
+            this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
         }});
         IframeBoss.prototype.__init__ = function __init__() {
             var self = this;
             var handlers;
             window.navigator.epubReadingSystem = new EPUBReadingSystem;
             self.last_cfi = null;
+            self.reference_mode_enabled = false;
             self.replace_history_on_next_cfi_update = true;
             self.blob_url_map = Object.create(null);
             self.content_ready = false;
@@ -17685,6 +17782,7 @@ return this.__repr__();
                 ρσ_d["initialize"] = self.initialize;
                 ρσ_d["display"] = self.display;
                 ρσ_d["scroll_to_anchor"] = self.on_scroll_to_anchor;
+                ρσ_d["scroll_to_ref"] = self.on_scroll_to_ref;
                 ρσ_d["scroll_to_frac"] = self.on_scroll_to_frac;
                 ρσ_d["next_screen"] = self.on_next_screen;
                 ρσ_d["change_font_size"] = self.change_font_size;
@@ -17695,6 +17793,7 @@ return this.__repr__();
                 ρσ_d["window_size"] = self.received_window_size;
                 ρσ_d["get_current_cfi"] = self.get_current_cfi;
                 ρσ_d["set_forward_keypresses"] = self.set_forward_keypresses;
+                ρσ_d["set_reference_mode"] = self.set_reference_mode;
                 return ρσ_d;
             }).call(this);
             self.comm = new IframeClient(handlers);
@@ -17783,6 +17882,7 @@ return this.__repr__();
             self.content_ready = false;
             self.replace_history_on_next_cfi_update = true;
             self.book = current_book.book = data.book;
+            self.reference_mode_enabled = data.reference_mode_enabled;
             self.is_titlepage = data.is_titlepage;
             spine = self.book.manifest.spine;
             index = spine.indexOf(data.name);
@@ -17812,6 +17912,7 @@ return this.__repr__();
                 ρσ_d["name"] = data.name;
                 ρσ_d["is_first"] = index === 0;
                 ρσ_d["is_last"] = index === spine.length - 1;
+                ρσ_d["index"] = index;
                 ρσ_d["initial_position"] = data.initial_position;
                 return ρσ_d;
             }).call(this));
@@ -17935,6 +18036,9 @@ return this.__repr__();
                 document.body.classList.add("cover-fill");
             }
             document.body.classList.add("calibre-viewer-" + ρσ_str.format("{}", layout_style()) + "");
+            if (self.reference_mode_enabled) {
+                start_reference_mode();
+            }
             ρσ_unpack = [scroll_viewport.width(), scroll_viewport.height()];
             self.last_window_width = ρσ_unpack[0];
             self.last_window_height = ρσ_unpack[1];
@@ -17948,7 +18052,7 @@ return this.__repr__();
         };
         IframeBoss.prototype.content_loaded_stage2 = function content_loaded_stage2() {
             var self = this;
-            var csi, ipos, spine, files, current_name, spine_index, si, i;
+            var csi, ipos, spine, files, spine_index, si, i;
             self.connect_links();
             self.content_ready = true;
             document.head.removeChild(document.head.firstChild);
@@ -17960,6 +18064,8 @@ return this.__repr__();
                     self.to_scroll_fraction(ipos.frac);
                 } else if (ipos.type === "anchor") {
                     self.scroll_to_anchor(ipos.anchor);
+                } else if (ipos.type === "ref") {
+                    self.scroll_to_ref(ipos.refnum);
                 } else if (ipos.type === "cfi") {
                     self.jump_to_cfi(ipos.cfi);
                 } else if (ipos.type === "search") {
@@ -17968,8 +18074,7 @@ return this.__repr__();
             }
             spine = self.book.manifest.spine;
             files = self.book.manifest.files;
-            current_name = current_spine_item().name;
-            spine_index = spine.indexOf(current_name);
+            spine_index = csi.index;
             self.length_before = 0;
             if (spine_index > -1) {
                 for (var ρσ_Index1 = 0; ρσ_Index1 < spine_index; ρσ_Index1++) {
@@ -18001,13 +18106,11 @@ return this.__repr__();
         };
         IframeBoss.prototype.get_current_cfi = function get_current_cfi(data) {
             var self = this;
-            var cfi, selected_text, spine, current_name, index;
+            var cfi, selected_text, index;
             cfi = current_cfi();
             selected_text = window.getSelection().toString();
             if (cfi) {
-                spine = self.book.manifest.spine;
-                current_name = current_spine_item().name;
-                index = spine.indexOf(current_name);
+                index = current_spine_item().index;
                 if (index > -1) {
                     cfi = "epubcfi(/{}{})".format(2 * (index + 1), cfi);
                     ρσ_interpolate_kwargs.call(self, self.send_message, ["report_cfi"].concat([ρσ_desugar_kwargs({cfi: cfi, progress_frac: self.calculate_progress_frac(), file_progress_frac: progress_frac(), request_id: data.request_id, selected_text: selected_text})]));
@@ -18021,12 +18124,10 @@ return this.__repr__();
         });
         IframeBoss.prototype.update_cfi = function update_cfi() {
             var self = this;
-            var cfi, spine, current_name, index, pf, fpf, selected_text;
+            var cfi, index, pf, fpf, selected_text;
             cfi = current_cfi();
             if (cfi) {
-                spine = self.book.manifest.spine;
-                current_name = current_spine_item().name;
-                index = spine.indexOf(current_name);
+                index = current_spine_item().index;
                 if (index > -1) {
                     cfi = "epubcfi(/{}{})".format(2 * (index + 1), cfi);
                     pf = self.calculate_progress_frac();
@@ -18257,6 +18358,29 @@ return this.__repr__();
         if (!IframeBoss.prototype.scroll_to_anchor.__argnames__) Object.defineProperties(IframeBoss.prototype.scroll_to_anchor, {
             __argnames__ : {value: ["frag"]}
         });
+        IframeBoss.prototype.scroll_to_ref = function scroll_to_ref(refnum) {
+            var self = this;
+            var elem;
+            refnum = int(refnum);
+            elem = elem_for_ref(refnum);
+            if (elem) {
+                scroll_to_elem(elem);
+            }
+        };
+        if (!IframeBoss.prototype.scroll_to_ref.__argnames__) Object.defineProperties(IframeBoss.prototype.scroll_to_ref, {
+            __argnames__ : {value: ["refnum"]}
+        });
+        IframeBoss.prototype.on_scroll_to_ref = function on_scroll_to_ref(data) {
+            var self = this;
+            var refnum;
+            refnum = data.refnum;
+            if ((typeof refnum !== "undefined" && refnum !== null)) {
+                self.scroll_to_ref(refnum);
+            }
+        };
+        if (!IframeBoss.prototype.on_scroll_to_ref.__argnames__) Object.defineProperties(IframeBoss.prototype.on_scroll_to_ref, {
+            __argnames__ : {value: ["data"]}
+        });
         IframeBoss.prototype.find = function find(data, from_load) {
             var self = this;
             if (data.searched_in_spine) {
@@ -18276,6 +18400,25 @@ return this.__repr__();
         };
         if (!IframeBoss.prototype.find.__argnames__) Object.defineProperties(IframeBoss.prototype.find, {
             __argnames__ : {value: ["data", "from_load"]}
+        });
+        IframeBoss.prototype.reference_item_changed = function reference_item_changed(ref_num_or_none) {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["reference_item_changed"].concat([ρσ_desugar_kwargs({refnum: ref_num_or_none, index: current_spine_item().index})]));
+        };
+        if (!IframeBoss.prototype.reference_item_changed.__argnames__) Object.defineProperties(IframeBoss.prototype.reference_item_changed, {
+            __argnames__ : {value: ["ref_num_or_none"]}
+        });
+        IframeBoss.prototype.set_reference_mode = function set_reference_mode(data) {
+            var self = this;
+            self.reference_mode_enabled = data.enabled;
+            if (data.enabled) {
+                start_reference_mode();
+            } else {
+                end_reference_mode();
+            }
+        };
+        if (!IframeBoss.prototype.set_reference_mode.__argnames__) Object.defineProperties(IframeBoss.prototype.set_reference_mode, {
+            __argnames__ : {value: ["data"]}
         });
         IframeBoss.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
@@ -19352,9 +19495,21 @@ return this.__repr__();
                 __argnames__ : {value: ["cfi"]}
             });
 
+            function goto_ref(ref) {
+                if (ui_operations.goto_reference(ref)) {
+                    overlay.hide();
+                } else {
+                    error_dialog(_("No such reference"), _("No reference {} found").format(ref));
+                }
+            };
+            if (!goto_ref.__argnames__) Object.defineProperties(goto_ref, {
+                __argnames__ : {value: ["ref"]}
+            });
+
             if (current_position_data.book_length > 0) {
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Current position: {}").format(format_pos(current_position_data.progress_frac, current_position_data.book_length))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
             }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Type the position, location or reference below. For a reference type ref: followed by the reference:")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
             function goto_pos() {
                 var src;
                 src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " [name=newpos]").value;
@@ -19363,6 +19518,9 @@ return this.__repr__();
                 }
                 if (src.indexOf("epubcfi(") === 0) {
                     return goto_cfi(src);
+                }
+                if (src.indexOf("ref:") === 0) {
+                    return goto_ref(src.slice(len("ref:")));
                 }
                 var ρσ_try_else_1 = false;
                 try {
@@ -23770,9 +23928,12 @@ return this.__repr__();
         });
 
         window.addEventListener("resize", debounce(adjust_all_iframes, 250));
-        function adjusting_sandboxed_html(html) {
+        function adjusting_sandboxed_html(html, extra_css) {
             var css, ans;
             css = "html, body {{ overflow: hidden; color: {} }}".format(get_color("window-foreground"));
+            if (extra_css) {
+                css += "\n\n" + extra_css;
+            }
             ans = sandboxed_html(html, css, "allow-same-origin allow-popups allow-popups-to-escape-sandbox");
             ans.addEventListener("load", (function() {
                 var ρσ_anonfunc = function (ev) {
@@ -23788,10 +23949,10 @@ return this.__repr__();
             return ans;
         };
         if (!adjusting_sandboxed_html.__argnames__) Object.defineProperties(adjusting_sandboxed_html, {
-            __argnames__ : {value: ["html"]}
+            __argnames__ : {value: ["html", "extra_css"]}
         });
 
-        function render_metadata(mi, table, book_id) {
+        function render_metadata(mi, table, book_id, iframe_css) {
             var field_metadata, interface_data, fields, comments, fm, field, all_html, name, ρσ_unpack, comment, iframe;
             field_metadata = library_data.field_metadata;
             interface_data = get_interface_data();
@@ -23866,7 +24027,7 @@ return this.__repr__();
 
                 table.appendChild(E.tr(E.td(name + ":"), E.td()));
                 if (is_html && /[<>]/.test(val + "")) {
-                    table.lastChild.lastChild.appendChild(adjusting_sandboxed_html(val + ""));
+                    table.lastChild.lastChild.appendChild(adjusting_sandboxed_html(val + "", iframe_css));
                 } else {
                     if (!join) {
                         add_val(val);
@@ -24177,12 +24338,12 @@ return this.__repr__();
                     all_html += comment;
                 }
             }
-            iframe = adjusting_sandboxed_html(all_html);
+            iframe = adjusting_sandboxed_html(all_html, iframe_css);
             iframe.style.marginTop = "2ex";
             table.parentNode.appendChild(iframe);
         };
         if (!render_metadata.__argnames__) Object.defineProperties(render_metadata, {
-            __argnames__ : {value: ["mi", "table", "book_id"]}
+            __argnames__ : {value: ["mi", "table", "book_id", "iframe_css"]}
         });
 
         function basic_table_rules(sel) {
@@ -25504,8 +25665,8 @@ return this.__repr__();
             });
 
             container.append(ρσ_interpolate_kwargs.call(E, E.table, [row(_("Serif family"), font_select("serif_family", settings)), row(_("Sans-serif family"), font_select("sans_family", settings)), row(_("Monospace family"), font_select("mono_family", settings)), row(_("Standard font"), standard_font(settings))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
-            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Zoom related settings")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
-            container.append(ρσ_interpolate_kwargs.call(E, E.table, [row(_("Zoom step size (%)"), zoom_step_size(settings)), row(_("Minimum font size (px)"), minimum_font_size(settings))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Zoom related settings")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; padding-top: 1rem; width: 100%; border-top: solid 1px"})])));
+            container.append(E.table(row(_("Zoom step size (%)"), zoom_step_size(settings)), row(_("Minimum font size (px)"), minimum_font_size(settings))));
             container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
         };
         if (!create_fonts_panel.__argnames__) Object.defineProperties(create_fonts_panel, {
@@ -27368,10 +27529,11 @@ return this.__repr__();
                 nav_actions = E.ul(home_action, back_action, forward_action);
             }
             bookmarks_action = ac(_("Bookmarks"), null, self.overlay.show_bookmarks, "bookmark");
-            toc_actions = E.ul(ac(_("Table of Contents"), null, self.overlay.show_toc, "TC", true));
+            toc_actions = E.ul(ac(_("Table of Contents"), null, self.overlay.show_toc, "toc"));
             if (runtime.is_standalone_viewer) {
                 toc_actions.appendChild(bookmarks_action);
             }
+            toc_actions.appendChild(ac(_("Reference mode"), _("Toggle the Reference mode"), self.overlay.toggle_reference_mode, "🖝", true));
             actions_div = ρσ_interpolate_kwargs.call(E, E.div, [nav_actions, E.ul(ac(_("Search"), _("Search for text in this book"), self.overlay.show_search, "search"), ac(_("Go to"), _("Go to a specific location in the book"), self.overlay.show_goto, "chevron-right")), reload_actions, toc_actions, E.ul(ac(_("Font size"), _("Change text size"), self.overlay.show_font_size_chooser, "Aa", true), ac(_("Preferences"), _("Configure the book reader"), self.overlay.show_prefs, "cogs"))].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_ACTIONS_CLASS})]));
             full_screen_actions = ρσ_list_decorate([]);
             if (runtime.is_standalone_viewer) {
@@ -27424,7 +27586,7 @@ return this.__repr__();
                     [self.overlay.hide(), ui_operations.reset_interface()];
                 }, "remove")));
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [self.overlay.view.book.metadata.title].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, set_css, [E.div(ρσ_interpolate_kwargs.call(E, E.div, [self.overlay.view.book.metadata.title || _("Unknown")].concat([ρσ_desugar_kwargs({style: "max-width: 90%; text-overflow: ellipsis; font-weight: bold; white-space: nowrap; overflow: hidden"})])), ρσ_interpolate_kwargs.call(E, E.div, [self.date_formatter.format(new Date)].concat([ρσ_desugar_kwargs({id: timer_id(), style: "max-width: 9%; white-space: nowrap; overflow: hidden"})])))].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", align_items: "baseline", font_size: "smaller", padding: "0.5ex 1ex", border_bottom: "solid 1px currentColor"})])), actions_div].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_TS_CLASS, onclick: (function() {
                 var ρσ_anonfunc = function (evt) {
                     evt.stopPropagation();
                 };
@@ -27783,6 +27945,7 @@ return this.__repr__();
             this.open_book = Overlay.prototype.open_book.bind(this);
             this.sync_book = Overlay.prototype.sync_book.bind(this);
             this.show_toc = Overlay.prototype.show_toc.bind(this);
+            this.toggle_reference_mode = Overlay.prototype.toggle_reference_mode.bind(this);
             this.show_bookmarks = Overlay.prototype.show_bookmarks.bind(this);
             this.show_goto = Overlay.prototype.show_goto.bind(this);
             this.show_metadata = Overlay.prototype.show_metadata.bind(this);
@@ -27994,6 +28157,11 @@ return this.__repr__();
             self.panels.push(new TOCOverlay(self));
             self.show_current_panel();
         };
+        Overlay.prototype.toggle_reference_mode = function toggle_reference_mode() {
+            var self = this;
+            self.hide_current_panel();
+            self.view.toggle_reference_mode();
+        };
         Overlay.prototype.show_bookmarks = function show_bookmarks() {
             var self = this;
             self.hide_current_panel();
@@ -28012,13 +28180,20 @@ return this.__repr__();
             var self = this;
             self.hide_current_panel();
             function show_metadata_overlay(mi, pathtoebook, overlay, container) {
-                var table;
+                var table, a;
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: BD_CLASS_NAME, style: "padding: 1ex 1em"})]));
                 table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({class_: "metadata"})]);
                 container.lastChild.appendChild(table);
-                render_metadata(mi, table);
+                render_metadata(mi, table, null, "html { font-size: " + ρσ_str.format("{}", document.documentElement.style.fontSize) + " }");
+                var ρσ_Iter2 = ρσ_Iterable(table.querySelectorAll("a[href]"));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    a = ρσ_Iter2[ρσ_Index2];
+                    a.removeAttribute("href");
+                    a.removeAttribute("title");
+                    a.classList.remove("blue-link");
+                }
                 if (pathtoebook) {
-                    container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Path: {}").format(pathtoebook)].concat([ρσ_desugar_kwargs({style: "font-size: smaller; margin-top: 1ex; padding-top: 1ex; border-top: solid 1px"})])));
+                    container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Path: {}").format(pathtoebook)].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex; padding-top: 1ex; border-top: solid 1px"})])));
                 }
             };
             if (!show_metadata_overlay.__argnames__) Object.defineProperties(show_metadata_overlay, {
@@ -28031,7 +28206,7 @@ return this.__repr__();
         Overlay.prototype.show_ask_for_location = function show_ask_for_location() {
             var self = this;
             self.hide_current_panel();
-            self.panels.push(new SimpleOverlay(self, create_location_overlay.bind(null, self.view.current_position_data), _("Go to location or position…")));
+            self.panels.push(new SimpleOverlay(self, create_location_overlay.bind(null, self.view.current_position_data), _("Go to location, position or reference…")));
             self.show_current_panel();
         };
         Overlay.prototype.show_search = function show_search() {
@@ -28655,6 +28830,7 @@ return this.__repr__();
             this.goto_book_position = View.prototype.goto_book_position.bind(this);
             this.on_scroll_to_anchor = View.prototype.on_scroll_to_anchor.bind(this);
             this.goto_cfi = View.prototype.goto_cfi.bind(this);
+            this.goto_reference = View.prototype.goto_reference.bind(this);
             this.goto_named_destination = View.prototype.goto_named_destination.bind(this);
             this.goto_toc_node = View.prototype.goto_toc_node.bind(this);
             this.on_next_spine_item = View.prototype.on_next_spine_item.bind(this);
@@ -28672,6 +28848,8 @@ return this.__repr__();
             this.set_progress_frac = View.prototype.set_progress_frac.bind(this);
             this.update_font_size = View.prototype.update_font_size.bind(this);
             this.update_color_scheme = View.prototype.update_color_scheme.bind(this);
+            this.toggle_reference_mode = View.prototype.toggle_reference_mode.bind(this);
+            this.on_reference_item_changed = View.prototype.on_reference_item_changed.bind(this);
         }});
         Object.defineProperties(View.prototype,  {
             "iframe": {
@@ -28679,6 +28857,14 @@ return this.__repr__();
                 "get": function iframe() {
                     var self = this;
                     return self.iframe_wrapper.iframe;
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "reference_mode_overlay": {
+                "enumerable": true, 
+                "get": function reference_mode_overlay() {
+                    var self = this;
+                    return document.getElementById("reference-mode-overlay");
                 }, 
                 "set": function () { throw new AttributeError("can't set attribute") }
             }, 
@@ -28712,6 +28898,7 @@ return this.__repr__();
             var self = this;
             var sd, left_margin, right_margin, iframe_id, sandbox, handlers, entry_point;
             self.timers = new Timers;
+            self.reference_mode_enabled = false;
             self.loaded_resources = Object.create(null);
             self.current_progress_frac = self.current_file_progress_frac = 0;
             self.current_toc_node = self.current_toc_toplevel_node = null;
@@ -28738,7 +28925,7 @@ return this.__repr__();
             if (runtime.is_standalone_viewer) {
                 sandbox += "  allow-same-origin";
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", get_color("window-foreground")) + "; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "position: absolute; display: none; left: 0; top: 0; padding: 0.5ex; border: solid 2px; z-index: 3000", id: "reference-mode-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
             handlers = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["ready"] = self.on_iframe_ready;
@@ -28771,6 +28958,7 @@ return this.__repr__();
                 ρσ_d["selectionchange"] = self.on_selection_change;
                 ρσ_d["handle_shortcut"] = self.on_handle_shortcut;
                 ρσ_d["handle_keypress"] = self.on_handle_keypress;
+                ρσ_d["reference_item_changed"] = self.on_reference_item_changed;
                 return ρσ_d;
             }).call(this);
             entry_point = (runtime.is_standalone_viewer) ? null : "read_book.iframe";
@@ -29019,6 +29207,8 @@ return this.__repr__();
                 }).call(this));
             } else if (data.name === "toggle_full_screen") {
                 ui_operations.toggle_full_screen();
+            } else if (data.name === "toggle_reference_mode") {
+                self.toggle_reference_mode();
             } else if (data.name === "reload_book") {
                 ui_operations.reload_book();
             } else if (data.name === "search_for_selection") {
@@ -29164,6 +29354,7 @@ return this.__repr__();
             self.overlay.hide();
             self.search_overlay.hide();
             self.content_popup_overlay.hide();
+            self.reference_mode_overlay.style.display = "none";
             self.focus_iframe();
         };
         View.prototype.focus_iframe = function focus_iframe() {
@@ -29382,7 +29573,7 @@ return this.__repr__();
         if (!View.prototype.parse_cfi.__argnames__) Object.defineProperties(View.prototype.parse_cfi, {
             __argnames__ : {value: ["encoded_cfi", "book"]}
         });
-        View.prototype.display_book = function display_book(book, initial_cfi, initial_toc_node, initial_bookpos) {
+        View.prototype.display_book = function display_book(book, initial_position) {
             var self = this;
             var is_current_book, pos, unkey, name, cfi, q, ρσ_unpack, cfiname, internal_cfi, navigated, sd, c;
             self.hide_overlays();
@@ -29411,8 +29602,8 @@ return this.__repr__();
             unkey = username_key(get_interface_data().username);
             name = book.manifest.spine[0];
             cfi = null;
-            if (initial_cfi && initial_cfi.startswith("epubcfi(/")) {
-                cfi = initial_cfi;
+            if (initial_position && initial_position.type === "cfi" && initial_position.data.startswith("epubcfi(/")) {
+                cfi = initial_position.data;
             } else {
                 q = parse_url_params();
                 if (q.bookpos && q.bookpos.startswith("epubcfi(/")) {
@@ -29432,12 +29623,15 @@ return this.__repr__();
                 pos.cfi = ρσ_unpack[1];
             }
             navigated = false;
-            if (typeof initial_toc_node === "number") {
-                navigated = self.goto_toc_node(initial_toc_node);
-            }
-            if (!navigated && typeof initial_bookpos === "number") {
-                navigated = true;
-                self.goto_book_position(initial_bookpos);
+            if (initial_position) {
+                if (initial_position.type === "toc") {
+                    navigated = self.goto_toc_node(initial_position.data);
+                } else if (initial_position.type === "bookpos") {
+                    navigated = true;
+                    self.goto_book_position(initial_position.data);
+                } else if (initial_position.type === "ref") {
+                    navigated = self.goto_reference(initial_position.data);
+                }
             }
             if (navigated) {
                 self.hide_loading();
@@ -29452,7 +29646,7 @@ return this.__repr__();
             }
         };
         if (!View.prototype.display_book.__argnames__) Object.defineProperties(View.prototype.display_book, {
-            __argnames__ : {value: ["book", "initial_cfi", "initial_toc_node", "initial_bookpos"]}
+            __argnames__ : {value: ["book", "initial_position"]}
         });
         View.prototype.redisplay_book = function redisplay_book() {
             var self = this;
@@ -29661,6 +29855,39 @@ return this.__repr__();
         };
         if (!View.prototype.goto_cfi.__argnames__) Object.defineProperties(View.prototype.goto_cfi, {
             __argnames__ : {value: ["bookpos"]}
+        });
+        View.prototype.goto_reference = function goto_reference(reference) {
+            var self = this;
+            var ρσ_unpack, index, refnum, chapter_name;
+            if (!self.book || !self.book.manifest) {
+                return;
+            }
+            ρσ_unpack = reference.split(".");
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            index = ρσ_unpack[0];
+            refnum = ρσ_unpack[1];
+            ρσ_unpack = [int(index), int(refnum)];
+            index = ρσ_unpack[0];
+            refnum = ρσ_unpack[1];
+            chapter_name = (ρσ_expr_temp = self.book.manifest.spine)[(typeof index === "number" && index < 0) ? ρσ_expr_temp.length + index : index];
+            if (!chapter_name) {
+                return false;
+            }
+            if (self.currently_showing.name === chapter_name) {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["scroll_to_ref"].concat([ρσ_desugar_kwargs({refnum: refnum})]));
+            } else {
+                ρσ_interpolate_kwargs.call(self, self.show_name, [chapter_name].concat([ρσ_desugar_kwargs({initial_position: (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["type"] = "ref";
+                    ρσ_d["refnum"] = refnum;
+                    ρσ_d["replace_history"] = true;
+                    return ρσ_d;
+                }).call(this)})]));
+            }
+            return true;
+        };
+        if (!View.prototype.goto_reference.__argnames__) Object.defineProperties(View.prototype.goto_reference, {
+            __argnames__ : {value: ["reference"]}
         });
         View.prototype.goto_named_destination = function goto_named_destination(name, frag) {
             var self = this;
@@ -29936,7 +30163,7 @@ return this.__repr__();
             self.currently_showing.loading = false;
             self.processing_spine_item_display = true;
             self.iframe.style.visibility = "hidden";
-            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_unencrypted_message, ["display"].concat([ρσ_desugar_kwargs({resource_data: resource_data, book: self.book, name: self.currently_showing.name, initial_position: self.currently_showing.initial_position, settings: self.currently_showing.settings, is_titlepage: self.currently_showing.name === self.book.manifest.title_page_name})]));
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_unencrypted_message, ["display"].concat([ρσ_desugar_kwargs({resource_data: resource_data, book: self.book, name: self.currently_showing.name, initial_position: self.currently_showing.initial_position, settings: self.currently_showing.settings, reference_mode_enabled: self.reference_mode_enabled, is_titlepage: self.currently_showing.name === self.book.manifest.title_page_name})]));
         };
         if (!View.prototype.show_spine_item_stage2.__argnames__) Object.defineProperties(View.prototype.show_spine_item_stage2, {
             __argnames__ : {value: ["resource_data"]}
@@ -29947,6 +30174,7 @@ return this.__repr__();
             self.hide_loading();
             self.set_progress_frac(data.progress_frac, data.file_progress_frac);
             self.update_header_footer();
+            self.on_reference_item_changed();
             window.scrollTo(0, 0);
             if (self.book_load_started) {
                 self.book_load_started = false;
@@ -29977,6 +30205,38 @@ return this.__repr__();
             cs = self.get_color_scheme(true);
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_color_scheme"].concat([ρσ_desugar_kwargs({color_scheme: cs})]));
         };
+        View.prototype.toggle_reference_mode = function toggle_reference_mode() {
+            var self = this;
+            self.reference_mode_enabled = !self.reference_mode_enabled;
+            self.on_reference_item_changed();
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["set_reference_mode"].concat([ρσ_desugar_kwargs({enabled: self.reference_mode_enabled})]));
+            if (ui_operations.reference_mode_changed) {
+                ui_operations.reference_mode_changed(self.reference_mode_enabled);
+            }
+        };
+        View.prototype.on_reference_item_changed = function on_reference_item_changed(data) {
+            var self = this;
+            var ρσ_unpack, refnum, index, div;
+            data = data || (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["refnum"] = null;
+                ρσ_d["index"] = null;
+                return ρσ_d;
+            }).call(this);
+            ρσ_unpack = [data.refnum, data.index];
+            refnum = ρσ_unpack[0];
+            index = ρσ_unpack[1];
+            div = self.reference_mode_overlay;
+            if (refnum === null) {
+                div.style.display = "none";
+            } else {
+                div.style.display = "block";
+                div.textContent = "" + ρσ_str.format("{}", index) + "." + ρσ_str.format("{}", refnum) + "";
+            }
+        };
+        if (!View.prototype.on_reference_item_changed.__argnames__) Object.defineProperties(View.prototype.on_reference_item_changed, {
+            __argnames__ : {value: ["data"]}
+        });
         View.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -29984,6 +30244,7 @@ return this.__repr__();
             return this.__repr__();
         };
         Object.defineProperty(View.prototype, "__bases__", {value: []});
+        
         
         
 
@@ -30030,8 +30291,8 @@ return this.__repr__();
         var footnotes_main = ρσ_modules["read_book.footnotes"].main;
 
         var runtime = ρσ_modules["read_book.globals"].runtime;
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
         var set_system_colors = ρσ_modules["read_book.globals"].set_system_colors;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
 
         var iframe_main = ρσ_modules["read_book.iframe"].main;
 
@@ -30042,6 +30303,7 @@ return this.__repr__();
         var local_storage = ρσ_modules.session.local_storage;
         var session_defaults = ρσ_modules.session.session_defaults;
 
+        var debounce = ρσ_modules.utils.debounce;
         var encode_query_with_path = ρσ_modules.utils.encode_query_with_path;
         var parse_url_params = ρσ_modules.utils.parse_url_params;
 
@@ -30145,9 +30407,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                filename = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter7 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                filename = ρσ_Iter7[ρσ_Index7];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();
@@ -30208,7 +30470,7 @@ return this.__repr__();
             __argnames__ : {value: ["title", "msg", "details"]}
         });
 
-        function manifest_received(key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook, end_type, xhr, ev) {
+        function manifest_received(key, initial_position, pathtoebook, end_type, xhr, ev) {
             var data;
             end_type = workaround_qt_bug(xhr, end_type);
             if (end_type === "load") {
@@ -30221,13 +30483,13 @@ return this.__repr__();
                 book.is_complete = true;
                 delete book.manifest["metadata"];
                 delete book.manifest["last_read_positions"];
-                view.display_book(book, initial_cfi, initial_toc_node, initial_bookpos);
+                view.display_book(book, initial_position);
             } else {
                 show_error(_("Could not open book"), _("Failed to load book manifest, click \"Show details\" for more info"), xhr.error_html || null);
             }
         };
         if (!manifest_received.__argnames__) Object.defineProperties(manifest_received, {
-            __argnames__ : {value: ["key", "initial_cfi", "initial_toc_node", "initial_bookpos", "pathtoebook", "end_type", "xhr", "ev"]}
+            __argnames__ : {value: ["key", "initial_position", "pathtoebook", "end_type", "xhr", "ev"]}
         });
 
         function SessionData() {
@@ -30383,6 +30645,7 @@ return this.__repr__();
                 if (view === null) {
                     create_session_data(prefs, local_storage);
                     view = new View(document.getElementById("view"));
+                    window.addEventListener("resize", debounce(view.on_resize.bind(self), 250));
                     if (ui_data.show_home_page_on_ready) {
                         view.overlay.open_book(false);
                     }
@@ -30415,14 +30678,14 @@ return this.__repr__();
 
         
         var start_book_load = from_python((function() {
-            var ρσ_anonfunc = function start_book_load(key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook) {
+            var ρσ_anonfunc = function start_book_load(key, initial_position, pathtoebook) {
                 var xhr;
-                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["manifest", manifest_received.bind(null, key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
+                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["manifest", manifest_received.bind(null, key, initial_position, pathtoebook)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "json";
                 xhr.send();
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                __argnames__ : {value: ["key", "initial_cfi", "initial_toc_node", "initial_bookpos", "pathtoebook"]}
+                __argnames__ : {value: ["key", "initial_position", "pathtoebook"]}
             });
             return ρσ_anonfunc;
         })());
@@ -30594,6 +30857,15 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })();
+            ui_operations.goto_reference = (function() {
+                var ρσ_anonfunc = function (ref) {
+                    return view.goto_reference(ref);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ref"]}
+                });
+                return ρσ_anonfunc;
+            })();
             ui_operations.toggle_toc = function () {
                 to_python.toggle_toc();
             };
@@ -30704,6 +30976,15 @@ return this.__repr__();
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["visible"]}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.reference_mode_changed = (function() {
+                var ρσ_anonfunc = function (enabled) {
+                    to_python.reference_mode_changed(enabled);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["enabled"]}
                 });
                 return ρσ_anonfunc;
             })();

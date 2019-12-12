@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de novembre 29, 2019" "4.5.0" "calibre"
+.TH "CALIBREDB" "1" "de desembre 13, 2019" "4.6.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,12 +140,12 @@ mostra aquest missatge d\fB\(aq\fPajuda i surt
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Camí a la biblioteca de calibre. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Camí a la biblioteca de calibre. Per defecte s\fB\(aq\fPutilitza el camí emmagatzemat a la configuració. També és possible connectar\-se al servidor de contingut de calibre per dur a terme accions a biblioteques remotes. Per fer\-ho utilitzeu una URL com aquesta: \fI\%http://nomdelservidor:port/#library_id\fP per exemple, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id és l\fB\(aq\fPidentificador de la biblioteca que voleu connectar al servidor de contingut. Podeu utilitzar el valor especial \fB"\fPlibrary_id value of\fB"\fP per obtenir una llista d\fB\(aq\fPidentificadors de biblioteques disponibles al servidor. Per a més detalls sobre com configurar l\fB\(aq\fPaccés a través d\fB\(aq\fPun servidor de contingut, vegeu \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Contrasenya per connectar a un servidor de continguts de calibre. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Contrasenya per connectar a un servidor de continguts de calibre. Per llegir la contraseya des d\fB\(aq\fPuna entrada estàndard, utilitzeu el valor especial: <stdin>. Per llegir la contrasenya des d\fB\(aq\fPun fitxer, utilitzeu : <f:/path/to/file> (és a dir <f: followed by the full path to the file and a trailing >). Els angles de dalt son obligatòries, recordeu tancar\-los o utilitzar cometes per a la closca.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -410,7 +410,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). Per identificadors, la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+El camp a establir. El format és nom_del_camp:valor, per exemple: \fI\%\-\-field\fP etiquetes:etiqueta1,etiqueta2. Utilitzeu \fI\%\-\-list\-fields\fP per obtenir una llista de tots els noms de camps. Es pot especificar aquesta opció diverses vegades per establir diversos camps. Nota: Per llengües cal utilitzar els codis de llengua ISO639 (per exemple, \fB"\fPen\fB"\fP per l\fB\(aq\fPanglès, \fB"\fPca\fB"\fP per al català...). Per identificadors, la sintaxi és \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Per als camps boolean (sí/no) utilitzeu \fB"\fPtrue\fB"\fP i \fB"\fPfalse\fB"\fP o \fB"\fPyes\fB"\fP i \fB"\fPno\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -658,20 +658,20 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .sp
 .nf
 .ft C
-calibredb add_custom_column [options] label name datatype
+calibredb add_custom_column [opcions] etiqueta nom tipus_de_dades
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Create a custom column. label is the machine friendly name of the column. No hauria de contenir espais o dos punts. name is the human friendly name of the column.
-datatype is one of: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Crea una columna personalitzada. L\(aqetiqueta és el nom intern de la columna. No hauria de contenir espais o dos punts. El nom és el nom visible de la columna.
+El tipus de dades és un de: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. Això és una cadena JSON. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
+Un diccionari d\fB\(aq\fPopcions per personalitzar com s\fB\(aq\fPinterpretaran les dades en aquesta columna. Això és una cadena JSON. Per columnes d\fB\(aq\fPenumeració, utilitzeu \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Hi ha moltes opcions per a la variable \fB"\fPdisplay\fB"\fP\&.Les opcions per tipus de columna son: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  La millor manera de trobar combinacions legals és creant una columna personalitzada del tipus adient a la interfície gràfica i després cercar un llibre al fitxer OPF (comproveu que s\fB\(aq\fPha creat un OPF nou des de l\fB\(aq\fPaddició de la columna). Veureu el JSON per a la \fB"\fPdisplay\fB"\fP de la columna nova a l\fB\(aq\fPOPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -936,7 +936,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-El nombre màxim de resultats que retornarà. Default is all results.
+El nombre màxim de resultats que retornarà. Per defecte es mostren tots els resultats.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

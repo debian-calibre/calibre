@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "十一月 29, 2019" "4.5.0" "calibre"
+.TH "EBOOK-POLISH" "1" "十二月 13, 2019" "4.6.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -57,6 +57,11 @@ ebook\-polish\(ga传递参数时，用引号括起这些参数。例如: "/some 
 .SH [选项]
 .INDENT 0.0
 .TP
+.B \-\-add\-soft\-hyphens, \-H
+Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-compress\-images, \-i
 无损压缩书中的图片，减少文件大小而不影响图片质量。
 .UNINDENT
@@ -89,6 +94,11 @@ OPF文件路径。从OPF文件更新书中的元数据。
 .TP
 .B \-\-remove\-jacket
 移除先前插入的书籍护封页。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-soft\-hyphens
+Remove soft hyphens from all text in the book.
 .UNINDENT
 .INDENT 0.0
 .TP

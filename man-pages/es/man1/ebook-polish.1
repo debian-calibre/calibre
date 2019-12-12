@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "noviembre 29, 2019" "4.5.0" "calibre"
+.TH "EBOOK-POLISH" "1" "diciembre 13, 2019" "4.6.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -60,6 +60,11 @@ Cuando alguno de los argumentos de \fBebook\-polish\fP contenga espacios, pónga
 .SH [OPCIONES]
 .INDENT 0.0
 .TP
+.B \-\-add\-soft\-hyphens, \-H
+Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-compress\-images, \-i
 Comprimir sin pérdidas las imágenes en el libro para reducir su tamaño sin afectar la calidad de imagen.
 .UNINDENT
@@ -92,6 +97,11 @@ Ruta a un fichero OPF. Los metadatos del libro se actualizan a partir del ficher
 .TP
 .B \-\-remove\-jacket
 Eliminar una página de sobrecubierta insertada previamente.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-soft\-hyphens
+Remove soft hyphens from all text in the book.
 .UNINDENT
 .INDENT 0.0
 .TP

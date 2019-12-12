@@ -502,7 +502,7 @@ class Freeze(object):
     def add_misc_libraries(self):
         for x in (
                 'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
-                'icudata.64', 'icui18n.64', 'icuio.64', 'icuuc.64',
+                'icudata.64', 'icui18n.64', 'icuio.64', 'icuuc.64', 'hyphen.0',
                 'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar',
                 'crypto.1.0.0', 'ssl.1.0.0', 'iconv.2',  # 'ltdl.7'
         ):
@@ -646,6 +646,7 @@ class Freeze(object):
         base_dir = base_dir or self.contents_dir
         cc_dir = join(base_dir, name, 'Contents')
         exe_dir = join(cc_dir, 'MacOS')
+        rel_path = os.path.relpath(join(self.contents_dir, 'MacOS'), exe_dir)
         os.makedirs(exe_dir)
         for x in os.listdir(self.contents_dir):
             if x.endswith('.app'):
@@ -662,7 +663,10 @@ class Freeze(object):
                 plist['CFBundleExecutable'] = exe + '-placeholder-for-codesigning'
                 nexe = join(exe_dir, plist['CFBundleExecutable'])
                 base = os.path.dirname(abspath(__file__))
-                cmd = [gcc, '-Wall', '-Werror', '-DEXE_NAME="%s"' % exe, join(base, 'placeholder.c'), '-o', nexe, '-headerpad_max_install_names']
+                cmd = [
+                    gcc, '-Wall', '-Werror', '-DEXE_NAME="%s"' % exe, '-DREL_PATH="%s"' % rel_path,
+                    join(base, 'placeholder.c'), '-o', nexe, '-headerpad_max_install_names'
+                ]
                 subprocess.check_call(cmd)
                 with open(join(cc_dir, x), 'wb') as p:
                     plistlib.dump(plist, p)

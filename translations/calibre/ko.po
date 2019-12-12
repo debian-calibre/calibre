@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2019-11-22 07:16+IST\n"
-"PO-Revision-Date: 2019-11-22 01:47+0000\n"
-"Last-Translator: Seo, HyunTae <acrab001@gmail.com>\n"
+"POT-Creation-Date: 2019-11-29 03:14+IST\n"
+"PO-Revision-Date: 2019-11-28 21:36+0000\n"
+"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -204,7 +204,7 @@ msgstr "아무 것도 하지 않음"
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/ereader/writer.py:173
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/palmdoc/writer.py:31
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdb/ztxt/writer.py:29
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:660
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:668
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdf/image_writer.py:22
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdf/image_writer.py:23
 #: /home/kovid/work/calibre/src/calibre/ebooks/pdf/render/links.py:145
@@ -261,6 +261,7 @@ msgstr "아무 것도 하지 않음"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:488
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:489
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/bookmarks.py:162
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:450
 #: /home/kovid/work/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:952
 #: /home/kovid/work/calibre/src/calibre/library/database.py:930
 #: /home/kovid/work/calibre/src/calibre/library/database2.py:607
@@ -1781,7 +1782,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_saved_searches.py:61
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/server.py:1027
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:69
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:87
 msgid "Name:"
 msgstr "이름:"
 
@@ -2419,6 +2420,10 @@ msgstr "메모리 카드에 전송될 때 책들이 저장될 폴더를 입력�
 #: /home/kovid/work/calibre/src/calibre/devices/cybook/driver.py:122
 msgid "Communicate with the Cybook Muse e-book reader."
 msgstr "Cybook Muse eBook 리더와 통신합니다."
+
+#: /home/kovid/work/calibre/src/calibre/devices/cybook/driver.py:148
+msgid "Communicate with the Bookeen Diva HD e-book reader."
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/devices/eb600/driver.py:27
 msgid "Communicate with the EB600 e-book reader."
@@ -3269,8 +3274,8 @@ msgid "Communicate with the Woxter Scriba reader"
 msgstr "Woxter Scriba reader와 통신합니다"
 
 #: /home/kovid/work/calibre/src/calibre/devices/misc.py:528
-msgid "Communicate with the PocketBook Touch Lux 2 reader"
-msgstr "PocketBook Touch Lux 2 reader와 통신"
+msgid "Communicate with the PocketBook Touch Lux 2 and Inkpad X readers"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/devices/misc.py:549
 msgid "Communicate with the SONY DPT-S1"
@@ -4800,6 +4805,16 @@ msgstr ""
 msgid "Generate an uncompressed PDF, useful for debugging."
 msgstr ""
 
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/pdf_output.py:136
+msgid ""
+"Shift the text horizontally by the specified offset (in pts). On odd "
+"numbered pages, it is shifted to the right and on even numbered pages to the"
+" left. Use negative numbers for the opposite effect. Note that this setting "
+"is ignored on pages where the margins are smaller than the specified offset."
+" Shifting is done by setting the PDF CropBox, not all software respects the "
+"CropBox."
+msgstr ""
+
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/pml_output.py:26
 msgid ""
 "Specify the character encoding of the output document. The default is "
@@ -5915,7 +5930,7 @@ msgstr "노트"
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1389
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/toc.py:646
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:16
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:656
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:664
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:387
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:233
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:579
@@ -8017,31 +8032,31 @@ msgstr ""
 msgid "Sidebar"
 msgstr "사이드 바"
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:981
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:989
 msgid "Adding headers and footers"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1104
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1112
 msgid "Headers and footers added"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1137
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1145
 msgid "Parsed all content for markup transformation"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1147
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1155
 msgid "Completed markup transformation"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1190
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1198
 msgid "Rendered all HTML as PDF"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1195
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1203
 msgid "Added links to PDF content"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1221
+#: /home/kovid/work/calibre/src/calibre/ebooks/pdf/html_writer.py:1239
 msgid "Updated metadata in PDF"
 msgstr ""
 
@@ -8240,11 +8255,11 @@ msgstr ""
 msgid "Could not create temporary directory, calibre cannot start."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:945
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:949
 msgid "Windows XP not supported"
 msgstr "Windows XP는 지원되지 않음"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:946
+#: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:950
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -8424,9 +8439,9 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:309
 #: /home/kovid/work/calibre/src/calibre/gui2/search_box.py:486
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:441
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:688
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:698
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1690
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:694
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:704
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1696
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1412
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.py:288
 msgid "Are you sure?"
@@ -8591,9 +8606,9 @@ msgid "Fetch annotations (experimental)"
 msgstr "주석 가져오기 (실험 중)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/annotate.py:111
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:662
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:909
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:940
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:668
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:915
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:946
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1357
 msgid "Not supported"
 msgstr "지원되지 않음"
@@ -8873,9 +8888,9 @@ msgid "Too long"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:435
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1083
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1270
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:282
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1089
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1276
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:300
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1400
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:191
 msgid "Not found"
@@ -10241,7 +10256,7 @@ msgstr "저장하기 전에 최소한 한가지 동작을 선택하여야 합니
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:155
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:84
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1096
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1102
 msgid "Choose name"
 msgstr "이름 선택"
 
@@ -11519,7 +11534,7 @@ msgstr "경로"
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:524
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:123
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/book_info.py:291
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1259
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1260
 #, python-format
 msgid "Cover size: %(width)d x %(height)d pixels"
 msgstr "표지 크기: %(width)d x %(height)d 픽셀"
@@ -11596,7 +11611,7 @@ msgstr "출력"
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/page_setup_ui.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdb_output_ui.py:45
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_input_ui.py:40
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:157
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:167
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pmlz_output_ui.py:44
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/rb_output_ui.py:30
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/rtf_input_ui.py:30
@@ -12253,7 +12268,7 @@ msgid "Create link"
 msgstr "링크 생성"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:636
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1111
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1112
 msgid "&Browse"
 msgstr "찾기(&B)"
 
@@ -12538,7 +12553,7 @@ msgid "Paper si&ze:"
 msgstr "종이 크기(&Z):"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/docx_output.py:38
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:160
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:170
 msgid "&Custom size:"
 msgstr "사용자 지정 크기(&C):"
 
@@ -12683,6 +12698,7 @@ msgstr "글꼴 크기 키(key) 값(&K):"
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/page_setup_ui.py:131
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/page_setup_ui.py:134
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/page_setup_ui.py:137
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:192
 msgid " pt"
 msgstr " pt"
 
@@ -13054,38 +13070,38 @@ msgid ""
 msgstr "책 정보를 지정합니다. 출력 파일은 가능한 이 책 정보와 같은 것들을 포함할 것입니다."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:113
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1257
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1258
 msgid "This book has no cover"
 msgstr "이 책은 표지가 없습니다"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:190
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1154
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1155
 msgid "Choose cover for "
 msgstr "표지 선택 - "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:197
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1161
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1162
 msgid "Cannot read"
 msgstr "읽을 수 없음"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:198
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1162
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1163
 msgid "You do not have permission to read the file: "
 msgstr "파일을 읽을 수 있는 권한이 없습니다: "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:206
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:214
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1171
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1172
 msgid "Error reading file"
 msgstr "파일 읽기 오류"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:207
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1172
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1173
 msgid "<p>There was an error reading from file: <br /><b>"
 msgstr "<p>파일에서 읽어오던 중에 오류가 있었습니다: <br /><b>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata.py:215
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1181
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1182
 msgid " is not a valid picture"
 msgstr " 는(은) 잘못된 그림입니다"
 
@@ -13140,7 +13156,7 @@ msgstr "태그(&G): "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:169
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:638
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1357
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1358
 msgid ""
 "Tags categorize the book. This is particularly useful while searching. "
 "<br><br>They can be any words or phrases, separated by commas."
@@ -13305,58 +13321,58 @@ msgstr "PDF 출력"
 msgid "Use page margins from the &document being converted"
 msgstr "변환되는 문서의 페이지 여백 사용(&D)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:158
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:168
 msgid "&Use the paper size set in output profile"
 msgstr "출력 프로파일에 지정된 종이 크기 사용 (&U)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:159
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:169
 msgid "&Paper size:"
 msgstr "종이 크기(&P):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:161
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:171
 msgid "&Unit:"
 msgstr "단위(&U):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:162
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:172
 msgid "Preserve &aspect ratio of cover"
 msgstr "표지의 가로 세로 비율을 유지(&A)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:163
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:173
 msgid "Add page &numbers to the bottom of every page"
 msgstr "모든 페이지의 아래에 페이지 번호 넣기"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:164
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:174
 msgid "Add a printable &Table of Contents at the end"
 msgstr "마지막에 인쇄가능한 목차 추가(&T)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:165
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:175
 msgid "&Title for ToC:"
 msgstr "목차의 제목(&T):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:166
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:176
 msgid "Serif famil&y:"
 msgstr "명조체 글꼴(&Y):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:167
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:177
 msgid "Sans fami&ly:"
 msgstr "고딕체 글꼴 (&Y):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:168
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:178
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:512
 msgid "&Monospace family:"
 msgstr "고정폭 글꼴(&M):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:169
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:179
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:517
 msgid "S&tandard font:"
 msgstr "표준 글꼴(&T):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:170
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:180
 msgid "Default font si&ze:"
 msgstr "글꼴 기본 크기(&Z):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:171
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:173
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:181
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:183
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:549
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:603
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:514
@@ -13370,24 +13386,24 @@ msgstr "글꼴 기본 크기(&Z):"
 msgid " px"
 msgstr " px"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:172
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:182
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:515
 msgid "Monospace &font size:"
 msgstr "고정폭 글꼴 크기(&F):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:174
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:184
 msgid "Page &number map:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:175
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:185
 msgid "Page  margins"
 msgstr "페이지 여백"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:176
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:186
 msgid "Page headers and footers"
 msgstr "페이지의 머리말과 꼬리말"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:177
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:187
 #, python-format
 msgid ""
 "You can insert headers and footers into every page of the produced PDF file "
@@ -13395,17 +13411,21 @@ msgid ""
 "href=\"%s\">documentation</a>."
 msgstr "머리말과 꼬리말 템플릿을 사용하여 생성된 PDF 파일의 모든 페이지에 머리말과 꼬리말을 넣을 수 있습니다. 예시를 보려면, <a href=\"%s\">문서</a>를 참조하세요."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:178
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:188
 msgid "&Header template:"
 msgstr "머리말 템플릿(&H)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:179
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:189
 msgid "&Footer template:"
 msgstr "꼬리말 템플릿(&F):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:180
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:190
 msgid "&Break long words at the end of lines"
 msgstr "행 끝에서 긴 단어를 자르기(&B)"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:191
+msgid "Odd/even &offset:"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pml_output.py:17
 msgid "PMLZ output"
@@ -13620,7 +13640,7 @@ msgid "Remove the currently selected expression"
 msgstr "현재 선택된 표현식을 제거합니다"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:148
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1123
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1124
 #: /home/kovid/work/calibre/src/calibre/gui2/open_with.py:366
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/bookmarks.py:102
 msgid "&Remove"
@@ -14449,7 +14469,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:556
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:560
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1823
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1824
 msgid "Undefined"
 msgstr "정의되지 않음"
 
@@ -16381,8 +16401,8 @@ msgid "Failed to import data."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/jobs_ui.py:67
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:954
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:967
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:955
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:968
 msgid "Active jobs"
 msgstr "활동 중인 작업이 있음"
 
@@ -16701,7 +16721,7 @@ msgid "Ser&ies:"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:584
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1801
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1802
 msgid "&Date:"
 msgstr "날짜(&D):"
 
@@ -16711,7 +16731,7 @@ msgid "&Apply date"
 msgstr "날짜 적용(&A)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:586
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1876
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1877
 msgid "P&ublished:"
 msgstr "출판일자(&U):"
 
@@ -16738,7 +16758,7 @@ msgid "Open Tag editor"
 msgstr "태그 편집기 열기"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:595
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1321
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1322
 msgid "&Rating:"
 msgstr "별점(&R):"
 
@@ -16787,7 +16807,7 @@ msgid "Author s&ort: "
 msgstr "저자 정렬명(&O): "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:613
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1424
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1425
 msgid "&Languages:"
 msgstr "언어(&L):"
 
@@ -17607,7 +17627,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:241
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/check_links.py:86
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:251
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:262
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:280
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1399
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/spell.py:935
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/toc.py:146
@@ -18161,7 +18181,7 @@ msgid "The tags to search for"
 msgstr "검색할 태그"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:146
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1356
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1357
 msgid "Ta&gs:"
 msgstr "태그(&G):"
 
@@ -18996,7 +19016,7 @@ msgid "Regular expression (?P<series_index>)"
 msgstr "정규 표현식 (?P<series_index>)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/filename_pattern_ui.py:153
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1695
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1696
 msgid "ISBN:"
 msgstr "ISBN:"
 
@@ -19088,12 +19108,12 @@ msgid "None"
 msgstr "없음"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/font_family_chooser.py:310
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:295
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:313
 msgid "Added fonts"
 msgstr "추가된 글꼴"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/font_family_chooser.py:311
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:295
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:313
 #, python-format
 msgid "Added font families: %s"
 msgstr "추가된 글꼴: %s"
@@ -19287,28 +19307,36 @@ msgid ""
 "Failed to download icon theme, click \"Show Details\" for more information."
 msgstr "아이콘 테마 다운로드가 실패했습니다. 더 자세한 정보는 \"상세정보 보기\"를 누르세요."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:58
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:59
 msgid "Zoom &in"
 msgstr "확대(&i)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:59
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:60
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:280
 msgid "Zoom &out"
 msgstr "축소(&o)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:60
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:61
 msgid "&Save as"
 msgstr "다른이름으로 저장(&S)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:61
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:62
 msgid "&Rotate"
 msgstr "회전(&R)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:87
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:77
+msgid "&Fit image"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:78
+msgid "Fit the image to the available space"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:115
 msgid "Choose a file to save to"
 msgstr "저장할 파일 선택"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:128
+#: /home/kovid/work/calibre/src/calibre/gui2/image_popup.py:168
 #, python-format
 msgid "View image: %s"
 msgstr ""
@@ -19637,7 +19665,7 @@ msgstr "이름으로 단축키 검색"
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:259
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:574
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search.py:381
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:965
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:971
 msgid "No matches"
 msgstr "검색결과 없음"
 
@@ -20378,116 +20406,116 @@ msgstr "사용자가 다음의 파일들을 읽을 권한이 없습니다:"
 msgid "No format selected"
 msgstr "선택된 형식이 없음"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1112
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1113
 msgid "Trim bord&ers"
 msgstr "테두리 잘라내기(&E)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1114
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1115
 msgid ""
 "Automatically detect and remove extra space at the cover's edges.\n"
 "Pressing it repeatedly can sometimes remove stubborn borders."
 msgstr "표지의 테두리에서 자동으로 여백을 감지하여 제거합니다.\n반복해서 누를 경우 때때로 다루기 힘든 테두리를 제거할 수 있습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1118
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1119
 msgid "Automatically trim borders"
 msgstr "자동으로 테두리 잘라내기"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1120
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1121
 msgid "Trim borders manually"
 msgstr "수동으로 테두리 잘라내기"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1121
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1122
 msgid "Undo last trim"
 msgstr "마지막 잘라내기 취소"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1125
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1126
 msgid "Download co&ver"
 msgstr "표지 다운로드(&V)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1126
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1127
 msgid "&Generate cover"
 msgstr "표지 생성(&G)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1129
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1130
 msgid "Customize the styles and colors of the generated cover"
 msgstr "생성되는 표지의 스타일과 색상 사용자 정의"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1180
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1181
 msgid "Not a valid picture"
 msgstr "올바른 그림 형식이 아닙니다"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1225
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1226
 msgid "Invalid cover"
 msgstr "유효하지 않은 표지"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1226
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1227
 msgid "Could not change cover as the image is invalid."
 msgstr "이미지가 유효하지 않아 표지를 바꿀 수 없습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1322
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1323
 msgid "Rating of this book. 0-5 stars"
 msgstr "이 책의 별점입니다. 0-5"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1396
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1397
 msgid "Tags changed"
 msgstr "태그 변경됨"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1397
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1398
 msgid ""
 "You have changed the tags. In order to use the tags editor, you must either "
 "discard or apply these changes. Apply changes?"
 msgstr "사용자가 태그를 변경했습니다. 태그 편집기를 사용하기 위해서는 이 변경사항을 포기하거나 적용시켜야 합니다. 변경사항을 적용할까요?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1425
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1426
 msgid "A comma separated list of languages for this book"
 msgstr "쉼표로 구분된 이 책의 언어 목록"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1454
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1455
 #, python-format
 msgid "The language %s is not recognized"
 msgid_plural "The languages %s are not recognized"
 msgstr[0] "언어 %s를 인식할 수 없습니다"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1455
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1456
 msgid "Unknown language"
 msgstr "모르는 언어"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1471
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1472
 msgid "Edit Identifiers"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1478
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1479
 msgid ""
 "Edit the book's identifiers. Every identifier must be on a separate line, "
 "and have the form type:value"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1495
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1496
 msgid "Duplicate identifier"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1496
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1497
 #, python-format
 msgid ""
 "The identifier of type: %s occurs more than once. Each type of identifier "
 "must be unique"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1500
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1501
 msgid "Invalid identifier"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1501
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1502
 #, python-format
 msgid ""
 "The identifier %s is invalid. Identifiers must be of the form type:value"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1515
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1516
 msgid "&Ids:"
 msgstr "&ID:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1516
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1517
 #, python-format
 msgid ""
 "Edit the identifiers for this book. For example: \n"
@@ -20497,42 +20525,42 @@ msgid ""
 "If an identifier value contains a comma, you can use the | character to represent it."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1531
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1532
 msgid "Edit identifiers in a dedicated window"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1596
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1726
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1597
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1727
 msgid "This ISBN is valid"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1599
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1729
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1600
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1730
 msgid "This ISBN is invalid"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1692
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1714
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1693
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1715
 msgid "Invalid ISBN"
 msgstr "잘못된 ISBN"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1693
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1694
 msgid "Enter an ISBN"
 msgstr "ISBN 입력"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1715
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1716
 msgid "The ISBN you entered is not valid. Try again."
 msgstr "입력된 ISBN 숫자가 틀립니다. 다시 해주세요."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1740
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1741
 msgid "&Publisher:"
 msgstr "출판사(&P):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1753
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1754
 msgid "Clear publisher"
 msgstr "출판사 비우기"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1827
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:1828
 msgid "Clear date"
 msgstr "날짜 지우기"
 
@@ -26851,7 +26879,7 @@ msgid "The Qt WebEngine Render process crashed and has been restarted"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:238
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1709
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1715
 msgid "Unsaved changes"
 msgstr "저장되지 않은 변경사항"
 
@@ -26872,7 +26900,7 @@ msgid ""
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:254
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1145
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1151
 msgid "Choose file location"
 msgstr "파일 위치 선택"
 
@@ -26885,7 +26913,7 @@ msgid "Choose book folder"
 msgstr "책 폴더 선택"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:299
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:828
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:834
 msgid "Choose book"
 msgstr "책 선택"
 
@@ -26960,108 +26988,108 @@ msgstr "파일 선택"
 msgid "Before Add files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:541
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:547
 msgid "Before: Add cover"
 msgstr "이전: 표지 추가"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:550
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:556
 msgid "No book open"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:555
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:561
 msgid "You must open a book before trying to edit the Table of Contents."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:557
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:563
 msgid "Before: Edit Table of Contents"
 msgstr "이전: 목차 편집"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:570
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:576
 msgid "Before: Insert inline Table of Contents"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:574
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:580
 msgid "No Table of Contents"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:575
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:581
 msgid ""
 "Cannot create an inline Table of Contents as this book has no existing Table"
 " of Contents. You must first create a Table of Contents using the Edit Table"
 " of Contents tool."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:587
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:593
 #, python-format
 msgid "Before: %s"
 msgstr "이전: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:601
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:628
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:607
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:634
 msgid "You must first open a book in order to transform styles."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:612
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:618
 msgid "Before style transformation"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:622
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:628
 msgid "No changes"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:623
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:629
 msgid "No styles were changed."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:632
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:638
 msgid "Before: Get external resources"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:651
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:657
 msgid "Embed all fonts"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:655
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:661
 msgid "Subset all fonts"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:663
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:669
 #, python-format
 msgid ""
 "The %s format does not support file and folder names internally, therefore "
 "arranging files into folders is not allowed."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:672
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:678
 msgid "The files in this book are already arranged into folders"
 msgstr "이 책안의 파일들은 이미 폴더 별로 정리되어 있습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:673
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:679
 msgid "Nothing to do"
 msgstr "할 일이 없음"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:674
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:680
 msgid "Show this message &again"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:676
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:682
 msgid "Before: Arrange into folders"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:678
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:703
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:684
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:709
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:715
 msgid "Renaming and updating links..."
 msgstr "이름 변경 및 링크 업데이트 중..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:686
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:692
 #, python-brace-format
 msgid ""
 "You are changing the file type of {0}<b>{1}</b> to {2}<b>{3}</b>. Doing so "
 "can cause problems, are you sure?"
 msgstr "{0}<b>{1}</b>의 파일 유형을{2}<b>{3}</b>(으)로 바꾸려 하고 있습니다. 이 경우 문제가 발생할 수도 있습니다. 확실합니까?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:693
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:699
 #, python-brace-format
 msgid ""
 "The name you have chosen {0} contains special characters, internally it will"
@@ -27070,186 +27098,186 @@ msgid ""
 "for  different e-book viewers. Are you sure you want to proceed?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:700
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:706
 #, python-format
 msgid "Before: Rename %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:707
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:713
 msgid "Before: Bulk rename"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:714
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:720
 msgid "Failed to rename files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:715
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:721
 msgid "Failed to rename files, click Show details for more information."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:748
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:754
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/undo.py:206
 msgid "&Revert to"
 msgstr "다음으로 돌아가기(&R) -"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:768
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:774
 msgid "&Revert changes"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:811
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:817
 msgid "Show this popup again"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:819
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:825
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/download.py:228
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/polish.py:95
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1462
 msgid "See what &changed"
 msgstr "변경 사항 보기(&C)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:829
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:835
 #, python-format
 msgid "%s books"
 msgstr "%s권"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:835
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:841
 msgid "Current book"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:835
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:841
 msgid "Other book"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:874
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:880
 msgid "Before: Fix HTML"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:878
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:884
 msgid "All HTML files fixed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:878
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:884
 msgid "Fixing done"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:886
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:892
 msgid "Before: Beautify files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:891
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:897
 msgid "All files beautified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:891
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:897
 msgid "Beautified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:910
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:916
 msgid "Inserting images is only supported for HTML and CSS files."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:941
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:947
 msgid "Semantics are not supported for the AZW3 format."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:944
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:950
 msgid "Before: Set Semantics"
 msgstr "이전: 의미 요소(Semantics) 설정"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:957
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:963
 msgid "Before: Filter style information"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:966
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:972
 msgid "No matching style rules were found"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1084
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1090
 #, python-format
 msgid "No file with the name %s was found in the book"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1097
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1103
 msgid ""
 "Choose a name for the checkpoint.\n"
 "You can later restore the book to this checkpoint via the\n"
 "\"Revert to...\" entries in the Edit menu."
 msgstr "체크포인트의 이름을 선택합니다.\n사용자는 나중에 편집 메뉴의 \"다음으로 돌아가기\" 항목을\n사용하여 이 체크포인트의 책 상태로 되돌아갈 수 있습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1139
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1145
 msgid "Path does not exist"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1140
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1146
 #, python-format
 msgid ""
 "The file you are editing (%s) no longer exists. You have to choose a new "
 "save location."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1163
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1169
 msgid "Cannot save a copy"
 msgstr "복사본을 저장할 수 없음"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1164
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1170
 msgid "Saving a copy of a folder based book is not supported"
 msgstr "폴더 기반 책의 복사본을 저장하는 기능은 지원되지 않습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1167
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1173
 msgid "Choose path"
 msgstr "경로 선택"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1169
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1175
 #, python-format
 msgid "Book (%s)"
 msgstr "책 (%s)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1185
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1191
 msgid "Saving copy, please wait..."
 msgstr "저장 중, 기다려주십시오..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1189
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1195
 msgid "Failed to save copy"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1190
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1196
 msgid "Failed to save copy, click Show details for more information."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1191
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1197
 #, python-format
 msgid "Copy saved to %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1192
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1198
 msgid "Copy saved"
 msgstr "복사본 저장 성공"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1200
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1206
 msgid "Could not save"
 msgstr "저장 실패"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1201
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1207
 msgid ""
 "Saving of the book failed. Click \"Show details\" for more information. You "
 "can try to save a copy to a different location, via File->Save a copy"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1209
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1215
 msgid "Enter line number"
 msgstr "행 번호 입력"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1219
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1238
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1225
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1244
 #, python-format
 msgid "Before: Split %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1256
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1262
 msgid "Does not exist"
 msgstr "존재하지 않습니다"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1257
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1263
 #, python-format
 msgid ""
 "The file %s does not exist. If you were trying to click an item in the Table"
@@ -27257,119 +27285,119 @@ msgid ""
 "\"Refresh\"."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1263
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1562
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1269
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1568
 msgid "Unsupported file format"
 msgstr "지원되지 않는 파일 형식"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1264
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1563
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1270
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1569
 #, python-format
 msgid "Editing files of type %s is not supported"
 msgstr "%s 형식 파일에 대한 편집 기능이 지원되지 않습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1271
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1277
 #, python-format
 msgid "The anchor %s was not found in this file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1285
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1291
 msgid "File deleted"
 msgstr "삭제된 파일"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1286
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1292
 msgid ""
 "The file {} has already been deleted, re-run Check Book to update the "
 "results."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1308
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1314
 msgid "Before: Spell Check"
 msgstr "이전: 철자 검사"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1313
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1319
 msgid "Before: Auto-fix errors"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1326
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1332
 #, python-format
 msgid "Before: Merge files into %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1338
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1344
 msgid "Before: Link stylesheets"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1397
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1403
 #, python-format
 msgid "Before: Replace %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1407
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1413
 msgid "You must first open a book in order to see the report."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1422
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1428
 msgid "You must first open a book in order to check links."
 msgstr "링크를 검사하려면 먼저 책을 열어야 합니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1427
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1433
 msgid "You must first open a book in order to compress images."
 msgstr "이미지를 압축하려면 우선 책을 열어야 합니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1433
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1439
 msgid "Before: compress images"
 msgstr "이전: 이미지 압축"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1441
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1447
 msgid "Unexpected error"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1442
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1448
 msgid "Failed to compress images, click \"Show details\" for more information"
 msgstr "이미지 압축에 실패했습니다. 자세한 내용은 \"상세정보 보기\"를 누르세요."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1538
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1544
 msgid "Cannot decode"
 msgstr "디코드(Decode) 불가"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1539
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1545
 #, python-format
 msgid "Cannot edit %s as it appears to be in an unknown character encoding"
 msgstr "%s이(가) 알 수 없는 문자 인코딩으로 되어 있어 편집할 수 없습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1570
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1576
 msgid "No book is currently open. You must first open a book to edit."
 msgstr "현재 열려있는 책이 없습니다. 먼저 편집할 책을 열어야 합니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1691
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1697
 msgid ""
 "The current book is being saved in the background. Quitting now will "
 "<b>abort the save process</b>! Finish saving first?"
 msgstr "백그라운드 작업으로 현재 책이 저장되고 있는 중입니다. 지금 종료를 하게되면 <b>이 저장 작업이 중단됩니다</b>! 저장을 먼저 완료하시겠습니까?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1693
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1699
 msgid "&Quit immediately"
 msgstr "즉시 종료(&Q)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1693
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1699
 msgid "Finish &saving first"
 msgstr "저장 먼저 완료(&S)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1714
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1720
 msgid ""
 "There are unsaved changes, if you quit without saving, you will lose them."
 msgstr "저장되지 않은 변경사항이 있습니다. 저장하지 않은 채 종료하게 되면, 변경사항들을 잃게 됩니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1726
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1732
 msgid "&Save and Quit"
 msgstr "저장 후 종료(&S)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1729
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1735
 msgid "&Quit without saving"
 msgstr "저장하지 않고 종료(&Q)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1743
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1749
 msgid "Saving, please wait..."
 msgstr "저장하는 중, 잠시 기다리세요..."
 
@@ -30220,100 +30248,111 @@ msgstr ""
 msgid "Change this to the relative path to: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:41
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:46
 msgid "Font file added"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:42
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:47
 msgid ""
 "The font file <b>{}</b> has been added. The text for the CSS @font-face rule"
 " for this file has been copied to the clipboard. You should paste it into "
 "whichever CSS file you want to add this font to."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:49
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:59
+msgid "Font files added"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:60
+msgid ""
+"The specified font files have been added. The text for the CSS @font-face "
+"rules for these files has been copied to the clipboard. You should paste it "
+"into whichever CSS file you want to add these fonts to."
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:67
 #, python-format
 msgid "Font faces for %s"
 msgstr "%s에 대한 글씨체(Font face)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:93
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:111
 msgid "Embedded"
 msgstr "내장됨"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:93
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:111
 msgid "Font family"
 msgstr "글꼴 패밀리"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:161
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:179
 msgid "Change font"
 msgstr "글꼴 변경"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:169
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:187
 #, python-format
 msgid "Change the font %s to:"
 msgid_plural "Change the fonts %s to:"
 msgstr[0] "%s 글꼴을 다음으로 변경:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:174
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:192
 msgid "&New font:"
 msgstr "새 글꼴(&N):"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:198
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:216
 #, python-format
 msgid "The font <i>%s</i> <b>exists</b> on your computer"
 msgstr "<i>%s</i> 글꼴이 <b>존재합니다</b>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:199
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:217
 #, python-format
 msgid "The font <i>%s</i> <b>does not exist</b> on your computer"
 msgstr "<i>%s</i> 글꼴이 <b>존재하지 않습니다</b>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:212
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:230
 msgid "Manage Fonts"
 msgstr "글꼴 관리"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:224
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:242
 msgid "&Install fonts"
 msgstr "글꼴 설치(&I)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:226
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:244
 msgid ""
 "Install fonts from .ttf/.otf files to make them available for embedding"
 msgstr "글꼴 내장이 가능하도록 하기 위하여 .ttf/.otf 파일로 부터 글꼴을 설치합니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:246
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:264
 msgid "&Change selected fonts"
 msgstr "선택된 글꼴 변경(&C)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:250
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:268
 msgid "&Remove selected fonts"
 msgstr "선택된 글꼴 제거(&R)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:254
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:272
 msgid "&Embed all fonts"
 msgstr "모든 글꼴 내장(&Embed)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:258
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:276
 msgid "&Subset all fonts"
 msgstr "모든 글꼴에서 사용된 부분만 추출(&Subset)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:263
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:281
 msgid "Rescan the book for fonts in case you have made changes"
 msgstr "변경 사항이 생긴 경우 책에서 글꼴을 다시 스캔합니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:269
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:287
 msgid ""
 " All the fonts declared in this book are shown to the left, along with whether they are embedded or not.\n"
 "            You can remove or replace any selected font and also embed any declared fonts that are not already embedded."
 msgstr " 이 책에 선언된 모든 글꼴은 내장(Embedded) 여부에 상관없이 왼쪽에 표시됩니다. 선택된 글꼴을 제거하거나 대체할 수 있으며, 아직 내장되지 않은 글꼴을 내장시킬 수도 있습니다."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:271
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:289
 msgid ""
 " Double click any font family to see if the font is available for embedding "
 "on your computer. "
 msgstr "사용자의 컴퓨터에서 글꼴이 내장 가능한지 확인하려면 해당 글꼴 패밀리를 더블 클릭 하세요."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:283
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:301
 #, python-format
 msgid ""
 "The font <b>%s</b> was not found on your computer. If you have the font "
@@ -30321,11 +30360,11 @@ msgid ""
 "left corner."
 msgstr "글꼴 <b>%s</b>이(가) 사용자의 컴퓨터에서 발견되지 않았습니다. 글꼴 파일을 가지고 있다면 왼쪽 하단 모서리의 \"글꼴 설치\" 버튼을 사용하여 설치하십시오."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:309
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:327
 msgid "No fonts selected"
 msgstr "선택된 글꼴 없음"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:310
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:328
 msgid "No fonts selected, you must first select some fonts in the left panel"
 msgstr "선택된 글꼴 없음, 먼저 왼쪽 패널에서 글꼴을 선택해야 함"
 
@@ -33069,32 +33108,32 @@ msgstr "레시피 사용 안함"
 msgid "<b>Failed</b>"
 msgstr "<b>실패</b>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:947
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:948
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "활동 중인 작업이 있습니다. 종료하는게 확실합니까?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:950
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:951
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr "가 기기와 통신 중입니다!<br>\n지금 종료하면 기기에 손상을 가져올 수도 있습니다.<br>\n종료하기를 원하십니까?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:958
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:959
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:959
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:960
 msgid "Library updates waiting"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:964
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:965
 msgid ""
 "Some deleted books are still being moved to the Recycle Bin, if you quit "
 "now, they will be left behind. Are you sure you want to quit?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:980
+#: /home/kovid/work/calibre/src/calibre/gui2/ui.py:981
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr ""
 

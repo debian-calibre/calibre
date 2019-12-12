@@ -16,12 +16,12 @@ from modals import create_modal_container
 from qt import from_python, to_python
 from read_book.db import new_book
 from read_book.footnotes import main as footnotes_main
-from read_book.globals import runtime, ui_operations, set_system_colors
+from read_book.globals import runtime, set_system_colors, ui_operations
 from read_book.iframe import main as iframe_main
 from read_book.shortcuts import add_standalone_viewer_shortcuts
 from read_book.view import View
 from session import local_storage, session_defaults
-from utils import encode_query_with_path, parse_url_params
+from utils import debounce, encode_query_with_path, parse_url_params
 from viewer.constants import FAKE_HOST, FAKE_PROTOCOL, READER_BACKGROUND_URL
 
 runtime.is_standalone_viewer = True
@@ -138,7 +138,7 @@ def show_error(title, msg, details):
     to_python.show_error(title, msg, details)
 
 
-def manifest_received(key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook, end_type, xhr, ev):
+def manifest_received(key, initial_position, pathtoebook, end_type, xhr, ev):
     nonlocal book
     end_type = workaround_qt_bug(xhr, end_type)
     if end_type is 'load':
@@ -151,7 +151,7 @@ def manifest_received(key, initial_cfi, initial_toc_node, initial_bookpos, patht
         book.is_complete = True
         v'delete book.manifest["metadata"]'
         v'delete book.manifest["last_read_positions"]'
-        view.display_book(book, initial_cfi, initial_toc_node, initial_bookpos)
+        view.display_book(book, initial_position)
     else:
         show_error(_('Could not open book'), _(
             'Failed to load book manifest, click "Show details" for more info'),
@@ -224,6 +224,7 @@ def create_view(prefs, local_storage, field_metadata, ui_data):
     if view is None:
         create_session_data(prefs, local_storage)
         view = View(document.getElementById('view'))
+        window.addEventListener('resize', debounce(view.on_resize.bind(self), 250))
         if ui_data.show_home_page_on_ready:
             view.overlay.open_book(False)
 
@@ -241,8 +242,8 @@ def show_home_page():
 
 
 @from_python
-def start_book_load(key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook):
-    xhr = ajax('manifest', manifest_received.bind(None, key, initial_cfi, initial_toc_node, initial_bookpos, pathtoebook), ok_code=0)
+def start_book_load(key, initial_position, pathtoebook):
+    xhr = ajax('manifest', manifest_received.bind(None, key, initial_position, pathtoebook), ok_code=0)
     xhr.responseType = 'json'
     xhr.send()
 
@@ -327,6 +328,8 @@ if window is window.top:
         return view.goto_frac(frac)
     ui_operations.goto_book_position = def(bpos):
         return view.goto_book_position(bpos)
+    ui_operations.goto_reference = def(ref):
+        return view.goto_reference(ref)
     ui_operations.toggle_toc = def():
         to_python.toggle_toc()
     ui_operations.toggle_bookmarks = def():
@@ -369,6 +372,8 @@ if window is window.top:
         to_python.quit()
     ui_operations.overlay_visibility_changed = def(visible):
         to_python.overlay_visibility_changed(visible)
+    ui_operations.reference_mode_changed = def(enabled):
+        to_python.reference_mode_changed(enabled)
     ui_operations.show_loading_message = def(msg):
         to_python.show_loading_message(msg)
     ui_operations.export_shortcut_map = def(smap):

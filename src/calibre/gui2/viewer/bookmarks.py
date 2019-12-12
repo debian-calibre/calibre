@@ -35,7 +35,7 @@ class BookmarksList(QListWidget):
         self.viewport().setAcceptDrops(True)
         self.setDropIndicatorShown(True)
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
-        self.ac_edit = ac = QAction(QIcon(I('edit_input.png')), _('Edit this bookmark'), self)
+        self.ac_edit = ac = QAction(QIcon(I('edit_input.png')), _('Rename this bookmark'), self)
         self.addAction(ac)
         self.ac_delete = ac = QAction(QIcon(I('trash.png')), _('Remove this bookmark'), self)
         self.addAction(ac)
@@ -276,7 +276,7 @@ class BookmarkManager(QWidget):
                 break
 
         title, ok = QInputDialog.getText(self, _('Add bookmark'),
-                _('Enter title for bookmark:'), text=default_title)
+                _('Enter title for bookmark:'), text=pos_data.get('selected_text') or default_title)
         title = unicode_type(title).strip()
         if not ok or not title:
             return
