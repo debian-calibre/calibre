@@ -252,6 +252,7 @@ class ViewerBridge(Bridge):
     copy_image = from_js(object)
     change_background_image = from_js(object)
     overlay_visibility_changed = from_js(object)
+    reference_mode_changed = from_js(object)
     show_loading_message = from_js(object)
     show_error = from_js(object, object, object)
     export_shortcut_map = from_js(object)
@@ -418,6 +419,7 @@ class WebView(RestartingWebEngineView):
     view_image = pyqtSignal(object)
     copy_image = pyqtSignal(object)
     overlay_visibility_changed = pyqtSignal(object)
+    reference_mode_changed = pyqtSignal(object)
     show_loading_message = pyqtSignal(object)
     show_error = pyqtSignal(object, object, object)
     print_book = pyqtSignal()
@@ -456,6 +458,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.view_image.connect(self.view_image)
         self.bridge.copy_image.connect(self.copy_image)
         self.bridge.overlay_visibility_changed.connect(self.overlay_visibility_changed)
+        self.bridge.reference_mode_changed.connect(self.reference_mode_changed)
         self.bridge.show_loading_message.connect(self.show_loading_message)
         self.bridge.show_error.connect(self.show_error)
         self.bridge.print_book.connect(self.print_book)
@@ -541,9 +544,9 @@ class WebView(RestartingWebEngineView):
         for func, args in iteritems(self.pending_bridge_ready_actions):
             getattr(self.bridge, func)(*args)
 
-    def start_book_load(self, initial_cfi=None, initial_toc_node=None, initial_bookpos=None):
+    def start_book_load(self, initial_position=None):
         key = (set_book_path.path,)
-        self.execute_when_ready('start_book_load', key, initial_cfi, initial_toc_node, initial_bookpos, set_book_path.pathtoebook)
+        self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook)
 
     def execute_when_ready(self, action, *args):
         if self.bridge.ready:

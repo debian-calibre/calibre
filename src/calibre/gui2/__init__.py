@@ -1008,6 +1008,10 @@ class Application(QApplication):
 
         load_builtin_fonts()
 
+    def set_dark_mode_palette(self):
+        from calibre.gui2.palette import dark_palette
+        self.set_palette(dark_palette())
+
     def setup_styles(self, force_calibre_style):
         if iswindows or isosx:
             using_calibre_style = gprefs['ui_style'] != 'system'
@@ -1015,6 +1019,17 @@ class Application(QApplication):
             using_calibre_style = os.environ.get('CALIBRE_USE_SYSTEM_THEME', '0') == '0'
         if force_calibre_style:
             using_calibre_style = True
+        if using_calibre_style:
+            use_dark_palette = False
+            if 'CALIBRE_USE_DARK_PALETTE' in os.environ:
+                if not isosx:
+                    use_dark_palette = os.environ['CALIBRE_USE_DARK_PALETTE'] != '0'
+            else:
+                if iswindows:
+                    use_dark_palette = windows_is_system_dark_mode_enabled()
+            if use_dark_palette:
+                self.set_dark_mode_palette()
+
         self.using_calibre_style = using_calibre_style
         if DEBUG:
             prints('Using calibre Qt style:', self.using_calibre_style)
@@ -1024,20 +1039,20 @@ class Application(QApplication):
         self.on_palette_change()
 
     def fix_dark_theme_colors(self):
-        self.is_dark_theme = is_dark_theme()
-        if self.is_dark_theme:
-            pal = self.palette()
-            # dark blue is unreadable when using dark backgrounds
-            pal.setColor(pal.Link, QColor('#6CB4EE'))
-            # alternating row colors look awful in most dark mode themes
-            pal.setColor(pal.AlternateBase, pal.color(pal.Base))
-            if isosx and self.using_calibre_style:
-                # Workaround for https://bugreports.qt.io/browse/QTBUG-75321
-                # Buttontext is set to black for some reason
-                pal.setColor(pal.ButtonText, pal.color(pal.WindowText))
-            self.set_palette(pal)
+        from calibre.gui2.palette import dark_link_color
+        pal = self.palette()
+        # dark blue is unreadable when using dark backgrounds
+        pal.setColor(pal.Link, dark_link_color)
+        # alternating row colors look awful in most dark mode themes
+        pal.setColor(pal.AlternateBase, pal.color(pal.Base))
+        if self.using_calibre_style:
+            # Workaround for https://bugreports.qt.io/browse/QTBUG-75321
+            # Buttontext is set to black for some reason
+            pal.setColor(pal.ButtonText, pal.color(pal.WindowText))
+        self.set_palette(pal)
 
     def set_palette(self, pal):
+        self.is_dark_mode_palette = False
         self.ignore_palette_changes = True
         self.setPalette(pal)
         # Needed otherwise Qt does not emit the paletteChanged signal when
@@ -1048,7 +1063,10 @@ class Application(QApplication):
     def on_palette_change(self):
         if self.ignore_palette_changes:
             return
-        self.fix_dark_theme_colors()
+        self.is_dark_theme = is_dark_theme()
+        self.setProperty('is_dark_theme', self.is_dark_theme)
+        if isosx:
+            self.fix_dark_theme_colors()
         self.palette_changed.emit()
 
     def stylesheet_for_line_edit(self, is_error=False):
@@ -1075,6 +1093,8 @@ class Application(QApplication):
             'MessageBoxQuestion': 'dialog_question.png',
             'BrowserReload': 'view-refresh.png',
             'LineEditClearButton': 'clear_left.png',
+            'ToolBarHorizontalExtensionButton': 'v-ellipsis.png',
+            'ToolBarVerticalExtensionButton': 'h-ellipsis.png',
         }):
             if v not in pcache:
                 p = I(v)
@@ -1118,7 +1138,7 @@ class Application(QApplication):
 
     @current_custom_colors.setter
     def current_custom_colors(self, colors):
-        from PyQt5.Qt import QColorDialog, QColor
+        from PyQt5.Qt import QColorDialog
         num = min(len(colors), QColorDialog.customCount())
         for i in range(num):
             QColorDialog.setCustomColor(i, QColor(*colors[i]))
@@ -1439,3 +1459,18 @@ def set_app_uid(val):
 def add_to_recent_docs(path):
     app = QApplication.instance()
     plugins['winutil'][0].add_to_recent_docs(unicode_type(path), app.windows_app_uid)
+
+
+def windows_is_system_dark_mode_enabled():
+    s = QSettings(r"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", QSettings.NativeFormat)
+    if s.status() == QSettings.NoError:
+        return s.value("AppsUseLightTheme") == 0
+    return False
+
+
+def make_view_use_window_background(view):
+    p = view.palette()
+    p.setColor(p.Base, p.color(p.Window))
+    p.setColor(p.AlternateBase, p.color(p.Window))
+    view.setPalette(p)
+    return view

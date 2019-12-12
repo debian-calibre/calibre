@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-POLISH" "1" "11月 29, 2019" "4.5.0" "calibre"
+.TH "EBOOK-POLISH" "1" "12月 13, 2019" "4.6.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .
@@ -52,6 +52,11 @@ ebook\-polish [options] input_file [output_file]
 .SH [オプション]
 .INDENT 0.0
 .TP
+.B \-\-add\-soft\-hyphens, \-H
+Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-compress\-images, \-i
 書籍中の画像を可逆圧縮し、画像の品質を損なうことなく ファイルサイズを減らします。
 .UNINDENT
@@ -84,6 +89,11 @@ OPFファイルへのパス。本の書誌情報はOPFファイルの内容で�
 .TP
 .B \-\-remove\-jacket
 以前挿入した「本のジャケット」ページを削除します。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-soft\-hyphens
+Remove soft hyphens from all text in the book.
 .UNINDENT
 .INDENT 0.0
 .TP

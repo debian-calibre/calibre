@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de novembre 29, 2019" "4.5.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de desembre 13, 2019" "4.6.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -196,12 +196,12 @@ Transcriu els caràcters unicode a una representació ASCII. Utilitzeu\-ho amb c
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-La mida base de la lletra en pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+La mida de lletra base en pts. Totes les mides de lletra al llibre produït canviaran en base a aquesta mida. Escollir una mida més gran podeu fer les lletres més gran a la sortida i viceversa. Per defecte, quan el valor es zero, la mida de lletra base es tria en base al perfil de sortida triat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Canvia la justificació del text. A value of \fB"\fPleft\fB"\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB"\fPjustify\fB"\fP converts all unjustified text to justified. A value of \fB"\fPoriginal\fB"\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
+Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB"\fPesquerra\fB"\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB"\fPalineat\fB"\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB"\fPoriginal\fB"\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida son compatibles amb l\fB\(aq\fPalineació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,12 +236,12 @@ Una llista separada per comes de propietats CSS que se suprimiran de totes les r
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapping from CSS font names to font sizes in pts. Un paràmetre d\fB\(aq\fPexemple és 12,12,14,16,18,20,22,24. These are the mappings for the sizes xx\-small to xx\-large, with the final size being for huge fonts. The font rescaling algorithm uses these sizes to intelligently rescale fonts. The default is to use a mapping based on the output profile you chose.
+Mapeig a partir de noms de lletra de CSS a mides de lletra en pts. Un paràmetre d\fB\(aq\fPexemple és 12,12,14,16,18,20,22,24. Aquests son els mapeigs per a les mides xx\-petita a xx\-gran, amb la mida final sent per lletres enormes. L\fB\(aq\fPalgoritme de canvi de lletra utilitza aquestes mides per canviar lletres de manera intel·ligent. Per defecte s\fB\(aq\fPutilitza un mapeig basat en el perfil de sortida triat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insereix una línia en blanc entre paràgrafs. Will not work if the source file does not use paragraphs (<p> or <div> tags).
+Insereix una línia en blanc entre paràgrafs. No funcionarà si el fitxer d\fB\(aq\fPorigen no utilitza paràgrafs (etiquetes <p> o <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ L\fB\(aq\fPalçada mínima de la línia, com a un percentatge de la mida de la l
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Elimina l\fB\(aq\fPespaiat entre paràgrafs. Also sets an indent on paragraphs of 1.5em. Spacing removal will not work if the source file does not use paragraphs (<p> or <div> tags).
+Elimina l\fB\(aq\fPespaiat entre paràgrafs. També estableix un sagnat als paràgrafs d\fB\(aq\fP1.5 em. L\fB\(aq\fPeliminació de l\fB\(aq\fPespaiat no funcionarà si el fitxer d\fB\(aq\fPorigen no utilitza paràgrafs (etiquetes <p> o <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -320,7 +320,11 @@ Converteix les cometes, els guions i els punts suspensius als seus equivalents s
 .UNINDENT
 .SH PROCESSAMENT HEURÍSTIC
 .sp
-Modifica el text i l\(aqestructura del document amb els patrons habituals. Disabled by default. Use \-\-enable\-heuristics to enable.  Individual actions can be disabled with the \-\-disable\-* options.
+Modifica el text i l\(aqestructura del document amb els patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per habilitar\-ho.  Les accions individuals es poden inhabilitar amb les opcions \-\-disable\-
+.nf
+*
+.fi
+\&.
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
@@ -369,7 +373,7 @@ Habilita el processament heurístic. S\fB\(aq\fPha d\fB\(aq\fPactivar aquesta op
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Scale used to determine the length at which a line should be unwrapped. Els valors vàlids són un decimal entre 0 i 1. The default is 0.4, just below the median line length.  If only a few lines in the document require unwrapping this value should be reduced
+Escala utilitzada per determinar la longitud en què una línia s\fB\(aq\fPhauria d\fB\(aq\fPajustar. Els valors vàlids són un decimal entre 0 i 1. Per defecte és 0.4, just per sota de la longitud mitjana de la línia. Si només algunes línies del document necessiten ajustar\-se aquest valor s\fB\(aq\fPhauria de reduir
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +424,7 @@ Controla l\(aqautodetecció de l\(aqestructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Una expressió XPath per detectar els títols dels capítols. The default is to consider <h1> or <h2> tags that contain the words \fB"\fPchapter\fB"\fP, \fB"\fPbook\fB"\fP, \fB"\fPsection\fB"\fP, \fB"\fPprologue\fB"\fP, \fB"\fPepilogue\fB"\fP or \fB"\fPpart\fB"\fP as chapter titles as well as any tags that have class=\fB"\fPchapter\fB"\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB"\fP/\fB"\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Una expressió XPath per detectar els títols dels capítols. Per defecte es considera <h1> o <h2> etiquetes que contenen les paraules  \fB"\fPcapítol\fB"\fP, \fB"\fPllibre\fB"\fP, \fB"\fPsecció\fB"\fP, \fB"\fPpròleg\fB"\fP, \fB"\fPepíleg\fB"\fP o \fB"\fPpart\fB"\fP així com títols de capítol i qualsevol etiqueta que tingui class=\fB"\fPcapítol\fB"\fP\&. L\fB\(aq\fPexpressió utilitzada s\fB\(aq\fPha d\fB\(aq\fPequiparar a una llista d\fB\(aq\fPelements. Per inhabilitar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió \fB"\fP/\fB"\fP\&. Vegeu el tutorial XPath al manual d\fB\(aq\fPusuari de calibre per més ajuda sobre aquesta funció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -440,7 +444,7 @@ Insereix les metadades del llibre a l\fB\(aq\fPinici. Això és útil si el vost
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-Una expressió XPath. Page breaks are inserted before the specified elements. Per inhabilitar utilitzeu l\fB\(aq\fPexpressió: /
+Una expressió XPath. Els salts de pàgina s\fB\(aq\fPinsereixen abans dels elements especificats. Per inhabilitar utilitzeu l\fB\(aq\fPexpressió: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -450,7 +454,7 @@ Estableix la portada detectada al fitxer d\fB\(aq\fPorigen de forma preferent a 
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Suprimeix la primera imatge del llibre electrònic d\fB\(aq\fPentrada. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Suprimeix la primera imatge del llibre electrònic d\fB\(aq\fPentrada. Útil si el document d\fB\(aq\fPentrada té una imatge de portada que no s\fB\(aq\fPidentifica com a portada. En aquest cas, si establiu una portada a calibre, el document de sortida tindrà dues imatges de portada si no especifiqueu aquesta opció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -459,7 +463,7 @@ Una expressió XPath per detectar el lloc del document on s\fB\(aq\fPha de comen
 .UNINDENT
 .SH TAULA DEL CONTINGUT
 .sp
-Controla la generació automàtica d\(aquna taula de continguts. By default, if the source file has a Table of Contents, it will be used in preference to the automatically generated one.
+Controla la generació automàtica d\(aquna taula de continguts. Per defecte, si el fitxer d\(aqorigen té una taula de continguts, s\(aqutilitzarà aquesta abans que la generada automàticament.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -516,7 +520,7 @@ La cadena que s\fB\(aq\fPutilitzarà en l\fB\(aq\fPordenació per autor.
 .INDENT 0.0
 .TP
 .B \-\-authors
-Estableix els autors. Multiple authors should be separated by ampersands.
+Estableix els autors. Diversos autors haurien d\fB\(aq\fPestar separats per \fB"\fP&\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -604,7 +608,7 @@ Desa la sortida de les diferents etapes de la canonada de conversió al director
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Nivell de verbositat. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Nivell de detall. Especifiqueu diverses vegades per un detall més gran. Si s\fB\(aq\fPespecifica dues vegades el resultat serà un detall complet; una vegada, detall mitjà, i cap vegada, el mínim de detall.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
