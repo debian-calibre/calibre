@@ -1,3 +1,39 @@
+calibre (4.6.0+dfsg-1) unstable; urgency=medium
+
+  [ YOKOTA Hiroshi ]
+  * Hardening Qt code
+  * Use automatic variables from dpkg-buildflags(1)
+  * Use environment values for hardening options.
+    Debian package builder already sets hardening options.
+  * Apply CPPFLAGS to more hardening
+  * Move patches to quilt
+  * Maximize hardening
+  * Update maintainer list.
+    Add myself to maintainer.
+    Thanks to Norbert and his approval.
+  * Refactor downloader code
+  * Use "shell" function
+  * Use newer "tar" option
+  * Use XZ_OPT to specify compression option
+  * Refactor
+  * Factor out to shell script
+  * Cosmetic fix
+  * Keep downloaded file while processing.
+    Source archive is too big to discard.
+    Keep it while processing.
+  * Don't use environment variable
+    gzip(1) deprecates this style environment variables.
+  * Add achiever options to reproducible build
+  * Update standards version
+  * Remove outdated patch
+
+  [ Norbert Preining ]
+  * New upstream version 4.6.0+dfsg
+  * Add libhyphen-dev to B-D
+  * Adjust install files to renamed lzma library
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 13 Dec 2019 17:26:59 +0900
+
 calibre (4.5.0+dfsg-3+exp1) experimental; urgency=medium
 
   * Calibre 4.5 / Python 3 for Debian experimental

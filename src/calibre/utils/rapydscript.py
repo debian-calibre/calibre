@@ -12,7 +12,9 @@ import sys
 from io import BytesIO
 
 from calibre import force_unicode
-from calibre.constants import FAKE_HOST, FAKE_PROTOCOL, __appname__, __version__
+from calibre.constants import (
+    FAKE_HOST, FAKE_PROTOCOL, __appname__, __version__, dark_link_color
+)
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.filenames import atomic_rename
 from polyglot.builtins import (
@@ -30,7 +32,7 @@ def abspath(x):
 
 
 def update_rapydscript():
-    from lzma.xz import compress
+    from calibre_lzma.xz import compress
     d = os.path.dirname
     base = d(d(d(d(d(abspath(__file__))))))
     base = os.path.join(base, 'rapydscript')
@@ -51,7 +53,7 @@ def to_dict(obj):
 
 
 def compiler():
-    from lzma.xz import decompress
+    from calibre_lzma.xz import decompress
     ans = getattr(compiler, 'ans', None)
     if ans is not None:
         return ans
@@ -354,7 +356,8 @@ def compile_viewer():
         js = compile_fast(f.read(), fname).replace(
             '__SPECIAL_TITLE__', special_title, 1).replace(
             '__FAKE_PROTOCOL__', FAKE_PROTOCOL, 1).replace(
-            '__FAKE_HOST__', FAKE_HOST, 1)
+            '__FAKE_HOST__', FAKE_HOST, 1).replace(
+            '__DARK_LINK_COLOR__', dark_link_color, 1)
     base = os.path.join(base, 'resources')
     atomic_write(base, 'viewer.js', js)
     atomic_write(base, 'viewer.html', html)
@@ -379,7 +382,8 @@ def compile_srv():
         js = compile_fast(f.read(), fname, js_version=5).replace(
             '__RENDER_VERSION__', rv, 1).replace(
             '__MATHJAX_VERSION__', mathjax_version, 1).replace(
-            '__CALIBRE_VERSION__', __version__, 1).encode('utf-8')
+            '__CALIBRE_VERSION__', __version__, 1).replace(
+            '__DARK_LINK_COLOR__', dark_link_color, 1).encode('utf-8')
     with lopen(os.path.join(base, 'index.html'), 'rb') as f:
         html = f.read().replace(b'RESET_STYLES', reset, 1).replace(b'ICONS', icons, 1).replace(b'MAIN_JS', js, 1)
 

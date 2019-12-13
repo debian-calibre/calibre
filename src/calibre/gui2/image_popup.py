@@ -50,6 +50,7 @@ class ImageView(QDialog):
         l.setScaledContents(True)
 
         self.scrollarea = sa = QScrollArea()
+        sa.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         sa.setBackgroundRole(QPalette.Dark)
         sa.setWidget(l)
 
@@ -75,7 +76,7 @@ class ImageView(QDialog):
         h.setContentsMargins(0, 0, 0, 0)
         l.addLayout(h)
         self.fit_image = i = QCheckBox(_('&Fit image'))
-        i.setToolTip(_('Fit the image to the available space'))
+        i.setToolTip(_('Fit image inside the available space'))
         i.setChecked(bool(gprefs.get('image_popup_fit_image')))
         i.stateChanged.connect(self.fit_changed)
         h.addWidget(i), h.addStretch(), h.addWidget(bb)
@@ -123,6 +124,9 @@ class ImageView(QDialog):
         gprefs.set('image_popup_fit_image', fitted)
         if self.fit_image.isChecked():
             self.set_to_viewport_size()
+        else:
+            self.factor = 1
+            self.adjust_image(1)
 
     def adjust_image(self, factor):
         if self.fit_image.isChecked():

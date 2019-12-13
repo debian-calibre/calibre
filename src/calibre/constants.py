@@ -6,7 +6,7 @@ from polyglot.builtins import map, unicode_type, environ_item, hasenv, getenv, a
 import sys, locale, codecs, os, importlib, collections
 
 __appname__   = 'calibre'
-numeric_version = (4, 5, 0)
+numeric_version = (4, 6, 0)
 __version__   = '.'.join(map(unicode_type, numeric_version))
 git_version   = None
 __author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
@@ -55,6 +55,7 @@ win32event = importlib.import_module('win32event') if iswindows else None
 winerror   = importlib.import_module('winerror') if iswindows else None
 win32api   = importlib.import_module('win32api') if iswindows else None
 fcntl      = None if iswindows else importlib.import_module('fcntl')
+dark_link_color = '#6cb4ee'
 
 _osx_ver = None
 
@@ -174,7 +175,8 @@ class Plugins(collections.Mapping):
                 'speedup',
                 'html_as_json',
                 'unicode_names',
-                'html',
+                'html_syntax_highlighter',
+                'hyphen',
                 'freetype',
                 'imageops',
                 'hunspell',
