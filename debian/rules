@@ -34,6 +34,7 @@ override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
+	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
 	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
 	# not needed
