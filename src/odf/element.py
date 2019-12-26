@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2007-2010 Søren Roug, European Environment Agency
 #
@@ -22,7 +22,7 @@
 # Note: This script has copied a lot of text from xml.dom.minidom.
 # Whatever license applies to that file also applies to this file.
 #
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 import xml.dom
 from xml.dom.minicompat import defproperty, EmptyNodeList
 from .namespaces import nsdict

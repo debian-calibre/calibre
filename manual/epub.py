@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -21,8 +21,13 @@ from polyglot.builtins import iteritems
 class EPUBHelpBuilder(EpubBuilder):
     name = 'myepub'
 
-    def build_epub(self, outdir, outname):
-        EpubBuilder.build_epub(self, outdir, outname)
+    def build_epub(self, outdir=None, outname=None):
+        if outdir:
+            EpubBuilder.build_epub(self, outdir, outname)
+        else:
+            EpubBuilder.build_epub(self)
+            outdir = self.outdir
+            outname = self.config.epub_basename + '.epub'
         container = get_container(os.path.join(outdir, outname))
         self.fix_epub(container)
         container.commit()

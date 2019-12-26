@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import socket, os, struct, errno, numbers
 from collections import deque, namedtuple
@@ -195,7 +195,12 @@ class WebSocketTest(BaseTest):
                 expected_messages.append(ex)
         if send_close:
             client.write_close(close_code, close_reason)
-        messages, control_frames = client.read_messages()
+        try:
+            messages, control_frames = client.read_messages()
+        except ConnectionAbortedError:
+            if expected_messages or expected_controls or send_close:
+                raise
+            return
         self.ae(expected_messages, messages)
         self.assertGreaterEqual(len(control_frames), 1)
         self.ae(expected_controls, control_frames[:-1])
@@ -317,3 +322,8 @@ class WebSocketTest(BaseTest):
                 sz *= 1024
                 t, b = 'a'*sz, b'a'*sz
                 simple_test([t, b], [t, b])
+
+
+def find_tests():
+    import unittest
+    return unittest.defaultTestLoader.loadTestsFromTestCase(WebSocketTest)

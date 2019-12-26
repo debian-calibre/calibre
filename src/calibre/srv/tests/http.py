@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -10,7 +10,6 @@ from io import BytesIO
 from tempfile import NamedTemporaryFile
 
 from calibre import guess_type
-from calibre.constants import ispy3
 from calibre.srv.tests.base import BaseTest, TestServer
 from calibre.srv.utils import eintr_retry_call
 from calibre.utils.monotonic import monotonic
@@ -96,7 +95,7 @@ class TestHTTP(BaseTest):
                 conn.request('GET', '/', headers={'Accept-Language': al})
                 r = conn.getresponse()
                 self.ae(r.status, http_client.OK)
-                q += getattr(get_translator(q)[-1], 'gettext' if ispy3 else 'ugettext')('Unknown')
+                q += get_translator(q)[-1].gettext('Unknown')
                 self.ae(r.read(), q.encode('utf-8'))
 
             test('en', 'en')

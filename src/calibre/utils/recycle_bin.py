@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -60,7 +60,8 @@ if iswindows:
             raise ValueError('Cannot recycle paths that have newlines in them (%r)' % path)
         with rlock:
             start_recycler()
-            eintr_retry_call(print, path.encode('utf-8'), file=recycler.stdin)
+            recycler.stdin.write(path.encode('utf-8'))
+            recycler.stdin.write(b'\n')
             recycler.stdin.flush()
             # Theoretically this could be made non-blocking using a
             # thread+queue, however the original implementation was blocking,

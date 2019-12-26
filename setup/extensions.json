@@ -9,12 +9,6 @@
 		"needs_c++11": true
     },
     {
-        "name": "monotonic",
-        "sources": "calibre/utils/monotonic.c",
-        "linux_libraries": "rt",
-        "needs_py2": true
-    },
-    {
         "name": "hyphen",
         "sources": "calibre/utils/hyphenation/hyphen.c",
 		"libraries": "hyphen",
@@ -33,15 +27,6 @@
         "sources": "calibre/utils/speedup.c",
         "libraries": "m",
         "windows_libraries": ""
-    },
-    {
-        "name": "zlib2",
-        "sources": "calibre/utils/zlib2.c",
-        "inc_dirs": "!zlib_inc_dirs",
-        "lib_dirs": "!zlib_lib_dirs",
-        "libraries": "z",
-        "windows_libraries": "zlib",
-        "needs_py2": true
     },
     {
         "name": "certgen",
@@ -87,19 +72,10 @@
         "inc_dirs": "!sqlite_inc_dirs"
     },
     {
-        "name": "chmlib",
-        "sources": "calibre/utils/chm/swig_chm.c",
-        "libraries": "chm",
-        "windows_libraries": "ChmLib",
-        "inc_dirs": "!chmlib_inc_dirs",
-        "lib_dirs": "!chmlib_lib_dirs",
-        "defines": "SWIG_COBJECT_TYPES SWIG_PYTHON_STRICT_BYTE_CHAR"
-    },
-    {
         "name": "lzx",
         "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
         "inc_dirs": "calibre/utils/lzx",
-        "headers": "calibre/utils/lzx/msstdint.h calibre/utils/lzx/lzc.h calibre/utils/lzx/lzxmodule.h calibre/utils/lzx/system.h calibre/utils/lzx/lzxc.h calibre/utils/lzx/lzxd.h calibre/utils/lzx/mspack.h"
+        "headers": "calibre/utils/lzx/lzc.h calibre/utils/lzx/lzxmodule.h calibre/utils/lzx/system.h calibre/utils/lzx/lzxc.h calibre/utils/lzx/lzxd.h calibre/utils/lzx/mspack.h"
     },
     {
         "name": "freetype",
@@ -158,12 +134,6 @@
         "headers": "calibre/utils/imageops/imageops.h",
         "sip_files": "calibre/utils/imageops/imageops.sip",
         "inc_dirs": "calibre/utils/imageops"
-    },
-    {
-        "name": "lzma_binding",
-        "sources": "calibre_lzma/*.c",
-        "headers": "calibre_lzma/*.h",
-        "defines": "_7ZIP_ST"
     },
     {
         "name": "winutil",

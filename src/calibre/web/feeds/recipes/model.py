@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -86,6 +86,8 @@ class NewsCategory(NewsTreeItem):
             return self.bold_font
         elif role == Qt.ForegroundRole and self.category == _('Scheduled'):
             return (QColor(0, 255, 0))
+        elif role == Qt.UserRole:
+            return '::category::{}'.format(self.sortq[0])
         return None
 
     def flags(self):
@@ -132,7 +134,8 @@ class NewsItem(NewsTreeItem):
                 else:
                     self.icon = self.default_icon
             return self.icon
-        return None
+        if role == Qt.UserRole:
+            return self.urn
 
     def __eq__(self, other):
         return self.urn == other.urn

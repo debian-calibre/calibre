@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -272,9 +272,9 @@ class SearchDialog(QDialog):
         gprefs['advanced search dialog current tab'] = \
             self.tab_widget.currentIndex()
         if self.tab_widget.currentIndex() == 1:
-            fw = self.tab_widget.focusWidget().objectName()
+            fw = self.tab_widget.focusWidget()
             if fw:
-                gprefs.set('advanced_search_simple_tab_focused_field', fw)
+                gprefs.set('advanced_search_simple_tab_focused_field', fw.objectName())
 
     def accept(self):
         self.save_state()

@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -497,6 +497,9 @@ class EditWithComplete(EnComboBox):
         le.no_popup = True
         le.setText(val)
         le.no_popup = False
+
+    def home(self, mark=False):
+        self.lineEdit().home(mark)
 
     def setCursorPosition(self, *args):
         self.lineEdit().setCursorPosition(*args)

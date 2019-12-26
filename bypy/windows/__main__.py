@@ -2,7 +2,6 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import glob
@@ -155,7 +154,8 @@ def freeze(env, ext_dir):
             copybin(f)
 
     copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver.replace('.', '')))
-    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules
+    copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver[0]))
+    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules and dlls
         copybin(x)
     for f in walk(os.path.join(env.python_base, 'Lib')):
         if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
@@ -202,19 +202,20 @@ def freeze(env, ext_dir):
     shutil.copytree(j(comext, 'shell'), j(sp_dir, 'win32com', 'shell'))
     shutil.rmtree(comext)
 
-    for pat in ('PyQt5\\uic\\port_v3', ):
-        x = glob.glob(j(env.lib_dir, 'site-packages', pat))[0]
-        shutil.rmtree(x)
+    # Fix pycryptodome
+    with open(j(sp_dir, 'Crypto', 'Util', '_file_system.py'), 'w') as fspy:
+        fspy.write('''
+import os, sys
+def pycryptodome_filename(dir_comps, filename):
+    base = os.path.join(sys.app_dir, 'app', 'bin')
+    path = os.path.join(base, '.'.join(dir_comps + [filename]))
+    return path
+''')
+
     pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
     for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
         if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
             os.remove(j(pyqt, x))
-    with open(j(pyqt, '__init__.py') , 'r+b') as f:
-        raw = f.read()
-        nraw = raw.replace(b'def find_qt():', b'def find_qt():\n    return # disabled for calibre')
-        if nraw == raw:
-            raise Exception('Failed to patch PyQt to disable dll directory manipulation')
-        f.seek(0), f.truncate(), f.write(nraw)
 
     printf('Adding calibre sources...')
     for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
@@ -454,7 +455,7 @@ def sign_files(env, files):
                 subprocess.check_call(cmd + [timeserver] + list(files))
                 break
             except subprocess.CalledProcessError:
-                print ('Signing failed, retrying with different timestamp server')
+                print('Signing failed, retrying with different timestamp server')
         else:
             raise SystemExit('Signing failed')
 
@@ -556,8 +557,8 @@ def build_launchers(env, debug=False):
             if typ == 'gui':
                 cflags += ['/DGUI_APP=']
 
-            cflags += ['/DMODULE="%s"' % mod, '/DBASENAME="%s"' % bname,
-                       '/DFUNCTION="%s"' % func]
+            cflags += ['/DMODULE=L"%s"' % mod, '/DBASENAME=L"%s"' % bname,
+                       '/DFUNCTION=L"%s"' % func]
             dest = j(env.obj_dir, bname + '.obj')
             printf('Compiling', bname)
             cmd = [CL] + cflags + dflags + ['/Tc' + src, '/Fo' + dest]
@@ -580,6 +581,8 @@ def build_launchers(env, debug=False):
 
 
 def add_to_zipfile(zf, name, base, zf_names):
+    if '__pycache__' in name:
+        return
     abspath = j(base, name)
     name = name.replace(os.sep, '/')
     if name in zf_names:
@@ -620,7 +623,7 @@ def archive_lib_dir(env):
         handled = {'pywin32.pth', 'win32'}
         base = j(sp, 'win32', 'lib')
         for x in os.listdir(base):
-            if os.path.splitext(x)[1] not in ('.exe',):
+            if os.path.splitext(x)[1] not in ('.exe',) and x != '__pycache__':
                 add_to_zipfile(zf, x, base, zf_names)
         base = os.path.dirname(base)
         for x in os.listdir(base):
@@ -630,6 +633,11 @@ def archive_lib_dir(env):
 
         # We dont want the site.py (if any) from site-packages
         handled.add('site.pyo')
+        handled.add('site.pyc')
+        handled.add('site.py')
+        handled.add('sitecustomize.pyo')
+        handled.add('sitecustomize.pyc')
+        handled.add('sitecustomize.py')
 
         # The rest of site-packages
         for x in os.listdir(sp):
