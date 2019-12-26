@@ -20,6 +20,8 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
+
+override_dh_auto_test:
 	xvfb-run $(SETUP) test
 
 override_dh_install:
