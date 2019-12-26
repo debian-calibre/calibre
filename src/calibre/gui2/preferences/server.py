@@ -1,8 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
-
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import json
@@ -33,6 +31,7 @@ from calibre.srv.opts import change_settings, options, server_config
 from calibre.srv.users import (
     UserManager, create_user_data, validate_password, validate_username
 )
+from calibre.utils.shared_file import share_open
 from calibre.utils.icu import primary_sort_key
 from polyglot.builtins import unicode_type, as_bytes
 
@@ -47,7 +46,7 @@ if iswindows and not isportable:
         exe_base = os.path.abspath(os.path.dirname(sys.executable))
         exe = os.path.join(exe_base, 'calibre.exe')
         if isinstance(exe, bytes):
-            exe = exe.decode('mbcs')
+            exe = os.fsdecode(exe)
         return exe
 
     def startup_shortcut_path():
@@ -1317,7 +1316,7 @@ class ConfigWidget(ConfigWidgetBase):
         layout.addWidget(el)
         try:
             el.setPlainText(
-                lopen(log_error_file, 'rb').read().decode('utf8', 'replace')
+                share_open(log_error_file, 'rb').read().decode('utf8', 'replace')
             )
         except EnvironmentError:
             el.setPlainText(_('No error log found'))
@@ -1326,7 +1325,7 @@ class ConfigWidget(ConfigWidgetBase):
         layout.addWidget(al)
         try:
             al.setPlainText(
-                lopen(log_access_file, 'rb').read().decode('utf8', 'replace')
+                share_open(log_access_file, 'rb').read().decode('utf8', 'replace')
             )
         except EnvironmentError:
             al.setPlainText(_('No access log found'))

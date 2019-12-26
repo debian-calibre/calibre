@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -669,8 +669,7 @@ else:
 def is_dark_theme():
     pal = QApplication.instance().palette()
     col = pal.color(pal.Window)
-    h, s, v, a = col.getHsvF()
-    return v < 0.45
+    return max(col.getRgb()[:3]) < 115
 
 
 def choose_osx_app(window, name, title, default_dir='/Applications'):
@@ -1104,7 +1103,13 @@ class Application(QApplication):
                 pcache[v] = p
             v = pcache[v]
             icon_map[getattr(QStyle, 'SP_'+k)] = v
-        self.pi.load_style(icon_map)
+        transient_scroller = 0
+        if isosx:
+            transient_scroller = plugins['cocoa'][0].transient_scroller()
+        try:
+            self.pi.load_style(icon_map, transient_scroller)
+        except TypeError:
+            self.pi.load_style(icon_map)
 
     def _send_file_open_events(self):
         with self._file_open_lock:
@@ -1442,12 +1447,13 @@ empty_index = empty_model.index(0)
 def set_app_uid(val):
     import ctypes
     from ctypes import wintypes
+    from ctypes import HRESULT
     try:
         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
     except Exception:  # Vista has no app uids
         return False
     AppUserModelID.argtypes = [wintypes.LPCWSTR]
-    AppUserModelID.restype = wintypes.HRESULT
+    AppUserModelID.restype = HRESULT
     try:
         AppUserModelID(unicode_type(val))
     except Exception as err:

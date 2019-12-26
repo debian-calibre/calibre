@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import with_statement, print_function
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,8 +11,8 @@ from collections import defaultdict
 from locale import normalize as normalize_locale
 from functools import partial
 
-from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json, ispy3
-from setup.parallel_build import parallel_check_output
+from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json
+from setup.parallel_build import batched_parallel_jobs
 from polyglot.builtins import codepoint_to_chr, iteritems, range
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -280,8 +280,7 @@ class Translations(POT):  # {{{
         self.compile_website_translations()
 
     def compile_group(self, files, handle_stats=None, file_ok=None, action_per_file=None):
-        from calibre.constants import islinux
-        jobs, ok_files = [], []
+        ok_files = []
         hashmap = {}
 
         def stats_cache(src, data=None):
@@ -308,20 +307,22 @@ class Translations(POT):  # {{{
                         handle_stats(src, stats_cache(src))
             else:
                 if file_ok is None or file_ok(data, src):
-                    self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
-                    if islinux:
-                        msgfmt = ['msgfmt']
-                    else:
-                        msgfmt = [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py')]
-                    jobs.append(msgfmt + ['--statistics', '-o', dest, src])
+                    # self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
                     ok_files.append((src, dest))
                     hashmap[src] = current_hash
             if action_per_file is not None:
                 action_per_file(src)
 
-        for (src, dest), line in zip(ok_files, parallel_check_output(jobs, self.info)):
+        self.info(f'\tCompiling {len(ok_files)} files')
+        items = []
+        results = batched_parallel_jobs(
+            [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py'), 'STDIN'],
+            ok_files)
+        for (src, dest), nums in zip(ok_files, results):
+            items.append((src, dest, nums))
+
+        for (src, dest, nums) in items:
             self.write_cache(open(dest, 'rb').read(), hashmap[src], src)
-            nums = tuple(map(int, re.findall(r'\d+', line)))
             stats_cache(src, nums)
             if handle_stats is not None:
                 handle_stats(src, nums)
@@ -427,7 +428,7 @@ class Translations(POT):  # {{{
 
         if self.iso639_errors:
             for err in self.iso639_errors:
-                print (err)
+                print(err)
             raise SystemExit(1)
 
         dest = self.stats
@@ -460,7 +461,7 @@ class Translations(POT):  # {{{
                 if current_hash == saved_hash:
                     raw = saved_data
                 else:
-                    self.info('\tParsing ' + os.path.basename(src))
+                    # self.info('\tParsing ' + os.path.basename(src))
                     raw = None
                     po_data = data.decode('utf-8')
                     data = json.loads(msgfmt(po_data))
@@ -562,7 +563,7 @@ class Translations(POT):  # {{{
                 if l == 'en':
                     t = get_language
                 else:
-                    t = getattr(get_iso639_translator(l), 'gettext' if ispy3 else 'ugettext')
+                    t = get_iso639_translator(l).gettext
                     t = partial(get_iso_language, t)
                 lang_names[l] = {x: t(x) for x in dl}
             zi = ZipInfo('lang-names.json')

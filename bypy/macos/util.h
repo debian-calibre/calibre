@@ -1,5 +1,5 @@
 #pragma once
+#include <wchar.h>
+#include <stdbool.h>
 
-int run(const char **ENV_VARS, const char **ENV_VAR_VALS, char *PROGRAM,
-        const char *MODULE, const char *FUNCTION, const char *PYVER, int IS_GUI,
-        int argc, const char **argv, const char **envp);
+void run(const wchar_t *program, const wchar_t *module, const wchar_t *function, bool is_gui, int argc, char * const *argv);

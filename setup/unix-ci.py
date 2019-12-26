@@ -2,7 +2,6 @@
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import shlex
@@ -104,10 +103,10 @@ def main():
 
         tball = 'macos-64' if ismacos else 'linux-64'
         download_and_decompress(
-            'https://download.calibre-ebook.com/ci/calibre/{}.tar.xz'.format(tball), SW
+            'https://download.calibre-ebook.com/ci/calibre3/{}.tar.xz'.format(tball), SW
         )
         if not ismacos:
-            run('sudo', 'apt-get', 'update', '-y')
+            # run('sudo', 'apt-get', 'update', '-y')
             # run('sudo', 'apt-get', 'upgrade', '-y')
             run('sudo', 'apt-get', 'install', '-y', 'gettext', 'libgl1-mesa-dev')
 

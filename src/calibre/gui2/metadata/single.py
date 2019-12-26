@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -32,7 +32,7 @@ from calibre.utils.date import local_tz
 from calibre.library.comments import merge_comments as merge_two_comments
 from polyglot.builtins import iteritems, unicode_type, filter
 
-BASE_TITLE = _('Edit Metadata')
+BASE_TITLE = _('Edit metadata')
 fetched_fields = ('title', 'title_sort', 'authors', 'author_sort', 'series',
                   'series_index', 'languages', 'publisher', 'tags', 'rating',
                   'comments', 'pubdate')

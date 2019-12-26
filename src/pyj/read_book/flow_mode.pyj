@@ -5,12 +5,12 @@ from __python__ import bound_methods, hash_literals
 from select import word_at_point
 
 from dom import set_css
-from read_book.globals import get_boss
+from read_book.globals import current_spine_item, get_boss
 from read_book.viewport import scroll_viewport
 from utils import document_height, viewport_to_document
 
 
-def flow_to_scroll_fraction(frac):
+def flow_to_scroll_fraction(frac, on_initial_load):
     scroll_viewport.scroll_to(0, document_height() * frac)
 
 
@@ -53,10 +53,19 @@ def report_human_scroll(amt):
         clear_small_scrolls()
 
 
+last_change_spine_item_request = {}
+
+
 def _check_for_scroll_end(func, obj, args, report):
     before = window.pageYOffset
     func.apply(obj, args)
     if window.pageYOffset is before:
+        now = Date.now()
+        csi = current_spine_item()
+        if last_change_spine_item_request.name is csi.name and now - last_change_spine_item_request.at < 2000:
+            return False
+        last_change_spine_item_request.name = csi.name
+        last_change_spine_item_request.at = now
         get_boss().send_message('next_spine_item', previous=args[0] < 0)
         return False
     if report:
@@ -98,13 +107,14 @@ def flow_onwheel(evt):
             dx = (scroll_viewport.width() - 30) * evt.deltaX
     if dx:
         window.scrollBy(dx, 0)
-    elif dy:
+    elif Math.abs(dy) >= 1:
         scroll_by(dy)
 
 smooth_y_data = {'last_event_at':0, 'up': False, 'timer':None, 'source':'wheel', 'pixels_per_ms': 0.2, 'scroll_interval':10, 'stop_scrolling_after':100}
 
 def do_y_scroll():
-    if scroll_by((-1 if smooth_y_data.up else 1) * smooth_y_data.pixels_per_ms * smooth_y_data.scroll_interval):
+    dy = (-1 if smooth_y_data.up else 1) * smooth_y_data.pixels_per_ms * smooth_y_data.scroll_interval
+    if Math.abs(dy) >= 1 and scroll_by(dy):
         if Date.now() - smooth_y_data.last_event_at < smooth_y_data.stop_scrolling_after:
             smooth_y_data.timer = setTimeout(do_y_scroll, smooth_y_data.scroll_interval)
 
@@ -218,10 +228,11 @@ def handle_gesture(gesture):
     if gesture.type is 'swipe':
         if gesture.points.length > 1 and not gesture.is_held:
             delta = gesture.points[-2] - gesture.points[-1]
-            if gesture.axis is 'vertical':
-                scroll_by(delta)
-            else:
-                window.scrollBy(delta, 0)
+            if Math.abs(delta) >= 1:
+                if gesture.axis is 'vertical':
+                    scroll_by(delta)
+                else:
+                    window.scrollBy(delta, 0)
         if not gesture.active and not gesture.is_held:
             flick_animator.start(gesture)
     elif gesture.type is 'prev-page':

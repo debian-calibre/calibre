@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/dialogs/tag_categories.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #

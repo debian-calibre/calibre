@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "dezembro 13, 2019" "4.6.0" "calibre"
+.TH "CALIBREDB" "1" "dezembro 19, 2019" "4.99.2" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -255,7 +255,7 @@ Adicionar um livro vazio (um livro sem formatos)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Definir identificadores para este livro, por exemplo \-I asin:XXX \-I isbn:YYY
+Definir a identificação deste livro, por exemplo \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -434,7 +434,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-all
-Exportar todos os livros da base de dados, ignorando a lista de ID.
+Exportar todos os livros da base de dados, ignorando a lista de IDs.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -597,7 +597,7 @@ Campo personalizado que contém texto de notas para inserir no cabeçalho \fB"\f
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para fundir com os comentários  [before|after] Colocação de notas em relação aos comentários  [True|False] \- Uma linha horizontal é inserida entre notas e comentários Padrão: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
+#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para fundir com os comentários  [before|after] Espaços reservados de notas com relação aos comentários  [True|False] \- Uma linha horizontal é inserida entre notas e comentários Padrão: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -820,7 +820,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Lista separada por vírgulas de categorias de limitadores de pesquisa. Predefinição: tudo
+Lista separada por vírgulas de categorias de termos de pesquisa. Predefinição: todas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -830,7 +830,7 @@ Saída em CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-O tipo de ficheiro CSV a criar. Opções: excel, excel\-tab
+O tipo de ficheiro CSV a criar. Opções: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -910,7 +910,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Atualizar metadados apenas em ficheiros de formato especifico. Especifique\-o vários vezes para vários formatos. Por definição, todos os formatos são atualizados.
+Só atualiza metadados em ficheiros de formato especifico. Especifique\-o em vários momentos para vários formatos. Por definição, todos os formatos são atualizados.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0

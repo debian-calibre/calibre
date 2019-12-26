@@ -212,13 +212,11 @@ icu_Collator_find(icu_Collator *self, PyObject *args) {
         pos = usearch_first(search, &status);
         if (pos != USEARCH_DONE) {
             length = usearch_getMatchedLength(search);
-#ifdef Py_UNICODE_WIDE
             // We have to return number of unicode characters since the string
             // could contain surrogate pairs which are represented as a single
             // character in python wide builds
             length = u_countChar32(b + pos, length);
             pos = u_countChar32(b, pos);
-#endif
         } else pos = -1;
     }
 end:
@@ -637,9 +635,7 @@ icu_BreakIterator_index(icu_BreakIterator *self, PyObject *token) {
         }
     }
     if (leading_hyphen && ans > -1) ans -= 1;
-#ifdef Py_UNICODE_WIDE
     if (ans > 0) ans = u_countChar32(self->text, ans);
-#endif
     Py_END_ALLOW_THREADS;
 
 end:
@@ -681,10 +677,8 @@ icu_BreakIterator_split2(icu_BreakIterator *self, PyObject *args) {
                 if (IS_HYPHEN_CHAR(sep)) trailing_hyphen = 1;
             }
             last_pos = p;
-#ifdef Py_UNICODE_WIDE
             sz = u_countChar32(self->text + word_start, sz);
             word_start = u_countChar32(self->text, word_start);
-#endif
             if (is_hyphen_sep && PyList_GET_SIZE(ans) > 0) {
                 sz = last_sz + sz + trailing_hyphen;
                 last_sz = sz;
@@ -1118,22 +1112,6 @@ icu_string_length(PyObject *self, PyObject *src) {
 static PyObject *
 icu_utf16_length(PyObject *self, PyObject *src) {
     Py_ssize_t sz = 0;
-#if PY_VERSION_HEX < 0x03030000
-#ifdef Py_UNICODE_WIDE
-    int32_t i = 0, t = 0;
-    Py_UNICODE *data = NULL;
-#endif
-
-    if (!PyUnicode_Check(src)) { PyErr_SetString(PyExc_TypeError, "Must be a unicode object"); return NULL; }
-    sz = PyUnicode_GET_SIZE(src);
-#ifdef Py_UNICODE_WIDE
-    data = PyUnicode_AS_UNICODE(src);
-    for (i = 0; i < sz; i++) {
-        t += (data[i] > 0xffff) ? 2 : 1;
-    }
-    sz = t;
-#endif
-#else
     Py_ssize_t unit_length, i;
     Py_UCS4 *data = NULL;
 
@@ -1149,7 +1127,6 @@ icu_utf16_length(PyObject *self, PyObject *src) {
             }
         }
     }
-#endif
 
     return Py_BuildValue("n", sz);
 } // }}}

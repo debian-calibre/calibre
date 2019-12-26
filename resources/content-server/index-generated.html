@@ -174,6 +174,9 @@ input[type=radio] {
   <symbol viewBox="0 0 1792 1792" id="icon-print">
     <path d="M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z"/>
   </symbol>
+  <symbol viewBox="0 0 512 512" id="icon-reference-mode">
+    <path d="M512 199.652c0 23.625-20.65 43.826-44.8 43.826h-99.851c16.34 17.048 18.346 49.766-6.299 70.944 14.288 22.829 2.147 53.017-16.45 62.315C353.574 425.878 322.654 448 272 448c-2.746 0-13.276-.203-16-.195-61.971.168-76.894-31.065-123.731-38.315C120.596 407.683 112 397.599 112 385.786V214.261l.002-.001c.011-18.366 10.607-35.889 28.464-43.845 28.886-12.994 95.413-49.038 107.534-77.323 7.797-18.194 21.384-29.084 40-29.092 34.222-.014 57.752 35.098 44.119 66.908-3.583 8.359-8.312 16.67-14.153 24.918H467.2c23.45 0 44.8 20.543 44.8 43.826zM96 200v192c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V200c0-13.255 10.745-24 24-24h48c13.255 0 24 10.745 24 24zM68 368c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z"/>
+  </symbol>
   <symbol viewBox="0 0 1792 1792" id="icon-eraser">
     <path d="M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z"/>
   </symbol>
@@ -8152,6 +8155,7 @@ return parser;
             ρσ_d["background_image_fade"] = 0;
             ρσ_d["current_color_scheme"] = "system";
             ρσ_d["user_color_schemes"] = Object.create(null);
+            ρσ_d["override_book_colors"] = "never";
             ρσ_d["base_font_size"] = 16;
             ρσ_d["controls_help_shown_count"] = 0;
             ρσ_d["header"] = Object.create(null);
@@ -8186,6 +8190,7 @@ return parser;
             ρσ_d["background_image_style"] = true;
             ρσ_d["background_image_fade"] = true;
             ρσ_d["current_color_scheme"] = true;
+            ρσ_d["override_book_colors"] = true;
             ρσ_d["base_font_size"] = true;
             ρσ_d["controls_help_shown_count"] = true;
             ρσ_d["standalone_font_settings"] = true;
@@ -13594,11 +13599,12 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.flow_mode";
-        var small_scroll_events, smooth_y_data, flick_animator, anchor_funcs;
+        var small_scroll_events, last_change_spine_item_request, smooth_y_data, flick_animator, anchor_funcs;
         var word_at_point = ρσ_modules.select.word_at_point;
 
         var set_css = ρσ_modules.dom.set_css;
 
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
 
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
@@ -13606,11 +13612,11 @@ return this.__repr__();
         var document_height = ρσ_modules.utils.document_height;
         var viewport_to_document = ρσ_modules.utils.viewport_to_document;
 
-        function flow_to_scroll_fraction(frac) {
+        function flow_to_scroll_fraction(frac, on_initial_load) {
             scroll_viewport.scroll_to(0, document_height() * frac);
         };
         if (!flow_to_scroll_fraction.__argnames__) Object.defineProperties(flow_to_scroll_fraction, {
-            __argnames__ : {value: ["frac"]}
+            __argnames__ : {value: ["frac", "on_initial_load"]}
         });
 
         small_scroll_events = [];
@@ -13669,11 +13675,19 @@ return this.__repr__();
             __argnames__ : {value: ["amt"]}
         });
 
+        last_change_spine_item_request = Object.create(null);
         function _check_for_scroll_end(func, obj, args, report) {
-            var before;
+            var before, now, csi;
             before = window.pageYOffset;
             func.apply(obj, args);
             if (window.pageYOffset === before) {
+                now = Date.now();
+                csi = current_spine_item();
+                if (last_change_spine_item_request.name === csi.name && now - last_change_spine_item_request.at < 2e3) {
+                    return false;
+                }
+                last_change_spine_item_request.name = csi.name;
+                last_change_spine_item_request.at = now;
                 (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: args[0] < 0})])));
                 return false;
             }
@@ -13740,7 +13754,7 @@ return this.__repr__();
             }
             if (dx) {
                 window.scrollBy(dx, 0);
-            } else if (dy) {
+            } else if (Math.abs(dy) >= 1) {
                 scroll_by(dy);
             }
         };
@@ -13760,7 +13774,9 @@ return this.__repr__();
             return ρσ_d;
         }).call(this);
         function do_y_scroll() {
-            if (scroll_by(((smooth_y_data.up) ? -1 : 1) * smooth_y_data.pixels_per_ms * smooth_y_data.scroll_interval)) {
+            var dy;
+            dy = ((smooth_y_data.up) ? -1 : 1) * smooth_y_data.pixels_per_ms * smooth_y_data.scroll_interval;
+            if (Math.abs(dy) >= 1 && scroll_by(dy)) {
                 if (Date.now() - smooth_y_data.last_event_at < smooth_y_data.stop_scrolling_after) {
                     smooth_y_data.timer = setTimeout(do_y_scroll, smooth_y_data.scroll_interval);
                 }
@@ -13953,10 +13969,12 @@ return this.__repr__();
             if (gesture.type === "swipe") {
                 if (gesture.points.length > 1 && !gesture.is_held) {
                     delta = (ρσ_expr_temp = gesture.points)[ρσ_expr_temp.length-2] - (ρσ_expr_temp = gesture.points)[ρσ_expr_temp.length-1];
-                    if (gesture.axis === "vertical") {
-                        scroll_by(delta);
-                    } else {
-                        window.scrollBy(delta, 0);
+                    if (Math.abs(delta) >= 1) {
+                        if (gesture.axis === "vertical") {
+                            scroll_by(delta);
+                        } else {
+                            window.scrollBy(delta, 0);
+                        }
                     }
                 }
                 if (!gesture.active && !gesture.is_held) {
@@ -14037,6 +14055,7 @@ return this.__repr__();
             return ρσ_d;
         }).call(this);
         ρσ_modules["read_book.flow_mode"].small_scroll_events = small_scroll_events;
+        ρσ_modules["read_book.flow_mode"].last_change_spine_item_request = last_change_spine_item_request;
         ρσ_modules["read_book.flow_mode"].smooth_y_data = smooth_y_data;
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
         ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
@@ -14085,6 +14104,8 @@ return this.__repr__();
             opts.cover_preserve_aspect_ratio = !!settings.cover_preserve_aspect_ratio;
             opts.bg_image_fade = settings.bg_image_fade || "transparent";
             opts.paged_wheel_scrolls_by_screen = !!settings.paged_wheel_scrolls_by_screen;
+            opts.is_dark_theme = !!settings.is_dark_theme;
+            opts.override_book_colors = settings.override_book_colors || "never";
         };
         if (!update_settings.__argnames__) Object.defineProperties(update_settings, {
             __argnames__ : {value: ["settings"]}
@@ -14098,7 +14119,7 @@ return this.__repr__();
         };
 
         function apply_colors() {
-            var elem, ss, c, text;
+            var elem, ss, text, c;
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 elem = ρσ_Iter0[ρσ_Index0];
@@ -14111,13 +14132,29 @@ return this.__repr__();
                 ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: "calibre-color-scheme-style-overrides", type: "text/css"})]);
                 document.documentElement.appendChild(ss);
             }
+            text = "";
+            if (opts.override_book_colors !== "never") {
+                text = "body";
+                if (opts.override_book_colors === "dark") {
+                    text += ".calibre-viewer-dark-colors";
+                }
+                text += " * { color: " + ρσ_str.format("{}", opts.color_scheme.foreground) + " !important; background-color: " + ρσ_str.format("{}", opts.color_scheme.background) + " !important }";
+            }
             if (opts.color_scheme.link) {
                 c = opts.color_scheme.link;
-                text = ":link, :link * { color: " + ρσ_str.format("{}", c) + " !important } :visited, :visited * { color: " + ρσ_str.format("{}", c) + " !important }";
-            } else {
-                text = "";
+                text += "\nhtml > body :link, html > body :link * { color: " + ρσ_str.format("{}", c) + " !important } html > body :visited, html > body :visited * { color: " + ρσ_str.format("{}", c) + " !important }";
             }
             ss.textContent = text;
+        };
+
+        function set_color_scheme_class() {
+            if (opts.is_dark_theme) {
+                document.body.classList.add("calibre-viewer-dark-colors");
+                document.body.classList.remove("calibre-viewer-light-colors");
+            } else {
+                document.body.classList.add("calibre-viewer-light-colors");
+                document.body.classList.remove("calibre-viewer-dark-colors");
+            }
         };
 
         function apply_stylesheet() {
@@ -14144,6 +14181,7 @@ return this.__repr__();
         ρσ_modules["read_book.settings"].update_settings = update_settings;
         ρσ_modules["read_book.settings"].apply_font_size = apply_font_size;
         ρσ_modules["read_book.settings"].apply_colors = apply_colors;
+        ρσ_modules["read_book.settings"].set_color_scheme_class = set_color_scheme_class;
         ρσ_modules["read_book.settings"].apply_stylesheet = apply_stylesheet;
         ρσ_modules["read_book.settings"].apply_settings = apply_settings;
     })();
@@ -15474,6 +15512,7 @@ return this.__repr__();
         var cfi_at_point = ρσ_modules["read_book.cfi"].at_point;
         var cfi_scroll_to = ρσ_modules["read_book.cfi"].scroll_to;
 
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
 
         var opts = ρσ_modules["read_book.settings"].opts;
@@ -15816,13 +15855,26 @@ return this.__repr__();
             __argnames__ : {value: ["xpos", "notify", "duration"]}
         });
 
-        function scroll_to_fraction(frac) {
+        function scroll_to_previous_position() {
+            var fsd;
+            fsd = next_spine_item.forward_scroll_data;
+            next_spine_item.forward_scroll_data = null;
+            if (0 < (ρσ_cond_temp = fsd.cols_left) && ρσ_cond_temp < cols_per_screen && cols_per_screen < number_of_cols) {
+                ρσ_interpolate_kwargs.call(this, scroll_to_column, [fsd.current_col].concat([ρσ_desugar_kwargs({duration: 1e3})]));
+                return true;
+            }
+        };
+
+        function scroll_to_fraction(frac, on_initial_load) {
             var xpos;
+            if (on_initial_load && frac === 1 && is_return() && scroll_to_previous_position()) {
+                return;
+            }
             xpos = Math.floor(scroll_viewport.paged_content_width() * frac);
             scroll_to_xpos(xpos);
         };
         if (!scroll_to_fraction.__argnames__) Object.defineProperties(scroll_to_fraction, {
-            __argnames__ : {value: ["frac"]}
+            __argnames__ : {value: ["frac", "on_initial_load"]}
         });
 
         function column_boundaries() {
@@ -15840,20 +15892,22 @@ return this.__repr__();
             return c * col_and_gap;
         };
 
+        function number_of_cols_left() {
+            var current_col, cols_left;
+            current_col = column_at(current_scroll_offset() + 10);
+            cols_left = number_of_cols - (current_col + cols_per_screen);
+            return Math.max(0, cols_left);
+        };
+
         function next_screen_location() {
-            var cc, ans, current_col, ncols, cols_left, limit;
+            var cc, ans, limit;
             if (is_full_screen_layout) {
                 return -1;
             }
             cc = current_column_location();
             ans = cc + screen_width;
-            if (cols_per_screen > 1) {
-                current_col = column_at(current_scroll_offset() + 10);
-                ncols = Math.floor((scroll_viewport.paged_content_width() + gap) / col_and_gap);
-                cols_left = ncols - (current_col + cols_per_screen);
-                if (cols_left < cols_per_screen) {
-                    return -1;
-                }
+            if (cols_per_screen > 1 && 0 < (ρσ_cond_temp = number_of_cols_left()) && ρσ_cond_temp < cols_per_screen) {
+                return -1;
             }
             limit = scroll_viewport.paged_content_width() - scroll_viewport.width();
             if (limit < col_and_gap) {
@@ -16052,6 +16106,33 @@ return this.__repr__();
             __argnames__ : {value: ["frac"]}
         });
 
+        function next_spine_item(backward) {
+            var csi;
+            if (!backward) {
+                csi = current_spine_item();
+                next_spine_item.forward_scroll_data = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["cols_per_screen"] = cols_per_screen;
+                    ρσ_d["cols_left"] = number_of_cols_left();
+                    ρσ_d["spine_index"] = csi.index;
+                    ρσ_d["spine_name"] = csi.name;
+                    ρσ_d["current_col"] = column_at(current_scroll_offset() + 10);
+                    return ρσ_d;
+                }).call(this);
+            }
+            (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: backward})])));
+        };
+        if (!next_spine_item.__argnames__) Object.defineProperties(next_spine_item, {
+            __argnames__ : {value: ["backward"]}
+        });
+
+        function is_return() {
+            var fsd, csi;
+            fsd = next_spine_item.forward_scroll_data;
+            csi = current_spine_item();
+            return fsd && fsd.cols_per_screen === cols_per_screen && fsd.spine_index === csi.index && fsd.spine_name === csi.name;
+        };
+
         function onwheel(evt) {
             var backward, x;
             if (evt.deltaY) {
@@ -16062,7 +16143,7 @@ return this.__repr__();
                     x = (backward) ? previous_col_location() : next_col_location();
                 }
                 if (x === -1) {
-                    (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: backward})])));
+                    next_spine_item(backward);
                 } else {
                     scroll_to_xpos(x);
                 }
@@ -16082,7 +16163,7 @@ return this.__repr__();
                 pages = 1;
             }
             if (pos === -1) {
-                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: backward})])));
+                next_spine_item(backward);
             } else {
                 if (!backward) {
                     scrolled_frac = (number_of_cols > 0) ? pages / number_of_cols : 0;
@@ -16340,9 +16421,11 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].scroll_to_offset = scroll_to_offset;
         ρσ_modules["read_book.paged_mode"].scroll_to_column = scroll_to_column;
         ρσ_modules["read_book.paged_mode"].scroll_to_xpos = scroll_to_xpos;
+        ρσ_modules["read_book.paged_mode"].scroll_to_previous_position = scroll_to_previous_position;
         ρσ_modules["read_book.paged_mode"].scroll_to_fraction = scroll_to_fraction;
         ρσ_modules["read_book.paged_mode"].column_boundaries = column_boundaries;
         ρσ_modules["read_book.paged_mode"].current_column_location = current_column_location;
+        ρσ_modules["read_book.paged_mode"].number_of_cols_left = number_of_cols_left;
         ρσ_modules["read_book.paged_mode"].next_screen_location = next_screen_location;
         ρσ_modules["read_book.paged_mode"].previous_screen_location = previous_screen_location;
         ρσ_modules["read_book.paged_mode"].next_col_location = next_col_location;
@@ -16353,6 +16436,8 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].jump_to_cfi = jump_to_cfi;
         ρσ_modules["read_book.paged_mode"].current_cfi = current_cfi;
         ρσ_modules["read_book.paged_mode"].progress_frac = progress_frac;
+        ρσ_modules["read_book.paged_mode"].next_spine_item = next_spine_item;
+        ρσ_modules["read_book.paged_mode"].is_return = is_return;
         ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
         ρσ_modules["read_book.paged_mode"].scroll_by_page = scroll_by_page;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
@@ -18266,6 +18351,7 @@ return this.__repr__();
         var apply_settings = ρσ_modules["read_book.settings"].apply_settings;
         var apply_stylesheet = ρσ_modules["read_book.settings"].apply_stylesheet;
         var opts = ρσ_modules["read_book.settings"].opts;
+        var set_color_scheme_class = ρσ_modules["read_book.settings"].set_color_scheme_class;
         var update_settings = ρσ_modules["read_book.settings"].update_settings;
 
         var create_shortcut_map = ρσ_modules["read_book.shortcuts"].create_shortcut_map;
@@ -18283,7 +18369,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.6.0";
+        CALIBRE_VERSION = "4.99.2";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -18571,7 +18657,7 @@ return this.__repr__();
         });
         IframeBoss.prototype.on_scroll_to_frac = function on_scroll_to_frac(data) {
             var self = this;
-            self.to_scroll_fraction(data.frac);
+            self.to_scroll_fraction(data.frac, false);
         };
         if (!IframeBoss.prototype.on_scroll_to_frac.__argnames__) Object.defineProperties(IframeBoss.prototype.on_scroll_to_frac, {
             __argnames__ : {value: ["data"]}
@@ -18617,7 +18703,7 @@ return this.__repr__();
             if (frag) {
                 self.scroll_to_anchor(frag);
             } else {
-                self.to_scroll_fraction(0);
+                self.to_scroll_fraction(0, false);
             }
         };
         if (!IframeBoss.prototype.on_scroll_to_anchor.__argnames__) Object.defineProperties(IframeBoss.prototype.on_scroll_to_anchor, {
@@ -18659,6 +18745,7 @@ return this.__repr__();
             if (data.color_scheme && data.color_scheme.foreground && data.color_scheme.background) {
                 opts.color_scheme = data.color_scheme;
                 apply_colors();
+                set_color_scheme_class();
             }
         };
         if (!IframeBoss.prototype.change_color_scheme.__argnames__) Object.defineProperties(IframeBoss.prototype.change_color_scheme, {
@@ -18672,6 +18759,7 @@ return this.__repr__();
                 document.body.classList.add("cover-fill");
             }
             document.body.classList.add("calibre-viewer-" + ρσ_str.format("{}", layout_style()) + "");
+            set_color_scheme_class();
             if (self.reference_mode_enabled) {
                 start_reference_mode();
             }
@@ -18697,7 +18785,7 @@ return this.__repr__();
                 ipos = csi.initial_position;
                 self.replace_history_on_next_cfi_update = ipos.replace_history || false;
                 if (ipos.type === "frac") {
-                    self.to_scroll_fraction(ipos.frac);
+                    self.to_scroll_fraction(ipos.frac, true);
                 } else if (ipos.type === "anchor") {
                     self.scroll_to_anchor(ipos.anchor);
                 } else if (ipos.type === "ref") {
@@ -25927,9 +26015,10 @@ return this.__repr__();
         };
 
         function create_colors_panel(container, apply_func, cancel_func) {
-            var cs, ul;
+            var sd, cs, ul;
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
             container = container.lastChild;
+            sd = get_session_data();
             cs = resolve_color_scheme();
             container.dataset.bg = cs.background;
             container.dataset.fg = cs.foreground;
@@ -25937,6 +26026,15 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Choose a color scheme below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0"})])));
             ul = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({id: COLOR_LIST})]);
             container.appendChild(ul);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(_("Override all book colors:") + " "), E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "never"})]), _("Never")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "dark"})]), _("In dark mode")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "always"})]), _("Always"))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0; white-space: pre-wrap"})])));
+            try {
+                container.lastChild.querySelector("[name=override_book_colors][value=" + ρσ_str.format("{}", sd.get("override_book_colors")) + "]").checked = true;
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    container.lastChild.querySelector("[name=override_book_colors][value=never]").checked = true;
+                } 
+            }
             create_color_buttons();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(create_button(_("New scheme"), "plus", new_color_scheme)), E.span(create_button(_("Edit scheme"), "pencil", edit_color_scheme)), E.span(create_button(_("Remove scheme"), "trash", remove_color_scheme))].concat([ρσ_desugar_kwargs({id: ACTION_BUTTONS})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.table(E.tr(E.td(_("Name:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "name"})]))), E.tr(E.td(_("Background:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "bg", type: "color", value: "#ffffff"})]))), E.tr(E.td(_("Foreground:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "fg", type: "color", value: "#000000"})]))), E.tr(E.td(_("Link:")), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "custom"})]), _("Custom")), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "link", type: "color", value: "#000000", onclick: (function() {
@@ -25957,13 +26055,18 @@ return this.__repr__();
 
         develop = create_colors_panel;
         function commit_colors(onchange) {
-            var ccs, rcs, c, sd;
+            var ccs, rcs, c, sd, prev_obc, cur_obc;
             ccs = current_color_scheme();
             rcs = resolve_color_scheme(ccs);
             c = get_container();
             sd = get_session_data();
+            prev_obc = sd.get("override_book_colors");
+            cur_obc = c.querySelector("[name=override_book_colors]:checked").value;
             sd.set("current_color_scheme", ccs);
-            if (rcs.foreground !== c.dataset.fg || rcs.background !== c.dataset.bg || c.dataset.link !== rcs.link) {
+            if (cur_obc !== prev_obc) {
+                sd.set("override_book_colors", cur_obc);
+            }
+            if (rcs.foreground !== c.dataset.fg || rcs.background !== c.dataset.bg || c.dataset.link !== rcs.link || cur_obc !== prev_obc) {
                 ui_operations.update_color_scheme();
                 onchange();
             }
@@ -26788,6 +26891,7 @@ return this.__repr__();
             ρσ_d["remember_window_geometry"] = false;
             ρσ_d["remember_last_read"] = true;
             ρσ_d["show_actions_toolbar"] = false;
+            ρσ_d["show_actions_toolbar_in_fullscreen"] = false;
             ρσ_d["save_annotations_in_ebook"] = true;
             ρσ_d["singleinstance"] = false;
             return ρσ_d;
@@ -26828,6 +26932,7 @@ return this.__repr__();
             container.append(cb("show_actions_toolbar", _("Show a toolbar with the most useful actions")));
             container.lastChild.append(E.span(" "));
             container.lastChild.append(ρσ_interpolate_kwargs.call(this, create_button, [_("Customize toolbar")].concat([ρσ_desugar_kwargs({action: ui_operations.customize_toolbar})])));
+            container.append(cb("show_actions_toolbar_in_fullscreen", _("Keep the toolbar in full screen mode (needs restart)")));
             container.append(cb("remember_last_read", _("Remember current page when quitting")));
             container.append(cb("save_annotations_in_ebook", _("Keep a copy of annotations/bookmarks in the e-book file, for easy sharing")));
             container.append(cb("singleinstance", _("Allow only a single instance of the viewer (needs restart)")));
@@ -26982,7 +27087,7 @@ return this.__repr__();
             var sd, val;
             sd = get_session_data();
             create_user_stylesheet_panel.container_id = ensure_id(container);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a background image to display behind the book text")].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1.5ex"})])), background_widget(sd), background_style_widget(sd), background_fade_widget(sd)].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px; margin-bottom: 1.5ex; padding-bottom: 1.5ex"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("A CSS style sheet that can be used to control the look and feel of the text. For examples, click"), " ", ρσ_interpolate_kwargs.call(E, E.a, [_("here.")].concat([ρσ_desugar_kwargs({class_: "blue-link", title: _("Examples of user style sheets"), target: (runtime.is_standalone_viewer) ? "_self" : "_blank", href: "https://www.mobileread.com/forums/showthread.php?t=51500"})])), " ", _("Note that you can use the selectors body.calibre-viewer-paginated and body.calibre-viewer-scrolling to target the Paged and Flow modes.")), ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({name: "user-stylesheet", style: "width: 100%; margin-top: 1ex; box-sizing: border-box; flex-grow: 10"})])].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; display: flex; flex-flow: column"})]))].concat([ρσ_desugar_kwargs({style: "min-height: 75vh; display: flex; flex-flow: column; margin: 1ex 1rem; padding: 1ex 0"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a background image to display behind the book text")].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1.5ex"})])), background_widget(sd), background_style_widget(sd), background_fade_widget(sd)].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px; margin-bottom: 1.5ex; padding-bottom: 1.5ex"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("A CSS style sheet that can be used to control the look and feel of the text. For examples, click"), " ", ρσ_interpolate_kwargs.call(E, E.a, [_("here.")].concat([ρσ_desugar_kwargs({class_: "blue-link", title: _("Examples of user style sheets"), target: (runtime.is_standalone_viewer) ? "_self" : "_blank", href: "https://www.mobileread.com/forums/showthread.php?t=51500"})])), " ", _("Note that you can use the selectors body.calibre-viewer-paginated and body.calibre-viewer-scrolling to target the Paged and Flow modes. Similarly, use body.calibre-viewer-light-colors and body.calibre-viewer-dark-colors to target light and dark color schemes.")), ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({name: "user-stylesheet", style: "width: 100%; margin-top: 1ex; box-sizing: border-box; flex-grow: 10"})])].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; display: flex; flex-flow: column"})]))].concat([ρσ_desugar_kwargs({style: "min-height: 75vh; display: flex; flex-flow: column; margin: 1ex 1rem; padding: 1ex 0"})])));
             val = sd.get("user_stylesheet");
             if (val) {
                 container.querySelector("[name=user-stylesheet]").value = val;
@@ -27978,7 +28083,7 @@ return this.__repr__();
             if (runtime.is_standalone_viewer) {
                 toc_actions.appendChild(bookmarks_action);
             }
-            toc_actions.appendChild(ac(_("Reference mode"), _("Toggle the Reference mode"), self.overlay.toggle_reference_mode, "🖝", true));
+            toc_actions.appendChild(ac(_("Reference mode"), _("Toggle the Reference mode"), self.overlay.toggle_reference_mode, "reference-mode"));
             actions_div = ρσ_interpolate_kwargs.call(E, E.div, [nav_actions, E.ul(ac(_("Search"), _("Search for text in this book"), self.overlay.show_search, "search"), ac(_("Go to"), _("Go to a specific location in the book"), self.overlay.show_goto, "chevron-right")), reload_actions, toc_actions, E.ul(ac(_("Font size"), _("Change text size"), self.overlay.show_font_size_chooser, "Aa", true), ac(_("Preferences"), _("Configure the book reader"), self.overlay.show_prefs, "cogs"))].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_ACTIONS_CLASS})]));
             full_screen_actions = ρσ_list_decorate([]);
             if (runtime.is_standalone_viewer) {
@@ -30106,13 +30211,14 @@ return this.__repr__();
         };
         View.prototype.iframe_settings = function iframe_settings(name) {
             var self = this;
-            var sd, bg_image_fade, cs, fade, rgba;
+            var sd, bg_image_fade, cs, fade, rgba, is_dark_theme;
             sd = get_session_data();
             bg_image_fade = "transparent";
             cs = self.get_color_scheme(true);
             fade = int(sd.get("background_image_fade"));
+            rgba = cached_color_to_rgba(cs.background);
+            is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115;
             if (self.iframe.style.backgroundImage !== "none" && fade > 0) {
-                rgba = cached_color_to_rgba(cs.background);
                 bg_image_fade = "rgba(" + ρσ_str.format("{}", rgba[0]) + ", " + ρσ_str.format("{}", rgba[1]) + ", " + ρσ_str.format("{}", rgba[2]) + ", " + ρσ_str.format("{}", fade / 100) + ")";
             }
             return (function(){
@@ -30122,6 +30228,8 @@ return this.__repr__();
                 ρσ_d["read_mode"] = sd.get("read_mode");
                 ρσ_d["columns_per_screen"] = sd.get("columns_per_screen");
                 ρσ_d["color_scheme"] = cs;
+                ρσ_d["override_book_colors"] = sd.get("override_book_colors");
+                ρσ_d["is_dark_theme"] = is_dark_theme;
                 ρσ_d["bg_image_fade"] = bg_image_fade;
                 ρσ_d["base_font_size"] = sd.get("base_font_size");
                 ρσ_d["user_stylesheet"] = sd.get("user_stylesheet");

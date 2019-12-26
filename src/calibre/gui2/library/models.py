@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -922,7 +922,7 @@ class BooksModel(QAbstractTableModel):  # {{{
             return self.column_to_dc_map[col](index.row())
         elif role == Qt.BackgroundRole:
             if self.id(index) in self.ids_to_highlight_set:
-                return (QColor('lightgreen'))
+                return QColor('#027524') if QApplication.instance().is_dark_theme else QColor('#b4ecb4')
         elif role == Qt.ForegroundRole:
             key = self.column_map[col]
             id_ = self.id(index)

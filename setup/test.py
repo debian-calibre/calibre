@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import unittest
@@ -55,6 +54,11 @@ class TestImports(unittest.TestCase):
         self.assertGreater(self.base_check(os.path.join(SRC, 'odf'), exclude_packages, exclude_modules), 10)
         base = os.path.join(SRC, 'calibre')
         self.assertGreater(self.base_check(base, exclude_packages, exclude_modules), 1000)
+
+        import calibre.web.feeds.feedparser as f
+        del f
+        from calibre.ebooks.markdown import Markdown
+        del Markdown
 
 
 def find_tests(which_tests=None):

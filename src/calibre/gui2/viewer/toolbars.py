@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 from functools import partial
@@ -50,6 +49,7 @@ def all_actions():
             'previous': Action('previous.png', _('Previous page'), 'previous'),
             'toc': Action('toc.png', _('Table of Contents'), 'toggle_toc'),
             'bookmarks': Action('bookmarks.png', _('Bookmarks'), 'toggle_bookmarks'),
+            'inspector': Action('debug.png', _('Inspector'), 'toggle_inspector'),
             'reference': Action('reference.png', _('Toggle Reference mode'), 'toggle_reference_mode'),
             'lookup': Action('generic-library.png', _('Lookup words'), 'toggle_lookup'),
             'chrome': Action('tweaks.png', _('Show viewer controls'), 'show_chrome'),
@@ -64,7 +64,7 @@ def all_actions():
 DEFAULT_ACTIONS = (
         'back', 'forward', None, 'open', 'copy', 'increase_font_size', 'decrease_font_size', 'fullscreen',
         None, 'previous', 'next', None, 'toc', 'bookmarks', 'lookup', 'reference', 'chrome', None, 'mode', 'print', 'preferences',
-        'metadata'
+        'metadata', 'inspector'
 )
 
 
@@ -147,11 +147,16 @@ class ActionsToolBar(ToolBar):
         self.next_action = shortcut_action('next')
         self.previous_action = shortcut_action('previous')
 
-        self.toc_action = shortcut_action('toc')
-        self.bookmarks_action = shortcut_action('bookmarks')
+        self.toc_action = a = shortcut_action('toc')
+        a.setCheckable(True)
+        self.bookmarks_action = a = shortcut_action('bookmarks')
+        a.setCheckable(True)
         self.reference_action = a = shortcut_action('reference')
         a.setCheckable(True)
-        self.lookup_action = shortcut_action('lookup')
+        self.lookup_action = a = shortcut_action('lookup')
+        a.setCheckable(True)
+        self.inspector_action = a = shortcut_action('inspector')
+        a.setCheckable(True)
         self.chrome_action = shortcut_action('chrome')
 
         self.mode_action = a = shortcut_action('mode')
@@ -187,6 +192,11 @@ class ActionsToolBar(ToolBar):
     def update_reference_mode_action(self, enabled):
         self.reference_action.setChecked(enabled)
 
+    def update_dock_actions(self, visibility_map):
+        for k in ('toc', 'bookmarks', 'lookup', 'inspector'):
+            ac = getattr(self, '{}_action'.format(k))
+            ac.setChecked(visibility_map[k])
+
     def set_tooltips(self, rmap):
         for sc, a in iteritems(self.shortcut_actions):
             if a.isCheckable():
@@ -220,6 +230,10 @@ class ActionsToolBar(ToolBar):
 
     def update_visibility(self):
         self.setVisible(bool(get_session_pref('show_actions_toolbar', default=False)))
+
+    @property
+    def visible_in_fullscreen(self):
+        return bool(get_session_pref('show_actions_toolbar_in_fullscreen', default=False))
 
     def customize(self):
         d = ConfigureToolBar(parent=self.parent())

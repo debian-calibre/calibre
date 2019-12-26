@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2008 Søren Roug, European Environment Agency
 #
@@ -19,7 +19,7 @@
 # Contributor(s):
 #
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 from .namespaces import (
     ANIMNS, CHARTNS, DR3DNS, DRAWNS, FORMNS, MANIFESTNS, METANS, NUMBERNS, OFFICENS,
     PRESENTATIONNS, SCRIPTNS, STYLENS, SVGNS, TABLENS, TEXTNS
