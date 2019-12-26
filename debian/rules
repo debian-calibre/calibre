@@ -21,8 +21,10 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
+TEST_HOME = $(CURDIR)/debian/test-home
 override_dh_auto_test:
-	xvfb-run $(SETUP) test
+	mkdir $(TEST_HOME)
+	HOME=$(TEST_HOME) xvfb-run $(SETUP) test
 
 override_dh_install:
 	dh_buildinfo
@@ -60,6 +62,7 @@ override_dh_installman:
 
 override_dh_auto_clean:
 	rm -rf debian/orig
+	rm -rf $(TEST_HOME)
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
 	find . -name '*.pyc' -delete
