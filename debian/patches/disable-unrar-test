@@ -1,0 +1,17 @@
+---
+ src/calibre/test_build.py |    4 ----
+ 1 file changed, 4 deletions(-)
+
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -265,10 +265,6 @@ class BuildTest(unittest.TestCase):
+         from calibre.gui2.win_file_dialogs import test
+         test()
+ 
+-    def test_unrar(self):
+-        from calibre.utils.unrar import test_basic
+-        test_basic()
+-
+     @unittest.skipUnless(iswindows, 'WPD is windows only')
+     def test_wpd(self):
+         wpd = plugins['wpd'][0]
