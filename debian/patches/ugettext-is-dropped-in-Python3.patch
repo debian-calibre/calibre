@@ -1,0 +1,19 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 27 Dec 2019 15:19:33 +0900
+Subject: [PATCH] "ugettext()" is dropped in Python3
+
+Use "gettext()" to get Unicode strings.
+---
+ src/calibre/translations/dynamic.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Index: b/src/calibre/translations/dynamic.py
+===================================================================
+--- a/src/calibre/translations/dynamic.py
++++ b/src/calibre/translations/dynamic.py
+@@ -34,4 +34,4 @@ def translate(lang, text):
+                     _CACHE[lang] = trans
+     if trans is None:
+         return getattr(__builtins__, '_', lambda x: x)(text)
+-    return trans.ugettext(text)
++    return trans.gettext(text)
