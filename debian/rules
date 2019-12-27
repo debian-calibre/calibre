@@ -26,7 +26,7 @@ override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
 override_dh_auto_test:
-	mkdir $(TEST_HOME)
+	mkdir -p $(TEST_HOME)
 	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 TZ=UTC xvfb-run $(SETUP) test
 
 override_dh_install:
