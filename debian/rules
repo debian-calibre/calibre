@@ -24,7 +24,7 @@ override_dh_auto_build:
 TEST_HOME = $(CURDIR)/debian/test-home
 override_dh_auto_test:
 	mkdir $(TEST_HOME)
-	HOME=$(TEST_HOME) xvfb-run $(SETUP) test
+	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 xvfb-run $(SETUP) test
 
 override_dh_install:
 	dh_buildinfo
