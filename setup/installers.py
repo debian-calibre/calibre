@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os, sys, subprocess, binascii, json
 
@@ -199,7 +199,7 @@ class ExportPackages(Command):
     def run(self, opts):
         base, bypy = get_paths()
         exe = get_exe()
-        cmd = [exe, bypy, 'export'] + list(opts.cli_args) + ['download.calibre-ebook.com:/srv/download/ci/calibre3']
+        cmd = [exe, bypy, 'export'] + list(opts.cli_args) + ['download.calibre-ebook.com:/srv/download/ci/calibre']
         ret = subprocess.Popen(cmd).wait()
         if ret != 0:
             raise SystemExit(ret)

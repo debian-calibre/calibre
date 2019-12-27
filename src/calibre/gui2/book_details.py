@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 from collections import namedtuple
@@ -160,8 +160,11 @@ def get_field_list(fm, use_defaults=False, pref_name='book_display_fields'):
 def render_data(mi, use_roman_numbers=True, all_fields=False, pref_name='book_display_fields'):
     field_list = get_field_list(getattr(mi, 'field_metadata', field_metadata), pref_name=pref_name)
     field_list = [(x, all_fields or display) for x, display in field_list]
-    return mi_to_html(mi, field_list=field_list, use_roman_numbers=use_roman_numbers, rtl=is_rtl(),
-                      rating_font=rating_font(), default_author_link=default_author_link())
+    return mi_to_html(
+        mi, field_list=field_list, use_roman_numbers=use_roman_numbers, rtl=is_rtl(),
+        rating_font=rating_font(), default_author_link=default_author_link(),
+        comments_heading_pos=gprefs['book_details_comments_heading_pos']
+    )
 
 # }}}
 

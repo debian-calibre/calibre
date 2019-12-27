@@ -1,6 +1,7 @@
-#!/usr/bin/env python
-# vim:fileencoding=utf-8
-# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
+from __future__ import absolute_import, division, print_function, unicode_literals
+__license__ = 'GPL 3'
+__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+__docformat__ = 'restructuredtext en'
 
 'A simplified logging system'
 
@@ -9,27 +10,21 @@ INFO  = 1
 WARN  = 2
 ERROR = 3
 
-import io
-import sys
-import traceback
+import sys, traceback, io
 from functools import partial
 from threading import Lock
 
-from calibre.prints import prints
-from polyglot.builtins import as_unicode
+from calibre import isbytestring, force_unicode, as_unicode, prints
+from polyglot.builtins import unicode_type, iteritems
 
 
 class Stream(object):
 
     def __init__(self, stream=None):
         if stream is None:
-            stream = io.StringIO()
-        self.stream = stream
-        self.encoding = getattr(self.stream, 'encoding', None) or 'utf-8'
-        self._prints = partial(prints, file=self.stream)
-
-    def write(self, text):
-        self._prints(text, end='')
+            stream = io.BytesIO()
+        self.stream = getattr(stream, 'buffer', stream)
+        self._prints = partial(prints, safe_encode=True, file=stream)
 
     def flush(self):
         self.stream.flush()
@@ -43,10 +38,10 @@ class ANSIStream(Stream):
     def __init__(self, stream=sys.stdout):
         Stream.__init__(self, stream)
         self.color = {
-            DEBUG: 'green',
+            DEBUG: u'green',
             INFO: None,
-            WARN: 'yellow',
-            ERROR: 'red',
+            WARN: u'yellow',
+            ERROR: u'red',
         }
 
     def prints(self, level, *args, **kwargs):
@@ -70,26 +65,30 @@ class FileStream(Stream):
 class HTMLStream(Stream):
 
     color = {
-        DEBUG: '<span style="color:green">',
-        INFO: '<span>',
-        WARN: '<span style="color:blue">',
-        ERROR: '<span style="color:red">'
+        DEBUG: b'<span style="color:green">',
+        INFO: b'<span>',
+        WARN: b'<span style="color:blue">',
+        ERROR: b'<span style="color:red">'
     }
-    normal = '</span>'
+    normal = b'</span>'
 
     def __init__(self, stream=sys.stdout):
         Stream.__init__(self, stream)
 
     def prints(self, level, *args, **kwargs):
-        self._prints(self.color[level], end='')
+        self.stream.write(self.color[level])
+        kwargs['file'] = self.stream
         self._prints(*args, **kwargs)
-        self._prints(self.normal, end='')
+        self.stream.write(self.normal)
 
     def flush(self):
         self.stream.flush()
 
 
 class UnicodeHTMLStream(HTMLStream):
+
+    color = {k: v.decode('ascii') for k, v in iteritems(HTMLStream.color)}
+    normal = HTMLStream.normal.decode('ascii')
 
     def __init__(self):
         self.clear()
@@ -105,11 +104,14 @@ class UnicodeHTMLStream(HTMLStream):
             self.data.append(col)
             self.last_col = col
 
-        sep  = kwargs.get('sep', ' ')
-        end  = kwargs.get('end', '\n')
+        sep  = kwargs.get(u'sep', u' ')
+        end  = kwargs.get(u'end', u'\n')
 
         for arg in args:
-            arg = as_unicode(arg)
+            if isbytestring(arg):
+                arg = force_unicode(arg)
+            elif not isinstance(arg, unicode_type):
+                arg = as_unicode(arg)
             self.data.append(arg+sep)
             self.plain_text.append(arg+sep)
         self.data.append(end)
@@ -122,8 +124,8 @@ class UnicodeHTMLStream(HTMLStream):
 
     @property
     def html(self):
-        end = self.normal if self.data else ''
-        return ''.join(self.data) + end
+        end = self.normal if self.data else u''
+        return u''.join(self.data) + end
 
     def dump(self):
         return [self.data, self.plain_text, self.last_col]
@@ -258,7 +260,7 @@ class GUILog(ThreadSafeLog):
 
     @property
     def plain_text(self):
-        return ''.join(self.outputs[0].plain_text)
+        return u''.join(self.outputs[0].plain_text)
 
     def dump(self):
         return self.outputs[0].dump()

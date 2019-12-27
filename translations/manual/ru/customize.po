@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 07:07+0530\n"
-"PO-Revision-Date: 2018-06-01 01:38+0000\n"
+"POT-Creation-Date: 2019-12-25 09:54+0530\n"
+"PO-Revision-Date: 2019-12-12 20:16+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -116,15 +116,23 @@ msgid ""
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Запретить calibre автоматически регистрировать типы файлов, которые он способен обрабатывать с помощью Windows."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:43
+msgid ""
+"``CALIBRE_USE_DARK_PALETTE`` - Set it to ``1`` to have calibre use dark "
+"colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
+"absence of this variable, the windows system preference for dark colors is "
+"used."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/manual/customize.rst:45
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - Использовать, если sysfs монтируется где-то, кроме /sys"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:44
+#: ../../home/kovid/work/calibre/manual/customize.rst:46
 msgid ""
 "``http_proxy``, ``https_proxy`` - Used on linux to specify an HTTP(S) proxy"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:46
+#: ../../home/kovid/work/calibre/manual/customize.rst:48
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
@@ -133,11 +141,11 @@ msgid ""
 "variable-in-mac-os-x-launchd-plist/>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:50
+#: ../../home/kovid/work/calibre/manual/customize.rst:52
 msgid "Tweaks"
 msgstr "Расширенные настройки"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:52
+#: ../../home/kovid/work/calibre/manual/customize.rst:54
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -145,11 +153,11 @@ msgid ""
 "reproduced below"
 msgstr "Твики являются небольшими изменениями, которые вы можете указать для управления различными аспектами поведения calibre. Вы можете изменить их, перейдя в меню «Настройки» -> «Дополнительно» - «Настройки». Значения по умолчанию для настроек приведены ниже"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:59
+#: ../../home/kovid/work/calibre/manual/customize.rst:61
 msgid "Overriding icons, templates, et cetera"
 msgstr "Переопределение значков, шаблонов и т.д."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:62
+#: ../../home/kovid/work/calibre/manual/customize.rst:64
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -158,7 +166,7 @@ msgid ""
 "resources."
 msgstr "у calibre есть прямая поддержка иконок, есть несколько тем значков, которые вы можете использовать, перейдя к :guilabel:`Preferences-> Interface-> Look & Feel-> Change Icon theme`. Темы значков используют тот же механизм, который описан ниже, для переопределения статических ресурсов."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:66
+#: ../../home/kovid/work/calibre/manual/customize.rst:68
 msgid ""
 "calibre allows you to override the static resources, like icons, javascript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -171,7 +179,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre позволяет вам переопределять статические ресурсы, такие как значки, javascript и шаблоны для метаданных, каталоги и т. д. с настраиваемыми версиями, которые вам нравятся. Все статические ресурсы хранятся в подпапке ресурсов в месте установки calibre. В Windows это обычно: файл: `C:\\\\Program Files\\\\Calibre2\\\\resources`. На macOS, :file:`/Applications/calibre.app/Contents/Resources/resources/`. В linux, если вы используете двоичный установщик с веб-сайта calibre, он будет :file:`/opt/caliber/resources`. Эти пути могут изменяться в зависимости от того, где вы хотите установить calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:75
+#: ../../home/kovid/work/calibre/manual/customize.rst:77
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -183,7 +191,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Вы не должны изменять файлы в этой папке ресурсов, так как ваши изменения будут перезаписаны при следующем обновлении calibre. Вместо этого перейдите к :guilabel:`Preferences->Advanced->Miscellaneous` и нажмите :guilabel:`Open calibre configuration directory`. В этом каталоге конфигурации создайте подпапку, называемую resources, и поместите файлы, которые вы хотите переопределить. Поместите файлы в соответствующие подпапки, например, изображения в :file:`resources/images` и т.д.  calibre автоматически будет использовать ваш пользовательский файл в качестве встроенного при следующем запуске."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:84
+#: ../../home/kovid/work/calibre/manual/customize.rst:86
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -194,11 +202,11 @@ msgid ""
 "calibre user interface are in :file:`resources/images` and its sub-folders."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:93
+#: ../../home/kovid/work/calibre/manual/customize.rst:95
 msgid "Creating your own icon theme for calibre"
 msgstr "Создание собственной темы значков для calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:95
+#: ../../home/kovid/work/calibre/manual/customize.rst:97
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -212,11 +220,11 @@ msgid ""
 " make your theme available via calibre's builtin icon theme system."
 msgstr "Если вы создали красивый набор значков и хотите поделиться ими с другими пользователями calibre с помощью встроенной поддержки, вы можете легко упаковать свои значки в тему. Для этого перейдите по ссылке :guilabel:`Preferences-> Miscellaneous-> Create icon theme`, выберите папку, в которую были помещены ваши значки (обычно это :file:`resources/images`в каталоге конфигурации calibre, как описано выше). Затем заполните метаданные темы и нажмите «ОК». Cоздастся  ZIP-файл, содержащий значки тем. Вы можете загрузить это на форум calibre на «Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>` _ , а затем я сделаю вашу тему доступной через встроенную систему значков значков calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:108
+#: ../../home/kovid/work/calibre/manual/customize.rst:110
 msgid "Customizing calibre with plugins"
 msgstr "Настроить calibre с помощью плагинов"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:110
+#: ../../home/kovid/work/calibre/manual/customize.rst:112
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -226,7 +234,7 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "calibre имеет очень модульную конструкцию. Практически все функциональные возможности calibre поставляются в виде плагинов. Плагины используются для преобразования, для загрузки новостей (там они называются рецептами), для различных компонентов пользовательского интерфейса, для подключения к различным устройствам, для обработки файлов при добавлении их в calibre и так далее. Вы можете получить полный список всех встроенных плагинов в calibre, перейдя к :guilabel: `Preferences-> Advanced-> Plugins`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:112
+#: ../../home/kovid/work/calibre/manual/customize.rst:114
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -24,7 +24,6 @@ from calibre.utils.img import (
     remove_borders_from_image, gaussian_sharpen_image, gaussian_blur_image, image_to_data, despeckle_image,
     normalize_image, oil_paint_image
 )
-from polyglot.builtins import as_unicode
 
 
 def painter(func):
@@ -325,7 +324,7 @@ class Canvas(QWidget):
         if not self.is_modified:
             return self.original_image_data
         fmt = self.original_image_format or 'JPEG'
-        if fmt.lower() not in set(map(as_unicode, QImageWriter.supportedImageFormats())):
+        if fmt.lower() not in {x.data().decode('utf-8') for x in QImageWriter.supportedImageFormats()}:
             if fmt.lower() == 'gif':
                 data = image_to_data(self.current_image, fmt='PNG', png_compression_level=0)
                 from PIL import Image

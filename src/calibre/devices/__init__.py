@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 
@@ -74,11 +74,11 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
     from calibre.devices.scanner import DeviceScanner
     from calibre.constants import iswindows, isosx
     from calibre import prints
-    from polyglot.io import PolyglotStringIO
+    from polyglot.io import PolyglotBytesIO
     oldo, olde = sys.stdout, sys.stderr
 
     if buf is None:
-        buf = PolyglotStringIO()
+        buf = PolyglotBytesIO()
     sys.stdout = sys.stderr = buf
     out = partial(prints, file=buf)
 
@@ -187,7 +187,7 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
                     out(ioreg)
 
         if hasattr(buf, 'getvalue'):
-            return buf.getvalue()
+            return buf.getvalue().decode('utf-8', 'replace')
     finally:
         sys.stdout = oldo
         sys.stderr = olde

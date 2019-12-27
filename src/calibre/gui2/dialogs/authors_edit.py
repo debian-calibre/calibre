@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -159,7 +159,7 @@ class AuthorsEdit(QDialog):
         self.resize(self.sizeHint() + QSize(150, 100))
         geom = gprefs.get('authors-edit-geometry', None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         self.author.setFocus(Qt.OtherFocusReason)
 
     def save_geometry(self):

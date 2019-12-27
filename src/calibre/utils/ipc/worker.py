@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -177,12 +177,6 @@ def main():
         # so launch the gui as usual
         from calibre.gui2.main import main as gui_main
         return gui_main(['calibre'])
-    niceness = os.environ.pop('CALIBRE_WORKER_NICENESS', None)
-    if niceness:
-        try:
-            os.nice(int(niceness))
-        except Exception:
-            pass
     csw = os.environ.pop('CALIBRE_SIMPLE_WORKER', None)
     if csw:
         mod, _, func = csw.partition(':')
@@ -195,6 +189,7 @@ def main():
             exec(sys.argv[-1])
         except Exception:
             print('Failed to run pipe worker with command:', sys.argv[-1])
+            sys.stdout.flush()
             raise
         return
     address = msgpack_loads(from_hex_bytes(os.environ['CALIBRE_WORKER_ADDRESS']))

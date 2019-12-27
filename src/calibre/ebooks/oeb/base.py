@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
 '''
 Basic support for manipulating OEB 1.x/2.0 content and metadata.
 '''
@@ -13,7 +14,7 @@ from operator import attrgetter
 
 from lxml import etree, html
 from calibre import force_unicode
-from calibre.constants import filesystem_encoding, __version__
+from calibre.constants import filesystem_encoding, __version__, ispy3
 from calibre.translations.dynamic import translate
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ebooks.conversion.preprocess import CSSPreProcessor
@@ -755,8 +756,15 @@ class Metadata(object):
             return 'Item(term=%r, value=%r, attrib=%r)' \
                 % (barename(self.term), self.value, self.attrib)
 
-        def __str__(self):
-            return as_unicode(self.value)
+        if ispy3:
+            def __str__(self):
+                return as_unicode(self.value)
+        else:
+            def __str__(self):
+                return unicode_type(self.value).encode('ascii', 'xmlcharrefreplace')
+
+            def __unicode__(self):
+                return as_unicode(self.value)
 
         def to_opf1(self, dcmeta=None, xmeta=None, nsrmap={}):
             attrib = {}
@@ -1091,8 +1099,15 @@ class Manifest(object):
         def bytes_representation(self):
             return serialize(self.data, self.media_type, pretty_print=self.oeb.pretty_print)
 
-        def __str__(self):
-            return self.unicode_representation
+        if ispy3:
+            def __str__(self):
+                return self.unicode_representation
+        else:
+            def __unicode__(self):
+                return self.unicode_representation
+
+            def __str__(self):
+                return self.bytes_representation
 
         def __eq__(self, other):
             return self is other
@@ -1602,8 +1617,15 @@ class TOC(object):
             ans.extend(child.get_lines(lvl+1))
         return ans
 
-    def __str__(self):
-        return '\n'.join(self.get_lines())
+    if ispy3:
+        def __str__(self):
+            return '\n'.join(self.get_lines())
+    else:
+        def __unicode__(self):
+            return '\n'.join(self.get_lines())
+
+        def __str__(self):
+            return b'\n'.join([x.encode('utf-8') for x in self.get_lines()])
 
     def to_opf1(self, tour):
         for node in self.nodes:

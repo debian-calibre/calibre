@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Grant Drake <grant.drake@gmail.com>'
@@ -10,7 +10,7 @@ import re, datetime, traceback
 from lxml import html
 from PyQt5.Qt import (Qt, QUrl, QFrame, QVBoxLayout, QLabel, QBrush, QTextEdit,
                       QComboBox, QAbstractItemView, QHBoxLayout, QDialogButtonBox,
-                      QAbstractTableModel, QTableView, QModelIndex,
+                      QAbstractTableModel, QTableView, QModelIndex, QApplication,
                       QSortFilterProxyModel, QAction, QIcon, QDialog,
                       QFont, QPixmap, QSize, QLineEdit)
 
@@ -156,7 +156,7 @@ class SizePersistedDialog(QDialog):
         if self.geom is None:
             self.resize(self.sizeHint()+self.initial_extra_size)
         else:
-            self.restoreGeometry(self.geom)
+            QApplication.instance().safe_restore_geometry(self, self.geom)
 
     def dialog_closing(self, result):
         geom = bytearray(self.saveGeometry())

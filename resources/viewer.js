@@ -5061,7 +5061,7 @@ return parser;
             function set_error(event, is_network_error) {
                 var rtext;
                 if (is_network_error) {
-                    xhr.error_html = str.format(_("Failed to communicate with \"{}\", network error, is the server running and accessible?"), xhr.request_path);
+                    xhr.error_html = str.format(_("Failed to communicate with \"{}\", network error. Is the server running and accessible?"), xhr.request_path);
                 } else if (event === "timeout") {
                     xhr.error_html = str.format(_("Failed to communicate with \"{}\", timed out after: {} seconds"), xhr.request_path, timeout);
                 } else if (event === "abort") {
@@ -12175,7 +12175,7 @@ return this.__repr__();
         });
 
         function process_stack(stack, tag_map, ns_map, load_required, onload) {
-            var ρσ_unpack, node, parent, tag_id, src, elem, loadable, attr, a;
+            var ρσ_unpack, node, parent, tag_id, src, elem, loadable, attr, a, load_callback;
             while (stack.length) {
                 ρσ_unpack = stack.pop();
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -12219,8 +12219,9 @@ return this.__repr__();
                 }
                 if (loadable) {
                     load_required.add(tag_id);
-                    elem.addEventListener("load", onload.bind(tag_id));
-                    elem.addEventListener("error", onload.bind(tag_id));
+                    load_callback = onload.bind(tag_id);
+                    elem.addEventListener("load", load_callback);
+                    elem.addEventListener("error", load_callback);
                 }
                 apply_attributes(src, elem, ns_map);
                 parent.appendChild(elem);
@@ -12277,14 +12278,14 @@ return this.__repr__();
             function hangcheck() {
                 if (!proceeded) {
                     proceeded = true;
-                    print("WARNING: All resources did not load in {} seconds, proceeding anyway ({} resources left)".format(hang_timeout, load_required.length));
+                    print("WARNING: All resources did not load in " + ρσ_str.format("{}", hang_timeout) + " seconds, proceeding anyway (" + ρσ_str.format("{}", load_required.length) + " resources left)");
                     proceed();
                 }
             };
 
             function onload() {
                 load_required.discard(this);
-                if (!load_required.length) {
+                if (!load_required.length && !proceeded) {
                     proceeded = true;
                     proceed();
                 }
@@ -12373,14 +12374,14 @@ return this.__repr__();
             function hangcheck() {
                 if (!proceeded) {
                     proceeded = true;
-                    print("WARNING: All resources did not load in {} seconds, proceeding anyway ({} resources left)".format(hang_timeout, load_required.length));
+                    print("WARNING: All resources did not load in " + ρσ_str.format("{}", hang_timeout) + " seconds, proceeding anyway (" + ρσ_str.format("{}", load_required.length) + " resources left)");
                     proceed();
                 }
             };
 
             function onload() {
                 load_required.discard(this);
-                if (!load_required.length) {
+                if (!load_required.length && !proceeded) {
                     proceeded = true;
                     proceed();
                 }
@@ -16051,10 +16052,10 @@ return this.__repr__();
             if (!ans) {
                 ans = shortcuts_definition.ans = (function(){
                     var ρσ_d = Object.create(null);
-                    ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of of multiple individual files, scroll to the start of the current file."));
+                    ρσ_d["start_of_file"] = desc(['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home'], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file."));
                     ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
                     ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
-                    ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of of multiple individual files, scroll to the end of the current file."));
+                    ρσ_d["end_of_file"] = desc(['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End'], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file."));
                     ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
                     ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
                     ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
@@ -16076,6 +16077,8 @@ return this.__repr__();
                     ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
                     ρσ_d["reload_book"] = desc(['F5', 'Ctrl+r'], "ui", _("Reload book"));
                     ρσ_d["search_for_selection"] = desc(['Ctrl+s'], "ui", _("Search for next occurrence of selected text"));
+                    ρσ_d["extend_selection_by_word"] = desc(['Ctrl+Shift+ArrowRight'], "ui", _("Alter the current selection forward by a word"));
+                    ρσ_d["shrink_selection_by_word"] = desc(['Ctrl+Shift+ArrowLeft'], "ui", _("Alter the current selection backwards by a word"));
                     ρσ_d["show_chrome"] = desc(['Escape', 'ContextMenu'], "ui", _("Show the viewer controls"));
                     ρσ_d["goto_location"] = desc([';', ':', 'Shift+:', 'Shift+;', 'Ctrl+g'], "ui", _("Go to a specified book location or position"));
                     return ρσ_d;
@@ -17809,6 +17812,7 @@ return this.__repr__();
             IframeBoss.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(IframeBoss.prototype, "__bind_methods__", {value: function () {
+            this.modify_selection = IframeBoss.prototype.modify_selection.bind(this);
             this.set_forward_keypresses = IframeBoss.prototype.set_forward_keypresses.bind(this);
             this.initialize = IframeBoss.prototype.initialize.bind(this);
             this.onerror = IframeBoss.prototype.onerror.bind(this);
@@ -17877,6 +17881,7 @@ return this.__repr__();
                 ρσ_d["get_current_cfi"] = self.get_current_cfi;
                 ρσ_d["set_forward_keypresses"] = self.set_forward_keypresses;
                 ρσ_d["set_reference_mode"] = self.set_reference_mode;
+                ρσ_d["modify_selection"] = self.modify_selection;
                 return ρσ_d;
             }).call(this);
             self.comm = new IframeClient(handlers);
@@ -17885,6 +17890,15 @@ return this.__repr__();
         };
         IframeBoss.__argnames__ = IframeBoss.prototype.__init__.__argnames__;
         IframeBoss.__handles_kwarg_interpolation__ = IframeBoss.prototype.__init__.__handles_kwarg_interpolation__;
+        IframeBoss.prototype.modify_selection = function modify_selection(data) {
+            var self = this;
+            var sel;
+            sel = window.getSelection();
+            sel.modify("extend", data.direction, data.granularity);
+        };
+        if (!IframeBoss.prototype.modify_selection.__argnames__) Object.defineProperties(IframeBoss.prototype.modify_selection, {
+            __argnames__ : {value: ["data"]}
+        });
         IframeBoss.prototype.set_forward_keypresses = function set_forward_keypresses(data) {
             var self = this;
             self.forward_keypresses = data.forward;
@@ -28095,6 +28109,10 @@ return this.__repr__();
         Overlay.__handles_kwarg_interpolation__ = Overlay.prototype.__init__.__handles_kwarg_interpolation__;
         Overlay.prototype.oncontextmenu = function oncontextmenu(evt) {
             var self = this;
+            if (evt.target && evt.target.tagName && ρσ_in(evt.target.tagName.toLowerCase(), ["input", 
+            "textarea"])) {
+                return;
+            }
             evt.preventDefault();
             self.handle_escape();
         };
@@ -29344,6 +29362,10 @@ return this.__repr__();
                 self.overlay.show_metadata();
             } else if (data.name === "goto_location") {
                 self.overlay.show_ask_for_location();
+            } else if (data.name === "shrink_selection_by_word") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "backward", granularity: "word"})]));
+            } else if (data.name === "extend_selection_by_word") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["modify_selection"].concat([ρσ_desugar_kwargs({direction: "forward", granularity: "word"})]));
             }
         };
         if (!View.prototype.on_handle_shortcut.__argnames__) Object.defineProperties(View.prototype.on_handle_shortcut, {

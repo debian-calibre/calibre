@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import weakref
 
@@ -173,7 +174,7 @@ class Dialog(QDialog):
         self.resize(self.sizeHint())
         geom = self.prefs_for_persistence.get(name + '-geometry', None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         if hasattr(self, 'splitter'):
             state = self.prefs_for_persistence.get(name + '-splitter-state', None)
             if state is not None:

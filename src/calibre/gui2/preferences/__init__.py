@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 
 import textwrap
 
-from PyQt5.Qt import (QWidget, pyqtSignal, QCheckBox, QAbstractSpinBox,
+from PyQt5.Qt import (QWidget, pyqtSignal, QCheckBox, QAbstractSpinBox, QApplication,
     QLineEdit, QComboBox, Qt, QIcon, QDialog, QVBoxLayout,
     QDialogButtonBox)
 
@@ -382,7 +382,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     w.genesis(gui)
     w.initialize()
     if geom is not None:
-        d.restoreGeometry(geom)
+        QApplication.instance().safe_restore_geometry(d, geom)
     d.exec_()
     geom = bytearray(d.saveGeometry())
     gprefs[conf_name] = geom

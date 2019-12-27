@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import hashlib
@@ -296,10 +296,9 @@ class Container(ContainerBase):  # {{{
         for item in self.opf_xpath('//opf:manifest/opf:item[@href and @media-type]'):
             href = item.get('href')
             name = self.href_to_name(href, self.opf_name)
-            mt = item.get('media-type')
-            if name in self.mime_map and name != self.opf_name and mt:
+            if name in self.mime_map and name != self.opf_name:
                 # some epubs include the opf in the manifest with an incorrect mime type
-                self.mime_map[name] = mt
+                self.mime_map[name] = item.get('media-type')
 
     def data_for_clone(self, dest_dir=None):
         dest_dir = dest_dir or self.root

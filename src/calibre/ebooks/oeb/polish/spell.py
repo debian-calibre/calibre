@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -94,7 +94,7 @@ def add_words(text, node, words, file_name, locale, node_item):
         p = patterns()
         is_fr = locale.langcode == 'fra'
         for word in candidates:
-            sword = p.sanitize_invisible_pat.sub('', word)
+            sword = p.sanitize_invisible_pat.sub('', word).strip()
             elided_prefix = ''
             if is_fr:
                 m = p.fr_elision_pat.match(sword)

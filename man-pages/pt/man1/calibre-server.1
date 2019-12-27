@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "dezembro 19, 2019" "4.99.2" "calibre"
+.TH "CALIBRE-SERVER" "1" "dezembro 27, 2019" "4.7.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -61,7 +61,7 @@ Time (in seconds) to wait for a response from the server when making queries.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Escolha o tipo de autenticação usado.       Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
+Escolher o tipo de autenticação a usar.     Set the HTTP authentication mode used by the server. Set to \fB"\fPbasic\fB"\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB"\fPauto\fB"\fP, which will use \fB"\fPbasic\fB"\fP if SSL is configured otherwise it will use \fB"\fPdigest\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -81,7 +81,7 @@ Banir endereços IP que apresentem erros de autenticação continuados.        T
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Escolha o modo de listagem padrão de livros.        Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Escolher o modo de listagem padrão de livros.       Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Restringir exibição de campos de metadados definidos pelo utilizador.       Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Autenticação por senha para aceder ao servidor.     Normally, the server is un
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Voltar ao interface automaticamente detetado.       If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Por predefinição, a opção esta ativada.
+Voltar à interface automaticamente detetada.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -131,7 +131,7 @@ Registar pedidos HTTP 404 (Não encontrado).         Normally, the server logs a
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Divulgar sinal OPDS através do BonJour.     Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Por predefinição, a opção esta ativada.
+Divulgar sinal OPDS através de BonJour.     Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,12 +146,12 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Campos de metadados personalizados a ignorar.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+A interface sob a qual escutar ligações.    The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,12 +226,12 @@ Total time in seconds to wait for clean shutdown.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Caminho para o ficheiro do certificado SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Caminho para o ficheiro da chave privada SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Time (in seconds) after which an idle connection is closed.
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-Um prefixo a anteceder todos os URL.        Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Prefixo a anteceder todos os URL.   Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
 .UNINDENT
 .INDENT 0.0
 .TP

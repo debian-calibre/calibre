@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import struct
@@ -30,8 +30,10 @@ def is_ok():
 
 
 try:
+    from calibre.constants import filesystem_encoding
     from calibre.utils.config import dynamic
 except ImportError:
+    filesystem_encoding = 'mbcs'
     dynamic = {}
 
 
@@ -110,7 +112,7 @@ class Loop(QEventLoop):
 
 def process_path(x):
     if isinstance(x, bytes):
-        x = os.fsdecode(x)
+        x = x.decode(filesystem_encoding)
     return os.path.abspath(os.path.expanduser(x))
 
 
@@ -165,7 +167,7 @@ def run_file_dialog(
             data.append(serialize_string('FOLDER', initial_folder))
     if filename:
         if isinstance(filename, bytes):
-            filename = os.fsdecode(filename)
+            filename = filename.decode(filesystem_encoding)
         data.append(serialize_string('FILENAME', filename))
     if only_dirs:
         file_types = ()  # file types not allowed for dir only dialogs

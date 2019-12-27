@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 ''' Post installation script for linux '''
 
@@ -9,7 +11,7 @@ from subprocess import check_call, check_output
 from functools import partial
 
 from calibre import __appname__, prints, guess_type
-from calibre.constants import islinux, isbsd
+from calibre.constants import islinux, isbsd, ispy3
 from calibre.customize.ui import all_input_formats
 from calibre.ptempfile import TemporaryDirectory
 from calibre import CurrentDir
@@ -22,7 +24,7 @@ entry_points = {
              'ebook-meta           = calibre.ebooks.metadata.cli:main',
              'ebook-convert        = calibre.ebooks.conversion.cli:main',
              'ebook-polish         = calibre.ebooks.oeb.polish.main:main',
-             'markdown-calibre     = markdown.__main__:run',
+             'markdown-calibre     = calibre.ebooks.markdown.__main__:run',
              'web2disk             = calibre.web.fetch.simple:main',
              'calibre-server       = calibre.srv.standalone:main',
              'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
@@ -1141,7 +1143,7 @@ def write_appdata(key, entry, base, translators):
     for para in entry['description']:
         description.append(E.p(para))
         for lang, t in iteritems(translators):
-            tp = t.gettext(para)
+            tp = getattr(t, 'gettext' if ispy3 else 'ugettext')(para)
             if tp != para:
                 description.append(E.p(tp))
                 description[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
@@ -1158,7 +1160,7 @@ def write_appdata(key, entry, base, translators):
         type='desktop'
     )
     for lang, t in iteritems(translators):
-        tp = t.gettext(entry['summary'])
+        tp = getattr(t, 'gettext' if ispy3 else 'ugettext')(entry['summary'])
         if tp != entry['summary']:
             root.append(E.summary(tp))
             root[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)

@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -12,7 +12,7 @@ Test a binary calibre build to ensure that all needed binary images/libraries ha
 
 import os, ctypes, sys, unittest, time
 
-from calibre.constants import plugins, iswindows, islinux, isosx, plugins_loc
+from calibre.constants import plugins, iswindows, islinux, isosx, ispy3, plugins_loc
 from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
 
 is_ci = os.environ.get('CI', '').lower() == 'true'
@@ -30,8 +30,6 @@ class BuildTest(unittest.TestCase):
                     ctypes.WinDLL(native_string_type(os.path.join(base, x)))
                 except Exception as err:
                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
-        from Crypto.Cipher import AES
-        del AES
 
     @unittest.skipUnless(islinux, 'DBUS only used on linux')
     def test_dbus(self):
@@ -52,10 +50,6 @@ class BuildTest(unittest.TestCase):
         from calibre.spell.dictionary import build_test
         build_test()
 
-    def test_pychm(self):
-        from chm.chm import CHMFile, chmlib
-        del CHMFile, chmlib
-
     def test_chardet(self):
         from chardet import detect
         raw = 'mūsi Füße'.encode('utf-8')
@@ -71,8 +65,8 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(detector.result['encoding'], 'utf-8')
 
     def test_lzma(self):
-        import lzma
-        lzma.open
+        from calibre_lzma.xz import test_lzma2
+        test_lzma2()
 
     def test_html5lib(self):
         import html5lib.html5parser  # noqa
@@ -87,7 +81,11 @@ class BuildTest(unittest.TestCase):
         del soupsieve, bs4
 
     def test_zeroconf(self):
-        import zeroconf as z, ifaddr
+        if ispy3:
+            import zeroconf as z, ifaddr
+        else:
+            import calibre.utils.Zeroconf as z
+            ifaddr = None
         del z
         del ifaddr
 
@@ -165,8 +163,6 @@ class BuildTest(unittest.TestCase):
         for fmt in (fmt, fmt.encode('ascii')):
             x = strftime(fmt, t)
             au(x, 'strftime')
-            if isinstance(fmt, bytes):
-                fmt = fmt.decode('ascii')
             self.assertEqual(unicode_type(time.strftime(fmt.replace('%e', '%#d'), t)), x)
 
     def test_sqlite(self):

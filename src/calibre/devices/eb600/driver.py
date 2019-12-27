@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -324,6 +324,7 @@ class POCKETBOOK301(USBMS):
 class POCKETBOOK602(USBMS):
 
     name = 'PocketBook Pro 602/902 Device Interface'
+    gui_name = 'PocketBook'
     description    = _('Communicate with the PocketBook 515/602/603/902/903/Pro 912 reader.')
     author         = 'Kovid Goyal'
     supported_platforms = ['windows', 'osx', 'linux']
@@ -371,6 +372,7 @@ class POCKETBOOK360P(POCKETBOOK602):
 class POCKETBOOK701(USBMS):
 
     name = 'PocketBook 701 Device Interface'
+    gui_name = 'PocketBook'
     description = _('Communicate with the PocketBook 701')
     author = _('Kovid Goyal')
 

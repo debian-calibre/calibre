@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import json
@@ -24,6 +26,7 @@ from calibre.gui2 import (
     open_url, warning_dialog
 )
 from calibre.gui2.preferences import AbortCommit, ConfigWidgetBase, test_widget
+from calibre.gui2.widgets import HistoryLineEdit
 from calibre.srv.code import custom_list_template as default_custom_list_template
 from calibre.srv.embedded import custom_list_template, search_the_net_urls
 from calibre.srv.library_broker import load_gui_libraries
@@ -31,9 +34,9 @@ from calibre.srv.opts import change_settings, options, server_config
 from calibre.srv.users import (
     UserManager, create_user_data, validate_password, validate_username
 )
-from calibre.utils.shared_file import share_open
 from calibre.utils.icu import primary_sort_key
-from polyglot.builtins import unicode_type, as_bytes
+from calibre.utils.shared_file import share_open
+from polyglot.builtins import as_bytes, unicode_type
 
 try:
     from PyQt5 import sip
@@ -46,7 +49,7 @@ if iswindows and not isportable:
         exe_base = os.path.abspath(os.path.dirname(sys.executable))
         exe = os.path.join(exe_base, 'calibre.exe')
         if isinstance(exe, bytes):
-            exe = os.fsdecode(exe)
+            exe = exe.decode('mbcs')
         return exe
 
     def startup_shortcut_path():
@@ -184,9 +187,10 @@ class Path(QWidget):
         opt = options[name]
         self.l = l = QHBoxLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
-        self.text = t = QLineEdit(self)
+        self.text = t = HistoryLineEdit(self)
+        t.initialize('server-opts-{}'.format(name))
         t.setClearButtonEnabled(True)
-        t.textChanged.connect(self.changed_signal.emit)
+        t.currentTextChanged.connect(self.changed_signal.emit)
         l.addWidget(t)
 
         self.b = b = QToolButton(self)
@@ -206,6 +210,7 @@ class Path(QWidget):
         ans = choose_files(self, 'choose_path_srv_opts_' + self.dname, _('Choose a file'), select_only_single_file=True)
         if ans:
             self.set(ans[0])
+            self.save_history()
 
 
 class Choices(QComboBox):

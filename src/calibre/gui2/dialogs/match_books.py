@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env  python2
 # vim:fileencoding=utf-8
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal kovid@kovidgoyal.net'
@@ -60,7 +60,7 @@ class MatchBooks(QDialog, Ui_MatchBooks):
                         gprefs.get('match_books_dialog_books_table_widths', None)
             geom = gprefs.get('match_books_dialog_geometry', None)
             if geom:
-                self.restoreGeometry(QByteArray(geom))
+                QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
         except:
             pass
 

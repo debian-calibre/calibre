@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 __license__   = 'GPL v3'
 __copyright__ = '2010-2012, , Timothy Legge <timlegge at gmail.com> and David Forrester <davidfor@internode.on.net>'
 __docformat__ = 'restructuredtext en'
@@ -6,7 +6,7 @@ __docformat__ = 'restructuredtext en'
 import os, time, sys
 from functools import cmp_to_key
 
-from calibre.constants import preferred_encoding, DEBUG
+from calibre.constants import preferred_encoding, DEBUG, ispy3
 from calibre import isbytestring, force_unicode
 from calibre.utils.icu import sort_key
 
@@ -113,7 +113,8 @@ class Book(Book_):
 
         return super(Book,self).__unicode__() + u"\n" + ans
 
-    __str__ = __unicode__
+    if ispy3:
+        __str__ = __unicode__
 
 
 class ImageWrapper(object):

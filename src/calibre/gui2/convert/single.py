@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import shutil
 
@@ -9,7 +10,7 @@ from PyQt5.Qt import (
     QAbstractListModel, QCheckBox, QComboBox, QCoreApplication, QDialog,
     QDialogButtonBox, QFont, QFrame, QGridLayout, QHBoxLayout, QIcon, QLabel,
     QListView, QModelIndex, QScrollArea, QSize, QSizePolicy, QSpacerItem,
-    Qt, QTextEdit, QWidget
+    Qt, QTextEdit, QWidget, QApplication
 )
 
 from calibre.customize.conversion import OptionRecommendation
@@ -93,7 +94,7 @@ class Config(QDialog):
         self.groups.setMouseTracking(True)
         geom = gprefs.get('convert_single_dialog_geom', None)
         if geom:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         else:
             self.resize(self.sizeHint())
 

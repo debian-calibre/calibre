@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
 import os
@@ -508,7 +509,7 @@ class EbookViewer(MainWindow):
         state = vprefs['main_window_state']
         geom = vprefs['main_window_geometry']
         if geom and get_session_pref('remember_window_geometry', default=False):
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         if state:
             self.restoreState(state, self.MAIN_WINDOW_STATE_VERSION)
             self.inspector_dock.setVisible(False)

@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python2
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
@@ -41,7 +41,7 @@ class EditAuthorsDialog(QDialog, Ui_EditAuthorsDialog):
                         gprefs.get('manage_authors_table_widths', None)
             geom = gprefs.get('manage_authors_dialog_geometry', None)
             if geom:
-                self.restoreGeometry(QByteArray(geom))
+                QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
         except Exception:
             pass
 

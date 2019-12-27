@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import sys
@@ -10,7 +11,7 @@ from functools import partial
 from threading import Thread
 
 from PyQt5.Qt import (
-    QCheckBox, QCursor, QDialog, QDialogButtonBox, QFrame, QGridLayout, QIcon,
+    QCheckBox, QCursor, QDialog, QDialogButtonBox, QFrame, QGridLayout, QIcon, QApplication,
     QInputDialog, QItemSelectionModel, QKeySequence, QLabel, QMenu, QPushButton,
     QSize, QSizePolicy, QStackedWidget, Qt, QToolButton, QTreeWidget,
     QTreeWidgetItem, QVBoxLayout, QWidget, pyqtSignal
@@ -1030,7 +1031,7 @@ class TOCEditor(QDialog):  # {{{
         self.resize(950, 630)
         geom = self.prefs.get('toc_editor_window_geom', None)
         if geom is not None:
-            self.restoreGeometry(bytes(geom))
+            QApplication.instance().safe_restore_geometry(self, bytes(geom))
         self.stacks.currentChanged.connect(self.update_history_buttons)
         self.update_history_buttons()
 

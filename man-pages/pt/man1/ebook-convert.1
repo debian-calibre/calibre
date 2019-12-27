@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "dezembro 19, 2019" "4.99.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "dezembro 27, 2019" "4.7.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -128,7 +128,7 @@ Opções para controlar o processamento do ficheiro de destino epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Desligar a divisão nas quebras de página. Normalmente os ficheiros de origem são automaticamente divididos nas quebras de página em dois ficheiros. Isto faz com que o livro de destino seja analisado mais rapidamente e com menos recursos. No entanto a divisão é lenta e se o seu ficheiro de origem tiver muitas quebras de página, deve desligar a divisão de quebras de página.
+Desligar a separação nas quebras de página. Normalmente os ficheiros de origem são automaticamente separados, nas quebras de página, em dois ficheiros. Isto faz com que o livro de destino seja analisado mais rapidamente e ocupando menos recursos. No entanto a separação é um processo lento e se o seu ficheiro de origem tiver muitas quebras de página deve desligar a separação nas quebras de página.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ Inserir um Índice em linha no final do livro em vez de no início.
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+A versão do ficheiro EPUB a ser gerado. O EPUB 2 é o mais compatível, use apenas o EPUB 3 se achar que realmente precisa dele.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -425,7 +425,7 @@ Uma expressão XPath para apagar os títulos dos capítulos. O padrão é consid
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Especifique como marcar os capítulos detetados. Um valor \fB"\fPquebra de página\fB"\fP vai inserir quebras de página antes dos capítulos. Um valor \fB"\fPregra\fB"\fP vai inserir uma linha antes dos capítulos. Um valor \fB"\fPnenhum\fB"\fP vai desativar a marcação de capítulos e um valor \fB"\fPambos\fB"\fP irá usar tanto quebras de página como linhas para marcar os capítulos.
+Especificar como marcar os capítulos detetados. Um valor \fB"\fPquebra de página\fB"\fP vai inserir quebras de página antes dos capítulos. Um valor \fB"\fPregra\fB"\fP vai inserir uma linha antes dos capítulos. Um valor \fB"\fPnenhum\fB"\fP vai desativar a marcação de capítulos e um valor \fB"\fPambos\fB"\fP irá usar tanto quebras de página como linhas para marcar os capítulos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -459,7 +459,7 @@ Uma expressão XPath para detetar a localização no documento a partir do qual 
 .UNINDENT
 .SH ÍNDICE
 .sp
-Controlar a geração automática do Índice. Por omissão, se o ficheiro de origem tem um Índice, este é utilizado em vez do gerado automaticamente.
+Controlar a geração automática de um índice. Por padrão, se o ficheiro de origem tiver um índice, este é utilizado em vez do gerado automaticamente.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -468,7 +468,7 @@ Quando criar um Índice das ligações a partir de documentos de entrada, permit
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas ao primeiro nível do índice . Se isto for especificado, terá precedência em relação a outras formas de deteção automática. Consulte o tutorial do XPath no Manual do utilizador do Calibre para exemplos.
+Expressão XPath que especifica todas as etiquetas que deverão ser adicionadas ao primeiro nível do índice. Se isto for especificado, terá precedência em relação a outras formas de deteção automática. Consulte o tutorial do XPath no Manual do utilizador do Calibre para exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP

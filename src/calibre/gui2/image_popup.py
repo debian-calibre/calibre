@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -164,7 +164,7 @@ class ImageView(QDialog):
         self.resize(QSize(int(geom.width()/2.5), geom.height()-50))
         geom = gprefs.get(self.geom_name, None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         try:
             self.current_image_name = unicode_type(self.current_url.toString(NO_URL_FORMATTING)).rpartition('/')[-1]
         except AttributeError:

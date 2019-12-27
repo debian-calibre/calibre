@@ -10,14 +10,15 @@
 # Paulo_Neto <layoutbr@lexxa.com.br>, 2014
 # Romulo Oliveira Barros <romuloobarros@gmail.com>, 2015
 # Thiago Oliveira <thiago.eec@gmail.com>, 2018
+# Victor Palma, 2019
 # Wagner Marques <wagnermarques00@hotmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 16:00+0530\n"
-"PO-Revision-Date: 2019-09-16 05:48+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2019-12-25 09:54+0530\n"
+"PO-Revision-Date: 2019-12-20 17:30+0000\n"
+"Last-Translator: Victor Palma\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +68,7 @@ msgstr "Introdução"
 msgid ""
 "The first thing to understand about the conversion system is that it is "
 "designed as a pipeline. Schematically, it looks like this:"
-msgstr "A primeira coisa a entender sobre o sistema de conversão é que ele é projetado como um processo. Esquematicamente, ele é assim:"
+msgstr "A primeira coisa a entender sobre o sistema de conversão é que ele é projetado como um processo e pode ser esquematizado da seguinte forma:"
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:49
 msgid ""
@@ -78,7 +79,7 @@ msgid ""
 " format. Some formats convert much better than others. A list of the best "
 "source formats for conversion is available :ref:`here <best-source-"
 "formats>`."
-msgstr ""
+msgstr "Primeiramente, o formato de entrada é convertido em XHTML pelo *plugin de entrada* adequado. Então o HTML é *transformado*. Por fim, o XHTML processado é convertido no formato de saída pelo *plugin de saída* apropriado. Os resultados da conversão podem variar muito, de acordo com o formado de entrada (alguns são mais bem convertidos do que outros). Uma lista dos melhores formatos de origem para conversão está disponível :ref:`aqui <best-source-formats>`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:56
 msgid ""
@@ -92,7 +93,7 @@ msgid ""
 "XHTML internally, the various transforms will be applied to the XHTML and "
 "then the *Output plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
-msgstr ""
+msgstr "As transformações sobre XHTML de saída são onde todo o trabalho acontece. Há diversas transformações, como a inserção dos metadados do livro como página no início do livro, a criação do Sumário com base nos títulos dos capítulos e o ajuste proporcional do tamanho das fontes. Importante lembrar que todas as transformações no XHTML de saída se devem ao *plugin de entrada*, e não ao arquivo de entrada propriamente. Assim, para ser convertido de RTF em EPUB, o arquivo é antes convertido internamente em XHTML, que recebe as várias transformações e só então o *plugin de saída* cria o arquivo EPUB, gerando automaticamente todos os metadados, o Sumário etc."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:65
 msgid ""
@@ -123,7 +124,7 @@ msgstr "entrada"
 msgid ""
 "This contains the HTML output by the Input plugin. Use this to debug the "
 "Input plugin."
-msgstr ""
+msgstr "Contém o HTML de saída gerado pelo plugin de entrada. Use-o para depurar o plugin de entrada."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:76
 msgid "parsed"
@@ -133,7 +134,7 @@ msgstr "analisado"
 msgid ""
 "The result of pre-processing and converting to XHTML the output from the "
 "Input plugin. Use to debug structure detection."
-msgstr ""
+msgstr "É o resultada do pré-processamento da saída e conversão em XHTML pelo plugin de entrada. Use-o para depurar a detecção da estrutura."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:77
 msgid "structure"
@@ -153,7 +154,7 @@ msgstr "processado"
 msgid ""
 "Just before the e-book is passed to the Output plugin. Use to debug the "
 "Output plugin."
-msgstr ""
+msgstr "Logo antes de o e-book passar para o plugin de saída. Use-o para depurar o plugin de saída."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:81
 msgid ""
@@ -163,14 +164,14 @@ msgid ""
 "subsequent conversions. To do this use the :guilabel:`Edit meta information`"
 " dialog to add the ZIP file as a format for the book and then, in the top "
 "left corner of the conversion dialog, select ZIP as the input format."
-msgstr ""
+msgstr "Se quiser editar o documento de entrada antes de o converter, o melhor é editar os arquivos no subdiretório :file:`entrada`, depois comprimi-los e usar o arquivo ZIP como formato de entrada para conversão. Use a janela :guilabel:`Editar metadados` para adicionar o arquivo ZIP como formato de livro e, em seguida, selecione ZIP como formato de entrada no canto superior esquerdo da janela de conversão."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:87
 msgid ""
 "This document will deal mainly with the various transforms that operate on "
 "the intermediate XHTML and how to control them. At the end are some tips "
 "specific to each input/output format."
-msgstr ""
+msgstr "Aqui são tratadas várias transformações que atuam no XHTML intermediário e como controlá-las. Ao final, são apresentadas dicas específicas para cada tipo de formato de entrada/saída."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:91
 msgid "Look & feel"
@@ -180,7 +181,7 @@ msgstr "Aparência"
 msgid ""
 "This group of options controls various aspects of the look and feel of the "
 "converted e-book."
-msgstr ""
+msgstr "Esse conjunto de opções controla vários aspectos da aparência do e-book convertido."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:102
 msgid "Fonts"
@@ -212,7 +213,7 @@ msgid ""
 "Normally, calibre will automatically choose a base font size appropriate to "
 "the output profile you have chosen (see :ref:`page-setup`). However, you can"
 " override this here in case the default is not suitable for you."
-msgstr ""
+msgstr "Via de regra, o calibre escolhe automaticamente um tamanho-padrão de fonte adequado para o perfil de saída que você escolheu (leia :ref:`page-setup`). No entanto, você pode alterá-lo aqui, caso o padrão não esteja adequado."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:121
 msgid ""
@@ -268,14 +269,14 @@ msgid ""
 "heights. However, this is something of a blunt weapon and should be used "
 "sparingly. If you want to adjust the line heights for some section of the "
 "input, it's better to use the :ref:`Extra CSS <extra-css>`."
-msgstr ""
+msgstr "Uma configuração relacionada é a :guilabel:`Altura da linha`, que controla o tamanho vertical das linhas de texto. Por padrão (altura da linha 0), não há manipulação da altura das linhas. Se você especificar um valor diferente, a altura vai ser aplicada a todos os locais que não tiverem seu próprio valor. No entanto, trata-se de um recurso arriscado e deve ser usado com cautela. Para ajustar a altura de linha de uma seção do arquivo de entrada, prefira :ref:`Extra CSS <extra-css>`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:160
 msgid ""
 "In this section you can also tell calibre to embed any referenced fonts into"
 " the book. This will allow the fonts to work on reader devices even if they "
 "are not available on the device."
-msgstr ""
+msgstr "Nessa seção, você ainda pode configurar o calibre para embutir as fontes citadas no livro, o que permite que as fontes operem no dispositivo de leitura, mesmo que não estejam disponíveis nele."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:165
 msgid "Text"
@@ -288,7 +289,7 @@ msgid ""
 "others do not. Normally, calibre will preserve the justification in the "
 "original document. If you want to override it you can use the "
 ":guilabel:`Text justification` option in this section."
-msgstr ""
+msgstr "O texto pode ou não ser justificado. Um texto justificado apresenta mais espaço entre as palavras para uniformizar a margem direita. Nem todo mundo gosta de texto justificado. Normalmente, o calibre retém a justificação no documento original. Para alterar o padrão, use a opção :guilabel:`Texto justificado` nessa seção."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:173
 msgid ""
@@ -297,7 +298,7 @@ msgid ""
 " alternatives. Note that this algorithm is not perfect so it is worth "
 "reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
 "punctuation` is also available."
-msgstr ""
+msgstr "Você pode ainda configurar o calibre para :guilabel:`Pontuação inteligente`, que substitui aspas, traços e reticências sem formatação pelas alternativas tipográficas corretas. O algoritmo, no entanto, não é perfeito, e o resultado precisa ser revisto. Também está disponível um algorítimo contrário, a :guilabel:`Pontuação não inteligente`."
 
 #: ../../home/kovid/work/calibre/manual/conversion.rst:178
 msgid ""

@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env  python2
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
@@ -157,7 +157,7 @@ class Quickview(QDialog, Ui_Quickview):
             if not self.is_pane:
                 geom = gprefs.get('quickview_dialog_geometry', None)
                 if geom:
-                    self.restoreGeometry(QByteArray(geom))
+                    QApplication.instance().safe_restore_geometry(self, QByteArray(geom))
         except:
             pass
 

@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import with_statement, print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,8 +11,8 @@ from collections import defaultdict
 from locale import normalize as normalize_locale
 from functools import partial
 
-from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json
-from setup.parallel_build import batched_parallel_jobs
+from setup import Command, __appname__, __version__, require_git_master, build_cache_dir, edit_file, dump_json, ispy3
+from setup.parallel_build import parallel_check_output
 from polyglot.builtins import codepoint_to_chr, iteritems, range
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
@@ -139,17 +139,23 @@ class POT(Command):  # {{{
         self.info('Generating translation template for website')
         self.wn_path = os.path.expanduser('~/work/srv/main/static/generate.py')
         data = subprocess.check_output([self.wn_path, '--pot', '/tmp/wn'])
-        bdir = os.path.join(self.TRANSLATIONS, 'website')
-        if not os.path.exists(bdir):
-            os.makedirs(bdir)
-        pot = os.path.join(bdir, 'website.pot')
-        with open(pot, 'wb') as f:
-            f.write(self.pot_header().encode('utf-8'))
-            f.write(b'\n')
-            f.write(data)
-        self.info('Website translations:', os.path.abspath(pot))
-        self.upload_pot(resource='website')
-        self.git(['add', os.path.abspath(pot)])
+        data = json.loads(data)
+
+        def do(name):
+            messages = data[name]
+            bdir = os.path.join(self.TRANSLATIONS, name)
+            if not os.path.exists(bdir):
+                os.makedirs(bdir)
+            pot = os.path.abspath(os.path.join(bdir, name + '.pot'))
+            with open(pot, 'wb') as f:
+                f.write(self.pot_header().encode('utf-8'))
+                f.write(b'\n')
+                f.write('\n'.join(messages).encode('utf-8'))
+            self.upload_pot(resource=name)
+            self.git(['add', pot])
+
+        do('website')
+        do('changelog')
 
     def pot_header(self, appname=__appname__, version=__version__):
         return textwrap.dedent('''\
@@ -278,9 +284,11 @@ class Translations(POT):  # {{{
         self.freeze_locales()
         self.compile_user_manual_translations()
         self.compile_website_translations()
+        self.compile_changelog_translations()
 
     def compile_group(self, files, handle_stats=None, file_ok=None, action_per_file=None):
-        ok_files = []
+        from calibre.constants import islinux
+        jobs, ok_files = [], []
         hashmap = {}
 
         def stats_cache(src, data=None):
@@ -307,22 +315,20 @@ class Translations(POT):  # {{{
                         handle_stats(src, stats_cache(src))
             else:
                 if file_ok is None or file_ok(data, src):
-                    # self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
+                    self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
+                    if islinux:
+                        msgfmt = ['msgfmt']
+                    else:
+                        msgfmt = [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py')]
+                    jobs.append(msgfmt + ['--statistics', '-o', dest, src])
                     ok_files.append((src, dest))
                     hashmap[src] = current_hash
             if action_per_file is not None:
                 action_per_file(src)
 
-        self.info(f'\tCompiling {len(ok_files)} files')
-        items = []
-        results = batched_parallel_jobs(
-            [sys.executable, self.j(self.SRC, 'calibre', 'translations', 'msgfmt.py'), 'STDIN'],
-            ok_files)
-        for (src, dest), nums in zip(ok_files, results):
-            items.append((src, dest, nums))
-
-        for (src, dest, nums) in items:
+        for (src, dest), line in zip(ok_files, parallel_check_output(jobs, self.info)):
             self.write_cache(open(dest, 'rb').read(), hashmap[src], src)
+            nums = tuple(map(int, re.findall(r'\d+', line)))
             stats_cache(src, nums)
             if handle_stats is not None:
                 handle_stats(src, nums)
@@ -461,7 +467,7 @@ class Translations(POT):  # {{{
                 if current_hash == saved_hash:
                     raw = saved_data
                 else:
-                    # self.info('\tParsing ' + os.path.basename(src))
+                    self.info('\tParsing ' + os.path.basename(src))
                     raw = None
                     po_data = data.decode('utf-8')
                     data = json.loads(msgfmt(po_data))
@@ -518,12 +524,12 @@ class Translations(POT):  # {{{
     def stats(self):
         return self.j(self.d(self.DEST), 'stats.calibre_msgpack')
 
-    def compile_website_translations(self):
+    def _compile_website_translations(self, name='website', threshold=50):
         from calibre.utils.zipfile import ZipFile, ZipInfo, ZIP_STORED
         from calibre.ptempfile import TemporaryDirectory
         from calibre.utils.localization import get_iso639_translator, get_language, get_iso_language
-        self.info('Compiling website translations...')
-        srcbase = self.j(self.d(self.SRC), 'translations', 'website')
+        self.info('Compiling', name, 'translations...')
+        srcbase = self.j(self.d(self.SRC), 'translations', name)
         fmap = {}
         files = []
         stats = {}
@@ -549,7 +555,7 @@ class Translations(POT):  # {{{
             self.compile_group(files, handle_stats=handle_stats)
 
             for locale, translated in iteritems(stats):
-                if translated >= 20:
+                if translated >= 50:
                     with open(os.path.join(tdir, locale + '.mo'), 'rb') as f:
                         raw = f.read()
                     zi = ZipInfo(os.path.basename(f.name))
@@ -563,18 +569,25 @@ class Translations(POT):  # {{{
                 if l == 'en':
                     t = get_language
                 else:
-                    t = get_iso639_translator(l).gettext
+                    t = getattr(get_iso639_translator(l), 'gettext' if ispy3 else 'ugettext')
                     t = partial(get_iso_language, t)
                 lang_names[l] = {x: t(x) for x in dl}
             zi = ZipInfo('lang-names.json')
             zi.compress_type = ZIP_STORED
             zf.writestr(zi, json.dumps(lang_names, ensure_ascii=False).encode('utf-8'))
+            return done
+
+    def compile_website_translations(self):
+        done = self._compile_website_translations()
         dest = self.j(self.d(self.stats), 'website-languages.txt')
         data = ' '.join(sorted(done))
         if not isinstance(data, bytes):
             data = data.encode('utf-8')
         with open(dest, 'wb') as f:
             f.write(data)
+
+    def compile_changelog_translations(self):
+        self._compile_website_translations('changelog', 0)
 
     def compile_user_manual_translations(self):
         self.info('Compiling user manual translations...')

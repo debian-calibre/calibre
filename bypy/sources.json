@@ -79,16 +79,6 @@
     },
 
     {
-        "name": "xz",
-        "os": "macos,linux",
-        "unix": {
-            "filename": "xz-5.2.4.tar.gz",
-            "hash": "md5:5ace3264bdd00c65eeec2891346f65e6",
-            "urls": ["https://tukaani.org/xz/{filename}"]
-        }
-    },
-
-    {
         "name": "unrar",
         "unix": {
             "filename": "unrarsrc-5.7.4.tar.gz",
@@ -166,9 +156,14 @@
     {
         "name": "python",
         "unix": {
-            "filename": "Python-3.8.0.tar.xz",
-            "hash": "sha256:b356244e13fb5491da890b35b13b2118c3122977c2cd825e3eb6e7d462030d84",
-            "urls": ["https://www.python.org/ftp/python/3.8.0/{filename}"]
+            "filename": "Python-2.7.16.tar.xz",
+            "hash": "sha256:f222ef602647eecb6853681156d32de4450a2c39f4de93bd5b20235f2e660ed7",
+            "urls": ["https://www.python.org/ftp/python/2.7.16/{filename}"]
+        },
+        "windows": {
+            "filename":"python-584870604fd8524e17bc2c067595b0210411319e.tar.gz",
+            "hash":"sha256:4f1833cac526f209de5b428d517cbd7a7923f13b89ba056e239dd8aa15894b7d",
+            "urls":["github:kovidgoyal/cpython"]
         }
     },
 
@@ -533,9 +528,9 @@
         "os": "windows",
         "python": 2,
         "windows": {
-            "filename":"pywin32-227.zip",
-            "hash":"sha256:f82946fb29d55a27b3abcd0b527ef2e8da6ea05b01dfcc40bfc14847b7673e8e",
-            "urls":["https://github.com/mhammond/pywin32/archive/b227.zip"]
+            "filename":"pywin32-224.zip",
+            "hash":"sha256:fa01a3b9f5e6afd0412013b216d40120b92bbc575dbb3d1a0afb45d8bc1c88d8",
+            "urls":["https://github.com/mhammond/pywin32/archive/b224.zip"]
         }
     },
 
@@ -553,15 +548,6 @@
         "unix": {
             "filename": "lxml-4.3.3.tar.gz",
             "hash": "sha256:4a03dd682f8e35a10234904e0b9508d705ff98cf962c5851ed052e9340df3d90",
-            "urls": ["pypi"]
-        }
-    },
-
-    {
-        "name": "pychm",
-        "unix": {
-            "filename": "pychm-0.8.6.tar.gz",
-            "hash": "sha256:26606fec1e30cf7506c7afa943460c31e8dac87f35b7f178f437574d654cf672",
             "urls": ["pypi"]
         }
     },
@@ -705,10 +691,10 @@
     },
 
     {
-        "name": "pycryptodome",
+        "name": "pycrypto",
         "unix": {
-            "filename": "pycryptodome-3.9.4.tar.gz",
-            "hash": "sha256:a168e73879619b467072509a223282a02c8047d932a48b74fbd498f27224aa04",
+            "filename": "pycrypto-2.6.1.tar.gz",
+            "hash": "sha256:f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c",
             "urls": ["pypi"]
         }
     },
@@ -744,8 +730,8 @@
     {
         "name": "pillow",
         "unix": {
-            "filename": "Pillow-6.2.1.tar.gz",
-            "hash": "sha256:bf4e972a88f8841d8fdc6db1a75e0f8d763e66e3754b03006cbc3854d89f1cb1",
+            "filename": "Pillow-6.0.0.tar.gz",
+            "hash": "sha256:809c0a2ce9032cbcd7b5313f71af4bdc5c8c771cb86eb7559afd954cab82ebb5",
             "urls": ["pypi"]
         }
     },
@@ -784,6 +770,16 @@
         "unix": {
             "filename": "zeroconf-0.21.3.tar.gz",
             "hash": "sha256:5b52dfdf4e665d98a17bf9aa50dea7a8c98e25f972d9c1d7660e2b978a1f5713",
+            "urls": ["pypi"]
+        }
+    },
+
+    {
+        "name": "enum34",
+		"python": "<3",
+        "unix": {
+            "filename": "enum34-1.1.6.tar.gz",
+            "hash": "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1",
             "urls": ["pypi"]
         }
     },

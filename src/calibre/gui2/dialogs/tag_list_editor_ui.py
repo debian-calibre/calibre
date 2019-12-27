@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/dialogs/tag_list_editor.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -30,6 +30,7 @@ class Ui_TagListEditor(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.search_box.sizePolicy().hasHeightForWidth())
         self.search_box.setSizePolicy(sizePolicy)
+        self.search_box.setClearButtonEnabled(True)
         self.search_box.setObjectName("search_box")
         self.horizontalLayout_11.addWidget(self.search_box)
         self.search_button = QtWidgets.QPushButton(TagListEditor)
@@ -75,9 +76,7 @@ class Ui_TagListEditor(object):
         self.table.setRowCount(0)
         self.gridlayout.addWidget(self.table, 2, 1, 1, 1)
         self.buttonBox = QtWidgets.QDialogButtonBox(TagListEditor)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.buttonBox.setCenterButtons(True)
         self.buttonBox.setObjectName("buttonBox")
         self.gridlayout.addWidget(self.buttonBox, 3, 0, 1, 2)
         self.label.setBuddy(self.search_box)

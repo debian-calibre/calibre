@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -186,7 +186,7 @@ def create_defs():
     defs['qv_dclick_changes_column'] = True
     defs['qv_retkey_changes_column'] = True
     defs['qv_follows_column'] = False
-    defs['book_details_narrow_comments_layout'] = 'float'
+    defs['book_details_comments_heading_pos'] = 'hide'
     defs['book_list_split'] = False
     defs['wrap_toolbar_text'] = False
     defs['dnd_merge'] = True
@@ -973,6 +973,19 @@ class Application(QApplication):
             if cft >= 0:
                 self.setCursorFlashTime(int(cft))
 
+    def safe_restore_geometry(self, widget, geom):
+        # See https://bugreports.qt.io/browse/QTBUG-77385
+        if not geom:
+            return
+        restored = widget.restoreGeometry(geom)
+        screen_rect = self.desktop().availableGeometry(widget)
+        if not widget.geometry().intersects(screen_rect):
+            w = min(widget.width(), screen_rect.width() - 10)
+            h = min(widget.height(), screen_rect.height() - 10)
+            widget.resize(w, h)
+            widget.move((screen_rect.width() - w) // 2, (screen_rect.height() - h) // 2)
+        return restored
+
     def setup_ui_font(self):
         f = QFont(QApplication.font())
         q = (f.family(), f.pointSize())
@@ -1447,13 +1460,12 @@ empty_index = empty_model.index(0)
 def set_app_uid(val):
     import ctypes
     from ctypes import wintypes
-    from ctypes import HRESULT
     try:
         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
     except Exception:  # Vista has no app uids
         return False
     AppUserModelID.argtypes = [wintypes.LPCWSTR]
-    AppUserModelID.restype = HRESULT
+    AppUserModelID.restype = wintypes.HRESULT
     try:
         AppUserModelID(unicode_type(val))
     except Exception as err:

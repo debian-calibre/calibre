@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "december 19, 2019" "4.99.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "december 27, 2019" "4.7.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -71,9 +71,9 @@ Below are the options that are common to all conversion, followed by the
 options specific to every input and output format.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%FORRÁS BEÁLLÍTÁSOK\fP
+\fI\%BEMENET\-BEÁLLÍTÁSOK\fP
 .IP \(bu 2
-\fI\%KIMENETI BEÁLLÍTÁSOK\fP
+\fI\%KIMENET\-BEÁLLÍTÁSOK\fP
 .IP \(bu 2
 \fI\%MEGJELENÉS\fP
 .IP \(bu 2
@@ -85,14 +85,14 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%TARTALOMJEGYZÉK\fP
 .IP \(bu 2
-\fI\%METAADAT\fP
+\fI\%METAADATOK\fP
 .IP \(bu 2
 \fI\%HIBAKERESÉS\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-ennek a súgónak a megjelenítése és kilépés
+súgó megjelenítése és kilépés
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -114,17 +114,17 @@ Specify the output profile. The output profile tells the conversion system how t
 .B \-\-version
 program verziójának megjelenítése és kilépés
 .UNINDENT
-.SH FORRÁS BEÁLLÍTÁSOK
+.SH BEMENET-BEÁLLÍTÁSOK
 .sp
-A forrás mobi fájlon végzett műveletek beállítása
+A(z) mobi bemeneti fájl feldolgozását vezérlő kapcsolók
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
 A forrás dokumentum karakterkódolásának meghatározása. Ez felülírja a dokumentum eredetei beállításait. Különösen hasznos olyan dokumentumoknál, ahol nincs, vagy hibásan van beállítva a karakterkódolás.
 .UNINDENT
-.SH KIMENETI BEÁLLÍTÁSOK
+.SH KIMENET-BEÁLLÍTÁSOK
 .sp
-A epub kimenethez használható kapcsolók
+A(z) epub kimenet feldolgozását vezérlő kapcsolók
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
@@ -509,9 +509,9 @@ Ha ennél kevesebb fejezet detektálható automatikusan, akkor a tartalomjegyzé
 .B \-\-use\-auto\-toc
 Általában ha a forrásfájl tartalmaz Tartalomjegyzéket, az kerül felhasználásra az automatikusan generált helyett. Ezzel a beállítással mindig az automatikusan generált lesz használva.
 .UNINDENT
-.SH METAADAT
+.SH METAADATOK
 .sp
-A kimenet metaadat beállításai
+A kimenet metaadat beállításaizz
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
