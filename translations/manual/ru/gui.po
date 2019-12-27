@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 07:14+0530\n"
-"PO-Revision-Date: 2019-11-27 22:29+0000\n"
+"POT-Creation-Date: 2019-12-25 09:54+0530\n"
+"PO-Revision-Date: 2019-12-21 21:46+0000\n"
 "Last-Translator: Родион Р.\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -426,7 +426,7 @@ msgstr "**Переименовать библиотеку**: позволяет 
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:182
 msgid "**Pick a random book**: Chooses a random book in the library for you"
-msgstr ""
+msgstr "**Выбрать случайную книгу**: выбирает для вас случайную книгу из библиотеки"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:183
 msgid "**Remove library**: Allows you to unregister a library from calibre."
@@ -436,7 +436,7 @@ msgstr "**Удалить библиотеку**: позволяет отмени
 msgid ""
 "**Export/import all calibre data**: Allows you to either export calibre data"
 " for migration to a new computer or import previously exported data."
-msgstr ""
+msgstr "**Экспорт/импорт всех данных calibre**: позволяет либо экспортировать данные calibre для переноса на новый компьютер, либо импортировать экспортированные ранее данные."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:185
 msgid ""
@@ -444,7 +444,7 @@ msgid ""
 "between multiple libraries that you have created or attached to. This list "
 "contains only the 5 most frequently used libraries. For the complete list, "
 "use the Quick Switch menu."
-msgstr ""
+msgstr "**<library name>**: действия 7, 8 и т. д. дают возможность мгновенно переключаться между несколькими созданными или присоединёнными библиотеками. В этом списке только 5 наиболее часто используемых библиотек. Полный список см. в меню «Быстрое переключение»."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:186
 msgid ""
@@ -802,7 +802,7 @@ msgid ""
 "appears anywhere in the indicated metadata. Two other kinds of searches are "
 "available: equality search and search using `regular expressions "
 "<https://en.wikipedia.org/wiki/Regular_expression>`_."
-msgstr "Поиск по умолчанию «содержит». Элемент соответствует, если строка поиска отображается в любом месте указанных метаданных. Доступны два других вида поиска: поиск равенства и поиск с использованием `регулярных выражений <https://en.wikipedia.org/wiki/Regular_expression>`_."
+msgstr "Поиск по умолчанию — «содержит». Элемент соответствует, если искомая строчка встречается где-либо в указанных метаданных. Доступны два других вида поиска: поиск равенства и поиск с использованием `регулярных выражений <https://en.wikipedia.org/wiki/Regular_expression>`_."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:346
 msgid ""
@@ -817,13 +817,13 @@ msgid ""
 "For example, to match a literal parenthesis you must enter ``\\\\(``. "
 "Regular expression searches are 'contains' searches unless the expression "
 "contains anchors."
-msgstr "Поиск по равномерности указывается в строке поиска префиксом - знаком равенства (=). Например, запрос ``tag:\"= science\"`` будет соответствовать \"science\", но не \"science fiction\" или \"hard science\". Поиск регулярными выражениями указывается путем префикса строки поиска тильдой (~). Любое `Python-совместимое регулярное выражение <https://docs.python.org/2/library/re.html>` _ может использоваться. Обратите внимание, что обратные косые черты, используемые для исключения специальных символов в регулярных выражениях, д.б. удвоены, поскольку при анализе запроса будут удалены одиночные обратные слэши. Напр., чтобы сопоставить буквенную скобку, нужно ввести ``\\\\(``. Поиск в регулярном выражении содержит 'contains' искомое, если выражение не содержит якоря."
+msgstr "Поиск равенства обозначается префиксом в строке поиска — знаком равенства (=). Например, запрос ``tag:\"=science\"`` будет соответствовать «science», но не «science fiction» или «hard science». Поиск с регулярными выражениями обозначается префиксом в строке поиска — тильдой (~). Можно использовать любое `python-совместимое регулярное выражение <https://docs.python.org/2/library/re.html>`_. Обратите внимание, что обратные косые черты, использующиеся для экранирования спецсимволов в регулярных выражениях, следует удваивать, так как одиночные при анализе запроса будут удалены. Например, для соответствия буквенной скобке нужно ввести ``\\\\(``. Поиск с регулярными выражениями — запросы вида «содержит», за исключением выражений с якорями."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:351
 msgid ""
 "Should you need to search for a string with a leading equals or tilde, "
 "prefix the string with a backslash."
-msgstr "Если вам нужно искать строку, начинающуюся со знака = или ~, используйте обратный слэш в начале строки."
+msgstr "Если вам нужно найти строку, начинающуюся со знака равенства или тильды, поставьте в начале строки обратную косую черту."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:353
 msgid ""
@@ -832,7 +832,7 @@ msgid ""
 "need to search for ``tag:\"=science fiction\"``. If you search for "
 "``tag:=science fiction`` you will find all books with the tag 'science' and "
 "containing the word 'fiction' in any metadata."
-msgstr "Заключите строку поиска в кавычки (\"), если строка содержит скобки или пробелы. Например, для поиска по тегу ``Science Fiction`` вам может понадобиться поиск по ``tag:\"=science fiction\"``. Если вы ищете ``tag:=science fiction``, вы найдёте все книги с тегом 'science' и содержащие слово 'fiction' в любых метаданных."
+msgstr "Заключайте строки поиска в кавычки (\"), если они содержат скобки или пробелы. Например, для поиска по тегу ``Science Fiction`` нужно будет искать ``tag:\"=научная фантастика\"``. Если вы ищете ``tag:=научная фантастика``, вы найдёте все книги с тегом «научная», содержащие слово «фантастика» в любых метаданных."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:358
 msgid ""
@@ -848,7 +848,7 @@ msgid ""
 "``ondevice`` field becomes available, when searching the calibre library "
 "view. To find the search name (actually called the `lookup name`) for a "
 "custom column, hover your mouse over the column header in the library view."
-msgstr "Доступные поля для поиска: ``тег, название, автор, издатель, серия, индекс_серии, рейтинг, обложка, комментарии, формат, идентификаторы, дата, дата публикации, поиск, размер`` и пользовательские столбцы. Если устройство подключено, становится доступно поле ``на устройстве`` при поиске во время просмотра библиотеки calibre. Чтобы найти имя для поиска (которое на самом деле называется `lookup name`) для пользовательского столбца, проведите мышью по заголовку столбца во время просмотра библиотеки."
+msgstr "Доступные поля для поиска: ``tag, title, author, publisher, series, series_index, rating, cover, comments, format, identifiers, date, pubdate, search, size, vl`` и пользовательские столбцы. Если устройство подключено, при поиске в библиотеке calibre становится доступно поле ``ondevice``. Чтобы найти имя для поиска (которое на самом деле называется `lookup name`) для пользовательского столбца, наведите мышь на заголовок столбца в библиотеке."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:364
 msgid "The syntax for searching for dates is::"
@@ -885,7 +885,7 @@ msgid ""
 "``<=`` (less than or equal to), and ``!=`` (not equal to). Rating fields are"
 " considered to be numeric. For example, the search ``rating:>=3`` will find "
 "all books rated 3 or higher."
-msgstr "Даты и числовые поля поддерживают операторый отношений ``=`` (равно), ``>`` (больше), ``>=`` (больше или равно), ``<`` (меньше), ``<=`` (меньше или равно), and ``!=`` (не равно). Предполагается, что поля рейтинга - числовые. Например, поиск ``rating:>=3`` будет искать книги с рейтингом 3 или выше."
+msgstr "Даты и числовые поля поддерживают операторы сравнения: ``=`` (равно), ``>`` (больше), ``>=`` (больше или равно), ``<`` (меньше), ``<=`` (меньше или равно) и ``!=`` (не равно). Поля оценки считаются числовыми. Например, поиск ``rating:>=3`` найдёт все книги с оценкой 3 или выше."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:392
 msgid ""
@@ -1483,22 +1483,22 @@ msgid ""
 "the details of a particular book), and most of them affect the title you "
 "have selected. The calibre E-book viewer has its own shortcuts which can be "
 "customised by clicking the :guilabel:`Preferences` button in the viewer."
-msgstr "В calibre есть несколько горячих клавиш, чтобы экономить ваше время и движения мыши. Эти сочетания активны при просмотре списка книг (когда вы не редактируете данные конкретной книги), и большинство из них влияет на выделенное вами наименование. Читалка электронных книг calibre имеет собственные горячие клавиши, которые можно настроить, нажав в ней кнопку :guilabel:`Параметры`."
+msgstr "В calibre есть горячие клавиши для экономии времени и движений мышью. Эти сочетания активны при просмотре списка книг (когда вы не редактируете данные конкретной книги), и большинство из них влияет на выделенное вами наименование. Читалка электронных книг calibre имеет собственные горячие клавиши, которые можно настроить, нажав в ней кнопку :guilabel:`Параметры`."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:651
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
-msgstr "Примечание: для быстрых клавиш calibre не требуется ключ-модификатор (Command, Option, Control и т.д.), Если специально не указано. Вам нужно только нажать клавишу с буквой, например E для редактирования."
+msgstr "Примечание: если специально не оговорено, то для горячих клавиш calibre не требуется ключ-модификатор (Command, Option, Control и т. д.). Необходимо нажать только клавишу с буквой, например «E» для редактирования."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:653
 msgid "Keyboard shortcuts for the main calibre program"
-msgstr "Горячией клавишы для основной программы calibre"
+msgstr "Горячие клавиши для главного окна calibre"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:657
 msgid "Keyboard shortcut"
-msgstr "Горячая клавиша"
+msgstr "Сочетание клавиш"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:658
 msgid "Action"
@@ -1526,7 +1526,7 @@ msgstr ":kbd:`Shift+A`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:664
 msgid "Add Formats to the selected books"
-msgstr "Добавить Форматы для выбранных книг"
+msgstr "Добавить форматы для выбранных книг"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:665
 msgid ":kbd:`C`"
@@ -1534,7 +1534,7 @@ msgstr ":kbd:`C`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:666
 msgid "Convert selected Books"
-msgstr "Преобразовать выбранные Книги"
+msgstr "Преобразовать выбранные книги"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:667
 msgid ":kbd:`D`"
@@ -1642,7 +1642,7 @@ msgstr ":kbd:`Alt+Shift+J`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:696
 msgid "Toggle jobs list"
-msgstr "Показать список задач"
+msgstr "Переключить список задач"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:697
 msgid ":kbd:`Alt+Shift+B`"
@@ -1658,7 +1658,7 @@ msgstr ":kbd:`Alt+Shift+D`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:700
 msgid "Toggle Book details panel"
-msgstr "Переключить панель Детали книг"
+msgstr "Переключить панель описания книги"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:701
 msgid ":kbd:`Alt+Shift+T`"
@@ -1666,7 +1666,7 @@ msgstr ":kbd:`Alt+Shift+T`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:702
 msgid "Toggle Tag browser"
-msgstr "Показать Обозреватель тегов"
+msgstr "Переключить браузер тегов"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:703
 msgid ":kbd:`Alt+Shift+G`"
@@ -1674,7 +1674,7 @@ msgstr ":kbd:`Alt+Shift+G`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:704
 msgid "Toggle Cover grid"
-msgstr "Переключить Сетку обложек"
+msgstr "Переключить сетку обложек"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:705
 msgid ":kbd:`Alt+A`"
@@ -1682,7 +1682,7 @@ msgstr ":kbd:`Alt+A`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:706
 msgid "Show books by the same author as the current book"
-msgstr "Показать книги того же автора, что и выбранная"
+msgstr "Показать книги с тем же автором, что и у текущей"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:707
 msgid ":kbd:`Alt+T`"
@@ -1690,7 +1690,7 @@ msgstr ":kbd:`Alt+T`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:708
 msgid "Show books with the same tags as current book"
-msgstr "Показать книги с теми же тегами, что и выбранная"
+msgstr "Показать книги с теми же тегами, что и текущая"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:709
 msgid ":kbd:`Alt+P`"
@@ -1698,7 +1698,7 @@ msgstr ":kbd:`Alt+P`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:710
 msgid "Show books by the same publisher as current book"
-msgstr "Показать книги с тем же издателем, как у выбранной"
+msgstr "Показать книги с таким же издательством, как у текущей"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:711
 msgid ":kbd:`Alt+Shift+S`"
@@ -1706,7 +1706,7 @@ msgstr ":kbd:`Alt+Shift+S`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:712
 msgid "Show books in the same series as current book"
-msgstr "Показать книги из той же серии, что и выбранная"
+msgstr "Показать книги из той же серии, что и текущая"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:713
 msgid ":kbd:`/, Ctrl+F`"
@@ -1738,7 +1738,7 @@ msgstr ":kbd:`Shift+Esc`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:720
 msgid "Focus the book list"
-msgstr "Перейти к списку книг"
+msgstr "Фокус на список книг"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:721
 msgid ":kbd:`Ctrl+Esc`"
@@ -1814,7 +1814,7 @@ msgstr ":kbd:`Ctrl+R`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:738
 msgid "Restart calibre"
-msgstr "Перезапустить Сalibre"
+msgstr "Перезапустить calibre"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:739
 msgid ":kbd:`Ctrl+Shift+R`"
@@ -1855,7 +1855,7 @@ msgstr ":kbd:`Shift+Q`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:748
 msgid "Focus the opened Quick View panel"
-msgstr "Перейти в открытую понель Быстрого Просмотра."
+msgstr "Фокус на открытую панель быстрого просмотра"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:749
 msgid ":kbd:`Shift+S`"
@@ -1863,7 +1863,7 @@ msgstr ":kbd:`Shift+S`"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:750
 msgid "Perform a search in the Quick View panel"
-msgstr "Выполнить поиск в панели Быстрого просмотра"
+msgstr "Выполнить поиск в панели быстрого просмотра"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:751
 msgid ":kbd:`Ctrl+Q`"

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/device_category_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -71,7 +71,7 @@ class Ui_DeviceCategoryEditor(object):
 
     def retranslateUi(self, DeviceCategoryEditor):
 
-        DeviceCategoryEditor.setWindowTitle(_("Category Editor"))
+        DeviceCategoryEditor.setWindowTitle(_("Category editor"))
         self.label.setText(_("Items in use"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))
         self.delete_button.setText(_("..."))

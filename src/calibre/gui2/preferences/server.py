@@ -26,6 +26,7 @@ from calibre.gui2 import (
     open_url, warning_dialog
 )
 from calibre.gui2.preferences import AbortCommit, ConfigWidgetBase, test_widget
+from calibre.gui2.widgets import HistoryLineEdit
 from calibre.srv.code import custom_list_template as default_custom_list_template
 from calibre.srv.embedded import custom_list_template, search_the_net_urls
 from calibre.srv.library_broker import load_gui_libraries
@@ -34,7 +35,8 @@ from calibre.srv.users import (
     UserManager, create_user_data, validate_password, validate_username
 )
 from calibre.utils.icu import primary_sort_key
-from polyglot.builtins import unicode_type, as_bytes
+from calibre.utils.shared_file import share_open
+from polyglot.builtins import as_bytes, unicode_type
 
 try:
     from PyQt5 import sip
@@ -185,9 +187,10 @@ class Path(QWidget):
         opt = options[name]
         self.l = l = QHBoxLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
-        self.text = t = QLineEdit(self)
+        self.text = t = HistoryLineEdit(self)
+        t.initialize('server-opts-{}'.format(name))
         t.setClearButtonEnabled(True)
-        t.textChanged.connect(self.changed_signal.emit)
+        t.currentTextChanged.connect(self.changed_signal.emit)
         l.addWidget(t)
 
         self.b = b = QToolButton(self)
@@ -207,6 +210,7 @@ class Path(QWidget):
         ans = choose_files(self, 'choose_path_srv_opts_' + self.dname, _('Choose a file'), select_only_single_file=True)
         if ans:
             self.set(ans[0])
+            self.save_history()
 
 
 class Choices(QComboBox):
@@ -1317,7 +1321,7 @@ class ConfigWidget(ConfigWidgetBase):
         layout.addWidget(el)
         try:
             el.setPlainText(
-                lopen(log_error_file, 'rb').read().decode('utf8', 'replace')
+                share_open(log_error_file, 'rb').read().decode('utf8', 'replace')
             )
         except EnvironmentError:
             el.setPlainText(_('No error log found'))
@@ -1326,7 +1330,7 @@ class ConfigWidget(ConfigWidgetBase):
         layout.addWidget(al)
         try:
             al.setPlainText(
-                lopen(log_access_file, 'rb').read().decode('utf8', 'replace')
+                share_open(log_access_file, 'rb').read().decode('utf8', 'replace')
             )
         except EnvironmentError:
             al.setPlainText(_('No access log found'))

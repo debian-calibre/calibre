@@ -118,6 +118,7 @@ class EbookViewer(MainWindow):
             ans.setObjectName(name)
             self.addDockWidget(area, ans)
             ans.setVisible(False)
+            ans.visibilityChanged.connect(self.dock_visibility_changed)
             return ans
 
         for dock_def in itervalues(self.dock_defs):
@@ -170,6 +171,7 @@ class EbookViewer(MainWindow):
         self.loading_overlay = LoadingOverlay(self)
         self.restore_state()
         self.actions_toolbar.update_visibility()
+        self.dock_visibility_changed()
         if continue_reading:
             self.continue_reading()
 
@@ -208,7 +210,8 @@ class EbookViewer(MainWindow):
     def set_full_screen(self, on):
         if on:
             self.maximized_at_last_fullscreen = self.isMaximized()
-            self.actions_toolbar.setVisible(False)
+            if not self.actions_toolbar.visible_in_fullscreen:
+                self.actions_toolbar.setVisible(False)
             self.showFullScreen()
         else:
             self.actions_toolbar.update_visibility()
@@ -289,6 +292,10 @@ class EbookViewer(MainWindow):
         md.setImageData(img)
         md.setUrls([url])
         QApplication.instance().clipboard().setMimeData(md)
+
+    def dock_visibility_changed(self):
+        vmap = {dock.objectName().partition('-')[0]: dock.toggleViewAction().isChecked() for dock in self.dock_widgets}
+        self.actions_toolbar.update_dock_actions(vmap)
     # }}}
 
     # Load book {{{
@@ -307,8 +314,12 @@ class EbookViewer(MainWindow):
         from .printing import print_book
         print_book(set_book_path.pathtoebook, book_title=self.current_book_data['metadata']['title'], parent=self)
 
+    @property
+    def dock_widgets(self):
+        return self.findChildren(QDockWidget, options=Qt.FindDirectChildrenOnly)
+
     def reset_interface(self):
-        for dock in self.findChildren(QDockWidget):
+        for dock in self.dock_widgets:
             dock.setFloating(False)
             area = self.dock_defs[dock.objectName().partition('-')[0]].initial_area
             self.removeDockWidget(dock)
@@ -498,7 +509,7 @@ class EbookViewer(MainWindow):
         state = vprefs['main_window_state']
         geom = vprefs['main_window_geometry']
         if geom and get_session_pref('remember_window_geometry', default=False):
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         if state:
             self.restoreState(state, self.MAIN_WINDOW_STATE_VERSION)
             self.inspector_dock.setVisible(False)

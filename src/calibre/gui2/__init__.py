@@ -186,7 +186,7 @@ def create_defs():
     defs['qv_dclick_changes_column'] = True
     defs['qv_retkey_changes_column'] = True
     defs['qv_follows_column'] = False
-    defs['book_details_narrow_comments_layout'] = 'float'
+    defs['book_details_comments_heading_pos'] = 'hide'
     defs['book_list_split'] = False
     defs['wrap_toolbar_text'] = False
     defs['dnd_merge'] = True
@@ -669,8 +669,7 @@ else:
 def is_dark_theme():
     pal = QApplication.instance().palette()
     col = pal.color(pal.Window)
-    h, s, v, a = col.getHsvF()
-    return v < 0.45
+    return max(col.getRgb()[:3]) < 115
 
 
 def choose_osx_app(window, name, title, default_dir='/Applications'):
@@ -974,6 +973,19 @@ class Application(QApplication):
             if cft >= 0:
                 self.setCursorFlashTime(int(cft))
 
+    def safe_restore_geometry(self, widget, geom):
+        # See https://bugreports.qt.io/browse/QTBUG-77385
+        if not geom:
+            return
+        restored = widget.restoreGeometry(geom)
+        screen_rect = self.desktop().availableGeometry(widget)
+        if not widget.geometry().intersects(screen_rect):
+            w = min(widget.width(), screen_rect.width() - 10)
+            h = min(widget.height(), screen_rect.height() - 10)
+            widget.resize(w, h)
+            widget.move((screen_rect.width() - w) // 2, (screen_rect.height() - h) // 2)
+        return restored
+
     def setup_ui_font(self):
         f = QFont(QApplication.font())
         q = (f.family(), f.pointSize())
@@ -1104,7 +1116,13 @@ class Application(QApplication):
                 pcache[v] = p
             v = pcache[v]
             icon_map[getattr(QStyle, 'SP_'+k)] = v
-        self.pi.load_style(icon_map)
+        transient_scroller = 0
+        if isosx:
+            transient_scroller = plugins['cocoa'][0].transient_scroller()
+        try:
+            self.pi.load_style(icon_map, transient_scroller)
+        except TypeError:
+            self.pi.load_style(icon_map)
 
     def _send_file_open_events(self):
         with self._file_open_lock:

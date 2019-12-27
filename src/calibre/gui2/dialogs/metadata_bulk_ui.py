@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -582,7 +582,7 @@ class Ui_MetadataBulkDialog(object):
         self.refresh_book_list.setText(_("&Refresh book list after edit"))
         self.label_7.setText(_("Ser&ies:"))
         self.label_10.setText(_("&Date:"))
-        self.apply_adddate.setText(_("&Apply date"))
+        self.apply_adddate.setText(_("A&pply date"))
         self.label_9.setText(_("P&ublished:"))
         self.auto_author_sort.setToolTip(_("This will cause the author sort field to be automatically updated\n"
 " based on the authors field for each selected book. Note that if\n"
@@ -616,7 +616,7 @@ class Ui_MetadataBulkDialog(object):
         self.pubdate.setDisplayFormat("MMM yyyy")
         self.clear_pubdate_button.setToolTip(_("Clear published date"))
         self.clear_pubdate_button.setText(_("..."))
-        self.apply_pubdate.setText(_("&Apply date"))
+        self.apply_pubdate.setText(_("A&pply date"))
         self.label_2.setText(_("&Author(s): "))
         self.adddate.setDisplayFormat("d MMM yyyy")
         self.clear_adddate_button.setText(_("..."))
