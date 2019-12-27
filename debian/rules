@@ -60,12 +60,13 @@ override_dh_auto_install:
 
 override_dh_installman:
 	# Create and install some of the man pages
-	dh_installman -pcalibre man-pages/man1/*.1
-	for i in man-pages/?? man-pages/??_?? ; do ll=`basename $$i`; dh_installman -pcalibre --language $$ll $$i/man1/*.1 ; done
+	ln -sf $(CURDIR)/man-pages debian/man
+	dh_installman
 
 override_dh_auto_clean:
 	rm -rf debian/orig
 	rm -rf $(TEST_HOME)
+	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
 	find . -name '*.pyc' -delete
