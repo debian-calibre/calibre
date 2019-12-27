@@ -7,6 +7,10 @@ SETUP=python3 setup.py
 # build hardening
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 
+# Set our HOME directory for testing.
+# Some test uses it for XDG Base Directory.
+TEST_HOME = $(CURDIR)/debian/test-home
+
 %:
 	dh $@ --buildsystem=makefile
 
@@ -21,7 +25,6 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
-TEST_HOME = $(CURDIR)/debian/test-home
 override_dh_auto_test:
 	mkdir $(TEST_HOME)
 	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 TZ=UTC xvfb-run $(SETUP) test
