@@ -4,8 +4,8 @@
 export CALIBRE_PY3_PORT=1
 SETUP=python3 setup.py
 
-# build hardening
-export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+# build options
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 
 # Set our HOME directory for testing.
 # Some test uses it for XDG Base Directory.
