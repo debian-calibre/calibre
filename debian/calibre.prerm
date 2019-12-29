@@ -2,8 +2,8 @@
 
 set -eu
 
-if which pyclean >/dev/null 2>&1; then
-  pyclean -p calibre
+if which py3clean >/dev/null 2>&1; then
+  py3clean -p calibre
 else
   dpkg -L calibre | grep \.py$ | while read file
   do
