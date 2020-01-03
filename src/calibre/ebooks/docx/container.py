@@ -18,11 +18,11 @@ from calibre.ptempfile import PersistentTemporaryDirectory
 from calibre.utils.localization import canonicalize_lang
 from calibre.utils.logging import default_log
 from calibre.utils.zipfile import ZipFile
-from calibre.ebooks.oeb.parse_utils import RECOVER_PARSER
+from calibre.utils.xml_parse import safe_xml_fromstring
 
 
-def fromstring(raw, parser=RECOVER_PARSER):
-    return etree.fromstring(raw, parser=parser)
+def fromstring(raw, parser=None):
+    return safe_xml_fromstring(raw)
 
 # Read metadata {{{
 
