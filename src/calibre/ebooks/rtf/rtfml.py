@@ -12,6 +12,7 @@ Transform OEB content into RTF markup
 import os
 import re
 import io
+from binascii import hexlify
 
 from lxml import etree
 
@@ -108,6 +109,7 @@ class RTFMLizer(object):
     def mlize_spine(self):
         from calibre.ebooks.oeb.base import XHTML
         from calibre.ebooks.oeb.stylizer import Stylizer
+        from calibre.utils.xml_parse import safe_xml_fromstring
         output = self.header()
         if 'titlepage' in self.oeb_book.guide:
             href = self.oeb_book.guide['titlepage'].href
@@ -125,7 +127,7 @@ class RTFMLizer(object):
             content = re.sub('<!--.*?-->', '', etree.tostring(item.data, encoding='unicode'), flags=re.DOTALL)
             content = self.remove_newlines(content)
             content = self.remove_tabs(content)
-            content = etree.fromstring(content)
+            content = safe_xml_fromstring(content)
             stylizer = Stylizer(content, item.href, self.oeb_book, self.opts, self.opts.output_profile)
             self.currently_dumping_item = item
             output += self.dump_text(content.find(XHTML('body')), stylizer)
@@ -184,24 +186,14 @@ class RTFMLizer(object):
         return text
 
     def image_to_hexstring(self, data):
+        # Images must be hex-encoded in 128 character lines
         data = save_cover_data_to(data)
         width, height = identify(data)[1:]
-
-        raw_hex = ''
-        for char in bytearray(data):
-            raw_hex += hex(char).replace('0x', '').rjust(2, '0')
-
-        # Images must be broken up so that they are no longer than 129 chars
-        # per line
-        hex_string = ''
-        col = 1
-        for char in raw_hex:
-            if col == 129:
-                hex_string += '\n'
-                col = 1
-            col += 1
-            hex_string += char
-
+        lines = []
+        v = memoryview(data)
+        for i in range(0, len(data), 64):
+            lines.append(hexlify(v[i:i+64]))
+        hex_string = b'\n'.join(lines).decode('ascii')
         return hex_string, width, height
 
     def clean_text(self, text):

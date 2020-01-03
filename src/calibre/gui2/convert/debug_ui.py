@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/debug.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,7 +33,6 @@ class Ui_Form(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
         self.opt_debug_pipeline = QtWidgets.QLineEdit(Form)
-        self.opt_debug_pipeline.setReadOnly(True)
         self.opt_debug_pipeline.setClearButtonEnabled(True)
         self.opt_debug_pipeline.setObjectName("opt_debug_pipeline")
         self.gridLayout.addWidget(self.opt_debug_pipeline, 1, 0, 1, 1)
