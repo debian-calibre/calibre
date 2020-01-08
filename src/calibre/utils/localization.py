@@ -1,15 +1,15 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import os, locale, re, io, sys
+import os, locale, re, io
 from gettext import GNUTranslations, NullTranslations
 
-from polyglot.builtins import is_py3, iteritems, unicode_type
+from polyglot.builtins import iteritems, unicode_type
 
 _available_translations = None
 
@@ -257,10 +257,7 @@ def set_translators():
         set_translators.lang = t.info().get('language')
     except Exception:
         pass
-    if is_py3:
-        t.install(names=('ngettext',))
-    else:
-        t.install(unicode=True, names=('ngettext',))
+    t.install(names=('ngettext',))
     # Now that we have installed a translator, we have to retranslate the help
     # for the global prefs object as it was instantiated in get_lang(), before
     # the translator was installed.
@@ -393,8 +390,7 @@ def get_language(lang):
         # The translator was not active when _extra_lang_codes was defined, so
         # re-translate
         return translate(_extra_lang_codes[lang])
-    attr = 'gettext' if sys.version_info.major > 2 else 'ugettext'
-    return get_iso_language(getattr(_lang_trans, attr, translate), lang)
+    return get_iso_language(getattr(_lang_trans, 'gettext', translate), lang)
 
 
 def calibre_langcode_to_name(lc, localize=True):

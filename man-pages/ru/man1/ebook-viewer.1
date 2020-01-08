@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-VIEWER" "1" "января 03, 2020" "4.8.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "января 06, 2020" "4.99.3" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .
@@ -35,16 +35,16 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-ebook\-viewer [опции] файл
+ebook\-viewer [options] file
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Читать электронную книгу.
+Показать e\-book.
 .sp
-Когда вы передаёте аргументы с пробелами в \fBebook\-viewer\fP, заключайте их в кавычки. Например: "/some path/with spaces"
-.SH [ОПЦИИ]
+Всякий раз, когда вы передаете аргументы \fBebook\-viewer\fP, в которых есть пробелы, заключите аргументы в кавычки. Например:  "/some path/with spaces"
+.SH [ПАРАМЕТРЫ]
 .INDENT 0.0
 .TP
 .B \-\-continue
@@ -63,7 +63,7 @@ ebook\-viewer [опции] файл
 .INDENT 0.0
 .TP
 .B \-\-full\-screen, \-\-fullscreen, \-f
-Если указано, окно читалки при запуске откроется во весь экран.
+Если указано, окно просмотрщика будет открыто во весь экран при запуске.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,12 +73,12 @@ ebook\-viewer [опции] файл
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-Место, в котором нужно открыть указанную книгу. Местоположение или позицию можно получить, выполнив действия «Перейти\->Место» в элементах управления читалкой. Кроме того, вы можете использовать форму toc:нечто, и она откроется в месте первой записи оглавления, содержащей строку «нечто». Форма toc\-href:нечто будет соответствовать href (внутренней ссылке на место назначения) элементов оглавления. Соответствие точное, если же хотите сопоставить подстроку, воспользуйтесь формой toc\-href\-contains:нечто. Форма ref:нечто будет использовать ссылки режима отсылок.
+The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB"\fPsomething\fB"\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact, If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-raise\-window
-Если указано, окно читалки при запуске попытается выйти на передний план.
+Если указано, окно просмотрщика будет пытаться всплыть наверх при открытии.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2006-2010 Søren Roug, European Environment Agency
 #
@@ -20,7 +20,7 @@
 #
 # import pdb
 # pdb.set_trace()
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 from collections import defaultdict
 from xml.sax import handler
 from xml.sax.saxutils import escape, quoteattr

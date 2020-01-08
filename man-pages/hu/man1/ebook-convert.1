@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "január 03, 2020" "4.8.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "január 06, 2020" "4.99.3" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -71,9 +71,9 @@ Below are the options that are common to all conversion, followed by the
 options specific to every input and output format.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%BEMENET\-BEÁLLÍTÁSOK\fP
+\fI\%FORRÁS BEÁLLÍTÁSOK\fP
 .IP \(bu 2
-\fI\%KIMENET\-BEÁLLÍTÁSOK\fP
+\fI\%KIMENETI BEÁLLÍTÁSOK\fP
 .IP \(bu 2
 \fI\%MEGJELENÉS\fP
 .IP \(bu 2
@@ -85,14 +85,14 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%TARTALOMJEGYZÉK\fP
 .IP \(bu 2
-\fI\%METAADATOK\fP
+\fI\%METAADAT\fP
 .IP \(bu 2
 \fI\%HIBAKERESÉS\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-súgó megjelenítése és kilépés
+ennek a súgónak a megjelenítése és kilépés
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -114,17 +114,17 @@ Specify the output profile. The output profile tells the conversion system how t
 .B \-\-version
 program verziójának megjelenítése és kilépés
 .UNINDENT
-.SH BEMENET-BEÁLLÍTÁSOK
+.SH FORRÁS BEÁLLÍTÁSOK
 .sp
-A(z) mobi bemeneti fájl feldolgozását vezérlő kapcsolók
+A forrás mobi fájlon végzett műveletek beállítása
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
 A forrás dokumentum karakterkódolásának meghatározása. Ez felülírja a dokumentum eredetei beállításait. Különösen hasznos olyan dokumentumoknál, ahol nincs, vagy hibásan van beállítva a karakterkódolás.
 .UNINDENT
-.SH KIMENET-BEÁLLÍTÁSOK
+.SH KIMENETI BEÁLLÍTÁSOK
 .sp
-A(z) epub kimenet feldolgozását vezérlő kapcsolók
+A epub kimenethez használható kapcsolók
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
@@ -266,17 +266,17 @@ Néhány rosszul megtervezett dokumentumban szükségtelenül alkalmaznak tábl�
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Az alsó margó beállítása pontokban. Alapértelmezés 5.0. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
+Az alsó margó beállítása pontokban. Alapértelmezés 5.0, Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-A bal oldali margó beállítása pontokban. Alapértelmezés 5.0. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
+A bal oldali margó beállítása pontokban. Alapértelmezés %ddefault. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-A jobb oldali margó beállítása pontokban. Alapértelmezés 5.0. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
+A jobb oldali margó beállítása pontokban. Alapértelmezés %ddefault. Ha nulla értékre állítja be, akkor nem lesz margó (az eredeti dokumentum margóbeállítása megmarad). Megjegyzés: Az oldalorientált formátumok, például a PDF és a DOCX saját margó beállításokkal rendelkeznek, amelyek elsőbbséget élveznek.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -509,9 +509,9 @@ Ha ennél kevesebb fejezet detektálható automatikusan, akkor a tartalomjegyzé
 .B \-\-use\-auto\-toc
 Általában ha a forrásfájl tartalmaz Tartalomjegyzéket, az kerül felhasználásra az automatikusan generált helyett. Ezzel a beállítással mindig az automatikusan generált lesz használva.
 .UNINDENT
-.SH METAADATOK
+.SH METAADAT
 .sp
-A kimenet metaadat beállításaizz
+A kimenet metaadat beállításai
 .INDENT 0.0
 .TP
 .B \-\-author\-sort

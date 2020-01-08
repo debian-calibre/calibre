@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import glob
 import os
@@ -14,7 +14,7 @@ from itertools import chain
 
 from calibre import prints
 from calibre.constants import (
-    config_dir, filesystem_encoding, ispy3, iswindows, plugins
+    config_dir, filesystem_encoding, iswindows, plugins
 )
 from calibre.spell import parse_lang_code
 from calibre.utils.config import JSONConfig
@@ -174,8 +174,6 @@ def load_dictionary(dictionary):
         path = os.path.abspath(path)
         if iswindows:
             path = r'\\?\{}'.format(path)
-        if not ispy3:
-            path = path.encode('utf-8')
         return path
 
     obj = hunspell.Dictionary(fix_path(dictionary.dicpath), fix_path(dictionary.affpath))

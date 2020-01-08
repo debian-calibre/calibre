@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -96,8 +96,8 @@ class TestICU(unittest.TestCase):
     def test_find(self):
         ' Test searching for substrings '
         self.ae((1, 1), icu.find(b'a', b'1ab'))
-        self.ae((1, 1 if sys.maxunicode >= 0x10ffff else 2), icu.find('\U0001f431', 'x\U0001f431x'))
-        self.ae((1 if sys.maxunicode >= 0x10ffff else 2, 1), icu.find('y', '\U0001f431y'))
+        self.ae((1, 1), icu.find('\U0001f431', 'x\U0001f431x'))
+        self.ae((1, 1), icu.find('y', '\U0001f431y'))
         self.ae((0, 4), icu.primary_find('pena', 'peña'))
         for k, v in iteritems({u'pèché': u'peche', u'flüße':u'Flusse', u'Štepánek':u'ŠtepaneK'}):
             self.ae((1, len(k)), icu.primary_find(v, ' ' + k), 'Failed to find %s in %s' % (v, k))
@@ -162,7 +162,7 @@ class TestICU(unittest.TestCase):
 
     def test_break_iterator(self):
         ' Test the break iterator '
-        from calibre.spell.break_iterator import split_into_words as split, index_of, split_into_words_and_positions
+        from calibre.spell.break_iterator import split_into_words as split, index_of, split_into_words_and_positions, count_words
         for q in ('one two three', ' one two three', 'one\ntwo  three ', ):
             self.ae(split(unicode_type(q)), ['one', 'two', 'three'], 'Failed to split: %r' % q)
         self.ae(split(u'I I\'m'), ['I', "I'm"])
@@ -170,7 +170,8 @@ class TestICU(unittest.TestCase):
         self.ae(split(u'-one two-'), ['-one', 'two-'])
         self.ae(split(u'-one a-b-c-d e'), ['-one', 'a-b-c-d', 'e'])
         self.ae(split(u'-one -a-b-c-d- e'), ['-one', '-a-b-c-d-', 'e'])
-        self.ae(split_into_words_and_positions('one \U0001f431 three'), [(0, 3), (7 if icu.is_narrow_build else 6, 5)])
+        self.ae(split_into_words_and_positions('one \U0001f431 three'), [(0, 3), (6, 5)])
+        self.ae(count_words('a b c d e f'), 6)
         for needle, haystack, pos in (
                 ('word', 'a word b', 2),
                 ('word', 'a word', 2),
@@ -188,7 +189,7 @@ class TestICU(unittest.TestCase):
                 ('i', 'six i', 4),
                 ('i', '', -1), ('', '', -1), ('', 'i', -1),
                 ('i', 'six clicks', -1),
-                ('i', '\U0001f431 i', (3 if icu.is_narrow_build else 2)),
+                ('i', '\U0001f431 i', 2),
                 ('-a', 'b -a', 2),
                 ('a-', 'a-b a- d', 4),
                 ('-a-', 'b -a -a-', 5),

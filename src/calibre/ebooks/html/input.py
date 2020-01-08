@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -17,7 +17,7 @@ from calibre.ebooks.oeb.base import urlunquote
 from calibre.ebooks.chardet import detect_xml_encoding
 from calibre.constants import iswindows
 from calibre import unicode_path, as_unicode, replace_entities
-from polyglot.builtins import is_py3, unicode_type
+from polyglot.builtins import unicode_type
 from polyglot.urllib import urlparse, urlunparse
 
 
@@ -66,9 +66,6 @@ class Link(object):
 
     def __str__(self):
         return 'Link: %s --> %s'%(self.url, self.path)
-
-    if not is_py3:
-        __unicode__ = __str__
 
 
 class IgnoreFile(Exception):

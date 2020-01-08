@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2006-2009 Søren Roug, European Environment Agency
 #
@@ -21,7 +21,7 @@
 
 """Class to show and manipulate user fields in odf documents."""
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 import sys
 import zipfile
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -144,8 +144,7 @@ class Ui_Form(object):
         self.gridLayout_3.addWidget(self.opt_auto_add_everything, 5, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.opt_auto_add_path = HistoryLineEdit(self.tab_4)
-        self.opt_auto_add_path.setClearButtonEnabled(True)
+        self.opt_auto_add_path = QtWidgets.QLineEdit(self.tab_4)
         self.opt_auto_add_path.setObjectName("opt_auto_add_path")
         self.horizontalLayout_2.addWidget(self.opt_auto_add_path)
         self.auto_add_browse_button = QtWidgets.QToolButton(self.tab_4)
@@ -196,7 +195,7 @@ class Ui_Form(object):
         self.label.setBuddy(self.opt_auto_add_path)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         self.opt_add_formats_to_existing.toggled['bool'].connect(self.opt_automerge.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -259,5 +258,4 @@ class Ui_Form(object):
 " you want to add it anyway."))
         self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when automatically adding files"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic adding"))
-from calibre.gui2.widgets import HistoryLineEdit
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2007-2008 Søren Roug, European Environment Agency
 #
@@ -24,7 +24,7 @@
 # in memory. The user should then be able to make operations and then save
 # the structure again.
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 from xml.sax import handler
 from .element import Element
 from .namespaces import OFFICENS
