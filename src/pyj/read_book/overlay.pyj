@@ -6,6 +6,7 @@ from elementmaker import E
 from gettext import gettext as _
 
 from book_list.book_details import CLASS_NAME as BD_CLASS_NAME, render_metadata
+from book_list.globals import get_session_data
 from book_list.library_data import sync_library_books
 from book_list.router import home
 from book_list.theme import get_color
@@ -19,7 +20,9 @@ from read_book.prefs.main import create_prefs_panel
 from read_book.toc import create_toc_panel
 from read_book.word_actions import create_word_actions_panel
 from session import get_device_uuid
-from utils import full_screen_element, is_ios, safe_set_inner_html
+from utils import (
+    full_screen_element, full_screen_supported, is_ios, safe_set_inner_html
+)
 from widgets import create_button, create_spinner
 
 
@@ -228,6 +231,7 @@ class MainOverlay:  # {{{
     def show(self, container):
         self.container_id = container.getAttribute('id')
         icon_size = '3.5ex'
+        sd = get_session_data()
 
         def ac(text, tooltip, action, icon, is_text_button):
             if is_text_button:
@@ -288,11 +292,20 @@ class MainOverlay:  # {{{
             full_screen_actions.push(
                 ac(_('Print'), _('Print book to PDF'), def(): self.overlay.hide(), ui_operations.print_book();, 'print'))
         else:
-            if not full_screen_element() and not is_ios:
+            if not is_ios and full_screen_supported():
+                text = _('Exit full screen') if full_screen_element() else _('Enter full screen')
                 # No fullscreen on iOS, see http://caniuse.com/#search=fullscreen
                 full_screen_actions.push(
-                    ac(_('Full screen'), _('Enter full screen mode'), def(): self.overlay.hide(), ui_operations.toggle_full_screen();, 'full-screen')
+                    ac(text, _('Toggle full screen mode'), def(): self.overlay.hide(), ui_operations.toggle_full_screen();, 'full-screen')
                 )
+        if sd.get('read_mode') is 'flow':
+            asa = self.overlay.view.autoscroll_active
+            full_screen_actions.append(ac(
+                _('Stop auto scroll') if asa else _('Auto scroll'), _('Toggle auto-scrolling'), def():
+                    self.overlay.hide()
+                    window.setTimeout(self.overlay.view.toggle_autoscroll, 0)
+                , 'auto-scroll'))
+
         if full_screen_actions.length:
             actions_div.appendChild(E.ul(*full_screen_actions))
 
@@ -495,6 +508,8 @@ class Overlay:
         self.panels = []
 
     def oncontextmenu(self, evt):
+        if evt.target and evt.target.tagName and evt.target.tagName.toLowerCase() in ('input', 'textarea'):
+            return
         evt.preventDefault()
         self.handle_escape()
 
@@ -505,7 +520,6 @@ class Overlay:
         c.style.color = get_color('window-foreground')
         if c.style.display is not 'block':
             c.style.display = 'block'
-            self.view.overlay_visibility_changed(True)
         return c
 
     @property

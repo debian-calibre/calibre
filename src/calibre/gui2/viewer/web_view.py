@@ -246,6 +246,7 @@ class ViewerBridge(Bridge):
     report_cfi = from_js(object, object)
     ask_for_open = from_js(object)
     selection_changed = from_js(object)
+    autoscroll_state_changed = from_js(object)
     copy_selection = from_js(object)
     view_image = from_js(object)
     copy_image = from_js(object)
@@ -415,6 +416,7 @@ class WebView(RestartingWebEngineView):
     toggle_full_screen = pyqtSignal()
     ask_for_open = pyqtSignal(object)
     selection_changed = pyqtSignal(object)
+    autoscroll_state_changed = pyqtSignal(object)
     view_image = pyqtSignal(object)
     copy_image = pyqtSignal(object)
     overlay_visibility_changed = pyqtSignal(object)
@@ -454,6 +456,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.toggle_full_screen.connect(self.toggle_full_screen)
         self.bridge.ask_for_open.connect(self.ask_for_open)
         self.bridge.selection_changed.connect(self.selection_changed)
+        self.bridge.autoscroll_state_changed.connect(self.autoscroll_state_changed)
         self.bridge.view_image.connect(self.view_image)
         self.bridge.copy_image.connect(self.copy_image)
         self.bridge.overlay_visibility_changed.connect(self.overlay_visibility_changed)
@@ -500,7 +503,7 @@ class WebView(RestartingWebEngineView):
         # TODO: Add UI for this
         ss = vprefs['session_data'].get('zoom_step_size') or 20
         amt = (ss / 100) * steps
-        self._page.setZoomFactor(self._page.zoomFactor() + amt)
+        self._page.setZoomFactor(max(0.25, min(self._page.zoomFactor() + amt, 5)))
 
     def render_process_died(self):
         if self.dead_renderer_error_shown:
@@ -531,9 +534,12 @@ class WebView(RestartingWebEngineView):
     def on_bridge_ready(self):
         f = QApplication.instance().font()
         fi = QFontInfo(f)
+        family = f.family()
+        if family in ('.AppleSystemUIFont', 'MS Shell Dlg 2'):
+            family = 'system-ui'
         ui_data = {
             'all_font_families': QFontDatabase().families(),
-            'ui_font_family': f.family(),
+            'ui_font_family': family,
             'ui_font_sz': '{}px'.format(fi.pixelSize()),
             'show_home_page_on_ready': self.show_home_page_on_ready,
             'system_colors': system_colors(),

@@ -13,7 +13,7 @@ import calendar, textwrap
 from collections import OrderedDict
 
 from PyQt5.Qt import (
-    QDialog, Qt, QTime, QObject, QMenu, QHBoxLayout, QAction, QIcon, QMutex,
+    QDialog, Qt, QTime, QObject, QMenu, QHBoxLayout, QAction, QIcon, QMutex, QApplication,
     QTimer, pyqtSignal, QWidget, QGridLayout, QCheckBox, QTimeEdit, QLabel,
     QLineEdit, QDoubleSpinBox, QSize, QTreeView, QSizePolicy, QToolButton,
     QScrollArea, QFrame, QVBoxLayout, QTabWidget, QSpacerItem, QGroupBox,
@@ -364,7 +364,7 @@ class SchedulerDialog(QDialog):
         b.setToolTip(_("Download all scheduled news sources at once"))
         b.clicked.connect(self.download_all_clicked)
         self.l.addWidget(b, 3, 0, 1, 1)
-        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Save | QDialogButtonBox.Cancel, self)
+        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
         bb.accepted.connect(self.accept), bb.rejected.connect(self.reject)
         self.download_button = b = bb.addButton(_('&Download now'), bb.ActionRole)
         b.setIcon(QIcon(I('arrow-down.png'))), b.setVisible(False)
@@ -373,7 +373,7 @@ class SchedulerDialog(QDialog):
 
         geom = gprefs.get('scheduler_dialog_geometry')
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
 
     def sizeHint(self):
         return QSize(800, 600)
@@ -729,7 +729,6 @@ class Scheduler(QObject):
 
 
 if __name__ == '__main__':
-    from PyQt5.Qt import QApplication
     app = QApplication([])
     d = SchedulerDialog(RecipeModel())
     d.exec_()

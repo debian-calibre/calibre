@@ -12,6 +12,7 @@ from PyQt5.Qt import (
 )
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 
+from calibre.constants import isosx
 from calibre.gui2 import elided_text
 from calibre.gui2.viewer.shortcuts import index_to_key_sequence
 from calibre.gui2.viewer.web_view import get_session_pref, set_book_path, vprefs
@@ -47,10 +48,13 @@ def all_actions():
             'fullscreen': Action('page.png', _('Toggle full screen'), 'toggle_full_screen'),
             'next': Action('next.png', _('Next page'), 'next'),
             'previous': Action('previous.png', _('Previous page'), 'previous'),
+            'next_section': Action('arrow-down.png', _('Next section'), 'next_section'),
+            'previous_section': Action('arrow-up.png', _('Previous section'), 'previous_section'),
             'toc': Action('toc.png', _('Table of Contents'), 'toggle_toc'),
             'bookmarks': Action('bookmarks.png', _('Bookmarks'), 'toggle_bookmarks'),
             'inspector': Action('debug.png', _('Inspector'), 'toggle_inspector'),
             'reference': Action('reference.png', _('Toggle Reference mode'), 'toggle_reference_mode'),
+            'autoscroll': Action('auto-scroll.png', _('Toggle auto-scrolling'), 'toggle_autoscroll'),
             'lookup': Action('generic-library.png', _('Lookup words'), 'toggle_lookup'),
             'chrome': Action('tweaks.png', _('Show viewer controls'), 'show_chrome'),
             'mode': Action('scroll.png', _('Toggle paged mode'), 'toggle_paged_mode'),
@@ -124,6 +128,7 @@ class ActionsToolBar(ToolBar):
         web_view.paged_mode_changed.connect(self.update_mode_action)
         web_view.reference_mode_changed.connect(self.update_reference_mode_action)
         web_view.standalone_misc_settings_changed.connect(self.update_visibility)
+        web_view.autoscroll_state_changed.connect(self.update_autoscroll_action)
         web_view.customize_toolbar.connect(self.customize, type=Qt.QueuedConnection)
 
         self.back_action = page.action(QWebEnginePage.Back)
@@ -146,6 +151,8 @@ class ActionsToolBar(ToolBar):
 
         self.next_action = shortcut_action('next')
         self.previous_action = shortcut_action('previous')
+        self.next_section_action = shortcut_action('next_section')
+        self.previous_section_action = shortcut_action('previous_section')
 
         self.toc_action = a = shortcut_action('toc')
         a.setCheckable(True)
@@ -157,6 +164,9 @@ class ActionsToolBar(ToolBar):
         a.setCheckable(True)
         self.inspector_action = a = shortcut_action('inspector')
         a.setCheckable(True)
+        self.autoscroll_action = a = shortcut_action('autoscroll')
+        a.setCheckable(True)
+        self.update_autoscroll_action(False)
         self.chrome_action = shortcut_action('chrome')
 
         self.mode_action = a = shortcut_action('mode')
@@ -188,6 +198,11 @@ class ActionsToolBar(ToolBar):
         else:
             a.setChecked(True)
             a.setToolTip(_('Switch to paged mode -- where the text is broken into pages'))
+
+    def update_autoscroll_action(self, active):
+        self.autoscroll_action.setChecked(active)
+        self.autoscroll_action.setToolTip(
+            _('Turn off auto-scrolling') if active else _('Turn on auto-scrolling'))
 
     def update_reference_mode_action(self, enabled):
         self.reference_action.setChecked(enabled)
@@ -250,7 +265,7 @@ class ActionsList(QListWidget):
         self.viewport().setAcceptDrops(True)
         self.setDropIndicatorShown(True)
         self.setDragDropMode(self.InternalMove)
-        self.setDefaultDropAction(Qt.MoveAction)
+        self.setDefaultDropAction(Qt.CopyAction if isosx else Qt.MoveAction)
         self.setMinimumHeight(400)
         self.is_source = is_source
         if is_source:

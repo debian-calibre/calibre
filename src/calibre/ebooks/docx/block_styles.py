@@ -237,7 +237,7 @@ def read_shd(parent, dest, XPath, get):
 
 
 def read_numbering(parent, dest, XPath, get):
-    lvl = num_id = None
+    lvl = num_id = inherit
     for np in XPath('./w:numPr')(parent):
         for ilvl in XPath('./w:ilvl[@w:val]')(np):
             try:
@@ -246,8 +246,8 @@ def read_numbering(parent, dest, XPath, get):
                 pass
         for num in XPath('./w:numId[@w:val]')(np):
             num_id = get(num, 'w:val')
-    val = (num_id, lvl) if num_id is not None or lvl is not None else inherit
-    setattr(dest, 'numbering', val)
+    setattr(dest, 'numbering_id', num_id)
+    setattr(dest, 'numbering_level', lvl)
 
 
 class Frame(object):
@@ -355,7 +355,7 @@ class ParagraphStyle(object):
 
         # Misc.
         'text_indent', 'text_align', 'line_height', 'background_color',
-        'numbering', 'font_family', 'font_size', 'color', 'frame',
+        'numbering_id', 'numbering_level', 'font_family', 'font_size', 'color', 'frame',
         'cs_font_size', 'cs_font_family',
     )
 
@@ -375,7 +375,7 @@ class ParagraphStyle(object):
                 setattr(self, p, binary_property(pPr, p, namespace.XPath, namespace.get))
 
             for x in ('border', 'indent', 'justification', 'spacing', 'shd', 'numbering', 'frame'):
-                f = globals()['read_%s' % x]
+                f = read_funcs[x]
                 f(pPr, self, namespace.XPath, namespace.get)
 
             for s in namespace.XPath('./w:pStyle[@w:val]')(pPr):
@@ -473,3 +473,6 @@ class ParagraphStyle(object):
             if bw is not inherit and bw and bs is not inherit and bs != 'none':
                 return True
         return False
+
+
+read_funcs = {k[5:]:v for k, v in iteritems(globals()) if k.startswith('read_')}

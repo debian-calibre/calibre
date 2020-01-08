@@ -51,7 +51,7 @@ def get_key_text(evt):
         cc = key.charCodeAt(0)
         # on windows in webengine pressing ctrl+ascii char gives us an ascii
         # control code
-        if (0 < cc < 32 or key is 'Enter') and evt.ctrlKey and not evt.metaKey and not evt.shiftKey and not evt.altKey:
+        if (0 < cc < 32 or key is 'Enter') and evt.ctrlKey and not evt.metaKey and not evt.altKey:
             if key is 'Enter':
                 if evt.code and evt.code is not 'Enter':
                     key = 'm'
@@ -94,7 +94,7 @@ def shortcuts_definition():
         v"['Ctrl+ArrowUp', 'Ctrl+ArrowLeft', 'Home']",
         'scroll',
         _('Scroll to the beginning of the current file'),
-        _('When the e-book is made of of multiple individual files, scroll to the start of the current file.'),
+        _('When the e-book is made of multiple individual files, scroll to the start of the current file.'),
     ),
 
     'start_of_book': desc(
@@ -113,7 +113,7 @@ def shortcuts_definition():
         v"['Ctrl+ArrowDown', 'Ctrl+ArrowRight', 'End']",
         'scroll',
         _('Scroll to the end of the current file'),
-        _('When the e-book is made of of multiple individual files, scroll to the end of the current file.'),
+        _('When the e-book is made of multiple individual files, scroll to the end of the current file.'),
     ),
 
     'up': desc(
@@ -246,16 +246,52 @@ def shortcuts_definition():
         _('Search for next occurrence of selected text'),
     ),
 
+    'extend_selection_by_word': desc(
+        v"['Ctrl+Shift+ArrowRight']",
+        'ui',
+        _('Alter the current selection forward by a word'),
+    ),
+
+    'shrink_selection_by_word': desc(
+        v"['Ctrl+Shift+ArrowLeft']",
+        'ui',
+        _('Alter the current selection backwards by a word'),
+    ),
+
     'show_chrome': desc(
         v"['Escape', 'ContextMenu']",
         'ui',
         _('Show the viewer controls'),
     ),
 
+    'preferences': desc(
+        v"['Ctrl+,', 'Ctrl+Escape', 'Meta+Escape', 'Meta+,']",
+        'ui',
+        _('Show viewer preferences'),
+    ),
+
     'goto_location': desc(
         v"[';', ':', 'Shift+:', 'Shift+;', 'Ctrl+g']",
         'ui',
         _('Go to a specified book location or position'),
+    ),
+
+    'toggle_autoscroll': desc(
+        "Ctrl+ ",
+        'scroll',
+        _('Toggle auto-scroll'),
+    ),
+
+    'scrollspeed_increase': desc(
+        "Alt+ArrowUp",
+        'scroll',
+        _('Auto scroll faster'),
+    ),
+
+    'scrollspeed_decrease': desc(
+        "Alt+ArrowDown",
+        'scroll',
+        _('Auto scroll slower'),
     ),
 
     }

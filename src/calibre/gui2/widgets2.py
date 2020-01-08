@@ -7,17 +7,17 @@ import weakref
 
 from PyQt5.Qt import (
     QAbstractListModel, QApplication, QCheckBox, QColor, QColorDialog, QComboBox,
-    QDialog, QDialogButtonBox, QFont, QIcon, QKeySequence, QLabel, QLayout,
-    QModelIndex, QPalette, QPixmap, QPoint, QPushButton, QRect, QSize, QSizePolicy,
-    QStyle, QStyledItemDelegate, Qt, QTextBrowser, QToolButton, QUndoCommand, QFontInfo,
-    QUndoStack, QWidget, pyqtSignal
+    QDialog, QDialogButtonBox, QFont, QFontInfo, QIcon, QKeySequence, QLabel,
+    QLayout, QModelIndex, QPalette, QPixmap, QPoint, QPushButton, QRect, QScrollArea,
+    QSize, QSizePolicy, QStyle, QStyledItemDelegate, Qt, QTabWidget, QTextBrowser,
+    QToolButton, QUndoCommand, QUndoStack, QWidget, pyqtSignal
 )
 
 from calibre.ebooks.metadata import rating_to_stars
-from calibre.utils.config_base import tweaks
 from calibre.gui2 import gprefs, rating_font
 from calibre.gui2.complete2 import EditWithComplete, LineEdit
 from calibre.gui2.widgets import history
+from calibre.utils.config_base import tweaks
 from polyglot.builtins import unicode_type
 
 
@@ -173,7 +173,7 @@ class Dialog(QDialog):
         self.resize(self.sizeHint())
         geom = self.prefs_for_persistence.get(name + '-geometry', None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         if hasattr(self, 'splitter'):
             state = self.prefs_for_persistence.get(name + '-splitter-state', None)
             if state is not None:
@@ -479,6 +479,30 @@ class HTMLDisplay(QTextBrowser):
                 self.scrollToAnchor(frag)
                 return
         self.anchor_clicked.emit(qurl)
+
+
+class ScrollingTabWidget(QTabWidget):
+
+    def __init__(self, parent=None):
+        QTabWidget.__init__(self, parent)
+
+    def wrap_widget(self, page):
+        sw = QScrollArea(self)
+        sw.setWidget(page)
+        sw.setWidgetResizable(True)
+        page.setAutoFillBackground(False)
+        sw.setStyleSheet('QScrollArea { background: transparent }')
+        return sw
+
+    def indexOf(self, page):
+        for i in range(self.count()):
+            t = self.widget(i)
+            if t.widget() is page:
+                return i
+        return -1
+
+    def addTab(self, page, *args):
+        return QTabWidget.addTab(self, self.wrap_widget(page), *args)
 
 
 if __name__ == '__main__':

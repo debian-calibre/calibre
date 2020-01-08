@@ -931,9 +931,13 @@ class CoversWidget(QWidget):  # {{{
         if num < 2:
             txt = _('Could not find any covers for <b>%s</b>')%self.book.title
         else:
-            txt = _('Found <b>%(num)d</b> possible covers for %(title)s. '
-                    'When the download completes, the covers will be sorted by size.')%dict(num=num-1,
-                            title=self.title)
+            if num == 2:
+                txt = _('Found a cover for {title}').format(title=self.title)
+            else:
+                txt = _(
+                    'Found <b>{num}</b> covers for {title}. When the download completes,'
+                    ' the covers will be sorted by size.').format(
+                            title=self.title, num=num-1)
         self.msg.setText(txt)
         self.msg.setWordWrap(True)
         self.covers_view.stop()
@@ -1062,7 +1066,7 @@ class FullFetch(QDialog):  # {{{
         self.resize(850, 600)
         geom = gprefs.get('metadata_single_gui_geom', None)
         if geom is not None and geom:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
 
         self.finished.connect(self.cleanup)
 
@@ -1164,7 +1168,7 @@ class CoverFetch(QDialog):  # {{{
 
         geom = gprefs.get('single-cover-fetch-dialog-geometry', None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
 
     def cleanup(self):
         self.covers_widget.cleanup()

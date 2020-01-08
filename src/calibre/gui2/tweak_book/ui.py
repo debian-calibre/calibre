@@ -76,6 +76,7 @@ class Central(QStackedWidget):  # {{{
         c.setLayout(l)
         l.setContentsMargins(0, 0, 0, 0)
         self.editor_tabs = t = QTabWidget(c)
+        self.editor_tabs.setStyleSheet('QTabBar::tab:selected { font-style: italic }')
         l.addWidget(t)
         t.setDocumentMode(True)
         t.setTabsClosable(True)
@@ -800,7 +801,7 @@ class Main(MainWindow):
     def restore_state(self):
         geom = tprefs.get('main_window_geometry', None)
         if geom is not None:
-            self.restoreGeometry(geom)
+            QApplication.instance().safe_restore_geometry(self, geom)
         state = tprefs.get('main_window_state', None)
         if state is not None:
             self.restoreState(state, self.STATE_VERSION)
