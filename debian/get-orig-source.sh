@@ -16,7 +16,11 @@ c_file=calibre-${V}.tar.xz
 mkdir -p debian/orig
 cd debian/orig
 
-wget -O ${c_file} https://download.calibre-ebook.com/${V}/${c_file}
+case ${V} in
+    4\.99*) url=https://download.calibre-ebook.com/betas/${c_file} ;;
+    *)      url=https://download.calibre-ebook.com/${V}/${c_file} ;;
+esac
+wget -O ${c_file} ${url}
 
 tar -Jxf ${c_file}
 
