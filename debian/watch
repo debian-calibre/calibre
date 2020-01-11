@@ -11,5 +11,5 @@ version=4
 #  https://download.calibre-ebook.com/4.html (\d[\d\.]*)/
 
 # remove +dfsg upstream version suffix
-opts="dversionmangle=auto" \
+opts="dversionmangle=auto,repacksuffix=+dfsg" \
   https://download.calibre-ebook.com/betas/ @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
