@@ -4,6 +4,12 @@
 # Compulsory line, this is a version 4 file
 version=4
 
+# for the released version 4 calibre, use this
+# needs to be used when upstream switched to v5/py3
+# after adjusting the 4.html -> 5.html (probably)
+#opts="dversionmangle=s/\+dfsg$//,downloadurlmangle=s/\/(\d[\d\.]*)\//\/$1\/calibre-$1.tar.xz/" \
+#  https://download.calibre-ebook.com/4.html (\d[\d\.]*)/
+
 # remove +dfsg upstream version suffix
 opts="dversionmangle=s/\+dfsg$//" \
   https://download.calibre-ebook.com/betas/ @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
