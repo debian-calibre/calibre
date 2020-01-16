@@ -1,3 +1,24 @@
+calibre (4.99.3+dfsg-2) UNRELEASED; urgency=medium
+
+  [ Norbert Preining ]
+  * get-orig-source support for beta releases
+  * update NEWS and TODO for Py3 version, remove PYTHON3-STATUS
+  * d/watch: include comments on old version watch line and v5 switch
+  * switch to uscan for orig creation
+
+  [ YOKOTA Hiroshi ]
+  * Use uscan(1) to re-package source files.
+    uscan(1) downloads and repacks upstream file when upstream version is
+    newer than local version that describes in "debian/changelog".
+    Use "gbp import-orig --uscan" to import upstream code.
+  * Add new "gbp import-orig" usage as comment.
+  * Add "filenamemangle" to specify local file name
+  * Verify upstream source code by upstream OpenPGP signature
+  * Use relaxed syntax for readability
+    "version=4" allows relaxed watch file syntax
+
+ -- Norbert Preining <norbert@preining.info>  Thu, 16 Jan 2020 11:47:18 +0900
+
 calibre (4.99.3+dfsg-1) experimental; urgency=medium
 
   [ YOKOTA Hiroshi ]
