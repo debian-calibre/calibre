@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import json
@@ -10,6 +9,7 @@ import os
 import tempfile
 import time
 from hashlib import sha1
+from itertools import count
 
 from calibre import walk
 from calibre.constants import cache_dir, iswindows
@@ -24,6 +24,7 @@ from polyglot.builtins import as_bytes, as_unicode, iteritems
 
 DAY = 24 * 3600
 VIEWER_VERSION = 1
+td_counter = count()
 
 
 def book_cache_dir():
@@ -138,7 +139,7 @@ def expire_cache_and_temp(temp_path, finished_path, metadata, max_age, force_exp
 
 
 def prepare_convert(temp_path, key, st, book_path):
-    tdir = tempfile.mkdtemp(dir=temp_path)
+    tdir = tempfile.mkdtemp(dir=temp_path, prefix=f'c{next(td_counter)}-')
     now = time.time()
     return {
         'path': os.path.basename(tdir),
@@ -234,7 +235,7 @@ def prepare_book(path, convert_func=do_convert, max_age=30 * DAY, force=False, p
     convert_func(path, temp_path, key, instance)
     src_path = os.path.join(temp_path, instance['path'])
     with cache_lock() as f:
-        ans = tempfile.mkdtemp(dir=finished_path)
+        ans = tempfile.mkdtemp(dir=finished_path, prefix=f'c{next(td_counter)}-')
         instance['path'] = os.path.basename(ans)
         try:
             metadata = json.loads(f.read())
@@ -313,8 +314,14 @@ def find_tests():
                 self.ae(instance['key'], key)
                 open(os.path.join(temp_path, instance['path'], 'sentinel'), 'wb').write(b'test')
 
+            def set_data(x):
+                if not isinstance(x, bytes):
+                    x = x.encode('utf-8')
+                with open(book_src, 'wb') as f:
+                    f.write(x)
+
             book_src = os.path.join(self.tdir, 'book.epub')
-            open(book_src, 'wb').write(b'a')
+            set_data('a')
             path = prepare_book(book_src, convert_func=convert_mock)
             self.ae(open(os.path.join(path, 'sentinel'), 'rb').read(), b'test')
 
@@ -323,7 +330,7 @@ def find_tests():
             self.ae(path, second_path)
 
             # Test that changing the book updates the cache
-            open(book_src, 'wb').write(b'bc')
+            set_data('bc')
             third_path = prepare_book(book_src, convert_func=convert_mock)
             self.assertNotEqual(path, third_path)
 
@@ -334,21 +341,21 @@ def find_tests():
             self.assertNotEqual(third_path, fourth_path)
 
             # Test cache expiry
-            open(book_src, 'wb').write(b'bcd')
+            set_data('bcd')
             prepare_book(book_src, convert_func=convert_mock, max_age=-1000)
             self.ae([], os.listdir(os.path.join(book_cache_dir(), 'f')))
 
             # Test modifying a book and opening it repeatedly leaves only
             # a single entry for it in the cache
-            prepare_book(book_src, convert_func=convert_mock, force_expire=True)
+            opath = prepare_book(book_src, convert_func=convert_mock, force_expire=True)
             finished_entries = os.listdir(os.path.join(book_cache_dir(), 'f'))
             self.ae(len(finished_entries), 1)
-            open(book_src, 'wb').write(b'bcde')
-            prepare_book(book_src, convert_func=convert_mock, force_expire=True)
+            set_data('bcde' * 4096)
+            npath = prepare_book(book_src, convert_func=convert_mock, force_expire=True)
             new_finished_entries = os.listdir(os.path.join(book_cache_dir(), 'f'))
             self.ae(len(new_finished_entries), 1)
-            self.assertNotEqual(finished_entries, new_finished_entries)
-            open(book_src, 'wb').write(b'bcdef')
+            self.assertNotEqual(opath, npath)
+            set_data('bcdef')
             prepare_book(book_src, convert_func=convert_mock, max_age=-1000, force_expire=True)
             self.ae([], os.listdir(os.path.join(book_cache_dir(), 'f')))
             with cache_lock() as f:
@@ -357,11 +364,11 @@ def find_tests():
 
             # Test updating cached book
             book_src = os.path.join(self.tdir, 'book2.epub')
-            open(book_src, 'wb').write(b'bb')
+            set_data('bb')
             path = prepare_book(book_src, convert_func=convert_mock)
             self.ae(open(os.path.join(path, 'sentinel'), 'rb').read(), b'test')
             bs = os.stat(book_src)
-            open(book_src, 'wb').write(b'cde')
+            set_data('cde')
             update_book(book_src, bs, name_data_map={'sentinel': b'updated'})
             self.ae(open(os.path.join(path, 'sentinel'), 'rb').read(), b'updated')
             self.ae(1, len(os.listdir(os.path.join(book_cache_dir(), 'f'))))

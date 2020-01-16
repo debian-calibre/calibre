@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "FETCH-EBOOK-METADATA" "1" "de gener 03, 2020" "4.8.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "de gener 06, 2020" "4.99.3" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .
@@ -41,8 +41,7 @@ fetch\-ebook\-metadata [opcions]
 .UNINDENT
 .UNINDENT
 .sp
-Agafa les metadades del llibre de fonts en línia. Heu d\(aqespecificar almenys un
-de títol, autors o ISBN.
+Agafa les metadades del llibre de fonts en línia. S\(aqha d\(aqespecificar com a mínim un d\(aqentre: títol, autor o ISBN.
 .sp
 Sempre que passeu arguments a \fBfetch\-ebook\-metadata\fP i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH [OPCIONS]
@@ -59,7 +58,7 @@ Autors del llibre
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Especifiqueu un nom de fitxer. Si la portada està disponible es desarà aquí. Sense aquesta opció, no es baixarà cap portada.
+Especifiqueu un nom de fitxer. La portada, si està disponible, es desarà en aquest. Sense aquesta opció, no es baixarà cap portada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -69,7 +68,7 @@ mostra aquest missatge d\fB\(aq\fPajuda i surt
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identificadors com els identificadors d\fB\(aq\fPASIN/goodreads... Es poden especificar diverses vegades per diversos identificadors. Per exemple: \fI\%\-\-identifier\fP asin:B0082BAJA0
+Identifiers such as ASIN/goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fI\%\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -84,7 +83,7 @@ Extreu les metadades en format OPF en comptes de text llegible.
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-d
-Temps d\fB\(aq\fPexpiració en segons. Per defecte és 30.
+Temps d\fB\(aq\fPexpiració en segons. Per defecte és 30
 .UNINDENT
 .INDENT 0.0
 .TP

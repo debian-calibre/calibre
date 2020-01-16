@@ -6,10 +6,8 @@ Subject: [PATCH] Hardening Qt code
  setup/build.py |   20 ++++++++++++++++++--
  1 file changed, 18 insertions(+), 2 deletions(-)
 
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
 @@ -168,6 +168,7 @@ def init_env():
          ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
          ldflags = shlex.split(ldflags)
@@ -18,7 +16,7 @@ Index: b/setup/build.py
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
  
-@@ -425,9 +426,17 @@ class Build(Command):
+@@ -458,9 +459,17 @@ class Build(Command):
              DESTDIR = {destdir}
              CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
              QMAKE_LIBS_PRIVATE += {glib} {fontconfig}
@@ -37,7 +35,7 @@ Index: b/setup/build.py
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
-@@ -492,10 +501,17 @@ class Build(Command):
+@@ -530,10 +539,17 @@ class Build(Command):
          macx {{
              QMAKE_LFLAGS += "-undefined dynamic_lookup"
          }}

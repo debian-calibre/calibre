@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__ = 'GPL v3'
 __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -47,4 +47,4 @@ def count_words(text, lang='en'):
         if it is None:
             it = _iterators[lang] = _icu.BreakIterator(_icu.UBRK_WORD, lang_as_iso639_1(lang) or lang)
         it.set_text(text)
-        return len(it.split2())
+        return it.count_words()

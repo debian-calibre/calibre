@@ -1,14 +1,20 @@
 #!/usr/bin/make -f
 
-SETUP=python2.7 setup.py
+# try building with python3
+export CALIBRE_PY3_PORT=1
+SETUP=python3 setup.py
 
 # build options
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all reproducible=+all
 
+# Set our HOME directory for testing.
+# Some test uses it for XDG Base Directory.
+TEST_HOME = $(CURDIR)/debian/test-home
+
 %:
 	dh $@ --buildsystem=makefile
 
-DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python-pyqt5)
+DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
 
 export QT_SELECT=qt5
 
@@ -19,9 +25,13 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
+override_dh_auto_test:
+	mkdir -p $(TEST_HOME)
+	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 LANGUAGE= TZ=UTC xvfb-run $(SETUP) test
+
 override_dh_install:
 	dh_buildinfo
-	dh_sip -pcalibre-bin
+	dh_sip3 -pcalibre-bin
 	dh_install
 
 override_dh_missing:
@@ -31,6 +41,7 @@ override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
+	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
 	env -u LANG -u LC_ALL -u LANGUAGE -u LC_MESSAGES XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
 	# not needed
@@ -44,8 +55,8 @@ override_dh_auto_install:
 	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
 
-	# fix "env python2" style hashbangs
-	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python2.7_ }'
+	# fix "env python3" style hashbangs
+	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
 
 override_dh_installman:
 	# Create and install some of the man pages
@@ -54,6 +65,7 @@ override_dh_installman:
 
 override_dh_auto_clean:
 	rm -rf debian/orig
+	rm -rf $(TEST_HOME)
 	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
@@ -67,3 +79,4 @@ override_dh_gencontrol:
 .PHONY: get-orig-source
 get-orig-source:
 	./debian/get-orig-source.sh
+#	uscan --verbose

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/metadata.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/convert/metadata.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -32,7 +32,7 @@ class Ui_Form(object):
         self._5.setSpacing(6)
         self._5.setObjectName("_5")
         self.cover_path = QtWidgets.QLineEdit(self.groupBox_4)
-        self.cover_path.setClearButtonEnabled(True)
+        self.cover_path.setReadOnly(True)
         self.cover_path.setObjectName("cover_path")
         self._5.addWidget(self.cover_path)
         self.cover_button = QtWidgets.QToolButton(self.groupBox_4)

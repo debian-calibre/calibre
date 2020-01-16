@@ -16710,7 +16710,7 @@ return this.__repr__();
 
         function auto_scroll_action(action) {
             if (action === "toggle") {
-                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["error"].concat([ρσ_desugar_kwargs({title: _("No auto scroll in paged mode"), msg: _("Switch to flow mode (Viewer preferences->Page layout) to enable auto scrolling")})])));
+                (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["error"].concat([ρσ_desugar_kwargs({title: _("No auto scroll in paged mode"), msg: _("Switch to flow mode (Viewer preferences->Page layout) to enable auto scrolling"), is_non_critical: true})])));
             }
             return false;
         };
@@ -16947,7 +16947,7 @@ return this.__repr__();
             key = evt.key;
             if (key) {
                 cc = key.charCodeAt(0);
-                if ((0 < cc && cc < 32 || key === "Enter") && evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
+                if ((0 < cc && cc < 32 || key === "Enter") && evt.ctrlKey && !evt.metaKey && !evt.altKey) {
                     if (key === "Enter") {
                         if (evt.code && evt.code !== "Enter") {
                             key = "m";
@@ -18701,7 +18701,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.8.0";
+        CALIBRE_VERSION = "4.99.3";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -29761,10 +29761,8 @@ return this.__repr__();
             ans = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", text_align: "center", height: "100vh", user_select: "none", display: "flex", align_items: "center", justify_content: "space-between", flex_direction: "column"})]));
             ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > .arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
             ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > *"].concat([ρσ_desugar_kwargs({max_width: "100%", overflow: "hidden"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover"].concat([ρσ_desugar_kwargs({flex_direction: "row", justify_content: "center"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active"].concat([ρσ_desugar_kwargs({flex_direction: "row", justify_content: "center"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > not(.arrow)"].concat([ρσ_desugar_kwargs({display: "none"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > not(.arrow)"].concat([ρσ_desugar_kwargs({display: "none"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > .not-arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > .not-arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
             ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > .arrow"].concat([ρσ_desugar_kwargs({display: "block"})]));
             ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > .arrow"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground"), display: "block", transform: "scale(2)"})]));
             return ans;
@@ -29864,7 +29862,7 @@ return this.__repr__();
 
         function side_margin_elem(self, sd, which) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", which) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow"})])), E.div(), E.div(), E.div()].concat([ρσ_desugar_kwargs({style: "width:{}px;".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", which) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow", style: "order: 3"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:1"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:2", class_: "not-arrow"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:4"})])].concat([ρσ_desugar_kwargs({style: "width:{}px;".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
             return ans;
         };
         if (!side_margin_elem.__argnames__) Object.defineProperties(side_margin_elem, {
@@ -30591,7 +30589,13 @@ return this.__repr__();
         };
         View.prototype.on_iframe_error = function on_iframe_error(data) {
             var self = this;
-            ui_operations.show_error(data.title || _("There was an error processing the book"), data.msg, data.details);
+            var title;
+            title = data.title || _("There was an error processing the book");
+            if (data.is_non_critical) {
+                ρσ_interpolate_kwargs.call(this, warning_dialog, [title, data.msg, data.details].concat([ρσ_desugar_kwargs({on_close: ui_operations.focus_iframe})]));
+                return;
+            }
+            ui_operations.show_error(title, data.msg, data.details);
         };
         if (!View.prototype.on_iframe_error.__argnames__) Object.defineProperties(View.prototype.on_iframe_error, {
             __argnames__ : {value: ["data"]}

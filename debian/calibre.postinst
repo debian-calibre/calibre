@@ -25,8 +25,11 @@ case "$1" in
 esac
 
 
-if which pycompile >/dev/null 2>&1; then
-  pycompile -p calibre /usr/lib/calibre -V 2.7-2.9
+if which py3compile >/dev/null 2>&1; then
+	py3compile -p calibre /usr/lib/calibre -V 3.7-
+fi
+if which pypy3compile >/dev/null 2>&1; then
+	pypy3compile -p calibre /usr/lib/calibre -V 3.7- || true
 fi
 
 #DEBHELPER#

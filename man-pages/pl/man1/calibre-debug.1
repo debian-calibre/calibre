@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "stycznia 03, 2020" "4.8.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "stycznia 06, 2020" "4.99.3" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -99,7 +99,7 @@ Wsadź książkę do określonego katalogu Zastosowanie: \-x file.epub output_di
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Eksportowanie wszystkich danych programu calibre (książki/ustawienia/wtyczki). Zazwyczaj zostaniesz zapytany o nazwę katalogu oraz biblioteki do eksportu. W celu uniknięcia zapytań możesz podać te dane jako argumenty w linii poleceń. Użyj pełnych ścieżek do katalogu i bibliotek do eksportu. Specjalne słowo kluczowe \fB"\fPall\fB"\fP może zostać użyte do eksportu wszystkich bibliotek.
+Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,7 +119,7 @@ Wyświetla ten tekst pomocy i kończy działanie
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Łączenie wcześniej podzielonej książki Użycie: \-i katalog_wyjsciowy plik.epub Importuje książkę z plików znajdujących się w katalog_wyjsciowy, który został utworzony przez wcześniejsze wywołanie \fI\%\-\-explode\-book\fP\&. Pamiętaj aby wybrać taki sam typ pliku jak podczas dzielenia książki.
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
 .UNINDENT
 .INDENT 0.0
 .TP

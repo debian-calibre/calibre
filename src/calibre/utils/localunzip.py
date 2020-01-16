@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -16,7 +16,7 @@ Tries to only use the local headers to extract data from the damaged zip file.
 import os, sys, zlib, shutil
 from struct import calcsize, unpack, pack
 from collections import namedtuple, OrderedDict
-from tempfile import SpooledTemporaryFile
+from calibre.ptempfile import SpooledTemporaryFile
 
 from polyglot.builtins import itervalues, getcwd
 

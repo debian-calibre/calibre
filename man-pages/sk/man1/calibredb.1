@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "januára 03, 2020" "4.8.0" "calibre"
+.TH "CALIBREDB" "1" "januára 06, 2020" "4.99.3" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -190,7 +190,7 @@ Generate output in JSON format, which is more suitable for machine parsing. Caus
 .INDENT 0.0
 .TP
 .B \-\-limit
-Maximálny počet výsledkov k zobrazeniu. Predvolená hodnota: všetky
+The maximum number of results to display. Default: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ Reťazec, ktorým budú oddelené jednotlivé polia. Štandardne je to medzera.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-Pole, podľa ktorého triediť výsledky. Dostupné polia: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Predvolené: id
+The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -343,7 +343,7 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Pridať e\-knihu v ebook_file k dostupným formátom pre logickú knihu identifikovanú pomocou id. Id môžete získať pomocou príkazu search. Ak formát už existuje, bude nahradený, pokiaľ nie je zadaná voľba nenahradzovať.
+Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -467,7 +467,7 @@ Zoznam formátov oddelených čiarkami, ktoré ukladať pre každú knihu. Vo v�
 .INDENT 0.0
 .TP
 .B \-\-progress
-Správa o priebehu
+Report progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -673,7 +673,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-Slovník volieb pre prispôsobenie spôsobu interpretácie údajov v tomto stĺpci. Toto je reťazec JSON. Pre výčet stĺpcov použite \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Existuje veľa možností, ktoré môžu ísť do premennej \fB"\fPdispley\fB"\fP\&. Možnosti podľa typu stĺpca sú: zložené: composite_template, composite_sort, make_category,contains_html, use_decorations dátum a čas: date_format výčet: enum_values, enum_colors, use_decorations celé číslo (int), plávajúce (float): number_format text: is_names, use_decorations  Nejlepší spôsob ako nájsť zákonité kombinácie, je vytvoriť v grafickom rozhraní vlastný stĺpec vhodného typu, potom vyhľadať v záložnom OPF knihu (uistite sa, že od pridania stĺpca bol vytvorený nový OPF). Uvidíte JSON pre \fB"\fPdisplay\fB"\fP pre nový stĺpec v OPF.
+A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB"\fPdisplay\fB"\fP for the new column in the OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -834,7 +834,7 @@ Výstup do CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-Typ súboru CSV, ktorý sa má vytvoriť. Možnosti: excel, excel\-tab
+The type of CSV file to produce. Choices: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -869,7 +869,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normálne tento príkaz funguje iba u kníh, ktoré majú zastarané súbory OPF. Táto možnosť umožňuje fungovanie u všetkých kníh.
+Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0

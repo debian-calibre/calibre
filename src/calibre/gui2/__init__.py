@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -1007,7 +1007,7 @@ class Application(QApplication):
         try:
             if self.clipboard().ownsClipboard():
                 import ctypes
-                ctypes.WinDLL(b'ole32.dll').OleFlushClipboard()
+                ctypes.WinDLL('ole32.dll').OleFlushClipboard()
         except Exception:
             import traceback
             traceback.print_exc()
@@ -1460,12 +1460,13 @@ empty_index = empty_model.index(0)
 def set_app_uid(val):
     import ctypes
     from ctypes import wintypes
+    from ctypes import HRESULT
     try:
         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
     except Exception:  # Vista has no app uids
         return False
     AppUserModelID.argtypes = [wintypes.LPCWSTR]
-    AppUserModelID.restype = wintypes.HRESULT
+    AppUserModelID.restype = HRESULT
     try:
         AppUserModelID(unicode_type(val))
     except Exception as err:

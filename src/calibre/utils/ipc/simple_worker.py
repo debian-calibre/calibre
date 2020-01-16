@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -143,7 +143,6 @@ def create_worker(env, priority='normal', cwd=None, func='main'):
 
 def start_pipe_worker(command, env=None, priority='normal', **process_args):
     import subprocess
-    from functools import partial
     w = Worker(env or {})
     args = {'stdout':subprocess.PIPE, 'stdin':subprocess.PIPE, 'env':w.env}
     args.update(process_args)
@@ -155,14 +154,8 @@ def start_pipe_worker(command, env=None, priority='normal', **process_args):
                 'low'    : win32process.IDLE_PRIORITY_CLASS}[priority]
         args['creationflags'] = win32process.CREATE_NO_WINDOW|priority
     else:
-        def renice(niceness):
-            try:
-                os.nice(niceness)
-            except:
-                pass
         niceness = {'normal' : 0, 'low'    : 10, 'high'   : 20}[priority]
-        args['preexec_fn'] = partial(renice, niceness)
-        args['close_fds'] = True
+        args['env']['CALIBRE_WORKER_NICENESS'] = str(niceness)
 
     exe = w.executable
     cmd = [exe] if isinstance(exe, string_or_bytes) else exe

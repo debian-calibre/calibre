@@ -1,3 +1,17 @@
+calibre (4.99.3+dfsg-2) unstable; urgency=medium
+
+  * This is the first version of Calibre using Python3 uploaded to sid.
+    It is a pre-release based on calibre 4.8 with additional fixes
+    for Python3. We expect upstream to switch completely to Python3
+    with the release of calibre 5.0 around mid 2020.
+
+    WARNING: External plugins are still mostly not ready for Python3, that
+    means that many of them will not work with this version. If you need
+    these plugins to work, do **NOT** update to this version, or install
+    the Linux version as distributed by upstream.
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 10 Jan 2020 13:34:50 +0900
+
 calibre (4.3.0+dfsg-2) unstable; urgency=medium
 
   * Conversion to PDF is currently (since version 4) broken due to Qt
@@ -5,3 +19,13 @@ calibre (4.3.0+dfsg-2) unstable; urgency=medium
     Debian, conversion will start again.
 
  -- Norbert Preining <norbert@preining.info>  Fri, 22 Nov 2019 15:56:21 +0900
+
+calibre (4.2.0+dfsg-1) experimental; urgency=medium
+
+  This is an experimental version of Calibre based on Python3.
+
+  WARNING: Practically all external plugins will fail.
+  If you install this package, you might need to remove all
+  plugins from ~/.config/calibre/plugins
+
+ -- Norbert Preining <norbert@preining.info>  Thu, 24 Oct 2019 09:05:49 +0900

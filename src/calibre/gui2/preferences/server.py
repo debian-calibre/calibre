@@ -1,8 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
-
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import errno
 import json
@@ -49,7 +47,7 @@ if iswindows and not isportable:
         exe_base = os.path.abspath(os.path.dirname(sys.executable))
         exe = os.path.join(exe_base, 'calibre.exe')
         if isinstance(exe, bytes):
-            exe = exe.decode('mbcs')
+            exe = os.fsdecode(exe)
         return exe
 
     def startup_shortcut_path():
@@ -210,7 +208,7 @@ class Path(QWidget):
         ans = choose_files(self, 'choose_path_srv_opts_' + self.dname, _('Choose a file'), select_only_single_file=True)
         if ans:
             self.set(ans[0])
-            self.save_history()
+            self.text.save_history()
 
 
 class Choices(QComboBox):

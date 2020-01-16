@@ -1,13 +1,12 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import csv
 import sys
 from textwrap import TextWrapper
-from io import BytesIO
+from io import StringIO
 
 from calibre import prints
 from polyglot.builtins import unicode_type, map
@@ -124,7 +123,7 @@ def do_list(fields, data, opts):
 
 
 def do_csv(fields, data, opts):
-    buf = BytesIO()
+    buf = StringIO(newline='')
     csv_print = csv.writer(buf, opts.dialect)
     csv_print.writerow(fields)
     for d in data:

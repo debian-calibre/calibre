@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 import re
 from collections import namedtuple
@@ -13,7 +13,7 @@ from PyQt5.Qt import (
     QWidget, pyqtProperty, pyqtSignal
 )
 
-from calibre import fit_image
+from calibre import fit_image, sanitize_file_name
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import Metadata, field_metadata
 from calibre.ebooks.metadata.book.render import mi_to_html
@@ -476,7 +476,7 @@ class CoverView(QWidget):  # {{{
         path = choose_save_file(
             self, 'save-cover-from-book-details', _('Choose cover save location'),
             filters=[(_('JPEG images'), ['jpg', 'jpeg'])], all_files=False,
-            initial_filename='{}.jpeg'.format(db.field_for('title', book_id, default_value='cover'))
+            initial_filename='{}.jpeg'.format(sanitize_file_name(db.field_for('title', book_id, default_value='cover')))
         )
         if path:
             db.copy_cover_to(book_id, path)

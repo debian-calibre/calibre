@@ -1,16 +1,52 @@
-calibre (4.8.0+dfsg-1) UNRELEASED; urgency=medium
+calibre (4.99.3+dfsg-1) experimental; urgency=medium
 
   [ YOKOTA Hiroshi ]
   * Typo fix
-  * It seems a Markdown file
   * Refactor man pages installation.
     This hack requires debhelper v11 or later.
   * Make reproducible build
+  * Use Python3 based tools
+  * Update maintainer script for more Python 3 support.
+    This codes are comes from "dh-python" package.
 
   [ Norbert Preining ]
-  * New upstream version 4.8.0+dfsg
+  * test unrar if available
+  * allow for plugin update check, but no calibre version check
+  * unfuzzify patch
+  * New upstream version 4.99.3+dfsg
+  * update patches
 
- -- Norbert Preining <norbert@preining.info>  Fri, 03 Jan 2020 23:48:00 +0900
+ -- Norbert Preining <norbert@preining.info>  Wed, 08 Jan 2020 15:16:28 +0900
+
+calibre (4.99.2+dfsg-1) experimental; urgency=medium
+
+  The "Thanks Eli Schwartz Release" - lots of feedback and suggestions for
+  improvements, very much appreciated!
+
+  [ Debian Janitor ]
+  * Fix some issues reported by lintian
+    - Set debhelper-compat version in Build-Depends.
+    Fixes lintian: uses-debhelper-compat-file
+    See https://lintian.debian.org/tags/uses-debhelper-compat-file.html
+    for more details.
+    - Set upstream metadata fields: Repository, Repository-Browse.
+    Fixes lintian: upstream-metadata-file-is-missing
+    See https://lintian.debian.org/tags/upstream-metadata-file-is-missing.html
+    for more details.
+
+  [ Norbert Preining ]
+  * New upstream beta version targetting Python3: 4.99.2
+  * reenable plugin dropdown menu (Closes: #947391)
+  * run unit tests after build (Closes: #947390)
+  * unfuzzify and disable patches not necessary anymore
+  * cleanup unused patches
+  * create /usr/share/zsh/vendor-completions/ to trigger calibre installer to
+    create zsh completions (Closes: #947394)
+
+  [ YOKOTA Hiroshi ]
+  * Update test code for non-English environment
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 27 Dec 2019 14:23:27 +0900
 
 calibre (4.7.0+dfsg-1) unstable; urgency=medium
 
@@ -28,6 +64,12 @@ calibre (4.7.0+dfsg-1) unstable; urgency=medium
   * New upstream version 4.7.0+dfsg
 
  -- Norbert Preining <norbert@preining.info>  Fri, 27 Dec 2019 14:40:15 +0900
+
+calibre (4.6.0+dfsg-1+exp1) experimental; urgency=medium
+
+  * Calibre 4.5 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 13 Dec 2019 22:27:52 +0900
 
 calibre (4.6.0+dfsg-1) unstable; urgency=medium
 
@@ -65,6 +107,12 @@ calibre (4.6.0+dfsg-1) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Fri, 13 Dec 2019 17:26:59 +0900
 
+calibre (4.5.0+dfsg-3+exp1) experimental; urgency=medium
+
+  * Calibre 4.5 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 03 Dec 2019 12:43:45 +0900
+
 calibre (4.5.0+dfsg-3) unstable; urgency=medium
 
   [ YOKOTA Hiroshi ]
@@ -73,11 +121,23 @@ calibre (4.5.0+dfsg-3) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Tue, 03 Dec 2019 08:58:11 +0900
 
+calibre (4.5.0+dfsg-2+exp1) experimental; urgency=medium
+
+  * Calibre 4.5 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 29 Nov 2019 14:22:40 +0900
+
 calibre (4.5.0+dfsg-2) unstable; urgency=medium
 
   * Fix double inclusion of man pages in -B builds
 
  -- Norbert Preining <norbert@preining.info>  Fri, 29 Nov 2019 14:18:17 +0900
+
+calibre (4.5.0+dfsg-1+exp1) experimental; urgency=medium
+
+  * Calibre 4.5 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 29 Nov 2019 08:02:02 +0900
 
 calibre (4.5.0+dfsg-1) unstable; urgency=medium
 
@@ -89,12 +149,24 @@ calibre (4.5.0+dfsg-1) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Fri, 29 Nov 2019 07:58:23 +0900
 
+calibre (4.4.0+dfsg-1+exp1) experimental; urgency=medium
+
+  * Calibre 4.4 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 22 Nov 2019 16:19:57 +0900
+
 calibre (4.4.0+dfsg-1) unstable; urgency=medium
 
   * New upstream version 4.4.0+dfsg
   * drop cherrypi deps (Closes: #936270)
 
  -- Norbert Preining <norbert@preining.info>  Fri, 22 Nov 2019 15:57:48 +0900
+
+calibre (4.3.0+dfsg-2+exp1) experimental; urgency=medium
+
+  * Calibre 4.3 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 11 Nov 2019 09:21:41 +0900
 
 calibre (4.3.0+dfsg-2) unstable; urgency=medium
 
@@ -103,6 +175,12 @@ calibre (4.3.0+dfsg-2) unstable; urgency=medium
 
  -- Norbert Preining <norbert@preining.info>  Mon, 11 Nov 2019 09:13:20 +0900
 
+calibre (4.3.0+dfsg-1+exp1) experimental; urgency=medium
+
+  * Calibre 4.3 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 08 Nov 2019 12:02:43 +0900
+
 calibre (4.3.0+dfsg-1) unstable; urgency=medium
 
   * update watch file for series 4 release
@@ -110,6 +188,18 @@ calibre (4.3.0+dfsg-1) unstable; urgency=medium
   * unfuzzify patches
 
  -- Norbert Preining <norbert@preining.info>  Fri, 08 Nov 2019 11:52:02 +0900
+
+calibre (4.2.0+dfsg-2+exp2) experimental; urgency=medium
+
+  * fix Kobo support (Closes: #943725)
+
+ -- Norbert Preining <norbert@preining.info>  Thu, 31 Oct 2019 11:08:58 +0900
+
+calibre (4.2.0+dfsg-2+exp1) experimental; urgency=medium
+
+  * Calibre 4.2 / Python 3 for Debian experimental
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 28 Oct 2019 14:56:15 +0900
 
 calibre (4.2.0+dfsg-2) unstable; urgency=medium
 
