@@ -26,10 +26,8 @@ override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
 override_dh_auto_test:
-ifneq (,$(findstrng nocheck,$(DEB_BUIlD_MAINT_OPTIONS) $(DEB_BUILD_OPTIONS)))
 	mkdir -p $(TEST_HOME)
 	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 LANGUAGE= TZ=UTC xvfb-run $(SETUP) test
-endif
 
 override_dh_install:
 	dh_buildinfo
