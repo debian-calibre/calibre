@@ -27,7 +27,7 @@ override_dh_auto_build:
 
 override_dh_auto_test:
 	mkdir -p $(TEST_HOME)
-	HOME=$(TEST_HOME) LC_MESSAGES=C.UTF-8 LANGUAGE= TZ=UTC xvfb-run $(SETUP) test
+	HOME=$(TEST_HOME) LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test
 
 override_dh_install:
 	dh_buildinfo
