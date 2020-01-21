@@ -1,0 +1,18 @@
+---
+ src/calibre/ebooks/oeb/polish/check/css.py |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+--- calibre-debian.git.orig/src/calibre/ebooks/oeb/polish/check/css.py
++++ calibre-debian.git/src/calibre/ebooks/oeb/polish/check/css.py
+@@ -8,7 +8,10 @@ import numbers
+ import sys
+ from collections import namedtuple
+ 
+-from PyQt5 import sip
++try:
++    from PyQt5 import sip
++except ImportError:
++    import sip
+ from PyQt5.Qt import QApplication, QEventLoop, pyqtSignal
+ from PyQt5.QtWebEngineWidgets import (
+     QWebEnginePage, QWebEngineProfile, QWebEngineScript
