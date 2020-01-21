@@ -17022,7 +17022,7 @@ return this.__repr__();
                     ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
                     ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
                     ρσ_d["right"] = desc("ArrowRight", "scroll", _("Scroll right"), _("Scroll rightwards by a little in flow mode and by a page in paged mode"));
-                    ρσ_d["pageup"] = desc("PageUp", "scroll", _("Scroll backwards by screen-fulls"));
+                    ρσ_d["pageup"] = desc(['PageUp', 'Shift+ '], "scroll", _("Scroll backwards by screen-fulls"));
                     ρσ_d["pagedown"] = desc([' ', 'PageDown'], "scroll", _("Scroll forwards by screen-fulls"));
                     ρσ_d["previous_section"] = desc("Ctrl+PageUp", "scroll", _("Scroll to the previous section"));
                     ρσ_d["next_section"] = desc("Ctrl+PageDown", "scroll", _("Scroll to the next section"));
@@ -18701,7 +18701,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.99.3";
+        CALIBRE_VERSION = "4.99.4";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -26923,7 +26923,7 @@ return this.__repr__();
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
             container.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec")].concat([ρσ_desugar_kwargs({step: MIN_SCROLL_SPEED_AUTO, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:25em min-content;grid-gap:1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: MIN_SCROLL_SPEED_AUTO, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
             container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
@@ -29893,6 +29893,7 @@ return this.__repr__();
             this.overlay_visibility_changed = View.prototype.overlay_visibility_changed.bind(this);
             this.on_handle_shortcut = View.prototype.on_handle_shortcut.bind(this);
             this.on_selection_change = View.prototype.on_selection_change.bind(this);
+            this.switch_color_scheme = View.prototype.switch_color_scheme.bind(this);
             this.toggle_paged_mode = View.prototype.toggle_paged_mode.bind(this);
             this.toggle_autoscroll = View.prototype.toggle_autoscroll.bind(this);
             this.toggle_toolbar = View.prototype.toggle_toolbar.bind(this);
@@ -30368,6 +30369,8 @@ return this.__repr__();
                 self.update_scroll_speed(-SCROLL_SPEED_STEP);
             } else if (data.name === "toggle_autoscroll") {
                 self.toggle_autoscroll();
+            } else if (data.name.startsWith("switch_color_scheme:")) {
+                self.switch_color_scheme((ρσ_expr_temp = data.name.partition(":"))[ρσ_expr_temp.length-1]);
             }
         };
         if (!View.prototype.on_handle_shortcut.__argnames__) Object.defineProperties(View.prototype.on_handle_shortcut, {
@@ -30382,6 +30385,14 @@ return this.__repr__();
         };
         if (!View.prototype.on_selection_change.__argnames__) Object.defineProperties(View.prototype.on_selection_change, {
             __argnames__ : {value: ["data"]}
+        });
+        View.prototype.switch_color_scheme = function switch_color_scheme(name) {
+            var self = this;
+            get_session_data().set("current_color_scheme", name);
+            ui_operations.redisplay_book();
+        };
+        if (!View.prototype.switch_color_scheme.__argnames__) Object.defineProperties(View.prototype.switch_color_scheme, {
+            __argnames__ : {value: ["name"]}
         });
         View.prototype.toggle_paged_mode = function toggle_paged_mode() {
             var self = this;
