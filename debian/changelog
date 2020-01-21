@@ -1,3 +1,30 @@
+calibre (4.99.4+dfsg-1) unstable; urgency=medium
+
+  [ Norbert Preining ]
+  * New upstream version 4.99.4+dfsg (Closes: #949095)
+  * update patches
+
+  [ YOKOTA Hiroshi ]
+  * Add debhelper compatible "nocheck" option.
+    This option will skip test to help maintainer.
+    Add "nocheck" to DEB_BUIlD_MAINT_OPTIONS or DEB_BUILD_OPTIONS to work.
+    See also dh_auto_test(1) manual.
+  * Revert "Add debhelper compatible "nocheck" option"
+    This reverts commit dd6636e4c9450e4502762f605aa71dd4b1fe7ee8.
+  * Use "C" locale for testing.
+    According to src/calibre/utils/localization.py:get_system_locale() ,
+    set "C" is the best way to reset locale functionality.
+  * Reset locale to "C" instead of erase them
+  * Add Emacs mode line
+  * Use Python 3 path
+  * Import test suite patch from upstream
+  * Refresh quilt patch
+  * Disable some tests for specific platforms.
+    Because build environment is not same as typical user environment.
+  * Disable HTTP response test
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 21 Jan 2020 11:21:47 +0900
+
 calibre (4.99.3+dfsg-2) unstable; urgency=medium
 
   [ Norbert Preining ]
