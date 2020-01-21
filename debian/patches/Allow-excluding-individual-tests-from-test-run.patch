@@ -8,10 +8,8 @@ Subject: [PATCH] Allow excluding individual tests from test run
  src/calibre/utils/run_tests.py |    8 ++++++++
  2 files changed, 20 insertions(+), 5 deletions(-)
 
-Index: b/setup/test.py
-===================================================================
---- a/setup/test.py
-+++ b/setup/test.py
+--- calibre-debian.git.orig/setup/test.py
++++ calibre-debian.git/setup/test.py
 @@ -61,12 +61,12 @@ class TestImports(unittest.TestCase):
          del Markdown
  
@@ -27,7 +25,7 @@ Index: b/setup/test.py
  
      if ok('build'):
          from calibre.test_build import find_tests
-@@ -156,17 +156,24 @@ class Test(Command):
+@@ -158,17 +158,24 @@ class Test(Command):
      description = 'Run the calibre test suite'
  
      def add_options(self, parser):
@@ -55,10 +53,8 @@ Index: b/setup/test.py
 +        if opts.exclude_test_name:
 +            tests = remove_tests_by_name(tests, *opts.exclude_test_name)
          run_cli(tests, verbosity=opts.test_verbosity)
-Index: b/src/calibre/utils/run_tests.py
-===================================================================
---- a/src/calibre/utils/run_tests.py
-+++ b/src/calibre/utils/run_tests.py
+--- calibre-debian.git.orig/src/calibre/utils/run_tests.py
++++ calibre-debian.git/src/calibre/utils/run_tests.py
 @@ -113,6 +113,14 @@ def filter_tests_by_name(suite, *names):
      return filter_tests(suite, q)
  
