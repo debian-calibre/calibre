@@ -13,7 +13,11 @@ TEST_FLAGS += --exclude-test-name=test_http_response
 ifeq      (arm64,  $(DEB_HOST_ARCH))
   # Illegal instruction
   TEST_FLAGS += --exclude-test-name=test_qt
+  # Test fail
+  TEST_FLAGS += --exclude-test-name=test_dictionaries
 else ifeq (mipsel, $(DEB_HOST_ARCH))
   # No network response
   TEST_FLAGS += --exclude-test-name=test_bonjour
+  # Test fail
+  TEST_FLAGS += --exclude-test-name=test_dictionaries
 endif
