@@ -8,21 +8,21 @@ version=4
 # for the released version 4 calibre, use this
 # needs to be used when upstream switched to v5/py3
 # after adjusting the 4.html -> 5.html (probably)
-#opts="pgpmode=next, \
-#      dversionmangle=auto, \
-#      repacksuffix=+dfsg, \
-#      downloadurlmangle=s!(\d+\.\d+\.\d+)/!$1/@PACKAGE@-$1.tar.xz!, \
-#      filenamemangle=s!(\d+\.\d+\.\d+)/!@PACKAGE@-$1.tar.xz!" \
-#  https://download.calibre-ebook.com/4.html \
-#  (\d+\.\d+\.\d+)/
-#opts="pgpmode=previous, \
-#      dversionmangle=auto, \
-#      repacksuffix=+dfsg" \
-#  https://calibre-ebook.com/signatures/ \
-#  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig
+opts="pgpmode=next, \
+      dversionmangle=auto, \
+      repacksuffix=+dfsg, \
+      downloadurlmangle=s!(\d+\.\d+\.\d+)/!$1/@PACKAGE@-$1.tar.xz!, \
+      filenamemangle=s!(\d+\.\d+\.\d+)/!@PACKAGE@-$1.tar.xz!" \
+  https://download.calibre-ebook.com/4.html \
+  (\d+\.\d+\.\d+)/
+opts="pgpmode=previous, \
+      dversionmangle=auto, \
+      repacksuffix=+dfsg" \
+  https://calibre-ebook.com/signatures/ \
+  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig
 
 # remove +dfsg upstream version suffix
-opts="dversionmangle=auto, \
-      repacksuffix=+dfsg" \
-  https://download.calibre-ebook.com/betas/ \
-  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
+# opts="dversionmangle=auto, \
+#       repacksuffix=+dfsg" \
+#   https://download.calibre-ebook.com/betas/ \
+#   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
