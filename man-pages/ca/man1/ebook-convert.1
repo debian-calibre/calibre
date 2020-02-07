@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de gener 20, 2020" "4.99.4" "calibre"
+.TH "EBOOK-CONVERT" "1" "de febrer 07, 2020" "4.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -196,12 +196,12 @@ Transcriu els caràcters unicode a una representació ASCII. Utilitzeu\-ho amb c
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+La mida de lletra base en pts. Totes les mides de lletra al llibre produït canviaran en base a aquesta mida. Escollir una mida més gran podeu fer les lletres més gran a la sortida i viceversa. Per defecte, quan el valor es zero, la mida de lletra base es tria en base al perfil de sortida triat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Modifica el valor d\fB\(aq\fPalineació del text. El valor «esquerra» converteix l\fB\(aq\fPalineació de tot el text de l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (no justificat). El valor «justificat» converteix tot el text no justificat en text justificat. El valor «original» (per defecte) no modifica l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Només alguns formats de sortida són compatibles amb l\fB\(aq\fPalineació.
+Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB"\fPesquerra\fB"\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB"\fPalineat\fB"\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB"\fPoriginal\fB"\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida son compatibles amb l\fB\(aq\fPalineació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,12 +236,12 @@ Una llista separada per comes de propietats CSS que se suprimiran de totes les r
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapatge a partir dels noms de les lletres del CSS en mides de lletres en punts. Un exemple d\fB\(aq\fPestabliment és 12,12,14,16,18,20,22,24. Aquests són els mapatges per a les mides des de xx\-petita fins a xx\-gran, amb una mida final per a les lletres enormes. L\fB\(aq\fPalgorisme de canvi d\fB\(aq\fPescala de la lletra utilitza aquestes mides per a un canvi intel·ligent d\fB\(aq\fPescala de les lletres. Per defecte s\fB\(aq\fPutilitza un mapatge basat en el perfil de sortida que heu triat.
+Mapeig a partir de noms de lletra de CSS a mides de lletra en pts. Un paràmetre d\fB\(aq\fPexemple és 12,12,14,16,18,20,22,24. Aquests son els mapeigs per a les mides xx\-petita a xx\-gran, amb la mida final sent per lletres enormes. L\fB\(aq\fPalgoritme de canvi de lletra utilitza aquestes mides per canviar lletres de manera intel·ligent. Per defecte s\fB\(aq\fPutilitza un mapeig basat en el perfil de sortida triat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insereix una línia en blanc entre paràgrafs. No funciona si el fitxer d\fB\(aq\fPorigen no indica els paràgrafs (amb les etiquetes <p> o <div>).
+Insereix una línia en blanc entre paràgrafs. No funcionarà si el fitxer d\fB\(aq\fPorigen no utilitza paràgrafs (etiquetes <p> o <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,7 +291,7 @@ L\fB\(aq\fPalçada mínima de la línia, com a un percentatge de la mida de la l
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Elimina l\fB\(aq\fPespaiament entre paràgrafs. També insereix un sagnat als paràgrafs d\fB\(aq\fP1.5 em. L\fB\(aq\fPeliminació de l\fB\(aq\fPespaiament no funcionarà si el fitxer d\fB\(aq\fPorigen no conté paràgrafs (amb les etiquetes <p> o <div>).
+Elimina l\fB\(aq\fPespaiat entre paràgrafs. També estableix un sagnat als paràgrafs d\fB\(aq\fP1.5 em. L\fB\(aq\fPeliminació de l\fB\(aq\fPespaiat no funcionarà si el fitxer d\fB\(aq\fPorigen no utilitza paràgrafs (etiquetes <p> o <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -320,7 +320,7 @@ Converteix les cometes, els guions i els punts suspensius als seus equivalents s
 .UNINDENT
 .SH PROCESSAMENT HEURÍSTIC
 .sp
-Modifica el text i l\(aqestructura del document utilitzant patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per habilitar\-ho. Es pot inhabilitar les accions individuals amb les opcions \-\-disable\-
+Modifica el text i l\(aqestructura del document amb els patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per habilitar\-ho.  Les accions individuals es poden inhabilitar amb les opcions \-\-disable\-
 .nf
 *
 .fi
@@ -373,7 +373,7 @@ Habilita el processament heurístic. S\fB\(aq\fPha d\fB\(aq\fPactivar aquesta op
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Escala utilitzada per determinar la longitud en què s\fB\(aq\fPha de suprimir el salt de línia. Els valors vàlids són un decimal entre 0 i 1. El valor per defecte és 0.4, just per sota de la longitud mitjana de la línia. Si únicament hi ha molt poques línies al document que requereixin la supressió del salt de línia, aleshores s\fB\(aq\fPhauria de reduir aquest valor
+Escala utilitzada per determinar la longitud en què una línia s\fB\(aq\fPhauria d\fB\(aq\fPajustar. Els valors vàlids són un decimal entre 0 i 1. Per defecte és 0.4, just per sota de la longitud mitjana de la línia. Si només algunes línies del document necessiten ajustar\-se aquest valor s\fB\(aq\fPhauria de reduir
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ Controla l\(aqautodetecció de l\(aqestructura del document.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Una expressió XPath per detectar títols de capítols. Per defecte, s\fB\(aq\fPassumeix que les etiquetes <h1> o <h2> contenen les paraules «capítol», «llibre», «secció», «pròleg», «epíleg» o «part» com a títols de capítol, així com qualsevol etiqueta que tingui class=«capítol». L\fB\(aq\fPexpressió que s\fB\(aq\fPutilitzi ha d\fB\(aq\fPequivaler a una llista d\fB\(aq\fPelements. Per desactivar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió «/». Vegeu l\fB\(aq\fPassistent de XPath al manual d\fB\(aq\fPusuari de calibre per a més informació.
+Una expressió XPath per detectar els títols dels capítols. Per defecte es considera <h1> o <h2> etiquetes que contenen les paraules  \fB"\fPcapítol\fB"\fP, \fB"\fPllibre\fB"\fP, \fB"\fPsecció\fB"\fP, \fB"\fPpròleg\fB"\fP, \fB"\fPepíleg\fB"\fP o \fB"\fPpart\fB"\fP així com títols de capítol i qualsevol etiqueta que tingui class=\fB"\fPcapítol\fB"\fP\&. L\fB\(aq\fPexpressió utilitzada s\fB\(aq\fPha d\fB\(aq\fPequiparar a una llista d\fB\(aq\fPelements. Per inhabilitar la detecció de capítols, utilitzeu l\fB\(aq\fPexpressió \fB"\fP/\fB"\fP\&. Vegeu el tutorial XPath al manual d\fB\(aq\fPusuari de calibre per més ajuda sobre aquesta funció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -444,7 +444,7 @@ Insereix les metadades del llibre a l\fB\(aq\fPinici. Això és útil si el vost
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-Una expressió XPath. S\fB\(aq\fPinsereixen  salts de pàgina abans dels elements especificats. Per inhabilitar\-ho utilitzeu l\fB\(aq\fPexpressió: /
+Una expressió XPath. Els salts de pàgina s\fB\(aq\fPinsereixen abans dels elements especificats. Per inhabilitar utilitzeu l\fB\(aq\fPexpressió: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -454,7 +454,7 @@ Estableix la portada detectada al fitxer d\fB\(aq\fPorigen de forma preferent a 
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Elimina la primera imatge del llibre seleccionat. És útil si el document seleccionat té una imatge de portada que no està marcada com a tal. En aquest cas, si no s\fB\(aq\fPestableix una portada a calibre, el document resultant en tindrà dues, llevat que s\fB\(aq\fPespecifiqui aquesta opció.
+Suprimeix la primera imatge del llibre electrònic d\fB\(aq\fPentrada. Útil si el document d\fB\(aq\fPentrada té una imatge de portada que no s\fB\(aq\fPidentifica com a portada. En aquest cas, si establiu una portada a calibre, el document de sortida tindrà dues imatges de portada si no especifiqueu aquesta opció.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -463,7 +463,7 @@ Una expressió XPath per detectar el lloc del document on s\fB\(aq\fPha de comen
 .UNINDENT
 .SH TAULA DEL CONTINGUT
 .sp
-Controla la generació automàtica de la taula del contingut. Si el fitxer d\(aqorigen conté una taula del contingut, s\(aqutilitzarà preferentment aquest en lloc del generat automàticament.
+Controla la generació automàtica d\(aquna taula de continguts. Per defecte, si el fitxer d\(aqorigen té una taula de continguts, s\(aqutilitzarà aquesta abans que la generada automàticament.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -520,7 +520,7 @@ La cadena que s\fB\(aq\fPutilitzarà en l\fB\(aq\fPordenació per autor.
 .INDENT 0.0
 .TP
 .B \-\-authors
-Estableix els autors. Si hi ha diversos autors, s\fB\(aq\fPhan de separar amb una \fB"\fP&\fB"\fP\&.
+Estableix els autors. Diversos autors haurien d\fB\(aq\fPestar separats per \fB"\fP&\fB"\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -560,7 +560,7 @@ Estableix l\fB\(aq\fPeditorial del llibre.
 .INDENT 0.0
 .TP
 .B \-\-rating
-Estableix la valoració. Ha de ser un nombre entre 1 i 5.
+Estableix la valoració. Hauria de ser un nombre entre l\fB\(aq\fP1 i el 5.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -580,7 +580,7 @@ Estableix l\fB\(aq\fPíndex del llibre en aquesta sèrie.
 .INDENT 0.0
 .TP
 .B \-\-tags
-Estableix les etiquetes per al llibre. Ha de ser una llista separada per comes.
+Estableix les etiquetes per al llibre. Hauria de ser una llista separada per comes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -608,7 +608,7 @@ Desa la sortida de les diferents etapes de la canonada de conversió al director
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Nivell de detall. Augmenteu\-ho per aconseguir més detall. Si s\fB\(aq\fPaugmenta dues vegades dóna com a resultat detall complet, una vegada, detall mitjà, i cap resulta en el menor detall.
+Nivell de detall. Especifiqueu diverses vegades per un detall més gran. Si s\fB\(aq\fPespecifica dues vegades el resultat serà un detall complet; una vegada, detall mitjà, i cap vegada, el mínim de detall.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

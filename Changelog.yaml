@@ -20,6 +20,84 @@
 #   new recipes:
 #     - title:
 
+- version: 4.10.0
+  date: 2020-02-07
+
+  new features:
+    - title: "Viewer: When searching have single and double quotes match their curly variants as well."
+      tickets: [1861715]
+
+  bug fixes:
+    - title: "Fix a regression that caused the edit metadata individually and convert individually actions to use the bulk actions when multiple books are selected."
+
+    - title: "Linux: Fix a crash caused by broken/incompatible CUPS Qt system plugin."
+      tickets: [1861741]
+
+    - title: "Viewer: Fix search shortcut button not focusing search input if the search panel is placed in a tab or a floating window"
+
+    - title: "Update Google Images cover download plugin for website markup changes"
+      tickets: [1862034]
+
+    - title: "Catalog generation: Ignore invalid pubdates"
+
+    - title: "Viewer: Stop autoscroll when changing page layout mode."
+      tickets: [1861621]
+
+    - title: "zipfile: Fix regression that broke handling of zipfiles with internal filenames not encoded in UTF-8."
+      tickets: [1860889]
+
+    - title: "Check Book: Turn off unique headings CSS warning"
+
+    - title: "DOCX Output: When a list item contains a nested listed but no text, it should be output as an empty list item."
+
+
+  improved recipes:
+    - The New Yorker
+    - Financiele Dagblad
+
+
+- version: 4.9.1
+  date: 2020-01-23
+
+  new features:
+    - title: "Viewer: Much improved search functionality"
+      description: "Now all matches are displayed when searching in a side bar with a few words of context. Also supports searching using regular expressions."
+      type: major
+      tickets: [1834247]
+
+    - title: "Edit book: The Check book function has a new, improved CSS checker with support for CSS 3"
+
+    - title: 'Edit book: Add an "Open with" action to the context menu of the files browser to easily open files with external programs.'
+      tickets: [1860462]
+
+    - title: "Viewer toolbar: Add button to easily change color schemes"
+      tickets: [1859547]
+
+  bug fixes:
+    - title: "version 4.9.1 fixes a couple of regressions in 4.9.0 with Check Book reporting false positives and an error when using the source editing view in the comments editor"
+
+    - title: "Comments editor: Fix inserted blank paragraph being rendered as two lines."
+
+    - title: "PDF Output: Fix conversion of files containing <canvas> elements failing."
+      tickets: [1859040]
+
+    - title: "Viewer: Fix failure to open some books that contain unparseable URLs."
+      tickets: [1858836]
+
+    - title: "Viewer: Fix data displayed in side margins getting moved out of position when mouse hovers over side margin."
+      tickets: [1858263]
+
+    - title: "Book details panel: When right clicking to save the cover, replace invalid characters in the suggested filename"
+
+    - title: "Fix harmless error popup when adding SSL key/certificate in server settings"
+      tickets: [1858198]
+
+    - title: "Dark mode: Fix colors in remove all formats except dialog"
+
+  improved recipes:
+    - Liberty Times
+
+
 - version: 4.8.0
   date: 2020-01-03
 

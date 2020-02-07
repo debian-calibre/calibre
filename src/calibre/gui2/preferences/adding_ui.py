@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/preferences/adding.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/adding.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -16,11 +16,12 @@ class Ui_Form(object):
         Form.resize(1035, 547)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
-        self.tabWidget = QtWidgets.QTabWidget(Form)
+        self.tabWidget = ScrollingTabWidget(Form)
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.tab)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_4 = QtWidgets.QLabel(self.tab)
         self.label_4.setWordWrap(True)
@@ -43,6 +44,7 @@ class Ui_Form(object):
         self.actions_tab = QtWidgets.QWidget()
         self.actions_tab.setObjectName("actions_tab")
         self.formLayout_2 = QtWidgets.QFormLayout(self.actions_tab)
+        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.formLayout_2.setObjectName("formLayout_2")
         self.opt_mark_new_books = QtWidgets.QCheckBox(self.actions_tab)
         self.opt_mark_new_books.setObjectName("opt_mark_new_books")
@@ -138,13 +140,15 @@ class Ui_Form(object):
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.tab_4)
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.opt_auto_add_everything = QtWidgets.QCheckBox(self.tab_4)
         self.opt_auto_add_everything.setObjectName("opt_auto_add_everything")
         self.gridLayout_3.addWidget(self.opt_auto_add_everything, 5, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.opt_auto_add_path = QtWidgets.QLineEdit(self.tab_4)
+        self.opt_auto_add_path = HistoryLineEdit(self.tab_4)
+        self.opt_auto_add_path.setClearButtonEnabled(True)
         self.opt_auto_add_path.setObjectName("opt_auto_add_path")
         self.horizontalLayout_2.addWidget(self.opt_auto_add_path)
         self.auto_add_browse_button = QtWidgets.QToolButton(self.tab_4)
@@ -195,7 +199,7 @@ class Ui_Form(object):
         self.label.setBuddy(self.opt_auto_add_path)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
         self.opt_add_formats_to_existing.toggled['bool'].connect(self.opt_automerge.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -204,8 +208,8 @@ class Ui_Form(object):
         Form.setWindowTitle(_("Form"))
         self.label_4.setText(_("Here you can control how calibre will read metadata from the files you add to it. calibre can either read metadata from the contents of the file, or from the filename."))
         self.opt_read_file_metadata.setText(_("Read &metadata from file contents rather than file name"))
-        self.opt_swap_author_names.setToolTip(_("Swap the firstname and lastname of the author. This affects only metadata read from file names."))
-        self.opt_swap_author_names.setText(_("&Swap author firstname and lastname when reading author from filename"))
+        self.opt_swap_author_names.setToolTip(_("Swap the first name and last name of the author. This affects only metadata read from file names."))
+        self.opt_swap_author_names.setText(_("&Swap author first name and last name when reading author from filename"))
         self.metadata_box.setTitle(_("Configure metadata from file name"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _("Reading &metadata"))
         self.opt_mark_new_books.setText(_("&Mark newly added books"))
@@ -258,4 +262,6 @@ class Ui_Form(object):
 " you want to add it anyway."))
         self.opt_auto_add_check_for_duplicates.setText(_("Check for &duplicates when automatically adding files"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _("&Automatic adding"))
+from calibre.gui2.widgets import HistoryLineEdit
+from calibre.gui2.widgets2 import ScrollingTabWidget
 

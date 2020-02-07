@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/convert/pdf_output.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -22,7 +22,7 @@ class Ui_Form(object):
         self.label = QtWidgets.QLabel(Form)
         self.label.setObjectName("label")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label)
-        self.opt_paper_size = QtWidgets.QComboBox(Form)
+        self.opt_paper_size = PaperSizes(Form)
         self.opt_paper_size.setObjectName("opt_paper_size")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_paper_size)
         self.label_3 = QtWidgets.QLabel(Form)
@@ -190,3 +190,4 @@ class Ui_Form(object):
         self.opt_pdf_hyphenate.setText(_("&Break long words at the end of lines"))
         self.label_2.setText(_("Odd/even &offset:"))
         self.opt_pdf_odd_even_offset.setSuffix(_(" pt"))
+from calibre.gui2.widgets import PaperSizes

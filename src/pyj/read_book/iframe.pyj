@@ -46,7 +46,9 @@ from read_book.shortcuts import (
 from read_book.toc import update_visible_toc_anchors
 from read_book.touch import create_handlers as create_touch_handlers
 from read_book.viewport import scroll_viewport
-from utils import debounce, html_escape, is_ios
+from utils import (
+    apply_cloned_selection, clone_selection, debounce, html_escape, is_ios
+)
 
 FORCE_FLOW_MODE = False
 CALIBRE_VERSION = '__CALIBRE_VERSION__'
@@ -112,6 +114,7 @@ class IframeBoss:
             'wheel_from_margin': self.wheel_from_margin,
             'window_size': self.received_window_size,
             'overlay_visibility_changed': self.on_overlay_visibility_changed,
+            'show_search_result': self.show_search_result,
         }
         self.comm = IframeClient(handlers)
         self.last_window_ypos = 0
@@ -195,6 +198,7 @@ class IframeBoss:
             self.jump_to_cfi = scroll_to_cfi
             self.anchor_funcs = flow_anchor_funcs
             self.auto_scroll_action = flow_auto_scroll_action
+            paged_auto_scroll_action('stop')
         else:
             self.do_layout = paged_layout
             self.handle_wheel = paged_onwheel
@@ -204,6 +208,7 @@ class IframeBoss:
             self._handle_gesture = paged_handle_gesture
             self.anchor_funcs = paged_anchor_funcs
             self.auto_scroll_action = paged_auto_scroll_action
+            flow_auto_scroll_action('stop')
         update_settings(data.settings)
         self.keyboard_shortcut_map = create_shortcut_map(data.settings.keyboard_shortcuts)
         set_current_spine_item({
@@ -312,6 +317,8 @@ class IframeBoss:
                 self.scroll_to_ref(ipos.refnum)
             elif ipos.type is 'cfi':
                 self.jump_to_cfi(ipos.cfi)
+            elif ipos.type is 'search_result':
+                self.show_search_result(ipos, True)
             elif ipos.type is 'search':
                 self.find(ipos.search_data, True)
         spine = self.book.manifest.spine
@@ -525,6 +532,41 @@ class IframeBoss:
                     'The text <i>{}</i> is present on this page but not visible').format(html_escape(data.text)))
             else:
                 self.send_message('find_in_spine', text=data.text, backwards=data.backwards, searched_in_spine=data.searched_in_spine)
+
+    def show_search_result(self, data, from_load):
+        sr = data.search_result
+        idx = -1
+        window.getSelection().removeAllRanges()
+        while idx < sr.index:
+            if not window.find(sr.text, True, False, False, False, False):
+                self.send_message('search_result_not_found', search_result=sr)
+                break
+            if sr.mode is not 'normal':
+                # verify we have the correct match since regexes can have
+                # boundary conditions
+                sel = window.getSelection()
+                ranges = clone_selection(sel)
+                r = ranges[0]
+                if sr.before:
+                    p = r.cloneRange()
+                    p.collapse(True)
+                    sel = apply_cloned_selection(v'[p]')
+                    sel.modify('extend', 'left', 'character')
+                    if sel.toString() is not sr.before[-1]:
+                        apply_cloned_selection(ranges)
+                        continue
+                if sr.after:
+                    p = r.cloneRange()
+                    p.collapse(False)
+                    sel = apply_cloned_selection(v'[p]')
+                    sel.modify('extend', 'right', 'character')
+                    if sel.toString() is not sr.after[0]:
+                        apply_cloned_selection(ranges)
+                        continue
+                apply_cloned_selection(ranges)
+            idx += 1
+        if idx > -1 and current_layout_mode() is not 'flow':
+            snap_to_selection()
 
     def reference_item_changed(self, ref_num_or_none):
         self.send_message('reference_item_changed', refnum=ref_num_or_none, index=current_spine_item().index)

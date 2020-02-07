@@ -32,6 +32,7 @@ from calibre.gui2.viewer.convert_book import (
 )
 from calibre.gui2.viewer.lookup import Lookup
 from calibre.gui2.viewer.overlay import LoadingOverlay
+from calibre.gui2.viewer.search import SearchPanel
 from calibre.gui2.viewer.toc import TOC, TOCSearch, TOCView
 from calibre.gui2.viewer.toolbars import ActionsToolBar
 from calibre.gui2.viewer.web_view import (
@@ -67,6 +68,7 @@ def dock_defs():
     d(_('Table of Contents'), 'toc', Qt.LeftDockWidgetArea),
     d(_('Lookup'), 'lookup', Qt.RightDockWidgetArea),
     d(_('Bookmarks'), 'bookmarks', Qt.RightDockWidgetArea)
+    d(_('Search'), 'search', Qt.LeftDockWidgetArea)
     d(_('Inspector'), 'inspector', Qt.RightDockWidgetArea, Qt.AllDockWidgetAreas)
     return ans
 
@@ -133,6 +135,11 @@ class EbookViewer(MainWindow):
         w.l.addWidget(self.toc), w.l.addWidget(self.toc_search), w.l.setContentsMargins(0, 0, 0, 0)
         self.toc_dock.setWidget(w)
 
+        self.search_widget = w = SearchPanel(self)
+        w.search_requested.connect(self.start_search)
+        self.search_dock.setWidget(w)
+        self.search_dock.visibilityChanged.connect(self.search_widget.visibility_changed)
+
         self.lookup_widget = w = Lookup(self)
         self.lookup_dock.visibilityChanged.connect(self.lookup_widget.visibility_changed)
         self.lookup_dock.setWidget(w)
@@ -150,6 +157,10 @@ class EbookViewer(MainWindow):
         self.web_view.cfi_changed.connect(self.cfi_changed)
         self.web_view.reload_book.connect(self.reload_book)
         self.web_view.toggle_toc.connect(self.toggle_toc)
+        self.web_view.show_search.connect(self.show_search)
+        self.web_view.find_next.connect(self.search_widget.find_next_requested)
+        self.search_widget.show_search_result.connect(self.web_view.show_search_result)
+        self.web_view.search_result_not_found.connect(self.search_widget.search_result_not_found)
         self.web_view.toggle_bookmarks.connect(self.toggle_bookmarks)
         self.web_view.toggle_inspector.connect(self.toggle_inspector)
         self.web_view.toggle_lookup.connect(self.toggle_lookup)
@@ -165,7 +176,7 @@ class EbookViewer(MainWindow):
         self.web_view.print_book.connect(self.print_book, type=Qt.QueuedConnection)
         self.web_view.reset_interface.connect(self.reset_interface, type=Qt.QueuedConnection)
         self.web_view.shortcuts_changed.connect(self.shortcuts_changed)
-        self.actions_toolbar.initialize(self.web_view)
+        self.actions_toolbar.initialize(self.web_view, self.search_dock.toggleViewAction())
         self.setCentralWidget(self.web_view)
         self.loading_overlay = LoadingOverlay(self)
         self.restore_state()
@@ -236,6 +247,18 @@ class EbookViewer(MainWindow):
     def toggle_toc(self):
         self.toc_dock.setVisible(not self.toc_dock.isVisible())
 
+    def show_search(self):
+        self.search_dock.setVisible(True)
+        self.search_dock.activateWindow()
+        self.search_dock.raise_()
+        self.search_widget.focus_input()
+
+    def start_search(self, search_query):
+        name = self.web_view.current_content_file
+        if name:
+            self.search_widget.start_search(search_query, name)
+            self.web_view.setFocus(Qt.OtherFocusReason)
+
     def toggle_bookmarks(self):
         is_visible = self.bookmarks_dock.isVisible()
         self.bookmarks_dock.setVisible(not is_visible)
@@ -257,6 +280,8 @@ class EbookViewer(MainWindow):
 
     def bookmarks_edited(self, bookmarks):
         self.current_book_data['annotations_map']['bookmark'] = bookmarks
+        # annotations will be saved in book file on exit
+        self.save_annotations(in_book_file=False)
 
     def bookmark_activated(self, cfi):
         self.web_view.goto_cfi(cfi)
@@ -355,6 +380,7 @@ class EbookViewer(MainWindow):
         self.loading_overlay(_('Loading book, please wait'))
         self.save_annotations()
         self.current_book_data = {}
+        self.search_widget.clear_searches()
         t = Thread(name='LoadBook', target=self._load_ebook_worker, args=(pathtoebook, open_at, reload_book or self.force_reload))
         t.daemon = True
         t.start()
@@ -484,14 +510,14 @@ class EbookViewer(MainWindow):
     # }}}
 
     # State serialization {{{
-    def save_annotations(self):
+    def save_annotations(self, in_book_file=True):
         if not self.current_book_data:
             return
         amap = self.current_book_data['annotations_map']
         annots = as_bytes(serialize_annotations(amap))
         with open(os.path.join(annotations_dir, self.current_book_data['annotations_path_key']), 'wb') as f:
             f.write(annots)
-        if self.current_book_data.get('pathtoebook', '').lower().endswith(
+        if in_book_file and self.current_book_data.get('pathtoebook', '').lower().endswith(
                 '.epub') and get_session_pref('save_annotations_in_ebook', default=True):
             path = self.current_book_data['pathtoebook']
             if os.access(path, os.W_OK):
@@ -518,6 +544,7 @@ class EbookViewer(MainWindow):
 
     def closeEvent(self, ev):
         self.shutting_down = True
+        self.search_widget.shutdown()
         try:
             self.save_annotations()
             self.save_state()

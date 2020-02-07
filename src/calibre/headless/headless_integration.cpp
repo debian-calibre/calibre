@@ -2,39 +2,25 @@
 #include "headless_integration.h"
 #include "headless_backingstore.h"
 #ifdef __APPLE__
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 8, 0))
 #include <QtFontDatabaseSupport/private/qcoretextfontdatabase_p.h>
 class QCoreTextFontEngine;
-#else
-#include <QtPlatformSupport/private/qcoretextfontdatabase_p.h>
-#endif
 #include <qpa/qplatformservices.h>
 #include <QtCore/private/qeventdispatcher_unix_p.h>
 #else
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 1))
 #include "fontconfig_database.h"
-#else
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 8, 0))
-#include <QtFontDatabaseSupport/private/qfontconfigdatabase_p.h>
-#else
-#include <QtPlatformSupport/private/qfontconfigdatabase_p.h>
 #endif
-#endif
-#ifndef Q_OS_WIN
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 8, 0))
-#include <QtEventDispatcherSupport/private/qgenericunixeventdispatcher_p.h>
-#else
-#include <QtPlatformSupport/private/qgenericunixeventdispatcher_p.h>
-#endif
-#else
+
+#ifdef Q_OS_WIN
 #include <QtCore/private/qeventdispatcher_win_p.h>
-#endif
+#else
+#include <QtEventDispatcherSupport/private/qgenericunixeventdispatcher_p.h>
 #endif
 
 #include <QtGui/private/qpixmap_raster_p.h>
 #include <QtGui/private/qguiapplication_p.h>
 #include <qpa/qplatformwindow.h>
 #include <qpa/qplatformfontdatabase.h>
+#include <qpa/qplatformtheme.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -52,6 +38,8 @@ class GenericUnixServices : public QGenericUnixServices {
      * does not make sense anyway.
      */
     QByteArray desktopEnvironment() const { return QByteArrayLiteral("UNKNOWN"); }
+	bool openUrl(const QUrl &url) { Q_UNUSED(url); return false; }
+	bool openDocument(const QUrl &url) { Q_UNUSED(url); return false; }
 };
 #endif
 
@@ -139,6 +127,37 @@ QAbstractEventDispatcher *HeadlessIntegration::createEventDispatcher() const
 HeadlessIntegration *HeadlessIntegration::instance()
 {
     return static_cast<HeadlessIntegration *>(QGuiApplicationPrivate::platformIntegration());
+}
+
+static QString themeName() { return QStringLiteral("headless"); }
+
+QStringList HeadlessIntegration::themeNames() const
+{
+    return QStringList(themeName());
+}
+
+// Restrict the styles to "fusion" to prevent native styles requiring native
+// window handles (eg Windows Vista style) from being used.
+class HeadlessTheme : public QPlatformTheme
+{
+public:
+	HeadlessTheme() {}
+
+	QVariant themeHint(ThemeHint h) const override
+	{
+		switch (h) {
+		case StyleNames:
+			return QVariant(QStringList(QStringLiteral("fusion")));
+		default:
+			break;
+		}
+		return QPlatformTheme::themeHint(h);
+	}
+};
+
+QPlatformTheme *HeadlessIntegration::createPlatformTheme(const QString &name) const
+{
+    return name == themeName() ? new HeadlessTheme() : nullptr;
 }
 
 QT_END_NAMESPACE

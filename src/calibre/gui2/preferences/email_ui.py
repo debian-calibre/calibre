@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/kovid/work/c3/src/calibre/gui2/preferences/email.ui'
+# Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/email.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -78,7 +78,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label_22.setText(_("calibre can send your books to you (or your reader) by email. Emails will be automatically sent for downloaded news to all email addresses that have Auto-send checked."))
+        self.label_22.setText(_("calibre can send your books to you (or your reader) by email. Emails will be automatically sent for downloaded news to all email addresses that have Auto send checked."))
         self.email_add.setToolTip(_("Add an email address to which to send books"))
         self.email_add.setText(_("&Add email"))
         self.email_make_default.setText(_("Make &default"))

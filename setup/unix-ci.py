@@ -106,7 +106,7 @@ def main():
             'https://download.calibre-ebook.com/ci/calibre3/{}.tar.xz'.format(tball), SW
         )
         if not ismacos:
-            # run('sudo', 'apt-get', 'update', '-y')
+            run('sudo', 'apt-get', 'update', '-y')
             # run('sudo', 'apt-get', 'upgrade', '-y')
             run('sudo', 'apt-get', 'install', '-y', 'gettext', 'libgl1-mesa-dev')
 
