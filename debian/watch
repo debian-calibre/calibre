@@ -9,15 +9,15 @@ version=4
 # needs to be used when upstream switched to v5/py3
 # after adjusting the 4.html -> 5.html (probably)
 opts="pgpmode=next, \
-      dversionmangle=auto, \
-      repacksuffix=+dfsg, \
+      dversionmangle=s!4\.99\.4\+dfsg\+really(\d+\.\d+\.\d+)\+py3!$1!, \
+      uversionmangle=s!(\d+\.\d+\.\d+)!4.99.4+dfsg+really$1+py3!, \
       downloadurlmangle=s!(\d+\.\d+\.\d+)/!$1/@PACKAGE@-$1.tar.xz!, \
       filenamemangle=s!(\d+\.\d+\.\d+)/!@PACKAGE@-$1.tar.xz!" \
   https://download.calibre-ebook.com/4.html \
   (\d+\.\d+\.\d+)/
 opts="pgpmode=previous, \
-      dversionmangle=auto, \
-      repacksuffix=+dfsg" \
+      dversionmangle=s!4\.99\.4\+dfsg\+really(\d+\.\d+\.\d+)\+py3!$1!, \
+      uversionmangle=s!(\d+\.\d+\.\d+)!4.99.4+dfsg+really$1+py3!" \
   https://calibre-ebook.com/signatures/ \
   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig
 
