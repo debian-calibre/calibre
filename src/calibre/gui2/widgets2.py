@@ -35,7 +35,7 @@ class HistoryMixin(object):
 
     def initialize(self, name):
         self._name = name
-        self.history = history.get(self.store_name, [])
+        self.history = self.load_history()
         self.set_separator(None)
         self.update_items_cache(self.history)
         self.setText('')
@@ -43,6 +43,9 @@ class HistoryMixin(object):
             self.editingFinished.connect(self.save_history)
         except AttributeError:
             self.lineEdit().editingFinished.connect(self.save_history)
+
+    def load_history(self):
+        return history.get(self.store_name, [])
 
     def save_history(self):
         ct = unicode_type(self.text())
@@ -505,6 +508,23 @@ class ScrollingTabWidget(QTabWidget):
 
     def addTab(self, page, *args):
         return QTabWidget.addTab(self, self.wrap_widget(page), *args)
+
+
+PARAGRAPH_SEPARATOR = '\u2029'
+
+
+def to_plain_text(self):
+    # QPlainTextEdit's toPlainText implementation replaces nbsp with normal
+    # space, so we re-implement it using QTextCursor, which does not do
+    # that
+    c = self.textCursor()
+    c.clearSelection()
+    c.movePosition(c.Start)
+    c.movePosition(c.End, c.KeepAnchor)
+    ans = c.selectedText().replace(PARAGRAPH_SEPARATOR, '\n')
+    # QTextCursor pads the return value of selectedText with null bytes if
+    # non BMP characters such as 0x1f431 are present.
+    return ans.rstrip('\0')
 
 
 if __name__ == '__main__':

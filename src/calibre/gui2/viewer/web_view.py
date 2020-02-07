@@ -32,6 +32,7 @@ from calibre.gui2.webengine import (
 from calibre.srv.code import get_translations_data
 from calibre.utils.config import JSONConfig
 from calibre.utils.serialize import json_loads
+from calibre.utils.shared_file import share_open
 from polyglot.builtins import as_bytes, iteritems
 
 try:
@@ -60,6 +61,10 @@ def set_book_path(path, pathtoebook):
     set_book_path.parsed_manifest = json_loads(set_book_path.manifest)
 
 
+def get_manifest():
+    return getattr(set_book_path, 'parsed_manifest', None)
+
+
 def get_path_for_name(name):
     bdir = getattr(set_book_path, 'path', None)
     if bdir is None:
@@ -74,7 +79,7 @@ def get_data(name):
     if path is None:
         return None, None
     try:
-        with lopen(path, 'rb') as f:
+        with share_open(path, 'rb') as f:
             return f.read(), guess_type(name)
     except EnvironmentError as err:
         prints('Failed to read from book file: {} with error: {}'.format(name, as_unicode(err)))
@@ -234,6 +239,7 @@ def create_profile():
 class ViewerBridge(Bridge):
 
     view_created = from_js(object)
+    content_file_changed = from_js(object)
     set_session_data = from_js(object, object)
     set_local_storage = from_js(object, object)
     reload_book = from_js()
@@ -241,6 +247,9 @@ class ViewerBridge(Bridge):
     toggle_bookmarks = from_js()
     toggle_inspector = from_js()
     toggle_lookup = from_js()
+    show_search = from_js()
+    search_result_not_found = from_js(object)
+    find_next = from_js(object)
     quit = from_js()
     update_current_toc_nodes = from_js(object, object)
     toggle_full_screen = from_js()
@@ -273,6 +282,7 @@ class ViewerBridge(Bridge):
     goto_frac = to_js()
     trigger_shortcut = to_js()
     set_system_palette = to_js()
+    show_search_result = to_js()
 
 
 def apply_font_settings(page_or_view):
@@ -409,6 +419,9 @@ class WebView(RestartingWebEngineView):
     cfi_changed = pyqtSignal(object)
     reload_book = pyqtSignal()
     toggle_toc = pyqtSignal()
+    show_search = pyqtSignal()
+    search_result_not_found = pyqtSignal(object)
+    find_next = pyqtSignal(object)
     toggle_bookmarks = pyqtSignal()
     toggle_inspector = pyqtSignal()
     toggle_lookup = pyqtSignal()
@@ -436,7 +449,7 @@ class WebView(RestartingWebEngineView):
         self._host_widget = None
         self.callback_id_counter = count()
         self.callback_map = {}
-        self.current_cfi = None
+        self.current_cfi = self.current_content_file = None
         RestartingWebEngineView.__init__(self, parent)
         self.dead_renderer_error_shown = False
         self.render_process_failed.connect(self.render_process_died)
@@ -447,10 +460,14 @@ class WebView(RestartingWebEngineView):
         self._page = WebPage(self)
         self.bridge.bridge_ready.connect(self.on_bridge_ready)
         self.bridge.view_created.connect(self.on_view_created)
+        self.bridge.content_file_changed.connect(self.on_content_file_changed)
         self.bridge.set_session_data.connect(self.set_session_data)
         self.bridge.set_local_storage.connect(self.set_local_storage)
         self.bridge.reload_book.connect(self.reload_book)
         self.bridge.toggle_toc.connect(self.toggle_toc)
+        self.bridge.show_search.connect(self.show_search)
+        self.bridge.search_result_not_found.connect(self.search_result_not_found)
+        self.bridge.find_next.connect(self.find_next)
         self.bridge.toggle_bookmarks.connect(self.toggle_bookmarks)
         self.bridge.toggle_inspector.connect(self.toggle_inspector)
         self.bridge.toggle_lookup.connect(self.toggle_lookup)
@@ -555,6 +572,9 @@ class WebView(RestartingWebEngineView):
     def on_view_created(self, data):
         self.view_created.emit(data)
 
+    def on_content_file_changed(self, data):
+        self.current_content_file = data
+
     def start_book_load(self, initial_position=None):
         key = (set_book_path.path,)
         self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook)
@@ -636,6 +656,9 @@ class WebView(RestartingWebEngineView):
 
     def trigger_shortcut(self, which):
         self.execute_when_ready('trigger_shortcut', which)
+
+    def show_search_result(self, sr):
+        self.execute_when_ready('show_search_result', sr)
 
     def palette_changed(self):
         self.execute_when_ready('set_system_palette', system_colors())

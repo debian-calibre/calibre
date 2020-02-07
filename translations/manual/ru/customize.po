@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 07:07+0530\n"
-"PO-Revision-Date: 2018-06-01 01:38+0000\n"
+"POT-Creation-Date: 2020-01-26 14:25+0530\n"
+"PO-Revision-Date: 2020-01-23 02:19+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -32,21 +32,21 @@ msgid ""
 " then how to specify your own static resources like icons and templates to "
 "override the defaults and finally how to use *plugins* to add functionality "
 "to calibre."
-msgstr "calibre имеет очень модульную конструкцию. Различные его части можно настраивать. Вы можете узнать, как создавать *рецепты*, чтобы добавить новые источники онлайн-контента в calibre в разделе :ref:`news`. Здесь вы узнаете, во-первых, как использовать переменные окружения и *tweaks* для настройки поведения calibre, а затем как указать свои собственные статические ресурсы (значки и шаблоны) чтобы переопределить умолчания и, наконец, как использовать *плагины* для добавления функциональности в calibre."
+msgstr "У calibre модульный дизайн. Можно настраивать всё. Можно узнать, как создавать *рецепты*, для добавления новых источников онлайн-контента в calibre в разделе :ref:`news`. Здесь вы узнаете, во-первых как использовать переменные окружения и *tweaks* для настройки поведения calibre, а затем как указать свои собственные статические ресурсы (значки и шаблоны) чтобы переопределить умолчания и, наконец, как использовать *plugins* для добавления функциональности в calibre."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:24
 msgid "Environment variables"
-msgstr "Переменные среды"
+msgstr "Переменные окружения"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:26
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the directory where configuration files "
 "are stored/read."
-msgstr "``CALIBRE_CONFIG_DIRECTORY`` - устанавливает директорию для чтения и хранения конфигурационных файлов."
+msgstr "``CALIBRE_CONFIG_DIRECTORY`` - установить директорию для чтения и хранения конфигурационных файлов."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:27
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary directory used by calibre"
-msgstr "``CALIBRE_TEMP_DIR`` - установить временный каталог для calibre"
+msgstr "``CALIBRE_TEMP_DIR`` - установить временную директорию для calibre"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:28
 msgid ""
@@ -60,38 +60,38 @@ msgid ""
 "metadata.db. Using this variable you can have metadata.db be in a location "
 "other than the library folder. Useful if your library folder is on a "
 "networked drive that does not support file locking."
-msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - позволяет указать полный путь к metadata.db. Используя эту переменную, вы можете иметь metadata.db в другом месте, кроме папки библиотеки. Полезно, если папка вашей библиотеки находится на сетевом диске, который не поддерживает блокировку файлов."
+msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - указать полный путь к metadata.db. Используя эту переменную, вы можете хранить metadata.db вне папки библиотеки. Полезно, если папка вашей библиотеки находится на сетевом диске, который не поддерживает блокировку файлов."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:30
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - Used to run from a calibre development "
 "environment. See :ref:`develop`."
-msgstr "``CALIBRE_DEVELOP_FROM`` - Используется для запуска из среды разработки calibre. См. :ref:`develop`."
+msgstr "``CALIBRE_DEVELOP_FROM`` - используется для запуска calibre из среды разработки. См. :ref:`develop`."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:31
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - Used to force the language used by the interface"
 " (ISO 639 language code)"
-msgstr "``CALIBRE_OVERRIDE_LANG`` - Используется для принудительной установки языка интерфейса (код языка ISO 639)"
+msgstr "``CALIBRE_OVERRIDE_LANG`` - используется для принудительной установки языка интерфейса (ISO 639 код языка)"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:32
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - Used to test a translation .po file (should "
 "be the path to the .po file)"
-msgstr "``CALIBRE_TEST_TRANSLATION`` - Используется для проверки файла перевода .po (должен быть путь к файлу .po)"
+msgstr "``CALIBRE_TEST_TRANSLATION`` - используется для проверки перевода .po файла (должен быть путь к файлу .po)"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:33
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Causes calibre to not use native file "
 "dialogs for selecting files/directories."
-msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - Заставляет calibre не использовать собственные диалоги файлов для выбора файлов/каталогов."
+msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - указание calibre не использовать нативные (из OS/DE) диалоги файлов для выбора файлов/директорий."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:34
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - Causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
-msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - Вызывает calibre, чтобы не создавать собственное (глобальное) меню в Ubuntu Unity и подобных Linux-окружениях. Вместо этого меню помещается внутри окна, как и традиционное."
+msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - указать calibre не создавать собственное (глобальное) меню в Ubuntu Unity и подобных Linux-окружениях. Вместо этого меню помещается внутри окна, как и традиционное."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:35
 msgid ""
@@ -101,77 +101,85 @@ msgid ""
 " system Qt. The downside is that calibre may not follow the system look and "
 "feel. If you set this environment variable on Linux, it will cause calibre "
 "to use the system theme -- beware of crashes and hangs."
-msgstr "``CALIBRE_USE_SYSTEM_THEME`` - По умолчанию в Linux calibre использует собственный встроенный стиль Qt. Это делается для избегания сбоев и зависаний, вызванных несовместимостью между версией Qt в calibre и общесистемной версией Qt. Недостатком является то, что calibre может не следовать взгляду системы. Если вы установите эту переменную среды в Linux, она заставит calibre использовать системную тему - остерегайтесь сбоев и зависаний."
+msgstr "``CALIBRE_USE_SYSTEM_THEME`` - умолчально в Linux calibre использует собственный встроенный стиль Qt. Это делается для избегания сбоев и зависаний, вызванных несовместимостью между версией Qt в calibre и общесистемной версией Qt. Из-за этого внешний вид calibre может выглядеть чужеродно в системе. Если вы установите эту переменную среды в Linux, она заставит calibre использовать системную тему - остерегайтесь сбоев и зависаний."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
-msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - Вызывает calibre для печати предупреждений об устаревании в stdout. Полезно для разработчиков calibre."
+msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - указать calibre печатать предупреждения об устаревании в stdout. Полезно для разработчиков calibre."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:42
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
-msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - Запретить calibre автоматически регистрировать типы файлов, которые он способен обрабатывать с помощью Windows."
+msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - запретить calibre автоматически регистрировать типы файлов. Полезно для обработчиков в Windows."
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:43
-msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
-msgstr "``SYSFS_PATH`` - Использовать, если sysfs монтируется где-то, кроме /sys"
-
-#: ../../home/kovid/work/calibre/manual/customize.rst:44
 msgid ""
-"``http_proxy``, ``https_proxy`` - Used on linux to specify an HTTP(S) proxy"
-msgstr ""
+"``CALIBRE_USE_DARK_PALETTE`` - Set it to ``1`` to have calibre use dark "
+"colors and ``0`` for normal colors (ignored on macOS). On Windows 10 in the "
+"absence of this variable, the windows system preference for dark colors is "
+"used."
+msgstr "``CALIBRE_USE_DARK_PALETTE`` - установить в ``1`` чтобы calibre использовал тёмные цвета и ``0`` для нормальных цветов (игнорируется в macOS). В Windows 10 при отсутствии этой переменной, используются системные настройки windows для тёмных цветов."
+
+#: ../../home/kovid/work/calibre/manual/customize.rst:45
+msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
+msgstr "``SYSFS_PATH`` - использовать, если sysfs монтируется где-то, кроме /sys"
 
 #: ../../home/kovid/work/calibre/manual/customize.rst:46
 msgid ""
-"See `How to set environment variables in Windows "
-"<https://www.computerhope.com/issues/ch000549.htm>`_ or `How to set "
-"environment variables in macOS "
-"<https://www.dowdandassociates.com/blog/content/howto-set-an-environment-"
-"variable-in-mac-os-x-launchd-plist/>`_."
-msgstr ""
+"``http_proxy``, ``https_proxy`` - Used on Linux to specify an HTTP(S) proxy"
+msgstr "``http_proxy``, ``https_proxy`` - используется в Linux для указания HTTP(S) прокси"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:50
+#: ../../home/kovid/work/calibre/manual/customize.rst:48
+msgid ""
+"See `How to set environment variables in Windows "
+"<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
+"you can set environment variables by creating the "
+":file:`~/Library/Preferences/calibre/macos-env.txt` and putting the "
+"environment variables one per line in it, for example::"
+msgstr "Смотрите `Как настроить переменные окружения в Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Если вы на macOS можно описать переменные окружения в :file:`~/Library/Preferences/calibre/macos-env.txt` указав по одной переменной окружения на строку, к примеру::"
+
+#: ../../home/kovid/work/calibre/manual/customize.rst:58
 msgid "Tweaks"
 msgstr "Расширенные настройки"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:52
+#: ../../home/kovid/work/calibre/manual/customize.rst:60
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
 "Preferences->Advanced->Tweaks. The default values for the tweaks are "
 "reproduced below"
-msgstr "Твики являются небольшими изменениями, которые вы можете указать для управления различными аспектами поведения calibre. Вы можете изменить их, перейдя в меню «Настройки» -> «Дополнительно» - «Настройки». Значения по умолчанию для настроек приведены ниже"
+msgstr "Твики - это небольшие изменения, через которые вы можете управлять различными аспектами поведения calibre. Вы можете изменить их, перейдя в меню «Настройки» -> «Дополнительно» - «Расширенные настройки». Умолчальные значения настроек приведены ниже"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:59
+#: ../../home/kovid/work/calibre/manual/customize.rst:67
 msgid "Overriding icons, templates, et cetera"
 msgstr "Переопределение значков, шаблонов и т.д."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:62
+#: ../../home/kovid/work/calibre/manual/customize.rst:70
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
 ":guilabel:`Preferences->Interface->Look & Feel->Change Icon theme`. The icon"
 " themes use the same mechanism as described below for overriding static "
 "resources."
-msgstr "у calibre есть прямая поддержка иконок, есть несколько тем значков, которые вы можете использовать, перейдя к :guilabel:`Preferences-> Interface-> Look & Feel-> Change Icon theme`. Темы значков используют тот же механизм, который описан ниже, для переопределения статических ресурсов."
+msgstr "у calibre есть прямая поддержка тем значков, несколько из этих тем можно использовать, перейдя в :guilabel:`Preferences-> Interface-> Look & Feel-> Change Icon theme`. Темы значков используют описанный ниже механизм для переопределения статических ресурсов."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:66
+#: ../../home/kovid/work/calibre/manual/customize.rst:74
 msgid ""
 "calibre allows you to override the static resources, like icons, javascript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
 "versions that you like.  All static resources are stored in the resources "
 "sub-folder of the calibre install location. On Windows, this is usually "
-":file:`C:\\\\Program Files\\\\Calibre2\\\\resources`. On macOS, "
-":file:`/Applications/calibre.app/Contents/Resources/resources/`. On linux, "
+":file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources`. On macOS, "
+":file:`/Applications/calibre.app/Contents/Resources/resources/`. On Linux, "
 "if you are using the binary installer from the calibre website it will be "
 ":file:`/opt/calibre/resources`. These paths can change depending on where "
 "you choose to install calibre."
-msgstr "calibre позволяет вам переопределять статические ресурсы, такие как значки, javascript и шаблоны для метаданных, каталоги и т. д. с настраиваемыми версиями, которые вам нравятся. Все статические ресурсы хранятся в подпапке ресурсов в месте установки calibre. В Windows это обычно: файл: `C:\\\\Program Files\\\\Calibre2\\\\resources`. На macOS, :file:`/Applications/calibre.app/Contents/Resources/resources/`. В linux, если вы используете двоичный установщик с веб-сайта calibre, он будет :file:`/opt/caliber/resources`. Эти пути могут изменяться в зависимости от того, где вы хотите установить calibre."
+msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:75
+#: ../../home/kovid/work/calibre/manual/customize.rst:83
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -181,9 +189,9 @@ msgid ""
 "Place the files in the appropriate sub folders, for example place images in "
 ":file:`resources/images`, etc. calibre will automatically use your custom "
 "file in preference to the built-in one the next time it is started."
-msgstr "Вы не должны изменять файлы в этой папке ресурсов, так как ваши изменения будут перезаписаны при следующем обновлении calibre. Вместо этого перейдите к :guilabel:`Preferences->Advanced->Miscellaneous` и нажмите :guilabel:`Open calibre configuration directory`. В этом каталоге конфигурации создайте подпапку, называемую resources, и поместите файлы, которые вы хотите переопределить. Поместите файлы в соответствующие подпапки, например, изображения в :file:`resources/images` и т.д.  calibre автоматически будет использовать ваш пользовательский файл в качестве встроенного при следующем запуске."
+msgstr "Вы не должны изменять файлы в этой папке ресурсов, так как ваши изменения будут перезаписаны при следующем обновлении calibre. Вместо этого перейдите в :guilabel:`Preferences->Advanced->Miscellaneous` и нажмите :guilabel:`Open calibre configuration directory`. В этой папке конфигурации создайте подпапку resources, и поместите туда файлы, которые вы хотите переопределить. Файлы нужно поместить в соответствующие подпапки, например, изображения в :file:`resources/images` и т.д. calibre будет использовать ваши пользовательские файлы вместо встроенных при следующем запуске."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:84
+#: ../../home/kovid/work/calibre/manual/customize.rst:92
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -192,13 +200,13 @@ msgid ""
 ":file:`my_remove_books.png` you would save it in the configuration directory"
 " as :file:`resources/images/remove_books.png`. All the icons used by the "
 "calibre user interface are in :file:`resources/images` and its sub-folders."
-msgstr ""
+msgstr "К примеру, если нужно сменить значок действия :guilabel:`Remove books`, вначале нужно посмотреть в папку встроенных ресурсов и увидеть, что нужный файл это :file:`resources/images/remove_books.png`. Предполагаем что у вас есть альтернативный значок в формате PNG, называемый :file:`my_remove_books.png`, вы должны сохранить его в папке конфигурации как :file:`resources/images/remove_books.png`. Все значки, используемые пользовательским интерфейсом calibre, находятся в :file:`resources/images` и подпапках."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:93
+#: ../../home/kovid/work/calibre/manual/customize.rst:101
 msgid "Creating your own icon theme for calibre"
 msgstr "Создание собственной темы значков для calibre"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:95
+#: ../../home/kovid/work/calibre/manual/customize.rst:103
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -210,13 +218,13 @@ msgid ""
 " icons. You can upload that to the calibre forum at `Mobileread "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_ and then I will"
 " make your theme available via calibre's builtin icon theme system."
-msgstr "Если вы создали красивый набор значков и хотите поделиться ими с другими пользователями calibre с помощью встроенной поддержки, вы можете легко упаковать свои значки в тему. Для этого перейдите по ссылке :guilabel:`Preferences-> Miscellaneous-> Create icon theme`, выберите папку, в которую были помещены ваши значки (обычно это :file:`resources/images`в каталоге конфигурации calibre, как описано выше). Затем заполните метаданные темы и нажмите «ОК». Cоздастся  ZIP-файл, содержащий значки тем. Вы можете загрузить это на форум calibre на «Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>` _ , а затем я сделаю вашу тему доступной через встроенную систему значков значков calibre."
+msgstr "Если вы создали красивый набор значков и хотите поделиться ими с другими пользователями calibre через встроенную поддержку тем, то нужно  упаковать свои значки в тему. Для этого перейдите по ссылке :guilabel:`Preferences-> Miscellaneous-> Create icon theme`, выберите папку, в которую помещены ваши значки (обычно это :file:`resources/images`в папке конфигурации calibre, как описано выше). Затем заполните метаданные темы и нажмите «ОК». Cоздастся  ZIP-файл, содержащий значки темы. Вы можете загрузить его на форум calibre «Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>` _ , а затем я сделаю вашу тему доступной через встроенную поддержку тем calibre."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:108
+#: ../../home/kovid/work/calibre/manual/customize.rst:116
 msgid "Customizing calibre with plugins"
 msgstr "Настроить calibre с помощью плагинов"
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:110
+#: ../../home/kovid/work/calibre/manual/customize.rst:118
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -224,9 +232,9 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr "calibre имеет очень модульную конструкцию. Практически все функциональные возможности calibre поставляются в виде плагинов. Плагины используются для преобразования, для загрузки новостей (там они называются рецептами), для различных компонентов пользовательского интерфейса, для подключения к различным устройствам, для обработки файлов при добавлении их в calibre и так далее. Вы можете получить полный список всех встроенных плагинов в calibre, перейдя к :guilabel: `Preferences-> Advanced-> Plugins`."
+msgstr "calibre имеет модульную конструкцию. Практически все функциональные возможности calibre поставляются в виде плагинов. Плагины используются для преобразования форматов, для загрузки новостей (там они называются рецептами), для различных компонентов пользовательского интерфейса, для подключения к различным устройствам, для обработки файлов при добавлении их в calibre и так далее. Вы можете получить полный список всех встроенных плагинов в calibre, перейдя в :guilabel: `Preferences-> Advanced-> Plugins`."
 
-#: ../../home/kovid/work/calibre/manual/customize.rst:112
+#: ../../home/kovid/work/calibre/manual/customize.rst:120
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"

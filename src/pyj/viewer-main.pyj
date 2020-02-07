@@ -288,6 +288,12 @@ def trigger_shortcut(which):
         view.on_handle_shortcut({'name': which})
 
 
+@from_python
+def show_search_result(sr):
+    if view:
+        view.show_search_result(sr)
+
+
 def onerror(msg, script_url, line_number, column_number, error_object):
     if not error_object:
         # cross domain error
@@ -337,6 +343,12 @@ if window is window.top:
         to_python.toggle_bookmarks()
     ui_operations.toggle_inspector = def():
         to_python.toggle_inspector()
+    ui_operations.content_file_changed = def(name):
+        to_python.content_file_changed(name)
+    ui_operations.show_search = def():
+        to_python.show_search()
+    ui_operations.find_next = def(previous):
+        to_python.find_next(previous)
     ui_operations.reset_interface = def():
         sd = get_session_data()
         defaults = session_defaults()
@@ -387,6 +399,8 @@ if window is window.top:
         to_python.customize_toolbar()
     ui_operations.autoscroll_state_changed = def(active):
         to_python.autoscroll_state_changed(active)
+    ui_operations.search_result_not_found = def(sr):
+        to_python.search_result_not_found(sr)
 
     document.body.appendChild(E.div(id='view'))
     window.onerror = onerror

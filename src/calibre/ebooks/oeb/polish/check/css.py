@@ -7,8 +7,12 @@ import json
 import numbers
 import sys
 from collections import namedtuple
+from itertools import repeat
 
-from PyQt5 import sip
+try:
+    from PyQt5 import sip
+except ImportError:
+    import sip
 from PyQt5.Qt import QApplication, QEventLoop, pyqtSignal
 from PyQt5.QtWebEngineWidgets import (
     QWebEnginePage, QWebEngineProfile, QWebEngineScript
@@ -82,6 +86,7 @@ def csslint_js():
                 'box-sizing': 1,
                 'compatible-vendor-prefixes': 1,
                 'text-indent': 1,
+                'unique-headings': 1,
                 'fallback-colors': 1,
                 'font-faces': 1,
                 'regex-selectors': 1,
@@ -185,7 +190,7 @@ class Pool(object):
 
     def check_css(self, css_sources):
         self.pending = list(enumerate(css_sources))
-        self.results = list(range(len(css_sources)))
+        self.results = list(repeat(None, len(css_sources)))
         self.working = True
         self.assign_work()
         app = QApplication.instance()
@@ -207,10 +212,10 @@ class Pool(object):
                 break
 
     def work_done(self, worker, result):
-        self.assign_work()
         if not isinstance(result, dict):
             result = worker.console_messages
         self.results[worker.result_idx] = result
+        self.assign_work()
         if not self.pending and not [w for w in self.workers if w.working]:
             self.working = False
 
@@ -227,7 +232,7 @@ Job = namedtuple('Job', 'name css line_offset')
 
 def create_job(name, css, line_offset=0, is_declaration=False):
     if is_declaration:
-        css = 'a{\n' + css + '\n}'
+        css = 'div{\n' + css + '\n}'
         line_offset -= 1
     return Job(name, css, line_offset)
 
@@ -244,10 +249,10 @@ def check_css(jobs):
                 if err is not None:
                     errors.append(err)
         elif isinstance(result, list) and result:
-            errors.append(CSSParseError(_('Failed to process {name} with errors: {errors}').format(
+            errors.append(CSSParseError(_('Failed to process CSS in {name} with errors: {errors}').format(
                 name=job.name, errors='\n'.join(result)), job.name))
         else:
-            errors.append(CSSParseError(_('Failed to process {name}').format(name=job.name), job.name))
+            errors.append(CSSParseError(_('Failed to process CSS in {name}').format(name=job.name), job.name))
     return errors
 
 

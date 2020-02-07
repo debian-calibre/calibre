@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-CUSTOMIZE" "1" "января 20, 2020" "4.99.4" "calibre"
+.TH "CALIBRE-CUSTOMIZE" "1" "февраля 07, 2020" "4.10.0" "calibre"
 .SH NAME
 calibre-customize \- calibre-customize
 .
@@ -35,25 +35,25 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-Настройки    calibre\-customize
+calibre\-customize [опции]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Настроить calibre при помощи внешних плагинов.
+Настроить calibre с помощью загрузки внешних плагинов.
 .sp
-Всякий раз, когда вы передаете аргументы \fBcalibre\-customize\fP, в которых есть пробелы, заключите аргументы в кавычки. Например:  "/some path/with spaces"
-.SH [ПАРАМЕТРЫ]
+Когда вы передаёте аргументы с пробелами в \fBcalibre\-customize\fP, заключайте их в кавычки. Например: "/some path/with spaces"
+.SH [ОПЦИИ]
 .INDENT 0.0
 .TP
 .B \-\-add\-plugin, \-a
-Добавьте плагин, указав путь к файлу ZIP, содержащему его.
+Добавить плагин, указав путь к содержащему его ZIP файлу.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-build\-plugin, \-b
-Для разработчиков плагинов: Путь к директории, в которой вы создаёте плагин. Эта команда будет автоматически архивировать плагин в zip и обновлять его в calibre.
+Для разработчиков плагинов: путь к директории, в которой вы создаёте плагин. Команда автоматически запакует плагин и обновит его в calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,12 +78,12 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .INDENT 0.0
 .TP
 .B \-\-list\-plugins, \-l
-Вывести список всех установленных плагинов
+Список всех установленных плагинов
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-plugin, \-r
-Удалить плагин по имени. Не действует на встроенные плагины
+Удалить пользовательский плагин по имени. Не влияет на встроенные плагины
 .UNINDENT
 .INDENT 0.0
 .TP

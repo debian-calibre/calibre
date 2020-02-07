@@ -1,0 +1,183 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CALIBRE-DEBUG" "1" "Februari 07, 2020" "4.10.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+calibre\-debug [opsi]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the e\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.UNINDENT
+.UNINDENT
+.sp
+Everything after the \fB\-\-\fP is passed to the script.
+.sp
+Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
+.SH [OPSI]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Tambahkan plugin sederhana ( yaitu sebuah plugin yang hanya terdiri dari file py ) , dengan menentukan path ke file py berisi kode Plugin .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Jalankan kode Python.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Debug device detection
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+( Tidak ) terdaftar calibre dari Default Program Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Menjalankan diff tool calibre. Sebagai contoh: calibre\-debug \fI\%\-\-diff\fP file1 file2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book, \-t
+Launch the calibre \fB"\fPEdit book\fB"\fP tool in debug mode.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Menjalankan kode Python dalam berkas.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Explode the book into the specified directory. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Jalankan GUI dengan debugging diaktifkan . Debug output dicetak ke stdout dan stderr .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Jalankan GUI dengan konsol debug, log ke jalan yang ditentukan . Untuk penggunaan internal saja , gunakan opsi \-g untuk menjalankan GUI dalam mode debug
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+tampilkan pesan bantuan ini dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Mengimpor data calibre yang sebelumnya diekspor
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Periksa berkas MOBI di urutan yang telah ditentukan
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Output jalur diperlukan untuk setup lingkungan calibre
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-reinitialize\-db
+Re\- inisialisasi database calibre sqlite di jalan yang ditentukan . Berguna untuk pulih dari korupsi db .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Jalankan plugin yang menyediakan antarmuka baris teks. Sebagai contoh: calibre\-debug \-r \fB"\fPAdd Books\fB"\fP \fB\-\-\fP file1 \fB\-\-option1\fP semua setelah \fB\-\-\fP akan diberikan kepada plugin sebagai perintah.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Menyebabkan matinya instansi calibre, jika ada. Perhatikan bahwa jika ada proses yang berjalan, mereka akan dimatikan paksa, jadi gunakan dengan bijak.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Subset font yang ditentukan . Gunakan \fB\-\-\fP setelah opsi ini untuk lulus pilihan untuk program huruf subsetting .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Menguji modul biner saat dibangun
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+tampilkan versi program dan keluar
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Jalankan penampil E\-book dalam mode awakutu
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "января 20, 2020" "4.99.4" "calibre"
+.TH "CALIBRE-DEBUG" "1" "февраля 07, 2020" "4.10.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -35,7 +35,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-debug [options]
+calibre\-debug [опции]
 .ft P
 .fi
 .UNINDENT
@@ -56,8 +56,8 @@ calibre\-debug [options]
 .sp
 Всё после  \fB\-\-\fP пропускается скриптом.
 .sp
-Всякий раз, когда вы передаете аргументы \fBcalibre\-debug\fP, в которых есть пробелы, заключите аргументы в кавычки. Например:  "/some path/with spaces"
-.SH [ПАРАМЕТРЫ]
+Когда вы передаёте аргументы с пробелами в \fBcalibre\-debug\fP, заключайте их в кавычки. Например: "/some path/with spaces"
+.SH [ОПЦИИ]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
@@ -151,7 +151,7 @@ calibre\-debug [options]
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Если calibre уже запущен, то он будет остановлен. Помните, если имеются запущенные задания, то они будут тихо прекращены, поэтому используйте с осторожностью.
+Завершает работу запущенного экземпляра calibre, если такой имеется. Обратите внимание, что прервутся все выполняющиеся задания, поэтому используйте с осторожностью.
 .UNINDENT
 .INDENT 0.0
 .TP
