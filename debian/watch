@@ -20,9 +20,3 @@ opts="pgpmode=previous, \
       uversionmangle=s!(\d+\.\d+\.\d+)!4.99.4+dfsg+really$1+py3!" \
   https://calibre-ebook.com/signatures/ \
   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig
-
-# remove +dfsg upstream version suffix
-# opts="dversionmangle=auto, \
-#       repacksuffix=+dfsg" \
-#   https://download.calibre-ebook.com/betas/ \
-#   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
