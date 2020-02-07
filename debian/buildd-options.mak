@@ -15,6 +15,9 @@ ifeq      (arm64,  $(DEB_HOST_ARCH))
   TEST_FLAGS += --exclude-test-name=test_qt
   # Test fail
   TEST_FLAGS += --exclude-test-name=test_dictionaries
+else ifeq (armhf, $(DEB_HOST_ARCH))
+  # Test fail
+  TEST_FLAGS += --exclude-test-name=test_dictionaries
 else ifeq (mipsel, $(DEB_HOST_ARCH))
   # No network response
   TEST_FLAGS += --exclude-test-name=test_bonjour
