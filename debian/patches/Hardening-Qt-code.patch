@@ -3,11 +3,13 @@ Date: Sat, 23 Nov 2019 17:48:46 +0900
 Subject: [PATCH] Hardening Qt code
 
 ---
- setup/build.py |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ setup/build.py |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- calibre-debian.git.orig/setup/build.py
-+++ calibre-debian.git/setup/build.py
+Index: b/setup/build.py
+===================================================================
+--- a/setup/build.py
++++ b/setup/build.py
 @@ -168,6 +168,7 @@ def init_env():
          ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
          ldflags = shlex.split(ldflags)
@@ -16,7 +18,25 @@ Subject: [PATCH] Hardening Qt code
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
  
-@@ -517,10 +518,17 @@ class Build(Command):
+@@ -445,9 +446,16 @@ class Build(Command):
+             INCLUDEPATH += {freetype}
+             DESTDIR = {destdir}
+             CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
++            QMAKE_CFLAGS   += {CFLAGS}   {CPPFLAGS}
++            QMAKE_CXXFLAGS += {CXXFLAGS} {CPPFLAGS}
++            QMAKE_LFLAGS   += {LFLAGS}
+             ''').format(
+                 headers=' '.join(headers), sources=' '.join(sources), others=' '.join(others), destdir=self.d(
+-                    target), freetype=' '.join(ft_inc_dirs))
++                    target), freetype=' '.join(ft_inc_dirs),
++                CFLAGS   = os.environ.get('CFLAGS',   ''),
++                CXXFLAGS = os.environ.get('CXXFLAGS', ''),
++                CPPFLAGS = os.environ.get('CPPFLAGS', ''),
++                LFLAGS   = os.environ.get('LDFLAGS',  ''))
+         bdir = self.j(self.build_dir, 'headless')
+         if not os.path.exists(bdir):
+             os.makedirs(bdir)
+@@ -517,10 +525,17 @@ class Build(Command):
          macx {{
              QMAKE_LFLAGS += "-undefined dynamic_lookup"
          }}
