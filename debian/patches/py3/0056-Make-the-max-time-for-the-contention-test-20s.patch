@@ -1,0 +1,43 @@
+From 8bedf6cdb5e6d4e7df482a460968c10dcebc0cb8 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 14:29:44 +0530
+Subject: [PATCH 056/104] Make the max time for the contention test 20s
+
+---
+ src/calibre/db/tests/locking.py | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/db/tests/locking.py b/src/calibre/db/tests/locking.py
+index aa046ffbe5..e15dffac05 100644
+--- a/src/calibre/db/tests/locking.py
++++ b/src/calibre/db/tests/locking.py
+@@ -171,10 +171,24 @@ class TestLock(BaseTest):
+         for t in threads:
+             t.daemon = True
+             t.start()
++        end_at = time.monotonic() + 20
+         for t in threads:
+-            t.join(20)
++            left = end_at - time.monotonic()
++            if left <= 0:
++                break
++            t.join(left)
+         live = [t for t in threads if t.is_alive()]
+-        self.assertListEqual(live, [], 'ShLock hung')
++        self.assertEqual(len(live), 0, 'ShLock hung, {} threads alive'.format(len(live)))
+         self.assertEqual(len(done), len(threads), 'SHLock locking failed')
+         self.assertFalse(lock.is_shared)
+         self.assertFalse(lock.is_exclusive)
++
++
++def find_tests():
++    import unittest
++    return unittest.defaultTestLoader.loadTestsFromTestCase(TestLock)
++
++
++def run_tests():
++    from calibre.utils.run_tests import run_tests
++    run_tests(find_tests)
+-- 
+2.25.0
+

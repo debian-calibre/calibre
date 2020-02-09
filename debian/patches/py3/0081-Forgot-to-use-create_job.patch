@@ -1,0 +1,64 @@
+From df76cbdb02814673407cddf345aa1ccd3ba043c0 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 12 Dec 2019 23:21:04 +0530
+Subject: [PATCH 081/104] Forgot to use create_job()
+
+---
+ setup/publish.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/setup/publish.py b/setup/publish.py
+index 9d8ea0f713..4409d884b2 100644
+--- a/setup/publish.py
++++ b/setup/publish.py
+@@ -10,7 +10,7 @@ import os, shutil, subprocess, tempfile, json, time, filecmp, sys
+ 
+ from setup import Command, __version__, require_clean_git, require_git_master
+ from setup.upload import installers
+-from setup.parallel_build import parallel_build
++from setup.parallel_build import parallel_build, create_job
+ 
+ 
+ class Stage1(Command):
+@@ -167,12 +167,12 @@ class Manual(Command):
+         languages = ['en'] + list(set(languages) - {'en'})
+         os.environ['ALL_USER_MANUAL_LANGUAGES'] = ' '.join(languages)
+         for language in languages:
+-            jobs.append(([
++            jobs.append(create_job([
+                 sys.executable, self.j(self.d(self.SRC), 'manual', 'build.py'),
+                 language, self.j(tdir, language)
+             ], '\n\n**************** Building translations for: %s' % language))
+         self.info('Building manual for %d languages' % len(jobs))
+-        subprocess.check_call(jobs[0][0])
++        subprocess.check_call(jobs[0].cmd)
+         if not parallel_build(jobs[1:], self.info):
+             raise SystemExit(1)
+         cwd = os.getcwd()
+@@ -258,12 +258,12 @@ class ManPages(Command):
+             pass
+         jobs = []
+         for l in languages:
+-            jobs.append((
++            jobs.append(create_job(
+                 [sys.executable, self.j(base, 'build.py'), '--man-pages', l, dest],
+                 '\n\n**************** Building translations for: %s' % l)
+             )
+         self.info('\tCreating man pages in {} for {} languages...'.format(dest, len(jobs)))
+-        subprocess.check_call(jobs[0][0])
++        subprocess.check_call(jobs[0].cmd)
+         if not parallel_build(jobs[1:], self.info, verbose=False):
+             raise SystemExit(1)
+         cwd = os.getcwd()
+@@ -285,7 +285,7 @@ class ManPages(Command):
+                 for dirpath, dirnames, filenames in os.walk('.'):
+                     for f in filenames:
+                         if f.endswith('.1'):
+-                            jobs.append((['gzip', '--best', self.j(dirpath, f)], ''))
++                            jobs.append(create_job(['gzip', '--best', self.j(dirpath, f)], ''))
+                 if not parallel_build(jobs, self.info, verbose=False):
+                     raise SystemExit(1)
+         finally:
+-- 
+2.25.0
+

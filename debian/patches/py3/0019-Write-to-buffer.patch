@@ -1,0 +1,25 @@
+From c8b958ce3be93a72f40661c9f301be25f4f810e9 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 25 Nov 2019 14:37:39 +0530
+Subject: [PATCH 019/104] Write to buffer
+
+---
+ src/calibre/utils/ipc/pool.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/utils/ipc/pool.py b/src/calibre/utils/ipc/pool.py
+index 4e4f28afef..4ab4c7d09f 100644
+--- a/src/calibre/utils/ipc/pool.py
++++ b/src/calibre/utils/ipc/pool.py
+@@ -58,7 +58,7 @@ def get_stdout(process):
+             raw = process.stdout.read(1)
+             if raw:
+                 try:
+-                    sys.stdout.write(raw)
++                    sys.stdout.buffer.write(raw)
+                 except EnvironmentError:
+                     pass
+             else:
+-- 
+2.25.0
+

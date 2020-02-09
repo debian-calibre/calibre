@@ -1,0 +1,71 @@
+From f26ca9a526bfa60cb40417fc36b5e4175e47089e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 19 Dec 2019 08:17:42 +0530
+Subject: [PATCH 091/104] Use text mode streams for metadata logging
+
+---
+ src/calibre/ebooks/metadata/sources/covers.py   | 4 ++--
+ src/calibre/ebooks/metadata/sources/identify.py | 4 ++--
+ src/calibre/ebooks/metadata/sources/test.py     | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/calibre/ebooks/metadata/sources/covers.py b/src/calibre/ebooks/metadata/sources/covers.py
+index c4336a6228..a7a12d652a 100644
+--- a/src/calibre/ebooks/metadata/sources/covers.py
++++ b/src/calibre/ebooks/metadata/sources/covers.py
+@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
+ 
+ import time
+ from threading import Thread, Event
+-from io import BytesIO
++from io import StringIO
+ 
+ from calibre.customize.ui import metadata_plugins
+ from calibre.ebooks.metadata.sources.base import create_log
+@@ -27,7 +27,7 @@ class Worker(Thread):
+         self.plugin = plugin
+         self.abort = abort
+         self.get_best_cover = get_best_cover
+-        self.buf = BytesIO()
++        self.buf = StringIO()
+         self.log = create_log(self.buf)
+         self.title, self.authors, self.identifiers = (title, authors,
+                 identifiers)
+diff --git a/src/calibre/ebooks/metadata/sources/identify.py b/src/calibre/ebooks/metadata/sources/identify.py
+index 06b7e0bb7f..529c3402c2 100644
+--- a/src/calibre/ebooks/metadata/sources/identify.py
++++ b/src/calibre/ebooks/metadata/sources/identify.py
+@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
+ import time, re
+ from datetime import datetime
+ from threading import Thread
+-from io import BytesIO
++from io import StringIO
+ from operator import attrgetter
+ from polyglot.urllib import urlparse, quote
+ 
+@@ -38,7 +38,7 @@ class Worker(Thread):
+ 
+         self.plugin, self.kwargs, self.rq = plugin, kwargs, Queue()
+         self.abort = abort
+-        self.buf = BytesIO()
++        self.buf = StringIO()
+         self.log = create_log(self.buf)
+ 
+     def run(self):
+diff --git a/src/calibre/ebooks/metadata/sources/test.py b/src/calibre/ebooks/metadata/sources/test.py
+index 695a446730..cc0870fa2e 100644
+--- a/src/calibre/ebooks/metadata/sources/test.py
++++ b/src/calibre/ebooks/metadata/sources/test.py
+@@ -126,7 +126,7 @@ def pubdate_test(year, month, day):
+ def init_test(tdir_name):
+     tdir = tempfile.gettempdir()
+     lf = os.path.join(tdir, tdir_name.replace(' ', '')+'_identify_test.txt')
+-    log = create_log(open(lf, 'wb'))
++    log = create_log(open(lf, 'w'))
+     abort = Event()
+     return tdir, lf, log, abort
+ 
+-- 
+2.25.0
+

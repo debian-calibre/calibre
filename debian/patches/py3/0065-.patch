@@ -1,0 +1,25 @@
+From 04ad10c7b45a51947742b3a51c28bcbbb29add0e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 20:45:33 +0530
+Subject: [PATCH 065/104] ...
+
+---
+ src/calibre/srv/tests/loop.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
+index 4878d54c53..ad24bd61c2 100644
+--- a/src/calibre/srv/tests/loop.py
++++ b/src/calibre/srv/tests/loop.py
+@@ -301,3 +301,8 @@ class LoopTest(BaseTest):
+         self.assertIn('a testing error', tb)
+         jm.start_job('simple test', 'calibre.srv.jobs', 'sleep_test', args=(1.0,))
+         jm.shutdown(), jm.wait_for_shutdown(monotonic() + 1)
++
++
++def find_tests():
++    import unittest
++    return unittest.defaultTestLoader.loadTestsFromTestCase(LoopTest)
+-- 
+2.25.0
+

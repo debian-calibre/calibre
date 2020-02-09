@@ -1,0 +1,116 @@
+From d0a3176fade6b8f418d4116b61d9f5cb19af8c3e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 23:03:34 +0530
+Subject: [PATCH 046/104] Restore reporting of unhandled exceptions during GUI
+ application startup on windows
+
+Not as nice as it was previously since errors importing the site module
+will not be reported, but the python API provides no hooks for this in
+Py_RunMain
+---
+ bypy/run-python.h    |  6 ++++++
+ bypy/windows/site.py | 11 ++++++++++-
+ bypy/windows/util.c  | 37 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 1 deletion(-)
+
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+index fcf2dd4db5..a1f5bc21ef 100644
+--- a/bypy/run-python.h
++++ b/bypy/run-python.h
+@@ -170,6 +170,7 @@ typedef struct {
+ #endif
+ 	const wchar_t *basename, *module, *function;
+ 	int argc;
++    PyObject* (*calibre_os_module)(void);
+ #ifdef _WIN32
+ 	wchar_t* const *argv;
+ #else
+@@ -237,6 +238,11 @@ run_interpreter() {
+     status = PyConfig_SetBytesArgv(&config, interpreter_data.argc, interpreter_data.argv);
+ #endif
+     CHECK_STATUS;
++    if (interpreter_data.calibre_os_module) {
++        if (PyImport_AppendInittab("calibre_os_module", interpreter_data.calibre_os_module) == -1) {
++            fatal("Failed to add calibre_os_module to the init table");
++        }
++    }
+     status = Py_InitializeFromConfig(&config);
+     CHECK_STATUS;
+ 
+diff --git a/bypy/windows/site.py b/bypy/windows/site.py
+index 2ec48e0754..ef9b55634f 100644
+--- a/bypy/windows/site.py
++++ b/bypy/windows/site.py
+@@ -85,4 +85,13 @@ def main():
+ 
+ 
+ if __name__ == '__main__':
+-    main()
++    try:
++        main()
++    except Exception:
++        if sys.gui_app:
++            import traceback
++            import calibre_os_module
++            calibre_os_module.gui_error_message(
++                f"Unhandled exception running {sys.calibre_basename}",
++                traceback.format_exc())
++        raise
+diff --git a/bypy/windows/util.c b/bypy/windows/util.c
+index b079123c61..a9296f1f07 100644
+--- a/bypy/windows/util.c
++++ b/bypy/windows/util.c
+@@ -115,6 +115,42 @@ redirect_out_stream(FILE *stream) {
+     }
+ }
+ 
++static PyObject*
++gui_error_message(PyObject *self, PyObject *args) {
++    PyObject *pt, *pm;
++    if (!PyArg_ParseTuple(args, "UU", &pt, &pm)) return NULL;
++    wchar_t title[256] = {0}, text[4096] = {0};
++    PyUnicode_AsWideChar(pt, title, arraysz(title)-1);
++    PyUnicode_AsWideChar(pm, text, arraysz(text)-1);
++    MessageBoxW(NULL, text, title, MB_ICONERROR|MB_OK);
++    return PyBool_FromLong(1);
++}
++
++static PyMethodDef methods[] = {
++    {"gui_error_message", (PyCFunction)gui_error_message, METH_VARARGS,
++     "gui_error_message(title, msg) -> Show a GUI based error message."
++    },
++    {NULL}  /* Sentinel */
++};
++
++
++static struct PyModuleDef module = {
++    /* m_base     */ PyModuleDef_HEAD_INIT,
++    /* m_name     */ "calibre_os_module",
++    /* m_doc      */ "Integration with OS facilities during startup",
++    /* m_size     */ -1,
++    /* m_methods  */ methods,
++    /* m_slots    */ 0,
++    /* m_traverse */ 0,
++    /* m_clear    */ 0,
++    /* m_free     */ 0,
++};
++
++PyObject*
++calibre_os_module(void) {
++    return PyModule_Create(&module);
++}
++
+ static void
+ null_invalid_parameter_handler(
+    const wchar_t * expression,
+@@ -151,6 +187,7 @@ execute_python_entrypoint(const wchar_t *basename, const wchar_t *module, const
+     interpreter_data.argv = CommandLineToArgvW(GetCommandLineW(), &interpreter_data.argc);
+     if (interpreter_data.argv == NULL) ExitProcess(show_last_error(L"Failed to get command line"));
+     interpreter_data.basename = basename; interpreter_data.module = module; interpreter_data.function = function;
++    interpreter_data.calibre_os_module = calibre_os_module;
+     load_python_dll();
+     pre_initialize_interpreter(is_gui_app);
+ 	run_interpreter();
+-- 
+2.25.0
+

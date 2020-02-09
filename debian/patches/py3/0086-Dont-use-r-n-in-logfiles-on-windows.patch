@@ -1,0 +1,25 @@
+From e9b559745a902f2858b7e01441f9ca62c5c771d4 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 13 Dec 2019 20:45:15 +0530
+Subject: [PATCH 086/104] Dont use \r\n in logfiles on windows
+
+---
+ src/calibre/srv/utils.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
+index 4bb811b8bf..bff60e698c 100644
+--- a/src/calibre/srv/utils.py
++++ b/src/calibre/srv/utils.py
+@@ -321,7 +321,7 @@ class RotatingStream(object):
+ 
+     def set_output(self):
+         if iswindows:
+-            self.stream = share_open(self.filename, 'a')
++            self.stream = share_open(self.filename, 'a', newline='')
+         else:
+             # see https://bugs.python.org/issue27805
+             self.stream = open(os.open(self.filename, os.O_WRONLY|os.O_APPEND|os.O_CREAT|os.O_CLOEXEC), 'w')
+-- 
+2.25.0
+

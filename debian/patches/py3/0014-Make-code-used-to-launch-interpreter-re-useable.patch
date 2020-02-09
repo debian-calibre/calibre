@@ -1,0 +1,434 @@
+From 19aff430b3f1a289d0d7a1326aaf27f8d59b4d7f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 20 Nov 2019 11:20:16 +0530
+Subject: [PATCH 014/104] Make code used to launch interpreter re-useable
+
+---
+ bypy/linux/__main__.py |   2 +-
+ bypy/linux/main.c      |  10 +--
+ bypy/linux/util.c      | 151 +++++----------------------------
+ bypy/linux/util.h      |   6 +-
+ bypy/run-python.h      | 188 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 218 insertions(+), 139 deletions(-)
+ create mode 100644 bypy/run-python.h
+
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 6d3487965b..14874815fa 100644
+--- a/bypy/linux/__main__.py
++++ b/bypy/linux/__main__.py
+@@ -173,7 +173,7 @@ def build_launchers(env):
+     base = self_dir
+     sources = [j(base, x) for x in ['util.c']]
+     objects = [j(env.obj_dir, os.path.basename(x) + '.o') for x in sources]
+-    cflags = '-fno-strict-aliasing -W -Wall -c -O2 -pipe -DPYTHON_VER=L"python%s"' % py_ver
++    cflags = '-fno-strict-aliasing -W -Wall -c -O2 -pipe -DPY_VERSION_MAJOR={} -DPY_VERSION_MINOR={}'.format(*py_ver.split('.'))
+     cflags = cflags.split() + ['-I%s/include/python%s' % (PREFIX, py_ver)]
+     for src, obj in zip(sources, objects):
+         cmd = ['gcc'] + cflags + ['-fPIC', '-o', obj, src]
+diff --git a/bypy/linux/main.c b/bypy/linux/main.c
+index d9aec5f847..4af0417abc 100644
+--- a/bypy/linux/main.c
++++ b/bypy/linux/main.c
+@@ -2,10 +2,8 @@
+ 
+ #include <stdlib.h>
+ 
+-int main(int argc, char **argv) {
+-    int ret = 0;
+-    set_gui_app(GUI_APP);
+-	ret = execute_python_entrypoint(argc, argv, BASENAME, MODULE, FUNCTION);
+-
+-    return ret;
++int
++main(int argc, char **argv) {
++	execute_python_entrypoint(argc, argv, BASENAME, MODULE, FUNCTION, GUI_APP);
++    return 0;
+ }
+diff --git a/bypy/linux/util.c b/bypy/linux/util.c
+index c58dc523d1..db3ac864c2 100644
+--- a/bypy/linux/util.c
++++ b/bypy/linux/util.c
+@@ -1,28 +1,7 @@
+ #include "util.h"
+-#include <Python.h>
+-#include <stdlib.h>
+-#include <strings.h>
+-#include <stdio.h>
+-#include <errno.h>
++#include "../run-python.h"
+ 
+-#define arraysz(x) (sizeof(x)/sizeof(x[0]))
+-
+-static bool GUI_APP = false;
+ static char exe_path_char[PATH_MAX];
+-static wchar_t exe_path[PATH_MAX];
+-static wchar_t base_dir[PATH_MAX];
+-static wchar_t bin_dir[PATH_MAX];
+-static wchar_t lib_dir[PATH_MAX];
+-static wchar_t extensions_dir[PATH_MAX];
+-static wchar_t resources_dir[PATH_MAX];
+-
+-void set_gui_app(bool yes) { GUI_APP = yes; }
+-
+-static int
+-report_error(const char *msg, int code) {
+-    fprintf(stderr, "%s\n", msg);
+-    return code;
+-}
+ 
+ static void
+ get_paths() {
+@@ -38,120 +17,36 @@ get_paths() {
+ 		   what the proper response is here.
+ 		   Since it really is an assert-like condition, aborting the
+ 		   program seems to be in order. */
+-        exit(report_error("PID too large", EXIT_FAILURE));
++        fatal("PID too large");
+     }
+ 
+ 	ret = readlink(linkname, exe_path_char, sizeof(exe_path_char));
+-	if (ret == -1) {
+-        exit(report_error("Failed to read exe path.", EXIT_FAILURE));
+-    }
+-	if ((size_t)ret >= sizeof(exe_path_char)) {
+-        exit(report_error("exe path buffer too small.", EXIT_FAILURE));
+-    }
++	if (ret == -1) fatal("Failed to read exe path from: %s", exe_path_char);
++	if ((size_t)ret >= sizeof(exe_path_char)) fatal("exe path buffer too small.");
+ 	exe_path_char[ret] = 0;
+-    size_t tsz;
+-    wchar_t* temp = Py_DecodeLocale(exe_path_char, &tsz);
+-    if (!temp) {
+-        exit(report_error("Failed to decode exe path", EXIT_FAILURE));
+-    }
+-    memcpy(exe_path, temp, tsz * sizeof(wchar_t));
+-    exe_path[tsz] = 0;
+-    PyMem_RawFree(temp);
++    decode_char_buf(exe_path_char, interpreter_data.exe_path);
+ 
+-    p = wcsrchr(exe_path, '/');
+-    if (p == NULL) {
+-        exit(report_error("No path separators in executable path", EXIT_FAILURE));
+-    }
+-    wcsncat(base_dir, exe_path, p - exe_path);
+-    p = wcsrchr(base_dir, '/');
+-    if (p == NULL) {
+-        exit(report_error("Only one path separator in executable path", EXIT_FAILURE));
+-    }
++    p = wcsrchr(interpreter_data.exe_path, '/');
++    if (p == NULL) fatal("No path separators in executable path: %s", exe_path_char);
++    wcsncat(interpreter_data.python_home_path, interpreter_data.exe_path, p - interpreter_data.exe_path);
++    p = wcsrchr(interpreter_data.python_home_path, '/');
++    if (p == NULL) fatal("Only one path separator in executable path: %s", exe_path_char);
+     *p = 0;
+-    if (wcslen(base_dir) == 0) {
+-        exit(report_error("base directory empty", EXIT_FAILURE));
+-    }
+-
+-    swprintf(bin_dir,        arraysz(bin_dir), L"%ls/bin", base_dir);
+-    swprintf(lib_dir,        arraysz(lib_dir), L"%ls/lib", base_dir);
+-    swprintf(resources_dir,  arraysz(resources_dir), L"%ls/resources", base_dir);
+-    swprintf(extensions_dir, arraysz(extensions_dir), L"%ls/%ls/site-packages/calibre/plugins", lib_dir, PYTHON_VER);
+-}
++    size_t home_len = p - interpreter_data.python_home_path;
++    if (home_len == 0) fatal("base directory empty");
++    wcsncat(interpreter_data.executables_path, interpreter_data.python_home_path, home_len);
+ 
+-static void
+-set_sys_string(const char* key, const wchar_t* val) {
+-    PyObject *temp = PyUnicode_FromWideChar(val, -1);
+-    if (temp) {
+-        if (PySys_SetObject(key, temp) != 0) {
+-            exit(report_error("Failed to set attribute on sys", EXIT_FAILURE));
+-        }
+-        Py_DECREF(temp);
+-    } else {
+-        exit(report_error("Failed to set attribute on sys, decode failed", EXIT_FAILURE));
+-    }
++    swprintf(interpreter_data.python_lib_path, arraysz(interpreter_data.python_lib_path), L"%ls/lib/python%d.%d", interpreter_data.python_home_path, PY_VERSION_MAJOR, PY_VERSION_MINOR);
++    swprintf(interpreter_data.resources_path, arraysz(interpreter_data.resources_path), L"%ls/resources", interpreter_data.python_home_path);
++    swprintf(interpreter_data.extensions_path, arraysz(interpreter_data.extensions_path), L"%ls/site-packages/calibre/plugins", interpreter_data.python_lib_path);
+ }
+ 
+-static int
+-initialize_interpreter(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function) {
+-    PyStatus status;
+-    PyPreConfig preconfig;
+-    PyConfig config;
+-    PyPreConfig_InitIsolatedConfig(&preconfig);
+-
+-    preconfig.utf8_mode = 1;
+-    preconfig.coerce_c_locale = 1;
+-    preconfig.isolated = 1;
+-
+-#define CHECK_STATUS if (PyStatus_Exception(status)) { PyConfig_Clear(&config); Py_ExitStatusException(status); return 1; }
+-    status = Py_PreInitialize(&preconfig);
+-    CHECK_STATUS;
+-    PyConfig_InitIsolatedConfig(&config);
+-
++void
++execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function, const bool gui_app) {
++    interpreter_data.argc = argc;
++    interpreter_data.argv = argv;
++    interpreter_data.basename = basename; interpreter_data.module = module; interpreter_data.function = function;
++    pre_initialize_interpreter(gui_app);
+     get_paths();
+-    static wchar_t* items[3];
+-    static wchar_t path[arraysz(items)*PATH_MAX];
+-    for (size_t i = 0; i < arraysz(items); i++) items[i] = path + i * PATH_MAX;
+-    swprintf(items[0], PATH_MAX, L"%ls/%ls", lib_dir, PYTHON_VER);
+-    swprintf(items[1], PATH_MAX, L"%ls/%ls/lib-dynload", lib_dir, PYTHON_VER);
+-    swprintf(items[2], PATH_MAX, L"%ls/%ls/site-packages", lib_dir, PYTHON_VER);
+-    status = PyConfig_SetWideStringList(&config, &config.module_search_paths, arraysz(items), items);
+-    CHECK_STATUS;
+-    config.module_search_paths_set = 1;
+-    config.optimization_level = 2;
+-    config.write_bytecode = 0;
+-    config.use_environment = 0;
+-    config.user_site_directory = 0;
+-    config.configure_c_stdio = 1;
+-    config.isolated = 1;
+-
+-    status = PyConfig_SetString(&config, &config.program_name, exe_path);
+-    CHECK_STATUS;
+-    status = PyConfig_SetString(&config, &config.home, base_dir);
+-    CHECK_STATUS;
+-    status = PyConfig_SetString(&config, &config.run_module, L"site");
+-    CHECK_STATUS;
+-    status = PyConfig_SetBytesArgv(&config, argc, argv);
+-    CHECK_STATUS;
+-    status = Py_InitializeFromConfig(&config);
+-    CHECK_STATUS;
+-#undef CHECK_STATUS
+-
+-    PySys_SetObject("gui_app", GUI_APP ? Py_True : Py_False);
+-    PySys_SetObject("frozen", Py_True);
+-    set_sys_string("calibre_basename", basename);
+-    set_sys_string("calibre_module",   module);
+-    set_sys_string("calibre_function", function);
+-    set_sys_string("extensions_location", extensions_dir);
+-    set_sys_string("resources_location", resources_dir);
+-    set_sys_string("executables_location", base_dir);
+-    set_sys_string("frozen_path", base_dir);
+-
+-    int ret = Py_RunMain();
+-    PyConfig_Clear(&config);
+-    return ret;
+-}
+-
+-int
+-execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function) {
+-    return initialize_interpreter(argc, argv, basename, module, function);
++    run_interpreter();
+ }
+diff --git a/bypy/linux/util.h b/bypy/linux/util.h
+index a09bf5e6d8..27c2bce0fc 100644
+--- a/bypy/linux/util.h
++++ b/bypy/linux/util.h
+@@ -12,7 +12,5 @@
+ #include <wchar.h>
+ #include <stdbool.h>
+ 
+-void set_gui_app(bool yes);
+-
+-int execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename,
+-        const wchar_t *module, const wchar_t *function);
++void execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename,
++        const wchar_t *module, const wchar_t *function, const bool gui_app);
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+new file mode 100644
+index 0000000000..72a836ac33
+--- /dev/null
++++ b/bypy/run-python.h
+@@ -0,0 +1,188 @@
++/*
++ * Copyright (C) 2019 Kovid Goyal <kovid at kovidgoyal.net>
++ *
++ * Distributed under terms of the GPL3 license.
++ */
++
++#pragma once
++
++#include <sys/time.h>
++#include <stdio.h>
++#include <stdbool.h>
++#include <time.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <strings.h>
++#include <errno.h>
++#include <Python.h>
++#ifdef __APPLE__
++#include <os/log.h>
++#endif
++
++#define arraysz(x) (sizeof(x)/sizeof(x[0]))
++
++void
++log_error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
++
++static bool use_os_log = false;
++
++
++void
++log_error(const char *fmt, ...) {
++    va_list ar;
++    struct timeval tv;
++#ifdef __APPLE__
++    // Apple does not provide a varargs style os_logv
++    char logbuf[16 * 1024] = {0};
++#else
++    char logbuf[4];
++#endif
++    char *p = logbuf;
++#define bufprint(func, ...) { if ((size_t)(p - logbuf) < sizeof(logbuf) - 2) { p += func(p, sizeof(logbuf) - (p - logbuf), __VA_ARGS__); } }
++    if (!use_os_log) {  // Apple's os_log already records timestamps
++        gettimeofday(&tv, NULL);
++        struct tm *tmp = localtime(&tv.tv_sec);
++        if (tmp) {
++            char tbuf[256] = {0}, buf[256] = {0};
++            if (strftime(buf, sizeof(buf), "%j %H:%M:%S.%%06u", tmp) != 0) {
++                snprintf(tbuf, sizeof(tbuf), buf, tv.tv_usec);
++                fprintf(stderr, "[%s] ", tbuf);
++            }
++        }
++    }
++    va_start(ar, fmt);
++    if (use_os_log) { bufprint(vsnprintf, fmt, ar); }
++    else vfprintf(stderr, fmt, ar);
++    va_end(ar);
++#ifdef __APPLE__
++    if (use_os_log) os_log(OS_LOG_DEFAULT, "%{public}s", logbuf);
++#endif
++    if (!use_os_log) fprintf(stderr, "\n");
++}
++
++
++#define fatal(...) { log_error(__VA_ARGS__); exit(EXIT_FAILURE); }
++
++static void
++set_sys_string(const char* key, const wchar_t* val) {
++    PyObject *temp = PyUnicode_FromWideChar(val, -1);
++    if (temp) {
++        if (PySys_SetObject(key, temp) != 0) fatal("Failed to set attribute on sys: %s", key);
++        Py_DECREF(temp);
++    } else {
++        fatal("Failed to set attribute on sys, PyUnicode_FromWideChar failed");
++    }
++}
++
++static void
++set_sys_bool(const char* key, const bool val) {
++	if (PySys_SetObject(key, val ? Py_True : Py_False) != 0) fatal("Failed to set attribute on sys: %s", key);
++}
++
++static void
++pre_initialize_interpreter(bool is_gui_app) {
++    PyStatus status;
++	use_os_log = is_gui_app;
++    PyPreConfig preconfig;
++    PyPreConfig_InitIsolatedConfig(&preconfig);
++    preconfig.utf8_mode = 1;
++    preconfig.coerce_c_locale = 1;
++    preconfig.isolated = 1;
++
++    status = Py_PreInitialize(&preconfig);
++	if (PyStatus_Exception(status)) Py_ExitStatusException(status);
++}
++
++#define decode_char_buf(src, dest) { \
++    size_t tsz; \
++    wchar_t* t__ = Py_DecodeLocale(src, &tsz); \
++    if (!t__) fatal("Failed to decode path: %s", src); \
++	if (tsz > sizeof(dest) - 1) tsz = sizeof(dest) - 1; \
++    memcpy(dest, t__, tsz * sizeof(wchar_t)); \
++	dest[tsz] = 0; \
++    PyMem_RawFree(t__); \
++}
++
++#define MAX_SYS_PATHS 3
++
++typedef struct {
++	wchar_t* sys_paths[MAX_SYS_PATHS];
++	wchar_t sys_path_buf[MAX_SYS_PATHS * PATH_MAX];
++	size_t sys_paths_count;
++	wchar_t exe_path[PATH_MAX], python_home_path[PATH_MAX], python_lib_path[PATH_MAX];
++	wchar_t extensions_path[PATH_MAX], resources_path[PATH_MAX], executables_path[PATH_MAX];
++	const wchar_t *basename, *module, *function;
++	int argc;
++	char * const *argv;
++} InterpreterData;
++
++static InterpreterData interpreter_data = {0};
++
++static wchar_t*
++add_sys_path() {
++	if (interpreter_data.sys_paths_count >= MAX_SYS_PATHS) fatal("Trying to add too many entries to sys.path");
++	wchar_t *ans = interpreter_data.sys_path_buf + PATH_MAX * interpreter_data.sys_paths_count;
++	interpreter_data.sys_paths[interpreter_data.sys_paths_count] = ans;
++	interpreter_data.sys_paths_count++;
++	return ans;
++}
++
++#ifdef _WIN32
++#else
++static void
++add_sys_paths() {
++    swprintf(add_sys_path(), PATH_MAX, L"%ls", interpreter_data.python_lib_path);
++    swprintf(add_sys_path(), PATH_MAX, L"%ls/lib-dynload", interpreter_data.python_lib_path);
++    swprintf(add_sys_path(), PATH_MAX, L"%ls/site-packages", interpreter_data.python_lib_path);
++}
++#endif
++
++static void
++run_interpreter() {
++#define CHECK_STATUS if (PyStatus_Exception(status)) { PyConfig_Clear(&config); Py_ExitStatusException(status); }
++    PyStatus status;
++    PyConfig config;
++
++    PyConfig_InitIsolatedConfig(&config);
++	add_sys_paths();
++    status = PyConfig_SetWideStringList(&config, &config.module_search_paths, interpreter_data.sys_paths_count, interpreter_data.sys_paths);
++    CHECK_STATUS;
++
++    config.module_search_paths_set = 1;
++    config.optimization_level = 2;
++    config.write_bytecode = 0;
++    config.use_environment = 0;
++    config.user_site_directory = 0;
++    config.configure_c_stdio = 1;
++    config.isolated = 1;
++
++    status = PyConfig_SetString(&config, &config.program_name, interpreter_data.exe_path);
++    CHECK_STATUS;
++    status = PyConfig_SetString(&config, &config.home, interpreter_data.python_home_path);
++    CHECK_STATUS;
++    status = PyConfig_SetString(&config, &config.run_module, L"site");
++    CHECK_STATUS;
++    status = PyConfig_SetBytesArgv(&config, interpreter_data.argc, interpreter_data.argv);
++    CHECK_STATUS;
++    status = Py_InitializeFromConfig(&config);
++    CHECK_STATUS;
++
++	set_sys_bool("gui_app", use_os_log);
++    set_sys_bool("frozen", true);
++    set_sys_string("calibre_basename", interpreter_data.basename);
++    set_sys_string("calibre_module",   interpreter_data.module);
++    set_sys_string("calibre_function", interpreter_data.function);
++    set_sys_string("extensions_location", interpreter_data.extensions_path);
++    set_sys_string("resources_location", interpreter_data.resources_path);
++    set_sys_string("executables_location", interpreter_data.executables_path);
++#ifdef __APPLE__
++#elif _WIN32
++#else
++    set_sys_string("frozen_path", interpreter_data.executables_path);
++#endif
++
++    int ret = Py_RunMain();
++    PyConfig_Clear(&config);
++	exit(ret);
++#undef CHECK_STATUS
++}
+-- 
+2.25.0
+

@@ -1,0 +1,722 @@
+From bef10ae86bfef3e8a43e2629b659404efddd68dc Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 28 Nov 2019 21:07:42 +0530
+Subject: [PATCH 026/104] Work on windows python3 build
+
+---
+ bypy/run-python.h        |  62 ++++++++--
+ bypy/windows/__main__.py |  17 ++-
+ bypy/windows/main.c      |   2 +-
+ bypy/windows/site.py     | 118 +++++++-----------
+ bypy/windows/util.c      | 261 ++-------------------------------------
+ 5 files changed, 114 insertions(+), 346 deletions(-)
+
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+index 3df7e71b87..304dc07cfb 100644
+--- a/bypy/run-python.h
++++ b/bypy/run-python.h
+@@ -6,13 +6,17 @@
+ 
+ #pragma once
+ 
+-#include <sys/time.h>
+ #include <stdio.h>
+ #include <stdbool.h>
+ #include <time.h>
+ #include <stdlib.h>
+ #include <stdarg.h>
++#ifdef _WIN32
++#include <string.h>
++#define PATH_MAX MAX_PATH
++#else
+ #include <strings.h>
++#endif
+ #include <errno.h>
+ #include <Python.h>
+ #ifdef __APPLE__
+@@ -21,13 +25,23 @@
+ 
+ #define arraysz(x) (sizeof(x)/sizeof(x[0]))
+ 
+-void
+-log_error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+-
+ static bool use_os_log = false;
+ 
++#ifdef _WIN32
++static void
++log_error(const char *fmt, ...) {
++    va_list ar;
++    va_start(ar, fmt);
++    vfprintf(stderr, fmt, ar);
++    va_end(ar);
++	fprintf(stderr, "\n");
++}
++#else
++static void
++log_error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
++
+ 
+-void
++static void
+ log_error(const char *fmt, ...) {
+     va_list ar;
+     struct timeval tv;
+@@ -59,6 +73,7 @@ log_error(const char *fmt, ...) {
+ #endif
+     if (!use_os_log) fprintf(stderr, "\n");
+ }
++#endif
+ 
+ 
+ #define fatal(...) { log_error(__VA_ARGS__); exit(EXIT_FAILURE); }
+@@ -76,7 +91,9 @@ set_sys_string(const char* key, const wchar_t* val) {
+ 
+ static void
+ set_sys_bool(const char* key, const bool val) {
+-	if (PySys_SetObject(key, val ? Py_True : Py_False) != 0) fatal("Failed to set attribute on sys: %s", key);
++	PyObject *pyval = PyBool_FromLong(val);
++	if (PySys_SetObject(key, pyval) != 0) fatal("Failed to set attribute on sys: %s", key);
++	Py_DECREF(pyval);
+ }
+ 
+ static void
+@@ -113,10 +130,16 @@ typedef struct {
+ 	wchar_t extensions_path[PATH_MAX], resources_path[PATH_MAX], executables_path[PATH_MAX];
+ #ifdef __APPLE__
+ 	wchar_t bundle_resource_path[PATH_MAX], frameworks_path[PATH_MAX];
++#elif defined(_WIN32)
++	wchar_t app_dir[PATH_MAX];
+ #endif
+ 	const wchar_t *basename, *module, *function;
+ 	int argc;
+-	char * const *argv;
++#ifdef _WIN32
++	wchar_t* const *argv;
++#else
++	char* const *argv;
++#endif
+ } InterpreterData;
+ 
+ static InterpreterData interpreter_data = {{0}};
+@@ -130,10 +153,12 @@ add_sys_path() {
+ 	return ans;
+ }
+ 
+-#ifdef _WIN32
+-#else
+ static void
+ add_sys_paths() {
++#ifdef _WIN32
++    swprintf(add_sys_path(), PATH_MAX, L"%ls\\app\\pylib.zip", interpreter_data.app_dir);
++    swprintf(add_sys_path(), PATH_MAX, L"%ls\\app\\bin", interpreter_data.app_dir);
++#else
+     swprintf(add_sys_path(), PATH_MAX, L"%ls", interpreter_data.python_lib_path);
+     swprintf(add_sys_path(), PATH_MAX, L"%ls/lib-dynload", interpreter_data.python_lib_path);
+ #ifdef __APPLE__
+@@ -141,9 +166,8 @@ add_sys_paths() {
+ #else
+     swprintf(add_sys_path(), PATH_MAX, L"%ls/site-packages", interpreter_data.python_lib_path);
+ #endif
+-
+-}
+ #endif
++}
+ 
+ static void
+ run_interpreter() {
+@@ -170,7 +194,11 @@ run_interpreter() {
+     CHECK_STATUS;
+     status = PyConfig_SetString(&config, &config.run_module, L"site");
+     CHECK_STATUS;
++#ifdef _WIN32
++    status = PyConfig_SetArgv(&config, interpreter_data.argc, interpreter_data.argv);
++#else
+     status = PyConfig_SetBytesArgv(&config, interpreter_data.argc, interpreter_data.argv);
++#endif
+     CHECK_STATUS;
+     status = Py_InitializeFromConfig(&config);
+     CHECK_STATUS;
+@@ -187,13 +215,23 @@ run_interpreter() {
+     set_sys_string("resourcepath", interpreter_data.bundle_resource_path);
+     set_sys_string("frameworks_dir", interpreter_data.frameworks_path);
+     set_sys_bool("new_app_bundle", true);
+-#elif _WIN32
++#elif defined(_WIN32)
++    set_sys_string("app_dir", interpreter_data.app_dir);
++    set_sys_bool("new_app_layout", true);
+ #else
+     set_sys_string("frozen_path", interpreter_data.executables_path);
+ #endif
+ 
++#ifdef _WIN32
++    UINT code_page = GetConsoleOutputCP();
++    if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
++#endif
++
+     int ret = Py_RunMain();
+     PyConfig_Clear(&config);
++#ifdef _WIN32
++    if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
++#endif
+ 	exit(ret);
+ #undef CHECK_STATUS
+ }
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 53ae785381..c17c619279 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
+@@ -205,12 +205,6 @@ def freeze(env, ext_dir):
+     for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
+         if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
+             os.remove(j(pyqt, x))
+-    with open(j(pyqt, '__init__.py') , 'r+b') as f:
+-        raw = f.read()
+-        nraw = raw.replace(b'def find_qt():', b'def find_qt():\n    return # disabled for calibre')
+-        if nraw == raw:
+-            raise Exception('Failed to patch PyQt to disable dll directory manipulation')
+-        f.seek(0), f.truncate(), f.write(nraw)
+ 
+     printf('Adding calibre sources...')
+     for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
+@@ -552,8 +546,8 @@ def build_launchers(env, debug=False):
+             if typ == 'gui':
+                 cflags += ['/DGUI_APP=']
+ 
+-            cflags += ['/DMODULE="%s"' % mod, '/DBASENAME="%s"' % bname,
+-                       '/DFUNCTION="%s"' % func]
++            cflags += ['/DMODULE=L"%s"' % mod, '/DBASENAME=L"%s"' % bname,
++                       '/DFUNCTION=L"%s"' % func]
+             dest = j(env.obj_dir, bname + '.obj')
+             printf('Compiling', bname)
+             cmd = [CL] + cflags + dflags + ['/Tc' + src, '/Fo' + dest]
+@@ -616,7 +610,7 @@ def archive_lib_dir(env):
+         handled = {'pywin32.pth', 'win32'}
+         base = j(sp, 'win32', 'lib')
+         for x in os.listdir(base):
+-            if os.path.splitext(x)[1] not in ('.exe',):
++            if os.path.splitext(x)[1] not in ('.exe',) and x != '__pycache__':
+                 add_to_zipfile(zf, x, base, zf_names)
+         base = os.path.dirname(base)
+         for x in os.listdir(base):
+@@ -626,6 +620,11 @@ def archive_lib_dir(env):
+ 
+         # We dont want the site.py (if any) from site-packages
+         handled.add('site.pyo')
++        handled.add('site.pyc')
++        handled.add('site.py')
++        handled.add('sitecustomize.pyo')
++        handled.add('sitecustomize.pyc')
++        handled.add('sitecustomize.py')
+ 
+         # The rest of site-packages
+         for x in os.listdir(sp):
+diff --git a/bypy/windows/main.c b/bypy/windows/main.c
+index 790c458f33..cde431dd47 100644
+--- a/bypy/windows/main.c
++++ b/bypy/windows/main.c
+@@ -52,7 +52,7 @@ static int show_last_error(wchar_t *preamble) {
+     return ret;
+ }
+ 
+-typedef int (__cdecl *ENTRYPROC)(const char*, const char*, const char*, int);
++typedef int (__cdecl *ENTRYPROC)(const wchar_t*, const wchar_t*, const wchar_t*, int);
+ typedef void (__cdecl *SIMPLEPRINT)(const wchar_t*);
+ typedef BOOL (*SETDEFAULTDIRS)(DWORD);
+ static ENTRYPROC entrypoint = NULL;
+diff --git a/bypy/windows/site.py b/bypy/windows/site.py
+index 74c6a43733..26acf3a8ae 100644
+--- a/bypy/windows/site.py
++++ b/bypy/windows/site.py
+@@ -1,81 +1,48 @@
+ #!/usr/bin/env python
+ # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
++# License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-__license__ = 'GPL v3'
+-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+-__docformat__ = 'restructuredtext en'
+-
+-import sys
++import builtins
+ import os
+-import imp
++import sys
++from importlib import import_module
++from importlib.util import spec_from_file_location
++from importlib.machinery import EXTENSION_SUFFIXES
++
++import _sitebuiltins
+ 
++pyd_items = None
++extension_suffixes = sorted(EXTENSION_SUFFIXES, key=len, reverse=True)
+ 
+-class PydImporter(object):
+ 
+-    __slots__ = ('items', 'description')
++def remove_extension_suffix(name):
++    for q in extension_suffixes:
++        if name.endswith(q):
++            return name[:-len(q)]
+ 
+-    def __init__(self):
+-        self.items = None
+-        self.description = ('.pyd', 'rb', imp.C_EXTENSION)
+ 
+-    def find_module(self, fullname, path=None):
+-        if self.items is None:
++class PydImporter:
++
++    def find_spec(self, fullname, path, target=None):
++        global pyd_items
++        if pyd_items is None:
++            pyd_items = {}
+             dlls_dir = os.path.join(sys.app_dir, 'app', 'bin')
+-            items = self.items = {}
+             for x in os.listdir(dlls_dir):
+                 lx = x.lower()
+-                if lx.endswith(b'.pyd'):
+-                    items[lx[:-4]] = os.path.abspath(os.path.join(dlls_dir, x))
+-        return self if fullname.lower() in self.items else None
+-
+-    def load_module(self, fullname):
+-        m = sys.modules.get(fullname)
+-        if m is not None:
+-            return m
+-        try:
+-            path = self.items[fullname.lower()]
+-        except KeyError:
+-            raise ImportError(
+-                'The native code module %s seems to have disappeared from self.items'
+-                % fullname
+-            )
+-        package, name = fullname.rpartition(b'.')[::2]
+-        m = imp.load_module(
+-            fullname, None, path, self.description
+-        )  # This inserts the module into sys.modules itself
+-        m.__loader__ = self
+-        m.__package__ = package or None
+-        return m
+-
+-
+-def abs__file__():
+-    """Set all module __file__ attribute to an absolute path"""
+-    for m in sys.modules.values():
+-        if hasattr(m, '__loader__'):
+-            continue  # don't mess with a PEP 302-supplied __file__
+-        try:
+-            m.__file__ = os.path.abspath(m.__file__)
+-        except AttributeError:
+-            continue
+-
+-
+-def aliasmbcs():
+-    import locale, codecs
+-    enc = locale.getdefaultlocale()[1]
+-    if enc.startswith('cp'):  # "cp***" ?
+-        try:
+-            codecs.lookup(enc)
+-        except LookupError:
+-            import encodings
+-            encodings._cache[enc] = encodings._unknown
+-            encodings.aliases.aliases[enc] = 'mbcs'
++                if lx.endswith('.pyd'):
++                    pyd_items[remove_extension_suffix(lx)] = os.path.abspath(os.path.join(dlls_dir, x))
++        q = fullname.lower()
++        path = pyd_items.get(q)
++        if path is not None:
++            return spec_from_file_location(fullname, path)
+ 
++    def invalidate_caches(self):
++        global pyd_items
++        pyd_items = None
+ 
+-def add_calibre_vars():
+-    sys.new_app_layout = 1
+-    sys.resources_location = os.path.join(sys.app_dir, 'app', 'resources')
+-    sys.extensions_location = os.path.join(sys.app_dir, 'app', 'bin')
+ 
++def add_calibre_vars():
+     dv = os.environ.get('CALIBRE_DEVELOP_FROM', None)
+     if dv and os.path.exists(dv):
+         sys.path.insert(0, os.path.abspath(dv))
+@@ -84,17 +51,23 @@ def add_calibre_vars():
+ def run_entry_point():
+     bname, mod, func = sys.calibre_basename, sys.calibre_module, sys.calibre_function
+     sys.argv[0] = bname + '.exe'
+-    pmod = __import__(mod, fromlist=[1], level=0)
++    pmod = import_module(mod)
+     return getattr(pmod, func)()
+ 
+ 
+-def main():
+-    sys.frozen = 'windows_exe'
+-    sys.setdefaultencoding('utf-8')
+-    aliasmbcs()
++def set_helper():
++    builtins.help = _sitebuiltins._Helper()
++
++
++def set_quit():
++    eof = 'Ctrl-Z plus Return'
++    builtins.quit = _sitebuiltins.Quitter('quit', eof)
++    builtins.exit = _sitebuiltins.Quitter('exit', eof)
++
+ 
++def main():
+     sys.meta_path.insert(0, PydImporter())
+-    sys.path_importer_cache.clear()
++    os.add_dll_directory(os.path.join(sys.app_dir, 'app', 'bin'))
+ 
+     import linecache
+ 
+@@ -104,11 +77,8 @@ def main():
+     linecache.orig_getline = linecache.getline
+     linecache.getline = fake_getline
+ 
+-    abs__file__()
+-
+     add_calibre_vars()
+-
+-    # Needed to bypass meaningless check in pywintypes.py
+-    sys.path.append(os.path.join(sys.app_dir, 'app', 'bin'))
++    set_helper()
++    set_quit()
+ 
+     return run_entry_point()
+diff --git a/bypy/windows/util.c b/bypy/windows/util.c
+index 22d163a006..7b552391d3 100644
+--- a/bypy/windows/util.c
++++ b/bypy/windows/util.c
+@@ -15,16 +15,13 @@
+ #include <delayimp.h>
+ #include <io.h>
+ #include <fcntl.h>
+-
+-#define arraysz(x) (sizeof((x))/sizeof((x)[0]))
++#include "../run-python.h"
+ 
+ static int GUI_APP = 0;
+ static char python_dll[] = PYDLL;
+ 
+ void set_gui_app(int yes) { GUI_APP = yes; }
+ 
+-int calibre_show_python_error(const wchar_t *preamble, int code);
+-
+ static int _show_error(const wchar_t *preamble, const wchar_t *msg, const int code) {
+     static wchar_t buf[4096];
+ 	static char utf8_buf[4096] = {0};
+@@ -74,30 +71,8 @@ int show_last_error(wchar_t *preamble) {
+     return ret;
+ }
+ 
+-static char    app_dir[MAX_PATH] = {0};
+-static wchar_t dll_dir[MAX_PATH] = {0};
+ static wchar_t qt_prefix_dir[MAX_PATH] = {0};
+-static char    program_name[MAX_PATH] = {0};
+ static wchar_t w_program_name[MAX_PATH] = {0};
+-static wchar_t w_app_dir[MAX_PATH] = {0};
+-#if PY_VERSION_MAJOR >= 3
+-static wchar_t python_path[MAX_PATH] = {0};
+-#else
+-static char python_path[MAX_PATH] = {0};
+-#endif
+-
+-static void
+-get_app_dir(void) {
+-    char drive[4] = "\0\0\0";
+-    DWORD sz; errno_t err;
+-    char buf[MAX_PATH] = {0};
+-
+-    sz = GetModuleFileNameA(NULL, program_name, MAX_PATH);
+-    if (sz >= MAX_PATH-1) ExitProcess(_show_error(L"Installation directory path too long", L"", 1));
+-    err = _splitpath_s(program_name, drive, 4, buf, MAX_PATH, NULL, 0, NULL, 0);
+-    if (err != 0) ExitProcess(show_last_error_crt(L"Failed to find application directory"));
+-    _snprintf_s(app_dir, MAX_PATH, _TRUNCATE, "%s%s", drive, buf);
+-}
+ 
+ static void
+ get_app_dirw(void) {
+@@ -109,22 +84,14 @@ get_app_dirw(void) {
+     if (sz >= MAX_PATH-1) ExitProcess(_show_error(L"Installation directory path too long", L"", 1));
+     err = _wsplitpath_s(w_program_name, drive, 4, buf, MAX_PATH, NULL, 0, NULL, 0);
+     if (err != 0) ExitProcess(show_last_error_crt(L"Failed to find application directory"));
+-    _snwprintf_s(w_app_dir, MAX_PATH, _TRUNCATE, L"%ls%ls", drive, buf);
++    _snwprintf_s(interpreter_data.app_dir, MAX_PATH, _TRUNCATE, L"%ls%ls", drive, buf);
+ }
+ 
+ static void
+ get_install_locations(void) {
+-    get_app_dir();
+     get_app_dirw();
+-    _snwprintf_s(qt_prefix_dir, MAX_PATH-1, _TRUNCATE, L"%ls\\app", w_app_dir);
++    _snwprintf_s(qt_prefix_dir, MAX_PATH-1, _TRUNCATE, L"%ls\\app", interpreter_data.app_dir);
+     _wputenv_s(L"CALIBRE_QT_PREFIX", qt_prefix_dir);
+-    _snwprintf_s(dll_dir, MAX_PATH-1, _TRUNCATE, L"%ls\\app\\bin", w_app_dir);
+-#if PY_VERSION_MAJOR >= 3
+-    _snwprintf_s(python_path, MAX_PATH-1, _TRUNCATE, L"%ls\\app\\pylib.zip", w_app_dir);
+-#else
+-    _snprintf_s(python_path, MAX_PATH-1, _TRUNCATE, "%s\\app\\pylib.zip", app_dir);
+-#endif
+-
+ }
+ 
+ static void
+@@ -136,193 +103,17 @@ load_python_dll() {
+ 
+ const static wchar_t out_of_memory[] = L"Out of memory";
+ 
+-static void
+-setup_stream(const char *name, const char *errors, UINT cp) {
+-    PyObject *stream;
+-    char buf[128] = {0};
+-
+-    if (cp == CP_UTF8) _snprintf_s(buf, 100, _TRUNCATE, "%s", "utf-8");
+-    else if (cp == CP_UTF7) _snprintf_s(buf, 100, _TRUNCATE, "%s", "utf-7");
+-    else _snprintf_s(buf, 100, _TRUNCATE, "cp%d", cp);
+-
+-    stream = PySys_GetObject((char*)name);
+-
+-    if (!PyFile_SetEncodingAndErrors(stream, buf, (char*)errors))
+-        ExitProcess(calibre_show_python_error(L"Failed to set stream encoding", 1));
+-}
+-
+ UINT
+ setup_streams() {
+     UINT code_page = GetConsoleOutputCP();
+     SetConsoleOutputCP(CP_UTF8);
+-    _putenv_s("PYTHONIOENCODING", "UTF-8");
+-    _setmode(_fileno(stdin),  _O_BINARY);
+-    _setmode(_fileno(stdout), _O_BINARY);
+-    _setmode(_fileno(stderr), _O_BINARY);
+-    if (!GUI_APP) { // Remove buffering
+-        setvbuf(stdin,  NULL, _IONBF, 2);
+-        setvbuf(stdout, NULL, _IONBF, 2);
+-        setvbuf(stderr, NULL, _IONBF, 2);
+-    }
+ 
+     //printf("input cp: %d output cp: %d\r\n", GetConsoleCP(), GetConsoleOutputCP());
+ 
+-    setup_stream("stdin", "strict", GetConsoleCP());
+-    setup_stream("stdout", "strict", CP_UTF8);
+-    setup_stream("stderr", "strict", CP_UTF8);
+-    return code_page;
+-}
+-
+-UINT
+-initialize_interpreter(const char *basename, const char *module, const char *function) {
+-    HMODULE dll;
+-    int *flag, i, argc;
+-    wchar_t **wargv;
+-    PyObject *argv, *v;
+-    char *dummy_argv[1] = {""};
+-
+-    dll = GetModuleHandleA(python_dll);
+-    if (!dll) ExitProcess(show_last_error(L"Failed to get python dll handle"));
+-    flag = (int*)GetProcAddress(dll, "Py_OptimizeFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get optimize flag", L"", 1));
+-    *flag = 2;
+-    flag = (int*)GetProcAddress(dll, "Py_NoSiteFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get no_site flag", L"", 1));
+-    *flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_DontWriteBytecodeFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get no_bytecode flag", L"", 1));
+-    *flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_IgnoreEnvironmentFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get ignore_environment flag", L"", 1));
+-    *flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_NoUserSiteDirectory");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get user_site flag", L"", 1));
+-    *flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_HashRandomizationFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get hash randomization flag", L"", 1));
+-    *flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_VerboseFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get verbose flag", L"", 1));
+-    //*flag = 1;
+-    flag = (int*)GetProcAddress(dll, "Py_DebugFlag");
+-    if (!flag) ExitProcess(_show_error(L"Failed to get debug flag", L"", 1));
+-    //*flag = 1;
+-
+-#if PY_VERSION_MAJOR >= 3
+-    Py_SetProgramName(w_program_name);
+-    Py_SetPythonHome(w_app_dir);
+-#else
+-    Py_SetProgramName(program_name);
+-    Py_SetPythonHome(app_dir);
+-#endif
+-
+-    //printf("Path before Py_Initialize(): %s\r\n\n", Py_GetPath());
+-    Py_Initialize();
+-    UINT code_page = setup_streams();
+-
+-    PySys_SetArgv(1, dummy_argv);
+-    //printf("Path after Py_Initialize(): %s\r\n\n", Py_GetPath());
+-    PySys_SetPath(python_path);
+-    //printf("Path set by me: %s\r\n\n", path);
+-    PySys_SetObject("gui_app", PyBool_FromLong((long)GUI_APP));
+-    PySys_SetObject("app_dir", PyUnicode_FromWideChar(w_app_dir, wcslen(w_app_dir)));
+-
+-    PySys_SetObject("calibre_basename", PyBytes_FromString(basename));
+-    PySys_SetObject("calibre_module", PyBytes_FromString(module));
+-    PySys_SetObject("calibre_function", PyBytes_FromString(function));
+-
+-    wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+-    if (wargv == NULL) ExitProcess(show_last_error(L"Failed to get command line"));
+-    argv = PyList_New(argc);
+-    if (argv == NULL) ExitProcess(_show_error(out_of_memory, L"", 1));
+-    for (i = 0; i < argc; i++) {
+-        v = PyUnicode_FromWideChar(wargv[i], wcslen(wargv[i]));
+-        if (v == NULL) ExitProcess(_show_error(out_of_memory, L"", 1));
+-        PyList_SetItem(argv, i, v);
+-    }
+-    PySys_SetObject("argv", argv);
+     return code_page;
+ }
+ 
+ 
+-static const wchar_t*
+-pyobject_to_wchar(PyObject *o) {
+-    PyObject *t = NULL;
+-    size_t s;
+-    static wchar_t ans[4096];
+-
+-    if (!PyUnicode_Check(o)) {
+-        t = PyUnicode_FromEncodedObject(o, NULL, "replace");
+-        if (t == NULL) return NULL;
+-    }
+-
+-    s = PyUnicode_AsWideChar((PyUnicodeObject*)(t ? t : o), ans, arraysz(ans)-1);
+-    Py_XDECREF(t);
+-    if (s >= 0) ans[s] = 0;
+-    else ans[s] = 0;
+-
+-    return ans;
+-}
+-
+-int pyobject_to_int(PyObject *res) {
+-    int ret; PyObject *tmp;
+-    tmp = PyNumber_Int(res);
+-    if (tmp == NULL) ret = (PyObject_IsTrue(res)) ? 1 : 0;
+-    else ret = (int)PyInt_AS_LONG(tmp);
+-
+-    return ret;
+-}
+-
+-int handle_sysexit(PyObject *e) {
+-    PyObject *code;
+-
+-    code = PyObject_GetAttrString(e, "code");
+-    if (!code) return 0;
+-    if (!PyInt_Check(code)) {
+-        PyObject_Print(code, stderr, Py_PRINT_RAW);
+-        fflush(stderr);
+-    }
+-    return pyobject_to_int(code);
+-}
+-
+-int calibre_show_python_error(const wchar_t *preamble, int code) {
+-    PyObject *exc, *val, *tb, *str, **system_exit;
+-    HMODULE dll;
+-    int ret, issysexit = 0; const wchar_t *i;
+-
+-    if (!PyErr_Occurred()) return code;
+-    dll = GetModuleHandleA(python_dll);
+-    if (!dll) ExitProcess(show_last_error(L"Failed to get python dll handle"));
+-    system_exit = (PyObject**)GetProcAddress(dll, "PyExc_SystemExit");
+-    issysexit = PyErr_ExceptionMatches(*system_exit);
+-
+-
+-    PyErr_Fetch(&exc, &val, &tb);
+-
+-    if (exc != NULL) {
+-        PyErr_NormalizeException(&exc, &val, &tb);
+-
+-        if (issysexit) {
+-            return (val) ? handle_sysexit(val) : 0;
+-        }
+-        if (val != NULL) {
+-            str = PyObject_Unicode(val);
+-            if (str == NULL) {
+-                PyErr_Clear();
+-                str = PyObject_Str(val);
+-            }
+-            i = pyobject_to_wchar(str);
+-            ret = _show_error(preamble, (i==NULL)?out_of_memory:i, code);
+-            if (tb != NULL) {
+-                PyErr_Restore(exc, val, tb);
+-                PyErr_Print();
+-            }
+-            return ret;
+-        }
+-    }
+-    return _show_error(preamble, L"", code);
+-}
+-
+ void redirect_out_stream(FILE *stream) {
+     FILE *f = NULL;
+     errno_t err;
+@@ -352,8 +143,7 @@ simple_print(const wchar_t *msg) {
+ }
+ 
+ __declspec(dllexport) int __cdecl
+-execute_python_entrypoint(const char *basename, const char *module, const char *function, int is_gui_app) {
+-    PyObject *site, *main, *res;
++execute_python_entrypoint(const wchar_t *basename, const wchar_t *module, const wchar_t *function, int is_gui_app) {
+     int ret = 0;
+     // Prevent Windows' idiotic error dialog popups when various win32 api functions fail
+     SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX);
+@@ -366,43 +156,14 @@ execute_python_entrypoint(const char *basename, const char *module, const char *
+     set_gui_app(is_gui_app);
+     // Disable the invalid parameter handler
+     _set_invalid_parameter_handler(null_invalid_parameter_handler);
+-
++    interpreter_data.argv = CommandLineToArgvW(GetCommandLineW(), &interpreter_data.argc);
++    if (interpreter_data.argv == NULL) ExitProcess(show_last_error(L"Failed to get command line"));
++    interpreter_data.basename = basename; interpreter_data.module = module; interpreter_data.function = function;
+     load_python_dll();
+-    UINT code_page = initialize_interpreter(basename, module, function);
+-
+-    site = PyImport_ImportModule("site");
+-
+-    if (site == NULL)
+-        ret = calibre_show_python_error(L"Failed to import site module",  1);
+-    else {
+-        Py_INCREF(site);
+-
+-        main = PyObject_GetAttrString(site, "main");
+-        if (main == NULL || !PyCallable_Check(main))
+-            ret = calibre_show_python_error(L"site module has no main function", 1);
+-        else {
+-            Py_INCREF(main);
+-            res = PyObject_CallObject(main, NULL);
+-
+-            if (res == NULL)
+-                ret = calibre_show_python_error(L"Python function terminated unexpectedly", 1);
+-            else {
+-#if PY_VERSION_MAJOR < 3
+-                if (PyInt_Check(res)) {
+-                    ret = PyInt_AS_LONG(res);
+-                }
+-#else
+-                if (PyLong_Check(res)) {
+-                    ret = PyLong_AsLong(res);
+-                }
+-#endif
+-                Py_DECREF(res);
+-            }
+-        }
+-    }
+-    PyErr_Clear();
+-    Py_Finalize();
+-    if (code_page != CP_UTF8) SetConsoleOutputCP(code_page);
++    pre_initialize_interpreter(is_gui_app);
++	run_interpreter();
++
++
+     /* printf("111111111111 returning: %d\r\n", ret); */
+ 
+     return ret;
+-- 
+2.25.0
+

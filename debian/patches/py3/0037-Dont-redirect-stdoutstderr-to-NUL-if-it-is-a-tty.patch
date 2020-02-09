@@ -1,0 +1,27 @@
+From d5eaf6f4287b0880c211d44989a4c3c77b2a75d3 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 17:09:34 +0530
+Subject: [PATCH 037/104] Dont redirect stdoutstderr to NUL if it is a tty
+
+---
+ bypy/windows/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/bypy/windows/util.c b/bypy/windows/util.c
+index 65d258d34d..d9a5c5f415 100644
+--- a/bypy/windows/util.c
++++ b/bypy/windows/util.c
+@@ -116,7 +116,9 @@ setup_streams() {
+ }
+ 
+ 
+-void redirect_out_stream(FILE *stream) {
++void
++redirect_out_stream(FILE *stream) {
++    if (_isatty(_fileno(stream))) return;
+     FILE *f = NULL;
+     errno_t err;
+ 
+-- 
+2.25.0
+

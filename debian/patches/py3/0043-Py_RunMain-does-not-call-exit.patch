@@ -1,0 +1,31 @@
+From 1f72ecd8a613a46cd1fceab5fab7af390cb059d7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 20:22:03 +0530
+Subject: [PATCH 043/104] Py_RunMain does not call exit()
+
+---
+ bypy/run-python.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+index 55383c79dd..fcf2dd4db5 100644
+--- a/bypy/run-python.h
++++ b/bypy/run-python.h
+@@ -263,11 +263,13 @@ run_interpreter() {
+     code_page = GetConsoleOutputCP();
+     if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
+     setup_vt_terminal_mode();
+-    Py_AtExit(cleanup_console_state);
+ #endif
+ 
+     int ret = Py_RunMain();
+     PyConfig_Clear(&config);
++#ifdef _WIN32
++    cleanup_console_state();
++#endif
+ 	exit(ret);
+ #undef CHECK_STATUS
+ }
+-- 
+2.25.0
+

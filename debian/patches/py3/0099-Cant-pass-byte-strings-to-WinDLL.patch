@@ -1,0 +1,25 @@
+From 9a9e0e7215fac6869107b1c97636b2ed0c9c4469 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 20 Dec 2019 07:38:49 +0530
+Subject: [PATCH 099/104] Cant pass byte strings to WinDLL()
+
+---
+ src/calibre/gui2/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
+index e62c1554d4..b5803779e9 100644
+--- a/src/calibre/gui2/__init__.py
++++ b/src/calibre/gui2/__init__.py
+@@ -1007,7 +1007,7 @@ class Application(QApplication):
+         try:
+             if self.clipboard().ownsClipboard():
+                 import ctypes
+-                ctypes.WinDLL(b'ole32.dll').OleFlushClipboard()
++                ctypes.WinDLL('ole32.dll').OleFlushClipboard()
+         except Exception:
+             import traceback
+             traceback.print_exc()
+-- 
+2.25.0
+

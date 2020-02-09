@@ -1,0 +1,567 @@
+From 39419aecaa8c1066afd2855dad6fa99ba48f8c66 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 18 Nov 2019 08:16:02 +0530
+Subject: [PATCH 005/104] Remove hardcoding of mbcs for filesystem names
+
+---
+ src/calibre/ebooks/metadata/pdf.py     |   4 +-
+ src/calibre/gui2/preferences/server.py |   4 +-
+ src/calibre/gui2/win_file_dialogs.py   |   6 +-
+ src/calibre/ptempfile.py               |   2 +-
+ src/calibre/srv/utils.py               |  11 +-
+ src/calibre/startup.py                 |  67 ++------
+ src/calibre/utils/config_base.py       |   2 -
+ src/calibre/utils/filenames.py         |   4 +-
+ src/calibre/utils/img.py               |  13 +-
+ src/calibre/utils/lock.py              |   4 +-
+ src/polyglot/builtins.py               | 215 ++++++++-----------------
+ 11 files changed, 93 insertions(+), 239 deletions(-)
+
+diff --git a/src/calibre/ebooks/metadata/pdf.py b/src/calibre/ebooks/metadata/pdf.py
+index fb2376d08d..c1464b2f3e 100644
+--- a/src/calibre/ebooks/metadata/pdf.py
++++ b/src/calibre/ebooks/metadata/pdf.py
+@@ -8,7 +8,7 @@ import os, subprocess, shutil, re
+ from functools import partial
+ 
+ from calibre import prints
+-from calibre.constants import iswindows, ispy3
++from calibre.constants import iswindows
+ from calibre.ptempfile import TemporaryDirectory
+ from calibre.ebooks.metadata import (
+     MetaInformation, string_to_authors, check_isbn, check_doi)
+@@ -99,8 +99,6 @@ def page_images(pdfpath, outputdir='.', first=1, last=1, image_format='jpeg', pr
+ 
+ 
+ def is_pdf_encrypted(path_to_pdf):
+-    if not ispy3 and not isinstance(path_to_pdf, bytes):
+-        path_to_pdf = path_to_pdf.encode('mbcs' if iswindows else 'utf-8')
+     pdfinfo = get_tools()[0]
+     raw = subprocess.check_output([pdfinfo, path_to_pdf])
+     q = re.search(br'^Encrypted:\s*(\S+)', raw, flags=re.MULTILINE)
+diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
+index b72b894ca4..6f8c1d42b0 100644
+--- a/src/calibre/gui2/preferences/server.py
++++ b/src/calibre/gui2/preferences/server.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+ # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-
+-
+ import errno
+ import json
+ import numbers
+@@ -49,7 +47,7 @@ if iswindows and not isportable:
+         exe_base = os.path.abspath(os.path.dirname(sys.executable))
+         exe = os.path.join(exe_base, 'calibre.exe')
+         if isinstance(exe, bytes):
+-            exe = exe.decode('mbcs')
++            exe = os.fsdecode(exe)
+         return exe
+ 
+     def startup_shortcut_path():
+diff --git a/src/calibre/gui2/win_file_dialogs.py b/src/calibre/gui2/win_file_dialogs.py
+index bf308a3824..7e65411279 100644
+--- a/src/calibre/gui2/win_file_dialogs.py
++++ b/src/calibre/gui2/win_file_dialogs.py
+@@ -30,10 +30,8 @@ def is_ok():
+ 
+ 
+ try:
+-    from calibre.constants import filesystem_encoding
+     from calibre.utils.config import dynamic
+ except ImportError:
+-    filesystem_encoding = 'mbcs'
+     dynamic = {}
+ 
+ 
+@@ -112,7 +110,7 @@ class Loop(QEventLoop):
+ 
+ def process_path(x):
+     if isinstance(x, bytes):
+-        x = x.decode(filesystem_encoding)
++        x = os.fsdecode(x)
+     return os.path.abspath(os.path.expanduser(x))
+ 
+ 
+@@ -167,7 +165,7 @@ def run_file_dialog(
+             data.append(serialize_string('FOLDER', initial_folder))
+     if filename:
+         if isinstance(filename, bytes):
+-            filename = filename.decode(filesystem_encoding)
++            filename = os.fsdecode(filename)
+         data.append(serialize_string('FILENAME', filename))
+     if only_dirs:
+         file_types = ()  # file types not allowed for dir only dialogs
+diff --git a/src/calibre/ptempfile.py b/src/calibre/ptempfile.py
+index 8f94eb8e81..762b5d6225 100644
+--- a/src/calibre/ptempfile.py
++++ b/src/calibre/ptempfile.py
+@@ -125,7 +125,7 @@ def base_dir():
+ 
+         try:
+             tempfile.gettempdir()
+-        except:
++        except Exception:
+             # Widows temp vars set to a path not encodable in mbcs
+             # Use our temp dir
+             tempfile.tempdir = _base_dir
+diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
+index 153b8150c1..957dfaaa0c 100644
+--- a/src/calibre/srv/utils.py
++++ b/src/calibre/srv/utils.py
+@@ -21,7 +21,7 @@ from calibre.utils.shared_file import share_open, raise_winerror
+ from polyglot.builtins import iteritems, map, range
+ from polyglot import reprlib
+ from polyglot.http_cookie import SimpleCookie
+-from polyglot.builtins import is_py3, unicode_type, as_bytes, as_unicode
++from polyglot.builtins import unicode_type, as_unicode
+ from polyglot.urllib import parse_qs, quote as urlquote
+ from polyglot.binary import as_hex_unicode as encode_name, from_hex_unicode as decode_name
+ 
+@@ -531,10 +531,5 @@ def get_use_roman():
+     return _use_roman
+ 
+ 
+-if iswindows and not is_py3:
+-    def fast_now_strftime(fmt):
+-        fmt = as_bytes(fmt, encoding='mbcs')
+-        return time.strftime(fmt).decode('mbcs', 'replace')
+-else:
+-    def fast_now_strftime(fmt):
+-        return as_unicode(time.strftime(fmt), errors='replace')
++def fast_now_strftime(fmt):
++    return as_unicode(time.strftime(fmt), errors='replace')
+diff --git a/src/calibre/startup.py b/src/calibre/startup.py
+index ea7837600b..a20f7cb124 100644
+--- a/src/calibre/startup.py
++++ b/src/calibre/startup.py
+@@ -7,7 +7,7 @@ __docformat__ = 'restructuredtext en'
+ Perform various initialization tasks.
+ '''
+ 
+-import locale, sys, os
++import locale, sys
+ 
+ # Default translation is NOOP
+ from polyglot.builtins import builtins, is_py3, unicode_type
+@@ -21,7 +21,7 @@ builtins.__dict__['__'] = lambda s: s
+ builtins.__dict__['dynamic_property'] = lambda func: func(None)
+ 
+ 
+-from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, isfrozen, DEBUG, isfreebsd, ispy3
++from calibre.constants import iswindows, preferred_encoding, plugins, isosx, islinux, DEBUG, isfreebsd
+ 
+ _run_once = False
+ winutil = winutilerror = None
+@@ -30,43 +30,17 @@ if not _run_once:
+     _run_once = True
+     from importlib import import_module
+ 
+-    if not isfrozen and not ispy3:
+-        # Prevent PyQt4 from being loaded
+-        class PyQt4Ban(object):
+-
+-            def find_module(self, fullname, path=None):
+-                if fullname.startswith('PyQt4'):
+-                    return self
+-
+-            def load_module(self, fullname):
+-                raise ImportError('Importing PyQt4 is not allowed as calibre uses PyQt5')
+-
+-        sys.meta_path.insert(0, PyQt4Ban())
+-
+     class DeVendor(object):
+ 
+-        if ispy3:
+-
+-            def find_spec(self, fullname, path, target=None):
+-                spec = None
+-                if fullname == 'calibre.web.feeds.feedparser':
+-                    m = import_module('feedparser')
+-                    spec = m.__spec__
+-                elif fullname.startswith('calibre.ebooks.markdown'):
+-                    m = import_module(fullname[len('calibre.ebooks.'):])
+-                    spec = m.__spec__
+-                return spec
+-
+-        else:
+-
+-            def find_module(self, fullname, path=None):
+-                if fullname == 'calibre.web.feeds.feedparser' or fullname.startswith('calibre.ebooks.markdown'):
+-                    return self
+-
+-            def load_module(self, fullname):
+-                if fullname == 'calibre.web.feeds.feedparser':
+-                    return import_module('feedparser')
+-                return import_module(fullname[len('calibre.ebooks.'):])
++        def find_spec(self, fullname, path, target=None):
++            spec = None
++            if fullname == 'calibre.web.feeds.feedparser':
++                m = import_module('feedparser')
++                spec = m.__spec__
++            elif fullname.startswith('calibre.ebooks.markdown'):
++                m = import_module(fullname[len('calibre.ebooks.'):])
++                spec = m.__spec__
++            return spec
+ 
+     sys.meta_path.insert(0, DeVendor())
+ 
+@@ -79,25 +53,6 @@ if not _run_once:
+         if len(sys.argv) > 1 and not isinstance(sys.argv[1], unicode_type):
+             sys.argv[1:] = winutil.argv()[1-len(sys.argv):]
+ 
+-        if not ispy3:
+-            # Python2's expanduser is broken for non-ASCII usernames
+-            # and unicode paths
+-
+-            def expanduser(path):
+-                if isinstance(path, bytes):
+-                    path = path.decode('mbcs')
+-                if path[:1] != '~':
+-                    return path
+-                i, n = 1, len(path)
+-                while i < n and path[i] not in '/\\':
+-                    i += 1
+-                userhome = winutil.special_folder_path(winutil.CSIDL_PROFILE)
+-                if i != 1:  # ~user
+-                    userhome = os.path.join(os.path.dirname(userhome), path[1:i])
+-
+-                return userhome + path[i:]
+-            os.path.expanduser = expanduser
+-
+     # Ensure that all temp files/dirs are created under a calibre tmp dir
+     from calibre.ptempfile import base_dir
+     try:
+diff --git a/src/calibre/utils/config_base.py b/src/calibre/utils/config_base.py
+index 04e65bd95b..fffd1354c2 100644
+--- a/src/calibre/utils/config_base.py
++++ b/src/calibre/utils/config_base.py
+@@ -1,8 +1,6 @@
+ #!/usr/bin/env python
+ # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+ 
+-
+-
+ __license__   = 'GPL v3'
+ __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
+ __docformat__ = 'restructuredtext en'
+diff --git a/src/calibre/utils/filenames.py b/src/calibre/utils/filenames.py
+index 1eb67758b5..b510222b19 100644
+--- a/src/calibre/utils/filenames.py
++++ b/src/calibre/utils/filenames.py
+@@ -490,9 +490,9 @@ if iswindows:
+     def rename_file(a, b):
+         move_file = plugins['winutil'][0].move_file
+         if isinstance(a, bytes):
+-            a = a.decode('mbcs')
++            a = os.fsdecode(a)
+         if isinstance(b, bytes):
+-            b = b.decode('mbcs')
++            b = os.fsdecode(b)
+         move_file(a, b)
+ 
+ 
+diff --git a/src/calibre/utils/img.py b/src/calibre/utils/img.py
+index d4681336c4..0bd517bce5 100644
+--- a/src/calibre/utils/img.py
++++ b/src/calibre/utils/img.py
+@@ -17,7 +17,7 @@ from PyQt5.QtCore import QBuffer, QByteArray, Qt
+ from PyQt5.QtGui import QColor, QImage, QImageReader, QImageWriter, QPixmap, QTransform
+ 
+ from calibre import fit_image, force_unicode
+-from calibre.constants import iswindows, plugins, ispy3
++from calibre.constants import iswindows, plugins
+ from calibre.ptempfile import TemporaryDirectory
+ from calibre.utils.config_base import tweaks
+ from calibre.utils.filenames import atomic_rename
+@@ -53,8 +53,8 @@ def get_exe_path(name):
+ 
+ def load_jxr_data(data):
+     with TemporaryDirectory() as tdir:
+-        if iswindows and isinstance(tdir, unicode_type):
+-            tdir = tdir.encode('mbcs')
++        if isinstance(tdir, bytes):
++            tdir = os.fsdecode(tdir)
+         with lopen(os.path.join(tdir, 'input.jxr'), 'wb') as f:
+             f.write(data)
+         cmd = [get_exe_path('JxrDecApp'), '-i', 'input.jxr', '-o', 'output.tif']
+@@ -506,13 +506,6 @@ def run_optimizer(file_path, cmd, as_filter=False, input_data=None):
+             cmd[cmd.index(q)] = r
+         if not as_filter:
+             repl(True, iname), repl(False, oname)
+-        if iswindows and not ispy3:
+-            # subprocess in python 2 cannot handle unicode strings that are not
+-            # encodeable in mbcs, so we fail here, where it is more explicit,
+-            # instead.
+-            cmd = [x.encode('mbcs') if isinstance(x, unicode_type) else x for x in cmd]
+-            if isinstance(cwd, unicode_type):
+-                cwd = cwd.encode('mbcs')
+         stdin = subprocess.PIPE if as_filter else None
+         stderr = subprocess.PIPE if as_filter else subprocess.STDOUT
+         creationflags = 0x08 if iswindows else 0
+diff --git a/src/calibre/utils/lock.py b/src/calibre/utils/lock.py
+index c1115af6cb..b3bdf064f6 100644
+--- a/src/calibre/utils/lock.py
++++ b/src/calibre/utils/lock.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-
+-
+ import atexit
+ import errno
+ import os
+@@ -50,7 +48,7 @@ def unix_retry(err):
+ 
+ def windows_open(path):
+     if isinstance(path, bytes):
+-        path = path.decode('mbcs')
++        path = os.fsdecode(path)
+     try:
+         h = win32file.CreateFileW(
+             path,
+diff --git a/src/polyglot/builtins.py b/src/polyglot/builtins.py
+index 66f8f2827a..caf2d254a0 100644
+--- a/src/polyglot/builtins.py
++++ b/src/polyglot/builtins.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-
+-
+ import os
+ import sys
+ 
+@@ -46,157 +44,80 @@ def only_unicode_recursive(x, encoding='utf-8', errors='strict'):
+     if isinstance(x, (set, list, tuple, frozenset)):
+         return type(x)(only_unicode_recursive(i, encoding, errors) for i in x)
+     if isinstance(x, dict):
+-        return {only_unicode_recursive(k, encoding, errors): only_unicode_recursive(v, encoding, errors) for k, v in iteritems(x)}
++        return {
++            only_unicode_recursive(k, encoding, errors):
++            only_unicode_recursive(v, encoding, errors)
++            for k, v in iteritems(x)
++        }
+     return x
+ 
+ 
+-if is_py3:
+-    def reraise(tp, value, tb=None):
+-        try:
+-            if value is None:
+-                value = tp()
+-            if value.__traceback__ is not tb:
+-                raise value.with_traceback(tb)
+-            raise value
+-        finally:
+-            value = None
+-            tb = None
+-
+-    import builtins
+-
+-    zip = builtins.zip
+-    map = builtins.map
+-    filter = builtins.filter
+-    range = builtins.range
+-
+-    codepoint_to_chr = chr
+-    unicode_type = str
+-    string_or_bytes = str, bytes
+-    string_or_unicode = str
+-    long_type = int
+-    raw_input = input
+-    getcwd = os.getcwd
+-    getenv = os.getenv
+-
+-    def error_message(exc):
+-        args = getattr(exc, 'args', None)
+-        if args and isinstance(args[0], unicode_type):
+-            return args[0]
+-        return unicode_type(exc)
+-
+-    def iteritems(d):
+-        return iter(d.items())
+-
+-    def itervalues(d):
+-        return iter(d.values())
+-
+-    def environ_item(x):
+-        if isinstance(x, bytes):
+-            x = x.decode('utf-8')
+-        return x
++def reraise(tp, value, tb=None):
++    try:
++        if value is None:
++            value = tp()
++        if value.__traceback__ is not tb:
++            raise value.with_traceback(tb)
++        raise value
++    finally:
++        value = None
++        tb = None
+ 
+-    def exec_path(path, ctx=None):
+-        ctx = ctx or {}
+-        with open(path, 'rb') as f:
+-            code = f.read()
+-        code = compile(code, f.name, 'exec')
+-        exec(code, ctx)
+ 
+-    def cmp(a, b):
+-        return (a > b) - (a < b)
++import builtins
+ 
+-    def int_to_byte(x):
+-        return bytes((x,))
++zip = builtins.zip
++map = builtins.map
++filter = builtins.filter
++range = builtins.range
+ 
+-    def reload(module):
+-        import importlib
+-        return importlib.reload(module)
++codepoint_to_chr = chr
++unicode_type = str
++string_or_bytes = str, bytes
++string_or_unicode = str
++long_type = int
++raw_input = input
++getcwd = os.getcwd
++getenv = os.getenv
++
++
++def error_message(exc):
++    args = getattr(exc, 'args', None)
++    if args and isinstance(args[0], unicode_type):
++        return args[0]
++    return unicode_type(exc)
++
++
++def iteritems(d):
++    return iter(d.items())
++
++
++def itervalues(d):
++    return iter(d.values())
++
++
++def environ_item(x):
++    if isinstance(x, bytes):
++        x = x.decode('utf-8')
++    return x
++
++
++def exec_path(path, ctx=None):
++    ctx = ctx or {}
++    with open(path, 'rb') as f:
++        code = f.read()
++    code = compile(code, f.name, 'exec')
++    exec(code, ctx)
++
++
++def cmp(a, b):
++    return (a > b) - (a < b)
++
++
++def int_to_byte(x):
++    return bytes((x, ))
+ 
+-else:
+-    exec("""def reraise(tp, value, tb=None):
+-    try:
+-        raise tp, value, tb
+-    finally:
+-        tb = None
+-""")
+-
+-    from future_builtins import zip, map, filter  # noqa
+-    range = xrange
+-    import __builtin__ as builtins
+-
+-    codepoint_to_chr = unichr
+-    unicode_type = unicode
+-    string_or_bytes = unicode, bytes
+-    string_or_unicode = str, unicode
+-    long_type = long
+-    exec_path = execfile
+-    raw_input = builtins.raw_input
+-    cmp = builtins.cmp
+-    int_to_byte = chr
+-    getcwd = os.getcwdu
+-
+-    def error_message(exc):
+-        ans = exc.message
+-        if isinstance(ans, bytes):
+-            ans = ans.decode('utf-8', 'replace')
+-        return ans
+-
+-    def iteritems(d):
+-        return d.iteritems()
+-
+-    def itervalues(d):
+-        return d.itervalues()
+-
+-    def environ_item(x):
+-        if isinstance(x, unicode_type):
+-            x = x.encode('utf-8')
+-        return x
+ 
+-    if hasattr(sys, 'getwindowsversion'):
+-        def getenv(x, default=None):
+-            if isinstance(x, bytes):
+-                x = x.decode('mbcs', 'replace')
+-
+-            if getenv.buf is None:
+-                import ctypes
+-                import ctypes.wintypes as w
+-                getenv.cub = ctypes.create_unicode_buffer
+-                getenv.buf = getenv.cub(1024)
+-                getenv.gev = ctypes.windll.kernel32.GetEnvironmentVariableW
+-                getenv.gev.restype = w.DWORD
+-                getenv.gev.argtypes = [w.LPCWSTR, w.LPWSTR, w.DWORD]
+-            res = getenv.gev(x, getenv.buf, len(getenv.buf))
+-            if res == 0:
+-                return default
+-            if res > len(getenv.buf) - 4:
+-                getenv.buf = getenv.cub(res + 8)
+-                res = getenv.gev(x, getenv.buf, len(getenv.buf))
+-                if res == 0:
+-                    return default
+-            return getenv.buf.value
+-        getenv.buf = None
+-    else:
+-        def getenv(x, default=None):
+-            ans = os.getenv(x, default)
+-            if isinstance(ans, bytes):
+-                ans = ans.decode('utf-8', 'replace')
+-            return ans
+-
+-    def reload(module):
+-        return builtins.reload(module)
+-
+-
+-def print_to_binary_file(fileobj, encoding='utf-8'):
+-
+-    def print(*a, **kw):
+-        f = kw.get('file', fileobj)
+-        if a:
+-            sep = as_bytes(kw.get('sep', ' '), encoding)
+-            for x in a:
+-                x = as_bytes(x, encoding)
+-                f.write(x)
+-                if x is not a[-1]:
+-                    f.write(sep)
+-        f.write(as_bytes(kw.get('end', '\n')))
+-
+-    return print
++def reload(module):
++    import importlib
++    return importlib.reload(module)
+-- 
+2.25.0
+

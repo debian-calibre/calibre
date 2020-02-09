@@ -1,0 +1,168 @@
+From 1f27095534c88504d7982565f979f3857cf606e1 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 11:57:28 +0530
+Subject: [PATCH 053/104] Fix share_open() in py3 on windows
+
+---
+ src/calibre/utils/shared_file.py | 71 +++++---------------------------
+ src/calibre/utils/speedup.c      | 28 -------------
+ 2 files changed, 11 insertions(+), 88 deletions(-)
+
+diff --git a/src/calibre/utils/shared_file.py b/src/calibre/utils/shared_file.py
+index 441a60dd25..f354b34546 100644
+--- a/src/calibre/utils/shared_file.py
++++ b/src/calibre/utils/shared_file.py
+@@ -9,7 +9,7 @@ import os, sys
+ 
+ from polyglot.builtins import reraise
+ 
+-from calibre.constants import iswindows, plugins
++from calibre.constants import iswindows
+ 
+ '''
+ This module defines a share_open() function which is a replacement for
+@@ -28,59 +28,6 @@ directory until all file handles are closed. To get around this, rename the
+ file before deleting it.
+ '''
+ 
+-speedup, err = plugins['speedup']
+-
+-if not speedup:
+-    raise RuntimeError('Failed to load the speedup plugin with error: %s' % err)
+-
+-valid_modes = {'a', 'a+', 'a+b', 'ab', 'r', 'rb', 'r+', 'r+b', 'w', 'wb', 'w+', 'w+b'}
+-
+-
+-def validate_mode(mode):
+-    return mode in valid_modes
+-
+-
+-class FlagConstants(object):
+-
+-    def __init__(self):
+-        for x in 'APPEND CREAT TRUNC EXCL RDWR RDONLY WRONLY'.split():
+-            x = 'O_' + x
+-            setattr(self, x, getattr(os, x))
+-        for x in 'RANDOM SEQUENTIAL TEXT BINARY'.split():
+-            x = 'O_' + x
+-            setattr(self, x, getattr(os, x, 0))
+-
+-
+-fc = FlagConstants()
+-
+-
+-def flags_from_mode(mode):
+-    if not validate_mode(mode):
+-        raise ValueError('The mode is invalid')
+-    m = mode[0]
+-    random = '+' in mode
+-    binary = 'b' in mode
+-    if m == 'a':
+-        flags = fc.O_APPEND | fc.O_CREAT
+-        if random:
+-            flags |= fc.O_RDWR | fc.O_RANDOM
+-        else:
+-            flags |= fc.O_WRONLY | fc.O_SEQUENTIAL
+-    elif m == 'r':
+-        if random:
+-            flags = fc.O_RDWR | fc.O_RANDOM
+-        else:
+-            flags = fc.O_RDONLY | fc.O_SEQUENTIAL
+-    elif m == 'w':
+-        if random:
+-            flags = fc.O_RDWR | fc.O_RANDOM
+-        else:
+-            flags = fc.O_WRONLY | fc.O_SEQUENTIAL
+-        flags |= fc.O_TRUNC | fc.O_CREAT
+-    flags |= (fc.O_BINARY if binary else fc.O_TEXT)
+-    return flags
+-
+-
+ if iswindows:
+     from numbers import Integral
+     import msvcrt
+@@ -127,7 +74,7 @@ if iswindows:
+         reraise(
+             WindowsError,
+             WindowsError(pywinerr.winerror,
+-                         (pywinerr.funcname or '') + b': ' + (pywinerr.strerror or '')),
++                         (pywinerr.funcname or '') + ': ' + (pywinerr.strerror or '')),
+             sys.exc_info()[2])
+ 
+     def os_open(path, flags, mode=0o777, share_flags=FILE_SHARE_VALID_FLAGS):
+@@ -168,13 +115,12 @@ if iswindows:
+                 path, access_flags, share_flags, None, create_flags, attrib_flags, None)
+         except pywintypes.error as e:
+             raise_winerror(e)
+-        ans = msvcrt.open_osfhandle(h, flags | os.O_NOINHERIT)
+-        h.Detach()  # We dont want the handle to be automatically closed when h is deleted
++        ans = msvcrt.open_osfhandle(h.Detach(), flags | os.O_NOINHERIT)
+         return ans
+ 
+-    def share_open(path, mode='r', buffering=-1):
+-        flags = flags_from_mode(mode)
+-        return speedup.fdopen(os_open(path, flags), path, mode, buffering)
++    def share_open(*a, **kw):
++        kw['opener'] = os_open
++        return open(*a, **kw)
+ 
+ else:
+     share_open = open
+@@ -214,3 +160,8 @@ def find_tests():
+                 eq(f3.read(100), b'b' * 100)
+ 
+     return unittest.defaultTestLoader.loadTestsFromTestCase(SharedFileTest)
++
++
++def run_tests():
++    from calibre.utils.run_tests import run_tests
++    run_tests(find_tests)
+diff --git a/src/calibre/utils/speedup.c b/src/calibre/utils/speedup.c
+index ca990150d1..389bece9d6 100644
+--- a/src/calibre/utils/speedup.c
++++ b/src/calibre/utils/speedup.c
+@@ -127,30 +127,6 @@ speedup_detach(PyObject *self, PyObject *args) {
+     Py_RETURN_NONE;
+ }
+ 
+-static PyObject*
+-speedup_fdopen(PyObject *self, PyObject *args) {
+-    PyObject *ans = NULL;
+-    char *name;
+-#if PY_MAJOR_VERSION == 2
+-    FILE *fp;
+-#endif
+-    int fd, bufsize = -1;
+-    char *mode;
+-
+-    if (!PyArg_ParseTuple(args, "iss|i", &fd, &name, &mode, &bufsize)) return NULL;
+-#if PY_MAJOR_VERSION >= 3
+-    ans = PyFile_FromFd(fd, NULL, mode, bufsize, NULL, NULL, NULL, 1);
+-#else
+-    fp = fdopen(fd, mode);
+-    if (fp == NULL) return PyErr_SetFromErrno(PyExc_OSError);
+-    ans = PyFile_FromFile(fp, name, mode, fclose);
+-    if (ans != NULL) {
+-        PyFile_SetBufSize(ans, bufsize);
+-    }
+-#endif
+-    return ans;
+-}
+-
+ static void calculate_gaussian_kernel(Py_ssize_t size, double *kernel, double radius) {
+     const double sqr = radius * radius;
+     const double factor = 1.0 / (2 * M_PI * sqr);
+@@ -630,10 +606,6 @@ static PyMethodDef speedup_methods[] = {
+             " This function returns an image (bytestring) in the PPM format as the texture."
+     },
+ 
+-    {"fdopen", speedup_fdopen, METH_VARARGS,
+-        "fdopen(fd, name, mode [, bufsize=-1)\n\nCreate a python file object from an OS file descriptor with a name. Note that this does not do any validation of mode, so you must ensure fd already has the correct flags set."
+-    },
+-
+     {"websocket_mask", speedup_websocket_mask, METH_VARARGS,
+         "websocket_mask(data, mask [, offset=0)\n\nXOR the data (bytestring) with the specified (must be 4-byte bytestring) mask"
+     },
+-- 
+2.25.0
+
