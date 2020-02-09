@@ -5,21 +5,20 @@ Subject: [PATCH 007/104] Minor fixups for changes when removing py3
  conditionals
 
 ---
- bypy/sources.json        | 10 ----------
- setup/build.py           |  4 ++--
- src/calibre/constants.py |  2 +-
- src/polyglot/builtins.py | 16 ++++++++++++++++
+ bypy/sources.json        |   10 ----------
+ setup/build.py           |    4 ++--
+ src/calibre/constants.py |    2 +-
+ src/polyglot/builtins.py |   16 ++++++++++++++++
  4 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/bypy/sources.json b/bypy/sources.json
-index d4300ffe57..07784ecb87 100644
+Index: b/bypy/sources.json
+===================================================================
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -769,16 +769,6 @@
-         }
+@@ -770,16 +770,6 @@
      },
  
--    {
+     {
 -        "name": "enum34",
 -		"python": "<3",
 -        "unix": {
@@ -29,14 +28,15 @@ index d4300ffe57..07784ecb87 100644
 -        }
 -    },
 -
-     {
+-    {
          "name": "sip",
          "unix": {
-diff --git a/setup/build.py b/setup/build.py
-index 8db1531606..40c7e815b3 100644
+             "filename": "sip-4.19.19.tar.gz",
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -218,8 +218,8 @@ def init_env():
+@@ -219,8 +219,8 @@ def init_env():
  class Build(Command):
  
      short_description = 'Build calibre C/C++ extension modules'
@@ -47,8 +47,8 @@ index 8db1531606..40c7e815b3 100644
  
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
-diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index e14acee251..9bcf8669d4 100644
+Index: b/src/calibre/constants.py
+===================================================================
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,7 +150,7 @@ def cache_dir():
@@ -60,8 +60,8 @@ index e14acee251..9bcf8669d4 100644
  
  
  # plugins {{{
-diff --git a/src/polyglot/builtins.py b/src/polyglot/builtins.py
-index caf2d254a0..f30d1d6e7d 100644
+Index: b/src/polyglot/builtins.py
+===================================================================
 --- a/src/polyglot/builtins.py
 +++ b/src/polyglot/builtins.py
 @@ -121,3 +121,19 @@ def int_to_byte(x):
@@ -84,6 +84,3 @@ index caf2d254a0..f30d1d6e7d 100644
 +        f.write(as_bytes(kw.get('end', '\n')))
 +
 +    return print
--- 
-2.25.0
-

@@ -4,14 +4,14 @@ Date: Fri, 6 Dec 2019 14:30:18 +0530
 Subject: [PATCH 072/104] Parallelize building sip files
 
 ---
- setup/build.py | 31 +++++++++++++++++++++++--------
+ setup/build.py |   31 +++++++++++++++++++++++--------
  1 file changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/setup/build.py b/setup/build.py
-index a2480fe94d..1e25574b32 100644
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -308,9 +308,20 @@ class Build(Command):
+@@ -309,9 +309,20 @@ class Build(Command):
              for cmd in link_commands:
                  self.post_link_cleanup(cmd)
  
@@ -34,7 +34,7 @@ index a2480fe94d..1e25574b32 100644
  
          if opts.only in {'all', 'headless'}:
              self.build_headless()
-@@ -452,17 +463,21 @@ class Build(Command):
+@@ -460,17 +471,21 @@ class Build(Command):
          if isosx:
              os.rename(self.j(self.d(target), 'libheadless.dylib'), self.j(self.d(target), 'headless.so'))
  
@@ -60,7 +60,7 @@ index a2480fe94d..1e25574b32 100644
          with open(sbf, 'rb') as f:
              raw = f.read().decode('utf-8')
  
-@@ -473,7 +488,7 @@ class Build(Command):
+@@ -481,7 +496,7 @@ class Build(Command):
              return ans
          return {x:read(x) for x in ('target', 'sources', 'headers')}
  
@@ -69,7 +69,7 @@ index a2480fe94d..1e25574b32 100644
          from setup.build_environment import pyqt, qmakespec, QMAKE
          from setup.parallel_build import cpu_count
          from distutils import sysconfig
-@@ -481,7 +496,7 @@ class Build(Command):
+@@ -489,7 +504,7 @@ class Build(Command):
          src_dir = self.j(pyqt_dir, ext.name)
          if not os.path.exists(src_dir):
              os.makedirs(src_dir)
@@ -78,6 +78,3 @@ index a2480fe94d..1e25574b32 100644
          pro = textwrap.dedent(
          '''\
          TEMPLATE = lib
--- 
-2.25.0
-

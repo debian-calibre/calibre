@@ -4,14 +4,14 @@ Date: Fri, 6 Dec 2019 12:02:44 +0530
 Subject: [PATCH 071/104] Fully parallelize building of non-pyqt extensions
 
 ---
- setup/build.py | 84 +++++++++++++++++++++++++++++++++-----------------
+ setup/build.py |   84 ++++++++++++++++++++++++++++++++++++++-------------------
  1 file changed, 56 insertions(+), 28 deletions(-)
 
-diff --git a/setup/build.py b/setup/build.py
-index a836bee8ff..a2480fe94d 100644
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -12,6 +12,8 @@ from setup import Command, islinux, isbsd, isfreebsd, isosx, ishaiku, SRC, iswin
+@@ -12,6 +12,8 @@ from setup import Command, islinux, isbs
  isunix = islinux or isosx or isbsd or ishaiku
  
  py_lib = os.path.join(sys.prefix, 'libs', 'python%d%d.lib' % sys.version_info[:2])
@@ -20,7 +20,7 @@ index a836bee8ff..a2480fe94d 100644
  
  
  def init_symbol_name(name):
-@@ -255,18 +257,19 @@ class Build(Command):
+@@ -256,18 +258,19 @@ class Build(Command):
              help='Path to directory in which to place the built extensions. Defaults to src/calibre/plugins')
  
      def run(self, opts):
@@ -44,7 +44,7 @@ index a836bee8ff..a2480fe94d 100644
              if opts.only != 'all' and opts.only != ext.name:
                  continue
              if ext.error:
-@@ -276,10 +279,39 @@ class Build(Command):
+@@ -277,10 +280,39 @@ class Build(Command):
                  else:
                      raise Exception(ext.error)
              dest = self.dest(ext)
@@ -87,7 +87,7 @@ index a836bee8ff..a2480fe94d 100644
          if opts.only in {'all', 'headless'}:
              self.build_headless()
  
-@@ -299,19 +331,14 @@ class Build(Command):
+@@ -300,19 +332,14 @@ class Build(Command):
          suff = '.lib' if iswindows else ''
          return [pref+x+suff for x in dirs]
  
@@ -110,7 +110,7 @@ index a836bee8ff..a2480fe94d 100644
          for src in ext.sources:
              obj = self.j(obj_dir, os.path.splitext(self.b(src))[0]+'.o')
              objects.append(obj)
-@@ -320,17 +347,16 @@ class Build(Command):
+@@ -321,17 +348,16 @@ class Build(Command):
                  sinc = [inf+src] if iswindows else ['-c', src]
                  oinc = ['/Fo'+obj] if iswindows else ['-o', obj]
                  cmd = [compiler] + self.env.cflags + ext.cflags + einc + sinc + oinc
@@ -133,7 +133,7 @@ index a836bee8ff..a2480fe94d 100644
              cmd = [linker]
              if iswindows:
                  pre_ld_flags = []
-@@ -341,13 +367,15 @@ class Build(Command):
+@@ -342,13 +368,15 @@ class Build(Command):
                      ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
              else:
                  cmd += objects + ext.extra_objs + ['-o', dest] + self.env.ldflags + ext.ldflags + elib + xlib
@@ -156,6 +156,3 @@ index a836bee8ff..a2480fe94d 100644
  
      def check_call(self, *args, **kwargs):
          """print cmdline if an error occured
--- 
-2.25.0
-

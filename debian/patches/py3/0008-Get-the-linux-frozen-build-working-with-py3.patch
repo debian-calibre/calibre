@@ -4,18 +4,18 @@ Date: Mon, 18 Nov 2019 18:31:54 +0530
 Subject: [PATCH 008/104] Get the linux frozen build working with py3
 
 ---
- bypy/init_env.py         |   2 -
- bypy/linux/__main__.py   |   9 +-
- bypy/linux/main.c        |   4 +-
- bypy/linux/site.py       |  94 ++++--------
- bypy/linux/util.c        | 313 +++++++++++++--------------------------
- bypy/linux/util.h        |   8 +-
- setup/build.py           |   4 +-
- src/calibre/constants.py |   2 +-
+ bypy/init_env.py         |    2 
+ bypy/linux/__main__.py   |    9 -
+ bypy/linux/main.c        |    4 
+ bypy/linux/site.py       |   96 ++++----------
+ bypy/linux/util.c        |  311 +++++++++++++++--------------------------------
+ bypy/linux/util.h        |    8 -
+ setup/build.py           |    4 
+ src/calibre/constants.py |    2 
  8 files changed, 147 insertions(+), 289 deletions(-)
 
-diff --git a/bypy/init_env.py b/bypy/init_env.py
-index bd5c6d223c..82f0fa0327 100644
+Index: b/bypy/init_env.py
+===================================================================
 --- a/bypy/init_env.py
 +++ b/bypy/init_env.py
 @@ -2,8 +2,6 @@
@@ -27,8 +27,8 @@ index bd5c6d223c..82f0fa0327 100644
  import json
  import os
  import re
-diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
-index 4b411e4a6d..9d36bf9f16 100644
+Index: b/bypy/linux/__main__.py
+===================================================================
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
 @@ -2,8 +2,6 @@
@@ -68,8 +68,8 @@ index 4b411e4a6d..9d36bf9f16 100644
  
              exe = j(env.bin_dir, bname)
              cmd = ['gcc'] + xflags + [src, '-o', exe, '-L' + env.lib_dir, '-lcalibre-launcher']
-diff --git a/bypy/linux/main.c b/bypy/linux/main.c
-index 7bb32db5df..d9aec5f847 100644
+Index: b/bypy/linux/main.c
+===================================================================
 --- a/bypy/linux/main.c
 +++ b/bypy/linux/main.c
 @@ -5,9 +5,7 @@
@@ -83,8 +83,8 @@ index 7bb32db5df..d9aec5f847 100644
  }
 -
 -
-diff --git a/bypy/linux/site.py b/bypy/linux/site.py
-index 4921f1eeed..9b21e7d4fe 100644
+Index: b/bypy/linux/site.py
+===================================================================
 --- a/bypy/linux/site.py
 +++ b/bypy/linux/site.py
 @@ -2,53 +2,27 @@
@@ -122,21 +122,15 @@ index 4921f1eeed..9b21e7d4fe 100644
 -        enc = 'UTF-8'
 -    sys.setdefaultencoding(enc)
 -    del sys.setdefaultencoding
- 
-+def set_quit():
-+    """Define new builtins 'quit' and 'exit'.
- 
+-
+-
 -class _Helper(object):
 -    """Define the builtin 'help'.
 -    This is a wrapper around pydoc.help (with a twist).
-+    These are objects which make the interpreter exit when called.
-+    The repr of each object contains a hint at how it works.
  
-     """
-+    if os.sep == '\\':
-+        eof = 'Ctrl-Z plus Return'
-+    else:
-+        eof = 'Ctrl-D (i.e. EOF)'
+-    """
++def set_quit():
++    """Define new builtins 'quit' and 'exit'.
  
 -    def __repr__(self):
 -        return "Type help() for interactive help, " \
@@ -145,8 +139,15 @@ index 4921f1eeed..9b21e7d4fe 100644
 -    def __call__(self, *args, **kwds):
 -        import pydoc
 -        return pydoc.help(*args, **kwds)
--
--
++    These are objects which make the interpreter exit when called.
++    The repr of each object contains a hint at how it works.
+ 
++    """
++    if os.sep == '\\':
++        eof = 'Ctrl-Z plus Return'
++    else:
++        eof = 'Ctrl-D (i.e. EOF)'
+ 
 -def set_helper():
 -    __builtin__.help = _Helper()
 +    builtins.quit = _sitebuiltins.Quitter('quit', eof)
@@ -207,8 +208,8 @@ index 4921f1eeed..9b21e7d4fe 100644
 +
 +if __name__ == '__main__':
 +    main()
-diff --git a/bypy/linux/util.c b/bypy/linux/util.c
-index fcb4004a63..c58dc523d1 100644
+Index: b/bypy/linux/util.c
+===================================================================
 --- a/bypy/linux/util.c
 +++ b/bypy/linux/util.c
 @@ -5,258 +5,153 @@
@@ -425,24 +426,30 @@ index fcb4004a63..c58dc523d1 100644
 -void initialize_interpreter(int argc, char **argv, char *outr, char *errr,
 -        const char *basename, const char *module, const char *function) {
 -    char *encoding, *p;
--
--    get_paths();
--    char path[3*PATH_MAX];
 +static int
 +initialize_interpreter(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function) {
 +    PyStatus status;
 +    PyPreConfig preconfig;
 +    PyConfig config;
 +    PyPreConfig_InitIsolatedConfig(&preconfig);
++
++    preconfig.utf8_mode = 1;
++    preconfig.coerce_c_locale = 1;
++    preconfig.isolated = 1;
++
++#define CHECK_STATUS if (PyStatus_Exception(status)) { PyConfig_Clear(&config); Py_ExitStatusException(status); return 1; }
++    status = Py_PreInitialize(&preconfig);
++    CHECK_STATUS;
++    PyConfig_InitIsolatedConfig(&config);
  
+     get_paths();
+-    char path[3*PATH_MAX];
+-
 -    snprintf(path, sizeof(path),
 -            "%s/%s:%s/%s/plat-linux2:%s/%s/lib-dynload:%s/%s/site-packages",
 -            lib_dir, PYTHON_VER, lib_dir, PYTHON_VER, lib_dir, PYTHON_VER,
 -            lib_dir, PYTHON_VER);
-+    preconfig.utf8_mode = 1;
-+    preconfig.coerce_c_locale = 1;
-+    preconfig.isolated = 1;
- 
+-
 -    Py_OptimizeFlag = 2;
 -    Py_NoSiteFlag = 1;
 -    Py_DontWriteBytecodeFlag = 1;
@@ -451,11 +458,7 @@ index fcb4004a63..c58dc523d1 100644
 -    Py_VerboseFlag = 0;
 -    Py_DebugFlag = 0;
 -    Py_HashRandomizationFlag = 1;
-+#define CHECK_STATUS if (PyStatus_Exception(status)) { PyConfig_Clear(&config); Py_ExitStatusException(status); return 1; }
-+    status = Py_PreInitialize(&preconfig);
-+    CHECK_STATUS;
-+    PyConfig_InitIsolatedConfig(&config);
- 
+-
 -    Py_SetProgramName(exe_path);
 -    Py_SetPythonHome(base_dir);
 -
@@ -470,23 +473,6 @@ index fcb4004a63..c58dc523d1 100644
 -        } else
 -            Py_FileSystemDefaultEncoding = strndup("UTF-8", 10);
 -    }
--
--
--    setup_streams();
--
--    PySys_SetArgv(argc, argv);
--    //printf("Path after Py_Initialize(): %s\r\n\n", Py_GetPath());
--    PySys_SetPath(path);
--    //printf("Path set by me: %s\r\n\n", path);
--    PySys_SetObject("gui_app", PyBool_FromLong((long)GUI_APP));
--    PySys_SetObject("calibre_basename", PyBytes_FromString(basename));
--    PySys_SetObject("calibre_module",   PyBytes_FromString(module));
--    PySys_SetObject("calibre_function", PyBytes_FromString(function));
--    PySys_SetObject("extensions_location", PyBytes_FromString(extensions_dir));
--    PySys_SetObject("resources_location", PyBytes_FromString(resources_dir));
--    PySys_SetObject("executables_location", PyBytes_FromString(base_dir));
--    PySys_SetObject("frozen_path", PyBytes_FromString(base_dir));
-+    get_paths();
 +    static wchar_t* items[3];
 +    static wchar_t path[arraysz(items)*PATH_MAX];
 +    for (size_t i = 0; i < arraysz(items); i++) items[i] = path + i * PATH_MAX;
@@ -514,7 +500,22 @@ index fcb4004a63..c58dc523d1 100644
 +    status = Py_InitializeFromConfig(&config);
 +    CHECK_STATUS;
 +#undef CHECK_STATUS
-+
+ 
+-
+-    setup_streams();
+-
+-    PySys_SetArgv(argc, argv);
+-    //printf("Path after Py_Initialize(): %s\r\n\n", Py_GetPath());
+-    PySys_SetPath(path);
+-    //printf("Path set by me: %s\r\n\n", path);
+-    PySys_SetObject("gui_app", PyBool_FromLong((long)GUI_APP));
+-    PySys_SetObject("calibre_basename", PyBytes_FromString(basename));
+-    PySys_SetObject("calibre_module",   PyBytes_FromString(module));
+-    PySys_SetObject("calibre_function", PyBytes_FromString(function));
+-    PySys_SetObject("extensions_location", PyBytes_FromString(extensions_dir));
+-    PySys_SetObject("resources_location", PyBytes_FromString(resources_dir));
+-    PySys_SetObject("executables_location", PyBytes_FromString(base_dir));
+-    PySys_SetObject("frozen_path", PyBytes_FromString(base_dir));
 +    PySys_SetObject("gui_app", GUI_APP ? Py_True : Py_False);
      PySys_SetObject("frozen", Py_True);
 -    Py_INCREF(Py_True);
@@ -524,7 +525,6 @@ index fcb4004a63..c58dc523d1 100644
 -    //    PySys_SetObject("stdout_redirect", PyUnicode_FromWideChar(outr, wcslen(outr)));
 -    //    PySys_SetObject("stderr_redirect", PyUnicode_FromWideChar(errr, wcslen(outr)));
 -    }
--
 +    set_sys_string("calibre_basename", basename);
 +    set_sys_string("calibre_module",   module);
 +    set_sys_string("calibre_function", function);
@@ -532,7 +532,7 @@ index fcb4004a63..c58dc523d1 100644
 +    set_sys_string("resources_location", resources_dir);
 +    set_sys_string("executables_location", base_dir);
 +    set_sys_string("frozen_path", base_dir);
-+
+ 
 +    int ret = Py_RunMain();
 +    PyConfig_Clear(&config);
 +    return ret;
@@ -574,8 +574,8 @@ index fcb4004a63..c58dc523d1 100644
 +execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function) {
 +    return initialize_interpreter(argc, argv, basename, module, function);
  }
-diff --git a/bypy/linux/util.h b/bypy/linux/util.h
-index de4c97870d..a09bf5e6d8 100644
+Index: b/bypy/linux/util.h
+===================================================================
 --- a/bypy/linux/util.h
 +++ b/bypy/linux/util.h
 @@ -9,10 +9,10 @@
@@ -593,11 +593,11 @@ index de4c97870d..a09bf5e6d8 100644
 -        char *outr, char *errr);
 +int execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename,
 +        const wchar_t *module, const wchar_t *function);
-diff --git a/setup/build.py b/setup/build.py
-index 40c7e815b3..a836bee8ff 100644
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -218,8 +218,8 @@ def init_env():
+@@ -219,8 +219,8 @@ def init_env():
  class Build(Command):
  
      short_description = 'Build calibre C/C++ extension modules'
@@ -608,8 +608,8 @@ index 40c7e815b3..a836bee8ff 100644
  
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
-diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 9bcf8669d4..fa7a62f9d7 100644
+Index: b/src/calibre/constants.py
+===================================================================
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,7 +150,7 @@ def cache_dir():
@@ -621,6 +621,3 @@ index 9bcf8669d4..fa7a62f9d7 100644
  
  
  # plugins {{{
--- 
-2.25.0
-

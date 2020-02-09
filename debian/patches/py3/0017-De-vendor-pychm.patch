@@ -4,15 +4,15 @@ Date: Fri, 22 Nov 2019 12:08:28 +0530
 Subject: [PATCH 017/104] De-vendor pychm
 
 ---
- COPYRIGHT                         |    6 -
- bypy/sources.json                 |    9 +
- setup/extensions.json             |    9 -
- src/calibre/constants.py          |    1 -
- src/calibre/ebooks/chm/reader.py  |   34 +-
- src/calibre/test_build.py         |    4 +
- src/calibre/utils/chm/__init__.py |   30 -
+ COPYRIGHT                         |    6 
+ bypy/sources.json                 |    9 
+ setup/extensions.json             |    9 
+ src/calibre/constants.py          |    1 
+ src/calibre/ebooks/chm/reader.py  |   34 
+ src/calibre/test_build.py         |    4 
+ src/calibre/utils/chm/__init__.py |   30 
  src/calibre/utils/chm/chm.py      |  520 ---
- src/calibre/utils/chm/swig_chm.c  | 5919 -----------------------------
+ src/calibre/utils/chm/swig_chm.c  | 5919 --------------------------------------
  src/calibre/utils/chm/swig_chm.i  |  209 -
  10 files changed, 33 insertions(+), 6708 deletions(-)
  delete mode 100644 src/calibre/utils/chm/__init__.py
@@ -20,11 +20,11 @@ Subject: [PATCH 017/104] De-vendor pychm
  delete mode 100644 src/calibre/utils/chm/swig_chm.c
  delete mode 100644 src/calibre/utils/chm/swig_chm.i
 
-diff --git a/COPYRIGHT b/COPYRIGHT
-index 10afc65876..7120d8f8d1 100644
+Index: b/COPYRIGHT
+===================================================================
 --- a/COPYRIGHT
 +++ b/COPYRIGHT
-@@ -206,12 +206,6 @@ Files: src/calibre/headless/fontconfig_database.cpp
+@@ -206,12 +206,6 @@ Files: src/calibre/headless/fontconfig_d
  Copyright: Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies)
  License: LGPL-2.1, LGPL-3
  
@@ -37,15 +37,14 @@ index 10afc65876..7120d8f8d1 100644
  Files: src/calibre/utils/open_search/description.py
  Copyright: 2011, John Schember <john@nachtimwald.com>, 2006, Ed Summers <ehs@pobox.com>
  License: GPL-3
-diff --git a/bypy/sources.json b/bypy/sources.json
-index d281fefb3d..4c8e363b1e 100644
+Index: b/bypy/sources.json
+===================================================================
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -556,6 +556,15 @@
-         }
+@@ -557,6 +557,15 @@
      },
  
-+    {
+     {
 +        "name": "pychm",
 +        "unix": {
 +            "filename": "pychm-0.8.5.tar.gz",
@@ -54,18 +53,18 @@ index d281fefb3d..4c8e363b1e 100644
 +        }
 +    },
 +
-     {
++    {
          "name": "html5-parser",
          "unix": {
-diff --git a/setup/extensions.json b/setup/extensions.json
-index 0d33ca3418..ebbcac510d 100644
+             "filename": "html5-parser-0.4.9.tar.gz",
+Index: b/setup/extensions.json
+===================================================================
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -71,15 +71,6 @@
-         "sources": "calibre/library/sqlite_custom.c",
+@@ -72,15 +72,6 @@
          "inc_dirs": "!sqlite_inc_dirs"
      },
--    {
+     {
 -        "name": "chmlib",
 -        "sources": "calibre/utils/chm/swig_chm.c",
 -        "libraries": "chm",
@@ -74,11 +73,12 @@ index 0d33ca3418..ebbcac510d 100644
 -        "lib_dirs": "!chmlib_lib_dirs",
 -        "defines": "SWIG_COBJECT_TYPES SWIG_PYTHON_STRICT_BYTE_CHAR"
 -    },
-     {
+-    {
          "name": "lzx",
          "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
-diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index d26011bbd7..1ff305a009 100644
+         "inc_dirs": "calibre/utils/lzx",
+Index: b/src/calibre/constants.py
+===================================================================
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -167,7 +167,6 @@ class Plugins(collections.Mapping):
@@ -89,8 +89,8 @@ index d26011bbd7..1ff305a009 100644
                  'icu',
                  'speedup',
                  'html_as_json',
-diff --git a/src/calibre/ebooks/chm/reader.py b/src/calibre/ebooks/chm/reader.py
-index 31a04223db..1139777787 100644
+Index: b/src/calibre/ebooks/chm/reader.py
+===================================================================
 --- a/src/calibre/ebooks/chm/reader.py
 +++ b/src/calibre/ebooks/chm/reader.py
 @@ -1,26 +1,19 @@
@@ -147,11 +147,11 @@ index 31a04223db..1139777787 100644
      def _parse_toc(self, ul, basedir=getcwd()):
          toc = TOC(play_order=self._playorder, base_path=basedir, text='')
          self._playorder += 1
-diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 3b1ca5721c..c8b893692c 100644
+Index: b/src/calibre/test_build.py
+===================================================================
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -50,6 +50,10 @@ class BuildTest(unittest.TestCase):
+@@ -54,6 +54,10 @@ class BuildTest(unittest.TestCase):
          from calibre.spell.dictionary import build_test
          build_test()
  
@@ -162,9 +162,8 @@ index 3b1ca5721c..c8b893692c 100644
      def test_chardet(self):
          from chardet import detect
          raw = 'mūsi Füße'.encode('utf-8')
-diff --git a/src/calibre/utils/chm/__init__.py b/src/calibre/utils/chm/__init__.py
-deleted file mode 100644
-index 3d329d9152..0000000000
+Index: b/src/calibre/utils/chm/__init__.py
+===================================================================
 --- a/src/calibre/utils/chm/__init__.py
 +++ /dev/null
 @@ -1,30 +0,0 @@
@@ -198,9 +197,8 @@ index 3d329d9152..0000000000
 -__all__ = ["chm", "chmlib", "_chmlib", "extra"]
 -__version__ = "0.8.4"
 -__revision__ = "$Id: __init__.py,v 1.8 2006/06/18 10:50:43 rubensr Exp $"
-diff --git a/src/calibre/utils/chm/chm.py b/src/calibre/utils/chm/chm.py
-deleted file mode 100644
-index 4791d90ee8..0000000000
+Index: b/src/calibre/utils/chm/chm.py
+===================================================================
 --- a/src/calibre/utils/chm/chm.py
 +++ /dev/null
 @@ -1,520 +0,0 @@
@@ -724,9 +722,8 @@ index 4791d90ee8..0000000000
 -            self.home = self.GetString(text, dft_index)
 -            if not self.home.startswith(b"/"):
 -                self.home = b"/" + self.home
-diff --git a/src/calibre/utils/chm/swig_chm.c b/src/calibre/utils/chm/swig_chm.c
-deleted file mode 100644
-index 1642fe7754..0000000000
+Index: b/src/calibre/utils/chm/swig_chm.c
+===================================================================
 --- a/src/calibre/utils/chm/swig_chm.c
 +++ /dev/null
 @@ -1,5919 +0,0 @@
@@ -6649,9 +6646,8 @@ index 1642fe7754..0000000000
 -  return;
 -#endif
 -}
-diff --git a/src/calibre/utils/chm/swig_chm.i b/src/calibre/utils/chm/swig_chm.i
-deleted file mode 100644
-index bbcbdbe698..0000000000
+Index: b/src/calibre/utils/chm/swig_chm.i
+===================================================================
 --- a/src/calibre/utils/chm/swig_chm.i
 +++ /dev/null
 @@ -1,209 +0,0 @@
@@ -6864,6 +6860,3 @@ index bbcbdbe698..0000000000
 -                      int what,
 -                      CHM_ENUMERATOR e,
 -                      void *context);
--- 
-2.25.0
-
