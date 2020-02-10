@@ -1,8 +1,32 @@
-calibre (4.99.4+dfsg+really4.10.0+py3-3) UNRELEASED; urgency=medium
+calibre (4.99.4+dfsg+really4.10.1-1) UNRELEASED; urgency=medium
 
+  [ Norbert Preining ]
   * add change for 4.10.1 as patch
+  * move Debian patches after Py3 patches
 
- -- Norbert Preining <norbert@preining.info>  Fri, 07 Feb 2020 15:59:43 +0900
+  [ YOKOTA Hiroshi ]
+  * Restore release version's watch line
+  * Update version mangle line for "+really" style version number
+  * Remove unused line
+  * Apply Debian's compilation options to libheadless.so
+  * New upstream version 4.99.4+dfsg+really4.10.1
+  * Drop obsolete patch.
+    This already patch applied in upstream
+  * Remove unused patch
+  * Refresh Debian patches
+  * Move upstream "py3" branch to Quilt patch set
+  * Refresh "py3" patches
+  * Add ignored file list to dh_missing(1)
+    "py3" branch already removed this file, but quilt(1) dose not handle
+    deletion of blank file. And upstream install process installs some
+    unwanted files.
+  * Add "py3" branch document
+  * Fix upstream version naming scheme
+    "+py3" is not comes from upstream tarball.
+    It comes from patch set.
+  * Break lines
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 10 Feb 2020 13:43:50 +0900
 
 calibre (4.99.4+dfsg+really4.10.0+py3-2) unstable; urgency=medium
 
