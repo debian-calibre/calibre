@@ -1,5 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
+from __future__ import with_statement
+from __future__ import print_function
 
 __license__   = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -8,16 +10,14 @@ __docformat__ = 'restructuredtext en'
 import textwrap, os, shlex, subprocess, glob, shutil, re, sys, json
 from collections import namedtuple
 
-from setup import Command, islinux, isbsd, isfreebsd, isosx, ishaiku, SRC, iswindows, __version__
+from setup import Command, islinux, isbsd, isfreebsd, isosx, ishaiku, SRC, iswindows, __version__, ispy3
 isunix = islinux or isosx or isbsd or ishaiku
 
 py_lib = os.path.join(sys.prefix, 'libs', 'python%d%d.lib' % sys.version_info[:2])
-CompileCommand = namedtuple('CompileCommand', 'cmd src dest')
-LinkCommand = namedtuple('LinkCommand', 'cmd objects dest')
 
 
 def init_symbol_name(name):
-    prefix = 'PyInit_'
+    prefix = 'PyInit_' if ispy3 else 'init'
     return prefix + name
 
 
@@ -44,7 +44,7 @@ class Extension(object):
         if iswindows:
             self.cflags.append('/DCALIBRE_MODINIT_FUNC=PyMODINIT_FUNC')
         else:
-            return_type = 'PyObject*'
+            return_type = 'PyObject*' if ispy3 else 'void'
             extern_decl = 'extern "C"' if self.needs_cxx else ''
 
             self.cflags.append(
@@ -173,8 +173,6 @@ def init_env():
 
     if islinux:
         cflags.append('-pthread')
-        if sys.stdout.isatty():
-            cflags.append('-fdiagnostics-color=always')
         ldflags.append('-shared')
 
     if isbsd:
@@ -222,8 +220,12 @@ def init_env():
 class Build(Command):
 
     short_description = 'Build calibre C/C++ extension modules'
-    DEFAULT_OUTPUTDIR = os.path.abspath(os.path.join(SRC, 'calibre', 'plugins'))
-    DEFAULT_BUILDDIR = os.path.abspath(os.path.join(os.path.dirname(SRC), 'build'))
+    if ispy3:
+        DEFAULT_OUTPUTDIR = os.path.abspath(os.path.join(SRC, 'calibre', 'plugins', '3'))
+        DEFAULT_BUILDDIR = os.path.abspath(os.path.join(os.path.dirname(SRC), 'build', '3'))
+    else:
+        DEFAULT_OUTPUTDIR = os.path.abspath(os.path.join(SRC, 'calibre', 'plugins'))
+        DEFAULT_BUILDDIR = os.path.abspath(os.path.join(os.path.dirname(SRC), 'build'))
 
     description = textwrap.dedent('''\
         calibre depends on several python extensions written in C/C++.
@@ -259,20 +261,21 @@ class Build(Command):
             help='Path to directory in which to place the built extensions. Defaults to src/calibre/plugins')
 
     def run(self, opts):
-        from setup.parallel_build import parallel_build, create_job
         if opts.no_compile:
             self.info('--no-compile specified, skipping compilation')
             return
         self.env = init_env()
-        all_extensions = map(parse_extension, filter(is_ext_allowed, read_extensions()))
+        extensions = map(parse_extension, filter(is_ext_allowed, read_extensions()))
         self.build_dir = os.path.abspath(opts.build_dir or self.DEFAULT_BUILDDIR)
         self.output_dir = os.path.abspath(opts.output_dir or self.DEFAULT_OUTPUTDIR)
         self.obj_dir = os.path.join(self.build_dir, 'objects')
         for x in (self.output_dir, self.obj_dir):
-            os.makedirs(x, exist_ok=True)
-        pyqt_extensions, extensions = [], []
-        for ext in all_extensions:
+            if not os.path.exists(x):
+                os.makedirs(x)
+        for ext in extensions:
             if opts.only != 'all' and opts.only != ext.name:
+                continue
+            if ext.needs_py2 and ispy3:
                 continue
             if ext.error:
                 if ext.optional:
@@ -281,50 +284,10 @@ class Build(Command):
                 else:
                     raise Exception(ext.error)
             dest = self.dest(ext)
-            os.makedirs(self.d(dest), exist_ok=True)
-            (pyqt_extensions if ext.sip_files else extensions).append((ext, dest))
-
-        jobs = []
-        objects_map = {}
-        self.info(f'Building {len(extensions)+len(pyqt_extensions)} extensions')
-        for (ext, dest) in extensions:
-            cmds, objects = self.get_compile_commands(ext, dest)
-            objects_map[id(ext)] = objects
-            for cmd in cmds:
-                jobs.append(create_job(cmd.cmd))
-        if jobs:
-            self.info(f'Compiling {len(jobs)} files...')
-            if not parallel_build(jobs, self.info):
-                raise SystemExit(1)
-        jobs, link_commands = [], []
-        for (ext, dest) in extensions:
-            objects = objects_map[id(ext)]
-            cmd = self.get_link_command(ext, dest, objects)
-            if cmd is not None:
-                link_commands.append(cmd)
-                jobs.append(create_job(cmd.cmd))
-        if jobs:
-            self.info(f'Linking {len(jobs)} files...')
-            if not parallel_build(jobs, self.info):
-                raise SystemExit(1)
-            for cmd in link_commands:
-                self.post_link_cleanup(cmd)
-
-        jobs = []
-        sbf_map = {}
-        for (ext, dest) in pyqt_extensions:
-            cmd, sbf = self.get_sip_commands(ext)
-            sbf_map[id(ext)] = sbf
-            if cmd is not None:
-                jobs.append(create_job(cmd))
-        if jobs:
-            self.info(f'SIPing {len(jobs)} files...')
-            if not parallel_build(jobs, self.info):
-                raise SystemExit(1)
-        for (ext, dest) in pyqt_extensions:
-            sbf = sbf_map[id(ext)]
-            self.build_pyqt_extension(ext, dest, sbf)
-
+            if not os.path.exists(self.d(dest)):
+                os.makedirs(self.d(dest))
+            self.info('\n####### Building extension', ext.name, '#'*7)
+            self.build(ext, dest)
         if opts.only in {'all', 'headless'}:
             self.build_headless()
 
@@ -344,14 +307,19 @@ class Build(Command):
         suff = '.lib' if iswindows else ''
         return [pref+x+suff for x in dirs]
 
-    def get_compile_commands(self, ext, dest):
+    def build(self, ext, dest):
+        from setup.parallel_build import create_job, parallel_build
+        if ext.sip_files:
+            return self.build_pyqt_extension(ext, dest)
         compiler = self.env.cxx if ext.needs_cxx else self.env.cc
+        linker = self.env.linker if iswindows else compiler
         objects = []
-        ans = []
         obj_dir = self.j(self.obj_dir, ext.name)
         einc = self.inc_dirs_to_cflags(ext.inc_dirs)
-        os.makedirs(obj_dir, exist_ok=True)
+        if not os.path.exists(obj_dir):
+            os.makedirs(obj_dir)
 
+        jobs = []
         for src in ext.sources:
             obj = self.j(obj_dir, os.path.splitext(self.b(src))[0]+'.o')
             objects.append(obj)
@@ -360,16 +328,17 @@ class Build(Command):
                 sinc = [inf+src] if iswindows else ['-c', src]
                 oinc = ['/Fo'+obj] if iswindows else ['-o', obj]
                 cmd = [compiler] + self.env.cflags + ext.cflags + einc + sinc + oinc
-                ans.append(CompileCommand(cmd, src, obj))
-        return ans, objects
+                jobs.append(create_job(cmd))
+        if jobs:
+            self.info('Compiling', ext.name)
+            if not parallel_build(jobs, self.info):
+                raise SystemExit(1)
 
-    def get_link_command(self, ext, dest, objects):
-        compiler = self.env.cxx if ext.needs_cxx else self.env.cc
-        linker = self.env.linker if iswindows else compiler
         dest = self.dest(ext)
         elib = self.lib_dirs_to_ldflags(ext.lib_dirs)
         xlib = self.libraries_to_ldflags(ext.libraries)
         if self.newer(dest, objects+ext.extra_objs):
+            self.info('Linking', ext.name)
             cmd = [linker]
             if iswindows:
                 pre_ld_flags = []
@@ -380,15 +349,13 @@ class Build(Command):
                     ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
             else:
                 cmd += objects + ext.extra_objs + ['-o', dest] + self.env.ldflags + ext.ldflags + elib + xlib
-            return LinkCommand(cmd, objects, dest)
-
-    def post_link_cleanup(self, link_command):
-        if iswindows:
-            dest = link_command.dest
-            for x in ('.exp', '.lib'):
-                x = os.path.splitext(dest)[0]+x
-                if os.path.exists(x):
-                    os.remove(x)
+            self.info('\n\n', ' '.join(cmd), '\n\n')
+            self.check_call(cmd)
+            if iswindows:
+                for x in ('.exp', '.lib'):
+                    x = os.path.splitext(dest)[0]+x
+                    if os.path.exists(x):
+                        os.remove(x)
 
     def check_call(self, *args, **kwargs):
         """print cmdline if an error occured
@@ -465,21 +432,17 @@ class Build(Command):
         if isosx:
             os.rename(self.j(self.d(target), 'libheadless.dylib'), self.j(self.d(target), 'headless.so'))
 
-    def get_sip_commands(self, ext):
-        pyqt_dir = self.j(self.build_dir, 'pyqt')
-        src_dir = self.j(pyqt_dir, ext.name)
+    def build_sip_files(self, ext, src_dir):
         from setup.build_environment import pyqt
         sip_files = ext.sip_files
         ext.sip_files = []
         sipf = sip_files[0]
-        os.makedirs(src_dir, exist_ok=True)
         sbf = self.j(src_dir, self.b(sipf)+'.sbf')
-        cmd = None
         if self.newer(sbf, [sipf]+ext.headers):
             cmd = [pyqt['sip_bin'], '-w', '-c', src_dir, '-b', sbf, '-I' + pyqt['pyqt_sip_dir']] + shlex.split(pyqt['sip_flags']) + [sipf]
-        return cmd, sbf
-
-    def get_sip_data(self, sbf):
+            self.info(' '.join(cmd))
+            self.check_call(cmd)
+            self.info('')
         with open(sbf, 'rb') as f:
             raw = f.read().decode('utf-8')
 
@@ -490,8 +453,7 @@ class Build(Command):
             return ans
         return {x:read(x) for x in ('target', 'sources', 'headers')}
 
-    def build_pyqt_extension(self, ext, dest, sbf):
-        self.info(f'\n####### Building {ext.name} extension', '#'*7)
+    def build_pyqt_extension(self, ext, dest):
         from setup.build_environment import pyqt, qmakespec, QMAKE
         from setup.parallel_build import cpu_count
         from distutils import sysconfig
@@ -499,7 +461,7 @@ class Build(Command):
         src_dir = self.j(pyqt_dir, ext.name)
         if not os.path.exists(src_dir):
             os.makedirs(src_dir)
-        sip = self.get_sip_data(sbf)
+        sip = self.build_sip_files(ext, src_dir)
         pro = textwrap.dedent(
         '''\
         TEMPLATE = lib

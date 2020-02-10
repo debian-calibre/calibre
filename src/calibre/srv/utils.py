@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -11,7 +11,7 @@ from email.utils import formatdate
 from operator import itemgetter
 
 from calibre import prints
-from calibre.constants import iswindows
+from calibre.constants import iswindows, ispy3
 from calibre.srv.errors import HTTPNotFound
 from calibre.utils.config_base import tweaks
 from calibre.utils.localization import get_translator
@@ -21,7 +21,7 @@ from calibre.utils.shared_file import share_open, raise_winerror
 from polyglot.builtins import iteritems, map, range
 from polyglot import reprlib
 from polyglot.http_cookie import SimpleCookie
-from polyglot.builtins import unicode_type, as_unicode
+from polyglot.builtins import is_py3, unicode_type, as_bytes, as_unicode
 from polyglot.urllib import parse_qs, quote as urlquote
 from polyglot.binary import as_hex_unicode as encode_name, from_hex_unicode as decode_name
 
@@ -48,7 +48,8 @@ class MultiDict(dict):  # {{{
     @staticmethod
     def create_from_query_string(qs):
         ans = MultiDict()
-        qs = as_unicode(qs)
+        if ispy3:
+            qs = as_unicode(qs)
         for k, v in iteritems(parse_qs(qs, keep_blank_values=True)):
             dict.__setitem__(ans, as_unicode(k), [as_unicode(x) for x in v])
         return ans
@@ -59,7 +60,7 @@ class MultiDict(dict):  # {{{
                 self[key] = val
 
     def items(self, duplicates=True):
-        f = dict.items
+        f = dict.items if ispy3 else dict.iteritems
         for k, v in f(self):
             if duplicates:
                 for x in v:
@@ -69,7 +70,7 @@ class MultiDict(dict):  # {{{
     iteritems = items
 
     def values(self, duplicates=True):
-        f = dict.values
+        f = dict.values if ispy3 else dict.itervalues
         for v in f(self):
             if duplicates:
                 for x in v:
@@ -291,6 +292,8 @@ def encode_path(*components):
 class Cookie(SimpleCookie):
 
     def _BaseCookie__set(self, key, real_value, coded_value):
+        if not ispy3 and not isinstance(key, bytes):
+            key = key.encode('ascii')  # Python 2.x cannot handle unicode keys
         return SimpleCookie._BaseCookie__set(self, key, real_value, coded_value)
 
 
@@ -320,23 +323,36 @@ class RotatingStream(object):
         self.set_output()
 
     def set_output(self):
-        if iswindows:
-            self.stream = share_open(self.filename, 'a', newline='')
+        if ispy3:
+            if iswindows:
+                self.stream = share_open(self.filename, 'ab')
+            else:
+                # see https://bugs.python.org/issue27805
+                self.stream = open(os.open(self.filename, os.O_WRONLY|os.O_APPEND|os.O_CREAT|os.O_CLOEXEC), 'wb')
         else:
-            # see https://bugs.python.org/issue27805
-            self.stream = open(os.open(self.filename, os.O_WRONLY|os.O_APPEND|os.O_CREAT|os.O_CLOEXEC), 'w')
+            self.stream = share_open(self.filename, 'ab', -1 if iswindows else 1)  # line buffered
         try:
-            self.stream.tell()
+            self.current_pos = self.stream.tell()
         except EnvironmentError:
             # Happens if filename is /dev/stdout for example
+            self.current_pos = 0
             self.max_size = None
 
     def flush(self):
         self.stream.flush()
 
     def prints(self, level, *args, **kwargs):
+        kwargs['safe_encode'] = True
         kwargs['file'] = self.stream
-        prints(*args, **kwargs)
+        self.current_pos += prints(*args, **kwargs)
+        if iswindows or ispy3:
+            # For some reason line buffering does not work on windows
+            # and in python 3 it only works with text mode streams
+            end = kwargs.get('end', b'\n')
+            if isinstance(end, unicode_type):
+                end = end.encode('utf-8')
+            if b'\n' in end:
+                self.flush()
         self.rollover()
 
     def rename(self, src, dest):
@@ -354,7 +370,7 @@ class RotatingStream(object):
                 raise
 
     def rollover(self):
-        if not self.max_size or self.stream.tell() <= self.max_size:
+        if not self.max_size or self.current_pos <= self.max_size or self.filename in ('/dev/stdout', '/dev/stderr'):
             return
         self.stream.close()
         for i in range(self.history - 1, 0, -1):
@@ -434,14 +450,12 @@ class HandleInterrupt(object):  # {{{
     def __enter__(self):
         if iswindows:
             if self.SetConsoleCtrlHandler(self.handle, 1) == 0:
-                import ctypes
-                raise ctypes.WinError()
+                raise WindowsError()
 
     def __exit__(self, *args):
         if iswindows:
             if self.SetConsoleCtrlHandler(self.handle, 0) == 0:
-                import ctypes
-                raise ctypes.WinError()
+                raise WindowsError()
 # }}}
 
 
@@ -517,5 +531,10 @@ def get_use_roman():
     return _use_roman
 
 
-def fast_now_strftime(fmt):
-    return as_unicode(time.strftime(fmt), errors='replace')
+if iswindows and not is_py3:
+    def fast_now_strftime(fmt):
+        fmt = as_bytes(fmt, encoding='mbcs')
+        return time.strftime(fmt).decode('mbcs', 'replace')
+else:
+    def fast_now_strftime(fmt):
+        return as_unicode(time.strftime(fmt), errors='replace')

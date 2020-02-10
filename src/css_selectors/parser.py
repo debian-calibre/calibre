@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 """
     Tokenizer, parser and parsed objects for CSS selectors.
