@@ -18,7 +18,7 @@ Index: b/setup/build.py
          ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
          cflags += ['-fvisibility=hidden']
  
-@@ -445,9 +446,16 @@ class Build(Command):
+@@ -412,9 +413,16 @@ class Build(Command):
              INCLUDEPATH += {freetype}
              DESTDIR = {destdir}
              CONFIG -= create_cmake  # Prevent qmake from generating a cmake build file which it puts in the calibre src directory
@@ -36,7 +36,7 @@ Index: b/setup/build.py
          bdir = self.j(self.build_dir, 'headless')
          if not os.path.exists(bdir):
              os.makedirs(bdir)
-@@ -517,10 +525,17 @@ class Build(Command):
+@@ -479,10 +487,17 @@ class Build(Command):
          macx {{
              QMAKE_LFLAGS += "-undefined dynamic_lookup"
          }}
