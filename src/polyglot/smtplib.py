@@ -1,9 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import sys
 from functools import partial
+
+from polyglot.builtins import is_py3
 
 
 class FilteredLog(object):
@@ -26,30 +30,44 @@ class FilteredLog(object):
         self.debug_to(*a)
 
 
-import smtplib
+if is_py3:
+    import smtplib
 
+    class SMTP(smtplib.SMTP):
 
-class SMTP(smtplib.SMTP):
+        def __init__(self, *a, **kw):
+            self.debug_to = FilteredLog(kw.pop('debug_to', None))
+            super().__init__(*a, **kw)
 
-    def __init__(self, *a, **kw):
-        self.debug_to = FilteredLog(kw.pop('debug_to', None))
-        super().__init__(*a, **kw)
+        def _print_debug(self, *a):
+            if self.debug_to is not None:
+                self.debug_to(*a)
+            else:
+                super()._print_debug(*a)
 
-    def _print_debug(self, *a):
-        if self.debug_to is not None:
-            self.debug_to(*a)
-        else:
-            super()._print_debug(*a)
+    class SMTP_SSL(smtplib.SMTP_SSL):
 
+        def __init__(self, *a, **kw):
+            self.debug_to = FilteredLog(kw.pop('debug_to', None))
+            super().__init__(*a, **kw)
 
-class SMTP_SSL(smtplib.SMTP_SSL):
+        def _print_debug(self, *a):
+            if self.debug_to is not None:
+                self.debug_to(*a)
+            else:
+                super()._print_debug(*a)
 
-    def __init__(self, *a, **kw):
-        self.debug_to = FilteredLog(kw.pop('debug_to', None))
-        super().__init__(*a, **kw)
+else:
+    import calibre.utils.smtplib as smtplib
 
-    def _print_debug(self, *a):
-        if self.debug_to is not None:
-            self.debug_to(*a)
-        else:
-            super()._print_debug(*a)
+    class SMTP(smtplib.SMTP):
+
+        def __init__(self, *a, **kw):
+            kw['debug_to'] = FilteredLog(kw.get('debug_to'))
+            smtplib.SMTP.__init__(self, *a, **kw)
+
+    class SMTP_SSL(smtplib.SMTP_SSL):
+
+        def __init__(self, *a, **kw):
+            kw['debug_to'] = FilteredLog(kw.get('debug_to'))
+            smtplib.SMTP_SSL.__init__(self, *a, **kw)

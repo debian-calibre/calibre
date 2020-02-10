@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
@@ -11,6 +11,7 @@ from collections import OrderedDict
 from functools import partial
 
 from calibre import as_unicode
+from calibre.constants import ispy3
 from calibre.customize import (Plugin, numeric_version, platform,
         InvalidPlugin, PluginNotFound)
 from polyglot.builtins import (itervalues, map, string_or_bytes,
@@ -110,8 +111,8 @@ def load_translations(namespace, zfp):
         from io import BytesIO
         trans = _translations_cache[zfp] = GNUTranslations(BytesIO(mo))
 
-    namespace['_'] = trans.gettext
-    namespace['ngettext'] = trans.ngettext
+    namespace['_'] = getattr(trans, 'gettext' if ispy3 else 'ugettext')
+    namespace['ngettext'] = getattr(trans, 'ngettext' if ispy3 else 'ungettext')
 
 
 class PluginLoader(object):

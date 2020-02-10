@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import functools
 import os
@@ -12,7 +14,7 @@ from threading import Thread
 from PyQt5.Qt import QEventLoop
 
 from calibre import force_unicode
-from calibre.constants import DEBUG, filesystem_encoding, preferred_encoding
+from calibre.constants import DEBUG, filesystem_encoding, ispy3, preferred_encoding
 from calibre.utils.config import dynamic
 from polyglot.builtins import getenv, reraise, string_or_bytes, unicode_type
 
@@ -105,13 +107,14 @@ def decode_output(raw):
 
 def run(cmd):
     from calibre.gui2 import sanitize_env_vars
+    ecmd = cmd if ispy3 else list(map(encode_arg, cmd))
     if DEBUG:
         try:
-            print(cmd)
+            print(ecmd)
         except Exception:
             pass
     with sanitize_env_vars():
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(ecmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     ret = p.wait()
     return ret, decode_output(stdout), decode_output(stderr)

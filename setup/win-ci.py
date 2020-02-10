@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import io
 import os
@@ -34,7 +35,7 @@ def download_file(url):
 def sw():
     sw = os.environ['SW']
     os.chdir(sw)
-    url = 'https://download.calibre-ebook.com/ci/calibre3/windows-64.tar.xz'
+    url = 'https://download.calibre-ebook.com/ci/calibre/windows-64.tar.xz'
     tarball = download_file(url)
     with tarfile.open(fileobj=io.BytesIO(tarball)) as tf:
         tf.extractall()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -8,7 +8,7 @@ __docformat__ = 'restructuredtext en'
 
 import time
 from threading import Thread, Event
-from io import StringIO
+from io import BytesIO
 
 from calibre.customize.ui import metadata_plugins
 from calibre.ebooks.metadata.sources.base import create_log
@@ -27,7 +27,7 @@ class Worker(Thread):
         self.plugin = plugin
         self.abort = abort
         self.get_best_cover = get_best_cover
-        self.buf = StringIO()
+        self.buf = BytesIO()
         self.log = create_log(self.buf)
         self.title, self.authors, self.identifiers = (title, authors,
                 identifiers)

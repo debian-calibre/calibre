@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from struct import unpack, error
 import os
 from calibre.utils.speedups import ReadOnlyFileBuffer
+from calibre.constants import ispy3
 from polyglot.builtins import string_or_bytes, unicode_type
 
 """ Recognize image file formats and sizes based on their first few bytes."""
@@ -124,8 +125,12 @@ def jpeg_dimensions(stream):
             raise ValueError('Truncated JPEG data')
         return ans
 
-    def read_byte():
-        return read(1)[0]
+    if ispy3:
+        def read_byte():
+            return read(1)[0]
+    else:
+        def read_byte():
+            return ord(read(1)[0])
 
     x = None
     while True:

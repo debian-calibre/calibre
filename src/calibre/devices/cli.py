@@ -1,5 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -18,7 +19,7 @@ from calibre.customize.ui import device_plugins
 from calibre.devices.scanner import DeviceScanner
 from calibre.utils.config import device_prefs
 from polyglot.builtins import unicode_type
-from polyglot.io import PolyglotStringIO
+from polyglot.io import PolyglotBytesIO
 
 MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
 
@@ -113,7 +114,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
                 c += 1
         return rowwidths
 
-    output = PolyglotStringIO()
+    output = PolyglotBytesIO()
     if path.endswith("/") and len(path) > 1:
         path = path[:-1]
     dirs = dev.list(path, recurse)
@@ -165,7 +166,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
                     prints(trytablecol[r][c], "".ljust(padding), end=' ', file=output)
                 prints(file=output)
         prints(file=output)
-    listing = output.getvalue().rstrip() + "\n"
+    listing = output.getvalue().rstrip().decode('utf-8') + "\n"
     output.close()
     return listing
 

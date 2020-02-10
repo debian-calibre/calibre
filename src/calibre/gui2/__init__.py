@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
@@ -1007,7 +1007,7 @@ class Application(QApplication):
         try:
             if self.clipboard().ownsClipboard():
                 import ctypes
-                ctypes.WinDLL('ole32.dll').OleFlushClipboard()
+                ctypes.WinDLL(b'ole32.dll').OleFlushClipboard()
         except Exception:
             import traceback
             traceback.print_exc()
@@ -1069,8 +1069,10 @@ class Application(QApplication):
         self.ignore_palette_changes = True
         self.setPalette(pal)
         # Needed otherwise Qt does not emit the paletteChanged signal when
-        # appearance is changed.
-        self.setAttribute(Qt.AA_SetPalette, False)
+        # appearance is changed. And it has to be after current event
+        # processing finishes as of Qt 5.14 otherwise the palette change is
+        # ignored.
+        QTimer.singleShot(1000, lambda: QApplication.instance().setAttribute(Qt.AA_SetPalette, False))
         self.ignore_palette_changes = False
 
     def on_palette_change(self):
@@ -1460,13 +1462,12 @@ empty_index = empty_model.index(0)
 def set_app_uid(val):
     import ctypes
     from ctypes import wintypes
-    from ctypes import HRESULT
     try:
         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
     except Exception:  # Vista has no app uids
         return False
     AppUserModelID.argtypes = [wintypes.LPCWSTR]
-    AppUserModelID.restype = HRESULT
+    AppUserModelID.restype = wintypes.HRESULT
     try:
         AppUserModelID(unicode_type(val))
     except Exception as err:
