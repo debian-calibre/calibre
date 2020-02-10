@@ -7,11 +7,9 @@ Subject: [PATCH 074/104] ...
  setup/build.py |    1 +
  1 file changed, 1 insertion(+)
 
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
-@@ -499,6 +499,7 @@ class Build(Command):
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
+@@ -491,6 +491,7 @@ class Build(Command):
          return {x:read(x) for x in ('target', 'sources', 'headers')}
  
      def build_pyqt_extension(self, ext, dest, sbf):

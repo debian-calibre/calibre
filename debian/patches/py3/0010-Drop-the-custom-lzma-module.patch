@@ -49,10 +49,8 @@ Use the builtin one from the python stdlib
  delete mode 100644 src/calibre_lzma/lzma_binding.c
  delete mode 100644 src/calibre_lzma/xz.py
 
-Index: b/setup/extensions.json
-===================================================================
---- a/setup/extensions.json
-+++ b/setup/extensions.json
+--- calibre-debian.git.orig/setup/extensions.json
++++ calibre-debian.git/setup/extensions.json
 @@ -145,12 +145,6 @@
          "inc_dirs": "calibre/utils/imageops"
      },
@@ -66,10 +64,8 @@ Index: b/setup/extensions.json
          "name": "winutil",
          "only": "windows",
          "sources": "calibre/utils/windows/winutil.c calibre/utils/windows/winutilpp.cpp",
-Index: b/src/calibre/gui2/icon_theme.py
-===================================================================
---- a/src/calibre/gui2/icon_theme.py
-+++ b/src/calibre/gui2/icon_theme.py
+--- calibre-debian.git.orig/src/calibre/gui2/icon_theme.py
++++ calibre-debian.git/src/calibre/gui2/icon_theme.py
 @@ -37,7 +37,6 @@ from calibre.utils.icu import numeric_so
  from calibre.utils.img import image_from_data, Canvas, optimize_png, optimize_jpeg
  from calibre.utils.zipfile import ZipFile, ZIP_STORED
@@ -99,11 +95,9 @@ Index: b/src/calibre/gui2/icon_theme.py
              f.seek(0)
              remove_icon_theme()
              install_icon_theme(theme, f)
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -69,8 +69,8 @@ class BuildTest(unittest.TestCase):
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -65,8 +65,8 @@ class BuildTest(unittest.TestCase):
          self.assertEqual(detector.result['encoding'], 'utf-8')
  
      def test_lzma(self):
@@ -114,10 +108,8 @@ Index: b/src/calibre/test_build.py
  
      def test_html5lib(self):
          import html5lib.html5parser  # noqa
-Index: b/src/calibre/utils/rapydscript.py
-===================================================================
---- a/src/calibre/utils/rapydscript.py
-+++ b/src/calibre/utils/rapydscript.py
+--- calibre-debian.git.orig/src/calibre/utils/rapydscript.py
++++ calibre-debian.git/src/calibre/utils/rapydscript.py
 @@ -9,7 +9,6 @@ import os
  import re
  import subprocess
@@ -175,9 +167,7 @@ Index: b/src/calibre/utils/rapydscript.py
              script += '\n\n;;\n\n' + vfs_script()
              self.scripts().insert(create_script(script, 'rapydscript.js'))
              self.setHtml('<p>initialize')
-Index: b/src/calibre_lzma/7zTypes.h
-===================================================================
---- a/src/calibre_lzma/7zTypes.h
+--- calibre-debian.git.orig/src/calibre_lzma/7zTypes.h
 +++ /dev/null
 @@ -1,256 +0,0 @@
 -/* 7zTypes.h -- Basic types
@@ -436,9 +426,7 @@ Index: b/src/calibre_lzma/7zTypes.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/Compiler.h
-===================================================================
---- a/src/calibre_lzma/Compiler.h
+--- calibre-debian.git.orig/src/calibre_lzma/Compiler.h
 +++ /dev/null
 @@ -1,32 +0,0 @@
 -/* Compiler.h
@@ -473,9 +461,7 @@ Index: b/src/calibre_lzma/Compiler.h
 -/* #define UNUSED_VAR(x) x=x; */
 -
 -#endif
-Index: b/src/calibre_lzma/LzFind.c
-===================================================================
---- a/src/calibre_lzma/LzFind.c
+--- calibre-debian.git.orig/src/calibre_lzma/LzFind.c
 +++ /dev/null
 @@ -1,1044 +0,0 @@
 -/* LzFind.c -- Match finder for LZ algorithms
@@ -1522,9 +1508,7 @@ Index: b/src/calibre_lzma/LzFind.c
 -  }
 -  */
 -}
-Index: b/src/calibre_lzma/LzFind.h
-===================================================================
---- a/src/calibre_lzma/LzFind.h
+--- calibre-debian.git.orig/src/calibre_lzma/LzFind.h
 +++ /dev/null
 @@ -1,117 +0,0 @@
 -/* LzFind.h -- Match finder for LZ algorithms
@@ -1644,9 +1628,7 @@ Index: b/src/calibre_lzma/LzFind.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/LzHash.h
-===================================================================
---- a/src/calibre_lzma/LzHash.h
+--- calibre-debian.git.orig/src/calibre_lzma/LzHash.h
 +++ /dev/null
 @@ -1,57 +0,0 @@
 -/* LzHash.h -- HASH functions for LZ algorithms
@@ -1706,9 +1688,7 @@ Index: b/src/calibre_lzma/LzHash.h
 -  h4 = (temp ^ (p->crc[cur[3]] << 5)) & (kHash4Size - 1); }
 -
 -#endif
-Index: b/src/calibre_lzma/Lzma2Dec.c
-===================================================================
---- a/src/calibre_lzma/Lzma2Dec.c
+--- calibre-debian.git.orig/src/calibre_lzma/Lzma2Dec.c
 +++ /dev/null
 @@ -1,378 +0,0 @@
 -/* Lzma2Dec.c -- LZMA2 Decoder
@@ -2089,9 +2069,7 @@ Index: b/src/calibre_lzma/Lzma2Dec.c
 -  Lzma2Dec_FreeProbs(&p, alloc);
 -  return res;
 -}
-Index: b/src/calibre_lzma/Lzma2Dec.h
-===================================================================
---- a/src/calibre_lzma/Lzma2Dec.h
+--- calibre-debian.git.orig/src/calibre_lzma/Lzma2Dec.h
 +++ /dev/null
 @@ -1,80 +0,0 @@
 -/* Lzma2Dec.h -- LZMA2 Decoder
@@ -2174,9 +2152,7 @@ Index: b/src/calibre_lzma/Lzma2Dec.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/Lzma2Enc.c
-===================================================================
---- a/src/calibre_lzma/Lzma2Enc.c
+--- calibre-debian.git.orig/src/calibre_lzma/Lzma2Enc.c
 +++ /dev/null
 @@ -1,520 +0,0 @@
 -/* Lzma2Enc.c -- LZMA2 Encoder
@@ -2699,9 +2675,7 @@ Index: b/src/calibre_lzma/Lzma2Enc.c
 -
 -  return Lzma2Enc_EncodeMt1(&p->coders[0], p, outStream, inStream, progress);
 -}
-Index: b/src/calibre_lzma/Lzma2Enc.h
-===================================================================
---- a/src/calibre_lzma/Lzma2Enc.h
+--- calibre-debian.git.orig/src/calibre_lzma/Lzma2Enc.h
 +++ /dev/null
 @@ -1,62 +0,0 @@
 -/* Lzma2Enc.h -- LZMA2 Encoder
@@ -2766,9 +2740,7 @@ Index: b/src/calibre_lzma/Lzma2Enc.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/LzmaDec.c
-===================================================================
---- a/src/calibre_lzma/LzmaDec.c
+--- calibre-debian.git.orig/src/calibre_lzma/LzmaDec.c
 +++ /dev/null
 @@ -1,1100 +0,0 @@
 -/* LzmaDec.c -- LZMA Decoder
@@ -3871,9 +3843,7 @@ Index: b/src/calibre_lzma/LzmaDec.c
 -  LzmaDec_FreeProbs(&p, alloc);
 -  return res;
 -}
-Index: b/src/calibre_lzma/LzmaDec.h
-===================================================================
---- a/src/calibre_lzma/LzmaDec.h
+--- calibre-debian.git.orig/src/calibre_lzma/LzmaDec.h
 +++ /dev/null
 @@ -1,227 +0,0 @@
 -/* LzmaDec.h -- LZMA Decoder
@@ -4103,9 +4073,7 @@ Index: b/src/calibre_lzma/LzmaDec.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/LzmaEnc.c
-===================================================================
---- a/src/calibre_lzma/LzmaEnc.c
+--- calibre-debian.git.orig/src/calibre_lzma/LzmaEnc.c
 +++ /dev/null
 @@ -1,2351 +0,0 @@
 -/* LzmaEnc.c -- LZMA Encoder
@@ -6459,9 +6427,7 @@ Index: b/src/calibre_lzma/LzmaEnc.c
 -  LzmaEnc_Destroy(p, alloc, allocBig);
 -  return res;
 -}
-Index: b/src/calibre_lzma/LzmaEnc.h
-===================================================================
---- a/src/calibre_lzma/LzmaEnc.h
+--- calibre-debian.git.orig/src/calibre_lzma/LzmaEnc.h
 +++ /dev/null
 @@ -1,78 +0,0 @@
 -/*  LzmaEnc.h -- LZMA Encoder
@@ -6542,9 +6508,7 @@ Index: b/src/calibre_lzma/LzmaEnc.h
 -EXTERN_C_END
 -
 -#endif
-Index: b/src/calibre_lzma/Precomp.h
-===================================================================
---- a/src/calibre_lzma/Precomp.h
+--- calibre-debian.git.orig/src/calibre_lzma/Precomp.h
 +++ /dev/null
 @@ -1,10 +0,0 @@
 -/* Precomp.h -- StdAfx
@@ -6557,9 +6521,7 @@ Index: b/src/calibre_lzma/Precomp.h
 -/* #include "7zTypes.h" */
 -
 -#endif
-Index: b/src/calibre_lzma/__init__.py
-===================================================================
---- a/src/calibre_lzma/__init__.py
+--- calibre-debian.git.orig/src/calibre_lzma/__init__.py
 +++ /dev/null
 @@ -1,9 +0,0 @@
 -#!/usr/bin/env python
@@ -6571,9 +6533,7 @@ Index: b/src/calibre_lzma/__init__.py
 -
 -
 -
-Index: b/src/calibre_lzma/errors.py
-===================================================================
---- a/src/calibre_lzma/errors.py
+--- calibre-debian.git.orig/src/calibre_lzma/errors.py
 +++ /dev/null
 @@ -1,24 +0,0 @@
 -#!/usr/bin/env python
@@ -6600,9 +6560,7 @@ Index: b/src/calibre_lzma/errors.py
 -class NotLzma(LzmaError):
 -    pass
 -
-Index: b/src/calibre_lzma/lzma1.py
-===================================================================
---- a/src/calibre_lzma/lzma1.py
+--- calibre-debian.git.orig/src/calibre_lzma/lzma1.py
 +++ /dev/null
 @@ -1,42 +0,0 @@
 -#!/usr/bin/env python
@@ -6647,9 +6605,7 @@ Index: b/src/calibre_lzma/lzma1.py
 -if __name__ == '__main__':
 -    import sys
 -    decompress(open(sys.argv[-1], 'rb'))
-Index: b/src/calibre_lzma/lzma_binding.c
-===================================================================
---- a/src/calibre_lzma/lzma_binding.c
+--- calibre-debian.git.orig/src/calibre_lzma/lzma_binding.c
 +++ /dev/null
 @@ -1,472 +0,0 @@
 -/*
@@ -7124,9 +7080,7 @@ Index: b/src/calibre_lzma/lzma_binding.c
 -    return m;
 -#endif
 -}
-Index: b/src/calibre_lzma/xz.py
-===================================================================
---- a/src/calibre_lzma/xz.py
+--- calibre-debian.git.orig/src/calibre_lzma/xz.py
 +++ /dev/null
 @@ -1,503 +0,0 @@
 -#!/usr/bin/env python

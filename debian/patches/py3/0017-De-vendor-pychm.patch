@@ -20,10 +20,8 @@ Subject: [PATCH 017/104] De-vendor pychm
  delete mode 100644 src/calibre/utils/chm/swig_chm.c
  delete mode 100644 src/calibre/utils/chm/swig_chm.i
 
-Index: b/COPYRIGHT
-===================================================================
---- a/COPYRIGHT
-+++ b/COPYRIGHT
+--- calibre-debian.git.orig/COPYRIGHT
++++ calibre-debian.git/COPYRIGHT
 @@ -206,12 +206,6 @@ Files: src/calibre/headless/fontconfig_d
  Copyright: Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies)
  License: LGPL-2.1, LGPL-3
@@ -37,10 +35,8 @@ Index: b/COPYRIGHT
  Files: src/calibre/utils/open_search/description.py
  Copyright: 2011, John Schember <john@nachtimwald.com>, 2006, Ed Summers <ehs@pobox.com>
  License: GPL-3
-Index: b/bypy/sources.json
-===================================================================
---- a/bypy/sources.json
-+++ b/bypy/sources.json
+--- calibre-debian.git.orig/bypy/sources.json
++++ calibre-debian.git/bypy/sources.json
 @@ -557,6 +557,15 @@
      },
  
@@ -57,10 +53,8 @@ Index: b/bypy/sources.json
          "name": "html5-parser",
          "unix": {
              "filename": "html5-parser-0.4.9.tar.gz",
-Index: b/setup/extensions.json
-===================================================================
---- a/setup/extensions.json
-+++ b/setup/extensions.json
+--- calibre-debian.git.orig/setup/extensions.json
++++ calibre-debian.git/setup/extensions.json
 @@ -72,15 +72,6 @@
          "inc_dirs": "!sqlite_inc_dirs"
      },
@@ -77,10 +71,8 @@ Index: b/setup/extensions.json
          "name": "lzx",
          "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
          "inc_dirs": "calibre/utils/lzx",
-Index: b/src/calibre/constants.py
-===================================================================
---- a/src/calibre/constants.py
-+++ b/src/calibre/constants.py
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
 @@ -167,7 +167,6 @@ class Plugins(collections.Mapping):
                  'podofo',
                  'cPalmdoc',
@@ -89,10 +81,8 @@ Index: b/src/calibre/constants.py
                  'icu',
                  'speedup',
                  'html_as_json',
-Index: b/src/calibre/ebooks/chm/reader.py
-===================================================================
---- a/src/calibre/ebooks/chm/reader.py
-+++ b/src/calibre/ebooks/chm/reader.py
+--- calibre-debian.git.orig/src/calibre/ebooks/chm/reader.py
++++ calibre-debian.git/src/calibre/ebooks/chm/reader.py
 @@ -1,26 +1,19 @@
 -
 -
@@ -147,11 +137,9 @@ Index: b/src/calibre/ebooks/chm/reader.py
      def _parse_toc(self, ul, basedir=getcwd()):
          toc = TOC(play_order=self._playorder, base_path=basedir, text='')
          self._playorder += 1
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -54,6 +54,10 @@ class BuildTest(unittest.TestCase):
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -50,6 +50,10 @@ class BuildTest(unittest.TestCase):
          from calibre.spell.dictionary import build_test
          build_test()
  
@@ -162,9 +150,7 @@ Index: b/src/calibre/test_build.py
      def test_chardet(self):
          from chardet import detect
          raw = 'mūsi Füße'.encode('utf-8')
-Index: b/src/calibre/utils/chm/__init__.py
-===================================================================
---- a/src/calibre/utils/chm/__init__.py
+--- calibre-debian.git.orig/src/calibre/utils/chm/__init__.py
 +++ /dev/null
 @@ -1,30 +0,0 @@
 -# Copyright (C) 2003-2006 Rubens Ramos <rubensr@users.sourceforge.net>
@@ -197,9 +183,7 @@ Index: b/src/calibre/utils/chm/__init__.py
 -__all__ = ["chm", "chmlib", "_chmlib", "extra"]
 -__version__ = "0.8.4"
 -__revision__ = "$Id: __init__.py,v 1.8 2006/06/18 10:50:43 rubensr Exp $"
-Index: b/src/calibre/utils/chm/chm.py
-===================================================================
---- a/src/calibre/utils/chm/chm.py
+--- calibre-debian.git.orig/src/calibre/utils/chm/chm.py
 +++ /dev/null
 @@ -1,520 +0,0 @@
 -# Copyright (C) 2003-2006 Rubens Ramos <rubensr@users.sourceforge.net>
@@ -722,9 +706,7 @@ Index: b/src/calibre/utils/chm/chm.py
 -            self.home = self.GetString(text, dft_index)
 -            if not self.home.startswith(b"/"):
 -                self.home = b"/" + self.home
-Index: b/src/calibre/utils/chm/swig_chm.c
-===================================================================
---- a/src/calibre/utils/chm/swig_chm.c
+--- calibre-debian.git.orig/src/calibre/utils/chm/swig_chm.c
 +++ /dev/null
 @@ -1,5919 +0,0 @@
 -/* ----------------------------------------------------------------------------
@@ -6646,9 +6628,7 @@ Index: b/src/calibre/utils/chm/swig_chm.c
 -  return;
 -#endif
 -}
-Index: b/src/calibre/utils/chm/swig_chm.i
-===================================================================
---- a/src/calibre/utils/chm/swig_chm.i
+--- calibre-debian.git.orig/src/calibre/utils/chm/swig_chm.i
 +++ /dev/null
 @@ -1,209 +0,0 @@
 -%module chmlib

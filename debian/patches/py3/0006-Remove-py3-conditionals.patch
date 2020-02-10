@@ -88,10 +88,8 @@ Subject: [PATCH 006/104] Remove py3 conditionals
  delete mode 100644 src/calibre/utils/unicode_getpass.py
  delete mode 100644 src/calibre/utils/zlib2.c
 
-Index: b/manual/conf.py
-===================================================================
---- a/manual/conf.py
-+++ b/manual/conf.py
+--- calibre-debian.git.orig/manual/conf.py
++++ calibre-debian.git/manual/conf.py
 @@ -18,7 +18,6 @@ from datetime import date
  base = os.path.dirname(os.path.abspath(__file__))
  sys.path.append(base)
@@ -109,10 +107,8 @@ Index: b/manual/conf.py
  
  # If true, '()' will be appended to :func: etc. cross-reference text.
  # add_function_parentheses = True
-Index: b/setup/__init__.py
-===================================================================
---- a/setup/__init__.py
-+++ b/setup/__init__.py
+--- calibre-debian.git.orig/setup/__init__.py
++++ calibre-debian.git/setup/__init__.py
 @@ -11,7 +11,6 @@ from contextlib import contextmanager
  
  is64bit = platform.architecture()[0] == '64bit'
@@ -175,10 +171,8 @@ Index: b/setup/__init__.py
  warnings = []
  
  
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
 @@ -1,8 +1,6 @@
  #!/usr/bin/env python
  # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
@@ -214,7 +208,7 @@ Index: b/setup/build.py
              extern_decl = 'extern "C"' if self.needs_cxx else ''
  
              self.cflags.append(
-@@ -221,12 +219,8 @@ def init_env():
+@@ -220,12 +218,8 @@ def init_env():
  class Build(Command):
  
      short_description = 'Build calibre C/C++ extension modules'
@@ -229,7 +223,7 @@ Index: b/setup/build.py
  
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
-@@ -276,8 +270,6 @@ class Build(Command):
+@@ -275,8 +269,6 @@ class Build(Command):
          for ext in extensions:
              if opts.only != 'all' and opts.only != ext.name:
                  continue
@@ -238,10 +232,8 @@ Index: b/setup/build.py
              if ext.error:
                  if ext.optional:
                      self.warn(ext.error)
-Index: b/setup/extensions.json
-===================================================================
---- a/setup/extensions.json
-+++ b/setup/extensions.json
+--- calibre-debian.git.orig/setup/extensions.json
++++ calibre-debian.git/setup/extensions.json
 @@ -9,12 +9,6 @@
  		"needs_c++11": true
      },
@@ -271,10 +263,8 @@ Index: b/setup/extensions.json
          "name": "certgen",
          "sources": "calibre/utils/certgen.c",
          "libraries": "crypto",
-Index: b/setup/translations.py
-===================================================================
---- a/setup/translations.py
-+++ b/setup/translations.py
+--- calibre-debian.git.orig/setup/translations.py
++++ calibre-debian.git/setup/translations.py
 @@ -11,7 +11,7 @@ from collections import defaultdict
  from locale import normalize as normalize_locale
  from functools import partial
@@ -293,9 +283,7 @@ Index: b/setup/translations.py
                      t = partial(get_iso_language, t)
                  lang_names[l] = {x: t(x) for x in dl}
              zi = ZipInfo('lang-names.json')
-Index: b/src/backports/functools_lru_cache.py
-===================================================================
---- a/src/backports/functools_lru_cache.py
+--- calibre-debian.git.orig/src/backports/functools_lru_cache.py
 +++ /dev/null
 @@ -1,199 +0,0 @@
 -#!/usr/bin/env python
@@ -497,10 +485,8 @@ Index: b/src/backports/functools_lru_cache.py
 -        return update_wrapper(wrapper, user_function)
 -
 -    return decorating_function
-Index: b/src/calibre/__init__.py
-===================================================================
---- a/src/calibre/__init__.py
-+++ b/src/calibre/__init__.py
+--- calibre-debian.git.orig/src/calibre/__init__.py
++++ calibre-debian.git/src/calibre/__init__.py
 @@ -18,7 +18,7 @@ except EnvironmentError:
  
  from calibre.constants import (iswindows, isosx, islinux, isfrozen,
@@ -546,10 +532,8 @@ Index: b/src/calibre/__init__.py
  
  
  relpath = os.path.relpath
-Index: b/src/calibre/constants.py
-===================================================================
---- a/src/calibre/constants.py
-+++ b/src/calibre/constants.py
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
 @@ -150,9 +150,7 @@ def cache_dir():
      return ans
  
@@ -573,10 +557,8 @@ Index: b/src/calibre/constants.py
          if iswindows:
              plugins.extend(['winutil', 'wpd', 'winfonts'])
          if isosx:
-Index: b/src/calibre/customize/zipplugin.py
-===================================================================
---- a/src/calibre/customize/zipplugin.py
-+++ b/src/calibre/customize/zipplugin.py
+--- calibre-debian.git.orig/src/calibre/customize/zipplugin.py
++++ calibre-debian.git/src/calibre/customize/zipplugin.py
 @@ -11,7 +11,6 @@ from collections import OrderedDict
  from functools import partial
  
@@ -596,10 +578,8 @@ Index: b/src/calibre/customize/zipplugin.py
  
  
  class PluginLoader(object):
-Index: b/src/calibre/db/backend.py
-===================================================================
---- a/src/calibre/db/backend.py
-+++ b/src/calibre/db/backend.py
+--- calibre-debian.git.orig/src/calibre/db/backend.py
++++ calibre-debian.git/src/calibre/db/backend.py
 @@ -16,7 +16,7 @@ from polyglot.builtins import (iteritems
  
  from calibre import isbytestring, force_unicode, prints, as_unicode
@@ -618,10 +598,8 @@ Index: b/src/calibre/db/backend.py
              return x
          options = [(book_id, fmt.upper(), map_data(data)) for book_id, data in iteritems(options)]
          self.executemany('INSERT OR REPLACE INTO conversion_options(book,format,data) VALUES (?,?,?)', options)
-Index: b/src/calibre/db/categories.py
-===================================================================
---- a/src/calibre/db/categories.py
-+++ b/src/calibre/db/categories.py
+--- calibre-debian.git.orig/src/calibre/db/categories.py
++++ calibre-debian.git/src/calibre/db/categories.py
 @@ -10,7 +10,6 @@ import copy
  from functools import partial
  from polyglot.builtins import iteritems, unicode_type, map, native_string_type
@@ -648,10 +626,8 @@ Index: b/src/calibre/db/categories.py
  
      def __repr__(self):
          return native_string_type(self)
-Index: b/src/calibre/db/cli/main.py
-===================================================================
---- a/src/calibre/db/cli/main.py
-+++ b/src/calibre/db/cli/main.py
+--- calibre-debian.git.orig/src/calibre/db/cli/main.py
++++ calibre-debian.git/src/calibre/db/cli/main.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
@@ -670,10 +646,8 @@ Index: b/src/calibre/db/cli/main.py
              pw = getpass(_('Enter the password: '))
          elif pw.startswith('<f:') and pw.endswith('>'):
              with lopen(pw[3:-1], 'rb') as f:
-Index: b/src/calibre/devices/kobo/bookmark.py
-===================================================================
---- a/src/calibre/devices/kobo/bookmark.py
-+++ b/src/calibre/devices/kobo/bookmark.py
+--- calibre-debian.git.orig/src/calibre/devices/kobo/bookmark.py
++++ calibre-debian.git/src/calibre/devices/kobo/bookmark.py
 @@ -7,7 +7,6 @@ __docformat__ = 'restructuredtext en'
  
  import os
@@ -691,10 +665,8 @@ Index: b/src/calibre/devices/kobo/bookmark.py
 +    __str__ = __unicode__
  
  # }}}
-Index: b/src/calibre/devices/kobo/books.py
-===================================================================
---- a/src/calibre/devices/kobo/books.py
-+++ b/src/calibre/devices/kobo/books.py
+--- calibre-debian.git.orig/src/calibre/devices/kobo/books.py
++++ calibre-debian.git/src/calibre/devices/kobo/books.py
 @@ -6,7 +6,7 @@ __docformat__ = 'restructuredtext en'
  import os, time, sys
  from functools import cmp_to_key
@@ -714,10 +686,8 @@ Index: b/src/calibre/devices/kobo/books.py
  
  
  class ImageWrapper(object):
-Index: b/src/calibre/devices/mtp/unix/driver.py
-===================================================================
---- a/src/calibre/devices/mtp/unix/driver.py
-+++ b/src/calibre/devices/mtp/unix/driver.py
+--- calibre-debian.git.orig/src/calibre/devices/mtp/unix/driver.py
++++ calibre-debian.git/src/calibre/devices/mtp/unix/driver.py
 @@ -1,7 +1,6 @@
  #!/usr/bin/env python
  # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
@@ -763,10 +733,8 @@ Index: b/src/calibre/devices/mtp/unix/driver.py
          if ans is None:
              raise DeviceError('Failed to upload file named: %s to %s: %s'
                      %(name, parent.full_path, self.format_errorstack(errs)))
-Index: b/src/calibre/ebooks/compression/tcr.py
-===================================================================
---- a/src/calibre/ebooks/compression/tcr.py
-+++ b/src/calibre/ebooks/compression/tcr.py
+--- calibre-debian.git.orig/src/calibre/ebooks/compression/tcr.py
++++ calibre-debian.git/src/calibre/ebooks/compression/tcr.py
 @@ -6,7 +6,7 @@ __copyright__ = '2009, John Schember <jo
  __docformat__ = 'restructuredtext en'
  
@@ -785,10 +753,8 @@ Index: b/src/calibre/ebooks/compression/tcr.py
              self.coded_txt = self.coded_txt.replace(code, code[0:1])
              self.codes[code[0]] = b'%s%s' % (self.codes[code[0]], self.codes[code[1]])
  
-Index: b/src/calibre/ebooks/html/input.py
-===================================================================
---- a/src/calibre/ebooks/html/input.py
-+++ b/src/calibre/ebooks/html/input.py
+--- calibre-debian.git.orig/src/calibre/ebooks/html/input.py
++++ calibre-debian.git/src/calibre/ebooks/html/input.py
 @@ -17,7 +17,7 @@ from calibre.ebooks.oeb.base import urlu
  from calibre.ebooks.chardet import detect_xml_encoding
  from calibre.constants import iswindows
@@ -808,10 +774,8 @@ Index: b/src/calibre/ebooks/html/input.py
  
  class IgnoreFile(Exception):
  
-Index: b/src/calibre/ebooks/lit/reader.py
-===================================================================
---- a/src/calibre/ebooks/lit/reader.py
-+++ b/src/calibre/ebooks/lit/reader.py
+--- calibre-debian.git.orig/src/calibre/ebooks/lit/reader.py
++++ calibre-debian.git/src/calibre/ebooks/lit/reader.py
 @@ -17,7 +17,6 @@ import calibre.ebooks.lit.mssha1 as mssh
  from calibre.ebooks.oeb.base import urlnormalize, xpath
  from calibre.ebooks.oeb.reader import OEBReader
@@ -829,10 +793,8 @@ Index: b/src/calibre/ebooks/lit/reader.py
  
      def binary_to_text(self, bin, buf):
          stack = [(0, None, None, 0, 0, False, False, 'text', 0)]
-Index: b/src/calibre/ebooks/lrf/objects.py
-===================================================================
---- a/src/calibre/ebooks/lrf/objects.py
-+++ b/src/calibre/ebooks/lrf/objects.py
+--- calibre-debian.git.orig/src/calibre/ebooks/lrf/objects.py
++++ calibre-debian.git/src/calibre/ebooks/lrf/objects.py
 @@ -7,7 +7,7 @@ import struct, array, zlib, io, collecti
  from calibre.ebooks.lrf import LRFParseError, PRS500_PROFILE
  from calibre import entity_to_unicode, prepare_string_for_xml
@@ -1032,10 +994,8 @@ Index: b/src/calibre/ebooks/lrf/objects.py
  
  object_map = [
      None,  # 00
-Index: b/src/calibre/ebooks/metadata/book/base.py
-===================================================================
---- a/src/calibre/ebooks/metadata/book/base.py
-+++ b/src/calibre/ebooks/metadata/book/base.py
+--- calibre-debian.git.orig/src/calibre/ebooks/metadata/book/base.py
++++ calibre-debian.git/src/calibre/ebooks/metadata/book/base.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
  import copy, traceback
  
@@ -1060,10 +1020,8 @@ Index: b/src/calibre/ebooks/metadata/book/base.py
  
      def __nonzero__(self):
          return bool(self.title or self.author or self.comments or self.tags)
-Index: b/src/calibre/ebooks/metadata/opf2.py
-===================================================================
---- a/src/calibre/ebooks/metadata/opf2.py
-+++ b/src/calibre/ebooks/metadata/opf2.py
+--- calibre-debian.git.orig/src/calibre/ebooks/metadata/opf2.py
++++ calibre-debian.git/src/calibre/ebooks/metadata/opf2.py
 @@ -13,7 +13,7 @@ import re, sys, unittest, functools, os,
  from lxml import etree
  
@@ -1088,10 +1046,8 @@ Index: b/src/calibre/ebooks/metadata/opf2.py
  
      def __repr__(self):
          return unicode_type(self)
-Index: b/src/calibre/ebooks/oeb/base.py
-===================================================================
---- a/src/calibre/ebooks/oeb/base.py
-+++ b/src/calibre/ebooks/oeb/base.py
+--- calibre-debian.git.orig/src/calibre/ebooks/oeb/base.py
++++ calibre-debian.git/src/calibre/ebooks/oeb/base.py
 @@ -1,4 +1,3 @@
 -
  '''
@@ -1160,10 +1116,8 @@ Index: b/src/calibre/ebooks/oeb/base.py
  
      def to_opf1(self, tour):
          for node in self.nodes:
-Index: b/src/calibre/ebooks/pdf/pdftohtml.py
-===================================================================
---- a/src/calibre/ebooks/pdf/pdftohtml.py
-+++ b/src/calibre/ebooks/pdf/pdftohtml.py
+--- calibre-debian.git.orig/src/calibre/ebooks/pdf/pdftohtml.py
++++ calibre-debian.git/src/calibre/ebooks/pdf/pdftohtml.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
@@ -1199,10 +1153,8 @@ Index: b/src/calibre/ebooks/pdf/pdftohtml.py
      if iswindows:
          kw['creationflags'] = 0x08
      return subprocess.Popen(cmd, **kw)
-Index: b/src/calibre/ebooks/pdf/render/common.py
-===================================================================
---- a/src/calibre/ebooks/pdf/render/common.py
-+++ b/src/calibre/ebooks/pdf/render/common.py
+--- calibre-debian.git.orig/src/calibre/ebooks/pdf/render/common.py
++++ calibre-debian.git/src/calibre/ebooks/pdf/render/common.py
 @@ -10,7 +10,7 @@ import codecs, zlib, numbers
  from io import BytesIO
  from datetime import datetime
@@ -1221,10 +1173,8 @@ Index: b/src/calibre/ebooks/pdf/render/common.py
      elif hasattr(o, 'pdf_serialize'):
          o.pdf_serialize(stream)
      elif o is None:
-Index: b/src/calibre/gui2/linux_file_dialogs.py
-===================================================================
---- a/src/calibre/gui2/linux_file_dialogs.py
-+++ b/src/calibre/gui2/linux_file_dialogs.py
+--- calibre-debian.git.orig/src/calibre/gui2/linux_file_dialogs.py
++++ calibre-debian.git/src/calibre/gui2/linux_file_dialogs.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
@@ -1260,10 +1210,8 @@ Index: b/src/calibre/gui2/linux_file_dialogs.py
      stdout, stderr = p.communicate()
      ret = p.wait()
      return ret, decode_output(stdout), decode_output(stderr)
-Index: b/src/calibre/library/database2.py
-===================================================================
---- a/src/calibre/library/database2.py
-+++ b/src/calibre/library/database2.py
+--- calibre-debian.git.orig/src/calibre/library/database2.py
++++ calibre-debian.git/src/calibre/library/database2.py
 @@ -25,7 +25,7 @@ from calibre.library.custom_columns impo
  from calibre.library.sqlite import connect, IntegrityError
  from calibre.library.prefs import DBPrefs
@@ -1285,10 +1233,8 @@ Index: b/src/calibre/library/database2.py
  
      def clean_user_categories(self):
          user_cats = self.prefs.get('user_categories', {})
-Index: b/src/calibre/linux.py
-===================================================================
---- a/src/calibre/linux.py
-+++ b/src/calibre/linux.py
+--- calibre-debian.git.orig/src/calibre/linux.py
++++ calibre-debian.git/src/calibre/linux.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
  # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
@@ -1325,10 +1271,8 @@ Index: b/src/calibre/linux.py
          if tp != entry['summary']:
              root.append(E.summary(tp))
              root[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
-Index: b/src/calibre/ptempfile.py
-===================================================================
---- a/src/calibre/ptempfile.py
-+++ b/src/calibre/ptempfile.py
+--- calibre-debian.git.orig/src/calibre/ptempfile.py
++++ calibre-debian.git/src/calibre/ptempfile.py
 @@ -9,7 +9,7 @@ import tempfile, os, atexit
  from polyglot.builtins import map, getenv
  
@@ -1373,10 +1317,8 @@ Index: b/src/calibre/ptempfile.py
  
      def truncate(self, *args):
          # The stdlib SpooledTemporaryFile implementation of truncate() doesn't
-Index: b/src/calibre/spell/dictionary.py
-===================================================================
---- a/src/calibre/spell/dictionary.py
-+++ b/src/calibre/spell/dictionary.py
+--- calibre-debian.git.orig/src/calibre/spell/dictionary.py
++++ calibre-debian.git/src/calibre/spell/dictionary.py
 @@ -14,7 +14,7 @@ from itertools import chain
  
  from calibre import prints
@@ -1395,10 +1337,8 @@ Index: b/src/calibre/spell/dictionary.py
          return path
  
      obj = hunspell.Dictionary(fix_path(dictionary.dicpath), fix_path(dictionary.affpath))
-Index: b/src/calibre/srv/http_response.py
-===================================================================
---- a/src/calibre/srv/http_response.py
-+++ b/src/calibre/srv/http_response.py
+--- calibre-debian.git.orig/src/calibre/srv/http_response.py
++++ calibre-debian.git/src/calibre/srv/http_response.py
 @@ -12,10 +12,10 @@ from itertools import chain, repeat
  from operator import itemgetter
  from functools import wraps
@@ -1441,10 +1381,8 @@ Index: b/src/calibre/srv/http_response.py
  # }}}
  
  
-Index: b/src/calibre/srv/manage_users_cli.py
-===================================================================
---- a/src/calibre/srv/manage_users_cli.py
-+++ b/src/calibre/srv/manage_users_cli.py
+--- calibre-debian.git.orig/src/calibre/srv/manage_users_cli.py
++++ calibre-debian.git/src/calibre/srv/manage_users_cli.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
@@ -1463,10 +1401,8 @@ Index: b/src/calibre/srv/manage_users_cli.py
  
          while True:
              one = getpass(
-Index: b/src/calibre/srv/opts.py
-===================================================================
---- a/src/calibre/srv/opts.py
-+++ b/src/calibre/srv/opts.py
+--- calibre-debian.git.orig/src/calibre/srv/opts.py
++++ calibre-debian.git/src/calibre/srv/opts.py
 @@ -12,11 +12,8 @@ from functools import partial
  
  from calibre.constants import config_dir
@@ -1481,10 +1417,8 @@ Index: b/src/calibre/srv/opts.py
  
  Option = namedtuple('Option', 'name default longdoc shortdoc choices')
  
-Index: b/src/calibre/srv/routes.py
-===================================================================
---- a/src/calibre/srv/routes.py
-+++ b/src/calibre/srv/routes.py
+--- calibre-debian.git.orig/src/calibre/srv/routes.py
++++ calibre-debian.git/src/calibre/srv/routes.py
 @@ -8,7 +8,6 @@ __copyright__ = '2015, Kovid Goyal <kovi
  import sys, inspect, re, time, numbers, json as jsonlib, textwrap
  from operator import attrgetter
@@ -1514,10 +1448,8 @@ Index: b/src/calibre/srv/routes.py
          if len(self.names) + 2 != len(argspec.args) - len(argspec.defaults or ()):
              raise route_error('Function must take %d non-default arguments' % (len(self.names) + 2))
          if argspec.args[2:len(self.names)+2] != self.names:
-Index: b/src/calibre/srv/tests/base.py
-===================================================================
---- a/src/calibre/srv/tests/base.py
-+++ b/src/calibre/srv/tests/base.py
+--- calibre-debian.git.orig/src/calibre/srv/tests/base.py
++++ calibre-debian.git/src/calibre/srv/tests/base.py
 @@ -12,7 +12,6 @@ from functools import partial
  from threading import Thread
  
@@ -1538,10 +1470,8 @@ Index: b/src/calibre/srv/tests/base.py
  
      def change_handler(self, handler):
          from calibre.srv.http_response import create_http_handler
-Index: b/src/calibre/srv/tests/http.py
-===================================================================
---- a/src/calibre/srv/tests/http.py
-+++ b/src/calibre/srv/tests/http.py
+--- calibre-debian.git.orig/src/calibre/srv/tests/http.py
++++ calibre-debian.git/src/calibre/srv/tests/http.py
 @@ -10,7 +10,6 @@ from io import BytesIO
  from tempfile import NamedTemporaryFile
  
@@ -1559,10 +1489,8 @@ Index: b/src/calibre/srv/tests/http.py
                  self.ae(r.read(), q.encode('utf-8'))
  
              test('en', 'en')
-Index: b/src/calibre/srv/tests/loop.py
-===================================================================
---- a/src/calibre/srv/tests/loop.py
-+++ b/src/calibre/srv/tests/loop.py
+--- calibre-debian.git.orig/src/calibre/srv/tests/loop.py
++++ calibre-debian.git/src/calibre/srv/tests/loop.py
 @@ -11,7 +11,6 @@ from unittest import skipIf
  from glob import glob
  from threading import Event
@@ -1583,10 +1511,8 @@ Index: b/src/calibre/srv/tests/loop.py
          b = BonJour(wait_for_stop=False)
          with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
              self.assertTrue(b.started.wait(5), 'BonJour not started')
-Index: b/src/calibre/srv/utils.py
-===================================================================
---- a/src/calibre/srv/utils.py
-+++ b/src/calibre/srv/utils.py
+--- calibre-debian.git.orig/src/calibre/srv/utils.py
++++ calibre-debian.git/src/calibre/srv/utils.py
 @@ -11,7 +11,7 @@ from email.utils import formatdate
  from operator import itemgetter
  
@@ -1673,10 +1599,8 @@ Index: b/src/calibre/srv/utils.py
          self.rollover()
  
      def rename(self, src, dest):
-Index: b/src/calibre/startup.py
-===================================================================
---- a/src/calibre/startup.py
-+++ b/src/calibre/startup.py
+--- calibre-debian.git.orig/src/calibre/startup.py
++++ calibre-debian.git/src/calibre/startup.py
 @@ -10,7 +10,7 @@ Perform various initialization tasks.
  import locale, sys
  
@@ -1732,10 +1656,8 @@ Index: b/src/calibre/startup.py
      builtins.__dict__['lopen'] = local_open
  
      from calibre.utils.icu import title_case, lower as icu_lower, upper as icu_upper
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
 @@ -12,7 +12,7 @@ Test a binary calibre build to ensure th
  
  import os, ctypes, sys, unittest, time
@@ -1745,7 +1667,7 @@ Index: b/src/calibre/test_build.py
  from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
  
  is_ci = os.environ.get('CI', '').lower() == 'true'
-@@ -85,11 +85,7 @@ class BuildTest(unittest.TestCase):
+@@ -81,11 +81,7 @@ class BuildTest(unittest.TestCase):
          del soupsieve, bs4
  
      def test_zeroconf(self):
@@ -1758,9 +1680,7 @@ Index: b/src/calibre/test_build.py
          del z
          del ifaddr
  
-Index: b/src/calibre/utils/Zeroconf.py
-===================================================================
---- a/src/calibre/utils/Zeroconf.py
+--- calibre-debian.git.orig/src/calibre/utils/Zeroconf.py
 +++ /dev/null
 @@ -1,1654 +0,0 @@
 -""" Multicast DNS Service Discovery for Python
@@ -3417,10 +3337,8 @@ Index: b/src/calibre/utils/Zeroconf.py
 -    r.unregisterService(info)
 -    print("   Unregister done.")
 -    r.close()
-Index: b/src/calibre/utils/complete.py
-===================================================================
---- a/src/calibre/utils/complete.py
-+++ b/src/calibre/utils/complete.py
+--- calibre-debian.git.orig/src/calibre/utils/complete.py
++++ calibre-debian.git/src/calibre/utils/complete.py
 @@ -14,45 +14,8 @@ completion.
  
  import sys, os, shlex, glob, re
@@ -3468,10 +3386,8 @@ Index: b/src/calibre/utils/complete.py
  
  
  def split(src):
-Index: b/src/calibre/utils/config_base.py
-===================================================================
---- a/src/calibre/utils/config_base.py
-+++ b/src/calibre/utils/config_base.py
+--- calibre-debian.git.orig/src/calibre/utils/config_base.py
++++ calibre-debian.git/src/calibre/utils/config_base.py
 @@ -11,17 +11,14 @@ from collections import defaultdict
  from copy import deepcopy
  
@@ -3492,10 +3408,8 @@ Index: b/src/calibre/utils/config_base.py
      options = {'cPickle':cPickle}
      try:
          if not isinstance(src, unicode_type):
-Index: b/src/calibre/utils/dbus_service.py
-===================================================================
---- a/src/calibre/utils/dbus_service.py
-+++ b/src/calibre/utils/dbus_service.py
+--- calibre-debian.git.orig/src/calibre/utils/dbus_service.py
++++ calibre-debian.git/src/calibre/utils/dbus_service.py
 @@ -45,7 +45,7 @@ from dbus.exceptions import (
  from dbus.lowlevel import ErrorMessage, MethodReturnMessage, MethodCallMessage
  from dbus.proxies import LOCAL_PATH
@@ -3515,10 +3429,8 @@ Index: b/src/calibre/utils/dbus_service.py
  
  class BusName(object):
      """A base class for exporting your own Named Services across the Bus.
-Index: b/src/calibre/utils/filenames.py
-===================================================================
---- a/src/calibre/utils/filenames.py
-+++ b/src/calibre/utils/filenames.py
+--- calibre-debian.git.orig/src/calibre/utils/filenames.py
++++ calibre-debian.git/src/calibre/utils/filenames.py
 @@ -12,7 +12,7 @@ from math import ceil
  
  from calibre import force_unicode, isbytestring, prints, sanitize_file_name
@@ -3544,10 +3456,8 @@ Index: b/src/calibre/utils/filenames.py
 -else:
 -    rmtree = shutil.rmtree
 +rmtree = shutil.rmtree
-Index: b/src/calibre/utils/imghdr.py
-===================================================================
---- a/src/calibre/utils/imghdr.py
-+++ b/src/calibre/utils/imghdr.py
+--- calibre-debian.git.orig/src/calibre/utils/imghdr.py
++++ calibre-debian.git/src/calibre/utils/imghdr.py
 @@ -6,7 +6,6 @@
  from struct import unpack, error
  import os
@@ -3571,10 +3481,8 @@ Index: b/src/calibre/utils/imghdr.py
  
      x = None
      while True:
-Index: b/src/calibre/utils/ipc/__init__.py
-===================================================================
---- a/src/calibre/utils/ipc/__init__.py
-+++ b/src/calibre/utils/ipc/__init__.py
+--- calibre-debian.git.orig/src/calibre/utils/ipc/__init__.py
++++ calibre-debian.git/src/calibre/utils/ipc/__init__.py
 @@ -10,7 +10,7 @@ import os, errno, sys
  from threading import Thread
  
@@ -3593,10 +3501,8 @@ Index: b/src/calibre/utils/ipc/__init__.py
      return ans
  
  
-Index: b/src/calibre/utils/ipc/launch.py
-===================================================================
---- a/src/calibre/utils/ipc/launch.py
-+++ b/src/calibre/utils/ipc/launch.py
+--- calibre-debian.git.orig/src/calibre/utils/ipc/launch.py
++++ calibre-debian.git/src/calibre/utils/ipc/launch.py
 @@ -1,7 +1,6 @@
  #!/usr/bin/env python
  # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
@@ -3671,10 +3577,8 @@ Index: b/src/calibre/utils/ipc/launch.py
  
      def __call__(self, redirect_output=True, cwd=None, priority=None):
          '''
-Index: b/src/calibre/utils/ipc/server.py
-===================================================================
---- a/src/calibre/utils/ipc/server.py
-+++ b/src/calibre/utils/ipc/server.py
+--- calibre-debian.git.orig/src/calibre/utils/ipc/server.py
++++ calibre-debian.git/src/calibre/utils/ipc/server.py
 @@ -19,7 +19,7 @@ from multiprocessing.connection import L
  from threading import RLock, Thread
  
@@ -3702,10 +3606,8 @@ Index: b/src/calibre/utils/ipc/server.py
              try:
                  return address, Listener(address=address, authkey=authkey, backlog=backlog)
              except EnvironmentError as err:
-Index: b/src/calibre/utils/localization.py
-===================================================================
---- a/src/calibre/utils/localization.py
-+++ b/src/calibre/utils/localization.py
+--- calibre-debian.git.orig/src/calibre/utils/localization.py
++++ calibre-debian.git/src/calibre/utils/localization.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
  import os, locale, re, io, sys
  from gettext import GNUTranslations, NullTranslations
@@ -3727,10 +3629,8 @@ Index: b/src/calibre/utils/localization.py
      # Now that we have installed a translator, we have to retranslate the help
      # for the global prefs object as it was instantiated in get_lang(), before
      # the translator was installed.
-Index: b/src/calibre/utils/lock.py
-===================================================================
---- a/src/calibre/utils/lock.py
-+++ b/src/calibre/utils/lock.py
+--- calibre-debian.git.orig/src/calibre/utils/lock.py
++++ calibre-debian.git/src/calibre/utils/lock.py
 @@ -11,7 +11,7 @@ import time
  from functools import partial
  
@@ -3749,10 +3649,8 @@ Index: b/src/calibre/utils/lock.py
          sock = socket.socket(family=socket.AF_UNIX)
          try:
              eintr_retry_call(sock.bind, address)
-Index: b/src/calibre/utils/mdns.py
-===================================================================
---- a/src/calibre/utils/mdns.py
-+++ b/src/calibre/utils/mdns.py
+--- calibre-debian.git.orig/src/calibre/utils/mdns.py
++++ calibre-debian.git/src/calibre/utils/mdns.py
 @@ -1,4 +1,3 @@
 -
  __license__ = 'GPL 3'
@@ -3802,9 +3700,7 @@ Index: b/src/calibre/utils/mdns.py
  
      return ServiceInfo(
          service_type, service_name,
-Index: b/src/calibre/utils/monotonic.c
-===================================================================
---- a/src/calibre/utils/monotonic.c
+--- calibre-debian.git.orig/src/calibre/utils/monotonic.c
 +++ /dev/null
 @@ -1,88 +0,0 @@
 -/*
@@ -3895,10 +3791,8 @@ Index: b/src/calibre/utils/monotonic.c
 -    if (m == NULL) return;
 -}
 -
-Index: b/src/calibre/utils/monotonic.py
-===================================================================
---- a/src/calibre/utils/monotonic.py
-+++ b/src/calibre/utils/monotonic.py
+--- calibre-debian.git.orig/src/calibre/utils/monotonic.py
++++ calibre-debian.git/src/calibre/utils/monotonic.py
 @@ -1,13 +1,4 @@
  # vim:fileencoding=utf-8
  
@@ -3915,10 +3809,8 @@ Index: b/src/calibre/utils/monotonic.py
 -    del monotonicp, err
 +from time import monotonic
 +monotonic
-Index: b/src/calibre/utils/serialize.py
-===================================================================
---- a/src/calibre/utils/serialize.py
-+++ b/src/calibre/utils/serialize.py
+--- calibre-debian.git.orig/src/calibre/utils/serialize.py
++++ calibre-debian.git/src/calibre/utils/serialize.py
 @@ -2,10 +2,7 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
@@ -3959,10 +3851,8 @@ Index: b/src/calibre/utils/serialize.py
 +def pickle_loads(dump):
 +    import pickle
 +    return pickle.loads(dump, encoding='utf-8')
-Index: b/src/calibre/utils/shared_file.py
-===================================================================
---- a/src/calibre/utils/shared_file.py
-+++ b/src/calibre/utils/shared_file.py
+--- calibre-debian.git.orig/src/calibre/utils/shared_file.py
++++ calibre-debian.git/src/calibre/utils/shared_file.py
 @@ -9,7 +9,7 @@ import os, sys
  
  from polyglot.builtins import reraise
@@ -3987,10 +3877,8 @@ Index: b/src/calibre/utils/shared_file.py
  
      def raise_winerror(x):
          reraise(NotImplementedError, None, sys.exc_info()[2])
-Index: b/src/calibre/utils/smtp.py
-===================================================================
---- a/src/calibre/utils/smtp.py
-+++ b/src/calibre/utils/smtp.py
+--- calibre-debian.git.orig/src/calibre/utils/smtp.py
++++ calibre-debian.git/src/calibre/utils/smtp.py
 @@ -12,7 +12,7 @@ This module implements a simple commandl
  
  import sys, traceback, os, socket, encodings.idna as idna
@@ -4018,10 +3906,8 @@ Index: b/src/calibre/utils/smtp.py
          s.login(username, password)
      ret = None
      try:
-Index: b/src/calibre/utils/terminal.py
-===================================================================
---- a/src/calibre/utils/terminal.py
-+++ b/src/calibre/utils/terminal.py
+--- calibre-debian.git.orig/src/calibre/utils/terminal.py
++++ calibre-debian.git/src/calibre/utils/terminal.py
 @@ -1,14 +1,13 @@
  #!/usr/bin/env python
  # vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:fdm=marker:ai
@@ -4052,9 +3938,7 @@ Index: b/src/calibre/utils/terminal.py
                  if not self.write_console(self.file_handle, wt, text_len, byref(written), None):
                      # Older versions of windows can fail to write large strings
                      # to console with WriteConsoleW (seen it happen on Win XP)
-Index: b/src/calibre/utils/unicode_getpass.py
-===================================================================
---- a/src/calibre/utils/unicode_getpass.py
+--- calibre-debian.git.orig/src/calibre/utils/unicode_getpass.py
 +++ /dev/null
 @@ -1,40 +0,0 @@
 -#!/usr/bin/env python
@@ -4097,9 +3981,7 @@ Index: b/src/calibre/utils/unicode_getpass.py
 -            enc = getattr(sys.stdin, 'encoding', preferred_encoding) or preferred_encoding
 -            from getpass import getpass
 -            return getpass(prompt).decode(enc)
-Index: b/src/calibre/utils/zlib2.c
-===================================================================
---- a/src/calibre/utils/zlib2.c
+--- calibre-debian.git.orig/src/calibre/utils/zlib2.c
 +++ /dev/null
 @@ -1,426 +0,0 @@
 -/*
@@ -4528,10 +4410,8 @@ Index: b/src/calibre/utils/zlib2.c
 -        PyModule_AddObject(m, "error", ZlibError);
 -    }
 -}
-Index: b/src/polyglot/functools.py
-===================================================================
---- a/src/polyglot/functools.py
-+++ b/src/polyglot/functools.py
+--- calibre-debian.git.orig/src/polyglot/functools.py
++++ calibre-debian.git/src/polyglot/functools.py
 @@ -2,12 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
@@ -4546,10 +4426,8 @@ Index: b/src/polyglot/functools.py
 +from functools import lru_cache
  
  lru_cache
-Index: b/src/polyglot/html_entities.py
-===================================================================
---- a/src/polyglot/html_entities.py
-+++ b/src/polyglot/html_entities.py
+--- calibre-debian.git.orig/src/polyglot/html_entities.py
++++ calibre-debian.git/src/polyglot/html_entities.py
 @@ -2,9 +2,5 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4562,10 +4440,8 @@ Index: b/src/polyglot/html_entities.py
 -    from htmlentitydefs import name2codepoint
 +from html.entities import name2codepoint
 +name2codepoint
-Index: b/src/polyglot/http_client.py
-===================================================================
---- a/src/polyglot/http_client.py
-+++ b/src/polyglot/http_client.py
+--- calibre-debian.git.orig/src/polyglot/http_client.py
++++ calibre-debian.git/src/polyglot/http_client.py
 @@ -2,21 +2,15 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4599,10 +4475,8 @@ Index: b/src/polyglot/http_client.py
 +    responses, HTTPConnection, HTTPSConnection, BAD_REQUEST, FOUND, FORBIDDEN, HTTP_VERSION_NOT_SUPPORTED, INTERNAL_SERVER_ERROR, METHOD_NOT_ALLOWED
 +    MOVED_PERMANENTLY, NOT_FOUND, NOT_IMPLEMENTED, NOT_MODIFIED, OK, PARTIAL_CONTENT, PRECONDITION_FAILED, REQUEST_ENTITY_TOO_LARGE, REQUEST_URI_TOO_LONG
 +    REQUESTED_RANGE_NOT_SATISFIABLE, REQUEST_TIMEOUT, SEE_OTHER, SERVICE_UNAVAILABLE, UNAUTHORIZED, _CS_IDLE, _CS_REQ_SENT
-Index: b/src/polyglot/http_cookie.py
-===================================================================
---- a/src/polyglot/http_cookie.py
-+++ b/src/polyglot/http_cookie.py
+--- calibre-debian.git.orig/src/polyglot/http_cookie.py
++++ calibre-debian.git/src/polyglot/http_cookie.py
 @@ -2,11 +2,5 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4617,10 +4491,8 @@ Index: b/src/polyglot/http_cookie.py
 -    from cookielib import CookieJar, Cookie  # noqa
 +from http.cookies import SimpleCookie    # noqa
 +from http.cookiejar import CookieJar, Cookie  # noqa
-Index: b/src/polyglot/http_server.py
-===================================================================
---- a/src/polyglot/http_server.py
-+++ b/src/polyglot/http_server.py
+--- calibre-debian.git.orig/src/polyglot/http_server.py
++++ calibre-debian.git/src/polyglot/http_server.py
 @@ -2,12 +2,4 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
@@ -4635,10 +4507,8 @@ Index: b/src/polyglot/http_server.py
 -    from BaseHTTPServer import HTTPServer  # noqa
 -    from SimpleHTTPServer import SimpleHTTPRequestHandler  # noqa
 +from http.server import HTTPServer, SimpleHTTPRequestHandler  # noqa
-Index: b/src/polyglot/plistlib.py
-===================================================================
---- a/src/polyglot/plistlib.py
-+++ b/src/polyglot/plistlib.py
+--- calibre-debian.git.orig/src/polyglot/plistlib.py
++++ calibre-debian.git/src/polyglot/plistlib.py
 @@ -2,11 +2,4 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
@@ -4652,10 +4522,8 @@ Index: b/src/polyglot/plistlib.py
 -else:
 -    from plistlib import readPlistFromString as loads, writePlistToString as dumps, Data  # noqa
 +from plistlib import loads, dumps, Data  # noqa
-Index: b/src/polyglot/queue.py
-===================================================================
---- a/src/polyglot/queue.py
-+++ b/src/polyglot/queue.py
+--- calibre-debian.git.orig/src/polyglot/queue.py
++++ calibre-debian.git/src/polyglot/queue.py
 @@ -2,9 +2,4 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4667,10 +4535,8 @@ Index: b/src/polyglot/queue.py
 -else:
 -    from Queue import Queue, Empty, Full, PriorityQueue, LifoQueue  # noqa
 +from queue import Queue, Empty, Full, PriorityQueue, LifoQueue  # noqa
-Index: b/src/polyglot/reprlib.py
-===================================================================
---- a/src/polyglot/reprlib.py
-+++ b/src/polyglot/reprlib.py
+--- calibre-debian.git.orig/src/polyglot/reprlib.py
++++ calibre-debian.git/src/polyglot/reprlib.py
 @@ -2,9 +2,5 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4683,10 +4549,8 @@ Index: b/src/polyglot/reprlib.py
 -    from repr import repr
 +from reprlib import repr
 +repr
-Index: b/src/polyglot/smtplib.py
-===================================================================
---- a/src/polyglot/smtplib.py
-+++ b/src/polyglot/smtplib.py
+--- calibre-debian.git.orig/src/polyglot/smtplib.py
++++ calibre-debian.git/src/polyglot/smtplib.py
 @@ -2,13 +2,9 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
@@ -4765,10 +4629,8 @@ Index: b/src/polyglot/smtplib.py
 +            self.debug_to(*a)
 +        else:
 +            super()._print_debug(*a)
-Index: b/src/polyglot/socketserver.py
-===================================================================
---- a/src/polyglot/socketserver.py
-+++ b/src/polyglot/socketserver.py
+--- calibre-debian.git.orig/src/polyglot/socketserver.py
++++ calibre-debian.git/src/polyglot/socketserver.py
 @@ -2,9 +2,4 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
@@ -4780,10 +4642,8 @@ Index: b/src/polyglot/socketserver.py
 -else:
 -    from SocketServer import TCPServer, ThreadingMixIn  # noqa
 +from socketserver import TCPServer, ThreadingMixIn  # noqa
-Index: b/src/polyglot/urllib.py
-===================================================================
---- a/src/polyglot/urllib.py
-+++ b/src/polyglot/urllib.py
+--- calibre-debian.git.orig/src/polyglot/urllib.py
++++ calibre-debian.git/src/polyglot/urllib.py
 @@ -4,46 +4,22 @@
  
  

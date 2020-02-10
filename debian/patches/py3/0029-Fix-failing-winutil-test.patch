@@ -7,11 +7,9 @@ Subject: [PATCH 029/104] Fix failing winutil test
  src/calibre/test_build.py |    2 ++
  1 file changed, 2 insertions(+)
 
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -167,6 +167,8 @@ class BuildTest(unittest.TestCase):
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -163,6 +163,8 @@ class BuildTest(unittest.TestCase):
          for fmt in (fmt, fmt.encode('ascii')):
              x = strftime(fmt, t)
              au(x, 'strftime')

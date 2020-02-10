@@ -8,10 +8,8 @@ Subject: [PATCH 088/104] Fix pycryptodome not working on windows
  src/calibre/test_build.py |    2 ++
  2 files changed, 12 insertions(+)
 
-Index: b/bypy/windows/__main__.py
-===================================================================
---- a/bypy/windows/__main__.py
-+++ b/bypy/windows/__main__.py
+--- calibre-debian.git.orig/bypy/windows/__main__.py
++++ calibre-debian.git/bypy/windows/__main__.py
 @@ -202,6 +202,16 @@ def freeze(env, ext_dir):
      shutil.copytree(j(comext, 'shell'), j(sp_dir, 'win32com', 'shell'))
      shutil.rmtree(comext)
@@ -29,11 +27,9 @@ Index: b/bypy/windows/__main__.py
      pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
      for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
          if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
-Index: b/src/calibre/test_build.py
-===================================================================
---- a/src/calibre/test_build.py
-+++ b/src/calibre/test_build.py
-@@ -34,6 +34,8 @@ class BuildTest(unittest.TestCase):
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -30,6 +30,8 @@ class BuildTest(unittest.TestCase):
                      ctypes.WinDLL(native_string_type(os.path.join(base, x)))
                  except Exception as err:
                      self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))

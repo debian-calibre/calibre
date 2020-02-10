@@ -14,10 +14,8 @@ Subject: [PATCH 008/104] Get the linux frozen build working with py3
  src/calibre/constants.py |    2 
  8 files changed, 147 insertions(+), 289 deletions(-)
 
-Index: b/bypy/init_env.py
-===================================================================
---- a/bypy/init_env.py
-+++ b/bypy/init_env.py
+--- calibre-debian.git.orig/bypy/init_env.py
++++ calibre-debian.git/bypy/init_env.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
@@ -27,10 +25,8 @@ Index: b/bypy/init_env.py
  import json
  import os
  import re
-Index: b/bypy/linux/__main__.py
-===================================================================
---- a/bypy/linux/__main__.py
-+++ b/bypy/linux/__main__.py
+--- calibre-debian.git.orig/bypy/linux/__main__.py
++++ calibre-debian.git/bypy/linux/__main__.py
 @@ -2,8 +2,6 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
@@ -68,10 +64,8 @@ Index: b/bypy/linux/__main__.py
  
              exe = j(env.bin_dir, bname)
              cmd = ['gcc'] + xflags + [src, '-o', exe, '-L' + env.lib_dir, '-lcalibre-launcher']
-Index: b/bypy/linux/main.c
-===================================================================
---- a/bypy/linux/main.c
-+++ b/bypy/linux/main.c
+--- calibre-debian.git.orig/bypy/linux/main.c
++++ calibre-debian.git/bypy/linux/main.c
 @@ -5,9 +5,7 @@
  int main(int argc, char **argv) {
      int ret = 0;
@@ -83,10 +77,8 @@ Index: b/bypy/linux/main.c
  }
 -
 -
-Index: b/bypy/linux/site.py
-===================================================================
---- a/bypy/linux/site.py
-+++ b/bypy/linux/site.py
+--- calibre-debian.git.orig/bypy/linux/site.py
++++ calibre-debian.git/bypy/linux/site.py
 @@ -2,53 +2,27 @@
  # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
@@ -208,10 +200,8 @@ Index: b/bypy/linux/site.py
 +
 +if __name__ == '__main__':
 +    main()
-Index: b/bypy/linux/util.c
-===================================================================
---- a/bypy/linux/util.c
-+++ b/bypy/linux/util.c
+--- calibre-debian.git.orig/bypy/linux/util.c
++++ calibre-debian.git/bypy/linux/util.c
 @@ -5,258 +5,153 @@
  #include <stdio.h>
  #include <errno.h>
@@ -574,10 +564,8 @@ Index: b/bypy/linux/util.c
 +execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename, const wchar_t *module, const wchar_t *function) {
 +    return initialize_interpreter(argc, argv, basename, module, function);
  }
-Index: b/bypy/linux/util.h
-===================================================================
---- a/bypy/linux/util.h
-+++ b/bypy/linux/util.h
+--- calibre-debian.git.orig/bypy/linux/util.h
++++ calibre-debian.git/bypy/linux/util.h
 @@ -9,10 +9,10 @@
  #define OOM exit(report_error("Out of memory", EXIT_FAILURE))
  #define True 1
@@ -593,11 +581,9 @@ Index: b/bypy/linux/util.h
 -        char *outr, char *errr);
 +int execute_python_entrypoint(int argc, char * const *argv, const wchar_t *basename,
 +        const wchar_t *module, const wchar_t *function);
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
-@@ -219,8 +219,8 @@ def init_env():
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
+@@ -218,8 +218,8 @@ def init_env():
  class Build(Command):
  
      short_description = 'Build calibre C/C++ extension modules'
@@ -608,10 +594,8 @@ Index: b/setup/build.py
  
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
-Index: b/src/calibre/constants.py
-===================================================================
---- a/src/calibre/constants.py
-+++ b/src/calibre/constants.py
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
 @@ -150,7 +150,7 @@ def cache_dir():
      return ans
  

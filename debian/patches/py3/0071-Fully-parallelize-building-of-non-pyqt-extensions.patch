@@ -7,10 +7,8 @@ Subject: [PATCH 071/104] Fully parallelize building of non-pyqt extensions
  setup/build.py |   84 ++++++++++++++++++++++++++++++++++++++-------------------
  1 file changed, 56 insertions(+), 28 deletions(-)
 
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
 @@ -12,6 +12,8 @@ from setup import Command, islinux, isbs
  isunix = islinux or isosx or isbsd or ishaiku
  
@@ -20,7 +18,7 @@ Index: b/setup/build.py
  
  
  def init_symbol_name(name):
-@@ -256,18 +258,19 @@ class Build(Command):
+@@ -255,18 +257,19 @@ class Build(Command):
              help='Path to directory in which to place the built extensions. Defaults to src/calibre/plugins')
  
      def run(self, opts):
@@ -44,7 +42,7 @@ Index: b/setup/build.py
              if opts.only != 'all' and opts.only != ext.name:
                  continue
              if ext.error:
-@@ -277,10 +280,39 @@ class Build(Command):
+@@ -276,10 +279,39 @@ class Build(Command):
                  else:
                      raise Exception(ext.error)
              dest = self.dest(ext)
@@ -87,7 +85,7 @@ Index: b/setup/build.py
          if opts.only in {'all', 'headless'}:
              self.build_headless()
  
-@@ -300,19 +332,14 @@ class Build(Command):
+@@ -299,19 +331,14 @@ class Build(Command):
          suff = '.lib' if iswindows else ''
          return [pref+x+suff for x in dirs]
  
@@ -110,7 +108,7 @@ Index: b/setup/build.py
          for src in ext.sources:
              obj = self.j(obj_dir, os.path.splitext(self.b(src))[0]+'.o')
              objects.append(obj)
-@@ -321,17 +348,16 @@ class Build(Command):
+@@ -320,17 +347,16 @@ class Build(Command):
                  sinc = [inf+src] if iswindows else ['-c', src]
                  oinc = ['/Fo'+obj] if iswindows else ['-o', obj]
                  cmd = [compiler] + self.env.cflags + ext.cflags + einc + sinc + oinc
@@ -133,7 +131,7 @@ Index: b/setup/build.py
              cmd = [linker]
              if iswindows:
                  pre_ld_flags = []
-@@ -342,13 +368,15 @@ class Build(Command):
+@@ -341,13 +367,15 @@ class Build(Command):
                      ['/EXPORT:' + init_symbol_name(ext.name)] + objects + ext.extra_objs + ['/OUT:'+dest]
              else:
                  cmd += objects + ext.extra_objs + ['-o', dest] + self.env.ldflags + ext.ldflags + elib + xlib

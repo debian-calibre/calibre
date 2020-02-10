@@ -11,10 +11,8 @@ Subject: [PATCH 007/104] Minor fixups for changes when removing py3
  src/polyglot/builtins.py |   16 ++++++++++++++++
  4 files changed, 19 insertions(+), 13 deletions(-)
 
-Index: b/bypy/sources.json
-===================================================================
---- a/bypy/sources.json
-+++ b/bypy/sources.json
+--- calibre-debian.git.orig/bypy/sources.json
++++ calibre-debian.git/bypy/sources.json
 @@ -770,16 +770,6 @@
      },
  
@@ -32,11 +30,9 @@ Index: b/bypy/sources.json
          "name": "sip",
          "unix": {
              "filename": "sip-4.19.19.tar.gz",
-Index: b/setup/build.py
-===================================================================
---- a/setup/build.py
-+++ b/setup/build.py
-@@ -219,8 +219,8 @@ def init_env():
+--- calibre-debian.git.orig/setup/build.py
++++ calibre-debian.git/setup/build.py
+@@ -218,8 +218,8 @@ def init_env():
  class Build(Command):
  
      short_description = 'Build calibre C/C++ extension modules'
@@ -47,10 +43,8 @@ Index: b/setup/build.py
  
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
-Index: b/src/calibre/constants.py
-===================================================================
---- a/src/calibre/constants.py
-+++ b/src/calibre/constants.py
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
 @@ -150,7 +150,7 @@ def cache_dir():
      return ans
  
@@ -60,10 +54,8 @@ Index: b/src/calibre/constants.py
  
  
  # plugins {{{
-Index: b/src/polyglot/builtins.py
-===================================================================
---- a/src/polyglot/builtins.py
-+++ b/src/polyglot/builtins.py
+--- calibre-debian.git.orig/src/polyglot/builtins.py
++++ calibre-debian.git/src/polyglot/builtins.py
 @@ -121,3 +121,19 @@ def int_to_byte(x):
  def reload(module):
      import importlib
