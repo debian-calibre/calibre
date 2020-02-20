@@ -53,6 +53,10 @@ override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
+	# remove certgen.py since we do not build the plugin since it requires
+	# openssl and calibre seems not to have a openssl license exception, see #951743
+	rm debian/tmp/usr/lib/calibre/calibre/utils/certgen.py
+
 	# not needed
 	rm debian/tmp/usr/share/calibre/calibre-portable.*
 	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py

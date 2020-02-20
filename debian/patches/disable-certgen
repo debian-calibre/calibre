@@ -1,0 +1,95 @@
+---
+ setup/extensions.json         |    8 --------
+ setup/test.py                 |    2 +-
+ src/calibre/constants.py      |    1 -
+ src/calibre/srv/tests/loop.py |   20 --------------------
+ src/calibre/test_build.py     |    4 ----
+ 5 files changed, 1 insertion(+), 34 deletions(-)
+
+--- calibre-debian.git.orig/setup/extensions.json
++++ calibre-debian.git/setup/extensions.json
+@@ -29,14 +29,6 @@
+         "windows_libraries": ""
+     },
+     {
+-        "name": "certgen",
+-        "sources": "calibre/utils/certgen.c",
+-        "libraries": "crypto",
+-        "windows_libraries": "libeay32",
+-        "inc_dirs": "!openssl_inc_dirs",
+-        "lib_dirs": "!openssl_lib_dirs"
+-    },
+-    {
+         "name": "html_syntax_highlighter",
+         "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
+     },
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
+@@ -180,7 +180,6 @@ class Plugins(collections.Mapping):
+                 'bzzdec',
+                 'matcher',
+                 'tokenizer',
+-                'certgen',
+             ]
+         if iswindows:
+             plugins.extend(['winutil', 'wpd', 'winfonts'])
+--- calibre-debian.git.orig/src/calibre/srv/tests/loop.py
++++ calibre-debian.git/src/calibre/srv/tests/loop.py
+@@ -14,7 +14,6 @@ from threading import Event
+ from calibre.srv.pre_activated import has_preactivated_support
+ from calibre.srv.tests.base import BaseTest, TestServer
+ from calibre.ptempfile import TemporaryDirectory
+-from calibre.utils.certgen import create_server_cert
+ from calibre.utils.monotonic import monotonic
+ from polyglot.builtins import range, unicode_type, map
+ from polyglot import http_client
+@@ -194,25 +193,6 @@ class LoopTest(BaseTest):
+         set(b'123456\n7', 4, 2, READ)
+         self.ae(buf.readline(), b'56\n')
+ 
+-    def test_ssl(self):
+-        'Test serving over SSL'
+-        address = '127.0.0.1'
+-        with TemporaryDirectory('srv-test-ssl') as tdir:
+-            cert_file, key_file, ca_file = map(lambda x:os.path.join(tdir, x), 'cka')
+-            create_server_cert(address, ca_file, cert_file, key_file, key_size=2048)
+-            ctx = ssl.create_default_context(cafile=ca_file)
+-            with TestServer(
+-                    lambda data:(data.path[0] + data.read().decode('utf-8')),
+-                    ssl_certfile=cert_file, ssl_keyfile=key_file, listen_on=address, port=0) as server:
+-                conn = http_client.HTTPSConnection(address, server.address[1], context=ctx)
+-                conn.request('GET', '/test', 'body')
+-                r = conn.getresponse()
+-                self.ae(r.status, http_client.OK)
+-                self.ae(r.read(), b'testbody')
+-                cert = conn.sock.getpeercert()
+-                subject = dict(x[0] for x in cert['subject'])
+-                self.ae(subject['commonName'], address)
+-
+     @skipIf(not has_preactivated_support, 'pre_activated_socket not available')
+     def test_socket_activation(self):
+         'Test socket activation'
+--- calibre-debian.git.orig/src/calibre/test_build.py
++++ calibre-debian.git/src/calibre/test_build.py
+@@ -117,10 +117,6 @@ class BuildTest(unittest.TestCase):
+         root = etree.fromstring(raw, parser=etree.XMLParser(recover=True, no_network=True, resolve_entities=False))
+         self.assertEqual(etree.tostring(root), raw)
+ 
+-    def test_certgen(self):
+-        from calibre.utils.certgen import create_key_pair
+-        create_key_pair()
+-
+     def test_msgpack(self):
+         from calibre.utils.serialize import msgpack_dumps, msgpack_loads
+         from calibre.utils.date import utcnow
+--- calibre-debian.git.orig/setup/test.py
++++ calibre-debian.git/setup/test.py
+@@ -37,7 +37,7 @@ class TestImports(unittest.TestCase):
+         return count
+ 
+     def test_import_of_all_python_modules(self):
+-        exclude_modules = {'calibre.gui2.dbus_export.demo', 'calibre.gui2.dbus_export.gtk'}
++        exclude_modules = {'calibre.gui2.dbus_export.demo', 'calibre.gui2.dbus_export.gtk', 'calibre.utils.certgen'}
+         exclude_packages = {'calibre.devices.mtp.unix.upstream'}
+         if not iswindows:
+             exclude_modules |= {'calibre.utils.iphlpapi', 'calibre.utils.open_with.windows', 'calibre.devices.winusb'}
