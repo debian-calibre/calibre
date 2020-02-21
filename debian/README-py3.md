@@ -15,8 +15,6 @@ Current Debian's Calibre source code uses upstream newest release code with
 "py3" branch patch.
 
 1. Import and merge upstream source code with `gbp import-orig --uscan`.
-   Don't forget to drop "+py3" from suggested upstream version name because
-   "+py3" comes from upstream patch set.
 2. Take "py3" branch patch set with `git format-patch --find-renames --find-copies [from rev]..py3`
    from upstream Git repository.
 3. Update `debian/patches/py3` directory with new "py3" branch patch set as
