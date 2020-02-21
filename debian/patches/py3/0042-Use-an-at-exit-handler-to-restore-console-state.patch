@@ -1,7 +1,7 @@
-From 1aebfa6f9b0bf26b720e834a6cb75c10c7b12b39 Mon Sep 17 00:00:00 2001
+From 15824a5a12f20dd623d54b4ec911774410b2c2f4 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 20:03:40 +0530
-Subject: [PATCH 042/104] Use an at exit handler to restore console state
+Subject: [PATCH 042/106] Use an at exit handler to restore console state
 
 Py_Main() does not return if an unhandled SystemExit is raised
 ---
@@ -72,5 +72,5 @@ index ed28b3164c..55383c79dd 100644
  #undef CHECK_STATUS
  }
 -- 
-2.25.0
+2.25.1
 

@@ -1,14 +1,16 @@
-From 714dc3cca2a4c84a374b6649458777f0f646bc28 Mon Sep 17 00:00:00 2001
+From 3581dcfe021533b8cd7002781775cdc02b862bc8 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 6 Dec 2019 14:38:21 +0530
-Subject: [PATCH 074/104] ...
+Subject: [PATCH 074/106] ...
 
 ---
- setup/build.py |    1 +
+ setup/build.py | 1 +
  1 file changed, 1 insertion(+)
 
---- calibre-debian.git.orig/setup/build.py
-+++ calibre-debian.git/setup/build.py
+diff --git a/setup/build.py b/setup/build.py
+index 6d00bb9fb3..c4889cbe00 100644
+--- a/setup/build.py
++++ b/setup/build.py
 @@ -491,6 +491,7 @@ class Build(Command):
          return {x:read(x) for x in ('target', 'sources', 'headers')}
  
@@ -17,3 +19,6 @@ Subject: [PATCH 074/104] ...
          from setup.build_environment import pyqt, qmakespec, QMAKE
          from setup.parallel_build import cpu_count
          from distutils import sysconfig
+-- 
+2.25.1
+

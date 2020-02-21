@@ -1,7 +1,7 @@
-From 2611d1fe5521b7e055f247a8e29c1fe89127c57c Mon Sep 17 00:00:00 2001
+From 9c91110c2b113e63e47cea53bbae26d1a2facf44 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 20 Nov 2019 07:29:37 +0530
-Subject: [PATCH 013/104] Auto fix excess blank lines
+Subject: [PATCH 013/106] Auto fix excess blank lines
 
 ---
  bypy/macos/__main__.py                                      | 4 +---
@@ -76,7 +76,7 @@ Subject: [PATCH 013/104] Auto fix excess blank lines
  src/calibre/ebooks/render_html.py                           | 1 -
  src/calibre/gui2/actions/author_mapper.py                   | 1 -
  src/calibre/gui2/actions/store.py                           | 1 -
- src/calibre/gui2/actions/virtual_library.py                 | 1 -
+ src/calibre/gui2/actions/virtual_library.py                 | 2 --
  src/calibre/gui2/add_filters.py                             | 1 -
  src/calibre/gui2/author_mapper.py                           | 1 -
  src/calibre/gui2/changes.py                                 | 1 -
@@ -167,7 +167,7 @@ Subject: [PATCH 013/104] Auto fix excess blank lines
  src/tinycss/parsing.py                                      | 2 --
  src/tinycss/token_data.py                                   | 1 -
  src/tinycss/tokenizer.py                                    | 1 -
- 163 files changed, 1 insertion(+), 168 deletions(-)
+ 163 files changed, 1 insertion(+), 169 deletions(-)
 
 diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
 index 4f8b621b5d..f68d74622e 100644
@@ -456,7 +456,7 @@ index b0a778e270..4630291fe5 100644
  
  from calibre.db.cli import integers_from_string
 diff --git a/src/calibre/db/cli/cmd_list.py b/src/calibre/db/cli/cmd_list.py
-index a4bacc643f..0367f7bab8 100644
+index 52adce567f..e9270299e2 100644
 --- a/src/calibre/db/cli/cmd_list.py
 +++ b/src/calibre/db/cli/cmd_list.py
 @@ -3,7 +3,6 @@
@@ -576,7 +576,7 @@ index b48f153039..6e90d2d10b 100644
  
  from calibre import prints
 diff --git a/src/calibre/db/cli/cmd_show_metadata.py b/src/calibre/db/cli/cmd_show_metadata.py
-index cb26a91cd1..d22eb5bca7 100644
+index 36177639c8..e9743efd2f 100644
 --- a/src/calibre/db/cli/cmd_show_metadata.py
 +++ b/src/calibre/db/cli/cmd_show_metadata.py
 @@ -3,7 +3,6 @@
@@ -672,7 +672,7 @@ index b09471af7e..c227aeaca5 100644
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
 diff --git a/src/calibre/devices/usbms/books.py b/src/calibre/devices/usbms/books.py
-index ddb2b44c0f..5c394fe455 100644
+index 692190c1b6..4f530f38cf 100644
 --- a/src/calibre/devices/usbms/books.py
 +++ b/src/calibre/devices/usbms/books.py
 @@ -1,7 +1,6 @@
@@ -708,7 +708,7 @@ index ed0a43b4f1..ac445ad6b6 100644
  from bs4 import (  # noqa
      CData, Comment, Declaration, NavigableString, ProcessingInstruction,
 diff --git a/src/calibre/ebooks/conversion/plugins/djvu_input.py b/src/calibre/ebooks/conversion/plugins/djvu_input.py
-index d3941db28f..269bac8cd3 100644
+index d9d22cf6b9..f3f0b132f2 100644
 --- a/src/calibre/ebooks/conversion/plugins/djvu_input.py
 +++ b/src/calibre/ebooks/conversion/plugins/djvu_input.py
 @@ -1,7 +1,6 @@
@@ -864,7 +864,7 @@ index 3fe3b0e6ff..89deaa40a6 100644
  Read meta information from Plucker pdb files.
  '''
 diff --git a/src/calibre/ebooks/metadata/search_internet.py b/src/calibre/ebooks/metadata/search_internet.py
-index f621a0571c..8672a27ead 100644
+index 6a46b0daf9..0b2d553cd4 100644
 --- a/src/calibre/ebooks/metadata/search_internet.py
 +++ b/src/calibre/ebooks/metadata/search_internet.py
 @@ -3,7 +3,6 @@
@@ -873,7 +873,7 @@ index f621a0571c..8672a27ead 100644
  
 -
  from polyglot.builtins import iteritems
- from polyglot.urllib import quote_plus
+ from polyglot.urllib import quote, quote_plus
  
 diff --git a/src/calibre/ebooks/metadata/snb.py b/src/calibre/ebooks/metadata/snb.py
 index fee88a0d3b..b17a689bd2 100644
@@ -1043,15 +1043,16 @@ index 170fabef65..0723fc3d29 100644
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
 diff --git a/src/calibre/gui2/actions/virtual_library.py b/src/calibre/gui2/actions/virtual_library.py
-index a187f69881..4cb6f99f0b 100644
+index c17b08b49e..517cbf70a2 100644
 --- a/src/calibre/gui2/actions/virtual_library.py
 +++ b/src/calibre/gui2/actions/virtual_library.py
-@@ -3,7 +3,6 @@
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
  # License: GPLv3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
  
- 
 -
- from PyQt5.Qt import QToolButton
+-
+ from PyQt5.Qt import QToolButton, QAction
  
  from calibre.gui2.actions import InterfaceAction
 diff --git a/src/calibre/gui2/add_filters.py b/src/calibre/gui2/add_filters.py
@@ -1416,7 +1417,7 @@ index 514c4f3c86..0bed9cee29 100644
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
 diff --git a/src/calibre/gui2/store/search/search.py b/src/calibre/gui2/store/search/search.py
-index eeeaf20371..258918f4dd 100644
+index 4be78798f3..1596046840 100644
 --- a/src/calibre/gui2/store/search/search.py
 +++ b/src/calibre/gui2/store/search/search.py
 @@ -1,7 +1,6 @@
@@ -1644,7 +1645,7 @@ index 24a8c3d9e8..109dd8a6e2 100644
  from functools import partial
  
 diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
-index 6fc4c03115..6c59bdfdd0 100644
+index 1db40b7565..18e0d176b1 100644
 --- a/src/calibre/gui2/viewer/ui.py
 +++ b/src/calibre/gui2/viewer/ui.py
 @@ -3,7 +3,6 @@
@@ -1656,7 +1657,7 @@ index 6fc4c03115..6c59bdfdd0 100644
  import os
  import re
 diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
-index f733baca97..c9623ef68e 100644
+index 8e92a56dbd..08346726b4 100644
 --- a/src/calibre/gui2/viewer/web_view.py
 +++ b/src/calibre/gui2/viewer/web_view.py
 @@ -3,7 +3,6 @@
@@ -2137,5 +2138,5 @@ index 4aaf32ce3a..5ba17c871e 100644
  
  
 -- 
-2.25.0
+2.25.1
 

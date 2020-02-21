@@ -1,7 +1,7 @@
-From 1eebba0f990576d20f142b94a53cd4e6ed165902 Mon Sep 17 00:00:00 2001
+From 692a0bfa5efd2a3f9c61aa41e9d6298ac2cca9c8 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 15:28:19 +0530
-Subject: [PATCH 057/104] Fix contention test on windows
+Subject: [PATCH 057/106] Fix contention test on windows
 
 ---
  src/calibre/db/tests/locking.py | 19 ++++++++++++++-----
@@ -57,5 +57,5 @@ index e15dffac05..6c2ace6551 100644
          self.assertFalse(lock.is_shared)
          self.assertFalse(lock.is_exclusive)
 -- 
-2.25.0
+2.25.1
 

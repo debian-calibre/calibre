@@ -1,15 +1,17 @@
-From 9aecb276a7543021c72461e763f5300419a3795c Mon Sep 17 00:00:00 2001
+From fb821d67ba0c3a7bafa99657947e8d32a5fbd5d0 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 18 Dec 2019 09:25:35 +0530
-Subject: [PATCH 088/104] Fix pycryptodome not working on windows
+Subject: [PATCH 088/106] Fix pycryptodome not working on windows
 
 ---
- bypy/windows/__main__.py  |   10 ++++++++++
- src/calibre/test_build.py |    2 ++
+ bypy/windows/__main__.py  | 10 ++++++++++
+ src/calibre/test_build.py |  2 ++
  2 files changed, 12 insertions(+)
 
---- calibre-debian.git.orig/bypy/windows/__main__.py
-+++ calibre-debian.git/bypy/windows/__main__.py
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 6a47426c2c..50ef45a22c 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
 @@ -202,6 +202,16 @@ def freeze(env, ext_dir):
      shutil.copytree(j(comext, 'shell'), j(sp_dir, 'win32com', 'shell'))
      shutil.rmtree(comext)
@@ -27,8 +29,10 @@ Subject: [PATCH 088/104] Fix pycryptodome not working on windows
      pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
      for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
          if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
---- calibre-debian.git.orig/src/calibre/test_build.py
-+++ calibre-debian.git/src/calibre/test_build.py
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index b02deea746..febb944120 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
 @@ -30,6 +30,8 @@ class BuildTest(unittest.TestCase):
                      ctypes.WinDLL(native_string_type(os.path.join(base, x)))
                  except Exception as err:
@@ -38,3 +42,6 @@ Subject: [PATCH 088/104] Fix pycryptodome not working on windows
  
      @unittest.skipUnless(islinux, 'DBUS only used on linux')
      def test_dbus(self):
+-- 
+2.25.1
+

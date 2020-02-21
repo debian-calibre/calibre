@@ -1,7 +1,7 @@
-From 91a9604e0953a096d9b6d517698aebfd769c6acf Mon Sep 17 00:00:00 2001
+From e090626ccaf21b815e7c08703cad5fd67cb58855 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 25 Nov 2019 15:18:13 +0530
-Subject: [PATCH 020/104] Allow subprocess to use posix_spawn()
+Subject: [PATCH 020/106] Allow subprocess to use posix_spawn()
 
 This is both faster and needed on macOS where one cannot use fork()
 when using Qt.
@@ -91,5 +91,5 @@ index 4756ca2cc5..d10e968e62 100644
      if csw:
          mod, _, func = csw.partition(':')
 -- 
-2.25.0
+2.25.1
 

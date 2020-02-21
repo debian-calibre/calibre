@@ -1,7 +1,7 @@
-From 1f27095534c88504d7982565f979f3857cf606e1 Mon Sep 17 00:00:00 2001
+From 4626080c70f7df1d39684eafeee343bbbe4940b0 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 11:57:28 +0530
-Subject: [PATCH 053/104] Fix share_open() in py3 on windows
+Subject: [PATCH 053/106] Fix share_open() in py3 on windows
 
 ---
  src/calibre/utils/shared_file.py | 71 +++++---------------------------
@@ -118,7 +118,7 @@ index 441a60dd25..f354b34546 100644
 +    from calibre.utils.run_tests import run_tests
 +    run_tests(find_tests)
 diff --git a/src/calibre/utils/speedup.c b/src/calibre/utils/speedup.c
-index ca990150d1..389bece9d6 100644
+index 30b82638c7..1bc956a1e3 100644
 --- a/src/calibre/utils/speedup.c
 +++ b/src/calibre/utils/speedup.c
 @@ -127,30 +127,6 @@ speedup_detach(PyObject *self, PyObject *args) {
@@ -152,7 +152,7 @@ index ca990150d1..389bece9d6 100644
  static void calculate_gaussian_kernel(Py_ssize_t size, double *kernel, double radius) {
      const double sqr = radius * radius;
      const double factor = 1.0 / (2 * M_PI * sqr);
-@@ -630,10 +606,6 @@ static PyMethodDef speedup_methods[] = {
+@@ -633,10 +609,6 @@ static PyMethodDef speedup_methods[] = {
              " This function returns an image (bytestring) in the PPM format as the texture."
      },
  
@@ -164,5 +164,5 @@ index ca990150d1..389bece9d6 100644
          "websocket_mask(data, mask [, offset=0)\n\nXOR the data (bytestring) with the specified (must be 4-byte bytestring) mask"
      },
 -- 
-2.25.0
+2.25.1
 

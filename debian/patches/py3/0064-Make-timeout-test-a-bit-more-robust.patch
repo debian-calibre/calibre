@@ -1,7 +1,7 @@
-From 3b4128be3b7c8cb533587a53f31252ff6852a1a4 Mon Sep 17 00:00:00 2001
+From 97e982bfc6c76f230331ad1c0172ef18b68b5a90 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 20:31:33 +0530
-Subject: [PATCH 064/104] Make timeout test a bit more robust
+Subject: [PATCH 064/106] Make timeout test a bit more robust
 
 ---
  src/calibre/srv/tests/loop.py | 2 +-
@@ -21,5 +21,5 @@ index 37a94d3f0d..4878d54c53 100644
              self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
              conn = server.connect()
 -- 
-2.25.0
+2.25.1
 

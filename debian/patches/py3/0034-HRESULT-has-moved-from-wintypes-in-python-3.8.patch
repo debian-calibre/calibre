@@ -1,17 +1,17 @@
-From dd73829a99f013d62813f55817d601d228af38a4 Mon Sep 17 00:00:00 2001
+From 5b1d082f82ababa4db5b961451f7e055e009bd66 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 09:30:38 +0530
-Subject: [PATCH 034/104] HRESULT has moved from wintypes in python 3.8
+Subject: [PATCH 034/106] HRESULT has moved from wintypes in python 3.8
 
 ---
- src/calibre/gui2/__init__.py |    3 ++-
+ src/calibre/gui2/__init__.py | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Index: b/src/calibre/gui2/__init__.py
-===================================================================
+diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
+index 16f83ceed9..c58262279c 100644
 --- a/src/calibre/gui2/__init__.py
 +++ b/src/calibre/gui2/__init__.py
-@@ -1462,12 +1462,13 @@ empty_index = empty_model.index(0)
+@@ -1465,12 +1465,13 @@ empty_index = empty_model.index(0)
  def set_app_uid(val):
      import ctypes
      from ctypes import wintypes
@@ -26,3 +26,6 @@ Index: b/src/calibre/gui2/__init__.py
      try:
          AppUserModelID(unicode_type(val))
      except Exception as err:
+-- 
+2.25.1
+

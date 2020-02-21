@@ -1,18 +1,18 @@
-From 8d0f0ab4ef30ba480f4a65ea22a58c0b60489eff Mon Sep 17 00:00:00 2001
+From 650366b94e2cb8871431336b95c540321fd1b01e Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 22 Nov 2019 12:08:28 +0530
-Subject: [PATCH 017/104] De-vendor pychm
+Subject: [PATCH 017/106] De-vendor pychm
 
 ---
- COPYRIGHT                         |    6 
- bypy/sources.json                 |    9 
- setup/extensions.json             |    9 
- src/calibre/constants.py          |    1 
- src/calibre/ebooks/chm/reader.py  |   34 
- src/calibre/test_build.py         |    4 
- src/calibre/utils/chm/__init__.py |   30 
+ COPYRIGHT                         |    6 -
+ bypy/sources.json                 |    9 +
+ setup/extensions.json             |    9 -
+ src/calibre/constants.py          |    1 -
+ src/calibre/ebooks/chm/reader.py  |   34 +-
+ src/calibre/test_build.py         |    4 +
+ src/calibre/utils/chm/__init__.py |   30 -
  src/calibre/utils/chm/chm.py      |  520 ---
- src/calibre/utils/chm/swig_chm.c  | 5919 --------------------------------------
+ src/calibre/utils/chm/swig_chm.c  | 5919 -----------------------------
  src/calibre/utils/chm/swig_chm.i  |  209 -
  10 files changed, 33 insertions(+), 6708 deletions(-)
  delete mode 100644 src/calibre/utils/chm/__init__.py
@@ -20,9 +20,11 @@ Subject: [PATCH 017/104] De-vendor pychm
  delete mode 100644 src/calibre/utils/chm/swig_chm.c
  delete mode 100644 src/calibre/utils/chm/swig_chm.i
 
---- calibre-debian.git.orig/COPYRIGHT
-+++ calibre-debian.git/COPYRIGHT
-@@ -206,12 +206,6 @@ Files: src/calibre/headless/fontconfig_d
+diff --git a/COPYRIGHT b/COPYRIGHT
+index 10afc65876..7120d8f8d1 100644
+--- a/COPYRIGHT
++++ b/COPYRIGHT
+@@ -206,12 +206,6 @@ Files: src/calibre/headless/fontconfig_database.cpp
  Copyright: Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies)
  License: LGPL-2.1, LGPL-3
  
@@ -35,12 +37,15 @@ Subject: [PATCH 017/104] De-vendor pychm
  Files: src/calibre/utils/open_search/description.py
  Copyright: 2011, John Schember <john@nachtimwald.com>, 2006, Ed Summers <ehs@pobox.com>
  License: GPL-3
---- calibre-debian.git.orig/bypy/sources.json
-+++ calibre-debian.git/bypy/sources.json
-@@ -557,6 +557,15 @@
+diff --git a/bypy/sources.json b/bypy/sources.json
+index d281fefb3d..4c8e363b1e 100644
+--- a/bypy/sources.json
++++ b/bypy/sources.json
+@@ -556,6 +556,15 @@
+         }
      },
  
-     {
++    {
 +        "name": "pychm",
 +        "unix": {
 +            "filename": "pychm-0.8.5.tar.gz",
@@ -49,16 +54,18 @@ Subject: [PATCH 017/104] De-vendor pychm
 +        }
 +    },
 +
-+    {
+     {
          "name": "html5-parser",
          "unix": {
-             "filename": "html5-parser-0.4.9.tar.gz",
---- calibre-debian.git.orig/setup/extensions.json
-+++ calibre-debian.git/setup/extensions.json
-@@ -72,15 +72,6 @@
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 0d33ca3418..ebbcac510d 100644
+--- a/setup/extensions.json
++++ b/setup/extensions.json
+@@ -71,15 +71,6 @@
+         "sources": "calibre/library/sqlite_custom.c",
          "inc_dirs": "!sqlite_inc_dirs"
      },
-     {
+-    {
 -        "name": "chmlib",
 -        "sources": "calibre/utils/chm/swig_chm.c",
 -        "libraries": "chm",
@@ -67,12 +74,13 @@ Subject: [PATCH 017/104] De-vendor pychm
 -        "lib_dirs": "!chmlib_lib_dirs",
 -        "defines": "SWIG_COBJECT_TYPES SWIG_PYTHON_STRICT_BYTE_CHAR"
 -    },
--    {
+     {
          "name": "lzx",
          "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
-         "inc_dirs": "calibre/utils/lzx",
---- calibre-debian.git.orig/src/calibre/constants.py
-+++ calibre-debian.git/src/calibre/constants.py
+diff --git a/src/calibre/constants.py b/src/calibre/constants.py
+index 4d6d6bdb0f..a0153d02a1 100644
+--- a/src/calibre/constants.py
++++ b/src/calibre/constants.py
 @@ -167,7 +167,6 @@ class Plugins(collections.Mapping):
                  'podofo',
                  'cPalmdoc',
@@ -81,8 +89,10 @@ Subject: [PATCH 017/104] De-vendor pychm
                  'icu',
                  'speedup',
                  'html_as_json',
---- calibre-debian.git.orig/src/calibre/ebooks/chm/reader.py
-+++ calibre-debian.git/src/calibre/ebooks/chm/reader.py
+diff --git a/src/calibre/ebooks/chm/reader.py b/src/calibre/ebooks/chm/reader.py
+index 31a04223db..1139777787 100644
+--- a/src/calibre/ebooks/chm/reader.py
++++ b/src/calibre/ebooks/chm/reader.py
 @@ -1,26 +1,19 @@
 -
 -
@@ -137,8 +147,10 @@ Subject: [PATCH 017/104] De-vendor pychm
      def _parse_toc(self, ul, basedir=getcwd()):
          toc = TOC(play_order=self._playorder, base_path=basedir, text='')
          self._playorder += 1
---- calibre-debian.git.orig/src/calibre/test_build.py
-+++ calibre-debian.git/src/calibre/test_build.py
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index 3b1ca5721c..c8b893692c 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
 @@ -50,6 +50,10 @@ class BuildTest(unittest.TestCase):
          from calibre.spell.dictionary import build_test
          build_test()
@@ -150,7 +162,10 @@ Subject: [PATCH 017/104] De-vendor pychm
      def test_chardet(self):
          from chardet import detect
          raw = 'mūsi Füße'.encode('utf-8')
---- calibre-debian.git.orig/src/calibre/utils/chm/__init__.py
+diff --git a/src/calibre/utils/chm/__init__.py b/src/calibre/utils/chm/__init__.py
+deleted file mode 100644
+index 3d329d9152..0000000000
+--- a/src/calibre/utils/chm/__init__.py
 +++ /dev/null
 @@ -1,30 +0,0 @@
 -# Copyright (C) 2003-2006 Rubens Ramos <rubensr@users.sourceforge.net>
@@ -183,7 +198,10 @@ Subject: [PATCH 017/104] De-vendor pychm
 -__all__ = ["chm", "chmlib", "_chmlib", "extra"]
 -__version__ = "0.8.4"
 -__revision__ = "$Id: __init__.py,v 1.8 2006/06/18 10:50:43 rubensr Exp $"
---- calibre-debian.git.orig/src/calibre/utils/chm/chm.py
+diff --git a/src/calibre/utils/chm/chm.py b/src/calibre/utils/chm/chm.py
+deleted file mode 100644
+index 4791d90ee8..0000000000
+--- a/src/calibre/utils/chm/chm.py
 +++ /dev/null
 @@ -1,520 +0,0 @@
 -# Copyright (C) 2003-2006 Rubens Ramos <rubensr@users.sourceforge.net>
@@ -706,7 +724,10 @@ Subject: [PATCH 017/104] De-vendor pychm
 -            self.home = self.GetString(text, dft_index)
 -            if not self.home.startswith(b"/"):
 -                self.home = b"/" + self.home
---- calibre-debian.git.orig/src/calibre/utils/chm/swig_chm.c
+diff --git a/src/calibre/utils/chm/swig_chm.c b/src/calibre/utils/chm/swig_chm.c
+deleted file mode 100644
+index 1642fe7754..0000000000
+--- a/src/calibre/utils/chm/swig_chm.c
 +++ /dev/null
 @@ -1,5919 +0,0 @@
 -/* ----------------------------------------------------------------------------
@@ -6628,7 +6649,10 @@ Subject: [PATCH 017/104] De-vendor pychm
 -  return;
 -#endif
 -}
---- calibre-debian.git.orig/src/calibre/utils/chm/swig_chm.i
+diff --git a/src/calibre/utils/chm/swig_chm.i b/src/calibre/utils/chm/swig_chm.i
+deleted file mode 100644
+index bbcbdbe698..0000000000
+--- a/src/calibre/utils/chm/swig_chm.i
 +++ /dev/null
 @@ -1,209 +0,0 @@
 -%module chmlib
@@ -6840,3 +6864,6 @@ Subject: [PATCH 017/104] De-vendor pychm
 -                      int what,
 -                      CHM_ENUMERATOR e,
 -                      void *context);
+-- 
+2.25.1
+
