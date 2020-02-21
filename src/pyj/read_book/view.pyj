@@ -172,7 +172,7 @@ class View:
         self.current_progress_frac = self.current_file_progress_frac = 0
         self.current_toc_node = self.current_toc_toplevel_node = None
         self.report_cfi_callbacks = {}
-        self.show_chrome_counter = 0
+        self.get_cfi_counter = 0
         self.show_loading_callback_timer = None
         self.timer_ids = {'clock': 0}
         self.book_scrollbar = BookScrollbar(self)
@@ -425,7 +425,7 @@ class View:
         elif data.name is 'print':
             ui_operations.print_book()
         elif data.name is 'preferences':
-            self.overlay.show_prefs()
+            self.show_chrome({'initial_panel': 'show_prefs'})
         elif data.name is 'metadata':
             self.overlay.show_metadata()
         elif data.name is 'goto_location':
@@ -442,6 +442,8 @@ class View:
             self.toggle_autoscroll()
         elif data.name.startsWith('switch_color_scheme:'):
             self.switch_color_scheme(data.name.partition(':')[-1])
+        else:
+            self.iframe_wrapper.send_message('handle_navigation_shortcut', name=data.name)
 
     def on_selection_change(self, data):
         self.currently_showing.selected_text = data.text
@@ -519,16 +521,26 @@ class View:
         self.iframe.contentWindow.focus()
 
     def show_chrome(self, data):
-        self.show_chrome_counter += 1
         elements = {}
         if data and data.elements:
             elements = data.elements
-        self.get_current_cfi('show-chrome-' + self.show_chrome_counter, self.do_show_chrome.bind(None, elements))
+        initial_panel = data?.initial_panel or None
+        self.get_current_cfi('show-chrome', self.do_show_chrome.bind(None, elements, initial_panel))
 
-    def do_show_chrome(self, elements, request_id, cfi_data):
+    def do_show_chrome(self, elements, initial_panel, request_id, cfi_data):
         self.hide_overlays()
         self.update_cfi_data(cfi_data)
-        self.overlay.show(elements)
+        if initial_panel:
+            getattr(self.overlay, initial_panel)()
+        else:
+            self.overlay.show(elements)
+
+    def prepare_for_close(self):
+
+        def close_prepared(request_id, cfi_data):
+            ui_operations.close_prep_finished(cfi_data.cfi)
+
+        self.get_current_cfi('prepare-close', close_prepared)
 
     def show_search(self):
         self.hide_overlays()
@@ -897,6 +909,8 @@ class View:
             self.goto_named_destination(toc_node.dest, toc_node.frag)
 
     def get_current_cfi(self, request_id, callback):
+        self.get_cfi_counter += 1
+        request_id += ':' + self.get_cfi_counter
         self.report_cfi_callbacks[request_id] = callback
         self.iframe_wrapper.send_message('get_current_cfi', request_id=request_id)
 
@@ -917,7 +931,7 @@ class View:
     def on_report_cfi(self, data):
         cb = self.report_cfi_callbacks[data.request_id]
         if cb:
-            cb(data.request_id, {
+            cb(data.request_id.rpartition(':')[0], {
                 'cfi': data.cfi,
                 'progress_frac': data.progress_frac,
                 'file_progress_frac': data.file_progress_frac,
@@ -1018,7 +1032,6 @@ class View:
             self.iframe_wrapper.init()
 
     def show_spine_item_stage2(self, resource_data):
-        self.currently_showing.loading = False
         # We cannot encrypt this message because the resource data contains
         # Blob objects which do not survive encryption
         self.processing_spine_item_display = True
@@ -1032,6 +1045,7 @@ class View:
 
     def on_content_loaded(self, data):
         self.processing_spine_item_display = False
+        self.currently_showing.loading = False
         self.hide_loading()
         self.set_progress_frac(data.progress_frac, data.file_progress_frac)
         self.update_header_footer()

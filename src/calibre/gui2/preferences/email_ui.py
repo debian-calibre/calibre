@@ -78,7 +78,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
 
         Form.setWindowTitle(_("Form"))
-        self.label_22.setText(_("calibre can send your books to you (or your reader) by email. Emails will be automatically sent for downloaded news to all email addresses that have Auto send checked."))
+        self.label_22.setText(_("<p>calibre can send your books to you (or your reader) by email. Emails will be automatically sent for downloaded news to all email addresses that have <i>Auto send</i> checked."))
         self.email_add.setToolTip(_("Add an email address to which to send books"))
         self.email_add.setText(_("&Add email"))
         self.email_make_default.setText(_("Make &default"))

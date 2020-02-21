@@ -20,6 +20,52 @@
 #   new recipes:
 #     - title:
 
+- version: 4.11.0
+  date: 2020-02-21
+
+  new features:
+    - title: "Viewer: Allow right clicking on the scrollbar to easily access commonly used scrolling shortcuts"
+
+    - title: "Edit book: Preview panel: Allow right clicking on images to edit them"
+
+    - title: "Add a new Quick select action to quickly select a virtual library with a few keystrokes. Activated by Ctrl+t or the Virtual library menu"
+
+    - title: "Viewer: Calculate default column widths based on current font size"
+
+    - title: "Viewer: Add a control to quit the viewer useful on touchscreens."
+      tickets: [1862441]
+
+    - title: "Viewer: Add shortcut for showing metadata (Ctrl+n)"
+      tickets: [1862432]
+
+  bug fixes:
+    - title: "Viewer: Fix a regression that broke detection of pop-up footnotes using EPUB 3 markup"
+
+    - title: "Viewer: Fix current reading position not preserved when changing preferences and auto scroll is active."
+      tickets: [1863438]
+
+    - title: "Viewer: Fix stopping autoscroll at end of chapter not stopping next chapter jump."
+      tickets: [1863487]
+
+    - title: "Fix for viewer window going off screen even when not restoring window geometry"
+
+    - title: "Edit book: Fix syntax highlighting for break-(before|after)"
+      tickets: [1863020]
+
+    - title: "Fix drag and drop of some image files onto edit metadata dialog not working"
+      tickets: [1862440]
+
+    - title: "Conversion pipeline: Fix styles applied via selectors to the <html> element being ignored"
+      tickets: [1862401]
+
+    - title: "Bulk metadata edit: Fix clear series not resetting series index"
+
+    - title: "Fix clicking on author name in book details panel to search in Goodreads not working if author has more than two parts in his name"
+
+
+  improved recipes:
+    - New York Times
+
 - version: 4.10.0
   date: 2020-02-07
 
@@ -48,7 +94,7 @@
 
     - title: "Check Book: Turn off unique headings CSS warning"
 
-    - title: "DOCX Output: When a list item contains a nested listed but no text, it should be output as an empty list item."
+    - title: "DOCX Output: When a list item contains a nested list but no text, it should be output as an empty list item."
 
 
   improved recipes:
@@ -2083,7 +2129,7 @@ to appear as Unknown if metadata management was set to manual in calibre."
     - title: "Content server: Open links in the comments section from the book details page in new windows."
       tickets: [1737644]
 
-    - title: "Choose English as the User interface language when a locale related environment variable is set to the C locale"
+    - title: "Choose English as the user interface language when a locale related environment variable is set to the C locale"
 
     - title: "Linux installer: A nicer error message if the user tries to run the installer on an ARM machine"
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "februari 07, 2020" "4.10.1" "calibre"
+.TH "CALIBREDB" "1" "februari 21, 2020" "4.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökägen till calibre\-biblioteket. Som standard är att använda sökvägen som lagrats i inställningarna. Du kan också ansluta till en calibre Innehållsserver för att utföra åtgärder på fjärrbibliotek. För att göra så använd en URL på formatet : \fI\%http://hostname:port/#library_id\fP till exempel \fI\%http://localhost:8080/#mylibrary\fP\&. Library_id är bibliotekets ID för biblioteket du vill ansluta till på Innehållsservern. Du kan använda det speciella library_id\-värdet av \- för att få en lista över bibliotekets identiteter som är tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsservern finns i \fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\&.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-Innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en webbadress i formuläret: \fI\%http://hostname:port/#bibliotek_id\fP till exempel, \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets ID för det bibliotek du vill ansluta till på Innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteks\-id:n tillgängliga på servern. Mer information om hur du konfigurerar åtkomst via en Innehållsserver finns i https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -229,7 +229,7 @@ calibredb add [options] fil1 fil2 fil3 ...
 .UNINDENT
 .UNINDENT
 .sp
-Lägg till de angivna filerna som böcker till databasen. Du kan även ange kataloger, se
+Lägg till de angivna filerna som böcker till databasen. Du kan även ange mappar, se
 katalog\-relaterade alternativ nedan.
 .sp
 När du skickar argument till calibredb som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
@@ -290,16 +290,16 @@ Ange namn på tillsatta boken/böckerna
 .UNINDENT
 .SS LÄGGER TILL FRÅN KATALOGER
 .sp
-Alternativ för att anpassa tilläggningen av böcker från kataloger. Som standard läggs endast filer som har ändelser av kända e\-bokfiltyper till.
+Alternativ för att anpassa tilläggningen av böcker från mappar. Som standard läggs endast filer som har ändelser av kända e\-bokfiltyper till.
 .INDENT 0.0
 .TP
 .B \-\-add
-Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid genomsökning av kataloger efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
+Ett filnamn (glob) mönster, kommer matcha filer som detta mönster läggas till vid genomsökning av mappar efter filer, även om de inte är av en känd e\-bok filtyp. Kan anges flera gånger för flera mönster.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid genomsökning av kataloger efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf ignorerar alla pdf\-filer
+Ett filnamn (glob) mönster, kommer filer som matchar detta mönster ignoreras vid genomsökning av mappar efter filer. Kan anges flera gånger för flera mönster. För t.ex.: *.pdf ignorerar alla pdf\-filer
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -309,7 +309,7 @@ Antag att varje katalog bara har en enda logisk bok och att alla filer i den är
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Sök igenom kataloger rekursivt
+Sök igenom mappar rekursivt
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
