@@ -4,17 +4,18 @@
 # 
 # Translators:
 # Alex, 2016
+# Herman L.M. van der Vaart <vaarttuig@gmail.com>, 2020
 # M. de Boer <de.boer.melle@gmail.com>, 2018
-# Full name, 2019
+# Meteor0id, 2019
 # Volluta <volluta@tutanota.com>, 2016
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 08:54+0530\n"
-"PO-Revision-Date: 2019-08-20 14:45+0000\n"
-"Last-Translator: Full name\n"
+"POT-Creation-Date: 2020-02-07 10:48+0530\n"
+"PO-Revision-Date: 2020-02-10 12:11+0000\n"
+"Last-Translator: Herman L.M. van der Vaart <vaarttuig@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,7 +83,7 @@ msgid ""
 " test that is used to select tags. Tests can be arbitrarily powerful and as "
 "this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "Stel nu dat u zowel de tags ``<h1> '' als ``<h2> '' wilt selecteren. Om dat te doen, hebben we een XPath-constructie nodig genaamd * predicaat *. Een :dfn: `predicaat` is gewoon een test die wordt gebruikt om tags te selecteren. Tests kunnen willekeurig krachtig zijn en naarmate deze zelfstudie vordert, zult u krachtigere voorbeelden zien. Een predicaat wordt gemaakt door de testuitdrukking tussen vierkante haken te plaatsen::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:53
 msgid ""
@@ -94,7 +95,7 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "Er zijn verschillende nieuwe functies in deze XPath-expressie. De eerste is het gebruik van het jokerteken `` * ``. Het betekent * komt overeen met elke tag *. Kijk nu naar de testuitdrukking `` name ()='h1' of name ()='h2' ''. : term: `name()` is een voorbeeld van een * ingebouwde functie *. Het evalueert eenvoudigweg de naam van de tag. Dus door het te gebruiken, kunnen we tags selecteren waarvan de namen `h1` of` h2` zijn. Merk op dat de functie :term:`name ()` naamruimten negeert, zodat het voorvoegsel `` h: `` niet nodig is. XPath heeft verschillende handige ingebouwde functies. Een paar meer zullen in deze zelfstudie worden geïntroduceerd."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
@@ -104,14 +105,14 @@ msgstr "Selecteren op eigenschap"
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "Om tags te selecteren op basis van hun attributen, is het gebruik van predicaten vereist::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "Hier verwijst de operator ``@'' naar de kenmerken van de tag. U kunt enkele van de in 'XPath ingebouwde functies' _ gebruiken om meer geavanceerdere vergelijkingen uit te voeren op kenmerkwaarden."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
@@ -122,17 +123,17 @@ msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "Met XPath kunt u zelfs tags selecteren op basis van de tekst die ze bevatten. De beste manier om dit te doen is om de kracht van * reguliere expressies * te gebruiken via de ingebouwde functie :term:`re:test()`::"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr ""
+msgstr "Hier verwijst de operator ``.`` naar de inhoud van de tag, net zoals de operator ``@'' verwijst naar de kenmerken."
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
-msgstr ""
+msgstr "Voorbeeld e-boek"
 
 #: ../../home/kovid/work/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
@@ -165,4 +166,4 @@ msgid ""
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/2.7/library/re.html>`_"
-msgstr ""
+msgstr "``re: test (src, patroon, vlaggen)`` geeft `waar` terug als de string`src` overeenkomt met de reguliere expressie `patroon`. Een bijzonder handige vlag is ``i``, het maakt vergelijken hoofdletter ongevoelig. Een goede inleiding over de syntaxis voor reguliere expressies is te vinden op `regexp syntax <https://docs.python.org/2.7/library/re.html>` _"
