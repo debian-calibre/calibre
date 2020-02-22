@@ -6,10 +6,10 @@ __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import socket
-#from calibre.constants import plugins
-#from polyglot.builtins import unicode_type
-from OpenSSL import crypto
 import secrets
+from OpenSSL import crypto
+#from calibre.constants import plugins
+from polyglot.builtins import unicode_type
 
 #certgen, err = plugins['certgen']
 #if err:
