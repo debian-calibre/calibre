@@ -32,6 +32,8 @@ def create_cert_request(
     req = crypto.X509Req()
     subj = req.get_subject()
 
+    req.set_version(2)
+
     if common_name         : setattr(subj, "CN",           common_name)
     if country             : setattr(subj, "C",            country)
     if state               : setattr(subj, "ST",           state)
@@ -52,6 +54,7 @@ def create_cert_request(
 
 def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
     cert = crypto.X509()
+    cert.set_version(2)
     cert.set_serial_number(secrets.randbits(SERIAL_RAND_BITS))
     cert.gmtime_adj_notBefore(not_before)
     cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
@@ -65,6 +68,7 @@ def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
 
 def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
     cert = crypto.X509()
+    cert.set_version(2)
     cert.set_serial_number(secrets.randbits(SERIAL_RAND_BITS))
     cert.gmtime_adj_notBefore(not_before)
     cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
