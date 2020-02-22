@@ -8,12 +8,7 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 import socket
 import secrets
 from OpenSSL import crypto
-#from calibre.constants import plugins
 from polyglot.builtins import unicode_type
-
-#certgen, err = plugins['certgen']
-#if err:
-#    raise ImportError('Failed to load the certgen module with error: %s' % err)
 
 
 def create_key_pair(size=2048):
