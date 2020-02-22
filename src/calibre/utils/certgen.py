@@ -43,6 +43,8 @@ def create_cert_request(
     if basic_constraints :
         req.add_extensions({crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii"))})
 
+    req.add_extensions(map(lambda x: crypto.X509Extension(b"subjectAltName", False, x.encode("ascii")), alt_names))
+
     req.set_pubkey(key_pair)
     req.sign(key_pair, "sha256")
 
@@ -134,7 +136,7 @@ def create_server_cert(
 
 
 if __name__ == '__main__':
-    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['1.test.me', '*.all.test.me'])
+    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['DNS:1.test.me', 'DNS:*.all.test.me'])
     print("CA Certificate")
     print(cert_info(cacert).encode('utf-8'))
     print(), print(), print()
