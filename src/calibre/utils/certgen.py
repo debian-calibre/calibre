@@ -6,16 +6,19 @@ __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import socket
-from calibre.constants import plugins
-from polyglot.builtins import unicode_type
+#from calibre.constants import plugins
+#from polyglot.builtins import unicode_type
+from OpenSSL import crypto
 
-certgen, err = plugins['certgen']
-if err:
-    raise ImportError('Failed to load the certgen module with error: %s' % err)
+#certgen, err = plugins['certgen']
+#if err:
+#    raise ImportError('Failed to load the certgen module with error: %s' % err)
 
 
 def create_key_pair(size=2048):
-    return certgen.create_rsa_keypair(size)
+    pkey = crypto.PKey()
+    pkey.generate_key(crypto.TYPE_RSA, size)
+    return pkey
 
 
 def create_cert_request(
@@ -28,18 +31,46 @@ def create_cert_request(
             x = x.encode('ascii')
         return x or None
 
-    return certgen.create_rsa_cert_req(
-        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
-        country, state, locality, organization, organizational_unit, email_address, basic_constraints
-    )
+    req = crypto.X509Req()
+    subj = req.get_subject()
 
+    setattr(subj, "CN", common_name)
+    setattr(subj, "C", country)
+    setattr(subj, "ST", state)
+    setattr(subj, "L", locality)
+    #setattr(subj, "O", organization)
+    #setattr(subj, "OU", organizational_unit)
+    #setattr(subj, "emailAddress", email_address)
+
+    req.set_pubkey(key_pair)
+    req.sign(key_pair, "sha256")
+
+    return req
 
 def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
-    return certgen.create_rsa_cert(req, ca_cert, ca_keypair, not_before, expire)
+    cert = crypto.X509()
+    cert.set_serial_number(0)
+    cert.gmtime_adj_notBefore(not_before)
+    cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
+    cert.set_issuer(ca_cert.get_subject())
+    cert.set_subject(req.get_subject())
+    cert.set_pubkey(req.get_pubkey())
+
+    cert.sign(ca_keypair, "sha256")
+    return cert
 
 
 def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
-    return certgen.create_rsa_cert(req, None, ca_keypair, not_before, expire)
+    cert = crypto.X509()
+    cert.set_serial_number(0)
+    cert.gmtime_adj_notBefore(not_before)
+    cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
+    cert.set_issuer(req.get_subject())
+    cert.set_subject(req.get_subject())
+    cert.set_pubkey(req.get_pubkey())
+
+    cert.sign(ca_keypair, "sha256")
+    return cert
 
 
 def serialize_cert(cert):
@@ -51,7 +82,7 @@ def serialize_key(key_pair, password=None):
 
 
 def cert_info(cert):
-    return certgen.cert_info(cert).decode('utf-8')
+    return crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode('utf-8')
 
 
 def create_server_cert(
