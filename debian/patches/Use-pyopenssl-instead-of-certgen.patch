@@ -7,15 +7,15 @@ So it soleves OpenSSL license issues.
 
 "pyopenssl" Uses Apache License Version 2.0, and it can be use with GPL3.
 ---
- src/calibre/utils/certgen.py | 72 +++++++++++++++++++++++++-----------
- setup/extensions.json    |    8 --------
- src/calibre/constants.py |    1 -
- 3 file changed, 51 insertions(+), 30 deletions(-)
+ setup/extensions.json        |    8 ----
+ src/calibre/constants.py     |    1 
+ src/calibre/utils/certgen.py |   74 ++++++++++++++++++++++++++++++-------------
+ 3 files changed, 52 insertions(+), 31 deletions(-)
 
-Index: calibre-debian.git/setup/extensions.json
+Index: b/setup/extensions.json
 ===================================================================
---- calibre-debian.git.orig/setup/extensions.json
-+++ calibre-debian.git/setup/extensions.json
+--- a/setup/extensions.json
++++ b/setup/extensions.json
 @@ -29,14 +29,6 @@
          "windows_libraries": ""
      },
@@ -31,10 +31,10 @@ Index: calibre-debian.git/setup/extensions.json
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
      },
-Index: calibre-debian.git/src/calibre/constants.py
+Index: b/src/calibre/constants.py
 ===================================================================
---- calibre-debian.git.orig/src/calibre/constants.py
-+++ calibre-debian.git/src/calibre/constants.py
+--- a/src/calibre/constants.py
++++ b/src/calibre/constants.py
 @@ -180,7 +180,6 @@ class Plugins(collections.Mapping):
                  'bzzdec',
                  'matcher',
@@ -43,8 +43,8 @@ Index: calibre-debian.git/src/calibre/constants.py
              ]
          if iswindows:
              plugins.extend(['winutil', 'wpd', 'winfonts'])
-diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
-index 30e4760dd..3f4c51a5b 100644
+Index: b/src/calibre/utils/certgen.py
+===================================================================
 --- a/src/calibre/utils/certgen.py
 +++ b/src/calibre/utils/certgen.py
 @@ -6,16 +6,15 @@ __license__ = 'GPL v3'
@@ -77,6 +77,11 @@ index 30e4760dd..3f4c51a5b 100644
 -        if isinstance(x, unicode_type):
 -            x = x.encode('ascii')
 -        return x or None
+-
+-    return certgen.create_rsa_cert_req(
+-        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
+-        country, state, locality, organization, organizational_unit, email_address, basic_constraints
+-    )
 +    req = crypto.X509Req()
 +    subj = req.get_subject()
 +
@@ -98,12 +103,8 @@ index 30e4760dd..3f4c51a5b 100644
 +        n = str.join(",", alt_names)
 +        ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
  
--    return certgen.create_rsa_cert_req(
--        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
--        country, state, locality, organization, organizational_unit, email_address, basic_constraints
--    )
 +    req.add_extensions(ext)
- 
++
 +    req.set_pubkey(key_pair)
 +    req.sign(key_pair, "sha256")
 +
@@ -159,6 +160,3 @@ index 30e4760dd..3f4c51a5b 100644
      print("CA Certificate")
      print(cert_info(cacert).encode('utf-8'))
      print(), print(), print()
--- 
-2.25.1
-
