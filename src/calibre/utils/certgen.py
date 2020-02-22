@@ -95,7 +95,9 @@ def serialize_cert(cert):
 
 
 def serialize_key(key_pair, password=None):
-    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, crypto.TYPE_RSA, password)
+    c = "blowfish" if password else None
+    p = password.encode("utf-8") if password else None
+    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, c, p)
 
 
 def cert_info(cert):
