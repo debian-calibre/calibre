@@ -47,7 +47,8 @@ def create_cert_request(
         ext.append(crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii")))
 
     if len(alt_names) > 0:
-        n = str.join(",", alt_names)
+        a = ["DNS:" + i for i in alt_names]
+        n = str.join(",", a)
         ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
 
     req.add_extensions(ext)
@@ -149,7 +150,7 @@ def create_server_cert(
 
 
 if __name__ == '__main__':
-    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['DNS:1.test.me', 'DNS:*.all.test.me'])
+    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['1.test.me', '*.all.test.me'])
     print("CA Certificate")
     print(cert_info(cacert).encode('utf-8'))
     print(), print(), print()
