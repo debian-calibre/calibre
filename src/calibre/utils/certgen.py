@@ -42,10 +42,15 @@ def create_cert_request(
     if organizational_unit : setattr(subj, "OU",           organizational_unit)
     if email_address       : setattr(subj, "emailAddress", email_address)
 
+    ext = []
     if basic_constraints :
-        req.add_extensions({crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii"))})
+        ext.append(crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii")))
 
-    req.add_extensions(map(lambda x: crypto.X509Extension(b"subjectAltName", False, x.encode("ascii")), alt_names))
+    if len(alt_names) > 0:
+        n = str.join(",", alt_names)
+        ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
+
+    req.add_extensions(ext)
 
     req.set_pubkey(key_pair)
     req.sign(key_pair, "sha256")
@@ -62,6 +67,8 @@ def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
     cert.set_subject(req.get_subject())
     cert.set_pubkey(req.get_pubkey())
 
+    cert.add_extensions(req.get_extensions())
+
     cert.sign(ca_keypair, "sha256")
     return cert
 
@@ -75,6 +82,8 @@ def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
     cert.set_issuer(req.get_subject())
     cert.set_subject(req.get_subject())
     cert.set_pubkey(req.get_pubkey())
+
+    cert.add_extensions(req.get_extensions())
 
     cert.sign(ca_keypair, "sha256")
     return cert
