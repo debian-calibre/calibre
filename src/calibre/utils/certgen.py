@@ -16,8 +16,6 @@ import secrets
 #    raise ImportError('Failed to load the certgen module with error: %s' % err)
 
 
-SERIAL_RAND_BITS = 128
-
 def create_key_pair(size=2048):
     pkey = crypto.PKey()
     pkey.generate_key(crypto.TYPE_RSA, size)
@@ -59,6 +57,8 @@ def create_cert_request(
     return req
 
 def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
+    SERIAL_RAND_BITS = 128
+
     cert = crypto.X509()
     cert.set_version(2)
     cert.set_serial_number(secrets.randbits(SERIAL_RAND_BITS))
@@ -73,22 +73,8 @@ def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
     cert.sign(ca_keypair, "sha256")
     return cert
 
-
 def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
-    cert = crypto.X509()
-    cert.set_version(2)
-    cert.set_serial_number(secrets.randbits(SERIAL_RAND_BITS))
-    cert.gmtime_adj_notBefore(not_before)
-    cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
-    cert.set_issuer(req.get_subject())
-    cert.set_subject(req.get_subject())
-    cert.set_pubkey(req.get_pubkey())
-
-    cert.add_extensions(req.get_extensions())
-
-    cert.sign(ca_keypair, "sha256")
-    return cert
-
+    return create_cert(req, req, ca_keypair, expire, not_before)
 
 def serialize_cert(cert):
     return crypto.dump_certificate(crypto.FILETYPE_PEM, cert)
