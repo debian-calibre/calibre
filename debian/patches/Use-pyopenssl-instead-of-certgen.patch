@@ -8,8 +8,41 @@ So it soleves OpenSSL license issues.
 "pyopenssl" Uses Apache License Version 2.0, and it can be use with GPL3.
 ---
  src/calibre/utils/certgen.py | 72 +++++++++++++++++++++++++-----------
- 1 file changed, 51 insertions(+), 21 deletions(-)
+ setup/extensions.json    |    8 --------
+ src/calibre/constants.py |    1 -
+ 3 file changed, 51 insertions(+), 30 deletions(-)
 
+Index: calibre-debian.git/setup/extensions.json
+===================================================================
+--- calibre-debian.git.orig/setup/extensions.json
++++ calibre-debian.git/setup/extensions.json
+@@ -29,14 +29,6 @@
+         "windows_libraries": ""
+     },
+     {
+-        "name": "certgen",
+-        "sources": "calibre/utils/certgen.c",
+-        "libraries": "crypto",
+-        "windows_libraries": "libeay32",
+-        "inc_dirs": "!openssl_inc_dirs",
+-        "lib_dirs": "!openssl_lib_dirs"
+-    },
+-    {
+         "name": "html_syntax_highlighter",
+         "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
+     },
+Index: calibre-debian.git/src/calibre/constants.py
+===================================================================
+--- calibre-debian.git.orig/src/calibre/constants.py
++++ calibre-debian.git/src/calibre/constants.py
+@@ -180,7 +180,6 @@ class Plugins(collections.Mapping):
+                 'bzzdec',
+                 'matcher',
+                 'tokenizer',
+-                'certgen',
+             ]
+         if iswindows:
+             plugins.extend(['winutil', 'wpd', 'winfonts'])
 diff --git a/src/calibre/utils/certgen.py b/src/calibre/utils/certgen.py
 index 30e4760dd..3f4c51a5b 100644
 --- a/src/calibre/utils/certgen.py
