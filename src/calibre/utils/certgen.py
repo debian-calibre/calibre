@@ -6,15 +6,16 @@ __license__ = 'GPL v3'
 __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import socket
-import secrets
-from OpenSSL import crypto
+from calibre.constants import plugins
 from polyglot.builtins import unicode_type
+
+certgen, err = plugins['certgen']
+if err:
+    raise ImportError('Failed to load the certgen module with error: %s' % err)
 
 
 def create_key_pair(size=2048):
-    pkey = crypto.PKey()
-    pkey.generate_key(crypto.TYPE_RSA, size)
-    return pkey
+    return certgen.create_rsa_keypair(size)
 
 
 def create_cert_request(
@@ -22,66 +23,35 @@ def create_cert_request(
     country='IN', state='Maharashtra', locality='Mumbai', organization=None,
     organizational_unit=None, email_address=None, alt_names=(), basic_constraints=None
 ):
-    req = crypto.X509Req()
-    subj = req.get_subject()
+    def enc(x):
+        if isinstance(x, unicode_type):
+            x = x.encode('ascii')
+        return x or None
 
-    req.set_version(2)
+    return certgen.create_rsa_cert_req(
+        key_pair, tuple(enc(x) for x in alt_names if x), common_name,
+        country, state, locality, organization, organizational_unit, email_address, basic_constraints
+    )
 
-    if common_name         : setattr(subj, "CN",           common_name)
-    if country             : setattr(subj, "C",            country)
-    if state               : setattr(subj, "ST",           state)
-    if locality            : setattr(subj, "L",            locality)
-    if organization        : setattr(subj, "O",            organization)
-    if organizational_unit : setattr(subj, "OU",           organizational_unit)
-    if email_address       : setattr(subj, "emailAddress", email_address)
-
-    ext = []
-    if basic_constraints :
-        ext.append(crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii")))
-
-    if len(alt_names) > 0 :
-        n = str.join(",", alt_names)
-        ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
-
-    req.add_extensions(ext)
-
-    req.set_pubkey(key_pair)
-    req.sign(key_pair, "sha256")
-
-    return req
 
 def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
-    SERIAL_RAND_BITS = 128
+    return certgen.create_rsa_cert(req, ca_cert, ca_keypair, not_before, expire)
 
-    cert = crypto.X509()
-    cert.set_version(2)
-    cert.set_serial_number(secrets.randbits(SERIAL_RAND_BITS))
-    cert.gmtime_adj_notBefore(not_before)
-    cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
-    cert.set_issuer(ca_cert.get_subject())
-    cert.set_subject(req.get_subject())
-    cert.set_pubkey(req.get_pubkey())
-
-    cert.add_extensions(req.get_extensions())
-
-    cert.sign(ca_keypair, "sha256")
-    return cert
 
 def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
-    return create_cert(req, req, ca_keypair, expire, not_before)
+    return certgen.create_rsa_cert(req, None, ca_keypair, not_before, expire)
+
 
 def serialize_cert(cert):
-    return crypto.dump_certificate(crypto.FILETYPE_PEM, cert)
+    return certgen.serialize_cert(cert)
 
 
 def serialize_key(key_pair, password=None):
-    c = "des3" if password else None
-    p = password.encode("utf-8") if password else None
-    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, cipher=c, passphrase=p)
+    return certgen.serialize_rsa_key(key_pair, password)
 
 
 def cert_info(cert):
-    return crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode('utf-8')
+    return certgen.cert_info(cert).decode('utf-8')
 
 
 def create_server_cert(
@@ -132,7 +102,7 @@ def create_server_cert(
 
 
 if __name__ == '__main__':
-    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['DNS:1.test.me', 'DNS:*.all.test.me'])
+    cacert, cakey, cert, pkey = create_server_cert('test.me', alt_names=['1.test.me', '*.all.test.me'])
     print("CA Certificate")
     print(cert_info(cacert).encode('utf-8'))
     print(), print(), print()
