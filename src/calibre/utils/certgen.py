@@ -46,7 +46,7 @@ def create_cert_request(
     if basic_constraints :
         ext.append(crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii")))
 
-    if len(alt_names) > 0:
+    if len(alt_names) > 0 :
         a = ["DNS:{}".format(i) for i in alt_names]
         n = str.join(",", a)
         ext.append(crypto.X509Extension(b"subjectAltName", False, n.encode("ascii")))
