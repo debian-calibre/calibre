@@ -15434,6 +15434,10 @@ return this.__repr__();
             return cps;
         };
 
+        function will_columns_per_screen_change() {
+            return ρσ_not_equals(calc_columns_per_screen(), cols_per_screen);
+        };
+
         function layout(is_single_page, on_resize) {
             var body_style, first_layout, cps, single_screen, svgs, has_svg, imgs, only_img, num, elems, n, ww, sm, c, c2, has_no_more_than_two_columns, data, dw, elem;
             body_style = window.getComputedStyle(document.body);
@@ -16179,6 +16183,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].fit_images = fit_images;
         ρσ_modules["read_book.paged_mode"].cps_by_em_size = cps_by_em_size;
         ρσ_modules["read_book.paged_mode"].calc_columns_per_screen = calc_columns_per_screen;
+        ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change = will_columns_per_screen_change;
         ρσ_modules["read_book.paged_mode"].layout = layout;
         ρσ_modules["read_book.paged_mode"].current_scroll_offset = current_scroll_offset;
         ρσ_modules["read_book.paged_mode"].scroll_to_offset = scroll_to_offset;
@@ -17515,7 +17520,7 @@ return this.__repr__();
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
 
         HOLD_THRESHOLD = 750;
-        TAP_THRESHOLD = 7;
+        TAP_THRESHOLD = 8;
         TAP_LINK_THRESHOLD = 5;
         PINCH_THRESHOLD = 10;
         LONG_TAP_THRESHOLD = 500;
@@ -18109,6 +18114,7 @@ return this.__repr__();
         var paged_anchor_funcs = ρσ_modules["read_book.paged_mode"].anchor_funcs;
         var paged_auto_scroll_action = ρσ_modules["read_book.paged_mode"].auto_scroll_action;
         var calc_columns_per_screen = ρσ_modules["read_book.paged_mode"].calc_columns_per_screen;
+        var will_columns_per_screen_change = ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change;
         var current_cfi = ρσ_modules["read_book.paged_mode"].current_cfi;
         var paged_handle_gesture = ρσ_modules["read_book.paged_mode"].handle_gesture;
         var paged_handle_shortcut = ρσ_modules["read_book.paged_mode"].handle_shortcut;
@@ -18250,6 +18256,8 @@ return this.__repr__();
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
             this.on_next_screen = IframeBoss.prototype.on_next_screen.bind(this);
             this.change_font_size = IframeBoss.prototype.change_font_size.bind(this);
+            this.viewer_font_size_changed = IframeBoss.prototype.viewer_font_size_changed.bind(this);
+            this.relayout_on_font_size_change = IframeBoss.prototype.relayout_on_font_size_change.bind(this);
             this.change_scroll_speed = IframeBoss.prototype.change_scroll_speed.bind(this);
             this.change_stylesheet = IframeBoss.prototype.change_stylesheet.bind(this);
             this.change_color_scheme = IframeBoss.prototype.change_color_scheme.bind(this);
@@ -18296,6 +18304,7 @@ return this.__repr__();
                 var ρσ_d = Object.create(null);
                 ρσ_d["change_color_scheme"] = self.change_color_scheme;
                 ρσ_d["change_font_size"] = self.change_font_size;
+                ρσ_d["viewer_font_size_changed"] = self.viewer_font_size_changed;
                 ρσ_d["change_scroll_speed"] = self.change_scroll_speed;
                 ρσ_d["display"] = self.display;
                 ρσ_d["find"] = self.find;
@@ -18554,11 +18563,37 @@ return this.__repr__();
             if (ρσ_exists.n(data.base_font_size) && (data.base_font_size !== opts.base_font_size && (typeof data.base_font_size !== "object" || ρσ_not_equals(data.base_font_size, opts.base_font_size)))) {
                 opts.base_font_size = data.base_font_size;
                 apply_font_size();
+                if (!runtime.is_standalone_viewer) {
+                    self.relayout_on_font_size_change();
+                }
             }
         };
         if (!IframeBoss.prototype.change_font_size.__argnames__) Object.defineProperties(IframeBoss.prototype.change_font_size, {
             __argnames__ : {value: ["data"]}
         });
+        IframeBoss.prototype.viewer_font_size_changed = function viewer_font_size_changed(data) {
+            var self = this;
+            opts.base_font_size = data.base_font_size;
+            self.relayout_on_font_size_change();
+        };
+        if (!IframeBoss.prototype.viewer_font_size_changed.__argnames__) Object.defineProperties(IframeBoss.prototype.viewer_font_size_changed, {
+            __argnames__ : {value: ["data"]}
+        });
+        IframeBoss.prototype.relayout_on_font_size_change = function relayout_on_font_size_change() {
+            var self = this;
+            var cfi;
+            if (current_layout_mode() !== "flow" && will_columns_per_screen_change()) {
+                self.do_layout(self.is_titlepage);
+                if (self.last_cfi) {
+                    cfi = self.last_cfi.slice(len("epubcfi(/"), -1).partition("/")[2];
+                    if (cfi) {
+                        paged_jump_to_cfi("/" + cfi);
+                    }
+                }
+                self.update_cfi();
+                self.update_toc_position();
+            }
+        };
         IframeBoss.prototype.change_scroll_speed = function change_scroll_speed(data) {
             var self = this;
             if (ρσ_exists.n(data.lines_per_sec_auto)) {
@@ -29692,6 +29727,7 @@ return this.__repr__();
             this.on_content_loaded = View.prototype.on_content_loaded.bind(this);
             this.set_progress_frac = View.prototype.set_progress_frac.bind(this);
             this.update_font_size = View.prototype.update_font_size.bind(this);
+            this.viewer_font_size_changed = View.prototype.viewer_font_size_changed.bind(this);
             this.update_scroll_speed = View.prototype.update_scroll_speed.bind(this);
             this.update_color_scheme = View.prototype.update_color_scheme.bind(this);
             this.toggle_reference_mode = View.prototype.toggle_reference_mode.bind(this);
@@ -31156,6 +31192,10 @@ return this.__repr__();
             var self = this;
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_font_size"].concat([ρσ_desugar_kwargs({base_font_size: get_session_data().get("base_font_size")})]));
         };
+        View.prototype.viewer_font_size_changed = function viewer_font_size_changed() {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["viewer_font_size_changed"].concat([ρσ_desugar_kwargs({base_font_size: get_session_data().get("base_font_size")})]));
+        };
         View.prototype.update_scroll_speed = function update_scroll_speed(amt) {
             var self = this;
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_scroll_speed"].concat([ρσ_desugar_kwargs({lines_per_sec_auto: change_scroll_speed(amt)})]));
@@ -31789,6 +31829,13 @@ return this.__repr__();
             }
         });
 
+        
+        var viewer_font_size_changed = from_python(function viewer_font_size_changed() {
+            if (view) {
+                view.viewer_font_size_changed();
+            }
+        });
+
         function onerror(msg, script_url, line_number, column_number, error_object) {
             var fname, details;
             if (!error_object) {
@@ -32089,7 +32136,7 @@ return this.__repr__();
             window.onerror = onerror;
             create_modal_container();
             document.head.appendChild(E.style(get_widget_css()));
-            ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({background_color: get_color("window-background"), color: get_color("window-foreground"), touch_action: "none"})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({background_color: get_color("window-background"), color: get_color("window-foreground")})]));
             setTimeout(function () {
                 window.onpopstate = on_pop_state;
             }, 0);
