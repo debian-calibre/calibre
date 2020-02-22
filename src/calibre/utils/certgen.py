@@ -9,6 +9,7 @@ import socket
 #from calibre.constants import plugins
 #from polyglot.builtins import unicode_type
 from OpenSSL import crypto
+import secrets
 
 #certgen, err = plugins['certgen']
 #if err:
@@ -49,7 +50,7 @@ def create_cert_request(
 
 def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
     cert = crypto.X509()
-    cert.set_serial_number(0)
+    cert.set_serial_number(secrets.randbits(128))
     cert.gmtime_adj_notBefore(not_before)
     cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
     cert.set_issuer(ca_cert.get_subject())
@@ -62,7 +63,7 @@ def create_cert(req, ca_cert, ca_keypair, expire=365, not_before=0):
 
 def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
     cert = crypto.X509()
-    cert.set_serial_number(0)
+    cert.set_serial_number(secrets.randbits(128))
     cert.gmtime_adj_notBefore(not_before)
     cert.gmtime_adj_notAfter((60 * 60 * 24) * expire)
     cert.set_issuer(req.get_subject())
@@ -74,11 +75,11 @@ def create_ca_cert(req, ca_keypair, expire=365, not_before=0):
 
 
 def serialize_cert(cert):
-    return certgen.serialize_cert(cert)
+    return crypto.dump_certificate(crypto.FILETYPE_PEM, cert)
 
 
 def serialize_key(key_pair, password=None):
-    return certgen.serialize_rsa_key(key_pair, password)
+    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, crypto.TYPE_RSA, password)
 
 
 def cert_info(cert):
