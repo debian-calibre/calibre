@@ -1,11 +1,10 @@
 ---
- setup/extensions.json         |    8 --------
- setup/test.py                 |    2 +-
- src/calibre/constants.py      |    1 -
- src/calibre/srv/tests/loop.py |   20 --------------------
- src/calibre/test_build.py     |    4 ----
- 5 files changed, 1 insertion(+), 34 deletions(-)
+ setup/extensions.json    |    8 --------
+ src/calibre/constants.py |    1 -
+ 2 files changed, 9 deletions(-)
 
+Index: calibre-debian.git/setup/extensions.json
+===================================================================
 --- calibre-debian.git.orig/setup/extensions.json
 +++ calibre-debian.git/setup/extensions.json
 @@ -29,14 +29,6 @@
@@ -23,6 +22,8 @@
          "name": "html_syntax_highlighter",
          "sources": "calibre/gui2/tweak_book/editor/syntax/html.c"
      },
+Index: calibre-debian.git/src/calibre/constants.py
+===================================================================
 --- calibre-debian.git.orig/src/calibre/constants.py
 +++ calibre-debian.git/src/calibre/constants.py
 @@ -180,7 +180,6 @@ class Plugins(collections.Mapping):
