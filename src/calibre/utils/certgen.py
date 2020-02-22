@@ -40,6 +40,9 @@ def create_cert_request(
     if organizational_unit : setattr(subj, "OU",           organizational_unit)
     if email_address       : setattr(subj, "emailAddress", email_address)
 
+    if basic_constraints :
+        req.add_extensions({crypto.X509Extension(b"basicConstraints", False, basic_constraints.encode("ascii"))})
+
     req.set_pubkey(key_pair)
     req.sign(key_pair, "sha256")
 
