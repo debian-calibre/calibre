@@ -97,7 +97,7 @@ def serialize_cert(cert):
 def serialize_key(key_pair, password=None):
     c = "des3" if password else None
     p = password.encode("utf-8") if password else None
-    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, c, p)
+    return crypto.dump_privatekey(crypto.FILETYPE_PEM, key_pair, cipher=c, passphrase=p)
 
 
 def cert_info(cert):
