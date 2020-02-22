@@ -29,21 +29,16 @@ def create_cert_request(
     country='IN', state='Maharashtra', locality='Mumbai', organization=None,
     organizational_unit=None, email_address=None, alt_names=(), basic_constraints=None
 ):
-    def enc(x):
-        if isinstance(x, unicode_type):
-            x = x.encode('ascii')
-        return x or None
-
     req = crypto.X509Req()
     subj = req.get_subject()
 
-    setattr(subj, "CN", common_name)
-    setattr(subj, "C", country)
-    setattr(subj, "ST", state)
-    setattr(subj, "L", locality)
-    #setattr(subj, "O", organization)
-    #setattr(subj, "OU", organizational_unit)
-    #setattr(subj, "emailAddress", email_address)
+    if common_name         : setattr(subj, "CN",           common_name)
+    if country             : setattr(subj, "C",            country)
+    if state               : setattr(subj, "ST",           state)
+    if locality            : setattr(subj, "L",            locality)
+    if organization        : setattr(subj, "O",            organization)
+    if organizational_unit : setattr(subj, "OU",           organizational_unit)
+    if email_address       : setattr(subj, "emailAddress", email_address)
 
     req.set_pubkey(key_pair)
     req.sign(key_pair, "sha256")
