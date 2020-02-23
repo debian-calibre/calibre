@@ -1,0 +1,31 @@
+commit a41fcfd3db7e20f596ba34b018914e704025ab6e
+Author: Kovid Goyal <kovid@kovidgoyal.net>
+Date:   Sun Feb 23 08:40:11 2020 +0530
+
+    Fix #1864340 [calibredb list output to file is broken](https://bugs.launchpad.net/calibre/+bug/1864340)
+    
+    py3 apparently cant print newlines correctly when stdout is redirected
+    to a file. Sigh.
+
+---
+ src/calibre/db/cli/cmd_list.py |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- calibre-debian.git.orig/src/calibre/db/cli/cmd_list.py
++++ calibre-debian.git/src/calibre/db/cli/cmd_list.py
+@@ -213,12 +213,12 @@ def do_list(
+         lines = max(map(len, text))
+         for l in range(lines):
+             for i, field in enumerate(text):
+-                ft = text[i][l] if l < len(text[i]) else u''
++                ft = text[i][l] if l < len(text[i]) else ''
+                 stdout.write(ft.encode('utf-8'))
+                 if i < len(text) - 1:
+-                    filler = (u'%*s' % (widths[i] - str_width(ft) - 1, u''))
++                    filler = ('%*s' % (widths[i] - str_width(ft) - 1, ''))
+                     stdout.write((filler + separator).encode('utf-8'))
+-            print()
++            stdout.write(b'\n')
+ 
+ 
+ def option_parser(get_parser, args):
