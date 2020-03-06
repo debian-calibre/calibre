@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "fevereiro 22, 2020" "4.11.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "março 06, 2020" "4.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -138,12 +138,12 @@ Esta opção só é necessária se pretende utilizar EPUB com o FBReaderJ. Vai r
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Inserir um índice em linha que irá aparecer como parte do conteúdo principal do livro.
+Inserir um índice incorporado que irá aparecer como parte do conteúdo principal do livro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Inserir um Índice em linha no final do livro em vez de no início.
+Colocar o índice incorporado no final do livro em vez de no início.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,7 +158,7 @@ Extrai o conteúdo do ficheiro EPUB gerado para a pasta especificada. O conteúd
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Dividir todos os ficheiros HTML maiores que este tamanho (em KB). Isto é necessário porque a maioria dos leitores EPUB não lida bem com ficheiros muito grandes. O padrão de 260KB é o tamanho requerido por Adobe Digital Editions. Definir para 0 para desativar a divisão baseada no tamanho.
+Dividir todos os ficheiros HTML maiores que este tamanho (em KB). Isto é necessário porque a maioria dos leitores EPUB não lida bem com ficheiros muito grandes. A predefinição de 260KB é o tamanho requerido por Adobe Digital Editions. Definir para 0 para desativar a divisão baseada no tamanho.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +173,7 @@ Não utilizar SVG para a capa do livro. Utilize esta opção se o seu EPUB for u
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-Quando utilizar uma capa SVG, esta opção permite esticar a capa para a área do ecrã preservando o aspeto (rácio largura/altura). Isto significa que podem surgir margens brancas nos lados ou no topo e fundo da imagem, mas a imagem nunca será distorcida.
+Quando utilizar uma capa SVG, esta opção permite esticar a capa para a área do ecrã disponível mas preservando o aspeto (proporção largura/altura). Isto significa que podem surgir margens brancas nos lados ou no topo e fundo da imagem mas a imagem não será distorcida.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +183,7 @@ Se especificado, o plugin de saída irá tentar criar um ficheiro o mais próxim
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Título para qualquer Índice gerado em série.
+Título para qualquer índice incorporado gerado.
 .UNINDENT
 .SH VISUAL
 .sp
@@ -201,7 +201,7 @@ The base font size in pts. All font sizes in the produced book will be rescaled 
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Mudar justificação do texto. Um valor de \fB"\fPleft\fB"\fP vai converter todo o texto justificado no original para texto com alinhamento à esquerda (ou seja, sem justificação). Um valor de \fB"\fPjustify\fB"\fP converte todo o texto sem justificação para justificado. Um valor de \fB"\fPoriginal\fB"\fP (o padrão) não altera a justificação no ficheiro fonte. Tenha em conta que apenas alguns formatos de saída suportam a justificação de texto.
+Mudar justificação do texto. Um valor de \fB"\fPleft\fB"\fP vai converter todo o texto justificado no original para texto com alinhamento à esquerda (ou seja, sem justificação). Um valor de \fB"\fPjustify\fB"\fP converte todo o texto sem justificação para justificado. Um valor de \fB"\fPoriginal\fB"\fP (a predefinição) não altera a justificação no ficheiro fonte. Tenha em conta que apenas alguns formatos de saída suportam a justificação de texto.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,7 +221,7 @@ Incorporar a família de fontes especificada no livro. Isto especifica o tipo de
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Por padrão, o Calibre vai usar o modo abreviado para várias propriedades CSS como margem, espaçamento, contorno, etc. Esta opção fará com que use a forma expandida. Note que o CSS é sempre expandido ao gerar ficheiros EPUB com o perfil de saída definido para um dos perfis do Nook, porque o Nook não permite CSS abreviado.
+Por predefinição, o Calibre vai usar o modo abreviado para várias propriedades CSS como margem, espaçamento, contorno, etc. Esta opção fará com que use a forma expandida. Note que o CSS é sempre expandido ao gerar ficheiros EPUB com o perfil de saída definido para um dos perfis do Nook, porque o Nook não permite CSS abreviado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ Uma lista separada por vírgulas de propriedades CSS que serão removidas de tod
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapeamento dos nomes dos tipos de letra CSS para tamanhos em pts. Um exemplo de definição é 12,12,14,16,18,20,22,24. Estes são os mapeamentos para os tamanhos xx\-small até xx\-large, sendo o tamanho final o maior. O algoritmo de alteração proporcional dos tipos de letra usa estes tamanhos para alterar de forma inteligente o tamanho dos tipos de letra. O padrão é usar um mapeamento baseado no perfil de destino que escolheu.
+Mapeamento dos nomes dos tipos de letra CSS para tamanhos em pts. Um exemplo de definição é 12,12,14,16,18,20,22,24. Estes são os mapeamentos para os tamanhos xx\-small até xx\-large, sendo o tamanho final o maior. O algoritmo de alteração proporcional dos tipos de letra usa estes tamanhos para alterar de forma inteligente o tamanho dos tipos de letra. A predefinição é usar um mapeamento baseado no perfil de destino que escolheu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,12 +246,12 @@ Inserir uma linha em branco entre os parágrafos. Não funciona se o ficheiro de
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Definir a altura das linhas inseridas em branco (em \fB\(aq\fPem\fB\(aq\fP). A altura das linhas entre parágrafos será duas vezes o tamanho definido aqui.
+Definir a altura das linhas inseridas em branco (valores \fB\(aq\fPem\fB\(aq\fP). A altura das linhas entre parágrafos será duas vezes o tamanho definido aqui.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserva as ligaturas presentes no documento de entrada. Uma ligatura é um formato especial para mostrar um par de caracteres tal como ff, fi, fl, etc. A maioria dos leitores não tem suporte para ligaturas nas suas fontes padrão e não conseguem mostrá\-las corretamente. Por padrão, o Calibre irá transformar uma ligatura no seu par correspondente de caracteres normais. Esta opção irá preservar as ligaturas.
+Preserva as ligaturas presentes no documento de entrada. Uma ligatura é um formato especial para mostrar um par de caracteres tal como ff, fi, fl, etc. A maioria dos leitores não têm suporte para ligaturas nas suas fontes predefinidas e não conseguem mostrá\-las corretamente. Por predefinição, o Calibre irá transformar uma ligatura no seu par correspondente de caracteres normais. Esta opção irá preservar as ligaturas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -266,22 +266,22 @@ Alguns documentos mal desenhados usam tabelas para controlar a disposição do t
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Definir a margem inferior em pts. O padrão é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já tem a sua própria margem determinada.
+Definir a margem inferior em pts. A predefinição é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já têm as sua próprias definições de margem determinadas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Definir a margem esquerda em pts. O padrão é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas de páginas pré\-estabelecidas como PDF e DOCX já tem a sua própria margem determinada.
+Definir a margem esquerda em pts. A predefinição é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já têm as sua próprias definições de margem determinadas e que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Definir a margem direita em pts. O padrão é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já tem a sua própria margem determinada.
+Definir a margem direita em pts. A predefinição é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já têm as sua próprias definições de margem determinadas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Definir a margem superior em pts. O padrão é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré estabelecida como PDF e DOCX já tem a sua própria margem determinada.
+Definir a margem superior em pts. A predefinição é 5.0. Definir este valor para 0 irá fazer com que nenhuma margem seja definida (as margens do documento original serão preservadas). Nota: formatos já com medidas da páginas pré\-estabelecidas como PDF e DOCX já têm as sua próprias definições de margem determinadas e que têm precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -320,7 +320,7 @@ Converter citações extravagantes, traços e reticências aos seus equivalentes
 .UNINDENT
 .SH PROCESSAMENTO HEURÍSTICO
 .sp
-Modifique o texto do documento e a sua estrutura usando padrões comuns. Desativada por omissão: use \-\-enable\-heuristics para ativar. Ações individuais podem ser desativadas com a opção \-\-disable\-* .
+Modifique o texto do documento e a sua estrutura usando padrões comuns. Desativada por predefinição. Usar \-\-enable\-heuristics para ativar. Ações individuais podem ser desativadas com as opções \-\-disable\-* .
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
@@ -420,7 +420,7 @@ Controlar a deteção automática da estrutura do documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Uma expressão XPath para apagar os títulos dos capítulos. O padrão é considerar as etiquetas <h1> ou <h2> que contém as palavras \fB"\fPcapítulo\fB"\fP,\fB"\fPlivro\fB"\fP,\fB"\fPsecção\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepilogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulos assim como quaisquer etiquetas que tenham class=\fB"\fPchapter\fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a deteção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Veja o tutorial do XPath no Manual do Utilizador do Calibre para mais ajudas no uso desta função.
+Uma expressão XPath para apagar os títulos dos capítulos. A predefinição é considerar as etiquetas <h1> ou <h2> que contém as palavras \fB"\fPcapítulo\fB"\fP,\fB"\fPlivro\fB"\fP,\fB"\fPsecção\fB"\fP, \fB"\fPprólogo\fB"\fP, \fB"\fPepilogo\fB"\fP ou \fB"\fPparte\fB"\fP como títulos de capítulos assim como quaisquer etiquetas que tenham class=\fB"\fPchapter\fB"\fP\&. A expressão usada deve avaliar uma lista de elementos. Para desativar a deteção de capítulos, use a expressão \fB"\fP/\fB"\fP\&. Veja o tutorial do XPath no Manual do Utilizador do Calibre para mais ajudas no uso desta função.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -459,7 +459,7 @@ Uma expressão XPath para detetar a localização no documento a partir do qual 
 .UNINDENT
 .SH ÍNDICE
 .sp
-Controlar a geração automática de um índice. Por padrão, se o ficheiro de origem tiver um índice, este é utilizado em vez do gerado automaticamente.
+Controlar a geração automática de um índice. Por predefinição, se o ficheiro de origem tiver um índice, este é utilizado em vez do gerado automaticamente.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc

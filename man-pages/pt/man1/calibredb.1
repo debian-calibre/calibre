@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "fevereiro 22, 2020" "4.11.2" "calibre"
+.TH "CALIBREDB" "1" "março 06, 2020" "4.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -479,12 +479,12 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-Modelo para controlar a estrutura do nome de ficheiro e pastas dos ficheiros guardados. O padrão é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, que vai guardar os livros numa subpasta por autor e com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura do nome de ficheiro e pastas dos ficheiros guardados. A predefinição é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, o que vai guardar os livros numa subpasta por autor e com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-O formato para exibir datas. %d \- dia, %b \- mês, %m \- número do mês, %Y \- ano. O padrão é: %b, %Y
+O formato para exibir datas. %d \- dia, %b \- mês, %m \- número do mês, %Y \- ano. A predefinição é: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -532,97 +532,97 @@ Mostrar informação de saída detalhada. Útil para depurar.
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Título do catálogo gerado utilizado como título nos metadados. Padrão: \fB\(aq\fPMy Books\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Título do catálogo gerado utilizado como título nos metadados. Predefinição: \fB\(aq\fPMy Books\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Criar referências cruzadas na secção de autores para livros com múltiplos autores. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3,EPUB, MOBI
+Criar referências cruzadas na secção de autores para livros com múltiplos autores. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3,EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Guarda o resultado, na pasta especificada, dos diferentes estágios da cadeia de conversão. Será útil se não tiver a certeza onde é que está a ocorrer o erro do processo de conversão. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Guarda o resultado, na pasta especificada, dos diferentes estágios da cadeia de conversão. Será útil se não tiver a certeza onde é que está a ocorrer o erro do processo de conversão. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Expressão regular descrevendo etiquetas a excluir como géneros. Padrão: \fB\(aq\fP[.+]|^+$\fB\(aq\fP exclui etiquetas com colchetes, por ex. \fB\(aq\fP[Projeto Gutenberg]\fB\(aq\fP, e ainda \fB\(aq\fP+\fB\(aq\fP, a etiqueta padrão para livros lidos. Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Expressão regular descrevendo etiquetas a excluir como géneros. Predefinição: \fB\(aq\fP[.+]|^+$\fB\(aq\fP exclui etiquetas com colchetes, por ex. \fB\(aq\fP[Projeto Gutenberg]\fB\(aq\fP, e ainda \fB\(aq\fP+\fB\(aq\fP, a etiqueta predefinida para os livros lidos. Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<lista de etiquetas separadas por vírgula>\fB\(aq\fP) ou (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<coluna personalizada>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando estiverem definidas várias regras serão aplicadas todas as regras. Padrão:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
+Especifica as regras usadas para excluir livros do catálogo gerado. O modelo para uma regra de exclusão é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLivros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) irá excluir um livro com um valor de \fB\(aq\fPArquivado\fB\(aq\fP na coluna personalizada \fB\(aq\fPstatus\fB\(aq\fP\&. Quando estiverem definidas várias regras serão aplicadas todas as regras. Predefinição:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Incluir a secção \fB\(aq\fPAutores\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPAutores\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Incluir a secção \fB\(aq\fPDescrição\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPDescrição\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Incluir a secção \fB\(aq\fPGéneros\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPGéneros\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Incluir a secção \fB\(aq\fPRecentemente adicionado\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPRecentemente adicionado\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Incluir a secção \fB\(aq\fPSéries\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPSéries\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Incluir a secção \fB\(aq\fPTítulos\fB\(aq\fP no catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Incluir a secção \fB\(aq\fPTítulos\fB\(aq\fP no catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Campo fonte para a secção \fB\(aq\fPGéneros\fB\(aq\fP\&. Padrão: \fB\(aq\fPEtiquetas\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Campo fonte para a secção \fB\(aq\fPGéneros\fB\(aq\fP\&. Predefinição: \fB\(aq\fPEtiquetas\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Campo personalizado que contém texto de notas para inserir no cabeçalho \fB"\fPDescrição\fB"\fP\&. Padrão: \fB\(aq\fP\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Campo personalizado que contém texto de notas para inserir no cabeçalho \fB"\fPDescrição\fB"\fP\&. Predefinição: \fB\(aq\fP\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para fundir com os comentários  [before|after] Colocação de notas em relação aos comentários  [True|False] \- Uma linha horizontal é inserida entre notas e comentários Padrão: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
+#<custom field>:[before|after]:[True|False] especificando:  <custom field> Campo personalizado contendo notas para fundir com os comentários  [before|after] Colocação de notas em relação aos comentários  [True|False] \- Uma linha horizontal é inserida entre notas e comentários Predefinição: \fB\(aq\fP::\fB\(aq\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Especifica um perfil de saída para um dispositivo. Em alguns casos, um perfil de saída é necessário para otimizar o catálogo para um dispositivo específico. Por exemplo, \fB\(aq\fPkindle\fB\(aq\fP ou \fB\(aq\fPkindle_dx\fB\(aq\fP cria um índice com secções e artigos. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
+Especifica um perfil de saída para um dispositivo. Em alguns casos, um perfil de saída é necessário para otimizar o catálogo para um dispositivo específico. Por exemplo, \fB\(aq\fPkindle\fB\(aq\fP ou \fB\(aq\fPkindle_dx\fB\(aq\fP cria um índice com secções e artigos. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se aos formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Especifica as regras usadas para incluir prefixos que indiquem livros de leitura, itens de lista de desejos e outros prefixos especificados pelo utilizador. O modelo para uma regra de prefixo é (\fB\(aq\fP<nome da regra>\fB\(aq\fP,\fB\(aq\fP<campo do recurso>\fB\(aq\fP,\fB\(aq\fP<padrão>\fB\(aq\fP,\fB\(aq\fP<prefixo>\fB\(aq\fP). Quando várias regras forem definidas, será usada a primeira regra correspondente. Padrão: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
+Especifica as regras usadas para incluir prefixos que indiquem livros de leitura, itens de lista de desejos e outros prefixos especificados pelo utilizador. O modelo para uma regra de prefixo é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Quando forem definidas várias regras será usada a primeira regra correspondente. Predefinição: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Aplica\-se a formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Utilizar um nome predefinido criado com a GUI do construtor de catálogo. Uma predefinição especifica todas as configurações para construir um catálogo. Padrão: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Utilizar um nome predefinido criado com a GUI do construtor de catálogo. Uma predefinição especifica todas as configurações para construir um catálogo. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Dica de tamanho (em pol.) para as capas de livros no catálogo. Faixa: 1.0 \- 2.0 Padrão: \fB\(aq\fP1.0\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Dica sobre o tamanho (em pol.) para as capas de livros no catálogo. Faixa: 1.0 \- 2.0 Predefinição: \fB\(aq\fP1.0\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Substituir uma capa existente quando gerar o catálogo. Padrão: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Substituir uma capa existente quando gerar o catálogo. Predefinição: \fB\(aq\fPFalse\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -935,7 +935,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-O número máximo de resultados a mostrar. O padrão é todos os resultados.
+O número máximo de resultados a mostrar. A predefinição é todos os resultados.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

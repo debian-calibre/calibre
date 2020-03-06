@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2020-02-07 10:50+IST\n"
-"PO-Revision-Date: 2020-02-07 01:22+0000\n"
+"POT-Creation-Date: 2020-02-22 16:05+IST\n"
+"PO-Revision-Date: 2020-02-22 10:35+0000\n"
 "Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
 "Language-Team: Latvian (http://www.transifex.com/calibre/calibre/language/lv/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgid "Contribute to support calibre development"
 msgstr "Sniegt atbalstu calibre attīstībai"
 
 #: /home/kovid/work/calibre/manual/conf.py:239
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:453
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:486
 msgid "page"
 msgstr "lapa"
 
@@ -205,7 +205,7 @@ msgstr "Nedara pilnīgi neko"
 #: /home/kovid/work/calibre/src/calibre/ebooks/txt/processor.py:150
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:557
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:565
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:322
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:326
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:652
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:654
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:312
@@ -223,7 +223,7 @@ msgstr "Nedara pilnīgi neko"
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/add_empty_book.py:148
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/authors_edit.py:181
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/custom_recipes.py:658
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1062
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1063
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:388
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:403
@@ -235,7 +235,7 @@ msgstr "Nedara pilnīgi neko"
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1558
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1561
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1649
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:204
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:205
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:381
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:396
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/diff.py:100
@@ -255,7 +255,7 @@ msgstr "Nedara pilnīgi neko"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:488
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:489
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/bookmarks.py:162
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:492
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:516
 #: /home/kovid/work/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:953
 #: /home/kovid/work/calibre/src/calibre/library/database.py:930
 #: /home/kovid/work/calibre/src/calibre/library/database2.py:607
@@ -1583,14 +1583,14 @@ msgstr "Atzīmējot šo slēdzi, darbība tiks izslēgta."
 msgid "You must specify some ids or the %s option"
 msgstr "Jums jānorāda daži id vai %s papildiespēja"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:227
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:228
 msgid ""
 "%prog list [options]\n"
 "\n"
 "List the books available in the calibre database.\n"
 msgstr "%prog list [options]\n\nGrāmatu saraksts, kas pieejams calibre datu bāzē.\n"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:239
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:240
 #, python-format
 msgid ""
 "The fields to display when listing books in the database. Should be a comma separated list of fields.\n"
@@ -1598,7 +1598,7 @@ msgid ""
 "Default: %%default. The special field \"all\" can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating"
 msgstr "Lauki, kas jāuzrāda, iekļaujot grāmatas datu bāzē. Lauku sarakstu jāatdala ar komatu.\nPieejamie lauki:%s\nNoklusējums: %%default. Īpašo lauku \"all\" , var izmantot, lai atlasītu visus laukus. Papildus iepriekš minētajiem laukiem, pielāgotie lauki ir pieejami arī kā * field_name, piemēram, pielāgotajam laukam #rating, izmantojiet nosaukumu: *rating"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:252
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:253
 #, python-brace-format
 msgid ""
 "The field by which to sort the results.\n"
@@ -1606,39 +1606,39 @@ msgid ""
 "Default: {1}"
 msgstr "Lauks, pēc kura kārtot rezultātus.\nPieejamie lauki: {0}\nNoklusējums: {1}"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:259
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:260
 msgid "Sort results in ascending order"
 msgstr "Kārtot rezultātus augošā secībā"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:266
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:267
 msgid ""
 "Filter the results by the search query. For the format of the search query, "
 "please see the search related documentation in the User Manual. Default is "
 "to do no filtering."
 msgstr "Filtrēt rezultātus pēc meklēšanas vaicājuma. Par meklēšanas formātu, lūdzu, skatiet lietotāja rokasgrāmatā pieejamo dokumentāciju. Pēc noklusējuma nefiltrē."
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:276
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:277
 #: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list_categories.py:69
 msgid ""
 "The maximum width of a single line in the output. Defaults to detecting "
 "screen size."
 msgstr "Maksimālais rindas platums izvadē. Noklusētais - mēģināt noteikt ekrāna izmērus."
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:282
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:283
 msgid "The string used to separate fields. Default is a space."
 msgstr "Teksts, ar kuru atdalīta laukus. Pēc noklusējuma tā ir atstarpe."
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:288
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:289
 msgid ""
 "The prefix for all file paths. Default is the absolute path to the library "
 "folder."
 msgstr "Prefikss visiem failu ceļiem. Pēc noklusējuma absolūtais ceļš uz bibliotēkas mapi."
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:295
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:296
 msgid "The maximum number of results to display. Default: all"
 msgstr "Maksimālais attēlojamo rezultātu skaits. Noklusētais: visi"
 
-#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:302
+#: /home/kovid/work/calibre/src/calibre/db/cli/cmd_list.py:303
 msgid ""
 "Generate output in JSON format, which is more suitable for machine parsing. "
 "Causes the line width and separator options to be ignored."
@@ -2850,7 +2850,7 @@ msgid ""
 msgstr "Jūsu Kobo izmanto atjauninātu programmaparatūras/datu bāzes versiju. Calibre par šo atjauninājumu nekas nav zināms, tādēļ, lai novērstu datubāzes sabojāšanu, datubāzes labošana ir atslēgta. Jūs joprojām varat nosūtīt grāmatas izmantojot Calibre uz Kobo, tačū grāmatu dzēšana un krājumu vadīšana nav iespējama. Ja Jums ir noskaņojums eksperimentēt un zināt, kā atjaunot Kobo iestatījumus uz rūpnīcas noklusētajiem iestatījumiem, varat šos ierobežojumus apiet, uzklikšķinot ar peles labo pogu uz ierīces ikonas un izvēloties iestatījumu \"Mēģināt atbalstīt jaunāku programmaparatūru\". Rīkojoties šādā veidā var nākties atiestatīt Jūsu Kobo uz noklusētajiem rūpnīcas iestatījumiem, zaudējot visus tajā ierakstītos datus."
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:733
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:587
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:591
 msgid "Not Implemented"
 msgstr "Nav ieviests"
 
@@ -5914,7 +5914,7 @@ msgstr "Ja īpašība {property} {match_type} {query}\n{action}"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/docx/to_html.py:69
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1401
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:810
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:819
 msgid "Notes"
 msgstr "Piezīmes"
 
@@ -5929,7 +5929,7 @@ msgstr "Piezīmes"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:233
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:579
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:753
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:798
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:807
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toolbars.py:55
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:69
 msgid "Table of Contents"
@@ -6209,7 +6209,7 @@ msgid "Producer"
 msgstr "Producents"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/book/base.py:774
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:582
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:583
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single.py:1168
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.py:158
 #: /home/kovid/work/calibre/src/calibre/library/field_metadata.py:180
@@ -6804,27 +6804,27 @@ msgid "Title page"
 msgstr "Titullapa"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1390
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:799
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:808
 msgid "Index"
 msgstr "Indekss"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1391
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:800
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:809
 msgid "Glossary"
 msgstr "Vārdnīca"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1392
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:801
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:810
 msgid "Acknowledgements"
 msgstr "Pateicības"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1393
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:802
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:811
 msgid "Bibliography"
 msgstr "Bibliogrāfija"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1394
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:803
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:812
 msgid "Colophon"
 msgstr "Pēcvārds"
 
@@ -6833,32 +6833,32 @@ msgid "Copyright"
 msgstr "Autortiesības"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1396
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:805
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:814
 msgid "Dedication"
 msgstr "Veltījums"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1397
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:806
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:815
 msgid "Epigraph"
 msgstr "Epigrāfs"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1398
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:807
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:816
 msgid "Foreword"
 msgstr "Priekšvārds"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1399
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:808
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:817
 msgid "List of illustrations"
 msgstr "Ilustrāciju saraksts"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1400
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:809
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:818
 msgid "List of tables"
 msgstr "Tabulu saraksts"
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:1402
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:811
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:820
 msgid "Preface"
 msgstr "Priekšvārds"
 
@@ -6879,12 +6879,12 @@ msgstr "Nezināma kļūda"
 msgid "See <a href=\"{}\">detailed description</a>."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/css.py:254
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/css.py:259
 #, python-brace-format
 msgid "Failed to process CSS in {name} with errors: {errors}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/css.py:257
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/check/css.py:262
 #, python-brace-format
 msgid "Failed to process CSS in {name}"
 msgstr ""
@@ -7747,7 +7747,7 @@ msgstr "<p><i>Grāmatu pulēšana</i> viss par to, liekot spīdēt pilnīgi\nrū
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/main.py:64
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:493
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/toc_edit.py:117
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:113
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:124
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:549
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:173
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:264
@@ -8316,7 +8316,7 @@ msgstr "calibre versijas jaunākas par 2.0 nevar palaist uz Windows XP, jo grafi
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:34
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:956
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:303
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:305
 msgid "Books"
 msgstr "Grāmatas"
 
@@ -8349,8 +8349,8 @@ msgid "Comics"
 msgstr "Komiksi"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:42
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:253
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:262
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:257
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:266
 msgid "Archives"
 msgstr "Arhīvi"
 
@@ -8466,9 +8466,9 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:309
 #: /home/kovid/work/calibre/src/calibre/gui2/search_box.py:486
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:441
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:697
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:707
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1722
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:699
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:709
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1724
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1412
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/send_email.py:288
 msgid "Are you sure?"
@@ -8510,98 +8510,98 @@ msgstr "Vai tiešām vēlaties pievienot vienu un to pašu tukšo datni viesām 
 msgid "Choose format of empty file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:252
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:261
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:256
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:265
 msgid "Choose archive file"
 msgstr "Izvēlieties arhīva datni"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:258
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:262
 msgid "Type of archive"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:263
 msgid "Will the archive have a single book per internal directory?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:268
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:272
 msgid "Select root folder"
 msgstr "Izvēlieties pamatmapi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:273
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:277
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.py:306
 msgid "Cannot add"
 msgstr "Nevar pievienot"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:274
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:278
 #, python-format
 msgid ""
 "Cannot add books from the folder: %s as it contains the currently opened "
 "calibre library"
 msgstr "Nevar pievienot grāmatas no mapes: %s ,jo tā satur pašlaik ir atvērtu calibre bibliotēku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:297
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:301
 msgid "Multi-file books?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:298
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:302
 msgid ""
 "Assume all e-book files in a single directory are the same book in different"
 " formats?"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:365
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:369
 msgid "Adding"
 msgstr "Pievieno"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:366
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:370
 msgid "Creating book records from ISBNs"
 msgstr "Izveido grāmatu ierakstus balstoties uz ISBN kodiem"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:446
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:450
 #, python-format
 msgid ""
 "You have dropped some files onto the book <b>%s</b>. This will add or "
 "replace the files for this book. Do you want to proceed?"
 msgstr "Jūs esat iemetuši dažas datnes grāmatā <b>%s</b>. Tas pievienos vai aizvietos dažas datnes. Vai vēlaties turpināt?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:468
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:522
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:472
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:526
 msgid "Uploading books to device."
 msgstr "Augšupielādē gramatas uz ierīci."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:487
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:491
 msgid "Supported books"
 msgstr "Atbalstītās grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:490
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:494
 msgid "Select books"
 msgstr "Izvēlieties grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:538
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:542
 msgid "The following duplicate book was found."
 msgid_plural "The following {} duplicate books were found."
 msgstr[0] "Tika atrasti šādi grāmatu dublikāti."
 msgstr[1] "The following {} duplicate books were found."
 msgstr[2] "The following {} duplicate books were found."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:541
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:545
 msgid "Merged some books"
 msgstr "Apvienoja dažas grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:542
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:546
 msgid ""
 "Incoming book formats were processed and merged into your calibre database "
 "according to your auto-merge settings. Click \"Show details\" to see the "
 "list of merged books."
 msgstr "Ienākošās grāmatas formāti tika apstrādāti un apvienoti jūsu calibre datubāzē saskaņā ar jūsu auto apvienošanas iestatījumiem. Klikšķiniet uz \"Rādīt detaļas\", lai skatītu apvienoto grāmatu sarakstu."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:566
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:571
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:591
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:570
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:575
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:595
 msgid "Add to library"
 msgstr "Pievienot bibliotēkai"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:571
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:575
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:168
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:90
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/store.py:107
@@ -8613,32 +8613,32 @@ msgstr "Pievienot bibliotēkai"
 msgid "No book selected"
 msgstr "Nav izvēlēta grāmata"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:585
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:589
 msgid ""
 "The following books are virtual and cannot be added to the calibre library:"
 msgstr "Sekojošās grāmatas ir virtuāla un nevar tikt pievienotas Calibre bibliotēkai."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:591
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:595
 msgid "No book files found"
 msgstr "Grāmatu datnes nav atrastas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:597
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:601
 msgid "Downloading books"
 msgstr "Lejuplādē grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:598
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:602
 msgid "Downloading books from device"
 msgstr "Lejuplādē grāmatas no ierīces"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:617
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:621
 msgid "Could not download files from the device"
 msgstr "Nav iespējams lejupielādēt datnes no ierīces"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:620
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:624
 msgid "Could not download some files from the device"
 msgstr "Nav iespējams lejupielādēt dažas datnes no ierīces"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:624
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/add.py:628
 msgid "Could not download files"
 msgstr "Nav iespējams lejupielādēt datnes"
 
@@ -8660,9 +8660,9 @@ msgid "Fetch annotations (experimental)"
 msgstr "Saņemt anotācijas (eksperiments)"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/annotate.py:111
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:671
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:918
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:949
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:673
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:920
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:951
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1357
 msgid "Not supported"
 msgstr "Nav atbalstīts"
@@ -8950,8 +8950,8 @@ msgid "Too long"
 msgstr "Par garu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:435
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1092
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1279
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1094
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1281
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:300
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1400
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:191
@@ -8997,7 +8997,7 @@ msgid "&OK"
 msgstr "&Labi"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:465
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:165
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:166
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:1023
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/toc.py:49
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:381
@@ -9042,7 +9042,7 @@ msgstr "Kļūdas Calibre bibliotēkas datubāzē nav atrastas. Vai vēlaties, la
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/copy_to_library.py:484
 #: /home/kovid/work/calibre/src/calibre/gui2/device.py:1027
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/exim.py:134
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1241
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1242
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/restore_library.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:497
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:538
@@ -9462,7 +9462,7 @@ msgid "Remove matching books from device"
 msgstr "Dzēst atbilstošās grāmatas no ierīces"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/delete.py:165
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:729
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:742
 msgid "Cannot delete"
 msgstr "Nevar izdzēst"
 
@@ -10353,7 +10353,7 @@ msgstr "Pirms saglabāšanas Jums ir jāizvēlas vismaz viena darbība"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:159
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:84
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1105
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1107
 msgid "Choose name"
 msgstr "Izvēlieties nosaukumu"
 
@@ -10437,7 +10437,7 @@ msgstr[1] "Oriģinālās datnes saglabātas kā %s."
 msgstr[2] "Oriģinālās datnes saglabātas kā %s."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/polish.py:369
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:320
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:322
 msgid " and "
 msgstr " un "
 
@@ -10886,7 +10886,7 @@ msgid "Cannot Edit book"
 msgstr "Nevar Labot grāmatu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:103
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:111
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:121
 msgid "Cannot edit book"
 msgstr "Nevar labot grāmatu"
 
@@ -10895,6 +10895,14 @@ msgid "Editing of books on the device is not supported"
 msgstr "Ierīcē esošo grāmatu labošana nav atbalstīta"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:112
+msgid "No editable formats"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:113
+msgid "Do you want to create an empty EPUB file to edit?"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:122
 #, python-format
 msgid ""
 "The book must be in the %s formats to edit.\n"
@@ -10902,11 +10910,11 @@ msgid ""
 "First convert the book to one of these formats."
 msgstr "Lai rediģētu, grāmatai ir jābūt kādā no formātiem: %s.\n\nVispirms pārvērtiet grāmatu kādā no tiem."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:142
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:152
 msgid "File missing"
 msgstr "Datne nav atrodama"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:143
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/tweak_epub.py:153
 #, python-format
 msgid ""
 "The %s format is missing from the calibre library. You should run library "
@@ -11131,6 +11139,15 @@ msgstr "%s nav pieejamu formātu."
 #: /home/kovid/work/calibre/src/calibre/gui2/layout.py:187
 msgid "Virtual library"
 msgstr "Virtuālā bibliotēka"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/virtual_library.py:31
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:383
+msgid "Quick select Virtual library"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/actions/virtual_library.py:32
+msgid "Quick select a Virtual library"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:37
 #: /home/kovid/work/calibre/src/calibre/gui2/add.py:41
@@ -11394,11 +11411,11 @@ msgstr "Mainīt"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/author_mapper.py:27
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:175
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:463
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:529
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:464
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:48
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:692
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:473
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:477
 msgid "Capitalize"
 msgstr "Lielais sākumburts"
 
@@ -11483,8 +11500,8 @@ msgstr ""
 msgid "Added {num} books automatically from {src}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/bars.py:435
-#: /home/kovid/work/calibre/src/calibre/gui2/bars.py:528
+#: /home/kovid/work/calibre/src/calibre/gui2/bars.py:436
+#: /home/kovid/work/calibre/src/calibre/gui2/bars.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/plugin_updater.py:279
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/toolbar.py:44
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:506
@@ -11534,23 +11551,23 @@ msgstr "Salīdzināt ar %s formātu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:204
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:211
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:65
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:73
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:594
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:601
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:66
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:74
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:198
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:205
 #, python-format
 msgid "Open %s with..."
 msgstr "Atvērt %s ar..."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:214
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:68
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:604
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:69
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:208
 #, python-format
 msgid "Add other application for %s files..."
 msgstr "Pievienot citu lietotni %s datnēm..."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:215
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:605
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:209
 msgid "Edit Open With applications..."
 msgstr "Labot Atvērt ar lietotnēm..."
 
@@ -11607,12 +11624,12 @@ msgid "Edit Open with applications..."
 msgstr "Labot Atvērt ar programmu..."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:431
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:276
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:280
 msgid "Paste cover"
 msgstr "Ielīmēt vāku"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/book_details.py:432
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:277
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:281
 msgid "Copy cover"
 msgstr "Kopēt vāku"
 
@@ -11884,7 +11901,7 @@ msgid "Preset name:"
 msgstr "Sākumiestatījuma nosaukums:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:734
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1290
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1291
 msgid "You must provide a name."
 msgstr "Jums jānorāda nosaulkums."
 
@@ -12394,7 +12411,7 @@ msgstr "&Pārlūkot"
 #: /home/kovid/work/calibre/src/calibre/gui2/qt_file_dialogs.py:196
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:298
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:62
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:883
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:896
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1308
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:89
 #: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:265
@@ -12402,9 +12419,9 @@ msgid "Images"
 msgstr "Attēli"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/comments_editor.py:648
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:885
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:948
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:980
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:898
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:961
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:993
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1194
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1236
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:207
@@ -12714,7 +12731,6 @@ msgstr "Sadalīt datnes, kas lielākas par:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/epub_output_ui.py:76
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:485
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:552
 msgid "Disabled"
 msgstr "Izslēgta"
 
@@ -12951,8 +12967,6 @@ msgid "Minim&um line height:"
 msgstr "Minim&ālais rindas augstums:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:244
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:573
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:576
 msgid " %"
 msgstr " %"
 
@@ -12982,7 +12996,7 @@ msgstr "Atslēgt fonta izmēru mērogošanu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:253
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:274
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:990
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "&Fonts"
 msgstr "&Fonti"
 
@@ -13056,7 +13070,7 @@ msgid "Filter Style Information"
 msgstr "Filtrēt stilu informāciju"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:272
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:986
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:995
 msgid "Select what style information you want completely removed:"
 msgstr "Izvēlieties stilu informāciju, kuru vēlaties pilnībā aizvākt:"
 
@@ -13071,7 +13085,7 @@ msgid ""
 msgstr "Aizvāc CSS malas īpašības. Ņemiet vērā, ka lapas malas šis iestatījums neietekmē."
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:276
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:990
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "&Margins"
 msgstr "&Apmales"
 
@@ -13080,7 +13094,7 @@ msgid "Removes the padding CSS properties"
 msgstr "Noņem CSS papildinājuma īpašības"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:278
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:990
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "&Padding"
 msgstr "&Papildinājums"
 
@@ -13098,7 +13112,7 @@ msgstr "Dzēš fona un priekšplāna krāsas"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:282
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:125
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:990
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "&Colors"
 msgstr "&Krāsas"
 
@@ -13240,7 +13254,7 @@ msgid "&Title: "
 msgstr "&Nosaukums "
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:163
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:192
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:193
 msgid "Change the title of this book"
 msgstr "Maina šīs grāmatas nosaukumu"
 
@@ -13472,12 +13486,10 @@ msgid "Sans fami&ly:"
 msgstr "Sans sai&me:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:178
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:512
 msgid "&Monospace family:"
 msgstr "&Fiksēta platuma saime:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:179
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:517
 msgid "S&tandard font:"
 msgstr "S&tandarta fonts:"
 
@@ -13489,19 +13501,10 @@ msgstr "Noklusētais fonta iz&mērs:"
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:183
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:570
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_ui.py:624
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:514
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:516
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:527
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:534
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:536
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:538
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:545
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:553
 msgid " px"
 msgstr " px"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/pdf_output_ui.py:182
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:515
 msgid "Monospace &font size:"
 msgstr "Fiksēta platuma &fonta izmērs:"
 
@@ -13743,8 +13746,6 @@ msgid "Edit the currently selected expression"
 msgstr "Labot pašreiz atlasīto izteiksmi"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:146
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:557
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:561
 #: /home/kovid/work/calibre/src/calibre/gui2/wizard/library_ui.py:62
 msgid "&Change"
 msgstr "&Mainīt"
@@ -13767,7 +13768,6 @@ msgstr "Ielādēt izteiksmju sarakstu no iepriekš saglabātas datnes"
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:150
 #: /home/kovid/work/calibre/src/calibre/gui2/css_transform_rules.py:290
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:497
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:604
 msgid "&Load"
 msgstr "Ie&lādēt"
 
@@ -13782,7 +13782,6 @@ msgstr "Saglabāt šo izteiksmju sarakstu vēlākai atkārtotai izmantošanai"
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_mapper.py:494
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1402
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:368
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:602
 msgid "&Save"
 msgstr "&Saglabāt"
 
@@ -14359,7 +14358,7 @@ msgid "My Color Scheme"
 msgstr "Mana krāsu shēma"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/covers.py:409
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:812
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:825
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1137
 msgid "Cannot edit"
 msgstr "Nav iespējams labot"
@@ -14578,8 +14577,8 @@ msgstr "Izvēlieties failu, no kura importēt noteikumus"
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:976
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1005
 #: /home/kovid/work/calibre/src/calibre/gui2/custom_column_widgets.py:1053
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:513
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:525
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:514
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:526
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:556
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:560
@@ -15547,7 +15546,7 @@ msgstr "Izvēlēties formātu"
 msgid "&Open with..."
 msgstr "&Atvērt ar..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:69
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_format.py:70
 msgid "Edit \"Open with\" applications..."
 msgstr "Labot \"Atvērt ar\" programmu..."
 
@@ -15702,7 +15701,7 @@ msgstr "Jūs varat arī pielāgot spraudņu atrašanās vietas, izmantojot <b>Iz
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/comicconf_ui.py:94
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:121
 #: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:226
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:193
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:194
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:215
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:195
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:178
@@ -16236,42 +16235,42 @@ msgstr "Saite"
 #: /home/kovid/work/calibre/src/calibre/gui2/lrf_renderer/main.py:161
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:528
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/diff/view.py:253
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:509
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:527
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toc.py:146
 msgid "No matches found"
 msgstr "Nav atbilstību"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:170
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:687
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:468
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:472
 msgid "Change case"
 msgstr "Mainīt reģistru"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:171
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:529
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:688
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:469
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:473
 msgid "Upper case"
 msgstr "Lieli burti"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:172
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:529
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:689
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:470
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:474
 msgid "Lower case"
 msgstr "Mazie burti"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:173
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:529
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:690
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:471
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:475
 msgid "Swap case"
 msgstr "Nomainīt reģistru"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:174
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:529
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:530
 #: /home/kovid/work/calibre/src/calibre/gui2/toc/main.py:691
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:472
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:476
 msgid "Title case"
 msgstr "Virsraksta burti"
 
@@ -16539,7 +16538,7 @@ msgstr "Aktīvie darbi"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/diff/main.py:263
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:126
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:472
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:227
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:230
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toc.py:135
 msgid "Find next match"
 msgstr "Meklēt nākamo atbilstību"
@@ -16607,10 +16606,11 @@ msgstr "Jums ir jāizvēlas atbilstoša grāmata"
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:73
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/char_select.py:774
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:466
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:217
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:447
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:220
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toolbars.py:56
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:72
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:740
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:744
 #: /home/kovid/work/calibre/src/calibre/linux.py:1192
 #: /home/kovid/work/calibre/src/calibre/srv/legacy.py:97
 msgid "Search"
@@ -16686,59 +16686,59 @@ msgstr ""
 msgid "Step %v/%m"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:460
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:461
 msgid "Lower Case"
 msgstr "Mazie burti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:461
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:462
 msgid "Upper Case"
 msgstr "Lieli burti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:462
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:463
 msgid "Title Case"
 msgstr "Virsraksta Kapitalizācija"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:466
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:467
 msgid "Character match"
 msgstr "Rakstzīmju atbisltība"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:467
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:468
 msgid "Regular expression"
 msgstr "Regulāra izteiksme"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:470
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:471
 msgid "Replace field"
 msgstr "Aizvietojuma lauks"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:471
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:472
 msgid "Prepend to field"
 msgstr "Pievienot lauka sākumā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:472
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:473
 msgid "Append to field"
 msgstr "Pievienot lauka beigās"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:486
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:487
 #, python-format
 msgid "Editing meta information for <b>%d books</b>"
 msgstr "Labot meta informāciju <b>%d grāmatām</b>"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:549
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:550
 msgid ""
 "Immediately make all changes without closing the dialog. This operation "
 "cannot be canceled or undone"
 msgstr "Tūlīt veikt visas izmaiņas, neaizverot dialogu. Šo darbību nevar atcelt vai atsaukt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:647
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:648
 #, python-format
 msgid "Book %d:"
 msgstr "Grāmata %d:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:665
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:666
 msgid "Enter an identifier type"
 msgstr "Ievadiet identifikatora tipu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:671
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:672
 msgid ""
 "<b>You can destroy your library using this feature.</b> Changes are "
 "permanent. There is no undo function. You are strongly encouraged to back up"
@@ -16746,7 +16746,7 @@ msgid ""
 "character matching or regular expressions. "
 msgstr "<b>Jūs varat iznīcināt jūsu bibliotēku, izmantojot šo funkciju..</b> Izmaiņas ir pastāvīgas. Nav atcelšanas funkcijas. Pirms turpināt, jums ieteicams dublēt jūsu bibliotēku.<p>Meklējiet un aizvietojiet teksta laukus, izmantojot rakstzīmju atbilstību vai regulāras izteiksmes. "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:679
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:680
 msgid ""
 "In character mode, the field is searched for the entered search text. The "
 "text is replaced by the specified replacement text everywhere it is found in"
@@ -16756,7 +16756,7 @@ msgid ""
 "search text will match both upper- and lower-case letters"
 msgstr "Rakstzīmju režīmā tiek meklēts ievadītais meklēšanas teksts. Tekstu aizvieto ar norādīto aizstāšanas tekstu visur, kur tas atrodas norādītajā laukā. Kad nomaiņa ir pabeigta, tekstu var mainīt uz lielajiem, mazajiem burtiem vai virsraksta burtiem. Ja tiek atzīmēta reģistrjutīga izvēles rūtiņa , meklējamajam tekstam ir precīzi jāatbilst. Ja tas nav atzīmēts, meklēšanas teksts atbilst gan lielajiem, gan mazajiem burtiem"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:690
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:691
 msgid ""
 "In regular expression mode, the search text is an arbitrary Python-"
 "compatible regular expression. The replacement text can contain "
@@ -16771,65 +16771,65 @@ msgid ""
 "function."
 msgstr "Regulāro izteiksmju režīmā meklēšanas teksts ir patvaļīga ar Python saderīga regulārā izteiksme. Aizstātais teksts var saturēt iekavās iekļautas atsauces uz izteiksmēm. Meklēšana nav noenkurota, un tā pati rinda var būt vairākas reizes saskaņota un aizstāta. Modificēšanas funkcija (mazie burti utt.) tiek piemēroti saskaņotajam tekstam, nevis laukam kopumā. Galamērķa lodziņš norāda lauku, kurā jānorāda rezultāts pēc saskaņošanas un aizstāšanas. Jūs varat pievienot vai aizvietot tekstu laukā vai pievienot saskaņoto tekstu. Lai iegūtu papildinformāciju par Python regulārajām izteiksmēm, un jo īpaši par apakšprogrammu, skatiet <a href=\"https://docs.python.org/library/re.html\">šo atsauci </a>."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:769
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:770
 msgid "S/R TEMPLATE ERROR"
 msgstr "S/R SAGAtAVES KĻŪDA"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:921
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:922
 msgid ""
 "You must specify a destination when source is a composite field or a "
 "template"
 msgstr "Jums jānorāda galamērķis, ja avots ir salikts lauks vai šablons"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:934
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:935
 msgid ""
 "The replacement value for a rating column must be empty or an integer "
 "between 0 and 10"
 msgstr "Vērtēšanas slejas aizstāšanas vērtībai jābūt tukšai vai veselam skaitlim no 0 līdz 10"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:941
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:942
 msgid "You must specify a destination identifier type"
 msgstr "Jums jānorāda mērķa identifikatora tips"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:994
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:995
 msgid "You must specify a search expression in the \"Search for\" field"
 msgstr "Jums jānorāda meklēšanas izteiksme \"Meklēt\" laukā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1056
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1057
 msgid ""
 "Invalid identifier string. It must be a comma-separated list of pairs of "
 "strings separated by a colon"
 msgstr "Nederīga identifikatora virkne. Tai jābūt ar komatu atdalītam pāru virknes sarakstam, atdalot tos ar kolu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1156
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1157
 msgid "Search/replace invalid"
 msgstr "Nederīga meklēšana/aizvietošana"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1157
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1158
 #, python-format
 msgid "Search/replace is invalid: %s"
 msgstr "Nederīgs meklēt/aizstāt: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1258
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1259
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:669
 msgid "Delete saved search/replace"
 msgstr "Dzēst saglabāto meklēšanu/aizvietošanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1259
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1260
 msgid "The selected saved search/replace will be deleted. Are you sure?"
 msgstr "Izvēlētais un saglabātais meklēt/aizstāt tiks dzēsts. Vai esat pārliecināts?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1284
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1289
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1294
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1285
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1290
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1295
 msgid "Save search/replace"
 msgstr "Saglabāt Meklēt/aizvietot"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1285
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1286
 msgid "Search/replace name:"
 msgstr "Meklēt/aizvietot nosaukums:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1295
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1296
 msgid ""
 "That saved search/replace already exists and will be overwritten. Are you "
 "sure?"
@@ -18599,6 +18599,7 @@ msgid "Unapply (remove) tag from current tag category"
 msgstr "Atvienot (noņemt) birkas no pašreizējās birku kategorijas"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor.py:32
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:410
 #, python-format
 msgid "Edit %s"
 msgstr ""
@@ -19535,7 +19536,7 @@ msgstr "Vāka režģis"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:342
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:372
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1081
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1085
 msgid "Toggle"
 msgstr "Pārslēgt"
 
@@ -19578,9 +19579,8 @@ msgid "Restore hidden tabs"
 msgstr "Atjaunot slēptās cilnes"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:534
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:385
-msgid "Hide virtual library tabs"
-msgstr "Slēpt virtuālās bibliotēkas cilnes"
+msgid "Hide Virtual library tabs"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:536
 msgid "Lock virtual library tabs"
@@ -19807,7 +19807,7 @@ msgstr "Meklēt saīsni pēc nosaukuma"
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/plugins.py:259
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/tweaks.py:574
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search.py:381
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:974
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:976
 msgid "No matches"
 msgstr "Nav rezultātu"
 
@@ -19907,12 +19907,12 @@ msgid "This book is on the device in %s"
 msgstr "Šī grāmata atrodas ierīcē %s"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:129
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:161
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:162
 msgid "Set date to undefined"
 msgstr "Iestatīt nenoteiktu datumu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/library/delegates.py:131
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:163
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:164
 msgid "Set date to today"
 msgstr ""
 
@@ -20423,7 +20423,7 @@ msgstr "I&ziet"
 msgid "Unhandled exception"
 msgstr "Neparedzēts izņēmums"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:166
+#: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:167
 #: /home/kovid/work/calibre/src/calibre/utils/localization.py:348
 msgid "&Redo"
 msgstr "At&griezt"
@@ -21112,7 +21112,7 @@ msgid "Current cover"
 msgstr "Pašreizējais vāks"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:643
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:36
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:37
 msgid "Searching..."
 msgstr "Meklē..."
 
@@ -22098,7 +22098,7 @@ msgstr "Tips"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/completion/basic.py:89
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:60
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:229
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:812
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:821
 msgid "Text"
 msgstr "Teksts"
 
@@ -22619,9 +22619,9 @@ msgstr "Kopējiet šīs vērtības starpliktuvē, ielīmējiet tās redaktorā, 
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/email_ui.py:81
 msgid ""
-"calibre can send your books to you (or your reader) by email. Emails will be"
-" automatically sent for downloaded news to all email addresses that have "
-"Auto send checked."
+"<p>calibre can send your books to you (or your reader) by email. Emails will"
+" be automatically sent for downloaded news to all email addresses that have "
+"<i>Auto send</i> checked."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/email_ui.py:82
@@ -23639,7 +23639,6 @@ msgstr "Maksimālais gaidīšanas &laiks pēc pirmā rezultāta atrašanas:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:162
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:164
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:566
 msgid " secs"
 msgstr " sek."
 
@@ -24887,7 +24886,6 @@ msgid "Set this to -1 if the function takes a variable number of arguments"
 msgstr "Uzstādiet uz -1, ja funkcija aizņem vairākus mainīgus argumentus"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/template_functions_ui.py:99
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:606
 msgid "&Delete"
 msgstr "&Dzēst"
 
@@ -25371,11 +25369,13 @@ msgid "Match all of the selected %s"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:102
-msgid "Edit virtual library"
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:347
+msgid "Edit Virtual library"
 msgstr "Labot virtuālo bibliotēku"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:104
-msgid "Create virtual library"
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:372
+msgid "Create Virtual library"
 msgstr "Izveidot virtuālo bibliotēku"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:109
@@ -25387,8 +25387,8 @@ msgid "&Search expression:"
 msgstr "&Vaicājuma izteiksme"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:130
-msgid "Create a virtual library based on: "
-msgstr "Izveidot virtuālo bibliotēku balstoties uz: "
+msgid "Create a Virtual library based on: "
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:143
 #, python-format
@@ -25396,11 +25396,11 @@ msgid ""
 "\n"
 "            <h2>Virtual libraries</h2>\n"
 "\n"
-"            <p>With <i>virtual libraries</i>, you can restrict calibre to only show\n"
-"            you books that match a search. When a virtual library is in effect, calibre\n"
+"            <p>With <i>Virtual libraries</i>, you can restrict calibre to only show\n"
+"            you books that match a search. When a Virtual library is in effect, calibre\n"
 "            behaves as though the library contains only the matched books. The Tag browser\n"
 "            display only the tags/authors/series/etc. that belong to the matched books and any searches\n"
-"            you do will only search within the books in the virtual library. This\n"
+"            you do will only search within the books in the Virtual library. This\n"
 "            is a good way to partition your large library into smaller and easier to work with subsets.</p>\n"
 "\n"
 "            <p>For example you can use a Virtual library to only show you books with the Tag <i>\"Unread\"</i>\n"
@@ -25421,9 +25421,9 @@ msgstr "Meklējamais teksts mainīts"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:228
 msgid ""
-"The virtual library name or the search text has changed. Do you want to "
+"The Virtual library name or the search text has changed. Do you want to "
 "discard these changes?"
-msgstr "Virtuālās bibliotēkas vārds vai meklēšanas teksts ir mainījies. Vai vēlaties atcelt šīs izmaiņas?"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:265
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/lookup.py:93
@@ -25432,12 +25432,12 @@ msgid "No name"
 msgstr "Bez nosaukuma"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:266
-msgid "You must provide a name for the new virtual library"
-msgstr "Nepieciešams norādīt jaunās virtuālās bibliotēkas nosaukumu"
+msgid "You must provide a name for the new Virtual library"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:272
-msgid "A virtual library name cannot begin with \"*\""
-msgstr "Virtuālās bibliotēkas nosaukums nevar sākties ar \"*\""
+msgid "A Virtual library name cannot begin with \"*\""
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:277
 msgid "Name already in use"
@@ -25453,16 +25453,16 @@ msgid "No search string"
 msgstr "Nav meklējamā teksta"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:286
-msgid "You must provide a search to define the new virtual library"
-msgstr "Jums ir jānodrošina meklēšana, lai noteiktu jauno virtuālo bibliotēku"
+msgid "You must provide a search to define the new Virtual library"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:294
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:447
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:449
 msgid "Invalid search"
 msgstr "Nederīgs vaicājums"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:295
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:448
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:450
 msgid "The search in the search box is not valid"
 msgstr "Meklēšanas lodziņā meklēšana nav derīga"
 
@@ -25472,16 +25472,16 @@ msgstr "Meklēšana pabeigta, nekas nav atrasts"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:301
 msgid ""
-"The search found no books, so the virtual library will be empty. Do you "
+"The search found no books, so the Virtual library will be empty. Do you "
 "really want to use that search?"
-msgstr "Grāmatas nav atrastas, tādēļ virtuālā bibliotēka būs tukša. Vai tiešām vēlaties izmantot šo meklēšanu?"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:314
 msgid "<None>"
 msgstr "<Nekas>"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:322
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:535
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:560
 msgid "*current search"
 msgstr "*pašreizējais vaicājums"
 
@@ -25507,34 +25507,53 @@ msgstr "(visas grāmatas)"
 msgid "Additional restriction"
 msgstr "Papildu ierobežojums"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:347
-msgid "Edit Virtual library"
-msgstr "Labot virtuālo bibliotēku"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:348
 msgid "Remove Virtual library"
 msgstr "Noņemt virtuālo bibliotēku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:372
-msgid "Create Virtual library"
-msgstr "Izveidot virtuālo bibliotēku"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:387
+msgid "Hide virtual library tabs"
+msgstr "Slēpt virtuālās bibliotēkas cilnes"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:389
 msgid "Show virtual libraries as tabs"
 msgstr "Rādīt virtuālās bibliotēkas kā cilnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:439
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:441
 msgid "No search"
 msgstr "Nav vaicājuma"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:440
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:442
 msgid "There is no current search to use"
 msgstr "Pašlaik netiek izmantota meklēšana"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:490
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:492
 #, python-brace-format
 msgid "Are you sure you want to remove the virtual library <b>{0}</b>?"
 msgstr "Vai vēlaties noņemt virtuālo bibliotēku <b>{0}</b>?"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:502
+msgid "No virtual libraries"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:503
+msgid "No Virtual libraries present, create some first"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:507
+#, python-brace-format
+msgid ""
+"<p>Quickly choose a Virtual library by typing in just a few characters from the library name into the field above.\n"
+"        For example, if want to choose the VL:\n"
+"        {example}\n"
+"        Simply type in the characters:\n"
+"        {chars}\n"
+"        and press Enter."
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/search_restriction_mixin.py:515
+msgid "Choose Virtual library"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:40
 #: /home/kovid/work/calibre/src/calibre/gui2/shortcuts.py:175
@@ -27041,222 +27060,222 @@ msgstr "Šīs grāmatas jau ir pārveidotas %s formātā. Vai vēlaties viņas p
 msgid "&Unmark marked text"
 msgstr "&Noņemt atzīmēto tekstu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:178
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:180
 msgid "The Qt WebEngine Render process crashed and has been restarted"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:241
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1741
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:243
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1743
 msgid "Unsaved changes"
 msgstr "Nesaglabātās izmaiņas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:242
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:244
 msgid ""
 "The current book has unsaved changes. If you open a new book, they will be "
 "lost. Are you sure you want to proceed?"
 msgstr "Pašreizējā grāmatā ir nesaglabātas izmaiņas. Ja atvērsiet jaunu grāmatu, tās tiks zaudētas. Vai tiešām vēlaties turpināt?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:246
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:248
 msgid "Cannot open"
 msgstr "Nav iespējams atvērt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:247
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:249
 msgid ""
 "The current book is being saved, you cannot open a new book until the saving"
 " is completed"
 msgstr "Tiek saglabāta pašreizējā grāmata. Atvērt citu grāmatu nav iespējams, kamēr nav pabeigta saglabāšana"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:257
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1154
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:259
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1156
 msgid "Choose file location"
 msgstr "Izvēlieties datnes atrašanās vietu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:282
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:284
 msgid "Importing book, please wait..."
 msgstr "Importē grāmatu. Llūdzu, gaidiet..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:298
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:300
 msgid "Choose book folder"
 msgstr "Izvēlieties grāmatas mapi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:302
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:837
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:304
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:839
 msgid "Choose book"
 msgstr "Izvēlieties grāmatu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:310
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:312
 msgid "File not found"
 msgstr "Datne netika atrasta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:311
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:313
 #, python-format
 msgid "The file %s does not exist."
 msgstr "Datne %s nepastāv."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:318
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:320
 msgid "Unsupported format"
 msgstr "Neatbalstīts formāts"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:319
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:321
 #, python-format
 msgid ""
 "Tweaking is only supported for books in the %s formats. Convert your book to"
 " one of these formats first."
 msgstr "Uzlabošana tiek atbalstīta tikai grāmatām %s formātos. Vispirms pārveidojiet jūsu grāmatu uz kādu no šiem formātiem."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:335
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:337
 msgid "Opening book, please wait..."
 msgstr "Atver grāmatu, lūdzu, gaidiet..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:347
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:351
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:349
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:353
 msgid "Failed to open book"
 msgstr "Grāmatu neizdevās atvērt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:348
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:350
 msgid ""
 "Failed to open book, it has obfuscated fonts, but the obfuscation key is "
 "missing from the OPF. Do an EPUB to EPUB conversion before trying to edit "
 "this book."
 msgstr "Neizdevās atvērt grāmatu, tas ir obfuscated fonts, bet obfuscation atslēga ir pazudusi no OPF. Vai pārveidot EPUB uz EPUB, pirms mēģinat labot šo grāmatu."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:352
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:354
 msgid "Failed to open book, click \"Show details\" for more information."
 msgstr "Neizdevās atvērt grāmatu, lai iegūtu plašāku informāciju, noklikšķiniet uz \"Rādīt detaļas\"."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:393
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:395
 msgid "Start of editing session"
 msgstr "Sākt labošanas sesiju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:428
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:430
 msgid "Before: Delete files"
 msgstr "Pirms tam: dzēst datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:459
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:461
 msgid "Before: Re-order text"
 msgstr "Pirms tam: pārkārtot tekstu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:469
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:508
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:471
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:510
 msgid ""
 "You must first open a book to edit, before trying to create new files in it."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:481
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:483
 #, python-format
 msgid "Before: Add file %s"
 msgstr "Pirms tam: pievienot datni %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:511
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:513
 msgid "Choose files"
 msgstr "Izvēlieties failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:516
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:518
 msgid "Before Add files"
 msgstr "Pirms tam: pievienot datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:550
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:552
 msgid "Before: Add cover"
 msgstr "Vispirms: Pievienot vāku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:559
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:561
 msgid "No book open"
 msgstr "Nav atvērtas grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:564
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:566
 msgid "You must open a book before trying to edit the Table of Contents."
 msgstr "Pirms Satura rādītāja labošanas ir jāatver grāmata."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:566
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:568
 msgid "Before: Edit Table of Contents"
 msgstr "Pirms tam: labot satura rādītāju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:579
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:581
 msgid "Before: Insert inline Table of Contents"
 msgstr "Vispirms: Ievietot iekļauto Satura rādītāju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:583
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:585
 msgid "No Table of Contents"
 msgstr "Nav satura rādītāja"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:584
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:586
 msgid ""
 "Cannot create an inline Table of Contents as this book has no existing Table"
 " of Contents. You must first create a Table of Contents using the Edit Table"
 " of Contents tool."
 msgstr "Nevar izveidot vienrindas Satura rādītāju, jo šajā grāmatā nav Satura rādītāja. Vispirms ir jāizveido Satura rādītājs, izmantojot rīku Rediģēt Satura rādītāju."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:596
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:598
 #, python-format
 msgid "Before: %s"
 msgstr "Vispirms: %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:610
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:637
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:612
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:639
 msgid "You must first open a book in order to transform styles."
 msgstr "Vispirms jāatver grāmata, lai pārveidotu stilus."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:621
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:623
 msgid "Before style transformation"
 msgstr "Pirms stila pārveidošanas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:631
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:633
 msgid "No changes"
 msgstr "Nav izmaiņu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:632
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:634
 msgid "No styles were changed."
 msgstr "Netika mainīti stili."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:641
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:643
 msgid "Before: Get external resources"
 msgstr "Vispirms: Iegūt ārējos resursus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:660
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:662
 msgid "Embed all fonts"
 msgstr "Iegult visus fontus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:664
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:666
 msgid "Subset all fonts"
 msgstr "Iegult visu fontu apakškopas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:672
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:674
 #, python-format
 msgid ""
 "The %s format does not support file and folder names internally, therefore "
 "arranging files into folders is not allowed."
 msgstr "Šis %s formāts neatbalsta failu un mapju nosaukumus iekšēji, tāpēc organizēt failus mapēs nav atļauts."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:681
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:683
 msgid "The files in this book are already arranged into folders"
 msgstr "Šīs grāmatas datnes jau ir sakārtotas mapēs"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:682
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:684
 msgid "Nothing to do"
 msgstr "Nekas nav darāms"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:683
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:685
 msgid "Show this message &again"
 msgstr "Rādīt šo ziņojumu &vēlreiz"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:685
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:687
 msgid "Before: Arrange into folders"
 msgstr "Vispirms: sakārtot mapēs"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:687
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:712
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:718
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:689
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:714
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:720
 msgid "Renaming and updating links..."
 msgstr "Pārdēvēt un atjaunot saites..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:695
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:697
 #, python-brace-format
 msgid ""
 "You are changing the file type of {0}<b>{1}</b> to {2}<b>{3}</b>. Doing so "
 "can cause problems, are you sure?"
 msgstr "Jūs maināt faila tipu no {0}<b>{1}</b> uz {2}<b>{3}</b>. To darot, var radīt problēmas, jūs esat pārliecināts?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:702
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:704
 #, python-brace-format
 msgid ""
 "The name you have chosen {0} contains special characters, internally it will"
@@ -27265,186 +27284,186 @@ msgid ""
 "for  different e-book viewers. Are you sure you want to proceed?"
 msgstr "Jūsu izvēlētais vārds {0} satur īpašus simbolus, iekšēji tā izskatās šādi: {1} Mēģiniet izmantot tikai angļu valodas alfabētu [a-z], ciparus [0-9], defises un vārdu pasvītrojumus. Citi simboli var radīt problēmas dažādiem e-grāmatu skatītājiem. Vai tiešām vēlaties turpināt?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:709
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:711
 #, python-format
 msgid "Before: Rename %s"
 msgstr "Vispirms: Pārdēvēt %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:716
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:718
 msgid "Before: Bulk rename"
 msgstr "Vispirms: Pārdēvēt masveidā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:723
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:725
 msgid "Failed to rename files"
 msgstr "Pārdēvēt datnes neizdevās"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:724
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:726
 msgid "Failed to rename files, click Show details for more information."
 msgstr "Pārdēvēt datnes neizdevās. Uzklikšķiniet \"Rādīt vairāk\" plašākai informācijai."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:757
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:759
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/undo.py:206
 msgid "&Revert to"
 msgstr "&Atgriezties pie"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:777
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:779
 msgid "&Revert changes"
 msgstr "&Atcelt izmaiņas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:820
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:822
 msgid "Show this popup again"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:828
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:830
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/download.py:228
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/polish.py:95
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:1462
 msgid "See what &changed"
 msgstr "Apskatīt iz&maiņas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:838
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:840
 #, python-format
 msgid "%s books"
 msgstr "%s grāmatas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:844
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:846
 msgid "Current book"
 msgstr "Pašreizējā grāmata"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:844
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:846
 msgid "Other book"
 msgstr "Cita grāmata"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:883
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:885
 msgid "Before: Fix HTML"
 msgstr "Pirms tam: labot HTML"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:887
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:889
 msgid "All HTML files fixed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:887
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:889
 msgid "Fixing done"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:895
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:897
 msgid "Before: Beautify files"
 msgstr "Vispirms: Izdaiļot failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:900
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:902
 msgid "All files beautified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:900
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:902
 msgid "Beautified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:919
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:921
 msgid "Inserting images is only supported for HTML and CSS files."
 msgstr "Attēlu ievietošana ir atblastīta tikai HTML un CSS datnēm."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:950
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:952
 msgid "Semantics are not supported for the AZW3 format."
 msgstr "Semantika nav atbalstīta AZW3 formātā."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:953
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:955
 msgid "Before: Set Semantics"
 msgstr "Vispirms: Iestatīt semantiku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:966
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:968
 msgid "Before: Filter style information"
 msgstr "Vispirms: filtrāt stilu informāciju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:975
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:977
 msgid "No matching style rules were found"
 msgstr "Nav atrasti atbilstoši stilu likumi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1093
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1095
 #, python-format
 msgid "No file with the name %s was found in the book"
 msgstr "Neviens fails ar nosaukumu %s netika atrasts grāmatā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1106
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1108
 msgid ""
 "Choose a name for the checkpoint.\n"
 "You can later restore the book to this checkpoint via the\n"
 "\"Revert to...\" entries in the Edit menu."
 msgstr "Izvēlieties nosaukuma kontrolpunktu.\nJūs varat vēlāk atjaunot grāmatu šajā kontrolpunktā izmantojot\n\"Atgriezties pie...\" ierakstu izvēlnē Rediģēt."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1148
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1150
 msgid "Path does not exist"
 msgstr "Ceļš nepastāv"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1149
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1151
 #, python-format
 msgid ""
 "The file you are editing (%s) no longer exists. You have to choose a new "
 "save location."
 msgstr "Jūsu rediģējamā datne (%s) vairs nepastāv. Jums ir jāizvēlas jauna saglabāšanas vieta."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1172
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1174
 msgid "Cannot save a copy"
 msgstr "Nevar saglabāt kopiju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1173
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1175
 msgid "Saving a copy of a folder based book is not supported"
 msgstr "Bibliotēkas kopijas saglabāšana netiek atbalstīta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1176
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1178
 msgid "Choose path"
 msgstr "Izvēlieties ceļu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1178
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1180
 #, python-format
 msgid "Book (%s)"
 msgstr "Grāmata (%s)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1194
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1196
 msgid "Saving copy, please wait..."
 msgstr "Saglabā kopiju, lūdzu, uzgaidiet..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1198
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1200
 msgid "Failed to save copy"
 msgstr "Neizdevās saglabāt kopiju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1199
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1201
 msgid "Failed to save copy, click Show details for more information."
 msgstr "Neizdevās saglabāt kopiju. Uzklikšķiniet \"Rādīt vairāk\" plašākai informācijai."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1200
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1202
 #, python-format
 msgid "Copy saved to %s"
 msgstr "Kopija saglabāta %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1201
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1203
 msgid "Copy saved"
 msgstr "Kopija saglabāta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1209
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1211
 msgid "Could not save"
 msgstr "Nevar saglabāt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1210
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1212
 msgid ""
 "Saving of the book failed. Click \"Show details\" for more information. You "
 "can try to save a copy to a different location, via File->Save a copy"
 msgstr "Grāmatas saglabāšana neizdevās. Lai iegūtu plašāku informāciju, noklikšķiniet uz \"Rādīt detaļas\". Varat mēģināt saglabāt kopiju citā atrašanās vietā, izmantojot Fails -> Saglabāt kopiju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1218
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1220
 msgid "Enter line number"
 msgstr "Ievadiet rindas numuru"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1228
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1247
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1230
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1249
 #, python-format
 msgid "Before: Split %s"
 msgstr "Vispirms: sadalīt %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1265
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1267
 msgid "Does not exist"
 msgstr "Nepastāv"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1266
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1268
 #, python-format
 msgid ""
 "The file %s does not exist. If you were trying to click an item in the Table"
@@ -27452,140 +27471,140 @@ msgid ""
 "\"Refresh\"."
 msgstr "Datne %s nepastāv. Ja mēģināt  izvēlēties vienumu no satura rādītāja, iespējams, vajadzēs to atsvaidzināt uzklikšķinot ar labo peles pogu un izvēloties \"Atsvaidzināt\"."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1272
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1594
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1274
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1596
 msgid "Unsupported file format"
 msgstr "Neatbalstīts datnes formāts"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1273
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1595
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1275
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1597
 #, python-format
 msgid "Editing files of type %s is not supported"
 msgstr "%s tipa datņu labošana nav atbalstīta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1280
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1282
 #, python-format
 msgid "The anchor %s was not found in this file"
 msgstr "Enkurs %s nav atrasts šajā datnē"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1294
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1296
 msgid "File deleted"
 msgstr "Fails dzēsts"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1295
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1297
 msgid ""
 "The file {} has already been deleted, re-run Check Book to update the "
 "results."
 msgstr "Fails {} jau ir dzēsts, atkārtojiet grāmatas pārbaudi, lai atjauninātu rezultātus."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1317
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1319
 msgid "Before: Spell Check"
 msgstr "Vispirms: Pareizrakstības pārbaude"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1322
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1324
 msgid "Before: Auto-fix errors"
 msgstr "Vispirms: automātiski labot kļūdas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1335
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1337
 #, python-format
 msgid "Before: Merge files into %s"
 msgstr "Vispirms: apvienot datnes %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1347
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1349
 msgid "Before: Link stylesheets"
 msgstr "Vispirms: sasaistīt stilu lapas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1376
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1378
 msgid "File opened"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1377
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1379
 #, python-brace-format
 msgid ""
-"When you are done editing {0} click \"Update\" to update the file in the "
+"When you are done editing {0} click \"Import\" to update the file in the "
 "book or \"Discard\" to lose any changes."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1379
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1381
 #: /usr/src/qt5/qtbase/src/gui/kernel/qplatformtheme.cpp:734
 msgid "Discard"
 msgstr "Atmest"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1379
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1381
 msgid "Import"
 msgstr "Importēt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1381
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1429
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1383
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1431
 #, python-format
 msgid "Before: Replace %s"
 msgstr "Vispirms: aizvietot %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1439
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1441
 msgid "You must first open a book in order to see the report."
 msgstr "Lai skatītu atskaiti, vispirms ir jāatver grāmata."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1454
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1456
 msgid "You must first open a book in order to check links."
 msgstr "Vispirms jāatver grāmata, lai pārbaudītu saites."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1459
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1461
 msgid "You must first open a book in order to compress images."
 msgstr "Lai saspiestu attēlus, vispirms ir jāatver grāmata."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1465
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1467
 msgid "Before: compress images"
 msgstr "Vispirms: saspiest attēlus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1473
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1475
 msgid "Unexpected error"
 msgstr "Negaidīta kļūda"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1474
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1476
 msgid "Failed to compress images, click \"Show details\" for more information"
 msgstr "Neizdevās saspiest attēlus, lai iegūtu vairāk informācijas, noklikšķiniet uz \"Rādīt detaļas\" pogas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1570
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1572
 msgid "Cannot decode"
 msgstr "Nevar atkodēt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1571
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1573
 #, python-format
 msgid "Cannot edit %s as it appears to be in an unknown character encoding"
 msgstr "Nav iespējams rediģēt %s, jo tā rakstzīmju kodējums nav zināms"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1602
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1604
 msgid "No book is currently open. You must first open a book to edit."
 msgstr "Neviena grāmata pašlaik nav atvērta. Lai labotu, jums vispirms ir jāatver grāmata."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1723
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1725
 msgid ""
 "The current book is being saved in the background. Quitting now will "
 "<b>abort the save process</b>! Finish saving first?"
 msgstr "Tekošā grāmata tiek saglabāts fonā. Iziet tagad <b>pārtraukt saglabāšanas procesu</b>! Pabeigt saglabāšanu vispirms?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1725
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1727
 msgid "&Quit immediately"
 msgstr "&Iziet tūlīt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1725
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1727
 msgid "Finish &saving first"
 msgstr "Vispirms pabeidziet &saglabāšanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1746
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1748
 msgid ""
 "There are unsaved changes, if you quit without saving, you will lose them."
 msgstr "Šobrīd ir palikušas nesaglabātas izmaiņas. Ja iziesiet no calibre bez saglabāšanas, Jūs šīs izmaiņas zaudēsiet."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1758
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1760
 msgid "&Save and Quit"
 msgstr "&Saglabāt un iziet"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1761
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1763
 msgid "&Quit without saving"
 msgstr "Aiz&vērt nesaglabājot"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1775
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.py:1777
 msgid "Saving, please wait..."
 msgstr "Saglabā, lūdzu, uzgaidiet..."
 
@@ -28863,7 +28882,7 @@ msgstr "Nākošā &atbilstība"
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/diff/main.py:269
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:130
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:474
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:234
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:237
 msgid "Find previous match"
 msgstr "Meklēt iepriekšējo atbilstību"
 
@@ -29144,8 +29163,8 @@ msgid "No image loaded"
 msgstr "Nav ielādēts neviens attēls"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:214
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:299
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:313
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:323
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:337
 msgid "Invalid image"
 msgstr "Nederīgs attēls"
 
@@ -29254,7 +29273,7 @@ msgstr "Izvēlieties datnes nosaukumu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:66
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/themes.py:353
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1006
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1019
 msgid "No name specified"
 msgstr "Nav norādīts nosaukums"
 
@@ -29308,7 +29327,7 @@ msgid ""
 msgstr "Ievietojiet attēlu tā, lai lasītājs tajā skatītu visu lapu"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:268
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1117
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1126
 msgid "Preserve aspect ratio"
 msgstr "Saglabāt proporcijas"
 
@@ -29546,20 +29565,20 @@ msgstr "Nav atrasts vaicājuma fragments: %s"
 msgid "Choose the built-in snippet to modify:"
 msgstr "Izvēlieties modificēt iebūvētos fragments:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:299
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:300
 msgid "Invalid text"
 msgstr "Nederīgs teksts"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:300
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:301
 msgid "Unterminated string"
 msgstr "Nepabeigta virkne"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:305
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:306
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:489
 msgid "Hold down the Ctrl key and click to open this link"
 msgstr "Pieturiet Ctrl taustiņu un klikšķiniet, lai atvērtu šo saiti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:309
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/css.py:310
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/syntax/html.py:492
 msgid "This link points to a file that is not present in the book"
 msgstr "Šī saite norāda uz grāmatā neesošu datni"
@@ -29898,7 +29917,7 @@ msgid "Insert &hyperlink"
 msgstr "Ievietot &hipersaiti"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/widget.py:91
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:625
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:634
 msgid "Insert hyperlink"
 msgstr "Ievietot hipersaiti"
 
@@ -30091,125 +30110,125 @@ msgid ""
 "instead of the order they were selected in."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:443
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:476
 msgid "Full path: "
 msgstr "Pilns ceļš: "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:453
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:486
 #, python-format
 msgid "This file is the cover %s for this book"
 msgstr "Šī datne ir %s vāks šai grāmatai"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:453
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:486
 msgid "image"
 msgstr "attēls"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:456
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:489
 msgid "This file contains all the metadata and book structure information"
 msgstr "Šī datne satur visu metadatu un grāmatas struktūras informāciju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:459
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:492
 msgid "This file contains the metadata table of contents"
 msgstr "Šī datne satur metadatu satura rādītāju"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:462
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:495
 msgid "This file is not listed in the book manifest"
 msgstr "Šī datne nav norādīta grāmatas manifestā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:465
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:498
 msgid ""
 "This file is marked as non-linear in the spine\n"
 "Drag it to the top to make it linear"
 msgstr "Šis fails ir atzīmēts kā nelineārs\nVelciet to uz augšu, lai padarītu to par lineāru"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:469
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:502
 msgid "This file is a text file that is not referenced in the spine"
 msgstr "Šis fails ir teksta fails, kam nav atsauces struktūrā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:473
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:506
 msgid "This file occurs more than once in the spine"
 msgstr "Šis fails struktūrā iestājas vairāk nekā vienu reizi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:480
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:513
 msgid "Not a valid font"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:539
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:572
 #, python-format
 msgid "Export %s"
 msgstr "Eksportēt %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:541
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:574
 #, python-format
 msgid "Replace %s with file..."
 msgstr "Aizvietot %s ar datni..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:543
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:576
 #, python-format
 msgid "Export all %d selected files"
 msgstr "Eksportēt visus %d atlasītos failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:549
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:582
 #, python-format
 msgid "&Rename %s"
 msgstr "&Pārdēvēt %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:551
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:584
 #, python-format
 msgid "Mark %s as cover image"
 msgstr "atzīmēt %s kā vāka attēlu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:553
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:586
 #, python-format
 msgid "Mark %s as cover page"
 msgstr "Atzīmēt %s kā titullapu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:559
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:592
 msgid "&Bulk rename the selected files"
 msgstr "&Masveidā pārdēvēt atlasītos failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:593
 msgid "Change the file extension for the selected files"
 msgstr "Mainīt izvēlēto failu paplašinājumu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:562
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:595
 msgid "&Delete the selected file"
 msgid_plural "&Delete the {} selected files"
 msgstr[0] "&Dzēst atlasīto failu"
 msgstr[1] "&Dzēst {} atlasītos failus"
 msgstr[2] "&Dzēst {} atlasītos failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:564
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:597
 msgid "&Copy the selected file to another editor instance"
 msgid_plural "&Copy the {} selected files to another editor instance"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:569
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:602
 msgid "Paste files from other editor instance"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:579
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:612
 msgid "Link &stylesheets..."
 msgstr "Sasaistīt &stilu lapas..."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:582
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:615
 msgid "&Merge selected text files"
 msgstr "Apvienot atlasītās teksta datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:584
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:617
 msgid "&Merge selected style files"
 msgstr "Apvienot atlasītās stilu datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:633
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:663
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:671
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:646
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:676
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:684
 msgid "Cannot rename"
 msgstr "Nevar pārdēvēt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:634
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:664
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:647
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:677
 #, python-format
 msgid ""
 "%s books do not support file renaming as they do not use file names "
@@ -30217,112 +30236,112 @@ msgid ""
 "internal structures of the original file."
 msgstr "%s grāmatas neatbalsta datņu pārdēvēšanu, jo tās iekšēji neizmanto datņu vārdus. Jums redzamie datņu nosaukumi ir automātiski izveidoti balstoties uz oriģinālo datņu iekšējo struktūru."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:648
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:661
 msgid "Not first item"
 msgstr "Nav pirmais vienums"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:649
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:662
 #, python-format
 msgid ""
 "%s is not the first text item. You should only mark the first text item as "
 "cover. Do you want to make it the first item?"
 msgstr "%s nav pirmais teksta vienums.  Kā iesējums būtu jāatzīmē tikai pirmais teksts. Vai vēlaties pārvērst to par pirmo?"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:672
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:685
 #, python-format
 msgid "The file(s) %s cannot be renamed."
 msgstr "Datni(-es) %s nav iespējams pārdēvēt."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:703
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:716
 msgid "New file extension:"
 msgstr "Jauns faila paplašinājums:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:703
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:716
 msgid "Rename files"
 msgstr "Pārdēvēt failus"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:730
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:743
 #, python-format
 msgid "The file(s) %s cannot be deleted."
 msgstr "Datni(es) %s nav iespējams izdzēst."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:813
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:826
 #, python-format
 msgid "No item with the name: %s was found"
 msgstr "Nav vienuma ar nosaukumu: tika atrasts %s"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:860
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:869
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:873
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:882
 msgid "Choose location"
 msgstr "Izvēlieties atrašanās vietu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:861
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:878
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:874
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:891
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/reports.py:1298
 #: /home/kovid/work/calibre/src/calibre/gui2/win_file_dialogs.py:80
 msgid "Files"
 msgstr "Datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:880
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:893
 msgid "HTML files"
 msgstr "HTML faili"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:902
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:915
 msgid "No stylesheets"
 msgstr "Nav stila lapu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:903
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:916
 msgid ""
 "This book currently has no stylesheets. You must first create a stylesheet "
 "before linking it."
 msgstr "Šai grāmatai pagaidām nav stilu lapas. Tā ir jāizveido pirms piesaistīšanas."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:908
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:921
 msgid "Choose stylesheets"
 msgstr "Izvēlēties stilu lapas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:909
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:922
 msgid "Choose the stylesheets to link. Drag and drop to re-arrange"
 msgstr "Izvēlieties piesaistāmās stilu lapas. Pārkārtojiet velkot un nometot"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:925
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:938
 msgid "Remove existing links to stylesheets"
 msgstr "Aizvākt pastāvošās saites uz stilu lapām"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:945
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:958
 msgid ""
 "Choose a name for the new (blank) file. To place the file in a specific "
 "folder in the book, include the folder name, for example: "
 "<i>text/chapter1.html"
 msgstr "Izvēlieties jaunās (tukšās) datnes nosaukumu. Lai novietotu to konkrētā grāmatas mapē, iekļaujiet nosaukumā mapes nosaukumu, piemēram: <i>text/chapter1.html"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:953
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:966
 msgid "Automatically add style-sheet links into new HTML files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:963
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:976
 msgid "Import resource file (image/font/etc.)"
 msgstr "Importēt resursu datni (attēlu/fontu/utt.)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:965
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:978
 msgid "Import a file from your computer as a new file into the book."
 msgstr "Importēt grāmatā datni no Jūsu datora kā jaunu datni."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:993
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1006
 msgid "Choose a name for the imported file"
 msgstr "Izvēlieties importējamās datnes nosaukumu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1007
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1020
 msgid ""
 "You must specify a name for the new file, with an extension, for example, "
 "chapter1.html"
 msgstr "Jaunas datnes nosaukums ir jānorāda ar paplašinājumu, piemēram: chapter1.html"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1034
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1047
 msgid "Choose master file"
 msgstr "Izvēlieties galveno datni"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1037
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/file_list.py:1050
 msgid ""
 "Choose the master file. All selected files will be merged into the master "
 "file:"
@@ -30850,7 +30869,6 @@ msgid "Style for standard &text:"
 msgstr "Standarta teksta &stils:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preferences.py:373
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:513
 msgid "&Default font size:"
 msgstr "Noklusētais fonta izmērs:"
 
@@ -30997,18 +31015,18 @@ msgstr[2] "{} atspējotie apstiprinājuma padomi tika atjaunoti"
 msgid "Disabled confirmations restored"
 msgstr "Atjaunoti atspējotie apstiprinājumi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:358
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:533
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:355
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:551
 msgid "Render process crashed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:359
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:356
 msgid ""
 "The Qt WebEngine Render process has crashed so Preview/Live css will not "
 "work. You should try restarting the editor."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:371
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:368
 msgid ""
 "\n"
 "            <h3>Live preview</h3>\n"
@@ -31022,65 +31040,65 @@ msgid ""
 "            "
 msgstr "\n            <h3>Tiešais priekšskatījums</h3>\n\n            <p>Šeit jūs redzat reāllaika HTML faila priekšskatījumu, kuru pašlaik labojat.\n            Priekšskatījums tiks automātiski atjaunināts, veicot izmaiņas.\n\n            <p style=\"font-size:x-small; color: gray\">Ņemiet vērā, ka tas ir ātrs priekšskatījums\n            tikai tas nav paredzēts, lai modelētu faktisko e-grāmatu lasītāju. Daži\n            jūsu e-grāmatas aspekti nedarbosies, piemēram, lapu pārtraukumi un lapu apmales.\n            "
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:398
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:395
 msgid "Inspect element"
 msgstr "Pārbaudīt elementu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:400
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:397
 msgid "Open link"
 msgstr "Atvērt saiti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:470
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:488
 msgid "Search in preview"
 msgstr "Meklēt priekšskatījumā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:510
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:528
 msgid "Invalid location"
 msgstr "Nederīga vieta"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:511
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:529
 msgid "Cannot split on the body tag"
 msgstr "Nevar sadalīt birku body"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:534
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:552
 msgid "Failed to launch worker"
 msgstr "Neizdevās sākt strādāt"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:535
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:553
 msgid "Failed to launch the worker process used for rendering the preview"
 msgstr "Neizdevās palaist darba procesu, ko izmanto priekšskatījuma noformēšanai"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:594
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:612
 msgid "Cannot disable"
 msgstr "Nevar atspējot"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:595
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:613
 msgid ""
 "Auto reloading of the preview panel cannot be disabled while the Live CSS "
 "panel is open."
 msgstr "Auto pārkraušanas apskata paneli nevar izslēgt, kamēr CSS Live panelis ir atvērts."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:598
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:616
 msgid "Auto reload preview when text changes in editor"
 msgstr "Automātiki pārlādēt apskatu, kad ir teksta izmaiņas redaktorā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:599
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:617
 msgid "Disable auto reload of preview"
 msgstr "Atslēgt automātisku priekšskatījuma atsvaidzināšanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:603
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:621
 msgid "Disable syncing of preview position to editor position"
 msgstr "Atslēgt sinhronizāciju no apskata pozīcijas uz rediģēšanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:604
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:622
 msgid "Enable syncing of preview position to editor position"
 msgstr "Ieslēgt sinhronizāciju no apskata pozīcijas uz rediģēšanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:612
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:630
 msgid "Abort file split"
 msgstr "Pārtraukt datnes dalīšanu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:613
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/preview.py:631
 msgid ""
 "Split this file at a specified location.\n"
 "\n"
@@ -31365,7 +31383,7 @@ msgstr "\n            Meklēšanas virziens:\n            <dl>\n            <dt>
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:206
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:28
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:243
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:246
 msgid "Regex"
 msgstr "Regex"
 
@@ -31393,7 +31411,6 @@ msgid "&Find:"
 msgstr "&Meklēt:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:250
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:593
 msgid "Clear search &history"
 msgstr "Notīrīt meklēšanas &vēsturi"
 
@@ -31457,7 +31474,7 @@ msgstr "R&ežīms:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/search.py:321
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/text_search.py:116
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:254
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:257
 msgid "&Case sensitive"
 msgstr "Reģistr&jūtīgs"
 
@@ -32463,7 +32480,7 @@ msgid "Set &semantics"
 msgstr "Iestatīt &semantiku"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:414
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:789
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:798
 msgid "Set semantics"
 msgstr "Iestatīt semantiku"
 
@@ -32472,7 +32489,7 @@ msgid "&Filter style information"
 msgstr "&Filtrēt stilu informāciju"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:416
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:977
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:986
 msgid "Filter style information"
 msgstr "Filtrēt stilu informāciju"
 
@@ -32738,8 +32755,8 @@ msgid "Close the currently open tab"
 msgstr "Aizvērt pašreiz atvērto cilni"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:515
-msgid "&Close other tabs"
-msgstr "Aizvērti &citas cilnes"
+msgid "C&lose other tabs"
+msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/ui.py:516
 msgid "Close all tabs except the current tab"
@@ -33029,15 +33046,15 @@ msgstr "Vajag dokumentu"
 msgid "You must specify the source file that will be imported."
 msgstr "Jums jānorāda importējamā datne."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:397
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:401
 msgid "No results found"
 msgstr "Nekas nav atrasts"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:415
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:420
 msgid "Choose file to edit"
 msgstr "Izvēlieties rediģējamo datni"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:436
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:433
 #, python-brace-format
 msgid ""
 "<p>Quickly choose a file by typing in just a few characters from the file name into the field above.\n"
@@ -33048,55 +33065,55 @@ msgid ""
 "        and press Enter."
 msgstr "<p>Ātri izvēlieties failu, ierakstot tikai dažus rakstzīmes no faila nosaukuma augšējā laukā.\n        Piemēram, ja vēlaties izvēlēties failu:\n        {example}\n        Vienkārši ierakstiet rakstzīmes:\n        {chars}\n        un nospiediet Enter."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:605
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:614
 #, python-brace-format
 msgid ""
 "Anchor: {0}\n"
 "Leading text: {1}"
 msgstr "Enkurs: {0}\nVadošais teksts: {1}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:639
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:847
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:648
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:856
 msgid "Filter files"
 msgstr "Filtrēt datnes"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:643
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:652
 msgid "Choose a &file to link to:"
 msgstr "Izvēlieties &datni, uz kuru izveidot saiti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:648
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:856
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:657
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:865
 msgid "Filter locations"
 msgstr "Filtrēt vietas"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:654
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:861
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:663
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:870
 msgid "Choose a &location (anchor) in the file:"
 msgstr "Izvēlieties &atrašanās vietu (enkuru) datnē:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:662
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:835
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:671
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:844
 msgid "The destination (href) for the link"
 msgstr "Galamērķis (href) uz saiti"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:663
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:836
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:672
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:845
 msgid "&Target:"
 msgstr "&Mērķis:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:668
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:677
 msgid "Te&xt:"
 msgstr "Te&ksts:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:670
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:679
 msgid "The (optional) text for the link"
 msgstr "Saites teksts (nav obligāts)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:675
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:684
 msgid "Tem&plate:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:678
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:687
 #, python-brace-format
 msgid ""
 "\n"
@@ -33107,39 +33124,39 @@ msgid ""
 "        "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:797
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:806
 msgid "Title Page"
 msgstr "Titullapa"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:804
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:813
 msgid "Copyright page"
 msgstr "Autortiesību pala"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:816
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:825
 msgid "Page with title, author, publisher, etc."
 msgstr "Lapa ar nosaukumu, autoru, izdevēju, utt."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:817
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:826
 msgid "Back-of-book style index"
 msgstr "Satura rādītājs grāmatas beigās"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:818
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:827
 msgid "First \"real\" page of content"
 msgstr "Vispirms\"reālo\" lapas saturu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:833
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:842
 msgid "Type of &semantics:"
 msgstr "Semantikas &veids:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:851
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:860
 msgid "Choose a &file:"
 msgstr "Izvēlieties &datni"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:874
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:883
 msgid "About semantics"
 msgstr "Par semantiku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:875
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:884
 msgid ""
 "Semantics refer to additional information about specific locations in the book. For example, you can specify that a particular location is the dedication or the preface or the Table of Contents and so on.\n"
 "\n"
@@ -33148,32 +33165,32 @@ msgid ""
 "The semantic information will be written in the <guide> section of the opf file."
 msgstr "Semantika attiecas uz papildu informāciju par konkrētām atrašanās vietām grāmatā. Piemēram, jūs varat norādīt, ka konkrētā atrašanās vieta ir saistība vai priekšvārds vai Saturs un tā tālāk.\n\nVispirms izvēlieties semantiskās informācijas veidu, pēc tam izvēlieties failu un pēc izvēles atrašanās vieta failā, uz kuru jānorāda.\n\nSemantiskā informācija tiks rakstīta opf faila sadaļā <guide>."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:990
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "Flo&ats"
 msgstr "Pel&došais"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:999
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1008
 msgid "&Other CSS properties:"
 msgstr "&Citas CSS īpašības:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1003
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1012
 #, python-format
 msgid "Only filter CSS in the current file (%s)"
 msgstr "Filtrēt CSS tikai pašreizējā datnē (%s)"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1089
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1098
 msgid "Add a cover"
 msgstr "Pievienot vāku"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1101
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1110
 msgid "&Images in book"
 msgstr "&Attēli grāmatā"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1105
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1114
 msgid "Filter the list of images"
 msgstr "Filtrēt attēlu sarakstu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1118
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1127
 msgid ""
 "If enabled the cover image you select will be embedded into the book in such"
 " a way that when viewed, its aspect ratio (ratio of width to height) will be"
@@ -33181,11 +33198,11 @@ msgid ""
 "book is being viewed on has an aspect ratio different to the image."
 msgstr "Ja ieslēgts vāka attēls izvēle tiks iestrādāta grāmatā tādā veidā, kā skatot, tā proporcijas (platuma un augstuma attiecība) tiks saglabāta. Tas nozīmē, tukšas vietas ap attēlu, ja uz ekrāna tiek skatīta grāmata ar atšķirīgu attēla proporciju."
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1136
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1145
 msgid "Import &image"
 msgstr "Importēt &attēlu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1164
+#: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/widgets.py:1173
 msgid "Choose a cover image"
 msgstr "Izvēlieties vāka attēlu"
 
@@ -33489,362 +33506,6 @@ msgstr "Pievienot grāmatzīmi"
 msgid "Enter title for bookmark:"
 msgstr "Ievadiet grāmatzīmes nosaukumu:"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:509
-msgid "Configure E-book viewer"
-msgstr "Konfigurēt e-grāmatu skatītāju"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:510
-msgid "Se&rif family:"
-msgstr "Se&rif saime:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:511
-msgid "&Sans family:"
-msgstr "&Sans saime:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:518
-msgid "Serif"
-msgstr "Serif"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:519
-msgid "Sans-serif"
-msgstr "Sans Serif"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:520
-msgid "Monospace"
-msgstr "Fiksēta platuma"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:521
-msgid "Font &magnification step size:"
-msgstr "Fonta iz&mēra palielināšanas solis:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:522
-msgid ""
-"The amount by which the font size is increased/decreased\n"
-" when you click the font size larger/smaller buttons"
-msgstr "Solis, par kādu fonta izmērs tiek palielināts /samazināts\nkad jūs noklikšķiniet uz fonta izmēra pogas lielāks/mazāks"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:524
-msgid "%"
-msgstr "%"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:525
-msgid "Minimum font si&ze:"
-msgstr "Minimālais fonta i&zmērs:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:526
-msgid "The minimum font size in pixels"
-msgstr "Minimālais fonta izmērs pikseļos"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:528
-msgid "&Font options"
-msgstr "Fontu iestatījumi"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:529
-msgid ""
-"<p>These options only apply in \"paged\" mode, where the text is broken up "
-"into pages, as in a paper book. To get into this mode, use the button with "
-"the yellow scroll icon in the top right corner of the viewer window."
-msgstr "<p>Šo iespēju piemēro tikai \"paged \" režīmā, kur teksts tiek sadalīts pa lapām, kā papīra grāmatā. Lai nokļūtu šajā režīmā, izmantojiet ritināšanas ikonas dzelteno pogu augšējā labajā stūrī skata logā."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:530
-msgid "In &portrait orientation:"
-msgstr "&Portreta orientācijā:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:531
-msgid ""
-"Controls the number of pages on the screen when the viewer window's width is"
-" less than its height"
-msgstr "Kontrolē ekrāna lapu skaitu, ja skatītāja loga platums ir mazāks par tā augstumu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:532
-msgid "&Override the page margin settings specified in the book"
-msgstr "&Ignorēt grāmatā norādītos lapas apmaļu iestatījumus"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:533
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:72
-msgid "&Top margin:"
-msgstr "&Augšējā piemale:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:535
-msgid "&Side margin:"
-msgstr "&Sānu piemale:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:537
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:74
-msgid "&Bottom margin:"
-msgstr "&Apakšējā piemale:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:539
-msgid "The number of pages of text to show on screen "
-msgstr "Teksta lapu skaits, kas jāatspoguļo ekrānā "
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:540
-msgid "In &landscape orientation: "
-msgstr "&Ainavas orientācija: "
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:541
-msgid ""
-"Controls the number of pages on the screen when the viewer window's height "
-"is less than its width"
-msgstr "Kontrolē ekrāna lapu skaitu, kad skatītāja loga augstums ir mazāks par tā platumu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:542
-msgid "Text &layout in paged mode"
-msgstr "Teksta &izkārtojums lapas režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:543
-msgid "Maximum text width in &fullscreen:"
-msgstr "Maksimālais teksta platums pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:544
-msgid ""
-"Set the maximum width that the book's text and pictures will take when in "
-"fullscreen mode. This allows you to read the book text without it becoming "
-"too wide."
-msgstr "Uzstādīt maksimālo platumu, ka grāmatas teksts un attēli ir pilnekrāna režīmā. Tas ļauj jums lasīt grāmatas tekstu, tas kļūst ļoti plašs."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:546
-msgid "Show reading &position in full screen mode"
-msgstr "Rādīt lasīšanas &pozīciju pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:547
-msgid "Show &scrollbar in full screen mode"
-msgstr "Rādīt &ritjoslu pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:548
-msgid "&Start viewer in full screen mode"
-msgstr "Palaist skatītāju pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:549
-msgid "Show &help message when starting full screen mode"
-msgstr "Rādīt &palīdzības paziņojumu pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:550
-msgid "Maximum text height in fullscreen (paged mode):"
-msgstr "Maksimālais teksta augstums pilnekrāna režīmā (lapas režīmā):"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:551
-msgid "Show &clock in full screen mode"
-msgstr "Rādīt &pulksteni pilnekrāna režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:554
-msgid "F&ull screen options"
-msgstr "&Pilnekrāna papildiespējas"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:555
-msgid "Background color:"
-msgstr "Fona krāsa:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:556
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:560
-#: /usr/src/qt5/qtbase/src/widgets/dialogs/qfontdialog.cpp:776
-msgid "Sample"
-msgstr "Piemērs"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:558
-msgid "&Reset"
-msgstr "&Atiestatīt"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:559
-msgid "Text color:"
-msgstr "Teksta krāsa:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:562
-#: /usr/src/qt5/qtbase/src/gui/kernel/qplatformtheme.cpp:740
-msgid "Reset"
-msgstr "Atstatīt"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:563
-msgid "Colors and backgrounds"
-msgstr "Krāsa un foni"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:564
-msgid "Page flip &duration:"
-msgstr "&Laiks starp lapu pāršķiršanu:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:565
-msgid "disabled"
-msgstr "atspējots"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:567
-msgid "&Tapping on the page flips pages"
-msgstr "&Pieskaroties lapai, tā tiek pāršķirta"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:568
-msgid "Mouse &wheel flips pages"
-msgstr "Peles &rullītis pāršķir lapas"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:569
-msgid "Line &scrolling stops at page breaks"
-msgstr "Rindu &ritināšana apstājas pie lappušu pārtraukumiem"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:570
-msgid "Scrolling in flow mode"
-msgstr "Ritināšana plūsmas režīmā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:571
-msgid "Control the amount the mouse &wheel scrolls:"
-msgstr "Kontrolē peles un rullīša ritināšanas &daudzumu:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:572
-msgid ""
-"This is a percentage, by making it less than 100 you can decrease the amount"
-" the wheel scrolls by, by making it more than 100 you can increase the "
-"scroll amount."
-msgstr "Tas ir procentuālais daudzums, padarot to mazāk par 100, jūs varat samazināt rullīša ritināšanas apjomu, padarot to vairāk par 100, jūs varat palielināt ritināšanas apjomu."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:574
-msgid "Control the amount the arrow &keys scroll:"
-msgstr "Kontrolēt bultiņas taustiņu &ritināšanas ātrumu:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:575
-msgid ""
-"This is a percentage, by making it less than 100 you can decrease the amount"
-" the arrow keys scroll by, by making it more than 100 you can increase the "
-"scroll amount."
-msgstr "Tas ir procentuālais daudzums, padarot to mazāk par 100, jūs varat samazināt bultiņu taustiņu ritināšanu, padarot to vairāk par 100, jūs varat palielināt ritināšanas apjomu."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:577
-msgid "Page fl&ip/scrolling options"
-msgstr "Lapu apvēršanas/ritināšanas iespējas"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:578
-msgid "H&yphenate (break line in the middle of large words)"
-msgstr "P&ārnest (pārtraukt rindu garu vārdu vidū)"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:579
-msgid "Default &language for hyphenation:"
-msgstr "Noklusētā &valoda dalīšanai zilbēs:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:580
-msgid ""
-"The default language to use for hyphenation rules. If the book does not "
-"specify a language, this will be used."
-msgstr "Noklusētai valodai izmantot zilbjdales noteikumus. Tas tiks izmantots, ja grāmatai nav uzrādīta valoda."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:581
-msgid "Show &controls in the viewer window"
-msgstr "Rādīt vadīklas skatītāja logā"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:582
-msgid "Search &online URL:"
-msgstr "Meklēt &tiešsaistes URL:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:583
-#, python-brace-format
-msgid ""
-"Change the search engine used to perform online searches for selected text.\n"
-"You must enter the search URL for the search engine, with the placeholder\n"
-"{text}, which will be replaced by the selected text."
-msgstr "Mainiet meklētājprogrammu, kas tiek izmantota atlasītā teksta meklēšanai tiešsaistē.\nJums jāievada meklētājprogrammas meklēšanas URL, izmantojot vietturētāju\n{text}, kuru aizstās izvēlētais teksts."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:586
-msgid "Remember last used &window size and layout"
-msgstr "Atcerēties pēdējo izmantoto &loga izmēru un izkārtojumu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:587
-msgid "Remember the current &page when quitting"
-msgstr "Atcerēties pašreizējo &lapu, izejot"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:588
-msgid ""
-"Keep a copy of all bookmarks/current page information inside the e-book "
-"file, so that you can share them by simply sending the e-book file itself. "
-"Currently only works with e-books in the EPUB format."
-msgstr "Saglabāt visu grāmatzīmju/pašreizējās lapas informācijas kopiju e-grāmatas failā, lai jūs varētu tos koplietot, vienkārši nosūtot e-grāmatu failu pats. Šobrīd EPUB formāts darbojas tikai ar e-grāmatām."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:589
-msgid ""
-"Keep a copy of &bookmarks/current page inside the e-book file, for easy "
-"sharing"
-msgstr "Saglabāt &grāmatzīmju/pašreizējās lapas kopiju e-grāmatu failā, lai to ērti koplietotu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:590
-msgid ""
-"Normally, you can view multiple books in calibre, each in its own viewer "
-"window. With this option, if you attempt to view a second book, it will "
-"replace the previously opened book instead of using a new window."
-msgstr "Parasti, calibre  varat aplūkot vairākas grāmatas, katru savā skatītāja logā. Izmantojot šo iespēju, ja mēģināsit skatīt otro grāmatu, tā aizstās iepriekš atvērto grāmatu, nevis lietos jaunu logu."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:591
-msgid "Allow only a single book to be &viewed at a time (needs restart)"
-msgstr "Atļaut vienlaikus skatīt un apskatīt, tikai vienu grāmatu (nepieciešams restartēt)"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:592
-msgid "&Resize images larger than the viewer window (needs restart)"
-msgstr "&Mainīt lielākus attēlus nekā skatītāja logā (vajag restartēt)"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:594
-msgid "&Miscellaneous options"
-msgstr "&Dažādi iestatījumi"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:595
-msgid "&General"
-msgstr "Vispārī&gi"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:596
-msgid "Double click to change a keyboard shortcut"
-msgstr "Dubultklikšķis, lai mainītu tastatūras īsceļu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:597
-msgid "&Keyboard shortcuts"
-msgstr "&Klaviatūras saīsnes"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:598
-msgid ""
-"<p>A CSS stylesheet that can be used to control the look and feel of books. "
-"For examples, click <a "
-"href=\"https://www.mobileread.com/forums/showthread.php?t=51500\">here</a>."
-msgstr "<p>CSS stilu tabula, ko var izmantot, lai kontrolētu grāmatu izskatu. Piemēram, noklikšķiniet uz <a href=\"https://www.mobileread.com/forums/showthread.php?t=51500\">šeit</a>."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:599
-msgid "User &stylesheet"
-msgstr "Lietotāja &stilu tabula"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:600
-msgid "You can save and load the viewer settings as <i>themes</i>"
-msgstr "Jūs varat saglabāt un ielādēt skatītāja iestatījumus kā <i>tēmas</i>"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:601
-msgid "Save current settings as a theme:"
-msgstr "Saglabāt pašreizējos iestatījumus kā tēmu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:603
-msgid "Load a previously saved theme:"
-msgstr "Ielādēt iepriekš saglabāto tēmu:"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:605
-msgid "Delete a saved theme:"
-msgstr "Dzēst saglabātu tēmu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:607
-msgid "&Theming"
-msgstr "&Formē tēmu"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:608
-msgid ""
-"When you lookup a word, the viewer opens the word's definition in a "
-"dictionary website. The dictionary website is chosen based on the language "
-"of the book. You can customize the website used for a particular language "
-"here."
-msgstr "Kad jūs meklējat vārdu, skatītājs atver vārda definīciju,kas iekļauta mājas lapas vārdnīcā. Vārdnīcas vietne ir izvēlēta, balstoties uz grāmatas valodas. Šeit jūs varat izmantot pielāgoto vietni konkrētā valodā."
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:609
-msgid "&Add website"
-msgstr "&Pievienot vietni"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:610
-msgid "&Remove website"
-msgstr "&Noņemt vietni"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:611
-msgid "&Change website"
-msgstr "&Mainīt vietni"
-
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/config_ui.py:612
-msgid "&Dictionaries"
-msgstr "&Vārdnīcas"
-
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/lookup.py:59
 msgid "Edit lookup source"
 msgstr ""
@@ -34018,9 +33679,17 @@ msgstr "Lapas &izmērs:"
 msgid "&Left margin:"
 msgstr "&Kreisā mala:"
 
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:72
+msgid "&Top margin:"
+msgstr "&Augšējā piemale:"
+
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:73
 msgid "&Right margin:"
 msgstr "&Labā mala:"
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:74
+msgid "&Bottom margin:"
+msgstr "&Apakšējā piemale:"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/printing.py:78
 msgid "inches"
@@ -34070,19 +33739,19 @@ msgstr "Neizdevās pārveidot par PDF"
 msgid "Failed to generate PDF file, click \"Show details\" for more information."
 msgstr "Neizdevās izveidot PDF datni. Uzklikšķiniet \"Rādīt detaļas\" plašākai informācijai"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:196
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:199
 msgid "Clear search history"
 msgstr "Attīrīt meklēšanas vēsturi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:241
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:244
 msgid "Contains"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:242
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:245
 msgid "Whole words"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:245
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:248
 msgid ""
 "Choose the type of search: <ul><li><b>Contains</b> will search for the "
 "entered text anywhere.<li><b>Whole words</b> will search for whole words "
@@ -34090,16 +33759,22 @@ msgid ""
 "regular expression."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:390
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:512
 msgid "Hidden text"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:391
-msgid "Some search results were for hidden text, they have been removed."
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:513
+msgid ""
+"Some search results were for hidden or non-reflowable text, they will be "
+"removed."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:510
-msgid "No matches were found for: <b>{}</b>"
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:524
+msgid "No displayable matches were found for:"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/search.py:526
+msgid "No matches were found for:"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toc.py:105
@@ -34153,11 +33828,13 @@ msgid "Previous page"
 msgstr "Iepriekšējā lapa"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toolbars.py:53
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:209
 #: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:133
 msgid "Next section"
 msgstr "Nākošā sadaļa"
 
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/toolbars.py:54
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:208
 #: /home/kovid/work/calibre/src/calibre/web/feeds/templates.py:140
 msgid "Previous section"
 msgstr "Iepriekšējā sadaļa"
@@ -34233,61 +33910,81 @@ msgstr ""
 msgid "Lookup"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:100
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:93
 msgid "Preparing book for first read, please wait"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:103
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:96
 msgid "E-book viewer"
 msgstr "E-grāmatas skatītājs"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:300
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:314
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:203
+msgid "Scroll here"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:205
+msgid "Start of book"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:206
+msgid "End of book"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:211
+msgid "Start of current file"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:212
+msgid "End of current file"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:324
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:338
 msgid "Failed to load the image {}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:302
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:308
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:326
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:332
 msgid "Image not found"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:303
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:309
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:327
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:333
 msgid "Failed to find the image {}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:363
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:387
 msgid "Choose e-book"
 msgstr "Izvēlieties e-grāmatu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:363
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:387
 msgid "E-books"
 msgstr "E-grāmata"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:380
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:404
 msgid "Loading book"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:381
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:405
 msgid "Loading book, please wait"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:424
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:448
 msgid "Loading book failed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:425
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/ui.py:449
 #, python-brace-format
 msgid "Failed to open the book at {0}. Click \"Show details\" for more info."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:534
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:552
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:640
+#: /home/kovid/work/calibre/src/calibre/gui2/viewer/web_view.py:659
 msgid "Choose background image"
 msgstr ""
 
@@ -34302,23 +33999,23 @@ msgid ""
 "must end with a file  extension like .epub or .mobi"
 msgstr "Faila nosaukums <b>%s</b> , šķiet, nebeidzas ar faila paplašinājumu. Tam jābeidzas ar faila paplašinājumu, piemēram, .epub vai .mobi"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:343
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:347
 msgid "Hide size in corner"
 msgstr "Slēpt stūrī rādīto izmēru"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:343
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:347
 msgid "Show size in corner"
 msgstr "Rādīt izmēru stūrī"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:977
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:981
 msgid "Drag to resize"
 msgstr "Velciet lai mērogotu"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1013
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1017
 msgid "Hide {}"
 msgstr "Slēpt {}"
 
-#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1013
+#: /home/kovid/work/calibre/src/calibre/gui2/widgets.py:1017
 msgid "Show {}"
 msgstr "Rādīt {}"
 
@@ -37749,6 +37446,10 @@ msgstr "Aizvērt"
 msgid "Apply"
 msgstr "Pielietot"
 
+#: /usr/src/qt5/qtbase/src/gui/kernel/qplatformtheme.cpp:740
+msgid "Reset"
+msgstr "Atstatīt"
+
 #: /usr/src/qt5/qtbase/src/gui/kernel/qplatformtheme.cpp:742
 msgid "Restore Defaults"
 msgstr "Atjaunot noklusējumus"
@@ -37834,6 +37535,10 @@ msgstr "Efekti"
 #: /usr/src/qt5/qtbase/src/widgets/dialogs/qfontdialog.cpp:774
 msgid "Stri&keout"
 msgstr "Pārs&vītrots"
+
+#: /usr/src/qt5/qtbase/src/widgets/dialogs/qfontdialog.cpp:776
+msgid "Sample"
+msgstr "Piemērs"
 
 #: /usr/src/qt5/qtbase/src/widgets/dialogs/qfontdialog.cpp:777
 msgid "Wr&iting System"

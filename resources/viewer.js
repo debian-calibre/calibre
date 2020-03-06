@@ -3758,6 +3758,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.viewport"] = {};
     ρσ_modules["read_book.cfi"] = {};
     ρσ_modules["read_book.extract"] = {};
+    ρσ_modules["read_book.find"] = {};
     ρσ_modules.select = {};
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.mathjax"] = {};
@@ -6925,34 +6926,6 @@ return this.__repr__();
             __argnames__ : {value: ["html", "style", "sandbox"]}
         });
 
-        function clone_selection(sel) {
-            var ans, i;
-            ans = [];
-            for (var ρσ_Index4 = 0; ρσ_Index4 < sel.rangeCount; ρσ_Index4++) {
-                i = ρσ_Index4;
-                ans.push(sel.getRangeAt(i).cloneRange());
-            }
-            return ans;
-        };
-        if (!clone_selection.__argnames__) Object.defineProperties(clone_selection, {
-            __argnames__ : {value: ["sel"]}
-        });
-
-        function apply_cloned_selection(ranges) {
-            var sel, r;
-            sel = window.getSelection();
-            sel.removeAllRanges();
-            var ρσ_Iter5 = ρσ_Iterable(ranges);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                r = ρσ_Iter5[ρσ_Index5];
-                sel.addRange(r);
-            }
-            return sel;
-        };
-        if (!apply_cloned_selection.__argnames__) Object.defineProperties(apply_cloned_selection, {
-            __argnames__ : {value: ["ranges"]}
-        });
-
         if (__name__ === "__main__") {
             var strings = ρσ_modules.pythonize.strings;
 
@@ -6988,8 +6961,6 @@ return this.__repr__();
         ρσ_modules.utils.simple_markup = simple_markup;
         ρσ_modules.utils.safe_set_inner_html = safe_set_inner_html;
         ρσ_modules.utils.sandboxed_html = sandboxed_html;
-        ρσ_modules.utils.clone_selection = clone_selection;
-        ρσ_modules.utils.apply_cloned_selection = apply_cloned_selection;
     })();
 
     (function(){
@@ -14229,6 +14200,222 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.find";
+        var cache;
+        function build_text_map() {
+            var node_list, flat_text, ignored_tags;
+            node_list = [];
+            flat_text = "";
+            ignored_tags = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["style"] = true;
+                ρσ_d["script"] = true;
+                ρσ_d["noscript"] = true;
+                ρσ_d["title"] = true;
+                ρσ_d["meta"] = true;
+                ρσ_d["head"] = true;
+                ρσ_d["link"] = true;
+                ρσ_d["html"] = true;
+                ρσ_d["img"] = true;
+                return ρσ_d;
+            }).call(this);
+            function process_node(node) {
+                var text, tag, style, children, i;
+                if (node.nodeType === Node.TEXT_NODE) {
+                    text = node.nodeValue;
+                    if (text && text.length) {
+                        node_list.push((function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["node"] = node;
+                            ρσ_d["offset"] = flat_text.length;
+                            ρσ_d["length"] = text.length;
+                            return ρσ_d;
+                        }).call(this));
+                        flat_text += text;
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (!node.hasChildNodes()) {
+                        return;
+                    }
+                    tag = node.tagName.toLowerCase();
+                    if (ignored_tags[(typeof tag === "number" && tag < 0) ? ignored_tags.length + tag : tag]) {
+                        return;
+                    }
+                    style = window.getComputedStyle(node);
+                    if (style.display === "none" || style.visibility === "hidden") {
+                        return;
+                    }
+                    children = node.childNodes;
+                    for (var ρσ_Index0 = 0; ρσ_Index0 < children.length; ρσ_Index0++) {
+                        i = ρσ_Index0;
+                        process_node(children[i]);
+                    }
+                }
+            };
+            if (!process_node.__argnames__) Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node"]}
+            });
+
+            process_node(document.body);
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["timestamp"] = window.performance.now();
+                ρσ_d["flat_text"] = flat_text;
+                ρσ_d["node_list"] = node_list;
+                return ρσ_d;
+            }).call(this);
+        };
+
+        function find_node_for_index_binary(node_list, idx_in_flat_text, start) {
+            var end, mid, q, limit, start_node, start_offset;
+            start = start || 0;
+            end = node_list.length - 1;
+            while (start <= end) {
+                mid = Math.floor((start + end) / 2);
+                q = node_list[(typeof mid === "number" && mid < 0) ? node_list.length + mid : mid];
+                limit = q.offset + q.length;
+                if (q.offset <= idx_in_flat_text && limit > idx_in_flat_text) {
+                    start_node = q.node;
+                    start_offset = idx_in_flat_text - q.offset;
+                    return [start_node, start_offset, mid];
+                }
+                if (limit <= idx_in_flat_text) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+            return [null, null, null];
+        };
+        if (!find_node_for_index_binary.__argnames__) Object.defineProperties(find_node_for_index_binary, {
+            __argnames__ : {value: ["node_list", "idx_in_flat_text", "start"]}
+        });
+
+        function find_node_for_index_linear(node_list, idx_in_flat_text, start) {
+            var q, limit, start_node, start_offset, i;
+            start = start || 0;
+            for (var ρσ_Index1 = start; ρσ_Index1 < node_list.length; ρσ_Index1++) {
+                i = ρσ_Index1;
+                q = node_list[(typeof i === "number" && i < 0) ? node_list.length + i : i];
+                limit = q.offset + q.length;
+                if (q.offset <= idx_in_flat_text && limit > idx_in_flat_text) {
+                    start_node = q.node;
+                    start_offset = idx_in_flat_text - q.offset;
+                    return [start_node, start_offset, i];
+                }
+            }
+            return [null, null, null];
+        };
+        if (!find_node_for_index_linear.__argnames__) Object.defineProperties(find_node_for_index_linear, {
+            __argnames__ : {value: ["node_list", "idx_in_flat_text", "start"]}
+        });
+
+        function find_specific_occurrence(q, num, before_len, after_len, text_map) {
+            var from_idx, flat_text, pos, match_num, idx, ρσ_unpack, start_node, start_offset, node_pos, end_node, end_offset;
+            if (!q || !q.length) {
+                return;
+            }
+            from_idx = 0;
+            flat_text = text_map.flat_text;
+            pos = 0;
+            match_num = -1;
+            while (true) {
+                idx = flat_text.indexOf(q, from_idx);
+                if (idx < 0) {
+                    break;
+                }
+                match_num += 1;
+                from_idx = idx + 1;
+                if (num < match_num) {
+                    continue;
+                }
+                ρσ_unpack = find_node_for_index_binary(text_map.node_list, idx + before_len, pos);
+ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
+                start_node = ρσ_unpack[0];
+                start_offset = ρσ_unpack[1];
+                node_pos = ρσ_unpack[2];
+                if (start_node !== null) {
+                    pos = node_pos;
+                    ρσ_unpack = find_node_for_index_linear(text_map.node_list, idx + q.length - after_len, pos);
+ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
+                    end_node = ρσ_unpack[0];
+                    end_offset = ρσ_unpack[1];
+                    node_pos = ρσ_unpack[2];
+                    if (end_node !== null) {
+                        return (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["start_node"] = start_node;
+                            ρσ_d["start_offset"] = start_offset;
+                            ρσ_d["start_pos"] = pos;
+                            ρσ_d["end_node"] = end_node;
+                            ρσ_d["end_offset"] = end_offset;
+                            ρσ_d["end_pos"] = node_pos;
+                            ρσ_d["idx_in_flat_text"] = idx;
+                            return ρσ_d;
+                        }).call(this);
+                    }
+                }
+                break;
+            }
+        };
+        if (!find_specific_occurrence.__argnames__) Object.defineProperties(find_specific_occurrence, {
+            __argnames__ : {value: ["q", "num", "before_len", "after_len", "text_map"]}
+        });
+
+        cache = Object.create(null);
+        function reset_find_caches() {
+            cache = Object.create(null);
+        };
+
+        function select_find_result(match) {
+            var sel;
+            sel = window.getSelection();
+            sel.setBaseAndExtent(match.start_node, match.start_offset, match.end_node, match.end_offset);
+        };
+        if (!select_find_result.__argnames__) Object.defineProperties(select_find_result, {
+            __argnames__ : {value: ["match"]}
+        });
+
+        function select_search_result(sr) {
+            var q, before_len, after_len, after, match;
+            window.getSelection().removeAllRanges();
+            if (!cache.text_map) {
+                cache.text_map = build_text_map();
+            }
+            q = "";
+            before_len = after_len = 0;
+            if (sr.before) {
+                q = sr.before.slice(-5);
+                before_len = q.length;
+            }
+            q += sr.text;
+            if (sr.after) {
+                after = sr.after.slice(0, 5);
+                after_len = after.length;
+                q += after;
+            }
+            match = find_specific_occurrence(q, int(sr.index), before_len, after_len, cache.text_map);
+            if (!match) {
+                return false;
+            }
+            select_find_result(match);
+            return true;
+        };
+        if (!select_search_result.__argnames__) Object.defineProperties(select_search_result, {
+            __argnames__ : {value: ["sr"]}
+        });
+
+        ρσ_modules["read_book.find"].cache = cache;
+        ρσ_modules["read_book.find"].build_text_map = build_text_map;
+        ρσ_modules["read_book.find"].find_node_for_index_binary = find_node_for_index_binary;
+        ρσ_modules["read_book.find"].find_node_for_index_linear = find_node_for_index_linear;
+        ρσ_modules["read_book.find"].find_specific_occurrence = find_specific_occurrence;
+        ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
+        ρσ_modules["read_book.find"].select_find_result = select_find_result;
+        ρσ_modules["read_book.find"].select_search_result = select_search_result;
+    })();
+
+    (function(){
         var __name__ = "select";
         function range_from_point(x, y) {
             var r, p;
@@ -14523,7 +14710,7 @@ return this.__repr__();
         })());
 
         function is_auto_scroll_active() {
-            return scroll_animator.auto && scroll_animator.is_running();
+            return scroll_animator.is_active();
         };
 
         function start_autoscroll() {
@@ -14532,9 +14719,9 @@ return this.__repr__();
 
         function toggle_autoscroll() {
             var running;
-            running = false;
             if (is_auto_scroll_active()) {
                 cancel_scroll();
+                running = false;
             } else {
                 start_autoscroll();
                 running = true;
@@ -14644,13 +14831,15 @@ return this.__repr__();
         }
         Object.defineProperty(ScrollAnimator.prototype, "__bind_methods__", {value: function () {
             this.is_running = ScrollAnimator.prototype.is_running.bind(this);
+            this.is_active = ScrollAnimator.prototype.is_active.bind(this);
             this.start = ScrollAnimator.prototype.start.bind(this);
             this.smooth_scroll = ScrollAnimator.prototype.smooth_scroll.bind(this);
             this.auto_scroll = ScrollAnimator.prototype.auto_scroll.bind(this);
+            this.request_next_spine_item = ScrollAnimator.prototype.request_next_spine_item.bind(this);
             this.report = ScrollAnimator.prototype.report.bind(this);
             this.sync = ScrollAnimator.prototype.sync.bind(this);
             this.stop = ScrollAnimator.prototype.stop.bind(this);
-            this.stop_auto_timer = ScrollAnimator.prototype.stop_auto_timer.bind(this);
+            this.stop_auto_spine_transition = ScrollAnimator.prototype.stop_auto_spine_transition.bind(this);
             this.pause = ScrollAnimator.prototype.pause.bind(this);
             this.resume = ScrollAnimator.prototype.resume.bind(this);
         }});
@@ -14659,12 +14848,17 @@ return this.__repr__();
             self.animation_id = null;
             self.auto = false;
             self.auto_timer = null;
+            self.paused = false;
         };
         ScrollAnimator.__argnames__ = ScrollAnimator.prototype.__init__.__argnames__;
         ScrollAnimator.__handles_kwarg_interpolation__ = ScrollAnimator.prototype.__init__.__handles_kwarg_interpolation__;
         ScrollAnimator.prototype.is_running = function is_running() {
             var self = this;
-            return self.animation_id !== null;
+            return self.animation_id !== null || self.auto_timer !== null;
+        };
+        ScrollAnimator.prototype.is_active = function is_active() {
+            var self = this;
+            return self.is_running() && (self.auto || self.auto_timer !== null);
         };
         ScrollAnimator.prototype.start = function start(direction, auto) {
             var self = this;
@@ -14674,7 +14868,7 @@ return this.__repr__();
             }
             now = window.performance.now();
             self.end_time = now + self.DURATION;
-            self.stop_auto_timer();
+            self.stop_auto_spine_transition();
             if (!self.is_running() || direction !== self.direction || auto !== self.auto) {
                 if (self.auto && !auto) {
                     self.pause();
@@ -14731,10 +14925,7 @@ return this.__repr__();
             if (scroll_finished) {
                 self.pause();
                 if (opts.scroll_auto_boundary_delay >= 0) {
-                    self.auto_timer = setTimeout(function () {
-                        self.auto_timer = null;
-                        (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: self.direction === DIRECTION.Up})])));
-                    }, opts.scroll_auto_boundary_delay * 1e3);
+                    self.auto_timer = setTimeout(self.request_next_spine_item, opts.scroll_auto_boundary_delay * 1e3);
                 }
             } else {
                 self.animation_id = window.requestAnimationFrame(self.auto_scroll);
@@ -14743,6 +14934,11 @@ return this.__repr__();
         if (!ScrollAnimator.prototype.auto_scroll.__argnames__) Object.defineProperties(ScrollAnimator.prototype.auto_scroll, {
             __argnames__ : {value: ["ts"]}
         });
+        ScrollAnimator.prototype.request_next_spine_item = function request_next_spine_item() {
+            var self = this;
+            self.auto_timer = null;
+            (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: self.direction === DIRECTION.Up})])));
+        };
         ScrollAnimator.prototype.report = function report() {
             var self = this;
             var amt;
@@ -14773,13 +14969,14 @@ return this.__repr__();
                 self.animation_id = null;
                 self.report();
             }
-            self.stop_auto_timer();
+            self.stop_auto_spine_transition();
         };
-        ScrollAnimator.prototype.stop_auto_timer = function stop_auto_timer() {
+        ScrollAnimator.prototype.stop_auto_spine_transition = function stop_auto_spine_transition() {
             var self = this;
             if (self.auto_timer !== null) {
                 clearTimeout(self.auto_timer);
                 self.auto_timer = null;
+                self.paused = false;
             }
         };
         ScrollAnimator.prototype.pause = function pause() {
@@ -15001,7 +15198,6 @@ return this.__repr__();
                 if (is_auto_scroll_active()) {
                     toggle_autoscroll();
                 }
-                scroll_animator.stop_auto_timer();
             } else if (action === "resume") {
                 auto_scroll_resume();
             }
@@ -15432,6 +15628,17 @@ return this.__repr__();
             }
             cps = max(1, min(cps || 1, 20));
             return cps;
+        };
+
+        function get_columns_per_screen_data() {
+            var which;
+            which = (scroll_viewport.width() > scroll_viewport.height()) ? "landscape" : "portrait";
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["which"] = which;
+                ρσ_d["cps"] = calc_columns_per_screen();
+                return ρσ_d;
+            }).call(this);
         };
 
         function will_columns_per_screen_change() {
@@ -16183,6 +16390,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].fit_images = fit_images;
         ρσ_modules["read_book.paged_mode"].cps_by_em_size = cps_by_em_size;
         ρσ_modules["read_book.paged_mode"].calc_columns_per_screen = calc_columns_per_screen;
+        ρσ_modules["read_book.paged_mode"].get_columns_per_screen_data = get_columns_per_screen_data;
         ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change = will_columns_per_screen_change;
         ρσ_modules["read_book.paged_mode"].layout = layout;
         ρσ_modules["read_book.paged_mode"].current_scroll_offset = current_scroll_offset;
@@ -16392,10 +16600,14 @@ return this.__repr__();
             key = evt.key;
             if (key) {
                 cc = key.charCodeAt(0);
-                if ((0 < cc && cc < 32 || key === "Enter") && evt.ctrlKey && !evt.metaKey && !evt.altKey) {
+                if ((0 < cc && cc < 32 || key === "Enter" || key === "Tab") && evt.ctrlKey && !evt.metaKey && !evt.altKey) {
                     if (key === "Enter") {
                         if (evt.code && evt.code !== "Enter") {
                             key = "m";
+                        }
+                    } else if (key === "Tab") {
+                        if (evt.code && evt.code !== "Tab") {
+                            key = "i";
                         }
                     } else {
                         key = chr(96 + cc);
@@ -16479,8 +16691,12 @@ return this.__repr__();
                     ρσ_d["previous_match"] = desc(['Shift+F3'], "ui", _("Find previous"));
                     ρσ_d["increase_font_size"] = desc(['Ctrl+=', 'Ctrl++', 'Ctrl+Shift++', 'Ctrl+Shift+=', 'Meta++', 'Meta+Shift++', 'Meta+Shift+='], "ui", _("Increase font size"));
                     ρσ_d["decrease_font_size"] = desc(['Ctrl+-', 'Ctrl+_', 'Ctrl+Shift+-', 'Ctrl+Shift+_', 'Meta+-', 'Meta+_'], "ui", _("Decrease font size"));
+                    ρσ_d["increase_number_of_columns"] = desc(['Ctrl+]'], "ui", _("Increase number of pages per screen"));
+                    ρσ_d["decrease_number_of_columns"] = desc(['Ctrl+['], "ui", _("Decrease number of pages per screen"));
+                    ρσ_d["reset_number_of_columns"] = desc(['Ctrl+Alt+c'], "ui", _("Make number of pages per screen automatic"));
                     ρσ_d["toggle_full_screen"] = desc(['F11', 'Ctrl+Shift+F'], "ui", _("Toggle full screen"));
                     ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
+                    ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
                     ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
                     ρσ_d["metadata"] = desc("Ctrl+n", "ui", _("Show the book metadata"));
                     ρσ_d["reload_book"] = desc(['F5', 'Ctrl+r'], "ui", _("Reload book"));
@@ -17407,7 +17623,7 @@ return this.__repr__();
             t = _("Search Table of Contents");
             search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
             ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex;"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
         };
         if (!create_toc_panel.__argnames__) Object.defineProperties(create_toc_panel, {
             __argnames__ : {value: ["book", "container", "onclick"]}
@@ -18090,6 +18306,9 @@ return this.__repr__();
 
         var get_elements = ρσ_modules["read_book.extract"].get_elements;
 
+        var reset_find_caches = ρσ_modules["read_book.find"].reset_find_caches;
+        var select_search_result = ρσ_modules["read_book.find"].select_search_result;
+
         var flow_anchor_funcs = ρσ_modules["read_book.flow_mode"].anchor_funcs;
         var flow_auto_scroll_action = ρσ_modules["read_book.flow_mode"].auto_scroll_action;
         var flow_onwheel = ρσ_modules["read_book.flow_mode"].flow_onwheel;
@@ -18114,8 +18333,8 @@ return this.__repr__();
         var paged_anchor_funcs = ρσ_modules["read_book.paged_mode"].anchor_funcs;
         var paged_auto_scroll_action = ρσ_modules["read_book.paged_mode"].auto_scroll_action;
         var calc_columns_per_screen = ρσ_modules["read_book.paged_mode"].calc_columns_per_screen;
-        var will_columns_per_screen_change = ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change;
         var current_cfi = ρσ_modules["read_book.paged_mode"].current_cfi;
+        var get_columns_per_screen_data = ρσ_modules["read_book.paged_mode"].get_columns_per_screen_data;
         var paged_handle_gesture = ρσ_modules["read_book.paged_mode"].handle_gesture;
         var paged_handle_shortcut = ρσ_modules["read_book.paged_mode"].handle_shortcut;
         var paged_jump_to_cfi = ρσ_modules["read_book.paged_mode"].jump_to_cfi;
@@ -18129,6 +18348,7 @@ return this.__repr__();
         var scroll_to_elem = ρσ_modules["read_book.paged_mode"].scroll_to_elem;
         var paged_scroll_to_fraction = ρσ_modules["read_book.paged_mode"].scroll_to_fraction;
         var snap_to_selection = ρσ_modules["read_book.paged_mode"].snap_to_selection;
+        var will_columns_per_screen_change = ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change;
 
         var elem_for_ref = ρσ_modules["read_book.referencing"].elem_for_ref;
         var end_reference_mode = ρσ_modules["read_book.referencing"].end_reference_mode;
@@ -18156,8 +18376,6 @@ return this.__repr__();
 
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
 
-        var apply_cloned_selection = ρσ_modules.utils.apply_cloned_selection;
-        var clone_selection = ρσ_modules.utils.clone_selection;
         var debounce = ρσ_modules.utils.debounce;
         var html_escape = ρσ_modules.utils.html_escape;
         var is_ios = ρσ_modules.utils.is_ios;
@@ -18256,8 +18474,9 @@ return this.__repr__();
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
             this.on_next_screen = IframeBoss.prototype.on_next_screen.bind(this);
             this.change_font_size = IframeBoss.prototype.change_font_size.bind(this);
-            this.viewer_font_size_changed = IframeBoss.prototype.viewer_font_size_changed.bind(this);
+            this.change_number_of_columns = IframeBoss.prototype.change_number_of_columns.bind(this);
             this.relayout_on_font_size_change = IframeBoss.prototype.relayout_on_font_size_change.bind(this);
+            this.number_of_columns_changed = IframeBoss.prototype.number_of_columns_changed.bind(this);
             this.change_scroll_speed = IframeBoss.prototype.change_scroll_speed.bind(this);
             this.change_stylesheet = IframeBoss.prototype.change_stylesheet.bind(this);
             this.change_color_scheme = IframeBoss.prototype.change_color_scheme.bind(this);
@@ -18304,7 +18523,8 @@ return this.__repr__();
                 var ρσ_d = Object.create(null);
                 ρσ_d["change_color_scheme"] = self.change_color_scheme;
                 ρσ_d["change_font_size"] = self.change_font_size;
-                ρσ_d["viewer_font_size_changed"] = self.viewer_font_size_changed;
+                ρσ_d["change_number_of_columns"] = self.change_number_of_columns;
+                ρσ_d["number_of_columns_changed"] = self.number_of_columns_changed;
                 ρσ_d["change_scroll_speed"] = self.change_scroll_speed;
                 ρσ_d["display"] = self.display;
                 ρσ_d["find"] = self.find;
@@ -18571,12 +18791,25 @@ return this.__repr__();
         if (!IframeBoss.prototype.change_font_size.__argnames__) Object.defineProperties(IframeBoss.prototype.change_font_size, {
             __argnames__ : {value: ["data"]}
         });
-        IframeBoss.prototype.viewer_font_size_changed = function viewer_font_size_changed(data) {
+        IframeBoss.prototype.change_number_of_columns = function change_number_of_columns(data) {
             var self = this;
-            opts.base_font_size = data.base_font_size;
+            var cdata, delta, new_val;
+            if (current_layout_mode() === "flow") {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["error"].concat([ρσ_desugar_kwargs({title: _("In flow mode"), msg: _("Cannot change number of pages per screen in flow mode, switch to paged mode first.")})]));
+                return;
+            }
+            cdata = get_columns_per_screen_data();
+            delta = int(data.delta);
+            if (delta === 0) {
+                new_val = 0;
+            } else {
+                new_val = max(1, cdata.cps + delta);
+            }
+            (ρσ_expr_temp = opts.columns_per_screen)[ρσ_bound_index(cdata.which, ρσ_expr_temp)] = new_val;
             self.relayout_on_font_size_change();
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["columns_per_screen_changed"].concat([ρσ_desugar_kwargs({which: cdata.which, cps: new_val})]));
         };
-        if (!IframeBoss.prototype.viewer_font_size_changed.__argnames__) Object.defineProperties(IframeBoss.prototype.viewer_font_size_changed, {
+        if (!IframeBoss.prototype.change_number_of_columns.__argnames__) Object.defineProperties(IframeBoss.prototype.change_number_of_columns, {
             __argnames__ : {value: ["data"]}
         });
         IframeBoss.prototype.relayout_on_font_size_change = function relayout_on_font_size_change() {
@@ -18594,6 +18827,14 @@ return this.__repr__();
                 self.update_toc_position();
             }
         };
+        IframeBoss.prototype.number_of_columns_changed = function number_of_columns_changed(data) {
+            var self = this;
+            opts.columns_per_screen = data.columns_per_screen;
+            self.relayout_on_font_size_change();
+        };
+        if (!IframeBoss.prototype.number_of_columns_changed.__argnames__) Object.defineProperties(IframeBoss.prototype.number_of_columns_changed, {
+            __argnames__ : {value: ["data"]}
+        });
         IframeBoss.prototype.change_scroll_speed = function change_scroll_speed(data) {
             var self = this;
             if (ρσ_exists.n(data.lines_per_sec_auto)) {
@@ -18648,6 +18889,7 @@ return this.__repr__();
         IframeBoss.prototype.content_loaded_stage2 = function content_loaded_stage2() {
             var self = this;
             var csi, ipos, spine, files, spine_index, si, i;
+            reset_find_caches();
             self.connect_links();
             self.content_ready = true;
             document.head.removeChild(document.head.firstChild);
@@ -19017,45 +19259,12 @@ return this.__repr__();
         });
         IframeBoss.prototype.show_search_result = function show_search_result(data, from_load) {
             var self = this;
-            var sr, idx, sel, ranges, r, p;
-            sr = data.search_result;
-            idx = -1;
-            window.getSelection().removeAllRanges();
-            while (idx < sr.index) {
-                if (!window.find(sr.text, true, false, false, false, false)) {
-                    ρσ_interpolate_kwargs.call(self, self.send_message, ["search_result_not_found"].concat([ρσ_desugar_kwargs({search_result: sr})]));
-                    break;
+            if (select_search_result(data.search_result)) {
+                if (current_layout_mode() !== "flow") {
+                    snap_to_selection();
                 }
-                if (sr.mode !== "normal") {
-                    sel = window.getSelection();
-                    ranges = clone_selection(sel);
-                    r = ranges[0];
-                    if (sr.before) {
-                        p = r.cloneRange();
-                        p.collapse(true);
-                        sel = apply_cloned_selection([p]);
-                        sel.modify("extend", "left", "character");
-                        if (sel.toString() !== (ρσ_expr_temp = sr.before)[ρσ_expr_temp.length-1]) {
-                            apply_cloned_selection(ranges);
-                            continue;
-                        }
-                    }
-                    if (sr.after) {
-                        p = r.cloneRange();
-                        p.collapse(false);
-                        sel = apply_cloned_selection([p]);
-                        sel.modify("extend", "right", "character");
-                        if (sel.toString() !== sr.after[0]) {
-                            apply_cloned_selection(ranges);
-                            continue;
-                        }
-                    }
-                    apply_cloned_selection(ranges);
-                }
-                idx += 1;
-            }
-            if (idx > -1 && current_layout_mode() !== "flow") {
-                snap_to_selection();
+            } else {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["search_result_not_found"].concat([ρσ_desugar_kwargs({search_result: data.search_result})]));
             }
         };
         if (!IframeBoss.prototype.show_search_result.__argnames__) Object.defineProperties(IframeBoss.prototype.show_search_result, {
@@ -22598,19 +22807,18 @@ return this.__repr__();
                 back();
             };
 
-            return (function() {
-                var ρσ_anonfunc = function init_prefs_panel(container_id) {
-                    var container;
-                    container = document.getElementById(container_id);
-                    ρσ_interpolate_kwargs.call(this, create_top_bar, [container, title].concat([ρσ_desugar_kwargs({action: close_action, icon: icon})]));
-                    container.appendChild(E.div());
-                    create_prefs_widget(container.lastChild, get_prefs_data());
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["container_id"]}
-                });
-                return ρσ_anonfunc;
-            })();
+            function init_prefs_panel(container_id) {
+                var container;
+                container = document.getElementById(container_id);
+                ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: title, action: close_action, icon: icon})]));
+                container.appendChild(E.div());
+                create_prefs_widget(container.lastChild, get_prefs_data());
+            };
+            if (!init_prefs_panel.__argnames__) Object.defineProperties(init_prefs_panel, {
+                __argnames__ : {value: ["container_id"]}
+            });
+
+            return init_prefs_panel;
         };
         if (!prefs_panel_handler.__defaults__) Object.defineProperties(prefs_panel_handler, {
             __defaults__ : {value: {on_close:null, icon:"close"}},
@@ -23259,7 +23467,7 @@ return this.__repr__();
             }).call(this), (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["name"] = "partition_method";
-                ρσ_d["text"] = _("Tag browser category partitioning method");
+                ρσ_d["text"] = _("Category partitioning method");
                 ρσ_d["choices"] = ρσ_list_decorate([ ["first letter", _("First Letter")], ["disable", 
                 _("Disable")], ["partition", _("Partition")] ]);
                 ρσ_d["tooltip"] = _("Choose how Tag browser subcategories are displayed when there are more items than the limit. Select by first letter to see an A, B, C list. Choose partitioned to have a list of fixed-sized groups. Set to disabled if you never want subcategories.");
@@ -25553,7 +25761,7 @@ return this.__repr__();
             sd = get_session_data();
             sz = sd.get("base_font_size");
             nsz = sz + amt;
-            nsz = max(8, min(nsz, 40));
+            nsz = max(8, min(nsz, 80));
             change_font_size(nsz);
         };
         if (!change_font_size_by.__argnames__) Object.defineProperties(change_font_size_by, {
@@ -26591,12 +26799,12 @@ return this.__repr__();
         var defaults = ρσ_modules.session.defaults;
 
         CONTAINER = unique_id("standalone-scrolling-settings");
-        MIN_SCROLL_SPEED_AUTO = .25;
+        MIN_SCROLL_SPEED_AUTO = .05;
         MAX_SCROLL_SPEED_AUTO = 5;
         MIN_SCROLL_AUTO_DELAY = -1;
-        MAX_SCROLL_AUTO_DELAY = 10;
-        MIN_SCROLL_SPEED_SMOOTH = 10;
-        MAX_SCROLL_SPEED_SMOOTH = 50;
+        MAX_SCROLL_AUTO_DELAY = 50;
+        MIN_SCROLL_SPEED_SMOOTH = 5;
+        MAX_SCROLL_SPEED_SMOOTH = 80;
         function restore_defaults() {
             var container, val, control;
             container = get_container();
@@ -28128,7 +28336,7 @@ return this.__repr__();
             sync_action = ac(_("Sync"), _("Get last read position and annotations from the server"), self.overlay.sync_book, "cloud-download");
             delete_action = ac(_("Delete"), _("Delete this book from the device"), self.overlay.delete_book, "trash");
             reload_action = ac(_("Reload"), _("Reload this book from the {}").format((runtime.is_standalone_viewer) ? _("computer") : _("server")), self.overlay.reload_book, "refresh");
-            home_action = ac(_("Home"), _("Return to list of books"), function () {
+            home_action = ac(_("Home"), _("Return to the home page"), function () {
                 home();
             }, "home");
             back_action = ac(_("Back"), null, self.back, "arrow-left");
@@ -28449,7 +28657,7 @@ return this.__repr__();
             var self = this;
             if (self.changes_occurred) {
                 self.changes_occurred = false;
-                ui_operations.redisplay_book();
+                self.overlay.view.preferences_changed();
             }
         };
         PrefsOverlay.prototype.__repr__ = function __repr__ () {
@@ -28498,6 +28706,7 @@ return this.__repr__();
             OpenBook.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(OpenBook.prototype, "__bind_methods__", {value: function () {
+            this.handle_escape = OpenBook.prototype.handle_escape.bind(this);
             this.on_container_click = OpenBook.prototype.on_container_click.bind(this);
             this.show = OpenBook.prototype.show.bind(this);
         }});
@@ -28505,13 +28714,20 @@ return this.__repr__();
             var self = this;
             self.overlay = overlay;
             self.closeable = closeable;
-            self.is_not_escapable = !closeable;
         };
         if (!OpenBook.prototype.__init__.__argnames__) Object.defineProperties(OpenBook.prototype.__init__, {
             __argnames__ : {value: ["overlay", "closeable"]}
         });
         OpenBook.__argnames__ = OpenBook.prototype.__init__.__argnames__;
         OpenBook.__handles_kwarg_interpolation__ = OpenBook.prototype.__init__.__handles_kwarg_interpolation__;
+        OpenBook.prototype.handle_escape = function handle_escape() {
+            var self = this;
+            if (self.closeable) {
+                self.overlay.hide_current_panel();
+            } else {
+                ui_operations.quit();
+            }
+        };
         OpenBook.prototype.on_container_click = function on_container_click(evt) {
             var self = this;
         };
@@ -28520,12 +28736,15 @@ return this.__repr__();
         });
         OpenBook.prototype.show = function show(container) {
             var self = this;
-            var close_button_style;
             container.style.backgroundColor = get_color("window-background");
-            close_button_style = (self.closeable) ? "" : "display: none";
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Open a new book")), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer; " + ρσ_str.format("{}", close_button_style) + "", onclick: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Open a new book")), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
                 var ρσ_anonfunc = function (event) {
-                    [event.preventDefault(), event.stopPropagation(), self.overlay.hide_current_panel(event)];
+                    [event.preventDefault(), event.stopPropagation()];
+                    if (self.closeable) {
+                        self.overlay.hide_current_panel(event);
+                    } else {
+                        ui_operations.quit();
+                    }
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["event"]}
@@ -29141,7 +29360,7 @@ return this.__repr__();
             sel = "." + CLASS_NAME;
             style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({text_align: "right", user_select: "none"})]));
             sel += " > div ";
-            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "inline-flex", pointer_events: "auto", background_color: get_color("window-background"), padding: "1ex"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", pointer_events: "auto", background_color: get_color("window-background"), padding: "1ex"})]));
             return style;
         });
         function SearchOverlay() {
@@ -29657,6 +29876,8 @@ return this.__repr__();
             View.prototype.__init__.apply(this, arguments);
         }
         Object.defineProperty(View.prototype, "__bind_methods__", {value: function () {
+            this.set_scrollbar_visibility = View.prototype.set_scrollbar_visibility.bind(this);
+            this.toggle_scrollbar = View.prototype.toggle_scrollbar.bind(this);
             this.on_lookup_word = View.prototype.on_lookup_word.bind(this);
             this.left_margin_clicked = View.prototype.left_margin_clicked.bind(this);
             this.right_margin_clicked = View.prototype.right_margin_clicked.bind(this);
@@ -29675,6 +29896,7 @@ return this.__repr__();
             this.overlay_visibility_changed = View.prototype.overlay_visibility_changed.bind(this);
             this.on_handle_shortcut = View.prototype.on_handle_shortcut.bind(this);
             this.on_selection_change = View.prototype.on_selection_change.bind(this);
+            this.on_columns_per_screen_changed = View.prototype.on_columns_per_screen_changed.bind(this);
             this.switch_color_scheme = View.prototype.switch_color_scheme.bind(this);
             this.toggle_paged_mode = View.prototype.toggle_paged_mode.bind(this);
             this.toggle_autoscroll = View.prototype.toggle_autoscroll.bind(this);
@@ -29701,6 +29923,7 @@ return this.__repr__();
             this.hide_loading = View.prototype.hide_loading.bind(this);
             this.parse_cfi = View.prototype.parse_cfi.bind(this);
             this.display_book = View.prototype.display_book.bind(this);
+            this.preferences_changed = View.prototype.preferences_changed.bind(this);
             this.redisplay_book = View.prototype.redisplay_book.bind(this);
             this.iframe_settings = View.prototype.iframe_settings.bind(this);
             this.show_name = View.prototype.show_name.bind(this);
@@ -29849,6 +30072,7 @@ return this.__repr__();
                 ρσ_d["request_size"] = self.on_request_size;
                 ρσ_d["scroll_to_anchor"] = self.on_scroll_to_anchor;
                 ρσ_d["selectionchange"] = self.on_selection_change;
+                ρσ_d["columns_per_screen_changed"] = self.on_columns_per_screen_changed;
                 ρσ_d["show_chrome"] = self.show_chrome;
                 ρσ_d["show_footnote"] = self.on_show_footnote;
                 ρσ_d["update_cfi"] = self.on_update_cfi;
@@ -29890,6 +30114,22 @@ return this.__repr__();
         });
         View.__argnames__ = View.prototype.__init__.__argnames__;
         View.__handles_kwarg_interpolation__ = View.prototype.__init__.__handles_kwarg_interpolation__;
+        View.prototype.set_scrollbar_visibility = function set_scrollbar_visibility(visible) {
+            var self = this;
+            var sd;
+            sd = get_session_data();
+            sd.set("book_scrollbar", bool(visible));
+            self.book_scrollbar.apply_visibility();
+        };
+        if (!View.prototype.set_scrollbar_visibility.__argnames__) Object.defineProperties(View.prototype.set_scrollbar_visibility, {
+            __argnames__ : {value: ["visible"]}
+        });
+        View.prototype.toggle_scrollbar = function toggle_scrollbar() {
+            var self = this;
+            var sd;
+            sd = get_session_data();
+            self.set_scrollbar_visibility(!sd.get("book_scrollbar"));
+        };
         View.prototype.on_lookup_word = function on_lookup_word(data) {
             var self = this;
             if (runtime.is_standalone_viewer) {
@@ -30098,6 +30338,8 @@ return this.__repr__();
                 self.toggle_paged_mode();
             } else if (data.name === "toggle_toolbar") {
                 self.toggle_toolbar();
+            } else if (data.name === "toggle_scrollbar") {
+                self.toggle_scrollbar();
             } else if (data.name === "quit") {
                 ui_operations.quit();
             } else if (data.name === "start_search") {
@@ -30171,6 +30413,12 @@ return this.__repr__();
                 self.toggle_autoscroll();
             } else if (data.name.startsWith("switch_color_scheme:")) {
                 self.switch_color_scheme((ρσ_expr_temp = data.name.partition(":"))[ρσ_expr_temp.length-1]);
+            } else if (data.name === "increase_number_of_columns") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_number_of_columns"].concat([ρσ_desugar_kwargs({delta: 1})]));
+            } else if (data.name === "decrease_number_of_columns") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_number_of_columns"].concat([ρσ_desugar_kwargs({delta: -1})]));
+            } else if (data.name === "reset_number_of_columns") {
+                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["change_number_of_columns"].concat([ρσ_desugar_kwargs({delta: 0})]));
             } else {
                 ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["handle_navigation_shortcut"].concat([ρσ_desugar_kwargs({name: data.name})]));
             }
@@ -30186,6 +30434,17 @@ return this.__repr__();
             }
         };
         if (!View.prototype.on_selection_change.__argnames__) Object.defineProperties(View.prototype.on_selection_change, {
+            __argnames__ : {value: ["data"]}
+        });
+        View.prototype.on_columns_per_screen_changed = function on_columns_per_screen_changed(data) {
+            var self = this;
+            var sd, cps;
+            sd = get_session_data();
+            cps = sd.get("columns_per_screen") || Object.create(null);
+            cps[ρσ_bound_index(data.which, cps)] = int(data.cps);
+            sd.set("columns_per_screen", cps);
+        };
+        if (!View.prototype.on_columns_per_screen_changed.__argnames__) Object.defineProperties(View.prototype.on_columns_per_screen_changed, {
             __argnames__ : {value: ["data"]}
         });
         View.prototype.switch_color_scheme = function switch_color_scheme(name) {
@@ -30620,6 +30879,11 @@ return this.__repr__();
         if (!View.prototype.display_book.__argnames__) Object.defineProperties(View.prototype.display_book, {
             __argnames__ : {value: ["book", "initial_position"]}
         });
+        View.prototype.preferences_changed = function preferences_changed() {
+            var self = this;
+            ui_operations.update_url_state(true);
+            ui_operations.redisplay_book();
+        };
         View.prototype.redisplay_book = function redisplay_book() {
             var self = this;
             var sd;

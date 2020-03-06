@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/wizard/library.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -60,5 +60,5 @@ class Ui_WizardPage(object):
         WizardPage.setSubTitle(_("The one stop solution to all your e-book needs."))
         self.label_3.setText(_("Choose your &language:"))
         self.button_change.setText(_("&Change"))
-        self.libloc_label2.setText(_("If a calibre library already exists at the new location, calibre will use it automatically."))
+        self.libloc_label2.setText(_("If a calibre library already exists at the newly selected location, calibre will use it automatically."))
         self.libloc_label1.setText(_("<p>Choose a location for your books. When you add books to calibre, they will be copied here. Use an <b>empty folder</b> for a new calibre library:"))
