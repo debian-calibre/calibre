@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -60,6 +60,9 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.opt_input_order.sizePolicy().hasHeightForWidth())
         self.opt_input_order.setSizePolicy(sizePolicy)
+        self.opt_input_order.setDragEnabled(True)
+        self.opt_input_order.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
+        self.opt_input_order.setDefaultDropAction(QtCore.Qt.MoveAction)
         self.opt_input_order.setAlternatingRowColors(True)
         self.opt_input_order.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.opt_input_order.setObjectName("opt_input_order")
