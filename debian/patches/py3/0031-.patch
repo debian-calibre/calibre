@@ -1,0 +1,25 @@
+From 1e0cca35624010c0176aedae35ffcbe08db35f2f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 3 Dec 2019 11:06:52 +0530
+Subject: [PATCH 031/107] ...
+
+---
+ bypy/windows/site.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bypy/windows/site.py b/bypy/windows/site.py
+index 244ddfb39b..2ec48e0754 100644
+--- a/bypy/windows/site.py
++++ b/bypy/windows/site.py
+@@ -67,7 +67,7 @@ def set_quit():
+ 
+ def main():
+     sys.meta_path.insert(0, PydImporter())
+-    os.add_dll_directory(os.path.join(sys.app_dir, 'app', 'bin'))
++    os.add_dll_directory(os.path.abspath(os.path.join(sys.app_dir, 'app', 'bin')))
+ 
+     import linecache
+ 
+-- 
+2.25.1
+

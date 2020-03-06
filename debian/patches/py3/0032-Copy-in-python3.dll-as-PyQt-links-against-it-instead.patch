@@ -1,0 +1,27 @@
+From d8d7ebed1ba4dbb59175b284705c7c77281968ba Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 3 Dec 2019 11:17:19 +0530
+Subject: [PATCH 032/107] Copy in python3.dll as PyQt links against it instead
+ of python38.dll
+
+---
+ bypy/windows/__main__.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 758724d3d8..6a47426c2c 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
+@@ -154,7 +154,8 @@ def freeze(env, ext_dir):
+             copybin(f)
+ 
+     copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver.replace('.', '')))
+-    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules
++    copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver[0]))
++    for x in glob.glob(os.path.join(env.python_base, 'DLLs', '*')):  # python pyd modules and dlls
+         copybin(x)
+     for f in walk(os.path.join(env.python_base, 'Lib')):
+         if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
+-- 
+2.25.1
+

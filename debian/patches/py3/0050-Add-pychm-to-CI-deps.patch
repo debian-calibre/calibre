@@ -1,0 +1,25 @@
+From ceab88b88ac4e536294dd30c80c44d271491f415 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 10:10:41 +0530
+Subject: [PATCH 050/107] Add pychm to CI deps
+
+---
+ .github/workflows/ci.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index b8d59eef1a..30c5d9aba6 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -45,7 +45,7 @@ jobs:
+                 set -xe
+                 useradd -m ci
+                 pacman -Syu --noconfirm
+-                pacman -S --noconfirm --needed base-devel sudo git sip chmlib icu jxrlib hunspell libmtp libusbx libwmf optipng podofo python-apsw python-beautifulsoup4 python-cssselect python-css-parser python-dateutil python-dbus python-dnspython python-dukpy python-feedparser python-html2text python-html5-parser python-lxml python-markdown python-mechanize python-msgpack python-netifaces python-unrardll python-pillow python-psutil python-pygments python-pyqt5 python-regex python-zeroconf python-pyqtwebengine qt5-x11extras qt5-svg qt5-imageformats udisks2 hyphen
++                pacman -S --noconfirm --needed base-devel sudo git sip chmlib icu jxrlib hunspell libmtp libusbx libwmf optipng podofo python-apsw python-beautifulsoup4 python-cssselect python-css-parser python-dateutil python-dbus python-dnspython python-dukpy python-feedparser python-html2text python-html5-parser python-lxml python-markdown python-mechanize python-msgpack python-netifaces python-unrardll python-pillow python-psutil python-pygments python-pyqt5 python-regex python-zeroconf python-pyqtwebengine qt5-x11extras qt5-svg qt5-imageformats udisks2 hyphen python-pychm
+ 
+             - name: Checkout source code
+               uses: actions/checkout@master
+-- 
+2.25.1
+

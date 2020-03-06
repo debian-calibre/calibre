@@ -1,0 +1,121 @@
+From 4d7d772540886650d6214810103b4f8270d9cd73 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 17:59:40 +0530
+Subject: [PATCH 039/107] Allow using ANSI escape codes on windows when writing
+ to the console
+
+---
+ bypy/run-python.h   | 30 ++++++++++++++++++++++++++++++
+ bypy/windows/util.c | 22 +++++-----------------
+ 2 files changed, 35 insertions(+), 17 deletions(-)
+
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+index 67d511c200..ed28b3164c 100644
+--- a/bypy/run-python.h
++++ b/bypy/run-python.h
+@@ -36,6 +36,34 @@ log_error(const char *fmt, ...) {
+     va_end(ar);
+ 	fprintf(stderr, "\n");
+ }
++
++static bool stdout_is_a_tty = false, stderr_is_a_tty = false;
++DWORD console_old_mode = 0;
++static bool console_mode_changed = false;
++
++static void
++detect_tty() {
++    stdout_is_a_tty = _isatty(_fileno(stdout));
++    stderr_is_a_tty = _isatty(_fileno(stderr));
++}
++
++static void
++setup_vt_terminal_mode() {
++    if (stdout_is_a_tty || stderr_is_a_tty) {
++        HANDLE h = GetStdHandle(stdout_is_a_tty ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);
++        if (h != INVALID_HANDLE_VALUE) {
++            if (GetConsoleMode(h, &console_old_mode)) {
++                console_mode_changed = true;
++                SetConsoleMode(h, console_old_mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
++            }
++        }
++    }
++}
++
++static void
++restore_vt_terminal_mode() {
++    if (console_mode_changed) SetConsoleMode(GetStdHandle(stdout_is_a_tty ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE), console_old_mode);
++}
+ #else
+ static void
+ log_error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+@@ -227,12 +255,14 @@ run_interpreter() {
+ #ifdef _WIN32
+     UINT code_page = GetConsoleOutputCP();
+     if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
++    setup_vt_terminal_mode();
+ #endif
+ 
+     int ret = Py_RunMain();
+     PyConfig_Clear(&config);
+ #ifdef _WIN32
+     if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
++    restore_vt_terminal_mode();
+ #endif
+ 	exit(ret);
+ #undef CHECK_STATUS
+diff --git a/bypy/windows/util.c b/bypy/windows/util.c
+index d9a5c5f415..fa22e5c000 100644
+--- a/bypy/windows/util.c
++++ b/bypy/windows/util.c
+@@ -20,8 +20,6 @@
+ static int GUI_APP = 0;
+ static char python_dll[] = PYDLL;
+ 
+-void set_gui_app(int yes) { GUI_APP = yes; }
+-
+ static int _show_error(const wchar_t *preamble, const wchar_t *msg, const int code) {
+     static wchar_t buf[4096];
+ 	static char utf8_buf[4096] = {0};
+@@ -105,20 +103,9 @@ load_python_dll() {
+ 
+ const static wchar_t out_of_memory[] = L"Out of memory";
+ 
+-UINT
+-setup_streams() {
+-    UINT code_page = GetConsoleOutputCP();
+-    SetConsoleOutputCP(CP_UTF8);
+-
+-    //printf("input cp: %d output cp: %d\r\n", GetConsoleCP(), GetConsoleOutputCP());
+-
+-    return code_page;
+-}
+-
+ 
+-void
++static void
+ redirect_out_stream(FILE *stream) {
+-    if (_isatty(_fileno(stream))) return;
+     FILE *f = NULL;
+     errno_t err;
+ 
+@@ -151,13 +138,14 @@ execute_python_entrypoint(const wchar_t *basename, const wchar_t *module, const
+     int ret = 0;
+     // Prevent Windows' idiotic error dialog popups when various win32 api functions fail
+     SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX);
++    detect_tty();
+ 
+     if (is_gui_app) {
+         // Redirect stdout and stderr to NUL so that python does not fail writing to them
+-        redirect_out_stream(stdout);
+-        redirect_out_stream(stderr);
++        if (!stdout_is_a_tty) redirect_out_stream(stdout);
++        if (!stderr_is_a_tty) redirect_out_stream(stderr);
+     }
+-    set_gui_app(is_gui_app);
++    GUI_APP = is_gui_app;
+     // Disable the invalid parameter handler
+     _set_invalid_parameter_handler(null_invalid_parameter_handler);
+     interpreter_data.argv = CommandLineToArgvW(GetCommandLineW(), &interpreter_data.argc);
+-- 
+2.25.1
+

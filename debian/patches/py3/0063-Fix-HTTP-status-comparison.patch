@@ -1,0 +1,25 @@
+From 314638bc4ddeb40cb4f69a91ce85dca07313319f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 20:11:44 +0530
+Subject: [PATCH 063/107] Fix HTTP status comparison
+
+---
+ src/calibre/srv/tests/loop.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
+index 644365f4dc..37a94d3f0d 100644
+--- a/src/calibre/srv/tests/loop.py
++++ b/src/calibre/srv/tests/loop.py
+@@ -92,7 +92,7 @@ class LoopTest(BaseTest):
+             conn.request('GET', '/')
+             with self.assertRaises(socket.timeout):
+                 res = conn.getresponse()
+-                if unicode_type(res.status) == unicode_type(http_client.REQUEST_TIMEOUT):
++                if res.status == http_client.REQUEST_TIMEOUT:
+                     raise socket.timeout('Timeout')
+                 raise Exception('Got unexpected response: code: %s %s headers: %r data: %r' % (
+                     res.status, res.reason, res.getheaders(), res.read()))
+-- 
+2.25.1
+

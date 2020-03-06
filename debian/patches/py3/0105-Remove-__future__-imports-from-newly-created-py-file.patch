@@ -1,0 +1,67 @@
+From 89d817cf602a1aea24458aaa00e6679a4b156741 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 6 Feb 2020 10:27:24 +0530
+Subject: [PATCH 105/107] Remove __future__ imports from newly created py files
+
+---
+ src/calibre/ebooks/oeb/polish/hyphenation.py | 2 --
+ src/calibre/gui2/palette.py                  | 2 --
+ src/calibre/gui2/viewer/search.py            | 2 --
+ src/calibre/utils/xml_parse.py               | 2 --
+ 4 files changed, 8 deletions(-)
+
+diff --git a/src/calibre/ebooks/oeb/polish/hyphenation.py b/src/calibre/ebooks/oeb/polish/hyphenation.py
+index ae6da750c8..96d2386d63 100644
+--- a/src/calibre/ebooks/oeb/polish/hyphenation.py
++++ b/src/calibre/ebooks/oeb/polish/hyphenation.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+-
+ from calibre.ebooks.oeb.base import OEB_DOCS
+ from polyglot.builtins import iteritems
+ 
+diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
+index 5989013368..c96886a4da 100644
+--- a/src/calibre/gui2/palette.py
++++ b/src/calibre/gui2/palette.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+-
+ from PyQt5.Qt import QColor, QPalette, Qt
+ from calibre.constants import dark_link_color
+ 
+diff --git a/src/calibre/gui2/viewer/search.py b/src/calibre/gui2/viewer/search.py
+index 957c991846..46b17bff69 100644
+--- a/src/calibre/gui2/viewer/search.py
++++ b/src/calibre/gui2/viewer/search.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+-
+ import json
+ from collections import Counter
+ from threading import Thread
+diff --git a/src/calibre/utils/xml_parse.py b/src/calibre/utils/xml_parse.py
+index aff73a6efc..6b67d6bae2 100644
+--- a/src/calibre/utils/xml_parse.py
++++ b/src/calibre/utils/xml_parse.py
+@@ -2,8 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+-
+ from lxml import etree
+ 
+ # resolving of SYSTEM entities is turned off as entities can cause
+-- 
+2.25.1
+

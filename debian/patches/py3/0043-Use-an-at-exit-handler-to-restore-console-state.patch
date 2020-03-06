@@ -1,0 +1,76 @@
+From 2a956134399da427feb87d9e3300b067adb63254 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 20:03:40 +0530
+Subject: [PATCH 043/107] Use an at exit handler to restore console state
+
+Py_Main() does not return if an unhandled SystemExit is raised
+---
+ bypy/run-python.h | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+diff --git a/bypy/run-python.h b/bypy/run-python.h
+index ed28b3164c..55383c79dd 100644
+--- a/bypy/run-python.h
++++ b/bypy/run-python.h
+@@ -38,17 +38,18 @@ log_error(const char *fmt, ...) {
+ }
+ 
+ static bool stdout_is_a_tty = false, stderr_is_a_tty = false;
+-DWORD console_old_mode = 0;
++static DWORD console_old_mode = 0;
++static UINT code_page = CP_UTF8;
+ static bool console_mode_changed = false;
+ 
+ static void
+-detect_tty() {
++detect_tty(void) {
+     stdout_is_a_tty = _isatty(_fileno(stdout));
+     stderr_is_a_tty = _isatty(_fileno(stderr));
+ }
+ 
+ static void
+-setup_vt_terminal_mode() {
++setup_vt_terminal_mode(void) {
+     if (stdout_is_a_tty || stderr_is_a_tty) {
+         HANDLE h = GetStdHandle(stdout_is_a_tty ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);
+         if (h != INVALID_HANDLE_VALUE) {
+@@ -61,9 +62,15 @@ setup_vt_terminal_mode() {
+ }
+ 
+ static void
+-restore_vt_terminal_mode() {
++restore_vt_terminal_mode(void) {
+     if (console_mode_changed) SetConsoleMode(GetStdHandle(stdout_is_a_tty ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE), console_old_mode);
+ }
++
++static void
++cleanup_console_state() {
++    if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
++    restore_vt_terminal_mode();
++}
+ #else
+ static void
+ log_error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+@@ -253,17 +260,14 @@ run_interpreter() {
+ #endif
+ 
+ #ifdef _WIN32
+-    UINT code_page = GetConsoleOutputCP();
++    code_page = GetConsoleOutputCP();
+     if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
+     setup_vt_terminal_mode();
++    Py_AtExit(cleanup_console_state);
+ #endif
+ 
+     int ret = Py_RunMain();
+     PyConfig_Clear(&config);
+-#ifdef _WIN32
+-    if (code_page != CP_UTF8) SetConsoleOutputCP(CP_UTF8);
+-    restore_vt_terminal_mode();
+-#endif
+ 	exit(ret);
+ #undef CHECK_STATUS
+ }
+-- 
+2.25.1
+

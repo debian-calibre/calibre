@@ -1,0 +1,35 @@
+From 89917198f5e184d45ba2b5d12feb4f039692ced7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 21 Nov 2019 21:03:42 +0530
+Subject: [PATCH 016/107] Remove useless if branch
+
+---
+ bypy/linux/site.py | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/bypy/linux/site.py b/bypy/linux/site.py
+index 9b21e7d4fe..e3870eb394 100644
+--- a/bypy/linux/site.py
++++ b/bypy/linux/site.py
+@@ -10,17 +10,7 @@ import _sitebuiltins
+ 
+ 
+ def set_quit():
+-    """Define new builtins 'quit' and 'exit'.
+-
+-    These are objects which make the interpreter exit when called.
+-    The repr of each object contains a hint at how it works.
+-
+-    """
+-    if os.sep == '\\':
+-        eof = 'Ctrl-Z plus Return'
+-    else:
+-        eof = 'Ctrl-D (i.e. EOF)'
+-
++    eof = 'Ctrl-D (i.e. EOF)'
+     builtins.quit = _sitebuiltins.Quitter('quit', eof)
+     builtins.exit = _sitebuiltins.Quitter('exit', eof)
+ 
+-- 
+2.25.1
+

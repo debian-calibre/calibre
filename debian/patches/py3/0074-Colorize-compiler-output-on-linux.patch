@@ -1,0 +1,25 @@
+From 72dd9e3e8e9e188d77accf280ee14dab34a57992 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 6 Dec 2019 14:36:57 +0530
+Subject: [PATCH 074/107] Colorize compiler output on linux
+
+---
+ setup/build.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/setup/build.py b/setup/build.py
+index 1e25574b32..6d00bb9fb3 100644
+--- a/setup/build.py
++++ b/setup/build.py
+@@ -173,6 +173,8 @@ def init_env():
+ 
+     if islinux:
+         cflags.append('-pthread')
++        if sys.stdout.isatty():
++            cflags.append('-fdiagnostics-color=always')
+         ldflags.append('-shared')
+ 
+     if isbsd:
+-- 
+2.25.1
+

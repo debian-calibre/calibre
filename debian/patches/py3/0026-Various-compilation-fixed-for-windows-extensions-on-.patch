@@ -1,0 +1,72 @@
+From 73a3da3346041118a0c510d38849af33c6600481 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 28 Nov 2019 17:20:54 +0530
+Subject: [PATCH 026/107] Various compilation fixed for windows extensions on
+ python3
+
+---
+ src/calibre/devices/mtp/windows/utils.cpp | 3 +--
+ src/calibre/devices/mtp/windows/wpd.cpp   | 2 +-
+ src/calibre/utils/fonts/winfonts.cpp      | 2 +-
+ src/calibre/utils/windows/winutil.c       | 1 -
+ 4 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/src/calibre/devices/mtp/windows/utils.cpp b/src/calibre/devices/mtp/windows/utils.cpp
+index 32e6ac20cf..4e5b89f963 100644
+--- a/src/calibre/devices/mtp/windows/utils.cpp
++++ b/src/calibre/devices/mtp/windows/utils.cpp
+@@ -38,7 +38,7 @@ wchar_t *wpd::unicode_to_wchar(PyObject *o) {
+     len = PyUnicode_GET_SIZE(o);
+     buf = (wchar_t *)calloc(len+2, sizeof(wchar_t));
+     if (buf == NULL) { PyErr_NoMemory(); return NULL; }
+-    len = PyUnicode_AsWideChar((PyUnicodeObject*)o, buf, len);
++    len = PyUnicode_AsWideChar(o, buf, len);
+     if (len == -1) { free(buf); PyErr_Format(PyExc_TypeError, "Invalid python unicode object."); return NULL; }
+     return buf;
+ }
+@@ -69,4 +69,3 @@ int wpd::pump_waiting_messages() {
+ 
+     return result;
+ }
+-
+diff --git a/src/calibre/devices/mtp/windows/wpd.cpp b/src/calibre/devices/mtp/windows/wpd.cpp
+index 67868e6472..f395341885 100644
+--- a/src/calibre/devices/mtp/windows/wpd.cpp
++++ b/src/calibre/devices/mtp/windows/wpd.cpp
+@@ -208,7 +208,7 @@ CALIBRE_MODINIT_FUNC initwpd(void) {
+ 
+     wpd::DeviceType.tp_new = PyType_GenericNew;
+     if (PyType_Ready(&wpd::DeviceType) < 0)
+-        return;
++        INITERROR;
+ 
+     m = INITMODULE;
+     if (m == NULL) {
+diff --git a/src/calibre/utils/fonts/winfonts.cpp b/src/calibre/utils/fonts/winfonts.cpp
+index f3abc68cef..8b2009d709 100644
+--- a/src/calibre/utils/fonts/winfonts.cpp
++++ b/src/calibre/utils/fonts/winfonts.cpp
+@@ -27,7 +27,7 @@ static wchar_t* unicode_to_wchar(PyObject *o) {
+     len = PyUnicode_GET_SIZE(o);
+     buf = (wchar_t *)calloc(len+2, sizeof(wchar_t));
+     if (buf == NULL) { PyErr_NoMemory(); return NULL; }
+-    len = PyUnicode_AsWideChar((PyUnicodeObject*)o, buf, len);
++    len = PyUnicode_AsWideChar(o, buf, len);
+     if (len == -1) { free(buf); PyErr_Format(PyExc_TypeError, "Invalid python unicode object."); return NULL; }
+     return buf;
+ }
+diff --git a/src/calibre/utils/windows/winutil.c b/src/calibre/utils/windows/winutil.c
+index 651d5e8682..a74b234683 100644
+--- a/src/calibre/utils/windows/winutil.c
++++ b/src/calibre/utils/windows/winutil.c
+@@ -46,7 +46,6 @@ wherever possible in this module.
+ #include <locale.h>
+ #include <Python.h>
+ #include <structseq.h>
+-#include <timefuncs.h>
+ #include <shlobj.h>
+ #include <stdio.h>
+ #include <setupapi.h>
+-- 
+2.25.1
+
