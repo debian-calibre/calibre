@@ -9,10 +9,10 @@ build time.
 
 So we use "py3" branch code because it can be build without Python 2.
 
-## How to update upstream "py3" branch files into current Debian souce code
+## How to update upstream "py3" branch files into current Debian source code
 
 Current Debian's Calibre source code uses upstream newest release code with
-"py3" branch patch.
+"py3" branch patch set.
 
 1. Import and merge upstream source code with `gbp import-orig --uscan`.
 2. Take "py3" branch patch set with `git format-patch --find-renames --find-copies [from rev]..py3`
@@ -21,5 +21,5 @@ Current Debian's Calibre source code uses upstream newest release code with
    quilt(1) patch set.
 4. Update `debian/patches/series` file to quilt(1) works.
 5. Refresh `debian/patches/py3` patches to quilt(1) works well.
-   - some patches contain references to src/odf/thumbnail.py which
+   - some patches contain references to `src/odf/thumbnail.py` which
      is removed during uscan, and thus these parts need to be fixed
