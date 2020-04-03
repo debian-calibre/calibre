@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de març 06, 2020" "4.12.0" "calibre"
+.TH "CALIBREDB" "1" "de març 27, 2020" "4.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Camí a la biblioteca de calibre. Per defecte s\fB\(aq\fPutilitza el camí emmag
 .INDENT 0.0
 .TP
 .B \-\-password
-Contrasenya per connectar a un servidor de continguts de calibre. Per llegir la contraseya des d\fB\(aq\fPuna entrada estàndard, utilitzeu el valor especial: <stdin>. Per llegir la contrasenya des d\fB\(aq\fPun fitxer, utilitzeu : <f:/path/to/file> (és a dir <f: followed by the full path to the file and a trailing >). Els angles de dalt son obligatòries, recordeu tancar\-los o utilitzar cometes per a la closca.
+Contrasenya per connectar a un servidor de continguts de calibre. Per llegir la contrasenya des d\fB\(aq\fPuna entrada estàndard, utilitzeu el valor especial: <stdin>. Per a llegir la contrasenya des d\fB\(aq\fPun fitxer, utilitzeu: <f:/path/to/file> (és a dir <f: followed by the full path to the file and a trailing >). Els angles de dalt són obligatòries, recordeu tancar\-los o utilitzar cometes per a la closca.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -671,7 +671,7 @@ Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delim
 .INDENT 0.0
 .TP
 .B \-\-display
-Un diccionari d\fB\(aq\fPopcions per personalitzar com s\fB\(aq\fPinterpretaran les dades en aquesta columna. Això és una cadena JSON. Per columnes d\fB\(aq\fPenumeració, utilitzeu \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Hi ha moltes opcions per a la variable \fB"\fPdisplay\fB"\fP\&.Les opcions per tipus de columna son: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  La millor manera de trobar combinacions legals és creant una columna personalitzada del tipus adient a la interfície gràfica i després cercar un llibre al fitxer OPF (comproveu que s\fB\(aq\fPha creat un OPF nou des de l\fB\(aq\fPaddició de la columna). Veureu el JSON per a la \fB"\fPdisplay\fB"\fP de la columna nova a l\fB\(aq\fPOPF.
+Un diccionari d\fB\(aq\fPopcions per personalitzar com s\fB\(aq\fPinterpretaran les dades en aquesta columna. Això és una cadena JSON. Per columnes d\fB\(aq\fPenumeració, utilitzeu \fI\%\-\-display\fP\fB"\fP{\e \fB"\fPenum_values\e \fB"\fP:[\e \fB"\fPval1\e \fB"\fP, \e \fB"\fPval2\e \fB"\fP]}\fB"\fP Hi ha moltes opcions per a la variable \fB"\fPdisplay\fB"\fP\&. Les opcions per tipus de columna són: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  La millor manera de trobar combinacions legals és creant una columna personalitzada del tipus adient a la interfície gràfica i després cercar un llibre al fitxer OPF (comproveu que s\fB\(aq\fPha creat un OPF nou des de l\fB\(aq\fPaddició de la columna). Veureu el JSON per a la \fB"\fPdisplay\fB"\fP de la columna nova a l\fB\(aq\fPOPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -861,7 +861,7 @@ podeu executar aquesta ordre per forçar que es tornin a regenerar els fitxers
 OPF amb l\(aqopció «\-\-all».
 .sp
 Tingueu en compte que normalment no hi ha necessitat de fer això, ja que es fa
-una còpia de seguretat dels fitxers OPF cada cop que es canvien les metadades.
+una còpia de seguretat dels fitxers OPF cada vegada que es canvien les metadades.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .INDENT 0.0

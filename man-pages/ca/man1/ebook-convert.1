@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "de març 06, 2020" "4.12.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "de març 27, 2020" "4.13.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -116,7 +116,7 @@ mostra el número de versió del programa i surt
 .UNINDENT
 .SH OPCIONS D'ENTRADA
 .sp
-Opcions per controlar el processament del fitxer d\(aqentrada mobi
+Opcions per a controlar el processament del fitxer d\(aqentrada mobi
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -173,7 +173,7 @@ No utilitzis cap portada SVG. Utilitzeu aquesta opció si el vostre EPUB s\fB\(a
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-Quan s\fB\(aq\fPutilitza una portada SVG, aquesta opció fa que s\fB\(aq\fPescali per cobrir l\fB\(aq\fPàrea de pantalla disponible, però encara preservarà la seva relació d\fB\(aq\fPaspecte (relació entre l\fB\(aq\fPamplada i l\fB\(aq\fPaltura). Això significa que pot haver bores blanques als costats o a la part superior i inferior de la imatge, però la imatge mai es distorsiona. Sense aquesta opció, la imatge pot estar una mica distorsionada, però no hi haurà bores.
+Quan s\fB\(aq\fPutilitza una portada SVG, aquesta opció fa que s\fB\(aq\fPescali per a cobrir l\fB\(aq\fPàrea de pantalla disponible, però encara preservarà la seva relació d\fB\(aq\fPaspecte (relació entre l\fB\(aq\fPamplada i l\fB\(aq\fPaltura). Això significa que pot haver\-hi vores blanques als costats o a la part superior i inferior de la imatge, però la imatge no es distorsiona mai. Sense aquesta opció, la imatge pot estar una mica distorsionada, però no hi haurà vores.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -187,7 +187,7 @@ Títol per a qualsevol taula del contingut generada automàticament.
 .UNINDENT
 .SH APARENÇA
 .sp
-Opcions per controlar l\(aqaparença de la sortida
+Opcions per a controlar l\(aqaparença de la sortida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
@@ -201,7 +201,7 @@ La mida de lletra base en pts. Totes les mides de lletra al llibre produït canv
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB"\fPesquerra\fB"\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB"\fPalineat\fB"\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB"\fPoriginal\fB"\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida son compatibles amb l\fB\(aq\fPalineació.
+Canvia l\fB\(aq\fPalineació del text. Un valor d\fB\(aq\fP\fB"\fPesquerra\fB"\fP converteix tot el text alineat a l\fB\(aq\fPorigen en text alineat a l\fB\(aq\fPesquerra (és a dir, no alineat). Un valor d\fB\(aq\fP\fB"\fPalineat\fB"\fP converteix tot el text no alineat en text alineat. Un valor d\fB\(aq\fP\fB"\fPoriginal\fB"\fP (el predeterminat) no canvia l\fB\(aq\fPalineació del fitxer d\fB\(aq\fPorigen. Tingues en compte que només alguns formats de sortida són compatibles amb l\fB\(aq\fPalineació.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -236,7 +236,7 @@ Una llista separada per comes de propietats CSS que se suprimiran de totes les r
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapeig a partir de noms de lletra de CSS a mides de lletra en pts. Un paràmetre d\fB\(aq\fPexemple és 12,12,14,16,18,20,22,24. Aquests son els mapeigs per a les mides xx\-petita a xx\-gran, amb la mida final sent per lletres enormes. L\fB\(aq\fPalgoritme de canvi de lletra utilitza aquestes mides per canviar lletres de manera intel·ligent. Per defecte s\fB\(aq\fPutilitza un mapeig basat en el perfil de sortida triat.
+Mapatge a partir de noms de lletra de CSS a mides de lletra en pts. Un paràmetre d\fB\(aq\fPexemple és 12,12,14,16,18,20,22,24. Aquests són els mapatges per a les mides xx\-petita a xx\-gran, amb la mida final sent per lletres enormes. L\fB\(aq\fPalgoritme de canvi de lletra utilitza aquestes mides per canviar lletres de manera intel·ligent. Per defecte s\fB\(aq\fPutilitza un mapatge basat en el perfil de sortida triat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -320,7 +320,7 @@ Converteix les cometes, els guions i els punts suspensius als seus equivalents s
 .UNINDENT
 .SH PROCESSAMENT HEURÍSTIC
 .sp
-Modifica el text i l\(aqestructura del document amb els patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per habilitar\-ho.  Les accions individuals es poden inhabilitar amb les opcions \-\-disable\-
+Modifica el text i l\(aqestructura del document amb els patrons habituals. Inhabilitat per defecte. Utilitzeu \-\-enable\-heuristics per a habilitar\-ho.  Les accions individuals es poden inhabilitar amb les opcions \-\-disable\-
 .nf
 *
 .fi
@@ -353,7 +353,7 @@ Cerca paraules i patrons que solen estar en cursiva i posar\-los\-hi.
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detecta els encapçalaments i els sub\-encapçalaments sense format dels capítols i canvia\fB\(aq\fPls a etiquetes h2 i h3. Aquest ajust no crearà una taula del contingut, però es pot utilitzar conjuntament amb la detecció de l\fB\(aq\fPestructura per crear\-ne una.
+Detecta els encapçalaments i els subencapçalaments sense format dels capítols i canvia\fB\(aq\fPls a etiquetes h2 i h3. Aquest ajust no crearà una taula del contingut, però es pot utilitzar conjuntament amb la detecció de l\fB\(aq\fPestructura per crear\-ne una.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -368,7 +368,7 @@ Suprimeix els salts de línia mitjançant la puntuació i altres indicis de form
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-Habilita el processament heurístic. S\fB\(aq\fPha d\fB\(aq\fPactivar aquesta opció per tal de poder fer qualsevol processament heurístic.
+Habilita el processament heurístic. S\fB\(aq\fPha d\fB\(aq\fPactivar aquesta opció per a poder fer qualsevol processament heurístic.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,7 +511,7 @@ Normalment s\fB\(aq\fPutilitza preferentment la taula del contingut del fitxer d
 .UNINDENT
 .SH METADADES
 .sp
-Opcions per assignar metadades a la sortida
+Opcions per a assignar metadades a la sortida
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -599,7 +599,7 @@ La versió del títol que s\fB\(aq\fPutilitzarà per a l\fB\(aq\fPordenació.
 .UNINDENT
 .SH DEPURACIÓ
 .sp
-Opcions per ajudar a la depuració de la conversió
+Opcions per a ajudar a la depuració de la conversió
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d

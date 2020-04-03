@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# demetrio <mendem@tiscali.it>, 2020
 # SKAL <sir_kalot@yahoo.it>, 2015
 # Vincenzo Reale <vinx.reale@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 07:15+0530\n"
-"PO-Revision-Date: 2018-08-24 01:46+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-03-11 17:43+0530\n"
+"PO-Revision-Date: 2020-03-25 08:03+0000\n"
+"Last-Translator: demetrio <mendem@tiscali.it>\n"
 "Language-Team: Italian (http://www.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,19 +22,19 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
-msgstr ""
+msgstr "Documentazione API per l'interfaccia del database"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:9
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr ""
+msgstr "Questa API è thread-safe (utilizza un lettore multiplo, con schema di blocco per singolo scrittore). Puoi accedere a questa API in questo modo ::"
 
 #: ../../home/kovid/work/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr ""
+msgstr "Se sei in un plugin  di Calibre che è parte della GUI principale, puoi accedervi in questo modo alternativo::"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -41,7 +42,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr ""
+msgstr "Una cache in-memory del file metadata.db da una libreria calibre. Questa classe serve anche da API thread-safe per l'accesso al database. La cache in-memory è mantenuta in forma normale per le massime prestazioni."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -49,7 +50,7 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr ""
+msgstr "SQLITE viene semplicemente utilizzato come modo per leggere e scrivere in modo affidabile da metadata.db. Tutta la logica di lettura/ordinamento/ricerca/cache della tabella viene nuovamente implementata. Ciò era necessario per la massima prestazione e flessibilità."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -58,7 +59,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr ""
+msgstr "Aggiunge i libri specificati alla biblioteca. I libri dovrebbero essere un iterabile di 2-tuples, ogni 2-tuple del modulo :code:`(mi, format_map)` dove mi è un oggetto Metadata e format_map è un dizionario del modulo :code:`{fmt: path_or_stream} `, ad esempio :code:`{'EPUB': '/path/to/file.epub'}`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -67,21 +68,21 @@ msgid ""
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr ""
+msgstr "Restituisce una coppia di elenchi: :code:`ids, duplicates`. ``ids '' contiene gli ID libro per tutti i libri appena creati nel database. ``duplicates`` contiene il :code:`(mi, format_map)` per tutti i libri che già esistono nel database secondo la semplice euristica di rilevamento dei duplicati usata da :meth:`has_book`."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr ""
+msgstr "Aggiunge i dati per nome dove val_map è una mappa di book_ids ai valori. Se delete_first è True, tutti i dati precedentemente memorizzati per il nome verranno rimossi."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
 "successfully."
-msgstr ""
+msgstr "Aggiunge un formato al libro specificato. Restituisce True se il formato è stato aggiunto correttamente."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:0
@@ -104,21 +105,21 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parametri"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr ""
+msgstr "Se True sostituisce il formato esistente, altrimenti se il formato esiste già, restituisce False."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr ""
+msgstr "Se True, i plug-in di tipo file vengono eseguiti nel formato prima e dopo l'aggiunta."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
@@ -128,36 +129,36 @@ msgstr "Solo per uso interno."
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr ""
+msgstr "Insieme congelato di tutti gli ID libro conosciuti."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
-msgstr ""
+msgstr "Come per field_for, tranne per il fatto che opera su più libri contemporaneamente"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
-msgstr ""
+msgstr "Insieme di ID congelati per tutti i valori nel campo ``name``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr ""
+msgstr "Insieme congelato di tutti i nomi dei campi (deve essere utilizzato solo per i campi many-one e many-many )"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr ""
+msgstr "Restituisce i dati dell'autore come un dizionario con le chiavi: nome, ordinamento, collegamento"
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr ""
+msgstr "Se non viene trovato alcun autore con gli ID specificati, viene restituito un dizionario vuoto. Se author_ids è None, vengono restituiti i dati per tutti gli autori."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -165,14 +166,14 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr ""
+msgstr "Dato un elenco di autori, restituisce la stringa author_sort per gli autori, preferendo l'ordinamento per autore associato all'autore rispetto alla stringa calcolata."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr ""
+msgstr "Restituisce tutti i libri associati all'elemento identificato da ``item_id``, dove l'articolo appartiene al campo `` name``."
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4

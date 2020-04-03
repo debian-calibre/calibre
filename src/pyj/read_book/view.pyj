@@ -18,6 +18,7 @@ from read_book.globals import (
 )
 from read_book.goto import get_next_section
 from read_book.open_book import add_book_to_recently_viewed
+from read_book.create_annotation import CreateAnnotation
 from read_book.overlay import Overlay
 from read_book.prefs.colors import resolve_color_scheme
 from read_book.prefs.font_size import change_font_size_by
@@ -127,9 +128,23 @@ def show_controls_help():
 
 # }}}
 
+
+def maximum_font_size():
+    ans = maximum_font_size.ans
+    if not ans:
+        q = window.getComputedStyle(document.body).fontSize
+        if q and q.endsWith('px'):
+            q = parseInt(q)
+            if q and not isNaN(q):
+                ans = maximum_font_size.ans = q
+                return ans
+        ans = maximum_font_size.ans = 12
+    return ans
+
+
 def margin_elem(sd, which, id, onclick, oncontextmenu):
     sz = sd.get(which, 20)
-    fsz = min(max(0, sz - 6), 12)
+    fsz = min(max(0, sz - 6), maximum_font_size())
     s = '; text-overflow: ellipsis; white-space: nowrap; overflow: hidden'
     ans = E.div(
         style=f'height:{sz}px; overflow: hidden; font-size:{fsz}px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center',
@@ -204,6 +219,7 @@ class View:
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none', id='book-overlay'),  # main overlay
                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='controls-help-overlay'),  # controls help overlay
+                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none; overflow: hidden', id=CreateAnnotation.container_id, tabindex='0'),  # create annotation overlay
                     )
                 ),
                 E.div(
@@ -246,6 +262,7 @@ class View:
             'search_result_not_found': def (data): if ui_operations.search_result_not_found:
                 ui_operations.search_result_not_found(data.search_result)
             ,
+            'annotations': self.on_annotations_message,
         }
         entry_point = None if runtime.is_standalone_viewer else 'read_book.iframe'
         if runtime.is_standalone_viewer:
@@ -261,6 +278,7 @@ class View:
         self.pending_load = None
         self.currently_showing = {}
         self.book_scrollbar.apply_visibility()
+        self.create_annotation = CreateAnnotation(self)
 
     @property
     def iframe(self):
@@ -284,6 +302,9 @@ class View:
             ui_operations.selection_changed(data.word)
             return
         self.overlay.show_word_actions(data.word)
+
+    def on_annotations_message(self, data):
+        self.create_annotation.handle_message(data)
 
     def left_margin_clicked(self, event):
         if event.button is 0:
@@ -539,6 +560,7 @@ class View:
         self.search_overlay.hide()
         self.content_popup_overlay.hide()
         self.reference_mode_overlay.style.display = 'none'
+        self.create_annotation.hide()
         self.focus_iframe()
 
     def focus_iframe(self):

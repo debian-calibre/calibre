@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "marzo 06, 2020" "4.12.0" "calibre"
+.TH "CALIBREDB" "1" "marzo 27, 2020" "4.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -372,14 +372,14 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb show_metadata [options] id
+calibredb show_metadata [opzioni] id
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Show the metadata stored in the calibre database for the book identified by id.
-id is an id number from the search command.
+Mostra i metadati salvati nel database di calibre per il libro identificato con id.
+id è un numero dal comando di ricerca.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -505,15 +505,15 @@ Converti i percorsi in lettere minuscole.
 .sp
 .nf
 .ft C
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalogo /percorso/di/destinazione.(csv|epub|mobi|xml...) [opzioni]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options.
+Esporta un catalogo nel formato specificato dall\(aqestensione di percorso/di/destinazione
+Le opzioni controllano il modo in cui le voci sono visualizzate nel catalogo generato.
+Notare che i differenti formati di catalogo supportano impostazioni differenti delle opzioni.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .INDENT 0.0
@@ -876,17 +876,14 @@ Di solito, questo comando opera solo su libri che hanno file OPF datati. Questa 
 .sp
 .nf
 .ft C
-calibredb clone path/to/new/library
+Creare un clone della biblioteca attuale.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, virtual libraries and other settings as the current library.
-.sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Questo crea una nuova libreria vuota che ha tutte le stesse colonne personalizzate, librerie virtuali e altre impostazioni della libreria corrente.
+La biblioteca clonata non conterrà libri. Se si desidera creare un duplicato completo, inclusi tutti i libri, è sufficiente utilizzare gli strumenti del filesystem per copiare la cartella della libreria.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA
