@@ -4,17 +4,23 @@ from __python__ import bound_methods, hash_literals
 
 import traceback
 from gettext import gettext as _
+from select import (
+    extend_selection_after_scroll, selection_extents, selection_extents_at_point,
+    set_selections_extents_to
+)
 
 from fs_images import fix_fullscreen_svg_images
 from iframe_comm import IframeClient
-from read_book.cfi import scroll_to as scroll_to_cfi
+from range_utils import reset_highlight_counter, wrap_text_in_range
+from read_book.cfi import cfi_for_selection, scroll_to as scroll_to_cfi
 from read_book.extract import get_elements
 from read_book.find import reset_find_caches, select_search_result
 from read_book.flow_mode import (
     anchor_funcs as flow_anchor_funcs, auto_scroll_action as flow_auto_scroll_action,
-    flow_onwheel, flow_to_scroll_fraction, handle_gesture as flow_handle_gesture,
-    handle_shortcut as flow_handle_shortcut, layout as flow_layout,
-    scroll_by_page as flow_scroll_by_page
+    ensure_selection_visible, flow_onwheel, flow_to_scroll_fraction,
+    handle_gesture as flow_handle_gesture, handle_shortcut as flow_handle_shortcut,
+    layout as flow_layout, scroll_by_page as flow_scroll_by_page,
+    scroll_to_extend_annotation as flow_annotation_scroll
 )
 from read_book.footnotes import is_footnote_link
 from read_book.globals import (
@@ -31,6 +37,7 @@ from read_book.paged_mode import (
     prepare_for_resize as paged_prepare_for_resize, progress_frac,
     reset_paged_mode_globals, resize_done as paged_resize_done,
     scroll_by_page as paged_scroll_by_page, scroll_to_elem,
+    scroll_to_extend_annotation as paged_annotation_scroll,
     scroll_to_fraction as paged_scroll_to_fraction, snap_to_selection,
     will_columns_per_screen_change
 )
@@ -40,7 +47,7 @@ from read_book.referencing import (
 from read_book.resources import finalize_resources, unserialize_html
 from read_book.settings import (
     apply_colors, apply_font_size, apply_settings, apply_stylesheet, opts,
-    set_color_scheme_class, update_settings
+    set_color_scheme_class, set_selection_style, update_settings
 )
 from read_book.shortcuts import (
     create_shortcut_map, keyevent_as_shortcut, shortcut_for_key_event
@@ -93,6 +100,7 @@ class IframeBoss:
         self.reference_mode_enabled = False
         self.replace_history_on_next_cfi_update = True
         self.blob_url_map = {}
+        self.annot_id_uuid_map = {}
         self.content_ready = False
         self.last_window_width = self.last_window_height = -1
         self.forward_keypresses = False
@@ -120,6 +128,7 @@ class IframeBoss:
             'overlay_visibility_changed': self.on_overlay_visibility_changed,
             'show_search_result': self.show_search_result,
             'handle_navigation_shortcut': self.on_handle_navigation_shortcut,
+            'annotations': self.annotations_msg_received,
         }
         self.comm = IframeClient(handlers)
         self.last_window_ypos = 0
@@ -186,6 +195,8 @@ class IframeBoss:
     def display(self, data):
         self.length_before = None
         self.content_ready = False
+        self.annot_id_uuid_map = {}
+        reset_highlight_counter()
         self.replace_history_on_next_cfi_update = True
         self.book = current_book.book = data.book
         self.reference_mode_enabled = data.reference_mode_enabled
@@ -203,6 +214,7 @@ class IframeBoss:
             self.jump_to_cfi = scroll_to_cfi
             self.anchor_funcs = flow_anchor_funcs
             self.auto_scroll_action = flow_auto_scroll_action
+            self.scroll_to_extend_annotation = flow_annotation_scroll
             paged_auto_scroll_action('stop')
         else:
             self.do_layout = paged_layout
@@ -213,6 +225,7 @@ class IframeBoss:
             self._handle_gesture = paged_handle_gesture
             self.anchor_funcs = paged_anchor_funcs
             self.auto_scroll_action = paged_auto_scroll_action
+            self.scroll_to_extend_annotation = paged_annotation_scroll
             flow_auto_scroll_action('stop')
         update_settings(data.settings)
         self.keyboard_shortcut_map = create_shortcut_map(data.settings.keyboard_shortcuts)
@@ -494,6 +507,8 @@ class IframeBoss:
             if sc_name:
                 if self.handle_navigation_shortcut(sc_name, evt):
                     evt.preventDefault()
+                elif sc_name is 'create_annotation':
+                    self.initiate_creation_of_annotation()
                 else:
                     self.send_message('handle_shortcut', name=sc_name)
 
@@ -581,7 +596,9 @@ class IframeBoss:
 
     def show_search_result(self, data, from_load):
         if select_search_result(data.search_result):
-            if current_layout_mode() is not 'flow':
+            if current_layout_mode() is 'flow':
+                ensure_selection_visible()
+            else:
                 snap_to_selection()
         else:
             self.send_message('search_result_not_found', search_result=data.search_result)
@@ -595,6 +612,44 @@ class IframeBoss:
             start_reference_mode()
         else:
             end_reference_mode()
+
+    def initiate_creation_of_annotation(self):
+        self.auto_scroll_action('stop')
+        in_flow_mode = current_layout_mode() is 'flow'
+        self.send_message(
+            'annotations',
+            type='create-annotation',
+            in_flow_mode=in_flow_mode,
+            extents=selection_extents(in_flow_mode),
+        )
+
+    def annotations_msg_received(self, data):
+        in_flow_mode = current_layout_mode() is 'flow'
+        if data.type is 'set-selection':
+            set_selections_extents_to(data.extents)
+        elif data.type is 'position-handles-at-point':
+            self.send_message(
+                'annotations',
+                type='position-handles',
+                extents=selection_extents_at_point(data.x, data.y, in_flow_mode))
+        elif data.type is 'scroll':
+            if self.scroll_to_extend_annotation(data.backwards):
+                extend_selection_after_scroll(data.backwards, in_flow_mode)
+                self.send_message('annotations', type='update-handles', extents=selection_extents(in_flow_mode))
+        elif data.type is 'perp-scroll':
+            if in_flow_mode and flow_annotation_scroll(data.backwards, True):
+                self.send_message('annotations', type='update-handles', extents=selection_extents(in_flow_mode))
+        elif data.type is 'set-highlight-style':
+            set_selection_style(data.style)
+        elif data.type is 'apply-highlight':
+            bounds = cfi_for_selection()
+            annot_id = wrap_text_in_range(data.style)
+            if annot_id is not None:
+                window.getSelection().removeAllRanges()
+                self.annot_id_uuid_map[annot_id] = data.uuid
+            self.send_message('annotations', type='highlight-applied', uuid=data.uuid, ok=annot_id is not None, bounds=bounds)
+        else:
+            console.log('Ignoring annotations message to iframe with unknown type: ' + data.type)
 
 
 def main():

@@ -224,13 +224,13 @@ class Ui_Form(object):
 "\n"
 "Title match ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc. Author match is exact."))
         self.opt_add_formats_to_existing.setText(_("&Auto-merge added books if they already exist:"))
-        self.opt_automerge.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats automatically into\n"
+        self.opt_automerge.setToolTip(_("Auto-merge: If books with similar titles and authors found, merge the incoming formats (files) automatically into\n"
 "existing book records. This box controls what happens when an existing record already has\n"
 "the incoming format:\n"
 "\n"
-"Ignore duplicate incoming files - means that existing files in your calibre library will not be replaced\n"
-"Overwrite existing duplicate files - means that existing files in your calibre library will be replaced\n"
-"Create new record for each duplicate file - means that a new book entry will be created for each duplicate file\n"
+"Ignore duplicate incoming formats - means that existing formats in your calibre library will not be replaced\n"
+"Overwrite existing duplicate formats - means that existing formats in your calibre library will be replaced\n"
+"Create new record for each duplicate formats - means that a new book entry will be created for each duplicate formats\n"
 "\n"
 "Title matching ignores leading indefinite articles (\"the\", \"a\", \"an\"), punctuation, case, etc.\n"
 "Author matching is exact."))

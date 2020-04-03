@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -151,9 +151,9 @@ class Ui_Form(object):
         self.groupBox_2.setTitle(_("Metadata fields to download"))
         self.fields_view.setToolTip(_("If you uncheck any fields, metadata for those fields will not be downloaded"))
         self.select_all_button.setText(_("&Select all"))
-        self.clear_all_button.setText(_("&Clear all"))
+        self.clear_all_button.setText(_("Sele&ct none"))
         self.select_default_button.setToolTip(_("Restore your own subset of checked fields that you define using the \'Set as default\' button"))
-        self.select_default_button.setText(_("&Select default"))
+        self.select_default_button.setText(_("Select &default"))
         self.set_as_default_button.setToolTip(_("Store the currently checked fields as the default, you can quickly apply the default using the \'Select default\' button"))
         self.set_as_default_button.setText(_("&Set as default"))
         self.opt_txt_comments.setText(_("Convert all downloaded comments to plain &text"))

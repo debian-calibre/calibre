@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "marzo 06, 2020" "4.12.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "marzo 27, 2020" "4.13.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -86,7 +86,7 @@ Choose the default book list mode.  Set the default book list mode that will be 
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Dimensione minima per la quale le risposte utilizzano la compressione dei dati (in byte).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -106,7 +106,7 @@ Restrict displayed user\-defined fields.     Comma separated list of user\-defin
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Socket pre\-allocation, for example, with systemd socket activation. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +116,7 @@ Password based authentication to access the server.         Normally, the server
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,17 +126,17 @@ Allow un\-authenticated local connections to make changes.   Normally, if you do
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+Registra le richieste HTTP 404 (Non Trovata).       Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Questa opzione è abilitata come predefinita
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -94,7 +94,7 @@ Convert books
     :class: float-right-img
 
 |cei| E-books can be converted from a number of formats into whatever format your e-book reader prefers.
-Many e-books available for purchase will be protected by `Digital Rights Management <https://drmfree.calibre-ebook.com/about#drm>`_ *(DRM)* technology.
+Many e-books available for purchase will be protected by :doc:`Digital Rights Management <drm>` *(DRM)* technology.
 calibre will not convert these e-books. It is easy to remove the DRM from many formats, but as this may be illegal,
 you will have to find tools to liberate your books yourself and then use calibre to convert them.
 
@@ -548,7 +548,7 @@ You can search User categories in the same way as built-in categories, by clicki
     3. "everything not matching an item in the category" shown by a single red minus sign.
     4. "everything not matching an item in the category or its sub-categories" shown by two red minus signs.
 
-It is also possible to create hierarchies inside some of the text categories such as tags, series, and custom columns. These hierarchies show with the small triangle, permitting the sub-items to be hidden. To use hierarchies of items in a category, you must first go to :guilabel:`Preferences->Interface->Look & feel` and enter the category name(s) into the "Categories with hierarchical items" box. Once this is done, items in that category that contain periods will be shown using the small triangle. For example, assume you create a custom column called "Genre" and indicate that it contains hierarchical items. Once done, items such as Mystery.Thriller and Mystery.English will display as Mystery with the small triangle next to it. Clicking on the triangle will show Thriller and English as sub-items. See :ref:`Managing subgroups of books, for example "genre" <subgroups-tutorial>` for more information.
+It is also possible to create hierarchies inside some of the text categories such as tags, series, and custom columns. These hierarchies show with the small triangle, permitting the sub-items to be hidden. To use hierarchies of items in a category, you must first go to :guilabel:`Preferences->Interface->Look & feel` and enter the category name(s) into the "Categories with hierarchical items" field. Once this is done, items in that category that contain periods will be shown using the small triangle. For example, assume you create a custom column called "Genre" and indicate that it contains hierarchical items. Once done, items such as Mystery.Thriller and Mystery.English will display as Mystery with the small triangle next to it. Clicking on the triangle will show Thriller and English as sub-items. See :ref:`Managing subgroups of books, for example "genre" <subgroups-tutorial>` for more information.
 
 Hierarchical items (items with children) use the same four 'click-on' searches as User categories. Items that do not have children use two of the searches: "everything matching" and "everything not matching".
 

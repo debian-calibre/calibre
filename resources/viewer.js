@@ -3754,12 +3754,13 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.settings"] = {};
     ρσ_modules["read_book.resources"] = {};
     ρσ_modules["read_book.footnotes"] = {};
+    ρσ_modules.select = {};
     ρσ_modules.fs_images = {};
+    ρσ_modules.range_utils = {};
     ρσ_modules["read_book.viewport"] = {};
     ρσ_modules["read_book.cfi"] = {};
     ρσ_modules["read_book.extract"] = {};
     ρσ_modules["read_book.find"] = {};
-    ρσ_modules.select = {};
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.mathjax"] = {};
     ρσ_modules["read_book.paged_mode"] = {};
@@ -3777,6 +3778,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.prefs.head_foot"] = {};
     ρσ_modules["read_book.goto"] = {};
     ρσ_modules["read_book.open_book"] = {};
+    ρσ_modules["read_book.create_annotation"] = {};
     ρσ_modules["book_list.top_bar"] = {};
     ρσ_modules["book_list.ui"] = {};
     ρσ_modules.file_uploads = {};
@@ -5862,6 +5864,7 @@ return parser;
             ρσ_d["user_color_schemes"] = Object.create(null);
             ρσ_d["user_stylesheet"] = "";
             ρσ_d["word_actions"] = [];
+            ρσ_d["highlight_style"] = null;
             return ρσ_d;
         }).call(this);
         is_local_setting = (function(){
@@ -5889,6 +5892,7 @@ return parser;
             ρσ_d["standalone_misc_settings"] = true;
             ρσ_d["standalone_recently_opened"] = true;
             ρσ_d["user_stylesheet"] = true;
+            ρσ_d["highlight_style"] = true;
             return ρσ_d;
         }).call(this);
         function session_defaults() {
@@ -7655,8 +7659,8 @@ return this.__repr__();
             __argnames__ : {value: ["icon_element", "new_name"]}
         });
 
-        function svgicon(name, height, width) {
-            var ans, u;
+        function svgicon(name, height, width, tooltip) {
+            var ans, u, tt;
             ans = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             ans.setAttribute("style", "fill: currentColor; height: {}; width: {}; vertical-align: text-top".format((typeof height !== "undefined" && height !== null ? height : "2ex"), (typeof width !== "undefined" && width !== null ? width : "2ex")));
             u = document.createElementNS("http://www.w3.org/2000/svg", "use");
@@ -7664,10 +7668,15 @@ return this.__repr__();
             if (name) {
                 ans.firstChild.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#icon-" + name);
             }
+            if (tooltip) {
+                tt = document.createElementNS("http://www.w3.org/2000/svg", "title");
+                tt.textContent = tooltip;
+                ans.appendChild(tt);
+            }
             return ans;
         };
         if (!svgicon.__argnames__) Object.defineProperties(svgicon, {
-            __argnames__ : {value: ["name", "height", "width"]}
+            __argnames__ : {value: ["name", "height", "width", "tooltip"]}
         });
 
         function element(elem_id, child_selector) {
@@ -11678,6 +11687,7 @@ return this.__repr__();
             var ρσ_d = Object.create(null);
             ρσ_d["is_standalone_viewer"] = false;
             ρσ_d["viewer_in_full_screen"] = false;
+            ρσ_d["in_develop_mode"] = window.navigator.userAgent.indexOf("CALIBRE_ENABLE_DEVELOP_MODE") > 0;
             return ρσ_d;
         }).call(this);
         ui_operations = (function(){
@@ -11720,9 +11730,10 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.settings";
-        var opts;
+        var opts, styles_id;
         var E = ρσ_modules.elementmaker.E;
 
+        var dark_link_color = ρσ_modules["read_book.globals"].dark_link_color;
         var runtime = ρσ_modules["read_book.globals"].runtime;
 
         var defaults = ρσ_modules.session.defaults;
@@ -11758,8 +11769,16 @@ return this.__repr__();
             }
         };
 
+        function default_selection_colors() {
+            if (opts.is_dark_theme) {
+                return [dark_link_color, "#111"];
+            }
+            return ["#3297FD", "#eee"];
+        };
+
+        styles_id = "calibre-color-scheme-style-overrides";
         function apply_colors() {
-            var elem, ss, text, c;
+            var elem, ss, text, c, ρσ_unpack, selbg, selfg;
             var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 elem = ρσ_Iter0[ρσ_Index0];
@@ -11769,7 +11788,7 @@ return this.__repr__();
             document.documentElement.style.backgroundColor = opts.bg_image_fade;
             ss = document.getElementById("calibre-color-scheme-style-overrides");
             if (!ss) {
-                ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: "calibre-color-scheme-style-overrides", type: "text/css"})]);
+                ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: styles_id, type: "text/css"})]);
                 document.documentElement.appendChild(ss);
             }
             text = "";
@@ -11784,8 +11803,50 @@ return this.__repr__();
                 c = opts.color_scheme.link;
                 text += "\nhtml > body :link, html > body :link * { color: " + ρσ_str.format("{}", c) + " !important } html > body :visited, html > body :visited * { color: " + ρσ_str.format("{}", c) + " !important }";
             }
+            ρσ_unpack = default_selection_colors();
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            selbg = ρσ_unpack[0];
+            selfg = ρσ_unpack[1];
+            text += "\n::selection { background-color: " + ρσ_str.format("{}", selbg) + "; color: " + ρσ_str.format("{}", selfg) + " }";
+            text += "\n::selection:window-inactive { background-color: " + ρσ_str.format("{}", selbg) + "; color: " + ρσ_str.format("{}", selfg) + " }";
             ss.textContent = text;
         };
+
+        function set_selection_style(style) {
+            var ρσ_unpack, selbg, selfg, sheet, css_text, prop, rule;
+            if (!style) {
+                ρσ_unpack = default_selection_colors();
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                selbg = ρσ_unpack[0];
+                selfg = ρσ_unpack[1];
+                style = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["color"] = selfg;
+                    ρσ_d["background-color"] = selbg;
+                    return ρσ_d;
+                }).call(this);
+            }
+            sheet = document.getElementById(styles_id);
+            if (!sheet) {
+                return;
+            }
+            css_text = "";
+            var ρσ_Iter1 = ρσ_Iterable(Object.keys(style));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                prop = ρσ_Iter1[ρσ_Index1];
+                css_text += "" + ρσ_str.format("{}", prop) + ": " + ρσ_str.format("{}", style[(typeof prop === "number" && prop < 0) ? style.length + prop : prop]) + "; ";
+            }
+            var ρσ_Iter2 = ρσ_Iterable(sheet.sheet.cssRules);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                rule = ρσ_Iter2[ρσ_Index2];
+                if (rule.type === rule.STYLE_RULE && rule.selectorText.indexOf("selection") > -1) {
+                    rule.style.cssText = css_text;
+                }
+            }
+        };
+        if (!set_selection_style.__argnames__) Object.defineProperties(set_selection_style, {
+            __argnames__ : {value: ["style"]}
+        });
 
         function set_color_scheme_class() {
             if (opts.is_dark_theme) {
@@ -11818,9 +11879,12 @@ return this.__repr__();
         };
 
         ρσ_modules["read_book.settings"].opts = opts;
+        ρσ_modules["read_book.settings"].styles_id = styles_id;
         ρσ_modules["read_book.settings"].update_settings = update_settings;
         ρσ_modules["read_book.settings"].apply_font_size = apply_font_size;
+        ρσ_modules["read_book.settings"].default_selection_colors = default_selection_colors;
         ρσ_modules["read_book.settings"].apply_colors = apply_colors;
+        ρσ_modules["read_book.settings"].set_selection_style = set_selection_style;
         ρσ_modules["read_book.settings"].set_color_scheme_class = set_color_scheme_class;
         ρσ_modules["read_book.settings"].apply_stylesheet = apply_stylesheet;
         ρσ_modules["read_book.settings"].apply_settings = apply_settings;
@@ -12996,6 +13060,264 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "select";
+        function range_from_point(x, y) {
+            var r, p;
+            r = null;
+            if (document.caretPositionFromPoint) {
+                p = document.caretPositionFromPoint(x, y);
+                if (p) {
+                    r = document.createRange();
+                    r.setStart(p.offsetNode, p.offset);
+                    r.collapse(true);
+                }
+            } else if (document.caretRangeFromPoint) {
+                r = document.caretRangeFromPoint(x, y);
+            }
+            return r;
+        };
+        if (!range_from_point.__argnames__) Object.defineProperties(range_from_point, {
+            __argnames__ : {value: ["x", "y"]}
+        });
+
+        function word_boundary_regex() {
+            var ans;
+            ans = word_boundary_regex.ans;
+            if (ans === undefined) {
+                ans = word_boundary_regex.ans = /[\s!-#%-\x2A,-/:;\x3F@\x5B-\x5D_\x7B}\u00A1\u00A7\u00AB\u00B6\u00B7\u00BB\u00BF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E3B\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/;
+            }
+            return ans;
+        };
+
+        function expand_offset_to_word(string, offset) {
+            var start, pat, ρσ_unpack, end, sz;
+            start = offset;
+            pat = word_boundary_regex();
+            while (start >= 1 && !pat.test(string.charAt(start - 1))) {
+                start -= 1;
+            }
+            ρσ_unpack = [offset, string.length];
+            end = ρσ_unpack[0];
+            sz = ρσ_unpack[1];
+            while (end < sz && !pat.test(string.charAt(end))) {
+                end += 1;
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["word"] = string.slice(start, end);
+                ρσ_d["start"] = start;
+                ρσ_d["end"] = end;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!expand_offset_to_word.__argnames__) Object.defineProperties(expand_offset_to_word, {
+            __argnames__ : {value: ["string", "offset"]}
+        });
+
+        function word_at_point(x, y) {
+            var r, word_info;
+            r = range_from_point(x, y);
+            if (r && r.startContainer.nodeType === 3) {
+                word_info = expand_offset_to_word(r.startContainer.data, r.startOffset);
+                if (word_info.word) {
+                    r.setStart(r.startContainer, word_info.start);
+                    r.setEnd(r.startContainer, word_info.end);
+                    return r;
+                }
+            }
+        };
+        if (!word_at_point.__argnames__) Object.defineProperties(word_at_point, {
+            __argnames__ : {value: ["x", "y"]}
+        });
+
+        function range_extents(start, end, in_flow_mode) {
+            var ans;
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["start"] = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["x"] = null;
+                    ρσ_d["y"] = null;
+                    ρσ_d["height"] = null;
+                    ρσ_d["onscreen"] = false;
+                    return ρσ_d;
+                }).call(this);
+                ρσ_d["end"] = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["x"] = null;
+                    ρσ_d["y"] = null;
+                    ρσ_d["height"] = null;
+                    ρσ_d["onscreen"] = false;
+                    return ρσ_d;
+                }).call(this);
+                return ρσ_d;
+            }).call(this);
+            if (!start || !end) {
+                return ans;
+            }
+            start = start.cloneRange();
+            end = end.cloneRange();
+            start.collapse(true);
+            end.collapse(false);
+            function for_boundary(r, ans) {
+                var rects, rect;
+                rects = r.getClientRects();
+                if (!rects.length) {
+                    return;
+                }
+                rect = rects[0];
+                ans.x = Math.round(rect.left);
+                ans.y = Math.round(rect.top);
+                ans.height = rect.bottom - rect.top;
+                if (rect.right <= window.innerWidth && rect.bottom <= window.innerHeight && rect.left >= 0 && rect.top >= 0) {
+                    ans.onscreen = true;
+                }
+            };
+            if (!for_boundary.__argnames__) Object.defineProperties(for_boundary, {
+                __argnames__ : {value: ["r", "ans"]}
+            });
+
+            for_boundary(start, ans.start);
+            for_boundary(end, ans.end);
+            return ans;
+        };
+        if (!range_extents.__argnames__) Object.defineProperties(range_extents, {
+            __argnames__ : {value: ["start", "end", "in_flow_mode"]}
+        });
+
+        function selection_extents(in_flow_mode) {
+            var sel, start, end;
+            sel = window.getSelection();
+            if (!sel || !sel.rangeCount) {
+                return range_extents();
+            }
+            start = sel.getRangeAt(0);
+            end = sel.getRangeAt(sel.rangeCount - 1);
+            return range_extents(start, end, in_flow_mode);
+        };
+        if (!selection_extents.__argnames__) Object.defineProperties(selection_extents, {
+            __argnames__ : {value: ["in_flow_mode"]}
+        });
+
+        function selection_extents_at_point(x, y, in_flow_mode) {
+            var r, sel, ans;
+            r = word_at_point(x, y);
+            if (r) {
+                sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(r);
+                return selection_extents(r, r);
+            }
+            ans = range_extents();
+            ans.start.y = ans.end.y = y;
+            ans.start.height = ans.end.height = parseInt(window.getComputedStyle(document.body).fontSize) + 4;
+            ans.start.x = x;
+            ans.end.x = x + ans.start.height * 3;
+            ans.start.onscreen = ans.end.onscreen = true;
+            return ans;
+        };
+        if (!selection_extents_at_point.__argnames__) Object.defineProperties(selection_extents_at_point, {
+            __argnames__ : {value: ["x", "y", "in_flow_mode"]}
+        });
+
+        function extend_selection_after_scroll(backwards, in_flow_mode) {
+            var sel, r, q, rects, rect, x, y, p;
+            sel = window.getSelection();
+            if (!sel.rangeCount) {
+                return;
+            }
+            r = sel.getRangeAt(0);
+            q = r.cloneRange();
+            q.collapse(backwards);
+            rects = r.getClientRects();
+            if (!rects.length) {
+                return;
+            }
+            rect = rects[0];
+            if (backwards) {
+                if (in_flow_mode && rect.bottom <= window.innerHeight) {
+                    return;
+                }
+                if (!in_flow_mode && rect.right <= window.innerWidth) {
+                    return;
+                }
+            } else {
+                if (in_flow_mode && rect.top >= 0) {
+                    return;
+                }
+                if (!in_flow_mode && rect.left >= 0) {
+                    return;
+                }
+            }
+            x = Math.floor(window.innerWidth / 2);
+            y = Math.floor(window.innerHeight / 3);
+            if (backwards) {
+                y *= 2;
+            }
+            p = range_from_point(x, y);
+            if (p) {
+                if (backwards) {
+                    r.setStart(p.startContainer, p.startOffset);
+                } else {
+                    r.setEnd(p.startContainer, p.startOffset);
+                }
+            }
+        };
+        if (!extend_selection_after_scroll.__argnames__) Object.defineProperties(extend_selection_after_scroll, {
+            __argnames__ : {value: ["backwards", "in_flow_mode"]}
+        });
+
+        function set_selections_extents_to(extents) {
+            var start, end, r, sel;
+            if (extents.start.onscreen && extents.end.onscreen) {
+                start = range_from_point(extents.start.x, extents.start.y);
+                if (start) {
+                    end = range_from_point(extents.end.x, extents.end.y);
+                    if (end) {
+                        r = document.createRange();
+                        r.setStart(start.startContainer, start.startOffset);
+                        r.setEnd(end.startContainer, end.startOffset);
+                        sel = window.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(r);
+                    }
+                }
+                return;
+            }
+            sel = window.getSelection();
+            if (!sel.rangeCount) {
+                return;
+            }
+            r = sel.getRangeAt(0);
+            if (extents.start.onscreen) {
+                start = range_from_point(extents.start.x, extents.start.y);
+                if (start) {
+                    r.setStart(start.startContainer, start.startOffset);
+                }
+            }
+            if (extents.end.onscreen) {
+                end = range_from_point(extents.end.x, extents.end.y);
+                if (end) {
+                    r.setEnd(end.startContainer, end.startOffset);
+                }
+            }
+        };
+        if (!set_selections_extents_to.__argnames__) Object.defineProperties(set_selections_extents_to, {
+            __argnames__ : {value: ["extents"]}
+        });
+
+        ρσ_modules.select.range_from_point = range_from_point;
+        ρσ_modules.select.word_boundary_regex = word_boundary_regex;
+        ρσ_modules.select.expand_offset_to_word = expand_offset_to_word;
+        ρσ_modules.select.word_at_point = word_at_point;
+        ρσ_modules.select.range_extents = range_extents;
+        ρσ_modules.select.selection_extents = selection_extents;
+        ρσ_modules.select.selection_extents_at_point = selection_extents_at_point;
+        ρσ_modules.select.extend_selection_after_scroll = extend_selection_after_scroll;
+        ρσ_modules.select.set_selections_extents_to = set_selections_extents_to;
+    })();
+
+    (function(){
         var __name__ = "fs_images";
         function is_svg_fs_markup(names, svg) {
             if (svg !== null) {
@@ -13056,6 +13378,176 @@ return this.__repr__();
 
         ρσ_modules.fs_images.is_svg_fs_markup = is_svg_fs_markup;
         ρσ_modules.fs_images.fix_fullscreen_svg_images = fix_fullscreen_svg_images;
+    })();
+
+    (function(){
+        var __name__ = "range_utils";
+        var wrapper_counter;
+        function get_text_nodes(el) {
+            var doc, walker, text_nodes, node;
+            el = el || document.body;
+            doc = el.ownerDocument || document;
+            walker = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+            text_nodes = [];
+            while (true) {
+                node = walker.nextNode();
+                if (!node) {
+                    break;
+                }
+                text_nodes.push(node);
+            }
+            return text_nodes;
+        };
+        if (!get_text_nodes.__argnames__) Object.defineProperties(get_text_nodes, {
+            __argnames__ : {value: ["el"]}
+        });
+
+        function create_range_from_node(node) {
+            var ans;
+            ans = node.ownerDocument.createRange();
+            try {
+                ans.selectNode(node);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    ans.selectNodeContents(node);
+                } 
+            }
+            return ans;
+        };
+        if (!create_range_from_node.__argnames__) Object.defineProperties(create_range_from_node, {
+            __argnames__ : {value: ["node"]}
+        });
+
+        function is_non_empty_text_node(node) {
+            return node.textContent.length > 0;
+        };
+        if (!is_non_empty_text_node.__argnames__) Object.defineProperties(is_non_empty_text_node, {
+            __argnames__ : {value: ["node"]}
+        });
+
+        function text_nodes_in_range(r, predicate) {
+            var container, nodes;
+            predicate = predicate || is_non_empty_text_node;
+            container = r.commonAncestorContainer;
+            nodes = get_text_nodes(container.parentNode || container);
+            function final_predicate(node) {
+                return r.intersectsNode(node) && predicate(node);
+            };
+            if (!final_predicate.__argnames__) Object.defineProperties(final_predicate, {
+                __argnames__ : {value: ["node"]}
+            });
+
+            return nodes.filter(final_predicate);
+        };
+        if (!text_nodes_in_range.__argnames__) Object.defineProperties(text_nodes_in_range, {
+            __argnames__ : {value: ["r", "predicate"]}
+        });
+
+        function remove(node) {
+            if (node.parentNode) {
+                node.parentNode.removeChild(node);
+            }
+        };
+        if (!remove.__argnames__) Object.defineProperties(remove, {
+            __argnames__ : {value: ["node"]}
+        });
+
+        function replace_node(replacement, node) {
+            remove(replace_node);
+            node.parentNode.insertBefore(replacement, node);
+            remove(node);
+        };
+        if (!replace_node.__argnames__) Object.defineProperties(replace_node, {
+            __argnames__ : {value: ["replacement", "node"]}
+        });
+
+        function unwrap(node) {
+            var r, p;
+            r = (node.ownerDocument || document).createRange();
+            r.selectNodeContents(node);
+            replace_node(r.extractContents(), node);
+            p = node.parentNode;
+            if (p) {
+                p.normalize();
+            }
+        };
+        if (!unwrap.__argnames__) Object.defineProperties(unwrap, {
+            __argnames__ : {value: ["node"]}
+        });
+
+        function create_wrapper_function(wrapper_elem, r) {
+            var start_node, end_node, start_offset, end_offset;
+            start_node = r.startContainer;
+            end_node = r.endContainer;
+            start_offset = r.startOffset;
+            end_offset = r.endOffset;
+            function wrap_node(node) {
+                var current_range, current_wrapper;
+                current_range = (node.ownerDocument || document).createRange();
+                current_wrapper = wrapper_elem.cloneNode();
+                current_range.selectNodeContents(node);
+                if (node === start_node && start_node.nodeType === Node.TEXT_NODE) {
+                    current_range.setStart(node, start_offset);
+                    start_node = current_wrapper;
+                    start_offset = 0;
+                }
+                if (node === end_node && end_node.nodeType === Node.TEXT_NODE) {
+                    current_range.setEnd(node, end_offset);
+                    end_node = current_wrapper;
+                    end_offset = 1;
+                }
+                current_range.surroundContents(current_wrapper);
+                return current_wrapper;
+            };
+            if (!wrap_node.__argnames__) Object.defineProperties(wrap_node, {
+                __argnames__ : {value: ["node"]}
+            });
+
+            return wrap_node;
+        };
+        if (!create_wrapper_function.__argnames__) Object.defineProperties(create_wrapper_function, {
+            __argnames__ : {value: ["wrapper_elem", "r"]}
+        });
+
+        wrapper_counter = 0;
+        function wrap_text_in_range(style, r) {
+            var wrapper_elem, wrap_node, nodes;
+            if (!r) {
+                r = window.getSelection().getRangeAt(0);
+            }
+            if (r.isCollapsed) {
+                return null;
+            }
+            wrapper_elem = document.createElement("span");
+            wrapper_elem.dataset.calibreRangeWrapper = ++wrapper_counter + "";
+            if (style) {
+                wrapper_elem.setAttribute("style", style);
+            }
+            wrap_node = create_wrapper_function(wrapper_elem, r);
+            nodes = text_nodes_in_range(r);
+            nodes = nodes.map(wrap_node);
+            return wrapper_elem.dataset.calibreRangeWrapper;
+        };
+        if (!wrap_text_in_range.__argnames__) Object.defineProperties(wrap_text_in_range, {
+            __argnames__ : {value: ["style", "r"]}
+        });
+
+        function reset_highlight_counter() {
+            wrapper_counter = 0;
+        };
+
+        ρσ_modules.range_utils.wrapper_counter = wrapper_counter;
+        ρσ_modules.range_utils.get_text_nodes = get_text_nodes;
+        ρσ_modules.range_utils.create_range_from_node = create_range_from_node;
+        ρσ_modules.range_utils.is_non_empty_text_node = is_non_empty_text_node;
+        ρσ_modules.range_utils.text_nodes_in_range = text_nodes_in_range;
+        ρσ_modules.range_utils.remove = remove;
+        ρσ_modules.range_utils.replace_node = replace_node;
+        ρσ_modules.range_utils.unwrap = unwrap;
+        ρσ_modules.range_utils.create_wrapper_function = create_wrapper_function;
+        ρσ_modules.range_utils.wrap_text_in_range = wrap_text_in_range;
+        ρσ_modules.range_utils.reset_highlight_counter = reset_highlight_counter;
     })();
 
     (function(){
@@ -14141,6 +14633,38 @@ return this.__repr__();
             return cfi;
         };
 
+        function cfi_for_selection(r) {
+            if (!r) {
+                r = window.getSelection().getRangeAt(0);
+            }
+            function pos(container, offset) {
+                var nt;
+                nt = container.nodeType;
+                if (nt === Node.TEXT_NODE || nt === Node.CDATA_SECTION_NODE || nt === Node.COMMENT_NODE) {
+                    return [container, offset];
+                }
+                if (nt === Node.ELEMENT_NODE) {
+                    return [(ρσ_expr_temp = container.childNodes)[(typeof offset === "number" && offset < 0) ? ρσ_expr_temp.length + offset : offset], 
+                    0];
+                }
+                return [container, offset];
+            };
+            if (!pos.__argnames__) Object.defineProperties(pos, {
+                __argnames__ : {value: ["container", "offset"]}
+            });
+
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["start"] = encode.apply(this, [r.startContainer.ownerDocument].concat(pos(r.startContainer, r.startOffset)));
+                ρσ_d["end"] = encode.apply(this, [r.endContainer.ownerDocument].concat([r.endContainer, 
+                r.endOffset]));
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!cfi_for_selection.__argnames__) Object.defineProperties(cfi_for_selection, {
+            __argnames__ : {value: ["r"]}
+        });
+
         if (__name__ === "__main__") {
             t = "a^!,1";
             if (unescape_from_cfi(escape_for_cfi(t)) !== t) {
@@ -14169,6 +14693,7 @@ return this.__repr__();
         ρσ_modules["read_book.cfi"].scroll_to = scroll_to;
         ρσ_modules["read_book.cfi"].at_point = at_point;
         ρσ_modules["read_book.cfi"].at_current = at_current;
+        ρσ_modules["read_book.cfi"].cfi_for_selection = cfi_for_selection;
     })();
 
     (function(){
@@ -14326,7 +14851,7 @@ return this.__repr__();
                 }
                 match_num += 1;
                 from_idx = idx + 1;
-                if (num < match_num) {
+                if (match_num < num) {
                     continue;
                 }
                 ρσ_unpack = find_node_for_index_binary(text_map.node_list, idx + before_len, pos);
@@ -14413,83 +14938,6 @@ return this.__repr__();
         ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
         ρσ_modules["read_book.find"].select_find_result = select_find_result;
         ρσ_modules["read_book.find"].select_search_result = select_search_result;
-    })();
-
-    (function(){
-        var __name__ = "select";
-        function range_from_point(x, y) {
-            var r, p;
-            r = null;
-            if (document.caretPositionFromPoint) {
-                p = document.caretPositionFromPoint(x, y);
-                if (p) {
-                    r = document.createRange();
-                    r.setStart(p.offsetNode, p.offset);
-                    r.collapse(true);
-                }
-            } else if (document.caretRangeFromPoint) {
-                r = document.caretRangeFromPoint(x, y);
-            }
-            return r;
-        };
-        if (!range_from_point.__argnames__) Object.defineProperties(range_from_point, {
-            __argnames__ : {value: ["x", "y"]}
-        });
-
-        function word_boundary_regex() {
-            var ans;
-            ans = word_boundary_regex.ans;
-            if (ans === undefined) {
-                ans = word_boundary_regex.ans = /[\s!-#%-\x2A,-/:;\x3F@\x5B-\x5D_\x7B}\u00A1\u00A7\u00AB\u00B6\u00B7\u00BB\u00BF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E3B\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]/;
-            }
-            return ans;
-        };
-
-        function expand_offset_to_word(string, offset) {
-            var start, pat, ρσ_unpack, end, sz;
-            start = offset;
-            pat = word_boundary_regex();
-            while (start >= 1 && !pat.test(string.charAt(start - 1))) {
-                start -= 1;
-            }
-            ρσ_unpack = [offset, string.length];
-            end = ρσ_unpack[0];
-            sz = ρσ_unpack[1];
-            while (end < sz && !pat.test(string.charAt(end))) {
-                end += 1;
-            }
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["word"] = string.slice(start, end);
-                ρσ_d["start"] = start;
-                ρσ_d["end"] = end;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!expand_offset_to_word.__argnames__) Object.defineProperties(expand_offset_to_word, {
-            __argnames__ : {value: ["string", "offset"]}
-        });
-
-        function word_at_point(x, y) {
-            var r, word_info;
-            r = range_from_point(x, y);
-            if (r && r.startContainer.nodeType === 3) {
-                word_info = expand_offset_to_word(r.startContainer.data, r.startOffset);
-                if (word_info.word) {
-                    r.setStart(r.startContainer, word_info.start);
-                    r.setEnd(r.startContainer, word_info.end);
-                    return r;
-                }
-            }
-        };
-        if (!word_at_point.__argnames__) Object.defineProperties(word_at_point, {
-            __argnames__ : {value: ["x", "y"]}
-        });
-
-        ρσ_modules.select.range_from_point = range_from_point;
-        ρσ_modules.select.word_boundary_regex = word_boundary_regex;
-        ρσ_modules.select.expand_offset_to_word = expand_offset_to_word;
-        ρσ_modules.select.word_at_point = word_at_point;
     })();
 
     (function(){
@@ -14708,6 +15156,23 @@ return this.__repr__();
             });
             return ρσ_anonfunc;
         })());
+
+        function scroll_to_extend_annotation(backward, horizontal) {
+            var direction, before, h;
+            direction = (backward) ? -1 : 1;
+            if (horizontal) {
+                before = window.pageXOffset;
+                window.scrollBy(15 * direction, 0);
+                return window.pageXOffset !== before;
+            }
+            h = scroll_viewport.height() - 10;
+            before = window.pageYOffset;
+            window.scrollBy(0, h * direction);
+            return window.pageYOffset !== before;
+        };
+        if (!scroll_to_extend_annotation.__argnames__) Object.defineProperties(scroll_to_extend_annotation, {
+            __argnames__ : {value: ["backward", "horizontal"]}
+        });
 
         function is_auto_scroll_active() {
             return scroll_animator.is_active();
@@ -15207,6 +15672,22 @@ return this.__repr__();
             __argnames__ : {value: ["action"]}
         });
 
+        function ensure_selection_visible() {
+            var s, p;
+            s = window.getSelection();
+            if (!s.anchorNode) {
+                return;
+            }
+            p = s.anchorNode;
+            while (p) {
+                if (p.scrollIntoView) {
+                    p.scrollIntoView();
+                    return;
+                }
+                p = p.parentNode;
+            }
+        };
+
         ρσ_modules["read_book.flow_mode"].small_scroll_events = small_scroll_events;
         ρσ_modules["read_book.flow_mode"].last_change_spine_item_request = last_change_spine_item_request;
         ρσ_modules["read_book.flow_mode"].DIRECTION = DIRECTION;
@@ -15226,6 +15707,7 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].flow_onwheel = flow_onwheel;
         ρσ_modules["read_book.flow_mode"].goto_boundary = goto_boundary;
         ρσ_modules["read_book.flow_mode"].scroll_by_page = scroll_by_page;
+        ρσ_modules["read_book.flow_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.flow_mode"].is_auto_scroll_active = is_auto_scroll_active;
         ρσ_modules["read_book.flow_mode"].start_autoscroll = start_autoscroll;
         ρσ_modules["read_book.flow_mode"].toggle_autoscroll = toggle_autoscroll;
@@ -15238,6 +15720,7 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].FlickAnimator = FlickAnimator;
         ρσ_modules["read_book.flow_mode"].handle_gesture = handle_gesture;
         ρσ_modules["read_book.flow_mode"].auto_scroll_action = auto_scroll_action;
+        ρσ_modules["read_book.flow_mode"].ensure_selection_visible = ensure_selection_visible;
     })();
 
     (function(){
@@ -15675,10 +16158,10 @@ return this.__repr__();
             }
             n = cols_per_screen = cps;
             ww = col_width = screen_width = scroll_viewport.width();
-            gap = 0;
+            sm = opts.margin_left + opts.margin_right;
+            gap = sm;
             if (n > 1) {
-                sm = opts.margin_left + opts.margin_right;
-                gap = sm + (ww + sm) % n;
+                gap += (ww + sm) % n;
                 col_width = Math.floor((ww + gap) / n) - gap;
             }
             screen_height = scroll_viewport.height();
@@ -16137,6 +16620,19 @@ return this.__repr__();
             __argnames__ : {value: ["backward", "by_screen"]}
         });
 
+        function scroll_to_extend_annotation(backward) {
+            var pos;
+            pos = (backward) ? previous_col_location() : next_col_location();
+            if (pos === -1) {
+                return false;
+            }
+            scroll_to_xpos(pos);
+            return true;
+        };
+        if (!scroll_to_extend_annotation.__argnames__) Object.defineProperties(scroll_to_extend_annotation, {
+            __argnames__ : {value: ["backward"]}
+        });
+
         function handle_shortcut(sc_name, evt) {
             if (sc_name === "up") {
                 scroll_by_page(true, true);
@@ -16416,6 +16912,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].is_return = is_return;
         ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
         ρσ_modules["read_book.paged_mode"].scroll_by_page = scroll_by_page;
+        ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
         ρσ_modules["read_book.paged_mode"].handle_gesture = handle_gesture;
         ρσ_modules["read_book.paged_mode"].ResizeManager = ResizeManager;
@@ -16511,6 +17008,8 @@ return this.__repr__();
     (function(){
         var __name__ = "read_book.shortcuts";
         var _ = ρσ_modules.gettext.gettext;
+
+        var runtime = ρσ_modules["read_book.globals"].runtime;
 
         function parse_key_repr(sc) {
             var parts, key, ans, q, modifier;
@@ -16740,6 +17239,9 @@ return this.__repr__();
             sc["quit"] = desc(quit_shortcut, "ui", _("Quit the viewer"));
             sc["print"] = desc("Ctrl+P", "ui", _("Print book to PDF"));
             sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
+            if (runtime.in_develop_mode) {
+                sc["create_annotation"] = desc("a", "ui", _("Create a highlight"));
+            }
         };
 
         function create_shortcut_map(custom_shortcuts) {
@@ -18298,10 +18800,19 @@ return this.__repr__();
 
         var _ = ρσ_modules.gettext.gettext;
 
+        var extend_selection_after_scroll = ρσ_modules.select.extend_selection_after_scroll;
+        var selection_extents = ρσ_modules.select.selection_extents;
+        var selection_extents_at_point = ρσ_modules.select.selection_extents_at_point;
+        var set_selections_extents_to = ρσ_modules.select.set_selections_extents_to;
+
         var fix_fullscreen_svg_images = ρσ_modules.fs_images.fix_fullscreen_svg_images;
 
         var IframeClient = ρσ_modules.iframe_comm.IframeClient;
 
+        var reset_highlight_counter = ρσ_modules.range_utils.reset_highlight_counter;
+        var wrap_text_in_range = ρσ_modules.range_utils.wrap_text_in_range;
+
+        var cfi_for_selection = ρσ_modules["read_book.cfi"].cfi_for_selection;
         var scroll_to_cfi = ρσ_modules["read_book.cfi"].scroll_to;
 
         var get_elements = ρσ_modules["read_book.extract"].get_elements;
@@ -18311,12 +18822,14 @@ return this.__repr__();
 
         var flow_anchor_funcs = ρσ_modules["read_book.flow_mode"].anchor_funcs;
         var flow_auto_scroll_action = ρσ_modules["read_book.flow_mode"].auto_scroll_action;
+        var ensure_selection_visible = ρσ_modules["read_book.flow_mode"].ensure_selection_visible;
         var flow_onwheel = ρσ_modules["read_book.flow_mode"].flow_onwheel;
         var flow_to_scroll_fraction = ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction;
         var flow_handle_gesture = ρσ_modules["read_book.flow_mode"].handle_gesture;
         var flow_handle_shortcut = ρσ_modules["read_book.flow_mode"].handle_shortcut;
         var flow_layout = ρσ_modules["read_book.flow_mode"].layout;
         var flow_scroll_by_page = ρσ_modules["read_book.flow_mode"].scroll_by_page;
+        var flow_annotation_scroll = ρσ_modules["read_book.flow_mode"].scroll_to_extend_annotation;
 
         var is_footnote_link = ρσ_modules["read_book.footnotes"].is_footnote_link;
 
@@ -18346,6 +18859,7 @@ return this.__repr__();
         var paged_resize_done = ρσ_modules["read_book.paged_mode"].resize_done;
         var paged_scroll_by_page = ρσ_modules["read_book.paged_mode"].scroll_by_page;
         var scroll_to_elem = ρσ_modules["read_book.paged_mode"].scroll_to_elem;
+        var paged_annotation_scroll = ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation;
         var paged_scroll_to_fraction = ρσ_modules["read_book.paged_mode"].scroll_to_fraction;
         var snap_to_selection = ρσ_modules["read_book.paged_mode"].snap_to_selection;
         var will_columns_per_screen_change = ρσ_modules["read_book.paged_mode"].will_columns_per_screen_change;
@@ -18363,6 +18877,7 @@ return this.__repr__();
         var apply_stylesheet = ρσ_modules["read_book.settings"].apply_stylesheet;
         var opts = ρσ_modules["read_book.settings"].opts;
         var set_color_scheme_class = ρσ_modules["read_book.settings"].set_color_scheme_class;
+        var set_selection_style = ρσ_modules["read_book.settings"].set_selection_style;
         var update_settings = ρσ_modules["read_book.settings"].update_settings;
 
         var create_shortcut_map = ρσ_modules["read_book.shortcuts"].create_shortcut_map;
@@ -18506,6 +19021,8 @@ return this.__repr__();
             this.show_search_result = IframeBoss.prototype.show_search_result.bind(this);
             this.reference_item_changed = IframeBoss.prototype.reference_item_changed.bind(this);
             this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
+            this.initiate_creation_of_annotation = IframeBoss.prototype.initiate_creation_of_annotation.bind(this);
+            this.annotations_msg_received = IframeBoss.prototype.annotations_msg_received.bind(this);
         }});
         IframeBoss.prototype.__init__ = function __init__() {
             var self = this;
@@ -18515,6 +19032,7 @@ return this.__repr__();
             self.reference_mode_enabled = false;
             self.replace_history_on_next_cfi_update = true;
             self.blob_url_map = Object.create(null);
+            self.annot_id_uuid_map = Object.create(null);
             self.content_ready = false;
             self.last_window_width = self.last_window_height = -1;
             self.forward_keypresses = false;
@@ -18543,6 +19061,7 @@ return this.__repr__();
                 ρσ_d["overlay_visibility_changed"] = self.on_overlay_visibility_changed;
                 ρσ_d["show_search_result"] = self.show_search_result;
                 ρσ_d["handle_navigation_shortcut"] = self.on_handle_navigation_shortcut;
+                ρσ_d["annotations"] = self.annotations_msg_received;
                 return ρσ_d;
             }).call(this);
             self.comm = new IframeClient(handlers);
@@ -18650,6 +19169,8 @@ return this.__repr__();
             var spine, index, name, ρσ_unpack, root_data;
             self.length_before = null;
             self.content_ready = false;
+            self.annot_id_uuid_map = Object.create(null);
+            reset_highlight_counter();
             self.replace_history_on_next_cfi_update = true;
             self.book = current_book.book = data.book;
             self.reference_mode_enabled = data.reference_mode_enabled;
@@ -18667,6 +19188,7 @@ return this.__repr__();
                 self.jump_to_cfi = scroll_to_cfi;
                 self.anchor_funcs = flow_anchor_funcs;
                 self.auto_scroll_action = flow_auto_scroll_action;
+                self.scroll_to_extend_annotation = flow_annotation_scroll;
                 paged_auto_scroll_action("stop");
             } else {
                 self.do_layout = paged_layout;
@@ -18677,6 +19199,7 @@ return this.__repr__();
                 self._handle_gesture = paged_handle_gesture;
                 self.anchor_funcs = paged_anchor_funcs;
                 self.auto_scroll_action = paged_auto_scroll_action;
+                self.scroll_to_extend_annotation = paged_annotation_scroll;
                 flow_auto_scroll_action("stop");
             }
             update_settings(data.settings);
@@ -19087,6 +19610,8 @@ return this.__repr__();
                 if (sc_name) {
                     if (self.handle_navigation_shortcut(sc_name, evt)) {
                         evt.preventDefault();
+                    } else if (sc_name === "create_annotation") {
+                        self.initiate_creation_of_annotation();
                     } else {
                         ρσ_interpolate_kwargs.call(self, self.send_message, ["handle_shortcut"].concat([ρσ_desugar_kwargs({name: sc_name})]));
                     }
@@ -19260,7 +19785,9 @@ return this.__repr__();
         IframeBoss.prototype.show_search_result = function show_search_result(data, from_load) {
             var self = this;
             if (select_search_result(data.search_result)) {
-                if (current_layout_mode() !== "flow") {
+                if (current_layout_mode() === "flow") {
+                    ensure_selection_visible();
+                } else {
                     snap_to_selection();
                 }
             } else {
@@ -19287,6 +19814,47 @@ return this.__repr__();
             }
         };
         if (!IframeBoss.prototype.set_reference_mode.__argnames__) Object.defineProperties(IframeBoss.prototype.set_reference_mode, {
+            __argnames__ : {value: ["data"]}
+        });
+        IframeBoss.prototype.initiate_creation_of_annotation = function initiate_creation_of_annotation() {
+            var self = this;
+            var in_flow_mode;
+            self.auto_scroll_action("stop");
+            in_flow_mode = current_layout_mode() === "flow";
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "create-annotation", in_flow_mode: in_flow_mode, extents: selection_extents(in_flow_mode)})]));
+        };
+        IframeBoss.prototype.annotations_msg_received = function annotations_msg_received(data) {
+            var self = this;
+            var in_flow_mode, bounds, annot_id;
+            in_flow_mode = current_layout_mode() === "flow";
+            if (data.type === "set-selection") {
+                set_selections_extents_to(data.extents);
+            } else if (data.type === "position-handles-at-point") {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "position-handles", extents: selection_extents_at_point(data.x, data.y, in_flow_mode)})]));
+            } else if (data.type === "scroll") {
+                if (self.scroll_to_extend_annotation(data.backwards)) {
+                    extend_selection_after_scroll(data.backwards, in_flow_mode);
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "update-handles", extents: selection_extents(in_flow_mode)})]));
+                }
+            } else if (data.type === "perp-scroll") {
+                if (in_flow_mode && flow_annotation_scroll(data.backwards, true)) {
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "update-handles", extents: selection_extents(in_flow_mode)})]));
+                }
+            } else if (data.type === "set-highlight-style") {
+                set_selection_style(data.style);
+            } else if (data.type === "apply-highlight") {
+                bounds = cfi_for_selection();
+                annot_id = wrap_text_in_range(data.style);
+                if (annot_id !== null) {
+                    window.getSelection().removeAllRanges();
+                    (ρσ_expr_temp = self.annot_id_uuid_map)[(typeof annot_id === "number" && annot_id < 0) ? ρσ_expr_temp.length + annot_id : annot_id] = data.uuid;
+                }
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-applied", uuid: data.uuid, ok: annot_id !== null, bounds: bounds})]));
+            } else {
+                console.log("Ignoring annotations message to iframe with unknown type: " + data.type);
+            }
+        };
+        if (!IframeBoss.prototype.annotations_msg_received.__argnames__) Object.defineProperties(IframeBoss.prototype.annotations_msg_received, {
             __argnames__ : {value: ["data"]}
         });
         IframeBoss.prototype.__repr__ = function __repr__ () {
@@ -20327,6 +20895,694 @@ return this.__repr__();
         ρσ_modules["read_book.open_book"].create_open_book = create_open_book;
         ρσ_modules["read_book.open_book"].clear_recent_list = clear_recent_list;
         ρσ_modules["read_book.open_book"].add_book_to_recently_viewed = add_book_to_recently_viewed;
+    })();
+
+    (function(){
+        var __name__ = "read_book.create_annotation";
+        var WAITING_FOR_CLICK, WAITING_FOR_DRAG, DRAGGING_LEFT, DRAGGING_RIGHT, dark_fg, light_fg, highlight_colors, default_highlight_color, BAR_SIZE;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var short_uuid = ρσ_modules.uuid.short_uuid;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var cached_color_to_rgba = ρσ_modules["book_list.theme"].cached_color_to_rgba;
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var clear = ρσ_modules.dom.clear;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+        var svgicon = ρσ_modules.dom.svgicon;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var shortcut_for_key_event = ρσ_modules["read_book.shortcuts"].shortcut_for_key_event;
+
+        WAITING_FOR_CLICK = 1;
+        WAITING_FOR_DRAG = 2;
+        DRAGGING_LEFT = 3;
+        DRAGGING_RIGHT = 4;
+        add_extra_css(function () {
+            var ans;
+            ans = "";
+            ans += ".selection-handle { fill: #3cef3d; stroke: black }";
+            ans += ".selection-handle:active { fill: #FCE883; }";
+            return ans;
+        });
+        dark_fg = "#111";
+        light_fg = "#eee";
+        highlight_colors = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["#fce2ae"] = dark_fg;
+            ρσ_d["#b6ffea"] = dark_fg;
+            ρσ_d["#ffb3b3"] = dark_fg;
+            ρσ_d["#ffdcf7"] = dark_fg;
+            ρσ_d["#cae8d5"] = dark_fg;
+            ρσ_d["#204051"] = light_fg;
+            ρσ_d["#3b6978"] = light_fg;
+            ρσ_d["#2b580c"] = light_fg;
+            ρσ_d["#512b58"] = light_fg;
+            return ρσ_d;
+        }).call(this);
+        default_highlight_color = "#fce2ae";
+        function selection_handle(invert) {
+            var ans, use, s;
+            ans = svgicon("selection-handle");
+            use = ans.querySelector("use");
+            use.classList.add("selection-handle");
+            s = ans.style;
+            if (invert) {
+                s.transform = "scaleX(-1)";
+            }
+            s.position = "absolute";
+            s.boxSizing = "border-box";
+            s.touchAction = "none";
+            return ans;
+        };
+        if (!selection_handle.__argnames__) Object.defineProperties(selection_handle, {
+            __argnames__ : {value: ["invert"]}
+        });
+
+        function map_from_iframe_coords(point) {
+            var l, t;
+            l = document.getElementById("book-left-margin");
+            point.x += l.offsetWidth;
+            t = document.getElementById("book-top-margin");
+            point.y += t.offsetHeight;
+            return point;
+        };
+        if (!map_from_iframe_coords.__argnames__) Object.defineProperties(map_from_iframe_coords, {
+            __argnames__ : {value: ["point"]}
+        });
+
+        function map_to_iframe_coords(point) {
+            var l, t;
+            l = document.getElementById("book-left-margin");
+            point.x -= l.offsetWidth;
+            t = document.getElementById("book-top-margin");
+            point.y -= t.offsetHeight;
+            return point;
+        };
+        if (!map_to_iframe_coords.__argnames__) Object.defineProperties(map_to_iframe_coords, {
+            __argnames__ : {value: ["point"]}
+        });
+
+        BAR_SIZE = 32;
+        function create_bar() {
+            var ans;
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id("annot-bar"), style: "height: " + ρσ_str.format("{}", BAR_SIZE) + "px; width: 100vw; display: flex; justify-content: space-between;"})]);
+            return ans;
+        };
+
+        function CreateAnnotation() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            CreateAnnotation.prototype.__bind_methods__.call(this);
+            CreateAnnotation.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(CreateAnnotation.prototype, "__bind_methods__", {value: function () {
+            this.scroll_up = CreateAnnotation.prototype.scroll_up.bind(this);
+            this.scroll_down = CreateAnnotation.prototype.scroll_down.bind(this);
+            this.choose_color = CreateAnnotation.prototype.choose_color.bind(this);
+            this.change_color = CreateAnnotation.prototype.change_color.bind(this);
+            this.show_middle = CreateAnnotation.prototype.show_middle.bind(this);
+            this.hide_middle = CreateAnnotation.prototype.hide_middle.bind(this);
+            this.save_handle_state = CreateAnnotation.prototype.save_handle_state.bind(this);
+            this.restore_handle_state = CreateAnnotation.prototype.restore_handle_state.bind(this);
+            this.accept = CreateAnnotation.prototype.accept.bind(this);
+            this.on_keydown = CreateAnnotation.prototype.on_keydown.bind(this);
+            this.container_clicked = CreateAnnotation.prototype.container_clicked.bind(this);
+            this.mousedown_on_handle = CreateAnnotation.prototype.mousedown_on_handle.bind(this);
+            this.mouseup_on_container = CreateAnnotation.prototype.mouseup_on_container.bind(this);
+            this.mousemove_on_container = CreateAnnotation.prototype.mousemove_on_container.bind(this);
+            this.show = CreateAnnotation.prototype.show.bind(this);
+            this.hide = CreateAnnotation.prototype.hide.bind(this);
+            this.send_message = CreateAnnotation.prototype.send_message.bind(this);
+            this.handle_message = CreateAnnotation.prototype.handle_message.bind(this);
+            this.hide_handles = CreateAnnotation.prototype.hide_handles.bind(this);
+            this.place_handles = CreateAnnotation.prototype.place_handles.bind(this);
+        }});
+        Object.defineProperties(CreateAnnotation.prototype,  {
+            "middle": {
+                "enumerable": true, 
+                "get": function middle() {
+                    var self = this;
+                    return document.getElementById(self.middle_id);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "container": {
+                "enumerable": true, 
+                "get": function container() {
+                    var self = this;
+                    return document.getElementById(self.container_id);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "left_handle": {
+                "enumerable": true, 
+                "get": function left_handle() {
+                    var self = this;
+                    return document.getElementById(self.left_handle_id);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "right_handle": {
+                "enumerable": true, 
+                "get": function right_handle() {
+                    var self = this;
+                    return document.getElementById(self.right_handle_id);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "is_visible": {
+                "enumerable": true, 
+                "get": function is_visible() {
+                    var self = this;
+                    return self.container.style.display !== "none";
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "current_handle_position": {
+                "enumerable": true, 
+                "get": function current_handle_position() {
+                    var self = this;
+                    var ρσ_unpack, lh, rh, lbr, rbr;
+                    ρσ_unpack = [self.left_handle, self.right_handle];
+                    lh = ρσ_unpack[0];
+                    rh = ρσ_unpack[1];
+                    ρσ_unpack = [self.left_handle.getBoundingClientRect(), self.right_handle.getBoundingClientRect()];
+                    lbr = ρσ_unpack[0];
+                    rbr = ρσ_unpack[1];
+                    return (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["start"] = (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["onscreen"] = lh.style.display !== "none";
+                            ρσ_d["x"] = Math.round(lbr.right);
+                            ρσ_d["y"] = Math.round(lbr.bottom - Math.floor(self.left_line_height / 2));
+                            return ρσ_d;
+                        }).call(this);
+                        ρσ_d["end"] = (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["onscreen"] = rh.style.display !== "none";
+                            ρσ_d["x"] = Math.round(rbr.left);
+                            ρσ_d["y"] = Math.round(rbr.bottom - Math.floor(self.right_line_height / 2));
+                            return ρσ_d;
+                        }).call(this);
+                        return ρσ_d;
+                    }).call(this);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "current_highlight_style": {
+                "enumerable": true, 
+                "get": function current_highlight_style() {
+                    var self = this;
+                    return JSON.parse(self.container.querySelector(".annot-button-fg").dataset.style);
+                }, 
+                "set": function current_highlight_style(val) {
+                    var self = this;
+                    var b;
+                    b = self.container.querySelector(".annot-button-fg");
+                    b.dataset.style = JSON.stringify(val);
+                }
+            }, 
+        });
+        CreateAnnotation.prototype.__init__ = function __init__(view) {
+            var self = this;
+            var container, tb, middle, bb, lh, rh, sd, style;
+            self.view = view;
+            self.state = WAITING_FOR_CLICK;
+            self.left_line_height = self.right_line_height = 8;
+            self.in_flow_mode = false;
+            container = self.container;
+            container.style.flexDirection = "column";
+            container.style.justifyContent = "space-between";
+            self.position_in_handle = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["x"] = 0;
+                ρσ_d["y"] = 0;
+                return ρσ_d;
+            }).call(this);
+            function button(bar, icon, tt, action) {
+                var cb;
+                cb = svgicon(icon, bar.style.height, bar.style.height, tt);
+                document.createElement;
+                cb.setAttribute("title", tt);
+                cb.classList.add("annot-button");
+                cb.classList.add("annot-button-" + ρσ_str.format("{}", icon) + "");
+                cb.style.backgroundColor = get_color("window-background");
+                cb.style.boxSizing = "border-box";
+                cb.style.padding = "2px";
+                cb.classList.add("simple-link");
+                cb.addEventListener("click", (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        [ev.preventDefault(), ev.stopPropagation()];
+                        action();
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]}
+                    });
+                    return ρσ_anonfunc;
+                })());
+                bar.appendChild(cb);
+                return cb;
+            };
+            if (!button.__argnames__) Object.defineProperties(button, {
+                __argnames__ : {value: ["bar", "icon", "tt", "action"]}
+            });
+
+            tb = create_bar();
+            container.appendChild(tb);
+            button(tb, "close", _("Cancel creation of highlight"), self.hide);
+            button(tb, "chevron-up", _("Scroll up"), self.scroll_up);
+            button(tb, "check", _("Finish creation of highlight"), self.accept);
+            middle = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id("middle"), style: "display: none"})]);
+            self.middle_id = middle.id;
+            container.appendChild(middle);
+            bb = create_bar();
+            container.appendChild(bb);
+            button(bb, "fg", _("Change highlight color"), self.choose_color);
+            button(bb, "chevron-down", _("Scroll down"), self.scroll_down);
+            button(bb, "pencil", _("Add a note"), self.add_text);
+            lh = selection_handle(true);
+            self.left_handle_id = ensure_id(lh, "handle");
+            lh.addEventListener("mousedown", self.mousedown_on_handle, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.appendChild(lh);
+            rh = selection_handle(false);
+            self.right_handle_id = ensure_id(rh, "handle");
+            rh.addEventListener("mousedown", self.mousedown_on_handle, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.appendChild(rh);
+            container.addEventListener("click", self.container_clicked, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.addEventListener("mouseup", self.mouseup_on_container, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.addEventListener("mousemove", self.mousemove_on_container, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.addEventListener("keydown", self.on_keydown, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            sd = get_session_data();
+            style = sd.get("highlight_style") || (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["background-color"] = default_highlight_color;
+                ρσ_d["color"] = highlight_colors[(typeof default_highlight_color === "number" && default_highlight_color < 0) ? highlight_colors.length + default_highlight_color : default_highlight_color];
+                return ρσ_d;
+            }).call(this);
+            self.current_highlight_style = style;
+        };
+        if (!CreateAnnotation.prototype.__init__.__argnames__) Object.defineProperties(CreateAnnotation.prototype.__init__, {
+            __argnames__ : {value: ["view"]}
+        });
+        CreateAnnotation.__argnames__ = CreateAnnotation.prototype.__init__.__argnames__;
+        CreateAnnotation.__handles_kwarg_interpolation__ = CreateAnnotation.prototype.__init__.__handles_kwarg_interpolation__;
+        CreateAnnotation.prototype.scroll_up = function scroll_up() {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["scroll"].concat([ρσ_desugar_kwargs({backwards: true})]));
+        };
+        CreateAnnotation.prototype.scroll_down = function scroll_down() {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["scroll"].concat([ρσ_desugar_kwargs({backwards: false})]));
+        };
+        CreateAnnotation.prototype.choose_color = function choose_color() {
+            var self = this;
+            var container, c, current_style, found_current, bg;
+            container = self.middle;
+            container.style.display = "block";
+            container.style.textAlign = "center";
+            clear(container);
+            c = ρσ_interpolate_kwargs.call(E, E.div, [E.h3(_("Choose highlight color")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; max-width: calc(" + ρσ_str.format("{}", BAR_SIZE) + "px * 6); margin: auto", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    [ev.stopPropagation(), ev.preventDefault()];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]}
+                });
+                return ρσ_anonfunc;
+            })()})])].concat([ρσ_desugar_kwargs({onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    [ev.stopPropagation(), ev.preventDefault()];
+                    self.hide_middle();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]}
+                });
+                return ρσ_anonfunc;
+            })(), style: "background: " + ρσ_str.format("{}", get_color("window-background")) + "; margin: auto; padding: 1rem"})]));
+            current_style = self.current_highlight_style;
+            container.appendChild(c);
+            found_current = false;
+            self.save_handle_state();
+            self.handle_state = [self.left_handle.display, self.right_hand];
+            function add(bg) {
+                var ic, is_current, sqbg, item;
+                ic = svgicon("swatch", BAR_SIZE, BAR_SIZE);
+                ic.classList.add("simple-link");
+                is_current = bg.lower() === current_style["background-color"].lower();
+                sqbg = (is_current) ? get_color("window-background2") : "unset";
+                ic.querySelector("use").style.fill = bg;
+                item = ρσ_interpolate_kwargs.call(E, E.div, [ic].concat([ρσ_desugar_kwargs({style: "padding: 4px; background-color: " + ρσ_str.format("{}", sqbg) + "; margin: 4px", onclick: self.change_color.bind(null, bg)})]));
+                c.lastChild.appendChild(item);
+                return is_current;
+            };
+            if (!add.__argnames__) Object.defineProperties(add, {
+                __argnames__ : {value: ["bg"]}
+            });
+
+            var ρσ_Iter0 = ρσ_Iterable(highlight_colors);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                bg = ρσ_Iter0[ρσ_Index0];
+                if (add(bg)) {
+                    found_current = true;
+                }
+            }
+            if (!found_current) {
+                add(current_style["background-color"]);
+            }
+        };
+        CreateAnnotation.prototype.change_color = function change_color(new_color) {
+            var self = this;
+            var c, current_style, fg, rgba, is_dark, sd;
+            self.hide_middle();
+            c = self.middle;
+            c.style.display = "none";
+            current_style = self.current_highlight_style;
+            if (!new_color || current_style["background-color"].lower() === new_color.lower()) {
+                return;
+            }
+            fg = highlight_colors[(typeof new_color === "number" && new_color < 0) ? highlight_colors.length + new_color : new_color];
+            if (!fg) {
+                rgba = cached_color_to_rgba(new_color);
+                is_dark = max(rgba[0], rgba[1], rgba[2]) < 115;
+                fg = (is_dark) ? light_fg : dark_fg;
+            }
+            self.current_highlight_style = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["background-color"] = new_color;
+                ρσ_d["color"] = fg;
+                return ρσ_d;
+            }).call(this);
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["set-highlight-style"].concat([ρσ_desugar_kwargs({style: self.current_highlight_style})]));
+            sd = get_session_data();
+            sd.set("highlight_style", self.current_highlight_style);
+        };
+        if (!CreateAnnotation.prototype.change_color.__argnames__) Object.defineProperties(CreateAnnotation.prototype.change_color, {
+            __argnames__ : {value: ["new_color"]}
+        });
+        CreateAnnotation.prototype.show_middle = function show_middle() {
+            var self = this;
+            self.save_handle_state();
+            self.middle.style.display = "block";
+        };
+        CreateAnnotation.prototype.hide_middle = function hide_middle() {
+            var self = this;
+            var m;
+            m = self.middle;
+            if (m.style.display !== "none") {
+                self.restore_handle_state();
+                m.style.display = "none";
+            }
+        };
+        CreateAnnotation.prototype.save_handle_state = function save_handle_state() {
+            var self = this;
+            var h;
+            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                h = ρσ_Iter1[ρσ_Index1];
+                h.dataset.savedState = h.style.display;
+                h.style.display = "none";
+            }
+        };
+        CreateAnnotation.prototype.restore_handle_state = function restore_handle_state() {
+            var self = this;
+            var h;
+            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                h = ρσ_Iter2[ρσ_Index2];
+                h.style.display = h.dataset.savedState;
+            }
+        };
+        CreateAnnotation.prototype.accept = function accept() {
+            var self = this;
+            var s, style, k;
+            s = self.current_highlight_style;
+            style = "";
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(self.current_highlight_style));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                k = ρσ_Iter3[ρσ_Index3];
+                style += "" + ρσ_str.format("{}", k) + ": " + ρσ_str.format("{}", s[(typeof k === "number" && k < 0) ? s.length + k : k]) + "; ";
+            }
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: style, uuid: short_uuid()})]));
+            self.hide();
+        };
+        CreateAnnotation.prototype.on_keydown = function on_keydown(ev) {
+            var self = this;
+            var sc_name;
+            [ev.stopPropagation(), ev.preventDefault()];
+            if (ev.key === "Enter") {
+                return self.accept();
+            }
+            sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map);
+            if (sc_name === "show_chrome") {
+                self.hide();
+            } else if (ρσ_in(sc_name, ["up", "down", "pageup", "pagedown"])) {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["scroll"].concat([ρσ_desugar_kwargs({backwards: bool(ρσ_in("up", sc_name))})]));
+            } else if (ρσ_in(sc_name, ["left", "right"])) {
+                if (self.in_flow_mode) {
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["perp-scroll"].concat([ρσ_desugar_kwargs({backwards: bool(sc_name === "left")})]));
+                } else {
+                    ρσ_interpolate_kwargs.call(self, self.send_message, ["scroll"].concat([ρσ_desugar_kwargs({backwards: bool(sc_name === "left")})]));
+                }
+            }
+        };
+        if (!CreateAnnotation.prototype.on_keydown.__argnames__) Object.defineProperties(CreateAnnotation.prototype.on_keydown, {
+            __argnames__ : {value: ["ev"]}
+        });
+        CreateAnnotation.prototype.container_clicked = function container_clicked(ev) {
+            var self = this;
+            var pt;
+            [ev.stopPropagation(), ev.preventDefault()];
+            self.hide_middle();
+            if (self.state === WAITING_FOR_CLICK) {
+                pt = map_to_iframe_coords((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["x"] = ev.clientX;
+                    ρσ_d["y"] = ev.clientY;
+                    return ρσ_d;
+                }).call(this));
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["position-handles-at-point"].concat([ρσ_desugar_kwargs({x: pt.x, y: pt.y})]));
+            }
+        };
+        if (!CreateAnnotation.prototype.container_clicked.__argnames__) Object.defineProperties(CreateAnnotation.prototype.container_clicked, {
+            __argnames__ : {value: ["ev"]}
+        });
+        CreateAnnotation.prototype.mousedown_on_handle = function mousedown_on_handle(ev) {
+            var self = this;
+            var q, handle, r;
+            [ev.stopPropagation(), ev.preventDefault()];
+            if (self.state === WAITING_FOR_CLICK) {
+                return;
+            }
+            q = ev.currentTarget.id;
+            if (q === self.left_handle_id) {
+                self.state = DRAGGING_LEFT;
+                handle = self.left_handle;
+            } else if (q === self.right_handle_id) {
+                self.state = DRAGGING_RIGHT;
+                handle = self.right_handle;
+            }
+            r = handle.getBoundingClientRect();
+            self.position_in_handle.x = Math.round(ev.clientX - r.left);
+            self.position_in_handle.y = Math.round(ev.clientY - r.top);
+        };
+        if (!CreateAnnotation.prototype.mousedown_on_handle.__argnames__) Object.defineProperties(CreateAnnotation.prototype.mousedown_on_handle, {
+            __argnames__ : {value: ["ev"]}
+        });
+        CreateAnnotation.prototype.mouseup_on_container = function mouseup_on_container(ev) {
+            var self = this;
+            if (ρσ_in(self.state, [DRAGGING_RIGHT, DRAGGING_LEFT])) {
+                self.state = WAITING_FOR_DRAG;
+                [ev.preventDefault(), ev.stopPropagation()];
+            }
+        };
+        if (!CreateAnnotation.prototype.mouseup_on_container.__argnames__) Object.defineProperties(CreateAnnotation.prototype.mouseup_on_container, {
+            __argnames__ : {value: ["ev"]}
+        });
+        CreateAnnotation.prototype.mousemove_on_container = function mousemove_on_container(ev) {
+            var self = this;
+            var handle, s, pos;
+            if (!ρσ_in(self.state, [DRAGGING_RIGHT, DRAGGING_LEFT])) {
+                return;
+            }
+            [ev.stopPropagation(), ev.preventDefault()];
+            handle = (self.state === DRAGGING_LEFT) ? self.left_handle : self.right_handle;
+            s = handle.style;
+            s.left = ev.clientX - self.position_in_handle.x + "px";
+            s.top = ev.clientY - self.position_in_handle.y + "px";
+            pos = self.current_handle_position;
+            pos.start = map_to_iframe_coords(pos.start);
+            pos.end = map_to_iframe_coords(pos.end);
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["set-selection"].concat([ρσ_desugar_kwargs({extents: pos})]));
+        };
+        if (!CreateAnnotation.prototype.mousemove_on_container.__argnames__) Object.defineProperties(CreateAnnotation.prototype.mousemove_on_container, {
+            __argnames__ : {value: ["ev"]}
+        });
+        CreateAnnotation.prototype.show = function show() {
+            var self = this;
+            var c;
+            c = self.container;
+            c.style.display = "flex";
+            c.focus();
+        };
+        CreateAnnotation.prototype.hide = function hide() {
+            var self = this;
+            if (self.is_visible) {
+                self.container.style.display = "none";
+                self.view.focus_iframe();
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["set-highlight-style"].concat([ρσ_desugar_kwargs({style: null})]));
+            }
+        };
+        CreateAnnotation.prototype.send_message = function send_message() {
+            var self = this;
+            var type = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var kw = arguments[arguments.length-1];
+            if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
+            ρσ_interpolate_kwargs.call(self.view.iframe_wrapper, self.view.iframe_wrapper.send_message, ["annotations"].concat([ρσ_desugar_kwargs(kw, {type: type})]));
+        };
+        if (!CreateAnnotation.prototype.send_message.__handles_kwarg_interpolation__) Object.defineProperties(CreateAnnotation.prototype.send_message, {
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["type"]}
+        });
+        CreateAnnotation.prototype.handle_message = function handle_message(msg) {
+            var self = this;
+            if (msg.type === "create-annotation") {
+                if (!self.is_visible) {
+                    self.view.hide_overlays();
+                }
+                self.state = WAITING_FOR_CLICK;
+                self.show();
+                self.hide_handles();
+                if (msg.extents.start.x !== null) {
+                    self.place_handles(msg.extents);
+                }
+                self.in_flow_mode = msg.in_flow_mode;
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["set-highlight-style"].concat([ρσ_desugar_kwargs({style: self.current_highlight_style})]));
+            } else if (msg.type === "position-handles") {
+                if (self.state === WAITING_FOR_CLICK) {
+                    self.place_handles(msg.extents);
+                }
+            } else if (msg.type === "update-handles") {
+                self.place_handles(msg.extents);
+            } else if (msg.type === "highlight-applied") {
+                if (!msg.ok) {
+                    return error_dialog(_("Highlighting failed"), _("Failed to apply highlighting, try adjusting extent of highlight"));
+                }
+            } else {
+                print("Ignoring annotations message with unknown type:", msg.type);
+            }
+        };
+        if (!CreateAnnotation.prototype.handle_message.__argnames__) Object.defineProperties(CreateAnnotation.prototype.handle_message, {
+            __argnames__ : {value: ["msg"]}
+        });
+        CreateAnnotation.prototype.hide_handles = function hide_handles() {
+            var self = this;
+            self.left_handle.style.display = "none";
+            self.right_handle.style.display = "none";
+        };
+        CreateAnnotation.prototype.place_handles = function place_handles(extents) {
+            var self = this;
+            var ρσ_unpack, lh, rh, style, width;
+            ρσ_unpack = [self.left_handle, self.right_handle];
+            lh = ρσ_unpack[0];
+            rh = ρσ_unpack[1];
+            function do_it(handle, data) {
+                var s, height, width, bottom, top;
+                map_from_iframe_coords(data);
+                s = handle.style;
+                s.display = (data.onscreen) ? "block" : "none";
+                height = data.height * 3;
+                width = data.height * 2;
+                s.width = "" + ρσ_str.format("{}", width) + "px";
+                s.height = "" + ρσ_str.format("{}", height) + "px";
+                bottom = data.y + data.height;
+                top = bottom - height;
+                s.top = "" + ρσ_str.format("{}", top) + "px";
+                return [s, width];
+            };
+            if (!do_it.__argnames__) Object.defineProperties(do_it, {
+                __argnames__ : {value: ["handle", "data"]}
+            });
+
+            ρσ_unpack = do_it(lh, extents.start);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            style = ρσ_unpack[0];
+            width = ρσ_unpack[1];
+            style.left = extents.start.x - width + "px";
+            ρσ_unpack = do_it(rh, extents.end);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            style = ρσ_unpack[0];
+            width = ρσ_unpack[1];
+            style.left = extents.end.x + "px";
+            self.state = WAITING_FOR_DRAG;
+            self.left_line_height = extents.start.height;
+            self.right_line_height = extents.end.height;
+        };
+        if (!CreateAnnotation.prototype.place_handles.__argnames__) Object.defineProperties(CreateAnnotation.prototype.place_handles, {
+            __argnames__ : {value: ["extents"]}
+        });
+        CreateAnnotation.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        CreateAnnotation.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(CreateAnnotation.prototype, "__bases__", {value: []});
+        CreateAnnotation.prototype.container_id = "create-annotation-overlay";
+        
+        
+        
+        
+        
+        
+        
+        
+
+        ρσ_modules["read_book.create_annotation"].WAITING_FOR_CLICK = WAITING_FOR_CLICK;
+        ρσ_modules["read_book.create_annotation"].WAITING_FOR_DRAG = WAITING_FOR_DRAG;
+        ρσ_modules["read_book.create_annotation"].DRAGGING_LEFT = DRAGGING_LEFT;
+        ρσ_modules["read_book.create_annotation"].DRAGGING_RIGHT = DRAGGING_RIGHT;
+        ρσ_modules["read_book.create_annotation"].dark_fg = dark_fg;
+        ρσ_modules["read_book.create_annotation"].light_fg = light_fg;
+        ρσ_modules["read_book.create_annotation"].highlight_colors = highlight_colors;
+        ρσ_modules["read_book.create_annotation"].default_highlight_color = default_highlight_color;
+        ρσ_modules["read_book.create_annotation"].BAR_SIZE = BAR_SIZE;
+        ρσ_modules["read_book.create_annotation"].selection_handle = selection_handle;
+        ρσ_modules["read_book.create_annotation"].map_from_iframe_coords = map_from_iframe_coords;
+        ρσ_modules["read_book.create_annotation"].map_to_iframe_coords = map_to_iframe_coords;
+        ρσ_modules["read_book.create_annotation"].create_bar = create_bar;
+        ρσ_modules["read_book.create_annotation"].CreateAnnotation = CreateAnnotation;
     })();
 
     (function(){
@@ -22771,7 +24027,7 @@ return this.__repr__();
                 state.widgets.push(new cls(item, div.firstChild, onfocus(item.name)).initialize());
             }
             if (state.widgets.length) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Restore default settings"), "refresh", reset_to_defaults)].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1em; text-align:center"})])));
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Restore default settings"), "refresh", reset_to_defaults)].concat([ρσ_desugar_kwargs({style: "margin:1rem;"})])));
             }
         };
         if (!create_prefs_widget.__argnames__) Object.defineProperties(create_prefs_widget, {
@@ -28737,7 +29993,7 @@ return this.__repr__();
         OpenBook.prototype.show = function show(container) {
             var self = this;
             container.style.backgroundColor = get_color("window-background");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Open a new book")), ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("close")].concat([ρσ_desugar_kwargs({style: "cursor:pointer", onclick: (function() {
                 var ρσ_anonfunc = function (event) {
                     [event.preventDefault(), event.stopPropagation()];
                     if (self.closeable) {
@@ -28750,7 +30006,7 @@ return this.__repr__();
                     __argnames__ : {value: ["event"]}
                 });
                 return ρσ_anonfunc;
-            })(), class_: "simple-link"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: space-between"})])));
+            })(), class_: "simple-link"})])), ρσ_interpolate_kwargs.call(E, E.h2, [_("Open a new book")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start"})])));
             create_open_book(container, ρσ_exists.d(self.overlay.view).book);
         };
         if (!OpenBook.prototype.show.__argnames__) Object.defineProperties(OpenBook.prototype.show, {
@@ -29717,6 +30973,8 @@ return this.__repr__();
 
         var add_book_to_recently_viewed = ρσ_modules["read_book.open_book"].add_book_to_recently_viewed;
 
+        var CreateAnnotation = ρσ_modules["read_book.create_annotation"].CreateAnnotation;
+
         var Overlay = ρσ_modules["read_book.overlay"].Overlay;
 
         var resolve_color_scheme = ρσ_modules["read_book.prefs.colors"].resolve_color_scheme;
@@ -29840,10 +31098,27 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap (or right click) for controls"))].concat([ρσ_desugar_kwargs({style: "height: 25vh; display:flex; align-items: center; border-bottom: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn back"))].concat([ρσ_desugar_kwargs({style: "width: 25vw; display:flex; align-items: center; border-right: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap to turn page"))].concat([ρσ_desugar_kwargs({style: "width: 75vw; display:flex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: stretch; flex-grow: 10"})]))].concat([ρσ_desugar_kwargs({style: "overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "display:flex; flex-direction: column; align-items: stretch"})])));
         };
 
+        function maximum_font_size() {
+            var ans, q;
+            ans = maximum_font_size.ans;
+            if (!ans) {
+                q = window.getComputedStyle(document.body).fontSize;
+                if (q && q.endsWith("px")) {
+                    q = parseInt(q);
+                    if (q && !isNaN(q)) {
+                        ans = maximum_font_size.ans = q;
+                        return ans;
+                    }
+                }
+                ans = maximum_font_size.ans = 12;
+            }
+            return ans;
+        };
+
         function margin_elem(sd, which, id, onclick, oncontextmenu) {
             var sz, fsz, s, ans;
             sz = sd.get(which, 20);
-            fsz = min(max(0, sz - 6), 12);
+            fsz = min(max(0, sz - 6), maximum_font_size());
             s = "; text-overflow: ellipsis; white-space: nowrap; overflow: hidden";
             ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1.5em" + s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1.5em" + s})])].concat([ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", sz) + "px; overflow: hidden; font-size:" + ρσ_str.format("{}", fsz) + "px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center", id: id})]));
             if (onclick) {
@@ -29879,6 +31154,7 @@ return this.__repr__();
             this.set_scrollbar_visibility = View.prototype.set_scrollbar_visibility.bind(this);
             this.toggle_scrollbar = View.prototype.toggle_scrollbar.bind(this);
             this.on_lookup_word = View.prototype.on_lookup_word.bind(this);
+            this.on_annotations_message = View.prototype.on_annotations_message.bind(this);
             this.left_margin_clicked = View.prototype.left_margin_clicked.bind(this);
             this.right_margin_clicked = View.prototype.right_margin_clicked.bind(this);
             this.side_margin_clicked = View.prototype.side_margin_clicked.bind(this);
@@ -30031,7 +31307,7 @@ return this.__repr__();
             if (runtime.is_standalone_viewer) {
                 sandbox += "  allow-same-origin";
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", get_color("window-foreground")) + "; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "position: absolute; display: none; left: 0; top: 0; padding: 0.5ex; border: solid 2px; z-index: 3000", id: "reference-mode-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), ρσ_interpolate_kwargs.call(E, E.iframe, [ρσ_desugar_kwargs({id: iframe_id, seamless: true, sandbox: sandbox, style: "flex-grow: 2", allowfullscreen: "true"})]), margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none", id: "book-search-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none; overflow: hidden", id: CreateAnnotation.prototype.container_id, tabindex: "0"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", get_color("window-foreground")) + "; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "position: absolute; display: none; left: 0; top: 0; padding: 0.5ex; border: solid 2px; z-index: 3000", id: "reference-mode-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch"})])));
             handlers = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["autoscroll_state_changed"] = (function() {
@@ -30089,6 +31365,7 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })();
+                ρσ_d["annotations"] = self.on_annotations_message;
                 return ρσ_d;
             }).call(this);
             entry_point = (runtime.is_standalone_viewer) ? null : "read_book.iframe";
@@ -30108,6 +31385,7 @@ return this.__repr__();
             self.pending_load = null;
             self.currently_showing = Object.create(null);
             self.book_scrollbar.apply_visibility();
+            self.create_annotation = new CreateAnnotation(self);
         };
         if (!View.prototype.__init__.__argnames__) Object.defineProperties(View.prototype.__init__, {
             __argnames__ : {value: ["container"]}
@@ -30139,6 +31417,13 @@ return this.__repr__();
             self.overlay.show_word_actions(data.word);
         };
         if (!View.prototype.on_lookup_word.__argnames__) Object.defineProperties(View.prototype.on_lookup_word, {
+            __argnames__ : {value: ["data"]}
+        });
+        View.prototype.on_annotations_message = function on_annotations_message(data) {
+            var self = this;
+            self.create_annotation.handle_message(data);
+        };
+        if (!View.prototype.on_annotations_message.__argnames__) Object.defineProperties(View.prototype.on_annotations_message, {
             __argnames__ : {value: ["data"]}
         });
         View.prototype.left_margin_clicked = function left_margin_clicked(event) {
@@ -30557,6 +31842,7 @@ return this.__repr__();
             self.search_overlay.hide();
             self.content_popup_overlay.hide();
             self.reference_mode_overlay.style.display = "none";
+            self.create_annotation.hide();
             self.focus_iframe();
         };
         View.prototype.focus_iframe = function focus_iframe() {
@@ -31534,6 +32820,7 @@ return this.__repr__();
         
 
         ρσ_modules["read_book.view"].show_controls_help = show_controls_help;
+        ρσ_modules["read_book.view"].maximum_font_size = maximum_font_size;
         ρσ_modules["read_book.view"].margin_elem = margin_elem;
         ρσ_modules["read_book.view"].side_margin_elem = side_margin_elem;
         ρσ_modules["read_book.view"].View = View;

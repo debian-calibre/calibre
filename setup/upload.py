@@ -123,7 +123,7 @@ def get_fosshub_data():
 
 def send_data(loc):
     subprocess.check_call([
-        'rsync', '--inplace', '--delete', '-r', '-z', '-h', '--progress', '-e',
+        'rsync', '--inplace', '--delete', '-r', '-zz', '-h', '--progress', '-e',
         'ssh -x', loc + '/', '%s@%s:%s' % (STAGING_USER, STAGING_HOST, STAGING_DIR)
     ])
 
@@ -336,7 +336,7 @@ class UploadUserManual(Command):  # {{{
         srcdir = self.j(gettempdir(), 'user-manual-build', 'en', 'html') + '/'
         check_call(
             ' '.join(
-                ['rsync', '-zrl', '--info=progress2', srcdir, 'main:/srv/manual/']
+                ['rsync', '-zz', '-rl', '--info=progress2', srcdir, 'main:/srv/manual/']
             ),
             shell=True
         )
