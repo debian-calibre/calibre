@@ -1,0 +1,25 @@
+From 1f2bcd5ed7be8aa82e630a388b810feb99ecc322 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 20:31:33 +0530
+Subject: [PATCH 064/106] Make timeout test a bit more robust
+
+---
+ src/calibre/srv/tests/loop.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
+index 37a94d3f0d..4878d54c53 100644
+--- a/src/calibre/srv/tests/loop.py
++++ b/src/calibre/srv/tests/loop.py
+@@ -85,7 +85,7 @@ class LoopTest(BaseTest):
+             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
+         # Test shutdown with hung worker
+         block = Event()
+-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.01) as server:
++        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
+             pool = server.loop.pool
+             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
+             conn = server.connect()
+-- 
+2.26.0
+

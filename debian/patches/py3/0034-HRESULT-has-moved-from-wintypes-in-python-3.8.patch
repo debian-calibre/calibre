@@ -1,0 +1,31 @@
+From 0d0caa883c4423cf5cc17650c75d7f909380df09 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 09:30:38 +0530
+Subject: [PATCH 034/106] HRESULT has moved from wintypes in python 3.8
+
+---
+ src/calibre/gui2/__init__.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
+index 16f83ceed9..c58262279c 100644
+--- a/src/calibre/gui2/__init__.py
++++ b/src/calibre/gui2/__init__.py
+@@ -1465,12 +1465,13 @@ empty_index = empty_model.index(0)
+ def set_app_uid(val):
+     import ctypes
+     from ctypes import wintypes
++    from ctypes import HRESULT
+     try:
+         AppUserModelID = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
+     except Exception:  # Vista has no app uids
+         return False
+     AppUserModelID.argtypes = [wintypes.LPCWSTR]
+-    AppUserModelID.restype = wintypes.HRESULT
++    AppUserModelID.restype = HRESULT
+     try:
+         AppUserModelID(unicode_type(val))
+     except Exception as err:
+-- 
+2.26.0
+

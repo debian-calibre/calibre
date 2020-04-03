@@ -1,0 +1,86 @@
+From ef2c27f4fac5f7fec1151a3c4ce4080c35cd8fa1 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 12 Dec 2019 18:00:03 +0530
+Subject: [PATCH 076/106] Get the manual building
+
+---
+ manual/build.py      | 10 +++++-----
+ manual/custom.py     |  2 +-
+ src/calibre/linux.py |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/manual/build.py b/manual/build.py
+index c48a07eb53..8a3a536692 100755
+--- a/manual/build.py
++++ b/manual/build.py
+@@ -11,7 +11,7 @@ from functools import partial
+ 
+ j, d, a = os.path.join, os.path.dirname, os.path.abspath
+ BASE = d(a(__file__))
+-SPHINX_BUILD = 'sphinx-build2'
++SPHINX_BUILD = 'sphinx-build'
+ 
+ sys.path.insert(0, d(BASE))
+ from setup import __appname__, __version__
+@@ -73,7 +73,7 @@ def build_manual(language, base):
+ 
+ def build_pot(base):
+     cmd = [SPHINX_BUILD, '-b', 'gettext', '-t', 'online', '-t', 'gettext', '.', base]
+-    print (' '.join(cmd))
++    print(' '.join(cmd))
+     subprocess.check_call(cmd)
+     os.remove(j(base, 'generated.pot'))
+     return base
+@@ -81,7 +81,7 @@ def build_pot(base):
+ 
+ def build_linkcheck(base):
+     cmd = [SPHINX_BUILD, '-b', 'linkcheck', '-t', 'online', '-t', 'linkcheck', '.', base]
+-    print (' '.join(cmd))
++    print(' '.join(cmd))
+     subprocess.check_call(cmd)
+     return base
+ 
+@@ -103,7 +103,7 @@ if __name__ == '__main__':
+             import json
+             os.environ['ALL_USER_MANUAL_LANGUAGES'] = ' '.join(json.load(open('locale/completed.json', 'rb')))
+         sphinx_build(language, base, t='online', quiet=False)
+-        print ('Manual built in', j(base, 'html'))
++        print('Manual built in', j(base, 'html'))
+     else:
+         p = argparse.ArgumentParser()
+         p.add_argument('language', help='The language to build for')
+@@ -122,4 +122,4 @@ if __name__ == '__main__':
+         else:
+             os.environ['CALIBRE_OVERRIDE_LANG'] = language
+             build_manual(language, base)
+-            print ('Manual for', language, 'built in', j(base, 'html'))
++            print('Manual for', language, 'built in', j(base, 'html'))
+diff --git a/manual/custom.py b/manual/custom.py
+index 2170166ca3..26af36a67b 100644
+--- a/manual/custom.py
++++ b/manual/custom.py
+@@ -33,7 +33,7 @@ def source_read_handler(app, docname, source):
+     # Sphinx does not call source_read_handle for the .. include directive
+     for m in reversed(tuple(include_pat.finditer(src))):
+         included_doc_name = m.group(1).lstrip('/')
+-        ss = [open(included_doc_name).read().decode('utf-8')]
++        ss = [open(included_doc_name, 'rb').read().decode('utf-8')]
+         source_read_handler(app, included_doc_name.partition('.')[0], ss)
+         src = src[:m.start()] + ss[0] + src[m.end():]
+     source[0] = src
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index b2878f11fd..6f7dc8e5fb 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -22,7 +22,7 @@ entry_points = {
+              'ebook-meta           = calibre.ebooks.metadata.cli:main',
+              'ebook-convert        = calibre.ebooks.conversion.cli:main',
+              'ebook-polish         = calibre.ebooks.oeb.polish.main:main',
+-             'markdown-calibre     = calibre.ebooks.markdown.__main__:run',
++             'markdown-calibre     = markdown.__main__:run',
+              'web2disk             = calibre.web.fetch.simple:main',
+              'calibre-server       = calibre.srv.standalone:main',
+              'lrf2lrs              = calibre.ebooks.lrf.lrfparser:main',
+-- 
+2.26.0
+

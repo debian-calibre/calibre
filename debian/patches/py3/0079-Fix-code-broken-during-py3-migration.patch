@@ -1,0 +1,40 @@
+From f261faafe7a2f5ab69f28d9a39e61860842adf39 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 12 Dec 2019 23:04:36 +0530
+Subject: [PATCH 079/106] Fix code broken during py3 migration
+
+---
+ src/calibre/gui2/icon_theme.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/gui2/icon_theme.py b/src/calibre/gui2/icon_theme.py
+index 1d9ec34a8e..96f55eca14 100644
+--- a/src/calibre/gui2/icon_theme.py
++++ b/src/calibre/gui2/icon_theme.py
+@@ -384,13 +384,12 @@ def create_themeball(report, progress=None, abort=None):
+             with lopen(srcpath, 'rb') as f:
+                 zf.writestr(name, f.read(), compression=ZIP_STORED)
+     buf.seek(0)
+-    out = BytesIO()
+     if abort is not None and abort.is_set():
+         return None, None
+     if progress is not None:
+         progress(next(num), _('Compressing theme file'))
+     import lzma
+-    lzma.compress(buf.getvalue(), format=lzma.FORMAT_XZ, preset=9)
++    compressed = lzma.compress(buf.getvalue(), format=lzma.FORMAT_XZ, preset=9)
+     buf = BytesIO()
+     prefix = report.name
+     if abort is not None and abort.is_set():
+@@ -399,7 +398,7 @@ def create_themeball(report, progress=None, abort=None):
+         with lopen(os.path.join(report.path, THEME_METADATA), 'rb') as f:
+             zf.writestr(prefix + '/' + THEME_METADATA, f.read())
+         zf.writestr(prefix + '/' + THEME_COVER, create_cover(report))
+-        zf.writestr(prefix + '/' + 'icons.zip.xz', out.getvalue(), compression=ZIP_STORED)
++        zf.writestr(prefix + '/' + 'icons.zip.xz', compressed, compression=ZIP_STORED)
+     if progress is not None:
+         progress(next(num), _('Finished'))
+     return buf.getvalue(), prefix
+-- 
+2.26.0
+

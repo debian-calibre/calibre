@@ -1,0 +1,45 @@
+From 992aa642975c5611a46d692fc593d7c75acf41f7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 26 Nov 2019 17:26:12 +0530
+Subject: [PATCH 021/106] Get python3 and webengine building on windows
+
+---
+ bypy/sources.json | 1 +
+ bypy/windows.conf | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 4c8e363b1e..a3f489f9ca 100644
+--- a/bypy/sources.json
++++ b/bypy/sources.json
+@@ -80,6 +80,7 @@
+ 
+     {
+         "name": "xz",
++        "os": "macos,linux",
+         "unix": {
+             "filename": "xz-5.2.4.tar.gz",
+             "hash": "md5:5ace3264bdd00c65eeec2891346f65e6",
+diff --git a/bypy/windows.conf b/bypy/windows.conf
+index ad0d6116e4..7f8d3cfee7 100644
+--- a/bypy/windows.conf
++++ b/bypy/windows.conf
+@@ -2,6 +2,7 @@
+ # git.exe must be in PATH. Must have ~120GB available disk space and 8GB RAM
+ # Install certifi in python 3 with:
+ # py.exe -m pip install certifi
++# Install python2 which is needed to build Qt WebEngine
+ # Copy opengl32sw.dll from
+ # https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/
+ # to C:/mesa/32 and C:/mesa/64
+@@ -11,6 +12,7 @@
+ vm_name 'calibre-windows-build'
+ root 'C:/r'
+ python 'py.exe'
++python2 'C:/Python27/python.exe'
+ perl 'C:/Strawberry/perl/bin/perl.exe'
+ ruby 'C:/Ruby26-x64/bin/ruby.exe'
+ mesa 'C:/mesa'
+-- 
+2.26.0
+

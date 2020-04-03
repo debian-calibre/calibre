@@ -1,0 +1,114 @@
+From 2d7a08ab8c1b869f05f88d840ad130d7b2c04977 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 18 Dec 2019 09:23:36 +0530
+Subject: [PATCH 087/106] Fix SpooledTemporaryFile on python3
+
+---
+ src/calibre/gui2/save.py        |  7 +------
+ src/calibre/ptempfile.py        | 13 +++++++++----
+ src/calibre/utils/localunzip.py |  2 +-
+ src/calibre/utils/zipfile.py    | 13 ++++++++++---
+ 4 files changed, 21 insertions(+), 14 deletions(-)
+
+diff --git a/src/calibre/gui2/save.py b/src/calibre/gui2/save.py
+index e4559374fa..5482d8f945 100644
+--- a/src/calibre/gui2/save.py
++++ b/src/calibre/gui2/save.py
+@@ -7,7 +7,6 @@ __copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+ 
+ import traceback, errno, os, time, shutil
+ from collections import namedtuple, defaultdict
+-from tempfile import SpooledTemporaryFile
+ 
+ from PyQt5.Qt import QObject, Qt, pyqtSignal
+ 
+@@ -17,7 +16,7 @@ from calibre.customize.ui import can_set_metadata
+ from calibre.db.errors import NoSuchFormat
+ from calibre.ebooks.metadata import authors_to_string
+ from calibre.ebooks.metadata.opf2 import metadata_to_opf
+-from calibre.ptempfile import PersistentTemporaryDirectory
++from calibre.ptempfile import PersistentTemporaryDirectory, SpooledTemporaryFile
+ from calibre.gui2 import error_dialog, warning_dialog, gprefs, open_local_file
+ from calibre.gui2.dialogs.progress import ProgressDialog
+ from calibre.utils.formatter_functions import load_user_template_functions
+@@ -63,10 +62,6 @@ class SpooledFile(SpooledTemporaryFile):  # {{{
+ 
+         self._rolled = True
+ 
+-    def truncate(self, *args):
+-        # The stdlib SpooledTemporaryFile implementation of truncate() doesn't
+-        # allow specifying a size.
+-        self._file.truncate(*args)
+ # }}}
+ 
+ 
+diff --git a/src/calibre/ptempfile.py b/src/calibre/ptempfile.py
+index 63de86a52a..cf7d69b85e 100644
+--- a/src/calibre/ptempfile.py
++++ b/src/calibre/ptempfile.py
+@@ -277,10 +277,15 @@ class SpooledTemporaryFile(tempfile.SpooledTemporaryFile):
+     def name(self, val):
+         self._name = val
+ 
+-    def truncate(self, *args):
+-        # The stdlib SpooledTemporaryFile implementation of truncate() doesn't
+-        # allow specifying a size.
+-        self._file.truncate(*args)
++    # See https://bugs.python.org/issue26175
++    def readable(self):
++        return self._file.readable()
++
++    def seekable(self):
++        return self._file.seekable()
++
++    def writable(self):
++        return self._file.writable()
+ 
+ 
+ def better_mktemp(*args, **kwargs):
+diff --git a/src/calibre/utils/localunzip.py b/src/calibre/utils/localunzip.py
+index 95d6fa485e..6aec6c1487 100644
+--- a/src/calibre/utils/localunzip.py
++++ b/src/calibre/utils/localunzip.py
+@@ -16,7 +16,7 @@ Tries to only use the local headers to extract data from the damaged zip file.
+ import os, sys, zlib, shutil
+ from struct import calcsize, unpack, pack
+ from collections import namedtuple, OrderedDict
+-from tempfile import SpooledTemporaryFile
++from calibre.ptempfile import SpooledTemporaryFile
+ 
+ from polyglot.builtins import itervalues, getcwd
+ 
+diff --git a/src/calibre/utils/zipfile.py b/src/calibre/utils/zipfile.py
+index 0eeffe4eaa..b7ed5982da 100644
+--- a/src/calibre/utils/zipfile.py
++++ b/src/calibre/utils/zipfile.py
+@@ -3,15 +3,22 @@
+ Read and write ZIP files. Modified by Kovid Goyal to support replacing files in
+ a zip archive, detecting filename encoding, updating zip files, etc.
+ """
+-import struct, os, time, sys, shutil, stat, re, io
+ import binascii
++import io
++import os
++import re
++import shutil
++import stat
++import struct
++import sys
++import time
+ from contextlib import closing
+-from tempfile import SpooledTemporaryFile
+ 
+ from calibre import sanitize_file_name
+ from calibre.constants import filesystem_encoding
+ from calibre.ebooks.chardet import detect
+-from polyglot.builtins import unicode_type, string_or_bytes, getcwd, map, as_bytes
++from calibre.ptempfile import SpooledTemporaryFile
++from polyglot.builtins import getcwd, map, string_or_bytes, unicode_type, as_bytes
+ 
+ try:
+     import zlib  # We may need its compression method
+-- 
+2.26.0
+

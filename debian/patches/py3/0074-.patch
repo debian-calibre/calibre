@@ -1,0 +1,24 @@
+From aa20fe44b7f858ab6e2fca854ec2a8e42e5a073e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 6 Dec 2019 14:38:21 +0530
+Subject: [PATCH 074/106] ...
+
+---
+ setup/build.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/setup/build.py b/setup/build.py
+index 6d00bb9fb3..c4889cbe00 100644
+--- a/setup/build.py
++++ b/setup/build.py
+@@ -491,6 +491,7 @@ class Build(Command):
+         return {x:read(x) for x in ('target', 'sources', 'headers')}
+ 
+     def build_pyqt_extension(self, ext, dest, sbf):
++        self.info(f'\n####### Building {ext.name} extension', '#'*7)
+         from setup.build_environment import pyqt, qmakespec, QMAKE
+         from setup.parallel_build import cpu_count
+         from distutils import sysconfig
+-- 
+2.26.0
+

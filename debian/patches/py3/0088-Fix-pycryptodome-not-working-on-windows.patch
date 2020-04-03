@@ -1,0 +1,47 @@
+From 889446f6ac816643cfdcdc2eaa912ebe4a867a0d Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 18 Dec 2019 09:25:35 +0530
+Subject: [PATCH 088/106] Fix pycryptodome not working on windows
+
+---
+ bypy/windows/__main__.py  | 10 ++++++++++
+ src/calibre/test_build.py |  2 ++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 6a47426c2c..50ef45a22c 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
+@@ -202,6 +202,16 @@ def freeze(env, ext_dir):
+     shutil.copytree(j(comext, 'shell'), j(sp_dir, 'win32com', 'shell'))
+     shutil.rmtree(comext)
+ 
++    # Fix pycryptodome
++    with open(j(sp_dir, 'Crypto', 'Util', '_file_system.py'), 'w') as fspy:
++        fspy.write('''
++import os, sys
++def pycryptodome_filename(dir_comps, filename):
++    base = os.path.join(sys.app_dir, 'app', 'bin')
++    path = os.path.join(base, '.'.join(dir_comps + [filename]))
++    return path
++''')
++
+     pyqt = j(env.lib_dir, 'site-packages', 'PyQt5')
+     for x in {x for x in os.listdir(pyqt) if x.endswith('.pyd')}:
+         if x.partition('.')[0] not in PYQT_MODULES and x != 'sip.pyd':
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index b02deea746..febb944120 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -30,6 +30,8 @@ class BuildTest(unittest.TestCase):
+                     ctypes.WinDLL(native_string_type(os.path.join(base, x)))
+                 except Exception as err:
+                     self.assertTrue(False, 'Failed to load DLL %s with error: %s' % (x, err))
++        from Crypto.Cipher import AES
++        del AES
+ 
+     @unittest.skipUnless(islinux, 'DBUS only used on linux')
+     def test_dbus(self):
+-- 
+2.26.0
+

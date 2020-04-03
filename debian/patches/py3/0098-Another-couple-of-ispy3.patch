@@ -1,0 +1,55 @@
+From 66f4984ab8b882fb53d225e1de2138d84db6dfd9 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 19 Dec 2019 15:57:41 +0530
+Subject: [PATCH 098/106] Another couple of ispy3
+
+---
+ src/calibre/translations/dynamic.py | 4 +---
+ src/calibre/utils/localization.py   | 5 ++---
+ 2 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/src/calibre/translations/dynamic.py b/src/calibre/translations/dynamic.py
+index fb2001d72b..909c7325b9 100644
+--- a/src/calibre/translations/dynamic.py
++++ b/src/calibre/translations/dynamic.py
+@@ -8,7 +8,6 @@ __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
+ 
+ import io
+ from gettext import GNUTranslations
+-from calibre.constants import ispy3
+ from calibre.utils.localization import get_lc_messages_path
+ from zipfile import ZipFile
+ 
+@@ -35,5 +34,4 @@ def translate(lang, text):
+                     _CACHE[lang] = trans
+     if trans is None:
+         return getattr(__builtins__, '_', lambda x: x)(text)
+-    f = getattr(trans, 'gettext' if ispy3 else 'ugettext')
+-    return f(text)
++    return trans.gettext(text)
+diff --git a/src/calibre/utils/localization.py b/src/calibre/utils/localization.py
+index aa5c40ee0d..72a2498f81 100644
+--- a/src/calibre/utils/localization.py
++++ b/src/calibre/utils/localization.py
+@@ -6,7 +6,7 @@ __license__   = 'GPL v3'
+ __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+ __docformat__ = 'restructuredtext en'
+ 
+-import os, locale, re, io, sys
++import os, locale, re, io
+ from gettext import GNUTranslations, NullTranslations
+ 
+ from polyglot.builtins import iteritems, unicode_type
+@@ -390,8 +390,7 @@ def get_language(lang):
+         # The translator was not active when _extra_lang_codes was defined, so
+         # re-translate
+         return translate(_extra_lang_codes[lang])
+-    attr = 'gettext' if sys.version_info.major > 2 else 'ugettext'
+-    return get_iso_language(getattr(_lang_trans, attr, translate), lang)
++    return get_iso_language(getattr(_lang_trans, 'gettext', translate), lang)
+ 
+ 
+ def calibre_langcode_to_name(lc, localize=True):
+-- 
+2.26.0
+

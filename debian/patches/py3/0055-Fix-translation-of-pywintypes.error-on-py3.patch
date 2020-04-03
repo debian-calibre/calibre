@@ -1,0 +1,85 @@
+From d46d49fbec3e36e963148af287ff9b8a5d2010a9 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 14:01:41 +0530
+Subject: [PATCH 055/106] Fix translation of pywintypes.error on py3
+
+---
+ src/calibre/utils/lock.py        |  3 ++-
+ src/calibre/utils/shared_file.py | 14 ++++++++------
+ src/calibre/utils/test_lock.py   |  8 ++++++--
+ 3 files changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/src/calibre/utils/lock.py b/src/calibre/utils/lock.py
+index f17ce9bab7..ba697d727f 100644
+--- a/src/calibre/utils/lock.py
++++ b/src/calibre/utils/lock.py
+@@ -14,6 +14,7 @@ from calibre.constants import (
+     __appname__, fcntl, filesystem_encoding, islinux, isosx, iswindows, plugins
+ )
+ from calibre.utils.monotonic import monotonic
++from calibre.utils.shared_file import raise_winerror
+ 
+ speedup = plugins['speedup'][0]
+ if iswindows:
+@@ -61,7 +62,7 @@ def windows_open(path):
+             None,  # No template file
+         )
+     except pywintypes.error as err:
+-        raise WindowsError(err[0], err[2], path)
++        raise_winerror(err)
+     fd = msvcrt.open_osfhandle(h.Detach(), 0)
+     return os.fdopen(fd, 'r+b')
+ 
+diff --git a/src/calibre/utils/shared_file.py b/src/calibre/utils/shared_file.py
+index f354b34546..ec379c4eff 100644
+--- a/src/calibre/utils/shared_file.py
++++ b/src/calibre/utils/shared_file.py
+@@ -70,12 +70,14 @@ if iswindows:
+         os.O_CREAT | os.O_TRUNC             : CREATE_ALWAYS
+     }
+ 
+-    def raise_winerror(pywinerr):
++    def raise_winerror(pywinerr, path=None):
+         reraise(
+-            WindowsError,
+-            WindowsError(pywinerr.winerror,
+-                         (pywinerr.funcname or '') + ': ' + (pywinerr.strerror or '')),
+-            sys.exc_info()[2])
++            WindowsError, WindowsError(
++                pywinerr.winerror,
++                (pywinerr.funcname or '') + ': ' + (pywinerr.strerror or ''), path
++            ),
++            sys.exc_info()[2]
++        )
+ 
+     def os_open(path, flags, mode=0o777, share_flags=FILE_SHARE_VALID_FLAGS):
+         '''
+@@ -114,7 +116,7 @@ if iswindows:
+             h = win32file.CreateFileW(
+                 path, access_flags, share_flags, None, create_flags, attrib_flags, None)
+         except pywintypes.error as e:
+-            raise_winerror(e)
++            raise_winerror(e, path)
+         ans = msvcrt.open_osfhandle(h.Detach(), flags | os.O_NOINHERIT)
+         return ans
+ 
+diff --git a/src/calibre/utils/test_lock.py b/src/calibre/utils/test_lock.py
+index 03ae48c266..893e079efe 100644
+--- a/src/calibre/utils/test_lock.py
++++ b/src/calibre/utils/test_lock.py
+@@ -191,6 +191,10 @@ def find_tests():
+     return unittest.defaultTestLoader.loadTestsFromTestCase(IPCLockTest)
+ 
+ 
++def run_tests():
++    from calibre.utils.run_tests import run_tests
++    run_tests(find_tests)
++
++
+ if __name__ == '__main__':
+-    suite = find_tests()
+-    unittest.TextTestRunner(verbosity=4).run(suite)
++    run_tests()
+-- 
+2.26.0
+

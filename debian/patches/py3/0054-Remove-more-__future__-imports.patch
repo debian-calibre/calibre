@@ -1,0 +1,50 @@
+From bfd3d73fdfb79807ddaac92f209df67ed7d04fbb Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 12:02:35 +0530
+Subject: [PATCH 054/106] Remove more __future__ imports
+
+---
+ src/calibre/utils/hyphenation/dictionaries.py     | 1 -
+ src/calibre/utils/hyphenation/hyphenate.py        | 1 -
+ src/calibre/utils/hyphenation/test_hyphenation.py | 1 -
+ 3 files changed, 3 deletions(-)
+
+diff --git a/src/calibre/utils/hyphenation/dictionaries.py b/src/calibre/utils/hyphenation/dictionaries.py
+index 6d3f350543..3b5975be9f 100644
+--- a/src/calibre/utils/hyphenation/dictionaries.py
++++ b/src/calibre/utils/hyphenation/dictionaries.py
+@@ -2,7 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+ import errno
+ import json
+diff --git a/src/calibre/utils/hyphenation/hyphenate.py b/src/calibre/utils/hyphenation/hyphenate.py
+index e6d89b6ed1..e36a83fae0 100644
+--- a/src/calibre/utils/hyphenation/hyphenate.py
++++ b/src/calibre/utils/hyphenation/hyphenate.py
+@@ -2,7 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+ import os
+ 
+diff --git a/src/calibre/utils/hyphenation/test_hyphenation.py b/src/calibre/utils/hyphenation/test_hyphenation.py
+index 67ed1fbd69..dfaf1c265d 100644
+--- a/src/calibre/utils/hyphenation/test_hyphenation.py
++++ b/src/calibre/utils/hyphenation/test_hyphenation.py
+@@ -2,7 +2,6 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
+ 
+-from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+ import os
+ import shutil
+-- 
+2.26.0
+
