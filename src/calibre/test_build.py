@@ -229,7 +229,7 @@ class BuildTest(unittest.TestCase):
 
             p.runJavaScript('1 + 1', callback)
             p.printToPdf(print_callback)
-            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
+            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
             QApplication.instance().exec_()
             test_flaky = isosx and not is_ci
             if not test_flaky:

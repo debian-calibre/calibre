@@ -94,7 +94,7 @@ class TestServer(Thread):
         specialize(self)
 
     def setup_defaults(self, kwargs):
-        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 0.1)
+        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 10)
         kwargs['listen_on'] = kwargs.get('listen_on', 'localhost')
         kwargs['port'] = kwargs.get('port', 0)
         kwargs['userdb'] = kwargs.get('userdb', ':memory:')
