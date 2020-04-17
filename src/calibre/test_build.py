@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time
 from calibre.constants import plugins, iswindows, islinux, isosx, ispy3, plugins_loc
 from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
 
-is_ci = os.environ.get('CI', '').lower() == 'true'
+is_ci = os.environ.get('SCHROOT_USER', None) != None
 
 
 class BuildTest(unittest.TestCase):

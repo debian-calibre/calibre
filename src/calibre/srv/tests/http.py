@@ -17,7 +17,7 @@ from calibre.utils.monotonic import monotonic
 from polyglot.builtins import iteritems, range, unicode_type
 from polyglot import http_client
 
-is_ci = os.environ.get('CI', '').lower() == 'true'
+is_ci = os.environ.get('SCHROOT_USER', None) != None
 
 
 class TestHTTP(BaseTest):

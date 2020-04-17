@@ -19,7 +19,7 @@ from calibre.utils.certgen import create_server_cert
 from calibre.utils.monotonic import monotonic
 from polyglot.builtins import range, unicode_type, map
 from polyglot import http_client
-is_ci = os.environ.get('CI', '').lower() == 'true'
+is_ci = os.environ.get('SCHROOT_USER', None) != None
 
 
 class LoopTest(BaseTest):
