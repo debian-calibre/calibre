@@ -19,7 +19,7 @@ from calibre.utils.certgen import create_server_cert
 from calibre.utils.monotonic import monotonic
 from polyglot.builtins import range, unicode_type, map
 from polyglot import http_client
-is_ci = os.environ.get('SCHROOT_USER', None) != None
+is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
 class LoopTest(BaseTest):
@@ -86,7 +86,7 @@ class LoopTest(BaseTest):
             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
         # Test shutdown with hung worker
         block = Event()
-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=10, timeout=1) as server:
+        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.01) as server:
             pool = server.loop.pool
             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
             conn = server.connect()
@@ -119,8 +119,8 @@ class LoopTest(BaseTest):
         else:
             from calibre.utils.Zeroconf import Zeroconf
         b = BonJour(wait_for_stop=False)
-        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=500) as server:
-            self.assertTrue(b.started.wait(50), 'BonJour not started')
+        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
+            self.assertTrue(b.started.wait(5), 'BonJour not started')
             self.ae(b.advertised_port, server.address[1])
             service = b.services[0]
             self.ae(service.type, '_calibre._tcp.local.')

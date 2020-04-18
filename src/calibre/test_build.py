@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time
 from calibre.constants import plugins, iswindows, islinux, isosx, ispy3, plugins_loc
 from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
 
-is_ci = os.environ.get('SCHROOT_USER', None) != None
+is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
 class BuildTest(unittest.TestCase):
@@ -229,7 +229,7 @@ class BuildTest(unittest.TestCase):
 
             p.runJavaScript('1 + 1', callback)
             p.printToPdf(print_callback)
-            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
+            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
             QApplication.instance().exec_()
             test_flaky = isosx and not is_ci
             if not test_flaky:

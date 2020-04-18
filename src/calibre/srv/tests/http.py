@@ -17,7 +17,7 @@ from calibre.utils.monotonic import monotonic
 from polyglot.builtins import iteritems, range, unicode_type
 from polyglot import http_client
 
-is_ci = os.environ.get('SCHROOT_USER', None) != None
+is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
 class TestHTTP(BaseTest):
@@ -89,7 +89,7 @@ class TestHTTP(BaseTest):
         def handler(data):
             return data.lang_code + data._('Unknown')
 
-        with TestServer(handler, timeout=30) as server:
+        with TestServer(handler, timeout=0.3) as server:
             conn = server.connect()
 
             def test(al, q):
@@ -140,7 +140,7 @@ class TestHTTP(BaseTest):
             conn._HTTPConnection__state = http_client._CS_REQ_SENT
             return conn.getresponse()
 
-        base_timeout = 50 if is_ci else 10
+        base_timeout = 0.5 if is_ci else 0.1
 
         with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
             conn = server.connect()
@@ -273,7 +273,7 @@ class TestHTTP(BaseTest):
             conn = server.connect()
 
             # Test closing
-            server.loop.opts.timeout = 1000  # ensure socket is not closed because of timeout
+            server.loop.opts.timeout = 10  # ensure socket is not closed because of timeout
             conn.request('GET', '/close', headers={'Connection':'close'})
             r = conn.getresponse()
             self.ae(r.status, 200), self.ae(r.read(), b'close')
@@ -286,8 +286,8 @@ class TestHTTP(BaseTest):
             self.assertIsNone(conn.sock)
 
             # Test timeout
-            server.loop.opts.timeout = 10
-            conn = server.connect(timeout=100)
+            server.loop.opts.timeout = 0.1
+            conn = server.connect(timeout=1)
             conn.request('GET', '/something')
             r = conn.getresponse()
             self.ae(r.status, 200), self.ae(r.read(), b'something')
@@ -301,7 +301,7 @@ class TestHTTP(BaseTest):
         def handler(conn):
             return conn.generate_static_output('test', lambda : ''.join(conn.path))
         with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
-                TestServer(handler, timeout=100, compress_min_size=0) as server:
+                TestServer(handler, timeout=1, compress_min_size=0) as server:
             fdata = (string.ascii_letters * 100).encode('ascii')
             f.write(fdata), f.seek(0)
 
@@ -402,7 +402,7 @@ class TestHTTP(BaseTest):
                 lf.seek(0)
                 data =  lf.read()
                 server.change_handler(lambda conn: lf)
-                conn = server.connect(timeout=100)
+                conn = server.connect(timeout=1)
                 conn.request('GET', '/test')
                 r = conn.getresponse()
                 self.ae(r.status, http_client.OK)

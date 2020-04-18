@@ -1,0 +1,153 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 17 Apr 2020 20:10:46 +0900
+Subject: [PATCH] Extend timeout limit
+
+Some non-x86 architecture is much slower than x86.
+Treat Debian package builder as CI system.
+---
+ src/calibre/srv/tests/base.py |  2 +-
+ src/calibre/srv/tests/http.py | 16 ++++++++--------
+ src/calibre/srv/tests/loop.py |  8 ++++----
+ src/calibre/test_build.py     |  4 ++--
+ 4 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
+index ee2e87bc0..c01e889a3 100644
+--- a/src/calibre/srv/tests/base.py
++++ b/src/calibre/srv/tests/base.py
+@@ -94,7 +94,7 @@ class TestServer(Thread):
+         specialize(self)
+ 
+     def setup_defaults(self, kwargs):
+-        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 0.1)
++        kwargs['shutdown_timeout'] = kwargs.get('shutdown_timeout', 10)
+         kwargs['listen_on'] = kwargs.get('listen_on', 'localhost')
+         kwargs['port'] = kwargs.get('port', 0)
+         kwargs['userdb'] = kwargs.get('userdb', ':memory:')
+diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
+index 25870faa3..15d4bbe25 100644
+--- a/src/calibre/srv/tests/http.py
++++ b/src/calibre/srv/tests/http.py
+@@ -17,7 +17,7 @@ from calibre.utils.monotonic import monotonic
+ from polyglot.builtins import iteritems, range, unicode_type
+ from polyglot import http_client
+ 
+-is_ci = os.environ.get('CI', '').lower() == 'true'
++is_ci = os.environ.get('SCHROOT_USER', None) != None
+ 
+ 
+ class TestHTTP(BaseTest):
+@@ -89,7 +89,7 @@ class TestHTTP(BaseTest):
+         def handler(data):
+             return data.lang_code + data._('Unknown')
+ 
+-        with TestServer(handler, timeout=0.3) as server:
++        with TestServer(handler, timeout=30) as server:
+             conn = server.connect()
+ 
+             def test(al, q):
+@@ -140,7 +140,7 @@ class TestHTTP(BaseTest):
+             conn._HTTPConnection__state = http_client._CS_REQ_SENT
+             return conn.getresponse()
+ 
+-        base_timeout = 0.5 if is_ci else 0.1
++        base_timeout = 50 if is_ci else 10
+ 
+         with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
+             conn = server.connect()
+@@ -273,7 +273,7 @@ class TestHTTP(BaseTest):
+             conn = server.connect()
+ 
+             # Test closing
+-            server.loop.opts.timeout = 10  # ensure socket is not closed because of timeout
++            server.loop.opts.timeout = 1000  # ensure socket is not closed because of timeout
+             conn.request('GET', '/close', headers={'Connection':'close'})
+             r = conn.getresponse()
+             self.ae(r.status, 200), self.ae(r.read(), b'close')
+@@ -286,8 +286,8 @@ class TestHTTP(BaseTest):
+             self.assertIsNone(conn.sock)
+ 
+             # Test timeout
+-            server.loop.opts.timeout = 0.1
+-            conn = server.connect(timeout=1)
++            server.loop.opts.timeout = 10
++            conn = server.connect(timeout=100)
+             conn.request('GET', '/something')
+             r = conn.getresponse()
+             self.ae(r.status, 200), self.ae(r.read(), b'something')
+@@ -301,7 +301,7 @@ class TestHTTP(BaseTest):
+         def handler(conn):
+             return conn.generate_static_output('test', lambda : ''.join(conn.path))
+         with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
+-                TestServer(handler, timeout=1, compress_min_size=0) as server:
++                TestServer(handler, timeout=100, compress_min_size=0) as server:
+             fdata = (string.ascii_letters * 100).encode('ascii')
+             f.write(fdata), f.seek(0)
+ 
+@@ -402,7 +402,7 @@ class TestHTTP(BaseTest):
+                 lf.seek(0)
+                 data =  lf.read()
+                 server.change_handler(lambda conn: lf)
+-                conn = server.connect(timeout=1)
++                conn = server.connect(timeout=100)
+                 conn.request('GET', '/test')
+                 r = conn.getresponse()
+                 self.ae(r.status, http_client.OK)
+diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
+index c743f219f..b6ea9a3b4 100644
+--- a/src/calibre/srv/tests/loop.py
++++ b/src/calibre/srv/tests/loop.py
+@@ -19,7 +19,7 @@ from calibre.utils.certgen import create_server_cert
+ from calibre.utils.monotonic import monotonic
+ from polyglot.builtins import range, unicode_type, map
+ from polyglot import http_client
+-is_ci = os.environ.get('CI', '').lower() == 'true'
++is_ci = os.environ.get('SCHROOT_USER', None) != None
+ 
+ 
+ class LoopTest(BaseTest):
+@@ -86,7 +86,7 @@ class LoopTest(BaseTest):
+             self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
+         # Test shutdown with hung worker
+         block = Event()
+-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.01) as server:
++        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=10, timeout=1) as server:
+             pool = server.loop.pool
+             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
+             conn = server.connect()
+@@ -119,8 +119,8 @@ class LoopTest(BaseTest):
+         else:
+             from calibre.utils.Zeroconf import Zeroconf
+         b = BonJour(wait_for_stop=False)
+-        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
+-            self.assertTrue(b.started.wait(5), 'BonJour not started')
++        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=500) as server:
++            self.assertTrue(b.started.wait(50), 'BonJour not started')
+             self.ae(b.advertised_port, server.address[1])
+             service = b.services[0]
+             self.ae(service.type, '_calibre._tcp.local.')
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index c6b1600f2..d1e2a4a7d 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -15,7 +15,7 @@ import os, ctypes, sys, unittest, time
+ from calibre.constants import plugins, iswindows, islinux, isosx, ispy3, plugins_loc
+ from polyglot.builtins import iteritems, map, unicode_type, getenv, native_string_type
+ 
+-is_ci = os.environ.get('CI', '').lower() == 'true'
++is_ci = os.environ.get('SCHROOT_USER', None) != None
+ 
+ 
+ class BuildTest(unittest.TestCase):
+@@ -229,7 +229,7 @@ class BuildTest(unittest.TestCase):
+ 
+             p.runJavaScript('1 + 1', callback)
+             p.printToPdf(print_callback)
+-            QTimer.singleShot(5000, lambda: QApplication.instance().quit())
++            QTimer.singleShot(500000, lambda: QApplication.instance().quit())
+             QApplication.instance().exec_()
+             test_flaky = isosx and not is_ci
+             if not test_flaky:
+-- 
+2.26.1
+
