@@ -1,3 +1,15 @@
+calibre (4.99.4+dfsg+really4.13.0-2) unstable; urgency=medium
+
+  [ YOKOTA Hiroshi ]
+  * Extend timeout limit.
+    Some non-x86 architectures are much slower than x86, try to fix build
+    errors on these builders due to timeouts in the test system:
+    . Extent wait time
+    . Treat Debian package builder as CI system
+  * Enable all tests in package builder
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 20 Apr 2020 09:08:02 +0900
+
 calibre (4.99.4+dfsg+really4.13.0-1) unstable; urgency=medium
 
   [ YOKOTA Hiroshi ]
