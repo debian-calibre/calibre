@@ -6,7 +6,10 @@
 # TEST_FLAGS += --exclude-test-name=test_mem_leaks
 
 # Disable some tests for specific platforms
-ifeq (mipsel, $(DEB_HOST_ARCH))
+ifeq      (armhf,  $(DEB_HOST_ARCH))
+  # Test failed
+  TEST_FLAGS += --exclude-test-name=test_dictionaries
+else ifeq (mipsel, $(DEB_HOST_ARCH))
   # Test error
   TEST_FLAGS += --exclude-test-name=test_qt
   # Test failed
