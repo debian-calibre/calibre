@@ -1,7 +1,7 @@
-From 314638bc4ddeb40cb4f69a91ce85dca07313319f Mon Sep 17 00:00:00 2001
+From e6329c39586362e0f5ae6b291eacbd7f7b35c8c6 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 20:11:44 +0530
-Subject: [PATCH 062/106] Fix HTTP status comparison
+Subject: [PATCH 062/112] Fix HTTP status comparison
 
 ---
  src/calibre/srv/tests/loop.py | 2 +-
@@ -21,5 +21,5 @@ index 644365f4dc..37a94d3f0d 100644
                  raise Exception('Got unexpected response: code: %s %s headers: %r data: %r' % (
                      res.status, res.reason, res.getheaders(), res.read()))
 -- 
-2.26.0
+2.26.2
 

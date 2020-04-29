@@ -1,7 +1,7 @@
-From 534651335fb6fe2c7d3dc2bb7e118d0cc0ca1ab3 Mon Sep 17 00:00:00 2001
+From 735de5fea55a92271b6f82d1366209f8c499b2e6 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 20:28:49 +0530
-Subject: [PATCH 063/106] Dont fail the websocket test when sending garbage and
+Subject: [PATCH 063/112] Dont fail the websocket test when sending garbage and
  the connection is unexpectedly closed by the OS
 
 ---
@@ -36,5 +36,5 @@ index 1620fb7b5f..b0a95819bb 100644
 +    import unittest
 +    return unittest.defaultTestLoader.loadTestsFromTestCase(WebSocketTest)
 -- 
-2.26.0
+2.26.2
 

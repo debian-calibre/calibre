@@ -1,7 +1,7 @@
-From 817ae8a88849f37361f37e49c6e17ffff4408511 Mon Sep 17 00:00:00 2001
+From 1e48ff918bf99833d5be37aa3e22ff48b87cecb1 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 19 Dec 2019 08:51:16 +0530
-Subject: [PATCH 094/106] Fix device detection on windows broken on python3
+Subject: [PATCH 094/112] Fix device detection on windows broken on python3
 
 ---
  src/calibre/devices/winusb.py | 36 +++++++++++++++++------------------
@@ -173,5 +173,5 @@ index 740b51f924..6c8af7421e 100644
      return buf, list(filter(None, data.contents))
  
 -- 
-2.26.0
+2.26.2
 

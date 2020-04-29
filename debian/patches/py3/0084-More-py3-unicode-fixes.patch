@@ -1,19 +1,18 @@
-From 24a5f0ef3cd991ea935b31840da4a20412c2e71b Mon Sep 17 00:00:00 2001
+From 62dbc818aedc5b26dd0895bb018c95d375907fae Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 13 Dec 2019 16:39:56 +0530
-Subject: [PATCH 084/106] More py3 unicode fixes
+Subject: [PATCH 084/112] More py3 unicode fixes
 
 the csv module needs to write out to a stream with newline='' on
 python3. And use PolyglotStringIO instead of PolyglotBytesIO so we remain unicode as long as possible.
 ---
  src/calibre/db/cli/cmd_check_library.py         |  6 ++++--
- src/calibre/db/cli/cmd_list_categories.py       |  4 ++--
  src/calibre/devices/__init__.py                 |  6 +++---
  src/calibre/devices/cli.py                      |  6 +++---
  src/calibre/gui2/tweak_book/function_replace.py |  4 ++--
  src/calibre/gui2/tweak_book/reports.py          | 12 ++++++------
  src/calibre/gui2/wizard/send_email.py           |  6 +++---
- 7 files changed, 23 insertions(+), 21 deletions(-)
+ 6 files changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/src/calibre/db/cli/cmd_check_library.py b/src/calibre/db/cli/cmd_check_library.py
 index 895870b7e4..8d719b955d 100644
@@ -41,28 +40,6 @@ index 895870b7e4..8d719b955d 100644
      else:
          print(check[1], file=out)
          for i in list:
-diff --git a/src/calibre/db/cli/cmd_list_categories.py b/src/calibre/db/cli/cmd_list_categories.py
-index 7172ce9122..2432108a5c 100644
---- a/src/calibre/db/cli/cmd_list_categories.py
-+++ b/src/calibre/db/cli/cmd_list_categories.py
-@@ -6,7 +6,7 @@
- import csv
- import sys
- from textwrap import TextWrapper
--from io import BytesIO
-+from io import StringIO
- 
- from calibre import prints
- from polyglot.builtins import unicode_type, map
-@@ -123,7 +123,7 @@ def do_list(fields, data, opts):
- 
- 
- def do_csv(fields, data, opts):
--    buf = BytesIO()
-+    buf = StringIO(newline='')
-     csv_print = csv.writer(buf, opts.dialect)
-     csv_print.writerow(fields)
-     for d in data:
 diff --git a/src/calibre/devices/__init__.py b/src/calibre/devices/__init__.py
 index d423be27cd..a561e40efe 100644
 --- a/src/calibre/devices/__init__.py
@@ -233,5 +210,5 @@ index dd683ff001..1023a50914 100644
              sys.stdout, sys.stderr = oout, oerr
          return tb
 -- 
-2.26.0
+2.26.2
 

@@ -1,0 +1,35 @@
+From b10aa5bc3a91705851c657ccaf07573779524f8b Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 21 Apr 2020 22:52:01 +0530
+Subject: [PATCH 112/112] Remove ispy3 conditional
+
+---
+ src/calibre/utils/open_with/osx.py | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/src/calibre/utils/open_with/osx.py b/src/calibre/utils/open_with/osx.py
+index c297f3e37f..d4c2de968c 100644
+--- a/src/calibre/utils/open_with/osx.py
++++ b/src/calibre/utils/open_with/osx.py
+@@ -7,17 +7,12 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+ 
+ import os, re, mimetypes, subprocess
+ from collections import defaultdict
++from plistlib import loads
+ 
+ from calibre.ptempfile import TemporaryDirectory
+-from calibre.constants import ispy3
+ from calibre.utils.icu import numeric_sort_key
+ from polyglot.builtins import iteritems, string_or_bytes
+ 
+-if ispy3:
+-    from plistlib import loads
+-else:
+-    from biplist import readPlistFromString as loads
+-
+ application_locations = ('/Applications', '~/Applications', '~/Desktop')
+ 
+ # Public UTI MAP {{{
+-- 
+2.26.2
+

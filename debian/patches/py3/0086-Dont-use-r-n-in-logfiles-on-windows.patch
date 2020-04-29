@@ -1,7 +1,7 @@
-From 9fd4bf8fade3e7fd70133492cd80d7cc9add4f7e Mon Sep 17 00:00:00 2001
+From 916f0d481c51aa2e0277e2b36f7983e37da29bca Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 13 Dec 2019 20:45:15 +0530
-Subject: [PATCH 086/106] Dont use \r\n in logfiles on windows
+Subject: [PATCH 086/112] Dont use \r\n in logfiles on windows
 
 ---
  src/calibre/srv/utils.py | 2 +-
@@ -21,5 +21,5 @@ index 4bb811b8bf..bff60e698c 100644
              # see https://bugs.python.org/issue27805
              self.stream = open(os.open(self.filename, os.O_WRONLY|os.O_APPEND|os.O_CREAT|os.O_CLOEXEC), 'w')
 -- 
-2.26.0
+2.26.2
 

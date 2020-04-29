@@ -1,7 +1,7 @@
-From 424d9d9379a82c2dc25d5832f738084eeb0133fd Mon Sep 17 00:00:00 2001
+From f58ae9a06690459c80abf084ac28976a9f43cf81 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 14:03:58 +0530
-Subject: [PATCH 006/106] Remove py3 conditionals
+Subject: [PATCH 006/112] Remove py3 conditionals
 
 ---
  manual/conf.py                           |    3 +-
@@ -267,7 +267,7 @@ index 2474973b2a..ca9097cbd4 100644
          "name": "certgen",
          "sources": "calibre/utils/certgen.c",
 diff --git a/setup/translations.py b/setup/translations.py
-index 2b281103e3..4d672fff99 100644
+index 81623bc1bc..0c4b833cfb 100644
 --- a/setup/translations.py
 +++ b/setup/translations.py
 @@ -11,7 +11,7 @@ from collections import defaultdict
@@ -279,13 +279,13 @@ index 2b281103e3..4d672fff99 100644
  from setup.parallel_build import parallel_check_output
  from polyglot.builtins import codepoint_to_chr, iteritems, range
  is_ci = os.environ.get('CI', '').lower() == 'true'
-@@ -598,7 +598,7 @@ class Translations(POT):  # {{{
-                 if l == 'en':
-                     t = get_language
-                 else:
--                    t = getattr(get_iso639_translator(l), 'gettext' if ispy3 else 'ugettext')
-+                    t = get_iso639_translator(l).gettext
-                     t = partial(get_iso_language, t)
+@@ -597,7 +597,7 @@ class Translations(POT):  # {{{
+             lang_names = {}
+             for l in dl:
+                 translator = translator_for_lang(l)['translator']
+-                t = getattr(translator, 'gettext' if ispy3 else 'ugettext')
++                t = translator.gettext
+                 t = partial(get_language, gettext_func=t)
                  lang_names[l] = {x: t(x) for x in dl}
              zi = ZipInfo('lang-names.json')
 diff --git a/src/backports/__init__.py b/src/backports/__init__.py
@@ -546,7 +546,7 @@ index 65155fb3db..b8528b743e 100644
  
  relpath = os.path.relpath
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index ca258a4305..b8cdfa6de6 100644
+index 2139b360ce..5b7eb6197e 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,9 +150,7 @@ def cache_dir():
@@ -714,7 +714,7 @@ index 9a8d06798c..d93939c424 100644
  
  class ImageWrapper(object):
 diff --git a/src/calibre/devices/mtp/unix/driver.py b/src/calibre/devices/mtp/unix/driver.py
-index da4685a850..68bc3e55d0 100644
+index bb5b235e8a..7c8d8a365d 100644
 --- a/src/calibre/devices/mtp/unix/driver.py
 +++ b/src/calibre/devices/mtp/unix/driver.py
 @@ -1,7 +1,6 @@
@@ -1032,7 +1032,7 @@ index 1d9de79a3a..5382529bb3 100644
  object_map = [
      None,  # 00
 diff --git a/src/calibre/ebooks/metadata/book/base.py b/src/calibre/ebooks/metadata/book/base.py
-index 00a4f3d50e..837d91c0a7 100644
+index 5c51b755cd..ce1b30d96e 100644
 --- a/src/calibre/ebooks/metadata/book/base.py
 +++ b/src/calibre/ebooks/metadata/book/base.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
@@ -1395,7 +1395,7 @@ index 52a23c03fe..2f9ed3e1e6 100644
  
      obj = hunspell.Dictionary(fix_path(dictionary.dicpath), fix_path(dictionary.affpath))
 diff --git a/src/calibre/srv/http_response.py b/src/calibre/srv/http_response.py
-index e8bfb97a0a..2806f116cb 100644
+index 1fd74e3c73..737858cf0e 100644
 --- a/src/calibre/srv/http_response.py
 +++ b/src/calibre/srv/http_response.py
 @@ -12,10 +12,10 @@ from itertools import chain, repeat
@@ -1463,7 +1463,7 @@ index 9b681e8b47..7d48ba3316 100644
          while True:
              one = getpass(
 diff --git a/src/calibre/srv/opts.py b/src/calibre/srv/opts.py
-index 7d3e4b2092..670e5599ee 100644
+index e1a69d1a10..68f4a131aa 100644
 --- a/src/calibre/srv/opts.py
 +++ b/src/calibre/srv/opts.py
 @@ -12,11 +12,8 @@ from functools import partial
@@ -3704,7 +3704,7 @@ index 083530d325..543dca745b 100644
                  return address, Listener(address=address, authkey=authkey, backlog=backlog)
              except EnvironmentError as err:
 diff --git a/src/calibre/utils/localization.py b/src/calibre/utils/localization.py
-index 460ac5f439..aa5c40ee0d 100644
+index 83b3f9fd08..72882a6b10 100644
 --- a/src/calibre/utils/localization.py
 +++ b/src/calibre/utils/localization.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
@@ -3716,7 +3716,7 @@ index 460ac5f439..aa5c40ee0d 100644
  
  _available_translations = None
  
-@@ -257,10 +257,7 @@ def set_translators():
+@@ -268,10 +268,7 @@ def set_translators():
          set_translators.lang = t.info().get('language')
      except Exception:
          pass
@@ -3918,7 +3918,7 @@ index 1bb4f3fe72..5596878427 100644
 +from time import monotonic
 +monotonic
 diff --git a/src/calibre/utils/serialize.py b/src/calibre/utils/serialize.py
-index bd908e4544..f2163cb521 100644
+index 1f9e0b38be..3de30016fa 100644
 --- a/src/calibre/utils/serialize.py
 +++ b/src/calibre/utils/serialize.py
 @@ -2,10 +2,7 @@
@@ -4852,5 +4852,5 @@ index 08684dd17b..1a128d47b6 100644
  
  def unquote_plus(x, encoding='utf-8', errors='replace'):
 -- 
-2.26.0
+2.26.2
 

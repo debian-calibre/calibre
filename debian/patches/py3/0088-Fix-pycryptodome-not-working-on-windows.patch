@@ -1,7 +1,7 @@
-From 889446f6ac816643cfdcdc2eaa912ebe4a867a0d Mon Sep 17 00:00:00 2001
+From be4f5cf92dfc59d76857bfcd5b6e6f498904eaad Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 18 Dec 2019 09:25:35 +0530
-Subject: [PATCH 088/106] Fix pycryptodome not working on windows
+Subject: [PATCH 088/112] Fix pycryptodome not working on windows
 
 ---
  bypy/windows/__main__.py  | 10 ++++++++++
@@ -43,5 +43,5 @@ index b02deea746..febb944120 100644
      @unittest.skipUnless(islinux, 'DBUS only used on linux')
      def test_dbus(self):
 -- 
-2.26.0
+2.26.2
 

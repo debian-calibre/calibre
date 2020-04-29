@@ -1,7 +1,7 @@
-From ac0c0ef55001ec6b079ecfd93e65e64bf00159ab Mon Sep 17 00:00:00 2001
+From d89d3c19a5140d1fa6a2b56f56c569455c8803d6 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 10:00:17 +0530
-Subject: [PATCH 048/106] Make the built py3 sw available for CI
+Subject: [PATCH 048/112] Make the built py3 sw available for CI
 
 ---
  setup/installers.py | 2 +-
@@ -22,7 +22,7 @@ index c3ad5bfe18..064f243c89 100644
          if ret != 0:
              raise SystemExit(ret)
 diff --git a/setup/win-ci.py b/setup/win-ci.py
-index 9113f3c84a..00d314f233 100644
+index 343f132384..076bac12bc 100644
 --- a/setup/win-ci.py
 +++ b/setup/win-ci.py
 @@ -34,7 +34,7 @@ def download_file(url):
@@ -35,5 +35,5 @@ index 9113f3c84a..00d314f233 100644
      with tarfile.open(fileobj=io.BytesIO(tarball)) as tf:
          tf.extractall()
 -- 
-2.26.0
+2.26.2
 

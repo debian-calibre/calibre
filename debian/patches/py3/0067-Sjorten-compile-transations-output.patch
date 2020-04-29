@@ -1,17 +1,17 @@
-From 2bd693d55d0837338cf3a645b787a555e01f1929 Mon Sep 17 00:00:00 2001
+From 3d23b34eab161dd3fac9950ecf89cf8f5fc6022f Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 23:26:12 +0530
-Subject: [PATCH 067/106] Sjorten compile transations output
+Subject: [PATCH 067/112] Sjorten compile transations output
 
 ---
  setup/translations.py | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/setup/translations.py b/setup/translations.py
-index 4d672fff99..f028ccca00 100644
+index 0c4b833cfb..f4bf81d696 100644
 --- a/setup/translations.py
 +++ b/setup/translations.py
-@@ -342,7 +342,7 @@ class Translations(POT):  # {{{
+@@ -343,7 +343,7 @@ class Translations(POT):  # {{{
                          handle_stats(src, stats_cache(src))
              else:
                  if file_ok is None or file_ok(data, src):
@@ -20,7 +20,7 @@ index 4d672fff99..f028ccca00 100644
                      if islinux:
                          msgfmt = ['msgfmt']
                      else:
-@@ -353,6 +353,7 @@ class Translations(POT):  # {{{
+@@ -354,6 +354,7 @@ class Translations(POT):  # {{{
              if action_per_file is not None:
                  action_per_file(src)
  
@@ -28,7 +28,7 @@ index 4d672fff99..f028ccca00 100644
          for (src, dest), line in zip(ok_files, parallel_check_output(jobs, self.info)):
              self.write_cache(open(dest, 'rb').read(), hashmap[src], src)
              nums = tuple(map(int, re.findall(r'\d+', line)))
-@@ -494,7 +495,7 @@ class Translations(POT):  # {{{
+@@ -495,7 +496,7 @@ class Translations(POT):  # {{{
                  if current_hash == saved_hash:
                      raw = saved_data
                  else:
@@ -38,5 +38,5 @@ index 4d672fff99..f028ccca00 100644
                      po_data = data.decode('utf-8')
                      data = json.loads(msgfmt(po_data))
 -- 
-2.26.0
+2.26.2
 

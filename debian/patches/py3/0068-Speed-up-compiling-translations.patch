@@ -1,7 +1,7 @@
-From 74c9b465262986078b106febc905d7b7d7eeb304 Mon Sep 17 00:00:00 2001
+From b34c22c834155c4e2c7f1d54dbf19b837818c8a5 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 6 Dec 2019 09:38:15 +0530
-Subject: [PATCH 068/106] Speed up compiling translations
+Subject: [PATCH 068/112] Speed up compiling translations
 
 Avoids calling a separate msgfmt binary for ever .po file since there
 are almost 4000 of them. Instead use msgfmt.py
@@ -111,7 +111,7 @@ index 448a5bd695..69140492a9 100644
 +        raise SystemExit('Worker process failed')
 +    return ans
 diff --git a/setup/translations.py b/setup/translations.py
-index f028ccca00..556900f765 100644
+index f4bf81d696..a890a295c4 100644
 --- a/setup/translations.py
 +++ b/setup/translations.py
 @@ -12,7 +12,7 @@ from locale import normalize as normalize_locale
@@ -123,7 +123,7 @@ index f028ccca00..556900f765 100644
  from polyglot.builtins import codepoint_to_chr, iteritems, range
  is_ci = os.environ.get('CI', '').lower() == 'true'
  
-@@ -314,8 +314,7 @@ class Translations(POT):  # {{{
+@@ -315,8 +315,7 @@ class Translations(POT):  # {{{
          self.compile_changelog_translations()
  
      def compile_group(self, files, handle_stats=None, file_ok=None, action_per_file=None):
@@ -133,7 +133,7 @@ index f028ccca00..556900f765 100644
          hashmap = {}
  
          def stats_cache(src, data=None):
-@@ -343,20 +342,21 @@ class Translations(POT):  # {{{
+@@ -344,20 +343,21 @@ class Translations(POT):  # {{{
              else:
                  if file_ok is None or file_ok(data, src):
                      # self.info('\t' + os.path.relpath(src, self.j(self.d(self.SRC), 'translations')))
@@ -224,5 +224,5 @@ index 5054d7c737..44f92df4a9 100644
              print(STATS['translated'], 'translated messages,', STATS['untranslated'], 'untranslated messages.')
  
 -- 
-2.26.0
+2.26.2
 

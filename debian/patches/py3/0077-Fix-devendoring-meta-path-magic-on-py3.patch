@@ -1,7 +1,7 @@
-From e5dd7506ec86b02743293d47316e31e8eb628d34 Mon Sep 17 00:00:00 2001
+From da0519413ece6eb65113afd75ecaf48138b100c3 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 12 Dec 2019 20:33:00 +0530
-Subject: [PATCH 077/106] Fix devendoring meta path magic on py3
+Subject: [PATCH 077/112] Fix devendoring meta path magic on py3
 
 ---
  setup/test.py          |  5 +++++
@@ -9,7 +9,7 @@ Subject: [PATCH 077/106] Fix devendoring meta path magic on py3
  2 files changed, 30 insertions(+), 9 deletions(-)
 
 diff --git a/setup/test.py b/setup/test.py
-index c9273697a8..427d65cf0b 100644
+index 7f75840df1..8ad1b997a0 100644
 --- a/setup/test.py
 +++ b/setup/test.py
 @@ -55,6 +55,11 @@ class TestImports(unittest.TestCase):
@@ -74,5 +74,5 @@ index 924d6ebf26..ede9fbae4d 100644
      sys.meta_path.insert(0, DeVendor())
  
 -- 
-2.26.0
+2.26.2
 

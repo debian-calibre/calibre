@@ -1,7 +1,7 @@
-From d39511a5179c582ec31d3c4f0ab8ebe721fb24db Mon Sep 17 00:00:00 2001
+From 10f93ab01f59a9ebb1c8d928d5fd26af0d221cfa Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 20:26:29 +0530
-Subject: [PATCH 010/106] Drop the custom lzma module
+Subject: [PATCH 010/112] Drop the custom lzma module
 
 Use the builtin one from the python stdlib
 ---
@@ -115,7 +115,7 @@ index a8e532d7f2..3b1ca5721c 100644
      def test_html5lib(self):
          import html5lib.html5parser  # noqa
 diff --git a/src/calibre/utils/rapydscript.py b/src/calibre/utils/rapydscript.py
-index 08dfe6ba7f..d50e199cb6 100644
+index 3f6a39b6ad..69bc54368d 100644
 --- a/src/calibre/utils/rapydscript.py
 +++ b/src/calibre/utils/rapydscript.py
 @@ -9,7 +9,6 @@ import os
@@ -126,7 +126,7 @@ index 08dfe6ba7f..d50e199cb6 100644
  
  from calibre import force_unicode
  from calibre.constants import (
-@@ -32,7 +31,7 @@ def abspath(x):
+@@ -30,7 +29,7 @@ def abspath(x):
  
  
  def update_rapydscript():
@@ -135,7 +135,7 @@ index 08dfe6ba7f..d50e199cb6 100644
      d = os.path.dirname
      base = d(d(d(d(d(abspath(__file__))))))
      base = os.path.join(base, 'rapydscript')
-@@ -41,8 +40,8 @@ def update_rapydscript():
+@@ -39,8 +38,8 @@ def update_rapydscript():
          with open(os.path.join(tdir, 'rapydscript.js'), 'rb') as f:
              raw = f.read()
      path = P(COMPILER_PATH, allow_user_override=False)
@@ -146,7 +146,7 @@ index 08dfe6ba7f..d50e199cb6 100644
  # }}}
  
  # Compiler {{{
-@@ -53,7 +52,7 @@ def to_dict(obj):
+@@ -51,7 +50,7 @@ def to_dict(obj):
  
  
  def compiler():
@@ -155,7 +155,7 @@ index 08dfe6ba7f..d50e199cb6 100644
      ans = getattr(compiler, 'ans', None)
      if ans is not None:
          return ans
-@@ -64,8 +63,8 @@ def compiler():
+@@ -62,8 +61,8 @@ def compiler():
      from PyQt5.Qt import QApplication, QEventLoop
      must_use_qt()
  
@@ -166,7 +166,7 @@ index 08dfe6ba7f..d50e199cb6 100644
  
      base = base_dir()
      rapydscript_dir = os.path.join(base, 'src', 'pyj')
-@@ -129,7 +128,7 @@ document.title = 'compiler initialized';
+@@ -127,7 +126,7 @@ document.title = 'compiler initialized';
              QWebEnginePage.__init__(self)
              self.errors = []
              secure_webengine(self)
@@ -7652,5 +7652,5 @@ index ab07098400..0000000000
 -    import sys
 -    decompress(open(sys.argv[-1], 'rb'))
 -- 
-2.26.0
+2.26.2
 

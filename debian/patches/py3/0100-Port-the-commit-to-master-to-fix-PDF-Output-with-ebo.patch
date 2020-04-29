@@ -1,7 +1,7 @@
-From 207602f70b97e81b6c2e3741669bc82e25c279f2 Mon Sep 17 00:00:00 2001
+From 9ddb4e721ef66e0b23d59228c30a276ee4334eff Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 24 Dec 2019 20:01:29 +0530
-Subject: [PATCH 100/106] Port the commit to master to fix PDF Output with
+Subject: [PATCH 100/112] Port the commit to master to fix PDF Output with
  ebook-convert via symlink on macOS
 
 ---
@@ -91,5 +91,5 @@ index be506030f6..c414e2ff70 100644
 -void run(const wchar_t *program, const wchar_t *module, const wchar_t *function, bool is_gui, int argc, char * const *argv);
 +void run(const wchar_t *program, const wchar_t *module, const wchar_t *function, bool is_gui, int argc, char * const *argv, char* exe_path);
 -- 
-2.26.0
+2.26.2
 
