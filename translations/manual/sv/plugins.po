@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2018-2020
-# Jonatan Nyberg, 2018
-# Jonatan Nyberg, 2017
+# Jonatan, 2016-2017
+# Jonatan, 2018-2020
+# Jonatan, 2018
+# Jonatan, 2017
 # Merarom <merarom@yahoo.es>, 2014-2017,2019
 # Sofie Sundberg <filaes@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-11 17:43+0530\n"
-"PO-Revision-Date: 2020-03-24 05:20+0000\n"
-"Last-Translator: Jonatan Nyberg\n"
+"POT-Creation-Date: 2020-03-27 14:01+0530\n"
+"PO-Revision-Date: 2020-04-11 20:07+0000\n"
+"Last-Translator: Jonatan\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -493,7 +493,7 @@ msgid ""
 "when the book record is created for the first time. This method is called "
 "whenever a new file is added to a book record. It is useful for modifying "
 "the book record based on the contents of the newly added file."
-msgstr "Anropad efterimportering (post import), d.v.s. efter att boken fil har lagts till i databasen. Observera att detta skiljer sig från: meth: `postadd` som kallas när boken posten skapas för första gången. Denna metod kallas varje gång en ny fil läggs till i en bokpost. Det är användbart för att modifiera bokenposten baserat på innehållet i den nyligen tillagda filen."
+msgstr "Anropas efter importering, d.v.s. efter bokfilen har lagts till i databasen. Observera att detta skiljer sig från :meth:`postadd` som anropas när bokposten skapas för första gången. Denna metod anropas varje gång en ny fil läggs till i en bokpost. Det är användbart för att ändra bokposten baserat på innehållet i den nyligen tillagda filen."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:6
@@ -505,7 +505,7 @@ msgstr "Databas id för tillagda boken."
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:7
 msgid "The file type of the book that was added."
-msgstr "Den filtyp av boken som lades till."
+msgstr "Filtypen för boken som lades till."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:8
@@ -521,7 +521,7 @@ msgid ""
 "record with possibly more than one book file has been created for the first "
 "time. This is useful if you wish to modify the book record in the database "
 "when the book is first added to calibre."
-msgstr "Anropad posttillägg (post add), d.v.s. efter att en bok har lagts till i databasen. Observera att detta skiljer sig från: meth:`postimport` som kallas efter en enskild bokfil har lagts till en bok. postadd() anropas när en hel bokpost med mer än en möjlig bokfil har skapats för första gången. Det är användbart för att modifiera bokposten i databasen när boken läggs till för första gången till calibre."
+msgstr "Anropad efter posttilläggning, d.v.s. efter en bok har lagts till i databasen. Observera att detta skiljer sig från :meth:`postimport` som anropas efter en enskild bokfil har lagts till en bok. postadd() anropas när en hel bokpost med mer än en möjlig bokfil har skapats för första gången. Det är användbart för att ändra bokposten i databasen när boken läggs till för första gången till calibre."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:9
@@ -539,7 +539,7 @@ msgstr "Biblioteksdatabas"
 
 #: ../../home/kovid/work/calibre/manual/plugins.rst:39
 msgid "Metadata plugins"
-msgstr "Metadata insticksmodul"
+msgstr "Metadatainsticksmodul"
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin:1
@@ -863,7 +863,7 @@ msgid ""
 "source does not store all related identifiers (for example, all ISBNs of a "
 "book), this method should retry with just the title and author (assuming "
 "they were specified)."
-msgstr "Om en eller flera identifierare anges och ingen träff hittas och denna metadatakälla inte lagrar alla relaterade identifierare (till exempel alla ISBN av en bok), bör denna metod försökas igen med bara titel och författare (förutsatt att de specificerades)."
+msgstr "Om en eller flera identifierare anges och ingen träff hittas och den här metadatakällan inte lagrar alla relaterade identifierare (till exempel alla ISBN av en bok), bör den här metoden försökas igen med bara titel och författare (förutsatt att de specificerades)."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:8
@@ -872,7 +872,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Om denna metadatakälla också ger omslag, ska den webbadress till omslaget cachas så att ett efterföljande anrop till get omslags-API med samma ISBN/special identifierare inte behöver få omslagsadresser igen. Använd cachnings-API för detta."
+msgstr "Om den här metadatakällan också innehåller omslag, bör webbadressen till omslaget cachelagras så att ett efterföljande anrop till skaffa omslags-API:n med samma ISBN/specialidentifiering inte behöver hämta omslagsadresser igen. Använd cache-API:n för detta."
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -1118,7 +1118,7 @@ msgid ""
 "contained in the current directory. If this plugin creates files outside the"
 " current directory they must be deleted/marked for deletion before this "
 "method returns."
-msgstr "Denna metod måste implementeras i underklasser. Den måste återge sökvägen till den skapade OPF-filen eller en :class:`OEBBook` instans. All utdata ska ingå i den aktuella katalogen. Om detta insticksmodul skapar filer utanför den aktuella katalogen som de måste raderas/markeras för borttagning innan denna metod avslutas."
+msgstr "Denna metod måste implementeras i underklasser. Den måste återge sökvägen till den skapade OPF-filen eller en :class:`OEBBook` instans. All utdata ska ingå i den aktuella katalogen. Om den här insticksmodulen skapar filer utanför den aktuella katalogen som de måste raderas/markeras för borttagning innan denna metod avslutas."
 
 #: ../../home/kovid/work/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:8
@@ -1795,7 +1795,7 @@ msgstr "sökvägar till böcker på enheten."
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.sync_booklists:1
 msgid "Update metadata on device."
-msgstr "Uppdatera metadata på enhet."
+msgstr "Uppdatera metadata på enheten."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:1
@@ -2035,7 +2035,7 @@ msgid ""
 "metadata for the book on the device is updated with calibre's metadata and "
 "given back to the device, but no GUI refresh of that book is done. This is "
 "useful when the calibre data is correct but must be sent to the device."
-msgstr "Metoden ska återge en två-värd tupel. Det första värdet är en uppsättning av calbres bok-id som ändras om calbres databas ändrades eller None om databasen inte ändrades. Om det första värdet är en tom mängd så uppdateras metadata för boken på med calbres metadata och ges tillbaka till enheten, men ingen GUI-uppdatering av den boken sker. Detta är användbart när calbres data är korrekt, men måste skickas till enheten."
+msgstr "Metoden ska återge en två-värd tupel. Det första värdet är en uppsättning av calbres bok-id som ändras om calbres databas ändrades eller None om databasen inte ändrades. Om det första värdet är en tom mängd så uppdateras metadata för boken på med calbres metadata och ges tillbaka till enheten, men ingen GUI-uppdatering av boken sker. Detta är användbart när calbres data är korrekt, men måste skickas till enheten."
 
 #: ../../home/kovid/work/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:13

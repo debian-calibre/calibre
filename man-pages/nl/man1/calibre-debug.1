@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "maart 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "april 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,20 +41,22 @@ calibre\-debug [opties]
 .UNINDENT
 .UNINDENT
 .sp
-Verscheidene commandoregel interfaces nuttig voor foutoplossen Calibre. Zonder opties start dit commando een geintegreerde python interpreter. Men kan ook de main
-Calibre GUI gebruiken, het Calibre leesvenster en de Calibre editor in de debug modus.
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
 .sp
-Het bevat ook interfaces voor verschillende onderdelen van  Calibre die geen specifieke
-commandoregel tools hebben, zoals font subsetting, de E\-boek diff tool enzovoort.
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+on.
 .sp
-Men kan ook \fBcalibre\-debug\fP gebruiken om op zichzelf staande scripts te draaien. Om dat te doen moet dit zo gebruikt worden:
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Alles ná  \fB\-\-\fP wordt doorgegeven aan het script.
+Everything after the \fB\-\-\fP is passed to the script.
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH [OPTIES]

@@ -17,9 +17,7 @@ from calibre.constants import (
 )
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.filenames import atomic_rename
-from polyglot.builtins import (
-    as_bytes, as_unicode, exec_path, itervalues, unicode_type, zip
-)
+from polyglot.builtins import as_bytes, as_unicode, exec_path, unicode_type, zip
 
 COMPILER_PATH = 'rapydscript/compiler.js.xz'
 special_title = '__webengine_messages_pending__'
@@ -227,7 +225,15 @@ def forked_compile():
     stdout.close()
 
 
-def compile_pyj(data, filename='<stdin>', beautify=True, private_scope=True, libdir=None, omit_baselib=False, js_version=5):
+def compile_pyj(
+    data,
+    filename='<stdin>',
+    beautify=True,
+    private_scope=True,
+    libdir=None,
+    omit_baselib=False,
+    js_version=5,
+):
     if isinstance(data, bytes):
         data = data.decode('utf-8')
     options = {
@@ -273,7 +279,15 @@ def detect_external_compiler():
     return False
 
 
-def compile_fast(data, filename=None, beautify=True, private_scope=True, libdir=None, omit_baselib=False, js_version=None):
+def compile_fast(
+    data,
+    filename=None,
+    beautify=True,
+    private_scope=True,
+    libdir=None,
+    omit_baselib=False,
+    js_version=None,
+):
     global has_external_compiler
     if has_external_compiler is None:
         has_external_compiler = detect_external_compiler()
@@ -302,20 +316,6 @@ def compile_fast(data, filename=None, beautify=True, private_scope=True, libdir=
     return js.decode('utf-8')
 
 
-def create_manifest(html):
-    import hashlib
-    from calibre.library.field_metadata import category_icon_map
-    h = hashlib.sha256(html)
-    for ci in itervalues(category_icon_map):
-        h.update(I(ci, data=True))
-    icons = {'icon/' + x for x in itervalues(category_icon_map)}
-    icons.add('favicon.png')
-    h.update(I('lt.png', data=True))
-    manifest = '\n'.join(sorted(icons))
-    return 'CACHE MANIFEST\n# {}\n{}\n\nNETWORK:\n*'.format(
-        h.hexdigest(), manifest).encode('utf-8')
-
-
 def base_dir():
     d = os.path.dirname
     return d(d(d(d(os.path.abspath(__file__)))))
@@ -327,6 +327,59 @@ def atomic_write(base, name, content):
     with lopen(tname, 'wb') as f:
         f.write(as_bytes(content))
     atomic_rename(tname, name)
+
+
+def run_rapydscript_tests():
+    from PyQt5.QtWebEngineWidgets import QWebEnginePage, QWebEngineScript
+    from PyQt5.Qt import QApplication, QEventLoop
+    from calibre.gui2.webengine import secure_webengine
+    from calibre.gui2 import must_use_qt
+    must_use_qt()
+    base = base_dir()
+    rapydscript_dir = os.path.join(base, 'src', 'pyj')
+    fname = os.path.join(rapydscript_dir, 'test.pyj')
+    with lopen(fname, 'rb') as f:
+        js = compile_fast(f.read(), fname)
+
+    def create_script(src, name):
+        s = QWebEngineScript()
+        s.setName(name)
+        s.setInjectionPoint(QWebEngineScript.DocumentReady)
+        s.setWorldId(QWebEngineScript.ApplicationWorld)
+        s.setRunsOnSubFrames(False)
+        s.setSourceCode(src)
+        return s
+
+    class Tester(QWebEnginePage):
+
+        def __init__(self):
+            QWebEnginePage.__init__(self)
+            self.titleChanged.connect(self.title_changed)
+            secure_webengine(self)
+            self.scripts().insert(create_script(js, 'test-rapydscript.js'))
+            self.setHtml('<p>initialize')
+            self.working = True
+
+        def title_changed(self, title):
+            if title == 'initialized':
+                self.titleChanged.disconnect()
+                self.runJavaScript('window.main()', QWebEngineScript.ApplicationWorld, self.callback)
+
+        def spin_loop(self):
+            while self.working:
+                QApplication.instance().processEvents(QEventLoop.ExcludeUserInputEvents)
+            return self.result
+
+        def callback(self, result):
+            self.result = result
+            self.working = False
+
+        def javaScriptConsoleMessage(self, level, msg, line_num, source_id):
+            print(msg, file=sys.stderr if level > 0 else sys.stdout)
+
+    tester = Tester()
+    result = tester.spin_loop()
+    raise SystemExit(int(result))
 
 
 def compile_editor():
@@ -387,9 +440,7 @@ def compile_srv():
     with lopen(os.path.join(base, 'index.html'), 'rb') as f:
         html = f.read().replace(b'RESET_STYLES', reset, 1).replace(b'ICONS', icons, 1).replace(b'MAIN_JS', js, 1)
 
-    manifest = create_manifest(html)
     atomic_write(base, 'index-generated.html', html)
-    atomic_write(base, 'calibre.appcache', manifest)
 
 # }}}
 

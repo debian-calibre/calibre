@@ -59,7 +59,7 @@ def all_actions():
             'reference': Action('reference.png', _('Toggle Reference mode'), 'toggle_reference_mode'),
             'autoscroll': Action('auto-scroll.png', _('Toggle auto-scrolling'), 'toggle_autoscroll'),
             'lookup': Action('generic-library.png', _('Lookup words'), 'toggle_lookup'),
-            'chrome': Action('tweaks.png', _('Show viewer controls'), 'show_chrome'),
+            'chrome': Action('tweaks.png', _('Show viewer controls'), 'show_chrome_force'),
             'mode': Action('scroll.png', _('Toggle paged mode'), 'toggle_paged_mode'),
             'print': Action('print.png', _('Print book'), 'print'),
             'preferences': Action('config.png', _('Preferences'), 'preferences'),
@@ -250,7 +250,7 @@ class ActionsToolBar(ToolBar):
                     path = os.path.abspath(entry['pathtoebook'])
                 except Exception:
                     continue
-                if path == os.path.abspath(set_book_path.pathtoebook):
+                if hasattr(set_book_path, 'pathtoebook') and path == os.path.abspath(set_book_path.pathtoebook):
                     continue
                 m.addAction('{}\t {}'.format(
                     elided_text(entry['title'], pos='right', width=250),

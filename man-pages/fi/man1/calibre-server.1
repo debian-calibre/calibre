@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maaliskuuta 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "huhtikuuta 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -151,7 +151,7 @@ Ignored user\-defined metadata fields.       Comma separated list of user\-defin
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+The interface on which to listen for connections.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,6 +237,11 @@ Path to the SSL private key file.
 .TP
 .B \-\-timeout
 Time (in seconds) after which an idle connection is closed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-trusted\-ips
+Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
 .UNINDENT
 .INDENT 0.0
 .TP

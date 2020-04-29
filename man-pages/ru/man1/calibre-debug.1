@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "марта 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "апреля 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,20 +41,22 @@ calibre\-debug [опции]
 .UNINDENT
 .UNINDENT
 .sp
-Различные интерфейсы командной строки полезны для отладки calibre.
-Без опций эта команда запустит встроенный интерпретатор Python. Также можно запустить
-основной графический интерфейс calibre, его просмотрщик или редактор в режиме отладки.
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
+.sp
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+on.
+.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
 .INDENT 0.0
 .INDENT 3.5
-Он также содержит интерфейсы для различных возможностей calibre, которые не имеют
-выделенных инструментов командной строки, например выделение подмножества шрифтов,
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-инструмент для выделения разницы в электронных книгах и т.п.
-Также можно использовать% prog для запуска автономных скриптов. Пример запуска:    \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.sp
-Всё после  \fB\-\-\fP пропускается скриптом.
+Everything after the \fB\-\-\fP is passed to the script.
 .sp
 Когда вы передаёте аргументы с пробелами в \fBcalibre\-debug\fP, заключайте их в кавычки. Например: "/some path/with spaces"
 .SH [ОПЦИИ]

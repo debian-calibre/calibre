@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "марта 27, 2020" "4.13.0" "calibre"
+.TH "CALIBREDB" "1" "апреля 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -804,7 +804,7 @@ calibredb list_categories [настройки]
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Список имен поиска категорий, разделенных запятыми. По умолчанию: all
+Разделённый запятыми список имён поиска категорий. По умолчанию: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -863,9 +863,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Создаёт клон текущей библиотеки. Создаётся новая пустая библиотека, имеющая такие же пользовательские столбцы, виртуальные библиотеки и другие настройки как в текущей библиотеке.
+Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
+same custom columns, Virtual libraries and other settings as the current library.
 .sp
-Клонированая библиотека не содержит книг. Если вы желаете создать полную копию, включая книги, то просто используйте функции вашей файловой системы и скопируйте папку библиотеки.
+The cloned library will contain no books. If you want to create a full duplicate, including
+all books, then simply use your filesystem tools to copy the library folder.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Например: "/some path/with spaces"
 .SH EMBED_METADATA

@@ -219,8 +219,6 @@ def create_profile():
         # DO NOT change the user agent as it is used to workaround
         # Qt bugs see workaround_qt_bug() in ajax.pyj
         ua = 'calibre-viewer {} {}'.format(__version__, osname)
-        if hasenv('CALIBRE_ENABLE_DEVELOP_MODE'):
-            ua += ' CALIBRE_ENABLE_DEVELOP_MODE'
         ans.setHttpUserAgent(ua)
         if is_running_from_develop:
             from calibre.utils.rapydscript import compile_viewer
@@ -229,6 +227,8 @@ def create_profile():
         js = P('viewer.js', data=True, allow_user_override=False)
         translations_json = get_translations_data() or b'null'
         js = js.replace(b'__TRANSLATIONS_DATA__', translations_json, 1)
+        if hasenv('CALIBRE_ENABLE_DEVELOP_MODE'):
+            js = js.replace(b'__IN_DEVELOP_MODE__', os.environ['CALIBRE_ENABLE_DEVELOP_MODE'].encode('ascii'))
         insert_scripts(ans, create_script('viewer.js', js))
         url_handler = UrlSchemeHandler(ans)
         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
@@ -276,6 +276,7 @@ class ViewerBridge(Bridge):
     customize_toolbar = from_js()
     scrollbar_context_menu = from_js(object, object, object)
     close_prep_finished = from_js(object)
+    highlights_changed = from_js(object)
 
     create_view = to_js()
     start_book_load = to_js()
@@ -457,6 +458,7 @@ class WebView(RestartingWebEngineView):
     customize_toolbar = pyqtSignal()
     scrollbar_context_menu = pyqtSignal(object, object, object)
     close_prep_finished = pyqtSignal(object)
+    highlights_changed = pyqtSignal(object)
     shortcuts_changed = pyqtSignal(object)
     paged_mode_changed = pyqtSignal()
     standalone_misc_settings_changed = pyqtSignal(object)
@@ -508,6 +510,7 @@ class WebView(RestartingWebEngineView):
         self.bridge.customize_toolbar.connect(self.customize_toolbar)
         self.bridge.scrollbar_context_menu.connect(self.scrollbar_context_menu)
         self.bridge.close_prep_finished.connect(self.close_prep_finished)
+        self.bridge.highlights_changed.connect(self.highlights_changed)
         self.bridge.export_shortcut_map.connect(self.set_shortcut_map)
         self.shortcut_map = {}
         self.bridge.report_cfi.connect(self.call_callback)
@@ -597,9 +600,9 @@ class WebView(RestartingWebEngineView):
     def on_content_file_changed(self, data):
         self.current_content_file = data
 
-    def start_book_load(self, initial_position=None):
+    def start_book_load(self, initial_position=None, highlights=None):
         key = (set_book_path.path,)
-        self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook)
+        self.execute_when_ready('start_book_load', key, initial_position, set_book_path.pathtoebook, highlights or [])
 
     def execute_when_ready(self, action, *args):
         if self.bridge.ready:
@@ -687,3 +690,7 @@ class WebView(RestartingWebEngineView):
 
     def prepare_for_close(self):
         self.execute_when_ready('prepare_for_close')
+
+    def contextMenuEvent(self, ev):
+        ev.accept()
+        self.trigger_shortcut('show_chrome')

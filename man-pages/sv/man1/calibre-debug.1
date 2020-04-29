@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "mars 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "april 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,18 +41,22 @@ calibre\-debug [alternativ]
 .UNINDENT
 .UNINDENT
 .sp
-Olika kommandoradsgränssnitt användbara för felsökning av calibre. Utan alternativ
-startar detta kommando en inbäddad Python\-tolk. Du kan också köra calibres huvudanvändargränssnitt, calibre\-visaren och calibre\-redigeringen i felsökningsläge.
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
 .sp
-Den innehåller också gränssnitt till olika delar av calibre som inte har
-dedikerade kommandoradsverktyg, såsom delmängder av typsnitt, diff\-verktyg för e\-böcker och så
-vidare.
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+on.
 .sp
-Du kan också använda \fBcalibre\-debug\fP att köra fristående skript. Använd det så här:
-.sp
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.UNINDENT
+.UNINDENT
 .sp
-Allt efter \fB\-\-\fP förs till skriptet.
+Everything after the \fB\-\-\fP is passed to the script.
 .sp
 När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: "/some path/with spaces"
 .SH [ALTERNATIV]
@@ -64,7 +68,7 @@ Lägg till en enkel insticksmodul (det vill säga en insticksmodul som består a
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Kör Python\-kod
+Kör Python\-kod.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -84,7 +88,7 @@ Kör calibres diffverktyg. Exempelvis: calibre\-debug \fI\%\-\-diff\fP fil1 fil2
 .INDENT 0.0
 .TP
 .B \-\-edit\-book, \-t
-Starta calibre \fB"\fPRedigera book\fB"\fP\-verktyget i felsökningsläge.
+Starta calibre\-verktyget \fB"\fPRedigera book\fB"\fP i felsökningsläge.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -94,12 +98,12 @@ Kör Python\-koden i fil.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Bryt isär boken i den angivna katalogen. Användning: \-x file.epub output_dir Exporterar boken som en samling HTML\-filer och metadata som du kan redigera med standard HTML\-redigeringsverktyg. Fungerar med EPUB\-, AZW3\-, HTMLZ\- och DOCX\-filer.
+Bryt isär boken i den angivna mappen. Användning: \-x file.epub output_dir Exporterar boken som en samling HTML\-filer och metadata som du kan redigera med standard HTML\-redigeringsverktyg. Fungerar med EPUB\-, AZW3\-, HTMLZ\- och DOCX\-filer.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportera all calibre\-data (böcker/inställningar/insticksmoduler). Normalt kommer du att frågad om exporteringskatalogen och biblioteken att exportera. Du kan även ange dem som kommandoradsargument för att hoppa över frågorna. Använd absoluta sökvägar för exportkatalogen och biblioteken. Det speciella nyckelordet \fB"\fPall\fB"\fP kan användas för att exportera alla bibliotek.
+Exportera alla calibre\-data (böcker/inställningar/insticksmoduler). Normalt kommer du att bli ombedd om exporteringsmappen och biblioteken att exportera. Du kan även ange dem som kommandoradsargument för att hoppa över frågorna. Använd absoluta sökvägar för exportmappen och biblioteken. Det speciella nyckelordet \fB"\fPall\fB"\fP kan användas för att exportera alla bibliotek.
 .UNINDENT
 .INDENT 0.0
 .TP

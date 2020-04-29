@@ -9,9 +9,14 @@ import os, re, mimetypes, subprocess
 from collections import defaultdict
 
 from calibre.ptempfile import TemporaryDirectory
+from calibre.constants import ispy3
 from calibre.utils.icu import numeric_sort_key
 from polyglot.builtins import iteritems, string_or_bytes
-from polyglot.plistlib import loads
+
+if ispy3:
+    from plistlib import loads
+else:
+    from biplist import readPlistFromString as loads
 
 application_locations = ('/Applications', '~/Applications', '~/Desktop')
 
@@ -269,6 +274,8 @@ def get_bundle_data(path):
         with open(info, 'rb') as f:
             plist = loads(f.read())
     except Exception:
+        import traceback
+        traceback.print_exc()
         return None
     ans['name'] = plist.get('CFBundleDisplayName') or plist.get('CFBundleName') or ans['name']
     icfile = plist.get('CFBundleIconFile')

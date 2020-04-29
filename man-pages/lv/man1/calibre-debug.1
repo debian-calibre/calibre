@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "marts 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "aprīlis 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,18 +41,22 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Dažādas komandrindas saskarnes noderīgas calibre atkļūdošanai. Bez opcijas
-šī komanda palaiž iegulto Python tulku. Indeksēšanai jūs varat arī palaist galveno
-calibre GUI, skatītāju un redaktoru atkļūdošanas režīmā.
+Various command line interfaces useful for debugging calibre. With no options,
+this command starts an embedded Python interpreter. You can also run the main
+calibre GUI, the calibre viewer and the calibre editor in debug mode.
 .sp
-Tas ietver arī saskarnes ar dažādām calibre iespējām, kur nav
-savu komandrindas rīku, piemēram, fontu apakškopa, e\-grāmatu diferencēšanas rīku u.t.t
+It also contains interfaces to various bits of calibre that do not have
+dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+on.
 .sp
-Varat arī izmantot % prog, lai palaistu atsevišķus skriptus. Lai to izdarītu, izmantojiet to šādi:
+You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.UNINDENT
+.UNINDENT
 .sp
-\ \ \ \ \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.sp
-Viss pēc tam \- tiek nodots skriptam.
+Everything after the \fB\-\-\fP is passed to the script.
 .sp
 Katru reizi, kad jūs nododat argumentus \fBcalibre\-debug\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH [OPCIJAS]

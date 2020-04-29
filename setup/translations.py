@@ -24,6 +24,7 @@ def qt_sources():
             'qtbase/src/gui/kernel/qplatformtheme.cpp',
             'qtbase/src/widgets/dialogs/qcolordialog.cpp',
             'qtbase/src/widgets/dialogs/qfontdialog.cpp',
+            'qtbase/src/widgets/widgets/qscrollbar.cpp',
     ]))
 
 
@@ -554,7 +555,7 @@ class Translations(POT):  # {{{
     def _compile_website_translations(self, name='website', threshold=50):
         from calibre.utils.zipfile import ZipFile, ZipInfo, ZIP_STORED
         from calibre.ptempfile import TemporaryDirectory
-        from calibre.utils.localization import get_iso639_translator, get_language, get_iso_language
+        from calibre.utils.localization import get_language, translator_for_lang
         self.info('Compiling', name, 'translations...')
         srcbase = self.j(self.d(self.SRC), 'translations', name)
         if not os.path.exists(srcbase):
@@ -595,11 +596,9 @@ class Translations(POT):  # {{{
 
             lang_names = {}
             for l in dl:
-                if l == 'en':
-                    t = get_language
-                else:
-                    t = getattr(get_iso639_translator(l), 'gettext' if ispy3 else 'ugettext')
-                    t = partial(get_iso_language, t)
+                translator = translator_for_lang(l)['translator']
+                t = getattr(translator, 'gettext' if ispy3 else 'ugettext')
+                t = partial(get_language, gettext_func=t)
                 lang_names[l] = {x: t(x) for x in dl}
             zi = ZipInfo('lang-names.json')
             zi.compress_type = ZIP_STORED

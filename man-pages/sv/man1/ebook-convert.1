@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "mars 27, 2020" "4.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "april 24, 2020" "4.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -191,7 +191,7 @@ Alternativ för utseende på utdata
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Till exempel kommer det att ersätta \fB"\fPМихаил Горбачёв\fB"\fP med \fB"\fPMikhail Gorbachiov\fB"\fP\&. Tänk också på att i de fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen som grundar sig på nuvarande calibre\-gränssnittsspråk att användas.
+Translitterera Unicode\-tecken till en ASCII\-representation. Används med försiktighet, eftersom detta kommer att ersätta Unicode\-tecken med ASCII. Till exempel kommer det att ersätta \fB"\fPМихаил Горбачёв\fB"\fP med \fB"\fPMikhail Gorbachiov\fB"\fP\&. Tänk också på att i de fall där det finns flera representationer av ett tecken (exempelvis tecken som delas av kinesiska och japanska) kommer representationen som grundar sig på aktuella calibre\-gränssnittsspråk att användas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,7 +511,7 @@ Om källfilen redan har en innehållsförteckning, används normalt denna i stä
 .UNINDENT
 .SH METADATA
 .sp
-Alternativ för att ställa metadata till utdata
+Alternativ för att ställa in metadata i utdata
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -565,7 +565,7 @@ Ange betyg. Bör vara ett nummer mellan 1 och 5.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Läs metadata från den angivna OPF\-filen. Metadata från denna fil kommer att åsidosätta all metadata i källfilen.
+Läs metadata från den angivna OPF\-filen. Metadata som läses från den här filen åsidosätter alla metadata i källfilen.
 .UNINDENT
 .INDENT 0.0
 .TP

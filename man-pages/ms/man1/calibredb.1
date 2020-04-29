@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "Mac 27, 2020" "4.13.0" "calibre"
+.TH "CALIBREDB" "1" "April 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -140,7 +140,7 @@ tunjuk mesej bantuan ini dan keluar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/ms/generated/ms/calibredb.html\fP\&.
+Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -884,17 +884,17 @@ Biasanya, perintah ini hanya beroperasi pada buku yang mempunyai fail OPF yang t
 .sp
 .nf
 .ft C
-calibredb clone laluan/ke/pustaka/baharu
+calibredb clone path/to/new/library
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Ciptasatu klon pustaka semasa. Ia hasilkan pustaka kosong dan baru yang mempunyai
-semua lajur suai, pustaka maya dan lain\-lain tetapan yang serupa dengan pustaka semasa.
+Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
+same custom columns, Virtual libraries and other settings as the current library.
 .sp
-Pustaka klon tidak mengandungi buku. Jika anda mahu cipta pendua lengkap, termasuklah
-semua buku, maka hanya guna alat sistem fail anda untuk menyalin folder pustaka.
+The cloned library will contain no books. If you want to create a full duplicate, including
+all books, then simply use your filesystem tools to copy the library folder.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA

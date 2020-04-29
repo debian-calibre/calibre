@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_list_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -94,9 +94,9 @@ class Ui_TagListEditor(object):
         self.search_button.setToolTip(_("Display items containing the search string"))
         self.search_button.setText(_("&Find"))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
-"      current virtual library. Applied items not in the VL will be marked\n"
+"      current Virtual library. Applied items not in the VL will be marked\n"
 "      \"not on any book\".</p>"))
-        self.apply_vl_checkbox.setText(_("&Show only available items in current virtual library"))
+        self.apply_vl_checkbox.setText(_("&Show only available items in current Virtual library"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))
         self.delete_button.setText(_("..."))
         self.delete_button.setShortcut(_("Ctrl+D"))
