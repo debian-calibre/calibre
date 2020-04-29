@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "三月 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "四月 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -156,7 +156,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: "/som
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-侦听连接的界面.    默认是监听所有可用的接口。你可以改变，。
+侦听连接的界面.    The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -225,7 +225,7 @@ OPDS供稿的最大书目数.       服务器将在单个OPDS采集原料中返�
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB"\fPSearch the internet\fB"\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+包含“搜索Internet”功能的URL的JSON文件的路径。创建这样的文件最简单的方法是进入首选项\->网络共享\->在Calibre中搜索互联网，创建URL并将其导出。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -246,6 +246,11 @@ SSL证书文件的路径.
 .TP
 .B \-\-timeout
 空闲连接关闭后的时间(秒).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-trusted\-ips
+Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
 .UNINDENT
 .INDENT 0.0
 .TP

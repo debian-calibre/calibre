@@ -155,7 +155,7 @@ elif isosx:
         return sort_key(entry.get('name') or '')
 
     def finalize_entry(entry):
-        entry['extensions'] = tuple(entry['extensions'])
+        entry['extensions'] = tuple(entry.get('extensions', ()))
         data = get_icon(entry.pop('icon_file', None), as_data=True, pixmap_to_data=pixmap_to_data)
         if data:
             entry['icon_data'] = data
@@ -178,8 +178,9 @@ elif isosx:
             if os.path.isdir(ans):
                 app = get_bundle_data(ans)
                 if app is None:
-                    return error_dialog(parent, _('Invalid Application'), _(
+                    error_dialog(parent, _('Invalid Application'), _(
                         '%s is not a valid macOS application bundle.') % ans, show=True)
+                    return
                 return app
             if not os.access(ans, os.X_OK):
                 error_dialog(parent, _('Cannot execute'), _(

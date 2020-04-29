@@ -130,30 +130,107 @@ def set_current_time(target, val):  # {{{
         target.addEventListener("canplay", def(): target.currentTime = val;, False)
 # }}}
 
-def encode(doc, node, offset, tail):  # {{{
-    cfi = tail or ""
+# def encode(doc, node, offset, tail): {{{
 
+def is_text_node(node):
+    return node.nodeType is Node.TEXT_NODE or node.nodeType is Node.CDATA_SECTION_NODE
+
+
+def text_length_in_range_wrapper(node):
+    p = node.firstChild
+    ans = 0
+    while p:
+        if is_text_node(p):
+            ans += p.nodeValue.length
+        elif p.nodeType is Node.ELEMENT_NODE and p.dataset.calibreRangeWrapper:
+            ans += text_length_in_range_wrapper(p)
+        p = p.nextSibling
+    return ans
+
+
+def adjust_node_for_text_offset(node):
+    offset = 0
+    while True:
+        p = node.previousSibling
+        if not p or p.nodeType > Node.COMMENT_NODE:
+            break
+        if is_text_node(p):
+            offset += p.nodeValue.length
+        elif p.nodeType is Node.ELEMENT_NODE and p.dataset.calibreRangeWrapper:
+            offset += text_length_in_range_wrapper(p)
+        node = p
+    return node, offset
+
+
+def unwrapped_nodes(range_wrapper):
+    ans = v'[]'
+    for child in range_wrapper.childNodes:
+        if child.nodeType is Node.ELEMENT_NODE and child.dataset.calibreRangeWrapper:
+            ans = ans.concat(unwrapped_nodes(child))
+        else:
+            ans.push(child)
+    return ans
+
+
+def increment_index_for_child(child, index, sentinel):
+    is_element = child.nodeType is Node.ELEMENT_NODE
+    if is_element and child.dataset.calibreRangeWrapper:
+        nodes = unwrapped_nodes(child)
+        index = increment_index_for_children(nodes, index, sentinel)
+    else:
+        index |= 1  # increment if even
+        if is_element:
+            index += 1
+    return index
+
+
+def increment_index_for_children(children, index, sentinel):
+    for i in range(children.length):
+        child = children[i]
+        index = increment_index_for_child(child, index, sentinel)
+        if child is sentinel:
+            break
+    return index
+
+
+def non_range_wrapper_parent(node):
+    p = node.parentNode
+    while p.dataset?.calibreRangeWrapper:
+        p = p.parentNode
+    return p
+
+
+def encode(doc, node, offset, tail):
+    cfi = tail or ""
     # Handle the offset, if any
     if node.nodeType is Node.ELEMENT_NODE:
         if jstype(offset) is 'number':
-            node = node.childNodes.item(offset)
-    elif Node.TEXT_NODE <= node.nodeType <= Node.ENTITY_NODE:
+            q = node.childNodes.item(offset)
+            if q:
+                if q.nodeType is Node.ELEMENT_NODE:
+                    node = q
+                    if node.dataset.calibreRangeWrapper:
+                        if not node.firstChild:
+                            node.appendChild(document.createTextNode(''))
+                        node = node.firstChild
+        elif node.dataset.calibreRangeWrapper:
+            if not node.firstChild:
+                node.appendChild(document.createTextNode(''))
+            node = node.firstChild
+    if is_text_node(node):
         offset = offset or 0
-        while True:
-            p = node.previousSibling
-            if not p or p.nodeType > Node.COMMENT_NODE:
-                break
-            # log("previous sibling:"+ p + " " + p?.nodeType + " length: " + p?.nodeValue?.length)
-            if p.nodeType not in v'[Node.ATTRIBUTE_NODE, Node.COMMENT_NODE]' and p.nodeValue and p.nodeValue.length:
-                offset += p.nodeValue.length
-            node = p
+        if node.parentNode and node.parentNode.dataset.calibreRangeWrapper:
+            node = node.parentNode
+        node, additional_offset = adjust_node_for_text_offset(node)
+        offset += additional_offset
         cfi = ":" + offset + cfi
-    else: # Not handled
-        print(str.format("Offsets for nodes of type {} are not handled", node.nodeType))
+    elif node.nodeType is not Node.ELEMENT_NODE: # Not handled
+        print(f"Offsets for nodes of type {node.nodeType} are not handled")
 
     # Construct the path to node from root
+    is_first = True
     while node is not doc:
-        p = node.parentNode
+        p = non_range_wrapper_parent(node)
         if not p:
             if node.nodeType == Node.DOCUMENT_NODE:  # Document node (iframe)
                 win = node.defaultView
@@ -162,19 +239,15 @@ def encode(doc, node, offset, tail):  # {{{
                     cfi = "!" + cfi
                     continue
             break
-        # Find position of node in parent
-        index = 0
-        child = p.firstChild
-        while True:
-            index |= 1 # Increment index by 1 if it is even
-            if child.nodeType is Node.ELEMENT_NODE:
-                index += 1
-            if child is node:
-                break
-            child = child.nextSibling
 
+        # Find position of node in parent
+        index = increment_index_for_children(p.childNodes, 0, node)
+        if is_first:
+            is_first = False
+            if node.nodeType is Node.ELEMENT_NODE and node.dataset.calibreRangeWrapper:
+                index -= 1
         # Add id assertions for robustness where possible
-        id = node.getAttribute('id') if node.getAttribute else None
+        id = node.id
         idspec = ('[' + escape_for_cfi(id) + ']') if id else ''
         cfi = '/' + index + idspec + cfi
         node = p
@@ -182,7 +255,62 @@ def encode(doc, node, offset, tail):  # {{{
     return cfi
 # }}}
 
-def decode(cfi, doc): # {{{
+
+# def decode(cfi, doc):  {{{
+
+def node_at_index(nodes, target, index, iter_text_nodes):
+    for i in range(nodes.length):
+        node = nodes[i]
+        is_element = node.nodeType is Node.ELEMENT_NODE
+        if is_element and node.dataset.calibreRangeWrapper:
+            q, index = node_at_index(unwrapped_nodes(node), target, index, iter_text_nodes)
+            if q:
+                return q, index
+            continue
+        if (iter_text_nodes and not is_text_node(node)) or (not iter_text_nodes and not is_element):
+            continue
+        if index is target:
+            return node, index
+        index += 1
+    return None, index
+
+
+def node_for_path_step(parent, target, assertion):
+    if assertion:
+        q = document.getElementById(assertion)
+        if q:
+            return q
+    is_element = target % 2 == 0
+    target //= 2
+    if is_element and target > 0:
+        target -= 1
+    return node_at_index(parent.childNodes, target, 0, not is_element)[0]
+
+
+def node_for_text_offset(nodes, offset, forward, first_node):
+    last_text_node = None
+    seen_first = False
+    for i in range(nodes.length):
+        node = nodes[i]
+        if not seen_first:
+            if not first_node or node.isSameNode(first_node):
+                seen_first = True
+            else:
+                continue
+        if is_text_node(node):
+            l = node.nodeValue.length
+            if offset < l or (not forward and offset is l):
+                return node, offset, True
+            last_text_node = node
+            offset -= l
+        elif node.nodeType is Node.ELEMENT_NODE and node.dataset.calibreRangeWrapper:
+            qn, offset, ok = node_for_text_offset(unwrapped_nodes(node), offset, forward)
+            if ok:
+                return qn, offset, True
+    return last_text_node, offset, False
+
+
+def decode(cfi, doc):
     doc = doc or window.document
     simple_node_regex = ///
         ^/(\d+)          # The node count
@@ -198,35 +326,13 @@ def decode(cfi, doc): # {{{
             assertion = r[2]
             if assertion:
                 assertion = unescape_from_cfi(assertion.slice(1, assertion.length-1))
-            index = 0
-            child = node.firstChild
-
-            while True:
-                if not child:
-                    if assertion: # Try to use the assertion to find the node
-                        child = doc.getElementById(assertion)
-                        if child:
-                            node = child
-                    if not child:
-                        error = "No matching child found for CFI: " + cfi
-                    cfi = cfi.substr(r[0].length)
-                    break
-                index |= 1 # Increment index by 1 if it is even
-                if child.nodeType is 1:
-                    index += 1
-                if index is target:
-                    cfi = cfi.substr(r[0].length)
-                    node = child
-                    if assertion and node.id is not assertion:
-                        # The found child does not match the id assertion,
-                        # trust the id assertion if an element with that id
-                        # exists
-                        child = doc.getElementById(assertion)
-                        if child:
-                            node = child
-                    break
-                child = child.nextSibling
-
+            q = node_for_path_step(node, target, assertion)
+            if q:
+                node = q
+                cfi = cfi.substr(r[0].length)
+            else:
+                error = "No matching child found for CFI: " + cfi
+                break
         else if cfi[0] is '!': # Indirection
             if node.contentDocument:
                 node = node.contentDocument
@@ -276,29 +382,11 @@ def decode(cfi, doc): # {{{
             # TODO: Handle text assertion
 
     # Find the text node that contains the offset
-    if node and node.parentNode:
-        node.parentNode.normalize()
     if offset is not None:
-        while True:
-            l = node.nodeValue.length
-            if offset < l or (not point.forward and offset is l):
-                break
-            next = False
-            while True:
-                nn = node.nextSibling
-                if not nn:
-                    break
-                if Node.TEXT_NODE <= nn.nodeType <= Node.ENTITY_NODE and nn.nodeValue and nn.nodeValue.length:
-                    next = nn
-                    break
-                node = nn
-            if not next:
-                if offset > l:
-                    error = "Offset out of range: " + offset
-                    offset = l
-                break
-            node = next
-            offset -= l
+        orig_offset = offset
+        node, offset, ok = node_for_text_offset(node.parentNode.childNodes, offset, point.forward, node)
+        if not ok:
+            error = "Offset out of range: " + orig_offset
         point.offset = offset
 
     point.node = node
@@ -689,7 +777,13 @@ def cfi_for_selection(r):  # {{{
 
 # }}}
 
-if __name__ is '__main__':
-    t = 'a^!,1'
-    if unescape_from_cfi(escape_for_cfi(t)) is not t:
-        raise Exception('Failed to properly roundtrip cfi')
+def range_from_cfi(start, end):  # {{{
+    start = decode(start)
+    end = decode(end)
+    if not start or start.error or not end or end.error:
+        return
+    r = document.createRange()
+    r.setStart(start.node, start.offset)
+    r.setEnd(end.node, end.offset)
+    return r
+# }}}

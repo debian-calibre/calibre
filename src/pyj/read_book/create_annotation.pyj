@@ -8,23 +8,83 @@ from uuid import short_uuid
 
 from book_list.globals import get_session_data
 from book_list.theme import cached_color_to_rgba, get_color
-from dom import add_extra_css, clear, ensure_id, svgicon, unique_id
+from dom import clear, ensure_id, svgicon, unique_id
 from modals import error_dialog
+from read_book.globals import ui_operations
 from read_book.shortcuts import shortcut_for_key_event
+
+
+class AnnotationsManager:
+
+    def __init__(self, view):
+        self.view = view
+        self.set_highlights()
+
+    def set_highlights(self, highlights):
+        highlights = highlights or v'[]'
+        self.highlights = {h.uuid: h for h in highlights}
+
+    def remove_highlight(self, uuid):
+        h = self.highlights[uuid]
+        if h:
+            h.timestamp = Date().toISOString()
+            h.removed = True
+            v'delete h.style'
+            v'delete h.highlighted_text'
+            v'delete h.start_cfi'
+            v'delete h.end_cfi'
+            v'delete h.notes'
+            v'delete h.spine_name'
+            v'delete h.spine_index'
+
+    def notes_for_highlight(self, uuid):
+        h = self.highlights[uuid]
+        if h:
+            return h.notes
+
+    def style_for_highlight(self, uuid):
+        h = self.highlights[uuid]
+        if h:
+            return h.style
+
+    def data_for_highlight(self, uuid):
+        return self.highlights[uuid]
+
+    def add_highlight(self, msg, style, notes):
+        now = Date().toISOString()
+        for uuid in msg.removed_highlights:
+            self.remove_highlight(uuid)
+
+        annot = self.highlights[msg.uuid] = {
+            'type': 'highlight',
+            'timestamp': now,
+            'uuid': msg.uuid,
+            'highlighted_text': msg.highlighted_text,
+            'start_cfi': msg.bounds.start,
+            'end_cfi': msg.bounds.end,
+            'style': style,  # dict with color and background-color
+            'spine_name': self.view.currently_showing.name,
+            'spine_index': self.view.currently_showing.spine_index,
+        }
+        if notes:
+            annot.notes = notes
+        if ui_operations.highlights_changed:
+            ui_operations.highlights_changed(Object.values(self.highlights))
+
+    def highlights_for_currently_showing(self):
+        name = self.view.currently_showing.name
+        ans = v'[]'
+        for uuid in Object.keys(self.highlights):
+            h = self.highlights[uuid]
+            if h.spine_name is name and not h.removed and h.start_cfi:
+                ans.push(h)
+        return ans
+
 
 WAITING_FOR_CLICK = 1
 WAITING_FOR_DRAG = 2
 DRAGGING_LEFT = 3
 DRAGGING_RIGHT = 4
-
-
-add_extra_css(def():
-    ans = ''
-    ans += '.selection-handle { fill: #3cef3d; stroke: black }'
-    ans += '.selection-handle:active { fill: #FCE883; }'
-    return ans
-)
-
 
 dark_fg = '#111'
 light_fg = '#eee'
@@ -43,10 +103,18 @@ highlight_colors = {
 default_highlight_color = '#fce2ae'
 
 
-def selection_handle(invert):
+def default_highlight_style():
+    return {
+        'background-color': default_highlight_color,
+        'color': highlight_colors[default_highlight_color]
+    }
+
+
+def selection_handle(invert, style):
     ans = svgicon('selection-handle')
     use = ans.querySelector('use')
-    use.classList.add('selection-handle')
+    use.style.stroke = style['color']
+    use.style.fill = style['background-color']
     s = ans.style
     if invert:
         s.transform = 'scaleX(-1)'
@@ -78,7 +146,7 @@ BAR_SIZE = 32
 def create_bar():
     ans = E.div(
         id=unique_id('annot-bar'),
-        style=f'height: {BAR_SIZE}px; width: 100vw; display: flex; justify-content: space-between;',
+        style=f'height: {BAR_SIZE}px; max-height: {BAR_SIZE}px; width: 100vw; display: flex; justify-content: space-between;',
     )
     return ans
 
@@ -89,6 +157,10 @@ class CreateAnnotation:
 
     def __init__(self, view):
         self.view = view
+        self.active_touch = None
+        self.editing_annot_uuid = None
+        self.current_notes = ''
+        self.annotations_manager = self.view.annotations_manager
         self.state = WAITING_FOR_CLICK
         self.left_line_height = self.right_line_height = 8
         self.in_flow_mode = False
@@ -106,6 +178,8 @@ class CreateAnnotation:
             cb.style.backgroundColor = get_color('window-background')
             cb.style.boxSizing = 'border-box'
             cb.style.padding = '2px'
+            cb.style.border = 'solid 2px currentColor'
+            cb.style.borderRadius = '4px'
             cb.classList.add('simple-link')
             cb.addEventListener('click', def(ev):
                 ev.preventDefault(), ev.stopPropagation()
@@ -118,9 +192,13 @@ class CreateAnnotation:
         container.appendChild(tb)
         button(tb, 'close', _('Cancel creation of highlight'), self.hide)
         button(tb, 'chevron-up', _('Scroll up'), self.scroll_up)
-        button(tb, 'check', _('Finish creation of highlight'), self.accept)
+        tb.appendChild(E.span(style=f'height: {tb.style.height}'))
+        if ui_operations.copy_selection:
+            button(tb.lastChild, 'copy', _('Copy to clipboard'), self.copy_to_clipboard)
+            tb.lastChild.appendChild(E.span('\xa0\xa0\xa0'))
+        button(tb.lastChild, 'check', _('Finish creation of highlight'), self.accept)
 
-        middle = E.div(id=unique_id('middle'), style='display: none')
+        middle = E.div(id=unique_id('middle'), style='display: none; text-align: center; z-index: 90000')
         self.middle_id = middle.id
         container.appendChild(middle)
 
@@ -128,28 +206,33 @@ class CreateAnnotation:
         container.appendChild(bb)
         button(bb, 'fg', _('Change highlight color'), self.choose_color)
         button(bb, 'chevron-down', _('Scroll down'), self.scroll_down)
-        button(bb, 'pencil', _('Add a note'), self.add_text)
+        button(bb, 'pencil', _('Add a note'), self.add_notes)
 
-        lh = selection_handle(True)
+        sd = get_session_data()
+        style = sd.get('highlight_style') or default_highlight_style()
+        self.current_highlight_style = style
+
+        lh = selection_handle(False, style)
         self.left_handle_id = ensure_id(lh, 'handle')
         lh.addEventListener('mousedown', self.mousedown_on_handle, {'passive': False})
+        lh.addEventListener('touchstart', self.touchstart_on_handle, {'passive': False})
         container.appendChild(lh)
-        rh = selection_handle(False)
+        rh = selection_handle(True, style)
         self.right_handle_id = ensure_id(rh, 'handle')
         rh.addEventListener('mousedown', self.mousedown_on_handle, {'passive': False})
+        rh.addEventListener('touchstart', self.touchstart_on_handle, {'passive': False})
         container.appendChild(rh)
 
         container.addEventListener('click', self.container_clicked, {'passive': False})
         container.addEventListener('mouseup', self.mouseup_on_container, {'passive': False})
         container.addEventListener('mousemove', self.mousemove_on_container, {'passive': False})
+        container.addEventListener('touchmove', self.touchmove_on_container, {'passive': False})
+        container.addEventListener('touchend', self.touchend_on_container, {'passive': False})
+        container.addEventListener('touchcancel', self.touchend_on_container, {'passive': False})
         container.addEventListener('keydown', self.on_keydown, {'passive': False})
 
-        sd = get_session_data()
-        style = sd.get('highlight_style') or {
-            'background-color': default_highlight_color,
-            'color': highlight_colors[default_highlight_color]
-        }
-        self.current_highlight_style = style
+    def copy_to_clipboard(self):
+        self.view.iframe_wrapper.send_message('copy_selection')
 
     def scroll_up(self):
         self.send_message('scroll', backwards=True)
@@ -161,10 +244,67 @@ class CreateAnnotation:
     def middle(self):
         return document.getElementById(self.middle_id)
 
-    def choose_color(self):
+    def add_notes(self):
+        self.show_middle(self.apply_notes)
         container = self.middle
-        container.style.display = 'block'
-        container.style.textAlign = 'center'
+        clear(container)
+        c = E.div(
+            style=f'background: {get_color("window-background")}; margin: auto; padding: 1rem',
+            onclick=def(ev):
+                ev.stopPropagation(), ev.preventDefault()
+                self.hide_middle()
+            ,
+
+            E.h3(_('Add notes for this highlight')),
+            E.textarea(
+                self.current_notes or '',
+                rows='10', spellcheck='true', style='resize: none; width: 80vw; max-width: 80em; margin: 1ex',
+                onkeydown=def(ev):
+                    ev.stopPropagation()
+                    if ev.key is 'Escape':
+                        self.hide_middle()
+                ,
+                onclick=def(ev):
+                    ev.stopPropagation()
+            ),
+            E.div(
+                style='display: flex; justify-content: space-between; margin-top: 1ex; align-items: center',
+                E.a(
+                    svgicon('eraser', f'{BAR_SIZE}px', f'{BAR_SIZE}px'),
+                    href='javascript:void',
+                    class_='simple-link',
+                    title=_('Clear'),
+                    onclick=def(ev):
+                        ev.preventDefault(), ev.stopPropagation()
+                        ta = self.middle.querySelector('textarea')
+                        ta.value = ''
+                        ta.focus()
+                ),
+                E.div(
+                    _('To view the notes for a highlight, long-tap or double click on it.'),
+                    style='font-size-smaller; margin-left: 1rem; margin-right: 1rem'
+                ),
+                E.a(
+                    svgicon('check', f'{BAR_SIZE}px', f'{BAR_SIZE}px'),
+                    href='javascript:void',
+                    class_='simple-link',
+                    title=_('Done adding notes'),
+                    onclick=def(ev):
+                        ev.preventDefault(), ev.stopPropagation()
+                        self.hide_middle()
+                ),
+            ),
+        )
+        container.appendChild(c)
+        c.querySelector('textarea').focus()
+
+    def apply_notes(self):
+        self.current_notes = self.middle.querySelector('textarea').value or ''
+        return True
+
+    def choose_color(self):
+        self.show_middle()
+        container = self.middle
         clear(container)
         c = E.div(
             E.h3(_('Choose highlight color')),
@@ -222,16 +362,30 @@ class CreateAnnotation:
         self.send_message('set-highlight-style', style=self.current_highlight_style)
         sd = get_session_data()
         sd.set('highlight_style', self.current_highlight_style)
+        self.update_handle_colors()
 
-    def show_middle(self):
+    def update_handle_colors(self):
+        fill = self.current_highlight_style['background-color']
+        stroke = self.current_highlight_style['color']
+        for handle in (self.left_handle, self.right_handle):
+            use = handle.querySelector('use')
+            use.style.stroke = stroke
+            use.style.fill = fill
+
+    def show_middle(self, pre_close_callback):
+        self.pre_middle_close_callback = pre_close_callback
         self.save_handle_state()
         self.middle.style.display = 'block'
 
     def hide_middle(self):
         m = self.middle
         if m.style.display is not 'none':
+            if self.pre_middle_close_callback:
+                if not self.pre_middle_close_callback():
+                    return
             self.restore_handle_state()
             m.style.display = 'none'
+            self.container.focus()
 
     def save_handle_state(self):
         for h in (self.left_handle, self.right_handle):
@@ -248,7 +402,7 @@ class CreateAnnotation:
         for k in Object.keys(self.current_highlight_style):
             style += f'{k}: {s[k]}; '
         self.send_message(
-            'apply-highlight', style=style, uuid=short_uuid()
+            'apply-highlight', style=style, uuid=short_uuid(), existing=self.editing_annot_uuid
         )
         self.hide()
 
@@ -274,11 +428,7 @@ class CreateAnnotation:
             pt = map_to_iframe_coords({'x': ev.clientX, 'y': ev.clientY})
             self.send_message('position-handles-at-point', x=pt.x, y=pt.y)
 
-    def mousedown_on_handle(self, ev):
-        ev.stopPropagation(), ev.preventDefault()
-        if self.state is WAITING_FOR_CLICK:
-            return
-        q = ev.currentTarget.id
+    def start_handle_drag(self, ev, q):
         if q is self.left_handle_id:
             self.state = DRAGGING_LEFT
             handle = self.left_handle
@@ -289,15 +439,36 @@ class CreateAnnotation:
         self.position_in_handle.x = Math.round(ev.clientX - r.left)
         self.position_in_handle.y = Math.round(ev.clientY - r.top)
 
+    def mousedown_on_handle(self, ev):
+        ev.stopPropagation(), ev.preventDefault()
+        if self.state is WAITING_FOR_CLICK:
+            return
+        self.start_handle_drag(ev, ev.currentTarget.id)
+
+    def touchstart_on_handle(self, ev):
+        ev.stopPropagation(), ev.preventDefault()
+        if self.state is WAITING_FOR_CLICK:
+            return
+        for touch in ev.changedTouches:
+            self.active_touch = touch.identifier
+            self.start_handle_drag(touch, ev.currentTarget.id)
+            break
+
     def mouseup_on_container(self, ev):
         if self.state in (DRAGGING_RIGHT, DRAGGING_LEFT):
             self.state = WAITING_FOR_DRAG
             ev.preventDefault(), ev.stopPropagation()
 
-    def mousemove_on_container(self, ev):
-        if self.state not in (DRAGGING_RIGHT, DRAGGING_LEFT):
-            return
-        ev.stopPropagation(), ev.preventDefault()
+    def touchend_on_container(self, ev):
+        if self.state in (DRAGGING_RIGHT, DRAGGING_LEFT):
+            ev.preventDefault(), ev.stopPropagation()
+            for touch in ev.changedTouches:
+                if touch.identifier is self.active_touch:
+                    self.active_touch = None
+                    self.state = WAITING_FOR_DRAG
+                    return
+
+    def handle_moved(self, ev):
         handle = self.left_handle if self.state is DRAGGING_LEFT else self.right_handle
         s = handle.style
         s.left = (ev.clientX - self.position_in_handle.x) + 'px'
@@ -306,6 +477,21 @@ class CreateAnnotation:
         pos.start = map_to_iframe_coords(pos.start)
         pos.end = map_to_iframe_coords(pos.end)
         self.send_message('set-selection', extents=pos)
+
+    def mousemove_on_container(self, ev):
+        if self.state not in (DRAGGING_RIGHT, DRAGGING_LEFT):
+            return
+        ev.stopPropagation(), ev.preventDefault()
+        self.handle_moved(ev)
+
+    def touchmove_on_container(self, ev):
+        if self.state not in (DRAGGING_RIGHT, DRAGGING_LEFT):
+            return
+        ev.stopPropagation(), ev.preventDefault()
+        for touch in ev.changedTouches:
+            if touch.identifier is self.active_touch:
+                self.handle_moved(touch)
+                return
 
     @property
     def container(self):
@@ -348,6 +534,7 @@ class CreateAnnotation:
         b.dataset.style = JSON.stringify(val)
 
     def show(self):
+        self.middle.style.display = 'none'
         c = self.container
         c.style.display = 'flex'
         c.focus()
@@ -361,29 +548,50 @@ class CreateAnnotation:
     def send_message(self, type, **kw):
         self.view.iframe_wrapper.send_message('annotations', type=type, **kw)
 
+    def edit_highlight(self, uuid):
+        self.send_message('edit-highlight', uuid=uuid)
+        self.show()
+
     def handle_message(self, msg):
         if msg.type is 'create-annotation':
+            self.editing_annot_uuid = None
+            self.current_notes = ''
             if not self.is_visible:
                 self.view.hide_overlays()
             self.state = WAITING_FOR_CLICK
             self.show()
             self.hide_handles()
-            if msg.extents.start.x is not None:
+            if msg.extents and msg.extents.start.x is not None:
                 self.place_handles(msg.extents)
             self.in_flow_mode = msg.in_flow_mode
+            self.editing_annot_uuid = msg.existing or None
             self.send_message('set-highlight-style', style=self.current_highlight_style)
         elif msg.type is 'position-handles':
             if self.state is WAITING_FOR_CLICK:
                 self.place_handles(msg.extents)
+                self.editing_annot_uuid = msg.existing or None
+                if self.editing_annot_uuid:
+                    self.current_notes = self.annotations_manager.notes_for_highlight(self.editing_annot_uuid) or ''
         elif msg.type is 'update-handles':
             self.place_handles(msg.extents)
+            if msg.from_scroll and not msg.selection_extended:
+                middle = map_from_iframe_coords({
+                    'x': msg.page_rect.left + msg.page_rect.width // 2,
+                    'y': msg.page_rect.top + msg.page_rect.height // 2
+                })
+                handle = self.left_handle if msg.backwards else self.right_handle
+                handle.style.display = 'block'
+                handle.style.left = f'{middle.x}px'
+                handle.style.top = f'{middle.y}px'
         elif msg.type is 'highlight-applied':
             if not msg.ok:
                 return error_dialog(
                     _('Highlighting failed'),
                     _('Failed to apply highlighting, try adjusting extent of highlight')
                 )
-
+            self.annotations_manager.add_highlight(msg, self.current_highlight_style, self.current_notes)
+        elif msg.type is 'annotation-activated':
+            self.view.view_annotation.show(msg.uuid)
         else:
             print('Ignoring annotations message with unknown type:', msg.type)
 
@@ -414,3 +622,88 @@ class CreateAnnotation:
         self.state = WAITING_FOR_DRAG
         self.left_line_height = extents.start.height
         self.right_line_height = extents.end.height
+
+
+class ViewAnnotation:
+
+    container_id = 'view-annotation-overlay'
+
+    def __init__(self, view):
+        self.view = view
+        self.annotations_manager = view.annotations_manager
+        c = self.container
+        self.showing_uuid = None
+        c.style.flexDirection = 'column'
+        c.style.justifyContent = 'flex-end'
+        c.appendChild(E.div(
+            style='pointer-events: auto; padding: 1ex 1rem; box-sizing: border-box; border-top: solid 2px currentColor; overflow: hidden',
+            onclick=def(ev):
+                ev.preventDefault(), ev.stopPropagation()
+            ,
+            E.div(
+                style='display: flex; justify-content: space-between; align-items: flex-start',
+                E.a(
+                    svgicon('close', f'{BAR_SIZE}px', f'{BAR_SIZE}px'),
+                    class_='simple-link', href='javascript: void', title=_('Close'),
+                    onclick=def(ev):
+                        self.hide()
+                ),
+                E.div(
+                    style='margin-left: 2rem; margin-right: 2rem; max-height: 20vh; overflow-y: auto; overflow-x: hidden; box-sizing: border-box; padding-top: 1ex',
+                    class_='highlight-notes-viewer'
+                ),
+                E.a(
+                    svgicon('pencil', f'{BAR_SIZE}px', f'{BAR_SIZE}px'),
+                    class_='simple-link', href='javascript: void', title=_('Edit this highlight'),
+                    onclick=def(ev):
+                        self.edit_current()
+                ),
+            )
+        ))
+
+    @property
+    def container(self):
+        return document.getElementById(self.container_id)
+
+    def show(self, uuid):
+        c = self.container
+        c.style.display = 'flex'
+        self.showing_uuid = uuid
+        s = self.annotations_manager.style_for_highlight(uuid) or default_highlight_style()
+        c = c.firstChild
+        c.style.color = s.color
+        c.style.backgroundColor = s['background-color']
+        text = self.annotations_manager.notes_for_highlight(uuid) or ''
+        self.display_text(text)
+
+    def display_text(self, text):
+        text = text or _('This highlight has no added notes')
+        text = text.strip()
+        div = self.container.querySelector('.highlight-notes-viewer')
+        clear(div)
+        current_block = ''
+
+        def add_para():
+            nonlocal current_block
+            div.appendChild(E.p(current_block))
+            if div.childNodes.length > 1:
+                div.lastChild.style.marginTop = '2ex'
+            current_block = ''
+
+        for line in text.splitlines():
+            if not line or not line.strip():
+                if current_block:
+                    add_para()
+                    continue
+            current_block += line + '\n'
+        if current_block:
+            add_para()
+
+    def hide(self):
+        self.container.style.display = 'none'
+        self.showing_uuid = None
+
+    def edit_current(self):
+        if self.showing_uuid:
+            self.view.create_annotation.edit_highlight(self.showing_uuid)
+        self.hide()

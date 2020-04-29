@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -77,6 +77,7 @@ class Ui_TagCategories(object):
         self.apply_vl_checkbox.setObjectName("apply_vl_checkbox")
         self.gridLayout.addWidget(self.apply_vl_checkbox, 1, 0, 1, 3)
         self.blank = QtWidgets.QLabel(TagCategories)
+        self.blank.setText("")
         self.blank.setObjectName("blank")
         self.gridLayout.addWidget(self.blank, 2, 0, 1, 1)
         self.gridLayout_4.addLayout(self.gridLayout, 0, 1, 1, 3)
@@ -141,16 +142,15 @@ class Ui_TagCategories(object):
         self.item_filter_box.setToolTip(_("Enter text to filter the available items. Case and accents are ignored."))
         self.delete_category_button.setToolTip(_("Delete this selected tag category"))
         self.delete_category_button.setText(_("..."))
-        self.input_box.setToolTip(_("Enter a category name, then use the add button or the rename button"))
+        self.input_box.setToolTip(_("Enter a category name, then use the Add button or the Rename button"))
         self.add_category_button.setToolTip(_("Add a new category"))
         self.add_category_button.setText(_("..."))
         self.rename_category_button.setToolTip(_("Rename the current category to what is in the box"))
         self.rename_category_button.setText(_("..."))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
-"            current virtual library. Applied items not in the VL will be marked\n"
+"            current Virtual library. Applied items not in the VL will be marked\n"
 "            \"not on any book\".</p>"))
-        self.apply_vl_checkbox.setText(_("&Show only available items in current virtual library"))
-        self.blank.setText(_(" "))
+        self.apply_vl_checkbox.setText(_("&Show only available items in current Virtual library"))
         self.label.setText(_("&Available items"))
         self.apply_button.setToolTip(_("Apply tags to current tag category"))
         self.apply_button.setText(_("..."))

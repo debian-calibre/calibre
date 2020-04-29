@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "martxoa 27, 2020" "4.13.0" "calibre"
+.TH "CALIBREDB" "1" "apirila 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -878,9 +878,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Uneko liburutegia klonatu. Honekin, erabiltzen zauden liburutegiaren zutabe pertsonalizatuak, liburutegi birtualak eta beste ezarpenak berdin\-berdin dituen liburutegi berri, hutsa sortuko duzu.
+Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
+same custom columns, Virtual libraries and other settings as the current library.
 .sp
-Kontuan izan liburutegi klonatu honek ez duela libururik izango. Liburuak ere badituen kopia oso bat baldin bada sortu nahi duzuna, nahikoa duzu ordenagailuko sistema eragileko lanabesak erabiltzea liburutegiaren karpetan kopia bat egiteko.
+The cloned library will contain no books. If you want to create a full duplicate, including
+all books, then simply use your filesystem tools to copy the library folder.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA

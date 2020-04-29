@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -669,7 +669,7 @@ class Ui_Form(object):
         self.opt_tag_browser_old_look.setText(_("Use &alternating row colors in the Tag browser"))
         self.opt_tag_browser_hide_empty_categories.setToolTip(_("When checked, calibre will automatically hide any category\n"
 " (a column, custom or standard) that has no items to show. For example, some\n"
-" categories might not have values when using virtual libraries. Checking this\n"
+" categories might not have values when using Virtual libraries. Checking this\n"
 " box will cause these empty categories to be hidden."))
         self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns) in the Tag browser"))
         self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
@@ -702,12 +702,12 @@ class Ui_Form(object):
         self.label_24.setText(_("Fie&ld for sub-title:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))
         self.opt_qv_respects_vls.setToolTip(_("Check this box to make Quickview show books only in the\n"
-"current virtual library. If unchecked, Quickview ignores virtual libraries. If\n"
+"current Virtual library. If unchecked, Quickview ignores Virtual libraries. If\n"
 "unchecked then only row changes are taken into account."))
-        self.opt_qv_respects_vls.setText(_("&Apply virtual libraries in Quickview panel"))
+        self.opt_qv_respects_vls.setText(_("&Apply Virtual libraries in Quickview panel"))
         self.opt_qv_follows_column.setToolTip(_("Check this box to make Quickview change the column being examined\n"
 "when the column in the book list is changed using the cursor arrow keys"))
-        self.opt_qv_follows_column.setText(_("&Change QV item when book list column changes"))
+        self.opt_qv_follows_column.setText(_("&Change Quickview item when book list column changes"))
         self.opt_qv_retkey_changes_column.setToolTip(_("Pressing return in a cell changes both the book and the\n"
 "column being examined (the left-hand pane)"))
         self.opt_qv_retkey_changes_column.setText(_("&Pressing \'return\' changes examined column"))

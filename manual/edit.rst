@@ -567,7 +567,7 @@ Splitting HTML files
 .. |spmb| image:: images/split-button.png
 
 One, perhaps non-obvious, use of the preview panel is to split long HTML files.
-While viewing the file you want to split, click the :guilabel:`split mode`
+While viewing the file you want to split, click the :guilabel:`Split mode`
 button under the preview panel |spmb|. Then simply move your mouse to the place
 where you want to split the file and click. A thick green line will show you
 exactly where the split will happen as you move your mouse. Once you have found
@@ -670,8 +670,8 @@ common in your book and to run a simple search and replace on individual words.
 
 .. note::
     If you make any changes to the book by editing files while the spell check
-    tool is open, you should click the :guilabel:`Refresh` button in the spell
-    check tool. If you do not do this and continue to use the spell check tool,
+    tool is open, you should click the :guilabel:`Refresh` button in the Spell
+    check tool. If you do not do this and continue to use the Spell check tool,
     you could lose the changes you have made in the editor.
 
 Adding new dictionaries

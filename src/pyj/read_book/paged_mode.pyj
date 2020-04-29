@@ -164,6 +164,10 @@ def will_columns_per_screen_change():
     return calc_columns_per_screen() != cols_per_screen
 
 
+def current_page_width():
+    return col_width
+
+
 def layout(is_single_page, on_resize):
     nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen, number_of_cols
     body_style = window.getComputedStyle(document.body)
@@ -623,9 +627,9 @@ def handle_gesture(gesture):
             if not gesture.active or gesture.is_held:
                 scroll_by_page(gesture.direction is 'right', True)
     elif gesture.type is 'prev-page':
-        scroll_by_page(True, False)
+        scroll_by_page(True, opts.paged_taps_scroll_by_screen)
     elif gesture.type is 'next-page':
-        scroll_by_page(False, False)
+        scroll_by_page(False, opts.paged_taps_scroll_by_screen)
     elif gesture.type is 'long-tap':
         r = word_at_point(gesture.viewport_x, gesture.viewport_y)
         if r:

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "de març 27, 2020" "4.13.0" "calibre"
+.TH "CALIBREDB" "1" "d’abril 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -875,16 +875,17 @@ Normalment aquesta ordre només actua en llibres que tenen fitxers OPF obsolets.
 .sp
 .nf
 .ft C
-calibredb clone camí/a/nova/biblioteca
+calibredb clone path/to/new/library
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Crea un clon de la biblioteca actual. Això crea una nova biblioteca buida que té les mateixes columnes personalitzades, biblioteques virtuals i altres configuracions que la biblioteca actual.
+Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
+same custom columns, Virtual libraries and other settings as the current library.
 .sp
-La biblioteca clonada no contindrà cap llibre. Si voleu crear un duplicat complet, incloent\-hi
-tots els llibres, simplement utilitzeu les eines del sistema de fitxers per copiar la carpeta de la biblioteca.
+The cloned library will contain no books. If you want to create a full duplicate, including
+all books, then simply use your filesystem tools to copy the library folder.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: "/some path/with spaces"
 .SH EMBED_METADATA

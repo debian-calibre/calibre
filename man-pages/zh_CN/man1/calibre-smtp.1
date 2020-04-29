@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SMTP" "1" "三月 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "四月 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .
@@ -35,22 +35,19 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .sp
 .nf
 .ft C
-calibre\-smtp [options] [from to text]
+calibre\-smtp [选项] [从到文本]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
-.sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+使用SMTP协议发送邮件。\fBcalibre\-smtp\(ga有两种操作模型。在“撰写”模式中，
+您可以指定“from to ”和“正文”，它们用于撰写和发送电子邮件。在筛选
+模式下，:command:\(gacalibre\-smtp\fP 从STDIN读取完整的电子邮件并发送。
+文本是电子邮件的正文。
+如果未指定文本，则会从STDIN读取完整的电子邮件。“from”是发件人的
+电子邮件地址，“to ”是收件人的电子邮件地址。 当从STDIN读取完整的
+电子邮件时，仅在SMTP协商中使用“从”和“到”电子邮件，则不修改邮件头。
 .sp
 每当向具有它们自己空间的:command:
 .nf

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "三月 27, 2020" "4.13.0" "calibre"
+.TH "CALIBREDB" "1" "四月 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -556,7 +556,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+指定用于从生成的目录中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#状态\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“状态”中排除值为“已存档”的图书。定义多个规则时，将应用所有规则。 默认: \fB"\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB"\fP 应用于AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -611,7 +611,7 @@ Specifies the rules used to exclude books from the generated catalog. The model 
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP Applies to: AZW3, EPUB, MOBI output formats
+指定用于包括表示已读书籍，收藏清单项目和其他用户 定前缀的前缀的规则。前缀规则的模型  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP)。 当定义了多个规则时，将使用第一个匹配规则 默认规则:\fB"\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB"\fP适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -850,8 +850,7 @@ calibredb backup_metadata [选项]
 单独备份元数据储存到数据库到每个 OPF 文件书库。
 此项默认自动发生,但是你可以运行此命令来重新生成 OPF 文件,还可以用 \-\-all 选项.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+注意，通常不需要这样做，因为OPF文件是备份的自动地，每次元数据更改时。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0
@@ -865,14 +864,15 @@ automatically, every time metadata is changed.
 .sp
 .nf
 .ft C
-calibredb clone path/to/new/library
+calibredb 拷贝到 path/to/new/library
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-创建当前图书库的克隆。创建一个全新的，没有书籍的图书库，和之前的图书库保持同样的定制的栏目，虚拟图书库，以及其他设置。
-这个克隆的图书库不包含任何书籍。如果你想要一个完整的复制，包括所有的书籍，那么，你只需要用系统提供的拷贝工具，拷贝整个图书库的目录就行了。
+创建当前书库的副本。它创建了一个新的、空的书库，它所有的自定义列、虚拟书库和其他设置与当前书库相同。
+.sp
+副本书库将没有任何书籍。如果您想要创建一个完整的副本书库，包括所有的书籍，那么只需使用您的文件系统工具来复制书库文件夹。
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -905,18 +905,14 @@ calibredb embed_metadata [options] book_id
 .sp
 .nf
 .ft C
-calibredb search [options] search expression
+calibredb搜索 [选项] 搜索表达式
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
-.sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: author:asimov title:robot
+搜索书库中指定的搜索项，返回与搜索表达式匹配的以逗号分隔的图书ID列表。输出格式对于输入格式接受ID列表的其他命令非常有用。
+搜索表达式可以是来自calibre强大的搜索查询语言中的任何内容，例如：author:asimov title:robot
 .sp
 每当向具有它们自己空间的calibredb传递参数时，用引号括起这些参数。例如: "/some path/with spaces"
 .INDENT 0.0

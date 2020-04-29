@@ -37,7 +37,7 @@ class TagBrowserMixin(object):  # {{{
         for text, func, args, cat_name in (
              (_('Authors'),
                         self.do_author_sort_edit, (self, None), 'authors'),
-             (_('Series'),
+             (ngettext('Series', 'Series', 2),
                         self.do_tags_list_edit, (None, 'series'), 'series'),
              (_('Publishers'),
                         self.do_tags_list_edit, (None, 'publisher'), 'publisher'),
@@ -281,7 +281,7 @@ class TagBrowserMixin(object):  # {{{
         Delete an item from some category.
         '''
         if restrict_to_book_ids:
-            msg = _('%s will be deleted from books in the virtual library. Are you sure?')%orig_name
+            msg = _('%s will be deleted from books in the Virtual library. Are you sure?')%orig_name
         else:
             msg = _('%s will be deleted from all books. Are you sure?')%orig_name
         if not question_dialog(self.tags_view,

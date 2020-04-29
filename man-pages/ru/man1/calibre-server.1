@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "марта 27, 2020" "4.13.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "апреля 24, 2020" "4.14.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -61,7 +61,7 @@ calibre через интернет. Вы можете указать пути �
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Выбрать тип используемой авторизации.       Установка режима авторизации HTTP для сервера. Установите \fB"\fPпростой\fB"\fP, если вы держите этот сервер за SSL\-прокси. Иначе, оставьте \fB"\fPавтоматический\fB"\fP, который будет использовать \fB"\fPпростой\fB"\fP, если SSL сконфигуировано, иначе будет использовать \fB"\fPdigest\fB"\fP\&.
+Выбрать тип используемой авторизации.       Установка используемого сервером режима проверки подлинности HTTP. Выберите «basic», если размещаете этот сервер за SSL\-прокси. Или оставьте «auto», который будет использовать «basic», если SSL настроен, а в противном случае — «digest».
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Zero\-copy передача файлов для увеличения произ�
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Интерфейс для прослушивания входящих соединений.    По умолчанию \- слушать на всех доступных интерфейсах. Вы можете изменить это, например, на \fB"\fP127.0.0.1\fB"\fP, чтобы ожидать соединения только от локальной машины, или на \fB"\fP::\fB"\fP, чтобы слушать все входящие соединения IPv6 и IPv4.
+Интерфейс для прослушивания входящих соединений.    The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -237,6 +237,11 @@ Zero\-copy передача файлов для увеличения произ�
 .TP
 .B \-\-timeout
 Время (в секундах) до отключения холостого соединения.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-trusted\-ips
+Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
 .UNINDENT
 .INDENT 0.0
 .TP

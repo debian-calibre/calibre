@@ -164,12 +164,13 @@ class Bool(Base):
         l.addWidget(c)
         c.clicked.connect(self.set_to_no)
 
-        t = _('Clear')
-        c = QPushButton(t, parent)
-        width = c.fontMetrics().boundingRect(t).width() + 7
-        c.setMaximumWidth(width)
-        l.addWidget(c)
-        c.clicked.connect(self.set_to_cleared)
+        if self.db.prefs.get('bools_are_tristate'):
+            t = _('Clear')
+            c = QPushButton(t, parent)
+            width = c.fontMetrics().boundingRect(t).width() + 7
+            c.setMaximumWidth(width)
+            l.addWidget(c)
+            c.clicked.connect(self.set_to_cleared)
 
         c = QLabel('', parent)
         c.setMaximumWidth(1)
@@ -416,7 +417,7 @@ class MultipleWidget(QWidget):
         self.tags_box = EditWithComplete(parent)
         layout.addWidget(self.tags_box, stretch=1000)
         self.editor_button = QToolButton(self)
-        self.editor_button.setToolTip(_('Open Item Editor'))
+        self.editor_button.setToolTip(_('Open item editor'))
         self.editor_button.setIcon(QIcon(I('chapters.png')))
         layout.addWidget(self.editor_button)
         self.setLayout(layout)
@@ -881,7 +882,7 @@ class BulkBase(Base):
         l.setStretchFactor(self.main_widget, 10)
         if add_tags_edit_button:
             self.edit_tags_button = QToolButton(parent)
-            self.edit_tags_button.setToolTip(_('Open Item Editor'))
+            self.edit_tags_button.setToolTip(_('Open item editor'))
             self.edit_tags_button.setIcon(QIcon(I('chapters.png')))
             l.addWidget(self.edit_tags_button)
         self.a_c_checkbox = QCheckBox(_('Apply changes'), w)
@@ -1272,7 +1273,7 @@ class RemoveTags(QWidget):
         self.tags_box.update_items_cache(values)
         layout.addWidget(self.tags_box, stretch=3)
         self.remove_tags_button = QToolButton(parent)
-        self.remove_tags_button.setToolTip(_('Open Item Editor'))
+        self.remove_tags_button.setToolTip(_('Open item editor'))
         self.remove_tags_button.setIcon(QIcon(I('chapters.png')))
         layout.addWidget(self.remove_tags_button)
         self.checkbox = QCheckBox(_('Remove all tags'), parent)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/behavior.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -166,7 +166,7 @@ class Ui_Form(object):
         self.opt_worker_process_priority.setItemText(0, _("Normal"))
         self.opt_worker_process_priority.setItemText(1, _("High"))
         self.opt_worker_process_priority.setItemText(2, _("Low"))
-        self.opt_edit_metadata_single_layout.setToolTip(_("Choose a different layout for the Edit Metadata dialog. The compact metadata layout favors editing custom metadata over changing covers and formats."))
+        self.opt_edit_metadata_single_layout.setToolTip(_("Choose a different layout for the Edit metadata dialog. The compact metadata layout favors editing custom metadata over changing covers and formats."))
         self.groupBox_5.setTitle(_("Preferred &input format order:"))
         self.input_up_button.setText(_("..."))
         self.input_down_button.setText(_("..."))
@@ -179,7 +179,7 @@ class Ui_Form(object):
         self.label_2.setText(_("Default network &timeout:"))
         self.opt_network_timeout.setToolTip(_("Set the default timeout for network fetches (i.e. anytime we go out to the internet to get information)"))
         self.opt_network_timeout.setSuffix(_(" seconds"))
-        self.opt_virtual_lib_on_startup.setToolTip(_("Use this virtual library on calibre startup if the current library is being used. Also applied when switching to this library. Note that this setting is per library. "))
+        self.opt_virtual_lib_on_startup.setToolTip(_("Use this Virtual library on calibre startup if the current library is being used. Also applied when switching to this library. Note that this setting is per library. "))
         self.reset_confirmation_button.setText(_("Reset all disabled &confirmation dialogs"))
         self.groupBox_3.setTitle(_("Use internal &viewer for:"))
         self.label_170.setText(_("Virtual library to apply when the current &library is opened:"))
