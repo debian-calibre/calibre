@@ -171,7 +171,7 @@ Device integration
 What devices does calibre support?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 calibre can directly connect to all the major (and most of the minor) e-book
-reading devices, smarthphones, tablets, etc.  In addition, using the
+reading devices, smartphones, tablets, etc.  In addition, using the
 :guilabel:`Connect to folder` function you can use it with any e-book reader
 that exports itself as a USB disk. Finally, you can connect wirelessly to any
 device that has a web browser using the calibre Content server.
@@ -209,6 +209,8 @@ Follow these steps to find the problem:
       no longer allows third party software to connect to their devices using a
       USB cable. Instead use a wireless connection, via the calibre Content
       server.
+    * If you are connecting a Kindle Fire HD or other Android device, read the note
+      under :ref:`android_usb`.
     * On macOS if you get permission errors when connecting a device to calibre, you can
       fix that by looking under :guilabel:`System Preferences > Security and
       Privacy > Privacy > Files and Folders`.
@@ -365,6 +367,8 @@ Android: Some examples (in no particular order):
 `Aldiko <https://play.google.com/store/apps/details?id=com.aldiko.android&hl=en>`_,
 `Kindle <https://play.google.com/store/apps/details?id=com.amazon.kindle&feature=related_apps>`_.
 
+.. _android_usb:
+
 Using a USB cable
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -381,9 +385,10 @@ utility, etc.
     USB cable. When you plugin in the USB cable you will get a popup
     notification. Make sure it says some thing like "Transferring Media files"
     or "MTP (Media Transfer mode)". If it does not, tap the notification, and
-    change the mode to Media Transfer (MTP).  Finally, you might get a popup on
-    the device every time calibre or the operating system actually tries to
-    connect to it, asking for permission, tap OK.
+    change the mode to Media Transfer (MTP).  You may need to restart calibre
+    at this point in order for your device to be recognized.  Finally, you
+    might get a popup on the device every time calibre or the operating system
+    actually tries to connect to it, asking for permission, tap OK.
 
 Over the air
 ^^^^^^^^^^^^^^
@@ -1038,7 +1043,7 @@ For many reasons:
     to see if you want to update once a year or so. There is a check box to
     turn off the update notification, on the update notification itself.
 
-  * calibre downloads currently use `about 100TB of bandwidth a month
+  * calibre downloads currently use `about 150TB of bandwidth a month
     <https://calibre-ebook.com/dynamic/downloads>`_. Implementing automatic
     updates would greatly increase that and end up costing thousands of dollars
     a month, which someone has to pay.

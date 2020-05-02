@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "aprīlis 24, 2020" "4.14.0" "calibre"
+.TH "CALIBREDB" "1" "maijs 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB OPCIJAS\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -145,7 +145,7 @@ Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāt
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Parole savienojumam ar calibre satura serveri. Lai nolasītu paroli no standarta ievades, izmantojiet īpašo vērtību: <stdin>. Lai nolasītu paroli no faila, izmantojiet: <f:/path/to/file> (t.i., <f: seko pilns ceļš uz failu un beidzas ar >). Nepieciešamas iepriekš norādītās leņķa iekavas, neaizmirstiet izvairīties no tām vai izmantot pēdiņas savam apvalkam.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,7 +169,7 @@ calibredb list [options]
 .UNINDENT
 .UNINDENT
 .sp
-Grāmatu saraksts, kas pieejams calibre datu bāzē.
+Pieejamais grāmatu saraksts calibre datu bāzē.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .INDENT 0.0
@@ -185,7 +185,7 @@ Lauki, kas jāuzrāda, iekļaujot grāmatas datu bāzē. Lauku sarakstu jāatdal
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Veido izvadi JSON formātā, kas ir vairāk piemērotas programmas šķirošanai. Ignorē līniju platumu un atdalītāju.
+Veido izvadi JSON formātā, kas ir vairāk piemērots programmas šķirošanai. Ignorē līniju platumu un atdalītāju.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -205,7 +205,7 @@ Prefikss visiem failu ceļiem. Pēc noklusējuma absolūtais ceļš uz bibliotē
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filtrēt rezultātus pēc meklēšanas vaicājuma. Par meklēšanas formātu, lūdzu, skatiet lietotāja rokasgrāmatā pieejamo dokumentāciju. Pēc noklusējuma nefiltrē.
+Filtrēt rezultātus pēc meklēšanas. Par meklēšanas formātu, lūdzu, skatiet lietotāja rokasgrāmatā pieejamo dokumentāciju. Pēc noklusējuma nefiltrē.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -304,7 +304,7 @@ Faila nosaukuma šablons, faili, kas atbilst šim šablonam tiks ignorēti, sken
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Pieņemt, ka katrā katalogā ir tikai viena loģiskā grāmata, un visi tajā esošie faili ir dažādu e\-grāmatu formātu grāmatas
+Pieņemt, ka katrā katalogā ir tikai viena loģiskā grāmata, un visi tajā esošie faili ir dažādi e\-grāmatu formāti
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -402,8 +402,8 @@ calibredb set_metadata [opcijas] id [/ceļš/uz/metadata.opf]
 Iestatiet metadatus, kas saglabāti calibre datubāzē grāmatai, kas identificēta ar id
 no OPF faila metadatu.opf. Id ir id numurs no meklēšanas komandas. Jūs
 varat ātri uztvert OPF formātu, izmantojot pārslēgšanos no \-\-as\-opf uz
-show_metadata komandu. Varat arī iestatīt atsevišķu lauku metadatus ar
-\-\-field opciju. Ja izmantojat opciju \-\-field, nav jānorāda
+show_metadata komandu. Varat arī iestatīt atsevišķu metadatu lauku ar
+\-\-field opciju. Izmantojot opciju \-\-field, nav jānorāda
 OPF fails.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
@@ -467,7 +467,7 @@ Ar komatu atdalītu formātu saraksts katras grāmatas saglabāšanai. Pēc nokl
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Ziņojuma progress
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -511,7 +511,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Kataloga eksportēšana formātā, kas norādīts ceļā / uz / galamērķa paplašinājumu.
+Kataloga eksportēšana formātā, kas norādīts ceļā/uz/mērķa paplašinājumu.
 Opcijas kontrolē, kā ieraksti tiek parādīti ģenerētajā katalogā.
 Ņemiet vērā, ka dažādi kataloga formāti atbalsta dažādas opcijas.
 .sp
@@ -528,14 +528,14 @@ Ar komatu atdalīts ID saraksts datu bāzes katalogā. Ja uzrādīts, :option:
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filtrēt rezultātus pēc meklēšanas vaicājuma. Meklēšanas formātu, skatiet Lietotāja rokasgrāmatā, ar meklēšanu saistīto dokumentāciju. Noklusējums: bez filtrēšanas
+Filtrēt rezultātus pēc meklēšanas. Meklēšanas formātu, skatiet Lietotāja rokasgrāmatā, ar meklēšanu saistīto dokumentāciju. Noklusējums: bez filtrēšanas
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
 Parādīt detalizētu izejas informāciju. Noderīga atkļūdošanai
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB OPCIJAS
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -681,7 +681,7 @@ Opcija, kas pielāgo, kā tiks šajā slejā interpretēta datu vārdnīca. Tā 
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Šī sleja saglabā birkas kā datus (piemēram vairākus ar komatiem atdalītas vērtības). Piemēro tikai tad, ja datu tips ir teksts.
+Šī sleja saglabā birkas kā datus (piemēram, vairākus ar komatiem atdalītas vērtības). Piemēro tikai tad, ja datu tips ir teksts.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -760,10 +760,10 @@ calibredb restore_database [opcijas]
 .UNINDENT
 .sp
 Atjaunojiet šo datubāzi no metadatiem, kas tiek glabāti OPF failos katrā
-calibre bibliotēkas direktorija. Tas ir noderīgi, ja jūsu metadata.db fails
+calibre bibliotēkas direktorijā. Tas ir noderīgi, ja jūsu metadata.db fails
 ir bojāts.
 .sp
-BRĪDINĀJUMS: šī komanda pilnīgi atjauno jūsu datubāzi. Jūs zaudēsiet
+BRĪDINĀJUMS: Šī komanda pilnīgi atjauno jūsu datubāzi. Jūs zaudēsiet
 visus saglabātos meklējumus, lietotāju kategorijas, spraudņus, grāmatas pārveidošanas
 iestatījumus un pielāgotās receptes. Atjaunotie metadati būs tikpat precīzi kā tie
 kas būs atrodami OPF failos.
@@ -821,7 +821,7 @@ calibredb list_categories [opcijas]
 .UNINDENT
 .UNINDENT
 .sp
-Sagatavo atskaiti par kategorijām datubāzē.
+Sagatavo kategoriju atskaiti datubāzē.
 Informācija ir ekvivalenta tai, kas parādīta birku rūtī.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
@@ -887,11 +887,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Izveidot tekošās bibliotēkas klonu. Tādējādi tiek izveidota jauna, tukša bibliotēka, kurā ir visas
+pielāgotās kolonnas, virtuālās bibliotēkas un citi iestatījumi, kā pašreizējā bibliotēkā.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Klonēta bibliotēka nesatur grāmatas. Ja vēlaties izveidot pilnu dublikātu, tostarp
+visas grāmatas, tad izmantojiet failu sistēmas instrumentus, lai kopētu bibliotēkas mapi.
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH EMBED_METADATA
@@ -936,7 +936,7 @@ Meklēt bibliotēkā norādīto meklēšanas terminu, atgriežot ar komatu atdal
 id grāmatu sarakstu, atbilstošu meklēšanas izteiksmei. Izvades formātā ir noderīgas
 ziņas citām komandām, kas pieņem ieejas ID sarakstu.
 .sp
-Meklēšanas izteiksme var būt jebkas, sākot no spēcīgās calibre meklēšanas vaicājumu
+Meklēšanas izteiksme var būt jebkas, sākot no spēcīgās calibre meklēšanas
 valodas, piemēram: author:asimov title:robot
 .sp
 Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"

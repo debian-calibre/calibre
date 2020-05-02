@@ -248,6 +248,8 @@ class ViewerBridge(Bridge):
     reload_book = from_js()
     toggle_toc = from_js()
     toggle_bookmarks = from_js()
+    toggle_highlights = from_js()
+    new_bookmark = from_js()
     toggle_inspector = from_js()
     toggle_lookup = from_js()
     show_search = from_js()
@@ -438,6 +440,8 @@ class WebView(RestartingWebEngineView):
     search_result_not_found = pyqtSignal(object)
     find_next = pyqtSignal(object)
     toggle_bookmarks = pyqtSignal()
+    toggle_highlights = pyqtSignal()
+    new_bookmark = pyqtSignal()
     toggle_inspector = pyqtSignal()
     toggle_lookup = pyqtSignal()
     quit = pyqtSignal()
@@ -489,6 +493,8 @@ class WebView(RestartingWebEngineView):
         self.bridge.search_result_not_found.connect(self.search_result_not_found)
         self.bridge.find_next.connect(self.find_next)
         self.bridge.toggle_bookmarks.connect(self.toggle_bookmarks)
+        self.bridge.toggle_highlights.connect(self.toggle_highlights)
+        self.bridge.new_bookmark.connect(self.new_bookmark)
         self.bridge.toggle_inspector.connect(self.toggle_inspector)
         self.bridge.toggle_lookup.connect(self.toggle_lookup)
         self.bridge.quit.connect(self.quit)
@@ -542,12 +548,6 @@ class WebView(RestartingWebEngineView):
         ans = self._host_widget
         if ans is not None and not sip.isdeleted(ans):
             return ans
-
-    def change_zoom_by(self, steps=1):
-        # TODO: Add UI for this
-        ss = vprefs['session_data'].get('zoom_step_size') or 20
-        amt = (ss / 100) * steps
-        self._page.setZoomFactor(max(0.25, min(self._page.zoomFactor() + amt, 5)))
 
     def render_process_died(self):
         if self.dead_renderer_error_shown:

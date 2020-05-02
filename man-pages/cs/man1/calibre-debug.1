@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "dubna 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "května 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,19 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Různá rozhraní příkazového řádku užitečná pro ladění Calibre. Bez voleb spouští
+tento příkaz vložený překladač Pythonu. Můžete také spustit hlavní grafické
+rozhraní Calibre, prohlížeč Calibre a editor Calibre v režimu ladění.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Také obsahuje rozhraní pro různé kusy Calibre, které neobsahují vyhrazené
+nástroje příkazového řádku, jako jsou částečné vkládání písma, nástroj Rozdílů
+e\-knih a tak dále.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+Můžete také použít \fBcalibre\-debug\fP ke spuštění samostatných skriptů. K tomu ho použijte takto:
+.sp
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Všechno za \fB\-\-\fP je předáno skriptu.
 .sp
 Kdykoliv předáváte parametry pro \fBcalibre\-debug\fP, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .SH [VOLBY]

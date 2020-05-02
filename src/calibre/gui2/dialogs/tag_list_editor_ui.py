@@ -94,7 +94,7 @@ class Ui_TagListEditor(object):
         self.search_button.setToolTip(_("Display items containing the search string"))
         self.search_button.setText(_("&Find"))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
-"      current Virtual library. Applied items not in the VL will be marked\n"
+"      current Virtual library. Applied items not in the Virtual library will be marked\n"
 "      \"not on any book\".</p>"))
         self.apply_vl_checkbox.setText(_("&Show only available items in current Virtual library"))
         self.delete_button.setToolTip(_("Delete item from database. This will unapply the item from all books and then remove it from the database."))

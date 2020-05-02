@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-DEBUG" "1" "aprīlis 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "maijs 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .
@@ -41,22 +41,19 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre viewer and the calibre editor in debug mode.
+Dažādas noderīgas komandrindas saskarnes calibre atkļūdošanai. Bez opcijām,
+šī komanda startē iegulto Python tulku. Var arī palaist galveno
+calibre GUI, calibre skatītāju un calibre redaktoru atkļūdošanas režīmā.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Tajā ir arī saskarnes ar dažādiem calibre bitiem, kuriem nav tādu
+īpašu komandrindas rīku, piemēram, fontu pakārtošana, E\-grāmatu diff rīks un tā tālāk
+tālāk.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
+Varat arī izmantot \fBcalibre\-debug\fP, lai palaistu savrupus skriptus. Lai to izdarītu, izmantojiet to šādi:
+.sp
 \fBcalibre\-debug\fP myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script.
+Viss pēc tam \fB\-\-\fP tiek nodots skriptam.
 .sp
 Katru reizi, kad jūs nododat argumentus \fBcalibre\-debug\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: "/some path/with spaces"
 .SH [OPCIJAS]
@@ -103,7 +100,7 @@ Atvērt grāmatu norādītajā direktorijā. Izmantot: \-x file.epub output_dir 
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export dir and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export directory and libraries. The special keyword \fB"\fPall\fB"\fP can be used to export all libraries.
+Eksportējiet visus calibre datus (grāmatas/iestatījumus/spraudņus). Parasti jums tiks prasīts eksportēt direktoriju un bibliotēkas. Varat arī norādīt tos kā komandrindas argumentus, lai izlaistu jautājumus. Eksporta direktorijām un bibliotēkām izmantojiet absolūtos ceļus. Īpašo atslēgvārdu \fB"\fPall\fB"\fP var izmantot visu bibliotēku eksportēšanai.
 .UNINDENT
 .INDENT 0.0
 .TP

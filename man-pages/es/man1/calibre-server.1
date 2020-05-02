@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "abril 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "mayo 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -148,7 +148,7 @@ Campos de metadatos definidos por el usuario ignorados.     Lista de campos de m
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-La interfaz en la que esperar conexiones.   The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+La interfaz en la que esperar conexiones.   De manera predeterminada se esperan conexiones en todas las interfaces IPv4 disponibles. Puede cambiar esto a, por ejemplo, «127.0.0.1» para esperar conexiones sólo del equipo local, o a «::» para esperar todas las conexiones IPv6 e IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -238,7 +238,7 @@ Tiempo (en segundos) tras el que se cierra una conexión inactiva.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Permitir hacer cambios a las conexiones sin autenticación desde direcciones IP específicas.         Normalmente, si no activa la autenticación, el servidor funciona en modo de sólo lectura, para que los usuarios anónimos no puedan hacer cambios en la biblioteca. Esta opción permite hacer cambios a cualquiera que se conecte desde las direcciones IP especificadas. Debe ser una lista de direcciones o especificaciones de red separadas por comas. Esto es útil si quiere ejecutar el servidor sin autenticación y usar calibredb para hacer cambios en las bibliotecas de calibre. Tenga en cuenta que si activa esta opción permitirá que cualquiera que se conecte desde las direcciones IP especificadas pueda hacer cambios en las bibliotecas de calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
