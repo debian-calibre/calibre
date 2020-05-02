@@ -148,7 +148,7 @@ class Ui_TagCategories(object):
         self.rename_category_button.setToolTip(_("Rename the current category to what is in the box"))
         self.rename_category_button.setText(_("..."))
         self.apply_vl_checkbox.setToolTip(_("<p>Show items in the Available items box only if they appear in the\n"
-"            current Virtual library. Applied items not in the VL will be marked\n"
+"            current Virtual library. Applied items not in the Virtual library will be marked\n"
 "            \"not on any book\".</p>"))
         self.apply_vl_checkbox.setText(_("&Show only available items in current Virtual library"))
         self.label.setText(_("&Available items"))

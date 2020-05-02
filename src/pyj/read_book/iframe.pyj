@@ -30,7 +30,8 @@ from read_book.flow_mode import (
 from read_book.footnotes import is_footnote_link
 from read_book.globals import (
     annot_id_uuid_map, clear_annot_id_uuid_map, current_book, current_layout_mode,
-    current_spine_item, runtime, set_boss, set_current_spine_item, set_layout_mode
+    current_spine_item, runtime, set_boss, set_current_spine_item, set_layout_mode,
+    set_toc_anchor_map
 )
 from read_book.mathjax import apply_mathjax
 from read_book.paged_mode import (
@@ -112,6 +113,7 @@ class IframeBoss:
         handlers = {
             'change_color_scheme': self.change_color_scheme,
             'change_font_size': self.change_font_size,
+            'viewer_font_size_changed': self.viewer_font_size_changed,
             'change_number_of_columns': self.change_number_of_columns,
             'number_of_columns_changed': self.number_of_columns_changed,
             'change_scroll_speed': self.change_scroll_speed,
@@ -202,6 +204,7 @@ class IframeBoss:
         self.content_ready = False
         clear_annot_id_uuid_map()
         reset_highlight_counter()
+        set_toc_anchor_map()
         self.replace_history_on_next_cfi_update = True
         self.book = current_book.book = data.book
         self.reference_mode_enabled = data.reference_mode_enabled
@@ -220,6 +223,7 @@ class IframeBoss:
             self.anchor_funcs = flow_anchor_funcs
             self.auto_scroll_action = flow_auto_scroll_action
             self.scroll_to_extend_annotation = flow_annotation_scroll
+            self.ensure_selection_visible = ensure_selection_visible
             paged_auto_scroll_action('stop')
         else:
             self.do_layout = paged_layout
@@ -231,6 +235,7 @@ class IframeBoss:
             self.anchor_funcs = paged_anchor_funcs
             self.auto_scroll_action = paged_auto_scroll_action
             self.scroll_to_extend_annotation = paged_annotation_scroll
+            self.ensure_selection_visible = snap_to_selection
             flow_auto_scroll_action('stop')
         update_settings(data.settings)
         self.keyboard_shortcut_map = create_shortcut_map(data.settings.keyboard_shortcuts)
@@ -312,6 +317,9 @@ class IframeBoss:
                 # in the standalone viewer this is a separate event as
                 # apply_font_size() is a no-op
                 self.relayout_on_font_size_change()
+
+    def viewer_font_size_changed(self, data):
+        self.relayout_on_font_size_change()
 
     def change_number_of_columns(self, data):
         if current_layout_mode() is 'flow':
@@ -617,12 +625,6 @@ class IframeBoss:
         refnum = data.refnum
         if refnum?:
             self.scroll_to_ref(refnum)
-
-    def ensure_selection_visible(self):
-        if current_layout_mode() is 'flow':
-            ensure_selection_visible()
-        else:
-            snap_to_selection()
 
     def find(self, data, from_load):
         if data.searched_in_spine:

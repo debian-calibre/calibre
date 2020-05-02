@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "квітня 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "травня 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -152,7 +152,7 @@ calibre\-server [параметри] [шлях до теки бібліотек�
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Інтерфейс, на якому слід очікувати на з’єднання.    The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Інтерфейс, на якому слід очікувати на з’єднання.    Типово, програма очікує на з’єднання на усіх інтерфейсах IPv4. Ви можете змінити цю поведінку: наприклад, визначити адресу «127.0.0.1», щоб програма очікувала на з’єднання лише на комп’ютері, на якому запущено сервер, або вказати «:::», щоб сервер очікував на всі вхідні з’єднання IPv6 і IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -242,7 +242,7 @@ calibre\-server [параметри] [шлях до теки бібліотек�
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Дозволити з’єднання із вказаних IP\-адрес для внесення змін без розпізнавання.       Зазвичай, якщо розпізнавання не увімкнено, сервер працюватиму у режимі лише читання, так, щоб забороняти анонімним користувачам вносити зміни до ваших бібліотек calibre. За допомогою цього пункту можна дозволити вносити зміни будь\-кому, хто встановлює з’єднання з вкзаних IP\-адрес. Адреси має бути вказано у форматі списку відокремлених комами адрес або специфікацій мережі. Це корисно, якщо ви хочете, щоб сервер працював без розпізнавання, але не хочете втрачати можливості вносити зміни до ваших бібліотек calibre за допомогою calibredb. Зауважте, що вмикання цього параметра означає, що будь\-хто, хто з\fB\(aq\fPєднується із вказаних IP\-адрес, зможе вносити зміни до ваших бібліотек calibre.
 .UNINDENT
 .INDENT 0.0
 .TP

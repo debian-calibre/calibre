@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "EBOOK-CONVERT" "1" "april 24, 2020" "4.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maj 02, 2020" "4.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .
@@ -216,7 +216,7 @@ Bädda in varje typsnitt som refereras i inmatningsdokumentet som inte redan är
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Bädda in den angivna typsnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-typsnitt som används för boken. Om indatadokumentet specificerar sina egna typsnitt, kan de åsidosätta detta bastypsnitt. Du kan använda informationsalternativet filterstil för att ta bort typsnitt från inmatningsdokumentet. Observera att bädda in typsnitt endast fungerar med vissa utdataformat, främst EPUB, AZW3 och DOCX.
+Bädda in den angivna typsnittsfamiljen i boken. Här anges \fB"\fPbas\fB"\fP\-typsnitt som används för boken. Om indatadokumentet specificerar sina egna typsnitt, kan de åsidosätta detta bastypsnitt. Du kan använda informationsalternativet filterformat för att ta bort typsnitt från inmatningsdokumentet. Observera att bädda in typsnitt endast fungerar med vissa utdataformat, främst EPUB, AZW3 och DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -231,7 +231,7 @@ Antingen sökvägen till en CSS\-formatmall eller rå CSS. Denna CSS\-kod kommer
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-En kommaseparerad lista med CSS\-egenskaper som kommer att tas bort från alla CSS\-regler. Detta är användbart om förekomsten av en viss stilinformationen hindrar den från att åsidosättas på enheten. Till exempel: font\-family,color,margin\-left,margin\-right
+En kommaseparerad lista över CSS\-egenskaper som kommer att tas bort från alla CSS\-formatregler. Detta är användbart om förekomsten av viss formatinformation förhindrar att den åsidosätts på din enhet. Till exempel: font\-family,color,margin\-left,margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,7 +311,7 @@ Använd delmängd av alla inbäddade typsnitt. Varje inbäddat typsnitt reducera
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Sökvägen till en fil som innehåller regler för att förändra CSS\-format i denna bok. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i calibre gränssnittet. Gå till det i \fB"\fPUtseende och känsla\->Omvandla stilar\fB"\fP avsnittet i konverteringsdialogrutan. När du har skapat reglerna, kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
+Sökvägen till en fil som innehåller regler för att förändra CSS\-format i denna bok. Det enklaste sättet att skapa en sådan fil är att använda guiden för att skapa regler i calibre gränssnittet. Gå till det i \fB"\fPUtseende och känsla\->Omvandla format\fB"\fP avsnittet i konverteringsdialogrutan. När du har skapat reglerna, kan du använda knappen \fB"\fPExportera\fB"\fP för att spara dem till en fil.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -373,7 +373,7 @@ Aktivera heuristisk bearbetning. Denna möjlighet måste anges för någon heuri
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Skala som används för att bestämma längden på vilken en rad bör har ha för undvika radbrytning. Giltiga värden är ett decimaltal mellan 0 och 1. Standard är 0,4, strax under median värde av radlängden. Om bara några rader i dokumentet kräver korrigering för radbrytning bör detta värde sänkas
+Skala som används för att bestämma längden på vilken en rad bör har ha för undvika radbrytning. Giltiga värden är en decimal mellan 0 och 1. Standardvärdet är 0,4, precis under medianradens längd. Om bara några få rader i dokumentet kräver korrigering för radbrytning bör detta värde minskas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -429,7 +429,7 @@ Ett XPath\-uttryck för att upptäcka kapitelrubrikerna. Standardinställningen 
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före varje nytt kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före nytt kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmärkning, och om värdet \fB"\fPboth\fB"\fP anges, kommer både sidbrytningar och blankrader att markera nya kapitel.
+Anger hur upptäckta kapitel markeras. Värdet \fB"\fPpagebreak\fB"\fP infogar en sidbrytning före kapitel. Värdet \fB"\fPrule\fB"\fP infogar en blankrad före kapitel. Värdet \fB"\fPnone\fB"\fP inaktiverar kapitelmarkering och om värdet \fB"\fPboth\fB"\fP anges kommer både sidbrytningar och blankrader att markera kapitel.
 .UNINDENT
 .INDENT 0.0
 .TP

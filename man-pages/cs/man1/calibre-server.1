@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "dubna 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "května 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -151,7 +151,7 @@ Ignorovaná uživatelem definovaná pole metadat.      Čárkami oddělený sezn
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Rozhraní, na kterém naslouchat pro připojení.       The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Rozhraní, na kterém naslouchat pro připojení.       Výchozí je naslouchat na všech dostupných rozhraních IPv4. Můžete to změnit, například na \fB"\fP127.0.0.1\fB"\fP pro naslouchání pouze pro připojení z místního počítače, nebo na \fB"\fP::\fB"\fP pro naslouchání pro všechna příchozí připojení IPv6 a IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Cesta k souboru soukromého klíče SSL.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Povolit neověřeným připojením z konkrétní adresy IP provádět změny.         Obyčejně, pokud nezapnete ověřování, server pracuje v režimu pouze pro čtení, aby neumožnil anonymním uživatelům provádět změny ve vašich knihovnách Calibre. Tato volba umožňuje provádět změny komukoliv připojenému z konkrétní adresy IP. Musí to být čárkami oddělený seznam adres nebo specifikací sítě. To je užitečné, pokud chcete spustit server bez ověřování, ale stále používáte calibredb k provádění změn ve vašich knihovnách Calibre. Pamatujte, že zapnutí této volby znamená, že kdokoliv připojený ze zadaných adres IP může provádět změny ve vašich knihovnách Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP

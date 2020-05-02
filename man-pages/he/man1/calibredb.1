@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "אפריל 24, 2020" "4.14.0" "calibre"
+.TH "CALIBREDB" "1" "מאי 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -79,14 +79,14 @@ To connect to a running Content server, pass the URL of the server to the
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+\fI\%אפשרויות גלובליות\fP
 .IP \(bu 2
 \fI\%list\fP
 .IP \(bu 2
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM DIRECTORIES\fP
+\fI\%מוסיף מתיקיות\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -104,7 +104,7 @@ details and examples.
 \fI\%catalog\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+\fI\%EPUB אפשרויות\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%saved_searches\fP
@@ -131,7 +131,7 @@ details and examples.
 .IP \(bu 2
 \fI\%search\fP
 .UNINDENT
-.SH GLOBAL OPTIONS
+.SH אפשרויות גלובליות
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
@@ -150,7 +150,7 @@ Password for connecting to a calibre Content server. To read the password from s
 .INDENT 0.0
 .TP
 .B \-\-username
-Username for connecting to a calibre Content server
+שם משתמש להתחברות לשרת calibre Content server
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,7 +210,7 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-separator
-The string used to separate fields. Default is a space.
+המחרוזת המשמשת להפרדת שדות. ברירת המחדל היא רווח.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -288,28 +288,28 @@ A comma separated list of languages (best to use ISO639 language codes, though s
 .B \-\-title, \-t
 הגדר את הכותרת של הספר/ים שנוספ/ו
 .UNINDENT
-.SS ADDING FROM DIRECTORIES
+.SS מוסיף מתיקיות
 .sp
 אפשרויות לניהול הוספת ספרים מתיקיות. כברירת מחדל רק קבצים בעלי סיומות של קבצי ebook מוכרים יתווספו.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning directories for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+ביטוי (glob) המייצג שם קובץ, בעת סריקה המערכת תוסיף קבצים המתאימים לביטוי זה, גם אם הם אינו e\-book מטיפוס מוכר. ניתן לציין מספר פעמים עבור מספר ביטויים.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning directories for files. Can be specified multiple times for multiple patterns. For e.g.: *.pdf will ignore all pdf files
+ביטוי (glob) המייצג שם קובץ, בעת סריקה המערכת תתעלם מקבצים המתאימים לביטוי זה . למשל, עבור הביטוי *.pdf, המערכת תתעלם מכל קבצי pdf
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each directory has only a single logical book and that all files in it are different e\-book formats of that book
+יש להניח כי בכל תיקייה יש רק ספר אחר, ושכל הקבצים בתיקייה הם אותו הספר בפורמט שונה
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process directories recursively
+עבד תיקיות באופן רקורסיבי
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -329,7 +329,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the recycle bin
+אל תשתמש בסל המחזור
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -349,7 +349,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+אל תחליף את הפורמט אם הוא כבר קיים
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -467,7 +467,7 @@ Comma separated list of formats to save for each book. By default all available 
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+דווח על התקדמות
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -477,7 +477,7 @@ Report progress
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single directory
+יצא את כל הספרים לתיקייה אחת
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -529,9 +529,9 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Show detailed output information. Useful for debugging
+הצג פלט מידע מפורט. שימושי עבור debugging
 .UNINDENT
-.SS EPUB OPTIONS
+.SS EPUB אפשרויות
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
@@ -718,7 +718,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
-Do not ask for confirmation
+אל תבקש אישור
 .UNINDENT
 .SH SET_CUSTOM
 .INDENT 0.0
@@ -741,7 +741,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-If the column stores multiple values, append the specified values to the existing ones, instead of replacing them.
+אם העמודה מאחסנת מספר ערכים, הוסף את הערכים המצויינים לערכים קיימים, במקום ליצור ערכים חדשים
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -768,7 +768,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
-Really do the recovery. The command will not run unless this option is specified.
+באמת בצע את השיחזור. הפקודה לא תרוץ אלא אם כן אפשרות זו מסומנת.
 .UNINDENT
 .SH CHECK_LIBRARY
 .INDENT 0.0
@@ -834,7 +834,7 @@ Comma\-separated list of category lookup names. Default: all
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+סוג קובץ CSV להכנה. אפשרויות: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -939,7 +939,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+מספר התוצאות המקסימלי להחזרה. ברירת המחדל היא כל התוצאות.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

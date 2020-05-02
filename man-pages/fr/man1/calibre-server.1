@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "avril 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "mai 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -151,7 +151,7 @@ Champs de métadonnées définis par l\fB\(aq\fPutilisateur ignorés.    Liste d
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-L\fB\(aq\fPinterface sur laquelle écouter pour les connexions.       The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+L\fB\(aq\fPinterface sur laquelle écouter pour les connexions.       Le comportement par défaut est d\fB\(aq\fPécouter sur toutes les interfaces IPv4 disponibles. Vous pouvez changer cela en, par exemple, \fB"\fP127.0.0.1\fB"\fP pour écouter uniquement après des connections à partir de la machine locale, ou en \fB"\fP::\fB"\fP pour toutes les connexions IPv6 et IPv4 entrantes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Temps (en secondes) après lequel une connexion inactive est fermée.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Autoriser les connexions non authentifiées à partir d\fB\(aq\fPadresses IP spécifiques pour effectuer des modifications.     Normalement, si vous n\fB\(aq\fPactivez pas l\fB\(aq\fPauthentification, le serveur fonctionne en mode lecture seule, afin de ne pas permettre à des utilisateurs anonymes d\fB\(aq\fPapporter des modifications à vos bibliothèques calibre. Cette option permet à toute personne se connectant à partir des adresses IP spécifiées d\fB\(aq\fPeffectuer des modifications. Il doit s\fB\(aq\fPagir d\fB\(aq\fPune liste d\fB\(aq\fPadresses ou de spécifications de réseau séparées par des virgules. Cette option est utile si vous voulez faire fonctionner le serveur sans authentification mais que vous utilisez tout de même calibredb pour modifier vos bibliothèques de calibre. Notez que l\fB\(aq\fPactivation de cette option signifie que toute personne se connectant à partir des adresses IP spécifiées peut apporter des modifications à vos bibliothèques calibre.
 .UNINDENT
 .INDENT 0.0
 .TP

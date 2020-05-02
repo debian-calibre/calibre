@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "april 24, 2020" "4.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "maj 02, 2020" "4.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -152,7 +152,7 @@ Ignorera användardefinierade metadatafält.  Kommaseparerad lista med användar
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Gränssnittet för att lyssna efter anslutningar.     The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+Gränssnittet för att lyssna efter anslutningar.     Standard är att lyssna på alla tillgängliga IPv4\-gränssnitt. Du kan ändra det här till exempelvis \fB"\fP127.0.0.1\fB"\fP för att bara lyssna på anslutningar från den lokala maskinen, eller till \fB"\fP::\fB"\fP för att lyssna på alla inkommande IPv6\- och IPv4\-anslutningar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -242,7 +242,7 @@ Tid (i sekunder) efter en inaktiv anslutning stängs.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Tillåt icke\-autentiserade anslutningar från specifika IP\-adresser att göra ändringar.       Normalt, om du inte aktiverar autentisering, fungerar servern i skrivskyddat läge, så att anonyma användare inte kan göra ändringar i dina calibre\-bibliotek. Det här alternativ tillåter alla som ansluter från de angivna IP\-adresserna att göra ändringar. Måste vara en kommaseparerad lista med adress\- eller nätverksspecifikationer. Detta är användbart om du vill köra servern utan autentisering men ändå använder calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att aktivering av det här alternativet innebär att alla som ansluter från de angivna IP\-adresserna kan göra ändringar i dina calibre\-bibliotek.
 .UNINDENT
 .INDENT 0.0
 .TP
