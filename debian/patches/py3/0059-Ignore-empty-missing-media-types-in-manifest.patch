@@ -1,14 +1,14 @@
-From 75e8746b30fb8ce96015e88e9d5bd4d0e34189a9 Mon Sep 17 00:00:00 2001
+From ec9e37766968bf274cc2f0f24f4d33dc147bb0cf Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 18:18:05 +0530
-Subject: [PATCH 059/112] Ignore empty/missing media-types in manifest
+Subject: [PATCH 059/119] Ignore empty/missing media-types in manifest
 
 ---
  src/calibre/ebooks/oeb/polish/container.py | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/src/calibre/ebooks/oeb/polish/container.py b/src/calibre/ebooks/oeb/polish/container.py
-index b424f0fbd6..77b2855b55 100644
+index ac4ebff4ba..7e93064da9 100644
 --- a/src/calibre/ebooks/oeb/polish/container.py
 +++ b/src/calibre/ebooks/oeb/polish/container.py
 @@ -296,9 +296,10 @@ class Container(ContainerBase):  # {{{

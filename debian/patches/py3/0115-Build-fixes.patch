@@ -1,0 +1,89 @@
+From 2f39c9617902dea6faa96c9a244c40e332fc122c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 1 May 2020 19:52:52 +0530
+Subject: [PATCH 115/119] Build fixes
+
+---
+ bypy/macos/util.c                  |  1 -
+ setup/extensions.json              |  2 +-
+ src/calibre/utils/lzx/compressor.c |  4 +++-
+ src/calibre/utils/lzx/lzxmodule.c  |  3 ++-
+ src/calibre/utils/lzx/lzxmodule.h  | 12 ------------
+ 5 files changed, 6 insertions(+), 16 deletions(-)
+ delete mode 100644 src/calibre/utils/lzx/lzxmodule.h
+
+diff --git a/bypy/macos/util.c b/bypy/macos/util.c
+index 4a9dd35072..64928528ff 100644
+--- a/bypy/macos/util.c
++++ b/bypy/macos/util.c
+@@ -32,7 +32,6 @@ get_paths(char *path) {
+     for (unsigned i = 0; i < 3; i++) {
+         char *t = rindex(path, '/');
+         if (t == NULL) fatal("Failed to determine bundle path.");
+->>>>>>> The Apple build is working
+         *t = '\0';
+     }
+     if (strstr(path, "/calibre.app/Contents/") != NULL) {
+diff --git a/setup/extensions.json b/setup/extensions.json
+index 298732d7ca..bc802d9565 100644
+--- a/setup/extensions.json
++++ b/setup/extensions.json
+@@ -75,7 +75,7 @@
+         "name": "lzx",
+         "sources": "calibre/utils/lzx/lzxmodule.c calibre/utils/lzx/compressor.c calibre/utils/lzx/lzxd.c calibre/utils/lzx/lzc.c calibre/utils/lzx/lzxc.c",
+         "inc_dirs": "calibre/utils/lzx",
+-        "headers": "calibre/utils/lzx/lzc.h calibre/utils/lzx/lzxmodule.h calibre/utils/lzx/system.h calibre/utils/lzx/lzxc.h calibre/utils/lzx/lzxd.h calibre/utils/lzx/mspack.h"
++        "headers": "calibre/utils/lzx/lzc.h calibre/utils/lzx/system.h calibre/utils/lzx/lzxc.h calibre/utils/lzx/lzxd.h calibre/utils/lzx/mspack.h"
+     },
+     {
+         "name": "freetype",
+diff --git a/src/calibre/utils/lzx/compressor.c b/src/calibre/utils/lzx/compressor.c
+index 605ca515f5..c9fba107d1 100644
+--- a/src/calibre/utils/lzx/compressor.c
++++ b/src/calibre/utils/lzx/compressor.c
+@@ -7,7 +7,9 @@
+ #include <Python.h>
+ #include <structmember.h>
+ #include <lzxc.h>
+-#include <lzxmodule.h>
++
++extern PyObject *LZXError;
++extern PyTypeObject CompressorType;
+ 
+ #define BUFFER_INIT(buffer)                                             \
+     do {                                                                \
+diff --git a/src/calibre/utils/lzx/lzxmodule.c b/src/calibre/utils/lzx/lzxmodule.c
+index 2f437aeed0..fd19975674 100644
+--- a/src/calibre/utils/lzx/lzxmodule.c
++++ b/src/calibre/utils/lzx/lzxmodule.c
+@@ -9,7 +9,8 @@
+ #include <mspack.h>
+ #include <lzxd.h>
+ 
+-#include <lzxmodule.h>
++extern PyObject *LZXError;
++extern PyTypeObject CompressorType;
+ 
+ static char lzx_doc[] =
+     "Provide basic LZX compression and decompression using the code from\n"
+diff --git a/src/calibre/utils/lzx/lzxmodule.h b/src/calibre/utils/lzx/lzxmodule.h
+deleted file mode 100644
+index 05159deb3b..0000000000
+--- a/src/calibre/utils/lzx/lzxmodule.h
++++ /dev/null
+@@ -1,12 +0,0 @@
+-/* __license__   = 'GPL v3'
+- * __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
+- *
+- * Common declarations for Python module C glue code.
+- */
+-#pragma once
+-
+-#include <Python.h>
+-
+-extern PyObject *LZXError;
+-extern PyTypeObject CompressorType;
+-
+-- 
+2.26.2
+

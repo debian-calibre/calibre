@@ -1,7 +1,7 @@
-From f58ae9a06690459c80abf084ac28976a9f43cf81 Mon Sep 17 00:00:00 2001
+From 91fe5601e06c8b0666132f7bf04f0adf6277ae4d Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 14:03:58 +0530
-Subject: [PATCH 006/112] Remove py3 conditionals
+Subject: [PATCH 006/119] Remove py3 conditionals
 
 ---
  manual/conf.py                           |    3 +-
@@ -785,7 +785,7 @@ index 453e14395a..5aaab1052d 100644
              self.codes[code[0]] = b'%s%s' % (self.codes[code[0]], self.codes[code[1]])
  
 diff --git a/src/calibre/ebooks/html/input.py b/src/calibre/ebooks/html/input.py
-index 60ab60797e..9f12a4f613 100644
+index 8e85b23dde..ae9511b81f 100644
 --- a/src/calibre/ebooks/html/input.py
 +++ b/src/calibre/ebooks/html/input.py
 @@ -17,7 +17,7 @@ from calibre.ebooks.oeb.base import urlunquote
@@ -1285,7 +1285,7 @@ index e2fa475200..7ab5cb31bc 100644
      def clean_user_categories(self):
          user_cats = self.prefs.get('user_categories', {})
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 955440fd95..b2878f11fd 100644
+index 8219345e32..b1a4c95f53 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
 @@ -2,8 +2,6 @@
@@ -1306,7 +1306,7 @@ index 955440fd95..b2878f11fd 100644
  from calibre.customize.ui import all_input_formats
  from calibre.ptempfile import TemporaryDirectory
  from calibre import CurrentDir
-@@ -1143,7 +1141,7 @@ def write_appdata(key, entry, base, translators):
+@@ -1191,7 +1189,7 @@ def write_appdata(key, entry, base, translators):
      for para in entry['description']:
          description.append(E.p(para))
          for lang, t in iteritems(translators):
@@ -1315,7 +1315,7 @@ index 955440fd95..b2878f11fd 100644
              if tp != para:
                  description.append(E.p(tp))
                  description[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
-@@ -1160,7 +1158,7 @@ def write_appdata(key, entry, base, translators):
+@@ -1208,7 +1206,7 @@ def write_appdata(key, entry, base, translators):
          type='desktop'
      )
      for lang, t in iteritems(translators):
@@ -3704,7 +3704,7 @@ index 083530d325..543dca745b 100644
                  return address, Listener(address=address, authkey=authkey, backlog=backlog)
              except EnvironmentError as err:
 diff --git a/src/calibre/utils/localization.py b/src/calibre/utils/localization.py
-index 83b3f9fd08..72882a6b10 100644
+index 11189f099f..50303c464c 100644
 --- a/src/calibre/utils/localization.py
 +++ b/src/calibre/utils/localization.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
