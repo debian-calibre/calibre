@@ -7,26 +7,45 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from itertools import chain
 
 from PyQt5.Qt import (
-    QItemSelectionModel, QListWidget, QListWidgetItem, Qt, QVBoxLayout, QWidget
+    QHBoxLayout, QIcon, QItemSelectionModel, QLabel, QListWidget, QListWidgetItem,
+    QPushButton, Qt, QVBoxLayout, QWidget, pyqtSignal
 )
 
-from calibre.gui2 import error_dialog
+from calibre.constants import plugins
+from calibre.gui2 import error_dialog, question_dialog
 from calibre.gui2.viewer.search import SearchInput
 from polyglot.builtins import range
 
 
 class Highlights(QListWidget):
 
+    jump_to_highlight = pyqtSignal(object)
+
     def __init__(self, parent=None):
         QListWidget.__init__(self, parent)
-        self.setFocusPolicy(Qt.NoFocus)
         self.setSpacing(2)
+        pi = plugins['progress_indicator'][0]
+        pi.set_no_activate_on_click(self)
+        self.itemActivated.connect(self.item_activated)
+        self.uuid_map = {}
 
     def load(self, highlights):
         self.clear()
+        self.uuid_map = {}
         for h in highlights or ():
-            i = QListWidgetItem(h['highlighted_text'], self)
-            i.setData(Qt.UserRole, h)
+            txt = h.get('highlighted_text')
+            if not h.get('removed') and txt:
+                i = QListWidgetItem(txt, self)
+                i.setData(Qt.UserRole, h)
+                self.uuid_map[h['uuid']] = self.count() - 1
+
+    def refresh(self, highlights):
+        h = self.current_highlight
+        self.load(highlights)
+        if h is not None:
+            idx = self.uuid_map.get(h['uuid'])
+            if idx is not None:
+                self.set_current_row(idx)
 
     def find_query(self, query):
         cr = self.currentRow()
@@ -50,20 +69,54 @@ class Highlights(QListWidget):
     def set_current_row(self, row):
         self.setCurrentRow(row, QItemSelectionModel.ClearAndSelect)
 
+    def item_activated(self, item):
+        self.jump_to_highlight.emit(item.data(Qt.UserRole))
+
+    @property
+    def current_highlight(self):
+        i = self.currentItem()
+        if i is not None:
+            return i.data(Qt.UserRole)
+
 
 class HighlightsPanel(QWidget):
 
+    jump_to_cfi = pyqtSignal(object)
+    request_highlight_action = pyqtSignal(object, object)
+
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
+        self.setFocusPolicy(Qt.NoFocus)
         self.l = l = QVBoxLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
         self.search_input = si = SearchInput(self, 'highlights-search')
         si.do_search.connect(self.search_requested)
         l.addWidget(si)
 
+        la = QLabel(_('Double click to jump to an entry'))
+        la.setWordWrap(True)
+        l.addWidget(la)
+
         self.highlights = h = Highlights(self)
         l.addWidget(h)
+        h.jump_to_highlight.connect(self.jump_to_highlight)
         self.load = h.load
+        self.refresh = h.refresh
+
+        self.h = h = QHBoxLayout()
+        l.addLayout(h)
+
+        def button(icon, text, tt, target):
+            b = QPushButton(QIcon(I(icon)), text, self)
+            b.setToolTip(tt)
+            b.setFocusPolicy(Qt.NoFocus)
+            b.clicked.connect(target)
+            return b
+
+        self.add_button = button('plus.png', _('Add'), _('Create a new highlight'), self.add_highlight)
+        self.edit_button = button('edit_input.png', _('Edit'), _('Edit the selected highlight'), self.edit_highlight)
+        self.remove_button = button('trash.png', _('Remove'), _('Remove the selected highlight'), self.remove_highlight)
+        h.addWidget(self.add_button), h.addWidget(self.edit_button), h.addWidget(self.remove_button)
 
     def search_requested(self, query):
         if not self.highlights.find_query(query):
@@ -71,4 +124,29 @@ class HighlightsPanel(QWidget):
                 'No highlights match the search: {}').format(query.text), show=True)
 
     def focus(self):
-        self.highlights_list.setFocus(Qt.OtherFocusReason)
+        self.highlights.setFocus(Qt.OtherFocusReason)
+
+    def jump_to_highlight(self, highlight):
+        self.request_highlight_action.emit(highlight['uuid'], 'goto')
+
+    def no_selected_highlight(self):
+        error_dialog(self, _('No selected highlight'), _(
+            'No highlight is currently selected'), show=True)
+
+    def edit_highlight(self):
+        h = self.highlights.current_highlight
+        if h is None:
+            return self.no_selected_highlight()
+        self.request_highlight_action.emit(h['uuid'], 'edit')
+
+    def remove_highlight(self):
+        h = self.highlights.current_highlight
+        if h is None:
+            return self.no_selected_highlight()
+        if question_dialog(self, _('Are you sure?'), _(
+            'Are you sure you want to delete this highlight permanently?')
+        ):
+            self.request_highlight_action.emit(h['uuid'], 'delete')
+
+    def add_highlight(self):
+        self.request_highlight_action.emit(None, 'create')

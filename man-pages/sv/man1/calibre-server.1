@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maj 02, 2020" "4.15.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "maj 15, 2020" "4.16.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -87,7 +87,7 @@ Välj standardläge för boklistan.    Ställ in standardläget för boklistan s
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minsta storlek för svar att använda vid datakomprimering (i bytes).
+Minsta storlek för svar att använda vid datakomprimering (i byte).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -117,12 +117,12 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Återgång till att automatiskt upptäcka gränssnitt.  Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är detta alternativ aktiverat.
+Återgång till automatiskt detekterat gränssnitt.    Om av någon anledning servern inte kan binda till gränssnittet som anges i listen_on alternativet, så kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är detta alternativ aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Tillåt inte autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
+Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i läsläge, så att inte anonyma användare kan göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla ansluta från samma dator som servern körs för att göra ändringar. Det här är användbart om du vill köra servern utan autentisering, men använd fortfarande calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet innebär det att ett program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är detta alternativ inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -227,17 +227,17 @@ Total tid i sekunder att vänta på ren avstängning.
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Sökväg till SSL\-certifikatfilen.
+Sökväg till SSL\-certifikatfil.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Sökväg till privata SSL\-nyckelfilen.
+Sökväg till privat SSL\-nyckelfil.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Tid (i sekunder) efter en inaktiv anslutning stängs.
+Tid (i sekunder) varefter en inaktiv anslutning stängs.
 .UNINDENT
 .INDENT 0.0
 .TP
