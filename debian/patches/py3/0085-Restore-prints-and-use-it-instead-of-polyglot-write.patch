@@ -4,20 +4,20 @@ Date: Fri, 13 Dec 2019 18:01:55 +0530
 Subject: [PATCH 085/119] Restore prints and use it instead of polyglot write
 
 ---
- src/calibre/__init__.py       |  2 +-
- src/calibre/prints.py         | 31 ++++++++++++++++++++++++++
- src/calibre/srv/tests/loop.py |  1 -
- src/calibre/srv/utils.py      | 25 +++++----------------
- src/calibre/utils/logging.py  | 41 ++++++++++++++---------------------
- src/calibre/utils/terminal.py | 10 ++-------
+ src/calibre/__init__.py       |    2 +-
+ src/calibre/prints.py         |   31 +++++++++++++++++++++++++++++++
+ src/calibre/srv/tests/loop.py |    1 -
+ src/calibre/srv/utils.py      |   25 +++++--------------------
+ src/calibre/utils/logging.py  |   41 ++++++++++++++++-------------------------
+ src/calibre/utils/terminal.py |   10 ++--------
  6 files changed, 55 insertions(+), 55 deletions(-)
  create mode 100644 src/calibre/prints.py
 
-diff --git a/src/calibre/__init__.py b/src/calibre/__init__.py
-index 9b78feb4bc..25a13ffac1 100644
+Index: b/src/calibre/__init__.py
+===================================================================
 --- a/src/calibre/__init__.py
 +++ b/src/calibre/__init__.py
-@@ -22,6 +22,7 @@ from calibre.constants import (iswindows, isosx, islinux, isfrozen,
+@@ -22,6 +22,7 @@ from calibre.constants import (iswindows
          filesystem_encoding, plugins, config_dir)
  from calibre.startup import winutil, winutilerror
  from calibre.utils.icu import safe_chr
@@ -25,7 +25,7 @@ index 9b78feb4bc..25a13ffac1 100644
  
  if False:
      # Prevent pyflakes from complaining
-@@ -138,7 +139,6 @@ def sanitize_file_name(name, substitute='_'):
+@@ -138,7 +139,6 @@ def sanitize_file_name(name, substitute=
  
  
  sanitize_file_name2 = sanitize_file_name_unicode = sanitize_file_name
@@ -33,9 +33,8 @@ index 9b78feb4bc..25a13ffac1 100644
  
  
  class CommandLineError(Exception):
-diff --git a/src/calibre/prints.py b/src/calibre/prints.py
-new file mode 100644
-index 0000000000..dba67df599
+Index: b/src/calibre/prints.py
+===================================================================
 --- /dev/null
 +++ b/src/calibre/prints.py
 @@ -0,0 +1,31 @@
@@ -70,8 +69,8 @@ index 0000000000..dba67df599
 +        kw['end'] = as_unicode(kw.get('end', '\n'))
 +
 +    return print(*a, **kw)
-diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index ad24bd61c2..ecb889b1cc 100644
+Index: b/src/calibre/srv/tests/loop.py
+===================================================================
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
 @@ -36,7 +36,6 @@ class LoopTest(BaseTest):
@@ -82,8 +81,8 @@ index ad24bd61c2..ecb889b1cc 100644
                  self.ae(ssize, os.path.getsize(fname))
                  return ssize
  
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index a04f24022c..4bb811b8bf 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
 @@ -12,7 +12,6 @@ from operator import itemgetter
@@ -92,9 +91,9 @@ index a04f24022c..4bb811b8bf 100644
  from calibre.constants import iswindows
 -from calibre.utils.terminal import polyglot_write
  from calibre.srv.errors import HTTPNotFound
- from calibre.utils.config_base import tweaks
  from calibre.utils.localization import get_translator
-@@ -322,36 +321,22 @@ class RotatingStream(object):
+ from calibre.utils.socket_inheritance import set_socket_inherit
+@@ -314,36 +313,22 @@ class RotatingStream(object):
  
      def set_output(self):
          if iswindows:
@@ -135,7 +134,7 @@ index a04f24022c..4bb811b8bf 100644
          self.rollover()
  
      def rename(self, src, dest):
-@@ -369,7 +354,7 @@ class RotatingStream(object):
+@@ -361,7 +346,7 @@ class RotatingStream(object):
                  raise
  
      def rollover(self):
@@ -144,8 +143,8 @@ index a04f24022c..4bb811b8bf 100644
              return
          self.stream.close()
          for i in range(self.history - 1, 0, -1):
-diff --git a/src/calibre/utils/logging.py b/src/calibre/utils/logging.py
-index 182d54235d..6ba30840db 100644
+Index: b/src/calibre/utils/logging.py
+===================================================================
 --- a/src/calibre/utils/logging.py
 +++ b/src/calibre/utils/logging.py
 @@ -15,9 +15,8 @@ import traceback
@@ -243,8 +242,8 @@ index 182d54235d..6ba30840db 100644
  
      def dump(self):
          return [self.data, self.plain_text, self.last_col]
-diff --git a/src/calibre/utils/terminal.py b/src/calibre/utils/terminal.py
-index 47232974d3..817f3bc6ea 100644
+Index: b/src/calibre/utils/terminal.py
+===================================================================
 --- a/src/calibre/utils/terminal.py
 +++ b/src/calibre/utils/terminal.py
 @@ -5,8 +5,9 @@ __license__   = 'GPL v3'
@@ -258,7 +257,7 @@ index 47232974d3..817f3bc6ea 100644
  from calibre.constants import iswindows
  from polyglot.builtins import iteritems, range, zip
  
-@@ -101,13 +102,6 @@ def colored(text, fg=None, bg=None, bold=False):
+@@ -101,13 +102,6 @@ def colored(text, fg=None, bg=None, bold
      return prefix + text + suffix
  
  
@@ -272,6 +271,3 @@ index 47232974d3..817f3bc6ea 100644
  class Detect(object):
  
      def __init__(self, stream):
--- 
-2.26.2
-

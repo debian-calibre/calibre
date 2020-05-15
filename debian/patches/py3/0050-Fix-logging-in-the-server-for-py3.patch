@@ -4,11 +4,11 @@ Date: Thu, 5 Dec 2019 10:19:38 +0530
 Subject: [PATCH 050/119] Fix logging in the server for py3
 
 ---
- src/calibre/srv/utils.py | 12 ++++++++++--
+ src/calibre/srv/utils.py |   12 ++++++++++--
  1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index 70409a4058..a04f24022c 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
 @@ -12,6 +12,7 @@ from operator import itemgetter
@@ -17,9 +17,9 @@ index 70409a4058..a04f24022c 100644
  from calibre.constants import iswindows
 +from calibre.utils.terminal import polyglot_write
  from calibre.srv.errors import HTTPNotFound
- from calibre.utils.config_base import tweaks
  from calibre.utils.localization import get_translator
-@@ -335,9 +336,16 @@ class RotatingStream(object):
+ from calibre.utils.socket_inheritance import set_socket_inherit
+@@ -327,9 +328,16 @@ class RotatingStream(object):
      def flush(self):
          self.stream.flush()
  
@@ -38,6 +38,3 @@ index 70409a4058..a04f24022c 100644
          # line bufferring only works with text mode streams
          end = kwargs.get('end', b'\n')
          if isinstance(end, unicode_type):
--- 
-2.26.2
-

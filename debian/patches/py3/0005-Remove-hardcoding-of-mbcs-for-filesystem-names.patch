@@ -4,21 +4,21 @@ Date: Mon, 18 Nov 2019 08:16:02 +0530
 Subject: [PATCH 005/119] Remove hardcoding of mbcs for filesystem names
 
 ---
- src/calibre/ebooks/metadata/pdf.py     |   4 +-
- src/calibre/gui2/preferences/server.py |   4 +-
- src/calibre/gui2/win_file_dialogs.py   |   6 +-
- src/calibre/ptempfile.py               |   2 +-
- src/calibre/srv/utils.py               |  11 +-
- src/calibre/startup.py                 |  67 ++------
- src/calibre/utils/config_base.py       |   2 -
- src/calibre/utils/filenames.py         |   4 +-
- src/calibre/utils/img.py               |  13 +-
- src/calibre/utils/lock.py              |   4 +-
- src/polyglot/builtins.py               | 215 ++++++++-----------------
+ src/calibre/ebooks/metadata/pdf.py     |    4 
+ src/calibre/gui2/preferences/server.py |    4 
+ src/calibre/gui2/win_file_dialogs.py   |    6 
+ src/calibre/ptempfile.py               |    2 
+ src/calibre/srv/utils.py               |   11 -
+ src/calibre/startup.py                 |   67 +---------
+ src/calibre/utils/config_base.py       |    2 
+ src/calibre/utils/filenames.py         |    4 
+ src/calibre/utils/img.py               |   13 -
+ src/calibre/utils/lock.py              |    4 
+ src/polyglot/builtins.py               |  215 ++++++++++-----------------------
  11 files changed, 93 insertions(+), 239 deletions(-)
 
-diff --git a/src/calibre/ebooks/metadata/pdf.py b/src/calibre/ebooks/metadata/pdf.py
-index fb2376d08d..c1464b2f3e 100644
+Index: b/src/calibre/ebooks/metadata/pdf.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/pdf.py
 +++ b/src/calibre/ebooks/metadata/pdf.py
 @@ -8,7 +8,7 @@ import os, subprocess, shutil, re
@@ -30,7 +30,7 @@ index fb2376d08d..c1464b2f3e 100644
  from calibre.ptempfile import TemporaryDirectory
  from calibre.ebooks.metadata import (
      MetaInformation, string_to_authors, check_isbn, check_doi)
-@@ -99,8 +99,6 @@ def page_images(pdfpath, outputdir='.', first=1, last=1, image_format='jpeg', pr
+@@ -99,8 +99,6 @@ def page_images(pdfpath, outputdir='.',
  
  
  def is_pdf_encrypted(path_to_pdf):
@@ -39,8 +39,8 @@ index fb2376d08d..c1464b2f3e 100644
      pdfinfo = get_tools()[0]
      raw = subprocess.check_output([pdfinfo, path_to_pdf])
      q = re.search(br'^Encrypted:\s*(\S+)', raw, flags=re.MULTILINE)
-diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
-index 8614df87b2..e252cf34c5 100644
+Index: b/src/calibre/gui2/preferences/server.py
+===================================================================
 --- a/src/calibre/gui2/preferences/server.py
 +++ b/src/calibre/gui2/preferences/server.py
 @@ -2,8 +2,6 @@
@@ -61,8 +61,8 @@ index 8614df87b2..e252cf34c5 100644
          return exe
  
      def startup_shortcut_path():
-diff --git a/src/calibre/gui2/win_file_dialogs.py b/src/calibre/gui2/win_file_dialogs.py
-index bf308a3824..7e65411279 100644
+Index: b/src/calibre/gui2/win_file_dialogs.py
+===================================================================
 --- a/src/calibre/gui2/win_file_dialogs.py
 +++ b/src/calibre/gui2/win_file_dialogs.py
 @@ -30,10 +30,8 @@ def is_ok():
@@ -94,8 +94,8 @@ index bf308a3824..7e65411279 100644
          data.append(serialize_string('FILENAME', filename))
      if only_dirs:
          file_types = ()  # file types not allowed for dir only dialogs
-diff --git a/src/calibre/ptempfile.py b/src/calibre/ptempfile.py
-index 8f94eb8e81..762b5d6225 100644
+Index: b/src/calibre/ptempfile.py
+===================================================================
 --- a/src/calibre/ptempfile.py
 +++ b/src/calibre/ptempfile.py
 @@ -125,7 +125,7 @@ def base_dir():
@@ -107,11 +107,11 @@ index 8f94eb8e81..762b5d6225 100644
              # Widows temp vars set to a path not encodable in mbcs
              # Use our temp dir
              tempfile.tempdir = _base_dir
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index 153b8150c1..957dfaaa0c 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
-@@ -21,7 +21,7 @@ from calibre.utils.shared_file import share_open, raise_winerror
+@@ -20,7 +20,7 @@ from calibre.utils.shared_file import sh
  from polyglot.builtins import iteritems, map, range
  from polyglot import reprlib
  from polyglot.http_cookie import SimpleCookie
@@ -120,7 +120,7 @@ index 153b8150c1..957dfaaa0c 100644
  from polyglot.urllib import parse_qs, quote as urlquote
  from polyglot.binary import as_hex_unicode as encode_name, from_hex_unicode as decode_name
  
-@@ -531,10 +531,5 @@ def get_use_roman():
+@@ -523,10 +523,5 @@ def get_use_roman():
      return _use_roman
  
  
@@ -133,8 +133,8 @@ index 153b8150c1..957dfaaa0c 100644
 -        return as_unicode(time.strftime(fmt), errors='replace')
 +def fast_now_strftime(fmt):
 +    return as_unicode(time.strftime(fmt), errors='replace')
-diff --git a/src/calibre/startup.py b/src/calibre/startup.py
-index ea7837600b..a20f7cb124 100644
+Index: b/src/calibre/startup.py
+===================================================================
 --- a/src/calibre/startup.py
 +++ b/src/calibre/startup.py
 @@ -7,7 +7,7 @@ __docformat__ = 'restructuredtext en'
@@ -234,8 +234,8 @@ index ea7837600b..a20f7cb124 100644
      # Ensure that all temp files/dirs are created under a calibre tmp dir
      from calibre.ptempfile import base_dir
      try:
-diff --git a/src/calibre/utils/config_base.py b/src/calibre/utils/config_base.py
-index 04e65bd95b..fffd1354c2 100644
+Index: b/src/calibre/utils/config_base.py
+===================================================================
 --- a/src/calibre/utils/config_base.py
 +++ b/src/calibre/utils/config_base.py
 @@ -1,8 +1,6 @@
@@ -247,8 +247,8 @@ index 04e65bd95b..fffd1354c2 100644
  __license__   = 'GPL v3'
  __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/utils/filenames.py b/src/calibre/utils/filenames.py
-index 1eb67758b5..b510222b19 100644
+Index: b/src/calibre/utils/filenames.py
+===================================================================
 --- a/src/calibre/utils/filenames.py
 +++ b/src/calibre/utils/filenames.py
 @@ -490,9 +490,9 @@ if iswindows:
@@ -263,11 +263,11 @@ index 1eb67758b5..b510222b19 100644
          move_file(a, b)
  
  
-diff --git a/src/calibre/utils/img.py b/src/calibre/utils/img.py
-index a1b2ddc9e2..8a63ce39f2 100644
+Index: b/src/calibre/utils/img.py
+===================================================================
 --- a/src/calibre/utils/img.py
 +++ b/src/calibre/utils/img.py
-@@ -17,7 +17,7 @@ from PyQt5.QtCore import QBuffer, QByteArray, Qt
+@@ -17,7 +17,7 @@ from PyQt5.QtCore import QBuffer, QByteA
  from PyQt5.QtGui import QColor, QImage, QImageReader, QImageWriter, QPixmap, QTransform
  
  from calibre import fit_image, force_unicode
@@ -287,7 +287,7 @@ index a1b2ddc9e2..8a63ce39f2 100644
          with lopen(os.path.join(tdir, 'input.jxr'), 'wb') as f:
              f.write(data)
          cmd = [get_exe_path('JxrDecApp'), '-i', 'input.jxr', '-o', 'output.tif']
-@@ -542,13 +542,6 @@ def run_optimizer(file_path, cmd, as_filter=False, input_data=None):
+@@ -542,13 +542,6 @@ def run_optimizer(file_path, cmd, as_fil
              cmd[cmd.index(q)] = r
          if not as_filter:
              repl(True, iname), repl(False, oname)
@@ -301,8 +301,8 @@ index a1b2ddc9e2..8a63ce39f2 100644
          stdin = subprocess.PIPE if as_filter else None
          stderr = subprocess.PIPE if as_filter else subprocess.STDOUT
          creationflags = 0x08 if iswindows else 0
-diff --git a/src/calibre/utils/lock.py b/src/calibre/utils/lock.py
-index c1115af6cb..b3bdf064f6 100644
+Index: b/src/calibre/utils/lock.py
+===================================================================
 --- a/src/calibre/utils/lock.py
 +++ b/src/calibre/utils/lock.py
 @@ -2,8 +2,6 @@
@@ -323,8 +323,8 @@ index c1115af6cb..b3bdf064f6 100644
      try:
          h = win32file.CreateFileW(
              path,
-diff --git a/src/polyglot/builtins.py b/src/polyglot/builtins.py
-index 66f8f2827a..caf2d254a0 100644
+Index: b/src/polyglot/builtins.py
+===================================================================
 --- a/src/polyglot/builtins.py
 +++ b/src/polyglot/builtins.py
 @@ -2,8 +2,6 @@
@@ -336,7 +336,7 @@ index 66f8f2827a..caf2d254a0 100644
  import os
  import sys
  
-@@ -46,157 +44,80 @@ def only_unicode_recursive(x, encoding='utf-8', errors='strict'):
+@@ -46,157 +44,80 @@ def only_unicode_recursive(x, encoding='
      if isinstance(x, (set, list, tuple, frozenset)):
          return type(x)(only_unicode_recursive(i, encoding, errors) for i in x)
      if isinstance(x, dict):
@@ -393,92 +393,39 @@ index 66f8f2827a..caf2d254a0 100644
 -        if isinstance(x, bytes):
 -            x = x.decode('utf-8')
 -        return x
-+def reraise(tp, value, tb=None):
-+    try:
-+        if value is None:
-+            value = tp()
-+        if value.__traceback__ is not tb:
-+            raise value.with_traceback(tb)
-+        raise value
-+    finally:
-+        value = None
-+        tb = None
- 
+-
 -    def exec_path(path, ctx=None):
 -        ctx = ctx or {}
 -        with open(path, 'rb') as f:
 -            code = f.read()
 -        code = compile(code, f.name, 'exec')
 -        exec(code, ctx)
- 
+-
 -    def cmp(a, b):
 -        return (a > b) - (a < b)
-+import builtins
- 
+-
 -    def int_to_byte(x):
 -        return bytes((x,))
-+zip = builtins.zip
-+map = builtins.map
-+filter = builtins.filter
-+range = builtins.range
- 
+-
 -    def reload(module):
 -        import importlib
 -        return importlib.reload(module)
-+codepoint_to_chr = chr
-+unicode_type = str
-+string_or_bytes = str, bytes
-+string_or_unicode = str
-+long_type = int
-+raw_input = input
-+getcwd = os.getcwd
-+getenv = os.getenv
-+
-+
-+def error_message(exc):
-+    args = getattr(exc, 'args', None)
-+    if args and isinstance(args[0], unicode_type):
-+        return args[0]
-+    return unicode_type(exc)
-+
-+
-+def iteritems(d):
-+    return iter(d.items())
-+
-+
-+def itervalues(d):
-+    return iter(d.values())
-+
-+
-+def environ_item(x):
-+    if isinstance(x, bytes):
-+        x = x.decode('utf-8')
-+    return x
-+
-+
-+def exec_path(path, ctx=None):
-+    ctx = ctx or {}
-+    with open(path, 'rb') as f:
-+        code = f.read()
-+    code = compile(code, f.name, 'exec')
-+    exec(code, ctx)
-+
-+
-+def cmp(a, b):
-+    return (a > b) - (a < b)
-+
-+
-+def int_to_byte(x):
-+    return bytes((x, ))
- 
+-
 -else:
 -    exec("""def reraise(tp, value, tb=None):
--    try:
++def reraise(tp, value, tb=None):
+     try:
 -        raise tp, value, tb
--    finally:
--        tb = None
++        if value is None:
++            value = tp()
++        if value.__traceback__ is not tb:
++            raise value.with_traceback(tb)
++        raise value
+     finally:
++        value = None
+         tb = None
 -""")
--
+ 
 -    from future_builtins import zip, map, filter  # noqa
 -    range = xrange
 -    import __builtin__ as builtins
@@ -557,11 +504,61 @@ index 66f8f2827a..caf2d254a0 100644
 -                if x is not a[-1]:
 -                    f.write(sep)
 -        f.write(as_bytes(kw.get('end', '\n')))
--
++import builtins
++
++zip = builtins.zip
++map = builtins.map
++filter = builtins.filter
++range = builtins.range
++
++codepoint_to_chr = chr
++unicode_type = str
++string_or_bytes = str, bytes
++string_or_unicode = str
++long_type = int
++raw_input = input
++getcwd = os.getcwd
++getenv = os.getenv
++
++
++def error_message(exc):
++    args = getattr(exc, 'args', None)
++    if args and isinstance(args[0], unicode_type):
++        return args[0]
++    return unicode_type(exc)
++
++
++def iteritems(d):
++    return iter(d.items())
++
++
++def itervalues(d):
++    return iter(d.values())
++
++
++def environ_item(x):
++    if isinstance(x, bytes):
++        x = x.decode('utf-8')
++    return x
++
++
++def exec_path(path, ctx=None):
++    ctx = ctx or {}
++    with open(path, 'rb') as f:
++        code = f.read()
++    code = compile(code, f.name, 'exec')
++    exec(code, ctx)
++
++
++def cmp(a, b):
++    return (a > b) - (a < b)
++
++
++def int_to_byte(x):
++    return bytes((x, ))
++
+ 
 -    return print
 +def reload(module):
 +    import importlib
 +    return importlib.reload(module)
--- 
-2.26.2
-

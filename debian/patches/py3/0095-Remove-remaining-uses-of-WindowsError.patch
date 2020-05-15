@@ -4,17 +4,17 @@ Date: Thu, 19 Dec 2019 09:14:03 +0530
 Subject: [PATCH 095/119] Remove remaining uses of WindowsError
 
 ---
- src/calibre/srv/utils.py                     |  6 ++++--
- src/calibre/utils/shared_file.py             | 12 ++++++------
- src/calibre/utils/winreg/default_programs.py | 16 ++++++++--------
- src/calibre/utils/winreg/lib.py              |  6 +++---
+ src/calibre/srv/utils.py                     |    6 ++++--
+ src/calibre/utils/shared_file.py             |   12 ++++++------
+ src/calibre/utils/winreg/default_programs.py |   16 ++++++++--------
+ src/calibre/utils/winreg/lib.py              |    6 +++---
  4 files changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index bff60e698c..7aa18a6985 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
-@@ -434,12 +434,14 @@ class HandleInterrupt(object):  # {{{
+@@ -426,12 +426,14 @@ class HandleInterrupt(object):  # {{{
      def __enter__(self):
          if iswindows:
              if self.SetConsoleCtrlHandler(self.handle, 1) == 0:
@@ -31,8 +31,8 @@ index bff60e698c..7aa18a6985 100644
  # }}}
  
  
-diff --git a/src/calibre/utils/shared_file.py b/src/calibre/utils/shared_file.py
-index ec379c4eff..2f122f141e 100644
+Index: b/src/calibre/utils/shared_file.py
+===================================================================
 --- a/src/calibre/utils/shared_file.py
 +++ b/src/calibre/utils/shared_file.py
 @@ -71,13 +71,13 @@ if iswindows:
@@ -55,8 +55,8 @@ index ec379c4eff..2f122f141e 100644
  
      def os_open(path, flags, mode=0o777, share_flags=FILE_SHARE_VALID_FLAGS):
          '''
-diff --git a/src/calibre/utils/winreg/default_programs.py b/src/calibre/utils/winreg/default_programs.py
-index 55b55c0665..c8343f9ca4 100644
+Index: b/src/calibre/utils/winreg/default_programs.py
+===================================================================
 --- a/src/calibre/utils/winreg/default_programs.py
 +++ b/src/calibre/utils/winreg/default_programs.py
 @@ -198,8 +198,8 @@ def get_prog_id_map(base, key_path):
@@ -103,8 +103,8 @@ index 55b55c0665..c8343f9ca4 100644
                  continue
          for prog_id in itervalues(k):
              if prog_id and prog_id not in seen_prog_ids:
-diff --git a/src/calibre/utils/winreg/lib.py b/src/calibre/utils/winreg/lib.py
-index 71298b3e94..65af342bbc 100644
+Index: b/src/calibre/utils/winreg/lib.py
+===================================================================
 --- a/src/calibre/utils/winreg/lib.py
 +++ b/src/calibre/utils/winreg/lib.py
 @@ -252,8 +252,8 @@ class Key(object):
@@ -127,6 +127,3 @@ index 71298b3e94..65af342bbc 100644
                  return
          try:
              name_buf = ctypes.create_unicode_buffer(16385)
--- 
-2.26.2
-

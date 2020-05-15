@@ -4,14 +4,14 @@ Date: Fri, 13 Dec 2019 20:45:15 +0530
 Subject: [PATCH 086/119] Dont use \r\n in logfiles on windows
 
 ---
- src/calibre/srv/utils.py | 2 +-
+ src/calibre/srv/utils.py |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index 4bb811b8bf..bff60e698c 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
-@@ -321,7 +321,7 @@ class RotatingStream(object):
+@@ -313,7 +313,7 @@ class RotatingStream(object):
  
      def set_output(self):
          if iswindows:
@@ -20,6 +20,3 @@ index 4bb811b8bf..bff60e698c 100644
          else:
              # see https://bugs.python.org/issue27805
              self.stream = open(os.open(self.filename, os.O_WRONLY|os.O_APPEND|os.O_CREAT|os.O_CLOEXEC), 'w')
--- 
-2.26.2
-
