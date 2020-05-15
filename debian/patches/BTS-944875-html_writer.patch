@@ -1,0 +1,22 @@
+commit 6d030410a363123c5152d4b2d1a056bac8bffa46 (HEAD -> master)
+Author: Piotr Ożarowski <piotr@debian.org>
+Date:   Tue May 12 12:32:01 2020 +0200
+
+    use deprecated setRequestInterceptor if setUrlRequestInterceptor is not available
+
+diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
+index c3abe969b..293ee3341 100644
+--- a/src/calibre/ebooks/pdf/html_writer.py
++++ b/src/calibre/ebooks/pdf/html_writer.py
+@@ -276,7 +276,10 @@ class RenderManager(QObject):
+         ans.setHttpUserAgent(ua)
+         s = ans.settings()
+         s.setDefaultTextEncoding('utf-8')
+-        ans.setUrlRequestInterceptor(self.interceptor)
++        try:
++            ans.setUrlRequestInterceptor(self.interceptor)
++        except AttributeError:
++            ans.setRequestInterceptor(self.interceptor)
+         self.profile = ans
+ 
+         self.opts = opts
