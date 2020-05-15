@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/metadata_sources.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -54,7 +54,16 @@ class Ui_Form(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.fields_view = QtWidgets.QListView(self.groupBox_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.fields_view.sizePolicy().hasHeightForWidth())
+        self.fields_view.setSizePolicy(sizePolicy)
+        self.fields_view.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.fields_view.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
+        self.fields_view.setFlow(QtWidgets.QListView.LeftToRight)
+        self.fields_view.setProperty("isWrapping", True)
+        self.fields_view.setResizeMode(QtWidgets.QListView.Adjust)
         self.fields_view.setObjectName("fields_view")
         self.gridLayout_2.addWidget(self.fields_view, 0, 0, 1, 2)
         self.select_all_button = QtWidgets.QPushButton(self.groupBox_2)
@@ -74,7 +83,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 373, 333))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 356, 462))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -141,8 +150,7 @@ class Ui_Form(object):
 
         Form.setWindowTitle(_("Form"))
         self.groupBox.setTitle(_("Metadata sources"))
-        self.label.setText(_("Disable any metadata sources you do not want by unchecking them. You can also set the cover priority. Covers from sources that have a higher (smaller) priority will be preferred when bulk downloading metadata.\n"
-""))
+        self.label.setText(_("Disable any metadata sources you do not want by unchecking them. You can also set the cover priority. Covers from sources that have a higher (smaller) priority will be preferred when bulk downloading metadata."))
         self.label_5.setText(_("Sources with a red X next to their names must be configured before they will be used. "))
         self.configure_plugin_button.setText(_("C&onfigure selected source"))
         self.groupBox_2.setTitle(_("Metadata fields to download"))

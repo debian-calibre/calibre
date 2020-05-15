@@ -4359,6 +4359,7 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["book_list.library_data"] = {};
     ρσ_modules.dom = {};
     ρσ_modules.popups = {};
+    ρσ_modules.widgets = {};
     ρσ_modules.modals = {};
     ρσ_modules.qt = {};
     ρσ_modules.read_book = {};
@@ -4384,7 +4385,6 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.referencing"] = {};
     ρσ_modules["read_book.shortcuts"] = {};
     ρσ_modules.complete = {};
-    ρσ_modules.widgets = {};
     ρσ_modules["read_book.toc"] = {};
     ρσ_modules["read_book.touch"] = {};
     ρσ_modules["read_book.iframe"] = {};
@@ -9176,6 +9176,336 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "widgets";
+        var build_rule = ρσ_modules.dom.build_rule;
+        var clear = ρσ_modules.dom.clear;
+        var svgicon = ρσ_modules.dom.svgicon;
+        var create_keyframes = ρσ_modules.dom.create_keyframes;
+        var set_css = ρσ_modules.dom.set_css;
+        var change_icon_image = ρσ_modules.dom.change_icon_image;
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+
+        var E = ρσ_modules.elementmaker.E;
+
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        function create_button() {
+            var text = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var icon = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.icon : arguments[1];
+            var action = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.action : arguments[2];
+            var tooltip = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.tooltip : arguments[3];
+            var highlight = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.highlight : arguments[4];
+            var download_filename = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.download_filename : arguments[5];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
+                icon = ρσ_kwargs_obj.icon;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
+                action = ρσ_kwargs_obj.action;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
+                tooltip = ρσ_kwargs_obj.tooltip;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "highlight")){
+                highlight = ρσ_kwargs_obj.highlight;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "download_filename")){
+                download_filename = ρσ_kwargs_obj.download_filename;
+            }
+            var ic, ans;
+            ic = "";
+            if (icon) {
+                ic = svgicon(icon);
+                text = " " + text;
+            }
+            ans = ρσ_interpolate_kwargs.call(E, E.a, [ic, E.span(text)].concat([ρσ_desugar_kwargs({class_: "calibre-push-button", href: "javascript: void(0)", title: tooltip || ""})]));
+            if (download_filename && "download" in ans) {
+                ans.setAttribute("download", download_filename);
+            }
+            if (action !== null) {
+                if (typeof action === "string") {
+                    ans.setAttribute("href", action);
+                } else {
+                    ans.addEventListener("click", (function() {
+                        var ρσ_anonfunc = function (event) {
+                            [event.preventDefault(), action(event)];
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["event"]},
+                            __module__ : {value: "widgets"}
+                        });
+                        return ρσ_anonfunc;
+                    })());
+                }
+            }
+            if (highlight) {
+                ρσ_interpolate_kwargs.call(this, set_css, [ans].concat([ρσ_desugar_kwargs({font_size: "larger", font_weight: "bold"})]));
+            }
+            return ans;
+        };
+        if (!create_button.__defaults__) Object.defineProperties(create_button, {
+            __defaults__ : {value: {icon:null, action:null, tooltip:null, highlight:false, download_filename:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["text", "icon", "action", "tooltip", "highlight", "download_filename"]},
+            __module__ : {value: "widgets"}
+        });
+
+        create_button.style = ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button"].concat([ρσ_desugar_kwargs({border_radius: "1em", background_clip: "padding-box", background_color: get_color("button-start"), background_image: "linear-gradient(to bottom, {}, {})".format(get_color("button-start"), get_color("button-end")), padding: "0.5ex 1em", color: get_color("button-text"), cursor: "pointer", font_size: "inherit", display: "inline-flex", align_items: "center", box_shadow: "0px 2px 1px rgba(50, 50, 50, 0.75)", white_space: "nowrap"})]));
+        create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:hover"].concat([ρσ_desugar_kwargs({transform: "scale(1.05)"})]));
+        create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.1)"})]));
+        function create_spinner(height, width) {
+            var ans;
+            ans = svgicon("cog", height, width);
+            ans.classList.add("spin");
+            return ans;
+        };
+        if (!create_spinner.__argnames__) Object.defineProperties(create_spinner, {
+            __argnames__ : {value: ["height", "width"]},
+            __module__ : {value: "widgets"}
+        });
+
+        create_spinner.style = ρσ_interpolate_kwargs.call(this, build_rule, [".spin"].concat([ρσ_desugar_kwargs({animation: "spin 2s infinite linear"})]));
+        create_spinner.style += create_keyframes("spin", "from { transform: rotate(0deg); } to { transform: rotate(359deg);}");
+        function Breadcrumbs() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            Breadcrumbs.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperties(Breadcrumbs.prototype,  {
+            "container": {
+                "enumerable": true, 
+                "get": function container() {
+                    var self = this;
+                    return document.getElementById(self.container_id);
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+        });
+        Breadcrumbs.prototype.__init__ = function __init__(container) {
+            var self = this;
+            self.container_id = ensure_id(container, "calibre-breadcrumbs-");
+            container.classList.add("calibre-breadcrumbs");
+            clear(container);
+        };
+        if (!Breadcrumbs.prototype.__init__.__argnames__) Object.defineProperties(Breadcrumbs.prototype.__init__, {
+            __argnames__ : {value: ["container"]},
+            __module__ : {value: "widgets"}
+        });
+        Breadcrumbs.__argnames__ = Breadcrumbs.prototype.__init__.__argnames__;
+        Breadcrumbs.__handles_kwarg_interpolation__ = Breadcrumbs.prototype.__init__.__handles_kwarg_interpolation__;
+        Breadcrumbs.prototype.reset = function reset() {
+            var self = this;
+            clear(self.container);
+        };
+        if (!Breadcrumbs.prototype.reset.__module__) Object.defineProperties(Breadcrumbs.prototype.reset, {
+            __module__ : {value: "widgets"}
+        });
+        Breadcrumbs.prototype.add_crumb = function add_crumb(callback) {
+            var self = this;
+            var li;
+            li = E.li();
+            if (callback) {
+                li.addEventListener("click", callback);
+            }
+            self.container.appendChild(li);
+            return li;
+        };
+        if (!Breadcrumbs.prototype.add_crumb.__argnames__) Object.defineProperties(Breadcrumbs.prototype.add_crumb, {
+            __argnames__ : {value: ["callback"]},
+            __module__ : {value: "widgets"}
+        });
+        Breadcrumbs.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        Breadcrumbs.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(Breadcrumbs.prototype, "__bases__", {value: []});
+        Breadcrumbs.prototype.STYLE_RULES = ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs"].concat([ρσ_desugar_kwargs({user_select: "none", white_space: "nowrap", background_color: get_color("window-background2"), z_index: "-1", border_radius: "10px", margin: "1ex 1em", margin_bottom: "0"})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li"].concat([ρσ_desugar_kwargs({cursor: "pointer", display: "inline-block", line_height: "26px", margin: "0 9px 0 -10px", padding: "0.5ex 1rem", position: "relative"})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:hover"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground")})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:active"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground"), transform: "scale(1.5)"})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:before, .calibre-breadcrumbs > li:after"].concat([ρσ_desugar_kwargs({border_right: "2px solid currentColor", content: "\"\"", display: "block", height: "50%", position: "absolute", left: "0", top: "0", right: "0", transform: "skewX(45deg)"})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:after"].concat([ρσ_desugar_kwargs({bottom: "0", top: "auto", transform: "skewX(-45deg)"})]));
+        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:last-of-type:before, .calibre-breadcrumbs > li:last-of-type:after"].concat([ρσ_desugar_kwargs({display: "none"})]));
+        
+
+        function create_tree(root, populate_data, onclick) {
+            var container;
+            container = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-tree"})]);
+            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({overflow: "auto"})]));
+            function toggle_node(li) {
+                if (li.dataset.treeState === "closed") {
+                    li.dataset.treeState = "open";
+                    li.lastChild.style.display = "block";
+                    change_icon_image(li.firstChild.firstChild, "caret-down");
+                } else {
+                    li.dataset.treeState = "closed";
+                    li.lastChild.style.display = "none";
+                    change_icon_image(li.firstChild.firstChild, "caret-right");
+                }
+            };
+            if (!toggle_node.__argnames__) Object.defineProperties(toggle_node, {
+                __argnames__ : {value: ["li"]},
+                __module__ : {value: "widgets"}
+            });
+
+            function process_node(node, parent_container, level) {
+                var ul, icon, li, child;
+                if (ρσ_exists.d(node.children).length) {
+                    ul = E.div();
+                    parent_container.appendChild(ul);
+                    var ρσ_Iter0 = ρσ_Iterable(node.children);
+                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                        child = ρσ_Iter0[ρσ_Index0];
+                        icon = (ρσ_exists.d(child.children).length) ? "caret-right" : null;
+                        li = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon(icon), E.span(" "), ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({href: "javascript: void(0)", class_: "simple-link tree-item-title", onclick: (function() {
+                            var ρσ_anonfunc = function (event) {
+                                if (onclick) {
+                                    if (event.button === 0) {
+                                        [event.preventDefault(), event.stopPropagation()];
+                                    }
+                                    onclick(event, event.currentTarget.parentNode.parentNode);
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["event"]},
+                                __module__ : {value: "widgets"}
+                            });
+                            return ρσ_anonfunc;
+                        })()})])].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none", data_tree_subtree_container: "1"})])].concat([ρσ_desugar_kwargs({style: "display:flex; flex-direction:column; margin: 1ex 1em; margin-left: {}em".format(level + 1), data_tree_state: "closed"})]));
+                        ul.appendChild(li);
+                        populate_data(child, li, li.firstChild.lastChild);
+                        if (icon) {
+                            ρσ_interpolate_kwargs.call(this, set_css, [li.firstChild.firstChild].concat([ρσ_desugar_kwargs({cursor: "pointer"})]));
+                            li.firstChild.firstChild.addEventListener("click", (function() {
+                                var ρσ_anonfunc = function (event) {
+                                    toggle_node(event.currentTarget.parentNode.parentNode);
+                                };
+                                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                    __argnames__ : {value: ["event"]},
+                                    __module__ : {value: "widgets"}
+                                });
+                                return ρσ_anonfunc;
+                            })());
+                            process_node(child, li.lastChild, level + 1);
+                        }
+                    }
+                }
+            };
+            if (!process_node.__argnames__) Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node", "parent_container", "level"]},
+                __module__ : {value: "widgets"}
+            });
+
+            if (root) {
+                process_node(root, container, 0);
+            }
+            return container;
+        };
+        if (!create_tree.__argnames__) Object.defineProperties(create_tree, {
+            __argnames__ : {value: ["root", "populate_data", "onclick"]},
+            __module__ : {value: "widgets"}
+        });
+
+        function find_text_in_tree(container, q) {
+            var last_match, lm, before, seen, ans, a;
+            q = q.lower();
+            last_match = container.querySelector("a[data-tree-last-match]");
+            if (last_match) {
+                last_match.parentNode.style.backgroundColor = "transparent";
+                last_match.parentNode.style.borderRadius = "0";
+                lm = last_match.getAttribute("data-tree-last-match");
+                last_match.removeAttribute("data-tree-last-match");
+                if (lm !== q) {
+                    last_match = null;
+                }
+            }
+            if (!q) {
+                return;
+            }
+            before = ρσ_list_decorate([]);
+            seen = false;
+            ans = null;
+            var ρσ_Iter1 = ρσ_Iterable(container.querySelectorAll("a.tree-item-title"));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                a = ρσ_Iter1[ρσ_Index1];
+                if (a === last_match) {
+                    seen = true;
+                } else {
+                    if (ρσ_not_equals(a.textContent.lower().indexOf(q), -1)) {
+                        if (seen) {
+                            ans = a;
+                            break;
+                        }
+                        if (last_match === null) {
+                            ans = a;
+                            break;
+                        }
+                        before.push(a);
+                    }
+                }
+            }
+            if (!ans && before.length) {
+                ans = before[0];
+            }
+            ans = ans || last_match;
+            if (ans) {
+                ans.dataset.treeLastMatch = q;
+            }
+            if (ans) {
+                ans.parentNode.style.backgroundColor = get_color("tree-highlight-item");
+                ans.parentNode.style.borderRadius = "5px";
+                ans = ans.parentNode.parentNode;
+            }
+            return ans;
+        };
+        if (!find_text_in_tree.__argnames__) Object.defineProperties(find_text_in_tree, {
+            __argnames__ : {value: ["container", "q"]},
+            __module__ : {value: "widgets"}
+        });
+
+        function scroll_tree_item_into_view(item) {
+            var p;
+            p = ρσ_exists.d(item.parentNode).parentNode;
+            while (p && p.getAttribute("data-tree-subtree-container")) {
+                p.style.display = "block";
+                p = ρσ_exists.d(ρσ_exists.d(p.parentNode).parentNode).parentNode;
+            }
+            item.scrollIntoView();
+        };
+        if (!scroll_tree_item_into_view.__argnames__) Object.defineProperties(scroll_tree_item_into_view, {
+            __argnames__ : {value: ["item"]},
+            __module__ : {value: "widgets"}
+        });
+
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var ans;
+                ans = "a, button:focus { outline: none }; a, button::-moz-focus-inner { border: 0 }\n";
+                ans += ".simple-link { cursor: pointer } .simple-link:hover { color: HC } .simple-link:active { transform: scale(1.5) }\n".replace("HC", get_color("window-hover-foreground"));
+                ans += ".blue-link { cursor: pointer; color: COL } .blue-link:visited { color: COL} .blue-link:hover { color: HC } .blue-link:active { transform: scale(1.5) }\n".replace("HC", get_color("window-hover-foreground")).replace(/COL/g, get_color("link-foreground"));
+                ans += create_button.style + "\n";
+                ans += create_button.style + "\n";
+                ans += create_spinner.style + "\n";
+                ans += Breadcrumbs.prototype.STYLE_RULES + "\n";
+                return ans;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "widgets"}
+            });
+            return ρσ_anonfunc;
+        })());
+        ρσ_modules.widgets.create_button = create_button;
+        ρσ_modules.widgets.create_spinner = create_spinner;
+        ρσ_modules.widgets.Breadcrumbs = Breadcrumbs;
+        ρσ_modules.widgets.create_tree = create_tree;
+        ρσ_modules.widgets.find_text_in_tree = find_text_in_tree;
+        ρσ_modules.widgets.scroll_tree_item_into_view = scroll_tree_item_into_view;
+    })();
+
+    (function(){
         var __name__ = "modals";
         var modal_container, modal_count;
         var E = ρσ_modules.elementmaker.E;
@@ -9198,6 +9528,8 @@ return this.__repr__();
 
         var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
 
+        var create_button = ρσ_modules.widgets.create_button;
+
         modal_container = null;
         modal_count = 0;
         add_extra_css((function() {
@@ -9218,18 +9550,19 @@ return this.__repr__();
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             Modal.prototype.__init__.apply(this, arguments);
         }
-        Modal.prototype.__init__ = function __init__(create_func, on_close, show_close) {
+        Modal.prototype.__init__ = function __init__(create_func, on_close, show_close, onkeydown) {
             var self = this;
             var ρσ_unpack;
             ρσ_unpack = [create_func, on_close, show_close];
             self.create_func = ρσ_unpack[0];
             self.on_close = ρσ_unpack[1];
             self.show_close = ρσ_unpack[2];
+            self.onkeydown = onkeydown;
             modal_count += 1;
             self.id = modal_count;
         };
         if (!Modal.prototype.__init__.__argnames__) Object.defineProperties(Modal.prototype.__init__, {
-            __argnames__ : {value: ["create_func", "on_close", "show_close"]},
+            __argnames__ : {value: ["create_func", "on_close", "show_close", "onkeydown"]},
             __module__ : {value: "modals"}
         });
         Modal.__argnames__ = Modal.prototype.__init__.__argnames__;
@@ -9294,6 +9627,7 @@ return this.__repr__();
             var create_func = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var on_close = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.on_close : arguments[1];
             var show_close = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.show_close : arguments[2];
+            var onkeydown = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.onkeydown : arguments[3];
             var ρσ_kwargs_obj = arguments[arguments.length-1];
             if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "on_close")){
@@ -9302,17 +9636,20 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_close")){
                 show_close = ρσ_kwargs_obj.show_close;
             }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "onkeydown")){
+                onkeydown = ρσ_kwargs_obj.onkeydown;
+            }
             var modal_id;
-            self.modals.push(new Modal(create_func, on_close, show_close));
+            self.modals.push(new Modal(create_func, on_close, show_close, onkeydown));
             modal_id = (ρσ_expr_temp = self.modals)[ρσ_expr_temp.length-1].id;
             self.update();
             self.modal_container.focus();
             return modal_id;
         };
         if (!ModalContainer.prototype.show_modal.__defaults__) Object.defineProperties(ModalContainer.prototype.show_modal, {
-            __defaults__ : {value: {on_close:null, show_close:true}},
+            __defaults__ : {value: {on_close:null, show_close:true, onkeydown:null}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["create_func", "on_close", "show_close"]},
+            __argnames__ : {value: ["create_func", "on_close", "show_close", "onkeydown"]},
             __module__ : {value: "modals"}
         });
         ModalContainer.prototype.hide_modal = function hide_modal(modal_id) {
@@ -9404,6 +9741,9 @@ return this.__repr__();
         });
         ModalContainer.prototype.onkeydown = function onkeydown(event) {
             var self = this;
+            if (self.current_modal !== null && self.current_modal.onkeydown) {
+                return self.current_modal.onkeydown(event, self.clear_current_modal.bind(self));
+            }
             if ((event.key === "Escape" || event.key === "Esc") && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
                 [event.preventDefault(), event.stopPropagation()];
                 self.close_current_modal(event);
@@ -9480,7 +9820,19 @@ return this.__repr__();
             __module__ : {value: "modals"}
         });
 
-        function create_custom_dialog(title, content_generator_func) {
+        function create_custom_dialog() {
+            var title = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var content_generator_func = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var on_close = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_custom_dialog.__defaults__.on_close : arguments[2];
+            var onkeydown = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_custom_dialog.__defaults__.onkeydown : arguments[3];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "on_close")){
+                on_close = ρσ_kwargs_obj.on_close;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "onkeydown")){
+                onkeydown = ρσ_kwargs_obj.onkeydown;
+            }
             function create_func(parent, close_modal) {
                 var content_div;
                 content_div = E.div();
@@ -9492,10 +9844,82 @@ return this.__repr__();
                 __module__ : {value: "modals"}
             });
 
-            show_modal(create_func);
+            ρσ_interpolate_kwargs.call(this, show_modal, [create_func].concat([ρσ_desugar_kwargs({on_close: on_close, onkeydown: onkeydown})]));
         };
-        if (!create_custom_dialog.__argnames__) Object.defineProperties(create_custom_dialog, {
-            __argnames__ : {value: ["title", "content_generator_func"]},
+        if (!create_custom_dialog.__defaults__) Object.defineProperties(create_custom_dialog, {
+            __defaults__ : {value: {on_close:null, onkeydown:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["title", "content_generator_func", "on_close", "onkeydown"]},
+            __module__ : {value: "modals"}
+        });
+
+        function question_dialog() {
+            var title = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var msg = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var callback = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+            var yes_text = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.yes_text : arguments[3];
+            var no_text = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? question_dialog.__defaults__.no_text : arguments[4];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "yes_text")){
+                yes_text = ρσ_kwargs_obj.yes_text;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "no_text")){
+                no_text = ρσ_kwargs_obj.no_text;
+            }
+            var called;
+            yes_text = yes_text || _("Yes");
+            no_text = no_text || _("No");
+            called = Object.create(null);
+            function keyaction(yes, close_modal) {
+                if (called.done) {
+                    return;
+                }
+                called.done = true;
+                if (close_modal) {
+                    close_modal();
+                }
+                callback(yes);
+            };
+            if (!keyaction.__argnames__) Object.defineProperties(keyaction, {
+                __argnames__ : {value: ["yes", "close_modal"]},
+                __module__ : {value: "modals"}
+            });
+
+            function on_keydown(event, close_modal) {
+                if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+                    return;
+                }
+                if (event.key === "Escape" || event.key === "Esc") {
+                    [event.preventDefault(), event.stopPropagation()];
+                    keyaction(false, close_modal);
+                }
+                if (event.key === "Enter" || event.key === "Return" || event.key === "Space") {
+                    [event.preventDefault(), event.stopPropagation()];
+                    keyaction(true, close_modal);
+                }
+            };
+            if (!on_keydown.__argnames__) Object.defineProperties(on_keydown, {
+                __argnames__ : {value: ["event", "close_modal"]},
+                __module__ : {value: "modals"}
+            });
+
+            ρσ_interpolate_kwargs.call(this, create_custom_dialog, [title, (function() {
+                var ρσ_anonfunc = function (parent, close_modal) {
+                    parent.appendChild(E.div(E.div(msg), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [yes_text, "check", keyaction.bind(null, true, close_modal)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", create_button(no_text, "close", keyaction.bind(null, false, close_modal))].concat([ρσ_desugar_kwargs({class_: "button-box"})]))));
+                    parent.lastChild.focus();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["parent", "close_modal"]},
+                    __module__ : {value: "modals"}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({on_close: keyaction.bind(null, false, null), onkeydown: on_keydown})]));
+        };
+        if (!question_dialog.__defaults__) Object.defineProperties(question_dialog, {
+            __defaults__ : {value: {yes_text:null, no_text:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["title", "msg", "callback", "yes_text", "no_text"]},
             __module__ : {value: "modals"}
         });
 
@@ -9572,6 +9996,7 @@ return this.__repr__();
             var create_func = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var on_close = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.on_close : arguments[1];
             var show_close = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.show_close : arguments[2];
+            var onkeydown = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_modal.__defaults__.onkeydown : arguments[3];
             var ρσ_kwargs_obj = arguments[arguments.length-1];
             if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "on_close")){
@@ -9580,12 +10005,15 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_close")){
                 show_close = ρσ_kwargs_obj.show_close;
             }
-            return modal_container.show_modal(create_func, on_close, show_close);
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "onkeydown")){
+                onkeydown = ρσ_kwargs_obj.onkeydown;
+            }
+            return modal_container.show_modal(create_func, on_close, show_close, onkeydown);
         };
         if (!show_modal.__defaults__) Object.defineProperties(show_modal, {
-            __defaults__ : {value: {on_close:null, show_close:true}},
+            __defaults__ : {value: {on_close:null, show_close:true, onkeydown:null}},
             __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["create_func", "on_close", "show_close"]},
+            __argnames__ : {value: ["create_func", "on_close", "show_close", "onkeydown"]},
             __module__ : {value: "modals"}
         });
 
@@ -9745,6 +10173,7 @@ return this.__repr__();
         ρσ_modules.modals.create_simple_dialog_markup = create_simple_dialog_markup;
         ρσ_modules.modals.create_simple_dialog = create_simple_dialog;
         ρσ_modules.modals.create_custom_dialog = create_custom_dialog;
+        ρσ_modules.modals.question_dialog = question_dialog;
         ρσ_modules.modals.create_progress_dialog = create_progress_dialog;
         ρσ_modules.modals.create_modal_container = create_modal_container;
         ρσ_modules.modals.show_modal = show_modal;
@@ -19534,336 +19963,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "widgets";
-        var build_rule = ρσ_modules.dom.build_rule;
-        var clear = ρσ_modules.dom.clear;
-        var svgicon = ρσ_modules.dom.svgicon;
-        var create_keyframes = ρσ_modules.dom.create_keyframes;
-        var set_css = ρσ_modules.dom.set_css;
-        var change_icon_image = ρσ_modules.dom.change_icon_image;
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var ensure_id = ρσ_modules.dom.ensure_id;
-
-        var E = ρσ_modules.elementmaker.E;
-
-        var get_color = ρσ_modules["book_list.theme"].get_color;
-
-        function create_button() {
-            var text = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var icon = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.icon : arguments[1];
-            var action = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.action : arguments[2];
-            var tooltip = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.tooltip : arguments[3];
-            var highlight = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.highlight : arguments[4];
-            var download_filename = (arguments[5] === undefined || ( 5 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_button.__defaults__.download_filename : arguments[5];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "icon")){
-                icon = ρσ_kwargs_obj.icon;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "action")){
-                action = ρσ_kwargs_obj.action;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "tooltip")){
-                tooltip = ρσ_kwargs_obj.tooltip;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "highlight")){
-                highlight = ρσ_kwargs_obj.highlight;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "download_filename")){
-                download_filename = ρσ_kwargs_obj.download_filename;
-            }
-            var ic, ans;
-            ic = "";
-            if (icon) {
-                ic = svgicon(icon);
-                text = " " + text;
-            }
-            ans = ρσ_interpolate_kwargs.call(E, E.a, [ic, E.span(text)].concat([ρσ_desugar_kwargs({class_: "calibre-push-button", href: "javascript: void(0)", title: tooltip || ""})]));
-            if (download_filename && "download" in ans) {
-                ans.setAttribute("download", download_filename);
-            }
-            if (action !== null) {
-                if (typeof action === "string") {
-                    ans.setAttribute("href", action);
-                } else {
-                    ans.addEventListener("click", (function() {
-                        var ρσ_anonfunc = function (event) {
-                            [event.preventDefault(), action(event)];
-                        };
-                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                            __argnames__ : {value: ["event"]},
-                            __module__ : {value: "widgets"}
-                        });
-                        return ρσ_anonfunc;
-                    })());
-                }
-            }
-            if (highlight) {
-                ρσ_interpolate_kwargs.call(this, set_css, [ans].concat([ρσ_desugar_kwargs({font_size: "larger", font_weight: "bold"})]));
-            }
-            return ans;
-        };
-        if (!create_button.__defaults__) Object.defineProperties(create_button, {
-            __defaults__ : {value: {icon:null, action:null, tooltip:null, highlight:false, download_filename:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["text", "icon", "action", "tooltip", "highlight", "download_filename"]},
-            __module__ : {value: "widgets"}
-        });
-
-        create_button.style = ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button"].concat([ρσ_desugar_kwargs({border_radius: "1em", background_clip: "padding-box", background_color: get_color("button-start"), background_image: "linear-gradient(to bottom, {}, {})".format(get_color("button-start"), get_color("button-end")), padding: "0.5ex 1em", color: get_color("button-text"), cursor: "pointer", font_size: "inherit", display: "inline-flex", align_items: "center", box_shadow: "0px 2px 1px rgba(50, 50, 50, 0.75)", white_space: "nowrap"})]));
-        create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:hover"].concat([ρσ_desugar_kwargs({transform: "scale(1.05)"})]));
-        create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.1)"})]));
-        function create_spinner(height, width) {
-            var ans;
-            ans = svgicon("cog", height, width);
-            ans.classList.add("spin");
-            return ans;
-        };
-        if (!create_spinner.__argnames__) Object.defineProperties(create_spinner, {
-            __argnames__ : {value: ["height", "width"]},
-            __module__ : {value: "widgets"}
-        });
-
-        create_spinner.style = ρσ_interpolate_kwargs.call(this, build_rule, [".spin"].concat([ρσ_desugar_kwargs({animation: "spin 2s infinite linear"})]));
-        create_spinner.style += create_keyframes("spin", "from { transform: rotate(0deg); } to { transform: rotate(359deg);}");
-        function Breadcrumbs() {
-            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
-            Breadcrumbs.prototype.__init__.apply(this, arguments);
-        }
-        Object.defineProperties(Breadcrumbs.prototype,  {
-            "container": {
-                "enumerable": true, 
-                "get": function container() {
-                    var self = this;
-                    return document.getElementById(self.container_id);
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-        });
-        Breadcrumbs.prototype.__init__ = function __init__(container) {
-            var self = this;
-            self.container_id = ensure_id(container, "calibre-breadcrumbs-");
-            container.classList.add("calibre-breadcrumbs");
-            clear(container);
-        };
-        if (!Breadcrumbs.prototype.__init__.__argnames__) Object.defineProperties(Breadcrumbs.prototype.__init__, {
-            __argnames__ : {value: ["container"]},
-            __module__ : {value: "widgets"}
-        });
-        Breadcrumbs.__argnames__ = Breadcrumbs.prototype.__init__.__argnames__;
-        Breadcrumbs.__handles_kwarg_interpolation__ = Breadcrumbs.prototype.__init__.__handles_kwarg_interpolation__;
-        Breadcrumbs.prototype.reset = function reset() {
-            var self = this;
-            clear(self.container);
-        };
-        if (!Breadcrumbs.prototype.reset.__module__) Object.defineProperties(Breadcrumbs.prototype.reset, {
-            __module__ : {value: "widgets"}
-        });
-        Breadcrumbs.prototype.add_crumb = function add_crumb(callback) {
-            var self = this;
-            var li;
-            li = E.li();
-            if (callback) {
-                li.addEventListener("click", callback);
-            }
-            self.container.appendChild(li);
-            return li;
-        };
-        if (!Breadcrumbs.prototype.add_crumb.__argnames__) Object.defineProperties(Breadcrumbs.prototype.add_crumb, {
-            __argnames__ : {value: ["callback"]},
-            __module__ : {value: "widgets"}
-        });
-        Breadcrumbs.prototype.__repr__ = function __repr__ () {
-                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
-        };
-        Breadcrumbs.prototype.__str__ = function __str__ () {
-            return this.__repr__();
-        };
-        Object.defineProperty(Breadcrumbs.prototype, "__bases__", {value: []});
-        Breadcrumbs.prototype.STYLE_RULES = ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs"].concat([ρσ_desugar_kwargs({user_select: "none", white_space: "nowrap", background_color: get_color("window-background2"), z_index: "-1", border_radius: "10px", margin: "1ex 1em", margin_bottom: "0"})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li"].concat([ρσ_desugar_kwargs({cursor: "pointer", display: "inline-block", line_height: "26px", margin: "0 9px 0 -10px", padding: "0.5ex 1rem", position: "relative"})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:hover"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground")})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:active"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground"), transform: "scale(1.5)"})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:before, .calibre-breadcrumbs > li:after"].concat([ρσ_desugar_kwargs({border_right: "2px solid currentColor", content: "\"\"", display: "block", height: "50%", position: "absolute", left: "0", top: "0", right: "0", transform: "skewX(45deg)"})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:after"].concat([ρσ_desugar_kwargs({bottom: "0", top: "auto", transform: "skewX(-45deg)"})]));
-        Breadcrumbs.prototype.STYLE_RULES += ρσ_interpolate_kwargs.call(this, build_rule, [".calibre-breadcrumbs > li:last-of-type:before, .calibre-breadcrumbs > li:last-of-type:after"].concat([ρσ_desugar_kwargs({display: "none"})]));
-        
-
-        function create_tree(root, populate_data, onclick) {
-            var container;
-            container = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "simple-tree"})]);
-            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({overflow: "auto"})]));
-            function toggle_node(li) {
-                if (li.dataset.treeState === "closed") {
-                    li.dataset.treeState = "open";
-                    li.lastChild.style.display = "block";
-                    change_icon_image(li.firstChild.firstChild, "caret-down");
-                } else {
-                    li.dataset.treeState = "closed";
-                    li.lastChild.style.display = "none";
-                    change_icon_image(li.firstChild.firstChild, "caret-right");
-                }
-            };
-            if (!toggle_node.__argnames__) Object.defineProperties(toggle_node, {
-                __argnames__ : {value: ["li"]},
-                __module__ : {value: "widgets"}
-            });
-
-            function process_node(node, parent_container, level) {
-                var ul, icon, li, child;
-                if (ρσ_exists.d(node.children).length) {
-                    ul = E.div();
-                    parent_container.appendChild(ul);
-                    var ρσ_Iter0 = ρσ_Iterable(node.children);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                        child = ρσ_Iter0[ρσ_Index0];
-                        icon = (ρσ_exists.d(child.children).length) ? "caret-right" : null;
-                        li = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon(icon), E.span(" "), ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({href: "javascript: void(0)", class_: "simple-link tree-item-title", onclick: (function() {
-                            var ρσ_anonfunc = function (event) {
-                                if (onclick) {
-                                    if (event.button === 0) {
-                                        [event.preventDefault(), event.stopPropagation()];
-                                    }
-                                    onclick(event, event.currentTarget.parentNode.parentNode);
-                                }
-                            };
-                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                                __argnames__ : {value: ["event"]},
-                                __module__ : {value: "widgets"}
-                            });
-                            return ρσ_anonfunc;
-                        })()})])].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none", data_tree_subtree_container: "1"})])].concat([ρσ_desugar_kwargs({style: "display:flex; flex-direction:column; margin: 1ex 1em; margin-left: {}em".format(level + 1), data_tree_state: "closed"})]));
-                        ul.appendChild(li);
-                        populate_data(child, li, li.firstChild.lastChild);
-                        if (icon) {
-                            ρσ_interpolate_kwargs.call(this, set_css, [li.firstChild.firstChild].concat([ρσ_desugar_kwargs({cursor: "pointer"})]));
-                            li.firstChild.firstChild.addEventListener("click", (function() {
-                                var ρσ_anonfunc = function (event) {
-                                    toggle_node(event.currentTarget.parentNode.parentNode);
-                                };
-                                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                                    __argnames__ : {value: ["event"]},
-                                    __module__ : {value: "widgets"}
-                                });
-                                return ρσ_anonfunc;
-                            })());
-                            process_node(child, li.lastChild, level + 1);
-                        }
-                    }
-                }
-            };
-            if (!process_node.__argnames__) Object.defineProperties(process_node, {
-                __argnames__ : {value: ["node", "parent_container", "level"]},
-                __module__ : {value: "widgets"}
-            });
-
-            if (root) {
-                process_node(root, container, 0);
-            }
-            return container;
-        };
-        if (!create_tree.__argnames__) Object.defineProperties(create_tree, {
-            __argnames__ : {value: ["root", "populate_data", "onclick"]},
-            __module__ : {value: "widgets"}
-        });
-
-        function find_text_in_tree(container, q) {
-            var last_match, lm, before, seen, ans, a;
-            q = q.lower();
-            last_match = container.querySelector("a[data-tree-last-match]");
-            if (last_match) {
-                last_match.parentNode.style.backgroundColor = "transparent";
-                last_match.parentNode.style.borderRadius = "0";
-                lm = last_match.getAttribute("data-tree-last-match");
-                last_match.removeAttribute("data-tree-last-match");
-                if (lm !== q) {
-                    last_match = null;
-                }
-            }
-            if (!q) {
-                return;
-            }
-            before = ρσ_list_decorate([]);
-            seen = false;
-            ans = null;
-            var ρσ_Iter1 = ρσ_Iterable(container.querySelectorAll("a.tree-item-title"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                a = ρσ_Iter1[ρσ_Index1];
-                if (a === last_match) {
-                    seen = true;
-                } else {
-                    if (ρσ_not_equals(a.textContent.lower().indexOf(q), -1)) {
-                        if (seen) {
-                            ans = a;
-                            break;
-                        }
-                        if (last_match === null) {
-                            ans = a;
-                            break;
-                        }
-                        before.push(a);
-                    }
-                }
-            }
-            if (!ans && before.length) {
-                ans = before[0];
-            }
-            ans = ans || last_match;
-            if (ans) {
-                ans.dataset.treeLastMatch = q;
-            }
-            if (ans) {
-                ans.parentNode.style.backgroundColor = get_color("tree-highlight-item");
-                ans.parentNode.style.borderRadius = "5px";
-                ans = ans.parentNode.parentNode;
-            }
-            return ans;
-        };
-        if (!find_text_in_tree.__argnames__) Object.defineProperties(find_text_in_tree, {
-            __argnames__ : {value: ["container", "q"]},
-            __module__ : {value: "widgets"}
-        });
-
-        function scroll_tree_item_into_view(item) {
-            var p;
-            p = ρσ_exists.d(item.parentNode).parentNode;
-            while (p && p.getAttribute("data-tree-subtree-container")) {
-                p.style.display = "block";
-                p = ρσ_exists.d(ρσ_exists.d(p.parentNode).parentNode).parentNode;
-            }
-            item.scrollIntoView();
-        };
-        if (!scroll_tree_item_into_view.__argnames__) Object.defineProperties(scroll_tree_item_into_view, {
-            __argnames__ : {value: ["item"]},
-            __module__ : {value: "widgets"}
-        });
-
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var ans;
-                ans = "a, button:focus { outline: none }; a, button::-moz-focus-inner { border: 0 }\n";
-                ans += ".simple-link { cursor: pointer } .simple-link:hover { color: HC } .simple-link:active { transform: scale(1.5) }\n".replace("HC", get_color("window-hover-foreground"));
-                ans += ".blue-link { cursor: pointer; color: COL } .blue-link:visited { color: COL} .blue-link:hover { color: HC } .blue-link:active { transform: scale(1.5) }\n".replace("HC", get_color("window-hover-foreground")).replace(/COL/g, get_color("link-foreground"));
-                ans += create_button.style + "\n";
-                ans += create_button.style + "\n";
-                ans += create_spinner.style + "\n";
-                ans += Breadcrumbs.prototype.STYLE_RULES + "\n";
-                return ans;
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "widgets"}
-            });
-            return ρσ_anonfunc;
-        })());
-        ρσ_modules.widgets.create_button = create_button;
-        ρσ_modules.widgets.create_spinner = create_spinner;
-        ρσ_modules.widgets.Breadcrumbs = Breadcrumbs;
-        ρσ_modules.widgets.create_tree = create_tree;
-        ρσ_modules.widgets.find_text_in_tree = find_text_in_tree;
-        ρσ_modules.widgets.scroll_tree_item_into_view = scroll_tree_item_into_view;
-    })();
-
-    (function(){
         var __name__ = "read_book.toc";
         var create_search_bar = ρσ_modules.complete.create_search_bar;
 
@@ -21115,6 +21214,7 @@ return this.__repr__();
             this.show_search_result = IframeBoss.prototype.show_search_result.bind(this);
             this.reference_item_changed = IframeBoss.prototype.reference_item_changed.bind(this);
             this.set_reference_mode = IframeBoss.prototype.set_reference_mode.bind(this);
+            this.create_annotation = IframeBoss.prototype.create_annotation.bind(this);
             this.initiate_creation_of_annotation = IframeBoss.prototype.initiate_creation_of_annotation.bind(this);
             this.annotations_msg_received = IframeBoss.prototype.annotations_msg_received.bind(this);
             this.apply_highlights_on_load = IframeBoss.prototype.apply_highlights_on_load.bind(this);
@@ -21154,6 +21254,7 @@ return this.__repr__();
                 ρσ_d["scroll_to_frac"] = self.on_scroll_to_frac;
                 ρσ_d["scroll_to_ref"] = self.on_scroll_to_ref;
                 ρσ_d["set_reference_mode"] = self.set_reference_mode;
+                ρσ_d["create_annotation"] = self.create_annotation;
                 ρσ_d["toggle_autoscroll"] = self.toggle_autoscroll;
                 ρσ_d["wheel_from_margin"] = self.wheel_from_margin;
                 ρσ_d["window_size"] = self.received_window_size;
@@ -21607,6 +21708,21 @@ return this.__repr__();
                     self.show_search_result(ipos, true);
                 } else if (ipos.type === "search") {
                     self.find(ipos.search_data, true);
+                } else if (ipos.type === "edit_annotation") {
+                    window.setTimeout((function() {
+                        var ρσ_anonfunc = function () {
+                            self.annotations_msg_received((function(){
+                                var ρσ_d = Object.create(null);
+                                ρσ_d["type"] = "edit-highlight";
+                                ρσ_d["uuid"] = ipos.uuid;
+                                return ρσ_d;
+                            }).call(this));
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.iframe"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), 5);
                 }
             }
             spine = self.book.manifest.spine;
@@ -22060,6 +22176,14 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
+        IframeBoss.prototype.create_annotation = function create_annotation(data) {
+            var self = this;
+            self.initiate_creation_of_annotation();
+        };
+        if (!IframeBoss.prototype.create_annotation.__argnames__) Object.defineProperties(IframeBoss.prototype.create_annotation, {
+            __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.iframe"}
+        });
         IframeBoss.prototype.initiate_creation_of_annotation = function initiate_creation_of_annotation(existing) {
             var self = this;
             var in_flow_mode;
@@ -22115,6 +22239,21 @@ return this.__repr__();
                     select_crw(crw_);
                     self.ensure_selection_visible();
                     self.initiate_creation_of_annotation(data.uuid);
+                }
+            } else if (data.type === "remove-highlight") {
+                crw_ = (ρσ_expr_temp = (function() {
+                    var ρσ_Iter = ρσ_Iterable(Object.entries(annot_id_uuid_map)), ρσ_Result = Object.create(null), k, v;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        ρσ_unpack = ρσ_Iter[ρσ_Index];
+                        k = ρσ_unpack[0];
+                        v = ρσ_unpack[1];
+                        ρσ_Result[v] = (k);
+                    }
+                    return ρσ_Result;
+                })())[ρσ_bound_index(data.uuid, ρσ_expr_temp)];
+                if (crw_) {
+                    unwrap_crw(crw_);
+                    delete annot_id_uuid_map[crw_];
                 }
             } else if (data.type === "apply-highlight") {
                 sel = window.getSelection();
@@ -22579,6 +22718,7 @@ return this.__repr__();
         var unique_id = ρσ_modules.dom.unique_id;
 
         var error_dialog = ρσ_modules.modals.error_dialog;
+        var question_dialog = ρσ_modules.modals.question_dialog;
 
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
 
@@ -22592,9 +22732,12 @@ return this.__repr__();
         Object.defineProperty(AnnotationsManager.prototype, "__bind_methods__", {value: function () {
             this.set_highlights = AnnotationsManager.prototype.set_highlights.bind(this);
             this.remove_highlight = AnnotationsManager.prototype.remove_highlight.bind(this);
+            this.delete_highlight = AnnotationsManager.prototype.delete_highlight.bind(this);
             this.notes_for_highlight = AnnotationsManager.prototype.notes_for_highlight.bind(this);
             this.style_for_highlight = AnnotationsManager.prototype.style_for_highlight.bind(this);
             this.data_for_highlight = AnnotationsManager.prototype.data_for_highlight.bind(this);
+            this.spine_index_for_highlight = AnnotationsManager.prototype.spine_index_for_highlight.bind(this);
+            this.cfi_for_highlight = AnnotationsManager.prototype.cfi_for_highlight.bind(this);
             this.add_highlight = AnnotationsManager.prototype.add_highlight.bind(this);
             this.highlights_for_currently_showing = AnnotationsManager.prototype.highlights_for_currently_showing.bind(this);
         }});
@@ -22640,9 +22783,22 @@ return this.__repr__();
                 delete h.notes;
                 delete h.spine_name;
                 delete h.spine_index;
+                return true;
             }
         };
         if (!AnnotationsManager.prototype.remove_highlight.__argnames__) Object.defineProperties(AnnotationsManager.prototype.remove_highlight, {
+            __argnames__ : {value: ["uuid"]},
+            __module__ : {value: "read_book.create_annotation"}
+        });
+        AnnotationsManager.prototype.delete_highlight = function delete_highlight(uuid) {
+            var self = this;
+            if (self.remove_highlight(uuid)) {
+                if (ui_operations.highlights_changed) {
+                    ui_operations.highlights_changed(Object.values(self.highlights));
+                }
+            }
+        };
+        if (!AnnotationsManager.prototype.delete_highlight.__argnames__) Object.defineProperties(AnnotationsManager.prototype.delete_highlight, {
             __argnames__ : {value: ["uuid"]},
             __module__ : {value: "read_book.create_annotation"}
         });
@@ -22676,6 +22832,40 @@ return this.__repr__();
         };
         if (!AnnotationsManager.prototype.data_for_highlight.__argnames__) Object.defineProperties(AnnotationsManager.prototype.data_for_highlight, {
             __argnames__ : {value: ["uuid"]},
+            __module__ : {value: "read_book.create_annotation"}
+        });
+        AnnotationsManager.prototype.spine_index_for_highlight = function spine_index_for_highlight(uuid, spine) {
+            var self = this;
+            var h, ans, name, idx;
+            h = (ρσ_expr_temp = self.highlights)[(typeof uuid === "number" && uuid < 0) ? ρσ_expr_temp.length + uuid : uuid];
+            if (!h) {
+                return -1;
+            }
+            ans = h.spine_index;
+            name = h.spine_name;
+            if (name) {
+                idx = spine.indexOf(name);
+                if (idx > -1) {
+                    ans = idx;
+                }
+            }
+            return ans;
+        };
+        if (!AnnotationsManager.prototype.spine_index_for_highlight.__argnames__) Object.defineProperties(AnnotationsManager.prototype.spine_index_for_highlight, {
+            __argnames__ : {value: ["uuid", "spine"]},
+            __module__ : {value: "read_book.create_annotation"}
+        });
+        AnnotationsManager.prototype.cfi_for_highlight = function cfi_for_highlight(uuid, spine_index) {
+            var self = this;
+            var h, x;
+            h = (ρσ_expr_temp = self.highlights)[(typeof uuid === "number" && uuid < 0) ? ρσ_expr_temp.length + uuid : uuid];
+            if (h) {
+                x = 2 * (spine_index + 1);
+                return "epubcfi(/" + ρσ_str.format("{}", x) + "" + ρσ_str.format("{}", h.start_cfi) + ")";
+            }
+        };
+        if (!AnnotationsManager.prototype.cfi_for_highlight.__argnames__) Object.defineProperties(AnnotationsManager.prototype.cfi_for_highlight, {
+            __argnames__ : {value: ["uuid", "spine_index"]},
             __module__ : {value: "read_book.create_annotation"}
         });
         AnnotationsManager.prototype.add_highlight = function add_highlight(msg, style, notes) {
@@ -22858,6 +23048,8 @@ return this.__repr__();
             this.hide = CreateAnnotation.prototype.hide.bind(this);
             this.send_message = CreateAnnotation.prototype.send_message.bind(this);
             this.edit_highlight = CreateAnnotation.prototype.edit_highlight.bind(this);
+            this.remove_highlight = CreateAnnotation.prototype.remove_highlight.bind(this);
+            this.delete_highlight = CreateAnnotation.prototype.delete_highlight.bind(this);
             this.handle_message = CreateAnnotation.prototype.handle_message.bind(this);
             this.hide_handles = CreateAnnotation.prototype.hide_handles.bind(this);
             this.place_handles = CreateAnnotation.prototype.place_handles.bind(this);
@@ -23006,6 +23198,8 @@ return this.__repr__();
             button(tb, "close", _("Cancel creation of highlight"), self.hide);
             button(tb, "chevron-up", _("Scroll up"), self.scroll_up);
             tb.appendChild(ρσ_interpolate_kwargs.call(E, E.span, [ρσ_desugar_kwargs({style: "height: " + ρσ_str.format("{}", tb.style.height) + ""})]));
+            button(tb.lastChild, "trash", _("Remove this highlight"), self.delete_highlight);
+            tb.lastChild.appendChild(E.span("   "));
             if (ui_operations.copy_selection) {
                 button(tb.lastChild, "copy", _("Copy to clipboard"), self.copy_to_clipboard);
                 tb.lastChild.appendChild(E.span("   "));
@@ -23575,6 +23769,36 @@ return this.__repr__();
         };
         if (!CreateAnnotation.prototype.edit_highlight.__argnames__) Object.defineProperties(CreateAnnotation.prototype.edit_highlight, {
             __argnames__ : {value: ["uuid"]},
+            __module__ : {value: "read_book.create_annotation"}
+        });
+        CreateAnnotation.prototype.remove_highlight = function remove_highlight(uuid) {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["remove-highlight"].concat([ρσ_desugar_kwargs({uuid: uuid})]));
+            self.annotations_manager.delete_highlight(uuid);
+            self.hide();
+        };
+        if (!CreateAnnotation.prototype.remove_highlight.__argnames__) Object.defineProperties(CreateAnnotation.prototype.remove_highlight, {
+            __argnames__ : {value: ["uuid"]},
+            __module__ : {value: "read_book.create_annotation"}
+        });
+        CreateAnnotation.prototype.delete_highlight = function delete_highlight() {
+            var self = this;
+            var uuid;
+            uuid = self.editing_annot_uuid;
+            question_dialog(_("Are you sure?"), _("Are you sure you want to delete this highlight permanently?"), (function() {
+                var ρσ_anonfunc = function (yes) {
+                    if (yes) {
+                        (uuid) ? self.remove_highlight(uuid) : self.hide();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "read_book.create_annotation"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!CreateAnnotation.prototype.delete_highlight.__module__) Object.defineProperties(CreateAnnotation.prototype.delete_highlight, {
             __module__ : {value: "read_book.create_annotation"}
         });
         CreateAnnotation.prototype.handle_message = function handle_message(msg) {
@@ -33421,7 +33645,7 @@ return this.__repr__();
             });
 
             sync_action = ac(_("Sync"), _("Get last read position and annotations from the server"), self.overlay.sync_book, "cloud-download");
-            delete_action = ac(_("Delete"), _("Delete this book from the device"), self.overlay.delete_book, "trash");
+            delete_action = ac(_("Delete"), _("Delete this book from local storage"), self.overlay.delete_book, "trash");
             reload_action = ac(_("Reload"), _("Reload this book from the {}").format((runtime.is_standalone_viewer) ? _("computer") : _("server")), self.overlay.reload_book, "refresh");
             home_action = ac(_("Home"), _("Return to the home page"), (function() {
                 var ρσ_anonfunc = function () {
@@ -35345,6 +35569,7 @@ return this.__repr__();
             this.toggle_reference_mode = View.prototype.toggle_reference_mode.bind(this);
             this.on_reference_item_changed = View.prototype.on_reference_item_changed.bind(this);
             this.show_search_result = View.prototype.show_search_result.bind(this);
+            this.highlight_action = View.prototype.highlight_action.bind(this);
         }});
         Object.defineProperties(View.prototype,  {
             "iframe": {
@@ -35792,6 +36017,8 @@ return this.__repr__();
                 ui_operations.toggle_bookmarks();
             } else if (data.name === "toggle_highlights") {
                 ui_operations.toggle_highlights();
+            } else if (data.name === "create_annotation") {
+                self.iframe_wrapper.send_message("create_annotation");
             } else if (data.name === "new_bookmark") {
                 ui_operations.new_bookmark();
             } else if (data.name === "toggle_inspector") {
@@ -37134,6 +37361,46 @@ return this.__repr__();
             __argnames__ : {value: ["sr"]},
             __module__ : {value: "read_book.view"}
         });
+        View.prototype.highlight_action = function highlight_action(uuid, which) {
+            var self = this;
+            var spine, spine_index, cfi;
+            if (self.create_annotation.is_visible) {
+                return;
+            }
+            if (which === "create") {
+                self.iframe_wrapper.send_message("create_annotation");
+                return;
+            }
+            spine = self.book.manifest.spine;
+            spine_index = self.annotations_manager.spine_index_for_highlight(uuid, spine);
+            if (spine_index < 0 || spine_index >= spine.length) {
+                return;
+            }
+            if (which === "edit") {
+                if (self.currently_showing.spine_index === spine_index) {
+                    self.create_annotation.edit_highlight(uuid);
+                } else {
+                    ρσ_interpolate_kwargs.call(self, self.show_name, [spine[(typeof spine_index === "number" && spine_index < 0) ? spine.length + spine_index : spine_index]].concat([ρσ_desugar_kwargs({initial_position: (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["type"] = "edit_annotation";
+                        ρσ_d["uuid"] = uuid;
+                        ρσ_d["replace_history"] = true;
+                        return ρσ_d;
+                    }).call(this)})]));
+                }
+            } else if (which === "delete") {
+                self.create_annotation.remove_highlight(uuid);
+            } else if (which === "goto") {
+                cfi = self.annotations_manager.cfi_for_highlight(uuid, spine_index);
+                if (cfi) {
+                    self.goto_cfi(cfi);
+                }
+            }
+        };
+        if (!View.prototype.highlight_action.__argnames__) Object.defineProperties(View.prototype.highlight_action, {
+            __argnames__ : {value: ["uuid", "which"]},
+            __module__ : {value: "read_book.view"}
+        });
         View.prototype.__repr__ = function __repr__ () {
                         return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
         };
@@ -37314,9 +37581,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter3 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                filename = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                filename = ρσ_Iter0[ρσ_Index0];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();
@@ -37602,6 +37869,20 @@ return this.__repr__();
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                 __argnames__ : {value: ["system_colors"]},
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var highlight_action = from_python((function() {
+            var ρσ_anonfunc = function highlight_action(uuid, which) {
+                if (view) {
+                    view.highlight_action(uuid, which);
+                }
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["uuid", "which"]},
                 __module__ : {value: null}
             });
             return ρσ_anonfunc;

@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 07:51+0530\n"
-"PO-Revision-Date: 2020-04-30 03:40+0000\n"
+"POT-Creation-Date: 2020-05-02 09:13+0530\n"
+"PO-Revision-Date: 2020-05-11 11:35+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -368,7 +368,7 @@ msgid ""
 "number zero. The last item can be returned using `list_item(-1,separator)`. "
 "If the item is not in the list, then the empty value is returned. The "
 "separator has the same meaning as in the `count` function."
-msgstr "``list_item(index, separator)`` -- tolkar fältet som en lista med objekt åtskilda med `separator`, återge` index` objektet. Den första elementet är siffran noll. Den sista punkten kan återges med `list_item (-1, separator)`. Om elementet inte finns i listan, då återges det tomma värdet. Separatorn har samma betydelse som i `count` funktionen."
+msgstr "``list_item(index, separator)`` -- tolkar fältet som en lista med objekt åtskilda med `separator`, återge` index` objektet. Den första elementet är siffran noll. Den sista punkten kan återges med `list_item (-1, separator)`. Om elementet inte finns i listan, då återges det tomma värdet. Avskiljaren har samma betydelse som i `count` funktionen."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:131
 msgid ""
@@ -738,7 +738,7 @@ msgid ""
 "spaces. It is up to you to choose separator strings that do not occur in "
 "author names or links. An author is included even if the author link is "
 "empty."
-msgstr "``author_links(val_separator, pair_separator)`` -- återger en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` o.s.v. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillagda blanksteg. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillagda blanksteg. Det är upp till dig att välja skiljesträngar som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
+msgstr "``author_links(val_separator, pair_separator)`` -- återger en sträng som innehåller en lista med författare och att författarens länkvärden i form ``author1 val_separator author1link pair_separator author2 val_separator author2link`` o.s.v. En författare är separerad från dess länk värde av ``val_separator`` sträng utan tillagda blanksteg. ``author:linkvalue`` paren skiljs åt av ``pair_separator`` strängargument utan tillagda blanksteg. Det är upp till dig att välja avskiljare som inte förekommer i författarnamn eller länkar. En författare ingår, även om författaren länken är tom."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:243
 msgid ""
@@ -749,7 +749,7 @@ msgid ""
 "author sort values in this list are in the same order as the authors of the "
 "book. If you want spaces around ``val_separator`` then include them in the "
 "separator string"
-msgstr "``author_sorts(val_separator)`` -- återger en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den återgivna listan har formen författaren sortera 1 ``val_separator`` författare sort 2 o.s.v. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha blanksteg runt ``val_separator`` så inkludera dem i avsiljarsträngen"
+msgstr "``author_sorts(val_separator)`` -- återger en sträng med en lista med författarens sorteringsvärden för författarna till boken. Sorteringen är  författarens metadata (som skiljer sig från den author_sort i böcker). Den återgivna listan har formen författaren sortera 1 ``val_separator`` författare sort 2 o.s.v. Författaren sortera värdena i denna lista är i samma ordning som författarna till boken. Om du vill ha blanksteg runt ``val_separator`` så inkludera dem i avskiljarsträngen"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:248
 msgid ""
@@ -925,7 +925,7 @@ msgid ""
 "removing from `list1` any item found in `list2`, using a case-insensitive "
 "comparison. The items in `list1` and `list2` are separated by separator, as "
 "are the items in the returned list."
-msgstr "``list_difference(list1, list2, separator)`` -- återge en lista genom att ta bort list1 alla objekt som finns i list2 med en skiftlägeskänslig jämförelse. Objekten i list1 och list2 skiljs åt av separator, liksom de artiklar i den återgivna listan."
+msgstr "``list_difference(list1, list2, separator)`` -- återge en lista genom att ta bort list1 alla objekt som finns i list2 med en skiftlägeskänslig jämförelse. Objekten i list1 och list2 skiljs åt av avskiljare, liksom de artiklar i den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:319
 msgid ""
@@ -942,7 +942,7 @@ msgid ""
 "removing from `list1` any item not found in `list2`, using a case-"
 "insensitive comparison. The items in `list1` and `list2` are separated by "
 "separator, as are the items in the returned list."
-msgstr "``list_intersection(list1, list2, separator)`` -- återge en lista genom att ta bort list1 alla objekt som finns i list2 med en skiftlägeskänslig jämförelse. Objekten i list1 och list2 skiljs åt av separator, liksom de artiklar i den återgivna listan."
+msgstr "``list_intersection(list1, list2, separator)`` -- återge en lista genom att ta bort list1 alla objekt som finns i list2 med en skiftlägeskänslig jämförelse. Objekten i list1 och list2 skiljs åt av avskiljare, liksom de artiklar i den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:321
 msgid ""
@@ -952,7 +952,7 @@ msgid ""
 "it does, then add it to the list to be returned. If `opt_replace` is not the"
 " empty string, then apply the replacement before adding the item to the "
 "returned list."
-msgstr "``list_re(src_list, separator, include_re, opt_replace)`` -- Konstruera en lista genom att först separera `src_list` in poster med `separator` tecken. För varje post i listan, kolla om det matchar `include_re`. Om den gör det, så lägga till den i listan som ska återges. Om `opt_replace` inte är den tomma strängen, så tillämpa bytet innan du lägger till posten till den återgivna listan."
+msgstr "``list_re(src_list, separator, include_re, opt_replace)`` -- Konstruera en lista genom att först separera `src_list` i poster med tecknet `separator`. För varje post i listan, kolla om det matchar `include_re`. Om den gör det, lägg till den i listan som ska återges. Om `opt_replace` inte är den tomma strängen, så tillämpa bytet innan du lägger till posten till den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:322
 msgid ""
@@ -968,7 +968,7 @@ msgid ""
 "case-insensitive sort. If `direction` is zero, the list is sorted ascending,"
 " otherwise descending. The list items are separated by separator, as are the"
 " items in the returned list."
-msgstr "``list_sort(list, direction, separator)`` -- återger lista sorterad med hjälp av en skiftlägeskänslig sortering. Om `direction` är noll, är listan sorteras stigande, annars fallande. Listposter är separerade med separator, likasom de poster i den återgivna listan."
+msgstr "``list_sort(list, direction, separator)`` -- återger lista sorterad med hjälp av en skiftlägeskänslig sortering. Om `direction` är noll, är listan sorteras stigande, annars fallande. Listposter är separerade med avskiljare, likasom de poster i den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:324
 msgid ""
@@ -977,7 +977,7 @@ msgid ""
 " comparison. If items differ in case, the one in list1 is used. The items in"
 " list1 and list2 are separated by separator, as are the items in the "
 "returned list."
-msgstr "``list_union(list1, list2, separator)`` -- återge en lista som görs av en sammanslagning av poster i list1 och list2, ta bort dubbletter med en skiftlägeskänslig jämförelse. Om objekt skiljer sig i fallet är den i list1 används. Objekten i list1 och list2 skiljs åt av separator, liksom de artiklar i den återgivna listan."
+msgstr "``list_union(list1, list2, separator)`` -- återge en lista som görs av en sammanslagning av poster i list1 och list2, ta bort dubbletter med en skiftlägeskänslig jämförelse. Om objekt skiljer sig i fallet är den i list1 används. Objekten i list1 och list2 skiljs åt av avskiljare, liksom de artiklar i den återgivna listan."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:325
 msgid ""
@@ -1016,7 +1016,7 @@ msgid ""
 "``raw_list(name, separator)`` -- returns the metadata list named by name "
 "without applying any formatting or sorting and with items separated by "
 "separator."
-msgstr "``raw_list(name, separator)`` -- återger listan metadata med namnet name utan att tillämpa någon formatering eller sortering och med poster åtskilda av separator."
+msgstr "``raw_list(name, separator)`` -- återger listan metadata med namnet name utan att tillämpa någon formatering eller sortering och med poster åtskilda av avskiljare."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:331
 msgid ""

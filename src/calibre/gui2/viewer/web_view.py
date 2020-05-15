@@ -291,6 +291,7 @@ class ViewerBridge(Bridge):
     goto_frac = to_js()
     trigger_shortcut = to_js()
     set_system_palette = to_js()
+    highlight_action = to_js()
     show_search_result = to_js()
     prepare_for_close = to_js()
     viewer_font_size_changed = to_js()
@@ -317,6 +318,7 @@ def apply_font_settings(page_or_view):
     s.setFontFamily(s.StandardFont, s.fontFamily(sf))
     old_minimum = s.fontSize(s.MinimumFontSize)
     old_base = s.fontSize(s.DefaultFontSize)
+    old_fixed_base = s.fontSize(s.DefaultFixedFontSize)
     mfs = fs.get('minimum_font_size')
     if mfs is None:
         s.resetFontSize(s.MinimumFontSize)
@@ -325,8 +327,10 @@ def apply_font_settings(page_or_view):
     bfs = sd.get('base_font_size')
     if bfs is not None:
         s.setFontSize(s.DefaultFontSize, bfs)
+        s.setFontSize(s.DefaultFixedFontSize, int(bfs * 13 / 16))
 
-    font_size_changed = old_minimum != s.fontSize(s.MinimumFontSize) or old_base != s.fontSize(s.DefaultFontSize)
+    font_size_changed = (old_minimum, old_base, old_fixed_base) != (
+            s.fontSize(s.MinimumFontSize), s.fontSize(s.DefaultFontSize), s.fontSize(s.DefaultFixedFontSize))
     if font_size_changed and hasattr(page_or_view, 'execute_when_ready'):
         page_or_view.execute_when_ready('viewer_font_size_changed')
 
@@ -690,6 +694,9 @@ class WebView(RestartingWebEngineView):
 
     def prepare_for_close(self):
         self.execute_when_ready('prepare_for_close')
+
+    def highlight_action(self, uuid, which):
+        self.execute_when_ready('highlight_action', uuid, which)
 
     def contextMenuEvent(self, ev):
         ev.accept()

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "五月 02, 2020" "4.15.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "五月 15, 2020" "4.16.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -156,7 +156,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: "/som
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-侦听连接的界面.    The default is to listen on all available IPv4 interfaces. You can change this to, for example, \fB"\fP127.0.0.1\fB"\fP to only listen for connections from the local machine, or to \fB"\fP::\fB"\fP to listen to all incoming IPv6 and IPv4 connections.
+侦听连接的界面.    默认情况下侦听所有可用的IPv4接口。例如，您可以将其更改为“127.0.0.1”以仅侦听来自本地计算机的连接，或更改为“：：”以侦听所有传入的IPv6和IPv4连接。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -250,7 +250,7 @@ SSL证书文件的路径.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+允许来自特定IP地址的未经身份验证的连接进行更改.   通常，如果您不打开身份验证，服务器将以只读模式运行，从而不允许匿名用户更改您的Calibre库。此选项允许从指定IP地址连接的任何人进行更改。必须是逗号分隔的地址或网络规范列表。如果您希望在不进行身份验证的情况下运行服务器，但仍使用Calibredb对您的Calibre库进行更改，则此功能非常有用。请注意，启用此选项意味着从指定IP地址连接的任何人都可以更改您的Calibre库。
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maj 02, 2020" "4.15.0" "calibre"
+.TH "CALIBREDB" "1" "maj 15, 2020" "4.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -185,12 +185,12 @@ The fields to display when listing books in the database. Should be a comma sepa
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Opret resultatet i JSON\-format, der er mere egnet til maskinfortolkning. Gør at linjebredde og adskillelsesindstillinger ignoreres.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-limit
-The maximum number of results to display. Default: all
+Maksimalt antal resultater at vise. Standard: all (alle)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,7 +215,7 @@ Strengen anvendt til at separere felter. Standard er et mellemrum.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: id
+Feltet resultaterne sorteres efter. Tilgængelige felter: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Standard: id
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -266,7 +266,7 @@ Sæt ISBN på den/de tilføjede bøger
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+En kommaadskilt liste over sprog (bedst til brug med ISO639\-sprogkoder, selvom nogle sprognavne måske ikke bliver genkendt)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -349,7 +349,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+Erstat ikke formatet hvis det allerede findes
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -467,7 +467,7 @@ Kommasepareret liste af formater, som gemmes for hver bog. Som standard gemmes a
 .INDENT 0.0
 .TP
 .B \-\-progress
-Report progress
+Rapporter status
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -834,7 +834,7 @@ Output i CSV
 .INDENT 0.0
 .TP
 .B \-\-dialect
-The type of CSV file to produce. Choices: excel, excel\-tab
+Typen af CSV\-fil at fremstille. Valg: excel, excel\-tab
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -869,7 +869,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+Normalt fungerer denne kommando kun på bøger som har forældede OPF\-filer. Dette tilvalg gør at det fungerer på alle bøger.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0
