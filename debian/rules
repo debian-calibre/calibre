@@ -74,6 +74,7 @@ override_dh_auto_clean:
 	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
+	py3clean setup src
 	find . -name '*.pyc' -delete
 	find . -name '*.so'  -delete
 
