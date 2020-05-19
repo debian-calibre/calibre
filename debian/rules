@@ -43,9 +43,6 @@ override_dh_install:
 	dh_sip3 -pcalibre-bin
 	dh_install
 
-override_dh_missing:
-	dh_missing --fail-missing
-
 override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/icons/hicolor
 	mkdir -p  debian/tmp/usr/share/applications
