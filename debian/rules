@@ -16,12 +16,10 @@ ifdef SCHROOT_USER
   include debian/buildd-options.mak
 endif
 
-# Set our HOME directory for testing.
-# Some test uses it for XDG Base Directory.
-TEST_HOME = $(CURDIR)/debian/test-home
-
 %:
 	dh $@ --buildsystem=makefile
+
+.PHONY: get-orig-source test
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W python3-pyqt5)
 
@@ -34,9 +32,12 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
 
+# Invoke "test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
-	mkdir -p $(TEST_HOME)
-	HOME=$(TEST_HOME) LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test $(TEST_FLAGS)
+	dh_auto_test -O--buildsystem=makefile -- -f debian/rules
+
+test:
+	LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC xvfb-run $(SETUP) test $(TEST_FLAGS)
 
 override_dh_install:
 	dh_buildinfo
@@ -71,7 +72,6 @@ override_dh_installman:
 
 override_dh_auto_clean:
 	rm -rf debian/orig
-	rm -rf $(TEST_HOME)
 	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
@@ -82,6 +82,5 @@ override_dh_auto_clean:
 override_dh_gencontrol:
 	dh_gencontrol $(DEB_DH_GENCONTROL_ARGS)
 
-.PHONY: get-orig-source
 get-orig-source:
 	uscan --verbose
