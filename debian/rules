@@ -71,7 +71,6 @@ override_dh_installman:
 	dh_installman
 
 override_dh_auto_clean:
-	rm -rf debian/orig
 	rm -f  debian/man
 	[ ! -d build ] || $(SETUP) build -c
 	$(SETUP) mathjax --clean
