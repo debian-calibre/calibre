@@ -5,22 +5,23 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
-from collections import Counter
+import re
+from collections import Counter, OrderedDict
 from threading import Thread
 
 import regex
 from PyQt5.Qt import (
-    QCheckBox, QComboBox, QHBoxLayout, QIcon, QLabel, QListWidget,
-    QListWidgetItem, QStaticText, QStyle, QStyledItemDelegate, Qt, QToolButton,
+    QAction, QCheckBox, QComboBox, QFont, QFontMetrics, QHBoxLayout, QIcon, QLabel,
+    QStyle, QStyledItemDelegate, Qt, QToolButton, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre.ebooks.conversion.search_replace import REGEX_FLAGS
-from calibre.gui2 import warning_dialog
+from calibre.gui2 import QT_HIDDEN_CLEAR_ACTION, warning_dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
 from calibre.gui2.viewer.web_view import get_data, get_manifest, vprefs
 from calibre.gui2.widgets2 import HistoryComboBox
-from polyglot.builtins import iteritems, unicode_type, map
+from polyglot.builtins import iteritems, map, unicode_type
 from polyglot.functools import lru_cache
 from polyglot.queue import Queue
 
@@ -125,34 +126,25 @@ class SearchFinished(object):
 
 class SearchResult(object):
 
-    __slots__ = ('search_query', 'before', 'text', 'after', 'q', 'spine_idx', 'index', 'file_name', '_static_text', 'is_hidden')
+    __slots__ = (
+        'search_query', 'before', 'text', 'after', 'q', 'spine_idx',
+        'index', 'file_name', 'is_hidden', 'offset', 'toc_nodes'
+    )
 
-    def __init__(self, search_query, before, text, after, q, name, spine_idx, index):
+    def __init__(self, search_query, before, text, after, q, name, spine_idx, index, offset):
         self.search_query = search_query
         self.q = q
         self.before, self.text, self.after = before, text, after
         self.spine_idx, self.index = spine_idx, index
         self.file_name = name
-        self._static_text = None
         self.is_hidden = False
-
-    @property
-    def static_text(self):
-        if self._static_text is None:
-            before_words = self.before.split()
-            before = ' '.join(before_words[-3:])
-            before_extra = len(before) - 15
-            if before_extra > 0:
-                before = before[before_extra:]
-            before = '…' + before
-            before_space = '' if self.before.rstrip() == self.before else ' '
-            after_words = self.after.split()
-            after = ' '.join(after_words[:3])[:15] + '…'
-            after_space = '' if self.after.lstrip() == self.after else ' '
-            self._static_text = st = QStaticText('<p>{}{}<b>{}</b>{}{}'.format(before, before_space, self.text, after_space, after))
-            st.setTextFormat(Qt.RichText)
-            st.setTextWidth(10000)
-        return self._static_text
+        self.offset = offset
+        try:
+            self.toc_nodes = toc_nodes_for_search_result(self)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            self.toc_nodes = ()
 
     @property
     def for_js(self):
@@ -179,32 +171,128 @@ def searchable_text_for_name(name):
         if child.get('n') == 'body':
             stack.append(child)
     ignore_text = {'script', 'style', 'title'}
+    text_pos = 0
+    anchor_offset_map = OrderedDict()
     while stack:
         node = stack.pop()
         if isinstance(node, unicode_type):
             ans.append(node)
+            text_pos += len(node)
             continue
         g = node.get
         name = g('n')
         text = g('x')
         tail = g('l')
         children = g('c')
+        attributes = g('a')
+        if attributes:
+            for x in attributes:
+                if x[0] == 'id':
+                    aid = x[1]
+                    if aid not in anchor_offset_map:
+                        anchor_offset_map[aid] = text_pos
         if name and text and name not in ignore_text:
             ans.append(text)
+            text_pos += len(text)
         if tail:
             stack.append(tail)
         if children:
             stack.extend(reversed(children))
-    return ''.join(ans)
+    return ''.join(ans), anchor_offset_map
+
+
+@lru_cache(maxsize=2)
+def get_toc_data():
+    manifest = get_manifest() or {}
+    spine = manifest.get('spine') or []
+    spine_toc_map = {name: [] for name in spine}
+
+    def process_node(node):
+        items = spine_toc_map.get(node['dest'])
+        if items is not None:
+            items.append(node)
+        children = node.get('children')
+        if children:
+            for child in children:
+                process_node(child)
+
+    toc = manifest.get('toc')
+    if toc:
+        process_node(toc)
+    return {
+        'spine': tuple(spine), 'spine_toc_map': spine_toc_map,
+        'spine_idx_map': {name: idx for idx, name in enumerate(spine)}
+    }
+
+
+class ToCOffsetMap(object):
+
+    def __init__(self, toc_nodes=(), offset_map=None, previous_toc_node=None):
+        self.toc_nodes = toc_nodes
+        self.offset_map = offset_map or {}
+        self.previous_toc_node = previous_toc_node
+
+    def toc_nodes_for_offset(self, offset):
+        found = False
+        for node in self.toc_nodes:
+            q = self.offset_map.get(node.get('id'))
+            if q is not None:
+                if q > offset:
+                    break
+                yield node
+                found = True
+        if not found and self.previous_toc_node is not None:
+            yield self.previous_toc_node
+
+
+@lru_cache(maxsize=None)
+def toc_offset_map_for_name(name):
+    anchor_map = searchable_text_for_name(name)[1]
+    toc_data = get_toc_data()
+    try:
+        idx = toc_data['spine_idx_map'][name]
+        toc_nodes = toc_data['spine_toc_map'][name]
+    except Exception:
+        idx = -1
+    if idx < 0:
+        return ToCOffsetMap()
+    offset_map = {}
+    for node in toc_nodes:
+        node_id = node.get('id')
+        if node_id is not None:
+            aid = node.get('frag')
+            offset = anchor_map.get(aid, 0)
+            offset_map[node_id] = offset
+    prev_toc_node = None
+    for spine_name in reversed(toc_data['spine'][:idx]):
+        try:
+            ptn = toc_data['spine_toc_map'][spine_name]
+        except Exception:
+            continue
+        if ptn:
+            prev_toc_node = ptn[-1]
+            break
+    return ToCOffsetMap(toc_nodes, offset_map, prev_toc_node)
+
+
+def toc_nodes_for_search_result(sr):
+    sidx = sr.spine_idx
+    toc_data = get_toc_data()
+    try:
+        name = toc_data['spine'][sidx]
+    except Exception:
+        return ()
+    tmap = toc_offset_map_for_name(name)
+    return tuple(tmap.toc_nodes_for_offset(sr.offset))
 
 
 def search_in_name(name, search_query, ctx_size=50):
-    raw = searchable_text_for_name(name)
+    raw = searchable_text_for_name(name)[0]
     for match in search_query.regex.finditer(raw):
         start, end = match.span()
         before = raw[max(0, start-ctx_size):start]
         after = raw[end:end+ctx_size]
-        yield before, match.group(), after
+        yield before, match.group(), after, start
 
 
 class SearchBox(HistoryComboBox):
@@ -226,6 +314,7 @@ class SearchBox(HistoryComboBox):
 class SearchInput(QWidget):  # {{{
 
     do_search = pyqtSignal(object)
+    cleared = pyqtSignal()
 
     def __init__(self, parent=None, panel_name='search'):
         QWidget.__init__(self, parent)
@@ -243,6 +332,9 @@ class SearchInput(QWidget):  # {{{
         sb.history_saved.connect(self.history_saved)
         sb.lineEdit().setPlaceholderText(_('Search'))
         sb.lineEdit().setClearButtonEnabled(True)
+        ac = sb.lineEdit().findChild(QAction, QT_HIDDEN_CLEAR_ACTION)
+        if ac is not None:
+            ac.triggered.connect(self.cleared)
         sb.lineEdit().returnPressed.connect(self.find_next)
         h.addWidget(sb)
 
@@ -350,77 +442,196 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, index)
         result = index.data(Qt.UserRole)
+        if not isinstance(result, SearchResult):
+            return
         painter.save()
-        p = option.palette
-        c = p.HighlightedText if option.state & QStyle.State_Selected else p.Text
-        group = (p.Active if option.state & QStyle.State_Active else p.Inactive)
-        c = p.color(group, c)
-        painter.setClipRect(option.rect)
-        painter.setPen(c)
-        height = result.static_text.size().height()
-        tl = option.rect.topLeft()
-        x, y = tl.x(), tl.y()
-        y += (option.rect.height() - height) // 2
-        if result.is_hidden:
-            x += option.decorationSize.width() + 4
         try:
-            painter.drawStaticText(x, y, result.static_text)
+            p = option.palette
+            c = p.HighlightedText if option.state & QStyle.State_Selected else p.Text
+            group = (p.Active if option.state & QStyle.State_Active else p.Inactive)
+            c = p.color(group, c)
+            painter.setPen(c)
+            font = option.font
+            emphasis_font = QFont(font)
+            emphasis_font.setBold(True)
+            flags = Qt.AlignTop | Qt.TextSingleLine | Qt.TextIncludeTrailingSpaces
+            rect = option.rect.adjusted(option.decorationSize.width() + 4 if result.is_hidden else 0, 0, 0, 0)
+            painter.setClipRect(rect)
+            before = re.sub(r'\s+', ' ', result.before)
+            before_width = 0
+            if before:
+                before_width = painter.boundingRect(rect, flags, before).width()
+            after = re.sub(r'\s+', ' ', result.after.rstrip())
+            after_width = 0
+            if after:
+                after_width = painter.boundingRect(rect, flags, after).width()
+            ellipsis_width = painter.boundingRect(rect, flags, '...').width()
+            painter.setFont(emphasis_font)
+            text = re.sub(r'\s+', ' ', result.text)
+            match_width = painter.boundingRect(rect, flags, text).width()
+            if match_width >= rect.width() - 3 * ellipsis_width:
+                efm = QFontMetrics(emphasis_font)
+                text = efm.elidedText(text, Qt.ElideRight, rect.width())
+                painter.drawText(rect, flags, text)
+            else:
+                self.draw_match(
+                    painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, font)
         except Exception:
             import traceback
             traceback.print_exc()
         painter.restore()
+
+    def draw_match(self, painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, normal_font):
+        extra_width = int(rect.width() - match_width)
+        if before_width < after_width:
+            left_width = min(extra_width // 2, before_width)
+            right_width = extra_width - left_width
+        else:
+            right_width = min(extra_width // 2, after_width)
+            left_width = min(before_width, extra_width - right_width)
+        x = rect.left()
+        nfm = QFontMetrics(normal_font)
+        if before_width and left_width:
+            r = rect.adjusted(0, 0, 0, 0)
+            r.setRight(x + left_width)
+            painter.setFont(normal_font)
+            ebefore = nfm.elidedText(before, Qt.ElideLeft, left_width)
+            if ebefore == before:
+                ebefore = '…' + before[1:]
+            r.setLeft(x)
+            x += painter.drawText(r, flags, ebefore).width()
+        painter.setFont(emphasis_font)
+        r = rect.adjusted(0, 0, 0, 0)
+        r.setLeft(x)
+        painter.drawText(r, flags, text).width()
+        x += match_width
+        if after_width and right_width:
+            painter.setFont(normal_font)
+            r = rect.adjusted(0, 0, 0, 0)
+            r.setLeft(x)
+            eafter = nfm.elidedText(after, Qt.ElideRight, right_width)
+            if eafter == after:
+                eafter = after[:-1] + '…'
+            painter.setFont(normal_font)
+            painter.drawText(r, flags, eafter)
+
 # }}}
 
 
-class Results(QListWidget):  # {{{
+class Results(QTreeWidget):  # {{{
 
     show_search_result = pyqtSignal(object)
+    current_result_changed = pyqtSignal(object)
 
     def __init__(self, parent=None):
-        QListWidget.__init__(self, parent)
+        QTreeWidget.__init__(self, parent)
+        self.setHeaderHidden(True)
         self.setFocusPolicy(Qt.NoFocus)
         self.delegate = ResultsDelegate(self)
         self.setItemDelegate(self.delegate)
         self.itemClicked.connect(self.item_activated)
         self.blank_icon = QIcon(I('blank.png'))
+        self.not_found_icon = QIcon(I('dialog_warning.png'))
+        self.currentItemChanged.connect(self.current_item_changed)
+        self.section_font = QFont(self.font())
+        self.section_font.setItalic(True)
+        self.section_map = {}
+        self.search_results = []
+        self.item_map = {}
+
+    def current_item_changed(self, current, previous):
+        if current is not None:
+            r = current.data(0, Qt.UserRole)
+            if isinstance(r, SearchResult):
+                self.current_result_changed.emit(r)
+        else:
+            self.current_result_changed.emit(None)
 
     def add_result(self, result):
-        i = QListWidgetItem(' ', self)
-        i.setData(Qt.UserRole, result)
-        i.setIcon(self.blank_icon)
-        return self.count()
+        section_title = _('Unknown')
+        section_id = -1
+        toc_nodes = getattr(result, 'toc_nodes', ()) or ()
+        if toc_nodes:
+            section_title = toc_nodes[-1].get('title') or _('Unknown')
+            section_id = toc_nodes[-1].get('id')
+            if section_id is None:
+                section_id = -1
+        section_key = section_id
+        section = self.section_map.get(section_key)
+        if section is None:
+            section = QTreeWidgetItem([section_title], 1)
+            section.setFlags(Qt.ItemIsEnabled)
+            section.setFont(0, self.section_font)
+            lines = []
+            for i, node in enumerate(toc_nodes):
+                lines.append('\xa0\xa0' * i + '➤ ' + (node.get('title') or _('Unknown')))
+            tt = ngettext('Table of Contents section:', 'Table of Contents sections:', len(lines))
+            tt += '\n' + '\n'.join(lines)
+            section.setToolTip(0, tt)
+            self.section_map[section_key] = section
+            self.addTopLevelItem(section)
+            section.setExpanded(True)
+        item = QTreeWidgetItem(section, [' '], 2)
+        item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemNeverHasChildren)
+        item.setData(0, Qt.UserRole, result)
+        item.setData(0, Qt.UserRole + 1, len(self.search_results))
+        item.setIcon(0, self.blank_icon)
+        self.item_map[len(self.search_results)] = item
+        self.search_results.append(result)
+        return self.number_of_results
 
     def item_activated(self):
         i = self.currentItem()
         if i:
-            sr = i.data(Qt.UserRole)
-            if not sr.is_hidden:
-                self.show_search_result.emit(sr)
+            sr = i.data(0, Qt.UserRole)
+            if isinstance(sr, SearchResult):
+                if not sr.is_hidden:
+                    self.show_search_result.emit(sr)
 
     def find_next(self, previous):
-        if self.count() < 1:
+        if self.number_of_results < 1:
             return
-        i = self.currentRow()
+        item = self.currentItem()
+        if item is None:
+            return
+        i = int(item.data(0, Qt.UserRole + 1))
         i += -1 if previous else 1
-        i %= self.count()
-        self.setCurrentRow(i)
+        i %= self.number_of_results
+        self.setCurrentItem(self.item_map[i])
         self.item_activated()
 
     def search_result_not_found(self, sr):
-        for i in range(self.count()):
-            item = self.item(i)
-            r = item.data(Qt.UserRole)
+        for i in range(self.number_of_results):
+            item = self.item_map[i]
+            r = item.data(0, Qt.UserRole)
             if r.is_result(sr):
                 r.is_hidden = True
-                item.setIcon(QIcon(I('dialog_warning.png')))
+                item.setIcon(0, self.not_found_icon)
                 break
 
     @property
     def current_result_is_hidden(self):
         item = self.currentItem()
-        if item and item.data(Qt.UserRole) and item.data(Qt.UserRole).is_hidden:
-            return True
+        if item is not None:
+            sr = item.data(0, Qt.UserRole)
+            if isinstance(sr, SearchResult) and sr.is_hidden:
+                return True
         return False
+
+    @property
+    def number_of_results(self):
+        return len(self.search_results)
+
+    def clear_all_results(self):
+        self.section_map = {}
+        self.item_map = {}
+        self.search_results = []
+        self.clear()
+
+    def select_first_result(self):
+        if self.number_of_results:
+            item = self.item_map[0]
+            self.setCurrentItem(item)
 # }}}
 
 
@@ -429,6 +640,7 @@ class SearchPanel(QWidget):  # {{{
     search_requested = pyqtSignal(object)
     results_found = pyqtSignal(object)
     show_search_result = pyqtSignal(object)
+    hide_search_panel = pyqtSignal()
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -443,8 +655,9 @@ class SearchPanel(QWidget):  # {{{
         si.do_search.connect(self.search_requested)
         l.addWidget(si)
         self.results = r = Results(self)
+        si.cleared.connect(r.clear_all_results)
         r.show_search_result.connect(self.do_show_search_result, type=Qt.QueuedConnection)
-        r.currentRowChanged.connect(self.update_hidden_message)
+        r.current_result_changed.connect(self.update_hidden_message)
         l.addWidget(r, 100)
         self.spinner = s = BusySpinner(self)
         s.setVisible(False)
@@ -469,7 +682,7 @@ class SearchPanel(QWidget):  # {{{
             self.searcher = Thread(name='Searcher', target=self.run_searches)
             self.searcher.daemon = True
             self.searcher.start()
-        self.results.clear()
+        self.results.clear_all_results()
         self.hidden_message.setVisible(False)
         self.spinner.start()
         self.current_search = search_query
@@ -499,9 +712,9 @@ class SearchPanel(QWidget):  # {{{
                 spine_idx = idx_map[name]
                 try:
                     for i, result in enumerate(search_in_name(name, search_query)):
-                        before, text, after = result
+                        before, text, after, offset = result
                         q = (before or '')[-5:] + text + (after or '')[:5]
-                        self.results_found.emit(SearchResult(search_query, before, text, after, q, name, spine_idx, counter[q]))
+                        self.results_found.emit(SearchResult(search_query, before, text, after, q, name, spine_idx, counter[q], offset))
                         counter[q] += 1
                 except Exception:
                     import traceback
@@ -513,12 +726,12 @@ class SearchPanel(QWidget):  # {{{
             return
         if isinstance(result, SearchFinished):
             self.spinner.stop()
-            if not self.results.count():
+            if not self.results.number_of_results:
                 self.show_no_results_found()
             return
         if self.results.add_result(result) == 1:
             # first result
-            self.results.setCurrentRow(0)
+            self.results.select_first_result()
             self.results.item_activated()
         self.update_hidden_message()
 
@@ -530,8 +743,10 @@ class SearchPanel(QWidget):  # {{{
         self.current_search = None
         self.last_hidden_text_warning = None
         searchable_text_for_name.cache_clear()
+        toc_offset_map_for_name.cache_clear()
+        get_toc_data.cache_clear()
         self.spinner.stop()
-        self.results.clear()
+        self.results.clear_all_results()
 
     def shutdown(self):
         self.search_tasks.put(None)
@@ -553,4 +768,11 @@ class SearchPanel(QWidget):  # {{{
     def show_no_results_found(self):
         msg = _('No matches were found for:')
         warning_dialog(self, _('No matches found'), msg + '  <b>{}</b>'.format(self.current_search.text), show=True)
+
+    def keyPressEvent(self, ev):
+        if ev.key() == Qt.Key_Escape:
+            self.hide_search_panel.emit()
+            ev.accept()
+            return
+        return QWidget.keyPressEvent(self, ev)
 # }}}

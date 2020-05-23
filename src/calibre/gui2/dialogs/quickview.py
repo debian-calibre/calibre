@@ -281,7 +281,7 @@ class Quickview(QDialog, Ui_Quickview):
     def item_doubleclicked(self, item):
         tb = self.gui.stack.tb_widget
         tb.set_focus_to_find_box()
-        tb.item_search.lineEdit().setText(self.current_key + ':' + item.text())
+        tb.item_search.lineEdit().setText(self.current_key + ':=' + item.text())
         tb.do_find()
 
     def show_context_menu(self, point):
@@ -505,7 +505,7 @@ class Quickview(QDialog, Ui_Quickview):
                 a.setToolTip(
                     '<p>' + _(
                         'Click to show only books with this item. '
-                        'Double click to search for this item in the tag browser') + '</p>')
+                        'Double click to search for this item in the Tag browser') + '</p>')
                 self.items.addItem(a)
             self.items.setCurrentRow(0)
 

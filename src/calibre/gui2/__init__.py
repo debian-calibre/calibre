@@ -150,6 +150,7 @@ def create_defs():
     defs['ui_style'] = 'calibre' if iswindows or isosx else 'system'
     defs['tag_browser_old_look'] = False
     defs['tag_browser_hide_empty_categories'] = False
+    defs['tag_browser_always_autocollapse'] = False
     defs['book_list_tooltips'] = True
     defs['show_layout_buttons'] = False
     defs['bd_show_cover'] = True
@@ -198,7 +199,7 @@ del create_defs
 # }}}
 
 UNDEFINED_QDATETIME = QDateTime(UNDEFINED_DATE)
-
+QT_HIDDEN_CLEAR_ACTION = '_q_qlineeditclearaction'
 ALL_COLUMNS = ['title', 'ondevice', 'authors', 'size', 'timestamp', 'rating', 'publisher',
         'tags', 'series', 'pubdate']
 

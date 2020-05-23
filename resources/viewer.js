@@ -7499,7 +7499,7 @@ return this.__repr__();
             return ans;
         };
         if (!rating_to_stars.__defaults__) Object.defineProperties(rating_to_stars, {
-            __defaults__ : {value: {allow_half_stars:false, star:"★", half:"½"}},
+            __defaults__ : {value: {allow_half_stars:false, star:"★", half:"⯨"}},
             __handles_kwarg_interpolation__ : {value: true},
             __argnames__ : {value: ["value", "allow_half_stars", "star", "half"]},
             __module__ : {value: "utils"}
@@ -24836,7 +24836,7 @@ return this.__repr__();
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id()})]));
                 c = container.lastChild;
                 items = ρσ_list_decorate([]);
-                c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Recently viewed books")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+                c.appendChild(ρσ_interpolate_kwargs.call(E, E.h2, [_("Recently viewed books")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
                 c.appendChild(E.div());
                 var ρσ_Iter0 = ρσ_Iterable(rl);
                 for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
@@ -33659,7 +33659,7 @@ return this.__repr__();
             back_action = ac(_("Back"), null, self.back, "arrow-left");
             forward_action = ac(_("Forward"), null, self.forward, "arrow-right");
             if (runtime.is_standalone_viewer) {
-                reload_actions = E.ul(ac(_("Open book"), _("Open a new book"), self.overlay.open_book, "book"), reload_action);
+                reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
                 nav_actions = E.ul(back_action, forward_action);
             } else {
                 reload_actions = E.ul(sync_action, delete_action, reload_action);
@@ -34153,7 +34153,9 @@ return this.__repr__();
             if (self.closeable) {
                 self.overlay.hide_current_panel();
             } else {
-                ui_operations.quit();
+                if (self.overlay.handling_context_menu_event === null) {
+                    ui_operations.quit();
+                }
             }
         };
         if (!OpenBook.prototype.handle_escape.__module__) Object.defineProperties(OpenBook.prototype.handle_escape, {
@@ -34183,7 +34185,7 @@ return this.__repr__();
                     __module__ : {value: "read_book.overlay"}
                 });
                 return ρσ_anonfunc;
-            })(), class_: "simple-link"})])), ρσ_interpolate_kwargs.call(E, E.h2, [_("Open a new book")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start"})])));
+            })(), class_: "simple-link"})])), ρσ_interpolate_kwargs.call(E, E.h2, [_("Open a book")].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em; border-bottom: solid 1px currentColor; display:flex; justify-content: flex-start"})])));
             create_open_book(container, ρσ_exists.d(self.overlay.view).book);
         };
         if (!OpenBook.prototype.show.__argnames__) Object.defineProperties(OpenBook.prototype.show, {
@@ -34252,6 +34254,7 @@ return this.__repr__();
             var self = this;
             var c;
             self.view = view;
+            self.handling_context_menu_event = null;
             c = self.clear_container();
             c.addEventListener("click", self.container_clicked);
             c.addEventListener("contextmenu", self.oncontextmenu, (function(){
@@ -34274,7 +34277,9 @@ return this.__repr__();
                 return;
             }
             evt.preventDefault();
+            self.handling_context_menu_event = evt;
             self.handle_escape();
+            self.handling_context_menu_event = null;
         };
         if (!Overlay.prototype.oncontextmenu.__argnames__) Object.defineProperties(Overlay.prototype.oncontextmenu, {
             __argnames__ : {value: ["evt"]},
@@ -37581,9 +37586,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                filename = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter3 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                filename = ρσ_Iter3[ρσ_Index3];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();
