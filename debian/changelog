@@ -1,3 +1,19 @@
+calibre (4.99.4+dfsg+really4.17.0-1) UNRELEASED; urgency=medium
+
+  [ YOKOTA Hiroshi ]
+  * Update debhelper standard to v13
+  * Improve "test" target hack
+    dh_auto_test(1) provides automatic environment variables like "HOME" and "XDG_*".
+    It requires Debhelper v13.
+  * Remove unused line.
+    We are already used uscan(1) based update method.
+  * No need to rebuild "resources/images.qrc"
+  * Use Python3 based cleaner
+  * New upstream version 4.99.4+dfsg+really4.17.0
+  * Adjust py3 patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 23 May 2020 20:21:33 +0900
+
 calibre (4.99.4+dfsg+really4.16.0-1) unstable; urgency=medium
 
   [ YOKOTA Hiroshi ]
