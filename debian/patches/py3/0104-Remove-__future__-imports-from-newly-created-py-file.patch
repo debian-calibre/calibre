@@ -4,14 +4,14 @@ Date: Thu, 6 Feb 2020 10:27:24 +0530
 Subject: [PATCH 104/119] Remove __future__ imports from newly created py files
 
 ---
- src/calibre/ebooks/oeb/polish/hyphenation.py | 2 --
- src/calibre/gui2/palette.py                  | 2 --
- src/calibre/gui2/viewer/search.py            | 2 --
- src/calibre/utils/xml_parse.py               | 2 --
+ src/calibre/ebooks/oeb/polish/hyphenation.py |    2 --
+ src/calibre/gui2/palette.py                  |    2 --
+ src/calibre/gui2/viewer/search.py            |    2 --
+ src/calibre/utils/xml_parse.py               |    2 --
  4 files changed, 8 deletions(-)
 
-diff --git a/src/calibre/ebooks/oeb/polish/hyphenation.py b/src/calibre/ebooks/oeb/polish/hyphenation.py
-index ae6da750c8..96d2386d63 100644
+Index: b/src/calibre/ebooks/oeb/polish/hyphenation.py
+===================================================================
 --- a/src/calibre/ebooks/oeb/polish/hyphenation.py
 +++ b/src/calibre/ebooks/oeb/polish/hyphenation.py
 @@ -2,8 +2,6 @@
@@ -23,8 +23,8 @@ index ae6da750c8..96d2386d63 100644
  from calibre.ebooks.oeb.base import OEB_DOCS
  from polyglot.builtins import iteritems
  
-diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
-index 5989013368..c96886a4da 100644
+Index: b/src/calibre/gui2/palette.py
+===================================================================
 --- a/src/calibre/gui2/palette.py
 +++ b/src/calibre/gui2/palette.py
 @@ -2,8 +2,6 @@
@@ -36,8 +36,8 @@ index 5989013368..c96886a4da 100644
  from PyQt5.Qt import QColor, QPalette, Qt
  from calibre.constants import dark_link_color
  
-diff --git a/src/calibre/gui2/viewer/search.py b/src/calibre/gui2/viewer/search.py
-index e82ef6d015..3babedac85 100644
+Index: b/src/calibre/gui2/viewer/search.py
+===================================================================
 --- a/src/calibre/gui2/viewer/search.py
 +++ b/src/calibre/gui2/viewer/search.py
 @@ -2,8 +2,6 @@
@@ -47,10 +47,10 @@ index e82ef6d015..3babedac85 100644
 -from __future__ import absolute_import, division, print_function, unicode_literals
 -
  import json
- from collections import Counter
- from threading import Thread
-diff --git a/src/calibre/utils/xml_parse.py b/src/calibre/utils/xml_parse.py
-index aff73a6efc..6b67d6bae2 100644
+ import re
+ from collections import Counter, OrderedDict
+Index: b/src/calibre/utils/xml_parse.py
+===================================================================
 --- a/src/calibre/utils/xml_parse.py
 +++ b/src/calibre/utils/xml_parse.py
 @@ -2,8 +2,6 @@
@@ -62,6 +62,3 @@ index aff73a6efc..6b67d6bae2 100644
  from lxml import etree
  
  # resolving of SYSTEM entities is turned off as entities can cause
--- 
-2.26.2
-
