@@ -241,75 +241,6 @@ if you are using the user defined plugin for a device normally detected by a
 builtin calibre plugin, you must disable the builtin plugin first, so that your
 user defined plugin is used instead.
 
-How does calibre manage collections on my SONY reader?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When calibre connects with the reader, it retrieves all collections for the books on the reader. The collections
-of which books are members are shown on the device view.
-
-When you send a book to the reader, calibre will add the book to collections based on the metadata for that book. By
-default, collections are created from tags and series. You can control what metadata is used by going to
-:guilabel:`Preferences->Advanced->Plugins->Device Interface plugins` and customizing the SONY device interface plugin. If you remove all
-values, calibre will not add the book to any collection.
-
-Collection management is largely controlled by the 'Metadata management' option found at
-:guilabel:`Preferences->Import/export->Sending books to devices`. If set to 'Manual' (the default), managing collections is left to
-the user; calibre will not delete already existing collections for a book on your reader when you resend the
-book to the reader, but calibre will add the book to collections if necessary.  To ensure that the collections
-for a book are based only on current calibre metadata, first delete the books from the reader, then resend the
-books.  You can edit collections directly on the device view by double-clicking or right-clicking in the
-collections column.
-
-If 'Metadata management' is set to 'Only on send', then calibre will manage collections more aggressively.
-Collections will be built using calibre metadata exclusively.  Sending a book to the reader will correct the
-collections for that book so its collections exactly match the book's metadata, adding and deleting
-collections as necessary.  Editing collections on the device view is not permitted, because collections not in
-the metadata will be removed automatically.
-
-If 'Metadata management' is set to 'Automatic management', then calibre will update metadata and collections
-both when the reader is connected and when books are sent. When calibre detects the reader and generates the
-list of books on the reader, it will send metadata from the library to the reader for all books on the reader
-that are in the library (On device is True), adding and removing books from collections as indicated by the
-metadata and device customization. When a book is sent, calibre corrects the metadata for that book, adding and
-deleting collections. Manual editing of metadata on the device view is not allowed. Note that this option
-specifies sending metadata, not books. The book files on the reader are not changed.
-
-In summary, choose 'manual management' if you want to manage collections yourself.  Collections for a book
-will never be removed by calibre, but can be removed by you by editing on the device view.  Choose 'Only on
-send' if you want calibre to manage collections when you send a book, adding books to and removing books from
-collections as needed.  Choose 'Automatic management' if you want calibre to keep collections up to date
-whenever the reader is connected.
-
-If you use multiple installations of calibre to manage your reader, then option 'Automatic management' may not
-be what you want.  Connecting the reader to one library will reset the metadata to what is in that library.
-Connecting to the other library will reset the metadata to what is in that other library. Metadata in books
-found in both libraries will be flopped back and forth.
-
-Can I use both calibre and the SONY software to manage my reader?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Yes, you can use both, provided you do not run them at the same time. That is, you should use the following sequence:
-Connect reader->Use one of the programs->Disconnect reader. Reconnect reader->Use the other program->disconnect reader.
-
-The underlying reason is that the Reader uses a single file to keep track
-of 'meta' information, such as collections, and this is written to by both
-calibre and the Sony software when either updates something on the Reader.
-The file will be saved when the Reader is (safely) disconnected, so using one
-or the other is safe if there's a disconnection between them, but if
-you're not the type to remember this, then the simple answer is to stick
-to one or the other for the transfer and just export/import from/to the
-other via the computers hard disk.
-
-If you do need to reset your metadata due to problems caused by using both
-at the same time, then just delete the media.xml file on the Reader using
-your PC's file explorer and it will be recreated after disconnection.
-
-With recent reader iterations, SONY, in all its wisdom has decided to try to force you to
-use their software. If you install it, it auto-launches whenever you connect the reader.
-If you don't want to uninstall it altogether, there are a couple of tricks you can use. The
-simplest is to simply re-name the executable file that launches the library program. More detail
-`in the forums <https://www.mobileread.com/forums/showthread.php?t=65809>`_.
-
 How do I use calibre with my iPad/iPhone/iPod touch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -469,7 +400,7 @@ programs block calibre from opening a connection to send email. Try adding an ex
 antivirus program.
 
 .. note::
-    Microsoft/Google/Gmx can disable your account if you use it to send large
+    Microsoft/Google/GMX can disable your account if you use it to send large
     amounts of email. So, when using these services to send mail calibre automatically
     restricts itself to sending one book every five minutes. If you don't mind
     risking your account being blocked you can reduce this wait interval by going
@@ -542,6 +473,27 @@ problem for *some* calibre users.
   * Try upgrading the firmware on your Kobo Touch to the latest
   * Try resetting the Kobo (sometimes this cures the problem for a little while, but then it re-appears, in which case you have to reset again and again)
   * Try only putting one or two books onto the Kobo at a time and do not keep large collections on the Kobo
+
+
+Covers for books I send to my e-ink Kindle show up momentarily and then are replaced by a generic cover?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This happens because of an Amazon bug. They try to download a cover for the
+book from their servers and when that fails, they replace the existing cover
+that calibre created with a generic cover. For details see `here
+<https://www.mobileread.com/forums/showthread.php?t=329945>`_. As of version
+4.17, calibre has a workaround, where if you connect the Kindle to calibre
+after the covers have been destroyed by Amazon, calibre will restore them
+automatically. So in order to see the covers on your Kindle, you have to:
+
+  1) Send the book to the Kindle with calibre
+  2) Disconnect the Kindle and wait for Amazon to destroy the cover
+  3) Reconnect the Kindle to calibre
+
+Note that this workaround only works for books sent with calibre 4.17 or later.
+Alternately, simply keep your Kindle in airplane mode, you don't really want
+Amazon knowing every book you read anyway. I encourage you to contact Amazon
+customer support and complain loudly about this bug. Maybe Amazon will listen.
 
 
 I transferred some books to my Kindle using calibre and they did not show up?
@@ -994,7 +946,7 @@ If you want to backup the calibre configuration/plugins, you have to backup the 
 
 How do I use purchased EPUB books with calibre (or what do I do with .acsm files)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Most purchased EPUB books have :doc:`DRM <drm>`. This prevents calibre from opening them. You can still use calibre to store and transfer them to your e-book reader. First, you must authorize your reader on a windows machine with Adobe Digital Editions. Once this is done, EPUB books transferred with calibre will work fine on your reader. When you purchase an epub book from a website, you will get an ".acsm" file. This file should be opened with Adobe Digital Editions, which will then download the actual ".epub" e-book. The e-book file will be stored in the folder "My Digital Editions", from where you can add it to calibre.
+Most purchased EPUB books have :doc:`DRM <drm>`. This prevents calibre from opening them. You can still use calibre to store and transfer them to your e-book reader. First, you must authorize your reader on a Windows machine with Adobe Digital Editions. Once this is done, EPUB books transferred with calibre will work fine on your reader. When you purchase an epub book from a website, you will get an ".acsm" file. This file should be opened with Adobe Digital Editions, which will then download the actual ".epub" e-book. The e-book file will be stored in the folder "My Digital Editions", from where you can add it to calibre.
 
 I am getting a "Permission Denied" error?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

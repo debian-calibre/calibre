@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -407,6 +407,9 @@ class Ui_Form(object):
         self.opt_tag_browser_hide_empty_categories = QtWidgets.QCheckBox(self.tag_browser_tab)
         self.opt_tag_browser_hide_empty_categories.setObjectName("opt_tag_browser_hide_empty_categories")
         self.formLayout.setWidget(12, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_hide_empty_categories)
+        self.opt_tag_browser_always_autocollapse = QtWidgets.QCheckBox(self.tag_browser_tab)
+        self.opt_tag_browser_always_autocollapse.setObjectName("opt_tag_browser_always_autocollapse")
+        self.formLayout.setWidget(13, QtWidgets.QFormLayout.SpanningRole, self.opt_tag_browser_always_autocollapse)
         self.opt_tags_browser_partition_method = QtWidgets.QComboBox(self.tag_browser_tab)
         self.opt_tags_browser_partition_method.setObjectName("opt_tags_browser_partition_method")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.opt_tags_browser_partition_method)
@@ -578,7 +581,7 @@ class Ui_Form(object):
         self.opt_systray_icon.setText(_("Enable s&ystem tray icon (needs restart)"))
         self.label_7.setText(_("Choose &language (needs restart):"))
         self.label_2.setText(_("&Interface font:"))
-        self.opt_disable_tray_notification.setToolTip(_("Disable popup notifications when calibre completes jobs such a conversion, sending to device etc. The notifications are sent via the operating system notification facility, if available. Note that on windows, you have to enable the system tray icon for notifications to work."))
+        self.opt_disable_tray_notification.setToolTip(_("Disable popup notifications when calibre completes jobs such a conversion, sending to device etc. The notifications are sent via the operating system notification facility, if available. Note that on Windows, you have to enable the system tray icon for notifications to work."))
         self.opt_disable_tray_notification.setText(_("Disable n&otifications on job completion"))
         self.opt_show_splash_screen.setText(_("Show the &splash screen at startup"))
         self.icon_theme_button.setText(_("Change &icon theme (needs restart)"))
@@ -672,6 +675,10 @@ class Ui_Form(object):
 " categories might not have values when using Virtual libraries. Checking this\n"
 " box will cause these empty categories to be hidden."))
         self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns) in the Tag browser"))
+        self.opt_tag_browser_always_autocollapse.setToolTip(_("When checked, Find in the Tag browser will show all items\n"
+" that match the search instead of the first one. If Hide empty categories is\n"
+" also checked then only categories containing a matched item will be shown."))
+        self.opt_tag_browser_always_autocollapse.setText(_("Find &shows all items that match in the Tag browser"))
         self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
 "there are more items than the limit. Select by first\n"
 "letter to see an A, B, C list. Choose partitioned to\n"

@@ -32,7 +32,7 @@ class SelectNames(QDialog):  # {{{
 
         self._names = QListWidget(self)
         self._names.addItems(sorted(names, key=sort_key))
-        self._names.setSelectionMode(self._names.ExtendedSelection)
+        self._names.setSelectionMode(self._names.MultiSelection)
         l.addWidget(self._names)
 
         self._or = QRadioButton(_('Match any of the selected %s')%txt)
@@ -125,6 +125,8 @@ class CreateVirtualLibrary(QDialog):  # {{{
         self.vl_text.textChanged.connect(self.search_text_changed)
         la2.setBuddy(self.vl_text)
         gl.addWidget(self.vl_text, 1, 1)
+        # Trigger the textChanged signal to initialize the saved searches box
+        self.vl_text.setText(' ')
         self.vl_text.setText(_build_full_search_string(self.gui))
 
         self.sl = sl = QLabel('<p>'+_('Create a Virtual library based on: ')+
@@ -213,10 +215,7 @@ class CreateVirtualLibrary(QDialog):  # {{{
                     txt = ''
             else:
                 txt = ''
-        if len(searches) > 1:
-            self.saved_searches_label.setPlainText('\n'.join(searches))
-        else:
-            self.saved_searches_label.setPlainText('')
+        self.saved_searches_label.setPlainText('\n'.join(searches))
 
     def name_text_edited(self, new_name):
         self.new_name = unicode_type(new_name)
@@ -371,16 +370,21 @@ class SearchRestrictionMixin(object):
 
         a = m.addAction(_('Create Virtual library'))
         a.triggered.connect(partial(self.do_create_edit, name=None))
+        db = self.current_db
+        virt_libs = db.prefs.get('virtual_libraries', {})
 
         a = self.edit_menu
         self.build_virtual_library_list(a, self.do_create_edit)
-        m.addMenu(a)
+        if virt_libs:
+            m.addMenu(a)
 
         a = self.rm_menu
         self.build_virtual_library_list(a, self.remove_vl_triggered)
-        m.addMenu(a)
+        if virt_libs:
+            m.addMenu(a)
 
-        m.addAction(_('Quick select Virtual library'), self.choose_vl_triggerred)
+        if virt_libs:
+            m.addAction(_('Quick select Virtual library'), self.choose_vl_triggerred)
 
         if add_tabs_action:
             if gprefs['show_vl_tabs']:
@@ -389,8 +393,6 @@ class SearchRestrictionMixin(object):
                 m.addAction(_('Show Virtual libraries as tabs'), self.vl_tabs.enable_bar)
 
         m.addSeparator()
-
-        db = self.library_view.model().db
 
         a = self.ar_menu
         a.clear()
@@ -419,7 +421,6 @@ class SearchRestrictionMixin(object):
 
         m.addSeparator()
 
-        virt_libs = db.prefs.get('virtual_libraries', {})
         for vl in sorted(virt_libs.keys(), key=sort_key):
             is_current = vl == current_lib
             a = m.addAction(self.checked if is_current else self.empty, vl.replace('&', '&&'))

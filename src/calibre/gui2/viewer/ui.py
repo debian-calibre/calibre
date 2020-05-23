@@ -101,6 +101,7 @@ class EbookViewer(MainWindow):
         connect_lambda(t.timeout, self, lambda self: self.save_annotations(in_book_file=False))
         self.pending_open_at = open_at
         self.base_window_title = _('E-book viewer')
+        self.setDockOptions(MainWindow.AnimatedDocks | MainWindow.AllowTabbedDocks | MainWindow.AllowNestedDocks)
         self.setWindowTitle(self.base_window_title)
         self.in_full_screen_mode = None
         self.image_popup = ImagePopup(self)
@@ -138,6 +139,7 @@ class EbookViewer(MainWindow):
 
         self.search_widget = w = SearchPanel(self)
         w.search_requested.connect(self.start_search)
+        w.hide_search_panel.connect(self.search_dock.close)
         self.search_dock.setWidget(w)
         self.search_dock.visibilityChanged.connect(self.search_widget.visibility_changed)
 

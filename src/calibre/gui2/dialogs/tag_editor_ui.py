@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_editor.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -120,20 +120,17 @@ class Ui_TagEditor(object):
 
     def retranslateUi(self, TagEditor):
 
-        TagEditor.setWindowTitle(_("Tag editor"))
-        self.label_3.setText(_("&Add tag:"))
-        self.add_tag_input.setToolTip(_("If the tag you want is not in the available list, you can add it here. Accepts a comma separated list of tags."))
-        self.add_tag_button.setToolTip(_("Add tag to available tags and apply it to current book"))
-        self.add_tag_button.setText(_("..."))
-        self.available_filter_input.setPlaceholderText(_("Filter the available tags"))
-        self.delete_button.setToolTip(_("Delete tag from database. This will unapply the tag from all books and then remove it from the database."))
-        self.delete_button.setText(_("&Delete tag"))
-        self.label.setText(_("Ava&ilable tags"))
-        self.apply_button.setToolTip(_("Apply tag to current book"))
-        self.apply_button.setText(_("..."))
-        self.applied_filter_input.setPlaceholderText(_("Filter the applied tags"))
-        self.label_2.setText(_("Applied &tags"))
-        self.unapply_button.setToolTip(_("Unapply (remove) tag from current book"))
-        self.unapply_button.setText(_("&Unapply tag"))
+        TagEditor.setWindowTitle(_("Manage items"))
+        self.label_3.setText(_("&Add item:"))
+        self.add_tag_button.setToolTip(_("Apply item(s) to the current book"))
+        self.available_filter_input.setPlaceholderText(_("Filter the available items"))
+        self.delete_button.setToolTip(_("Delete the item from database. This will unapply the item from all books and then remove it from the database."))
+        self.delete_button.setText(_("&Delete item(s)"))
+        self.label.setText(_("Ava&ilable items"))
+        self.apply_button.setToolTip(_("Apply item to current book"))
+        self.applied_filter_input.setPlaceholderText(_("Filter the applied items"))
+        self.label_2.setText(_("Applied &items"))
+        self.unapply_button.setToolTip(_("Unapply (remove) the item from current book"))
+        self.unapply_button.setText(_("&Unapply item(s)"))
 from calibre.gui2.widgets import EnLineEdit
 

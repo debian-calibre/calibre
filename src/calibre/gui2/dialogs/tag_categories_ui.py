@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/tag_categories.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -29,6 +29,7 @@ class Ui_TagCategories(object):
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_3)
         self.category_box = QtWidgets.QComboBox(TagCategories)
         self.category_box.setEditable(False)
+        self.category_box.setMinimumSize(QtCore.QSize(150, 0))
         self.category_box.setObjectName("category_box")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.category_box)
         self.label_5 = QtWidgets.QLabel(TagCategories)
@@ -36,6 +37,7 @@ class Ui_TagCategories(object):
         self.label_5.setObjectName("label_5")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_5)
         self.category_filter_box = QtWidgets.QComboBox(TagCategories)
+        self.category_filter_box.setMinimumSize(QtCore.QSize(150, 0))
         self.category_filter_box.setObjectName("category_filter_box")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.category_filter_box)
         self.label_filt = QtWidgets.QLabel(TagCategories)
@@ -43,6 +45,7 @@ class Ui_TagCategories(object):
         self.label_filt.setObjectName("label_filt")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_filt)
         self.item_filter_box = QtWidgets.QLineEdit(TagCategories)
+        self.item_filter_box.setMinimumSize(QtCore.QSize(150, 0))
         self.item_filter_box.setObjectName("item_filter_box")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.item_filter_box)
         self.gridLayout_4.addLayout(self.formLayout, 0, 0, 1, 1)
@@ -140,7 +143,7 @@ class Ui_TagCategories(object):
         self.category_filter_box.setToolTip(_("Select the content kind of the new category"))
         self.label_filt.setText(_("Item &filter: "))
         self.item_filter_box.setToolTip(_("Enter text to filter the available items. Case and accents are ignored."))
-        self.delete_category_button.setToolTip(_("Delete this selected tag category"))
+        self.delete_category_button.setToolTip(_("Delete the current tag category"))
         self.delete_category_button.setText(_("..."))
         self.input_box.setToolTip(_("Enter a category name, then use the Add button or the Rename button"))
         self.add_category_button.setToolTip(_("Add a new category"))
