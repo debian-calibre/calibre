@@ -145,15 +145,15 @@ class TagsView(QTreeView):  # {{{
     del_item_from_user_cat  = pyqtSignal(object, object, object)
     add_item_to_user_cat    = pyqtSignal(object, object, object)
     add_subcategory         = pyqtSignal(object)
-    tags_list_edit          = pyqtSignal(object, object)
+    tags_list_edit          = pyqtSignal(object, object, object)
     saved_search_edit       = pyqtSignal(object)
     rebuild_saved_searches  = pyqtSignal()
-    author_sort_edit        = pyqtSignal(object, object, object, object)
+    author_sort_edit        = pyqtSignal(object, object, object, object, object)
     tag_item_renamed        = pyqtSignal()
     search_item_renamed     = pyqtSignal()
     drag_drop_finished      = pyqtSignal(object)
     restriction_error       = pyqtSignal()
-    tag_item_delete         = pyqtSignal(object, object, object, object)
+    tag_item_delete         = pyqtSignal(object, object, object, object, object)
     apply_tag_to_selected   = pyqtSignal(object, object, object)
 
     def __init__(self, parent=None):
@@ -172,7 +172,6 @@ class TagsView(QTreeView):  # {{{
         self.setDragEnabled(True)
         self.setDragDropMode(self.DragDrop)
         self.setDropIndicatorShown(True)
-        self.in_drag_drop = False
         self.setAutoExpandDelay(500)
         self.pane_is_visible = False
         self.search_icon = QIcon(I('search.png'))
@@ -320,6 +319,11 @@ class TagsView(QTreeView):  # {{{
         except:
             pass
 
+    def mousePressEvent(self, event):
+        if event.buttons() & Qt.LeftButton:
+            self.possible_drag_start = event.pos()
+        return QTreeView.mousePressEvent(self, event)
+
     def mouseMoveEvent(self, event):
         dex = self.indexAt(event.pos())
         if dex.isValid():
@@ -328,15 +332,15 @@ class TagsView(QTreeView):  # {{{
             self.unsetCursor()
         if not event.buttons() & Qt.LeftButton:
             return
-        if self.in_drag_drop or not dex.isValid():
+        if not dex.isValid():
             QTreeView.mouseMoveEvent(self, event)
             return
-        # Must deal with odd case where the node being dragged is 'virtual',
-        # created to form a hierarchy. We can't really drag this node, but in
-        # addition we can't allow drag recognition to notice going over some
-        # other node and grabbing that one. So we set in_drag_drop to prevent
-        # this from happening, turning it off when the user lifts the button.
-        self.in_drag_drop = True
+        # don't start drag/drop until the mouse has moved a bit.
+        if ((event.pos() - self.possible_drag_start).manhattanLength() <
+                                    QApplication.startDragDistance()):
+            QTreeView.mouseMoveEvent(self, event)
+            return
+
         if not self._model.flags(dex) & Qt.ItemIsDragEnabled:
             QTreeView.mouseMoveEvent(self, event)
             return
@@ -345,16 +349,17 @@ class TagsView(QTreeView):  # {{{
         drag = QDrag(self)
         drag.setPixmap(pixmap)
         drag.setMimeData(md)
-        if self._model.is_in_user_category(dex):
+        if (self._model.is_in_user_category(dex) or
+                    self._model.is_index_on_a_hierarchical_category(dex)):
+            '''
+            Things break if we specify MoveAction as the default, which is
+            what we want for drag on hierarchical categories. Dragging user
+            categories stops working. Don't know why. To avoid the problem
+            we fix the action in dragMoveEvent.
+            '''
             drag.exec_(Qt.CopyAction|Qt.MoveAction, Qt.CopyAction)
         else:
             drag.exec_(Qt.CopyAction)
-
-    def mouseReleaseEvent(self, event):
-        # Swallow everything except leftButton so context menus work correctly
-        if event.button() == Qt.LeftButton or self.in_drag_drop:
-            QTreeView.mouseReleaseEvent(self, event)
-            self.in_drag_drop = False
 
     def mouseDoubleClickEvent(self, event):
         # swallow these to avoid toggling and editing at the same time
@@ -390,7 +395,7 @@ class TagsView(QTreeView):  # {{{
 
     def context_menu_handler(self, action=None, category=None,
                              key=None, index=None, search_state=None,
-                             use_vl=None):
+                             use_vl=None, is_first_letter=False):
         if not action:
             return
         try:
@@ -440,14 +445,22 @@ class TagsView(QTreeView):  # {{{
                 self.edit(index)
                 return
             if action == 'delete_item_in_vl':
-                self.tag_item_delete.emit(key, index.id, index.original_name,
-                                          self.model().get_book_ids_to_use())
+                tag = index.tag
+                id_ = tag.id if tag.is_editable else None
+                children = index.child_tags()
+                self.tag_item_delete.emit(key, id_, tag.original_name,
+                                          self.model().get_book_ids_to_use(),
+                                          children)
                 return
             if action == 'delete_item_no_vl':
-                self.tag_item_delete.emit(key, index.id, index.original_name, None)
+                tag = index.tag
+                id_ = tag.id if tag.is_editable else None
+                children = index.child_tags()
+                self.tag_item_delete.emit(key, id_, tag.original_name,
+                                          None, children)
                 return
             if action == 'open_editor':
-                self.tags_list_edit.emit(category, key)
+                self.tags_list_edit.emit(category, key, is_first_letter)
                 return
             if action == 'manage_categories':
                 self.edit_user_category.emit(category)
@@ -492,11 +505,14 @@ class TagsView(QTreeView):  # {{{
             if action == 'manage_searches':
                 self.saved_search_edit.emit(category)
                 return
+            if action == 'edit_authors':
+                self.author_sort_edit.emit(self, index, False, False, is_first_letter)
+                return
             if action == 'edit_author_sort':
-                self.author_sort_edit.emit(self, index, True, False)
+                self.author_sort_edit.emit(self, index, True, False, is_first_letter)
                 return
             if action == 'edit_author_link':
-                self.author_sort_edit.emit(self, index, False, True)
+                self.author_sort_edit.emit(self, index, False, True, False)
                 return
 
             reset_filter_categories = True
@@ -546,7 +562,9 @@ class TagsView(QTreeView):  # {{{
                 n = tag.name
                 if len(n) > 45:
                     n = n[:45] + '...'
-                ans = "'" + n + "'"
+                ans = n
+            elif tag.is_hierarchical and not tag.is_editable:
+                ans = tag.original_name
             if ans:
                 ans = ans.replace('&', '&&')
             return ans
@@ -557,9 +575,9 @@ class TagsView(QTreeView):  # {{{
         if index.isValid():
             item = index.data(Qt.UserRole)
             tag = None
+            tag_item = item
 
             if item.type == TagTreeItem.TAG:
-                tag_item = item
                 tag = item.tag
                 while item.type != TagTreeItem.CATEGORY:
                     item = item.parent
@@ -579,8 +597,8 @@ class TagsView(QTreeView):  # {{{
                 if tag:
                     # If the user right-clicked on an editable item, then offer
                     # the possibility of renaming that item.
-                    if tag.is_editable:
-                        # Add the 'rename' items
+                    if tag.is_editable or tag.is_hierarchical:
+                        # Add the 'rename' items to both interior and leaf nodes
                         if self.model().get_in_vl():
                             self.context_menu.addAction(self.rename_icon,
                                                     _('Rename %s in Virtual library')%display_name(tag),
@@ -596,12 +614,13 @@ class TagsView(QTreeView):  # {{{
                                 self.context_menu.addAction(self.delete_icon,
                                                     _('Delete %s in Virtual library')%display_name(tag),
                                 partial(self.context_menu_handler, action='delete_item_in_vl',
-                                    key=key, index=tag))
+                                    key=key, index=tag_item))
 
                             self.context_menu.addAction(self.delete_icon,
                                                     _('Delete %s')%display_name(tag),
                                 partial(self.context_menu_handler, action='delete_item_no_vl',
-                                    key=key, index=tag))
+                                    key=key, index=tag_item))
+                    if tag.is_editable:
                         if key == 'authors':
                             self.context_menu.addAction(_('Edit sort for %s')%display_name(tag),
                                     partial(self.context_menu_handler,
@@ -653,7 +672,7 @@ class TagsView(QTreeView):  # {{{
                             partial(self.context_menu_handler, action='edit_item_no_vl',
                                     index=index))
                         self.context_menu.addAction(self.delete_icon,
-                                _('Delete search %s')%display_name(tag),
+                                _('Delete Saved search %s')%display_name(tag),
                                 partial(self.context_menu_handler,
                                         action='delete_search', key=tag.original_name))
                     if key.startswith('@') and not item.is_gst:
@@ -726,13 +745,29 @@ class TagsView(QTreeView):  # {{{
                 self.context_menu.addSeparator()
                 if key in ['tags', 'publisher', 'series'] or (
                         self.db.field_metadata[key]['is_custom'] and self.db.field_metadata[key]['datatype'] != 'composite'):
-                    self.context_menu.addAction(_('Manage %s')%category,
+                    if tag_item.type == TagTreeItem.CATEGORY and tag_item.temporary:
+                        self.context_menu.addAction(_('Manage %s')%category,
+                            partial(self.context_menu_handler, action='open_editor',
+                                    category=tag_item.name,
+                                    key=key, is_first_letter=True))
+                    else:
+                        self.context_menu.addAction(_('Manage %s')%category,
                             partial(self.context_menu_handler, action='open_editor',
                                     category=tag.original_name if tag else None,
                                     key=key))
                 elif key == 'authors':
-                    self.context_menu.addAction(_('Manage %s')%category,
-                            partial(self.context_menu_handler, action='edit_author_sort'))
+                    if tag_item.type == TagTreeItem.CATEGORY:
+                        if tag_item.temporary:
+                            self.context_menu.addAction(_('Manage %s')%category,
+                                partial(self.context_menu_handler, action='edit_authors',
+                                        index=tag_item.name, is_first_letter=True))
+                        else:
+                            self.context_menu.addAction(_('Manage %s')%category,
+                                partial(self.context_menu_handler, action='edit_authors'))
+                    else:
+                        self.context_menu.addAction(_('Manage %s')%category,
+                            partial(self.context_menu_handler, action='edit_authors',
+                                    index=tag.id))
                 elif key == 'search':
                     self.context_menu.addAction(_('Manage Saved searches'),
                         partial(self.context_menu_handler, action='manage_searches',
@@ -822,30 +857,56 @@ class TagsView(QTreeView):  # {{{
         item = index.data(Qt.UserRole)
         if item.type == TagTreeItem.ROOT:
             return
-        flags = self._model.flags(index)
-        if item.type == TagTreeItem.TAG and flags & Qt.ItemIsDropEnabled:
+
+        if src_is_tb:
+            src_json = json_loads(bytes(event.mimeData().data('application/calibre+from_tag_browser')))
+            if len(src_json) > 1:
+                # Should never have multiple mimedata from the tag browser
+                return
+        if src_is_tb:
+            src_md = src_json[0]
+            src_item = self._model.get_node(self._model.index_for_path(src_md[5]))
+            # Check if this is an intra-hierarchical-category drag/drop
+            if (src_item.type == TagTreeItem.TAG and
+                    src_item.tag.category == item.tag.category and
+                    not item.temporary and
+                    self._model.is_key_a_hierarchical_category(src_item.tag.category)):
+                event.setDropAction(Qt.MoveAction)
+                self.setDropIndicatorShown(True)
+                return
+        # We aren't dropping an item on its own category. Check if the dest is
+        # not a user category and can be dropped on. This covers drops from the
+        # booklist. It is OK to drop onto virtual nodes
+        if item.type == TagTreeItem.TAG and self._model.flags(index) & Qt.ItemIsDropEnabled:
+            event.setDropAction(Qt.CopyAction)
             self.setDropIndicatorShown(not src_is_tb)
             return
+        # Now see if we are on a user category and the source can be dropped there
         if item.type == TagTreeItem.CATEGORY and not item.is_gst:
             fm_dest = self.db.metadata_for_field(item.category_key)
             if fm_dest['kind'] == 'user':
                 if src_is_tb:
+                    # src_md and src_item are initialized above
                     if event.dropAction() == Qt.MoveAction:
-                        data = bytes(event.mimeData().data('application/calibre+from_tag_browser'))
-                        src = json_loads(data)
-                        for s in src:
-                            if s[0] == TagTreeItem.TAG and \
-                                    (not s[1].startswith('@') or s[2]):
-                                return
-                    self.setDropIndicatorShown(True)
+                        # can move only from user categories
+                        if (src_md[0] == TagTreeItem.TAG and
+                                 (not src_md[1].startswith('@') or src_md[2])):
+                            return
+                    # can't copy virtual nodes into a user category
+                    if src_item.tag.is_editable:
+                        self.setDropIndicatorShown(True)
                     return
                 md = event.mimeData()
+                # Check for drag to user category from the book list. Can handle
+                # only non-multiple columns, except for some unknown reason authors
                 if hasattr(md, 'column_name'):
                     fm_src = self.db.metadata_for_field(md.column_name)
                     if md.column_name in ['authors', 'publisher', 'series'] or \
-                            (fm_src['is_custom'] and (
-                             (fm_src['datatype'] in ['series', 'text', 'enumeration'] and not fm_src['is_multiple']) or (
-                                 fm_src['datatype'] == 'composite' and fm_src['display'].get('make_category', False)))):
+                            (fm_src['is_custom'] and
+                             ((fm_src['datatype'] in ['series', 'text', 'enumeration'] and
+                                 not fm_src['is_multiple']) or
+                              (fm_src['datatype'] == 'composite' and
+                                  fm_src['display'].get('make_category', False)))):
                         self.setDropIndicatorShown(True)
 
     def clear(self):

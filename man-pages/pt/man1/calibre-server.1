@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maio 23, 2020" "4.17.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "junho 05, 2020" "4.18.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -101,7 +101,7 @@ Run process in background as a daemon (Linux only).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restringir exibição de campos de metadados definidos pelo utilizador.       Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Restringir exibição de campos de metadados definidos pelo utilizador.       Lista separada por vírgulas de campos de metadados personalizados que serão exibidos pelo servidor de conteúdos nas saídas de /opds e /mobile. Se especificar esta opção, qualquer campo que não esteja na lista não será exibido. Por exemplo: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +136,7 @@ Divulgar sinal OPDS através de BonJour.     Advertise the OPDS feeds via the Bo
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Por predefinição, a opção esta ativada.
+Cópia zero na transferência de ficheiros para melhor desempenho.    This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. Por predefinição, a opção esta ativada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +146,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Campos de metadados personalizados a ignorar.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Campos de metadados personalizados a ignorar.       Lista separada por vírgulas de campos de metadados personalizados que não serão exibidos pelo servidor de conteúdos nas saídas de /opds e /mobile. Por exemplo: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP

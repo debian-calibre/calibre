@@ -9255,6 +9255,7 @@ return this.__repr__();
         create_button.style = ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button"].concat([ρσ_desugar_kwargs({border_radius: "1em", background_clip: "padding-box", background_color: get_color("button-start"), background_image: "linear-gradient(to bottom, {}, {})".format(get_color("button-start"), get_color("button-end")), padding: "0.5ex 1em", color: get_color("button-text"), cursor: "pointer", font_size: "inherit", display: "inline-flex", align_items: "center", box_shadow: "0px 2px 1px rgba(50, 50, 50, 0.75)", white_space: "nowrap"})]));
         create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:hover"].concat([ρσ_desugar_kwargs({transform: "scale(1.05)"})]));
         create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:active"].concat([ρσ_desugar_kwargs({transform: "scale(1.1)"})]));
+        create_button.style += ρσ_interpolate_kwargs.call(this, build_rule, ["a.calibre-push-button:visited"].concat([ρσ_desugar_kwargs({color: get_color("button-text")})]));
         function create_spinner(height, width) {
             var ans;
             ans = svgicon("cog", height, width);
@@ -13419,6 +13420,8 @@ return this.__repr__();
             opts.lines_per_sec_smooth = settings.lines_per_sec_smooth;
             opts.margin_left = max(0, settings.margin_left);
             opts.margin_right = max(0, settings.margin_right);
+            opts.margin_top = max(0, settings.margin_top);
+            opts.margin_bottom = max(0, settings.margin_bottom);
             opts.override_book_colors = settings.override_book_colors;
             opts.paged_wheel_scrolls_by_screen = !!settings.paged_wheel_scrolls_by_screen;
             opts.paged_taps_scroll_by_screen = !!settings.paged_taps_scroll_by_screen;
@@ -17090,7 +17093,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.flow_mode";
-        var small_scroll_events, last_change_spine_item_request, DIRECTION, scroll_animator, flick_animator, anchor_funcs;
+        var small_scroll_events, last_change_spine_item_request, DIRECTION, scroll_animator, flick_animator, drag_scroller, anchor_funcs;
         var set_css = ρσ_modules.dom.set_css;
 
         var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
@@ -17539,6 +17542,7 @@ return this.__repr__();
         ScrollAnimator.prototype.start = function start(direction, auto) {
             var self = this;
             var now;
+            cancel_drag_scroll();
             if (self.wait) {
                 return;
             }
@@ -17566,6 +17570,10 @@ return this.__repr__();
             var self = this;
             var duration, progress, scroll_target, amt;
             duration = self.end_time - self.start_time;
+            if (duration <= 0) {
+                self.animation_id = null;
+                return;
+            }
             progress = max(0, min(1, (ts - self.start_time) / duration));
             scroll_target = self.start_offset;
             scroll_target += Math.trunc(self.direction * progress * duration * line_height() * opts.lines_per_sec_smooth) / 1e3;
@@ -17725,6 +17733,7 @@ return this.__repr__();
         FlickAnimator.prototype.start = function start(gesture) {
             var self = this;
             var now, points, times, ρσ_unpack, i, t, elapsed, delta, velocity;
+            cancel_drag_scroll();
             self.vertical = gesture.axis === "vertical";
             now = window.performance.now();
             points = times = null;
@@ -17802,6 +17811,119 @@ return this.__repr__();
         FlickAnimator.prototype.MIMUMUM_VELOCITY = 100;
 
         flick_animator = new FlickAnimator;
+        function DragScroller() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            DragScroller.prototype.__bind_methods__.call(this);
+            DragScroller.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(DragScroller.prototype, "__bind_methods__", {value: function () {
+            this.is_running = DragScroller.prototype.is_running.bind(this);
+            this.smooth_scroll = DragScroller.prototype.smooth_scroll.bind(this);
+            this.start = DragScroller.prototype.start.bind(this);
+            this.stop = DragScroller.prototype.stop.bind(this);
+        }});
+        DragScroller.prototype.__init__ = function __init__() {
+            var self = this;
+            self.animation_id = null;
+            self.direction = 1;
+            self.speed_factor = 1;
+            self.start_time = self.end_time = 0;
+            self.start_offset = 0;
+        };
+        if (!DragScroller.prototype.__init__.__module__) Object.defineProperties(DragScroller.prototype.__init__, {
+            __module__ : {value: "read_book.flow_mode"}
+        });
+        DragScroller.__argnames__ = DragScroller.prototype.__init__.__argnames__;
+        DragScroller.__handles_kwarg_interpolation__ = DragScroller.prototype.__init__.__handles_kwarg_interpolation__;
+        DragScroller.prototype.is_running = function is_running() {
+            var self = this;
+            return self.animation_id !== null;
+        };
+        if (!DragScroller.prototype.is_running.__module__) Object.defineProperties(DragScroller.prototype.is_running, {
+            __module__ : {value: "read_book.flow_mode"}
+        });
+        DragScroller.prototype.smooth_scroll = function smooth_scroll(ts) {
+            var self = this;
+            var duration, progress, scroll_target;
+            duration = self.end_time - self.start_time;
+            if (duration <= 0) {
+                self.animation_id = null;
+                self.start(self.direction, self.speed_factor);
+                return;
+            }
+            progress = max(0, min(1, (ts - self.start_time) / duration));
+            scroll_target = self.start_offset;
+            scroll_target += Math.trunc(self.direction * progress * duration * line_height() * opts.lines_per_sec_smooth * self.speed_factor) / 1e3;
+            window.scrollTo(0, scroll_target);
+            if (progress < 1) {
+                self.animation_id = window.requestAnimationFrame(self.smooth_scroll);
+            } else {
+                self.animation_id = null;
+                self.start(self.direction, self.speed_factor);
+            }
+        };
+        if (!DragScroller.prototype.smooth_scroll.__argnames__) Object.defineProperties(DragScroller.prototype.smooth_scroll, {
+            __argnames__ : {value: ["ts"]},
+            __module__ : {value: "read_book.flow_mode"}
+        });
+        DragScroller.prototype.start = function start(direction, speed_factor) {
+            var self = this;
+            var now;
+            now = window.performance.now();
+            self.end_time = now + self.DURATION;
+            if (!self.is_running() || direction !== self.direction || speed_factor !== self.speed_factor) {
+                self.stop();
+                self.direction = direction;
+                self.speed_factor = speed_factor;
+                self.start_time = now;
+                self.start_offset = window.pageYOffset;
+                self.animation_id = window.requestAnimationFrame(self.smooth_scroll);
+            }
+        };
+        if (!DragScroller.prototype.start.__argnames__) Object.defineProperties(DragScroller.prototype.start, {
+            __argnames__ : {value: ["direction", "speed_factor"]},
+            __module__ : {value: "read_book.flow_mode"}
+        });
+        DragScroller.prototype.stop = function stop() {
+            var self = this;
+            if (self.animation_id !== null) {
+                window.cancelAnimationFrame(self.animation_id);
+                self.animation_id = null;
+            }
+        };
+        if (!DragScroller.prototype.stop.__module__) Object.defineProperties(DragScroller.prototype.stop, {
+            __module__ : {value: "read_book.flow_mode"}
+        });
+        DragScroller.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        DragScroller.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(DragScroller.prototype, "__bases__", {value: []});
+        DragScroller.prototype.DURATION = 100;
+
+        drag_scroller = new DragScroller;
+        function cancel_drag_scroll() {
+            drag_scroller.stop();
+        };
+        if (!cancel_drag_scroll.__module__) Object.defineProperties(cancel_drag_scroll, {
+            __module__ : {value: "read_book.flow_mode"}
+        });
+
+        function start_drag_scroll(delta) {
+            var limit, direction, speed_factor;
+            limit = (delta < 0) ? opts.margin_top : opts.margin_bottom;
+            direction = (delta >= 0) ? 1 : -1;
+            speed_factor = min(abs(delta), limit) / limit;
+            speed_factor *= 2 - speed_factor;
+            drag_scroller.start(direction, 2 * speed_factor);
+        };
+        if (!start_drag_scroll.__argnames__) Object.defineProperties(start_drag_scroll, {
+            __argnames__ : {value: ["delta"]},
+            __module__ : {value: "read_book.flow_mode"}
+        });
+
         function handle_gesture(gesture) {
             var delta;
             flick_animator.stop();
@@ -17934,6 +18056,7 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].DIRECTION = DIRECTION;
         ρσ_modules["read_book.flow_mode"].scroll_animator = scroll_animator;
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
+        ρσ_modules["read_book.flow_mode"].drag_scroller = drag_scroller;
         ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.flow_mode"].line_height = line_height;
         ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction = flow_to_scroll_fraction;
@@ -17959,6 +18082,9 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].is_scroll_end = is_scroll_end;
         ρσ_modules["read_book.flow_mode"].ScrollAnimator = ScrollAnimator;
         ρσ_modules["read_book.flow_mode"].FlickAnimator = FlickAnimator;
+        ρσ_modules["read_book.flow_mode"].DragScroller = DragScroller;
+        ρσ_modules["read_book.flow_mode"].cancel_drag_scroll = cancel_drag_scroll;
+        ρσ_modules["read_book.flow_mode"].start_drag_scroll = start_drag_scroll;
         ρσ_modules["read_book.flow_mode"].handle_gesture = handle_gesture;
         ρσ_modules["read_book.flow_mode"].auto_scroll_action = auto_scroll_action;
         ρσ_modules["read_book.flow_mode"].ensure_selection_visible = ensure_selection_visible;
@@ -20997,6 +21123,7 @@ return this.__repr__();
 
         var flow_anchor_funcs = ρσ_modules["read_book.flow_mode"].anchor_funcs;
         var flow_auto_scroll_action = ρσ_modules["read_book.flow_mode"].auto_scroll_action;
+        var cancel_drag_scroll = ρσ_modules["read_book.flow_mode"].cancel_drag_scroll;
         var ensure_selection_visible = ρσ_modules["read_book.flow_mode"].ensure_selection_visible;
         var flow_onwheel = ρσ_modules["read_book.flow_mode"].flow_onwheel;
         var flow_to_scroll_fraction = ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction;
@@ -21005,6 +21132,7 @@ return this.__repr__();
         var flow_layout = ρσ_modules["read_book.flow_mode"].layout;
         var flow_scroll_by_page = ρσ_modules["read_book.flow_mode"].scroll_by_page;
         var flow_annotation_scroll = ρσ_modules["read_book.flow_mode"].scroll_to_extend_annotation;
+        var start_drag_scroll = ρσ_modules["read_book.flow_mode"].start_drag_scroll;
 
         var is_footnote_link = ρσ_modules["read_book.footnotes"].is_footnote_link;
 
@@ -21199,6 +21327,8 @@ return this.__repr__();
             this.onresize_stage2 = IframeBoss.prototype.onresize_stage2.bind(this);
             this.received_window_size = IframeBoss.prototype.received_window_size.bind(this);
             this.onwheel = IframeBoss.prototype.onwheel.bind(this);
+            this.onmousemove = IframeBoss.prototype.onmousemove.bind(this);
+            this.onmouseup = IframeBoss.prototype.onmouseup.bind(this);
             this.onkeydown = IframeBoss.prototype.onkeydown.bind(this);
             this.on_handle_navigation_shortcut = IframeBoss.prototype.on_handle_navigation_shortcut.bind(this);
             this.oncontextmenu = IframeBoss.prototype.oncontextmenu.bind(this);
@@ -21276,6 +21406,7 @@ return this.__repr__();
         IframeBoss.__handles_kwarg_interpolation__ = IframeBoss.prototype.__init__.__handles_kwarg_interpolation__;
         IframeBoss.prototype.on_overlay_visibility_changed = function on_overlay_visibility_changed(data) {
             var self = this;
+            cancel_drag_scroll();
             if (data.visible) {
                 self.forward_keypresses = true;
                 if (self.auto_scroll_action) {
@@ -21319,6 +21450,16 @@ return this.__repr__();
             window.addEventListener("keydown", self.onkeydown, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            window.addEventListener("mousemove", self.onmousemove, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = true;
+                return ρσ_d;
+            }).call(this));
+            window.addEventListener("mouseup", self.onmouseup, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = true;
                 return ρσ_d;
             }).call(this));
             document.documentElement.addEventListener("contextmenu", self.oncontextmenu, (function(){
@@ -21375,6 +21516,7 @@ return this.__repr__();
         IframeBoss.prototype.display = function display(data) {
             var self = this;
             var spine, index, name, ρσ_unpack, root_data;
+            cancel_drag_scroll();
             self.length_before = null;
             self.content_ready = false;
             clear_annot_id_uuid_map();
@@ -21912,6 +22054,36 @@ return this.__repr__();
             }
         };
         if (!IframeBoss.prototype.onwheel.__argnames__) Object.defineProperties(IframeBoss.prototype.onwheel, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.iframe"}
+        });
+        IframeBoss.prototype.onmousemove = function onmousemove(evt) {
+            var self = this;
+            var sel, delta;
+            if (evt.buttons !== 1) {
+                return;
+            }
+            if (0 <= (ρσ_cond_temp = evt.clientY) && ρσ_cond_temp <= window.innerHeight || current_layout_mode() !== "flow") {
+                cancel_drag_scroll();
+                return;
+            }
+            sel = window.getSelection();
+            if (!sel) {
+                cancel_drag_scroll();
+                return;
+            }
+            delta = (evt.clientY < 0) ? evt.clientY : evt.clientY - window.innerHeight;
+            start_drag_scroll(delta);
+        };
+        if (!IframeBoss.prototype.onmousemove.__argnames__) Object.defineProperties(IframeBoss.prototype.onmousemove, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.iframe"}
+        });
+        IframeBoss.prototype.onmouseup = function onmouseup(evt) {
+            var self = this;
+            cancel_drag_scroll();
+        };
+        if (!IframeBoss.prototype.onmouseup.__argnames__) Object.defineProperties(IframeBoss.prototype.onmouseup, {
             __argnames__ : {value: ["evt"]},
             __module__ : {value: "read_book.iframe"}
         });
@@ -25085,6 +25257,20 @@ return this.__repr__();
             __module__ : {value: "book_list.top_bar"}
         });
 
+        function set_title_tooltip(container, text) {
+            var bars, bar;
+            bars = get_bars(container);
+            var ρσ_Iter3 = ρσ_Iterable(bars);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                bar = ρσ_Iter3[ρσ_Index3];
+                bar.firstChild.firstChild.nextSibling.title = text;
+            }
+        };
+        if (!set_title_tooltip.__argnames__) Object.defineProperties(set_title_tooltip, {
+            __argnames__ : {value: ["container", "text"]},
+            __module__ : {value: "book_list.top_bar"}
+        });
+
         function create_top_bar() {
             var container = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
             var kw = arguments[arguments.length-1];
@@ -25116,9 +25302,9 @@ return this.__repr__();
                 throw new ValueError("An icon must be specified");
             }
             bars = get_bars(container);
-            var ρσ_Iter3 = ρσ_Iterable(enumerate(bars));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter4 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
                 i = ρσ_unpack[0];
                 bar = ρσ_unpack[1];
                 right = bar.firstChild.nextSibling;
@@ -25150,9 +25336,9 @@ return this.__repr__();
         function clear_buttons(container) {
             var bars, right, ρσ_unpack, i, bar;
             bars = get_bars(container);
-            var ρσ_Iter4 = ρσ_Iterable(enumerate(bars));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter5 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                ρσ_unpack = ρσ_Iter5[ρσ_Index5];
                 i = ρσ_unpack[0];
                 bar = ρσ_unpack[1];
                 right = bar.firstChild.nextSibling;
@@ -25166,9 +25352,9 @@ return this.__repr__();
 
         function set_button_visibility(container, icon, visible) {
             var right, elem, bar;
-            var ρσ_Iter5 = ρσ_Iterable(get_bars(container));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                bar = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter6 = ρσ_Iterable(get_bars(container));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                bar = ρσ_Iter6[ρσ_Index6];
                 right = bar.firstChild.nextSibling;
                 elem = right.querySelector("[data-button-icon=\"" + ρσ_str.format("{}", icon) + "\"]");
                 if (elem) {
@@ -25190,6 +25376,7 @@ return this.__repr__();
         ρσ_modules["book_list.top_bar"].get_bars = get_bars;
         ρσ_modules["book_list.top_bar"].set_left_data = set_left_data;
         ρσ_modules["book_list.top_bar"].set_title = set_title;
+        ρσ_modules["book_list.top_bar"].set_title_tooltip = set_title_tooltip;
         ρσ_modules["book_list.top_bar"].create_top_bar = create_top_bar;
         ρσ_modules["book_list.top_bar"].add_button = add_button;
         ρσ_modules["book_list.top_bar"].clear_buttons = clear_buttons;
@@ -28450,6 +28637,7 @@ return this.__repr__();
 
         var add_button = ρσ_modules["book_list.top_bar"].add_button;
         var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
+        var set_title_tooltip = ρσ_modules["book_list.top_bar"].set_title_tooltip;
 
         var query_as_href = ρσ_modules["book_list.ui"].query_as_href;
         var set_panel_handler = ρσ_modules["book_list.ui"].set_panel_handler;
@@ -28925,6 +29113,9 @@ return this.__repr__();
                 return;
             }
             create_books_list(container);
+            if (library_data.search_result && typeof library_data.search_result.num_books_without_search === "number") {
+                set_title_tooltip(this, _("Total number of books: {}").format(library_data.search_result.num_books_without_search));
+            }
         };
         if (!check_for_books_loaded.__module__) Object.defineProperties(check_for_books_loaded, {
             __module__ : {value: "book_list.views"}
@@ -30100,7 +30291,7 @@ return this.__repr__();
             render_book.title = metadata.title;
             set_title(c, metadata.title);
             authors = (metadata.authors) ? metadata.authors.join(" & ") : _("Unknown");
-            alt = _("{} by {}\nClick to read").format(metadata.title, authors);
+            alt = _("{} by {}\n\nClick to read").format(metadata.title, authors);
             bsrgb = get_color_as_rgba("button-start");
             function prev_next_button(is_prev) {
                 return ρσ_interpolate_kwargs.call(E, E.div, [svgicon((is_prev) ? "chevron-left" : "chevron-right")].concat([ρσ_desugar_kwargs({style: "cursor: pointer; border-radius: " + ρσ_str.format("{}", Math.floor(border_radius / 5)) + "px; background-color:rgba(" + ρσ_str.format("{}", bsrgb[0]) + ", " + ρσ_str.format("{}", bsrgb[1]) + ", " + ρσ_str.format("{}", bsrgb[2]) + ", 0.75);", title: (is_prev) ? _("Previous book") : _("Next book"), class_: "next-book-button", onclick: next_book.bind(null, book_id, (is_prev) ? -1 : 1)})]));
@@ -35459,7 +35650,7 @@ return this.__repr__();
             sz = sd.get(which, 20);
             fsz = min(max(0, sz - 6), maximum_font_size());
             s = "; text-overflow: ellipsis; white-space: nowrap; overflow: hidden";
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1.5em" + s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1.5em" + s})])].concat([ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", sz) + "px; overflow: hidden; font-size:" + ρσ_str.format("{}", fsz) + "px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center", id: id})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1.5em" + s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1.5em" + s})])].concat([ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", sz) + "px; overflow: hidden; font-size:" + ρσ_str.format("{}", fsz) + "px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center; user-select: none", id: id})]));
             if (onclick) {
                 ans.addEventListener("click", onclick);
             }
@@ -35478,7 +35669,7 @@ return this.__repr__();
 
         function side_margin_elem(self, sd, which) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", which) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow", style: "order: 3"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:1"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:2", class_: "not-arrow"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:4"})])].concat([ρσ_desugar_kwargs({style: "width:{}px;".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [svgicon("caret-" + ρσ_str.format("{}", which) + "", "100%", "100%")].concat([ρσ_desugar_kwargs({class_: "arrow", style: "order: 3"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:1"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:2", class_: "not-arrow"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "order:4"})])].concat([ρσ_desugar_kwargs({style: "width:{}px; user-select: none".format(sd.get("margin_" + ρσ_str.format("{}", which) + "", 20)), class_: "book-side-margin", id: "book-" + ρσ_str.format("{}", which) + "-margin", onclick: self.side_margin_clicked.bind(null, which), oncontextmenu: self.margin_context_menu.bind(null, which), onwheel: self.on_margin_wheel.bind(null, which)})]));
             return ans;
         };
         if (!side_margin_elem.__argnames__) Object.defineProperties(side_margin_elem, {
@@ -36702,6 +36893,8 @@ return this.__repr__();
                 var ρσ_d = Object.create(null);
                 ρσ_d["margin_left"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_left");
                 ρσ_d["margin_right"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_right");
+                ρσ_d["margin_top"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_top");
+                ρσ_d["margin_bottom"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_bottom");
                 ρσ_d["read_mode"] = sd.get("read_mode");
                 ρσ_d["columns_per_screen"] = sd.get("columns_per_screen");
                 ρσ_d["color_scheme"] = cs;
@@ -37586,9 +37779,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter3 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                filename = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                filename = ρσ_Iter0[ρσ_Index0];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();

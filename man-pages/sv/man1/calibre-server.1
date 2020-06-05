@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maj 23, 2020" "4.17.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "juni 05, 2020" "4.18.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -77,7 +77,7 @@ Antal misslyckande inloggningsförsök för bannlysning.       Antal misslyckade
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Bannlys IP\-adresser som har upprepade misslyckade inloggningsförsök.        Bannlyser tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök för det angivna antalet minuter. Användbar för att förhindra försök att gissa lösenord. Om den är nollställd, görs ingen bannlysning.
+Bannlys IP\-adresser som har upprepade misslyckade inloggningsförsök.        Bannlys tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök under det angivna antalet minuter. Användbart för att förhindra försök att gissa lösenord. Om den är inställd på noll görs ingen bannlysning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,7 +102,7 @@ Kör process i bakgrunden som en demon (endast Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Begränsa användardefinieradefält som ska visas.     Kommaseparerad lista med användardefinierade metadatafält som ska visas av Innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet, kommer alla fält som inte finns i denna lista inte att visas. Till exempel: my_rating,my_tags
+Begränsa användardefinierade fält som ska visas.    Kommaseparerad lista med användardefinierade metadatafält som ska visas av Innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet, kommer alla fält som inte finns i denna lista inte att visas. Till exempel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -202,7 +202,7 @@ Största tillåtna storlek för filer som överförs till servern (i MB).
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Antal böcker att visa på en enskild sida.   Antalet böcker som ska visas på en enda sida i webbläsaren.
+Antal böcker att visa på en enskild sida.   Antalet böcker som ska visas på en enskild sida i webbläsaren.
 .UNINDENT
 .INDENT 0.0
 .TP

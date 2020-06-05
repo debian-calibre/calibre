@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/kovid/work/calibre/src/calibre/gui2/dialogs/choose_library.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.14.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -75,7 +75,7 @@ class Ui_Dialog(object):
 
         Dialog.setWindowTitle(_("Choose your calibre library"))
         self.old_location.setText(_("Your calibre library is currently located at {0}"))
-        self.label_2.setText(_("New &Location:"))
+        self.label_2.setText(_("New &location:"))
         self.existing_library.setText(_("Use the previously &existing library at the new location"))
         self.empty_library.setText(_("&Create an empty library at the new location"))
         self.copy_structure.setToolTip(_("Copy the custom columns, saved searches, column widths, plugboards,\n"

@@ -74,7 +74,7 @@ class Ui_TagListEditor(object):
         self.undo_button.setObjectName("undo_button")
         self.verticalLayout_2.addWidget(self.undo_button)
         self.gridlayout.addLayout(self.verticalLayout_2, 2, 0, 1, 1)
-        self.table = QtWidgets.QTableWidget(TagListEditor)
+        self.table = TleTableWidget(TagListEditor)
         self.table.setAlternatingRowColors(True)
         self.table.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.table.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
@@ -104,7 +104,7 @@ class Ui_TagListEditor(object):
         self.apply_vl_checkbox.setToolTip(_("<p>Show items only if they appear in the\n"
 "          current Virtual library. Edits already done may be hidden but will\n"
 "          not be forgotten.</p>"))
-        self.apply_vl_checkbox.setText(_("Only show items in the current &virtual library"))
+        self.apply_vl_checkbox.setText(_("Only show items in the current &Virtual library"))
         self.label1.setText(_("&Filter by:"))
         self.filter_box.setToolTip(_("Filter items using the text in this box"))
         self.filter_button.setToolTip(_("Show only items containing this text"))
@@ -118,5 +118,6 @@ class Ui_TagListEditor(object):
         self.undo_button.setToolTip(_("Undo any deletes or edits on the selected lines"))
         self.undo_button.setText(_("..."))
         self.undo_button.setShortcut(_("Ctrl+U"))
+from calibre.gui2.dialogs.tag_list_editor_table_widget import TleTableWidget
 from calibre.gui2.widgets import HistoryLineEdit
 

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "maggio 23, 2020" "4.17.0" "calibre"
+.TH "CALIBREDB" "1" "giugno 05, 2020" "4.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -876,17 +876,14 @@ Di solito, questo comando opera solo su libri che hanno file OPF datati. Questa 
 .sp
 .nf
 .ft C
-calibredb clone path/to/new/library
+Crea un clone della libreria attuale.
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
-.sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Questo crea una nuova libreria vuota che ha tutte le stesse colonne personalizzate, librerie virtuali e altre impostazioni della libreria corrente.
+La libreria clonata non conterrà libri. Se si desidera creare un duplicato completo, inclusi tutti i libri, è sufficiente utilizzare gli strumenti del filesystem per copiare la cartella della libreria.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: "/some path/with spaces"
 .SH EMBED_METADATA

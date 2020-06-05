@@ -764,7 +764,13 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
                     with lopen(path, 'rb') as f:
                         data = f.read()
                 except EnvironmentError:
-                    pass
+                    if path.rpartition('.')[-1].lower() in {'jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'}:
+                        return QByteArray(bytearray.fromhex(
+                                    '89504e470d0a1a0a0000000d49484452'
+                                    '000000010000000108060000001f15c4'
+                                    '890000000a49444154789c6300010000'
+                                    '0500010d0a2db40000000049454e44ae'
+                                    '426082'))
                 else:
                     return QByteArray(data)
 
@@ -1114,6 +1120,7 @@ class Editor(QWidget):  # {{{
         for x in ('bold', 'italic', 'underline', 'strikethrough'):
             ac = getattr(self.editor, 'action_'+x)
             self.toolbar3.addAction(ac)
+            self.addAction(ac)
         self.toolbar3.addSeparator()
 
         for x in ('left', 'center', 'right', 'justified'):

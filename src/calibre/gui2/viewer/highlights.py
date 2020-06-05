@@ -7,19 +7,21 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from itertools import chain
 
 from PyQt5.Qt import (
-    QHBoxLayout, QIcon, QItemSelectionModel, QLabel, QListWidget, QListWidgetItem,
-    QPushButton, Qt, QVBoxLayout, QWidget, pyqtSignal
+    QHBoxLayout, QIcon, QItemSelectionModel, QKeySequence, QLabel, QListWidget,
+    QListWidgetItem, QPushButton, Qt, QTextBrowser, QVBoxLayout, QWidget, pyqtSignal
 )
 
 from calibre.constants import plugins
 from calibre.gui2 import error_dialog, question_dialog
 from calibre.gui2.viewer.search import SearchInput
+from calibre.gui2.viewer.shortcuts import index_to_key_sequence
 from polyglot.builtins import range
 
 
 class Highlights(QListWidget):
 
     jump_to_highlight = pyqtSignal(object)
+    current_highlight_changed = pyqtSignal(object)
 
     def __init__(self, parent=None):
         QListWidget.__init__(self, parent)
@@ -27,7 +29,11 @@ class Highlights(QListWidget):
         pi = plugins['progress_indicator'][0]
         pi.set_no_activate_on_click(self)
         self.itemActivated.connect(self.item_activated)
+        self.currentItemChanged.connect(self.current_item_changed)
         self.uuid_map = {}
+
+    def current_item_changed(self, current, previous):
+        self.current_highlight_changed.emit(current.data(Qt.UserRole) if current is not None else None)
 
     def load(self, highlights):
         self.clear()
@@ -100,6 +106,7 @@ class HighlightsPanel(QWidget):
         self.highlights = h = Highlights(self)
         l.addWidget(h)
         h.jump_to_highlight.connect(self.jump_to_highlight)
+        h.current_highlight_changed.connect(self.current_highlight_changed)
         self.load = h.load
         self.refresh = h.refresh
 
@@ -118,6 +125,22 @@ class HighlightsPanel(QWidget):
         self.remove_button = button('trash.png', _('Remove'), _('Remove the selected highlight'), self.remove_highlight)
         h.addWidget(self.add_button), h.addWidget(self.edit_button), h.addWidget(self.remove_button)
 
+        self.notes_display = nd = QTextBrowser(self)
+        l.addWidget(nd)
+        nd.setVisible(False)
+
+    def set_tooltips(self, rmap):
+        a = rmap.get('create_annotation')
+        if a:
+
+            def as_text(idx):
+                return index_to_key_sequence(idx).toString(QKeySequence.NativeText)
+
+            tt = self.add_button.toolTip().partition('[')[0].strip()
+            keys = sorted(filter(None, map(as_text, a)))
+            if keys:
+                self.add_button.setToolTip('{} [{}]'.format(tt, ', '.join(keys)))
+
     def search_requested(self, query):
         if not self.highlights.find_query(query):
             error_dialog(self, _('No matches'), _(
@@ -128,6 +151,17 @@ class HighlightsPanel(QWidget):
 
     def jump_to_highlight(self, highlight):
         self.request_highlight_action.emit(highlight['uuid'], 'goto')
+
+    def current_highlight_changed(self, highlight):
+        nd = self.notes_display
+        if highlight is None or not highlight.get('notes'):
+            nd.setVisible(False)
+            nd.setPlainText('')
+        else:
+            nd.setVisible(True)
+            nd.setPlainText(highlight['notes'])
+            h = nd.document().size().height()
+            nd.setMaximumHeight(h + 8)
 
     def no_selected_highlight(self):
         error_dialog(self, _('No selected highlight'), _(
