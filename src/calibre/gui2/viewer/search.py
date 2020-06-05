@@ -315,6 +315,7 @@ class SearchInput(QWidget):  # {{{
 
     do_search = pyqtSignal(object)
     cleared = pyqtSignal()
+    go_back = pyqtSignal()
 
     def __init__(self, parent=None, panel_name='search'):
         QWidget.__init__(self, parent)
@@ -375,6 +376,12 @@ class SearchInput(QWidget):  # {{{
         cs.setChecked(bool(vprefs.get('viewer-{}-case-sensitive'.format(self.panel_name), False)))
         cs.stateChanged.connect(self.save_search_type)
         h.addWidget(cs)
+
+        self.return_button = rb = QToolButton(self)
+        rb.setIcon(QIcon(I('back.png')))
+        rb.setToolTip(_('Go back to where you were before searching'))
+        rb.clicked.connect(self.go_back)
+        h.addWidget(rb)
 
     def history_saved(self, new_text, history):
         if new_text:
@@ -522,6 +529,7 @@ class Results(QTreeWidget):  # {{{
 
     show_search_result = pyqtSignal(object)
     current_result_changed = pyqtSignal(object)
+    count_changed = pyqtSignal(object)
 
     def __init__(self, parent=None):
         QTreeWidget.__init__(self, parent)
@@ -578,7 +586,9 @@ class Results(QTreeWidget):  # {{{
         item.setIcon(0, self.blank_icon)
         self.item_map[len(self.search_results)] = item
         self.search_results.append(result)
-        return self.number_of_results
+        n = self.number_of_results
+        self.count_changed.emit(n)
+        return n
 
     def item_activated(self):
         i = self.currentItem()
@@ -627,6 +637,7 @@ class Results(QTreeWidget):  # {{{
         self.item_map = {}
         self.search_results = []
         self.clear()
+        self.count_changed.emit(-1)
 
     def select_first_result(self):
         if self.number_of_results:
@@ -640,12 +651,15 @@ class SearchPanel(QWidget):  # {{{
     search_requested = pyqtSignal(object)
     results_found = pyqtSignal(object)
     show_search_result = pyqtSignal(object)
+    count_changed = pyqtSignal(object)
     hide_search_panel = pyqtSignal()
+    goto_cfi = pyqtSignal(object)
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.last_hidden_text_warning = None
         self.current_search = None
+        self.anchor_cfi = None
         self.l = l = QVBoxLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
         self.search_input = si = SearchInput(self)
@@ -653,9 +667,11 @@ class SearchPanel(QWidget):  # {{{
         self.search_tasks = Queue()
         self.results_found.connect(self.on_result_found, type=Qt.QueuedConnection)
         si.do_search.connect(self.search_requested)
+        si.cleared.connect(self.search_cleared)
+        si.go_back.connect(self.go_back)
         l.addWidget(si)
         self.results = r = Results(self)
-        si.cleared.connect(r.clear_all_results)
+        r.count_changed.connect(self.count_changed)
         r.show_search_result.connect(self.do_show_search_result, type=Qt.QueuedConnection)
         r.current_result_changed.connect(self.update_hidden_message)
         l.addWidget(r, 100)
@@ -668,11 +684,19 @@ class SearchPanel(QWidget):  # {{{
         la.setVisible(False)
         l.addWidget(la)
 
+    def go_back(self):
+        if self.anchor_cfi:
+            self.goto_cfi.emit(self.anchor_cfi)
+
     def update_hidden_message(self):
         self.hidden_message.setVisible(self.results.current_result_is_hidden)
 
     def focus_input(self, text=None):
         self.search_input.focus_input(text)
+
+    def search_cleared(self):
+        self.results.clear_all_results()
+        self.current_search = None
 
     def start_search(self, search_query, current_name):
         if self.current_search is not None and search_query == self.current_search:
@@ -688,6 +712,9 @@ class SearchPanel(QWidget):  # {{{
         self.current_search = search_query
         self.last_hidden_text_warning = None
         self.search_tasks.put((search_query, current_name))
+
+    def set_anchor_cfi(self, pos_data):
+        self.anchor_cfi = pos_data['cfi']
 
     def run_searches(self):
         while True:

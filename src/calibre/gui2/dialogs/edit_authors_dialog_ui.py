@@ -97,8 +97,8 @@ class Ui_EditAuthorsDialog(object):
         self.apply_vl_checkbox.setToolTip(_("<p>Only show authors in the\n"
 "          current Virtual library. Edits already done may be hidden but will\n"
 "          not be forgotten.</p>"))
-        self.apply_vl_checkbox.setText(_("Only show authors in the current &virtual library"))
-        self.label1.setText(_("Filter &By:"))
+        self.apply_vl_checkbox.setText(_("Only show authors in the current &Virtual library"))
+        self.label1.setText(_("Filter &by:"))
         self.filter_box.setToolTip(_("<p>Only show authors that contain the text in this box.\n"
 "          The match ignores case.</p>"))
         self.filter_button.setText(_("Fi&lter"))

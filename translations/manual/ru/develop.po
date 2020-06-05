@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# ashed <craysy@gmail.com>, 2020
 # Родион Р., 2020
 # Родион Р., 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-11 17:43+0530\n"
-"PO-Revision-Date: 2020-03-10 18:52+0000\n"
-"Last-Translator: Родион Р.\n"
+"POT-Creation-Date: 2020-05-23 07:53+0530\n"
+"PO-Revision-Date: 2020-05-29 17:19+0000\n"
+"Last-Translator: ashed <craysy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgid ""
 "<https://www.python.org>`_ with some C/C++ code for speed and system "
 "interfacing. Note that calibre is not compatible with Python 3 and requires "
 "at least Python 2.7.9."
-msgstr ""
+msgstr "Calibre является полностью открытым исходным кодом, и распространяется под лицензией `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_. Это означает, что вы можете свободно загружать и изменять программу в соответствии с вашими пожеланиями. В этом разделе вы узнаете, как настроить среду разработки calibre в выбранной вами операционной системе. calibre написан в основном на `Python <https://www.python.org>`_ с небольшим количеством кода C/C ++ для скорости и взаимодействия с системой. Обратите внимание, что calibre не совместим с Python 3 и требует как минимум Python 2.7.9."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:14
 msgid "Contents"
@@ -66,23 +67,23 @@ msgid ""
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
 "designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr ""
+msgstr "Модульная конструкция calibre выражается через «Плагины». Существует :ref:`tutorial` по написанию плагинов calibre. Например, добавление поддержки нового устройства в calibre обычно включает в себя написание менее 100 строк кода в виде плагина драйвера устройства. Вы можете просмотреть `встроенные драйверы <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. Точно так же добавление поддержки новых форматов преобразования включает в себя написание плагинов формата ввода/вывода. Другим примером модульного дизайна является :ref:`recipe system` для получения новостей. Дополнительные примеры плагинов, предназначенных для добавления функций в calibre, см. В разделе «Индекс плагинов <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:34
 msgid "Code layout"
-msgstr "Разбивка кода"
+msgstr "Макет кода"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:36
 msgid ""
 "All the calibre python code is in the ``calibre`` package. This package "
 "contains the following main sub-packages"
-msgstr ""
+msgstr "Весь код Python calibre находится в пакете ``calibre``. Этот пакет содержит следующие основные подпакеты"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:38
 msgid ""
 "devices - All the device drivers. Just look through some of the built-in "
 "drivers to get an idea for how they work."
-msgstr ""
+msgstr "devices - все драйверы устройств. Просто просмотрите некоторые встроенные драйверы, чтобы понять, как они работают."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:40
 msgid ""
@@ -90,7 +91,7 @@ msgid ""
 "supported by device drivers and ``devices.usbms`` which defines a generic "
 "driver that connects to a USBMS device. All USBMS based drivers in calibre "
 "inherit from it."
-msgstr ""
+msgstr "Для получения дополнительной информации см.: «devices.interface», определяющий интерфейс, поддерживаемый драйверами устройств, и «devices.usbms», определяющий универсальный драйвер, который подключается к устройству USBMS. Все драйверы calibre на базе USBMS наследуются от него."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:43
 msgid ""
@@ -99,12 +100,12 @@ msgid ""
 ":`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
-msgstr ""
+msgstr "e-books - Весь код преобразования электронных книг/метаданных. Хорошей отправной точкой является ``calibre.ebooks.conversion.cli``, который является модулем, питающим команду :command:`ebook-convert`. Процесс конвертации контролируется через ``translation.plumber``. Код, не зависящий от формата, находится в ``ebooks.oeb``, а код, зависящий от формата, - в ``ebooks.format_name``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:47
 msgid ""
 "Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
-msgstr ""
+msgstr "Чтение, запись и загрузка метаданных - все это в ``ebooks.metadata``"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:48
 msgid ""
@@ -118,44 +119,44 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr ""
+msgstr "Конвертация происходит в конвейере, для структуры конвейера, см. :ref:`conversion-introduction`. Конвейер состоит из входного плагина, различных трансформаций и выходного плагина. Код, который создает и управляет конвейером, находится в :file:`plumber.py`. Конвейер работает над представлением электронной книги, похожей на разархивированный epub, с манифестом, spine, toc, guide, html-содержимым и т. д. Класс, который управляет этим представлением, - OEBBook в ``ebooks.oeb.base``, различные трансформации, применяемые к книге во время конвертации, находятся в :file:`oeb/transforms/*.py`. А входные и выходные плагины находятся в :file:`translation/plugins/*.py`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:58
 msgid ""
 "E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
-msgstr ""
+msgstr "Редактирование электронной книги происходит с использованием другого объекта контейнера. Это задокументировано в :ref:`polish_api`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:61
 msgid ""
 "db - The database back-end. See :ref:`db_api` for the interface to the "
 "calibre library."
-msgstr ""
+msgstr "db - серверная часть базы данных. Смотрите :ref:`db_api` для интерфейса с библиотекой calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:63
 msgid "Content server: ``srv`` is the calibre Content server."
-msgstr ""
+msgstr "Контент-сервер: `` srv`` - это Контент-сервер calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
 "``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
 "e-book editor is in ``gui2.tweak_book``."
-msgstr ""
+msgstr "gui2 - графический интерфейс пользователя. Инициализация GUI происходит в ``gui2.main`` и ``gui2.ui``. Программа просмотра электронных книг находится в ``gui2.viewer``. Редактор электронных книг находится в ``gui2.tweak_book``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:67
 msgid ""
 "If you want to locate the entry points for all the various calibre "
 "executables, look at the ``entry_points`` structure in `linux.py "
 "<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
-msgstr ""
+msgstr "Если вы хотите найти точки входа для всех исполняемых файлов различного уровня, посмотрите на структуру ``entry_points`` в `linux.py <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/ linux.py>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:71
 msgid ""
 "If you need help understanding the code, post in the `development forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
 "most likely get help from one of calibre's many developers."
-msgstr ""
+msgstr "Если вам нужна помощь в понимании кода, отправьте сообщение на `форум разработчиков <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_, и вы, скорее всего, получите помощь от одного из многих разработчиков calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:75
 msgid "Getting the code"
@@ -173,40 +174,40 @@ msgid ""
 "calibre uses `Git <https://www.git-scm.com/>`_, a distributed version "
 "control system. Git is available on all the platforms calibre supports.  "
 "After installing Git, you can get the calibre source code with the command::"
-msgstr ""
+msgstr "calibre использует `Git <https://www.git-scm.com/>`_, распределенную систему контроля версий. Git доступен на всех платформах, поддерживаемых calibre. После установки Git вы можете получить исходный код calibre с помощью команды::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:86
 msgid ""
 "On Windows you will need the complete path name, that will be something like"
 " :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
-msgstr ""
+msgstr "В Windows вам потребуется полный путь, который будет выглядеть примерно так :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:88
 msgid ""
 "calibre is a very large project with a very long source control history, so "
 "the above can take a while (10 mins to an hour depending on your internet "
 "speed)."
-msgstr ""
+msgstr "calibre - это очень большой проект с очень длинной историей управления исходным кодом, поэтому описанное выше может занять некоторое время (от 10 минут до часа в зависимости от скорости вашего интернета)."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:91
 msgid ""
 "If you want to get the code faster, the source code for the latest release "
 "is always available as an `archive <https://calibre-ebook.com/dist/src>`_."
-msgstr ""
+msgstr "Если вы хотите получить код быстрее, исходный код для последней версии всегда доступен в виде `archive <https://calibre-ebook.com/dist/src>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:94
 msgid "To update a branch to the latest code, use the command::"
-msgstr ""
+msgstr "Чтобы обновить ветку до последнего кода, используйте команду::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:98
 msgid ""
 "You can also browse the code at `GitHub "
 "<https://github.com/kovidgoyal/calibre>`_."
-msgstr ""
+msgstr "Вы также можете просмотреть код на `GitHub <https://github.com/kovidgoyal/calibre>`_"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:101
 msgid "Submitting your changes to be included"
-msgstr ""
+msgstr "Отправка ваших изменений для включения"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:103
 msgid ""
@@ -214,7 +215,7 @@ msgid ""
 "create a \"merge directive\" which you can then attach to a ticket in the "
 "calibre `bug tracker <https://bugs.launchpad.net/calibre>`_. To do this, "
 "make your changes, then run::"
-msgstr ""
+msgstr "Если вы планируете внести только несколько небольших изменений, вы можете внести свои изменения и создать \"merge directive\", которую затем можете прикрепить к заявке в `calibre bug tracker <https://bugs.launchpad.net/calibre>`_. Для этого внесите свои изменения, затем запустите::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:111
 msgid ""
@@ -223,17 +224,17 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
 "the commits you have made. If you only want to send some commits, you have "
 "to change ``origin/master`` above. To send only the last commit, use::"
-msgstr ""
+msgstr "Это создаст файл :file:`my-changes` в текущем каталоге, просто присоедините его к заявке на calibre `bug tracker <https://bugs.launchpad.net/calibre>`_. Обратите внимание, что это будет включать *все* сделанные вами коммиты. Если вы хотите отправить только некоторые коммиты, вы должны изменить ``origin/master`` выше. Чтобы отправить только последний коммит, используйте::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:119
 msgid ""
 "To send the last *n* commits, replace *1* with *n*, for example, for the "
 "last 3 commits::"
-msgstr ""
+msgstr "Чтобы отправить последние *n* коммитов, замените *1* на *n*, например, для последних 3 коммитов::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:124
 msgid "Be careful to not include merges when using ``HEAD~n``."
-msgstr ""
+msgstr "Будьте осторожны, чтобы не включать слияния при использовании ``HEAD~n``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:126
 msgid ""
@@ -241,54 +242,54 @@ msgid ""
 "to create a `GitHub <https://github.com>`__ account. Below is a basic guide "
 "to setting up your own fork of calibre in a way that will allow you to "
 "submit pull requests for inclusion into the main calibre repository:"
-msgstr ""
+msgstr "Если вы планируете много заниматься разработкой, то лучше всего создать учетную запись `GitHub <https://github.com>`__. Ниже приведено основное руководство по настройке собственного форка calibre таким образом, чтобы вы могли отправлять пулл-реквесты для включения в основной репозиторий calibre:"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:131
 msgid ""
 "Setup git on your machine as described in this article: `Setup Git "
 "<https://help.github.com/articles/set-up-git>`_"
-msgstr ""
+msgstr "Настройте git на своем компьютере, как описано в этой статье: `Setup Git <https://help.github.com/articles/set-up-git>`_"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:132
 msgid ""
 "Setup ssh keys for authentication to GitHub, as described here: `Generating "
 "SSH keys <https://help.github.com/articles/generating-ssh-keys>`_"
-msgstr ""
+msgstr "Настройте ssh-ключи для аутентификации на GitHub, как описано здесь: `Генерация SSH-ключей <https://help.github.com/articles/generating-ssh-keys>`_"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:133
 msgid ""
 "Go to https://github.com/kovidgoyal/calibre and click the :guilabel:`Fork` "
 "button."
-msgstr ""
+msgstr "Перейдите на https://github.com/kovidgoyal/calibre и нажмите кнопку :guilabel:`Fork`."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:134
 msgid "In a Terminal do::"
-msgstr ""
+msgstr "В Терминале делай::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:139
 msgid ""
 "Replace <username> above with your GitHub username. That will get your fork "
 "checked out locally."
-msgstr ""
+msgstr "Замените <username> выше своим именем пользователя GitHub. Это позволит проверить ваш форк локально."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:140
 msgid ""
 "You can make changes and commit them whenever you like. When you are ready "
 "to have your work merged, do a::"
-msgstr ""
+msgstr "Вы можете вносить изменения и коммитить их в любое время. Когда вы будете готовы объединить свою работу, сделайте::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:144
 msgid ""
 "and go to ``https://github.com/<username>/calibre`` and click the "
 ":guilabel:`Pull Request` button to generate a pull request that can be "
 "merged."
-msgstr ""
+msgstr "и перейдите к ``https://github.com//calibre`` и нажмите кнопку :guilabel:`Pull Request`, чтобы сгенерировать pull-реквест, который можно объединить."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:145
 msgid ""
 "You can update your local copy with code from the main repo at any time by "
 "doing::"
-msgstr ""
+msgstr "Вы можете в любое время обновить свою локальную копию кодом из основного репозитория, выполнив::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:150
 msgid ""
@@ -296,32 +297,32 @@ msgid ""
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
 "major changes, you should discuss them in the forum or contact Kovid "
 "directly (his email address is all over the source code)."
-msgstr ""
+msgstr "Вам также следует следить за `форумом по разработке calibre <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Прежде чем вносить серьезные изменения, вы должны обсудить их на форуме или напрямую связаться с Ковидом (его адрес электронной почты указан по всему исходному коду)."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:156
 msgid "Windows development environment"
-msgstr "Среда разработки Windows"
+msgstr "Среда разработки под Windows"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:158
 #: ../../home/kovid/work/calibre/manual/develop.rst:192
 #: ../../home/kovid/work/calibre/manual/develop.rst:228
 msgid ""
 "You must also get the calibre source code separately as described above."
-msgstr ""
+msgstr "Вы также должны получить исходный код calibre отдельно, как описано выше."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:160
 msgid ""
 "Install calibre normally, using the Windows installer. Then open a Command "
 "Prompt and change to the previously checked out calibre code directory. For "
 "example::"
-msgstr ""
+msgstr "Установите calibre нормально, используя установщик Windows. Затем откройте командную строку и перейдите в ранее отмеченный каталог с исходным кодом calibre. Например::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:165
 #: ../../home/kovid/work/calibre/manual/develop.rst:240
 msgid ""
 "calibre is the directory that contains the src and resources sub-"
 "directories."
-msgstr ""
+msgstr "calibre - это каталог, содержащий подкаталоги src и resources."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:167
 msgid ""
@@ -330,51 +331,51 @@ msgid ""
 " would be ``C:\\Users\\kovid\\work\\calibre\\src``. `Here is a short guide "
 "<https://docs.python.org/2/using/windows.html#excursus-setting-environment-"
 "variables>`_ to setting environment variables on Windows."
-msgstr ""
+msgstr "Следующим шагом является установка переменной окружения ``CALIBRE_DEVELOP_FROM`` в абсолютный путь к каталогу src. Итак, следуя приведенному выше примеру, это будет ``C:\\Users\\kovid\\work\\calibre\\src``. `Вот краткое руководство <https://docs.python.org/2/using/windows.html#excursus-setting-environment-variables>`_ для установки переменных окружения в Windows."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:172
 msgid ""
 "Once you have set the environment variable, open a new command prompt and "
 "check that it was correctly set by using the command::"
-msgstr ""
+msgstr "После того, как вы установили переменную окружения, откройте новую командную строку и проверьте, что она была правильно установлена, используя команду::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:177
 #: ../../home/kovid/work/calibre/manual/develop.rst:251
 msgid ""
 "Setting this environment variable means that calibre will now load all its "
 "Python code from the specified location."
-msgstr ""
+msgstr "Установка этой переменной окружения означает, что calibre теперь будет загружать весь свой код Python из указанного места."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:179
 msgid ""
 "That's it! You are now ready to start hacking on the calibre code. For "
 "example, open the file :file:`src\\\\calibre\\\\__init__.py` in your "
 "favorite editor and add the line::"
-msgstr ""
+msgstr "Это всё! Теперь вы готовы взломать код calibre. Например, откройте файл :file:`src\\\\calibre\\\\__init__.py` в вашем любимом редакторе и добавьте строку::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:184
 #: ../../home/kovid/work/calibre/manual/develop.rst:258
 msgid ""
 "near the top of the file. Now run the command :command:`calibredb`. The very"
 " first line of output should be ``Hello, world!``."
-msgstr ""
+msgstr "в верхней части файла. Теперь запустите команду :command:`calibredb`. Самая первая строка вывода должна быть ``Hello, world! ``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:186
 msgid ""
 "You can also setup a calibre development environment inside the free "
 "Microsoft Visual Studio, if you like, following the instructions `here "
 "<https://www.mobileread.com/forums/showthread.php?t=251201>`_."
-msgstr ""
+msgstr "Вы также можете настроить окужение разработки calibre в бесплатной Microsoft Visual Studio, если хотите, следуя инструкциям `здесь <https://www.mobileread.com/forums/showthread.php?t=251201>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:190
 msgid "macOS development environment"
-msgstr "Среда разработки macOS"
+msgstr "Среда разработки под macOS"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:194
 msgid ""
 "Install calibre normally using the provided .dmg. Then open a Terminal and "
 "change to the previously checked out calibre code directory, for example::"
-msgstr ""
+msgstr "Установите calibre, как обычно, используя предоставленный .dmg. Затем откройте терминал и перейдите в ранее отмеченный каталог с исходным кодом calibre, например::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:199
 msgid ""
@@ -383,39 +384,39 @@ msgid ""
 " bundle, in :file:`/Applications/calibre.app/Contents/MacOS` you should add "
 "this directory to your PATH environment variable, if you want to run the "
 "command line tools easily."
-msgstr ""
+msgstr "calibre - это каталог, содержащий подкаталоги src и resources. Инструменты командной строки calibre находятся в комплекте приложения калибра, в :file:`/Applications/calibre.app/Contents/MacOS`, вы должны добавить этот каталог в переменную среды PATH, если вы хотите легко запускать инструменты командной строки."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:205
 msgid ""
 "The next step is to create a bash script that will set the environment "
 "variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src directory "
 "when running calibre in debug mode."
-msgstr ""
+msgstr "Следующим шагом является создание bash-скрипта, который установит переменную окружения ``CALIBRE_DEVELOP_FROM`` в абсолютный путь к каталогу src при запуске calibre в режиме отладки."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:207
 msgid "Create a plain text file::"
-msgstr ""
+msgstr "Создайте простой текстовый файл::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:213
 msgid ""
 "Save this file as ``/usr/bin/calibre-develop``, then set its permissions so "
 "that it can be executed::"
-msgstr ""
+msgstr "Сохраните этот файл как ``/usr/bin/calibre-develop``, затем установите ему права доступа так, чтобы он мог выполняться::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:217
 msgid "Once you have done this, run::"
-msgstr ""
+msgstr "Как только вы это сделали, запустите::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:221
 msgid ""
 "You should see some diagnostic information in the Terminal window as calibre"
 " starts up, and you should see an asterisk after the version number in the "
 "GUI window, indicating that you are running from source."
-msgstr ""
+msgstr "При запуске calibre вы должны увидеть диагностическую информацию в окне терминала, а в окне графического интерфейса вы увидите звездочку после номера версии, указывающую, что вы запустились из исходников."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:226
 msgid "Linux development environment"
-msgstr "Среда разработки Linux"
+msgstr "Среда разработки под Linux"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:230
 msgid ""
@@ -426,13 +427,13 @@ msgid ""
 " calibre from source. Instructions for setting up a development environment "
 "from source are in the INSTALL file in the source tree. Here we will address"
 " using the binary as a runtime, which is the recommended method."
-msgstr ""
+msgstr "calibre в основном разработан на Linux. У вас есть два варианта настройки среды разработки. Вы можете установить бинарный файл calibre как обычно и использовать его в качестве среды выполнения для разработки. Этот подход аналогичен тому, который используется в Windows и macOS. Кроме того, вы можете установить calibre из исходных кодов. Инструкции по настройке среды разработки из исходного кода находятся в файле INSTALL в дереве исходного кода. Здесь мы рассмотрим использование двоичного файла в качестве среды выполнения, что является рекомендуемым методом."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:236
 msgid ""
 "Install calibre using the binary installer. Then open a terminal and change "
 "to the previously checked out calibre code directory, for example::"
-msgstr ""
+msgstr "Установите calibre с помощью бинарного установщика. Затем откройте терминал и перейдите ранее отмеченный каталог с исходным кодом calibre, например::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:242
 msgid ""
@@ -440,20 +441,20 @@ msgid ""
 " the absolute path of the src directory. So, following the example above, it"
 " would be ``/home/kovid/work/calibre/src``. How to set environment variables"
 " depends on your Linux distribution and what shell you are using."
-msgstr ""
+msgstr "Следующим шагом является установка переменной окружения ``CALIBRE_DEVELOP_FROM`` в абсолютный путь к каталогу src. Итак, следуя приведенному выше примеру, это будет ``/home/kovid/work/calibre/src``. Как установить переменные окружения, зависит от вашего дистрибутива Linux и от того, какой шелл вы используете."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:246
 msgid ""
 "Once you have set the environment variable, open a new terminal and check "
 "that it was correctly set by using the command::"
-msgstr ""
+msgstr "После того, как вы установили переменную окружения, откройте новый терминал и проверьте, что она была правильно установлена, используя команду::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:253
 msgid ""
 "That's it! You are now ready to start hacking on the calibre code. For "
 "example, open the file :file:`src/calibre/__init__.py` in your favorite "
 "editor and add the line::"
-msgstr ""
+msgstr "Это всё! Теперь вы готовы взломать код calibre. Например, откройте файл :file:`src\\\\calibre\\\\__init__.py` в вашем любимом редакторе и добавьте строку::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:261
 msgid ""
@@ -469,11 +470,11 @@ msgid ""
 "using .bat files or shell scripts to launch calibre. The example below shows"
 " how to do this on Windows using .bat files (the instructions for other "
 "platforms are the same, just use a shell script instead of a .bat file)"
-msgstr ""
+msgstr "Исходное дерево кодов calibre очень стабильно и редко ломается, но если вы чувствуете необходимость запуска из источника в отдельной тестовой библиотеке и запускаете выпущенную версию calibre с вашей повседневной библиотекой, вы можете легко добиться этого, используя файлы .bat или сценарии оболочки для запуска calibre. В приведенном ниже примере показано, как сделать это в Windows с использованием файлов .bat (инструкции для других платформ такие же, просто используйте сценарий оболочки вместо файла .bat)"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:268
 msgid "To launch the release version of calibre with your everyday library:"
-msgstr ""
+msgstr "Чтобы запустить релизную версию calibre с вашей повседневной библиотекой:"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:270
 msgid "calibre-normal.bat::"
@@ -492,36 +493,36 @@ msgid ""
 "Python is a dynamically typed language with excellent facilities for "
 "introspection. Kovid wrote the core calibre code without once using a "
 "debugger. There are many strategies to debug calibre code:"
-msgstr ""
+msgstr "Python - это динамически типизированный язык с отличными возможностями для самоанализа. Ковид написал код ядра calibre без единого использования отладчика. Существует много стратегий для отладки кода calibre:"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:288
 msgid "Using print statements"
-msgstr ""
+msgstr "Использование print statements"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:290
 msgid ""
 "This is Kovid's favorite way to debug. Simply insert print statements at "
 "points of interest and run your program in the terminal. For example, you "
 "can start the GUI from the terminal as::"
-msgstr ""
+msgstr "Это любимый способ отладки Ковида. Просто вставьте операторы печати в интересующие места и запустите вашу программу в терминале. Например, вы можете запустить графический интерфейс из терминала как::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:295
 msgid "Similarly, you can start the e-book-viewer as::"
-msgstr ""
+msgstr "Точно так же вы можете запустить программу просмотра электронных книг как::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:299
 msgid "The e-book-editor can be started as::"
-msgstr ""
+msgstr "Редактор электронных книг может быть запущен как::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:304
 msgid "Using an interactive Python interpreter"
-msgstr ""
+msgstr "Использование интерактивного интерпретатора Python"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:306
 msgid ""
 "You can insert the following two lines of code to start an interactive "
 "Python session at that point::"
-msgstr ""
+msgstr "Вы можете вставить следующие две строки кода, чтобы начать интерактивный сеанс Python в этой точке::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:311
 msgid ""
@@ -530,38 +531,38 @@ msgid ""
 "local scope). The interactive prompt even has TAB completion for object "
 "properties and you can use the various Python facilities for introspection, "
 "such as :func:`dir`, :func:`type`, :func:`repr`, etc."
-msgstr ""
+msgstr "При запуске из командной строки запускается интерактивный интерпретатор Python с доступом ко всем локально определенным переменным (переменным в локальной области). Интерактивная подсказка даже имеет завершение TAB для свойств объекта, и вы можете использовать различные возможности Python для самоанализа, такие как :func:`dir`, :func:`type`, :func:`repr` и т. д."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:317
 msgid "Using the Python debugger as a remote debugger"
-msgstr ""
+msgstr "Использовать отладчик Python как удаленный отладчик"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:319
 msgid ""
 "You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
-msgstr ""
+msgstr "Вы можете использовать встроенный отладчик Python (pdb) в качестве удаленного отладчика из командной строки. Сначала запустите удаленный отладчик в интересующем вас месте кода calibre, например::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:326
 msgid ""
 "Then run calibre, either as normal, or using one of the calibre-debug "
 "commands described in the previous section. Once the above point in the code"
 " is reached, calibre will freeze, waiting for the debugger to connect."
-msgstr ""
+msgstr "Затем запустите calibre, как обычно, или с помощью одной из команд отладки calibre, описанных в предыдущем разделе. Как только вышеуказанная точка в коде будет достигнута, calibre остановится, ожидая подключения отладчика."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:330
 msgid ""
 "Now open a terminal or command prompt and use the following command to start"
 " the debugging session::"
-msgstr ""
+msgstr "Теперь откройте терминал или командную строку и используйте следующую команду для запуска сеанса отладки::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:335
 msgid ""
 "You can read about how to use the Python debugger in the `Python stdlib docs"
 " for the pdb module <https://docs.python.org/2/library/pdb.html#debugger-"
 "commands>`_."
-msgstr ""
+msgstr "Вы можете прочитать о том, как использовать отладчик Python в документации `Python stdlib для модуля pdb <https://docs.python.org/2/library/pdb.html#debugger-commands>`_."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:339
 msgid ""
@@ -569,17 +570,17 @@ msgid ""
 "change it, by passing the port parameter to both the set_trace() and the "
 "cli() functions above, like this: ``set_trace(port=1234)`` and "
 "``cli(port=1234)``."
-msgstr ""
+msgstr "По умолчанию удаленный отладчик будет пытаться подключиться к порту 4444. Вы можете изменить его, передав параметр порта обеим функциям set_trace() и cli(), описанным выше, например: ``set_trace(port=1234)`` и ``cli(port=1234)``."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:345
 msgid ""
 "The Python debugger cannot handle multiple threads, so you have to call "
 "set_trace once per thread, each time with a different port number."
-msgstr ""
+msgstr "Отладчик Python не может обрабатывать несколько потоков, поэтому вы должны вызывать set_trace один раз для потока, каждый раз с другим номером порта."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:349
 msgid "Using the debugger in your favorite Python IDE"
-msgstr ""
+msgstr "Использование отладчика в вашей любимой Python IDE"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:351
 msgid ""
@@ -588,7 +589,7 @@ msgid ""
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the directory "
 "you set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the "
 "``PYTHONPATH`` of your IDE."
-msgstr ""
+msgstr "Можно использовать встроенный отладчик в вашей любимой Python IDE, если он поддерживает удаленную отладку. Первым шагом является добавление проверки calibre src в ``PYTHONPATH`` в вашей IDE. Другими словами, каталог, который вы установили как ``CALIBRE_DEVELOP_FROM`` выше, также должен находиться в ``PYTHONPATH`` вашей IDE."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:356
 msgid ""
@@ -597,23 +598,23 @@ msgid ""
 "needed to launch the remote debugger to calibre at the point of interest, "
 "for example in the main function. Then run calibre as normal. Your IDE "
 "should now be able to connect to the remote debugger running inside calibre."
-msgstr ""
+msgstr "Затем поместите модуль удаленного отладчика IDE в подкаталог :file:`src` проверки исходного кода calibre. Добавьте любой код, необходимый для запуска удаленного отладчика для calibre в интересующей точке, например, в основной функции. Затем запустите calibre как обычно. Теперь ваша IDE должна иметь возможность подключаться к удаленному отладчику, работающему внутри calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:363
 msgid "Executing arbitrary scripts in the calibre Python environment"
-msgstr ""
+msgstr "Выполнение произвольных скриптов в окружении Python calibre "
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:365
 msgid ""
 "The :command:`calibre-debug` command provides a couple of handy switches to "
 "execute your own code, with access to the calibre modules::"
-msgstr ""
+msgstr "Команда :command:`calibre-debug` предоставляет несколько удобных ключей для выполнения собственного кода с доступом к модулям calibre::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:370
 msgid ""
 "is great for testing a little snippet of code on the command line. It works "
 "in the same way as the -c switch to the Python interpreter::"
-msgstr ""
+msgstr "отлично подходит для тестирования небольшого фрагмента кода в командной строке. Он работает так же, как ключ -c для интерпретатора Python::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:374
 msgid ""
@@ -621,12 +622,12 @@ msgid ""
 "passing the script to the Python interpreter, except that the calibre "
 "environment is fully initialized, so you can use all the calibre code in "
 "your script. To use command line arguments with your script, use the form::"
-msgstr ""
+msgstr "может быть использован для выполнения вашего собственного скрипта Python. Он работает так же, как и передача скрипта интерпретатору Python, за исключением того, что окружение calibre полностью инициализировано, поэтому вы можете использовать весь код calibre в своем скрипте. Чтобы использовать аргументы командной строки с вашим скриптом, используйте форму::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:379
 msgid ""
 "The ``--`` causes all subsequent arguments to be passed to your script."
-msgstr ""
+msgstr "``--`` заставляет все последующие аргументы быть переданными в ваш скрипт."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:383
 msgid "Using calibre in your projects"
@@ -636,33 +637,33 @@ msgstr "Использование calibre в собственных проек�
 msgid ""
 "It is possible to directly use calibre functions/code in your Python "
 "project. Two ways exist to do this:"
-msgstr ""
+msgstr "Можно напрямую использовать функции/код calibre в вашем проекте Python. Существует два способа сделать это:"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:388
 msgid "Binary install of calibre"
-msgstr ""
+msgstr "Установка исполняемого файла calibre"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:390
 msgid ""
 "If you have a binary install of calibre, you can use the Python interpreter "
 "bundled with calibre, like this::"
-msgstr ""
+msgstr "Если у вас есть бинарная установка calibre, вы можете использовать интерпретатор Python в комплекте с calibre, например::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:395
 msgid "Source install on Linux"
-msgstr ""
+msgstr "Установка из исходного кода в Linux"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:397
 msgid ""
 "In addition to using the above technique, if you do a source install on "
 "Linux, you can also directly import calibre, as follows::"
-msgstr ""
+msgstr "Помимо использования описанной выше техники, если вы выполняете установку из исходного кода в Linux, вы также можете напрямую импортировать calibre, как показано ниже::"
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:405
 msgid ""
 "It is essential that you import the init_calibre module before any other "
 "calibre modules/packages as it sets up the interpreter to run calibre code."
-msgstr ""
+msgstr "Важно, чтобы вы импортировали модуль init_calibre перед любыми другими модулями/пакетами calibre, поскольку он настраивает интерпретатор для запуска кода calibre."
 
 #: ../../home/kovid/work/calibre/manual/develop.rst:409
 msgid "API documentation for various parts of calibre"

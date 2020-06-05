@@ -90,7 +90,8 @@ def author_search_href(which, title=None, author=None):
 def mi_to_html(
         mi,
         field_list=None, default_author_link=None, use_roman_numbers=True,
-        rating_font='Liberation Serif', rtl=False, comments_heading_pos='hide'
+        rating_font='Liberation Serif', rtl=False, comments_heading_pos='hide',
+        for_qt=False,
     ):
     if field_list is None:
         field_list = get_field_list(mi)
@@ -325,7 +326,10 @@ def mi_to_html(
         classname(fieldl), html) for fieldl, html in ans]
     # print '\n'.join(ans)
     direction = 'rtl' if rtl else 'ltr'
-    margin = 'left' if rtl else 'right'
-    return u'<style>table.fields td { vertical-align:top}</style>' + \
-           u'<table class="fields" style="direction: %s; margin-%s:auto">%s</table>'%(
-               direction, margin, u'\n'.join(ans)), comment_fields
+    rans = u'<style>table.fields td { vertical-align:top}</style><table class="fields" style="direction: %s; ' % direction
+    if not for_qt:
+        # This causes wasted space at the edge of the table in Qt's rich text
+        # engine, see https://bugs.launchpad.net/calibre/+bug/1881488
+        margin = 'left' if rtl else 'right'
+        rans += 'margin-{}: auto; '.format(margin)
+    return '{}">{}</table>'.format(rans, '\n'.join(ans)), comment_fields

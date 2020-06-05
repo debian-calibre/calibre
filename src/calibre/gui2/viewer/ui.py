@@ -48,7 +48,7 @@ from calibre.utils.ipc.simple_worker import WorkerError
 from calibre.utils.iso8601 import parse_iso8601
 from calibre.utils.monotonic import monotonic
 from calibre.utils.serialize import json_loads
-from polyglot.builtins import as_bytes, iteritems, itervalues
+from polyglot.builtins import as_bytes, iteritems, itervalues, as_unicode
 
 annotations_dir = os.path.join(viewer_config_dir, 'annots')
 
@@ -140,6 +140,8 @@ class EbookViewer(MainWindow):
         self.search_widget = w = SearchPanel(self)
         w.search_requested.connect(self.start_search)
         w.hide_search_panel.connect(self.search_dock.close)
+        w.count_changed.connect(self.search_results_count_changed)
+        w.goto_cfi.connect(self.goto_cfi)
         self.search_dock.setWidget(w)
         self.search_dock.visibilityChanged.connect(self.search_widget.visibility_changed)
 
@@ -203,6 +205,7 @@ class EbookViewer(MainWindow):
         for k, v in iteritems(smap):
             rmap[v].append(k)
         self.actions_toolbar.set_tooltips(rmap)
+        self.highlights_widget.set_tooltips(rmap)
 
     def resizeEvent(self, ev):
         self.loading_overlay.resize(self.size())
@@ -293,6 +296,17 @@ class EbookViewer(MainWindow):
     def show_search(self):
         self.web_view.get_current_cfi(self.show_search_with_current_selection)
 
+    def search_results_count_changed(self, num=-1):
+        if num < 0:
+            tt = _('Search')
+        elif num == 0:
+            tt = _('Search :: no matches')
+        elif num == 1:
+            tt = _('Search :: one match')
+        else:
+            tt = _('Search :: {} matches').format(num)
+        self.search_dock.setWindowTitle(tt)
+
     def show_search_with_current_selection(self, pos_data):
         self.search_dock.setVisible(True)
         self.search_dock.activateWindow()
@@ -302,6 +316,7 @@ class EbookViewer(MainWindow):
     def start_search(self, search_query):
         name = self.web_view.current_content_file
         if name:
+            self.web_view.get_current_cfi(self.search_widget.set_anchor_cfi)
             self.search_widget.start_search(search_query, name)
             self.web_view.setFocus(Qt.OtherFocusReason)
 
@@ -337,8 +352,11 @@ class EbookViewer(MainWindow):
         # annotations will be saved in book file on exit
         self.save_annotations(in_book_file=False)
 
-    def bookmark_activated(self, cfi):
+    def goto_cfi(self, cfi):
         self.web_view.goto_cfi(cfi)
+
+    def bookmark_activated(self, cfi):
+        self.goto_cfi(cfi)
 
     def view_image(self, name):
         path = get_path_for_name(name)
@@ -468,7 +486,7 @@ class EbookViewer(MainWindow):
         self.web_view.clear_caches()
         if not ok:
             self.setWindowTitle(self.base_window_title)
-            tb = data['tb'].strip()
+            tb = as_unicode(data['tb'].strip(), errors='replace')
             tb = re.split(r'^calibre\.gui2\.viewer\.convert_book\.ConversionFailure:\s*', tb, maxsplit=1, flags=re.M)[-1]
             last_line = tuple(tb.strip().splitlines())[-1]
             if last_line.startswith('calibre.ebooks.DRMError'):

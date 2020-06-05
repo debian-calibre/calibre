@@ -240,7 +240,7 @@ class TagBrowserMixin(object):  # {{{
             result = None
         return result
 
-    def do_tags_list_edit(self, tag, category):
+    def do_tags_list_edit(self, tag, category, is_first_letter=False):
         '''
         Open the 'manage_X' dialog where X == category. If tag is not None, the
         dialog will position the editor on that item.
@@ -255,7 +255,7 @@ class TagBrowserMixin(object):  # {{{
         d = TagListEditor(self, cat_name=db.field_metadata[category]['name'],
                           tag_to_match=tag,
                           get_book_ids=partial(self.get_book_ids, db=db, category=category),
-                          sorter=key)
+                          sorter=key, ttm_is_first_letter=is_first_letter)
         d.exec_()
         if d.result() == d.Accepted:
             to_rename = d.to_rename  # dict of old id to new name
@@ -278,21 +278,50 @@ class TagBrowserMixin(object):  # {{{
                 self.do_tag_item_renamed()
                 self.tags_view.recount()
 
-    def do_tag_item_delete(self, category, item_id, orig_name, restrict_to_book_ids=None):
+    def do_tag_item_delete(self, category, item_id, orig_name,
+                           restrict_to_book_ids=None, children=[]):
         '''
         Delete an item from some category.
         '''
-        if restrict_to_book_ids:
-            msg = _('%s will be deleted from books in the Virtual library. Are you sure?')%orig_name
+        tag_names = []
+        for child in children:
+            if child.tag.is_editable:
+                tag_names.append(child.tag.original_name)
+        n = '\n   '.join(tag_names)
+        if n:
+            n = '%s:\n   %s\n%s:\n   %s'%(_('Item'), orig_name, _('Children'), n)
+        if n:
+            # Use a new "see this again" name to force the dialog to appear at
+            # least once, thus announcing the new feature.
+            skip_dialog_name = 'tag_item_delete_hierarchical'
+            if restrict_to_book_ids:
+                msg = _('%s and its children will be deleted from books '
+                        'in the Virtual library. Are you sure?')%orig_name
+            else:
+                msg = _('%s and its children will be deleted from all books. '
+                        'Are you sure?')%orig_name
         else:
-            msg = _('%s will be deleted from all books. Are you sure?')%orig_name
+            skip_dialog_name='tag_item_delete',
+            if restrict_to_book_ids:
+                msg = _('%s will be deleted from books in the Virtual library. Are you sure?')%orig_name
+            else:
+                msg = _('%s will be deleted from all books. Are you sure?')%orig_name
         if not question_dialog(self.tags_view,
                     title=_('Delete item'),
                     msg='<p>'+ msg,
-                    skip_dialog_name='tag_item_delete',
+                    det_msg=n,
+                    skip_dialog_name=skip_dialog_name,
                     skip_dialog_msg=_('Show this confirmation again')):
             return
-        self.current_db.new_api.remove_items(category, (item_id,), restrict_to_book_ids=restrict_to_book_ids)
+        ids_to_remove = []
+        if item_id is not None:
+            ids_to_remove.append(item_id)
+        for child in children:
+            if child.tag.is_editable:
+                ids_to_remove.append(child.tag.id)
+
+        self.current_db.new_api.remove_items(category, ids_to_remove,
+                                             restrict_to_book_ids=restrict_to_book_ids)
         if restrict_to_book_ids is None:
             m = self.tags_view.model()
             m.delete_item_from_all_user_categories(orig_name, category)
@@ -356,14 +385,16 @@ class TagBrowserMixin(object):  # {{{
         self.library_view.select_rows(ids)
         # refreshing the tags view happens at the emit()/call() site
 
-    def do_author_sort_edit(self, parent, id_, select_sort=True, select_link=False):
+    def do_author_sort_edit(self, parent, id_, select_sort=True,
+                            select_link=False, is_first_letter=False):
         '''
         Open the manage authors dialog
         '''
 
         db = self.library_view.model().db
         editor = EditAuthorsDialog(parent, db, id_, select_sort, select_link,
-                                   partial(self.get_book_ids, db=db, category='authors'))
+                                   partial(self.get_book_ids, db=db, category='authors'),
+                                   is_first_letter)
         if editor.exec_() == editor.Accepted:
             # Save and restore the current selections. Note that some changes
             # will cause sort orders to change, so don't bother with attempting
@@ -607,7 +638,7 @@ class TagBrowserWidget(QFrame):  # {{{
 
         mt = l.m.addAction(_('Manage authors, tags, etc.'))
         mt.setToolTip(_('All of these category_managers are available by right-clicking '
-                       'on items in the tag browser above'))
+                       'on items in the Tag browser above'))
         mt.m = l.manage_menu = QMenu(l.m)
         mt.setMenu(mt.m)
 

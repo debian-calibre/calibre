@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "maggio 23, 2020" "4.17.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "giugno 05, 2020" "4.18.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -71,12 +71,12 @@ Ricarica automaticamente il server quando il codice sorgente è cambiato. Utile 
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Numero di login falliti necessari per il ban.       The number of login failures after which an IP address is banned
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Banna gli indirizzi IP che hanno fallito più volte ad eseguire il login.    Blocca temporaneamente l\fB\(aq\fPaccesso per gli indirizzi IP che hanno fallito ripetutamente ad eseguire il login per il numero specificato di minuti. Utile per  prevenire tentativi di indovinare le password. Se impostato a zero non viene eseguito alcun ban
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -121,7 +121,7 @@ Fallback to auto\-detected interface.        If for some reason the server is un
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Consenti alle connessioni locali non autenticate di apportare modifiche.    Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Time (in seconds) after which an idle connection is closed.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Consenti a connessioni non autenticate da indirizzi IP specifici di apportare modifiche.    Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
 .UNINDENT
 .INDENT 0.0
 .TP

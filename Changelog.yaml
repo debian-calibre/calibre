@@ -20,6 +20,58 @@
 #   new recipes:
 #     - title:
 
+- version: 4.18.0
+  date: 2020-06-05
+
+  new features:
+    - title: "Viewer: Search panel: Add a button to return to the position the book was at before doing a search."
+      tickets: [1879889]
+
+    - title: "Tag browser: Improve handling of hierarchical tags"
+      description: "Renaming a tag now renames it and all its children. Drag and drop of hierarchical tags alters their hierarchy. Deleting a tag now deletes all its children."
+      tickets: [1880264]
+
+    - title: "Viewer: In flow mode, implement drag scrolling."
+      tickets: [1880707]
+
+    - title: "Tag browser: Allow Manage Tags to open to a selected letter when clicking on a letter."
+      tickets: [1880175]
+
+    - title: "Viewer: Show number of search results in title of search panel."
+      tickets: [1881792]
+
+    - title: "Content server: In the book list hovering over the library name now shows the total number of books in the library."
+      tickets: [1881384]
+
+  bug fixes:
+    - title: "Fix a regression in the previous release that broke the copy and recalculate author sort buttons."
+      tickets: [1880395]
+
+    - title: "Book details: Fix extra margin to the right of the metadata fields."
+      tickets: [1881488]
+
+    - title: "Cover grid: Show text under books that have no cover as well."
+      tickets: [1880558]
+
+    - title: "When merging metadata, if a custom column has type multiple in the new data and some other type in the old data, ignore the old data instead of failing"
+      tickets: [1881796]
+
+    - title: "macOS: When using the single instance option of the viewer, crashes should not require a restart of the computer to use the viewer again."
+      tickets: [1881375]
+
+    - title: "Windows: Fix an error when changing title/author for books in a library whose name contains characters not encodeable in the current code page"
+
+    - title: "Windows: Fix amazon metadata download failing when accented characters in search query"
+      tickets: [1880300]
+
+    - title: "Comments editor: Fix shortcuts for bold/italic not working when toolbars are hidden"
+
+  improved recipes:
+    - The Hindu
+    - Wired Daily Edition
+    - The Economist
+
+
 - version: 4.17.0
   date: 2020-05-23
 
@@ -38,7 +90,7 @@
     - title: "Manage tags/authors/etc dialogs: Allow searching and filtering the list of items."
       tickets: [1879134]
 
-    - title: "Book details panel contenxt menu: Add an action to open the Book details window."
+    - title: "Book details panel context menu: Add an action to open the Book details window."
       tickets: [1878768]
 
     - title: "Viewer: Add Next and Previous buttons in the bookmarks panel."
@@ -517,7 +569,7 @@
     - title: "Viewer: Fix flick scrolling in flow mode jumping to next chapter."
       tickets: [1856398]
 
-    - title: "Windows: Possible fix for some Windows appearing off screen on multi-monitor setups"
+    - title: "Windows: Possible fix for some windows appearing off screen on multi-monitor setups"
       tickets: [1857651]
 
     - title: "macOS: Fix PDF Output not working when running ebook-convert via symlink on the command line."
@@ -2424,7 +2476,7 @@ to appear as Unknown if metadata management was set to manual in calibre."
     - title: "Book polishing: Do not scan book for font usage when subsetting if no embedded fonts are available."
       tickets: [1737400]
 
-    - title: "Content server: Open links in the comments section from the book details page in new Windows."
+    - title: "Content server: Open links in the comments section from the book details page in new windows."
       tickets: [1737644]
 
     - title: "Choose English as the user interface language when a locale related environment variable is set to the C locale"
