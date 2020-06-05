@@ -1,7 +1,7 @@
-From 96219d89a961c1c0e2d1d8219b5559e0847b42bd Mon Sep 17 00:00:00 2001
+From 4c44f0b4c5f26f0d09b3a8b57282cdd7b5de6bd8 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 14:30:48 +0530
-Subject: [PATCH 007/119] Minor fixups for changes when removing py3
+Subject: [PATCH 007/118] Minor fixups for changes when removing py3
  conditionals
 
 ---
@@ -12,7 +12,7 @@ Subject: [PATCH 007/119] Minor fixups for changes when removing py3
  4 files changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/bypy/sources.json b/bypy/sources.json
-index d4300ffe57..07784ecb87 100644
+index d694b83002..e2e2352001 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
 @@ -769,16 +769,6 @@
@@ -48,7 +48,7 @@ index 8db1531606..40c7e815b3 100644
      description = textwrap.dedent('''\
          calibre depends on several python extensions written in C/C++.
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index 5b7eb6197e..9fa1829a8e 100644
+index 473cae9bc3..51e5446da0 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,7 +150,7 @@ def cache_dir():
@@ -85,5 +85,5 @@ index caf2d254a0..f30d1d6e7d 100644
 +
 +    return print
 -- 
-2.26.2
+2.27.0
 

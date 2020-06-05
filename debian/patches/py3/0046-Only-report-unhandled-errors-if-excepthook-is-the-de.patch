@@ -1,0 +1,26 @@
+From 6cc1d4f1fb9b9b9a9eea4005640787ce6f01a375 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 4 Dec 2019 23:10:30 +0530
+Subject: [PATCH 046/118] Only report unhandled errors if excepthook is the
+ default
+
+---
+ bypy/windows/site.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bypy/windows/site.py b/bypy/windows/site.py
+index ef9b55634f..952c23bbbb 100644
+--- a/bypy/windows/site.py
++++ b/bypy/windows/site.py
+@@ -88,7 +88,7 @@ if __name__ == '__main__':
+     try:
+         main()
+     except Exception:
+-        if sys.gui_app:
++        if sys.gui_app and sys.excepthook == sys.__excepthook__:
+             import traceback
+             import calibre_os_module
+             calibre_os_module.gui_error_message(
+-- 
+2.27.0
+

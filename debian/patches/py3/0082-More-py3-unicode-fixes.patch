@@ -1,0 +1,214 @@
+From a64ad6baada09890e97321fd87f9f27bb86e0462 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 13 Dec 2019 16:39:56 +0530
+Subject: [PATCH 082/118] More py3 unicode fixes
+
+the csv module needs to write out to a stream with newline='' on
+python3. And use PolyglotStringIO instead of PolyglotBytesIO so we remain unicode as long as possible.
+---
+ src/calibre/db/cli/cmd_check_library.py         |  6 ++++--
+ src/calibre/devices/__init__.py                 |  6 +++---
+ src/calibre/devices/cli.py                      |  6 +++---
+ src/calibre/gui2/tweak_book/function_replace.py |  4 ++--
+ src/calibre/gui2/tweak_book/reports.py          | 12 ++++++------
+ src/calibre/gui2/wizard/send_email.py           |  6 +++---
+ 6 files changed, 21 insertions(+), 19 deletions(-)
+
+diff --git a/src/calibre/db/cli/cmd_check_library.py b/src/calibre/db/cli/cmd_check_library.py
+index 895870b7e4..8d719b955d 100644
+--- a/src/calibre/db/cli/cmd_check_library.py
++++ b/src/calibre/db/cli/cmd_check_library.py
+@@ -4,6 +4,7 @@
+ 
+ 
+ import csv
++import io
+ import sys
+ 
+ from calibre import prints
+@@ -71,10 +72,11 @@ def _print_check_library_results(checker, check, as_csv=False, out=sys.stdout):
+ 
+     if as_csv:
+         to_output = [(check[1], i[0], i[1]) for i in list]
+-        csv_print = csv.writer(out)
++        buf = io.StringIO(newline='')
++        csv_print = csv.writer(buf)
+         for line in to_output:
+             csv_print.writerow(line)
+-
++        out.write(buf.getvalue())
+     else:
+         print(check[1], file=out)
+         for i in list:
+diff --git a/src/calibre/devices/__init__.py b/src/calibre/devices/__init__.py
+index d423be27cd..a561e40efe 100644
+--- a/src/calibre/devices/__init__.py
++++ b/src/calibre/devices/__init__.py
+@@ -74,11 +74,11 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
+     from calibre.devices.scanner import DeviceScanner
+     from calibre.constants import iswindows, isosx
+     from calibre import prints
+-    from polyglot.io import PolyglotBytesIO
++    from polyglot.io import PolyglotStringIO
+     oldo, olde = sys.stdout, sys.stderr
+ 
+     if buf is None:
+-        buf = PolyglotBytesIO()
++        buf = PolyglotStringIO()
+     sys.stdout = sys.stderr = buf
+     out = partial(prints, file=buf)
+ 
+@@ -187,7 +187,7 @@ def debug(ioreg_to_tmp=False, buf=None, plugins=None,
+                     out(ioreg)
+ 
+         if hasattr(buf, 'getvalue'):
+-            return buf.getvalue().decode('utf-8', 'replace')
++            return buf.getvalue()
+     finally:
+         sys.stdout = oldo
+         sys.stderr = olde
+diff --git a/src/calibre/devices/cli.py b/src/calibre/devices/cli.py
+index 20201d4f6d..c34afc4dc2 100755
+--- a/src/calibre/devices/cli.py
++++ b/src/calibre/devices/cli.py
+@@ -18,7 +18,7 @@ from calibre.customize.ui import device_plugins
+ from calibre.devices.scanner import DeviceScanner
+ from calibre.utils.config import device_prefs
+ from polyglot.builtins import unicode_type
+-from polyglot.io import PolyglotBytesIO
++from polyglot.io import PolyglotStringIO
+ 
+ MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
+ 
+@@ -113,7 +113,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
+                 c += 1
+         return rowwidths
+ 
+-    output = PolyglotBytesIO()
++    output = PolyglotStringIO()
+     if path.endswith("/") and len(path) > 1:
+         path = path[:-1]
+     dirs = dev.list(path, recurse)
+@@ -165,7 +165,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
+                     prints(trytablecol[r][c], "".ljust(padding), end=' ', file=output)
+                 prints(file=output)
+         prints(file=output)
+-    listing = output.getvalue().rstrip().decode('utf-8') + "\n"
++    listing = output.getvalue().rstrip() + "\n"
+     output.close()
+     return listing
+ 
+diff --git a/src/calibre/gui2/tweak_book/function_replace.py b/src/calibre/gui2/tweak_book/function_replace.py
+index 527ad776f3..9e3aace7fb 100644
+--- a/src/calibre/gui2/tweak_book/function_replace.py
++++ b/src/calibre/gui2/tweak_book/function_replace.py
+@@ -22,7 +22,7 @@ from calibre.utils.icu import capitalize, upper, lower, swapcase
+ from calibre.utils.titlecase import titlecase
+ from calibre.utils.localization import localize_user_manual_link
+ from polyglot.builtins import iteritems, unicode_type
+-from polyglot.io import PolyglotBytesIO
++from polyglot.io import PolyglotStringIO
+ 
+ user_functions = JSONConfig('editor-search-replace-functions')
+ 
+@@ -67,7 +67,7 @@ class Function(object):
+         self.match_index = 0
+         self.boss = get_boss()
+         self.data = {}
+-        self.debug_buf = PolyglotBytesIO()
++        self.debug_buf = PolyglotStringIO()
+         self.functions = {name:func.mod for name, func in iteritems(functions()) if func.mod is not None}
+ 
+     def __hash__(self):
+diff --git a/src/calibre/gui2/tweak_book/reports.py b/src/calibre/gui2/tweak_book/reports.py
+index 9575ca2b0a..57a5325635 100644
+--- a/src/calibre/gui2/tweak_book/reports.py
++++ b/src/calibre/gui2/tweak_book/reports.py
+@@ -11,7 +11,7 @@ from operator import itemgetter
+ from functools import partial
+ from collections import defaultdict
+ from csv import writer as csv_writer
+-from io import BytesIO
++from io import StringIO
+ 
+ import regex
+ from PyQt5.Qt import (
+@@ -35,7 +35,7 @@ from calibre.gui2.progress_indicator import ProgressIndicator
+ from calibre.utils.icu import primary_contains, numeric_sort_key
+ from calibre.utils.unicode_names import character_name_from_code
+ from calibre.utils.localization import calibre_langcode_to_name, canonicalize_lang
+-from polyglot.builtins import filter, iteritems, map, range, unicode_type
++from polyglot.builtins import filter, iteritems, map, range, unicode_type, as_bytes
+ 
+ # Utils {{{
+ 
+@@ -194,7 +194,7 @@ class FilesView(QTableView):
+             m.exec_(pos)
+ 
+     def to_csv(self):
+-        buf = BytesIO()
++        buf = StringIO(newline='')
+         w = csv_writer(buf)
+         w.writerow(self.proxy.sourceModel().COLUMN_HEADERS)
+         cols = self.proxy.columnCount()
+@@ -1093,7 +1093,7 @@ class CSSWidget(QWidget):
+         self.proxy.sort(0, self.sort_order)
+ 
+     def to_csv(self):
+-        buf = BytesIO()
++        buf = StringIO(newline='')
+         w = csv_writer(buf)
+         w.writerow([_('Style Rule'), _('Number of matches')])
+         for r in range(self.proxy.rowCount()):
+@@ -1239,7 +1239,7 @@ class ClassesWidget(CSSWidget):
+         self.summary.setText(_('{0} classes, {1} unused').format(self.model.rowCount(), self.model.num_unused))
+ 
+     def to_csv(self):
+-        buf = BytesIO()
++        buf = StringIO(newline='')
+         w = csv_writer(buf)
+         w.writerow([_('Class'), _('Number of matches')])
+         for r in range(self.proxy.rowCount()):
+@@ -1361,7 +1361,7 @@ class ReportsWidget(QWidget):
+             (_('CSV files'), ['csv'])], all_files=False, initial_filename='%s.csv' % category)
+         if fname:
+             with open(fname, 'wb') as f:
+-                f.write(data)
++                f.write(as_bytes(data))
+ 
+ 
+ class Reports(Dialog):
+diff --git a/src/calibre/gui2/wizard/send_email.py b/src/calibre/gui2/wizard/send_email.py
+index dd683ff001..1023a50914 100644
+--- a/src/calibre/gui2/wizard/send_email.py
++++ b/src/calibre/gui2/wizard/send_email.py
+@@ -21,7 +21,7 @@ from calibre.utils.smtp import config as smtp_prefs
+ from calibre.gui2 import error_dialog, question_dialog
+ from polyglot.builtins import unicode_type
+ from polyglot.binary import as_hex_unicode, from_hex_unicode
+-from polyglot.io import PolyglotBytesIO
++from polyglot.io import PolyglotStringIO
+ 
+ 
+ class TestEmail(QDialog):
+@@ -194,7 +194,7 @@ class SendEmail(QWidget, Ui_Form):
+     def test_email_settings(self, to):
+         opts = smtp_prefs().parse()
+         from calibre.utils.smtp import sendmail, create_mail
+-        buf = PolyglotBytesIO()
++        buf = PolyglotStringIO()
+         debug_out = partial(prints, file=buf)
+         oout, oerr = sys.stdout, sys.stderr
+         sys.stdout = sys.stderr = buf
+@@ -210,7 +210,7 @@ class SendEmail(QWidget, Ui_Form):
+         except:
+             import traceback
+             tb = traceback.format_exc()
+-            tb += '\n\nLog:\n' + buf.getvalue().decode('utf-8', 'replace')
++            tb += '\n\nLog:\n' + buf.getvalue()
+         finally:
+             sys.stdout, sys.stderr = oout, oerr
+         return tb
+-- 
+2.27.0
+

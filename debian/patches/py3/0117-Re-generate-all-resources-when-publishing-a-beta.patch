@@ -1,0 +1,25 @@
+From 5eaaa644886fbe45d46d5c45edbd277554038990 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 1 May 2020 22:22:02 +0530
+Subject: [PATCH 117/118] Re-generate all resources when publishing a beta
+
+---
+ setup/publish.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup/publish.py b/setup/publish.py
+index 3473d22609..6d1c3f7f06 100644
+--- a/setup/publish.py
++++ b/setup/publish.py
+@@ -113,7 +113,7 @@ class Publish(Command):
+ 
+ class PublishBetas(Command):
+ 
+-    sub_commands = ['rapydscript', 'stage2', 'sdist']
++    sub_commands = ['stage1', 'stage2', 'sdist']
+ 
+     def pre_sub_commands(self, opts):
+         require_clean_git()
+-- 
+2.27.0
+

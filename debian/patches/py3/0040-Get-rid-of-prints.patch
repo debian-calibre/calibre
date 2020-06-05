@@ -1,23 +1,23 @@
-From 43b54d4e364a7efcdc54515825ae0f107095db74 Mon Sep 17 00:00:00 2001
+From 43490957937738147eaa911c50d3878e7427816c Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 19:40:13 +0530
-Subject: [PATCH 040/119] Get rid of prints()
+Subject: [PATCH 040/118] Get rid of prints()
 
 Not needed in python3
 ---
- src/calibre/__init__.py            |   74 -------------------------------------
- src/calibre/ebooks/metadata/cli.py |    4 +-
- src/calibre/gui2/device.py         |    7 +--
- src/calibre/srv/utils.py           |    1 
- src/calibre/utils/ipc/job.py       |    6 +--
- src/calibre/utils/logging.py       |    2 -
+ src/calibre/__init__.py            | 74 +-----------------------------
+ src/calibre/ebooks/metadata/cli.py |  4 +-
+ src/calibre/gui2/device.py         |  7 ++-
+ src/calibre/srv/utils.py           |  1 -
+ src/calibre/utils/ipc/job.py       |  6 +--
+ src/calibre/utils/logging.py       |  2 +-
  6 files changed, 9 insertions(+), 85 deletions(-)
 
-Index: b/src/calibre/__init__.py
-===================================================================
+diff --git a/src/calibre/__init__.py b/src/calibre/__init__.py
+index b8528b743e..9b78feb4bc 100644
 --- a/src/calibre/__init__.py
 +++ b/src/calibre/__init__.py
-@@ -138,79 +138,7 @@ def sanitize_file_name(name, substitute=
+@@ -138,79 +138,7 @@ def sanitize_file_name(name, substitute='_'):
  
  
  sanitize_file_name2 = sanitize_file_name_unicode = sanitize_file_name
@@ -98,8 +98,8 @@ Index: b/src/calibre/__init__.py
  
  
  class CommandLineError(Exception):
-Index: b/src/calibre/ebooks/metadata/cli.py
-===================================================================
+diff --git a/src/calibre/ebooks/metadata/cli.py b/src/calibre/ebooks/metadata/cli.py
+index 15b9612602..80b131d625 100644
 --- a/src/calibre/ebooks/metadata/cli.py
 +++ b/src/calibre/ebooks/metadata/cli.py
 @@ -186,7 +186,7 @@ def main(args=sys.argv):
@@ -120,8 +120,8 @@ Index: b/src/calibre/ebooks/metadata/cli.py
          if lrf is not None:
              prints('\tBookID:', lrf.book_id)
  
-Index: b/src/calibre/gui2/device.py
-===================================================================
+diff --git a/src/calibre/gui2/device.py b/src/calibre/gui2/device.py
+index 1bca2347d5..f087aeae0c 100644
 --- a/src/calibre/gui2/device.py
 +++ b/src/calibre/gui2/device.py
 @@ -59,8 +59,7 @@ class DeviceJob(BaseJob):  # {{{
@@ -152,8 +152,8 @@ Index: b/src/calibre/gui2/device.py
          self.job_manager.changed_queue.put(self)
  
      def report_progress(self, percent, msg=''):
-Index: b/src/calibre/srv/utils.py
-===================================================================
+diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
+index 50bd480535..eb51943ffd 100644
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
 @@ -328,7 +328,6 @@ class RotatingStream(object):
@@ -164,8 +164,8 @@ Index: b/src/calibre/srv/utils.py
          kwargs['file'] = self.stream
          self.current_pos += prints(*args, **kwargs)
          # line bufferring only works with text mode streams
-Index: b/src/calibre/utils/ipc/job.py
-===================================================================
+diff --git a/src/calibre/utils/ipc/job.py b/src/calibre/utils/ipc/job.py
+index a36de1a276..59465b7bb7 100644
 --- a/src/calibre/utils/ipc/job.py
 +++ b/src/calibre/utils/ipc/job.py
 @@ -60,10 +60,8 @@ class BaseJob(object):
@@ -181,8 +181,8 @@ Index: b/src/calibre/utils/ipc/job.py
                  except:
                      pass
              if not self._done_called:
-Index: b/src/calibre/utils/logging.py
-===================================================================
+diff --git a/src/calibre/utils/logging.py b/src/calibre/utils/logging.py
+index e6449caf3f..7affa7b3d6 100644
 --- a/src/calibre/utils/logging.py
 +++ b/src/calibre/utils/logging.py
 @@ -24,7 +24,7 @@ class Stream(object):
@@ -194,3 +194,6 @@ Index: b/src/calibre/utils/logging.py
  
      def flush(self):
          self.stream.flush()
+-- 
+2.27.0
+

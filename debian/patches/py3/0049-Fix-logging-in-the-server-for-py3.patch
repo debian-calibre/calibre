@@ -1,0 +1,43 @@
+From 7bf8a277dce6d865a5f164a52480ebb3c62e025c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 10:19:38 +0530
+Subject: [PATCH 049/118] Fix logging in the server for py3
+
+---
+ src/calibre/srv/utils.py | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
+index eb51943ffd..08ab8ac98c 100644
+--- a/src/calibre/srv/utils.py
++++ b/src/calibre/srv/utils.py
+@@ -12,6 +12,7 @@ from operator import itemgetter
+ 
+ from calibre import prints
+ from calibre.constants import iswindows
++from calibre.utils.terminal import polyglot_write
+ from calibre.srv.errors import HTTPNotFound
+ from calibre.utils.localization import get_translator
+ from calibre.utils.socket_inheritance import set_socket_inherit
+@@ -327,9 +328,16 @@ class RotatingStream(object):
+     def flush(self):
+         self.stream.flush()
+ 
++    def write(self, x):
++        return polyglot_write(self.stream, True, 'utf-8', x)
++
+     def prints(self, level, *args, **kwargs):
+-        kwargs['file'] = self.stream
+-        self.current_pos += prints(*args, **kwargs)
++        kwargs['file'] = self
++        prints(*args, **kwargs)
++        try:
++            self.current_pos = self.stream.tell()
++        except EnvironmentError:
++            self.current_pos = 0
+         # line bufferring only works with text mode streams
+         end = kwargs.get('end', b'\n')
+         if isinstance(end, unicode_type):
+-- 
+2.27.0
+

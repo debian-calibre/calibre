@@ -1,0 +1,40 @@
+From d6649b445d025aad6a1dcaa0e315b560d583ebcd Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 20:28:49 +0530
+Subject: [PATCH 061/118] Dont fail the websocket test when sending garbage and
+ the connection is unexpectedly closed by the OS
+
+---
+ src/calibre/srv/tests/web_sockets.py | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/tests/web_sockets.py b/src/calibre/srv/tests/web_sockets.py
+index 1620fb7b5f..b0a95819bb 100644
+--- a/src/calibre/srv/tests/web_sockets.py
++++ b/src/calibre/srv/tests/web_sockets.py
+@@ -195,7 +195,12 @@ class WebSocketTest(BaseTest):
+                 expected_messages.append(ex)
+         if send_close:
+             client.write_close(close_code, close_reason)
+-        messages, control_frames = client.read_messages()
++        try:
++            messages, control_frames = client.read_messages()
++        except ConnectionAbortedError:
++            if expected_messages or expected_controls or send_close:
++                raise
++            return
+         self.ae(expected_messages, messages)
+         self.assertGreaterEqual(len(control_frames), 1)
+         self.ae(expected_controls, control_frames[:-1])
+@@ -317,3 +322,8 @@ class WebSocketTest(BaseTest):
+                 sz *= 1024
+                 t, b = 'a'*sz, b'a'*sz
+                 simple_test([t, b], [t, b])
++
++
++def find_tests():
++    import unittest
++    return unittest.defaultTestLoader.loadTestsFromTestCase(WebSocketTest)
+-- 
+2.27.0
+

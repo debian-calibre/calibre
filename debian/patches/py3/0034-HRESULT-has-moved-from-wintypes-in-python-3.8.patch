@@ -1,14 +1,14 @@
-From 6c78bb5445787c4e78417164e9c330669af5e513 Mon Sep 17 00:00:00 2001
+From 3f1a08483d83b3b3ee61bc99191a0414ef3fab6c Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 09:30:38 +0530
-Subject: [PATCH 034/119] HRESULT has moved from wintypes in python 3.8
+Subject: [PATCH 034/118] HRESULT has moved from wintypes in python 3.8
 
 ---
- src/calibre/gui2/__init__.py |    3 ++-
+ src/calibre/gui2/__init__.py | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Index: b/src/calibre/gui2/__init__.py
-===================================================================
+diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
+index f7525700fe..af91a133d2 100644
 --- a/src/calibre/gui2/__init__.py
 +++ b/src/calibre/gui2/__init__.py
 @@ -1466,12 +1466,13 @@ empty_index = empty_model.index(0)
@@ -26,3 +26,6 @@ Index: b/src/calibre/gui2/__init__.py
      try:
          AppUserModelID(unicode_type(val))
      except Exception as err:
+-- 
+2.27.0
+

@@ -1,0 +1,30 @@
+From 1e89aec27c2e9ffda75af59c70e5c0765c5eaa23 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 19 Dec 2019 08:32:14 +0530
+Subject: [PATCH 091/118] oops
+
+---
+ src/calibre/prints.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/prints.py b/src/calibre/prints.py
+index fcbc52c418..26f69eb821 100644
+--- a/src/calibre/prints.py
++++ b/src/calibre/prints.py
+@@ -32,10 +32,10 @@ def prints(*a, **kw):
+         a = (as_unicode(x, errors='replace') for x in a)
+         sep = as_unicode(sep)
+         end = as_unicode(end)
+-    for x in a:
+-        stream.write(x)
+-        if sep:
++    for i, x in enumerate(a):
++        if sep and i != 0:
+             stream.write(sep)
++        stream.write(x)
+     if end:
+         stream.write(end)
+     if kw.get('flush'):
+-- 
+2.27.0
+

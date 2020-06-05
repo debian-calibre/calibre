@@ -1,0 +1,50 @@
+From 7b2d0cc3dceb272f75a097736d29907a7c29c381 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 5 Dec 2019 18:37:32 +0530
+Subject: [PATCH 059/118] Fix test failing on windows
+
+---
+ src/calibre/gui2/viewer/convert_book.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/gui2/viewer/convert_book.py b/src/calibre/gui2/viewer/convert_book.py
+index 362075b095..13b04582f8 100644
+--- a/src/calibre/gui2/viewer/convert_book.py
++++ b/src/calibre/gui2/viewer/convert_book.py
+@@ -9,6 +9,7 @@ import os
+ import tempfile
+ import time
+ from hashlib import sha1
++from itertools import count
+ 
+ from calibre import walk
+ from calibre.constants import cache_dir, iswindows
+@@ -23,6 +24,7 @@ from polyglot.builtins import as_bytes, as_unicode, iteritems
+ 
+ DAY = 24 * 3600
+ VIEWER_VERSION = 1
++td_counter = count()
+ 
+ 
+ def book_cache_dir():
+@@ -137,7 +139,7 @@ def expire_cache_and_temp(temp_path, finished_path, metadata, max_age, force_exp
+ 
+ 
+ def prepare_convert(temp_path, key, st, book_path):
+-    tdir = tempfile.mkdtemp(dir=temp_path)
++    tdir = tempfile.mkdtemp(dir=temp_path, prefix=f'c{next(td_counter)}-')
+     now = time.time()
+     return {
+         'path': os.path.basename(tdir),
+@@ -233,7 +235,7 @@ def prepare_book(path, convert_func=do_convert, max_age=30 * DAY, force=False, p
+     convert_func(path, temp_path, key, instance)
+     src_path = os.path.join(temp_path, instance['path'])
+     with cache_lock() as f:
+-        ans = tempfile.mkdtemp(dir=finished_path)
++        ans = tempfile.mkdtemp(dir=finished_path, prefix=f'c{next(td_counter)}-')
+         instance['path'] = os.path.basename(ans)
+         try:
+             metadata = json.loads(f.read())
+-- 
+2.27.0
+
