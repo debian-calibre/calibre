@@ -4,15 +4,15 @@ Date: Thu, 28 Nov 2019 21:07:42 +0530
 Subject: [PATCH 026/118] Work on windows python3 build
 
 ---
- bypy/run-python.h        |  62 ++++++++--
- bypy/windows/__main__.py |  17 ++-
- bypy/windows/main.c      |   2 +-
- bypy/windows/site.py     | 118 +++++++-----------
- bypy/windows/util.c      | 261 ++-------------------------------------
- 5 files changed, 114 insertions(+), 346 deletions(-)
+ bypy/run-python.h        |   62 +++++++++--
+ bypy/windows/__main__.py |   17 +--
+ bypy/windows/main.c      |    2 
+ bypy/windows/site.py     |  118 ++++++++-------------
+ bypy/windows/util.c      |  257 +----------------------------------------------
+ 5 files changed, 112 insertions(+), 344 deletions(-)
 
-diff --git a/bypy/run-python.h b/bypy/run-python.h
-index 3df7e71b87..304dc07cfb 100644
+Index: b/bypy/run-python.h
+===================================================================
 --- a/bypy/run-python.h
 +++ b/bypy/run-python.h
 @@ -6,13 +6,17 @@
@@ -70,7 +70,7 @@ index 3df7e71b87..304dc07cfb 100644
  
  
  #define fatal(...) { log_error(__VA_ARGS__); exit(EXIT_FAILURE); }
-@@ -76,7 +91,9 @@ set_sys_string(const char* key, const wchar_t* val) {
+@@ -76,7 +91,9 @@ set_sys_string(const char* key, const wc
  
  static void
  set_sys_bool(const char* key, const bool val) {
@@ -162,8 +162,8 @@ index 3df7e71b87..304dc07cfb 100644
  	exit(ret);
  #undef CHECK_STATUS
  }
-diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index 53ae785381..c17c619279 100644
+Index: b/bypy/windows/__main__.py
+===================================================================
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
 @@ -205,12 +205,6 @@ def freeze(env, ext_dir):
@@ -179,7 +179,7 @@ index 53ae785381..c17c619279 100644
  
      printf('Adding calibre sources...')
      for x in glob.glob(j(CALIBRE_DIR, 'src', '*')):
-@@ -552,8 +546,8 @@ def build_launchers(env, debug=False):
+@@ -555,8 +549,8 @@ def build_launchers(env, debug=False):
              if typ == 'gui':
                  cflags += ['/DGUI_APP=']
  
@@ -190,7 +190,7 @@ index 53ae785381..c17c619279 100644
              dest = j(env.obj_dir, bname + '.obj')
              printf('Compiling', bname)
              cmd = [CL] + cflags + dflags + ['/Tc' + src, '/Fo' + dest]
-@@ -616,7 +610,7 @@ def archive_lib_dir(env):
+@@ -619,7 +613,7 @@ def archive_lib_dir(env):
          handled = {'pywin32.pth', 'win32'}
          base = j(sp, 'win32', 'lib')
          for x in os.listdir(base):
@@ -199,7 +199,7 @@ index 53ae785381..c17c619279 100644
                  add_to_zipfile(zf, x, base, zf_names)
          base = os.path.dirname(base)
          for x in os.listdir(base):
-@@ -626,6 +620,11 @@ def archive_lib_dir(env):
+@@ -629,6 +623,11 @@ def archive_lib_dir(env):
  
          # We dont want the site.py (if any) from site-packages
          handled.add('site.pyo')
@@ -211,11 +211,11 @@ index 53ae785381..c17c619279 100644
  
          # The rest of site-packages
          for x in os.listdir(sp):
-diff --git a/bypy/windows/main.c b/bypy/windows/main.c
-index 790c458f33..cde431dd47 100644
+Index: b/bypy/windows/main.c
+===================================================================
 --- a/bypy/windows/main.c
 +++ b/bypy/windows/main.c
-@@ -52,7 +52,7 @@ static int show_last_error(wchar_t *preamble) {
+@@ -52,7 +52,7 @@ static int show_last_error(wchar_t *prea
      return ret;
  }
  
@@ -224,8 +224,8 @@ index 790c458f33..cde431dd47 100644
  typedef void (__cdecl *SIMPLEPRINT)(const wchar_t*);
  typedef BOOL (*SETDEFAULTDIRS)(DWORD);
  static ENTRYPROC entrypoint = NULL;
-diff --git a/bypy/windows/site.py b/bypy/windows/site.py
-index 74c6a43733..26acf3a8ae 100644
+Index: b/bypy/windows/site.py
+===================================================================
 --- a/bypy/windows/site.py
 +++ b/bypy/windows/site.py
 @@ -1,81 +1,48 @@
@@ -326,17 +326,17 @@ index 74c6a43733..26acf3a8ae 100644
 +        path = pyd_items.get(q)
 +        if path is not None:
 +            return spec_from_file_location(fullname, path)
- 
++
 +    def invalidate_caches(self):
 +        global pyd_items
 +        pyd_items = None
  
--def add_calibre_vars():
+ 
+ def add_calibre_vars():
 -    sys.new_app_layout = 1
 -    sys.resources_location = os.path.join(sys.app_dir, 'app', 'resources')
 -    sys.extensions_location = os.path.join(sys.app_dir, 'app', 'bin')
- 
-+def add_calibre_vars():
+-
      dv = os.environ.get('CALIBRE_DEVELOP_FROM', None)
      if dv and os.path.exists(dv):
          sys.path.insert(0, os.path.abspath(dv))
@@ -355,14 +355,14 @@ index 74c6a43733..26acf3a8ae 100644
 -    aliasmbcs()
 +def set_helper():
 +    builtins.help = _sitebuiltins._Helper()
-+
+ 
 +
 +def set_quit():
 +    eof = 'Ctrl-Z plus Return'
 +    builtins.quit = _sitebuiltins.Quitter('quit', eof)
 +    builtins.exit = _sitebuiltins.Quitter('exit', eof)
 +
- 
++
 +def main():
      sys.meta_path.insert(0, PydImporter())
 -    sys.path_importer_cache.clear()
@@ -384,8 +384,8 @@ index 74c6a43733..26acf3a8ae 100644
 +    set_quit()
  
      return run_entry_point()
-diff --git a/bypy/windows/util.c b/bypy/windows/util.c
-index 22d163a006..7b552391d3 100644
+Index: b/bypy/windows/util.c
+===================================================================
 --- a/bypy/windows/util.c
 +++ b/bypy/windows/util.c
 @@ -15,16 +15,13 @@
@@ -462,7 +462,7 @@ index 22d163a006..7b552391d3 100644
  }
  
  static void
-@@ -136,193 +103,17 @@ load_python_dll() {
+@@ -136,192 +103,16 @@ load_python_dll() {
  
  const static wchar_t out_of_memory[] = L"Out of memory";
  
@@ -500,9 +500,9 @@ index 22d163a006..7b552391d3 100644
 -    setup_stream("stdin", "strict", GetConsoleCP());
 -    setup_stream("stdout", "strict", CP_UTF8);
 -    setup_stream("stderr", "strict", CP_UTF8);
--    return code_page;
--}
--
+     return code_page;
+ }
+ 
 -UINT
 -initialize_interpreter(const char *basename, const char *module, const char *function) {
 -    HMODULE dll;
@@ -571,10 +571,10 @@ index 22d163a006..7b552391d3 100644
 -        PyList_SetItem(argv, i, v);
 -    }
 -    PySys_SetObject("argv", argv);
-     return code_page;
- }
- 
- 
+-    return code_page;
+-}
+-
+-
 -static const wchar_t*
 -pyobject_to_wchar(PyObject *o) {
 -    PyObject *t = NULL;
@@ -652,10 +652,9 @@ index 22d163a006..7b552391d3 100644
 -    }
 -    return _show_error(preamble, L"", code);
 -}
--
+ 
  void redirect_out_stream(FILE *stream) {
      FILE *f = NULL;
-     errno_t err;
 @@ -352,8 +143,7 @@ simple_print(const wchar_t *msg) {
  }
  
@@ -666,7 +665,7 @@ index 22d163a006..7b552391d3 100644
      int ret = 0;
      // Prevent Windows' idiotic error dialog popups when various win32 api functions fail
      SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX);
-@@ -366,43 +156,14 @@ execute_python_entrypoint(const char *basename, const char *module, const char *
+@@ -366,43 +156,14 @@ execute_python_entrypoint(const char *ba
      set_gui_app(is_gui_app);
      // Disable the invalid parameter handler
      _set_invalid_parameter_handler(null_invalid_parameter_handler);
@@ -676,9 +675,11 @@ index 22d163a006..7b552391d3 100644
 +    interpreter_data.basename = basename; interpreter_data.module = module; interpreter_data.function = function;
      load_python_dll();
 -    UINT code_page = initialize_interpreter(basename, module, function);
--
++    pre_initialize_interpreter(is_gui_app);
++	run_interpreter();
+ 
 -    site = PyImport_ImportModule("site");
--
+ 
 -    if (site == NULL)
 -        ret = calibre_show_python_error(L"Failed to import site module",  1);
 -    else {
@@ -710,13 +711,6 @@ index 22d163a006..7b552391d3 100644
 -    PyErr_Clear();
 -    Py_Finalize();
 -    if (code_page != CP_UTF8) SetConsoleOutputCP(code_page);
-+    pre_initialize_interpreter(is_gui_app);
-+	run_interpreter();
-+
-+
      /* printf("111111111111 returning: %d\r\n", ret); */
  
      return ret;
--- 
-2.27.0
-

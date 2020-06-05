@@ -4,14 +4,14 @@ Date: Tue, 3 Dec 2019 10:47:43 +0530
 Subject: [PATCH 028/118] Ensure no __pycache__ is added to pylib.zip
 
 ---
- bypy/windows/__main__.py | 2 ++
+ bypy/windows/__main__.py |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index c17c619279..758724d3d8 100644
+Index: b/bypy/windows/__main__.py
+===================================================================
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
-@@ -570,6 +570,8 @@ def build_launchers(env, debug=False):
+@@ -573,6 +573,8 @@ def build_launchers(env, debug=False):
  
  
  def add_to_zipfile(zf, name, base, zf_names):
@@ -20,6 +20,3 @@ index c17c619279..758724d3d8 100644
      abspath = j(base, name)
      name = name.replace(os.sep, '/')
      if name in zf_names:
--- 
-2.27.0
-
