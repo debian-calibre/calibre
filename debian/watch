@@ -5,16 +5,13 @@
 # Compulsory line, this is a version 4 file
 version=4
 
-# for the released version 4 calibre, use this
-# needs to be used when upstream switched to v5/py3
-# after adjusting the 4.html -> 5.html (probably)
 opts="pgpmode=next, \
       dversionmangle=s!4\.99\.4\+dfsg\+really!!, \
-      downloadurlmangle=s!(\d+\.\d+\.\d+)/!$1/@PACKAGE@-$1.tar.xz!, \
-      filenamemangle=s!(\d+\.\d+\.\d+)/!@PACKAGE@-$1.tar.xz!, \
+      downloadurlmangle=s!(\d+\.\d+\.\d+)!/kovidgoyal/calibre/releases/download/v$1/@PACKAGE@-$1.tar.xz!, \
+      filenamemangle=s!/kovidgoyal/calibre/releases/tag/v(\d+\.\d+\.\d+)!@PACKAGE@-$1.tar.xz!, \
       oversionmangle=s!(.+)!4.99.4+dfsg+really$1!" \
-  https://download.calibre-ebook.com/4.html \
-  (\d+\.\d+\.\d+)/
+  https://github.com/kovidgoyal/calibre/tags \
+  /kovidgoyal/calibre/releases/tag/v(\d+\.\d+\.\d+)
 opts="pgpmode=previous" \
   https://calibre-ebook.com/signatures/ \
   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
