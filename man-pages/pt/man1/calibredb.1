@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "junho 05, 2020" "4.18.0" "calibre"
+.TH "CALIBREDB" "1" "junho 19, 2020" "4.19.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -449,7 +449,7 @@ Normalmente o Calibre guarda a capa num ficheiro separado, junto aos ficheiros d
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normalmente o Calibre atualiza os metadados nos ficheiros guardados a partir da biblioteca do Calibre. Torna o guardar no disco mais lento. Especificar este parâmetro irá desligar este comportamento.
+Normalmente o Calibre atualiza os metadados nos ficheiros exportados a partir da biblioteca do Calibre. Torna a exportação de ficheiros mais lenta. Especificar este parâmetro irá desligar este comportamento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -479,7 +479,7 @@ Exportar todos os livros para uma única pasta
 .INDENT 0.0
 .TP
 .B \-\-template
-Modelo para controlar a estrutura do nome de ficheiro e pastas dos ficheiros guardados. A predefinição é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, o que vai guardar os livros numa subpasta por autor e com nomes de ficheiros contendo título e autor. Os controlos disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Modelo para controlar a estrutura do nome de ficheiro e pastas dos ficheiros guardados. A predefinição é \fB"\fP{author_sort}/{title}/{title} \- {authors}\fB"\fP, o que vai guardar os livros numa subpasta por autor e com nomes de ficheiros contendo título e autor. As variáveis disponíveis são: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -612,7 +612,7 @@ Especifica as regras usadas para incluir prefixos que indiquem livros de leitura
 .INDENT 0.0
 .TP
 .B \-\-preset
-Utilizar um nome predefinido criado com a GUI do construtor de catálogo. Uma predefinição especifica todas as configurações para construir um catálogo. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
+Utilizar um nome predefinido criado com a IGU do construtor de catálogo. Uma predefinição especifica todas as configurações para construir um catálogo. Predefinição: \fB\(aq\fPNone\fB\(aq\fP Aplica\-se a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -655,15 +655,15 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .sp
 .nf
 .ft C
-calibredb add_custom_column [opções] identificador nome tipo\-de\-dado
+calibredb add_custom_column [options] label name datatype
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Cria uma coluna personalizada. "identificador" é o nome de máquina para coluna.
-Não pode conter espaços ou dois\-pontos. "nome" é o nome da coluna que será exibido.
-tipo\-de\-dado pode ser um dos seguintes: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Cria uma coluna personalizada. LABEL é o nome amigável da coluna para a máquina. Não pode conter espaços ou dois pontos.
+NAME é o nome amigável da coluna para humanos.
+DATATYPE pode ser um dos seguintes: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: "/some path/with spaces"
 .INDENT 0.0

@@ -20824,6 +20824,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
+            if (!before && prev !== null) {
+                before = prev;
+            }
             return [before, after];
         };
         if (!get_border_nodes.__argnames__) Object.defineProperties(get_border_nodes, {
@@ -21835,7 +21838,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.18.0";
+        CALIBRE_VERSION = "4.19.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -39785,7 +39788,7 @@ return this.__repr__();
             recent = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: CLASS_NAME})]);
             recent_container_id = ensure_id(recent);
             container.appendChild(recent);
-            recent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Loading downloaded books from storage, please wait...")].concat([ρσ_desugar_kwargs({style: "margin: 1rem 1rem"})])));
+            recent.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Loading downloaded books from local storage, please wait...")].concat([ρσ_desugar_kwargs({style: "margin: 1rem 1rem"})])));
             conditional_timeout(recent_container_id, 5, show_recent);
         };
         if (!init.__argnames__) Object.defineProperties(init, {
