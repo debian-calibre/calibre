@@ -1,15 +1,15 @@
-From d92d92f53dea2093ccd29b4b56eaf3c11e3515b0 Mon Sep 17 00:00:00 2001
+From 18c08e17d1122ea4824785a579fbe5e197c74818 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 26 Nov 2019 17:26:12 +0530
-Subject: [PATCH 021/118] Get python3 and webengine building on windows
+Subject: [PATCH 021/125] Get python3 and webengine building on windows
 
 ---
- bypy/sources.json |    1 +
- bypy/windows.conf |    2 ++
+ bypy/sources.json | 1 +
+ bypy/windows.conf | 2 ++
  2 files changed, 3 insertions(+)
 
-Index: b/bypy/sources.json
-===================================================================
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 65e3e5d370..e464847f1a 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
 @@ -80,6 +80,7 @@
@@ -20,8 +20,8 @@ Index: b/bypy/sources.json
          "unix": {
              "filename": "xz-5.2.4.tar.gz",
              "hash": "md5:5ace3264bdd00c65eeec2891346f65e6",
-Index: b/bypy/windows.conf
-===================================================================
+diff --git a/bypy/windows.conf b/bypy/windows.conf
+index b163e3732b..6385ad049b 100644
 --- a/bypy/windows.conf
 +++ b/bypy/windows.conf
 @@ -2,6 +2,7 @@
@@ -40,3 +40,6 @@ Index: b/bypy/windows.conf
  perl 'C:/Strawberry/perl/bin/perl.exe'
  ruby 'C:/Ruby27-x64/bin/ruby.exe'
  mesa 'C:/mesa'
+-- 
+2.27.0
+

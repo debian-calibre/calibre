@@ -1,14 +1,14 @@
-From a873b54cc8bbaff74c5175ce317f8df01c500226 Mon Sep 17 00:00:00 2001
+From 445d59ec03a56a7f296deb0749b127038f62694b Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 3 Dec 2019 10:47:43 +0530
-Subject: [PATCH 028/118] Ensure no __pycache__ is added to pylib.zip
+Subject: [PATCH 028/125] Ensure no __pycache__ is added to pylib.zip
 
 ---
- bypy/windows/__main__.py |    2 ++
+ bypy/windows/__main__.py | 2 ++
  1 file changed, 2 insertions(+)
 
-Index: b/bypy/windows/__main__.py
-===================================================================
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 3f1aa199fc..aee163207c 100644
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
 @@ -573,6 +573,8 @@ def build_launchers(env, debug=False):
@@ -20,3 +20,6 @@ Index: b/bypy/windows/__main__.py
      abspath = j(base, name)
      name = name.replace(os.sep, '/')
      if name in zf_names:
+-- 
+2.27.0
+

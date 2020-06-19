@@ -1,7 +1,7 @@
-From 60387f41d5ecf25817f4248edfab2d7391a390fc Mon Sep 17 00:00:00 2001
+From 23c7797e9066a914a13c972a1376107d4cc6c98e Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 18 Dec 2019 09:25:35 +0530
-Subject: [PATCH 086/118] Fix pycryptodome not working on windows
+Subject: [PATCH 086/125] Fix pycryptodome not working on windows
 
 ---
  bypy/windows/__main__.py  | 10 ++++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 086/118] Fix pycryptodome not working on windows
  2 files changed, 12 insertions(+)
 
 diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index 6a47426c2c..50ef45a22c 100644
+index 412695ce07..02982d05b5 100644
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
 @@ -202,6 +202,16 @@ def freeze(env, ext_dir):

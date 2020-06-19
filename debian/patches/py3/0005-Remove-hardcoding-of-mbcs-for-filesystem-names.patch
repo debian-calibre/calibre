@@ -1,7 +1,7 @@
-From e443d6c793dddbf6cdd0a34b97e8d07f9ddb83e4 Mon Sep 17 00:00:00 2001
+From f816b972a401ae0202a7dc0579d36286f53bceb5 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 08:16:02 +0530
-Subject: [PATCH 005/118] Remove hardcoding of mbcs for filesystem names
+Subject: [PATCH 005/125] Remove hardcoding of mbcs for filesystem names
 
 ---
  src/calibre/ebooks/metadata/pdf.py     |   4 +-
@@ -248,7 +248,7 @@ index 04e65bd95b..fffd1354c2 100644
  __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
 diff --git a/src/calibre/utils/filenames.py b/src/calibre/utils/filenames.py
-index 1eb67758b5..b510222b19 100644
+index 8ab1c2a460..1b5ca70c63 100644
 --- a/src/calibre/utils/filenames.py
 +++ b/src/calibre/utils/filenames.py
 @@ -490,9 +490,9 @@ if iswindows:

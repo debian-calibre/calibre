@@ -1,0 +1,41 @@
+From 8f30ff1348f3b8b90b2a46160d02770d16c872f9 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 14 Jun 2020 12:54:48 +0530
+Subject: [PATCH 119/125] Use separate vms for python3 builds
+
+---
+ bypy/macos.conf   | 2 +-
+ bypy/windows.conf | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/bypy/macos.conf b/bypy/macos.conf
+index a29633dab5..e0a3c660cc 100644
+--- a/bypy/macos.conf
++++ b/bypy/macos.conf
+@@ -1,6 +1,6 @@
+ # Requires installation of XCode 10.3 and Python 3 and
+ # python3 -m pip install certifi
+ 
+-vm_name 'macos-calibre-build'
++vm_name 'macos-calibre'
+ root '/Users/Shared/calibre-build'
+ python '/usr/local/bin/python3'
+diff --git a/bypy/windows.conf b/bypy/windows.conf
+index 6385ad049b..1c80890626 100644
+--- a/bypy/windows.conf
++++ b/bypy/windows.conf
+@@ -9,10 +9,9 @@
+ # Ensure the windwos sdk version at least 10.0.18362 or newer is installed, needed for
+ # qt-webengine-14.1
+ 
+-vm_name 'windows-calibre-build'
++vm_name 'windows-calibre'
+ root 'C:/r'
+ python 'py.exe'
+-python2 'C:/Python27/python.exe'
+ perl 'C:/Strawberry/perl/bin/perl.exe'
+ ruby 'C:/Ruby27-x64/bin/ruby.exe'
+ mesa 'C:/mesa'
+-- 
+2.27.0
+

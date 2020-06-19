@@ -1,17 +1,17 @@
-From f0817e0c2a7460618d18bd6542140789d0601866 Mon Sep 17 00:00:00 2001
+From 86d6b733a5af03fc79e324b1de24e9a9ac31303f Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 20 Dec 2019 07:38:49 +0530
-Subject: [PATCH 097/118] Cant pass byte strings to WinDLL()
+Subject: [PATCH 097/125] Cant pass byte strings to WinDLL()
 
 ---
  src/calibre/gui2/__init__.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
-index af91a133d2..a7bbf5d8e0 100644
+index 564edeaddd..7904cd355c 100644
 --- a/src/calibre/gui2/__init__.py
 +++ b/src/calibre/gui2/__init__.py
-@@ -1011,7 +1011,7 @@ class Application(QApplication):
+@@ -1016,7 +1016,7 @@ class Application(QApplication):
          try:
              if self.clipboard().ownsClipboard():
                  import ctypes

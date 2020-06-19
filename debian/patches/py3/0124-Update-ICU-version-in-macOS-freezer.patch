@@ -1,0 +1,25 @@
+From b7132cb948a6c2e704d2c0ecf80a34086fca0dad Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 16 Jun 2020 09:56:23 +0530
+Subject: [PATCH 124/125] Update ICU version in macOS freezer
+
+---
+ bypy/macos/__main__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 3d36716880..6c52858396 100644
+--- a/bypy/macos/__main__.py
++++ b/bypy/macos/__main__.py
+@@ -494,7 +494,7 @@ class Freeze(object):
+     def add_misc_libraries(self):
+         for x in (
+             'usb-1.0.0', 'mtp.9', 'chm.0', 'sqlite3.0', 'hunspell-1.7.0',
+-            'icudata.64', 'icui18n.64', 'icuio.64', 'icuuc.64', 'hyphen.0',
++            'icudata.67', 'icui18n.67', 'icuio.67', 'icuuc.67', 'hyphen.0',
+             'xslt.1', 'exslt.0', 'xml2.2', 'z.1', 'unrar', 'lzma.5',
+             'crypto.1.0.0', 'ssl.1.0.0', 'iconv.2',  # 'ltdl.7'
+         ):
+-- 
+2.27.0
+
