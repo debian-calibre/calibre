@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Artur de Carvalho Alves <arturcalves@gmail.com>, 2015
+# JOÃO PEDRO SLONGO, 2020
 # Paulo_Neto <layoutbr@lexxa.com.br>, 2014
 # Patricia de Albuquerque Garcia Redondo <prbioeng@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-23 07:53+0530\n"
-"PO-Revision-Date: 2020-05-23 02:23+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-06-05 08:22+0530\n"
+"PO-Revision-Date: 2020-06-17 20:24+0000\n"
+"Last-Translator: JOÃO PEDRO SLONGO\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr ""
+msgstr "O calibre possui um design muito modular. Quase todas as funcionalidades do calibre vêm na forma de plugins. Os plug-ins são usados para conversão, para baixar notícias (embora sejam chamadas de receitas), para vários componentes da interface do usuário, para conectar-se a dispositivos diferentes, para processar arquivos ao adicioná-los ao calibre e assim por diante. Você pode obter uma lista completa de todos os plugins integrados no calibre, visitando: guilabel: `Preferências-> Avançado-> Plugins`."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:8
 msgid ""
@@ -57,7 +58,7 @@ msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr ""
+msgstr "Um plugin de calibre é muito simples, é apenas um arquivo ZIP que contém algum código Python e outros recursos, como arquivos de imagem necessários ao plugin. Sem mais delongas, vamos ver um exemplo básico."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -67,13 +68,13 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr ""
+msgstr "Suponha que você tenha uma instalação de calibre que esteja usando para publicar automaticamente vários documentos eletrônicos nos formatos EPUB e MOBI. Você deseja que todos os arquivos gerados pelo calibre tenham o editor definido como \"Olá, mundo\", veja como fazê-lo. Crie um arquivo chamado: file: `__init __. Py` (este é um nome especial e sempre deve ser usado para o arquivo principal do seu plugin) e insira o seguinte código Python nele:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the directory in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "Isso é tudo. Para adicionar esse código ao calibre como um plug-in, basta executar o seguinte no diretório em que você criou Arquivo:`__init__.py`::"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -86,7 +87,7 @@ msgstr "No macOS, as ferramentas de linha de comando estão dentro do pacote do 
 msgid ""
 "You can download the Hello World plugin from `helloworld_plugin.zip  <https"
 "://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
-msgstr ""
+msgstr "Você pode baixar o plugin Hello World em `helloworld_plugin.zip <https://calibre-ebook.com/downloads/helloworld_plugin.zip>`_."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -94,7 +95,7 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, lets move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr ""
+msgstr "Toda vez que você usar o calibre para converter um livro, o método plugin: meth: `run` será chamado e o livro convertido terá seu editor definido como\" Hello World \". Este é um plugin trivial, vamos para um exemplo mais complexo que realmente adiciona um componente à interface do usuário."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
@@ -107,24 +108,24 @@ msgid ""
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr ""
+msgstr "Este plugin será espalhado por alguns arquivos (para manter o código limpo). Ele mostrará como obter recursos (imagens ou arquivos de dados) do arquivo ZIP do plug-in, permitir que os usuários configurem seu plug-in, como criar elementos na interface do usuário do calibre e como acessar e consultar o banco de dados de livros no calibre."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from `interface_demo_plugin.zip <https"
 "://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
-msgstr ""
+msgstr "Você pode baixar este plugin em `interface_demo_plugin.zip <https://calibre-ebook.com/downloads/interface_demo_plugin.zip>`_"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr ""
+msgstr "A primeira coisa a observar é que esse arquivo ZIP contém muito mais arquivos, explicados abaixo, e preste atenção ``plugin-import-name-interface_demo.txt``."
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
-msgstr ""
+msgstr "plugin-import-name-interface_demo.tx"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:65
 msgid ""
@@ -134,7 +135,7 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr ""
+msgstr "Um arquivo de texto vazio usado para ativar a mágica do plug-in com vários arquivos. Este arquivo deve estar presente em todos os plugins que usam mais de um arquivo .py. Ele deve estar vazio e seu nome de arquivo deve estar no formato:  plugin-import-name-**some_name**.txt``. A presença desse arquivo permite importar código dos arquivos .py presentes dentro do arquivo ZIP, usando uma instrução como:"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:71
 msgid ""
@@ -152,15 +153,15 @@ msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr ""
+msgstr "O nome que você usa para `` some_name`` entra em um namespace global compartilhado por todos os plugins, ** para torná-lo o mais exclusivo possível **. Mas lembre-se de que deve ser um identificador Python válido (apenas alfabetos, números e sublinhado)"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
-msgstr ""
+msgstr "__init__.py"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
-msgstr ""
+msgstr "Como antes, o arquivo que define a classe de plug-in"
 
 #: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"

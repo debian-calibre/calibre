@@ -4,19 +4,19 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Oleg Shmelyov, 2017
 # Anton Bershanskiy <bershan2@illinois.edu>, 2017
 # Alex Kroll <krollus@gmail.com>, 2018
 # Родион Р., 2020
+# ashed <craysy@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 4.14.0\n"
+"Project-Id-Version: calibre 4.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 07:51+0530\n"
+"POT-Creation-Date: 2020-06-05 08:22+0530\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
-"Last-Translator: Родион Р., 2020\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020\n"
 "Language-Team: Russian (https://www.transifex.com/calibre/teams/19337/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,9 +36,9 @@ msgid ""
 "basic regexp engine used throughout the rest of calibre."
 msgstr ""
 "В этом списке представлены наиболее часто используемые а также трудно "
-"запоминаемые части механизма регулярного выражения, доступные в calibre в "
-"свойствах редактирования и преобразования текста. Обратите внимание, что "
-"этот движок поддерживает больше функций, чем основной движок регулярных "
+"запоминаемые части движка регулярных выражений, доступного в calibre в "
+"свойствах редактирования и конвертации текста. Обратите внимание, что этот "
+"движок поддерживает больше функций, чем основной движок регулярных "
 "выражений, используемый в прочих частях calibre."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:12
@@ -47,13 +47,14 @@ msgstr "Содержание"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:15
 msgid "Character classes"
-msgstr "Группы символов"
+msgstr "Классы символов"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:17
 msgid ""
 "Character classes are useful to represent different groups of characters, "
 "succinctly."
 msgstr ""
+"Классы символов полезны для краткого представления различных групп символов."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:20
 msgid "Examples:"
@@ -69,7 +70,7 @@ msgstr "**Обозначение**"
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:23
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:54
 msgid "**Class**"
-msgstr "**Группа**"
+msgstr "**Класс**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:26
 msgid "``[a-z]``"
@@ -112,36 +113,40 @@ msgid ""
 "Any character except a digit. The caret (^) placed at the beginning of the "
 "class excludes the characters of the class (complemented class)"
 msgstr ""
-"Любые символы, кроме цифр. Карет (^), помещенный в начале класса, исключает "
-"символы класса (дополненный класс)."
+"Любые символы, кроме цифр. Каретка (^), помещенная в начале класса, "
+"исключает символы класса (дополненный класс)."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
 msgid "``[[a-z]--[aeiouy]]``"
-msgstr "``[[а-я]--[аеёиоуыэюя]]``"
+msgstr "``[[a-z]--[aeiouy]]`` ``[[а-я]--[аеёиоуыэюя]]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:38
 msgid ""
 "The lowercase consonants. A class can be included in a class. The characters"
 " ``--`` exclude what follows them"
 msgstr ""
+"Строчные согласные. Класс может быть включен в класс. Символы ``--`` "
+"исключают то, что следует за ними"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
 msgid "``[\\w--[\\d_]]``"
-msgstr ""
+msgstr "``[\\w--[\\d_]]``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:41
 msgid ""
 "All letters (including foreign accented characters). Abbreviated classes can"
 " be used inside a class"
 msgstr ""
+"Все буквы (включая иностранные акцентированные символы). Сокращенные классы "
+"могут использоваться внутри класса"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:46
 msgid "Example::"
-msgstr "Пример:"
+msgstr "Пример::"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:51
 msgid "Shorthand character classes"
-msgstr ""
+msgstr "Сокращенные классы символов"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:57
 msgid "``\\d``"
@@ -168,6 +173,8 @@ msgid ""
 "An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
 " mark and ligatures"
 msgstr ""
+"Буквенно-цифровой символ (``[a-zA-Z0-9]``), включая символы с меткой "
+"ударения и лигатуры"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
 msgid "``\\W``"
@@ -175,7 +182,7 @@ msgstr "``\\W``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:66
 msgid "Any “non-word” character"
-msgstr ""
+msgstr "Любой “non-word” («несловесный») символ"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
 msgid "``\\s``"
@@ -184,6 +191,8 @@ msgstr "``\\s``"
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:69
 msgid "Space, non-breaking space, tab, return line"
 msgstr ""
+"Space (пробел), non-breaking space (неразрывный пробел), tab (табуляция), "
+"return line (обратная строка)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
 msgid "``\\S``"
@@ -191,7 +200,7 @@ msgstr "``\\S``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:72
 msgid "Any “non-whitespace” character"
-msgstr ""
+msgstr "Любой символ «без пробелов»"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:75
 msgid "``.``"
@@ -202,18 +211,20 @@ msgid ""
 "Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
 "regexp modifier to include the newline character."
 msgstr ""
+"Любой символ кроме новой строки. Используйте флажок «dot all» или "
+"модификатор regexp ``(?s)``, чтобы включить символ новой строки."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:80
 msgid "The quantifiers"
-msgstr ""
+msgstr "Квантификаторы"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:83
 msgid "**Quantifier**"
-msgstr ""
+msgstr "**Квантификатор**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:83
 msgid "**Number of occurrences of the expression preceding the quantifier**"
-msgstr ""
+msgstr "**Количество вхождений выражения, предшествующего квантификатору**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:86
 msgid "``?``"
@@ -275,11 +286,11 @@ msgstr "``{,max}``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:104
 msgid "Number of occurrences between 0 and the maximum value included"
-msgstr ""
+msgstr "Количество вхождений между 0 и включенным максимальным значением"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:111
 msgid "Greed"
-msgstr ""
+msgstr "Жадность"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:113
 msgid ""
@@ -288,12 +299,19 @@ msgid ""
 "first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
 "same expression, the result can be unpredictable."
 msgstr ""
+"По умолчанию в квантификаторах механизм регулярных выражений является "
+"жадным: он максимально расширяет выбор. Поначалу это часто вызывает "
+"сюрпризы. ``? `` следует за квантификатором, чтобы сделать его ленивым. "
+"Старайтесь не ставить два в одном выражении, результат может быть "
+"непредсказуемым."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:118
 msgid ""
 "Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
 "exponentially increases processing time."
 msgstr ""
+"Остерегайтесь вложенных квантификаторов, например, шаблона ``(a*)*``, "
+"поскольку он экспоненциально увеличивает время обработки."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:122
 msgid "Alternation"
@@ -333,6 +351,7 @@ msgid ""
 "selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
 "\"Blabla\"."
 msgstr ""
+"выбирает Blabla, в строках Blabla или «Blabla или Blabla», но не в «Blabla»."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:140
 msgid "Method 2"
@@ -340,7 +359,7 @@ msgstr "Метод 2"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:142
 msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
-msgstr "``шаблон_для_исключения\\K|(шаблон_для_поиска)``"
+msgstr "``шаблон_для_исключения\\K|(шаблон_для_отбора)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:144
 msgid "``\"Blabla\"\\K|(Blabla)``"
@@ -348,13 +367,15 @@ msgstr "``\"Blabla\"\\K|(Blabla)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:149
 msgid "Anchors"
-msgstr ""
+msgstr "Якоря"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:151
 msgid ""
 "An anchor is a way to match a logical location in a string, rather than a "
 "character. The most useful anchors for text processing are:"
 msgstr ""
+"Якорь - это способ сопоставления логического расположения в строке, а не "
+"символа. Наиболее полезными якорями для обработки текста являются:"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:157
 msgid "``\\b``"
@@ -366,6 +387,9 @@ msgid ""
 "character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
 "not ``absurd``."
 msgstr ""
+"Обозначает границу слова, то есть переход от пробела к непропробельному "
+"символу. Например, вы можете использовать ``\\bsurd`` для сопоставления с "
+"``surd``, но не ``absurd``."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:161
 msgid "``^``"
@@ -389,7 +413,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:171
 msgid "``\\K``"
-msgstr ""
+msgstr "``\\K``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:167
 msgid ""
@@ -399,14 +423,20 @@ msgid ""
 "engines, it also allows you to get rid of this limit by writing the "
 "equivalent of a positive lookbehind of variable length."
 msgstr ""
+"Сбрасывает начальную позицию выделения в его позицию в шаблоне. Некоторые "
+"движки регулярных выражений (но не calibre) не позволяют просматривать "
+"данные переменной длины, особенно с квантификаторами. Когда вы можете "
+"использовать ``\\K`` с этими движками, это также позволяет вам избавиться от"
+" этого предела, написав эквивалент положительного взгляда позади длины "
+"переменной."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:174
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:179
 msgid "``(expression)``"
-msgstr ""
+msgstr "``(выражение)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:177
 msgid ""
@@ -414,18 +444,21 @@ msgid ""
 " *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
 "number of the capturing group (starting at 1 in reading order)"
 msgstr ""
+"Группа захвата, которая хранит выбор и может быть вызвана позже в шаблонах "
+"*search* или *replace* на ``\\n``, где `` n`` - порядковый номер группы "
+"захвата (начиная с 1 в порядке чтения)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:182
 msgid "``(?:expression)``"
-msgstr ""
+msgstr "``(?:выражение)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:182
 msgid "Group that does not capture the selection"
-msgstr ""
+msgstr "Группа, которая не захватывает выбор"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:188
 msgid "``(?>expression)``"
-msgstr ""
+msgstr "``(?>expression)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:185
 msgid ""
@@ -433,20 +466,26 @@ msgid ""
 "passes, and if the rest of the pattern fails, it will not backtrack to try "
 "other combinations with the expression. Atomic groups do not capture."
 msgstr ""
+"Атомная группа: как только выражение удовлетворено, обработчик регулярных "
+"выражений проходит, и если остальная часть шаблона завершится неудачно, он "
+"не будет возвращаться, чтобы попробовать другие комбинации с выражением. "
+"Атомные группы не захватывают."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:192
 msgid "``(?|expression)``"
-msgstr ""
+msgstr "``(?|expression)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:191
 msgid ""
 "Branch reset group: the branches of the alternations included in the "
 "expression share the same group numbers"
 msgstr ""
+"Группа сброса ветвей: ветви чередований, включенные в выражение, имеют "
+"одинаковые номера групп"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:198
 msgid "``(?<name>expression)``"
-msgstr ""
+msgstr "``(?<name>expression)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:195
 msgid ""
@@ -454,51 +493,54 @@ msgid ""
 "pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
 "different groups can use the same name."
 msgstr ""
+"Группа под названием «имя». Выбор может быть вызван позже в шаблоне *search*"
+" с помощью ``(?P=name)`` и в *replace* на ``\\g<name>``. Две разные группы "
+"могут использовать одно и то же имя."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:201
 msgid "Lookarounds"
-msgstr ""
+msgstr "Взгляды по сторонам"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:204
 msgid "**Lookaround**"
-msgstr ""
+msgstr "**Взгляд по сторонам**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:204
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:255
 msgid "**Meaning**"
-msgstr ""
+msgstr "**Смысл**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:207
 msgid "``?=``"
-msgstr ""
+msgstr "``?=``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:207
 msgid "Positive lookahead (to be placed after the selection)"
-msgstr ""
+msgstr "Позитивный lookahead (взгляд вперёд) (будет размещен после выделения)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:210
 msgid "``?!``"
-msgstr ""
+msgstr "``?!``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:210
 msgid "Negative lookahead (to be placed after the selection)"
-msgstr ""
+msgstr "Негативный lookahead (взгляд вперёд) (ставится после выделения)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:213
 msgid "``?<=``"
-msgstr ""
+msgstr "``?<=``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:213
 msgid "Positive lookbehind (to be placed before the selection)"
-msgstr ""
+msgstr "Позитивный lookbehind (взгляд назад) (ставится перед выделением)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:216
 msgid "``?<!``"
-msgstr ""
+msgstr "``?<!``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:216
 msgid "Negative lookbehind (to be placed before the selection)"
-msgstr ""
+msgstr "Негативный lookbehind (взгляд назад) (ставится перед выделением)"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:220
 msgid ""
@@ -507,6 +549,11 @@ msgid ""
 "satisfied, the regexp engine passes, and if the rest of the pattern fails, "
 "it will not backtrack inside the lookaround to try other combinations."
 msgstr ""
+"Lookaheads (взгляды вперед) и lookbehinds (взгляды назад) не потребляют "
+"символы, они имеют нулевую длину и не захватывают. Они являются атомарными "
+"группами: как только утверждение выполнено, движок регулярных выражений "
+"проходит, и если не удастся остальная часть шаблона, он не будет "
+"возвращаться в обход, чтобы попробовать другие комбинации."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:225
 msgid ""
@@ -520,6 +567,16 @@ msgid ""
 "calibre's regexp engine practice, the positive lookbehind behaves in the "
 "same way, and selects only 2, contrary to theory."
 msgstr ""
+"При поиске нескольких совпадений в строке, в начальной позиции каждой "
+"попытки сопоставления, взгляд назад может проверять символы перед текущей "
+"позицией. Поэтому в строке 123 шаблон ``(?<=\\D)\\d`` (цифра, перед которой "
+"стоит цифра) должен теоретически выбрать 2 и 3. С другой стороны, "
+"``\\d\\K\\d`` может выбрать только 2, потому что начальная позиция после "
+"первого выбора находится непосредственно перед 3, и для второго совпадения "
+"недостаточно цифр. Точно так же ``\\d(\\d)`` только захватывает 2. В "
+"практике движка регулярных выражений calibre положительный взгляд назад "
+"(positive lookbehind) ведёт себя таким же образом и выбирает только 2, "
+"вопреки теории."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:235
 msgid ""
@@ -530,47 +587,60 @@ msgid ""
 "``\\K`` rather than a positive lookbehind when you have a quantifier (or "
 "worse, several) in a capturing group of the positive lookbehind."
 msgstr ""
+"Группы могут быть помещены в lookarounds (взгляды по сторонам), но захват "
+"редко полезен. Тем не менее, если это будет полезно, необходимо будет быть "
+"очень осторожным при использовании квантификатора во взгляде назад: "
+"жадность, связанная с отсутствием обратного отслеживания, может дать "
+"неожиданный захват. По этой причине, используйте ``\\K``, а не положительный"
+" взгляд назад (positive lookbehind), когда у вас есть квантификатор (или, "
+"что еще хуже, несколько) в группе захвата положительного взгляда назад "
+"(positive lookbehind)."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:242
 msgid "Example of negative lookahead:"
-msgstr ""
+msgstr "Пример негативного взгляда вперёд:"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:244
 msgid "``(?![^<>{}]*[>}])``"
-msgstr ""
+msgstr "``(?![^<>{}]*[>}])``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:246
 msgid ""
 "Placed at the end of the pattern prevents to select within a tag or a style "
 "embedded in the file."
 msgstr ""
+"Помещенный в конец шаблона препятствует выделению внутри тега или стиля, "
+"встроенного в файл."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:248
 msgid ""
 "Whenever possible, it is always better to \"anchor\" the lookarounds, to "
 "reduce the number of steps necessary to obtain the result."
 msgstr ""
+"Когда бы ни было возможно, всегда лучше «закрепить» обходные пути, чтобы "
+"уменьшить количество шагов, необходимых для получения результата."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:252
 msgid "Recursion"
-msgstr ""
+msgstr "Рекурсия"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:258
 msgid "``(?R)``"
-msgstr ""
+msgstr "``(?R)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:258
 msgid "Recursion of the entire pattern"
-msgstr ""
+msgstr "Рекурсия всего шаблона"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:261
 msgid "``(?1)``"
-msgstr ""
+msgstr "``(?1)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:261
 msgid ""
 "Recursion of the only pattern of the numbered capturing group, here group 1"
 msgstr ""
+"Рекурсия единственного шаблона нумерованной группы захвата, здесь группа 1"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:265
 msgid ""
@@ -580,62 +650,71 @@ msgid ""
 "beginning of a new string between double quotation marks, well we know how "
 "to do, and we call ourselves. Then we have a pattern like::"
 msgstr ""
+"Рекурсия вызывает себя. Это полезно для сбалансированных запросов, таких как"
+" строки в кавычках, которые могут содержать встроенные строки в кавычках. "
+"Таким образом, если во время обработки строки между двойными кавычками мы "
+"сталкиваемся с началом новой строки между двойными кавычками, мы хорошо "
+"знаем, как это сделать, и мы вызываем себя. Тогда у нас есть шаблон, вроде::"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:273
 msgid ""
 "To select a string between double quotation marks without stopping on an "
 "embedded string::"
 msgstr ""
+"Чтобы выбрать строку между двойными кавычками, не останавливаясь на "
+"встроенной строке::"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:277
 msgid ""
 "This template can also be used to modify pairs of tags that can be embedded,"
 " such as ``<div>`` tags."
 msgstr ""
+"Этот шаблон также можно использовать для изменения пар тегов, которые могут "
+"быть встроены, таких как теги ``<div>``."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:282
 msgid "Special characters"
-msgstr ""
+msgstr "Специальные символы"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:285
 msgid "**Character**"
-msgstr ""
+msgstr "**Символ**"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:288
 msgid "``\\t``"
-msgstr ""
+msgstr "``\\t``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:288
 msgid "tabulation"
-msgstr ""
+msgstr "табуляция"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:291
 msgid "``\\n``"
-msgstr ""
+msgstr "``\\n``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:291
 msgid "line break"
-msgstr ""
+msgstr "Разрыв строки"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:294
 msgid "``\\x20``"
-msgstr ""
+msgstr "``\\x20``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:294
 msgid "(breakable) space"
-msgstr ""
+msgstr "(разрываемый) пробел"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:297
 msgid "``\\xa0``"
-msgstr ""
+msgstr "``\\xa0``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:297
 msgid "no-break space"
-msgstr ""
+msgstr "неразрываемый пробел"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:302
 msgid "Meta-characters"
-msgstr "Метасимволы"
+msgstr "Мета-символы"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:304
 msgid ""
@@ -644,12 +723,18 @@ msgid ""
 "(``\\``), to lose their special meaning and become a regular character "
 "again::"
 msgstr ""
+"Мета-символы - это те, которые имеют особое значение для движка регулярных "
+"выражений. Из них двенадцати должен предшествовать escape-символ, обратная "
+"косая черта (``\\``), чтобы потерять свое особое значение и снова стать "
+"обычным символом::"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:310
 msgid ""
 "Seven other meta-characters do not need to be preceded by a backslash (but "
 "can be without any other consequence)::"
 msgstr ""
+"Семи другим метасимволам не обязательно должен предшествовать обратный слеш "
+"(но он может быть без каких-либо других последствий):"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:316
 msgid ""
@@ -658,12 +743,18 @@ msgid ""
 "status in a class. Outside the class, the dash is a simple literal, the "
 "closing bracket remains a meta-character."
 msgstr ""
+"Специальные символы теряют свой статус, если они используются внутри класса "
+"(между скобками ``[]``). Закрывающая скобка и тире имеют особый статус в "
+"классе. Вне класса тире - это простой литерал, закрывающая скобка остается "
+"метасимволом."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:321
 msgid ""
 "The slash (/) and the number sign (or hash character) (#) are not meta-"
 "characters, they don’t need to be escaped."
 msgstr ""
+"Косая черта (/) и знак числа (или хэш-символ) (#) не являются метасимволами,"
+" их не нужно экранировать."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:324
 msgid ""
@@ -671,25 +762,30 @@ msgid ""
 "the special status of separator, and must be escaped, or the options "
 "changed. This is not the case in the editor of calibre."
 msgstr ""
+"В некоторых инструментах, таких как regex101.com с движком Python, двойные "
+"кавычки имеют специальный статус разделителя и должны быть экранированы, "
+"либо параметры изменены. Это не так в редакторе calibre."
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:329
 msgid "Modes"
-msgstr ""
+msgstr "Режимы"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:332
 msgid "``(?s)``"
-msgstr ""
+msgstr "``(?s)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:332
 msgid "Causes the dot (``.``) to match newline characters as well"
-msgstr ""
+msgstr "Заставляет точку (``.``) совпадать с символами новой строки"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:336
 msgid "``(?m)``"
-msgstr ""
+msgstr "``(?m)``"
 
 #: ../../home/kovid/work/calibre/manual/regexp_quick_reference.rst:335
 msgid ""
 "Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
 "of the start and end of the entire string."
 msgstr ""
+"Заставляет якоря ``^`` и ``$`` соответствовать началу и концу строк вместо "
+"начала и конца всей строки."

@@ -20192,6 +20192,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
+            if (!before && prev !== null) {
+                before = prev;
+            }
             return [before, after];
         };
         if (!get_border_nodes.__argnames__) Object.defineProperties(get_border_nodes, {
@@ -37779,9 +37782,9 @@ return this.__repr__();
                 proceed(get_mathjax_files_stage2.file_data);
                 return;
             }
-            var ρσ_Iter0 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                filename = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter6 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                filename = ρσ_Iter6[ρσ_Index6];
                 xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
                 xhr.responseType = "blob";
                 xhr.send();
