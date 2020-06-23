@@ -9,7 +9,7 @@ opts="pgpmode=next, \
       dversionmangle=s!4\.99\.\d+\+dfsg\+really!!, \
       oversionmangle=s!(.+)!4.99.6+dfsg+really$1!" \
   https://github.com/kovidgoyal/@PACKAGE@/releases \
-  /kovidgoyal/@PACKAGE@/releases/download/v\d+\.\d+\.\d+/@PACKAGE@-(\d+\.\d+\.\d+).tar.xz
+  /kovidgoyal/@PACKAGE@/releases/download/v(\d+\.\d+\.\d+)/@PACKAGE@-\g1\.tar\.xz
 opts="pgpmode=previous" \
   https://calibre-ebook.com/signatures/ \
   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
