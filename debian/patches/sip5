@@ -1,0 +1,27 @@
+---
+ bypy/init_env.py           |    2 +-
+ setup/build_environment.py |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+--- a/bypy/init_env.py
++++ b/bypy/init_env.py
+@@ -158,7 +158,7 @@ def run(*args, **extra_env):
+     env.update(extra_env)
+     env['SW'] = PREFIX
+     env['LD_LIBRARY_PATH'] = LIBDIR
+-    env['SIP_BIN'] = os.path.join(PREFIX, 'bin', 'sip')
++    env['SIP_BIN'] = os.path.join(PREFIX, 'bin', 'sip5')
+     env['QMAKE'] = os.path.join(PREFIX, 'qt', 'bin', 'qmake')
+     return subprocess.call(list(args), env=env, cwd=CALIBRE_DIR)
+ 
+--- a/setup/build_environment.py
++++ b/setup/build_environment.py
+@@ -87,7 +87,7 @@ pyqt = {x:readvar(y) for x, y in (
+ qt = {x:readvar(y) for x, y in {'libs':'QT_INSTALL_LIBS', 'plugins':'QT_INSTALL_PLUGINS'}.items()}
+ qmakespec = readvar('QMAKE_SPEC') if iswindows else None
+ 
+-pyqt['sip_bin'] = os.environ.get('SIP_BIN', 'sip')
++pyqt['sip_bin'] = os.environ.get('SIP_BIN', 'sip5')
+ 
+ import PyQt5
+ from PyQt5.QtCore import PYQT_CONFIGURATION
