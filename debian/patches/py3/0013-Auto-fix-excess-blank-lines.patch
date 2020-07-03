@@ -4,173 +4,172 @@ Date: Wed, 20 Nov 2019 07:29:37 +0530
 Subject: [PATCH 013/125] Auto fix excess blank lines
 
 ---
- bypy/macos/__main__.py                                      | 4 +---
- bypy/windows/__main__.py                                    | 1 -
- manual/plugin_examples/webengine_demo/__init__.py           | 1 -
- manual/plugin_examples/webengine_demo/main.py               | 1 -
- setup/browser_data.py                                       | 1 -
- setup/git_version.py                                        | 1 -
- setup/install.py                                            | 1 -
- setup/port.py                                               | 1 -
- setup/publish.py                                            | 1 -
- setup/test.py                                               | 1 -
- setup/unix-ci.py                                            | 1 -
- setup/win-ci.py                                             | 1 -
- src/calibre/db/cli/__init__.py                              | 1 -
- src/calibre/db/cli/cmd_add.py                               | 1 -
- src/calibre/db/cli/cmd_add_custom_column.py                 | 1 -
- src/calibre/db/cli/cmd_add_format.py                        | 1 -
- src/calibre/db/cli/cmd_backup_metadata.py                   | 1 -
- src/calibre/db/cli/cmd_catalog.py                           | 1 -
- src/calibre/db/cli/cmd_check_library.py                     | 1 -
- src/calibre/db/cli/cmd_clone.py                             | 1 -
- src/calibre/db/cli/cmd_custom_columns.py                    | 1 -
- src/calibre/db/cli/cmd_embed_metadata.py                    | 1 -
- src/calibre/db/cli/cmd_export.py                            | 1 -
- src/calibre/db/cli/cmd_list.py                              | 1 -
- src/calibre/db/cli/cmd_list_categories.py                   | 1 -
- src/calibre/db/cli/cmd_remove.py                            | 1 -
- src/calibre/db/cli/cmd_remove_custom_column.py              | 1 -
- src/calibre/db/cli/cmd_remove_format.py                     | 1 -
- src/calibre/db/cli/cmd_restore_database.py                  | 1 -
- src/calibre/db/cli/cmd_saved_searches.py                    | 1 -
- src/calibre/db/cli/cmd_search.py                            | 1 -
- src/calibre/db/cli/cmd_set_custom.py                        | 1 -
- src/calibre/db/cli/cmd_set_metadata.py                      | 1 -
- src/calibre/db/cli/cmd_show_metadata.py                     | 1 -
- src/calibre/db/cli/utils.py                                 | 1 -
- src/calibre/db/copy_to_library.py                           | 1 -
- src/calibre/db/restore.py                                   | 1 -
- src/calibre/devices/cli.py                                  | 1 -
- src/calibre/devices/kindle/bookmark.py                      | 1 -
- src/calibre/devices/kobo/__init__.py                        | 1 -
- src/calibre/devices/smart_device_app/__init__.py            | 1 -
- src/calibre/devices/usbms/books.py                          | 1 -
- src/calibre/devices/winusb.py                               | 1 -
- src/calibre/ebooks/BeautifulSoup.py                         | 1 -
- src/calibre/ebooks/conversion/plugins/djvu_input.py         | 1 -
- src/calibre/ebooks/conversion/plugins/htmlz_input.py        | 1 -
- src/calibre/ebooks/conversion/plugins/htmlz_output.py       | 1 -
- src/calibre/ebooks/conversion/search_replace.py             | 1 -
- src/calibre/ebooks/epub/pages.py                            | 1 -
- src/calibre/ebooks/htmlz/oeb2html.py                        | 1 -
- src/calibre/ebooks/lrf/pylrs/pylrfopt.py                    | 1 -
- src/calibre/ebooks/metadata/book/serialize.py               | 2 --
- src/calibre/ebooks/metadata/kfx.py                          | 1 -
- src/calibre/ebooks/metadata/opf.py                          | 1 -
- src/calibre/ebooks/metadata/opf3.py                         | 1 -
- src/calibre/ebooks/metadata/opf_2_to_3.py                   | 1 -
- src/calibre/ebooks/metadata/plucker.py                      | 1 -
- src/calibre/ebooks/metadata/search_internet.py              | 1 -
- src/calibre/ebooks/metadata/snb.py                          | 1 -
- src/calibre/ebooks/oeb/polish/download.py                   | 1 -
- src/calibre/ebooks/oeb/polish/upgrade.py                    | 1 -
- src/calibre/ebooks/oeb/transforms/unsmarten.py              | 1 -
- src/calibre/ebooks/pdb/ereader/reader202.py                 | 1 -
- src/calibre/ebooks/pdb/header.py                            | 1 -
- src/calibre/ebooks/pdb/plucker/reader.py                    | 1 -
- src/calibre/ebooks/pdf/develop.py                           | 1 -
- src/calibre/ebooks/pdf/image_writer.py                      | 1 -
- src/calibre/ebooks/pdf/test_html_writer.py                  | 1 -
- src/calibre/ebooks/readability/debug.py                     | 1 -
- src/calibre/ebooks/render_html.py                           | 1 -
- src/calibre/gui2/actions/author_mapper.py                   | 1 -
- src/calibre/gui2/actions/store.py                           | 1 -
- src/calibre/gui2/actions/virtual_library.py                 | 2 --
- src/calibre/gui2/add_filters.py                             | 1 -
- src/calibre/gui2/author_mapper.py                           | 1 -
- src/calibre/gui2/changes.py                                 | 1 -
- src/calibre/gui2/convert/single.py                          | 1 -
- src/calibre/gui2/css_transform_rules.py                     | 1 -
- src/calibre/gui2/dialogs/choose_plugin_toolbars.py          | 1 -
- src/calibre/gui2/dialogs/restore_library.py                 | 1 -
- src/calibre/gui2/dialogs/saved_search_editor.py             | 1 -
- src/calibre/gui2/ebook_download.py                          | 1 -
- src/calibre/gui2/layout_menu.py                             | 1 -
- src/calibre/gui2/pin_columns.py                             | 1 -
- src/calibre/gui2/preferences/emailp.py                      | 1 -
- src/calibre/gui2/preferences/tweaks.py                      | 1 -
- src/calibre/gui2/progress_indicator/__init__.py             | 2 --
- src/calibre/gui2/qt_file_dialogs.py                         | 1 -
- src/calibre/gui2/splash_screen.py                           | 1 -
- src/calibre/gui2/store/__init__.py                          | 1 -
- src/calibre/gui2/store/basic_config.py                      | 1 -
- src/calibre/gui2/store/config/chooser/adv_search_builder.py | 1 -
- src/calibre/gui2/store/config/chooser/chooser_dialog.py     | 1 -
- src/calibre/gui2/store/config/chooser/chooser_widget.py     | 1 -
- src/calibre/gui2/store/config/chooser/models.py             | 1 -
- src/calibre/gui2/store/config/chooser/results_view.py       | 1 -
- src/calibre/gui2/store/config/search/search_widget.py       | 1 -
- src/calibre/gui2/store/config/store.py                      | 1 -
- src/calibre/gui2/store/opensearch_store.py                  | 1 -
- src/calibre/gui2/store/search/adv_search_builder.py         | 1 -
- src/calibre/gui2/store/search/download_thread.py            | 1 -
- src/calibre/gui2/store/search/models.py                     | 1 -
- src/calibre/gui2/store/search/results_view.py               | 1 -
- src/calibre/gui2/store/search/search.py                     | 1 -
- src/calibre/gui2/store/search_result.py                     | 1 -
- src/calibre/gui2/store/web_store.py                         | 1 -
- src/calibre/gui2/store/web_store_dialog.py                  | 1 -
- src/calibre/gui2/tag_mapper.py                              | 1 -
- src/calibre/gui2/toc/main.py                                | 1 -
- src/calibre/gui2/tweak_book/check_links.py                  | 1 -
- src/calibre/gui2/tweak_book/editor/comments.py              | 1 -
- src/calibre/gui2/tweak_book/text_search.py                  | 1 -
- src/calibre/gui2/viewer/annotations.py                      | 1 -
- src/calibre/gui2/viewer/bookmarks.py                        | 1 -
- src/calibre/gui2/viewer/convert_book.py                     | 1 -
- src/calibre/gui2/viewer/lookup.py                           | 1 -
- src/calibre/gui2/viewer/main.py                             | 1 -
- src/calibre/gui2/viewer/mathjax.py                          | 1 -
- src/calibre/gui2/viewer/overlay.py                          | 1 -
- src/calibre/gui2/viewer/shortcuts.py                        | 1 -
- src/calibre/gui2/viewer/toc.py                              | 1 -
- src/calibre/gui2/viewer/toolbars.py                         | 1 -
- src/calibre/gui2/viewer/ui.py                               | 1 -
- src/calibre/gui2/viewer/web_view.py                         | 1 -
- src/calibre/gui2/webengine.py                               | 1 -
- src/calibre/gui2/widgets2.py                                | 1 -
- src/calibre/library/comments.py                             | 1 -
- src/calibre/srv/books.py                                    | 1 -
- src/calibre/srv/cdb.py                                      | 1 -
- src/calibre/srv/code.py                                     | 1 -
- src/calibre/srv/convert.py                                  | 1 -
- src/calibre/srv/legacy.py                                   | 1 -
- src/calibre/srv/library_broker.py                           | 1 -
- src/calibre/srv/render_book.py                              | 1 -
- src/calibre/srv/users_api.py                                | 1 -
- src/calibre/srv/web_socket.py                               | 1 -
- src/calibre/translations/msgfmt.py                          | 1 -
- src/calibre/utils/__init__.py                               | 1 -
- src/calibre/utils/file_type_icons.py                        | 1 -
- src/calibre/utils/fonts/sfnt/merge.py                       | 1 -
- src/calibre/utils/html2text.py                              | 1 -
- src/calibre/utils/network.py                                | 1 -
- src/calibre/utils/opensearch/description.py                 | 1 -
- src/calibre/utils/opensearch/query.py                       | 1 -
- src/calibre/utils/opensearch/url.py                         | 1 -
- src/calibre/utils/random_ua.py                              | 1 -
- src/calibre/utils/search_query_parser_test.py               | 1 -
- src/calibre/utils/smartypants.py                            | 1 -
- src/calibre/utils/speedups.py                               | 1 -
- src/calibre/utils/tdir_in_cache.py                          | 1 -
- src/calibre/utils/test_lock.py                              | 1 -
- src/calibre/utils/text2int.py                               | 1 -
- src/calibre/utils/unicode_names.py                          | 1 -
- src/calibre/utils/unsmarten.py                              | 1 -
- src/calibre/utils/windows/wintest.py                        | 1 -
- src/calibre/utils/wordcount.py                              | 1 -
- src/polyglot/binary.py                                      | 1 -
- src/polyglot/io.py                                          | 1 -
- src/polyglot/urllib.py                                      | 1 -
- src/tinycss/decoding.py                                     | 1 -
- src/tinycss/parsing.py                                      | 2 --
- src/tinycss/token_data.py                                   | 1 -
- src/tinycss/tokenizer.py                                    | 1 -
- 163 files changed, 1 insertion(+), 169 deletions(-)
+ bypy/macos/__main__.py                                      |    4 +---
+ bypy/windows/__main__.py                                    |    1 -
+ manual/plugin_examples/webengine_demo/__init__.py           |    1 -
+ manual/plugin_examples/webengine_demo/main.py               |    1 -
+ setup/browser_data.py                                       |    1 -
+ setup/git_version.py                                        |    1 -
+ setup/install.py                                            |    1 -
+ setup/port.py                                               |    1 -
+ setup/publish.py                                            |    1 -
+ setup/test.py                                               |    1 -
+ setup/unix-ci.py                                            |    1 -
+ setup/win-ci.py                                             |    1 -
+ src/calibre/db/cli/__init__.py                              |    1 -
+ src/calibre/db/cli/cmd_add.py                               |    1 -
+ src/calibre/db/cli/cmd_add_custom_column.py                 |    1 -
+ src/calibre/db/cli/cmd_add_format.py                        |    1 -
+ src/calibre/db/cli/cmd_backup_metadata.py                   |    1 -
+ src/calibre/db/cli/cmd_catalog.py                           |    1 -
+ src/calibre/db/cli/cmd_check_library.py                     |    1 -
+ src/calibre/db/cli/cmd_clone.py                             |    1 -
+ src/calibre/db/cli/cmd_custom_columns.py                    |    1 -
+ src/calibre/db/cli/cmd_embed_metadata.py                    |    1 -
+ src/calibre/db/cli/cmd_export.py                            |    1 -
+ src/calibre/db/cli/cmd_list.py                              |    1 -
+ src/calibre/db/cli/cmd_list_categories.py                   |    1 -
+ src/calibre/db/cli/cmd_remove.py                            |    1 -
+ src/calibre/db/cli/cmd_remove_custom_column.py              |    1 -
+ src/calibre/db/cli/cmd_remove_format.py                     |    1 -
+ src/calibre/db/cli/cmd_restore_database.py                  |    1 -
+ src/calibre/db/cli/cmd_saved_searches.py                    |    1 -
+ src/calibre/db/cli/cmd_search.py                            |    1 -
+ src/calibre/db/cli/cmd_set_custom.py                        |    1 -
+ src/calibre/db/cli/cmd_set_metadata.py                      |    1 -
+ src/calibre/db/cli/cmd_show_metadata.py                     |    1 -
+ src/calibre/db/cli/utils.py                                 |    1 -
+ src/calibre/db/copy_to_library.py                           |    1 -
+ src/calibre/db/restore.py                                   |    1 -
+ src/calibre/devices/cli.py                                  |    1 -
+ src/calibre/devices/kindle/bookmark.py                      |    1 -
+ src/calibre/devices/kobo/__init__.py                        |    1 -
+ src/calibre/devices/smart_device_app/__init__.py            |    1 -
+ src/calibre/devices/usbms/books.py                          |    1 -
+ src/calibre/devices/winusb.py                               |    1 -
+ src/calibre/ebooks/BeautifulSoup.py                         |    1 -
+ src/calibre/ebooks/conversion/plugins/djvu_input.py         |    1 -
+ src/calibre/ebooks/conversion/plugins/htmlz_input.py        |    1 -
+ src/calibre/ebooks/conversion/plugins/htmlz_output.py       |    1 -
+ src/calibre/ebooks/conversion/search_replace.py             |    1 -
+ src/calibre/ebooks/epub/pages.py                            |    1 -
+ src/calibre/ebooks/htmlz/oeb2html.py                        |    1 -
+ src/calibre/ebooks/lrf/pylrs/pylrfopt.py                    |    1 -
+ src/calibre/ebooks/metadata/book/serialize.py               |    2 --
+ src/calibre/ebooks/metadata/kfx.py                          |    1 -
+ src/calibre/ebooks/metadata/opf.py                          |    1 -
+ src/calibre/ebooks/metadata/opf3.py                         |    1 -
+ src/calibre/ebooks/metadata/opf_2_to_3.py                   |    1 -
+ src/calibre/ebooks/metadata/plucker.py                      |    1 -
+ src/calibre/ebooks/metadata/search_internet.py              |    1 -
+ src/calibre/ebooks/metadata/snb.py                          |    1 -
+ src/calibre/ebooks/oeb/polish/download.py                   |    1 -
+ src/calibre/ebooks/oeb/polish/upgrade.py                    |    1 -
+ src/calibre/ebooks/oeb/transforms/unsmarten.py              |    1 -
+ src/calibre/ebooks/pdb/ereader/reader202.py                 |    1 -
+ src/calibre/ebooks/pdb/header.py                            |    1 -
+ src/calibre/ebooks/pdb/plucker/reader.py                    |    1 -
+ src/calibre/ebooks/pdf/develop.py                           |    1 -
+ src/calibre/ebooks/pdf/image_writer.py                      |    1 -
+ src/calibre/ebooks/pdf/test_html_writer.py                  |    1 -
+ src/calibre/ebooks/readability/debug.py                     |    1 -
+ src/calibre/ebooks/render_html.py                           |    1 -
+ src/calibre/gui2/actions/author_mapper.py                   |    1 -
+ src/calibre/gui2/actions/store.py                           |    1 -
+ src/calibre/gui2/actions/virtual_library.py                 |    2 --
+ src/calibre/gui2/add_filters.py                             |    1 -
+ src/calibre/gui2/author_mapper.py                           |    1 -
+ src/calibre/gui2/changes.py                                 |    1 -
+ src/calibre/gui2/convert/single.py                          |    1 -
+ src/calibre/gui2/css_transform_rules.py                     |    1 -
+ src/calibre/gui2/dialogs/choose_plugin_toolbars.py          |    1 -
+ src/calibre/gui2/dialogs/restore_library.py                 |    1 -
+ src/calibre/gui2/dialogs/saved_search_editor.py             |    1 -
+ src/calibre/gui2/ebook_download.py                          |    1 -
+ src/calibre/gui2/layout_menu.py                             |    1 -
+ src/calibre/gui2/pin_columns.py                             |    1 -
+ src/calibre/gui2/preferences/emailp.py                      |    1 -
+ src/calibre/gui2/preferences/tweaks.py                      |    1 -
+ src/calibre/gui2/progress_indicator/__init__.py             |    2 --
+ src/calibre/gui2/qt_file_dialogs.py                         |    1 -
+ src/calibre/gui2/splash_screen.py                           |    1 -
+ src/calibre/gui2/store/__init__.py                          |    1 -
+ src/calibre/gui2/store/basic_config.py                      |    1 -
+ src/calibre/gui2/store/config/chooser/adv_search_builder.py |    1 -
+ src/calibre/gui2/store/config/chooser/chooser_dialog.py     |    1 -
+ src/calibre/gui2/store/config/chooser/chooser_widget.py     |    1 -
+ src/calibre/gui2/store/config/chooser/models.py             |    1 -
+ src/calibre/gui2/store/config/chooser/results_view.py       |    1 -
+ src/calibre/gui2/store/config/search/search_widget.py       |    1 -
+ src/calibre/gui2/store/config/store.py                      |    1 -
+ src/calibre/gui2/store/opensearch_store.py                  |    1 -
+ src/calibre/gui2/store/search/adv_search_builder.py         |    1 -
+ src/calibre/gui2/store/search/download_thread.py            |    1 -
+ src/calibre/gui2/store/search/models.py                     |    1 -
+ src/calibre/gui2/store/search/results_view.py               |    1 -
+ src/calibre/gui2/store/search/search.py                     |    1 -
+ src/calibre/gui2/store/search_result.py                     |    1 -
+ src/calibre/gui2/store/web_store.py                         |    1 -
+ src/calibre/gui2/store/web_store_dialog.py                  |    1 -
+ src/calibre/gui2/tag_mapper.py                              |    1 -
+ src/calibre/gui2/toc/main.py                                |    1 -
+ src/calibre/gui2/tweak_book/check_links.py                  |    1 -
+ src/calibre/gui2/tweak_book/editor/comments.py              |    1 -
+ src/calibre/gui2/tweak_book/text_search.py                  |    1 -
+ src/calibre/gui2/viewer/annotations.py                      |    1 -
+ src/calibre/gui2/viewer/bookmarks.py                        |    1 -
+ src/calibre/gui2/viewer/convert_book.py                     |    1 -
+ src/calibre/gui2/viewer/lookup.py                           |    1 -
+ src/calibre/gui2/viewer/main.py                             |    1 -
+ src/calibre/gui2/viewer/overlay.py                          |    1 -
+ src/calibre/gui2/viewer/shortcuts.py                        |    1 -
+ src/calibre/gui2/viewer/toc.py                              |    1 -
+ src/calibre/gui2/viewer/toolbars.py                         |    1 -
+ src/calibre/gui2/viewer/ui.py                               |    1 -
+ src/calibre/gui2/viewer/web_view.py                         |    1 -
+ src/calibre/gui2/webengine.py                               |    1 -
+ src/calibre/gui2/widgets2.py                                |    1 -
+ src/calibre/library/comments.py                             |    1 -
+ src/calibre/srv/books.py                                    |    1 -
+ src/calibre/srv/cdb.py                                      |    1 -
+ src/calibre/srv/code.py                                     |    1 -
+ src/calibre/srv/convert.py                                  |    1 -
+ src/calibre/srv/legacy.py                                   |    1 -
+ src/calibre/srv/library_broker.py                           |    1 -
+ src/calibre/srv/render_book.py                              |    1 -
+ src/calibre/srv/users_api.py                                |    1 -
+ src/calibre/srv/web_socket.py                               |    1 -
+ src/calibre/translations/msgfmt.py                          |    1 -
+ src/calibre/utils/__init__.py                               |    1 -
+ src/calibre/utils/file_type_icons.py                        |    1 -
+ src/calibre/utils/fonts/sfnt/merge.py                       |    1 -
+ src/calibre/utils/html2text.py                              |    1 -
+ src/calibre/utils/network.py                                |    1 -
+ src/calibre/utils/opensearch/description.py                 |    1 -
+ src/calibre/utils/opensearch/query.py                       |    1 -
+ src/calibre/utils/opensearch/url.py                         |    1 -
+ src/calibre/utils/random_ua.py                              |    1 -
+ src/calibre/utils/search_query_parser_test.py               |    1 -
+ src/calibre/utils/smartypants.py                            |    1 -
+ src/calibre/utils/speedups.py                               |    1 -
+ src/calibre/utils/tdir_in_cache.py                          |    1 -
+ src/calibre/utils/test_lock.py                              |    1 -
+ src/calibre/utils/text2int.py                               |    1 -
+ src/calibre/utils/unicode_names.py                          |    1 -
+ src/calibre/utils/unsmarten.py                              |    1 -
+ src/calibre/utils/windows/wintest.py                        |    1 -
+ src/calibre/utils/wordcount.py                              |    1 -
+ src/polyglot/binary.py                                      |    1 -
+ src/polyglot/io.py                                          |    1 -
+ src/polyglot/urllib.py                                      |    1 -
+ src/tinycss/decoding.py                                     |    1 -
+ src/tinycss/parsing.py                                      |    2 --
+ src/tinycss/token_data.py                                   |    1 -
+ src/tinycss/tokenizer.py                                    |    1 -
+ 162 files changed, 1 insertion(+), 168 deletions(-)
 
-diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
-index 4f8b621b5d..f68d74622e 100644
+Index: b/bypy/macos/__main__.py
+===================================================================
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
 @@ -2,8 +2,6 @@
@@ -191,8 +190,8 @@ index 4f8b621b5d..f68d74622e 100644
                  'crypto.1.0.0', 'ssl.1.0.0', 'iconv.2',  # 'ltdl.7'
          ):
              print('\nAdding', x)
-diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
-index e0032c8670..07cfcfaacc 100644
+Index: b/bypy/windows/__main__.py
+===================================================================
 --- a/bypy/windows/__main__.py
 +++ b/bypy/windows/__main__.py
 @@ -3,7 +3,6 @@
@@ -203,8 +202,8 @@ index e0032c8670..07cfcfaacc 100644
  import errno
  import glob
  import os
-diff --git a/manual/plugin_examples/webengine_demo/__init__.py b/manual/plugin_examples/webengine_demo/__init__.py
-index 1270276351..7d8b4fdcc1 100644
+Index: b/manual/plugin_examples/webengine_demo/__init__.py
+===================================================================
 --- a/manual/plugin_examples/webengine_demo/__init__.py
 +++ b/manual/plugin_examples/webengine_demo/__init__.py
 @@ -3,7 +3,6 @@
@@ -215,8 +214,8 @@ index 1270276351..7d8b4fdcc1 100644
  # The class that all Interface Action plugin wrappers must inherit from
  from calibre.customize import InterfaceActionBase
  
-diff --git a/manual/plugin_examples/webengine_demo/main.py b/manual/plugin_examples/webengine_demo/main.py
-index 42fe1faad7..6a3c85485b 100644
+Index: b/manual/plugin_examples/webengine_demo/main.py
+===================================================================
 --- a/manual/plugin_examples/webengine_demo/main.py
 +++ b/manual/plugin_examples/webengine_demo/main.py
 @@ -3,7 +3,6 @@
@@ -227,8 +226,8 @@ index 42fe1faad7..6a3c85485b 100644
  from PyQt5.Qt import QUrl
  from PyQt5.QtWebEngineWidgets import QWebEngineView
  
-diff --git a/setup/browser_data.py b/setup/browser_data.py
-index 6882649511..7646ea9da2 100644
+Index: b/setup/browser_data.py
+===================================================================
 --- a/setup/browser_data.py
 +++ b/setup/browser_data.py
 @@ -3,7 +3,6 @@
@@ -239,8 +238,8 @@ index 6882649511..7646ea9da2 100644
  import os
  import json
  import gzip
-diff --git a/setup/git_version.py b/setup/git_version.py
-index 787bfd5bee..21ceebfdb7 100755
+Index: b/setup/git_version.py
+===================================================================
 --- a/setup/git_version.py
 +++ b/setup/git_version.py
 @@ -3,7 +3,6 @@
@@ -251,8 +250,8 @@ index 787bfd5bee..21ceebfdb7 100755
  import re
  import subprocess
  
-diff --git a/setup/install.py b/setup/install.py
-index 15f1d47665..72d6a1849a 100644
+Index: b/setup/install.py
+===================================================================
 --- a/setup/install.py
 +++ b/setup/install.py
 @@ -3,7 +3,6 @@
@@ -263,8 +262,8 @@ index 15f1d47665..72d6a1849a 100644
  import atexit
  import glob
  import os
-diff --git a/setup/port.py b/setup/port.py
-index 8ee737d914..80f408cbd0 100644
+Index: b/setup/port.py
+===================================================================
 --- a/setup/port.py
 +++ b/setup/port.py
 @@ -3,7 +3,6 @@
@@ -275,8 +274,8 @@ index 8ee737d914..80f408cbd0 100644
  import errno
  import hashlib
  import json
-diff --git a/setup/publish.py b/setup/publish.py
-index f9b8e381f3..9d8ea0f713 100644
+Index: b/setup/publish.py
+===================================================================
 --- a/setup/publish.py
 +++ b/setup/publish.py
 @@ -2,7 +2,6 @@
@@ -287,8 +286,8 @@ index f9b8e381f3..9d8ea0f713 100644
  __license__ = 'GPL v3'
  __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
-diff --git a/setup/test.py b/setup/test.py
-index d333f2e06c..7f75840df1 100644
+Index: b/setup/test.py
+===================================================================
 --- a/setup/test.py
 +++ b/setup/test.py
 @@ -3,7 +3,6 @@
@@ -299,8 +298,8 @@ index d333f2e06c..7f75840df1 100644
  import os
  import unittest
  
-diff --git a/setup/unix-ci.py b/setup/unix-ci.py
-index 2a10d6e431..381e66cc5c 100644
+Index: b/setup/unix-ci.py
+===================================================================
 --- a/setup/unix-ci.py
 +++ b/setup/unix-ci.py
 @@ -3,7 +3,6 @@
@@ -311,8 +310,8 @@ index 2a10d6e431..381e66cc5c 100644
  import os
  import shlex
  import subprocess
-diff --git a/setup/win-ci.py b/setup/win-ci.py
-index d97f584706..343f132384 100644
+Index: b/setup/win-ci.py
+===================================================================
 --- a/setup/win-ci.py
 +++ b/setup/win-ci.py
 @@ -3,7 +3,6 @@
@@ -323,8 +322,8 @@ index d97f584706..343f132384 100644
  import io
  import os
  import subprocess
-diff --git a/src/calibre/db/cli/__init__.py b/src/calibre/db/cli/__init__.py
-index 45ef2b323c..3a8e513f2e 100644
+Index: b/src/calibre/db/cli/__init__.py
+===================================================================
 --- a/src/calibre/db/cli/__init__.py
 +++ b/src/calibre/db/cli/__init__.py
 @@ -3,7 +3,6 @@
@@ -335,8 +334,8 @@ index 45ef2b323c..3a8e513f2e 100644
  import importlib
  
  
-diff --git a/src/calibre/db/cli/cmd_add.py b/src/calibre/db/cli/cmd_add.py
-index 6c13802b7a..ce95a751a1 100644
+Index: b/src/calibre/db/cli/cmd_add.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_add.py
 +++ b/src/calibre/db/cli/cmd_add.py
 @@ -3,7 +3,6 @@
@@ -347,8 +346,8 @@ index 6c13802b7a..ce95a751a1 100644
  import os
  import sys
  from contextlib import contextmanager
-diff --git a/src/calibre/db/cli/cmd_add_custom_column.py b/src/calibre/db/cli/cmd_add_custom_column.py
-index ca217d8607..a1ce639b9c 100644
+Index: b/src/calibre/db/cli/cmd_add_custom_column.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_add_custom_column.py
 +++ b/src/calibre/db/cli/cmd_add_custom_column.py
 @@ -3,7 +3,6 @@
@@ -359,8 +358,8 @@ index ca217d8607..a1ce639b9c 100644
  import json
  
  from calibre import prints
-diff --git a/src/calibre/db/cli/cmd_add_format.py b/src/calibre/db/cli/cmd_add_format.py
-index 39408b03ee..d0b25254a3 100644
+Index: b/src/calibre/db/cli/cmd_add_format.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_add_format.py
 +++ b/src/calibre/db/cli/cmd_add_format.py
 @@ -3,7 +3,6 @@
@@ -371,8 +370,8 @@ index 39408b03ee..d0b25254a3 100644
  import os
  from io import BytesIO
  
-diff --git a/src/calibre/db/cli/cmd_backup_metadata.py b/src/calibre/db/cli/cmd_backup_metadata.py
-index a961d5bc6e..2edbbd55b4 100644
+Index: b/src/calibre/db/cli/cmd_backup_metadata.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_backup_metadata.py
 +++ b/src/calibre/db/cli/cmd_backup_metadata.py
 @@ -3,7 +3,6 @@
@@ -383,8 +382,8 @@ index a961d5bc6e..2edbbd55b4 100644
  from calibre import prints
  
  readonly = True
-diff --git a/src/calibre/db/cli/cmd_catalog.py b/src/calibre/db/cli/cmd_catalog.py
-index c4b7456681..128ed9e7da 100644
+Index: b/src/calibre/db/cli/cmd_catalog.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_catalog.py
 +++ b/src/calibre/db/cli/cmd_catalog.py
 @@ -3,7 +3,6 @@
@@ -395,8 +394,8 @@ index c4b7456681..128ed9e7da 100644
  import os
  
  from calibre.customize.ui import available_catalog_formats, plugin_for_catalog_format
-diff --git a/src/calibre/db/cli/cmd_check_library.py b/src/calibre/db/cli/cmd_check_library.py
-index 29a08b0755..895870b7e4 100644
+Index: b/src/calibre/db/cli/cmd_check_library.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_check_library.py
 +++ b/src/calibre/db/cli/cmd_check_library.py
 @@ -3,7 +3,6 @@
@@ -407,8 +406,8 @@ index 29a08b0755..895870b7e4 100644
  import csv
  import sys
  
-diff --git a/src/calibre/db/cli/cmd_clone.py b/src/calibre/db/cli/cmd_clone.py
-index 3d66fa5710..f6f5c7c9bd 100644
+Index: b/src/calibre/db/cli/cmd_clone.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_clone.py
 +++ b/src/calibre/db/cli/cmd_clone.py
 @@ -3,7 +3,6 @@
@@ -419,8 +418,8 @@ index 3d66fa5710..f6f5c7c9bd 100644
  import os
  
  from calibre import patheq
-diff --git a/src/calibre/db/cli/cmd_custom_columns.py b/src/calibre/db/cli/cmd_custom_columns.py
-index adeb142028..115b6733fc 100644
+Index: b/src/calibre/db/cli/cmd_custom_columns.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_custom_columns.py
 +++ b/src/calibre/db/cli/cmd_custom_columns.py
 @@ -3,7 +3,6 @@
@@ -431,8 +430,8 @@ index adeb142028..115b6733fc 100644
  from pprint import pformat
  
  from calibre import prints
-diff --git a/src/calibre/db/cli/cmd_embed_metadata.py b/src/calibre/db/cli/cmd_embed_metadata.py
-index fc5378a483..c0aab6378c 100644
+Index: b/src/calibre/db/cli/cmd_embed_metadata.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_embed_metadata.py
 +++ b/src/calibre/db/cli/cmd_embed_metadata.py
 @@ -3,7 +3,6 @@
@@ -443,8 +442,8 @@ index fc5378a483..c0aab6378c 100644
  from calibre import prints
  from calibre.db.cli import integers_from_string
  from calibre.srv.changes import formats_added
-diff --git a/src/calibre/db/cli/cmd_export.py b/src/calibre/db/cli/cmd_export.py
-index b0a778e270..4630291fe5 100644
+Index: b/src/calibre/db/cli/cmd_export.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_export.py
 +++ b/src/calibre/db/cli/cmd_export.py
 @@ -3,7 +3,6 @@
@@ -455,8 +454,8 @@ index b0a778e270..4630291fe5 100644
  import os
  
  from calibre.db.cli import integers_from_string
-diff --git a/src/calibre/db/cli/cmd_list.py b/src/calibre/db/cli/cmd_list.py
-index 79655632c8..1fde960b7a 100644
+Index: b/src/calibre/db/cli/cmd_list.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_list.py
 +++ b/src/calibre/db/cli/cmd_list.py
 @@ -3,7 +3,6 @@
@@ -467,8 +466,8 @@ index 79655632c8..1fde960b7a 100644
  import json
  import os
  import sys
-diff --git a/src/calibre/db/cli/cmd_list_categories.py b/src/calibre/db/cli/cmd_list_categories.py
-index 6ba23754d5..da94ef0fe9 100644
+Index: b/src/calibre/db/cli/cmd_list_categories.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_list_categories.py
 +++ b/src/calibre/db/cli/cmd_list_categories.py
 @@ -3,7 +3,6 @@
@@ -479,8 +478,8 @@ index 6ba23754d5..da94ef0fe9 100644
  import csv
  import sys
  from textwrap import TextWrapper
-diff --git a/src/calibre/db/cli/cmd_remove.py b/src/calibre/db/cli/cmd_remove.py
-index 01daf54b63..f60e8ee031 100644
+Index: b/src/calibre/db/cli/cmd_remove.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_remove.py
 +++ b/src/calibre/db/cli/cmd_remove.py
 @@ -3,7 +3,6 @@
@@ -491,8 +490,8 @@ index 01daf54b63..f60e8ee031 100644
  from calibre.db.cli import integers_from_string
  from calibre.db.delete_service import delete_service
  from calibre.srv.changes import books_deleted
-diff --git a/src/calibre/db/cli/cmd_remove_custom_column.py b/src/calibre/db/cli/cmd_remove_custom_column.py
-index 534ba204f5..dbbf18a7af 100644
+Index: b/src/calibre/db/cli/cmd_remove_custom_column.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_remove_custom_column.py
 +++ b/src/calibre/db/cli/cmd_remove_custom_column.py
 @@ -3,7 +3,6 @@
@@ -503,8 +502,8 @@ index 534ba204f5..dbbf18a7af 100644
  import sys
  from calibre import prints
  from calibre.db.legacy import LibraryDatabase
-diff --git a/src/calibre/db/cli/cmd_remove_format.py b/src/calibre/db/cli/cmd_remove_format.py
-index b360e2f43c..afe75c6b79 100644
+Index: b/src/calibre/db/cli/cmd_remove_format.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_remove_format.py
 +++ b/src/calibre/db/cli/cmd_remove_format.py
 @@ -3,7 +3,6 @@
@@ -515,8 +514,8 @@ index b360e2f43c..afe75c6b79 100644
  from calibre.db.delete_service import delete_service
  from calibre.srv.changes import formats_removed
  
-diff --git a/src/calibre/db/cli/cmd_restore_database.py b/src/calibre/db/cli/cmd_restore_database.py
-index c2d854cc81..a07aa16222 100644
+Index: b/src/calibre/db/cli/cmd_restore_database.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_restore_database.py
 +++ b/src/calibre/db/cli/cmd_restore_database.py
 @@ -3,7 +3,6 @@
@@ -527,8 +526,8 @@ index c2d854cc81..a07aa16222 100644
  from calibre import prints
  from calibre.db.restore import Restore
  
-diff --git a/src/calibre/db/cli/cmd_saved_searches.py b/src/calibre/db/cli/cmd_saved_searches.py
-index b8360f3e38..6008fac18e 100644
+Index: b/src/calibre/db/cli/cmd_saved_searches.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_saved_searches.py
 +++ b/src/calibre/db/cli/cmd_saved_searches.py
 @@ -3,7 +3,6 @@
@@ -539,8 +538,8 @@ index b8360f3e38..6008fac18e 100644
  readonly = False
  version = 0  # change this if you change signature of implementation()
  
-diff --git a/src/calibre/db/cli/cmd_search.py b/src/calibre/db/cli/cmd_search.py
-index 31a46f3630..e386077b9a 100644
+Index: b/src/calibre/db/cli/cmd_search.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_search.py
 +++ b/src/calibre/db/cli/cmd_search.py
 @@ -3,7 +3,6 @@
@@ -551,8 +550,8 @@ index 31a46f3630..e386077b9a 100644
  from calibre import prints
  
  readonly = True
-diff --git a/src/calibre/db/cli/cmd_set_custom.py b/src/calibre/db/cli/cmd_set_custom.py
-index 4c184c4697..b40fb887bf 100644
+Index: b/src/calibre/db/cli/cmd_set_custom.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_set_custom.py
 +++ b/src/calibre/db/cli/cmd_set_custom.py
 @@ -3,7 +3,6 @@
@@ -563,8 +562,8 @@ index 4c184c4697..b40fb887bf 100644
  from calibre import prints
  from calibre.db import _get_series_values
  from calibre.srv.changes import metadata
-diff --git a/src/calibre/db/cli/cmd_set_metadata.py b/src/calibre/db/cli/cmd_set_metadata.py
-index b48f153039..6e90d2d10b 100644
+Index: b/src/calibre/db/cli/cmd_set_metadata.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_set_metadata.py
 +++ b/src/calibre/db/cli/cmd_set_metadata.py
 @@ -3,7 +3,6 @@
@@ -575,8 +574,8 @@ index b48f153039..6e90d2d10b 100644
  import os
  
  from calibre import prints
-diff --git a/src/calibre/db/cli/cmd_show_metadata.py b/src/calibre/db/cli/cmd_show_metadata.py
-index 36177639c8..e9743efd2f 100644
+Index: b/src/calibre/db/cli/cmd_show_metadata.py
+===================================================================
 --- a/src/calibre/db/cli/cmd_show_metadata.py
 +++ b/src/calibre/db/cli/cmd_show_metadata.py
 @@ -3,7 +3,6 @@
@@ -587,8 +586,8 @@ index 36177639c8..e9743efd2f 100644
  import sys
  
  from calibre import prints
-diff --git a/src/calibre/db/cli/utils.py b/src/calibre/db/cli/utils.py
-index 2825a5dff0..175cd7582f 100644
+Index: b/src/calibre/db/cli/utils.py
+===================================================================
 --- a/src/calibre/db/cli/utils.py
 +++ b/src/calibre/db/cli/utils.py
 @@ -3,7 +3,6 @@
@@ -599,8 +598,8 @@ index 2825a5dff0..175cd7582f 100644
  from polyglot.builtins import map
  
  import unicodedata
-diff --git a/src/calibre/db/copy_to_library.py b/src/calibre/db/copy_to_library.py
-index caeb86bc9d..9a9adeaed9 100644
+Index: b/src/calibre/db/copy_to_library.py
+===================================================================
 --- a/src/calibre/db/copy_to_library.py
 +++ b/src/calibre/db/copy_to_library.py
 @@ -3,7 +3,6 @@
@@ -611,8 +610,8 @@ index caeb86bc9d..9a9adeaed9 100644
  from calibre.db.utils import find_identical_books
  from calibre.utils.config import tweaks
  from calibre.utils.date import now
-diff --git a/src/calibre/db/restore.py b/src/calibre/db/restore.py
-index 0840bb0470..d44f220e41 100644
+Index: b/src/calibre/db/restore.py
+===================================================================
 --- a/src/calibre/db/restore.py
 +++ b/src/calibre/db/restore.py
 @@ -2,7 +2,6 @@
@@ -623,8 +622,8 @@ index 0840bb0470..d44f220e41 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/devices/cli.py b/src/calibre/devices/cli.py
-index 1d8b465b5c..20201d4f6d 100755
+Index: b/src/calibre/devices/cli.py
+===================================================================
 --- a/src/calibre/devices/cli.py
 +++ b/src/calibre/devices/cli.py
 @@ -1,7 +1,6 @@
@@ -635,8 +634,8 @@ index 1d8b465b5c..20201d4f6d 100755
  __license__   = 'GPL v3'
  __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
  """
-diff --git a/src/calibre/devices/kindle/bookmark.py b/src/calibre/devices/kindle/bookmark.py
-index 2537906773..5d690f170e 100644
+Index: b/src/calibre/devices/kindle/bookmark.py
+===================================================================
 --- a/src/calibre/devices/kindle/bookmark.py
 +++ b/src/calibre/devices/kindle/bookmark.py
 @@ -1,7 +1,6 @@
@@ -647,8 +646,8 @@ index 2537906773..5d690f170e 100644
  __license__   = 'GPL v3'
  __docformat__ = 'restructuredtext en'
  
-diff --git a/src/calibre/devices/kobo/__init__.py b/src/calibre/devices/kobo/__init__.py
-index b09471af7e..c227aeaca5 100644
+Index: b/src/calibre/devices/kobo/__init__.py
+===================================================================
 --- a/src/calibre/devices/kobo/__init__.py
 +++ b/src/calibre/devices/kobo/__init__.py
 @@ -2,7 +2,6 @@
@@ -659,8 +658,8 @@ index b09471af7e..c227aeaca5 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/devices/smart_device_app/__init__.py b/src/calibre/devices/smart_device_app/__init__.py
-index b09471af7e..c227aeaca5 100644
+Index: b/src/calibre/devices/smart_device_app/__init__.py
+===================================================================
 --- a/src/calibre/devices/smart_device_app/__init__.py
 +++ b/src/calibre/devices/smart_device_app/__init__.py
 @@ -2,7 +2,6 @@
@@ -671,8 +670,8 @@ index b09471af7e..c227aeaca5 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/devices/usbms/books.py b/src/calibre/devices/usbms/books.py
-index 692190c1b6..4f530f38cf 100644
+Index: b/src/calibre/devices/usbms/books.py
+===================================================================
 --- a/src/calibre/devices/usbms/books.py
 +++ b/src/calibre/devices/usbms/books.py
 @@ -1,7 +1,6 @@
@@ -683,8 +682,8 @@ index 692190c1b6..4f530f38cf 100644
  __license__ = 'GPL 3'
  __copyright__ = '2009, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/devices/winusb.py b/src/calibre/devices/winusb.py
-index 207507d323..740b51f924 100644
+Index: b/src/calibre/devices/winusb.py
+===================================================================
 --- a/src/calibre/devices/winusb.py
 +++ b/src/calibre/devices/winusb.py
 @@ -3,7 +3,6 @@
@@ -695,8 +694,8 @@ index 207507d323..740b51f924 100644
  import os, string, re, sys
  from collections import namedtuple, defaultdict
  from operator import itemgetter
-diff --git a/src/calibre/ebooks/BeautifulSoup.py b/src/calibre/ebooks/BeautifulSoup.py
-index ed0a43b4f1..ac445ad6b6 100644
+Index: b/src/calibre/ebooks/BeautifulSoup.py
+===================================================================
 --- a/src/calibre/ebooks/BeautifulSoup.py
 +++ b/src/calibre/ebooks/BeautifulSoup.py
 @@ -3,7 +3,6 @@
@@ -707,8 +706,8 @@ index ed0a43b4f1..ac445ad6b6 100644
  import bs4
  from bs4 import (  # noqa
      CData, Comment, Declaration, NavigableString, ProcessingInstruction,
-diff --git a/src/calibre/ebooks/conversion/plugins/djvu_input.py b/src/calibre/ebooks/conversion/plugins/djvu_input.py
-index d9d22cf6b9..f3f0b132f2 100644
+Index: b/src/calibre/ebooks/conversion/plugins/djvu_input.py
+===================================================================
 --- a/src/calibre/ebooks/conversion/plugins/djvu_input.py
 +++ b/src/calibre/ebooks/conversion/plugins/djvu_input.py
 @@ -1,7 +1,6 @@
@@ -719,8 +718,8 @@ index d9d22cf6b9..f3f0b132f2 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, Anthon van der Neut <anthon@mnt.org>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/conversion/plugins/htmlz_input.py b/src/calibre/ebooks/conversion/plugins/htmlz_input.py
-index 05c6f52faa..b773b925ee 100644
+Index: b/src/calibre/ebooks/conversion/plugins/htmlz_input.py
+===================================================================
 --- a/src/calibre/ebooks/conversion/plugins/htmlz_input.py
 +++ b/src/calibre/ebooks/conversion/plugins/htmlz_input.py
 @@ -1,7 +1,6 @@
@@ -731,8 +730,8 @@ index 05c6f52faa..b773b925ee 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/conversion/plugins/htmlz_output.py b/src/calibre/ebooks/conversion/plugins/htmlz_output.py
-index ee63954dd8..88b9f6b1e8 100644
+Index: b/src/calibre/ebooks/conversion/plugins/htmlz_output.py
+===================================================================
 --- a/src/calibre/ebooks/conversion/plugins/htmlz_output.py
 +++ b/src/calibre/ebooks/conversion/plugins/htmlz_output.py
 @@ -1,7 +1,6 @@
@@ -743,8 +742,8 @@ index ee63954dd8..88b9f6b1e8 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/conversion/search_replace.py b/src/calibre/ebooks/conversion/search_replace.py
-index f7226fa2a2..62d180cc26 100644
+Index: b/src/calibre/ebooks/conversion/search_replace.py
+===================================================================
 --- a/src/calibre/ebooks/conversion/search_replace.py
 +++ b/src/calibre/ebooks/conversion/search_replace.py
 @@ -3,7 +3,6 @@
@@ -755,11 +754,11 @@ index f7226fa2a2..62d180cc26 100644
  import regex
  
  REGEX_FLAGS = regex.VERSION1 | regex.WORD | regex.FULLCASE | regex.MULTILINE | regex.UNICODE
-diff --git a/src/calibre/ebooks/epub/pages.py b/src/calibre/ebooks/epub/pages.py
-index d1eb64d90e..ed824d0a44 100644
+Index: b/src/calibre/ebooks/epub/pages.py
+===================================================================
 --- a/src/calibre/ebooks/epub/pages.py
 +++ b/src/calibre/ebooks/epub/pages.py
-@@ -3,7 +3,6 @@ Add page mapping information to an EPUB book.
+@@ -3,7 +3,6 @@ Add page mapping information to an EPUB
  '''
  
  
@@ -767,8 +766,8 @@ index d1eb64d90e..ed824d0a44 100644
  __license__   = 'GPL v3'
  __copyright__ = '2008, Marshall T. Vandegrift <llasram@gmail.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/htmlz/oeb2html.py b/src/calibre/ebooks/htmlz/oeb2html.py
-index 71bbafc41d..0fcf6a67d4 100644
+Index: b/src/calibre/ebooks/htmlz/oeb2html.py
+===================================================================
 --- a/src/calibre/ebooks/htmlz/oeb2html.py
 +++ b/src/calibre/ebooks/htmlz/oeb2html.py
 @@ -1,7 +1,6 @@
@@ -779,8 +778,8 @@ index 71bbafc41d..0fcf6a67d4 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/lrf/pylrs/pylrfopt.py b/src/calibre/ebooks/lrf/pylrs/pylrfopt.py
-index 1ddf80d556..00167e8c2d 100644
+Index: b/src/calibre/ebooks/lrf/pylrs/pylrfopt.py
+===================================================================
 --- a/src/calibre/ebooks/lrf/pylrs/pylrfopt.py
 +++ b/src/calibre/ebooks/lrf/pylrs/pylrfopt.py
 @@ -1,6 +1,5 @@
@@ -790,8 +789,8 @@ index 1ddf80d556..00167e8c2d 100644
  def _optimize(tagList, tagName, conversion):
      # copy the tag of interest plus any text
      newTagList = []
-diff --git a/src/calibre/ebooks/metadata/book/serialize.py b/src/calibre/ebooks/metadata/book/serialize.py
-index 12a76c18dc..48f54d9fa5 100644
+Index: b/src/calibre/ebooks/metadata/book/serialize.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/book/serialize.py
 +++ b/src/calibre/ebooks/metadata/book/serialize.py
 @@ -3,8 +3,6 @@
@@ -803,8 +802,8 @@ index 12a76c18dc..48f54d9fa5 100644
  from calibre.constants import preferred_encoding
  from calibre.ebooks.metadata.book import SERIALIZABLE_FIELDS
  from calibre.ebooks.metadata.book.base import Metadata
-diff --git a/src/calibre/ebooks/metadata/kfx.py b/src/calibre/ebooks/metadata/kfx.py
-index 7de15265af..4029814071 100644
+Index: b/src/calibre/ebooks/metadata/kfx.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/kfx.py
 +++ b/src/calibre/ebooks/metadata/kfx.py
 @@ -3,7 +3,6 @@
@@ -815,8 +814,8 @@ index 7de15265af..4029814071 100644
  # Based on work of John Howell reversing the KFX format
  # https://www.mobileread.com/forums/showpost.php?p=3176029&postcount=89
  
-diff --git a/src/calibre/ebooks/metadata/opf.py b/src/calibre/ebooks/metadata/opf.py
-index 081af8f140..2d9abdd0ec 100644
+Index: b/src/calibre/ebooks/metadata/opf.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/opf.py
 +++ b/src/calibre/ebooks/metadata/opf.py
 @@ -3,7 +3,6 @@
@@ -827,8 +826,8 @@ index 081af8f140..2d9abdd0ec 100644
  from lxml import etree
  
  from calibre.ebooks.metadata.opf2 import OPF, pretty_print
-diff --git a/src/calibre/ebooks/metadata/opf3.py b/src/calibre/ebooks/metadata/opf3.py
-index e09efb4346..97d87f1d19 100644
+Index: b/src/calibre/ebooks/metadata/opf3.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/opf3.py
 +++ b/src/calibre/ebooks/metadata/opf3.py
 @@ -3,7 +3,6 @@
@@ -839,8 +838,8 @@ index e09efb4346..97d87f1d19 100644
  import json
  import re
  from collections import defaultdict, namedtuple
-diff --git a/src/calibre/ebooks/metadata/opf_2_to_3.py b/src/calibre/ebooks/metadata/opf_2_to_3.py
-index 601effd9f5..5dcf0df419 100644
+Index: b/src/calibre/ebooks/metadata/opf_2_to_3.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/opf_2_to_3.py
 +++ b/src/calibre/ebooks/metadata/opf_2_to_3.py
 @@ -3,7 +3,6 @@
@@ -851,8 +850,8 @@ index 601effd9f5..5dcf0df419 100644
  from lxml import etree
  
  from calibre.ebooks.metadata.opf3 import (
-diff --git a/src/calibre/ebooks/metadata/plucker.py b/src/calibre/ebooks/metadata/plucker.py
-index 3fe3b0e6ff..89deaa40a6 100644
+Index: b/src/calibre/ebooks/metadata/plucker.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/plucker.py
 +++ b/src/calibre/ebooks/metadata/plucker.py
 @@ -1,7 +1,6 @@
@@ -863,8 +862,8 @@ index 3fe3b0e6ff..89deaa40a6 100644
  '''
  Read meta information from Plucker pdb files.
  '''
-diff --git a/src/calibre/ebooks/metadata/search_internet.py b/src/calibre/ebooks/metadata/search_internet.py
-index 6a46b0daf9..0b2d553cd4 100644
+Index: b/src/calibre/ebooks/metadata/search_internet.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/search_internet.py
 +++ b/src/calibre/ebooks/metadata/search_internet.py
 @@ -3,7 +3,6 @@
@@ -875,8 +874,8 @@ index 6a46b0daf9..0b2d553cd4 100644
  from polyglot.builtins import iteritems
  from polyglot.urllib import quote, quote_plus
  
-diff --git a/src/calibre/ebooks/metadata/snb.py b/src/calibre/ebooks/metadata/snb.py
-index fee88a0d3b..b17a689bd2 100644
+Index: b/src/calibre/ebooks/metadata/snb.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/snb.py
 +++ b/src/calibre/ebooks/metadata/snb.py
 @@ -1,7 +1,6 @@
@@ -887,8 +886,8 @@ index fee88a0d3b..b17a689bd2 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Li Fanxi <lifanxi@freemindworld.com>'
  
-diff --git a/src/calibre/ebooks/oeb/polish/download.py b/src/calibre/ebooks/oeb/polish/download.py
-index fa5891fbd1..e2c5627698 100644
+Index: b/src/calibre/ebooks/oeb/polish/download.py
+===================================================================
 --- a/src/calibre/ebooks/oeb/polish/download.py
 +++ b/src/calibre/ebooks/oeb/polish/download.py
 @@ -3,7 +3,6 @@
@@ -899,8 +898,8 @@ index fa5891fbd1..e2c5627698 100644
  import cgi
  import mimetypes
  import os
-diff --git a/src/calibre/ebooks/oeb/polish/upgrade.py b/src/calibre/ebooks/oeb/polish/upgrade.py
-index 0385bed485..e98a8d8471 100644
+Index: b/src/calibre/ebooks/oeb/polish/upgrade.py
+===================================================================
 --- a/src/calibre/ebooks/oeb/polish/upgrade.py
 +++ b/src/calibre/ebooks/oeb/polish/upgrade.py
 @@ -3,7 +3,6 @@
@@ -911,8 +910,8 @@ index 0385bed485..e98a8d8471 100644
  import sys
  
  from calibre.ebooks.metadata.opf_2_to_3 import upgrade_metadata
-diff --git a/src/calibre/ebooks/oeb/transforms/unsmarten.py b/src/calibre/ebooks/oeb/transforms/unsmarten.py
-index e247309df2..ea7d40c846 100644
+Index: b/src/calibre/ebooks/oeb/transforms/unsmarten.py
+===================================================================
 --- a/src/calibre/ebooks/oeb/transforms/unsmarten.py
 +++ b/src/calibre/ebooks/oeb/transforms/unsmarten.py
 @@ -1,7 +1,6 @@
@@ -923,8 +922,8 @@ index e247309df2..ea7d40c846 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/pdb/ereader/reader202.py b/src/calibre/ebooks/pdb/ereader/reader202.py
-index a970d15c8a..63c5f73aa7 100644
+Index: b/src/calibre/ebooks/pdb/ereader/reader202.py
+===================================================================
 --- a/src/calibre/ebooks/pdb/ereader/reader202.py
 +++ b/src/calibre/ebooks/pdb/ereader/reader202.py
 @@ -1,7 +1,6 @@
@@ -935,8 +934,8 @@ index a970d15c8a..63c5f73aa7 100644
  '''
  Read content from ereader pdb file with a 116 and 202 byte header created by Makebook.
  '''
-diff --git a/src/calibre/ebooks/pdb/header.py b/src/calibre/ebooks/pdb/header.py
-index 8194175f95..ab3fb04b30 100644
+Index: b/src/calibre/ebooks/pdb/header.py
+===================================================================
 --- a/src/calibre/ebooks/pdb/header.py
 +++ b/src/calibre/ebooks/pdb/header.py
 @@ -1,7 +1,6 @@
@@ -947,8 +946,8 @@ index 8194175f95..ab3fb04b30 100644
  '''
  Read the header data from a pdb file.
  '''
-diff --git a/src/calibre/ebooks/pdb/plucker/reader.py b/src/calibre/ebooks/pdb/plucker/reader.py
-index b92dd6a8e2..d23e362066 100644
+Index: b/src/calibre/ebooks/pdb/plucker/reader.py
+===================================================================
 --- a/src/calibre/ebooks/pdb/plucker/reader.py
 +++ b/src/calibre/ebooks/pdb/plucker/reader.py
 @@ -1,7 +1,6 @@
@@ -959,8 +958,8 @@ index b92dd6a8e2..d23e362066 100644
  __license__   = 'GPL v3'
  __copyright__ = '20011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/ebooks/pdf/develop.py b/src/calibre/ebooks/pdf/develop.py
-index 67ad81f2c9..eaae643668 100644
+Index: b/src/calibre/ebooks/pdf/develop.py
+===================================================================
 --- a/src/calibre/ebooks/pdf/develop.py
 +++ b/src/calibre/ebooks/pdf/develop.py
 @@ -3,7 +3,6 @@
@@ -971,8 +970,8 @@ index 67ad81f2c9..eaae643668 100644
  import sys
  
  from PyQt5.Qt import QApplication, QUrl, QPageLayout, QPageSize, QMarginsF
-diff --git a/src/calibre/ebooks/pdf/image_writer.py b/src/calibre/ebooks/pdf/image_writer.py
-index 51bb7439c1..5632252672 100644
+Index: b/src/calibre/ebooks/pdf/image_writer.py
+===================================================================
 --- a/src/calibre/ebooks/pdf/image_writer.py
 +++ b/src/calibre/ebooks/pdf/image_writer.py
 @@ -3,7 +3,6 @@
@@ -983,8 +982,8 @@ index 51bb7439c1..5632252672 100644
  from PyQt5.Qt import QMarginsF, QPageLayout, QPageSize, QSize
  
  from calibre.constants import filesystem_encoding
-diff --git a/src/calibre/ebooks/pdf/test_html_writer.py b/src/calibre/ebooks/pdf/test_html_writer.py
-index 4527f0295d..251dd7f5d9 100644
+Index: b/src/calibre/ebooks/pdf/test_html_writer.py
+===================================================================
 --- a/src/calibre/ebooks/pdf/test_html_writer.py
 +++ b/src/calibre/ebooks/pdf/test_html_writer.py
 @@ -3,7 +3,6 @@
@@ -995,8 +994,8 @@ index 4527f0295d..251dd7f5d9 100644
  import unittest
  from .html_writer import merge_w_arrays, merge_cmaps
  
-diff --git a/src/calibre/ebooks/readability/debug.py b/src/calibre/ebooks/readability/debug.py
-index 1a74948ba5..bc51815909 100644
+Index: b/src/calibre/ebooks/readability/debug.py
+===================================================================
 --- a/src/calibre/ebooks/readability/debug.py
 +++ b/src/calibre/ebooks/readability/debug.py
 @@ -1,6 +1,5 @@
@@ -1006,8 +1005,8 @@ index 1a74948ba5..bc51815909 100644
  def save_to_file(text, filename):
      with open(filename, 'wb') as f:
          f.write(b'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />')
-diff --git a/src/calibre/ebooks/render_html.py b/src/calibre/ebooks/render_html.py
-index 4b6858d950..f18eb3caab 100644
+Index: b/src/calibre/ebooks/render_html.py
+===================================================================
 --- a/src/calibre/ebooks/render_html.py
 +++ b/src/calibre/ebooks/render_html.py
 @@ -3,7 +3,6 @@
@@ -1018,8 +1017,8 @@ index 4b6858d950..f18eb3caab 100644
  import os
  import sys
  
-diff --git a/src/calibre/gui2/actions/author_mapper.py b/src/calibre/gui2/actions/author_mapper.py
-index 8fd4c658bf..9e7443f4ea 100644
+Index: b/src/calibre/gui2/actions/author_mapper.py
+===================================================================
 --- a/src/calibre/gui2/actions/author_mapper.py
 +++ b/src/calibre/gui2/actions/author_mapper.py
 @@ -3,7 +3,6 @@
@@ -1030,8 +1029,8 @@ index 8fd4c658bf..9e7443f4ea 100644
  from calibre.gui2 import gprefs
  from calibre.gui2.actions import InterfaceAction
  from polyglot.builtins import iteritems, map, range
-diff --git a/src/calibre/gui2/actions/store.py b/src/calibre/gui2/actions/store.py
-index 5d4681b5e5..a10deba24c 100644
+Index: b/src/calibre/gui2/actions/store.py
+===================================================================
 --- a/src/calibre/gui2/actions/store.py
 +++ b/src/calibre/gui2/actions/store.py
 @@ -1,7 +1,6 @@
@@ -1042,8 +1041,8 @@ index 5d4681b5e5..a10deba24c 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/actions/virtual_library.py b/src/calibre/gui2/actions/virtual_library.py
-index c17b08b49e..517cbf70a2 100644
+Index: b/src/calibre/gui2/actions/virtual_library.py
+===================================================================
 --- a/src/calibre/gui2/actions/virtual_library.py
 +++ b/src/calibre/gui2/actions/virtual_library.py
 @@ -2,8 +2,6 @@
@@ -1055,8 +1054,8 @@ index c17b08b49e..517cbf70a2 100644
  from PyQt5.Qt import QToolButton, QAction
  
  from calibre.gui2.actions import InterfaceAction
-diff --git a/src/calibre/gui2/add_filters.py b/src/calibre/gui2/add_filters.py
-index 06bbea5e42..9be6a323b7 100644
+Index: b/src/calibre/gui2/add_filters.py
+===================================================================
 --- a/src/calibre/gui2/add_filters.py
 +++ b/src/calibre/gui2/add_filters.py
 @@ -3,7 +3,6 @@
@@ -1067,8 +1066,8 @@ index 06bbea5e42..9be6a323b7 100644
  from collections import OrderedDict
  from polyglot.builtins import map, unicode_type
  
-diff --git a/src/calibre/gui2/author_mapper.py b/src/calibre/gui2/author_mapper.py
-index 0d5a436814..322cc415b3 100644
+Index: b/src/calibre/gui2/author_mapper.py
+===================================================================
 --- a/src/calibre/gui2/author_mapper.py
 +++ b/src/calibre/gui2/author_mapper.py
 @@ -3,7 +3,6 @@
@@ -1079,8 +1078,8 @@ index 0d5a436814..322cc415b3 100644
  from collections import OrderedDict
  
  from calibre.ebooks.metadata import authors_to_string, string_to_authors
-diff --git a/src/calibre/gui2/changes.py b/src/calibre/gui2/changes.py
-index 6a49327eda..29f05f8800 100644
+Index: b/src/calibre/gui2/changes.py
+===================================================================
 --- a/src/calibre/gui2/changes.py
 +++ b/src/calibre/gui2/changes.py
 @@ -3,7 +3,6 @@
@@ -1091,8 +1090,8 @@ index 6a49327eda..29f05f8800 100644
  from calibre.srv.changes import (
      BooksAdded, BooksDeleted, FormatsAdded, FormatsRemoved, MetadataChanged,
      SavedSearchesChanged
-diff --git a/src/calibre/gui2/convert/single.py b/src/calibre/gui2/convert/single.py
-index 6d0d5240a6..bba385a0b9 100644
+Index: b/src/calibre/gui2/convert/single.py
+===================================================================
 --- a/src/calibre/gui2/convert/single.py
 +++ b/src/calibre/gui2/convert/single.py
 @@ -3,7 +3,6 @@
@@ -1103,8 +1102,8 @@ index 6d0d5240a6..bba385a0b9 100644
  import shutil
  
  from PyQt5.Qt import (
-diff --git a/src/calibre/gui2/css_transform_rules.py b/src/calibre/gui2/css_transform_rules.py
-index 1c461422cd..7ea9923371 100644
+Index: b/src/calibre/gui2/css_transform_rules.py
+===================================================================
 --- a/src/calibre/gui2/css_transform_rules.py
 +++ b/src/calibre/gui2/css_transform_rules.py
 @@ -3,7 +3,6 @@
@@ -1115,8 +1114,8 @@ index 1c461422cd..7ea9923371 100644
  from PyQt5.Qt import (
      QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QLineEdit,
      QPushButton, QSize, pyqtSignal, QMenu
-diff --git a/src/calibre/gui2/dialogs/choose_plugin_toolbars.py b/src/calibre/gui2/dialogs/choose_plugin_toolbars.py
-index 12dea16a91..f9f49407d7 100644
+Index: b/src/calibre/gui2/dialogs/choose_plugin_toolbars.py
+===================================================================
 --- a/src/calibre/gui2/dialogs/choose_plugin_toolbars.py
 +++ b/src/calibre/gui2/dialogs/choose_plugin_toolbars.py
 @@ -2,7 +2,6 @@
@@ -1127,8 +1126,8 @@ index 12dea16a91..f9f49407d7 100644
  __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
  __docformat__ = 'restructuredtext en'
  __license__   = 'GPL v3'
-diff --git a/src/calibre/gui2/dialogs/restore_library.py b/src/calibre/gui2/dialogs/restore_library.py
-index f4353fe4a2..52a6d8ecd9 100644
+Index: b/src/calibre/gui2/dialogs/restore_library.py
+===================================================================
 --- a/src/calibre/gui2/dialogs/restore_library.py
 +++ b/src/calibre/gui2/dialogs/restore_library.py
 @@ -3,7 +3,6 @@
@@ -1139,8 +1138,8 @@ index f4353fe4a2..52a6d8ecd9 100644
  from PyQt5.Qt import (QDialog, QLabel, QVBoxLayout, QDialogButtonBox,
          QProgressBar, QSize, QTimer, pyqtSignal, Qt)
  
-diff --git a/src/calibre/gui2/dialogs/saved_search_editor.py b/src/calibre/gui2/dialogs/saved_search_editor.py
-index 9f02e773ac..ec482d47f4 100644
+Index: b/src/calibre/gui2/dialogs/saved_search_editor.py
+===================================================================
 --- a/src/calibre/gui2/dialogs/saved_search_editor.py
 +++ b/src/calibre/gui2/dialogs/saved_search_editor.py
 @@ -3,7 +3,6 @@
@@ -1151,8 +1150,8 @@ index 9f02e773ac..ec482d47f4 100644
  from PyQt5.Qt import (
      QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, Qt, QVBoxLayout
  )
-diff --git a/src/calibre/gui2/ebook_download.py b/src/calibre/gui2/ebook_download.py
-index eb6acc31af..c0a23b8fd1 100644
+Index: b/src/calibre/gui2/ebook_download.py
+===================================================================
 --- a/src/calibre/gui2/ebook_download.py
 +++ b/src/calibre/gui2/ebook_download.py
 @@ -1,7 +1,6 @@
@@ -1163,8 +1162,8 @@ index eb6acc31af..c0a23b8fd1 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/layout_menu.py b/src/calibre/gui2/layout_menu.py
-index c0319384b6..03f43e5ac8 100644
+Index: b/src/calibre/gui2/layout_menu.py
+===================================================================
 --- a/src/calibre/gui2/layout_menu.py
 +++ b/src/calibre/gui2/layout_menu.py
 @@ -3,7 +3,6 @@
@@ -1175,8 +1174,8 @@ index c0319384b6..03f43e5ac8 100644
  from PyQt5.Qt import (
      QFontMetrics, QHBoxLayout, QIcon, QMenu, QPainter, QPushButton, QSize,
      QSizePolicy, Qt, QWidget, QStyleOption, QStyle)
-diff --git a/src/calibre/gui2/pin_columns.py b/src/calibre/gui2/pin_columns.py
-index 33e11d599e..579c88fce0 100644
+Index: b/src/calibre/gui2/pin_columns.py
+===================================================================
 --- a/src/calibre/gui2/pin_columns.py
 +++ b/src/calibre/gui2/pin_columns.py
 @@ -3,7 +3,6 @@
@@ -1187,8 +1186,8 @@ index 33e11d599e..579c88fce0 100644
  from PyQt5.Qt import QSplitter, QTableView
  
  from calibre.gui2.library import DEFAULT_SORT
-diff --git a/src/calibre/gui2/preferences/emailp.py b/src/calibre/gui2/preferences/emailp.py
-index c38e884025..f8f3958745 100644
+Index: b/src/calibre/gui2/preferences/emailp.py
+===================================================================
 --- a/src/calibre/gui2/preferences/emailp.py
 +++ b/src/calibre/gui2/preferences/emailp.py
 @@ -3,7 +3,6 @@
@@ -1199,8 +1198,8 @@ index c38e884025..f8f3958745 100644
  import re
  import textwrap
  
-diff --git a/src/calibre/gui2/preferences/tweaks.py b/src/calibre/gui2/preferences/tweaks.py
-index 7ac430b014..cb8dc7afdb 100644
+Index: b/src/calibre/gui2/preferences/tweaks.py
+===================================================================
 --- a/src/calibre/gui2/preferences/tweaks.py
 +++ b/src/calibre/gui2/preferences/tweaks.py
 @@ -3,7 +3,6 @@
@@ -1211,8 +1210,8 @@ index 7ac430b014..cb8dc7afdb 100644
  import textwrap
  from collections import OrderedDict
  from functools import partial
-diff --git a/src/calibre/gui2/progress_indicator/__init__.py b/src/calibre/gui2/progress_indicator/__init__.py
-index 6d9fc45e9d..87d86cb183 100644
+Index: b/src/calibre/gui2/progress_indicator/__init__.py
+===================================================================
 --- a/src/calibre/gui2/progress_indicator/__init__.py
 +++ b/src/calibre/gui2/progress_indicator/__init__.py
 @@ -2,8 +2,6 @@
@@ -1224,8 +1223,8 @@ index 6d9fc45e9d..87d86cb183 100644
  from PyQt5.Qt import (
      QDialog, QLabel, QSizePolicy, QStackedLayout, QStackedWidget, Qt, QVBoxLayout,
      QWidget
-diff --git a/src/calibre/gui2/qt_file_dialogs.py b/src/calibre/gui2/qt_file_dialogs.py
-index 635e3631c5..696fb65235 100644
+Index: b/src/calibre/gui2/qt_file_dialogs.py
+===================================================================
 --- a/src/calibre/gui2/qt_file_dialogs.py
 +++ b/src/calibre/gui2/qt_file_dialogs.py
 @@ -3,7 +3,6 @@
@@ -1236,8 +1235,8 @@ index 635e3631c5..696fb65235 100644
  import os
  
  from PyQt5.Qt import QFileDialog, QObject
-diff --git a/src/calibre/gui2/splash_screen.py b/src/calibre/gui2/splash_screen.py
-index 580565c6eb..bd5c3d4714 100644
+Index: b/src/calibre/gui2/splash_screen.py
+===================================================================
 --- a/src/calibre/gui2/splash_screen.py
 +++ b/src/calibre/gui2/splash_screen.py
 @@ -3,7 +3,6 @@
@@ -1248,8 +1247,8 @@ index 580565c6eb..bd5c3d4714 100644
  from PyQt5.Qt import (
      QApplication, QBrush, QColor, QFont, QFontMetrics, QPen, QPixmap, QSplashScreen,
      Qt
-diff --git a/src/calibre/gui2/store/__init__.py b/src/calibre/gui2/store/__init__.py
-index 61facb0f18..7e85033c43 100644
+Index: b/src/calibre/gui2/store/__init__.py
+===================================================================
 --- a/src/calibre/gui2/store/__init__.py
 +++ b/src/calibre/gui2/store/__init__.py
 @@ -1,7 +1,6 @@
@@ -1260,8 +1259,8 @@ index 61facb0f18..7e85033c43 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/basic_config.py b/src/calibre/gui2/store/basic_config.py
-index 089380c7ba..85a9818db7 100644
+Index: b/src/calibre/gui2/store/basic_config.py
+===================================================================
 --- a/src/calibre/gui2/store/basic_config.py
 +++ b/src/calibre/gui2/store/basic_config.py
 @@ -1,7 +1,6 @@
@@ -1272,8 +1271,8 @@ index 089380c7ba..85a9818db7 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/chooser/adv_search_builder.py b/src/calibre/gui2/store/config/chooser/adv_search_builder.py
-index 575f40b280..61d8003fa3 100644
+Index: b/src/calibre/gui2/store/config/chooser/adv_search_builder.py
+===================================================================
 --- a/src/calibre/gui2/store/config/chooser/adv_search_builder.py
 +++ b/src/calibre/gui2/store/config/chooser/adv_search_builder.py
 @@ -1,7 +1,6 @@
@@ -1284,8 +1283,8 @@ index 575f40b280..61d8003fa3 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/chooser/chooser_dialog.py b/src/calibre/gui2/store/config/chooser/chooser_dialog.py
-index 502f70ec70..dd6576e243 100644
+Index: b/src/calibre/gui2/store/config/chooser/chooser_dialog.py
+===================================================================
 --- a/src/calibre/gui2/store/config/chooser/chooser_dialog.py
 +++ b/src/calibre/gui2/store/config/chooser/chooser_dialog.py
 @@ -1,7 +1,6 @@
@@ -1296,8 +1295,8 @@ index 502f70ec70..dd6576e243 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/chooser/chooser_widget.py b/src/calibre/gui2/store/config/chooser/chooser_widget.py
-index 3ad9c64c14..177ed244d8 100644
+Index: b/src/calibre/gui2/store/config/chooser/chooser_widget.py
+===================================================================
 --- a/src/calibre/gui2/store/config/chooser/chooser_widget.py
 +++ b/src/calibre/gui2/store/config/chooser/chooser_widget.py
 @@ -1,7 +1,6 @@
@@ -1308,8 +1307,8 @@ index 3ad9c64c14..177ed244d8 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/chooser/models.py b/src/calibre/gui2/store/config/chooser/models.py
-index 73dd26cc51..e9f9ef5bb4 100644
+Index: b/src/calibre/gui2/store/config/chooser/models.py
+===================================================================
 --- a/src/calibre/gui2/store/config/chooser/models.py
 +++ b/src/calibre/gui2/store/config/chooser/models.py
 @@ -1,7 +1,6 @@
@@ -1320,8 +1319,8 @@ index 73dd26cc51..e9f9ef5bb4 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/chooser/results_view.py b/src/calibre/gui2/store/config/chooser/results_view.py
-index 991529f022..3c1a8732a7 100644
+Index: b/src/calibre/gui2/store/config/chooser/results_view.py
+===================================================================
 --- a/src/calibre/gui2/store/config/chooser/results_view.py
 +++ b/src/calibre/gui2/store/config/chooser/results_view.py
 @@ -1,7 +1,6 @@
@@ -1332,8 +1331,8 @@ index 991529f022..3c1a8732a7 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/search/search_widget.py b/src/calibre/gui2/store/config/search/search_widget.py
-index ec2e29a288..aeb0839b10 100644
+Index: b/src/calibre/gui2/store/config/search/search_widget.py
+===================================================================
 --- a/src/calibre/gui2/store/config/search/search_widget.py
 +++ b/src/calibre/gui2/store/config/search/search_widget.py
 @@ -1,7 +1,6 @@
@@ -1344,8 +1343,8 @@ index ec2e29a288..aeb0839b10 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/config/store.py b/src/calibre/gui2/store/config/store.py
-index de0fbff74c..d1f9dc8bfa 100644
+Index: b/src/calibre/gui2/store/config/store.py
+===================================================================
 --- a/src/calibre/gui2/store/config/store.py
 +++ b/src/calibre/gui2/store/config/store.py
 @@ -1,7 +1,6 @@
@@ -1356,8 +1355,8 @@ index de0fbff74c..d1f9dc8bfa 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/opensearch_store.py b/src/calibre/gui2/store/opensearch_store.py
-index 745607776a..67447b5e81 100644
+Index: b/src/calibre/gui2/store/opensearch_store.py
+===================================================================
 --- a/src/calibre/gui2/store/opensearch_store.py
 +++ b/src/calibre/gui2/store/opensearch_store.py
 @@ -1,7 +1,6 @@
@@ -1368,8 +1367,8 @@ index 745607776a..67447b5e81 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search/adv_search_builder.py b/src/calibre/gui2/store/search/adv_search_builder.py
-index 7c5c7e9a43..decbed987d 100644
+Index: b/src/calibre/gui2/store/search/adv_search_builder.py
+===================================================================
 --- a/src/calibre/gui2/store/search/adv_search_builder.py
 +++ b/src/calibre/gui2/store/search/adv_search_builder.py
 @@ -1,7 +1,6 @@
@@ -1380,8 +1379,8 @@ index 7c5c7e9a43..decbed987d 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search/download_thread.py b/src/calibre/gui2/store/search/download_thread.py
-index 075a29c57d..5ae0c9671c 100644
+Index: b/src/calibre/gui2/store/search/download_thread.py
+===================================================================
 --- a/src/calibre/gui2/store/search/download_thread.py
 +++ b/src/calibre/gui2/store/search/download_thread.py
 @@ -1,7 +1,6 @@
@@ -1392,8 +1391,8 @@ index 075a29c57d..5ae0c9671c 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search/models.py b/src/calibre/gui2/store/search/models.py
-index e03b21cef7..ab87877f92 100644
+Index: b/src/calibre/gui2/store/search/models.py
+===================================================================
 --- a/src/calibre/gui2/store/search/models.py
 +++ b/src/calibre/gui2/store/search/models.py
 @@ -1,7 +1,6 @@
@@ -1404,8 +1403,8 @@ index e03b21cef7..ab87877f92 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search/results_view.py b/src/calibre/gui2/store/search/results_view.py
-index 514c4f3c86..0bed9cee29 100644
+Index: b/src/calibre/gui2/store/search/results_view.py
+===================================================================
 --- a/src/calibre/gui2/store/search/results_view.py
 +++ b/src/calibre/gui2/store/search/results_view.py
 @@ -1,7 +1,6 @@
@@ -1416,8 +1415,8 @@ index 514c4f3c86..0bed9cee29 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search/search.py b/src/calibre/gui2/store/search/search.py
-index 4be78798f3..1596046840 100644
+Index: b/src/calibre/gui2/store/search/search.py
+===================================================================
 --- a/src/calibre/gui2/store/search/search.py
 +++ b/src/calibre/gui2/store/search/search.py
 @@ -1,7 +1,6 @@
@@ -1428,8 +1427,8 @@ index 4be78798f3..1596046840 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/search_result.py b/src/calibre/gui2/store/search_result.py
-index c050e8605c..68c4ce30d8 100644
+Index: b/src/calibre/gui2/store/search_result.py
+===================================================================
 --- a/src/calibre/gui2/store/search_result.py
 +++ b/src/calibre/gui2/store/search_result.py
 @@ -1,7 +1,6 @@
@@ -1440,8 +1439,8 @@ index c050e8605c..68c4ce30d8 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/gui2/store/web_store.py b/src/calibre/gui2/store/web_store.py
-index 9524615fc6..e64be72b21 100644
+Index: b/src/calibre/gui2/store/web_store.py
+===================================================================
 --- a/src/calibre/gui2/store/web_store.py
 +++ b/src/calibre/gui2/store/web_store.py
 @@ -3,7 +3,6 @@
@@ -1452,8 +1451,8 @@ index 9524615fc6..e64be72b21 100644
  import json
  import os
  import shutil
-diff --git a/src/calibre/gui2/store/web_store_dialog.py b/src/calibre/gui2/store/web_store_dialog.py
-index 3f8f17ea8f..1f9726108c 100644
+Index: b/src/calibre/gui2/store/web_store_dialog.py
+===================================================================
 --- a/src/calibre/gui2/store/web_store_dialog.py
 +++ b/src/calibre/gui2/store/web_store_dialog.py
 @@ -3,7 +3,6 @@
@@ -1464,8 +1463,8 @@ index 3f8f17ea8f..1f9726108c 100644
  import json
  from base64 import standard_b64encode
  from itertools import count
-diff --git a/src/calibre/gui2/tag_mapper.py b/src/calibre/gui2/tag_mapper.py
-index 12c84d4011..b3bba22afc 100644
+Index: b/src/calibre/gui2/tag_mapper.py
+===================================================================
 --- a/src/calibre/gui2/tag_mapper.py
 +++ b/src/calibre/gui2/tag_mapper.py
 @@ -3,7 +3,6 @@
@@ -1476,8 +1475,8 @@ index 12c84d4011..b3bba22afc 100644
  from collections import OrderedDict
  import textwrap
  
-diff --git a/src/calibre/gui2/toc/main.py b/src/calibre/gui2/toc/main.py
-index f9bf0e73f3..b2c0e37ff9 100644
+Index: b/src/calibre/gui2/toc/main.py
+===================================================================
 --- a/src/calibre/gui2/toc/main.py
 +++ b/src/calibre/gui2/toc/main.py
 @@ -3,7 +3,6 @@
@@ -1488,8 +1487,8 @@ index f9bf0e73f3..b2c0e37ff9 100644
  import os
  import sys
  import textwrap
-diff --git a/src/calibre/gui2/tweak_book/check_links.py b/src/calibre/gui2/tweak_book/check_links.py
-index 750c4eacac..eefa367c39 100644
+Index: b/src/calibre/gui2/tweak_book/check_links.py
+===================================================================
 --- a/src/calibre/gui2/tweak_book/check_links.py
 +++ b/src/calibre/gui2/tweak_book/check_links.py
 @@ -3,7 +3,6 @@
@@ -1500,8 +1499,8 @@ index 750c4eacac..eefa367c39 100644
  from collections import defaultdict
  from threading import Thread
  
-diff --git a/src/calibre/gui2/tweak_book/editor/comments.py b/src/calibre/gui2/tweak_book/editor/comments.py
-index 985ecf1faa..f6460938c3 100644
+Index: b/src/calibre/gui2/tweak_book/editor/comments.py
+===================================================================
 --- a/src/calibre/gui2/tweak_book/editor/comments.py
 +++ b/src/calibre/gui2/tweak_book/editor/comments.py
 @@ -3,7 +3,6 @@
@@ -1512,8 +1511,8 @@ index 985ecf1faa..f6460938c3 100644
  from PyQt5.Qt import QTextCursor
  
  opening_map = {
-diff --git a/src/calibre/gui2/tweak_book/text_search.py b/src/calibre/gui2/tweak_book/text_search.py
-index 93eb3fd294..e63f42a813 100644
+Index: b/src/calibre/gui2/tweak_book/text_search.py
+===================================================================
 --- a/src/calibre/gui2/tweak_book/text_search.py
 +++ b/src/calibre/gui2/tweak_book/text_search.py
 @@ -3,7 +3,6 @@
@@ -1524,8 +1523,8 @@ index 93eb3fd294..e63f42a813 100644
  from PyQt5.Qt import (
      QWidget, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QPushButton, QIcon,
      pyqtSignal, QFont, QCheckBox, QSizePolicy
-diff --git a/src/calibre/gui2/viewer/annotations.py b/src/calibre/gui2/viewer/annotations.py
-index f46819a5c0..1a6bfc306a 100644
+Index: b/src/calibre/gui2/viewer/annotations.py
+===================================================================
 --- a/src/calibre/gui2/viewer/annotations.py
 +++ b/src/calibre/gui2/viewer/annotations.py
 @@ -3,7 +3,6 @@
@@ -1536,8 +1535,8 @@ index f46819a5c0..1a6bfc306a 100644
  from collections import defaultdict
  from io import BytesIO
  from operator import itemgetter
-diff --git a/src/calibre/gui2/viewer/bookmarks.py b/src/calibre/gui2/viewer/bookmarks.py
-index b5187362e4..9941152dc5 100644
+Index: b/src/calibre/gui2/viewer/bookmarks.py
+===================================================================
 --- a/src/calibre/gui2/viewer/bookmarks.py
 +++ b/src/calibre/gui2/viewer/bookmarks.py
 @@ -3,7 +3,6 @@
@@ -1548,8 +1547,8 @@ index b5187362e4..9941152dc5 100644
  import json
  
  from PyQt5.Qt import (
-diff --git a/src/calibre/gui2/viewer/convert_book.py b/src/calibre/gui2/viewer/convert_book.py
-index 7c043908cf..362075b095 100644
+Index: b/src/calibre/gui2/viewer/convert_book.py
+===================================================================
 --- a/src/calibre/gui2/viewer/convert_book.py
 +++ b/src/calibre/gui2/viewer/convert_book.py
 @@ -3,7 +3,6 @@
@@ -1560,8 +1559,8 @@ index 7c043908cf..362075b095 100644
  import errno
  import json
  import os
-diff --git a/src/calibre/gui2/viewer/lookup.py b/src/calibre/gui2/viewer/lookup.py
-index 2c614b9480..0cf65dfb6d 100644
+Index: b/src/calibre/gui2/viewer/lookup.py
+===================================================================
 --- a/src/calibre/gui2/viewer/lookup.py
 +++ b/src/calibre/gui2/viewer/lookup.py
 @@ -3,7 +3,6 @@
@@ -1572,8 +1571,8 @@ index 2c614b9480..0cf65dfb6d 100644
  import os
  import sys
  
-diff --git a/src/calibre/gui2/viewer/main.py b/src/calibre/gui2/viewer/main.py
-index 745c698907..a37270a410 100644
+Index: b/src/calibre/gui2/viewer/main.py
+===================================================================
 --- a/src/calibre/gui2/viewer/main.py
 +++ b/src/calibre/gui2/viewer/main.py
 @@ -3,7 +3,6 @@
@@ -1584,20 +1583,8 @@ index 745c698907..a37270a410 100644
  import os
  import sys
  from threading import Thread
-diff --git a/src/calibre/gui2/viewer/mathjax.py b/src/calibre/gui2/viewer/mathjax.py
-index 9571afa4d4..1ae34d4ff5 100644
---- a/src/calibre/gui2/viewer/mathjax.py
-+++ b/src/calibre/gui2/viewer/mathjax.py
-@@ -3,7 +3,6 @@
- # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
- 
- 
--
- PATCHED_MATHJAX = '''
- 
- function postprocess_mathjax(link_uid) {
-diff --git a/src/calibre/gui2/viewer/overlay.py b/src/calibre/gui2/viewer/overlay.py
-index 9b6e105507..a02dc448e4 100644
+Index: b/src/calibre/gui2/viewer/overlay.py
+===================================================================
 --- a/src/calibre/gui2/viewer/overlay.py
 +++ b/src/calibre/gui2/viewer/overlay.py
 @@ -3,7 +3,6 @@
@@ -1608,8 +1595,8 @@ index 9b6e105507..a02dc448e4 100644
  from PyQt5.Qt import QWidget, Qt, QFontInfo, QLabel, QVBoxLayout
  
  from calibre.gui2.progress_indicator import ProgressIndicator
-diff --git a/src/calibre/gui2/viewer/shortcuts.py b/src/calibre/gui2/viewer/shortcuts.py
-index c05a1acb20..7063cd6312 100644
+Index: b/src/calibre/gui2/viewer/shortcuts.py
+===================================================================
 --- a/src/calibre/gui2/viewer/shortcuts.py
 +++ b/src/calibre/gui2/viewer/shortcuts.py
 @@ -3,7 +3,6 @@
@@ -1620,8 +1607,8 @@ index c05a1acb20..7063cd6312 100644
  from PyQt5.Qt import QKeySequence, QMainWindow, Qt
  
  
-diff --git a/src/calibre/gui2/viewer/toc.py b/src/calibre/gui2/viewer/toc.py
-index fe5a190c36..9fdeee69b4 100644
+Index: b/src/calibre/gui2/viewer/toc.py
+===================================================================
 --- a/src/calibre/gui2/viewer/toc.py
 +++ b/src/calibre/gui2/viewer/toc.py
 @@ -3,7 +3,6 @@
@@ -1632,8 +1619,8 @@ index fe5a190c36..9fdeee69b4 100644
  import re
  from functools import partial
  
-diff --git a/src/calibre/gui2/viewer/toolbars.py b/src/calibre/gui2/viewer/toolbars.py
-index d5633805fb..bbc3964652 100644
+Index: b/src/calibre/gui2/viewer/toolbars.py
+===================================================================
 --- a/src/calibre/gui2/viewer/toolbars.py
 +++ b/src/calibre/gui2/viewer/toolbars.py
 @@ -3,7 +3,6 @@
@@ -1644,8 +1631,8 @@ index d5633805fb..bbc3964652 100644
  import os
  from functools import partial
  
-diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
-index f3b3ec8db9..22933f48ef 100644
+Index: b/src/calibre/gui2/viewer/ui.py
+===================================================================
 --- a/src/calibre/gui2/viewer/ui.py
 +++ b/src/calibre/gui2/viewer/ui.py
 @@ -3,7 +3,6 @@
@@ -1656,8 +1643,8 @@ index f3b3ec8db9..22933f48ef 100644
  import json
  import os
  import re
-diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
-index ad3f257867..b7e601cbab 100644
+Index: b/src/calibre/gui2/viewer/web_view.py
+===================================================================
 --- a/src/calibre/gui2/viewer/web_view.py
 +++ b/src/calibre/gui2/viewer/web_view.py
 @@ -3,7 +3,6 @@
@@ -1668,8 +1655,8 @@ index ad3f257867..b7e601cbab 100644
  import os
  import shutil
  import sys
-diff --git a/src/calibre/gui2/webengine.py b/src/calibre/gui2/webengine.py
-index 939ce93fb5..709f1a17fe 100644
+Index: b/src/calibre/gui2/webengine.py
+===================================================================
 --- a/src/calibre/gui2/webengine.py
 +++ b/src/calibre/gui2/webengine.py
 @@ -3,7 +3,6 @@
@@ -1680,8 +1667,8 @@ index 939ce93fb5..709f1a17fe 100644
  import json
  
  from PyQt5.Qt import QObject, Qt, pyqtSignal
-diff --git a/src/calibre/gui2/widgets2.py b/src/calibre/gui2/widgets2.py
-index 257fb24d6c..67bf9754ae 100644
+Index: b/src/calibre/gui2/widgets2.py
+===================================================================
 --- a/src/calibre/gui2/widgets2.py
 +++ b/src/calibre/gui2/widgets2.py
 @@ -3,7 +3,6 @@
@@ -1692,8 +1679,8 @@ index 257fb24d6c..67bf9754ae 100644
  import weakref
  
  from PyQt5.Qt import (
-diff --git a/src/calibre/library/comments.py b/src/calibre/library/comments.py
-index 1fefa181b2..f98008147b 100644
+Index: b/src/calibre/library/comments.py
+===================================================================
 --- a/src/calibre/library/comments.py
 +++ b/src/calibre/library/comments.py
 @@ -3,7 +3,6 @@
@@ -1704,8 +1691,8 @@ index 1fefa181b2..f98008147b 100644
  import re
  
  from calibre import prepare_string_for_xml
-diff --git a/src/calibre/srv/books.py b/src/calibre/srv/books.py
-index 8fbeb36a84..36f8aad7bb 100644
+Index: b/src/calibre/srv/books.py
+===================================================================
 --- a/src/calibre/srv/books.py
 +++ b/src/calibre/srv/books.py
 @@ -3,7 +3,6 @@
@@ -1716,8 +1703,8 @@ index 8fbeb36a84..36f8aad7bb 100644
  import errno
  import json as jsonlib
  import os
-diff --git a/src/calibre/srv/cdb.py b/src/calibre/srv/cdb.py
-index c5756af1ba..333a31d096 100644
+Index: b/src/calibre/srv/cdb.py
+===================================================================
 --- a/src/calibre/srv/cdb.py
 +++ b/src/calibre/srv/cdb.py
 @@ -3,7 +3,6 @@
@@ -1728,8 +1715,8 @@ index c5756af1ba..333a31d096 100644
  import os
  from functools import partial
  from io import BytesIO
-diff --git a/src/calibre/srv/code.py b/src/calibre/srv/code.py
-index 3ebb748427..44156a24c5 100644
+Index: b/src/calibre/srv/code.py
+===================================================================
 --- a/src/calibre/srv/code.py
 +++ b/src/calibre/srv/code.py
 @@ -3,7 +3,6 @@
@@ -1740,8 +1727,8 @@ index 3ebb748427..44156a24c5 100644
  import hashlib
  import os
  import random
-diff --git a/src/calibre/srv/convert.py b/src/calibre/srv/convert.py
-index f586e8dbef..2a758e3695 100644
+Index: b/src/calibre/srv/convert.py
+===================================================================
 --- a/src/calibre/srv/convert.py
 +++ b/src/calibre/srv/convert.py
 @@ -3,7 +3,6 @@
@@ -1752,8 +1739,8 @@ index f586e8dbef..2a758e3695 100644
  import os
  import shutil
  import tempfile
-diff --git a/src/calibre/srv/legacy.py b/src/calibre/srv/legacy.py
-index a6b863c629..c3a782e668 100644
+Index: b/src/calibre/srv/legacy.py
+===================================================================
 --- a/src/calibre/srv/legacy.py
 +++ b/src/calibre/srv/legacy.py
 @@ -3,7 +3,6 @@
@@ -1764,8 +1751,8 @@ index a6b863c629..c3a782e668 100644
  from functools import partial
  
  from lxml.html import tostring
-diff --git a/src/calibre/srv/library_broker.py b/src/calibre/srv/library_broker.py
-index b56bf029a3..a22683fe93 100644
+Index: b/src/calibre/srv/library_broker.py
+===================================================================
 --- a/src/calibre/srv/library_broker.py
 +++ b/src/calibre/srv/library_broker.py
 @@ -3,7 +3,6 @@
@@ -1776,8 +1763,8 @@ index b56bf029a3..a22683fe93 100644
  import os
  from collections import OrderedDict, defaultdict
  from threading import RLock as Lock
-diff --git a/src/calibre/srv/render_book.py b/src/calibre/srv/render_book.py
-index 1de49da445..ec44ed311b 100644
+Index: b/src/calibre/srv/render_book.py
+===================================================================
 --- a/src/calibre/srv/render_book.py
 +++ b/src/calibre/srv/render_book.py
 @@ -3,7 +3,6 @@
@@ -1788,8 +1775,8 @@ index 1de49da445..ec44ed311b 100644
  import json
  import os
  import re
-diff --git a/src/calibre/srv/users_api.py b/src/calibre/srv/users_api.py
-index 37ddb86cd7..5bb570311b 100644
+Index: b/src/calibre/srv/users_api.py
+===================================================================
 --- a/src/calibre/srv/users_api.py
 +++ b/src/calibre/srv/users_api.py
 @@ -3,7 +3,6 @@
@@ -1800,8 +1787,8 @@ index 37ddb86cd7..5bb570311b 100644
  import json
  
  from calibre import as_unicode
-diff --git a/src/calibre/srv/web_socket.py b/src/calibre/srv/web_socket.py
-index 0fb2302fe5..84bd0e93f8 100644
+Index: b/src/calibre/srv/web_socket.py
+===================================================================
 --- a/src/calibre/srv/web_socket.py
 +++ b/src/calibre/srv/web_socket.py
 @@ -3,7 +3,6 @@
@@ -1812,8 +1799,8 @@ index 0fb2302fe5..84bd0e93f8 100644
  import os
  import socket
  import weakref
-diff --git a/src/calibre/translations/msgfmt.py b/src/calibre/translations/msgfmt.py
-index 989ceca5e7..5054d7c737 100644
+Index: b/src/calibre/translations/msgfmt.py
+===================================================================
 --- a/src/calibre/translations/msgfmt.py
 +++ b/src/calibre/translations/msgfmt.py
 @@ -3,7 +3,6 @@
@@ -1824,8 +1811,8 @@ index 989ceca5e7..5054d7c737 100644
  """Generate binary message catalog from textual translation description.
  
  This program converts a textual Uniforum-style message catalog (.po file) into
-diff --git a/src/calibre/utils/__init__.py b/src/calibre/utils/__init__.py
-index 8b1eff4899..bbca860b44 100644
+Index: b/src/calibre/utils/__init__.py
+===================================================================
 --- a/src/calibre/utils/__init__.py
 +++ b/src/calibre/utils/__init__.py
 @@ -1,7 +1,6 @@
@@ -1836,8 +1823,8 @@ index 8b1eff4899..bbca860b44 100644
  __license__   = 'GPL v3'
  __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/utils/file_type_icons.py b/src/calibre/utils/file_type_icons.py
-index afa069bbf1..0f45874ab1 100644
+Index: b/src/calibre/utils/file_type_icons.py
+===================================================================
 --- a/src/calibre/utils/file_type_icons.py
 +++ b/src/calibre/utils/file_type_icons.py
 @@ -3,7 +3,6 @@
@@ -1848,8 +1835,8 @@ index afa069bbf1..0f45874ab1 100644
  EXT_MAP = {
      'default' : 'unknown',
      'dir'     : 'dir',
-diff --git a/src/calibre/utils/fonts/sfnt/merge.py b/src/calibre/utils/fonts/sfnt/merge.py
-index 66b61626b5..b1f012b46f 100644
+Index: b/src/calibre/utils/fonts/sfnt/merge.py
+===================================================================
 --- a/src/calibre/utils/fonts/sfnt/merge.py
 +++ b/src/calibre/utils/fonts/sfnt/merge.py
 @@ -3,7 +3,6 @@
@@ -1860,8 +1847,8 @@ index 66b61626b5..b1f012b46f 100644
  from collections import OrderedDict
  from functools import partial
  
-diff --git a/src/calibre/utils/html2text.py b/src/calibre/utils/html2text.py
-index b34f9965ad..51a44baa65 100644
+Index: b/src/calibre/utils/html2text.py
+===================================================================
 --- a/src/calibre/utils/html2text.py
 +++ b/src/calibre/utils/html2text.py
 @@ -3,7 +3,6 @@
@@ -1872,8 +1859,8 @@ index b34f9965ad..51a44baa65 100644
  def html2text(html):
      from html2text import HTML2Text
      import re
-diff --git a/src/calibre/utils/network.py b/src/calibre/utils/network.py
-index 25d69ef552..d0143f9a8f 100644
+Index: b/src/calibre/utils/network.py
+===================================================================
 --- a/src/calibre/utils/network.py
 +++ b/src/calibre/utils/network.py
 @@ -3,7 +3,6 @@
@@ -1884,8 +1871,8 @@ index 25d69ef552..d0143f9a8f 100644
  from calibre.constants import iswindows, islinux, isbsd
  from calibre.utils.config_base import tweaks
  
-diff --git a/src/calibre/utils/opensearch/description.py b/src/calibre/utils/opensearch/description.py
-index 68d331114d..5d1ffc1cc3 100644
+Index: b/src/calibre/utils/opensearch/description.py
+===================================================================
 --- a/src/calibre/utils/opensearch/description.py
 +++ b/src/calibre/utils/opensearch/description.py
 @@ -1,7 +1,6 @@
@@ -1896,8 +1883,8 @@ index 68d331114d..5d1ffc1cc3 100644
  __license__ = 'GPL 3'
  __copyright__ = '''
  2011, John Schember <john@nachtimwald.com>,
-diff --git a/src/calibre/utils/opensearch/query.py b/src/calibre/utils/opensearch/query.py
-index 643cf5827e..bab8bddc6b 100644
+Index: b/src/calibre/utils/opensearch/query.py
+===================================================================
 --- a/src/calibre/utils/opensearch/query.py
 +++ b/src/calibre/utils/opensearch/query.py
 @@ -1,7 +1,6 @@
@@ -1908,8 +1895,8 @@ index 643cf5827e..bab8bddc6b 100644
  __license__ = 'GPL 3'
  __copyright__ = '2006, Ed Summers <ehs@pobox.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/utils/opensearch/url.py b/src/calibre/utils/opensearch/url.py
-index 2e8a23e91c..4e12d0468d 100644
+Index: b/src/calibre/utils/opensearch/url.py
+===================================================================
 --- a/src/calibre/utils/opensearch/url.py
 +++ b/src/calibre/utils/opensearch/url.py
 @@ -1,7 +1,6 @@
@@ -1920,8 +1907,8 @@ index 2e8a23e91c..4e12d0468d 100644
  __license__ = 'GPL 3'
  __copyright__ = '2006, Ed Summers <ehs@pobox.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/utils/random_ua.py b/src/calibre/utils/random_ua.py
-index e24f51dc74..b825c0922f 100644
+Index: b/src/calibre/utils/random_ua.py
+===================================================================
 --- a/src/calibre/utils/random_ua.py
 +++ b/src/calibre/utils/random_ua.py
 @@ -3,7 +3,6 @@
@@ -1932,8 +1919,8 @@ index e24f51dc74..b825c0922f 100644
  import json
  import random
  
-diff --git a/src/calibre/utils/search_query_parser_test.py b/src/calibre/utils/search_query_parser_test.py
-index b204e369e1..49807def13 100644
+Index: b/src/calibre/utils/search_query_parser_test.py
+===================================================================
 --- a/src/calibre/utils/search_query_parser_test.py
 +++ b/src/calibre/utils/search_query_parser_test.py
 @@ -3,7 +3,6 @@
@@ -1944,8 +1931,8 @@ index b204e369e1..49807def13 100644
  import operator
  import unittest
  
-diff --git a/src/calibre/utils/smartypants.py b/src/calibre/utils/smartypants.py
-index eaf548f4f6..b652c0100b 100644
+Index: b/src/calibre/utils/smartypants.py
+===================================================================
 --- a/src/calibre/utils/smartypants.py
 +++ b/src/calibre/utils/smartypants.py
 @@ -2,7 +2,6 @@
@@ -1956,8 +1943,8 @@ index eaf548f4f6..b652c0100b 100644
  __author__ = "Chad Miller <smartypantspy@chad.org>, Kovid Goyal <kovid at kovidgoyal.net>"
  __description__ = "Smart-quotes, smart-ellipses, and smart-dashes for weblog entries in pyblosxom"
  
-diff --git a/src/calibre/utils/speedups.py b/src/calibre/utils/speedups.py
-index a8874cde5f..9a7cb776d6 100644
+Index: b/src/calibre/utils/speedups.py
+===================================================================
 --- a/src/calibre/utils/speedups.py
 +++ b/src/calibre/utils/speedups.py
 @@ -3,7 +3,6 @@
@@ -1968,8 +1955,8 @@ index a8874cde5f..9a7cb776d6 100644
  import os
  from polyglot.builtins import range, unicode_type
  
-diff --git a/src/calibre/utils/tdir_in_cache.py b/src/calibre/utils/tdir_in_cache.py
-index d297022486..995d5f4147 100644
+Index: b/src/calibre/utils/tdir_in_cache.py
+===================================================================
 --- a/src/calibre/utils/tdir_in_cache.py
 +++ b/src/calibre/utils/tdir_in_cache.py
 @@ -3,7 +3,6 @@
@@ -1980,8 +1967,8 @@ index d297022486..995d5f4147 100644
  import atexit
  import errno
  import os
-diff --git a/src/calibre/utils/test_lock.py b/src/calibre/utils/test_lock.py
-index 625bd431a8..03ae48c266 100644
+Index: b/src/calibre/utils/test_lock.py
+===================================================================
 --- a/src/calibre/utils/test_lock.py
 +++ b/src/calibre/utils/test_lock.py
 @@ -3,7 +3,6 @@
@@ -1992,8 +1979,8 @@ index 625bd431a8..03ae48c266 100644
  import os
  import shutil
  import subprocess
-diff --git a/src/calibre/utils/text2int.py b/src/calibre/utils/text2int.py
-index 27c3061b90..77fdd4e215 100644
+Index: b/src/calibre/utils/text2int.py
+===================================================================
 --- a/src/calibre/utils/text2int.py
 +++ b/src/calibre/utils/text2int.py
 @@ -1,7 +1,6 @@
@@ -2004,8 +1991,8 @@ index 27c3061b90..77fdd4e215 100644
  __author__ = "stackoverflow community"
  __docformat__ = 'restructuredtext en'
  """
-diff --git a/src/calibre/utils/unicode_names.py b/src/calibre/utils/unicode_names.py
-index 443e07f0b2..b9c40f6ba1 100644
+Index: b/src/calibre/utils/unicode_names.py
+===================================================================
 --- a/src/calibre/utils/unicode_names.py
 +++ b/src/calibre/utils/unicode_names.py
 @@ -3,7 +3,6 @@
@@ -2016,8 +2003,8 @@ index 443e07f0b2..b9c40f6ba1 100644
  from collections import defaultdict
  
  from calibre.constants import plugins
-diff --git a/src/calibre/utils/unsmarten.py b/src/calibre/utils/unsmarten.py
-index b9b460e266..c4b813a7f1 100644
+Index: b/src/calibre/utils/unsmarten.py
+===================================================================
 --- a/src/calibre/utils/unsmarten.py
 +++ b/src/calibre/utils/unsmarten.py
 @@ -1,7 +1,6 @@
@@ -2028,8 +2015,8 @@ index b9b460e266..c4b813a7f1 100644
  __license__ = 'GPL 3'
  __copyright__ = '2011, John Schember <john@nachtimwald.com>'
  __docformat__ = 'restructuredtext en'
-diff --git a/src/calibre/utils/windows/wintest.py b/src/calibre/utils/windows/wintest.py
-index 907ba88501..fedae1f2da 100644
+Index: b/src/calibre/utils/windows/wintest.py
+===================================================================
 --- a/src/calibre/utils/windows/wintest.py
 +++ b/src/calibre/utils/windows/wintest.py
 @@ -3,7 +3,6 @@
@@ -2040,8 +2027,8 @@ index 907ba88501..fedae1f2da 100644
  import os
  import unittest
  from polyglot.builtins import unicode_type
-diff --git a/src/calibre/utils/wordcount.py b/src/calibre/utils/wordcount.py
-index 1efb61ba38..5fc9c29102 100644
+Index: b/src/calibre/utils/wordcount.py
+===================================================================
 --- a/src/calibre/utils/wordcount.py
 +++ b/src/calibre/utils/wordcount.py
 @@ -2,7 +2,6 @@
@@ -2052,8 +2039,8 @@ index 1efb61ba38..5fc9c29102 100644
  """
  Get word, character, and Asian character counts
  
-diff --git a/src/polyglot/binary.py b/src/polyglot/binary.py
-index 6cf64a5ab3..ceedc11fac 100644
+Index: b/src/polyglot/binary.py
+===================================================================
 --- a/src/polyglot/binary.py
 +++ b/src/polyglot/binary.py
 @@ -3,7 +3,6 @@
@@ -2064,8 +2051,8 @@ index 6cf64a5ab3..ceedc11fac 100644
  from base64 import standard_b64decode, standard_b64encode
  from binascii import hexlify, unhexlify
  
-diff --git a/src/polyglot/io.py b/src/polyglot/io.py
-index 8d0df2725c..443d4a93ce 100644
+Index: b/src/polyglot/io.py
+===================================================================
 --- a/src/polyglot/io.py
 +++ b/src/polyglot/io.py
 @@ -3,7 +3,6 @@
@@ -2076,8 +2063,8 @@ index 8d0df2725c..443d4a93ce 100644
  from io import StringIO, BytesIO
  
  
-diff --git a/src/polyglot/urllib.py b/src/polyglot/urllib.py
-index 1a128d47b6..935fe1fde4 100644
+Index: b/src/polyglot/urllib.py
+===================================================================
 --- a/src/polyglot/urllib.py
 +++ b/src/polyglot/urllib.py
 @@ -3,7 +3,6 @@
@@ -2088,8 +2075,8 @@ index 1a128d47b6..935fe1fde4 100644
  from urllib.request import (build_opener, getproxies, install_opener,  # noqa
          HTTPBasicAuthHandler, HTTPCookieProcessor, HTTPDigestAuthHandler,  # noqa
          url2pathname, urlopen, Request)  # noqa
-diff --git a/src/tinycss/decoding.py b/src/tinycss/decoding.py
-index a2a12ec4b3..979573e53e 100644
+Index: b/src/tinycss/decoding.py
+===================================================================
 --- a/src/tinycss/decoding.py
 +++ b/src/tinycss/decoding.py
 @@ -11,7 +11,6 @@
@@ -2100,8 +2087,8 @@ index a2a12ec4b3..979573e53e 100644
  import operator
  import re
  
-diff --git a/src/tinycss/parsing.py b/src/tinycss/parsing.py
-index 7daf4c78d2..2f9d9f9f58 100644
+Index: b/src/tinycss/parsing.py
+===================================================================
 --- a/src/tinycss/parsing.py
 +++ b/src/tinycss/parsing.py
 @@ -10,8 +10,6 @@
@@ -2113,8 +2100,8 @@ index 7daf4c78d2..2f9d9f9f58 100644
  # TODO: unit tests
  
  def split_on_comma(tokens):
-diff --git a/src/tinycss/token_data.py b/src/tinycss/token_data.py
-index 5f1aefe486..3e070bae8c 100644
+Index: b/src/tinycss/token_data.py
+===================================================================
 --- a/src/tinycss/token_data.py
 +++ b/src/tinycss/token_data.py
 @@ -10,7 +10,6 @@
@@ -2125,8 +2112,8 @@ index 5f1aefe486..3e070bae8c 100644
  import re
  import sys
  import operator
-diff --git a/src/tinycss/tokenizer.py b/src/tinycss/tokenizer.py
-index 4aaf32ce3a..5ba17c871e 100644
+Index: b/src/tinycss/tokenizer.py
+===================================================================
 --- a/src/tinycss/tokenizer.py
 +++ b/src/tinycss/tokenizer.py
 @@ -13,7 +13,6 @@
@@ -2137,6 +2124,3 @@ index 4aaf32ce3a..5ba17c871e 100644
  from tinycss import token_data
  
  
--- 
-2.27.0
-

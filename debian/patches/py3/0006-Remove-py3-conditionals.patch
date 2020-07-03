@@ -10,72 +10,77 @@ Subject: [PATCH 006/125] Remove py3 conditionals
  setup/extensions.json                    |   15 -
  setup/translations.py                    |    4 +-
  src/backports/__init__.py                |    0
+ manual/conf.py                           |    3 
+ setup/__init__.py                        |   47 
+ setup/build.py                           |   18 
+ setup/extensions.json                    |   15 
+ setup/translations.py                    |    4 
  src/backports/functools_lru_cache.py     |  199 ---
- src/calibre/__init__.py                  |   31 +-
- src/calibre/constants.py                 |    9 +-
- src/calibre/customize/zipplugin.py       |    5 +-
- src/calibre/db/backend.py                |    4 +-
- src/calibre/db/categories.py             |   12 +-
- src/calibre/db/cli/main.py               |    4 +-
- src/calibre/devices/kobo/bookmark.py     |    4 +-
- src/calibre/devices/kobo/books.py        |    5 +-
- src/calibre/devices/mtp/unix/driver.py   |   13 +-
- src/calibre/ebooks/compression/tcr.py    |    4 +-
- src/calibre/ebooks/html/input.py         |    5 +-
- src/calibre/ebooks/lit/reader.py         |    3 +-
- src/calibre/ebooks/lrf/objects.py        |   59 +-
- src/calibre/ebooks/metadata/book/base.py |   10 +-
- src/calibre/ebooks/metadata/opf2.py      |   10 +-
- src/calibre/ebooks/oeb/base.py           |   36 +-
- src/calibre/ebooks/pdf/pdftohtml.py      |   11 +-
- src/calibre/ebooks/pdf/render/common.py  |    4 +-
- src/calibre/gui2/linux_file_dialogs.py   |    9 +-
- src/calibre/library/database2.py         |    7 +-
- src/calibre/linux.py                     |    8 +-
- src/calibre/ptempfile.py                 |   30 +-
- src/calibre/spell/dictionary.py          |    4 +-
- src/calibre/srv/http_response.py         |   19 +-
- src/calibre/srv/manage_users_cli.py      |    4 +-
- src/calibre/srv/opts.py                  |    7 +-
- src/calibre/srv/routes.py                |    8 +-
- src/calibre/srv/tests/base.py            |    6 +-
- src/calibre/srv/tests/http.py            |    3 +-
- src/calibre/srv/tests/loop.py            |    6 +-
- src/calibre/srv/utils.py                 |   36 +-
- src/calibre/startup.py                   |   41 +-
- src/calibre/test_build.py                |    8 +-
- src/calibre/utils/Zeroconf.py            | 1654 ----------------------
- src/calibre/utils/complete.py            |   41 +-
- src/calibre/utils/config_base.py         |    7 +-
- src/calibre/utils/dbus_service.py        |    5 +-
- src/calibre/utils/filenames.py           |   14 +-
- src/calibre/utils/imghdr.py              |    9 +-
- src/calibre/utils/ipc/__init__.py        |    4 +-
- src/calibre/utils/ipc/launch.py          |   43 +-
- src/calibre/utils/ipc/server.py          |    6 +-
- src/calibre/utils/localization.py        |    7 +-
- src/calibre/utils/lock.py                |    4 +-
- src/calibre/utils/mdns.py                |   24 +-
- src/calibre/utils/monotonic.c            |   88 --
- src/calibre/utils/monotonic.py           |   13 +-
- src/calibre/utils/serialize.py           |   26 +-
- src/calibre/utils/shared_file.py         |   10 +-
- src/calibre/utils/smtp.py                |    6 +-
- src/calibre/utils/terminal.py            |   10 +-
- src/calibre/utils/unicode_getpass.py     |   40 -
- src/calibre/utils/zlib2.c                |  426 ------
- src/polyglot/functools.py                |    8 +-
- src/polyglot/html_entities.py            |    8 +-
- src/polyglot/http_client.py              |   28 +-
- src/polyglot/http_cookie.py              |   10 +-
- src/polyglot/http_server.py              |   10 +-
- src/polyglot/plistlib.py                 |    9 +-
- src/polyglot/queue.py                    |    7 +-
- src/polyglot/reprlib.py                  |    8 +-
- src/polyglot/smtplib.py                  |   56 +-
- src/polyglot/socketserver.py             |    7 +-
- src/polyglot/urllib.py                   |   56 +-
- 71 files changed, 193 insertions(+), 3162 deletions(-)
+ src/calibre/__init__.py                  |   31 
+ src/calibre/constants.py                 |    9 
+ src/calibre/customize/zipplugin.py       |    5 
+ src/calibre/db/backend.py                |    4 
+ src/calibre/db/categories.py             |   12 
+ src/calibre/db/cli/main.py               |    4 
+ src/calibre/devices/kobo/bookmark.py     |    4 
+ src/calibre/devices/kobo/books.py        |    5 
+ src/calibre/devices/mtp/unix/driver.py   |   13 
+ src/calibre/ebooks/compression/tcr.py    |    4 
+ src/calibre/ebooks/html/input.py         |    5 
+ src/calibre/ebooks/lit/reader.py         |    3 
+ src/calibre/ebooks/lrf/objects.py        |   59 -
+ src/calibre/ebooks/metadata/book/base.py |   10 
+ src/calibre/ebooks/metadata/opf2.py      |   10 
+ src/calibre/ebooks/oeb/base.py           |   36 
+ src/calibre/ebooks/pdf/pdftohtml.py      |   11 
+ src/calibre/ebooks/pdf/render/common.py  |    4 
+ src/calibre/gui2/linux_file_dialogs.py   |    9 
+ src/calibre/library/database2.py         |    7 
+ src/calibre/linux.py                     |    8 
+ src/calibre/ptempfile.py                 |   30 
+ src/calibre/spell/dictionary.py          |    4 
+ src/calibre/srv/http_response.py         |   19 
+ src/calibre/srv/manage_users_cli.py      |    4 
+ src/calibre/srv/opts.py                  |    7 
+ src/calibre/srv/routes.py                |    8 
+ src/calibre/srv/tests/base.py            |    6 
+ src/calibre/srv/tests/http.py            |    3 
+ src/calibre/srv/tests/loop.py            |    6 
+ src/calibre/srv/utils.py                 |   36 
+ src/calibre/startup.py                   |   41 
+ src/calibre/test_build.py                |    8 
+ src/calibre/utils/Zeroconf.py            | 1654 -------------------------------
+ src/calibre/utils/complete.py            |   39 
+ src/calibre/utils/config_base.py         |    7 
+ src/calibre/utils/dbus_service.py        |    5 
+ src/calibre/utils/filenames.py           |   14 
+ src/calibre/utils/imghdr.py              |    9 
+ src/calibre/utils/ipc/__init__.py        |    4 
+ src/calibre/utils/ipc/launch.py          |   43 
+ src/calibre/utils/ipc/server.py          |    4 
+ src/calibre/utils/localization.py        |    7 
+ src/calibre/utils/lock.py                |    4 
+ src/calibre/utils/mdns.py                |   24 
+ src/calibre/utils/monotonic.c            |   88 -
+ src/calibre/utils/monotonic.py           |   13 
+ src/calibre/utils/serialize.py           |   26 
+ src/calibre/utils/shared_file.py         |   10 
+ src/calibre/utils/smtp.py                |    6 
+ src/calibre/utils/terminal.py            |   10 
+ src/calibre/utils/unicode_getpass.py     |   40 
+ src/calibre/utils/zlib2.c                |  426 -------
+ src/polyglot/functools.py                |    8 
+ src/polyglot/html_entities.py            |    8 
+ src/polyglot/http_client.py              |   28 
+ src/polyglot/http_cookie.py              |   10 
+ src/polyglot/http_server.py              |   10 
+ src/polyglot/plistlib.py                 |   25 
+ src/polyglot/queue.py                    |    7 
+ src/polyglot/reprlib.py                  |    8 
+ src/polyglot/smtplib.py                  |   56 -
+ src/polyglot/socketserver.py             |    7 
+ src/polyglot/urllib.py                   |   56 -
+ 70 files changed, 195 insertions(+), 3172 deletions(-)
  delete mode 100644 src/backports/__init__.py
  delete mode 100644 src/backports/functools_lru_cache.py
  delete mode 100644 src/calibre/utils/Zeroconf.py
@@ -83,8 +88,8 @@ Subject: [PATCH 006/125] Remove py3 conditionals
  delete mode 100644 src/calibre/utils/unicode_getpass.py
  delete mode 100644 src/calibre/utils/zlib2.c
 
-diff --git a/manual/conf.py b/manual/conf.py
-index 9e61d4b34c..81aa89da0f 100644
+Index: b/manual/conf.py
+===================================================================
 --- a/manual/conf.py
 +++ b/manual/conf.py
 @@ -18,7 +18,6 @@ from datetime import date
@@ -104,8 +109,8 @@ index 9e61d4b34c..81aa89da0f 100644
  
  # If true, '()' will be appended to :func: etc. cross-reference text.
  # add_function_parentheses = True
-diff --git a/setup/__init__.py b/setup/__init__.py
-index 9b12fb5d95..bf1365fe44 100644
+Index: b/setup/__init__.py
+===================================================================
 --- a/setup/__init__.py
 +++ b/setup/__init__.py
 @@ -11,7 +11,6 @@ from contextlib import contextmanager
@@ -170,8 +175,8 @@ index 9b12fb5d95..bf1365fe44 100644
  warnings = []
  
  
-diff --git a/setup/build.py b/setup/build.py
-index 8dd1f15726..8db1531606 100644
+Index: b/setup/build.py
+===================================================================
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -1,8 +1,6 @@
@@ -233,28 +238,27 @@ index 8dd1f15726..8db1531606 100644
              if ext.error:
                  if ext.optional:
                      self.warn(ext.error)
-diff --git a/setup/extensions.json b/setup/extensions.json
-index 2474973b2a..ca9097cbd4 100644
+Index: b/setup/extensions.json
+===================================================================
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -8,12 +8,6 @@
-         "windows_libraries": "libhunspell",
+@@ -9,12 +9,6 @@
  		"needs_c++11": true
      },
--    {
+     {
 -        "name": "monotonic",
 -        "sources": "calibre/utils/monotonic.c",
 -        "linux_libraries": "rt",
 -        "needs_py2": true
 -    },
-     {
+-    {
          "name": "hyphen",
          "sources": "calibre/utils/hyphenation/hyphen.c",
-@@ -34,15 +28,6 @@
-         "libraries": "m",
+ 		"libraries": "hyphen",
+@@ -35,15 +29,6 @@
          "windows_libraries": ""
      },
--    {
+     {
 -        "name": "zlib2",
 -        "sources": "calibre/utils/zlib2.c",
 -        "inc_dirs": "!zlib_inc_dirs",
@@ -263,11 +267,12 @@ index 2474973b2a..ca9097cbd4 100644
 -        "windows_libraries": "zlib",
 -        "needs_py2": true
 -    },
-     {
+-    {
          "name": "certgen",
          "sources": "calibre/utils/certgen.c",
-diff --git a/setup/translations.py b/setup/translations.py
-index 81623bc1bc..0c4b833cfb 100644
+         "libraries": "crypto",
+Index: b/setup/translations.py
+===================================================================
 --- a/setup/translations.py
 +++ b/setup/translations.py
 @@ -11,7 +11,7 @@ from collections import defaultdict
@@ -288,12 +293,8 @@ index 81623bc1bc..0c4b833cfb 100644
                  t = partial(get_language, gettext_func=t)
                  lang_names[l] = {x: t(x) for x in dl}
              zi = ZipInfo('lang-names.json')
-diff --git a/src/backports/__init__.py b/src/backports/__init__.py
-deleted file mode 100644
-index e69de29bb2..0000000000
-diff --git a/src/backports/functools_lru_cache.py b/src/backports/functools_lru_cache.py
-deleted file mode 100644
-index dd4335273c..0000000000
+Index: b/src/backports/functools_lru_cache.py
+===================================================================
 --- a/src/backports/functools_lru_cache.py
 +++ /dev/null
 @@ -1,199 +0,0 @@
@@ -496,8 +497,8 @@ index dd4335273c..0000000000
 -        return update_wrapper(wrapper, user_function)
 -
 -    return decorating_function
-diff --git a/src/calibre/__init__.py b/src/calibre/__init__.py
-index 65155fb3db..b8528b743e 100644
+Index: b/src/calibre/__init__.py
+===================================================================
 --- a/src/calibre/__init__.py
 +++ b/src/calibre/__init__.py
 @@ -18,7 +18,7 @@ except EnvironmentError:
@@ -545,8 +546,8 @@ index 65155fb3db..b8528b743e 100644
  
  
  relpath = os.path.relpath
-diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index d8e3f11e46..b56cffa4fe 100644
+Index: b/src/calibre/constants.py
+===================================================================
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -150,9 +150,7 @@ def cache_dir():
@@ -572,8 +573,8 @@ index d8e3f11e46..b56cffa4fe 100644
          if iswindows:
              plugins.extend(['winutil', 'wpd', 'winfonts'])
          if isosx:
-diff --git a/src/calibre/customize/zipplugin.py b/src/calibre/customize/zipplugin.py
-index 45a664f43c..c0d528024a 100644
+Index: b/src/calibre/customize/zipplugin.py
+===================================================================
 --- a/src/calibre/customize/zipplugin.py
 +++ b/src/calibre/customize/zipplugin.py
 @@ -11,7 +11,6 @@ from collections import OrderedDict
@@ -595,11 +596,11 @@ index 45a664f43c..c0d528024a 100644
  
  
  class PluginLoader(object):
-diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
-index 959bd84dbb..13b1cd14d0 100644
+Index: b/src/calibre/db/backend.py
+===================================================================
 --- a/src/calibre/db/backend.py
 +++ b/src/calibre/db/backend.py
-@@ -16,7 +16,7 @@ from polyglot.builtins import (iteritems, itervalues,
+@@ -16,7 +16,7 @@ from polyglot.builtins import (iteritems
  
  from calibre import isbytestring, force_unicode, prints, as_unicode
  from calibre.constants import (iswindows, filesystem_encoding,
@@ -617,8 +618,8 @@ index 959bd84dbb..13b1cd14d0 100644
              return x
          options = [(book_id, fmt.upper(), map_data(data)) for book_id, data in iteritems(options)]
          self.executemany('INSERT OR REPLACE INTO conversion_options(book,format,data) VALUES (?,?,?)', options)
-diff --git a/src/calibre/db/categories.py b/src/calibre/db/categories.py
-index bc972a1ba9..e268c8aa12 100644
+Index: b/src/calibre/db/categories.py
+===================================================================
 --- a/src/calibre/db/categories.py
 +++ b/src/calibre/db/categories.py
 @@ -10,7 +10,6 @@ import copy
@@ -647,8 +648,8 @@ index bc972a1ba9..e268c8aa12 100644
  
      def __repr__(self):
          return native_string_type(self)
-diff --git a/src/calibre/db/cli/main.py b/src/calibre/db/cli/main.py
-index f78be8b3f9..d3380341c7 100644
+Index: b/src/calibre/db/cli/main.py
+===================================================================
 --- a/src/calibre/db/cli/main.py
 +++ b/src/calibre/db/cli/main.py
 @@ -2,8 +2,6 @@
@@ -669,8 +670,8 @@ index f78be8b3f9..d3380341c7 100644
              pw = getpass(_('Enter the password: '))
          elif pw.startswith('<f:') and pw.endswith('>'):
              with lopen(pw[3:-1], 'rb') as f:
-diff --git a/src/calibre/devices/kobo/bookmark.py b/src/calibre/devices/kobo/bookmark.py
-index 8de1b66944..cd354adb6f 100644
+Index: b/src/calibre/devices/kobo/bookmark.py
+===================================================================
 --- a/src/calibre/devices/kobo/bookmark.py
 +++ b/src/calibre/devices/kobo/bookmark.py
 @@ -7,7 +7,6 @@ __docformat__ = 'restructuredtext en'
@@ -690,8 +691,8 @@ index 8de1b66944..cd354adb6f 100644
 +    __str__ = __unicode__
  
  # }}}
-diff --git a/src/calibre/devices/kobo/books.py b/src/calibre/devices/kobo/books.py
-index 9a8d06798c..d93939c424 100644
+Index: b/src/calibre/devices/kobo/books.py
+===================================================================
 --- a/src/calibre/devices/kobo/books.py
 +++ b/src/calibre/devices/kobo/books.py
 @@ -6,7 +6,7 @@ __docformat__ = 'restructuredtext en'
@@ -713,8 +714,8 @@ index 9a8d06798c..d93939c424 100644
  
  
  class ImageWrapper(object):
-diff --git a/src/calibre/devices/mtp/unix/driver.py b/src/calibre/devices/mtp/unix/driver.py
-index bb5b235e8a..7c8d8a365d 100644
+Index: b/src/calibre/devices/mtp/unix/driver.py
+===================================================================
 --- a/src/calibre/devices/mtp/unix/driver.py
 +++ b/src/calibre/devices/mtp/unix/driver.py
 @@ -1,7 +1,6 @@
@@ -762,11 +763,11 @@ index bb5b235e8a..7c8d8a365d 100644
          if ans is None:
              raise DeviceError('Failed to upload file named: %s to %s: %s'
                      %(name, parent.full_path, self.format_errorstack(errs)))
-diff --git a/src/calibre/ebooks/compression/tcr.py b/src/calibre/ebooks/compression/tcr.py
-index 453e14395a..5aaab1052d 100644
+Index: b/src/calibre/ebooks/compression/tcr.py
+===================================================================
 --- a/src/calibre/ebooks/compression/tcr.py
 +++ b/src/calibre/ebooks/compression/tcr.py
-@@ -6,7 +6,7 @@ __copyright__ = '2009, John Schember <john@nachtimwald.com>'
+@@ -6,7 +6,7 @@ __copyright__ = '2009, John Schember <jo
  __docformat__ = 'restructuredtext en'
  
  import re
@@ -784,11 +785,11 @@ index 453e14395a..5aaab1052d 100644
              self.coded_txt = self.coded_txt.replace(code, code[0:1])
              self.codes[code[0]] = b'%s%s' % (self.codes[code[0]], self.codes[code[1]])
  
-diff --git a/src/calibre/ebooks/html/input.py b/src/calibre/ebooks/html/input.py
-index 8e85b23dde..ae9511b81f 100644
+Index: b/src/calibre/ebooks/html/input.py
+===================================================================
 --- a/src/calibre/ebooks/html/input.py
 +++ b/src/calibre/ebooks/html/input.py
-@@ -17,7 +17,7 @@ from calibre.ebooks.oeb.base import urlunquote
+@@ -17,7 +17,7 @@ from calibre.ebooks.oeb.base import urlu
  from calibre.ebooks.chardet import detect_xml_encoding
  from calibre.constants import iswindows
  from calibre import unicode_path, as_unicode, replace_entities
@@ -807,11 +808,11 @@ index 8e85b23dde..ae9511b81f 100644
  
  class IgnoreFile(Exception):
  
-diff --git a/src/calibre/ebooks/lit/reader.py b/src/calibre/ebooks/lit/reader.py
-index 367daf3042..73a2e5035e 100644
+Index: b/src/calibre/ebooks/lit/reader.py
+===================================================================
 --- a/src/calibre/ebooks/lit/reader.py
 +++ b/src/calibre/ebooks/lit/reader.py
-@@ -17,7 +17,6 @@ import calibre.ebooks.lit.mssha1 as mssha1
+@@ -17,7 +17,6 @@ import calibre.ebooks.lit.mssha1 as mssh
  from calibre.ebooks.oeb.base import urlnormalize, xpath
  from calibre.ebooks.oeb.reader import OEBReader
  from calibre.ebooks import DRMError
@@ -828,11 +829,11 @@ index 367daf3042..73a2e5035e 100644
  
      def binary_to_text(self, bin, buf):
          stack = [(0, None, None, 0, 0, False, False, 'text', 0)]
-diff --git a/src/calibre/ebooks/lrf/objects.py b/src/calibre/ebooks/lrf/objects.py
-index 1d9de79a3a..5382529bb3 100644
+Index: b/src/calibre/ebooks/lrf/objects.py
+===================================================================
 --- a/src/calibre/ebooks/lrf/objects.py
 +++ b/src/calibre/ebooks/lrf/objects.py
-@@ -7,7 +7,7 @@ import struct, array, zlib, io, collections, re
+@@ -7,7 +7,7 @@ import struct, array, zlib, io, collecti
  from calibre.ebooks.lrf import LRFParseError, PRS500_PROFILE
  from calibre import entity_to_unicode, prepare_string_for_xml
  from calibre.ebooks.lrf.tags import Tag
@@ -1031,8 +1032,8 @@ index 1d9de79a3a..5382529bb3 100644
  
  object_map = [
      None,  # 00
-diff --git a/src/calibre/ebooks/metadata/book/base.py b/src/calibre/ebooks/metadata/book/base.py
-index 0821a664a6..d6ff6a7b55 100644
+Index: b/src/calibre/ebooks/metadata/book/base.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/book/base.py
 +++ b/src/calibre/ebooks/metadata/book/base.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
@@ -1059,11 +1060,11 @@ index 0821a664a6..d6ff6a7b55 100644
  
      def __nonzero__(self):
          return bool(self.title or self.author or self.comments or self.tags)
-diff --git a/src/calibre/ebooks/metadata/opf2.py b/src/calibre/ebooks/metadata/opf2.py
-index 0225be63dd..7ebfbfdc07 100644
+Index: b/src/calibre/ebooks/metadata/opf2.py
+===================================================================
 --- a/src/calibre/ebooks/metadata/opf2.py
 +++ b/src/calibre/ebooks/metadata/opf2.py
-@@ -13,7 +13,7 @@ import re, sys, unittest, functools, os, uuid, glob, io, json, copy
+@@ -13,7 +13,7 @@ import re, sys, unittest, functools, os,
  from lxml import etree
  
  from calibre.ebooks import escape_xpath_attr
@@ -1087,8 +1088,8 @@ index 0225be63dd..7ebfbfdc07 100644
  
      def __repr__(self):
          return unicode_type(self)
-diff --git a/src/calibre/ebooks/oeb/base.py b/src/calibre/ebooks/oeb/base.py
-index acc7876dcd..957ded7bd1 100644
+Index: b/src/calibre/ebooks/oeb/base.py
+===================================================================
 --- a/src/calibre/ebooks/oeb/base.py
 +++ b/src/calibre/ebooks/oeb/base.py
 @@ -1,4 +1,3 @@
@@ -1159,8 +1160,8 @@ index acc7876dcd..957ded7bd1 100644
  
      def to_opf1(self, tour):
          for node in self.nodes:
-diff --git a/src/calibre/ebooks/pdf/pdftohtml.py b/src/calibre/ebooks/pdf/pdftohtml.py
-index 9eedf39a9c..80287e9a59 100644
+Index: b/src/calibre/ebooks/pdf/pdftohtml.py
+===================================================================
 --- a/src/calibre/ebooks/pdf/pdftohtml.py
 +++ b/src/calibre/ebooks/pdf/pdftohtml.py
 @@ -2,8 +2,6 @@
@@ -1198,8 +1199,8 @@ index 9eedf39a9c..80287e9a59 100644
      if iswindows:
          kw['creationflags'] = 0x08
      return subprocess.Popen(cmd, **kw)
-diff --git a/src/calibre/ebooks/pdf/render/common.py b/src/calibre/ebooks/pdf/render/common.py
-index 0c607fd947..8fe22e4476 100644
+Index: b/src/calibre/ebooks/pdf/render/common.py
+===================================================================
 --- a/src/calibre/ebooks/pdf/render/common.py
 +++ b/src/calibre/ebooks/pdf/render/common.py
 @@ -10,7 +10,7 @@ import codecs, zlib, numbers
@@ -1220,8 +1221,8 @@ index 0c607fd947..8fe22e4476 100644
      elif hasattr(o, 'pdf_serialize'):
          o.pdf_serialize(stream)
      elif o is None:
-diff --git a/src/calibre/gui2/linux_file_dialogs.py b/src/calibre/gui2/linux_file_dialogs.py
-index 89bb295a76..6e4f15f7ad 100644
+Index: b/src/calibre/gui2/linux_file_dialogs.py
+===================================================================
 --- a/src/calibre/gui2/linux_file_dialogs.py
 +++ b/src/calibre/gui2/linux_file_dialogs.py
 @@ -2,8 +2,6 @@
@@ -1259,11 +1260,11 @@ index 89bb295a76..6e4f15f7ad 100644
      stdout, stderr = p.communicate()
      ret = p.wait()
      return ret, decode_output(stdout), decode_output(stderr)
-diff --git a/src/calibre/library/database2.py b/src/calibre/library/database2.py
-index 653f5f83c5..2f10cd3690 100644
+Index: b/src/calibre/library/database2.py
+===================================================================
 --- a/src/calibre/library/database2.py
 +++ b/src/calibre/library/database2.py
-@@ -25,7 +25,7 @@ from calibre.library.custom_columns import CustomColumns
+@@ -25,7 +25,7 @@ from calibre.library.custom_columns impo
  from calibre.library.sqlite import connect, IntegrityError
  from calibre.library.prefs import DBPrefs
  from calibre.ebooks.metadata.book.base import Metadata
@@ -1272,7 +1273,7 @@ index 653f5f83c5..2f10cd3690 100644
  from calibre.ptempfile import (PersistentTemporaryFile,
          base_dir, SpooledTemporaryFile)
  from calibre.customize.ui import (run_plugins_on_import,
-@@ -1752,10 +1752,7 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
+@@ -1752,10 +1752,7 @@ class LibraryDatabase2(LibraryDatabase,
              return 'n=%s s=%s c=%d rt=%d rc=%d id=%s' % (
                  self.n, self.s, self.c, self.rt, self.rc, self.id)
  
@@ -1284,8 +1285,8 @@ index 653f5f83c5..2f10cd3690 100644
  
      def clean_user_categories(self):
          user_cats = self.prefs.get('user_categories', {})
-diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 0e7d96692a..7f6dc6036f 100644
+Index: b/src/calibre/linux.py
+===================================================================
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
 @@ -2,8 +2,6 @@
@@ -1297,7 +1298,7 @@ index 0e7d96692a..7f6dc6036f 100644
  ''' Post installation script for linux '''
  
  import sys, os, textwrap, stat, errno
-@@ -11,7 +9,7 @@ from subprocess import check_call, check_output
+@@ -11,7 +9,7 @@ from subprocess import check_call, check
  from functools import partial
  
  from calibre import __appname__, prints, guess_type
@@ -1306,7 +1307,7 @@ index 0e7d96692a..7f6dc6036f 100644
  from calibre.customize.ui import all_input_formats
  from calibre.ptempfile import TemporaryDirectory
  from calibre import CurrentDir
-@@ -1191,7 +1189,7 @@ def write_appdata(key, entry, base, translators):
+@@ -1191,7 +1189,7 @@ def write_appdata(key, entry, base, tran
      for para in entry['description']:
          description.append(E.p(para))
          for lang, t in iteritems(translators):
@@ -1315,7 +1316,7 @@ index 0e7d96692a..7f6dc6036f 100644
              if tp != para:
                  description.append(E.p(tp))
                  description[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
-@@ -1208,7 +1206,7 @@ def write_appdata(key, entry, base, translators):
+@@ -1208,7 +1206,7 @@ def write_appdata(key, entry, base, tran
          type='desktop'
      )
      for lang, t in iteritems(translators):
@@ -1324,8 +1325,8 @@ index 0e7d96692a..7f6dc6036f 100644
          if tp != entry['summary']:
              root.append(E.summary(tp))
              root[-1].set('{http://www.w3.org/XML/1998/namespace}lang', lang)
-diff --git a/src/calibre/ptempfile.py b/src/calibre/ptempfile.py
-index 762b5d6225..63de86a52a 100644
+Index: b/src/calibre/ptempfile.py
+===================================================================
 --- a/src/calibre/ptempfile.py
 +++ b/src/calibre/ptempfile.py
 @@ -9,7 +9,7 @@ import tempfile, os, atexit
@@ -1337,7 +1338,7 @@ index 762b5d6225..63de86a52a 100644
  
  
  def cleanup(path):
-@@ -265,23 +265,17 @@ class SpooledTemporaryFile(tempfile.SpooledTemporaryFile):
+@@ -265,23 +265,17 @@ class SpooledTemporaryFile(tempfile.Spoo
              suffix = ''
          if dir is None:
              dir = base_dir()
@@ -1372,8 +1373,8 @@ index 762b5d6225..63de86a52a 100644
  
      def truncate(self, *args):
          # The stdlib SpooledTemporaryFile implementation of truncate() doesn't
-diff --git a/src/calibre/spell/dictionary.py b/src/calibre/spell/dictionary.py
-index 52a23c03fe..2f9ed3e1e6 100644
+Index: b/src/calibre/spell/dictionary.py
+===================================================================
 --- a/src/calibre/spell/dictionary.py
 +++ b/src/calibre/spell/dictionary.py
 @@ -14,7 +14,7 @@ from itertools import chain
@@ -1394,8 +1395,8 @@ index 52a23c03fe..2f9ed3e1e6 100644
          return path
  
      obj = hunspell.Dictionary(fix_path(dictionary.dicpath), fix_path(dictionary.affpath))
-diff --git a/src/calibre/srv/http_response.py b/src/calibre/srv/http_response.py
-index 1fd74e3c73..737858cf0e 100644
+Index: b/src/calibre/srv/http_response.py
+===================================================================
 --- a/src/calibre/srv/http_response.py
 +++ b/src/calibre/srv/http_response.py
 @@ -12,10 +12,10 @@ from itertools import chain, repeat
@@ -1440,8 +1441,8 @@ index 1fd74e3c73..737858cf0e 100644
  # }}}
  
  
-diff --git a/src/calibre/srv/manage_users_cli.py b/src/calibre/srv/manage_users_cli.py
-index a6ee4f6b94..bbbf3aad67 100644
+Index: b/src/calibre/srv/manage_users_cli.py
+===================================================================
 --- a/src/calibre/srv/manage_users_cli.py
 +++ b/src/calibre/srv/manage_users_cli.py
 @@ -2,8 +2,6 @@
@@ -1462,8 +1463,8 @@ index a6ee4f6b94..bbbf3aad67 100644
  
          while True:
              one = getpass(
-diff --git a/src/calibre/srv/opts.py b/src/calibre/srv/opts.py
-index e1a69d1a10..68f4a131aa 100644
+Index: b/src/calibre/srv/opts.py
+===================================================================
 --- a/src/calibre/srv/opts.py
 +++ b/src/calibre/srv/opts.py
 @@ -12,11 +12,8 @@ from functools import partial
@@ -1480,11 +1481,11 @@ index e1a69d1a10..68f4a131aa 100644
  
  Option = namedtuple('Option', 'name default longdoc shortdoc choices')
  
-diff --git a/src/calibre/srv/routes.py b/src/calibre/srv/routes.py
-index 62ef365a78..523c9780a1 100644
+Index: b/src/calibre/srv/routes.py
+===================================================================
 --- a/src/calibre/srv/routes.py
 +++ b/src/calibre/srv/routes.py
-@@ -8,7 +8,6 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+@@ -8,7 +8,6 @@ __copyright__ = '2015, Kovid Goyal <kovi
  import sys, inspect, re, time, numbers, json as jsonlib, textwrap
  from operator import attrgetter
  
@@ -1513,8 +1514,8 @@ index 62ef365a78..523c9780a1 100644
          if len(self.names) + 2 != len(argspec.args) - len(argspec.defaults or ()):
              raise route_error('Function must take %d non-default arguments' % (len(self.names) + 2))
          if argspec.args[2:len(self.names)+2] != self.names:
-diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index 325c5c8456..de2176bcb6 100644
+Index: b/src/calibre/srv/tests/base.py
+===================================================================
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -12,7 +12,6 @@ from functools import partial
@@ -1537,8 +1538,8 @@ index 325c5c8456..de2176bcb6 100644
  
      def change_handler(self, handler):
          from calibre.srv.http_response import create_http_handler
-diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index e32f7dbcc7..81f91b483e 100644
+Index: b/src/calibre/srv/tests/http.py
+===================================================================
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
 @@ -10,7 +10,6 @@ from io import BytesIO
@@ -1558,8 +1559,8 @@ index e32f7dbcc7..81f91b483e 100644
                  self.ae(r.read(), q.encode('utf-8'))
  
              test('en', 'en')
-diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 8b25e7b448..1710bd2925 100644
+Index: b/src/calibre/srv/tests/loop.py
+===================================================================
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
 @@ -11,7 +11,6 @@ from unittest import skipIf
@@ -1582,8 +1583,8 @@ index 8b25e7b448..1710bd2925 100644
          b = BonJour(wait_for_stop=False)
          with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
              self.assertTrue(b.started.wait(5), 'BonJour not started')
-diff --git a/src/calibre/srv/utils.py b/src/calibre/srv/utils.py
-index 0706287a2e..50bd480535 100644
+Index: b/src/calibre/srv/utils.py
+===================================================================
 --- a/src/calibre/srv/utils.py
 +++ b/src/calibre/srv/utils.py
 @@ -11,7 +11,7 @@ from email.utils import formatdate
@@ -1672,8 +1673,8 @@ index 0706287a2e..50bd480535 100644
          self.rollover()
  
      def rename(self, src, dest):
-diff --git a/src/calibre/startup.py b/src/calibre/startup.py
-index a20f7cb124..924d6ebf26 100644
+Index: b/src/calibre/startup.py
+===================================================================
 --- a/src/calibre/startup.py
 +++ b/src/calibre/startup.py
 @@ -10,7 +10,7 @@ Perform various initialization tasks.
@@ -1731,11 +1732,11 @@ index a20f7cb124..924d6ebf26 100644
      builtins.__dict__['lopen'] = local_open
  
      from calibre.utils.icu import title_case, lower as icu_lower, upper as icu_upper
-diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 71885930c0..a8e532d7f2 100644
+Index: b/src/calibre/test_build.py
+===================================================================
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -12,7 +12,7 @@ Test a binary calibre build to ensure that all needed binary images/libraries ha
+@@ -12,7 +12,7 @@ Test a binary calibre build to ensure th
  
  import os, ctypes, sys, unittest, time
  
@@ -1757,9 +1758,8 @@ index 71885930c0..a8e532d7f2 100644
          del z
          del ifaddr
  
-diff --git a/src/calibre/utils/Zeroconf.py b/src/calibre/utils/Zeroconf.py
-deleted file mode 100644
-index 62537988c5..0000000000
+Index: b/src/calibre/utils/Zeroconf.py
+===================================================================
 --- a/src/calibre/utils/Zeroconf.py
 +++ /dev/null
 @@ -1,1654 +0,0 @@
@@ -3417,8 +3417,8 @@ index 62537988c5..0000000000
 -    r.unregisterService(info)
 -    print("   Unregister done.")
 -    r.close()
-diff --git a/src/calibre/utils/complete.py b/src/calibre/utils/complete.py
-index 9bfe5e9b19..26e411ddb7 100644
+Index: b/src/calibre/utils/complete.py
+===================================================================
 --- a/src/calibre/utils/complete.py
 +++ b/src/calibre/utils/complete.py
 @@ -14,45 +14,8 @@ completion.
@@ -3426,7 +3426,7 @@ index 9bfe5e9b19..26e411ddb7 100644
  import sys, os, shlex, glob, re
  
 -from polyglot.builtins import is_py3, unicode_type
--
+ 
 -
 -if is_py3:
 -    prints = print
@@ -3464,13 +3464,12 @@ index 9bfe5e9b19..26e411ddb7 100644
 -            if i != len(args)-1:
 -                file.write(sep)
 -        file.write(end)
-+
 +prints = print
  
  
  def split(src):
-diff --git a/src/calibre/utils/config_base.py b/src/calibre/utils/config_base.py
-index fffd1354c2..e2a35cb4cb 100644
+Index: b/src/calibre/utils/config_base.py
+===================================================================
 --- a/src/calibre/utils/config_base.py
 +++ b/src/calibre/utils/config_base.py
 @@ -11,17 +11,14 @@ from collections import defaultdict
@@ -3493,8 +3492,8 @@ index fffd1354c2..e2a35cb4cb 100644
      options = {'cPickle':cPickle}
      try:
          if not isinstance(src, unicode_type):
-diff --git a/src/calibre/utils/dbus_service.py b/src/calibre/utils/dbus_service.py
-index feac589e1a..e04b6524b6 100644
+Index: b/src/calibre/utils/dbus_service.py
+===================================================================
 --- a/src/calibre/utils/dbus_service.py
 +++ b/src/calibre/utils/dbus_service.py
 @@ -45,7 +45,7 @@ from dbus.exceptions import (
@@ -3516,8 +3515,8 @@ index feac589e1a..e04b6524b6 100644
  
  class BusName(object):
      """A base class for exporting your own Named Services across the Bus.
-diff --git a/src/calibre/utils/filenames.py b/src/calibre/utils/filenames.py
-index 1b5ca70c63..2687bb2862 100644
+Index: b/src/calibre/utils/filenames.py
+===================================================================
 --- a/src/calibre/utils/filenames.py
 +++ b/src/calibre/utils/filenames.py
 @@ -12,7 +12,7 @@ from math import ceil
@@ -3529,7 +3528,7 @@ index 1b5ca70c63..2687bb2862 100644
  )
  from calibre.utils.localization import get_udc
  from polyglot.builtins import iteritems, itervalues, unicode_type, range
-@@ -629,14 +629,4 @@ def copytree_using_links(path, dest, dest_is_parent=True, filecopyfunc=copyfile)
+@@ -629,14 +629,4 @@ def copytree_using_links(path, dest, des
                  filecopyfunc(src, df)
  
  
@@ -3545,8 +3544,8 @@ index 1b5ca70c63..2687bb2862 100644
 -else:
 -    rmtree = shutil.rmtree
 +rmtree = shutil.rmtree
-diff --git a/src/calibre/utils/imghdr.py b/src/calibre/utils/imghdr.py
-index 72221e4939..f7bc9b0dc1 100644
+Index: b/src/calibre/utils/imghdr.py
+===================================================================
 --- a/src/calibre/utils/imghdr.py
 +++ b/src/calibre/utils/imghdr.py
 @@ -6,7 +6,6 @@
@@ -3572,8 +3571,8 @@ index 72221e4939..f7bc9b0dc1 100644
  
      x = None
      while True:
-diff --git a/src/calibre/utils/ipc/__init__.py b/src/calibre/utils/ipc/__init__.py
-index a2355fb7e3..b683a69a39 100644
+Index: b/src/calibre/utils/ipc/__init__.py
+===================================================================
 --- a/src/calibre/utils/ipc/__init__.py
 +++ b/src/calibre/utils/ipc/__init__.py
 @@ -10,7 +10,7 @@ import os, errno, sys
@@ -3594,8 +3593,8 @@ index a2355fb7e3..b683a69a39 100644
      return ans
  
  
-diff --git a/src/calibre/utils/ipc/launch.py b/src/calibre/utils/ipc/launch.py
-index 88b112c4b0..b31494a1b6 100644
+Index: b/src/calibre/utils/ipc/launch.py
+===================================================================
 --- a/src/calibre/utils/ipc/launch.py
 +++ b/src/calibre/utils/ipc/launch.py
 @@ -1,7 +1,6 @@
@@ -3672,19 +3671,10 @@ index 88b112c4b0..b31494a1b6 100644
  
      def __call__(self, redirect_output=True, cwd=None, priority=None):
          '''
-diff --git a/src/calibre/utils/ipc/server.py b/src/calibre/utils/ipc/server.py
-index f5f2fa0ac7..aec5bdcd23 100644
+Index: b/src/calibre/utils/ipc/server.py
+===================================================================
 --- a/src/calibre/utils/ipc/server.py
 +++ b/src/calibre/utils/ipc/server.py
-@@ -19,7 +19,7 @@ from multiprocessing.connection import Listener, arbitrary_address
- from threading import RLock, Thread
- 
- from calibre import detect_ncpus as cpu_count
--from calibre.constants import DEBUG, islinux, iswindows, ispy3
-+from calibre.constants import DEBUG, islinux, iswindows
- from calibre.ptempfile import base_dir
- from calibre.utils.ipc import eintr_retry_call
- from calibre.utils.ipc.launch import Worker
 @@ -138,8 +138,6 @@ if islinux:
          prefix = '\0calibre-ipc-listener-%d-%%d' % os.getpid()
          while True:
@@ -3703,8 +3693,8 @@ index f5f2fa0ac7..aec5bdcd23 100644
              try:
                  return address, Listener(address=address, authkey=authkey, backlog=backlog)
              except EnvironmentError as err:
-diff --git a/src/calibre/utils/localization.py b/src/calibre/utils/localization.py
-index 11189f099f..50303c464c 100644
+Index: b/src/calibre/utils/localization.py
+===================================================================
 --- a/src/calibre/utils/localization.py
 +++ b/src/calibre/utils/localization.py
 @@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
@@ -3728,8 +3718,8 @@ index 11189f099f..50303c464c 100644
      # Now that we have installed a translator, we have to retranslate the help
      # for the global prefs object as it was instantiated in get_lang(), before
      # the translator was installed.
-diff --git a/src/calibre/utils/lock.py b/src/calibre/utils/lock.py
-index b3bdf064f6..f17ce9bab7 100644
+Index: b/src/calibre/utils/lock.py
+===================================================================
 --- a/src/calibre/utils/lock.py
 +++ b/src/calibre/utils/lock.py
 @@ -11,7 +11,7 @@ import time
@@ -3750,8 +3740,8 @@ index b3bdf064f6..f17ce9bab7 100644
          sock = socket.socket(family=socket.AF_UNIX)
          try:
              eintr_retry_call(sock.bind, address)
-diff --git a/src/calibre/utils/mdns.py b/src/calibre/utils/mdns.py
-index a25e3f2d8b..c82b1abe68 100644
+Index: b/src/calibre/utils/mdns.py
+===================================================================
 --- a/src/calibre/utils/mdns.py
 +++ b/src/calibre/utils/mdns.py
 @@ -1,4 +1,3 @@
@@ -3780,7 +3770,7 @@ index a25e3f2d8b..c82b1abe68 100644
          try:
              _server = Zeroconf()
          except Exception:
-@@ -150,21 +144,7 @@ def create_service(desc, service_type, port, properties, add_hostname, use_ip_ad
+@@ -150,21 +144,7 @@ def create_service(desc, service_type, p
      service_type = service_type+'.local.'
      service_name = desc + '.' + service_type
      server_name = hostname+'.local.'
@@ -3803,9 +3793,8 @@ index a25e3f2d8b..c82b1abe68 100644
  
      return ServiceInfo(
          service_type, service_name,
-diff --git a/src/calibre/utils/monotonic.c b/src/calibre/utils/monotonic.c
-deleted file mode 100644
-index aecb2476fa..0000000000
+Index: b/src/calibre/utils/monotonic.c
+===================================================================
 --- a/src/calibre/utils/monotonic.c
 +++ /dev/null
 @@ -1,88 +0,0 @@
@@ -3897,8 +3886,8 @@ index aecb2476fa..0000000000
 -    if (m == NULL) return;
 -}
 -
-diff --git a/src/calibre/utils/monotonic.py b/src/calibre/utils/monotonic.py
-index 1bb4f3fe72..5596878427 100644
+Index: b/src/calibre/utils/monotonic.py
+===================================================================
 --- a/src/calibre/utils/monotonic.py
 +++ b/src/calibre/utils/monotonic.py
 @@ -1,13 +1,4 @@
@@ -3917,8 +3906,8 @@ index 1bb4f3fe72..5596878427 100644
 -    del monotonicp, err
 +from time import monotonic
 +monotonic
-diff --git a/src/calibre/utils/serialize.py b/src/calibre/utils/serialize.py
-index 1f9e0b38be..3de30016fa 100644
+Index: b/src/calibre/utils/serialize.py
+===================================================================
 --- a/src/calibre/utils/serialize.py
 +++ b/src/calibre/utils/serialize.py
 @@ -2,10 +2,7 @@
@@ -3961,8 +3950,8 @@ index 1f9e0b38be..3de30016fa 100644
 +def pickle_loads(dump):
 +    import pickle
 +    return pickle.loads(dump, encoding='utf-8')
-diff --git a/src/calibre/utils/shared_file.py b/src/calibre/utils/shared_file.py
-index 44aac391bf..441a60dd25 100644
+Index: b/src/calibre/utils/shared_file.py
+===================================================================
 --- a/src/calibre/utils/shared_file.py
 +++ b/src/calibre/utils/shared_file.py
 @@ -9,7 +9,7 @@ import os, sys
@@ -3989,11 +3978,11 @@ index 44aac391bf..441a60dd25 100644
  
      def raise_winerror(x):
          reraise(NotImplementedError, None, sys.exc_info()[2])
-diff --git a/src/calibre/utils/smtp.py b/src/calibre/utils/smtp.py
-index f945f361c9..b716099f5b 100644
+Index: b/src/calibre/utils/smtp.py
+===================================================================
 --- a/src/calibre/utils/smtp.py
 +++ b/src/calibre/utils/smtp.py
-@@ -12,7 +12,7 @@ This module implements a simple commandline SMTP client that supports:
+@@ -12,7 +12,7 @@ This module implements a simple commandl
  
  import sys, traceback, os, socket, encodings.idna as idna
  from calibre import isbytestring
@@ -4002,7 +3991,7 @@ index f945f361c9..b716099f5b 100644
  from polyglot.builtins import unicode_type, as_unicode, native_string_type
  
  
-@@ -150,7 +150,7 @@ def get_smtp_class(use_ssl=False, debuglevel=0):
+@@ -150,7 +150,7 @@ def get_smtp_class(use_ssl=False, debugl
      # but there is no way to set debuglevel before connect() is called
      import polyglot.smtplib as smtplib
      cls = smtplib.SMTP_SSL if use_ssl else smtplib.SMTP
@@ -4011,7 +4000,7 @@ index f945f361c9..b716099f5b 100644
      return type(native_string_type('SMTP'), bases, {native_string_type('debuglevel'): debuglevel})
  
  
-@@ -177,8 +177,6 @@ def sendmail(msg, from_, to, localhost=None, verbose=0, timeout=None,
+@@ -177,8 +177,6 @@ def sendmail(msg, from_, to, localhost=N
          s.starttls(context=context)
          s.ehlo()
      if username is not None and password is not None:
@@ -4020,8 +4009,8 @@ index f945f361c9..b716099f5b 100644
          s.login(username, password)
      ret = None
      try:
-diff --git a/src/calibre/utils/terminal.py b/src/calibre/utils/terminal.py
-index d945da9e56..ffbabcdc64 100644
+Index: b/src/calibre/utils/terminal.py
+===================================================================
 --- a/src/calibre/utils/terminal.py
 +++ b/src/calibre/utils/terminal.py
 @@ -1,14 +1,13 @@
@@ -4054,9 +4043,8 @@ index d945da9e56..ffbabcdc64 100644
                  if not self.write_console(self.file_handle, wt, text_len, byref(written), None):
                      # Older versions of windows can fail to write large strings
                      # to console with WriteConsoleW (seen it happen on Win XP)
-diff --git a/src/calibre/utils/unicode_getpass.py b/src/calibre/utils/unicode_getpass.py
-deleted file mode 100644
-index 2c36ca9968..0000000000
+Index: b/src/calibre/utils/unicode_getpass.py
+===================================================================
 --- a/src/calibre/utils/unicode_getpass.py
 +++ /dev/null
 @@ -1,40 +0,0 @@
@@ -4100,9 +4088,8 @@ index 2c36ca9968..0000000000
 -            enc = getattr(sys.stdin, 'encoding', preferred_encoding) or preferred_encoding
 -            from getpass import getpass
 -            return getpass(prompt).decode(enc)
-diff --git a/src/calibre/utils/zlib2.c b/src/calibre/utils/zlib2.c
-deleted file mode 100644
-index 77524a1558..0000000000
+Index: b/src/calibre/utils/zlib2.c
+===================================================================
 --- a/src/calibre/utils/zlib2.c
 +++ /dev/null
 @@ -1,426 +0,0 @@
@@ -4532,8 +4519,8 @@ index 77524a1558..0000000000
 -        PyModule_AddObject(m, "error", ZlibError);
 -    }
 -}
-diff --git a/src/polyglot/functools.py b/src/polyglot/functools.py
-index 68c5abe672..408f7b15c1 100644
+Index: b/src/polyglot/functools.py
+===================================================================
 --- a/src/polyglot/functools.py
 +++ b/src/polyglot/functools.py
 @@ -2,12 +2,6 @@
@@ -4550,8 +4537,8 @@ index 68c5abe672..408f7b15c1 100644
 +from functools import lru_cache
  
  lru_cache
-diff --git a/src/polyglot/html_entities.py b/src/polyglot/html_entities.py
-index c006b2941f..c396e54615 100644
+Index: b/src/polyglot/html_entities.py
+===================================================================
 --- a/src/polyglot/html_entities.py
 +++ b/src/polyglot/html_entities.py
 @@ -2,9 +2,5 @@
@@ -4566,8 +4553,8 @@ index c006b2941f..c396e54615 100644
 -    from htmlentitydefs import name2codepoint
 +from html.entities import name2codepoint
 +name2codepoint
-diff --git a/src/polyglot/http_client.py b/src/polyglot/http_client.py
-index 3c6126337f..dbd2ccf3dd 100644
+Index: b/src/polyglot/http_client.py
+===================================================================
 --- a/src/polyglot/http_client.py
 +++ b/src/polyglot/http_client.py
 @@ -2,21 +2,15 @@
@@ -4603,8 +4590,8 @@ index 3c6126337f..dbd2ccf3dd 100644
 +    responses, HTTPConnection, HTTPSConnection, BAD_REQUEST, FOUND, FORBIDDEN, HTTP_VERSION_NOT_SUPPORTED, INTERNAL_SERVER_ERROR, METHOD_NOT_ALLOWED
 +    MOVED_PERMANENTLY, NOT_FOUND, NOT_IMPLEMENTED, NOT_MODIFIED, OK, PARTIAL_CONTENT, PRECONDITION_FAILED, REQUEST_ENTITY_TOO_LARGE, REQUEST_URI_TOO_LONG
 +    REQUESTED_RANGE_NOT_SATISFIABLE, REQUEST_TIMEOUT, SEE_OTHER, SERVICE_UNAVAILABLE, UNAUTHORIZED, _CS_IDLE, _CS_REQ_SENT
-diff --git a/src/polyglot/http_cookie.py b/src/polyglot/http_cookie.py
-index 1c5977f74f..5334fc3722 100644
+Index: b/src/polyglot/http_cookie.py
+===================================================================
 --- a/src/polyglot/http_cookie.py
 +++ b/src/polyglot/http_cookie.py
 @@ -2,11 +2,5 @@
@@ -4621,8 +4608,8 @@ index 1c5977f74f..5334fc3722 100644
 -    from cookielib import CookieJar, Cookie  # noqa
 +from http.cookies import SimpleCookie    # noqa
 +from http.cookiejar import CookieJar, Cookie  # noqa
-diff --git a/src/polyglot/http_server.py b/src/polyglot/http_server.py
-index 544c86a065..ea0dff99c1 100644
+Index: b/src/polyglot/http_server.py
+===================================================================
 --- a/src/polyglot/http_server.py
 +++ b/src/polyglot/http_server.py
 @@ -2,12 +2,4 @@
@@ -4639,25 +4626,43 @@ index 544c86a065..ea0dff99c1 100644
 -    from BaseHTTPServer import HTTPServer  # noqa
 -    from SimpleHTTPServer import SimpleHTTPRequestHandler  # noqa
 +from http.server import HTTPServer, SimpleHTTPRequestHandler  # noqa
-diff --git a/src/polyglot/plistlib.py b/src/polyglot/plistlib.py
-index 6bf8df6004..5b1f130239 100644
+Index: b/src/polyglot/plistlib.py
+===================================================================
 --- a/src/polyglot/plistlib.py
 +++ b/src/polyglot/plistlib.py
-@@ -2,11 +2,4 @@
+@@ -2,25 +2,10 @@
  # vim:fileencoding=utf-8
  # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
  
--
--
++from plistlib import loads, dumps  # noqa
+ 
++def unwrap_bytes(x):
++    return x
+ 
 -from polyglot.builtins import is_py3
 -
 -if is_py3:
--    from plistlib import loads, dumps, Data  # noqa
+-    from plistlib import loads, dumps  # noqa
+-
+-    def unwrap_bytes(x):
+-        return x
+-
+-    def wrap_bytes(x):
+-        return x
 -else:
 -    from plistlib import readPlistFromString as loads, writePlistToString as dumps, Data  # noqa
-+from plistlib import loads, dumps, Data  # noqa
-diff --git a/src/polyglot/queue.py b/src/polyglot/queue.py
-index 51feafeaca..3239fc36c3 100644
+-
+-    def unwrap_bytes(x):
+-        if isinstance(x, Data):
+-            x = x.data
+-        return x
+-
+-    def wrap_bytes(x):
+-        return Data(x)
++def wrap_bytes(x):
++    return x
+Index: b/src/polyglot/queue.py
+===================================================================
 --- a/src/polyglot/queue.py
 +++ b/src/polyglot/queue.py
 @@ -2,9 +2,4 @@
@@ -4671,8 +4676,8 @@ index 51feafeaca..3239fc36c3 100644
 -else:
 -    from Queue import Queue, Empty, Full, PriorityQueue, LifoQueue  # noqa
 +from queue import Queue, Empty, Full, PriorityQueue, LifoQueue  # noqa
-diff --git a/src/polyglot/reprlib.py b/src/polyglot/reprlib.py
-index d3b745851e..d3e5869d7b 100644
+Index: b/src/polyglot/reprlib.py
+===================================================================
 --- a/src/polyglot/reprlib.py
 +++ b/src/polyglot/reprlib.py
 @@ -2,9 +2,5 @@
@@ -4687,8 +4692,8 @@ index d3b745851e..d3e5869d7b 100644
 -    from repr import repr
 +from reprlib import repr
 +repr
-diff --git a/src/polyglot/smtplib.py b/src/polyglot/smtplib.py
-index cff16f9cf8..5457a416ab 100644
+Index: b/src/polyglot/smtplib.py
+===================================================================
 --- a/src/polyglot/smtplib.py
 +++ b/src/polyglot/smtplib.py
 @@ -2,13 +2,9 @@
@@ -4769,8 +4774,8 @@ index cff16f9cf8..5457a416ab 100644
 +            self.debug_to(*a)
 +        else:
 +            super()._print_debug(*a)
-diff --git a/src/polyglot/socketserver.py b/src/polyglot/socketserver.py
-index da5c644531..9be3c51e03 100644
+Index: b/src/polyglot/socketserver.py
+===================================================================
 --- a/src/polyglot/socketserver.py
 +++ b/src/polyglot/socketserver.py
 @@ -2,9 +2,4 @@
@@ -4784,8 +4789,8 @@ index da5c644531..9be3c51e03 100644
 -else:
 -    from SocketServer import TCPServer, ThreadingMixIn  # noqa
 +from socketserver import TCPServer, ThreadingMixIn  # noqa
-diff --git a/src/polyglot/urllib.py b/src/polyglot/urllib.py
-index 08684dd17b..1a128d47b6 100644
+Index: b/src/polyglot/urllib.py
+===================================================================
 --- a/src/polyglot/urllib.py
 +++ b/src/polyglot/urllib.py
 @@ -4,46 +4,22 @@
@@ -4851,6 +4856,3 @@ index 08684dd17b..1a128d47b6 100644
  
  
  def unquote_plus(x, encoding='utf-8', errors='replace'):
--- 
-2.27.0
-
