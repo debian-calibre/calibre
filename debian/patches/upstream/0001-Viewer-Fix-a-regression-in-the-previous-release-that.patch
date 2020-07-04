@@ -7,11 +7,12 @@ Subject: [PATCH] Viewer: Fix a regression in the previous release that broke
  'startswith'.](https://bugs.launchpad.net/calibre/+bug/1886192)
 
 ---
- src/pyj/read_book/mathjax.pyj | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ resources/viewer.js           |    2 +-
+ src/pyj/read_book/mathjax.pyj |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/pyj/read_book/mathjax.pyj b/src/pyj/read_book/mathjax.pyj
-index 50cdf09ad3..d179d9a5e1 100644
+Index: b/src/pyj/read_book/mathjax.pyj
+===================================================================
 --- a/src/pyj/read_book/mathjax.pyj
 +++ b/src/pyj/read_book/mathjax.pyj
 @@ -19,7 +19,7 @@ def get_url(mathjax_files, name):
@@ -23,6 +24,16 @@ index 50cdf09ad3..d179d9a5e1 100644
              a.setAttribute('href', 'javascript: void(0)')
              a.setAttribute('data-' + link_uid, JSON.stringify({'frag':href[1:]}))
  
--- 
-2.27.0
-
+Index: b/resources/viewer.js
+===================================================================
+--- a/resources/viewer.js
++++ b/resources/viewer.js
+@@ -18124,7 +18124,7 @@ return this.__repr__();
+             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                 a = ρσ_Iter0[ρσ_Index0];
+                 href = a.getAttribute("href");
+-                if (href.startswith("#")) {
++                if (href && href.startswith("#")) {
+                     a.setAttribute("href", "javascript: void(0)");
+                     a.setAttribute("data-" + link_uid, JSON.stringify((function(){
+                         var ρσ_d = Object.create(null);
