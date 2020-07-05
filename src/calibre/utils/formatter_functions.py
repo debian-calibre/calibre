@@ -1635,6 +1635,56 @@ class BuiltinCheckYesNo(BuiltinFormatterFunction):
         return ""
 
 
+class BuiltinRatingToStars(BuiltinFormatterFunction):
+    name = 'rating_to_stars'
+    arg_count = 2
+    category = 'Formatting values'
+    __doc__ = doc = _('rating_to_stars(value, use_half_stars) '
+                      '-- Returns the rating as string of star characters. '
+                      'The value is a number between 0 and 5. Set use_half_stars '
+                      'to 1 if you want half star characters for custom ratings '
+                      'columns that support non-integer ratings, for example 2.5.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, value, use_half_stars):
+        if not value:
+            return ''
+        err_msg = _('The rating must be a number between 0 and 5')
+        try:
+            v = float(value) * 2
+        except:
+            raise ValueError(err_msg)
+        if v < 0 or v > 10:
+            raise ValueError(err_msg)
+        from calibre.ebooks.metadata import rating_to_stars
+        return rating_to_stars(v, use_half_stars == '1')
+
+
+class BuiltinSwapAroundArticles(BuiltinFormatterFunction):
+    name = 'swap_around_articles'
+    arg_count = 2
+    category = 'String manipulation'
+    __doc__ = doc = _('swap_around_articles(val, separator) '
+                      '-- returns the val with articles moved to the end. '
+                      'The value can be a list, in which case each member '
+                      'of the list is processed. If the value is a list then '
+                      'you must provide the list value separator. If no '
+                      'separator is provided then the value is treated as '
+                      'being a single value, not a list.')
+
+    def evaluate(self, formatter, kwargs, mi, locals, val, separator):
+        if not val:
+            return ''
+        if not separator:
+            return title_sort(val).replace(',', ';')
+        result = []
+        try:
+            for v in [x.strip() for x in val.split(separator)]:
+                result.append(title_sort(v).replace(',', ';'))
+        except:
+            traceback.print_exc()
+        return separator.join(sorted(result, key=sort_key))
+
+
 _formatter_builtins = [
     BuiltinAdd(), BuiltinAnd(), BuiltinApproximateFormats(), BuiltinAssign(),
     BuiltinAuthorLinks(), BuiltinAuthorSorts(), BuiltinBooksize(),
@@ -1650,12 +1700,13 @@ _formatter_builtins = [
     BuiltinListIntersection(), BuiltinListitem(), BuiltinListRe(),
     BuiltinListReGroup(), BuiltinListSort(), BuiltinListUnion(), BuiltinLookup(),
     BuiltinLowercase(), BuiltinMultiply(), BuiltinNot(), BuiltinOndevice(),
-    BuiltinOr(), BuiltinPrint(), BuiltinRawField(), BuiltinRawList(),
+    BuiltinOr(), BuiltinPrint(), BuiltinRatingToStars(), BuiltinRawField(), BuiltinRawList(),
     BuiltinRe(), BuiltinReGroup(), BuiltinSelect(), BuiltinSeriesSort(),
     BuiltinShorten(), BuiltinStrcat(), BuiltinStrcatMax(),
     BuiltinStrcmp(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
-    BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundComma(),
-    BuiltinSwitch(), BuiltinTemplate(), BuiltinTest(), BuiltinTitlecase(),
+    BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundArticles(),
+    BuiltinSwapAroundComma(), BuiltinSwitch(),
+    BuiltinTemplate(), BuiltinTest(), BuiltinTitlecase(),
     BuiltinToday(), BuiltinTransliterate(), BuiltinUppercase(),
     BuiltinUserCategories(), BuiltinVirtualLibraries()
 ]

@@ -5190,7 +5190,7 @@ var str = ρσ_str, repr = ρσ_repr;;
         var __name__ = "__main__";
 
 
-        var state;
+        var FAKE_HOST, FAKE_PROTOCOL, state;
         var E = ρσ_modules.elementmaker.E;
 
         var fix_fullscreen_svg_images = ρσ_modules.fs_images.fix_fullscreen_svg_images;
@@ -5201,6 +5201,8 @@ var str = ρσ_str, repr = ρσ_repr;;
         var from_python = ρσ_modules.qt.from_python;
         var to_python = ρσ_modules.qt.to_python;
 
+        FAKE_HOST = "internal.invalid";
+        FAKE_PROTOCOL = "clbr";
         function is_hidden(elem) {
             while (elem) {
                 if (elem.style && (elem.style.visibility === "hidden" || elem.style.display === "none")) {
@@ -5498,8 +5500,40 @@ var str = ρσ_str, repr = ρσ_repr;;
             return ρσ_anonfunc;
         })());
 
+        function check_for_maths() {
+            var s;
+            if (document.body.getElementsByTagNameNS("http://www.w3.org/1998/Math/MathML", "math").length > 0) {
+                return true;
+            }
+            var ρσ_Iter5 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                s = ρσ_Iter5[ρσ_Index5];
+                if (s.type === "text/x-mathjax-config") {
+                    return true;
+                }
+            }
+            return false;
+        };
+        if (!check_for_maths.__module__) Object.defineProperties(check_for_maths, {
+            __module__ : {value: null}
+        });
+
+        function load_mathjax() {
+            var script;
+            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
+            script.async = true;
+            script.src = "" + ρσ_str.format("{}", FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", FAKE_HOST) + "/calibre_internal-mathjax/startup.js";
+            document.head.appendChild(script);
+        };
+        if (!load_mathjax.__module__) Object.defineProperties(load_mathjax, {
+            __module__ : {value: null}
+        });
+
         document.body.addEventListener("click", onclick, true);
         document.documentElement.appendChild(ρσ_interpolate_kwargs.call(E, E.style, ["[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }"].concat([ρσ_desugar_kwargs({type: "text/css"})])));
         fix_fullscreen_svg_images();
+        if (check_for_maths()) {
+            load_mathjax();
+        }
     })();
 })();

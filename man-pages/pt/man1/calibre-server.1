@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBRE-SERVER" "1" "junho 19, 2020" "4.19.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "julho 03, 2020" "4.20.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .
@@ -191,7 +191,7 @@ Número máximo de livros no sinal OPDS.      Número máximo de livros que o se
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Número máximo de itens não agrupados em sinais OPDS.        Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Número máximo de itens não agrupados em sinais OPDS.        Agrupar itens em categorias tais como autores/etiquetas pela primeira lera quando existir mais que este número de itens. Escolha 0 para desativar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -241,7 +241,7 @@ Time (in seconds) after which an idle connection is closed.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Permitir que ligações não autenticadas, mas de endereços IP específicos, realizem alterações.       Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -251,7 +251,7 @@ Prefixo a anteceder todos os URL.   Useful if you wish to run this server behind
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/pt/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
