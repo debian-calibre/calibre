@@ -27,7 +27,7 @@ export QT_SELECT=qt5
 
 override_dh_auto_configure:
 	# use system mathjax
-	$(SETUP) mathjax --system-mathjax --path-to-mathjax=/usr/share/javascript/mathjax
+	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/MathJax-3.0.5.tar.gz"
 
 override_dh_auto_build:
 	[ -d build ] || $(SETUP) build
