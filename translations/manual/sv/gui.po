@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-05 08:22+0530\n"
-"PO-Revision-Date: 2020-06-12 04:39+0000\n"
+"POT-Creation-Date: 2020-06-19 07:53+0530\n"
+"PO-Revision-Date: 2020-06-19 08:38+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan.nyberg.karl@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -800,7 +800,7 @@ msgid ""
 "appears anywhere in the indicated metadata. Two other kinds of searches are "
 "available: equality search and search using `regular expressions "
 "<https://en.wikipedia.org/wiki/Regular_expression>`_."
-msgstr "Sökningar är som standard \"innehåller\". Ett objekt matchar om söksträngen visas någonstans i den angivna metadata. Två andra typer av sökningar finns: likhetssökning och sök hjälp av `reguljära uttryck <https://en.wikipedia.org/wiki/Regular_expression>`_."
+msgstr "Sökningar är som standard \"innehåller\". En post matchar om söksträngen visas någonstans i den angivna metadata. Två andra typer av sökningar finns: likhetssökning och sök hjälp av `reguljära uttryck <https://en.wikipedia.org/wiki/Regular_expression>`_."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:346
 msgid ""
@@ -950,17 +950,17 @@ msgid ""
 "find the tags `A` and `A.B`, but will not find the tags `AA` or `AA.B`. The "
 "query ``tags:=.A.B`` will find the tags `A.B` and `A.B.C`, but not the tag "
 "`A`."
-msgstr "Hierarkiska objekt (t.ex. A.B.C) använder en utökad syntax för att matcha de första delarna av hierarkin. Detta görs genom att lägga till en punkt mellan den exakta matchningsindikatorn (=) och texten. Till exempel förfrågan ``tags:=A`` hittar taggarna `A` och` AB`, men hittar inte taggarna `AA` eller` AA.B`. Sökning ``tags:=.A.B`` hittar taggarna `A.B` och` A.B.C`, men inte den taggen `A`."
+msgstr "Hierarkiska post (t.ex. A.B.C) använder en utökad syntax för att matcha de första delarna av hierarkin. Detta görs genom att lägga till en punkt mellan den exakta matchningsindikatorn (=) och texten. Till exempel förfrågan ``tags:=A`` hittar taggarna `A` och` AB`, men hittar inte taggarna `AA` eller` AA.B`. Sökning ``tags:=.A.B`` hittar taggarna `A.B` och` A.B.C`, men inte den taggen `A`."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:423
 msgid ""
-"Identifiers (e.g., isbn, doi, lccn etc) also use an extended syntax. First, "
+"Identifiers (e.g., ISBN, doi, lccn etc) also use an extended syntax. First, "
 "note that an identifier has the form ``type:value``, as in "
 "``isbn:123456789``. The extended syntax permits you to specify independently"
 " which type and value to search for. Both the type and the value parts of "
 "the query can use `equality`, `contains`, or `regular expression` matches. "
 "Examples:"
-msgstr "Identifierare (t.ex. isbn, doi, LCCN o.s.v.) också använda en utökad syntax. Först, observera att en identifierare har formen ``typ:value``, som i ``ISBN:123456789``. Den utökade syntaxen tillåter dig att specificera självständigt vilken typ och värde för att söka efter. Både typ och värde delarna av förfrågan kan använda `lika med`,` innehåller` eller `reguljära uttryck` sökningar. Exempel:"
+msgstr "Identifierare (t.ex. ISBN, doi, LCCN o.s.v.) använder också en utökad syntax. Notera först att en identifierare har formen \"typ:värde\", som i \"isbn:123456789\". Den utökade syntaxen tillåter dig att oberoende specificera vilken typ och värde du vill söka efter. Både typ och värdet delar av förfrågan kan använda \"lika med\", \"innehåller\" eller \"reguljära uttryck\" matchningar. Exempel:"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:425
 msgid "``identifiers:true`` will find books with any identifier."
@@ -985,25 +985,25 @@ msgstr "``identifierare:=123456789`` kommer att söka efter böcker av vilken ty
 #: ../../home/kovid/work/calibre/manual/gui.rst:429
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
-"type equal to isbn having any value"
-msgstr "``identifierare:=isbn:`` och ``identifierare: isbn: true`` hittar böcker med en typ lika med isbn har något värde"
+"type equal to ISBN having any value"
+msgstr "\"identifierare:=isbn:\" och \"identifierare: isbn:true\" hittar böcker med en typ som motsvarar ISBN med något värde"
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:430
 msgid ""
-"``identifiers:=isbn:false`` will find books with no type equal to isbn."
-msgstr "``identifierare:=isbn:false`` hittar böcker med någon typ lika med isbn."
+"``identifiers:=isbn:false`` will find books with no type equal to ISBN."
+msgstr "\"identifierare:=isbn:false\" hittar böcker som inte har samma typ som ISBN."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:431
 msgid ""
-"``identifiers:=isbn:123`` will find books with a type equal to isbn having a"
+"``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
-msgstr "``identifierare:=isbn:123`` hittar böcker med en typ som motsvarar isbn med ett värde som innehåller `123`."
+msgstr "\"identifierare:=isbn:123\" hittar böcker med en typ som motsvarar ISBN med ett värde som innehåller \"123\"."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:432
 msgid ""
-"``identifiers:=isbn:=123456789`` will find books with a type equal to isbn "
+"``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
-msgstr "``identifierare:=isbn:=123456789`` hittar böcker med en typ som motsvarar isbn med ett värde som är lika med `123456789`."
+msgstr "\"identifierare:=isbn:=123456789\" hittar böcker med en typ som motsvarar ISBN med ett värde som är lika med \"123456789\"."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:433
 msgid ""
@@ -1155,7 +1155,7 @@ msgid ""
 " restricted to showing books by that author. You can click on category names"
 " as well. For example, clicking on \"Series\" will show you all books in any"
 " series."
-msgstr "Taggbläddraren tillåter dig enkelt bläddra i din samling författare/taggar/serier/o.s.v. Om du klickar på ett objekt i Taggbläddraren, till exempel författarens namn Isaac Asimov, då begränsas listan med böcker till höger till att visa böcker av denna författare. Du kan klicka på kategorinamn också. Till exempel, klicka på \"Serier\" kommer att visa dig alla böcker i någon serie."
+msgstr "Taggbläddraren tillåter dig enkelt bläddra i din samling författare/taggar/serier/o.s.v. Om du klickar på en post i Taggbläddraren, till exempel författarens namn Isaac Asimov, då begränsas listan med böcker till höger till att visa böcker av denna författare. Du kan klicka på kategorinamn också. Till exempel, klicka på \"Serier\" kommer att visa dig alla böcker i någon serie."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:539
 msgid ""
@@ -1173,7 +1173,7 @@ msgid ""
 "search expressions that are automatically entered into the Search bar. "
 "Looking at what the Tag browser generates is a good way to learn how to "
 "construct basic search expressions."
-msgstr "Det första klicket på ett objekt kommer att begränsa listan med böcker till de som innehåller eller matchar objektet. Fortsätt exemplet ovan, att klicka på Isaac Asimov kommer visa böcker av denna författare. Klicka igen på objektet kommer att ändra vad som visas, beroende på om objektet har underkategorier (se underkategorier och hierarkiska artiklar nedan). Fortsätt Isaac Asimov exemplet klicka igen på Isaac Asimov kommer begränsa listan med böcker till dem som inte är av Isaac Asimov. Ett tredje klick tar bort begränsningen, visar alla böcker. Om du håller ned Ctrl eller Skift och klickar på flera poster, så skapas restriktioner baserade på flera poster. Till exempel kan du hålla Ctrl och klicka på taggarna Historia och Europa för att hitta böcker om Europas historia. Taggbläddraren fungerar genom att bygga sökuttryck som automatiskt förs in i sökfältet. Att se vad Taggbläddraren genererar är ett bra sätt att lära sig hur man konstruerar grundläggande sökuttryck."
+msgstr "Det första klicket på en post kommer att begränsa listan med böcker till de som innehåller eller matchar posten. Fortsätt exemplet ovan, att klicka på Isaac Asimov kommer visa böcker av denna författare. Klicka igen på posten kommer att ändra vad som visas, beroende på om posten har underkategorier (se underkategorier och hierarkiska artiklar nedan). Fortsätt Isaac Asimov exemplet klicka igen på Isaac Asimov kommer begränsa listan med böcker till dem som inte är av Isaac Asimov. Ett tredje klick tar bort begränsningen, visar alla böcker. Om du håller ned Ctrl eller Skift och klickar på flera poster, så skapas restriktioner baserade på flera poster. Till exempel kan du hålla Ctrl och klicka på taggarna Historia och Europa för att hitta böcker om Europas historia. Taggbläddraren fungerar genom att bygga sökuttryck som automatiskt förs in i sökfältet. Att se vad Taggbläddraren genererar är ett bra sätt att lära sig hur man konstruerar grundläggande sökuttryck."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:541
 msgid ""
@@ -1201,7 +1201,7 @@ msgid ""
 ":guilabel:`Add sub-category to...`, and entering the sub-category name; or "
 "by using the :guilabel:`User categories editor` by entering names like the "
 "Favorites example above."
-msgstr "Objekten i yttre nivå av :guilabel:`Taggbläddraren`, som till exempel författare och serier, kallas kategorier. Du kan skapa egna kategorier, så kallade :guilabel:`Användarkategorier`, som är användbara för att organisera poster. Till exempel kan du använda  :guilabel:`Användarkategoriredigeraren` (klicka på knappen :guilabel:`Anpassa` nere till vänster av Taggbläddraren och välj :guilabel:`Författare, serier, o.s.v.->Användarkategorier`) för att skapa en Användarkategori som kallas Favoritförfattare, lägg sedan posterna för dina favoriter i kategorin. Användarkategorier kan ha underkategorier. Till exempel är Användarkategorin Favoriter. Författare en underkategori av Favoriter. Du kanske också har Favoriter. Serier, i vilket fall kommer det att finnas två underkategorier under Favoriter. Underkategorier kan skapas genom att högerklicka på en Användarkategori och att välja :guilabel:`Lägg till underkategori i...`, och går in i underkategorin namn; eller genom att använda :guilabel:`Användarkategoriredigering` genom att ange namn som favoriter i exemplet ovan."
+msgstr "Posten i yttre nivå av :guilabel:`Taggbläddraren`, som till exempel författare och serier, kallas kategorier. Du kan skapa egna kategorier, så kallade :guilabel:`Användarkategorier`, som är användbara för att organisera poster. Till exempel kan du använda  :guilabel:`Användarkategoriredigeraren` (klicka på knappen :guilabel:`Anpassa` nere till vänster av Taggbläddraren och välj :guilabel:`Författare, serier, o.s.v.->Användarkategorier`) för att skapa en Användarkategori som kallas Favoritförfattare, lägg sedan posterna för dina favoriter i kategorin. Användarkategorier kan ha underkategorier. Till exempel är Användarkategorin Favoriter. Författare en underkategori av Favoriter. Du kanske också har Favoriter. Serier, i vilket fall kommer det att finnas två underkategorier under Favoriter. Underkategorier kan skapas genom att högerklicka på en Användarkategori och att välja :guilabel:`Lägg till underkategori i...`, och går in i underkategorin namn; eller genom att använda :guilabel:`Användarkategoriredigering` genom att ange namn som favoriter i exemplet ovan."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:549
 msgid ""
@@ -1249,14 +1249,14 @@ msgid ""
 "the small triangle next to it. Clicking on the triangle will show Thriller "
 "and English as sub-items. See :ref:`Managing subgroups of books, for example"
 " \"genre\" <subgroups-tutorial>` for more information."
-msgstr "Det är också möjligt att skapa hierarkier inom några av kategorierna text såsom taggar, serier och anpassade kolumner. Dessa hierarkier visar den lilla triangeln, medger delposter att vara dolda. För att använda hierarkier av objekt i en kategori, måste du först gå till :guilabel:`Inställningar->Gränssnitt->Utseende och känsla` och ange kategorinamnet eller kategorinamnen i fältet \"Kategorier med hierarkisk objekt\". När detta är gjort, kommer poster i den kategorin som innehåller punkter visas med hjälp av den lilla triangeln. Till exempel, anta att du skapar en egen kolumn som heter \"genre\" och hänvisar till att den innehåller hierarkiska objekt. När detta är gjort, sådant som Mystery.Thriller och Mystery.English visas som Mystery med den lilla triangeln bredvid den. Genom att klicka på triangeln visas Thriller och engelska som delposter. Se :ref:`Hantera undergrupper av böcker, till exempel “genre” <subgroups-tutorial>` för mer information."
+msgstr "Det är också möjligt att skapa hierarkier inom några av kategorierna text såsom taggar, serier och anpassade kolumner. Dessa hierarkier visar den lilla triangeln, medger delposter att vara dolda. För att använda hierarkier av post i en kategori, måste du först gå till :guilabel:`Inställningar->Gränssnitt->Utseende och känsla` och ange kategorinamnet eller kategorinamnen i fältet \"Kategorier med hierarkisk post\". När detta är gjort, kommer poster i den kategorin som innehåller punkter visas med hjälp av den lilla triangeln. Till exempel, anta att du skapar en egen kolumn som heter \"genre\" och hänvisar till att den innehåller hierarkiska post. När detta är gjort, sådant som Mystery.Thriller och Mystery.English visas som Mystery med den lilla triangeln bredvid den. Genom att klicka på triangeln visas Thriller och engelska som delposter. Se :ref:`Hantera undergrupper av böcker, till exempel “genre” <subgroups-tutorial>` för mer information."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:553
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
-msgstr "Hierarkiska objekt (objekt med underkategorier) använder samma fyra \"klicka-på\" sökningar som Användarkategorier. Poster som inte har skapelser använder två av de sökningar: \"allt som matchar\" och \"allt som inte matchar\"."
+msgstr "Hierarkiska post (post med underkategorier) använder samma fyra \"klicka-på\" sökningar som Användarkategorier. Poster som inte har skapelser använder två av de sökningar: \"allt som matchar\" och \"allt som inte matchar\"."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:555
 msgid ""
@@ -1268,7 +1268,7 @@ msgid ""
 " books. For example, dragging a book onto Isaac Asimov will set the author "
 "of that book to Isaac Asimov. Dropping it onto the tag History will add the "
 "tag History to the book's tags."
-msgstr "Du kan dra och släppa objekt i Taggbläddraren på Användarkategorier för att lägga till dem i den kategorin. Om källan är en Användarkategori, hålla Skift-tangenten medan du drar flyttar objektet till den nya kategorin. Du kan också dra och släppa böcker från boklistan på objekt i Taggbläddraren; släppa en bok om ett objekt medför att objekt som ska tillämpas automatiskt på de släppta böckerna. Till exempel kommer dra en bok på Isaac Asimov sätter författaren till denna bok till Isaac Asimov. Att släppa den på taggen Historik kommer att lägga till taggen Historik till bokens taggar."
+msgstr "Du kan dra och släppa post i Taggbläddraren på Användarkategorier för att lägga till dem i den kategorin. Om källan är en Användarkategori, hålla Skift-tangenten medan du drar flyttar posten till den nya kategorin. Du kan också dra och släppa böcker från boklistan på post i Taggbläddraren; släppa en bok om en post medför att post som ska tillämpas automatiskt på de släppta böckerna. Till exempel kommer dra en bok på Isaac Asimov sätter författaren till denna bok till Isaac Asimov. Att släppa den på taggen Historik kommer att lägga till taggen Historik till bokens taggar."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:557
 msgid ""
@@ -1278,7 +1278,7 @@ msgid ""
 "rename it, or open a \"Manage x\" dialog that allows you to manage items of "
 "that kind. For example, the \"Manage Authors\" dialog allows you to rename "
 "authors and control how their names are sorted."
-msgstr "Du kan enkelt hitta någon post i Taggbläddraren genom att klicka på sökknappen längst ned till höger. Dessutom kan du högerklicka på ett objekt och välja en av flera operationer. Några exempel är att dölja det, byta namn på det, eller öppna en \"Hantera x\" dialogruta som låter dig anpassa objekt av detta slag. Till exempel med \"Hantera författare\" dialogrutan kan du byta namn på författare och hantera hur deras namn sorteras."
+msgstr "Du kan enkelt hitta någon post i Taggbläddraren genom att klicka på sökknappen längst ned till höger. Dessutom kan du högerklicka på en post och välja en av flera operationer. Några exempel är att dölja det, byta namn på det, eller öppna en \"Hantera x\" dialogruta som låter dig anpassa post av detta slag. Till exempel med \"Hantera författare\" dialogrutan kan du byta namn på författare och hantera hur deras namn sorteras."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:559
 msgid ""
@@ -1287,7 +1287,7 @@ msgid ""
 "choose to sort by name, average rating or popularity (popularity is the "
 "number of books with an item in your library; for example, the popularity of"
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
-msgstr "Du kan anpassa hur objekt sorteras i Taggbläddraren via knappen :guilabel:`Anpassa` längst ned till vänster på Taggbläddraren. Du kan välja att sortera efter namn, genomsnittliga betyget eller popularitet (popularitet är antalet böcker med ett objekt i biblioteket, till exempel, är populariteten av Isaac Asimov antalet böcker i biblioteket av Isaac Asimov)."
+msgstr "Du kan anpassa hur post sorteras i Taggbläddraren via knappen :guilabel:`Anpassa` längst ned till vänster på Taggbläddraren. Du kan välja att sortera efter namn, genomsnittliga betyget eller popularitet (popularitet är antalet böcker med en post i biblioteket, till exempel, är populariteten av Isaac Asimov antalet böcker i biblioteket av Isaac Asimov)."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:566
 msgid "Cover grid"
@@ -1402,7 +1402,7 @@ msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
-msgstr "Dubbelklicka på en bok i Snabbvisningsfönstret för att välja den bok i biblioteksvyn. Detta kommer också ändra objekt som visas i Snabbvisningsfönstret (det vänstra panelen) för att visa objekten i den nyligen valda boken."
+msgstr "Dubbelklicka på en bok i Snabbvisningsfönstret för att välja den bok i biblioteksvyn. Detta kommer också ändra post som visas i Snabbvisningsfönstret (det vänstra panelen) för att visa posterna i den nyligen valda boken."
 
 #: ../../home/kovid/work/calibre/manual/gui.rst:615
 msgid ""

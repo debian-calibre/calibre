@@ -11038,9 +11038,9 @@ return this.__repr__();
             book.is_complete = false;
             if (get_interface_data().username) {
                 newest_epoch = newest_pos = null;
-                var ρσ_Iter0 = ρσ_Iterable(manifest.last_read_positions);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    pos = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter5 = ρσ_Iterable(manifest.last_read_positions);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    pos = ρσ_Iter5[ρσ_Index5];
                     if (newest_epoch === null || pos.epoch > newest_epoch) {
                         newest_epoch = pos.epoch;
                         newest_pos = pos.cfi;
@@ -15668,11 +15668,44 @@ return this.__repr__();
             }
         }
         viewport_mode_changer(scroll_viewport.set_mode);
+        function line_height(reset) {
+            var ds, lh;
+            if (reset) {
+                line_height.ans = null;
+                return;
+            }
+            if (!line_height.ans) {
+                ds = window.getComputedStyle(document.body);
+                try {
+                    lh = float(ds.lineHeight);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        try {
+                            lh = 1.2 * float(ds.fontSize);
+                        } catch (ρσ_Exception) {
+                            ρσ_last_exception = ρσ_Exception;
+                            {
+                                lh = 15;
+                            } 
+                        }
+                    } 
+                }
+                line_height.ans = max(5, lh);
+            }
+            return line_height.ans;
+        };
+        if (!line_height.__argnames__) Object.defineProperties(line_height, {
+            __argnames__ : {value: ["reset"]},
+            __module__ : {value: "read_book.viewport"}
+        });
+
         ρσ_modules["read_book.viewport"].FUNCTIONS = FUNCTIONS;
         ρσ_modules["read_book.viewport"].scroll_viewport = scroll_viewport;
         ρσ_modules["read_book.viewport"].attr = attr;
         ρσ_modules["read_book.viewport"].ScrollViewport = ScrollViewport;
         ρσ_modules["read_book.viewport"].IOSScrollViewport = IOSScrollViewport;
+        ρσ_modules["read_book.viewport"].line_height = line_height;
     })();
 
     (function(){
@@ -15903,9 +15936,9 @@ return this.__repr__();
         function unwrapped_nodes(range_wrapper) {
             var ans, child;
             ans = [];
-            var ρσ_Iter0 = ρσ_Iterable(range_wrapper.childNodes);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                child = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter6 = ρσ_Iterable(range_wrapper.childNodes);
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                child = ρσ_Iter6[ρσ_Index6];
                 if (child.nodeType === Node.ELEMENT_NODE && child.dataset.calibreRangeWrapper) {
                     ans = ans.concat(unwrapped_nodes(child));
                 } else {
@@ -15940,8 +15973,8 @@ return this.__repr__();
 
         function increment_index_for_children(children, index, sentinel) {
             var child, i;
-            for (var ρσ_Index1 = 0; ρσ_Index1 < children.length; ρσ_Index1++) {
-                i = ρσ_Index1;
+            for (var ρσ_Index7 = 0; ρσ_Index7 < children.length; ρσ_Index7++) {
+                i = ρσ_Index7;
                 child = children[(typeof i === "number" && i < 0) ? children.length + i : i];
                 index = increment_index_for_child(child, index, sentinel);
                 if (child === sentinel) {
@@ -16041,8 +16074,8 @@ return this.__repr__();
 
         function node_at_index(nodes, target, index, iter_text_nodes) {
             var node, is_element, ρσ_unpack, q, i;
-            for (var ρσ_Index2 = 0; ρσ_Index2 < nodes.length; ρσ_Index2++) {
-                i = ρσ_Index2;
+            for (var ρσ_Index8 = 0; ρσ_Index8 < nodes.length; ρσ_Index8++) {
+                i = ρσ_Index8;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 is_element = node.nodeType === Node.ELEMENT_NODE;
                 if (is_element && node.dataset.calibreRangeWrapper) {
@@ -16094,8 +16127,8 @@ return this.__repr__();
             var last_text_node, seen_first, node, l, ρσ_unpack, qn, ok, i;
             last_text_node = null;
             seen_first = false;
-            for (var ρσ_Index3 = 0; ρσ_Index3 < nodes.length; ρσ_Index3++) {
-                i = ρσ_Index3;
+            for (var ρσ_Index9 = 0; ρσ_Index9 < nodes.length; ρσ_Index9++) {
+                i = ρσ_Index9;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 if (!seen_first) {
                     if (!first_node || node.isSameNode(first_node)) {
@@ -16288,9 +16321,9 @@ return this.__repr__();
                     var diff, i;
                     a = key_map[(typeof a === "number" && a < 0) ? key_map.length + a : a];
                     b = key_map[(typeof b === "number" && b < 0) ? key_map.length + b : b];
-                    var ρσ_Iter4 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
-                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                        i = ρσ_Iter4[ρσ_Index4];
+                    var ρσ_Iter10 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
+                    for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                        i = ρσ_Iter10[ρσ_Index10];
                         diff = (ρσ_expr_temp = a.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] - (ρσ_expr_temp = b.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
                         if (diff !== 0) {
                             return diff;
@@ -16528,9 +16561,9 @@ return this.__repr__();
                         var rect, p, node, offset, rects, x, y, ρσ_unpack;
                         rect = span.getBoundingClientRect();
                         p = span.parentNode;
-                        var ρσ_Iter5 = ρσ_Iterable(span.childNodes);
-                        for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                            node = ρσ_Iter5[ρσ_Index5];
+                        var ρσ_Iter11 = ρσ_Iterable(span.childNodes);
+                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                            node = ρσ_Iter11[ρσ_Index11];
                             span.removeChild(node);
                             p.insertBefore(node, span);
                         }
@@ -16693,9 +16726,9 @@ return this.__repr__();
             maxx = winw;
             function x_loop(cury) {
                 var delta, curx, cfi, direction;
-                var ρσ_Iter6 = ρσ_Iterable([-1, 1]);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    direction = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter12 = ρσ_Iterable([-1, 1]);
+                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                    direction = ρσ_Iter12[ρσ_Index12];
                     delta = deltax * direction;
                     curx = 0;
                     while (!((direction < 0 && curx < minx || direction > 0 && curx > maxx))) {
@@ -16712,9 +16745,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.cfi"}
             });
 
-            var ρσ_Iter7 = ρσ_Iterable([-1, 1]);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                direction = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter13 = ρσ_Iterable([-1, 1]);
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                direction = ρσ_Iter13[ρσ_Index13];
                 delta = deltay * direction;
                 cury = 0;
                 while (!((direction < 0 && cury < miny || direction > 0 && cury > maxy))) {
@@ -17101,37 +17134,11 @@ return this.__repr__();
 
         var opts = ρσ_modules["read_book.settings"].opts;
 
+        var line_height = ρσ_modules["read_book.viewport"].line_height;
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
 
         var document_height = ρσ_modules.utils.document_height;
         var viewport_to_document = ρσ_modules.utils.viewport_to_document;
-
-        function line_height() {
-            var ds, lh;
-            if (!line_height.ans) {
-                ds = window.getComputedStyle(document.body);
-                try {
-                    lh = float(ds.lineHeight);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        try {
-                            lh = 1.2 * float(ds.fontSize);
-                        } catch (ρσ_Exception) {
-                            ρσ_last_exception = ρσ_Exception;
-                            {
-                                lh = 15;
-                            } 
-                        }
-                    } 
-                }
-                line_height.ans = max(5, lh);
-            }
-            return line_height.ans;
-        };
-        if (!line_height.__module__) Object.defineProperties(line_height, {
-            __module__ : {value: "read_book.flow_mode"}
-        });
 
         function flow_to_scroll_fraction(frac, on_initial_load) {
             scroll_viewport.scroll_to(0, document_height() * frac);
@@ -17440,7 +17447,7 @@ return this.__repr__();
         });
 
         function layout(is_single_page) {
-            line_height.ans = null;
+            line_height(true);
             ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({margin: "0", border_width: "0", padding: "0"})]));
         };
         if (!layout.__argnames__) Object.defineProperties(layout, {
@@ -18058,7 +18065,6 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
         ρσ_modules["read_book.flow_mode"].drag_scroller = drag_scroller;
         ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
-        ρσ_modules["read_book.flow_mode"].line_height = line_height;
         ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction = flow_to_scroll_fraction;
         ρσ_modules["read_book.flow_mode"].clear_small_scrolls = clear_small_scrolls;
         ρσ_modules["read_book.flow_mode"].dispatch_small_scrolls = dispatch_small_scrolls;
@@ -18112,76 +18118,7 @@ return this.__repr__();
             __module__ : {value: "read_book.mathjax"}
         });
 
-        function monkeypatch(mathjax_files) {
-            var StyleString, orig;
-            StyleString = window.MathJax.Ajax.StyleString.bind(window.MathJax.Ajax);
-            function style_string(styles) {
-                return StyleString(styles).replace(/url\('?(.*?)'?\)/g, (function() {
-                    var ρσ_anonfunc = function (match, url) {
-                        var ans;
-                        if (!url.endsWith(".woff")) {
-                            return match;
-                        }
-                        url = get_url(mathjax_files, url);
-                        ans = "url('" + ρσ_str.format("{}", url) + "')";
-                        return ans;
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["match", "url"]},
-                        __module__ : {value: "read_book.mathjax"}
-                    });
-                    return ρσ_anonfunc;
-                })());
-            };
-            if (!style_string.__argnames__) Object.defineProperties(style_string, {
-                __argnames__ : {value: ["styles"]},
-                __module__ : {value: "read_book.mathjax"}
-            });
-
-            orig = window.MathJax.Ajax.fileURL.bind(window.MathJax.Ajax);
-            function file_url(file) {
-                var ans, name;
-                ans = orig(file);
-                name = ans.lstrip("/");
-                if (name.startswith("../fonts")) {
-                    name = name.slice(3);
-                }
-                if (ρσ_in((ρσ_expr_temp = name.rpartition("/"))[ρσ_expr_temp.length-1], "otf eot woff")) {
-                    return name;
-                }
-                ans = get_url(mathjax_files, name);
-                if (ans === name && !name.startswith("blob:")) {
-                    if (ans.endswith(".eot") || ans.endswith(".otf")) {
-                        return "";
-                    }
-                    print("WARNING: Failed to resolve MathJax file:", name);
-                }
-                return ans;
-            };
-            if (!file_url.__argnames__) Object.defineProperties(file_url, {
-                __argnames__ : {value: ["file"]},
-                __module__ : {value: "read_book.mathjax"}
-            });
-
-            window.MathJax.Ajax.fileURL = file_url;
-            window.MathJax.Ajax.StyleString = style_string;
-            window.MathJax.Ajax.fileRev = (function() {
-                var ρσ_anonfunc = function (file) {
-                    return "";
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["file"]},
-                    __module__ : {value: "read_book.mathjax"}
-                });
-                return ρσ_anonfunc;
-            })();
-        };
-        if (!monkeypatch.__argnames__) Object.defineProperties(monkeypatch, {
-            __argnames__ : {value: ["mathjax_files"]},
-            __module__ : {value: "read_book.mathjax"}
-        });
-
-        function postprocess(link_uid, proceed) {
+        function postprocess(link_uid) {
             var href, a;
             var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("a"));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
@@ -18196,59 +18133,30 @@ return this.__repr__();
                     }).call(this)));
                 }
             }
-            proceed();
         };
         if (!postprocess.__argnames__) Object.defineProperties(postprocess, {
-            __argnames__ : {value: ["link_uid", "proceed"]},
+            __argnames__ : {value: ["link_uid"]},
             __module__ : {value: "read_book.mathjax"}
         });
 
-        function init_mathjax(mathjax_files, link_uid, proceed) {
-            monkeypatch(mathjax_files);
-            window.MathJax.Hub.Register.StartupHook("End", postprocess.bind(this, link_uid, proceed));
+        function load_mathjax(src) {
+            var script;
+            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
+            script.async = true;
+            script.src = src;
+            document.head.appendChild(script);
         };
-        if (!init_mathjax.__argnames__) Object.defineProperties(init_mathjax, {
-            __argnames__ : {value: ["mathjax_files", "link_uid", "proceed"]},
+        if (!load_mathjax.__argnames__) Object.defineProperties(load_mathjax, {
+            __argnames__ : {value: ["src"]},
             __module__ : {value: "read_book.mathjax"}
         });
 
         function apply_mathjax(mathjax_files, link_uid, proceed) {
-            var m, script;
-            window.MathJax = m = {};
-            m.positionToHash = false;
-            m.showMathMenu = false;
-            m.showMathMenuMSIE = false;
-            m.extensions = "tex2jax.js asciimath2jax.js mml2jax.js".split(" ");
-            m.jax = "input/TeX input/MathML input/AsciiMath output/CommonHTML".split(" ");
-            m.TeX = {};
-            m.TeX.extensions = "AMSmath.js AMSsymbols.js noErrors.js noUndefined.js".split(" ");
-            m.CommonHTML = { linebreaks: { automatic: true} };
-            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
-            document.head.appendChild(script);
+            var es, s;
             if (runtime.is_standalone_viewer) {
-                script.onload = (function() {
-                    var ρσ_anonfunc = function () {
-                        var ev;
-                        ev = new CustomEvent("calibre-mathjax-init", (function(){
-                            var ρσ_d = Object.create(null);
-                            ρσ_d["detail"] = (function(){
-                                var ρσ_d = Object.create(null);
-                                ρσ_d["MathJax"] = m;
-                                ρσ_d["link_uid"] = link_uid;
-                                ρσ_d["mathjax_files"] = mathjax_files;
-                                return ρσ_d;
-                            }).call(this);
-                            return ρσ_d;
-                        }).call(this));
-                        document.documentElement.dispatchEvent(ev);
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.mathjax"}
-                    });
-                    return ρσ_anonfunc;
-                })();
-                document.documentElement.addEventListener("calibre-mathjax-init-done", (function() {
+                document.documentElement.addEventListener("calibre-mathjax-typeset-done", (function() {
                     var ρσ_anonfunc = function (ev) {
+                        postprocess(link_uid);
                         proceed();
                     };
                     if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -18257,10 +18165,118 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })());
-            } else {
-                m.AuthorInit = init_mathjax.bind(this, mathjax_files, link_uid, proceed);
+                load_mathjax("" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/mathjax/startup.js");
+                return;
             }
-            script.src = get_url(mathjax_files, "MathJax.js");
+            window.MathJax = {};
+            window.MathJax.startup = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["ready"] = (function() {
+                    var ρσ_anonfunc = function () {
+                        window.MathJax.startup.defaultReady();
+                        window.MathJax.startup.output.font.addFontURLs = (function() {
+                            var ρσ_anonfunc = function (styles, fonts, url) {
+                                var base, clone, font, key, font_name, full_name, src, name;
+                                base = url.partition("/")[2];
+                                var ρσ_Iter1 = ρσ_Iterable(fonts);
+                                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                                    name = ρσ_Iter1[ρσ_Index1];
+                                    clone = {};
+                                    font = fonts[(typeof name === "number" && name < 0) ? fonts.length + name : name];
+                                    var ρσ_Iter2 = ρσ_Iterable(Object.keys(font));
+                                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                                        key = ρσ_Iter2[ρσ_Index2];
+                                        clone[(typeof key === "number" && key < 0) ? clone.length + key : key] = font[(typeof key === "number" && key < 0) ? font.length + key : key];
+                                    }
+                                    font_name = clone.src.partition("/")[2].partition("\"")[0];
+                                    full_name = base + "/" + font_name;
+                                    src = get_url(mathjax_files, full_name);
+                                    clone.src = clone.src.replace(/".+?"/, "\"" + ρσ_str.format("{}", src) + "\"");
+                                    styles[(typeof name === "number" && name < 0) ? styles.length + name : name] = clone;
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["styles", "fonts", "url"]},
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })();
+                        window.MathJax.startup.promise.then((function() {
+                            var ρσ_anonfunc = function () {
+                                postprocess(link_uid);
+                                proceed();
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "read_book.mathjax"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            window.MathJax.loader = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["load"] = ['input/tex-full', 'input/asciimath', 'input/mml', 'output/chtml'];
+                ρσ_d["require"] = (function() {
+                    var ρσ_anonfunc = function (url) {
+                        return new Promise((function() {
+                            var ρσ_anonfunc = function (resolve, reject) {
+                                var name, script;
+                                name = url.partition("/")[2];
+                                script = document.createElement("script");
+                                script.charset = "UTF-8";
+                                script.onload = (function() {
+                                    var ρσ_anonfunc = function () {
+                                        resolve(url);
+                                    };
+                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                        __module__ : {value: "read_book.mathjax"}
+                                    });
+                                    return ρσ_anonfunc;
+                                })();
+                                script.onerror = (function() {
+                                    var ρσ_anonfunc = function () {
+                                        reject(url);
+                                    };
+                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                        __module__ : {value: "read_book.mathjax"}
+                                    });
+                                    return ρσ_anonfunc;
+                                })();
+                                script.src = get_url(mathjax_files, name);
+                                document.head.appendChild(script);
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["resolve", "reject"]},
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["url"]},
+                        __module__ : {value: "read_book.mathjax"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            var ρσ_Iter3 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                s = ρσ_Iter3[ρσ_Index3];
+                if (s.type === "text/x-mathjax-config") {
+                    es = document.createElement("script");
+                    es.text = s.text;
+                    document.head.appendChild(es);
+                    document.head.removeChild(es);
+                }
+            }
+            load_mathjax(get_url(mathjax_files, "startup.js"));
         };
         if (!apply_mathjax.__argnames__) Object.defineProperties(apply_mathjax, {
             __argnames__ : {value: ["mathjax_files", "link_uid", "proceed"]},
@@ -18268,15 +18284,14 @@ return this.__repr__();
         });
 
         ρσ_modules["read_book.mathjax"].get_url = get_url;
-        ρσ_modules["read_book.mathjax"].monkeypatch = monkeypatch;
         ρσ_modules["read_book.mathjax"].postprocess = postprocess;
-        ρσ_modules["read_book.mathjax"].init_mathjax = init_mathjax;
+        ρσ_modules["read_book.mathjax"].load_mathjax = load_mathjax;
         ρσ_modules["read_book.mathjax"].apply_mathjax = apply_mathjax;
     })();
 
     (function(){
         var __name__ = "read_book.paged_mode";
-        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, number_of_cols, last_scrolled_to_column, is_full_screen_layout, anchor_funcs, resize_manager;
+        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, number_of_cols, last_scrolled_to_column, is_full_screen_layout, wheel_handler, onwheel, anchor_funcs, resize_manager;
         var traceback = ρσ_modules.traceback;
 
         var E = ρσ_modules.elementmaker.E;
@@ -18297,6 +18312,7 @@ return this.__repr__();
         var opts = ρσ_modules["read_book.settings"].opts;
 
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+        var line_height = ρσ_modules["read_book.viewport"].line_height;
 
         var document_height = ρσ_modules.utils.document_height;
         var document_width = ρσ_modules.utils.document_width;
@@ -18546,6 +18562,7 @@ return this.__repr__();
 
         function layout(is_single_page, on_resize) {
             var body_style, first_layout, cps, single_screen, svgs, has_svg, imgs, only_img, num, elems, n, ww, sm, c, c2, has_no_more_than_two_columns, data, dw, elem;
+            line_height(true);
             body_style = window.getComputedStyle(document.body);
             first_layout = !_in_paged_mode;
             cps = calc_columns_per_screen();
@@ -19041,27 +19058,99 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
-        function onwheel(evt) {
-            var backward, x;
-            if (evt.deltaY) {
-                backward = evt.deltaY < 0;
-                if (opts.paged_wheel_scrolls_by_screen) {
-                    x = (backward) ? previous_screen_location() : next_screen_location();
-                } else {
-                    x = (backward) ? previous_col_location() : next_col_location();
-                }
-                if (x === -1) {
-                    next_spine_item(backward);
-                } else {
-                    scroll_to_xpos(x);
-                }
+        function HandleWheel() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            HandleWheel.prototype.__init__.apply(this, arguments);
+        }
+        HandleWheel.prototype.__init__ = function __init__() {
+            var self = this;
+            self.reset();
+        };
+        if (!HandleWheel.prototype.__init__.__module__) Object.defineProperties(HandleWheel.prototype.__init__, {
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.__argnames__ = HandleWheel.prototype.__init__.__argnames__;
+        HandleWheel.__handles_kwarg_interpolation__ = HandleWheel.prototype.__init__.__handles_kwarg_interpolation__;
+        HandleWheel.prototype.reset = function reset() {
+            var self = this;
+            self.last_event_mode = "page";
+            self.last_event_at = -1e4;
+            self.last_event_backwards = false;
+            self.accumlated_scroll = 0;
+        };
+        if (!HandleWheel.prototype.reset.__module__) Object.defineProperties(HandleWheel.prototype.reset, {
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.onwheel = function onwheel(evt) {
+            var self = this;
+            var backward, WheelEvent;
+            if (!evt.deltaY) {
+                return;
+            }
+            backward = evt.deltaY < 0;
+            WheelEvent = window.WheelEvent;
+            if (evt.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+                self.do_scroll(backward);
+            } else {
+                self.add_event(backward, Math.abs(evt.deltaY), (evt.deltaMode === WheelEvent.DOM_DELTA_LINE) ? "line" : "pixel");
             }
         };
-        if (!onwheel.__argnames__) Object.defineProperties(onwheel, {
+        if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
             __argnames__ : {value: ["evt"]},
             __module__ : {value: "read_book.paged_mode"}
         });
+        HandleWheel.prototype.add_event = function add_event(backward, deltaY, mode) {
+            var self = this;
+            var now, lh;
+            now = window.performance.now();
+            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== mode) {
+                self.accumlated_scroll = 0;
+            }
+            self.last_event_mode = mode;
+            self.last_event_at = now;
+            self.last_event_backwards = backward;
+            lh = line_height();
+            if (mode === "line") {
+                deltaY *= lh;
+            }
+            self.accumlated_scroll += deltaY;
+            if (self.accumlated_scroll > 5 * lh) {
+                self.do_scroll(backward);
+            }
+        };
+        if (!HandleWheel.prototype.add_event.__argnames__) Object.defineProperties(HandleWheel.prototype.add_event, {
+            __argnames__ : {value: ["backward", "deltaY", "mode"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.do_scroll = function do_scroll(backward) {
+            var self = this;
+            var x;
+            self.reset();
+            if (opts.paged_wheel_scrolls_by_screen) {
+                x = (backward) ? previous_screen_location() : next_screen_location();
+            } else {
+                x = (backward) ? previous_col_location() : next_col_location();
+            }
+            if (x === -1) {
+                next_spine_item(backward);
+            } else {
+                scroll_to_xpos(x);
+            }
+        };
+        if (!HandleWheel.prototype.do_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.do_scroll, {
+            __argnames__ : {value: ["backward"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        HandleWheel.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(HandleWheel.prototype, "__bases__", {value: []});
 
+        wheel_handler = new HandleWheel;
+        onwheel = wheel_handler.onwheel.bind(wheel_handler);
         function scroll_by_page(backward, by_screen) {
             var pos, pages, scrolled_frac;
             if (by_screen) {
@@ -19364,6 +19453,8 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].number_of_cols = number_of_cols;
         ρσ_modules["read_book.paged_mode"].last_scrolled_to_column = last_scrolled_to_column;
         ρσ_modules["read_book.paged_mode"].is_full_screen_layout = is_full_screen_layout;
+        ρσ_modules["read_book.paged_mode"].wheel_handler = wheel_handler;
+        ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
         ρσ_modules["read_book.paged_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.paged_mode"].resize_manager = resize_manager;
         ρσ_modules["read_book.paged_mode"].first_child = first_child;
@@ -19401,7 +19492,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].progress_frac = progress_frac;
         ρσ_modules["read_book.paged_mode"].next_spine_item = next_spine_item;
         ρσ_modules["read_book.paged_mode"].is_return = is_return;
-        ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
+        ρσ_modules["read_book.paged_mode"].HandleWheel = HandleWheel;
         ρσ_modules["read_book.paged_mode"].scroll_by_page = scroll_by_page;
         ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
@@ -19528,9 +19619,9 @@ return this.__repr__();
                 ρσ_d["shiftKey"] = false;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter0 = ρσ_Iterable(parts.slice(0, -1));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                modifier = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter14 = ρσ_Iterable(parts.slice(0, -1));
+            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                modifier = ρσ_Iter14[ρσ_Index14];
                 q = modifier.toLowerCase();
                 if (q === "ctrl") {
                     ans.ctrlKey = true;
@@ -19555,9 +19646,9 @@ return this.__repr__();
                 sc = [sc];
             }
             pkey = [];
-            var ρσ_Iter1 = ρσ_Iterable(sc);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                x = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter15 = ρσ_Iterable(sc);
+            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                x = ρσ_Iter15[ρσ_Index15];
                 pkey.push(parse_key_repr(x));
             }
             return (function(){
@@ -19627,9 +19718,9 @@ return this.__repr__();
         function keyevent_to_index(evt) {
             var parts, mod;
             parts = [];
-            var ρσ_Iter2 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                mod = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter16 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
+            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                mod = ρσ_Iter16[ρσ_Index16];
                 parts.push((evt[(typeof mod === "number" && mod < 0) ? evt.length + mod : mod]) ? "y" : "n");
             }
             return parts.join("") + get_key_text(evt);
@@ -19642,9 +19733,9 @@ return this.__repr__();
         function key_as_text(evt) {
             var mods, x, key;
             mods = [];
-            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                x = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter17 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                x = ρσ_Iter17[ρσ_Index17];
                 if (evt[ρσ_bound_index(x + "Key", evt)]) {
                     if (ρσ_in("macos", window.navigator.userAgent)) {
                         if (x === "alt") {
@@ -19768,17 +19859,17 @@ return this.__repr__();
             var ans, scd, entry, shortcuts, sc, sc_name;
             ans = Object.create(null);
             scd = shortcuts_definition();
-            var ρσ_Iter4 = ρσ_Iterable(Object.keys(scd));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                sc_name = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter18 = ρσ_Iterable(Object.keys(scd));
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                sc_name = ρσ_Iter18[ρσ_Index18];
                 entry = scd[(typeof sc_name === "number" && sc_name < 0) ? scd.length + sc_name : sc_name];
                 shortcuts = entry.shortcuts;
                 if (custom_shortcuts && custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]) {
                     shortcuts = custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name];
                 }
-                var ρσ_Iter5 = ρσ_Iterable(shortcuts);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    sc = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter19 = ρσ_Iterable(shortcuts);
+                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                    sc = ρσ_Iter19[ρσ_Index19];
                     ans[ρσ_bound_index(keyevent_to_index(sc), ans)] = sc_name;
                 }
             }
@@ -23047,9 +23138,9 @@ return this.__repr__();
             var self = this;
             var now, uuid, annot;
             now = (new Date).toISOString();
-            var ρσ_Iter0 = ρσ_Iterable(msg.removed_highlights);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                uuid = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter20 = ρσ_Iterable(msg.removed_highlights);
+            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                uuid = ρσ_Iter20[ρσ_Index20];
                 self.remove_highlight(uuid);
             }
             annot = (ρσ_expr_temp = self.highlights)[ρσ_bound_index(msg.uuid, ρσ_expr_temp)] = (function(){
@@ -23081,9 +23172,9 @@ return this.__repr__();
             var name, ans, h, uuid;
             name = self.view.currently_showing.name;
             ans = [];
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(self.highlights));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                uuid = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter21 = ρσ_Iterable(Object.keys(self.highlights));
+            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                uuid = ρσ_Iter21[ρσ_Index21];
                 h = (ρσ_expr_temp = self.highlights)[(typeof uuid === "number" && uuid < 0) ? ρσ_expr_temp.length + uuid : uuid];
                 if (h.spine_name === name && !h.removed && h.start_cfi) {
                     ans.push(h);
@@ -23602,9 +23693,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.create_annotation"}
             });
 
-            var ρσ_Iter2 = ρσ_Iterable(highlight_colors);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                bg = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter22 = ρσ_Iterable(highlight_colors);
+            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                bg = ρσ_Iter22[ρσ_Index22];
                 if (add(bg)) {
                     found_current = true;
                 }
@@ -23652,9 +23743,9 @@ return this.__repr__();
             var fill, stroke, use, handle;
             fill = self.current_highlight_style["background-color"];
             stroke = self.current_highlight_style["color"];
-            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                handle = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter23 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                handle = ρσ_Iter23[ρσ_Index23];
                 use = handle.querySelector("use");
                 use.style.stroke = stroke;
                 use.style.fill = fill;
@@ -23694,9 +23785,9 @@ return this.__repr__();
         CreateAnnotation.prototype.save_handle_state = function save_handle_state() {
             var self = this;
             var h;
-            var ρσ_Iter4 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                h = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter24 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
+                h = ρσ_Iter24[ρσ_Index24];
                 h.dataset.savedState = h.style.display;
                 h.style.display = "none";
             }
@@ -23707,9 +23798,9 @@ return this.__repr__();
         CreateAnnotation.prototype.restore_handle_state = function restore_handle_state() {
             var self = this;
             var h;
-            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                h = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter25 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
+                h = ρσ_Iter25[ρσ_Index25];
                 h.style.display = h.dataset.savedState;
             }
         };
@@ -23721,9 +23812,9 @@ return this.__repr__();
             var s, style, k;
             s = self.current_highlight_style;
             style = "";
-            var ρσ_Iter6 = ρσ_Iterable(Object.keys(self.current_highlight_style));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                k = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter26 = ρσ_Iterable(Object.keys(self.current_highlight_style));
+            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
+                k = ρσ_Iter26[ρσ_Index26];
                 style += "" + ρσ_str.format("{}", k) + ": " + ρσ_str.format("{}", s[(typeof k === "number" && k < 0) ? s.length + k : k]) + "; ";
             }
             ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: style, uuid: short_uuid(), existing: self.editing_annot_uuid})]));
@@ -23812,9 +23903,9 @@ return this.__repr__();
             if (self.state === WAITING_FOR_CLICK) {
                 return;
             }
-            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                touch = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter27 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
+                touch = ρσ_Iter27[ρσ_Index27];
                 self.active_touch = touch.identifier;
                 self.start_handle_drag(touch, ev.currentTarget.id);
                 break;
@@ -23840,9 +23931,9 @@ return this.__repr__();
             var touch;
             if (ρσ_in(self.state, [DRAGGING_RIGHT, DRAGGING_LEFT])) {
                 [ev.preventDefault(), ev.stopPropagation()];
-                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    touch = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter28 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index28 = 0; ρσ_Index28 < ρσ_Iter28.length; ρσ_Index28++) {
+                    touch = ρσ_Iter28[ρσ_Index28];
                     if (touch.identifier === self.active_touch) {
                         self.active_touch = null;
                         self.state = WAITING_FOR_DRAG;
@@ -23890,9 +23981,9 @@ return this.__repr__();
                 return;
             }
             [ev.stopPropagation(), ev.preventDefault()];
-            var ρσ_Iter9 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                touch = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter29 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index29 = 0; ρσ_Index29 < ρσ_Iter29.length; ρσ_Index29++) {
+                touch = ρσ_Iter29[ρσ_Index29];
                 if (touch.identifier === self.active_touch) {
                     self.handle_moved(touch);
                     return;
@@ -24200,9 +24291,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.create_annotation"}
             });
 
-            var ρσ_Iter10 = ρσ_Iterable(text.splitlines());
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                line = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter30 = ρσ_Iterable(text.splitlines());
+            for (var ρσ_Index30 = 0; ρσ_Index30 < ρσ_Iter30.length; ρσ_Index30++) {
+                line = ρσ_Iter30[ρσ_Index30];
                 if (!line || !line.strip()) {
                     if (current_block) {
                         add_para();
@@ -33680,18 +33771,18 @@ return this.__repr__();
             dev = get_device_uuid();
             epoch = 0;
             ans = null;
-            var ρσ_Iter0 = ρσ_Iterable(data);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter31 = ρσ_Iterable(data);
+            for (var ρσ_Index31 = 0; ρσ_Index31 < ρσ_Iter31.length; ρσ_Index31++) {
+                key = ρσ_Iter31[ρσ_Index31];
                 ρσ_unpack = ρσ_eslice(key.partition(":"), 2);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 book_id = ρσ_unpack[0];
                 fmt = ρσ_unpack[1];
                 if (book_id === str(book.key[1]) && fmt.upper() === book.key[2].upper()) {
                     last_read_positions = data[(typeof key === "number" && key < 0) ? data.length + key : key];
-                    var ρσ_Iter1 = ρσ_Iterable(last_read_positions);
-                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                        d = ρσ_Iter1[ρσ_Index1];
+                    var ρσ_Iter32 = ρσ_Iterable(last_read_positions);
+                    for (var ρσ_Index32 = 0; ρσ_Index32 < ρσ_Iter32.length; ρσ_Index32++) {
+                        d = ρσ_Iter32[ρσ_Index32];
                         if (d.device !== dev && d.epoch > epoch) {
                             epoch = d.epoch;
                             ans = d;
@@ -34710,9 +34801,9 @@ return this.__repr__();
                 table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({class_: "metadata"})]);
                 container.lastChild.appendChild(table);
                 render_metadata(mi, table, null, "html { font-size: " + ρσ_str.format("{}", document.documentElement.style.fontSize) + " }");
-                var ρσ_Iter2 = ρσ_Iterable(table.querySelectorAll("a[href]"));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    a = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter33 = ρσ_Iterable(table.querySelectorAll("a[href]"));
+                for (var ρσ_Index33 = 0; ρσ_Index33 < ρσ_Iter33.length; ρσ_Index33++) {
+                    a = ρσ_Iter33[ρσ_Index33];
                     a.removeAttribute("href");
                     a.removeAttribute("title");
                     a.classList.remove("blue-link");
@@ -36089,9 +36180,9 @@ return this.__repr__();
             var evt, attr;
             event.preventDefault();
             evt = Object.create(null);
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                attr = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter34 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
+            for (var ρσ_Index34 = 0; ρσ_Index34 < ρσ_Iter34.length; ρσ_Index34++) {
+                attr = ρσ_Iter34[ρσ_Index34];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["wheel_from_margin"].concat([ρσ_desugar_kwargs({evt: evt})]));
@@ -36420,12 +36511,12 @@ return this.__repr__();
             }
             names = [];
             item_groups = (data.backwards) ? ρσ_list_decorate([ range(idx - 1, -1, -1), range(spine.length - 1, idx, -1) ]) : ρσ_list_decorate([ range(idx + 1, spine.length), range(idx) ]);
-            var ρσ_Iter1 = ρσ_Iterable(item_groups);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                items = ρσ_Iter1[ρσ_Index1];
-                var ρσ_Iter2 = ρσ_Iterable(items);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    i = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter35 = ρσ_Iterable(item_groups);
+            for (var ρσ_Index35 = 0; ρσ_Index35 < ρσ_Iter35.length; ρσ_Index35++) {
+                items = ρσ_Iter35[ρσ_Index35];
+                var ρσ_Iter36 = ρσ_Iterable(items);
+                for (var ρσ_Index36 = 0; ρσ_Index36 < ρσ_Iter36.length; ρσ_Index36++) {
+                    i = ρσ_Iter36[ρσ_Index36];
                     names.push(spine[(typeof i === "number" && i < 0) ? spine.length + i : i]);
                 }
             }
@@ -36659,9 +36750,9 @@ return this.__repr__();
             var ans, m, s, mc, ρσ_unpack, which, sd, iframe, bg_image;
             ans = resolve_color_scheme();
             self.current_color_scheme = ans;
-            var ρσ_Iter3 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                which = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter37 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index37 = 0; ρσ_Index37 < ρσ_Iter37.length; ρσ_Index37++) {
+                which = ρσ_Iter37[ρσ_Index37];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -37010,9 +37101,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter4 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                name = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter38 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index38 = 0; ρσ_Index38 < ρσ_Iter38.length; ρσ_Index38++) {
+                name = ρσ_Iter38[ρσ_Index38];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -37177,9 +37268,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter5 = ρσ_Iterable(x.children);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    c = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter39 = ρσ_Iterable(x.children);
+                for (var ρσ_Index39 = 0; ρσ_Index39 < ρσ_Iter39.length; ρσ_Index39++) {
+                    c = ρσ_Iter39[ρσ_Index39];
                     process_node(c);
                 }
             };
@@ -37374,9 +37465,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                edge = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter40 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index40 = 0; ρσ_Index40 < ρσ_Iter40.length; ρσ_Index40++) {
+                edge = ρσ_Iter40[ρσ_Index40];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -37729,78 +37820,8 @@ return this.__repr__();
             __module__ : {value: null}
         });
 
-        function mathjax_file_received(name, proceed, end_type, xhr, ev) {
-            var result;
-            end_type = workaround_qt_bug(xhr, end_type);
-            if (end_type === "abort") {
-                return;
-            }
-            if (end_type !== "load") {
-                show_error(_("Failed to load MathJax file"), _("Could not load the file: {} with error: {}").format(name, xhr.error_html));
-                return;
-            }
-            if (!xhr.responseType || xhr.responseType === "text") {
-                result = xhr.responseText;
-            } else if (xhr.responseType === "blob" || xhr.responseType === "json") {
-                result = xhr.response;
-            } else {
-                show_error(_("Failed to load MathJax file"), _("Could not load the file: {} unknown response type: {}").format(name, xhr.responseType));
-                return;
-            }
-            if (name === "manifest.json") {
-                get_mathjax_files.manifest = result;
-                get_mathjax_files_stage2.files_to_get = list(Object.keys(result));
-                get_mathjax_files_stage2.file_data = Object.create(null);
-                get_mathjax_files_stage2(proceed);
-                return;
-            }
-            (ρσ_expr_temp = get_mathjax_files_stage2.file_data)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = result;
-            get_mathjax_files_stage2.files_to_get.remove(name);
-            if (!get_mathjax_files_stage2.files_to_get.length) {
-                proceed(get_mathjax_files_stage2.file_data);
-            }
-        };
-        if (!mathjax_file_received.__argnames__) Object.defineProperties(mathjax_file_received, {
-            __argnames__ : {value: ["name", "proceed", "end_type", "xhr", "ev"]},
-            __module__ : {value: null}
-        });
-
-        function get_mathjax_manifest(proceed) {
-            var xhr;
-            xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/manifest.json", mathjax_file_received.bind(null, "manifest.json", proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
-            xhr.responseType = "json";
-            xhr.send();
-        };
-        if (!get_mathjax_manifest.__argnames__) Object.defineProperties(get_mathjax_manifest, {
-            __argnames__ : {value: ["proceed"]},
-            __module__ : {value: null}
-        });
-
-        function get_mathjax_files_stage2(proceed) {
-            var xhr, filename;
-            if (!get_mathjax_files_stage2.files_to_get.length) {
-                proceed(get_mathjax_files_stage2.file_data);
-                return;
-            }
-            var ρσ_Iter6 = ρσ_Iterable(get_mathjax_files_stage2.files_to_get);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                filename = ρσ_Iter6[ρσ_Index6];
-                xhr = ρσ_interpolate_kwargs.call(this, ajax, ["mathjax/" + ρσ_str.format("{}", filename) + "", mathjax_file_received.bind(null, filename, proceed)].concat([ρσ_desugar_kwargs({ok_code: 0})]));
-                xhr.responseType = "blob";
-                xhr.send();
-            }
-        };
-        if (!get_mathjax_files_stage2.__argnames__) Object.defineProperties(get_mathjax_files_stage2, {
-            __argnames__ : {value: ["proceed"]},
-            __module__ : {value: null}
-        });
-
         function get_mathjax_files(proceed) {
-            if (!get_mathjax_files.manifest) {
-                get_mathjax_manifest(proceed);
-            } else {
-                get_mathjax_files_stage2(proceed);
-            }
+            proceed(Object.create(null));
         };
         if (!get_mathjax_files.__argnames__) Object.defineProperties(get_mathjax_files, {
             __argnames__ : {value: ["proceed"]},

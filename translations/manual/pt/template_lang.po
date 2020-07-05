@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-05 08:22+0530\n"
-"PO-Revision-Date: 2020-06-14 11:08+0000\n"
+"POT-Creation-Date: 2020-06-19 07:53+0530\n"
+"PO-Revision-Date: 2020-06-20 15:47+0000\n"
 "Last-Translator: Paulo Pereira <pauloizidoro@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/calibre/calibre/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -306,7 +306,7 @@ msgid ""
 " `separator`, returning the number of items in the list. Most lists use a "
 "comma as the separator, but authors uses an ampersand. Examples: "
 "`{tags:count(,)}`, `{authors:count(&)}`"
-msgstr ""
+msgstr "``count(separator)`` -- interpreta o valor como uma lista de itens separados por `separator`, retornando o número de itens na lista. A maioria das listas usam uma vírgula como separador, mas autores usam um E comercial. Exemplos: `{tags:count(,)}`, `{authors:count(&)}`"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:124
 msgid ""
@@ -364,7 +364,7 @@ msgid ""
 "number zero. The last item can be returned using `list_item(-1,separator)`. "
 "If the item is not in the list, then the empty value is returned. The "
 "separator has the same meaning as in the `count` function."
-msgstr ""
+msgstr "``list_item(index, separator)`` -- interpreta o campo como uma lista de itens separados por `separator`, devolvendo o item `index`. O primeiro item é o número zero. O último item pode ser obtido usando `list_item(-1,separator)`. Se o item não estiver na lista, então é devolvido o valor vazio. O separador tem o mesmo significado que na função de `count` ."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:131
 msgid ""
@@ -388,9 +388,9 @@ msgid ""
 "``select(key)`` -- interpret the field as a comma-separated list of items, "
 "with the items being of the form \"id:value\". Find the pair with the id "
 "equal to key, and return the corresponding value. This function is "
-"particularly useful for extracting a value such as an isbn from the set of "
+"particularly useful for extracting a value such as an ISBN from the set of "
 "identifiers for a book."
-msgstr ""
+msgstr "``select(key)`` -- interpreta o campo como uma lista de itens separados por vírgulas, com os itens na forma \"id:value\". Encontra o emparelhamento do id igual a key, e devolve o valor correspondente. Esta função é particularmente útil para extrair um valor, como um ISBN, de um conjunto de identificadores de um livro"
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:134
 msgid ""
@@ -921,7 +921,7 @@ msgid ""
 "removing from `list1` any item found in `list2`, using a case-insensitive "
 "comparison. The items in `list1` and `list2` are separated by separator, as "
 "are the items in the returned list."
-msgstr ""
+msgstr "``list_difference(list1, list2, separator)`` -- devolve uma lista feita ao remover da `list1` qualquer item encontrado em `list2`, usando uma comparação não sensível a maiúsculas. Os itens em `list1` e `list2` são separados por separador, tal como estão os itens da lista devolvida."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:319
 msgid ""
@@ -930,7 +930,7 @@ msgid ""
 "`no_val`. The items are determined by splitting each list using the "
 "appropriate separator character (`sep1` or `sep2`). The order of items in "
 "the lists is not relevant. The comparison is case-insensitive."
-msgstr ""
+msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- devolverá `yes_val` se `list1` e `list2` contiverem os mesmos itens, caso contrário devolverá no_val. Os itens são determinados dividindo cada lista usando o carácter separador apropriado (`sep1` ou `sep2`). A ordem dos itens das listas não é relevante. A comparação não é sensível a maiúsculas."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:320
 msgid ""
@@ -938,7 +938,7 @@ msgid ""
 "removing from `list1` any item not found in `list2`, using a case-"
 "insensitive comparison. The items in `list1` and `list2` are separated by "
 "separator, as are the items in the returned list."
-msgstr ""
+msgstr "``list_intersection(list1, list2, separator)`` -- devolve uma lista feita ao remover da `list1` qualquer item não encontrado em `list2`, usando uma comparação não sensível a maiúsculas. Os itens em `list1` e `list2` são separados por separador, tal como estão os itens da lista devolvida."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:321
 msgid ""
@@ -948,7 +948,7 @@ msgid ""
 "it does, then add it to the list to be returned. If `opt_replace` is not the"
 " empty string, then apply the replacement before adding the item to the "
 "returned list."
-msgstr ""
+msgstr "``list_re(src_list, separator, include_re, opt_replace)``  -- Construir uma lista, primeiro pela separação de `src_list` em itens usando o carácter `separator`. Para cada item da lista, verificar se ele corresponde a `include_re`. Se isso acontecer, então adicioná-lo à lista a ser obtida. Se `opt_replace` não for uma string vazia, então aplicar a substituição antes de adicionar o item à lista obtida."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:322
 msgid ""
@@ -964,7 +964,7 @@ msgid ""
 "case-insensitive sort. If `direction` is zero, the list is sorted ascending,"
 " otherwise descending. The list items are separated by separator, as are the"
 " items in the returned list."
-msgstr ""
+msgstr "``list_sort(list, direction, separator)`` -- devolve uma lista ordenada usando uma ordenação não diferenciadora de maiúsculas. Se `direction` for zero, a lista é ordenada de forma crescente, caso contrário será por ordem decrescente. Os itens da lista são separados por `separator`, tal como o são os itens na lista devolvida."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:324
 msgid ""
@@ -973,7 +973,7 @@ msgid ""
 " comparison. If items differ in case, the one in list1 is used. The items in"
 " list1 and list2 are separated by separator, as are the items in the "
 "returned list."
-msgstr ""
+msgstr "``list_union(list1, list2, separator)`` -- devolve uma lista feita pela fusão dos itens da list1 e list2, removendo itens duplicados sendo usada uma comparação não sensível a maiúsculas. Se os itens diferirem em maiúsculas, é usado o primeiro da list1. Os itens em list1 e list2 são separados pelo separador, tal como estão os itens da lista devolvida."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:325
 msgid ""
@@ -1012,7 +1012,7 @@ msgid ""
 "``raw_list(name, separator)`` -- returns the metadata list named by name "
 "without applying any formatting or sorting and with items separated by "
 "separator."
-msgstr ""
+msgstr "``raw_list(name, separator)`` -- devolve a lista de metadados por nomeado por nome mas sem aplicar formatações ou ordenação e com itens separados por `separator`."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:331
 msgid ""
@@ -1051,7 +1051,7 @@ msgid ""
 "``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive comparison x and y "
 "as strings. Returns ``lt`` if x < y. Returns ``eq`` if x == y. Otherwise "
 "returns ``gt``."
-msgstr ""
+msgstr "``strcmp(x, y, lt, eq, gt)`` -- faz uma comparação intensiva não diferenciadora de maiúsculas de x e y como strings. Devolve ``lt`` se x < y. Devolve ``eq`` se x == y. Caso contrário devolve ``gt``."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:339
 msgid ""

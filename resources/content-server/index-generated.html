@@ -14881,11 +14881,44 @@ return this.__repr__();
             }
         }
         viewport_mode_changer(scroll_viewport.set_mode);
+        function line_height(reset) {
+            var ds, lh;
+            if (reset) {
+                line_height.ans = null;
+                return;
+            }
+            if (!line_height.ans) {
+                ds = window.getComputedStyle(document.body);
+                try {
+                    lh = float(ds.lineHeight);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        try {
+                            lh = 1.2 * float(ds.fontSize);
+                        } catch (ρσ_Exception) {
+                            ρσ_last_exception = ρσ_Exception;
+                            {
+                                lh = 15;
+                            } 
+                        }
+                    } 
+                }
+                line_height.ans = max(5, lh);
+            }
+            return line_height.ans;
+        };
+        if (!line_height.__argnames__) Object.defineProperties(line_height, {
+            __argnames__ : {value: ["reset"]},
+            __module__ : {value: "read_book.viewport"}
+        });
+
         ρσ_modules["read_book.viewport"].FUNCTIONS = FUNCTIONS;
         ρσ_modules["read_book.viewport"].scroll_viewport = scroll_viewport;
         ρσ_modules["read_book.viewport"].attr = attr;
         ρσ_modules["read_book.viewport"].ScrollViewport = ScrollViewport;
         ρσ_modules["read_book.viewport"].IOSScrollViewport = IOSScrollViewport;
+        ρσ_modules["read_book.viewport"].line_height = line_height;
     })();
 
     (function(){
@@ -16499,37 +16532,11 @@ return this.__repr__();
 
         var opts = ρσ_modules["read_book.settings"].opts;
 
+        var line_height = ρσ_modules["read_book.viewport"].line_height;
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
 
         var document_height = ρσ_modules.utils.document_height;
         var viewport_to_document = ρσ_modules.utils.viewport_to_document;
-
-        function line_height() {
-            var ds, lh;
-            if (!line_height.ans) {
-                ds = window.getComputedStyle(document.body);
-                try {
-                    lh = float(ds.lineHeight);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        try {
-                            lh = 1.2 * float(ds.fontSize);
-                        } catch (ρσ_Exception) {
-                            ρσ_last_exception = ρσ_Exception;
-                            {
-                                lh = 15;
-                            } 
-                        }
-                    } 
-                }
-                line_height.ans = max(5, lh);
-            }
-            return line_height.ans;
-        };
-        if (!line_height.__module__) Object.defineProperties(line_height, {
-            __module__ : {value: "read_book.flow_mode"}
-        });
 
         function flow_to_scroll_fraction(frac, on_initial_load) {
             scroll_viewport.scroll_to(0, document_height() * frac);
@@ -16838,7 +16845,7 @@ return this.__repr__();
         });
 
         function layout(is_single_page) {
-            line_height.ans = null;
+            line_height(true);
             ρσ_interpolate_kwargs.call(this, set_css, [document.body].concat([ρσ_desugar_kwargs({margin: "0", border_width: "0", padding: "0"})]));
         };
         if (!layout.__argnames__) Object.defineProperties(layout, {
@@ -17456,7 +17463,6 @@ return this.__repr__();
         ρσ_modules["read_book.flow_mode"].flick_animator = flick_animator;
         ρσ_modules["read_book.flow_mode"].drag_scroller = drag_scroller;
         ρσ_modules["read_book.flow_mode"].anchor_funcs = anchor_funcs;
-        ρσ_modules["read_book.flow_mode"].line_height = line_height;
         ρσ_modules["read_book.flow_mode"].flow_to_scroll_fraction = flow_to_scroll_fraction;
         ρσ_modules["read_book.flow_mode"].clear_small_scrolls = clear_small_scrolls;
         ρσ_modules["read_book.flow_mode"].dispatch_small_scrolls = dispatch_small_scrolls;
@@ -18744,76 +18750,7 @@ return this.__repr__();
             __module__ : {value: "read_book.mathjax"}
         });
 
-        function monkeypatch(mathjax_files) {
-            var StyleString, orig;
-            StyleString = window.MathJax.Ajax.StyleString.bind(window.MathJax.Ajax);
-            function style_string(styles) {
-                return StyleString(styles).replace(/url\('?(.*?)'?\)/g, (function() {
-                    var ρσ_anonfunc = function (match, url) {
-                        var ans;
-                        if (!url.endsWith(".woff")) {
-                            return match;
-                        }
-                        url = get_url(mathjax_files, url);
-                        ans = "url('" + ρσ_str.format("{}", url) + "')";
-                        return ans;
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["match", "url"]},
-                        __module__ : {value: "read_book.mathjax"}
-                    });
-                    return ρσ_anonfunc;
-                })());
-            };
-            if (!style_string.__argnames__) Object.defineProperties(style_string, {
-                __argnames__ : {value: ["styles"]},
-                __module__ : {value: "read_book.mathjax"}
-            });
-
-            orig = window.MathJax.Ajax.fileURL.bind(window.MathJax.Ajax);
-            function file_url(file) {
-                var ans, name;
-                ans = orig(file);
-                name = ans.lstrip("/");
-                if (name.startswith("../fonts")) {
-                    name = name.slice(3);
-                }
-                if (ρσ_in((ρσ_expr_temp = name.rpartition("/"))[ρσ_expr_temp.length-1], "otf eot woff")) {
-                    return name;
-                }
-                ans = get_url(mathjax_files, name);
-                if (ans === name && !name.startswith("blob:")) {
-                    if (ans.endswith(".eot") || ans.endswith(".otf")) {
-                        return "";
-                    }
-                    print("WARNING: Failed to resolve MathJax file:", name);
-                }
-                return ans;
-            };
-            if (!file_url.__argnames__) Object.defineProperties(file_url, {
-                __argnames__ : {value: ["file"]},
-                __module__ : {value: "read_book.mathjax"}
-            });
-
-            window.MathJax.Ajax.fileURL = file_url;
-            window.MathJax.Ajax.StyleString = style_string;
-            window.MathJax.Ajax.fileRev = (function() {
-                var ρσ_anonfunc = function (file) {
-                    return "";
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["file"]},
-                    __module__ : {value: "read_book.mathjax"}
-                });
-                return ρσ_anonfunc;
-            })();
-        };
-        if (!monkeypatch.__argnames__) Object.defineProperties(monkeypatch, {
-            __argnames__ : {value: ["mathjax_files"]},
-            __module__ : {value: "read_book.mathjax"}
-        });
-
-        function postprocess(link_uid, proceed) {
+        function postprocess(link_uid) {
             var href, a;
             var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("a"));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
@@ -18828,59 +18765,30 @@ return this.__repr__();
                     }).call(this)));
                 }
             }
-            proceed();
         };
         if (!postprocess.__argnames__) Object.defineProperties(postprocess, {
-            __argnames__ : {value: ["link_uid", "proceed"]},
+            __argnames__ : {value: ["link_uid"]},
             __module__ : {value: "read_book.mathjax"}
         });
 
-        function init_mathjax(mathjax_files, link_uid, proceed) {
-            monkeypatch(mathjax_files);
-            window.MathJax.Hub.Register.StartupHook("End", postprocess.bind(this, link_uid, proceed));
+        function load_mathjax(src) {
+            var script;
+            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
+            script.async = true;
+            script.src = src;
+            document.head.appendChild(script);
         };
-        if (!init_mathjax.__argnames__) Object.defineProperties(init_mathjax, {
-            __argnames__ : {value: ["mathjax_files", "link_uid", "proceed"]},
+        if (!load_mathjax.__argnames__) Object.defineProperties(load_mathjax, {
+            __argnames__ : {value: ["src"]},
             __module__ : {value: "read_book.mathjax"}
         });
 
         function apply_mathjax(mathjax_files, link_uid, proceed) {
-            var m, script;
-            window.MathJax = m = {};
-            m.positionToHash = false;
-            m.showMathMenu = false;
-            m.showMathMenuMSIE = false;
-            m.extensions = "tex2jax.js asciimath2jax.js mml2jax.js".split(" ");
-            m.jax = "input/TeX input/MathML input/AsciiMath output/CommonHTML".split(" ");
-            m.TeX = {};
-            m.TeX.extensions = "AMSmath.js AMSsymbols.js noErrors.js noUndefined.js".split(" ");
-            m.CommonHTML = { linebreaks: { automatic: true} };
-            script = ρσ_interpolate_kwargs.call(E, E.script, [ρσ_desugar_kwargs({type: "text/javascript"})]);
-            document.head.appendChild(script);
+            var es, s;
             if (runtime.is_standalone_viewer) {
-                script.onload = (function() {
-                    var ρσ_anonfunc = function () {
-                        var ev;
-                        ev = new CustomEvent("calibre-mathjax-init", (function(){
-                            var ρσ_d = Object.create(null);
-                            ρσ_d["detail"] = (function(){
-                                var ρσ_d = Object.create(null);
-                                ρσ_d["MathJax"] = m;
-                                ρσ_d["link_uid"] = link_uid;
-                                ρσ_d["mathjax_files"] = mathjax_files;
-                                return ρσ_d;
-                            }).call(this);
-                            return ρσ_d;
-                        }).call(this));
-                        document.documentElement.dispatchEvent(ev);
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.mathjax"}
-                    });
-                    return ρσ_anonfunc;
-                })();
-                document.documentElement.addEventListener("calibre-mathjax-init-done", (function() {
+                document.documentElement.addEventListener("calibre-mathjax-typeset-done", (function() {
                     var ρσ_anonfunc = function (ev) {
+                        postprocess(link_uid);
                         proceed();
                     };
                     if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -18889,10 +18797,118 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })());
-            } else {
-                m.AuthorInit = init_mathjax.bind(this, mathjax_files, link_uid, proceed);
+                load_mathjax("" + ρσ_str.format("{}", runtime.FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", runtime.SANDBOX_HOST) + "/mathjax/startup.js");
+                return;
             }
-            script.src = get_url(mathjax_files, "MathJax.js");
+            window.MathJax = {};
+            window.MathJax.startup = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["ready"] = (function() {
+                    var ρσ_anonfunc = function () {
+                        window.MathJax.startup.defaultReady();
+                        window.MathJax.startup.output.font.addFontURLs = (function() {
+                            var ρσ_anonfunc = function (styles, fonts, url) {
+                                var base, clone, font, key, font_name, full_name, src, name;
+                                base = url.partition("/")[2];
+                                var ρσ_Iter1 = ρσ_Iterable(fonts);
+                                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                                    name = ρσ_Iter1[ρσ_Index1];
+                                    clone = {};
+                                    font = fonts[(typeof name === "number" && name < 0) ? fonts.length + name : name];
+                                    var ρσ_Iter2 = ρσ_Iterable(Object.keys(font));
+                                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                                        key = ρσ_Iter2[ρσ_Index2];
+                                        clone[(typeof key === "number" && key < 0) ? clone.length + key : key] = font[(typeof key === "number" && key < 0) ? font.length + key : key];
+                                    }
+                                    font_name = clone.src.partition("/")[2].partition("\"")[0];
+                                    full_name = base + "/" + font_name;
+                                    src = get_url(mathjax_files, full_name);
+                                    clone.src = clone.src.replace(/".+?"/, "\"" + ρσ_str.format("{}", src) + "\"");
+                                    styles[(typeof name === "number" && name < 0) ? styles.length + name : name] = clone;
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["styles", "fonts", "url"]},
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })();
+                        window.MathJax.startup.promise.then((function() {
+                            var ρσ_anonfunc = function () {
+                                postprocess(link_uid);
+                                proceed();
+                            };
+                            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "read_book.mathjax"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            window.MathJax.loader = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["load"] = ['input/tex-full', 'input/asciimath', 'input/mml', 'output/chtml'];
+                ρσ_d["require"] = (function() {
+                    var ρσ_anonfunc = function (url) {
+                        return new Promise((function() {
+                            var ρσ_anonfunc = function (resolve, reject) {
+                                var name, script;
+                                name = url.partition("/")[2];
+                                script = document.createElement("script");
+                                script.charset = "UTF-8";
+                                script.onload = (function() {
+                                    var ρσ_anonfunc = function () {
+                                        resolve(url);
+                                    };
+                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                        __module__ : {value: "read_book.mathjax"}
+                                    });
+                                    return ρσ_anonfunc;
+                                })();
+                                script.onerror = (function() {
+                                    var ρσ_anonfunc = function () {
+                                        reject(url);
+                                    };
+                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                        __module__ : {value: "read_book.mathjax"}
+                                    });
+                                    return ρσ_anonfunc;
+                                })();
+                                script.src = get_url(mathjax_files, name);
+                                document.head.appendChild(script);
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["resolve", "reject"]},
+                                __module__ : {value: "read_book.mathjax"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["url"]},
+                        __module__ : {value: "read_book.mathjax"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                return ρσ_d;
+            }).call(this);
+            var ρσ_Iter3 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                s = ρσ_Iter3[ρσ_Index3];
+                if (s.type === "text/x-mathjax-config") {
+                    es = document.createElement("script");
+                    es.text = s.text;
+                    document.head.appendChild(es);
+                    document.head.removeChild(es);
+                }
+            }
+            load_mathjax(get_url(mathjax_files, "startup.js"));
         };
         if (!apply_mathjax.__argnames__) Object.defineProperties(apply_mathjax, {
             __argnames__ : {value: ["mathjax_files", "link_uid", "proceed"]},
@@ -18900,15 +18916,14 @@ return this.__repr__();
         });
 
         ρσ_modules["read_book.mathjax"].get_url = get_url;
-        ρσ_modules["read_book.mathjax"].monkeypatch = monkeypatch;
         ρσ_modules["read_book.mathjax"].postprocess = postprocess;
-        ρσ_modules["read_book.mathjax"].init_mathjax = init_mathjax;
+        ρσ_modules["read_book.mathjax"].load_mathjax = load_mathjax;
         ρσ_modules["read_book.mathjax"].apply_mathjax = apply_mathjax;
     })();
 
     (function(){
         var __name__ = "read_book.paged_mode";
-        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, number_of_cols, last_scrolled_to_column, is_full_screen_layout, anchor_funcs, resize_manager;
+        var _in_paged_mode, col_width, screen_width, screen_height, cols_per_screen, gap, col_and_gap, number_of_cols, last_scrolled_to_column, is_full_screen_layout, wheel_handler, onwheel, anchor_funcs, resize_manager;
         var traceback = ρσ_modules.traceback;
 
         var E = ρσ_modules.elementmaker.E;
@@ -18929,6 +18944,7 @@ return this.__repr__();
         var opts = ρσ_modules["read_book.settings"].opts;
 
         var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+        var line_height = ρσ_modules["read_book.viewport"].line_height;
 
         var document_height = ρσ_modules.utils.document_height;
         var document_width = ρσ_modules.utils.document_width;
@@ -19178,6 +19194,7 @@ return this.__repr__();
 
         function layout(is_single_page, on_resize) {
             var body_style, first_layout, cps, single_screen, svgs, has_svg, imgs, only_img, num, elems, n, ww, sm, c, c2, has_no_more_than_two_columns, data, dw, elem;
+            line_height(true);
             body_style = window.getComputedStyle(document.body);
             first_layout = !_in_paged_mode;
             cps = calc_columns_per_screen();
@@ -19673,27 +19690,99 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
-        function onwheel(evt) {
-            var backward, x;
-            if (evt.deltaY) {
-                backward = evt.deltaY < 0;
-                if (opts.paged_wheel_scrolls_by_screen) {
-                    x = (backward) ? previous_screen_location() : next_screen_location();
-                } else {
-                    x = (backward) ? previous_col_location() : next_col_location();
-                }
-                if (x === -1) {
-                    next_spine_item(backward);
-                } else {
-                    scroll_to_xpos(x);
-                }
+        function HandleWheel() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            HandleWheel.prototype.__init__.apply(this, arguments);
+        }
+        HandleWheel.prototype.__init__ = function __init__() {
+            var self = this;
+            self.reset();
+        };
+        if (!HandleWheel.prototype.__init__.__module__) Object.defineProperties(HandleWheel.prototype.__init__, {
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.__argnames__ = HandleWheel.prototype.__init__.__argnames__;
+        HandleWheel.__handles_kwarg_interpolation__ = HandleWheel.prototype.__init__.__handles_kwarg_interpolation__;
+        HandleWheel.prototype.reset = function reset() {
+            var self = this;
+            self.last_event_mode = "page";
+            self.last_event_at = -1e4;
+            self.last_event_backwards = false;
+            self.accumlated_scroll = 0;
+        };
+        if (!HandleWheel.prototype.reset.__module__) Object.defineProperties(HandleWheel.prototype.reset, {
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.onwheel = function onwheel(evt) {
+            var self = this;
+            var backward, WheelEvent;
+            if (!evt.deltaY) {
+                return;
+            }
+            backward = evt.deltaY < 0;
+            WheelEvent = window.WheelEvent;
+            if (evt.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+                self.do_scroll(backward);
+            } else {
+                self.add_event(backward, Math.abs(evt.deltaY), (evt.deltaMode === WheelEvent.DOM_DELTA_LINE) ? "line" : "pixel");
             }
         };
-        if (!onwheel.__argnames__) Object.defineProperties(onwheel, {
+        if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
             __argnames__ : {value: ["evt"]},
             __module__ : {value: "read_book.paged_mode"}
         });
+        HandleWheel.prototype.add_event = function add_event(backward, deltaY, mode) {
+            var self = this;
+            var now, lh;
+            now = window.performance.now();
+            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== mode) {
+                self.accumlated_scroll = 0;
+            }
+            self.last_event_mode = mode;
+            self.last_event_at = now;
+            self.last_event_backwards = backward;
+            lh = line_height();
+            if (mode === "line") {
+                deltaY *= lh;
+            }
+            self.accumlated_scroll += deltaY;
+            if (self.accumlated_scroll > 5 * lh) {
+                self.do_scroll(backward);
+            }
+        };
+        if (!HandleWheel.prototype.add_event.__argnames__) Object.defineProperties(HandleWheel.prototype.add_event, {
+            __argnames__ : {value: ["backward", "deltaY", "mode"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.do_scroll = function do_scroll(backward) {
+            var self = this;
+            var x;
+            self.reset();
+            if (opts.paged_wheel_scrolls_by_screen) {
+                x = (backward) ? previous_screen_location() : next_screen_location();
+            } else {
+                x = (backward) ? previous_col_location() : next_col_location();
+            }
+            if (x === -1) {
+                next_spine_item(backward);
+            } else {
+                scroll_to_xpos(x);
+            }
+        };
+        if (!HandleWheel.prototype.do_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.do_scroll, {
+            __argnames__ : {value: ["backward"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+        HandleWheel.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        HandleWheel.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(HandleWheel.prototype, "__bases__", {value: []});
 
+        wheel_handler = new HandleWheel;
+        onwheel = wheel_handler.onwheel.bind(wheel_handler);
         function scroll_by_page(backward, by_screen) {
             var pos, pages, scrolled_frac;
             if (by_screen) {
@@ -19996,6 +20085,8 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].number_of_cols = number_of_cols;
         ρσ_modules["read_book.paged_mode"].last_scrolled_to_column = last_scrolled_to_column;
         ρσ_modules["read_book.paged_mode"].is_full_screen_layout = is_full_screen_layout;
+        ρσ_modules["read_book.paged_mode"].wheel_handler = wheel_handler;
+        ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
         ρσ_modules["read_book.paged_mode"].anchor_funcs = anchor_funcs;
         ρσ_modules["read_book.paged_mode"].resize_manager = resize_manager;
         ρσ_modules["read_book.paged_mode"].first_child = first_child;
@@ -20033,7 +20124,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].progress_frac = progress_frac;
         ρσ_modules["read_book.paged_mode"].next_spine_item = next_spine_item;
         ρσ_modules["read_book.paged_mode"].is_return = is_return;
-        ρσ_modules["read_book.paged_mode"].onwheel = onwheel;
+        ρσ_modules["read_book.paged_mode"].HandleWheel = HandleWheel;
         ρσ_modules["read_book.paged_mode"].scroll_by_page = scroll_by_page;
         ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
@@ -21838,7 +21929,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.19.0";
+        CALIBRE_VERSION = "4.20.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");
@@ -38091,7 +38182,7 @@ return this.__repr__();
         var create_button = ρσ_modules.widgets.create_button;
 
         RENDER_VERSION = 1;
-        MATHJAX_VERSION = "4f9ffdf3457391b5df1a4daa469548d5c3809f3d";
+        MATHJAX_VERSION = "a3a5575dd30442257db5a6e67f5dcfd576d13180";
         function ReadUI() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             ReadUI.prototype.__init__.apply(this, arguments);
