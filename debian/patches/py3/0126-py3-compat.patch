@@ -1,0 +1,25 @@
+From 6a559a1d81e4b2e56364a68487e89cc86333798e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 6 Jul 2020 08:42:07 +0530
+Subject: [PATCH 126/128] py3 compat
+
+---
+ src/calibre/utils/unicode_names.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/utils/unicode_names.py b/src/calibre/utils/unicode_names.py
+index b9c40f6ba1..3ef9a739df 100644
+--- a/src/calibre/utils/unicode_names.py
++++ b/src/calibre/utils/unicode_names.py
+@@ -35,7 +35,7 @@ def points_for_word(w):
+     w = w.lower()
+     ans = points_for_word.cache.get(w)
+     if ans is None:
+-        ans = plugins['unicode_names'][0].codepoints_for_word(w.encode('utf-8')) | html_entities().get(w, set())
++        ans = plugins['unicode_names'][0].codepoints_for_word(w) | html_entities().get(w, set())
+         points_for_word.cache[w] = ans
+     return ans
+ 
+-- 
+2.27.0
+
