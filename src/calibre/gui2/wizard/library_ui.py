@@ -37,6 +37,7 @@ class Ui_WizardPage(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.location = QtWidgets.QLineEdit(WizardPage)
+        self.location.setStyleSheet("QLineEdit { background: transparent; border: 1px solid; border-radius: 5px; padding: 4px }")
         self.location.setReadOnly(True)
         self.location.setObjectName("location")
         self.horizontalLayout_2.addWidget(self.location)

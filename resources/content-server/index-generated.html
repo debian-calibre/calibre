@@ -18756,7 +18756,7 @@ return this.__repr__();
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 a = ρσ_Iter0[ρσ_Index0];
                 href = a.getAttribute("href");
-                if (href.startswith("#")) {
+                if (href && href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
                     a.setAttribute("data-" + link_uid, JSON.stringify((function(){
                         var ρσ_d = Object.create(null);
@@ -19708,50 +19708,46 @@ return this.__repr__();
             self.last_event_mode = "page";
             self.last_event_at = -1e4;
             self.last_event_backwards = false;
-            self.accumlated_scroll = 0;
+            self.accumulated_scroll = 0;
         };
         if (!HandleWheel.prototype.reset.__module__) Object.defineProperties(HandleWheel.prototype.reset, {
             __module__ : {value: "read_book.paged_mode"}
         });
         HandleWheel.prototype.onwheel = function onwheel(evt) {
             var self = this;
-            var backward, WheelEvent;
+            var backward;
             if (!evt.deltaY) {
                 return;
             }
             backward = evt.deltaY < 0;
-            WheelEvent = window.WheelEvent;
-            if (evt.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-                self.do_scroll(backward);
+            if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
+                self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
             } else {
-                self.add_event(backward, Math.abs(evt.deltaY), (evt.deltaMode === WheelEvent.DOM_DELTA_LINE) ? "line" : "pixel");
+                self.do_scroll(backward);
             }
         };
         if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
             __argnames__ : {value: ["evt"]},
             __module__ : {value: "read_book.paged_mode"}
         });
-        HandleWheel.prototype.add_event = function add_event(backward, deltaY, mode) {
+        HandleWheel.prototype.add_pixel_scroll = function add_pixel_scroll(backward, deltaY) {
             var self = this;
             var now, lh;
             now = window.performance.now();
-            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== mode) {
-                self.accumlated_scroll = 0;
+            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== "pixel") {
+                self.accumulated_scroll = 0;
             }
-            self.last_event_mode = mode;
+            self.last_event_mode = "pixel";
             self.last_event_at = now;
             self.last_event_backwards = backward;
+            self.accumulated_scroll += deltaY;
             lh = line_height();
-            if (mode === "line") {
-                deltaY *= lh;
-            }
-            self.accumlated_scroll += deltaY;
-            if (self.accumlated_scroll > 5 * lh) {
+            if (self.accumulated_scroll > 5 * lh) {
                 self.do_scroll(backward);
             }
         };
-        if (!HandleWheel.prototype.add_event.__argnames__) Object.defineProperties(HandleWheel.prototype.add_event, {
-            __argnames__ : {value: ["backward", "deltaY", "mode"]},
+        if (!HandleWheel.prototype.add_pixel_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.add_pixel_scroll, {
+            __argnames__ : {value: ["backward", "deltaY"]},
             __module__ : {value: "read_book.paged_mode"}
         });
         HandleWheel.prototype.do_scroll = function do_scroll(backward) {
@@ -21929,7 +21925,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "4.20.0";
+        CALIBRE_VERSION = "4.21.0";
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
             s.jsset.add("dom-manipulation");

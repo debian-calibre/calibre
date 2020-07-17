@@ -11038,9 +11038,9 @@ return this.__repr__();
             book.is_complete = false;
             if (get_interface_data().username) {
                 newest_epoch = newest_pos = null;
-                var ρσ_Iter5 = ρσ_Iterable(manifest.last_read_positions);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    pos = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter0 = ρσ_Iterable(manifest.last_read_positions);
+                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                    pos = ρσ_Iter0[ρσ_Index0];
                     if (newest_epoch === null || pos.epoch > newest_epoch) {
                         newest_epoch = pos.epoch;
                         newest_pos = pos.cfi;
@@ -15936,9 +15936,9 @@ return this.__repr__();
         function unwrapped_nodes(range_wrapper) {
             var ans, child;
             ans = [];
-            var ρσ_Iter6 = ρσ_Iterable(range_wrapper.childNodes);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                child = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter0 = ρσ_Iterable(range_wrapper.childNodes);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                child = ρσ_Iter0[ρσ_Index0];
                 if (child.nodeType === Node.ELEMENT_NODE && child.dataset.calibreRangeWrapper) {
                     ans = ans.concat(unwrapped_nodes(child));
                 } else {
@@ -15973,8 +15973,8 @@ return this.__repr__();
 
         function increment_index_for_children(children, index, sentinel) {
             var child, i;
-            for (var ρσ_Index7 = 0; ρσ_Index7 < children.length; ρσ_Index7++) {
-                i = ρσ_Index7;
+            for (var ρσ_Index1 = 0; ρσ_Index1 < children.length; ρσ_Index1++) {
+                i = ρσ_Index1;
                 child = children[(typeof i === "number" && i < 0) ? children.length + i : i];
                 index = increment_index_for_child(child, index, sentinel);
                 if (child === sentinel) {
@@ -16074,8 +16074,8 @@ return this.__repr__();
 
         function node_at_index(nodes, target, index, iter_text_nodes) {
             var node, is_element, ρσ_unpack, q, i;
-            for (var ρσ_Index8 = 0; ρσ_Index8 < nodes.length; ρσ_Index8++) {
-                i = ρσ_Index8;
+            for (var ρσ_Index2 = 0; ρσ_Index2 < nodes.length; ρσ_Index2++) {
+                i = ρσ_Index2;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 is_element = node.nodeType === Node.ELEMENT_NODE;
                 if (is_element && node.dataset.calibreRangeWrapper) {
@@ -16127,8 +16127,8 @@ return this.__repr__();
             var last_text_node, seen_first, node, l, ρσ_unpack, qn, ok, i;
             last_text_node = null;
             seen_first = false;
-            for (var ρσ_Index9 = 0; ρσ_Index9 < nodes.length; ρσ_Index9++) {
-                i = ρσ_Index9;
+            for (var ρσ_Index3 = 0; ρσ_Index3 < nodes.length; ρσ_Index3++) {
+                i = ρσ_Index3;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 if (!seen_first) {
                     if (!first_node || node.isSameNode(first_node)) {
@@ -16321,9 +16321,9 @@ return this.__repr__();
                     var diff, i;
                     a = key_map[(typeof a === "number" && a < 0) ? key_map.length + a : a];
                     b = key_map[(typeof b === "number" && b < 0) ? key_map.length + b : b];
-                    var ρσ_Iter10 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
-                    for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                        i = ρσ_Iter10[ρσ_Index10];
+                    var ρσ_Iter4 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
+                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                        i = ρσ_Iter4[ρσ_Index4];
                         diff = (ρσ_expr_temp = a.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] - (ρσ_expr_temp = b.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
                         if (diff !== 0) {
                             return diff;
@@ -16561,9 +16561,9 @@ return this.__repr__();
                         var rect, p, node, offset, rects, x, y, ρσ_unpack;
                         rect = span.getBoundingClientRect();
                         p = span.parentNode;
-                        var ρσ_Iter11 = ρσ_Iterable(span.childNodes);
-                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                            node = ρσ_Iter11[ρσ_Index11];
+                        var ρσ_Iter5 = ρσ_Iterable(span.childNodes);
+                        for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                            node = ρσ_Iter5[ρσ_Index5];
                             span.removeChild(node);
                             p.insertBefore(node, span);
                         }
@@ -16726,9 +16726,9 @@ return this.__repr__();
             maxx = winw;
             function x_loop(cury) {
                 var delta, curx, cfi, direction;
-                var ρσ_Iter12 = ρσ_Iterable([-1, 1]);
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    direction = ρσ_Iter12[ρσ_Index12];
+                var ρσ_Iter6 = ρσ_Iterable([-1, 1]);
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    direction = ρσ_Iter6[ρσ_Index6];
                     delta = deltax * direction;
                     curx = 0;
                     while (!((direction < 0 && curx < minx || direction > 0 && curx > maxx))) {
@@ -16745,9 +16745,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.cfi"}
             });
 
-            var ρσ_Iter13 = ρσ_Iterable([-1, 1]);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                direction = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter7 = ρσ_Iterable([-1, 1]);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                direction = ρσ_Iter7[ρσ_Index7];
                 delta = deltay * direction;
                 cury = 0;
                 while (!((direction < 0 && cury < miny || direction > 0 && cury > maxy))) {
@@ -18124,7 +18124,7 @@ return this.__repr__();
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 a = ρσ_Iter0[ρσ_Index0];
                 href = a.getAttribute("href");
-                if (href.startswith("#")) {
+                if (href && href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
                     a.setAttribute("data-" + link_uid, JSON.stringify((function(){
                         var ρσ_d = Object.create(null);
@@ -19076,50 +19076,46 @@ return this.__repr__();
             self.last_event_mode = "page";
             self.last_event_at = -1e4;
             self.last_event_backwards = false;
-            self.accumlated_scroll = 0;
+            self.accumulated_scroll = 0;
         };
         if (!HandleWheel.prototype.reset.__module__) Object.defineProperties(HandleWheel.prototype.reset, {
             __module__ : {value: "read_book.paged_mode"}
         });
         HandleWheel.prototype.onwheel = function onwheel(evt) {
             var self = this;
-            var backward, WheelEvent;
+            var backward;
             if (!evt.deltaY) {
                 return;
             }
             backward = evt.deltaY < 0;
-            WheelEvent = window.WheelEvent;
-            if (evt.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-                self.do_scroll(backward);
+            if (evt.deltaMode === window.WheelEvent.DOM_DELTA_PIXEL) {
+                self.add_pixel_scroll(backward, Math.abs(evt.deltaY));
             } else {
-                self.add_event(backward, Math.abs(evt.deltaY), (evt.deltaMode === WheelEvent.DOM_DELTA_LINE) ? "line" : "pixel");
+                self.do_scroll(backward);
             }
         };
         if (!HandleWheel.prototype.onwheel.__argnames__) Object.defineProperties(HandleWheel.prototype.onwheel, {
             __argnames__ : {value: ["evt"]},
             __module__ : {value: "read_book.paged_mode"}
         });
-        HandleWheel.prototype.add_event = function add_event(backward, deltaY, mode) {
+        HandleWheel.prototype.add_pixel_scroll = function add_pixel_scroll(backward, deltaY) {
             var self = this;
             var now, lh;
             now = window.performance.now();
-            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== mode) {
-                self.accumlated_scroll = 0;
+            if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== "pixel") {
+                self.accumulated_scroll = 0;
             }
-            self.last_event_mode = mode;
+            self.last_event_mode = "pixel";
             self.last_event_at = now;
             self.last_event_backwards = backward;
+            self.accumulated_scroll += deltaY;
             lh = line_height();
-            if (mode === "line") {
-                deltaY *= lh;
-            }
-            self.accumlated_scroll += deltaY;
-            if (self.accumlated_scroll > 5 * lh) {
+            if (self.accumulated_scroll > 5 * lh) {
                 self.do_scroll(backward);
             }
         };
-        if (!HandleWheel.prototype.add_event.__argnames__) Object.defineProperties(HandleWheel.prototype.add_event, {
-            __argnames__ : {value: ["backward", "deltaY", "mode"]},
+        if (!HandleWheel.prototype.add_pixel_scroll.__argnames__) Object.defineProperties(HandleWheel.prototype.add_pixel_scroll, {
+            __argnames__ : {value: ["backward", "deltaY"]},
             __module__ : {value: "read_book.paged_mode"}
         });
         HandleWheel.prototype.do_scroll = function do_scroll(backward) {
@@ -19619,9 +19615,9 @@ return this.__repr__();
                 ρσ_d["shiftKey"] = false;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter14 = ρσ_Iterable(parts.slice(0, -1));
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                modifier = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter0 = ρσ_Iterable(parts.slice(0, -1));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                modifier = ρσ_Iter0[ρσ_Index0];
                 q = modifier.toLowerCase();
                 if (q === "ctrl") {
                     ans.ctrlKey = true;
@@ -19646,9 +19642,9 @@ return this.__repr__();
                 sc = [sc];
             }
             pkey = [];
-            var ρσ_Iter15 = ρσ_Iterable(sc);
-            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                x = ρσ_Iter15[ρσ_Index15];
+            var ρσ_Iter1 = ρσ_Iterable(sc);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                x = ρσ_Iter1[ρσ_Index1];
                 pkey.push(parse_key_repr(x));
             }
             return (function(){
@@ -19718,9 +19714,9 @@ return this.__repr__();
         function keyevent_to_index(evt) {
             var parts, mod;
             parts = [];
-            var ρσ_Iter16 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
-            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                mod = ρσ_Iter16[ρσ_Index16];
+            var ρσ_Iter2 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                mod = ρσ_Iter2[ρσ_Index2];
                 parts.push((evt[(typeof mod === "number" && mod < 0) ? evt.length + mod : mod]) ? "y" : "n");
             }
             return parts.join("") + get_key_text(evt);
@@ -19733,9 +19729,9 @@ return this.__repr__();
         function key_as_text(evt) {
             var mods, x, key;
             mods = [];
-            var ρσ_Iter17 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
-            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                x = ρσ_Iter17[ρσ_Index17];
+            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                x = ρσ_Iter3[ρσ_Index3];
                 if (evt[ρσ_bound_index(x + "Key", evt)]) {
                     if (ρσ_in("macos", window.navigator.userAgent)) {
                         if (x === "alt") {
@@ -19859,17 +19855,17 @@ return this.__repr__();
             var ans, scd, entry, shortcuts, sc, sc_name;
             ans = Object.create(null);
             scd = shortcuts_definition();
-            var ρσ_Iter18 = ρσ_Iterable(Object.keys(scd));
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                sc_name = ρσ_Iter18[ρσ_Index18];
+            var ρσ_Iter4 = ρσ_Iterable(Object.keys(scd));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                sc_name = ρσ_Iter4[ρσ_Index4];
                 entry = scd[(typeof sc_name === "number" && sc_name < 0) ? scd.length + sc_name : sc_name];
                 shortcuts = entry.shortcuts;
                 if (custom_shortcuts && custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]) {
                     shortcuts = custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name];
                 }
-                var ρσ_Iter19 = ρσ_Iterable(shortcuts);
-                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                    sc = ρσ_Iter19[ρσ_Index19];
+                var ρσ_Iter5 = ρσ_Iterable(shortcuts);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    sc = ρσ_Iter5[ρσ_Index5];
                     ans[ρσ_bound_index(keyevent_to_index(sc), ans)] = sc_name;
                 }
             }
@@ -23138,9 +23134,9 @@ return this.__repr__();
             var self = this;
             var now, uuid, annot;
             now = (new Date).toISOString();
-            var ρσ_Iter20 = ρσ_Iterable(msg.removed_highlights);
-            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                uuid = ρσ_Iter20[ρσ_Index20];
+            var ρσ_Iter0 = ρσ_Iterable(msg.removed_highlights);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                uuid = ρσ_Iter0[ρσ_Index0];
                 self.remove_highlight(uuid);
             }
             annot = (ρσ_expr_temp = self.highlights)[ρσ_bound_index(msg.uuid, ρσ_expr_temp)] = (function(){
@@ -23172,9 +23168,9 @@ return this.__repr__();
             var name, ans, h, uuid;
             name = self.view.currently_showing.name;
             ans = [];
-            var ρσ_Iter21 = ρσ_Iterable(Object.keys(self.highlights));
-            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                uuid = ρσ_Iter21[ρσ_Index21];
+            var ρσ_Iter1 = ρσ_Iterable(Object.keys(self.highlights));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                uuid = ρσ_Iter1[ρσ_Index1];
                 h = (ρσ_expr_temp = self.highlights)[(typeof uuid === "number" && uuid < 0) ? ρσ_expr_temp.length + uuid : uuid];
                 if (h.spine_name === name && !h.removed && h.start_cfi) {
                     ans.push(h);
@@ -23693,9 +23689,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.create_annotation"}
             });
 
-            var ρσ_Iter22 = ρσ_Iterable(highlight_colors);
-            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                bg = ρσ_Iter22[ρσ_Index22];
+            var ρσ_Iter2 = ρσ_Iterable(highlight_colors);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                bg = ρσ_Iter2[ρσ_Index2];
                 if (add(bg)) {
                     found_current = true;
                 }
@@ -23743,9 +23739,9 @@ return this.__repr__();
             var fill, stroke, use, handle;
             fill = self.current_highlight_style["background-color"];
             stroke = self.current_highlight_style["color"];
-            var ρσ_Iter23 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                handle = ρσ_Iter23[ρσ_Index23];
+            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                handle = ρσ_Iter3[ρσ_Index3];
                 use = handle.querySelector("use");
                 use.style.stroke = stroke;
                 use.style.fill = fill;
@@ -23785,9 +23781,9 @@ return this.__repr__();
         CreateAnnotation.prototype.save_handle_state = function save_handle_state() {
             var self = this;
             var h;
-            var ρσ_Iter24 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
-                h = ρσ_Iter24[ρσ_Index24];
+            var ρσ_Iter4 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                h = ρσ_Iter4[ρσ_Index4];
                 h.dataset.savedState = h.style.display;
                 h.style.display = "none";
             }
@@ -23798,9 +23794,9 @@ return this.__repr__();
         CreateAnnotation.prototype.restore_handle_state = function restore_handle_state() {
             var self = this;
             var h;
-            var ρσ_Iter25 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
-            for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
-                h = ρσ_Iter25[ρσ_Index25];
+            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ self.left_handle, self.right_handle ]));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                h = ρσ_Iter5[ρσ_Index5];
                 h.style.display = h.dataset.savedState;
             }
         };
@@ -23812,9 +23808,9 @@ return this.__repr__();
             var s, style, k;
             s = self.current_highlight_style;
             style = "";
-            var ρσ_Iter26 = ρσ_Iterable(Object.keys(self.current_highlight_style));
-            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
-                k = ρσ_Iter26[ρσ_Index26];
+            var ρσ_Iter6 = ρσ_Iterable(Object.keys(self.current_highlight_style));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                k = ρσ_Iter6[ρσ_Index6];
                 style += "" + ρσ_str.format("{}", k) + ": " + ρσ_str.format("{}", s[(typeof k === "number" && k < 0) ? s.length + k : k]) + "; ";
             }
             ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: style, uuid: short_uuid(), existing: self.editing_annot_uuid})]));
@@ -23903,9 +23899,9 @@ return this.__repr__();
             if (self.state === WAITING_FOR_CLICK) {
                 return;
             }
-            var ρσ_Iter27 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
-                touch = ρσ_Iter27[ρσ_Index27];
+            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                touch = ρσ_Iter7[ρσ_Index7];
                 self.active_touch = touch.identifier;
                 self.start_handle_drag(touch, ev.currentTarget.id);
                 break;
@@ -23931,9 +23927,9 @@ return this.__repr__();
             var touch;
             if (ρσ_in(self.state, [DRAGGING_RIGHT, DRAGGING_LEFT])) {
                 [ev.preventDefault(), ev.stopPropagation()];
-                var ρσ_Iter28 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index28 = 0; ρσ_Index28 < ρσ_Iter28.length; ρσ_Index28++) {
-                    touch = ρσ_Iter28[ρσ_Index28];
+                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    touch = ρσ_Iter8[ρσ_Index8];
                     if (touch.identifier === self.active_touch) {
                         self.active_touch = null;
                         self.state = WAITING_FOR_DRAG;
@@ -23981,9 +23977,9 @@ return this.__repr__();
                 return;
             }
             [ev.stopPropagation(), ev.preventDefault()];
-            var ρσ_Iter29 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index29 = 0; ρσ_Index29 < ρσ_Iter29.length; ρσ_Index29++) {
-                touch = ρσ_Iter29[ρσ_Index29];
+            var ρσ_Iter9 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                touch = ρσ_Iter9[ρσ_Index9];
                 if (touch.identifier === self.active_touch) {
                     self.handle_moved(touch);
                     return;
@@ -24291,9 +24287,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.create_annotation"}
             });
 
-            var ρσ_Iter30 = ρσ_Iterable(text.splitlines());
-            for (var ρσ_Index30 = 0; ρσ_Index30 < ρσ_Iter30.length; ρσ_Index30++) {
-                line = ρσ_Iter30[ρσ_Index30];
+            var ρσ_Iter10 = ρσ_Iterable(text.splitlines());
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                line = ρσ_Iter10[ρσ_Index10];
                 if (!line || !line.strip()) {
                     if (current_block) {
                         add_para();
@@ -33771,18 +33767,18 @@ return this.__repr__();
             dev = get_device_uuid();
             epoch = 0;
             ans = null;
-            var ρσ_Iter31 = ρσ_Iterable(data);
-            for (var ρσ_Index31 = 0; ρσ_Index31 < ρσ_Iter31.length; ρσ_Index31++) {
-                key = ρσ_Iter31[ρσ_Index31];
+            var ρσ_Iter0 = ρσ_Iterable(data);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                key = ρσ_Iter0[ρσ_Index0];
                 ρσ_unpack = ρσ_eslice(key.partition(":"), 2);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 book_id = ρσ_unpack[0];
                 fmt = ρσ_unpack[1];
                 if (book_id === str(book.key[1]) && fmt.upper() === book.key[2].upper()) {
                     last_read_positions = data[(typeof key === "number" && key < 0) ? data.length + key : key];
-                    var ρσ_Iter32 = ρσ_Iterable(last_read_positions);
-                    for (var ρσ_Index32 = 0; ρσ_Index32 < ρσ_Iter32.length; ρσ_Index32++) {
-                        d = ρσ_Iter32[ρσ_Index32];
+                    var ρσ_Iter1 = ρσ_Iterable(last_read_positions);
+                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                        d = ρσ_Iter1[ρσ_Index1];
                         if (d.device !== dev && d.epoch > epoch) {
                             epoch = d.epoch;
                             ans = d;
@@ -34801,9 +34797,9 @@ return this.__repr__();
                 table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({class_: "metadata"})]);
                 container.lastChild.appendChild(table);
                 render_metadata(mi, table, null, "html { font-size: " + ρσ_str.format("{}", document.documentElement.style.fontSize) + " }");
-                var ρσ_Iter33 = ρσ_Iterable(table.querySelectorAll("a[href]"));
-                for (var ρσ_Index33 = 0; ρσ_Index33 < ρσ_Iter33.length; ρσ_Index33++) {
-                    a = ρσ_Iter33[ρσ_Index33];
+                var ρσ_Iter2 = ρσ_Iterable(table.querySelectorAll("a[href]"));
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    a = ρσ_Iter2[ρσ_Index2];
                     a.removeAttribute("href");
                     a.removeAttribute("title");
                     a.classList.remove("blue-link");
@@ -36180,9 +36176,9 @@ return this.__repr__();
             var evt, attr;
             event.preventDefault();
             evt = Object.create(null);
-            var ρσ_Iter34 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
-            for (var ρσ_Index34 = 0; ρσ_Index34 < ρσ_Iter34.length; ρσ_Index34++) {
-                attr = ρσ_Iter34[ρσ_Index34];
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                attr = ρσ_Iter0[ρσ_Index0];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["wheel_from_margin"].concat([ρσ_desugar_kwargs({evt: evt})]));
@@ -36511,12 +36507,12 @@ return this.__repr__();
             }
             names = [];
             item_groups = (data.backwards) ? ρσ_list_decorate([ range(idx - 1, -1, -1), range(spine.length - 1, idx, -1) ]) : ρσ_list_decorate([ range(idx + 1, spine.length), range(idx) ]);
-            var ρσ_Iter35 = ρσ_Iterable(item_groups);
-            for (var ρσ_Index35 = 0; ρσ_Index35 < ρσ_Iter35.length; ρσ_Index35++) {
-                items = ρσ_Iter35[ρσ_Index35];
-                var ρσ_Iter36 = ρσ_Iterable(items);
-                for (var ρσ_Index36 = 0; ρσ_Index36 < ρσ_Iter36.length; ρσ_Index36++) {
-                    i = ρσ_Iter36[ρσ_Index36];
+            var ρσ_Iter1 = ρσ_Iterable(item_groups);
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                items = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter2 = ρσ_Iterable(items);
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    i = ρσ_Iter2[ρσ_Index2];
                     names.push(spine[(typeof i === "number" && i < 0) ? spine.length + i : i]);
                 }
             }
@@ -36750,9 +36746,9 @@ return this.__repr__();
             var ans, m, s, mc, ρσ_unpack, which, sd, iframe, bg_image;
             ans = resolve_color_scheme();
             self.current_color_scheme = ans;
-            var ρσ_Iter37 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index37 = 0; ρσ_Index37 < ρσ_Iter37.length; ρσ_Index37++) {
-                which = ρσ_Iter37[ρσ_Index37];
+            var ρσ_Iter3 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                which = ρσ_Iter3[ρσ_Index3];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -37101,9 +37097,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter38 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index38 = 0; ρσ_Index38 < ρσ_Iter38.length; ρσ_Index38++) {
-                name = ρσ_Iter38[ρσ_Index38];
+            var ρσ_Iter4 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                name = ρσ_Iter4[ρσ_Index4];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -37268,9 +37264,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter39 = ρσ_Iterable(x.children);
-                for (var ρσ_Index39 = 0; ρσ_Index39 < ρσ_Iter39.length; ρσ_Index39++) {
-                    c = ρσ_Iter39[ρσ_Index39];
+                var ρσ_Iter5 = ρσ_Iterable(x.children);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    c = ρσ_Iter5[ρσ_Index5];
                     process_node(c);
                 }
             };
@@ -37465,9 +37461,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter40 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index40 = 0; ρσ_Index40 < ρσ_Iter40.length; ρσ_Index40++) {
-                edge = ρσ_Iter40[ρσ_Index40];
+            var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                edge = ρσ_Iter6[ρσ_Index6];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 07:53+0530\n"
-"PO-Revision-Date: 2020-06-19 11:09+0000\n"
+"POT-Creation-Date: 2020-07-03 07:43+0530\n"
+"PO-Revision-Date: 2020-07-03 10:00+0000\n"
 "Last-Translator: Ptit Prince <leporello1791@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -178,9 +178,9 @@ msgstr "Si vous ne voulez que les deux premières lettres de la donnée, utilise
 msgid ""
 "The calibre template language comes from Python and for more details on the "
 "syntax of these advanced formatting operations, look at the `Python "
-"documentation <https://docs.python.org/2/library/string.html#format-string-"
+"documentation <https://docs.python.org/library/string.html#format-string-"
 "syntax>`_."
-msgstr "Le langage de modèle de calibre vient de Python et pour plus de détails sur la syntaxe de ces opérations de mise en forme avancée, reportez-vous à la `Documentation Python <https://docs.python.org/2/library/string.html#format-string-syntax>`_."
+msgstr "Le langage de modèle de calibre vient de Python et pour plus de détails sur la syntaxe de ces opérations de mise en forme avancée, reportez-vous à la `Documentation Python <https://docs.python.org/library/string.html#format-string-syntax>`_."
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:90
 msgid "Advanced features"
@@ -381,12 +381,20 @@ msgstr "``lookup(pattern, field, pattern, field, ..., else_field)`` -- lcomme sw
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:132
 msgid ""
+"``rating_to_stars(use_half_stars)`` -- Returns the rating as string of star "
+"characters. The source value must be a number between 0 and 5. Set "
+"use_half_stars to 1 if you want half star characters for custom ratings "
+"columns that are not integers, for example 2.5."
+msgstr "``rating_to_stars(use_half_stars)`` -- Retourne la note sous forme de chaîne de caractères étoilés. La valeur source doit être un nombre entre 0 et 5. Mettez use_half_stars à 1 si vous voulez des caractères demi-étoiles pour les colonnes de classement personnalisées qui ne sont pas des entiers, par exemple 2.5."
+
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:133
+msgid ""
 "``re(pattern, replacement)`` -- return the field after applying the regular "
 "expression. All instances of `pattern` are replaced with `replacement`. As "
 "in all of calibre, these are Python-compatible regular expressions."
 msgstr "``re(pattern, replacement)`` -- renvoie le champ après avoir appliquer l’expression régulière. Toutes les instances de `pattern` seront remplacées par `replacement`. Comme tout dans calibre, celles-ci sont des expressions régulières Python-compatibles."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:133
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:134
 msgid ""
 "``select(key)`` -- interpret the field as a comma-separated list of items, "
 "with the items being of the form \"id:value\". Find the pair with the id "
@@ -395,7 +403,7 @@ msgid ""
 "identifiers for a book."
 msgstr "``select(key)`` -- interprète la valeur comme une liste d'articles séparés par des virgules, ceux-ci étant de la forme \"id:valeur\". Trouve la paire avec l’id égale à la clé, et retourne la valeur correspondante. Cette fonction est particulièrement utile pour extraire une valeur telle qu'un ISBN à partir d'un ensemble d'identifiants pour un livre."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:134
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:135
 msgid ""
 "``shorten(left chars, middle text, right chars)`` -- Return a shortened "
 "version of the field, consisting of `left chars` characters from the "
@@ -409,7 +417,7 @@ msgid ""
 " intact. For example, the title `The Dome` would not be changed."
 msgstr "``shorten(left chars, middle text, right chars)`` -- Retourne une version raccourcie du champ, constituée par les `left chars` caractères du début du champ, suivis par `middle text` et enfin par `right chars` de la fin de la chaîne. `left chars` et `right chars` doivent être des entiers. Par exemple, supposons que le titre du livre est `Ancient English Laws in the Times of Ivanhoe`, et que vous voulez que ce titre rentre dans un espace maximal de 15 charactéres. Si vous utilisez ``{title:shorten(9,-,5)}``, le resultat sera `Ancient E-nhoe`. Si la longueur du champ est inférieure à ``left chars`` + ``right chars`` + la longueur de ``middle text``, alors le champ ne sera pas modifié. Par exemple, le titre `The Dome` ne serait pas modifié."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:135
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:136
 msgid ""
 "``str_in_list(separator, string, found_val, ..., not_found_val)`` -- "
 "interpret the field as a list of items separated by `separator`, comparing "
@@ -421,7 +429,7 @@ msgid ""
 "search. The strings are checked in order. The first match is returned."
 msgstr "``str_in_list(separator, string, found_val, ..., not_found_val) -- interprète le champ comme une liste d’éléments séparés par `separator`, comparant `string` avec chaque valeur de la liste. Si `string`  correspond à une valeur (ignorant la casse) cela retourne `found_val`, sinon, cela retourne `not_found_val`. Si la chaîne contient des séparateurs, alors elle est également traitée comme une liste et chaque valeur est vérifiée. `string` et `found_value` peuvent être répétés autant de fois que désiré, permettant de renvoyer différentes valeurs dépendantes de la recherche. Les chaînes sont traitées dans l'ordre. La première correspondance est renvoyée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:136
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:137
 msgid ""
 "``subitems(start_index, end_index)`` -- This function is used to break apart"
 " lists of tag-like hierarchical items such as genres. It interprets the "
@@ -435,7 +443,7 @@ msgid ""
 "list. Examples::"
 msgstr "``subitems(start_index, end_index)`` -- Cette fonction est utilisée pour séparer des listes d’éléments analogues de type hiérarchique comme les genres. Elle interprète le champ comme une liste d’éléments séparés par des virgules d'éléments analogues, où chaque élément est une liste séparée par des points. Retourne une nouvelle liste composée en recherchant d’abord tous les éléments analogues séparés par des points, puis pour chacun de ces  éléments en extrayant les composantes entre `start_index` et `end_index` avant de les recombiner. Le premier élément dans une liste séparée par des points a un index de 0. Si un index est négatif, alors il part de la fin de la liste. Comme cas spécial, un fin_index de zéro est considéré comme étant la longueur de la liste. Exemples :: "
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:146
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:147
 msgid ""
 "``sublist(start_index, end_index, separator)`` -- interpret the field as a "
 "list of items separated by `separator`, returning a new list made from the "
@@ -446,14 +454,23 @@ msgid ""
 ",C\"::"
 msgstr "``sublist(start_index, end_index, separator) -- interprète le champ comme une liste d’éléments séparés par `separator`, retournant une nouvelle liste composée des éléments compris entre `start_index` et `end_index`. Le premier élément est le numéro 0. Si un index est négatif, alors il part de la fin de la liste. Comme cas spécial, un end_index de zéro est considéré comme étant la longueur de la liste. Des exemples supposant que la colonne des étiquettes (qui sont séparées par des virgules) contient \"A, B, C\" :: "
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:152
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:153
+msgid ""
+"``swap_around_articles(separator)`` -- returns the val with articles moved "
+"to the end. The value can be a list, in which case each member of the list "
+"is processed. If the value is a list then you must provide the list value "
+"separator. If no separator is provided then the value is treated as being a "
+"single value, not a list."
+msgstr "``swap_around_articles(separator)`` -- renvoie la val avec les articles déplacés à la fin. La valeur peut être une liste, auquel cas chaque membre de la liste est traité. Si la valeur est une liste, alors vous devez fournir le séparateur de valeur de liste. Si aucun séparateur n'est fourni, la valeur est traitée comme une valeur unique et non comme une liste."
+
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:154
 msgid ""
 "``swap_around_comma()`` -- given a field with a value of the form ``B, A``, "
 "return ``A B``. This is most useful for converting names in LN, FN format to"
 " FN LN. If there is no comma, the function returns val unchanged."
 msgstr "``swap_around_comma()`` -- donne un champ avec une valeur au format \"B, A\", renvoie \"A B\". Ceci est très utile pour la conversion des noms du format NF, Pr vers Pr NF. Si il n’y a pas de virgule, la fonction renvoie val non modifiée"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:153
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:155
 msgid ""
 "``switch(pattern, value, pattern, value, ..., else_value)`` -- for each "
 "``pattern, value`` pair, checks if the field matches the regular expression "
@@ -462,13 +479,13 @@ msgid ""
 "pairs as you want."
 msgstr "``switch(pattern, value, pattern, value, …, else_valeur)`` -- pour chaque paire ``pattern, value``, vérifie si le champ à des correspondances pour l’expression régulière ``pattern`` et si oui renvoie cette ``valeur``. Si aucun ``pattern`` ne  correspond, alors else_value est renvoyé. Vous pouvez avoir autant de paires ``pattern, value`` que vous voulez."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:154
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:156
 msgid ""
 "``test(text if not empty, text if empty)`` -- return `text if not empty` if "
 "the field is not empty, otherwise return `text if empty`."
 msgstr "``test(text if not empty, text if empty)`` -- renvoie `text if not empty` si le champ n’est pas vide, sinon renvoie `text if empty`."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:155
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:157
 msgid ""
 "``transliterate()`` -- Returns a string in a latin alphabet formed by "
 "approximating the sound of the words in the source field. For example, if "
@@ -476,7 +493,7 @@ msgid ""
 "``Fiodor Mikhailovich Dostoievskii``.'"
 msgstr "``transliterate()`` - Restitue une chaîne en alphabet latin représentant approximativement le son des mots de la chaîne source. Par exemple,  si le champ source est `Фёдор Миха́йлович Достоевский`` la fonction renverra ``Fiodor Mikhailovich Dostoievskii``.'"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:157
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:159
 msgid ""
 "Now, what about using functions and formatting in the same field. Suppose "
 "you have an integer custom column called ``#myint`` that you want to see "
@@ -488,17 +505,17 @@ msgid ""
 "value back to a zero. The field reference would be::"
 msgstr "Maintenant, qu'en est-il de l'utilisation des fonctions et du formatage dans le même champ. Supposons que vous avez une colonne personnalisée appelée ``#myint`` que vous voulez avoir avec des 0 devant, tel que ``003``. Pour ce faire, vous devez utiliser un format de ``0>3s``. Cependant, par défaut, si un nombre (entier ou flottant) est égal à zéro alors le champ retourne une valeur vide, et les valeurs nulles ne produisent rien, pas ``000``. Si vous voulez vraiment voir la valeur ``000``, alors vous utilisez à la fois un format de chaîne et la fonction ``ifempty`` pour traiter la valeur vide et la transformer en zéro. La référence de champ serait::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:161
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:163
 msgid ""
 "Note that you can use the prefix and suffix as well. If you want the number "
 "to appear as ``[003]`` or ``[000]``, then use the field::"
 msgstr "Notez que vous pouvez également utiliser préfixe et suffixe, si vous voulez que le nombre apparaisse comme  ``[003]`` ou ``[000]``, utilisez alors le champ::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:168
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:170
 msgid "Using functions in templates - template program mode"
 msgstr "Utiliser les fonctions dans les modèles - mode modèle de programme"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:170
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:172
 msgid ""
 "The template language program mode differs from single-function mode in that"
 " it permits you to write template expressions that refer to other metadata "
@@ -506,13 +523,13 @@ msgid ""
 "programming language."
 msgstr "Le langage du mode modèle de programme diffère du mode fonction seule en ce qu'il permet d'écrire des expressions de modèles qui font référence à d'autres champs de métadonnées, champs, de modifier les valeurs et faire de l'arithmétique. Il s'agit d'un langage de programmation assez complet."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:172
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:174
 msgid ""
 "You can use the functions documented above in template program mode. See "
 "below for details."
 msgstr "Vous pouvez utiliser les fonctions documentées ci-dessus dans le mode de programmation de modèle. Voir ci-dessous pour plus de détails."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:174
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:176
 msgid ""
 "Beginning with an example, assume that you want your template to show the "
 "series for a book if it has one, otherwise show the value of a custom field "
@@ -521,23 +538,23 @@ msgid ""
 " mode, you can. The following expression works::"
 msgstr "Commençons par un exemple : supposons que vous voulez que votre modèle vous donne la série d'un livre s'il en a une, et sinon vous donne la valeur du champ personnalisé #genre. Vous ne pouvez pas le faire dans la langue de base, parce que vous ne pouvez pas faire référence à un autre champ de métadonnées dans l'expression d'un modèle. En mode programmation, vous pouvez. L'expression suivante fonctionne::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:178
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:180
 msgid "The example shows several things:"
 msgstr "L'exemple montre plusieurs choses :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:180
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:182
 msgid ""
 "program mode is used if the expression begins with ``:'`` and ends with "
 "``'``. Anything else is assumed to be single-function."
 msgstr "le mode modèle de programmation est utilisé si l'expression commence par ``:'`` et se termine par ``'``. Tout le reste est considéré comme étant fonction-seule."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:181
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:183
 msgid ""
 "the variable ``$`` stands for the field the expression is operating upon, "
 "``#series`` in this case."
 msgstr "la variable ``$`` représente le champ sur lequel porte l'expression opère, ``#series`` dans ce cas."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:182
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:184
 msgid ""
 "functions must be given all their arguments. There is no default value. For "
 "example, the standard built-in functions must be given an additional initial"
@@ -545,16 +562,16 @@ msgid ""
 "from single-function mode."
 msgstr "les fonctions doivent être donnés avec tous leurs arguments. Il n'y a pas de valeur par défaut. Par exemple, les fonctions intégrées standard doivent avoir un paramètre initial supplémentaire indiquant le champ source, ce qui est une différence importante avec le mode fonction-seule."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:183
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:185
 msgid "white space is ignored and can be used anywhere within the expression."
 msgstr "les espaces sont ignorés et peuvent être utlisés n'importe où dans l'expression."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:184
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:186
 msgid ""
 "constant strings are enclosed in matching quotes, either ``'`` or ``\"``."
 msgstr "les chaînes constantes sont entre guillemets, soit ``'`` ou ``\"``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:186
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:188
 msgid ""
 "The language is similar to ``functional`` languages in that it is built "
 "almost entirely from functions. A statement is a function. An expression is "
@@ -562,15 +579,15 @@ msgid ""
 "returning the value indicated by the constant or stored in the identifier."
 msgstr "Le langage est similaire aux langages ``fonctionnels`` en ce qu'il est construit presque entièrement à partir de fonctions. Une déclaration est une fonction. Une expression est une fonction. Constantes et identificateurs peuvent être considérés comme des fonctions renvoyant la valeur indiquée par la constante ou stockés dans l'identificateur."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:188
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:190
 msgid "The syntax of the language is shown by the following grammar::"
 msgstr "La syntaxe du langage est représentée par la grammaire suivante::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:198
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:200
 msgid "Comments are lines with a '#' character at the beginning of the line."
 msgstr "Les commentaires sont des lignes avec le caractère '#' au début de la ligne."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:200
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:202
 msgid ""
 "An ``expression`` always has a value, either the value of the constant, the "
 "value contained in the identifier, or the value returned by a function. The "
@@ -578,27 +595,27 @@ msgid ""
 " of statements. As such, the value of the program (statement)::"
 msgstr "Une ``expression`` a toujours une valeur, soit la valeur d'une constante, soit la valeur contenue dans un identifiant, ou la valeur retournée par une fonction. La valeur d'une ``déclaration`` est la valeur de la dernière expression d'une phrase de déclarations. De même, la valeur d'un programme (déclaration)::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:204
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:206
 msgid "is 3."
 msgstr "est 3."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:206
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:208
 msgid ""
 "Another example of a complex but rather silly program might help make things"
 " clearer::"
 msgstr "Un autre exemple d'un programme complexe, même s'il est un peu ridicule, pourrait aider à clarifier les choses::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:217
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:219
 msgid "This program does the following:"
 msgstr "Ce programme fait ce qui suit :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:219
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:221
 msgid ""
 "specify that the field being looked at is series_index. This sets the value "
 "of the variable ``$``."
 msgstr "précise que le champ qui doit être traité est series_index. Cela définit la valeur de la variable ``$``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:220
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:222
 msgid ""
 "calls the ``substr`` function, which takes 3 parameters ``(str, start, "
 "end)``. It returns a string formed by extracting the start through end "
@@ -609,7 +626,7 @@ msgid ""
 "before substr can return."
 msgstr "appelle la fonction ``substr``, qui comprend 3 paramètres ``(str, start, end)``. Elle renvoie une chaîne qui est formée par l'extraction des caractères du début à la fin de la chaîne, base zéro (le premier caractère est un caractére zéro).\nDans ce cas, la chaîne sera calculée par la fonction ``strcat``, le début est 0, et la fin est 6. Dans ce cas, elle retournera les 6 premiers caractères de la chaîne renvoyée par ``strcat``, qui doit être évaluée avant que substr puisse renvoyer."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:221
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:223
 msgid ""
 "calls the ``strcat`` (string concatenation) function. Strcat accepts 1 or "
 "more arguments, and returns a string formed by concatenating all the values."
@@ -620,7 +637,7 @@ msgid ""
 "return."
 msgstr "appelle la fonction ``strcat`` (concaténation de chaîne). Strcat accepte 1 ou plus d'arguments, et renvoie une chaîne formée par la concaténation de toutes les valeurs. Dans ce cas il y a trois arguments. Le premier paramètre est la valeur dans ``$``, qui ici est la valeur de ``series_index``. Le deuxième paramètre est la chaîne constante ``'->'``. Le troisième paramètre est la valeur retournée par la fonction ``cmp``, qui doit être complètement évaluée avant que ``strcat`` puisse renvoyer."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:222
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:224
 msgid ""
 "The ``cmp`` function takes 5 arguments ``(x, y, lt, eq, gt)``. It compares x"
 " and y and returns the third argument ``lt`` if x < y, the fourth argument "
@@ -633,7 +650,7 @@ msgid ""
 "``'gt'``."
 msgstr "La fonction ``cmp`` comprend 5 arguments ``(x, y, lt, eq, gt)``. Elle compare x et y et renvoie le troisième argument ``lt`` si x < y, le quatrième argument ``eq`` si x == y, et le cinquième argument ``gt`` si x > y. Comme avec toutes les fonctions, tous les paramètres peuvent être des déclarations. Dans ce cas le premier paramètre (la valeur pour ``x``) est le résultat de la division de series_index par 2. Le deuxième paramètre ``y`` est la constante ``1``. Le troisième paramètre ``t`` est une déclaration (plus à ce sujet plus tard). Le quatrième paramètre ``eq`` est la chaîne constante ``'eq'``. Le cinquième paramètre est la chaîne constante ``'gt'``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:223
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:225
 msgid ""
 "The third parameter (the one for ``lt``) is a statement, or a sequence of "
 "expressions. Remember that a statement (a sequence of semicolon-separated "
@@ -645,38 +662,38 @@ msgid ""
 "``'t123'``."
 msgstr " Le troisième paramètre (celui pour ``it``) est une déclaration ou une séquence d'expressions. Rappelez-vous qu'une déclaration (une séquence d'expressions séparées par des points-virgules) est également une expression et renvoie la valeur de la dernière expression dans la liste. Dans ce cas, le programme affecte d'abord la valeur ``1`` à une variable locale ``c``, puis retourne une sous-chaîne faite par l'extraction du c'th caractère à la fin. Puisque c contient toujours la constante ``1``, la sous-chaîne retournera le deuxième jusqu'aux caractères de fin, ou ``t123``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:224
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:226
 msgid ""
 "Once the statement providing the value to the third parameter is executed, "
 "``cmp`` can return a value. At that point, ``strcat` can return a value, "
 "then ``substr`` can return a value. The program then terminates."
 msgstr "Une fois la déclaration donnant la valeur du troisième paramètre est exécutée, ``cmp`` peut renvoyer une valeur. A ce moment, ``strcat`` peut renvoyer une valeur, puis ``substr`` peut renvoyer une valeur. Ensuite, le programme se termine."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:226
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:228
 msgid "For various values of series_index, the program returns:"
 msgstr "Pour différentes valeurs de series_index, le programme renvoie :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:228
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:230
 msgid "series_index == undefined, result = ``prefix ->t123 suffix``"
 msgstr "series_index == indéfini, résultat = ``préfixe ->t123 suffixe``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:229
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:231
 msgid "series_index == 0.5, result = ``prefix 0.50-> suffix``"
 msgstr "series_index == 0.5, resultat = ``prefix 0.50-> suffix``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:230
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:232
 msgid "series_index == 1, result = ``prefix 1->t12 suffix``"
 msgstr "series_index == 1, résultat = ``préfixe 1->t12 suffixe``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:231
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:233
 msgid "series_index == 2, result = ``prefix 2->eq suffix``"
 msgstr "series_index == 2, résultat = ``préfixe 2->eq suffixe``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:232
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:234
 msgid "series_index == 3, result = ``prefix 3->gt suffix``"
 msgstr "series_index == 3, résultat = ``préfixe 3->gt suffixe``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:234
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:236
 msgid ""
 "**All the functions listed under single-function mode can be used in program"
 " mode**. To do so, you must supply the value that the function is to act "
@@ -687,7 +704,7 @@ msgid ""
 " often `field()`."
 msgstr "**Toutes les fonctions listées sous le mode fonction-seule peuvent être utilisées dans le mode programmation**. Pour faire cela, vous devez fournir la valeur sur laquelle la fonction agit comme premier paramètre, en complément des paramètres documentés ci-dessus. Par exemple, en mode programmation les paramètres de la fonction `test` sont ``test(x, text_if_not_empty, text_if_empty)``. Le paramètre `x`, qui est la valeur à tester, sera presque toujours une variable ou un appel de fonction, souvent `field()`."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:236
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:238
 msgid ""
 "The following functions are available in addition to those described in "
 "single-function mode. Remember from the example above that the single-"
@@ -698,26 +715,26 @@ msgid ""
 ":ref:`Function classification <template_functions_reference>`:"
 msgstr "Les fonctions suivantes sont disponibles en complément de celles décrites dans le mode fonction-seule. Rappelez-vous de l'exemple ci-dessus que les fonctions du mode fonction-seule requièrent un premier paramètre additionnel spécifiant le champ sur lequel opérer.Avec l'exception du paramètre ``id`` d'assign, tous les paramètres peuvent être des déclarations (séquences d'expressions). Notez que la documentation définitive pour les fonctions est disponible dans la section :ref:`Classification de fonction <template_functions_reference>`:"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:238
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:240
 msgid ""
 "``and(value, value, ...)`` -- returns the string \"1\" if all values are not"
 " empty, otherwise returns the empty string. This function works well with "
 "test or first_non_empty. You can have as many values as you want."
 msgstr "``and(valeur, valeur, …)`` -- renvoie la chaîne \"1\" si toutes les valeurs ne sont pas vides, sinon renvoie la chaine vide. Cette fonction fonctionne très bien avec test ou first_non_empty. Vous pouvez avoir autant de valeurs que vous voulez."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:239
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:241
 msgid ""
 "``add(x, y)`` -- returns x + y. Throws an exception if either x or y are not"
 " numbers."
 msgstr "``add(x, y)`` -- renvoie x + y. Renvoie une exception si x ou y ne sont pas des nombres."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:240
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:242
 msgid ""
 "``assign(id, val)`` -- assigns val to id, then returns val. id must be an "
 "identifier, not an expression"
 msgstr "``assign(id, val)`` -- assigne val à id, puis renvoie val. id doit être un identifiant, pas une expression"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:241
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:243
 msgid ""
 "``approximate_formats()`` -- return a comma-separated list of formats that "
 "at one point were associated with the book. There is no guarantee that the "
@@ -726,7 +743,7 @@ msgid ""
 "Note that format names are always uppercase, as in EPUB."
 msgstr "``approximate_formats()`` -- retourne une liste de formats, séparées par des virgules, qui,  à un certain moment, on été associés avec le livre. Il n'y a aucune garantie que cette liste est correcte, bien qu'elle le soit probablement. Cette fonction peut-être appelée en mode de modèle de programme en utilisant le modèle \"{:'approximate_formats()'}\". Notez que ces noms de formats sont toujours en majuscule, comme dans EPUB."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:242
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:244
 msgid ""
 "``author_links(val_separator, pair_separator)`` -- returns a string "
 "containing a list of authors and that author's link values in the form "
@@ -739,7 +756,7 @@ msgid ""
 "empty."
 msgstr "``author_links(val_separator, pair_separator)`` -- retourne une chaîne contenant une liste d'auteurs et les valeurs de ce lien d'auteur dans la forme ``auteur1 val_separator author1link pair_separator auteur2 val_separator author2link`` etc. Un auteur est séparé de la valeur de son lien par la chaîne ``val_separator`` sans espaces ajoutés. Les paires ``author:linkvalue`` sont séparées par la chaîne d'argument ``pair_separator`` sans espaces ajoutés. Il vous incombe de choisir des chaines de séparateur qui n'apparaissent pas dans des noms ou des liens d'auteur. Un auteur est inclus même si le lien d'auteur est vide."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:243
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:245
 msgid ""
 "``author_sorts(val_separator)`` -- returns a string containing a list of "
 "author's sort values for the authors of the book. The sort is the one in the"
@@ -750,13 +767,13 @@ msgid ""
 "separator string"
 msgstr "``author_sorts(val_separator)`` --  renvoie une chaîne contenant une liste des valeurs de tri de l'auteur pour les auteurs du livre. Le tri est celui des métadonnées auteur (différente de l'author_sort dans les livres). La liste renvoyée a ltri auteur 1 ``val_separator`` tri auteur 2 etc. Les valeurs de tri auteur dans cette liste sont dans le même ordre que les auteurs du livre. Si vous voulez les espaces autour du ``val_separator`` incluez les alors dans la chaîne separator"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:248
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:246
 msgid ""
 "``booksize()`` -- returns the value of the calibre 'size' field. Returns '' "
 "if there are no formats."
 msgstr "``booksize()`` -- renvoie la valeur du champ 'size' de calibre. Renvoie '' s'il n'y a pas de formats."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:245
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:247
 msgid ""
 "``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- checks the "
 "value of the yes/no field named by the lookup key ``field_name`` for a value"
@@ -766,7 +783,7 @@ msgid ""
 "otherwise set it to 0. Example::"
 msgstr "``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- vérifie la valeur du champ yes/no nommé par la clé de recherche ``field_name`` pour une valeur spécifiée par les paramètres, en retournant \"yes\" si une correspondance est trouvée, sinon en retournant une chaîne vide. Mettre le paramètre ``is_undefined``, ``is_false``, ou ``is_true`` à 1 (le nombre) pour vérifier cette condition, sinon le mettre à 0. Exemple::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:249
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:251
 msgid ""
 "returns \"yes\" if the yes/no field ``\"#bool\"`` is either undefined "
 "(neither True nor False) or True. More than one of ``is_undefined``, "
@@ -774,28 +791,28 @@ msgid ""
 " by the ``test()`` or ``is_empty()`` functions."
 msgstr "renvoie \"oui\" si le champ oui/non \"#bool\"`` est soit indéfini (ni Vrai ni Faux) ou Vrai. Plus d'une des fonctions ``is_undefined``, ``is_false``, ou ``is_true`` peut être mise à 1. Cette fonction est généralement utilisée par les fonctions ``test()`` ou ``is_empty()``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:250
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:252
 msgid ""
 "``cmp(x, y, lt, eq, gt)`` -- compares x and y after converting both to "
 "numbers. Returns ``lt`` if x < y. Returns ``eq`` if x == y. Otherwise "
 "returns ``gt``."
 msgstr "``cmp(x, y, lt, eq, gt)`` -- compare x et y après les avoir converti tous les deux en nombres. Renvoie ``lt`` si x < y. Renvoie ``eq`` si x == y. Sinon renvoie ``gt``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:251
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:253
 msgid ""
 "``current_library_name()`` -- return the last name on the path to the "
 "current calibre library. This function can be called in template program "
 "mode using the template ``{:'current_library_name()'}``."
 msgstr "``current_library_name()`` -- retourne le dernier nom du chemin de la bibliothèque calibre actuelle. Cette fonction peut-être appelée en mode de modèle de programme en utilisant le modèle ``{:'current_library_name()'}``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:252
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:254
 msgid ""
 "``current_library_path()`` -- return the path to the current calibre "
 "library. This function can be called in template program mode using the "
 "template ``{:'current_library_path()'}``."
 msgstr "``current_library_path()`` -- retourne le chemin de la bibliothèque calibre actuelle. Cette fonction peut-être appelée en  mode de modèle de programme en utilisant le modèle ``{:'current_library_path()'}``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:253
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:255
 msgid ""
 "``days_between(date1, date2)`` -- return the number of days between "
 "``date1`` and ``date2``. The number is positive if ``date1`` is greater than"
@@ -803,13 +820,13 @@ msgid ""
 "dates, the function returns the empty string."
 msgstr "``days_between(date1, date2)`` -- renvoie le nombre de jours entre ``date1`` et ``date2``. Le nombre est positif si ``date1`` est plus grand que ``date2``, sinon négatif. Si ``date1`` ou ``date2`` ne sont pas des dates, la fonction renvoie une chaîne vide."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:254
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:256
 msgid ""
 "``divide(x, y)`` -- returns x / y. Throws an exception if either x or y are "
 "not numbers."
 msgstr "``divide(x, y)`` -- renvoie x / y. Renvoie une exception si x ou y ne sont pas des nombres."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:255
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:257
 msgid ""
 "``eval(string)`` -- evaluates the string as a program, passing the local "
 "variables (those ``assign`` ed to). This permits using the template "
@@ -820,11 +837,11 @@ msgid ""
 "the argument to this function when using template program mode."
 msgstr "``eval(string)`` -- évalue la chaîne, en analysant les variables locales (celles ``assign``ées à). Cela permet en utilisant le traitement du modèle de construire des résultats complexes à partir de variables locales. Parce que les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère `}` ; ils sont convertis automatiquement. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans les arguments de cette fonction lorsque le mode modèle de programmation est utilisé."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:256
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:258
 msgid "``field(name)`` -- returns the metadata field named by ``name``."
 msgstr "``field(name)`` -- renvoie le champ de métadonnée nommé par ``name``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:257
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:259
 msgid ""
 "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- "
 "compares ``val < cmpN`` in sequence, returning resultN for the first "
@@ -832,27 +849,27 @@ msgid ""
 "Example::"
 msgstr "``first_matching_cmp(val, cmp1, result1, cmp2, r2, ..., else_result)`` -- compare ``val < cmpN`` dans la séquence, retourne resultN pour la première comparaison qui réussit. Retourne else_return si aucune comparaison ne réussit. Exemple::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:262
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:264
 msgid ""
 "returns \"large\". The same example with a first value of 16 returns "
 "\"giant\"."
 msgstr "renvoie \"large\". Le même exemple avec une première valeur à 16 renvoie \"géant\"."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:264
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:266
 msgid ""
 "``first_non_empty(value, value, ...)`` -- returns the first value that is "
 "not empty. If all values are empty, then the empty value is returned. You "
 "can have as many values as you want."
 msgstr "``first_non_empty(valeur, valeur, …)`` -- retourne la première valeur non vide. Si toutes les valeurs sont vides, la valeur vide est retournée. Vous pouvez avoir autant de valeurs que vous voulez."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:266
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:268
 msgid ""
 "``format_date(val, format_string)`` -- format the value, which must be a "
 "date field, using the format_string, returning a string. The formatting "
 "codes are::"
 msgstr "``format_date(val, format_string)`` -- formate la valeur, qui doit être un champ date, en utilisant format_string, retournant une chaîne. Les codes de formatage sont::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:291
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:293
 msgid ""
 "You might get unexpected results if the date you are formatting contains "
 "localized month names, which can happen if you changed the format tweaks to "
@@ -861,7 +878,7 @@ msgid ""
 "mode as in ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
 msgstr "Vous pourriez obtenir des résultats inattendus si la date que vous formatez contient des noms de mois localisés, ce qui peut arriver si vous changez les ajustements de format pour contenir ``MMMM``. Dans ce cas, à la place d'utiliser quelque chose comme ``{pubdate:format_date(yyyy)}``, écrivez le modèle en utilisant le mode programmation de modèle comme dans ``{:'format_date(raw_field('pubdate'),'yyyy')'}``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:293
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:295
 msgid ""
 "``finish_formatting(val, fmt, prefix, suffix)`` -- apply the format, prefix,"
 " and suffix to a value in the same way as done in a template like "
@@ -872,14 +889,14 @@ msgid ""
 "same output as the above template::"
 msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- applique le format, le préfixe, et le suffixe à une valeur de la même manière que cela ce fait dans un modèle comme ``{series_index:05.2f| - |- }``. Cette fonction est fournie pour facilité la conversion d'une single-function complexe - ou des modèles template-program-mode en :ref:`mode général de programmation <general_mode>` (voir ci-dessous) pour profiter de l'avantage de la compilation de modèle GPM. Par exemple, le programme suivant produit la même sortie que le modèle ci-dessus::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:304
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:306
 msgid ""
 "Another example: for the template "
 "``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - "
 "}{title}`` use::"
 msgstr "Un autre exemple: pour le modèle ``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - }{title}`` utilisez::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:313
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:315
 msgid ""
 "``formats_modtimes(format_string)`` -- return a comma-separated list of "
 "colon-separated items representing modification times for the formats of a "
@@ -889,7 +906,7 @@ msgid ""
 "are always uppercase, as in EPUB."
 msgstr "``formats_modtimes(format_string)`` -- retourne une liste séparée par des virgules d’éléments séparés par deux-points représentant les dates de modification pour les formats d’un livre. Le paramètre format_string indique comment la date doit être formatée. Voir la fonction  `format_date()` pour plus de détails. Vous pouvez utiliser la fonction select pour obtenir le moment de modification pour un format spécifique. Veuillez noter que les noms de format sont toujours en majuscules, comme dans EPUB."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:314
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:316
 msgid ""
 "``formats_paths()`` -- return a comma-separated list of colon-separated "
 "items representing full path to the formats of a book. You can use the "
@@ -897,7 +914,7 @@ msgid ""
 "names are always uppercase, as in EPUB."
 msgstr "``formats_paths()`` -- retourne une liste séparées par des virgules d'éléments séparés par deux points représentant le chemin absolu vers les formats d'un livre. Vous pouvez utiliser cette fonction pour obtenir le chemin d'un format spécifique. Notez que ces noms de formats sont toujours en majuscule, comme dans EPUB."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:315
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:317
 msgid ""
 "``formats_sizes()`` -- return a comma-separated list of colon-separated "
 "items representing sizes in bytes of the formats of a book. You can use the "
@@ -905,20 +922,20 @@ msgid ""
 "names are always uppercase, as in EPUB."
 msgstr "``formats_sizes()`` -- renvoie une liste séparée par des virgules correspondant à des articles représentant les tailles en octets des formats du livre. Vous pouvez utiliser la fonction select pour obtenir la taille d’un format spécifique. Notez que ces noms de formats sont toujours en majuscule, comme dans EPUB."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:316
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:318
 msgid ""
 "``has_cover()`` -- return ``Yes`` if the book has a cover, otherwise return "
 "the empty string"
 msgstr "``has_cover()`` -- renvoie ``Yes`` si le livre a une couverture, sinon renvoie une chaine vide"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:317
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:319
 msgid ""
 "``not(value)`` -- returns the string \"1\" if the value is empty, otherwise "
 "returns the empty string. This function works well with test or "
 "first_non_empty."
 msgstr "``not(value)`` -- renvoie la chaîne \"1\" si la valeur est vide, sinon renvoie la chaîne vide. Cette fonction fonctionne très bien avec test ou first_non_empty."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:318
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:320
 msgid ""
 "``list_difference(list1, list2, separator)`` -- return a list made by "
 "removing from `list1` any item found in `list2`, using a case-insensitive "
@@ -926,7 +943,7 @@ msgid ""
 "are the items in the returned list."
 msgstr "``list_difference(list1, list2, separator)`` -- restitue une liste en supprimant de ``list1`` tout élément trouvé dans ``list2 ``en utilisant une comparaison insensible à la casse. Les éléments dans ``list1`` et ``list2`` sont séparés par le séparateur, comme le sont les éléments dans la liste restituée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:319
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:321
 msgid ""
 "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return "
 "`yes_val` if `list1` and `list2` contain the same items, otherwise return "
@@ -935,7 +952,7 @@ msgid ""
 "the lists is not relevant. The comparison is case-insensitive."
 msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` --retourne `yes_val` si ``list1`` et ``list2`` contiennent les mêmes éléments, sinon renvoie ``no_val``. Les éléments sont déterminés en éclatant chaque liste à l’aide du séparateur approprié (`sep1` ou `sep2`). L’ordre des éléments dans la liste n’est pas pris en compte. La comparaison est insensible à la casse."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:320
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:322
 msgid ""
 "``list_intersection(list1, list2, separator)`` -- return a list made by "
 "removing from `list1` any item not found in `list2`, using a case-"
@@ -943,7 +960,7 @@ msgid ""
 "separator, as are the items in the returned list."
 msgstr "``list_intersection(list1, list2, separator)`` -- restitue une liste en supprimant de ``list1`` tout élément non trouvé dans ``list2 ``en utilisant une comparaison insensible à la casse. Les éléments dans ``list1`` et ``list2`` sont séparés par le séparateur, comme le sont les éléments dans la liste restituée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:321
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:323
 msgid ""
 "``list_re(src_list, separator, include_re, opt_replace)`` -- Construct a "
 "list by first separating `src_list` into items using the `separator` "
@@ -953,7 +970,7 @@ msgid ""
 "returned list."
 msgstr "``list_re(src_list, separator, include_re, opt_replace)`` -- Construit une liste en séparant d'abord `src_list` en éléments utilisant le caractère de séparation. Pour chaque élément dans la liste, vérifie s'il correspond à `include_re`. Si c'est le cas, alors il l'ajoute à la liste à renvoyer. Si `opt_replace` n'est pas une chaîne vide, alors effectue le remplacement avant d'ajouter l'élément à la liste renvoyée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:322
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:324
 msgid ""
 "``list_re_group(src_list, separator, include_re, search_re, "
 "template_for_group_1, for_group_2, ...)`` -- Like list_re except "
@@ -961,7 +978,7 @@ msgid ""
 "...) when doing the replacements."
 msgstr "``list_re_group(src_list, separator, include_re, search_re, template_for_group_1, for_group_2, ...)`` -- Comme list_re excepté que les remplacements ne sont pas optionnels. Il utilise re_group(item, search_re, template ...) quand il effectue les remplacements."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:323
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:325
 msgid ""
 "``list_sort(list, direction, separator)`` -- return list sorted using a "
 "case-insensitive sort. If `direction` is zero, the list is sorted ascending,"
@@ -969,7 +986,7 @@ msgid ""
 " items in the returned list."
 msgstr "``list_sort(list, direction, separator) -- retourne une liste triée en utilisant un tri insensible à la casse. Si `direction` est zéro, la liste est triée de manière ascendante, sinon descendante. Les éléments sont séparés par le séparateur, comme ceux de la liste retournée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:324
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:326
 msgid ""
 "``list_union(list1, list2, separator)`` -- return a list made by merging the"
 " items in list1 and list2, removing duplicate items using a case-insensitive"
@@ -978,46 +995,46 @@ msgid ""
 "returned list."
 msgstr "``list_union(list1, list2, separator)`` -- restitue une liste créée de la fusion des éléments dans list1 et list2, supprimant les doublons en utilisant une comparaison insensible à la casse. Si la casse des éléments diffère, celle de list1 est utilisée. Les éléments dans list1 et list2 sont séparés par le séparateur, comme ceux de la liste restituée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:325
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:327
 msgid ""
 "``multiply(x, y)`` -- returns x * y. Throws an exception if either x or y "
 "are not numbers."
 msgstr "``multiply(x, y)`` -- renvoie x * y. Renvoie une exception si x ou y ne sont pas des nombres."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:326
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:328
 msgid ""
 "``ondevice()`` -- return the string \"Yes\" if ondevice is set, otherwise "
 "return the empty string"
 msgstr "``ondevice()`` -- renvoie la chaîne \"Yes\" si ondevice est paramétré, sinon renvoie la chaîne vide"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:327
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:329
 msgid ""
 "``or(value, value, ...)`` -- returns the string \"1\" if any value is not "
 "empty, otherwise returns the empty string. This function works well with "
 "test or first_non_empty. You can have as many values as you want."
 msgstr "``or(value, value, …)`` -- renvoie la chaîne \"1\" si n'importe quelle valeur n’est pas vide, sinon renvoie la chaine vide. Cette fonction fonctionne très bien avec test ou first_non_empty. Vous pouvez avoir autant de valeurs que vous voulez."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:328
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:330
 msgid ""
 "``print(a, b, ...)`` -- prints the arguments to standard output. Unless you "
 "start calibre from the command line (``calibre-debug -g``), the output will "
 "go to a black hole."
 msgstr "``print(a, b, …)`` -- affiche les arguments dans la console standard. Sauf si vous avez démarré calibre à partir de la ligne de commande (``calibre-debug -g``), la sortie ira dans un trou noir."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:329
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:331
 msgid ""
 "``raw_field(name)`` -- returns the metadata field named by name without "
 "applying any formatting."
 msgstr "``raw_field(name)`` -- renvoie le champ de métadonnée nommé par name sans appliquer aucun formatage."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:330
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:332
 msgid ""
 "``raw_list(name, separator)`` -- returns the metadata list named by name "
 "without applying any formatting or sorting and with items separated by "
 "separator."
 msgstr "``raw_field(name, separator)`` -- renvoie la liste de métadonnées nommée par name sans appliquer aucun formatage ou triage et avec les éléments séparés par separator."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:331
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:333
 msgid ""
 "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` --  "
 "return a string made by applying the regular expression pattern to the val "
@@ -1029,17 +1046,17 @@ msgid ""
 "more than one word and uppercases the first word::"
 msgstr "``re_group(val, pattern, template_for_group_1, for_group_2, ...)`` -- renvoie une chaîne faite en appliquant le modèle d'expression régulière à la valeur et en remplaçant chaque instance assortie par la chaîne calculée en remplaçant chaque groupe assorti par la valeur retournée par le modèle correspondant. La valeur assortie originale pour le groupe est disponible comme $. En mode programmation de modèle, comme pour le modèle et les fonctions eval, vous utiliserez [[ pour { et ]] pour }. L'exemple suivant en mode programmation de modèle recherche des séries avec plus d'un mot et des majuscules dans le premier mot::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:335
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:337
 msgid "``series_sort()`` -- returns the series sort value."
 msgstr "``series_sort()`` -- renvoie la valeur de tri des séries."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:336
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:338
 msgid ""
 "``strcat(a, b, ...)`` -- can take any number of arguments. Returns a string "
 "formed by concatenating all the arguments."
 msgstr "``strcat(a, b, …)`` -- peut avoir n'importe quel nombre d’arguments. Renvoie une chaine constituée par la concaténation de tous les arguments."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:337
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:339
 msgid ""
 "``strcat_max(max, string1, prefix2, string2, ...)`` -- Returns a string "
 "formed by concatenating the arguments. The returned value is initialized to "
@@ -1049,19 +1066,19 @@ msgid ""
 "you wish."
 msgstr "``strcat_max(max, string1, prefix1, string2, …)`` -- Retourne la chaîne formée par la concaténation des arguments. La valeur retournée est initialisée à string1. Les paires 'Prefix,string' sont ajoutées à la fin de la valeur tant que la taille de la chaîne de sortie est plus petite que 'max'. String1 est retournée même si string1 est plus grande que max. Vous pouvez passer autant de paires de 'prefix,string' que vous le souhaitez."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:338
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:340
 msgid ""
 "``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive comparison x and y "
 "as strings. Returns ``lt`` if x < y. Returns ``eq`` if x == y. Otherwise "
 "returns ``gt``."
 msgstr "``strcmp(x, y, lt, eq, gt)`` -- effectue une comparaison insensible à la casse des chaines x et y. Renvoie ``lt`` si x < y. Renvoie ``eq`` si x == y. Sinon renvoie ``gt``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:339
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:341
 msgid ""
 "``strlen(a)`` -- Returns the length of the string passed as the argument."
 msgstr "``strlen(a)`` -- Retourne la longueur de la chaîne de caractères passée en argument."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:340
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:342
 msgid ""
 "``substr(str, start, end)`` -- returns the ``start``'th through the "
 "``end``'th characters of ``str``. The first character in ``str`` is the "
@@ -1071,20 +1088,20 @@ msgid ""
 "and ``substr('12345', 1, -1)`` returns ``'234'``."
 msgstr "``substr(str, start, end)`` -- renvoie les caractères de début jusqu'à fin de ``str``. Le premier caractère dans ``str`` est le caractère zéro. Si end est négatif, cela indique que beaucoup de caractères sont comptés à partir de la droite. Si end est zéro, cela indique le dernier caractère. Par exemple, ``substr('12345', 1, 0)`` renvoie ``'2345'``, et ``substr('12345', 1, -1)`` renvoie ``'234'``."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:341
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:343
 msgid ""
 "``subtract(x, y)`` -- returns x - y. Throws an exception if either x or y "
 "are not numbers."
 msgstr "``subtract(x, y)`` -- renvoie x - y. Renvoie une exception si x ou y ne sont pas des nombres."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:342
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:344
 msgid ""
 "``today()`` -- return a date string for today. This value is designed for "
 "use in format_date or days_between, but can be manipulated like any other "
 "string. The date is in ISO format."
 msgstr "``today()`` -- renvoie une chaine date pour aujourd’hui. Cette valeur est conçue pour être utiliser avec format_date ou days_between, mais peut être manipulée comme toute autre chaine. La date est au format ISO."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:343
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:345
 msgid ""
 "``template(x)`` -- evaluates x as a template. The evaluation is done in its "
 "own context, meaning that variables are not shared between the caller and "
@@ -1096,15 +1113,15 @@ msgid ""
 "argument to this function when using template program mode."
 msgstr "``template(x)`` -- évalue x comme un modèle. L’évaluation est effectuée dans son propre contexte, cela veut dire que les variables ne sont pas partagées entre l’appelant et l’évaluation du modèle. Comme les caractères `{` et `}` sont spéciaux, vous devez utiliser `[[` pour le caractère `{` et `]]` pour le caractère `}` ; ils sont convertis automatiquement. Par exemple, ``template('[[title_sort]]')`` évaluera le modèle ``{title_sort}`` et retournera sa valeur. Notez également que les préfixes et les suffixes (la syntaxe `|prefix|suffix`) ne peuvent pas être utilisés dans les arguments de cette fonction lorsque le mode modèle de programme est utilisé."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:348
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:350
 msgid "Function classification"
 msgstr "Classification de fonction"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:359
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:361
 msgid "Using general program mode"
 msgstr "En utilisant le mode général de programmation"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:361
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:363
 msgid ""
 "For more complicated template programs, it is sometimes easier to avoid "
 "template syntax (all the `{` and `}` characters), instead writing a more "
@@ -1114,7 +1131,7 @@ msgid ""
 "correct results."
 msgstr "Pour les modèles de programme plus complexes, il est parfois plus facile d'éviter la syntaxe des modèles (avec tous ces caractères `{` et `}`), et utiliser à la place un programme plus classique. Vous pouvez le faire avec calibre en commençant par le modèle par `program:`. Dans ce cas, aucun traitement de modèle n'est fait. La variable spéciale `$` n'est pas implémentée. C'est à votre programme de produire des résultats corrects."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:363
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:365
 msgid ""
 "One advantage of `program:` mode is that the brackets are no longer special."
 " For example, it is not necessary to use `[[` and `]]` when using the "
@@ -1128,7 +1145,7 @@ msgid ""
 "report."
 msgstr "Un avantage du mode `program:` est que les accolades ne sont plus considérées comme des caractères spéciaux. Par exemple, il n'est pas nécessaire d'utiliser des `[[` et des `]]` quand vous utilisez la fonction `template()`. Un autre avantage est que ces modèles sont compilés avec Python et peuvent tourner beaucoup plus vite que les modèles crées dans les deux autres modes. L'amélioration de la vitesse dépend de la complexité des modèles, plus le modèle est plus compliqué, plus l'amélioration est sensible. La compilation est activé ou désactivé à l'aide de l'ajustement ``compile_gpm_templates`` (Compiler les modèles du Mode Général de Programme en Python). La raison principale pour suspendre la compilation est si un modèle compilé ne fonctionne pas. Dans ce cas, merci de remplir un rapport d'erreur."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:365
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:367
 msgid ""
 "The following example is a `program:` mode implementation of a recipe on the"
 " MobileRead forum: \"Put series into the title, using either initials or a "
@@ -1139,7 +1156,7 @@ msgid ""
 "following:"
 msgstr "L'exemple suivant est un mode `program:` d'implémentation d'une recette sur le forum MobileRead : \"Mettre les séries dans le titre, en utilisant soit les initiales soit une forme raccourcie. Retirer les articles principaux du nom de la série (n'importe lequel).\" Par exemple, pour le livre The Two Towers dans la série Seigneur des Anneaux, la recette donne `LotR [02] The Two Towers`. En utilisant le modèle standard, la recette requiert trois colonnes personnalisées et un tableau de connexion, comme expliqué ci-après :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:367
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:369
 msgid ""
 "The solution requires creating three composite columns. The first column is "
 "used to remove the leading articles. The second is used to compute the "
@@ -1148,14 +1165,14 @@ msgid ""
 "of the three columns on the library view::"
 msgstr "La solution requiert la création de trois colonnes composites. La première colonne est utilisée pour retirer les articles principaux. La seconde est utilisée pour calculer la forme 'raccourcie'. La troisième est pour calculer la forme 'initiales'. Une fois que vous avez ces colonnes, le tableau de connexion sélectionne entre elles. Vous pouvez masquer n'importe laquelle ou toutes les colonnes dans la vue bibliothèque::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:406
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:408
 msgid ""
 "The following program produces the same results as the original recipe, "
 "using only one custom column to hold the results of a program that computes "
 "the special title value::"
 msgstr "Le programme qui suit produit le même résultat que la recette originale, en utilisant seulement une colonne personnalisée pour conserver le résultat d'un programme qui calcule la valeur spéciale titre::"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:443
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:445
 msgid ""
 "It would be possible to do the above with no custom columns by putting the "
 "program into the template box of the plugboard. However, to do so, all "
@@ -1165,11 +1182,11 @@ msgid ""
 " being one giant line."
 msgstr "Il serait possible de faire ce qu'il y a ci-dessus sans colonnes personnalisées en mettant le programme dans la case modèle du tableau de connexion. Cependant, pour faire cela,tous les commentaires doivent être supprimés car la case de texte du tableau de connexion ne supporte pas l'édition multi-lignes. C'est discutable si le gain de ne pas avoir la colonne personnalisée vaille la vaste augmentation en difficulté provoquée par le fait que le programme soit une ligne géante."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:447
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:449
 msgid "User-defined template functions"
 msgstr "Modèles de fonctions définies par l'utilisateur"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:449
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:451
 msgid ""
 "You can add your own functions to the template processor. Such functions are"
 " written in Python, and can be used in any of the three template programming"
@@ -1177,11 +1194,11 @@ msgid ""
 "Template functions. Instructions are shown in that dialog."
 msgstr "Vous pouvez ajouter vos propres fonctions au traitement des modèles. Ces fonctions s'écrivent en Python, et peuvent être utilisées dans n'importe lequel des trois modes de programmation de modèle. Les fonctions sont ajoutées en allant dans Préférences->Avancé->Modèles de fonctions. Les instructions sont affichées dans cette boite de dialogue."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:452
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:454
 msgid "Special notes for save/send templates"
 msgstr "Notes spéciales pour la sauvergarde/l'envoi des modèles"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:454
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:456
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -1192,18 +1209,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au périphérique`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:456
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:458
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Par exemple, supposons que nous voulons que la structure des dossiers soit `series/series_index - titre`, en prévoyant que si la série n'existe pas, alors le titre devrait être dans le dossier racine (le premier dossier, pas le sous-dossier). Le modèle pour faire cela est :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:460
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:462
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "La barre oblique et le trait d'union apparaissent uniquement si la série n'est pas vide."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:462
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:464
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1213,25 +1230,25 @@ msgid ""
 "depending on the value of series."
 msgstr "La fonction de recherche nous permet de faire le traitement encore plus poussé. Par exemple, supposons que si un livre est dans une série, alors nous voulons que la structure soit la suivante : `series/series index - title.fmt`.. Si le livre n'est pas dans une série, alors nous voulons que la structure des dossiers soit  `genre/author_sort/title.fmt`. Si le livre n'a pas de genre, nous voulons utiliser 'Inconnu'. Nous voulons deux chemins de répertoire totalement différents en fonction de la valeur de la série."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:467
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:469
 msgid "To accomplish this, we:"
 msgstr "Pour accomplir cela, nous :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:465
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:467
 msgid ""
 "Create a composite field (give it lookup name #AA) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Créons une colonne composite (appelons-la #AA) contenant ``{series}/{series_index} - {title}``. Si la série n'est pas vide, alors ce modèle produit `series/series_index - title`."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:466
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:468
 msgid ""
 "Create a composite field (give it lookup name #BB) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Créons une champ composite (appelons-le #BB) contenant ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Ce modèle produit `genre/author_sort/title`, où un genre vide est remplacé par `Inconnu`."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:467
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:469
 msgid ""
 "Set the save template to ``{series:lookup(.,#AA,#BB)}``. This template "
 "chooses composite field #AA if series is not empty, and composite field #BB "
@@ -1239,11 +1256,11 @@ msgid ""
 "depending on whether or not `series` is empty."
 msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,#AA,#BB)}``. Ce modèle choisit le champ composite #AA si série n'est pas vide, et le champ composite #BB si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:470
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:472
 msgid "Templates and plugboards"
 msgstr "Modèles et tableaux de connexions"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:472
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:474
 msgid ""
 "Plugboards are used for changing the metadata written into books during "
 "send-to-device and save-to-disk operations. A plugboard permits you to "
@@ -1254,7 +1271,7 @@ msgid ""
 "display issues."
 msgstr "Les tableaux de connexions sont utilisés pour modifier les métadonnées écrites dans les livres pendant l'envoi à une liseuse et les opérations de sauvegarde sur le disque. Le tableau de connexion vous permet de spécifier pour un modèle de lecteur précis quelles données à insérer dans les métadonnées du livre. Vous pouvez utiliser les tableaux de connexions pour modifier les champs suivants : authors, author_sort, language, publisher, tags, title, title_sort. Cette fonctionnalité aide ceux qui veulent utiliser les différentes métadonnées des livres pour contrôler le tri ou l'affichage des livres sur leurs périphériques."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:474
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:476
 msgid ""
 "When you create a plugboard, you specify the format and device for which the"
 " plugboard is to be used. A special device is provided, save_to_disk, that "
@@ -1265,7 +1282,7 @@ msgid ""
 "can, of course, use composite columns in these templates."
 msgstr "Lorsque vous créez un tableau de connexion, vous spécifiez le format et le périphérique pour lequel le tableau de connexion doit être utilisé. Un périphérique spécial est procuré, save_to_disk qui est utilisé lors de la sauvegarde de formats (en opposition à les envoyer vers le périphérique). Une fois que vous avez choisi le format et le périphérique, vous choisissez les champs de métadonnées à modifier, indiquez le modèle à appliquer pour fournir les nouvelles valeurs. Ces modèles sont `reliés` à leurs champs de destination, d'où le nom de `tableau de connexions`. Vous pouvez, bien sûr, utiliser des colonnes composites dans ces modèles."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:476
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:478
 msgid ""
 "When a plugboard might apply (Content server, save to disk, or send to "
 "device), calibre searches the defined plugboards to choose the correct one "
@@ -1274,29 +1291,29 @@ msgid ""
 " the plugboards using the following search order:"
 msgstr "Quand un tableau de connexion doit s'appliquer (Serveur de contenu, sauvegarde sur disque ou envoyer au périphérique), calibre recherche les tableau de connexions définis et celui qui est correct pour le format donné et le périphérique. Par exemple, pour trouver le tableau de connexion approprié pour un livre EPUB envoyé à un périphérique ANDROID, calibre recherche dans les tableaux de connexion dans l'ordre de recherche suivant :"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:478
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:480
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
 msgstr "un tableau de connexion avec une correspondance exacte sur le format et le périphérique, par ex., ``EPUB`` et ``ANDROID``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:479
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:481
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
 msgstr "un tableau de connexion avec une correspondance exacte sur le format et le choix spécial ``n'importe quel périphérique``, par ex., ``EPUB`` et ``n'importe quel périphérique``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:480
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:482
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
 msgstr "un tableau de connexion avec le choix spécial ``n'importe quel format`` et une correspondance exacte sur le périphérique, par ex., ``n'importe quel format`` et ``ANDROID``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:481
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:483
 msgid "a plugboard with ``any format`` and ``any device``"
 msgstr "un tableau de conversion avec ``n'importe quel format`` et ``n'importe quel périphérique``"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:483
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:485
 msgid ""
 "The tags and authors fields have special treatment, because both of these "
 "fields can hold more than one item. A book can have many tags and many "
@@ -1308,7 +1325,7 @@ msgid ""
 "comma in the middle of a tag."
 msgstr "Les étiquettes et les champs auteur ont un traitement spécial, parce que ces deux champs peuvent contenir plusieurs données. Un livre peut avoir plusieurs étiquettes et plusieurs auteurs. Lorsque vous spécifiez que l'un de ces deux champs doit être modifié, le résultat du modèle est examiné pour voir s'il y a plus d'un élément dedans. Pour les étiquettes, le résultat est découpé partout où calibre trouve une virgule. Par exemple, si le modèle produit les valeurs ``Thriller, Horreur``, alors ke résultat sera deux étiquettes, ``Thriller`` et ``Horreur``. Il n'est pas possible de mettre une virgule au milieu d'une étiquette."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:485
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:487
 msgid ""
 "The same thing happens for authors, but using a different character for the "
 "cut, a `&` (ampersand) instead of a comma. For example, if the template "
@@ -1318,7 +1335,7 @@ msgid ""
 "author with a rather strange name."
 msgstr "La même chose se produit pour les auteurs, mais en utilisant un caractère différent comme séparateur, le `&` (esperluette) au lieu d'une virgule. Par exemple, si le modèle produit la valeur ``Blogs, Joe&Posts, Susan``, alors le livre finira avec deux auteurs ``Blogs, Joe`` et ``Posts, Susan``. Si le modèle produit la valeur ``Blogs, Joe;Posts, Susan``, alors ce livre aura un auteur avec un nom assez étrange."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:487
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:489
 msgid ""
 "Plugboards affect the metadata written into the book when it is saved to "
 "disk or written to the device. Plugboards do not affect the metadata used by"
@@ -1327,34 +1344,34 @@ msgid ""
 "preferences window."
 msgstr "Les tableaux de connexions affectent les métadonnées écrites dans le livre quand il est sauvegardé sur le disque ou copié sur le périphérique. Les tableaux de connexions n'affecte pas les métadonnées utilisées par ``Enregistrer sur le disque`` et ``Envoyer au périphérique``. A la place, les noms de fichiers sont construits en utilisant les modèles entrés dans la fenêtre de préférence appropriée."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:490
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:492
 msgid "Helpful tips"
 msgstr "Astuces utiles"
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:492
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:494
 msgid "You might find the following tips useful."
 msgstr "Vous devriez trouver les astuces suivantes utiles."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:494
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:496
 msgid ""
 "Create a custom composite column to test templates. Once you have the "
 "column, you can change its template simply by double-clicking on the column."
 " Hide the column when you are not testing."
 msgstr "Créez une colonne composite pour tester vos modèles. Une fois la colonne en place, vous pouvez modifier son modèle en double cliquant simplement dessus.Masquez cette colonne lorsque vous ne testez pas."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:495
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:497
 msgid ""
 "Templates can use other templates by referencing a composite custom column."
 msgstr "Les modèles peuvent utiliser d'autres modèles se référençant à des colonnes composites."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:496
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:498
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "Dans un tableau de connexions, vous pouvez paramétrer un champ à vide (ou quelque soit sont équivalent à vide) en utilisant le modèle spécial ``{}``. Ce modèle sera toujours évalué à une chaîne vide."
 
-#: ../../home/kovid/work/calibre/manual/template_lang.rst:497
+#: ../../home/kovid/work/calibre/manual/template_lang.rst:499
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."

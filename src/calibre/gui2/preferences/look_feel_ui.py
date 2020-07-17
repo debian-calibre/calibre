@@ -552,7 +552,7 @@ class Ui_Form(object):
         self.label_24.setBuddy(self.opt_cover_browser_subtitle_field)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         self.cover_grid_tab.setCurrentIndex(0)
         self.opt_cover_grid_show_title.toggled['bool'].connect(self.opt_field_under_covers_in_grid.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -642,7 +642,7 @@ class Ui_Form(object):
         self.df_down_button.setToolTip(_("Move down"))
         self.df_up_button.setToolTip(_("Move up"))
         self.label_3.setText(_("Note that <b>comments</b> will always be displayed at the end, regardless of the position you assign here."))
-        self.opt_bd_show_cover.setText(_("Show &cover in the Book details panel"))
+        self.opt_bd_show_cover.setText(_("Show &cover"))
         self.opt_bd_overlay_cover_size.setToolTip(_("Show the size of the book\'s cover in pixels"))
         self.opt_bd_overlay_cover_size.setText(_("Show cover &size"))
         self.opt_use_roman_numerals_for_series_number.setText(_("Use &Roman numerals for series"))
@@ -664,49 +664,49 @@ class Ui_Form(object):
 "and \'Mystery.Thriller\' will be displayed with English and Thriller\n"
 "both under \'Mystery\'. If \'tags\' is not in this box,\n"
 "then the tags will be displayed each on their own line."))
-        self.opt_tag_browser_old_look.setText(_("Use &alternating row colors in the Tag browser"))
+        self.opt_tag_browser_old_look.setText(_("Use &alternating row colors"))
         self.opt_tag_browser_hide_empty_categories.setToolTip(_("When checked, calibre will automatically hide any category\n"
 " (a column, custom or standard) that has no items to show. For example, some\n"
 " categories might not have values when using Virtual libraries. Checking this\n"
 " box will cause these empty categories to be hidden."))
-        self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns) in the Tag browser"))
+        self.opt_tag_browser_hide_empty_categories.setText(_("Hi&de empty categories (columns)"))
         self.opt_tag_browser_always_autocollapse.setToolTip(_("When checked, Find in the Tag browser will show all items\n"
 " that match the search instead of the first one. If Hide empty categories is\n"
 " also checked then only categories containing a matched item will be shown."))
-        self.opt_tag_browser_always_autocollapse.setText(_("Find &shows all items that match in the Tag browser"))
+        self.opt_tag_browser_always_autocollapse.setText(_("Find &shows all items that match"))
         self.opt_tags_browser_partition_method.setToolTip(_("Choose how Tag browser subcategories are displayed when\n"
 "there are more items than the limit. Select by first\n"
 "letter to see an A, B, C list. Choose partitioned to\n"
 "have a list of fixed-sized groups. Set to disabled\n"
 "if you never want subcategories"))
-        self.label_9.setText(_("&Tag browser category partitioning method:"))
-        self.opt_show_avg_rating.setText(_("Show &average ratings in the Tag browser"))
+        self.label_9.setText(_("&Category partitioning method:"))
+        self.opt_show_avg_rating.setText(_("Show &average ratings"))
         self.opt_tag_browser_show_counts.setToolTip(_("Show counts for items in the Tag browser. Such as the number of books\n"
 "by each author, the number of authors, etc. If you turn it off, you can still\n"
 "see the counts by hovering your mouse over any item."))
-        self.opt_tag_browser_show_counts.setText(_("Show &counts in the Tag browser"))
+        self.opt_tag_browser_show_counts.setText(_("Show &counts"))
         self.label.setText(_("Spacing between &items:"))
         self.opt_tag_browser_item_padding.setToolTip(_("The spacing between consecutive items in the Tag browser. In units of (ex) which is the approximate height of the letter \'x\' in the currently used font. "))
         self.opt_tag_browser_item_padding.setSuffix(_(" ex"))
-        self.opt_tag_browser_show_tooltips.setText(_("Show &tooltips in the Tag browser"))
+        self.opt_tag_browser_show_tooltips.setText(_("Show &tooltips"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tag_browser_tab), _("&Tag browser"))
         self.opt_cover_browser_title_template.setToolTip(_("The template used to generate the text below the covers. Uses the same syntax as save templates. Defaults to just the book title. Note that this setting is per-library, which means that you have to set it again for every different calibre library you use."))
         self.label_6.setText(_("&Number of covers to show in browse mode (needs restart):"))
         self.label_23.setText(_("&Template for caption:"))
         self.cover_browser_title_template_button.setText(_("Template &editor"))
-        self.opt_cb_fullscreen.setText(_("When showing the Cover browser in a separate window, show it &fullscreen"))
-        self.opt_separate_cover_flow.setText(_("Show Cover &browser in a separate window (needs restart)"))
+        self.opt_cb_fullscreen.setText(_("When showing in a separate window, show it &fullscreen"))
+        self.opt_separate_cover_flow.setText(_("Show in a &separate window (needs restart)"))
         self.opt_cb_preserve_aspect_ratio.setToolTip(_("Show covers in their original aspect ratio instead of resizing\n"
 "them to all have the same width and height"))
-        self.opt_cb_preserve_aspect_ratio.setText(_("Preserve &aspect ratio of covers displayed in the Cover browser"))
-        self.opt_cover_browser_reflections.setText(_("Show &reflections in the Cover browser"))
+        self.opt_cb_preserve_aspect_ratio.setText(_("Preserve &aspect ratio of covers"))
+        self.opt_cover_browser_reflections.setText(_("Show &reflections"))
         self.fs_help_msg.setText(_("You can press the %s keys to toggle full screen mode."))
         self.label_24.setText(_("Fie&ld for sub-title:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cover_browser_tab), _("Cover &browser"))
         self.opt_qv_respects_vls.setToolTip(_("Check this box to make Quickview show books only in the\n"
 "current Virtual library. If unchecked, Quickview ignores Virtual libraries. If\n"
 "unchecked then only row changes are taken into account."))
-        self.opt_qv_respects_vls.setText(_("&Apply Virtual libraries in Quickview panel"))
+        self.opt_qv_respects_vls.setText(_("&Apply Virtual libraries"))
         self.opt_qv_follows_column.setToolTip(_("Check this box to make Quickview change the column being examined\n"
 "when the column in the book list is changed using the cursor arrow keys"))
         self.opt_qv_follows_column.setText(_("&Change Quickview item when book list column changes"))
