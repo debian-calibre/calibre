@@ -26,7 +26,7 @@ from calibre.db.tables import VirtualTable
 from calibre.db.write import get_series_values, uniq
 from calibre.db.lazy import FormatMetadata, FormatsList, ProxyMetadata
 from calibre.ebooks import check_ebook_format
-from calibre.ebooks.metadata import string_to_authors, author_to_author_sort, authors_to_sort_string
+from calibre.ebooks.metadata import string_to_authors, author_to_author_sort
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf2 import metadata_to_opf
 from calibre.ptempfile import (base_dir, PersistentTemporaryFile,
@@ -90,6 +90,22 @@ def _add_newbook_tag(mi):
                     mi.tags = [tag]
                 elif tag not in mi.tags:
                     mi.tags.append(tag)
+
+
+def _add_default_custom_column_values(mi, fm):
+    cols = fm.custom_field_metadata(include_composites=False)
+    for cc,col in iteritems(cols):
+        dv = col['display'].get('default_value', '')
+        try:
+            if dv:
+                if not mi.get_user_metadata(cc, make_copy=False):
+                    mi.set_user_metadata(cc, col)
+                dt = col['datatype']
+                if dt == 'datetime' and icu_lower(dv) == 'now':
+                    dv = nowf()
+                mi.set(cc, dv)
+        except:
+            traceback.print_exc()
 
 
 dynamic_category_preferences = frozenset({'grouped_search_make_user_categories', 'grouped_search_terms', 'user_categories'})
@@ -1349,7 +1365,7 @@ class Cache(object):
 
                 val = mi.get('author_sort', None)
                 if authors_changed and (not val or mi.is_null('author_sort')):
-                    val = authors_to_sort_string(mi.authors)
+                    val = self._author_sort_from_authors(mi.authors)
                 if authors_changed or (force_changes and val is not None) or not mi.is_null('author_sort'):
                     protected_set_field('author_sort', val)
 
@@ -1571,6 +1587,7 @@ class Cache(object):
             mi.tags = list(mi.tags)
         if apply_import_tags:
             _add_newbook_tag(mi)
+            _add_default_custom_column_values(mi, self.field_metadata)
         if not add_duplicates and self._has_book(mi):
             return
         series_index = (self._get_next_series_num_for(mi.series) if mi.series_index is None else mi.series_index)
@@ -1583,7 +1600,7 @@ class Cache(object):
                 series_index = 1.0
         if not mi.authors:
             mi.authors = (_('Unknown'),)
-        aus = mi.author_sort if mi.author_sort else self._author_sort_from_authors(mi.authors)
+        aus = mi.author_sort if not mi.is_null('author_sort') else self._author_sort_from_authors(mi.authors)
         mi.title = mi.title or _('Unknown')
         if isbytestring(aus):
             aus = aus.decode(preferred_encoding, 'replace')

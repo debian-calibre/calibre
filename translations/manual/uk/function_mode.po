@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Yuri Chornoivan <yurchor@ukr.net>, 2016-2017
+# Yuri Chornoivan <yurchor@ukr.net>, 2016-2017,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-01 16:48+0530\n"
-"PO-Revision-Date: 2017-09-21 15:39+0000\n"
+"POT-Creation-Date: 2020-07-03 07:43+0530\n"
+"PO-Revision-Date: 2020-07-03 05:04+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
@@ -36,9 +36,9 @@ msgid ""
 "regular expression to search for as well as a template that is used to "
 "replace all found matches. In function mode, instead of using a fixed "
 "template, you specify an arbitrary function, in the `Python programming "
-"language <https://docs.python.org/2.7/>`_. This allows you to do lots of "
-"things that are not possible with simple templates."
-msgstr "У стандартному режимі *формальних виразів* для пошуку з заміною ви вказуєте формальний вираз для пошуку і шаблон, який буде використано для заміни усіх відповідників. У функціональному режимі, замість використання фіксованого шаблона, ви вказуєте довільну функцію, яку написано `мовою програмування Python <https://docs.python.org/2.7/>`_. Це надає ам змогу виконувати багато завдань, які неможливо виконати за допомогою прости шаблонів."
+"language <https://docs.python.org>`_. This allows you to do lots of things "
+"that are not possible with simple templates."
+msgstr "У стандартному режимі *формальних виразів* для пошуку з заміною ви вказуєте формальний вираз для пошуку і шаблон, який буде використано для заміни усіх відповідників. У функціональному режимі, замість використання фіксованого шаблона, ви вказуєте довільну функцію, яку написано `мовою програмування Python <https://docs.python.org>`_. Це надає вам змогу виконувати багато завдань, які неможливо виконати за допомогою простих шаблонів."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:16
 msgid ""
@@ -91,12 +91,11 @@ msgid ""
 "arguments shown above. For the moment, we wont worry about all the different"
 " arguments to ``replace()`` function. Just focus on the ``match`` argument. "
 "It represents a match when running a search and replace. Its full "
-"documentation in available `here "
-"<https://docs.python.org/2.7/library/re.html#match-objects>`_. "
-"``match.group()`` simply returns all the matched text and all we do is "
-"replace hyphens in that text with em-dashes, first replacing double hyphens "
-"and then single hyphens."
-msgstr "Кожна нетипова функція пошуку з заміною повинна мати неповторну назву і складатися з функції python із назвою replace, яка приймає усі аргументи, вказані вище. Для початку, пропустимо усі різні аргументи функції ``replace()``. Зосередимо нашу увагу на аргументі ``match``. Він представляє відповідник рядка пошуку під час пошуку з заміною. Повну документацію щодо нього можна знайти `тут <https://docs.python.org/2.7/library/re.html#match-objects>`_. ``match.group()`` просто повертає увесь відповідний текст, і усе, що нам лишається зробити, це замінити дефіси у цьому тексті на тире. Спочатку замінюємо подвійні дефіси, а потім одинарні."
+"documentation in available `here <https://docs.python.org/library/re.html"
+"#match-objects>`_. ``match.group()`` simply returns all the matched text and"
+" all we do is replace hyphens in that text with em-dashes, first replacing "
+"double hyphens and then single hyphens."
+msgstr "Кожна нетипова функція пошуку з заміною повинна мати неповторну назву і складатися з функції python із назвою replace, яка приймає усі аргументи, вказані вище. Для початку, пропустимо усі різні аргументи функції ``replace()``. Зосередимо нашу увагу на аргументі ``match``. Він представляє відповідник рядка пошуку під час пошуку з заміною. Повну документацію щодо нього можна знайти `тут <https://docs.python.org/library/re.html#match-objects>`_. ``match.group()`` просто повертає увесь відповідний текст, і усе, що нам лишається зробити, це замінити дефіси у цьому тексті на тире. Спочатку замінюємо подвійні дефіси, а потім одинарні."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
@@ -254,11 +253,11 @@ msgstr "Аргумент «match»"
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:241
 msgid ""
 "The ``match`` argument represents the currently found match. It is a `Python"
-" Match object <https://docs.python.org/2.7/library/re.html#match-objects>`_."
-" Its most useful method is ``group()`` which can be used to get the matched "
-"text corresponding to individual capture groups in the search regular "
+" Match object <https://docs.python.org/library/re.html#match-objects>`_. Its"
+" most useful method is ``group()`` which can be used to get the matched text"
+" corresponding to individual capture groups in the search regular "
 "expression."
-msgstr "Аргумент ``match`` представляє поточний знайдений відповідник. Це `об’єкт Match Python <https://docs.python.org/2.7/library/re.html#match-objects>`_. Його найкориснішим методом є ``group()``, метод, яким можна скористатися для отримання відповідного тексту для окремих груп захоплення під час пошуку за формальним виразом."
+msgstr "Аргумент ``match`` представляє поточний знайдений відповідник. Це `об’єкт Match Python <https://docs.python.org/library/re.html#match-objects>`_. Його найкориснішим методом є ``group()``, метод, яким можна скористатися для отримання відповідного тексту для окремих груп захоплення під час пошуку за формальним виразом."
 
 #: ../../home/kovid/work/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
