@@ -7,10 +7,11 @@ Subject: [PATCH 135/201] Dont modify database when no dirtied annotations are
 ---
  src/calibre/db/backend.py        |  11 ++++++-----
  src/calibre/db/tests/metadata.db | Bin 245760 -> 252928 bytes
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ src/calibre/db/backend.py |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
-index 2fdea75f65..af44ef4293 100644
+Index: b/src/calibre/db/backend.py
+===================================================================
 --- a/src/calibre/db/backend.py
 +++ b/src/calibre/db/backend.py
 @@ -1795,11 +1795,12 @@ class DB(object):
@@ -31,30 +32,3 @@ index 2fdea75f65..af44ef4293 100644
  
      def conversion_options(self, book_id, fmt):
          for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):
-diff --git a/src/calibre/db/tests/metadata.db b/src/calibre/db/tests/metadata.db
-index fb8345a10191e6466e494a103e2ed932b7ac07fa..d86bd55a8c920d1473a15b1fe210a0057b03a240 100644
-GIT binary patch
-delta 915
-zcmZuv&1(}u6n{IDFKbE+C>v-YD<QUlv`~vi@f6#L#h6A-AV}@HNw&?>=7VGk?LphI
-zr5^0TBD#2P)doB$LK7@4qVyzU{{W>|!GmAbA{2Bsn}x+X@Mhoq=Dpv0zj-?|<C>|v
-z?zZ`@0I<u<SR2f-7zg&{n0fBGonE&Uy8B*h;VI<R0(KWmPc6ugyf55N#2xubGYtGn
-z(`^4jhuQv_UY!l0+abg;L$wgX?;c?*oL22C__(^fhKFkRSMa#26)yt@KcG15fPXQ}
-z$LR$+Z0CD>(XBH?N{`D@p-?0eQHq6%m{rO|k+c7S;9KA2NH`G@65+Gah+v9P=@Oc*
-z#n<sOq-h&sdQyj4(Kb_B1@sAiqsLHX;KS*QG;QO(J|ruJtUTGE5S6U%=ncTHW|e_h
-ze<Y<>(L#j5n7O3TnJyN`0<!^n-Ol@bXrBL9iK##M(d2aRZ~aw(^Qz7&KF^8jo{T(d
-zyox=3qU7ZYk@6*hNsbD!!GsV?Mx((Nfi0u$2P5dPO+PeJTXa7w5lOppRb;80$!QNP
-z5_ytnSbs7$a48vSG#?ZuDsovQQzcn<gThF$oR>(jSwX)sss&mCC#huP2Yl+*8{|3G
-zz?(zsF&$tB_rL)*27q%^RR2_Qd$;M@7_ey0F+ljvvfi^vy<MF{7RQoh&tc<W6JV2J
-zYX|2;G-Ge;;vEYoYESC;6w=j8YWo`QQnz2?&D90YYO!-UKy@xxb9ZvrxQ-~5S(48&
-zcZHOd(NVcPGL{i_RTCxlSk2#0y}6D()&{QLxq$)(_trZ8*wIh3I!E6=4yC|ek?0D|
-N9M7k?qb80Ie*y8OD=Gj0
-
-delta 190
-zcmZqJ!QarpKS5fRg@J+L0}#W&b|3>J1_O*hhWKPb9(h3)20cy<Rv<TwNgE{lVPe6W
-z&4N5ajGXTqqk;U_jgigfOzq}Oj6lq^-JFT}>{4bHhN;upS1=n*R^W-*K6M3i4nH?g
-zDHFpS2IeIUbAaYf;BI4SjAobC73b*o-+ti&vjx+1>&whXr(3RIj^W`2DP{~{U|Pc%
-P0JO`6ar>7Y%o~^hRT3(1
-
--- 
-2.28.0.rc0
-
