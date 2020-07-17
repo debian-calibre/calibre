@@ -1,7 +1,7 @@
-From 7d2f083b4311030b394d4c61b21be8e767faabf3 Mon Sep 17 00:00:00 2001
+From 3ee12b1137322e5e1905ce39589a2ede1036e90a Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 3 Dec 2019 11:17:19 +0530
-Subject: [PATCH 031/125] Copy in python3.dll as PyQt links against it instead
+Subject: [PATCH 031/201] Copy in python3.dll as PyQt links against it instead
  of python38.dll
 
 ---
@@ -23,5 +23,5 @@ index aee163207c..412695ce07 100644
      for f in walk(os.path.join(env.python_base, 'Lib')):
          if f.lower().endswith('.dll') and 'scintilla' not in f.lower():
 -- 
-2.27.0
+2.28.0.rc0
 

@@ -1,0 +1,47 @@
+From 3a535b49c04be35f022a3a8a3465b0cc52228186 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 1 Jul 2020 16:49:15 +0530
+Subject: [PATCH 164/201] Allow storing annotations for anonymous users
+
+---
+ src/calibre/srv/books.py | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/src/calibre/srv/books.py b/src/calibre/srv/books.py
+index 8a7534124a..06a9767854 100644
+--- a/src/calibre/srv/books.py
++++ b/src/calibre/srv/books.py
+@@ -152,7 +152,7 @@ def book_manifest(ctx, rd, book_id, fmt):
+                 ans['metadata'] = book_as_json(db, book_id)
+                 user = rd.username or None
+                 ans['last_read_positions'] = db.get_last_read_positions(book_id, fmt, user) if user else []
+-                ans['annotations_map'] = db.annotations_map_for_book(book_id, fmt, user_type='web', user=user) if user else {}
++                ans['annotations_map'] = db.annotations_map_for_book(book_id, fmt, user_type='web', user=user or '*')
+                 return ans
+             except EnvironmentError as e:
+                 if e.errno != errno.ENOENT:
+@@ -234,9 +234,7 @@ def get_annotations(ctx, rd, library_id, which):
+     book_id1-fmt1_book_id2-fmt2,...
+     '''
+     db = get_db(ctx, rd, library_id)
+-    user = rd.username or None
+-    if not user:
+-        raise HTTPNotFound('login required for sync')
++    user = rd.username or '*'
+     ans = {}
+     allowed_book_ids = ctx.allowed_book_ids(rd, db)
+     for item in which.split('_'):
+@@ -258,9 +256,7 @@ def get_annotations(ctx, rd, library_id, which):
+ @endpoint('/book-update-annotations/{library_id}/{book_id}/{+fmt}', types={'book_id': int}, methods=('POST',))
+ def update_annotations(ctx, rd, library_id, book_id, fmt):
+     db = get_db(ctx, rd, library_id)
+-    user = rd.username or None
+-    if not user:
+-        raise HTTPNotFound('login required for sync')
++    user = rd.username or '*'
+     if not ctx.has_id(rd, db, book_id):
+         raise BookNotFound(book_id, db)
+     try:
+-- 
+2.28.0.rc0
+

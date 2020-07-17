@@ -1,7 +1,7 @@
-From 257d2473901b2aa7774a8ee439aaea1000ba8136 Mon Sep 17 00:00:00 2001
+From 7cd7d23fc1fdb2b2aea29c4a66f376454183bf97 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 18 Nov 2019 20:26:29 +0530
-Subject: [PATCH 010/125] Drop the custom lzma module
+Subject: [PATCH 010/201] Drop the custom lzma module
 
 Use the builtin one from the python stdlib
 ---
@@ -115,7 +115,7 @@ index a8e532d7f2..3b1ca5721c 100644
      def test_html5lib(self):
          import html5lib.html5parser  # noqa
 diff --git a/src/calibre/utils/rapydscript.py b/src/calibre/utils/rapydscript.py
-index 3f6a39b6ad..69bc54368d 100644
+index e4a20c87c8..7b3f26264a 100644
 --- a/src/calibre/utils/rapydscript.py
 +++ b/src/calibre/utils/rapydscript.py
 @@ -9,7 +9,6 @@ import os
@@ -7652,5 +7652,5 @@ index ab07098400..0000000000
 -    import sys
 -    decompress(open(sys.argv[-1], 'rb'))
 -- 
-2.27.0
+2.28.0.rc0
 

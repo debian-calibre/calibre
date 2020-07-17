@@ -1,0 +1,276 @@
+From c80c5f6e291099d882eb34f00c3ed7387f0f4913 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 11 Jul 2020 20:42:26 +0530
+Subject: [PATCH 182/201] Allow syninc annots from viewer to specific content
+ server user
+
+---
+ src/calibre/db/annotations.py          | 30 +++++++++++++++-----------
+ src/calibre/gui2/actions/view.py       |  8 +++++++
+ src/calibre/gui2/viewer/annotations.py | 12 ++++++-----
+ src/calibre/gui2/viewer/integration.py | 17 ++++++++++++---
+ src/calibre/gui2/viewer/ui.py          | 11 +++++++++-
+ src/pyj/read_book/prefs/misc.pyj       | 24 +++++++++++++++++++--
+ 6 files changed, 78 insertions(+), 24 deletions(-)
+
+diff --git a/src/calibre/db/annotations.py b/src/calibre/db/annotations.py
+index 32f30297c6..6a347e70c2 100644
+--- a/src/calibre/db/annotations.py
++++ b/src/calibre/db/annotations.py
+@@ -74,25 +74,29 @@ def merge_annot_lists(a, b, annot_type):
+     return c
+ 
+ 
+-def merge_annotations(annots, annots_map):
++def merge_annotations(annots, annots_map, merge_last_read=True):
+     # If you make changes to this algorithm also update the
+     # implementation in read_book.annotations
+-    amap = defaultdict(list)
+-    for annot in annots:
+-        amap[annot['type']].append(annot)
+-
+-    lr = amap.get('last-read')
+-    if lr:
+-        existing = annots_map.get('last-read')
+-        if existing:
+-            lr = existing + lr
++    if isinstance(annots, dict):
++        amap = annots
++    else:
++        amap = defaultdict(list)
++        for annot in annots:
++            amap[annot['type']].append(annot)
++
++    if merge_last_read:
++        lr = amap.get('last-read')
+         if lr:
+-            lr.sort(key=itemgetter('timestamp'), reverse=True)
+-            annots_map['last-read'] = [lr[0]]
++            existing = annots_map.get('last-read')
++            if existing:
++                lr = existing + lr
++            if lr:
++                lr.sort(key=itemgetter('timestamp'), reverse=True)
++                annots_map['last-read'] = [lr[0]]
+ 
+     for annot_type, field in merge_field_map.items():
+         a = annots_map.get(annot_type)
+-        b = amap[annot_type]
++        b = amap.get(annot_type)
+         if not b:
+             continue
+         changed, annots_map[annot_type] = merge_annots_with_identical_field(a or [], b, field=field)
+diff --git a/src/calibre/gui2/actions/view.py b/src/calibre/gui2/actions/view.py
+index 5958be9c57..5eac859b3b 100644
+--- a/src/calibre/gui2/actions/view.py
++++ b/src/calibre/gui2/actions/view.py
+@@ -100,8 +100,16 @@ class ViewAction(InterfaceAction):
+         self.view_format_by_id(id_, format)
+ 
+     def calibre_book_data(self, book_id, fmt):
++        from calibre.gui2.viewer.config import vprefs, get_session_pref
++        from calibre.db.annotations import merge_annotations
++        vprefs.refresh()
++        sync_annots_user = get_session_pref('sync_annots_user', default='')
+         db = self.gui.current_db.new_api
+         annotations_map = db.annotations_map_for_book(book_id, fmt)
++        if sync_annots_user:
++            other_annotations_map = db.annotations_map_for_book(book_id, fmt, user_type='web', user=sync_annots_user)
++            if other_annotations_map:
++                merge_annotations(other_annotations_map, annotations_map, merge_last_read=False)
+         return {
+             'book_id': book_id, 'uuid': db.field_for('uuid', book_id), 'fmt': fmt.upper(),
+             'annotations_map': annotations_map,
+diff --git a/src/calibre/gui2/viewer/annotations.py b/src/calibre/gui2/viewer/annotations.py
+index e1454c5b93..8daddbc87e 100644
+--- a/src/calibre/gui2/viewer/annotations.py
++++ b/src/calibre/gui2/viewer/annotations.py
+@@ -55,7 +55,7 @@ def save_annots_to_epub(path, serialized_annots):
+         safe_replace(zf, 'META-INF/calibre_bookmarks.txt', BytesIO(serialized_annots), add_missing=True)
+ 
+ 
+-def save_annotations(annotations_list, annotations_path_key, bld, pathtoebook, in_book_file):
++def save_annotations(annotations_list, annotations_path_key, bld, pathtoebook, in_book_file, sync_annots_user):
+     annots = annot_list_as_bytes(annotations_list)
+     with open(os.path.join(annotations_dir, annotations_path_key), 'wb') as f:
+         f.write(annots)
+@@ -64,7 +64,7 @@ def save_annotations(annotations_list, annotations_path_key, bld, pathtoebook, i
+         save_annots_to_epub(pathtoebook, annots)
+         update_book(pathtoebook, before_stat, {'calibre-book-annotations.json': annots})
+     if bld:
+-        save_annotations_list_to_library(bld, annotations_list)
++        save_annotations_list_to_library(bld, annotations_list, sync_annots_user)
+ 
+ 
+ class AnnotationsSaveWorker(Thread):
+@@ -89,13 +89,14 @@ class AnnotationsSaveWorker(Thread):
+             bld = x['book_library_details']
+             pathtoebook = x['pathtoebook']
+             in_book_file = x['in_book_file']
++            sync_annots_user = x['sync_annots_user']
+             try:
+-                save_annotations(annotations_list, annotations_path_key, bld, pathtoebook, in_book_file)
++                save_annotations(annotations_list, annotations_path_key, bld, pathtoebook, in_book_file, sync_annots_user)
+             except Exception:
+                 import traceback
+                 traceback.print_exc()
+ 
+-    def save_annotations(self, current_book_data, in_book_file=True):
++    def save_annotations(self, current_book_data, in_book_file=True, sync_annots_user=''):
+         alist = tuple(annotations_as_copied_list(current_book_data['annotations_map']))
+         ebp = current_book_data['pathtoebook']
+         can_save_in_book_file = ebp.lower().endswith('.epub')
+@@ -104,7 +105,8 @@ class AnnotationsSaveWorker(Thread):
+             'annotations_path_key': current_book_data['annotations_path_key'],
+             'book_library_details': current_book_data['book_library_details'],
+             'pathtoebook': current_book_data['pathtoebook'],
+-            'in_book_file': in_book_file and can_save_in_book_file
++            'in_book_file': in_book_file and can_save_in_book_file,
++            'sync_annots_user': sync_annots_user,
+         })
+ 
+ 
+diff --git a/src/calibre/gui2/viewer/integration.py b/src/calibre/gui2/viewer/integration.py
+index 6ac2821f6b..c3e73291fa 100644
+--- a/src/calibre/gui2/viewer/integration.py
++++ b/src/calibre/gui2/viewer/integration.py
+@@ -25,7 +25,7 @@ def database_has_annotations_support(cursor):
+     return next(cursor.execute('pragma user_version;'))[0] > 23
+ 
+ 
+-def load_annotations_map_from_library(book_library_details):
++def load_annotations_map_from_library(book_library_details, user_type='local', user='viewer'):
+     import apsw
+     from calibre.db.backend import annotations_for_book, Connection
+     ans = {}
+@@ -39,14 +39,17 @@ def load_annotations_map_from_library(book_library_details):
+         cursor = conn.cursor()
+         if not database_has_annotations_support(cursor):
+             return ans
+-        for annot in annotations_for_book(cursor, book_library_details['book_id'], book_library_details['fmt']):
++        for annot in annotations_for_book(
++            cursor, book_library_details['book_id'], book_library_details['fmt'],
++            user_type=user_type, user=user
++        ):
+             ans.setdefault(annot['type'], []).append(annot)
+     finally:
+         conn.close()
+     return ans
+ 
+ 
+-def save_annotations_list_to_library(book_library_details, alist):
++def save_annotations_list_to_library(book_library_details, alist, sync_annots_user=''):
+     import apsw
+     from calibre.db.backend import save_annotations_for_book, Connection, annotations_for_book
+     from calibre.gui2.viewer.annotations import annotations_as_copied_list
+@@ -66,7 +69,15 @@ def save_annotations_list_to_library(book_library_details, alist):
+             for annot in annotations_for_book(cursor, book_library_details['book_id'], book_library_details['fmt']):
+                 amap.setdefault(annot['type'], []).append(annot)
+             merge_annotations((x[0] for x in alist), amap)
++            if sync_annots_user:
++                other_amap = {}
++                for annot in annotations_for_book(cursor, book_library_details['book_id'], book_library_details['fmt'], user_type='web', user=sync_annots_user):
++                    other_amap.setdefault(annot['type'], []).append(annot)
++                merge_annotations(amap, other_amap)
+             alist = tuple(annotations_as_copied_list(amap))
+             save_annotations_for_book(cursor, book_library_details['book_id'], book_library_details['fmt'], alist)
++            if sync_annots_user:
++                alist = tuple(annotations_as_copied_list(other_amap))
++                save_annotations_for_book(cursor, book_library_details['book_id'], book_library_details['fmt'], alist, user_type='web', user=sync_annots_user)
+     finally:
+         conn.close()
+diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
+index 3e3e4e5945..6f14f03939 100644
+--- a/src/calibre/gui2/viewer/ui.py
++++ b/src/calibre/gui2/viewer/ui.py
+@@ -564,6 +564,11 @@ class EbookViewer(MainWindow):
+             bld = self.current_book_data['book_library_details']
+             if bld is not None:
+                 lib_amap = load_annotations_map_from_library(bld)
++                sau = get_session_pref('sync_annots_user', default='')
++                if sau:
++                    other_amap = load_annotations_map_from_library(bld, user_type='web', user=sau)
++                    if other_amap:
++                        merge_annotations(other_amap, lib_amap)
+                 if lib_amap:
+                     for annot_type, annots in iteritems(lib_amap):
+                         merge_annotations(annots, amap)
+@@ -604,7 +609,11 @@ class EbookViewer(MainWindow):
+         if self.annotations_saver is None:
+             self.annotations_saver = AnnotationsSaveWorker()
+             self.annotations_saver.start()
+-        self.annotations_saver.save_annotations(self.current_book_data, in_book_file and get_session_pref('save_annotations_in_ebook', default=True))
++        self.annotations_saver.save_annotations(
++            self.current_book_data,
++            in_book_file and get_session_pref('save_annotations_in_ebook', default=True),
++            get_session_pref('sync_annots_user', default='')
++        )
+ 
+     def highlights_changed(self, highlights):
+         if not self.current_book_data:
+diff --git a/src/pyj/read_book/prefs/misc.pyj b/src/pyj/read_book/prefs/misc.pyj
+index f858a54d69..3dda433e39 100644
+--- a/src/pyj/read_book/prefs/misc.pyj
++++ b/src/pyj/read_book/prefs/misc.pyj
+@@ -19,6 +19,7 @@ DEFAULTS = {
+     'show_actions_toolbar': False,
+     'show_actions_toolbar_in_fullscreen': False,
+     'save_annotations_in_ebook': True,
++    'sync_annots_user': '',
+     'singleinstance': False,
+ }
+ 
+@@ -26,7 +27,11 @@ DEFAULTS = {
+ def restore_defaults():
+     container = get_container()
+     for q in Object.keys(DEFAULTS):
+-        container.querySelector(f'[name={q}]').checked = DEFAULTS[q]
++        control = container.querySelector(f'[name={q}]')
++        if jstype(DEFAULTS[q]) is 'boolean':
++            control.checked = DEFAULTS[q]
++        else:
++            control.value = DEFAULTS[q]
+     container.querySelector(f'[name=hide_tooltips]').checked = defaults.hide_tooltips
+ 
+ 
+@@ -46,6 +51,16 @@ def create_misc_panel(container, apply_func, cancel_func):
+         ans.checked = settings[name] if jstype(settings[name]) is 'boolean' else DEFAULTS[name]
+         return E.div(style='margin-top:1ex', E.label(ans, '\xa0' + text))
+ 
++    sai = E.input(name='sync_annots_user', title=_(
++        'The username of a Content server user that you want all annotations synced with.'
++        ' Use the special value * to sync with anonymous users'
++    ))
++    sai.value = settings.sync_annots_user if jstype(settings.sync_annots_user) is 'string' else DEFAULTS.sync_annots_user
++    sync_annots = E.div(
++        style='margin-top: 1ex; margin-left: 3px',
++        E.label(_('Sync bookmarks/highlights with Content server user:') + '\xa0', sai)
++    )
++
+     container.append(cb('remember_window_geometry', _('Remember last used window size and position')))
+     container.append(cb('show_actions_toolbar', _('Show a toolbar with the most useful actions')))
+     container.lastChild.append(E.span('\xa0'))
+@@ -54,6 +69,7 @@ def create_misc_panel(container, apply_func, cancel_func):
+     container.append(cb('show_actions_toolbar_in_fullscreen', _('Keep the toolbar in full screen mode (needs restart)')))
+     container.append(cb('remember_last_read', _('Remember current page when quitting')))
+     container.append(cb('save_annotations_in_ebook', _('Keep a copy of annotations/bookmarks in the e-book file, for easy sharing')))
++    container.append(sync_annots)
+     container.append(cb('singleinstance', _('Allow only a single instance of the viewer (needs restart)')))
+     container.append(cb('hide_tooltips', _('Hide mouse-over tooltips in the book text')))
+ 
+@@ -68,7 +84,11 @@ def commit_misc(onchange):
+     container = get_container()
+     vals = {}
+     for q in Object.keys(DEFAULTS):
+-        val = container.querySelector(f'[name={q}]').checked
++        control = container.querySelector(f'[name={q}]')
++        if jstype(DEFAULTS[q]) is 'boolean':
++            val = control.checked
++        else:
++            val = control.value.strip()
+         if val is not DEFAULTS[q]:
+             vals[q] = val
+     sd.set('standalone_misc_settings', vals)
+-- 
+2.28.0.rc0
+

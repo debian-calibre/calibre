@@ -1,0 +1,125 @@
+From f5b123b3e0cfd609ca08e7dc86a8810b9bb84d68 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 26 Jun 2020 17:47:25 +0530
+Subject: [PATCH 157/201] DRYer
+
+---
+ src/calibre/constants.py            |  1 +
+ src/calibre/customize/builtins.py   |  4 ++--
+ src/calibre/gui2/viewer/web_view.py | 10 +++++-----
+ src/calibre/srv/code.py             |  8 ++++----
+ 4 files changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/src/calibre/constants.py b/src/calibre/constants.py
+index 189c66aed8..83b4ec7837 100644
+--- a/src/calibre/constants.py
++++ b/src/calibre/constants.py
+@@ -279,6 +279,7 @@ else:
+ dv = getenv('CALIBRE_DEVELOP_FROM')
+ is_running_from_develop = bool(getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path)
+ del dv
++in_develop_mode = getenv('CALIBRE_ENABLE_DEVELOP_MODE') == '1'
+ 
+ 
+ def get_version():
+diff --git a/src/calibre/customize/builtins.py b/src/calibre/customize/builtins.py
+index 088c8388b5..6da18493b8 100644
+--- a/src/calibre/customize/builtins.py
++++ b/src/calibre/customize/builtins.py
+@@ -8,7 +8,7 @@ import os, glob, re
+ from calibre import guess_type
+ from calibre.customize import (FileTypePlugin, MetadataReaderPlugin,
+     MetadataWriterPlugin, PreferencesPlugin, InterfaceActionBase, StoreBase)
+-from calibre.constants import numeric_version
++from calibre.constants import numeric_version, in_develop_mode
+ from calibre.ebooks.metadata.archive import ArchiveExtract, KPFExtract, get_comic_metadata
+ from calibre.ebooks.html.to_zip import HTML2ZIP
+ 
+@@ -1102,7 +1102,7 @@ plugins += [ActionAdd, ActionFetchAnnotations, ActionGenerateCatalog,
+         ActionPluginUpdater, ActionPickRandom, ActionEditToC, ActionSortBy,
+         ActionMarkBooks, ActionEmbed, ActionTemplateTester, ActionTagMapper, ActionAuthorMapper,
+         ActionVirtualLibrary]
+-if os.environ.get('CALIBRE_ENABLE_DEVELOP_MODE') == '1':
++if in_develop_mode:
+     plugins.append(ActionBrowseAnnotations)
+ 
+ # }}}
+diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
+index fa1ae331c6..10a2efe281 100644
+--- a/src/calibre/gui2/viewer/web_view.py
++++ b/src/calibre/gui2/viewer/web_view.py
+@@ -19,8 +19,8 @@ from PyQt5.QtWebEngineWidgets import (
+ 
+ from calibre import as_unicode, prints
+ from calibre.constants import (
+-    FAKE_HOST, FAKE_PROTOCOL, __version__, config_dir, is_running_from_develop,
+-    isosx, iswindows
++    FAKE_HOST, FAKE_PROTOCOL, __version__, config_dir, in_develop_mode,
++    is_running_from_develop, isosx, iswindows
+ )
+ from calibre.ebooks.metadata.book.base import field_metadata
+ from calibre.ebooks.oeb.polish.utils import guess_type
+@@ -33,7 +33,7 @@ from calibre.srv.code import get_translations_data
+ from calibre.utils.config import JSONConfig
+ from calibre.utils.serialize import json_loads
+ from calibre.utils.shared_file import share_open
+-from polyglot.builtins import as_bytes, hasenv, iteritems, unicode_type
++from polyglot.builtins import as_bytes, iteritems, unicode_type
+ from polyglot.functools import lru_cache
+ 
+ try:
+@@ -229,8 +229,8 @@ def create_profile():
+         js = P('viewer.js', data=True, allow_user_override=False)
+         translations_json = get_translations_data() or b'null'
+         js = js.replace(b'__TRANSLATIONS_DATA__', translations_json, 1)
+-        if hasenv('CALIBRE_ENABLE_DEVELOP_MODE'):
+-            js = js.replace(b'__IN_DEVELOP_MODE__', os.environ['CALIBRE_ENABLE_DEVELOP_MODE'].encode('ascii'))
++        if in_develop_mode:
++            js = js.replace(b'__IN_DEVELOP_MODE__', b'1')
+         insert_scripts(ans, create_script('viewer.js', js))
+         url_handler = UrlSchemeHandler(ans)
+         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
+diff --git a/src/calibre/srv/code.py b/src/calibre/srv/code.py
+index 44156a24c5..f5d40223c9 100644
+--- a/src/calibre/srv/code.py
++++ b/src/calibre/srv/code.py
+@@ -4,7 +4,6 @@
+ 
+ 
+ import hashlib
+-import os
+ import random
+ import shutil
+ import sys
+@@ -13,6 +12,7 @@ from json import load as load_json_file, loads as json_loads
+ from threading import Lock
+ 
+ from calibre import as_unicode
++from calibre.constants import in_develop_mode
+ from calibre.customize.ui import available_input_formats
+ from calibre.db.view import sanitize_sort_field_name
+ from calibre.srv.ajax import search_result
+@@ -31,7 +31,7 @@ from calibre.utils.localization import (
+ )
+ from calibre.utils.search_query_parser import ParseException
+ from calibre.utils.serialize import json_dumps
+-from polyglot.builtins import iteritems, itervalues, hasenv
++from polyglot.builtins import iteritems, itervalues
+ 
+ POSTABLE = frozenset({'GET', 'POST', 'HEAD'})
+ 
+@@ -39,9 +39,9 @@ POSTABLE = frozenset({'GET', 'POST', 'HEAD'})
+ @endpoint('', auth_required=False)
+ def index(ctx, rd):
+     ans_file = lopen(P('content-server/index-generated.html'), 'rb')
+-    if not hasenv('CALIBRE_ENABLE_DEVELOP_MODE'):
++    if not in_develop_mode:
+         return ans_file
+-    return ans_file.read().replace(b'__IN_DEVELOP_MODE__', os.environ['CALIBRE_ENABLE_DEVELOP_MODE'].encode('ascii'))
++    return ans_file.read().replace(b'__IN_DEVELOP_MODE__', b'1')
+ 
+ 
+ @endpoint('/robots.txt', auth_required=False)
+-- 
+2.28.0.rc0
+

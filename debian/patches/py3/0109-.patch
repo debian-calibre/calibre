@@ -1,21 +1,21 @@
-From b9be7a183e32ce76c11fc5db17e567f21c46469e Mon Sep 17 00:00:00 2001
+From e3db4bb0901928dfbeec1ff26db2a078e9123c74 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 21 Apr 2020 22:19:56 +0530
-Subject: [PATCH 109/125] ...
+Subject: [PATCH 109/201] ...
 
 ---
- src/polyglot/plistlib.py |    1 +
+ src/polyglot/plistlib.py | 1 +
  1 file changed, 1 insertion(+)
 
-Index: b/src/polyglot/plistlib.py
-===================================================================
+diff --git a/src/polyglot/plistlib.py b/src/polyglot/plistlib.py
+index b07f25765c..e31b23f05f 100644
 --- a/src/polyglot/plistlib.py
 +++ b/src/polyglot/plistlib.py
-@@ -3,6 +3,7 @@
- # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
- 
- from plistlib import loads, dumps  # noqa
-+loads_binary_or_xml = loads
- 
- def unwrap_bytes(x):
+@@ -9,3 +9,4 @@ def wrap_bytes(x):
      return x
+ 
+ from plistlib import loads, dumps, Data  # noqa
++loads_binary_or_xml = loads
+-- 
+2.28.0.rc0
+

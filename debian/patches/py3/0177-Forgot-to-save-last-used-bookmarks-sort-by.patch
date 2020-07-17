@@ -1,0 +1,24 @@
+From 8fa2afde9b6762c56d558671140c0b54ed4240cc Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 9 Jul 2020 14:56:16 +0530
+Subject: [PATCH 177/201] Forgot to save last used bookmarks sort by
+
+---
+ src/calibre/gui2/viewer/bookmarks.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/gui2/viewer/bookmarks.py b/src/calibre/gui2/viewer/bookmarks.py
+index 7d68b703b3..123a40e251 100644
+--- a/src/calibre/gui2/viewer/bookmarks.py
++++ b/src/calibre/gui2/viewer/bookmarks.py
+@@ -141,6 +141,7 @@ class BookmarkManager(QWidget):
+         return self.sort_by.currentData()
+ 
+     def sort_by_changed(self):
++        vprefs['bookmarks_sort'] = self.current_sort_by
+         self.set_bookmarks(self.get_bookmarks())
+ 
+     def set_bookmarks(self, bookmarks=()):
+-- 
+2.28.0.rc0
+

@@ -1,0 +1,26 @@
+From 6dc57cb956406b5a0bb7fe91200b89d51dcffd1c Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 6 Jul 2020 13:55:20 +0530
+Subject: [PATCH 169/201] Fix annotations not being saved in indexeddb after
+ creation
+
+---
+ src/pyj/read_book/ui.pyj | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/ui.pyj b/src/pyj/read_book/ui.pyj
+index b228523867..b501eda402 100644
+--- a/src/pyj/read_book/ui.pyj
++++ b/src/pyj/read_book/ui.pyj
+@@ -199,7 +199,7 @@ class ReadUI:
+         library_id = self.base_url_data.library_id
+         book_id = self.base_url_data.book_id
+         fmt = self.base_url_data.fmt
+-        self.db.update_annotations_data_from_key(library_id, book_id, fmt, amap)
++        self.db.update_annotations_data_from_key(library_id, book_id, fmt, {'annotations_map': amap})
+         ajax_send(f'book-update-annotations/{library_id}/{book_id}/{fmt}', amap, def (): pass;)
+ 
+     def annotations_synced(self, amap):
+-- 
+2.28.0.rc0
+

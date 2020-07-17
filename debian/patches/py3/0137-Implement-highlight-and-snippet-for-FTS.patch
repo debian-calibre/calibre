@@ -1,0 +1,107 @@
+From d36c630ea46fd82697ebee823d4b4dca66c42e6a Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sat, 13 Jun 2020 16:35:43 +0530
+Subject: [PATCH 137/201] Implement highlight and snippet for FTS
+
+---
+ src/calibre/db/backend.py       | 26 +++++++++++++++++++++-----
+ src/calibre/db/cache.py         |  3 ++-
+ src/calibre/db/tests/writing.py |  8 ++++++--
+ 3 files changed, 29 insertions(+), 8 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 113ac36bd4..fedb5293ce 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -1775,12 +1775,20 @@ class DB(object):
+             yield x
+ 
+     def search_annotations(self,
+-        fts_engine_query, use_stemming, highlight_start, highlight_end, annotation_type,
++        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, annotation_type,
+         restrict_to_book_ids, restrict_to_user
+     ):
+         fts_table = 'annotations_fts_stemmed' if use_stemming else 'annotations_fts'
+-        query = 'SELECT {0}.id, {0}.book, {0}.format, {0}.user_type, {0}.user, {0}.annot_data FROM {0} '
+-        query = query.format('annotations')
++        text = 'annotations.searchable_text'
++        if highlight_start is not None and highlight_end is not None:
++            if snippet_size is not None:
++                text = 'snippet({fts_table}, 0, "{highlight_start}", "{highlight_end}", "…", {snippet_size})'.format(
++                        fts_table=fts_table, highlight_start=highlight_start, highlight_end=highlight_end,
++                        snippet_size=max(1, min(snippet_size, 64)))
++            else:
++                text = 'highlight({}, 0, "{}", "{}")'.format(fts_table, highlight_start, highlight_end)
++        query = 'SELECT {0}.id, {0}.book, {0}.format, {0}.user_type, {0}.user, {0}.annot_data, {1} FROM {0} '
++        query = query.format('annotations', text)
+         query += ' JOIN {fts_table} ON annotations.id = {fts_table}.rowid'.format(fts_table=fts_table)
+         query += ' WHERE {fts_table} MATCH ?'.format(fts_table=fts_table)
+         data = [fts_engine_query]
+@@ -1790,8 +1798,16 @@ class DB(object):
+         if annotation_type:
+             query += ' AND annotations.annot_type = ? '
+             data.append(annotation_type)
+-        for (rowid, book_id, fmt, user_type, user, annot_data) in self.execute(query, tuple(data)):
+-            yield {'id': rowid, 'book_id': book_id, 'format': fmt, 'user_type': user_type, 'user': user, 'annotation': annot_data}
++        for (rowid, book_id, fmt, user_type, user, annot_data, text) in self.execute(query, tuple(data)):
++            yield {
++                'id': rowid,
++                'book_id': book_id,
++                'format': fmt,
++                'user_type': user_type,
++                'user': user,
++                'text': text,
++                'annotation': annot_data
++            }
+ 
+     def all_annotations_for_book(self, book_id):
+         for (fmt, user_type, user, data) in self.execute('SELECT format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)):
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index d7c6d788e2..2eaebd7fad 100644
+--- a/src/calibre/db/cache.py
++++ b/src/calibre/db/cache.py
+@@ -2308,13 +2308,14 @@ class Cache(object):
+         use_stemming=True,
+         highlight_start=None,
+         highlight_end=None,
++        snippet_size=None,
+         annotation_type=None,
+         restrict_to_book_ids=None,
+         restrict_to_user=None,
+     ):
+         return tuple(self.backend.search_annotations(
+             fts_engine_query, use_stemming, highlight_start, highlight_end,
+-            annotation_type, restrict_to_book_ids, restrict_to_user
++            snippet_size, annotation_type, restrict_to_book_ids, restrict_to_user
+         ))
+ 
+     @write_api
+diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
+index 72cdef723d..456aef3696 100644
+--- a/src/calibre/db/tests/writing.py
++++ b/src/calibre/db/tests/writing.py
+@@ -778,7 +778,7 @@ class WritingTest(BaseTest):
+         annot_list = [
+             a(type='bookmark', title='bookmark1 changed', seq=1),
+             a(type='highlight', highlighted_text='text1', uuid='1', seq=2),
+-            a(type='highlight', highlighted_text='text2', uuid='2', seq=3, notes='notes2 some word changed'),
++            a(type='highlight', highlighted_text='text2', uuid='2', seq=3, notes='notes2 some word changed again'),
+         ]
+ 
+         def map_as_list(amap):
+@@ -806,7 +806,11 @@ class WritingTest(BaseTest):
+         results = cache.search_annotations('"Change"')
+         self.assertEqual([1, 3], [x['id'] for x in results])
+         results = cache.search_annotations('"change"', use_stemming=False)
+-        self.assertEqual([], [x['id'] for x in results])
++        self.assertFalse(results)
++        results = cache.search_annotations('"bookmark1"', highlight_start='[', highlight_end=']')
++        self.assertEqual(results[0]['text'], '[bookmark1] changed')
++        results = cache.search_annotations('"word"', highlight_start='[', highlight_end=']', snippet_size=3)
++        self.assertEqual(results[0]['text'], '…some [word] changed…')
+ 
+         annot_list[0][0]['title'] = 'changed title'
+         cache.set_annotations_for_book(1, 'moo', annot_list)
+-- 
+2.28.0.rc0
+

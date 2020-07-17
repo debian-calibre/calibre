@@ -1,0 +1,139 @@
+From 1fea6d21bea519f35ae3a6b266b716c254efe8bb Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 13 Jul 2020 18:07:42 +0530
+Subject: [PATCH 189/201] Dont show removed annotations in the browser
+
+---
+ src/calibre/db/backend.py               | 25 +++++++++++++++++--------
+ src/calibre/db/cache.py                 |  8 +++++---
+ src/calibre/gui2/library/annotations.py | 10 ++++++++--
+ 3 files changed, 30 insertions(+), 13 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 61ced67000..ab2c5c030f 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -1777,7 +1777,7 @@ class DB(object):
+ 
+     def search_annotations(self,
+         fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, annotation_type,
+-        restrict_to_book_ids, restrict_to_user
++        restrict_to_book_ids, restrict_to_user, ignore_removed=False
+     ):
+         fts_table = 'annotations_fts_stemmed' if use_stemming else 'annotations_fts'
+         text = 'annotations.searchable_text'
+@@ -1807,6 +1807,8 @@ class DB(object):
+                     parsed_annot = ls(annot_data)
+                 except Exception:
+                     continue
++                if ignore_removed and parsed_annot.get('removed'):
++                    continue
+                 yield {
+                     'id': rowid,
+                     'book_id': book_id,
+@@ -1819,15 +1821,18 @@ class DB(object):
+         except apsw.SQLError as e:
+             raise FTSQueryError(fts_engine_query, query, e)
+ 
+-    def all_annotations_for_book(self, book_id):
+-        for (fmt, user_type, user, data) in self.execute('SELECT id, book, format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)):
+-
++    def all_annotations_for_book(self, book_id, ignore_removed=False):
++        for (fmt, user_type, user, data) in self.execute(
++            'SELECT id, book, format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)
++        ):
+             try:
+-                yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': json.loads(data)}
++                annot = json.loads(data)
+             except Exception:
+                 pass
++            if not ignore_removed or not annot.get('removed'):
++                yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': annot}
+ 
+-    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None):
++    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False):
+         ls = json.loads
+         q = 'SELECT id, book, format, user_type, user, annot_data FROM annotations'
+         data = []
+@@ -1840,14 +1845,15 @@ class DB(object):
+             data.append(annotation_type)
+             q += ' annot_type = ? '
+         q += ' ORDER BY timestamp'
+-        if limit is not None:
+-            q += ' LIMIT %d' % limit
++        count = 0
+         for (rowid, book_id, fmt, user_type, user, annot_data) in self.execute(q, tuple(data)):
+             try:
+                 annot = ls(annot_data)
+                 atype = annot['type']
+             except Exception:
+                 continue
++            if ignore_removed and annot.get('removed'):
++                continue
+             text = ''
+             if atype == 'bookmark':
+                 text = annot['title']
+@@ -1862,6 +1868,9 @@ class DB(object):
+                 'text': text,
+                 'annotation': annot,
+             }
++            count += 1
++            if limit is not None and count >= limit:
++                break
+ 
+     def all_annotation_users(self):
+         return self.execute('SELECT DISTINCT user_type, user FROM annotations')
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index 74a7848cc5..3c61239e97 100644
+--- a/src/calibre/db/cache.py
++++ b/src/calibre/db/cache.py
+@@ -2311,8 +2311,8 @@ class Cache(object):
+         return tuple(self.backend.all_annotation_types())
+ 
+     @read_api
+-    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None):
+-        return tuple(self.backend.all_annotations(restrict_to_user, limit, annotation_type))
++    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False):
++        return tuple(self.backend.all_annotations(restrict_to_user, limit, annotation_type, ignore_removed))
+ 
+     @read_api
+     def search_annotations(
+@@ -2325,10 +2325,12 @@ class Cache(object):
+         annotation_type=None,
+         restrict_to_book_ids=None,
+         restrict_to_user=None,
++        ignore_removed=False
+     ):
+         return tuple(self.backend.search_annotations(
+             fts_engine_query, use_stemming, highlight_start, highlight_end,
+-            snippet_size, annotation_type, restrict_to_book_ids, restrict_to_user
++            snippet_size, annotation_type, restrict_to_book_ids, restrict_to_user,
++            ignore_removed
+         ))
+ 
+     @write_api
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index 27e0e7f992..886af6813d 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -297,9 +297,15 @@ class BrowsePanel(QWidget):
+         with BusyCursor():
+             db = current_db()
+             if not q['fts_engine_query']:
+-                results = db.all_annotations(restrict_to_user=q['restrict_to_user'], limit=4096, annotation_type=q['annotation_type'])
++                results = db.all_annotations(
++                    restrict_to_user=q['restrict_to_user'], limit=4096, annotation_type=q['annotation_type'],
++                    ignore_removed=True
++                )
+             else:
+-                results = db.search_annotations(highlight_start='\x1d', highlight_end='\x1d', snippet_size=64, **q)
++                results = db.search_annotations(
++                    highlight_start='\x1d', highlight_end='\x1d', snippet_size=64,
++                    ignore_removed=True, **q
++                )
+ 
+             self.results_list.set_results(results, bool(q['fts_engine_query']))
+             self.current_query = q
+-- 
+2.28.0.rc0
+

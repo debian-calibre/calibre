@@ -1,0 +1,93 @@
+From 88d2a897de56ed2eeb307bab5e11a2cf44c23df6 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 15 Jun 2020 13:44:27 +0530
+Subject: [PATCH 140/201] Make the highlight shortcuts always available
+
+---
+ src/calibre/gui2/viewer/main.py | 10 +++++-----
+ src/pyj/read_book/shortcuts.pyj | 25 +++++++++++--------------
+ 2 files changed, 16 insertions(+), 19 deletions(-)
+
+diff --git a/src/calibre/gui2/viewer/main.py b/src/calibre/gui2/viewer/main.py
+index 8617dac938..a428273320 100644
+--- a/src/calibre/gui2/viewer/main.py
++++ b/src/calibre/gui2/viewer/main.py
+@@ -197,19 +197,19 @@ def main(args=sys.argv):
+     QWebEngineUrlScheme.registerScheme(scheme)
+     override = 'calibre-ebook-viewer' if islinux else None
+     processed_args = []
+-    internal_book_data = None
++    internal_book_data = internal_book_data_path = None
+     for arg in args:
+         if arg.startswith('--internal-book-data='):
+-            internal_book_data = arg.split('=', 1)[1]
++            internal_book_data_path = arg.split('=', 1)[1]
+             continue
+         processed_args.append(arg)
+-    if internal_book_data:
++    if internal_book_data_path:
+         try:
+-            with lopen(internal_book_data, 'rb') as f:
++            with lopen(internal_book_data_path, 'rb') as f:
+                 internal_book_data = json.load(f)
+         finally:
+             try:
+-                os.remove(internal_book_data)
++                os.remove(internal_book_data_path)
+             except EnvironmentError:
+                 pass
+     args = processed_args
+diff --git a/src/pyj/read_book/shortcuts.pyj b/src/pyj/read_book/shortcuts.pyj
+index 1c3ede0430..afbc76c566 100644
+--- a/src/pyj/read_book/shortcuts.pyj
++++ b/src/pyj/read_book/shortcuts.pyj
+@@ -4,8 +4,6 @@ from __python__ import bound_methods, hash_literals
+ 
+ from gettext import gettext as _
+ 
+-from read_book.globals import runtime
+-
+ 
+ def parse_key_repr(sc):
+     parts = sc.split('+')
+@@ -330,13 +328,13 @@ def shortcuts_definition():
+         _('Auto scroll slower'),
+     ),
+ 
++    'create_annotation': desc(
++        "Ctrl+h",
++        'ui',
++        _('Create a highlight'),
++    ),
++
+     }
+-    if runtime.in_develop_mode:
+-        ans.create_annotation = desc(
+-            "Ctrl+h",
+-            'ui',
+-            _('Create a highlight'),
+-        )
+ 
+     return ans
+ 
+@@ -397,12 +395,11 @@ def add_standalone_viewer_shortcuts():
+         'ui',
+         _('Toggle the toolbar'),
+     )
+-    if runtime.in_develop_mode:
+-        sc['toggle_highlights'] = desc(
+-            "Ctrl+Alt+h",
+-            'ui',
+-            _('Toggle the highlights panel')
+-        )
++    sc['toggle_highlights'] = desc(
++        "Ctrl+Alt+h",
++        'ui',
++        _('Toggle the highlights panel')
++    )
+ 
+ 
+ def create_shortcut_map(custom_shortcuts):
+-- 
+2.28.0.rc0
+

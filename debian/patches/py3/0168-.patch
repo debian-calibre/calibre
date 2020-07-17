@@ -1,0 +1,24 @@
+From 6acf9ccf1148da0c4b0f30b1d96dcf90d1e7d619 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 6 Jul 2020 09:31:10 +0530
+Subject: [PATCH 168/201] ...
+
+---
+ src/calibre/srv/books.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/srv/books.py b/src/calibre/srv/books.py
+index 06a9767854..a0e3a7b487 100644
+--- a/src/calibre/srv/books.py
++++ b/src/calibre/srv/books.py
+@@ -268,6 +268,7 @@ def update_annotations(ctx, rd, library_id, book_id, fmt):
+         if val:
+             alist.extend(val)
+     db.merge_annotations_for_book(book_id, fmt, alist, user_type='web', user=user)
++    return b''
+ 
+ 
+ mathjax_lock = Lock()
+-- 
+2.28.0.rc0
+

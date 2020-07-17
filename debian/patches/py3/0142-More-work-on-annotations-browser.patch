@@ -1,0 +1,71 @@
+From 5ea305e3e20b81ebb07561ad7730f4fb75d6af58 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 15 Jun 2020 21:34:48 +0530
+Subject: [PATCH 142/201] More work on annotations browser
+
+---
+ src/calibre/db/backend.py               |  2 +-
+ src/calibre/gui2/library/annotations.py | 17 ++++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 17b7f72da7..9bb48530af 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -305,7 +305,7 @@ def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='loca
+             aid = text = annot['title']
+         elif atype == 'highlight':
+             aid = annot['uuid']
+-            text = annot.get('highlighed_text') or ''
++            text = annot.get('highlighted_text') or ''
+             notes = annot.get('notes') or ''
+             if notes:
+                 text += '\n0x1f\n' + notes
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index 6a9852ca05..3fde7e9ab1 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -37,6 +37,8 @@ class ResultsList(QListWidget):
+ 
+     def set_results(self, results):
+         self.clear()
++        for result in results:
++            print(result)
+ 
+ 
+ class BrowsePanel(QWidget):
+@@ -120,6 +122,10 @@ class AnnotationsBrowser(Dialog):
+         Dialog.__init__(self, _('Annotations browser'), 'library-annotations-browser-1', parent=parent)
+         self.setAttribute(Qt.WA_DeleteOnClose, False)
+ 
++    def keyPressEvent(self, ev):
++        if ev.key() not in (Qt.Key_Enter, Qt.Key_Return):
++            return Dialog.keyPressEvent(self, ev)
++
+     def setup_ui(self):
+         l = QVBoxLayout(self)
+ 
+@@ -136,10 +142,19 @@ class AnnotationsBrowser(Dialog):
+         self.bb.setStandardButtons(self.bb.Close)
+         l.addWidget(self.bb)
+ 
++    def show_dialog(self):
++        self.browse_panel.search_box.setFocus(Qt.OtherFocusReason)
++        if self.parent() is None:
++            self.exec_()
++        else:
++            self.show()
++
+ 
+ if __name__ == '__main__':
+     from calibre.library import db
+     app = Application([])
+     current_db.ans = db(os.path.expanduser('~/test library'))
+-    AnnotationsBrowser().exec_()
++    br = AnnotationsBrowser()
++    br.show_dialog()
++    del br
+     del app
+-- 
+2.28.0.rc0
+

@@ -1,7 +1,7 @@
-From 9175beea23ca20b25a290dfd1e998d93789cd800 Mon Sep 17 00:00:00 2001
+From 76e91ea9b4187e114fdae9f46e50b74a76b3a259 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 5 Dec 2019 20:05:57 +0530
-Subject: [PATCH 060/125] DRYer
+Subject: [PATCH 060/201] DRYer
 
 ---
  src/calibre/gui2/viewer/convert_book.py | 26 +++++++++++++++----------
@@ -79,5 +79,5 @@ index 13b04582f8..996a105469 100644
              self.ae(open(os.path.join(path, 'sentinel'), 'rb').read(), b'updated')
              self.ae(1, len(os.listdir(os.path.join(book_cache_dir(), 'f'))))
 -- 
-2.27.0
+2.28.0.rc0
 

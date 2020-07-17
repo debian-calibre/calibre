@@ -1,0 +1,170 @@
+From dfefcc84283baaddabf23a6d6122ba8e13f13911 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 26 May 2020 20:55:11 +0530
+Subject: [PATCH 130/201] Add an annotations table to the database
+
+---
+ resources/metadata_sqlite.sql          | 34 ++++++++++++++
+ src/calibre/db/schema_upgrades.py      | 64 ++++++++++++++++++++++++++
+ src/calibre/gui2/viewer/integration.py |  2 +-
+ 3 files changed, 99 insertions(+), 1 deletion(-)
+
+diff --git a/resources/metadata_sqlite.sql b/resources/metadata_sqlite.sql
+index 454b271465..8409bc986a 100644
+--- a/resources/metadata_sqlite.sql
++++ b/resources/metadata_sqlite.sql
+@@ -106,6 +106,9 @@ CREATE TABLE library_id ( id   INTEGER PRIMARY KEY,
+ CREATE TABLE metadata_dirtied(id INTEGER PRIMARY KEY,
+                              book INTEGER NOT NULL,
+                              UNIQUE(book));
++CREATE TABLE annotations_dirtied(id INTEGER PRIMARY KEY,
++                             book INTEGER NOT NULL,
++                             UNIQUE(book));
+ CREATE TABLE preferences(id INTEGER PRIMARY KEY,
+                                  key TEXT NOT NULL,
+                                  val TEXT NOT NULL,
+@@ -139,6 +142,19 @@ CREATE TABLE last_read_positions ( id INTEGER PRIMARY KEY,
+ 	UNIQUE(user, device, book, format)
+ );
+ 
++CREATE TABLE annotations ( id INTEGER PRIMARY KEY,
++	book INTEGER NOT NULL,
++	format TEXT NOT NULL COLLATE NOCASE,
++	user_type TEXT NOT NULL,
++	user TEXT NOT NULL,
++	timestamp REAL NOT NULL,
++	annot_id TEXT NOT NULL,
++	annot_type TEXT NOT NULL,
++	annot_data TEXT NOT NULL,
++	searchable_text TEXT NOT NULL,
++    UNIQUE(book, user_type, user, format, annot_id)
++);
++
+ CREATE VIEW meta AS
+         SELECT id, title,
+                (SELECT sortconcat(bal.id, name) FROM books_authors_link AS bal JOIN authors ON(author = authors.id) WHERE book = books.id) authors,
+@@ -290,6 +306,7 @@ CREATE INDEX conversion_options_idx_b ON conversion_options (book);
+ CREATE INDEX custom_columns_idx ON custom_columns (label);
+ CREATE INDEX data_idx ON data (book);
+ CREATE INDEX lrp_idx ON last_read_positions (book);
++CREATE INDEX annot_idx ON annotations (book);
+ CREATE INDEX formats_idx ON data (format);
+ CREATE INDEX languages_idx ON languages (lang_code COLLATE NOCASE);
+ CREATE INDEX publishers_idx ON publishers (name COLLATE NOCASE);
+@@ -306,6 +323,7 @@ CREATE TRIGGER books_delete_trg
+                 DELETE FROM books_languages_link WHERE book=OLD.id;
+                 DELETE FROM data WHERE book=OLD.id;
+                 DELETE FROM last_read_positions WHERE book=OLD.id;
++                DELETE FROM annotations WHERE book=OLD.id;
+                 DELETE FROM comments WHERE book=OLD.id;
+                 DELETE FROM conversion_options WHERE book=OLD.id;
+                 DELETE FROM books_plugin_data WHERE book=OLD.id;
+@@ -369,6 +387,22 @@ CREATE TRIGGER fkc_lrp_update
+                 THEN RAISE(ABORT, 'Foreign key violation: book not in books')
+             END;
+         END;
++CREATE TRIGGER fkc_annot_insert
++        BEFORE INSERT ON annotations
++        BEGIN
++            SELECT CASE
++                WHEN (SELECT id from books WHERE id=NEW.book) IS NULL
++                THEN RAISE(ABORT, 'Foreign key violation: book not in books')
++            END;
++        END;
++CREATE TRIGGER fkc_annot_update
++        BEFORE UPDATE OF book ON annotations
++        BEGIN
++            SELECT CASE
++                WHEN (SELECT id from books WHERE id=NEW.book) IS NULL
++                THEN RAISE(ABORT, 'Foreign key violation: book not in books')
++            END;
++        END;
+ CREATE TRIGGER fkc_delete_on_authors
+         BEFORE DELETE ON authors
+         BEGIN
+diff --git a/src/calibre/db/schema_upgrades.py b/src/calibre/db/schema_upgrades.py
+index acd7a20178..f8fc5a0b50 100644
+--- a/src/calibre/db/schema_upgrades.py
++++ b/src/calibre/db/schema_upgrades.py
+@@ -696,3 +696,67 @@ CREATE TRIGGER fkc_lrp_update
+         END;
+ 
+         ''')
++
++    def upgrade_version_23(self):
++        ''' Create the annotations table '''
++        self.db.execute('''
++DROP TABLE IF EXISTS annotations_dirtied;
++CREATE TABLE annotations_dirtied(id INTEGER PRIMARY KEY,
++                             book INTEGER NOT NULL,
++                             UNIQUE(book));
++DROP TABLE IF EXISTS annotations;
++CREATE TABLE annotations ( id INTEGER PRIMARY KEY,
++    book INTEGER NOT NULL,
++    format TEXT NOT NULL COLLATE NOCASE,
++    user_type TEXT NOT NULL,
++    user TEXT NOT NULL,
++    timestamp REAL NOT NULL,
++    annot_id TEXT NOT NULL,
++    annot_type TEXT NOT NULL,
++    annot_data TEXT NOT NULL,
++    searchable_text TEXT NOT NULL,
++    UNIQUE(book, user_type, user, format, annot_id)
++);
++
++DROP INDEX IF EXISTS annot_idx;
++CREATE INDEX annot_idx ON annotations (book);
++
++DROP TRIGGER IF EXISTS books_delete_trg;
++CREATE TRIGGER books_delete_trg
++    AFTER DELETE ON books
++    BEGIN
++        DELETE FROM books_authors_link WHERE book=OLD.id;
++        DELETE FROM books_publishers_link WHERE book=OLD.id;
++        DELETE FROM books_ratings_link WHERE book=OLD.id;
++        DELETE FROM books_series_link WHERE book=OLD.id;
++        DELETE FROM books_tags_link WHERE book=OLD.id;
++        DELETE FROM books_languages_link WHERE book=OLD.id;
++        DELETE FROM data WHERE book=OLD.id;
++        DELETE FROM last_read_positions WHERE book=OLD.id;
++        DELETE FROM annotations WHERE book=OLD.id;
++        DELETE FROM comments WHERE book=OLD.id;
++        DELETE FROM conversion_options WHERE book=OLD.id;
++        DELETE FROM books_plugin_data WHERE book=OLD.id;
++        DELETE FROM identifiers WHERE book=OLD.id;
++END;
++
++DROP TRIGGER IF EXISTS fkc_annot_insert;
++DROP TRIGGER IF EXISTS fkc_annot_update;
++CREATE TRIGGER fkc_annot_insert
++        BEFORE INSERT ON annotations
++        BEGIN
++            SELECT CASE
++                WHEN (SELECT id from books WHERE id=NEW.book) IS NULL
++                THEN RAISE(ABORT, 'Foreign key violation: book not in books')
++            END;
++        END;
++CREATE TRIGGER fkc_annot_update
++        BEFORE UPDATE OF book ON annotations
++        BEGIN
++            SELECT CASE
++                WHEN (SELECT id from books WHERE id=NEW.book) IS NULL
++                THEN RAISE(ABORT, 'Foreign key violation: book not in books')
++            END;
++        END;
++
++        ''')
+diff --git a/src/calibre/gui2/viewer/integration.py b/src/calibre/gui2/viewer/integration.py
+index 6252cb5979..54eca1945b 100644
+--- a/src/calibre/gui2/viewer/integration.py
++++ b/src/calibre/gui2/viewer/integration.py
+@@ -20,5 +20,5 @@ def get_book_library_details(absolute_path_to_ebook):
+     dbpath = os.path.join(library_dir, 'metadata.db')
+     dbpath = os.environ.get('CALIBRE_OVERRIDE_DATABASE_PATH') or dbpath
+     if not os.path.exists(dbpath):
+-        return None
++        return
+     return {'dbpath': dbpath, 'book_id': book_id, 'fmt': absolute_path_to_ebook.rpartition('.')[-1].upper()}
+-- 
+2.28.0.rc0
+

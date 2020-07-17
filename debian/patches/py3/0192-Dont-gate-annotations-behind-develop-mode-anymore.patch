@@ -1,0 +1,169 @@
+From 54fa610c564cb2b6a2dc7a1f2508bb2b362d7b68 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 14 Jul 2020 09:28:09 +0530
+Subject: [PATCH 192/201] Dont gate annotations behind develop mode anymore
+
+---
+ src/calibre/customize/builtins.py   |  6 ++----
+ src/calibre/gui2/viewer/toolbars.py | 24 ++++++++----------------
+ src/pyj/read_book/overlay.pyj       | 14 ++++++--------
+ src/pyj/read_book/shortcuts.pyj     | 25 ++++++++++++-------------
+ 4 files changed, 28 insertions(+), 41 deletions(-)
+
+diff --git a/src/calibre/customize/builtins.py b/src/calibre/customize/builtins.py
+index 6da18493b8..73a6bbcf62 100644
+--- a/src/calibre/customize/builtins.py
++++ b/src/calibre/customize/builtins.py
+@@ -8,7 +8,7 @@ import os, glob, re
+ from calibre import guess_type
+ from calibre.customize import (FileTypePlugin, MetadataReaderPlugin,
+     MetadataWriterPlugin, PreferencesPlugin, InterfaceActionBase, StoreBase)
+-from calibre.constants import numeric_version, in_develop_mode
++from calibre.constants import numeric_version
+ from calibre.ebooks.metadata.archive import ArchiveExtract, KPFExtract, get_comic_metadata
+ from calibre.ebooks.html.to_zip import HTML2ZIP
+ 
+@@ -1101,9 +1101,7 @@ plugins += [ActionAdd, ActionFetchAnnotations, ActionGenerateCatalog,
+         ActionCopyToLibrary, ActionTweakEpub, ActionUnpackBook, ActionNextMatch, ActionStore,
+         ActionPluginUpdater, ActionPickRandom, ActionEditToC, ActionSortBy,
+         ActionMarkBooks, ActionEmbed, ActionTemplateTester, ActionTagMapper, ActionAuthorMapper,
+-        ActionVirtualLibrary]
+-if in_develop_mode:
+-    plugins.append(ActionBrowseAnnotations)
++        ActionVirtualLibrary, ActionBrowseAnnotations]
+ 
+ # }}}
+ 
+diff --git a/src/calibre/gui2/viewer/toolbars.py b/src/calibre/gui2/viewer/toolbars.py
+index 9528a9149c..6ff496b317 100644
+--- a/src/calibre/gui2/viewer/toolbars.py
++++ b/src/calibre/gui2/viewer/toolbars.py
+@@ -12,7 +12,7 @@ from PyQt5.Qt import (
+ )
+ from PyQt5.QtWebEngineWidgets import QWebEnginePage
+ 
+-from calibre.constants import in_develop_mode, isosx
++from calibre.constants import isosx
+ from calibre.gui2 import elided_text
+ from calibre.gui2.viewer.config import get_session_pref
+ from calibre.gui2.viewer.shortcuts import index_to_key_sequence
+@@ -64,26 +64,18 @@ def all_actions():
+             'print': Action('print.png', _('Print book'), 'print'),
+             'preferences': Action('config.png', _('Preferences'), 'preferences'),
+             'metadata': Action('metadata.png', _('Show book metadata'), 'metadata'),
++            'highlight': Action('highlight.png', _('Highlight text in the book'), 'create_annotation'),
++            'toggle_highlights': Action('highlight_only_on.png', _('Browse highlights in book'), 'toggle_highlights'),
+         }
+-        if in_develop_mode:
+-            amap['highlight'] = Action('highlight.png', _('Highlight text in the book'), 'create_annotation')
+-            amap['toggle_highlights'] = Action('highlight_only_on.png', _('Browse highlights in book'), 'toggle_highlights')
+         all_actions.ans = Actions(amap)
+     return all_actions.ans
+ 
+ 
+-if in_develop_mode:
+-    DEFAULT_ACTIONS = (
+-        'back', 'forward', None, 'open', 'copy', 'increase_font_size', 'decrease_font_size', 'fullscreen', 'color_scheme',
+-        None, 'previous', 'next', None, 'toc', 'search', 'bookmarks', 'lookup', 'highlight', 'chrome', None,
+-        'mode', 'print', 'preferences', 'metadata', 'inspector'
+-    )
+-else:
+-    DEFAULT_ACTIONS = (
+-        'back', 'forward', None, 'open', 'copy', 'increase_font_size', 'decrease_font_size', 'fullscreen', 'color_scheme',
+-        None, 'previous', 'next', None, 'toc', 'search', 'bookmarks', 'lookup', 'reference', 'chrome', None,
+-        'mode', 'print', 'preferences', 'metadata', 'inspector'
+-    )
++DEFAULT_ACTIONS = (
++    'back', 'forward', None, 'open', 'copy', 'increase_font_size', 'decrease_font_size', 'fullscreen', 'color_scheme',
++    None, 'previous', 'next', None, 'toc', 'search', 'bookmarks', 'lookup', 'highlight', 'chrome', None,
++    'mode', 'print', 'preferences', 'metadata', 'inspector'
++)
+ 
+ 
+ def current_actions():
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index 6a29ba52ad..0931c0cdd6 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -322,12 +322,11 @@ class MainOverlay:  # {{{
+                 ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
+                    def(): self.overlay.hide(), ui_operations.toggle_lookup();, 'library')
+             ))
+-            if runtime.in_develop_mode:
+-                actions_div.lastChild.appendChild(highlight_action)
+-                actions_div.lastChild.appendChild(
+-                    ac(_('Browse highlights'), _('Browse all highlights'),
+-                        def(): self.overlay.hide(), ui_operations.toggle_highlights();, 'image')
+-                )
++            actions_div.lastChild.appendChild(highlight_action)
++            actions_div.lastChild.appendChild(
++                ac(_('Browse highlights'), _('Browse all highlights'),
++                    def(): self.overlay.hide(), ui_operations.toggle_highlights();, 'image')
++            )
+             copy_actions = E.ul()
+             if self.overlay.view.currently_showing.selected_text:
+                 copy_actions.appendChild(ac(_('Copy selection'), _('Copy the current selection'), def():
+@@ -356,8 +355,7 @@ class MainOverlay:  # {{{
+                    def(): self.overlay.hide(), ui_operations.quit();, 'remove'),
+             ))
+         else:
+-            if runtime.in_develop_mode:
+-                actions_div.appendChild(E.ul(highlight_action))
++            actions_div.appendChild(E.ul(highlight_action))
+         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
+             onclick=def (evt):evt.stopPropagation();,
+ 
+diff --git a/src/pyj/read_book/shortcuts.pyj b/src/pyj/read_book/shortcuts.pyj
+index 0048a35e41..4e8050c25d 100644
+--- a/src/pyj/read_book/shortcuts.pyj
++++ b/src/pyj/read_book/shortcuts.pyj
+@@ -3,7 +3,6 @@
+ from __python__ import bound_methods, hash_literals
+ 
+ from gettext import gettext as _
+-from read_book.globals import runtime
+ 
+ 
+ def parse_key_repr(sc):
+@@ -329,13 +328,13 @@ def shortcuts_definition():
+         _('Auto scroll slower'),
+     ),
+ 
++    'create_annotation': desc(
++        "Ctrl+h",
++        'ui',
++        _('Create a highlight'),
++    ),
++
+     }
+-    if runtime.in_develop_mode:
+-        ans.create_annotation = desc(
+-            "Ctrl+h",
+-            'ui',
+-            _('Create a highlight'),
+-        )
+     return ans
+ 
+ 
+@@ -395,12 +394,12 @@ def add_standalone_viewer_shortcuts():
+         'ui',
+         _('Toggle the toolbar'),
+     )
+-    if runtime.in_develop_mode:
+-        sc['toggle_highlights'] = desc(
+-            "Ctrl+Alt+h",
+-            'ui',
+-            _('Toggle the highlights panel')
+-        )
++
++    sc['toggle_highlights'] = desc(
++        "Ctrl+Alt+h",
++        'ui',
++        _('Toggle the highlights panel')
++    )
+ 
+ 
+ def create_shortcut_map(custom_shortcuts):
+-- 
+2.28.0.rc0
+

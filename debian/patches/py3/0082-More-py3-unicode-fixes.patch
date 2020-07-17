@@ -1,7 +1,7 @@
-From 0ffd70dc2f30268ba70330e7cb60345de4a145e9 Mon Sep 17 00:00:00 2001
+From 86db9a8a11fc7852a27dce0e2a8b09e6c9c40966 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 13 Dec 2019 16:39:56 +0530
-Subject: [PATCH 082/125] More py3 unicode fixes
+Subject: [PATCH 082/201] More py3 unicode fixes
 
 the csv module needs to write out to a stream with newline='' on
 python3. And use PolyglotStringIO instead of PolyglotBytesIO so we remain unicode as long as possible.
@@ -210,5 +210,5 @@ index dd683ff001..1023a50914 100644
              sys.stdout, sys.stderr = oout, oerr
          return tb
 -- 
-2.27.0
+2.28.0.rc0
 

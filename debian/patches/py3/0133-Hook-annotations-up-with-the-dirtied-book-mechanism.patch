@@ -1,0 +1,181 @@
+From 8683398b9debcb841840db0ae123881c61bc6127 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 12 Jun 2020 09:49:46 +0530
+Subject: [PATCH 133/201] Hook annotations up with the dirtied book mechanism
+
+Add some simple tests
+---
+ src/calibre/db/backend.py       | 23 +++++++++++++++++-
+ src/calibre/db/backup.py        |  9 +++++++-
+ src/calibre/db/cache.py         | 16 +++++++++++++
+ src/calibre/db/tests/writing.py | 41 +++++++++++++++++++++++++++++++++
+ 4 files changed, 87 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 047bd393b9..f22e195dbc 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -311,10 +311,11 @@ def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='loca
+         else:
+             continue
+         data.append((book_id, fmt, user_type, user, timestamp_in_secs, aid, atype, json.dumps(annot), text))
++    cursor.execute('INSERT OR IGNORE INTO annotations_dirtied (book) VALUES (?)', (book_id,))
++    cursor.execute('DELETE FROM annotations WHERE book=? AND format=? AND user_type=? AND user=?', (book_id, fmt, user_type, user))
+     cursor.executemany(
+         'INSERT OR REPLACE INTO annotations (book, format, user_type, user, timestamp, annot_id, annot_type, annot_data, searchable_text)'
+         ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
+-    cursor.execute('INSERT OR IGNORE INTO annotations_dirtied (book) VALUES (?)', (book_id,))
+ # }}}
+ 
+ 
+@@ -1773,6 +1774,26 @@ class DB(object):
+         for x in annotations_for_book(self.conn, book_id, fmt, user_type, user):
+             yield x
+ 
++    def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
++        try:
++            with self.conn:  # Disable autocommit mode, for performance
++                save_annotations_for_book(self.conn.cursor(), book_id, fmt, annots_list, user_type, user)
++        except apsw.IOError:
++            # This can happen if the computer was suspended see for example:
++            # https://bugs.launchpad.net/bugs/1286522. Try to reopen the db
++            if not self.conn.getautocommit():
++                raise  # We are in a transaction, re-opening the db will fail anyway
++            self.reopen(force=True)
++            with self.conn:  # Disable autocommit mode, for performance
++                save_annotations_for_book(self.conn.cursor(), book_id, fmt, annots_list, user_type, user)
++
++    def dirty_books_with_dirtied_annotations(self):
++        self.execute('''
++            INSERT or IGNORE INTO metadata_dirtied(book) SELECT book FROM annotations_dirtied;
++            DELETE FROM annotations_dirtied;
++        ''')
++        return self.conn.changes() > 0
++
+     def conversion_options(self, book_id, fmt):
+         for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):
+             if data:
+diff --git a/src/calibre/db/backup.py b/src/calibre/db/backup.py
+index e103769564..db9e4931c9 100644
+--- a/src/calibre/db/backup.py
++++ b/src/calibre/db/backup.py
+@@ -31,6 +31,7 @@ class MetadataBackup(Thread):
+         self.stop_running = Event()
+         self.interval = interval
+         self.scheduling_interval = scheduling_interval
++        self.check_dirtied_annotations = 0
+ 
+     @property
+     def db(self):
+@@ -55,6 +56,13 @@ class MetadataBackup(Thread):
+                 break
+ 
+     def do_one(self):
++        self.check_dirtied_annotations += 1
++        if self.check_dirtied_annotations > 2:
++            self.check_dirtied_annotations = 0
++            try:
++                self.db.check_dirtied_annotations()
++            except Exception:
++                traceback.print_exc()
+         try:
+             book_id = self.db.get_a_dirtied_book()
+             if book_id is None:
+@@ -117,4 +125,3 @@ class MetadataBackup(Thread):
+     def break_cycles(self):
+         # Legacy compatibility
+         pass
+-
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index 83b81c2622..bfdf2a3b05 100644
+--- a/src/calibre/db/cache.py
++++ b/src/calibre/db/cache.py
+@@ -212,6 +212,7 @@ class Cache(object):
+ 
+     @write_api
+     def initialize_dynamic(self):
++        self.backend.dirty_books_with_dirtied_annotations()
+         self.dirtied_cache = {x:i for i, x in enumerate(self.backend.dirtied_books())}
+         if self.dirtied_cache:
+             self.dirtied_sequence = max(itervalues(self.dirtied_cache))+1
+@@ -1095,6 +1096,17 @@ class Cache(object):
+         if self.dirtied_cache:
+             self.backend.dirty_books(self.dirtied_cache)
+ 
++    @write_api
++    def check_dirtied_annotations(self):
++        if not self.backend.dirty_books_with_dirtied_annotations():
++            return
++        book_ids = set(self.backend.dirtied_books())
++        new_dirtied = book_ids - set(self.dirtied_cache)
++        if new_dirtied:
++            new_dirtied = {book_id:self.dirtied_sequence+i for i, book_id in enumerate(new_dirtied)}
++            self.dirtied_sequence = max(itervalues(new_dirtied)) + 1
++            self.dirtied_cache.update(new_dirtied)
++
+     @write_api
+     def set_field(self, name, book_id_to_val_map, allow_case_change=True, do_path_update=True):
+         '''
+@@ -2282,6 +2294,10 @@ class Cache(object):
+             ans.setdefault(annot['type'], []).append(annot)
+         return ans
+ 
++    @write_api
++    def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
++        self.backend.set_annotations_for_book(book_id, fmt, annots_list, user_type, user)
++
+ 
+ def import_library(library_key, importer, library_path, progress=None, abort=None):
+     from calibre.db.backend import DB
+diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
+index da6404cc75..489fa836f2 100644
+--- a/src/calibre/db/tests/writing.py
++++ b/src/calibre/db/tests/writing.py
+@@ -760,3 +760,44 @@ class WritingTest(BaseTest):
+         prefs['test mutable'] = {k:k for k in reversed(range(10))}
+         self.assertEqual(len(changes), 3, 'The database was written to despite there being no change in value')
+     # }}}
++
++    def test_annotations(self):  # {{{
++        'Test handling of annotations'
++        cl = self.cloned_library
++        cache = self.init_cache(cl)
++        # First empty dirtied
++        cache.dump_metadata()
++        self.assertFalse(cache.dirtied_cache)
++        annot_list = [
++                ({'type': 'bookmark', 'title': 'bookmark1', 'seq': 1}, 1.1),
++                ({'type': 'highlight', 'highlighted_text': 'text1', 'uuid': '1', 'seq': 2}, 0.3),
++                ({'type': 'highlight', 'highlighted_text': 'text2', 'notes': 'notes2', 'uuid': '2', 'seq': 3}, 3),
++        ]
++
++        def map_as_list(amap):
++            ans = []
++            for items in amap.values():
++                ans.extend(items)
++            ans.sort(key=lambda x:x['seq'])
++            return ans
++
++        cache.set_annotations_for_book(1, 'moo', annot_list)
++        amap = cache.annotations_map_for_book(1, 'moo')
++        self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
++        self.assertFalse(cache.dirtied_cache)
++        cache.check_dirtied_annotations()
++        self.assertEqual(set(cache.dirtied_cache), {1})
++        cache.dump_metadata()
++        cache.check_dirtied_annotations()
++        self.assertFalse(cache.dirtied_cache)
++
++        annot_list[0][0]['title'] = 'changed title'
++        cache.set_annotations_for_book(1, 'moo', annot_list)
++        amap = cache.annotations_map_for_book(1, 'moo')
++        self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
++
++        del annot_list[1]
++        cache.set_annotations_for_book(1, 'moo', annot_list)
++        amap = cache.annotations_map_for_book(1, 'moo')
++        self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
++    # }}}
+-- 
+2.28.0.rc0
+

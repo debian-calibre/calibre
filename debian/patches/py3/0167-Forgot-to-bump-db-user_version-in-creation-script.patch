@@ -1,0 +1,22 @@
+From bf958f700832a869c879fc92bdb27ad26914e91d Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 6 Jul 2020 09:00:54 +0530
+Subject: [PATCH 167/201] Forgot to bump db user_version in creation script
+
+---
+ resources/metadata_sqlite.sql | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/resources/metadata_sqlite.sql b/resources/metadata_sqlite.sql
+index 3f8459f74c..6554a2d1e3 100644
+--- a/resources/metadata_sqlite.sql
++++ b/resources/metadata_sqlite.sql
+@@ -633,4 +633,4 @@ CREATE TRIGGER series_update_trg
+         BEGIN
+           UPDATE series SET sort=title_sort(NEW.name) WHERE id=NEW.id;
+         END;
+-pragma user_version=23;
++pragma user_version=24;
+-- 
+2.28.0.rc0
+

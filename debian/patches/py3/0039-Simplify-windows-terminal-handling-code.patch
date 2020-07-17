@@ -1,7 +1,7 @@
-From e7cadf87802bc8921506f6f7fcec0eb85cb9ad8f Mon Sep 17 00:00:00 2001
+From 853382be4631877169e78429df3ce1b8e95c1718 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 18:27:55 +0530
-Subject: [PATCH 039/125] Simplify windows terminal handling code
+Subject: [PATCH 039/201] Simplify windows terminal handling code
 
 We rely on the fact that python 3 now knows how to write unicode to
 windows consoles. And we setup the console to understand ANSI escape
@@ -307,5 +307,5 @@ index c61f45fad9..51d38580bd 100644
 +    s.write(u)
      print()
 -- 
-2.27.0
+2.28.0.rc0
 

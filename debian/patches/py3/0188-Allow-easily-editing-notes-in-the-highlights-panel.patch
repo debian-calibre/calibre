@@ -1,0 +1,239 @@
+From 969f307c010bd5d33dc060ebc4997dda4cdeb2f7 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 13 Jul 2020 15:56:45 +0530
+Subject: [PATCH 188/201] Allow easily editing notes in the highlights panel
+
+---
+ src/calibre/gui2/viewer/highlights.py   | 75 ++++++++++++++++++++++---
+ src/calibre/gui2/viewer/ui.py           |  1 +
+ src/calibre/gui2/viewer/web_view.py     |  4 ++
+ src/pyj/read_book/create_annotation.pyj | 16 ++++++
+ src/pyj/read_book/view.pyj              |  5 ++
+ src/pyj/viewer-main.pyj                 |  6 ++
+ 6 files changed, 99 insertions(+), 8 deletions(-)
+
+diff --git a/src/calibre/gui2/viewer/highlights.py b/src/calibre/gui2/viewer/highlights.py
+index cbe4415826..9a7e3eec2e 100644
+--- a/src/calibre/gui2/viewer/highlights.py
++++ b/src/calibre/gui2/viewer/highlights.py
+@@ -6,13 +6,16 @@ from itertools import chain
+ 
+ from PyQt5.Qt import (
+     QHBoxLayout, QIcon, QItemSelectionModel, QKeySequence, QLabel, QListWidget,
+-    QListWidgetItem, QPushButton, Qt, QTextBrowser, QVBoxLayout, QWidget, pyqtSignal
++    QListWidgetItem, QPushButton, Qt, QTextEdit, QToolButton, QVBoxLayout, QWidget,
++    pyqtSignal
+ )
+ 
+ from calibre.constants import plugins
+ from calibre.gui2 import error_dialog, question_dialog
++from calibre.gui2.library.annotations import Details
+ from calibre.gui2.viewer.search import SearchInput
+ from calibre.gui2.viewer.shortcuts import index_to_key_sequence
++from calibre.gui2.widgets2 import Dialog
+ from polyglot.builtins import range
+ 
+ 
+@@ -83,10 +86,63 @@ class Highlights(QListWidget):
+             return i.data(Qt.UserRole)
+ 
+ 
++class NotesEditDialog(Dialog):
++
++    def __init__(self, notes, parent=None):
++        self.initial_notes = notes
++        Dialog.__init__(self, name='edit-notes-highlight', title=_('Edit notes'), parent=parent)
++
++    def setup_ui(self):
++        l = QVBoxLayout(self)
++        self.qte = qte = QTextEdit(self)
++        qte.setMinimumHeight(400)
++        qte.setMinimumWidth(600)
++        if self.initial_notes:
++            qte.setPlainText(self.initial_notes)
++        l.addWidget(qte)
++        l.addWidget(self.bb)
++
++    @property
++    def notes(self):
++        return self.qte.toPlainText().rstrip()
++
++
++class NotesDisplay(QWidget):
++
++    notes_edited = pyqtSignal(object)
++
++    def __init__(self, parent=None):
++        QWidget.__init__(self, parent)
++        h = QHBoxLayout(self)
++        h.setContentsMargins(0, 0, 0, 0)
++        self.browser = nd = Details(self)
++        h.addWidget(nd)
++        self.edit_button = eb = QToolButton(self)
++        eb.setIcon(QIcon(I('modified.png')))
++        eb.setToolTip(_('Edit the notes for this highlight'))
++        h.addWidget(eb)
++        eb.clicked.connect(self.edit_notes)
++
++    def show_notes(self, text=''):
++        text = (text or '').strip()
++        self.setVisible(bool(text))
++        self.browser.setPlainText(text)
++        h = self.browser.document().size().height() + 8
++        self.browser.setMaximumHeight(h)
++        self.setMaximumHeight(max(self.edit_button.sizeHint().height() + 4, h))
++
++    def edit_notes(self):
++        current_text = self.browser.toPlainText()
++        d = NotesEditDialog(current_text, self)
++        if d.exec_() == d.Accepted and d.notes != current_text:
++            self.notes_edited.emit(d.notes)
++
++
+ class HighlightsPanel(QWidget):
+ 
+     jump_to_cfi = pyqtSignal(object)
+     request_highlight_action = pyqtSignal(object, object)
++    web_action = pyqtSignal(object, object)
+ 
+     def __init__(self, parent=None):
+         QWidget.__init__(self, parent)
+@@ -123,10 +179,17 @@ class HighlightsPanel(QWidget):
+         self.remove_button = button('trash.png', _('Remove'), _('Remove the selected highlight'), self.remove_highlight)
+         h.addWidget(self.add_button), h.addWidget(self.edit_button), h.addWidget(self.remove_button)
+ 
+-        self.notes_display = nd = QTextBrowser(self)
++        self.notes_display = nd = NotesDisplay(self)
++        nd.notes_edited.connect(self.notes_edited)
+         l.addWidget(nd)
+         nd.setVisible(False)
+ 
++    def notes_edited(self, text):
++        h = self.highlights.current_highlight
++        if h is not None:
++            h['notes'] = text
++            self.web_action.emit('set-notes-in-highlight', h)
++
+     def set_tooltips(self, rmap):
+         a = rmap.get('create_annotation')
+         if a:
+@@ -153,13 +216,9 @@ class HighlightsPanel(QWidget):
+     def current_highlight_changed(self, highlight):
+         nd = self.notes_display
+         if highlight is None or not highlight.get('notes'):
+-            nd.setVisible(False)
+-            nd.setPlainText('')
++            nd.show_notes()
+         else:
+-            nd.setVisible(True)
+-            nd.setPlainText(highlight['notes'])
+-            h = nd.document().size().height()
+-            nd.setMaximumHeight(h + 8)
++            nd.show_notes(highlight['notes'])
+ 
+     def no_selected_highlight(self):
+         error_dialog(self, _('No selected highlight'), _(
+diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
+index 6f14f03939..91cae9e0de 100644
+--- a/src/calibre/gui2/viewer/ui.py
++++ b/src/calibre/gui2/viewer/ui.py
+@@ -193,6 +193,7 @@ class EbookViewer(MainWindow):
+         self.actions_toolbar.update_visibility()
+         self.dock_visibility_changed()
+         self.highlights_widget.request_highlight_action.connect(self.web_view.highlight_action)
++        self.highlights_widget.web_action.connect(self.web_view.generic_action)
+         if continue_reading:
+             self.continue_reading()
+ 
+diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
+index 4db5d226ef..42ee8f55d2 100644
+--- a/src/calibre/gui2/viewer/web_view.py
++++ b/src/calibre/gui2/viewer/web_view.py
+@@ -281,6 +281,7 @@ class ViewerBridge(Bridge):
+     trigger_shortcut = to_js()
+     set_system_palette = to_js()
+     highlight_action = to_js()
++    generic_action = to_js()
+     show_search_result = to_js()
+     prepare_for_close = to_js()
+     viewer_font_size_changed = to_js()
+@@ -688,6 +689,9 @@ class WebView(RestartingWebEngineView):
+         self.execute_when_ready('highlight_action', uuid, which)
+         self.setFocus(Qt.OtherFocusReason)
+ 
++    def generic_action(self, which, data):
++        self.execute_when_ready('generic_action', which, data)
++
+     def contextMenuEvent(self, ev):
+         ev.accept()
+         self.trigger_shortcut('show_chrome')
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 34502d4285..9e00c3951f 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -60,6 +60,18 @@ class AnnotationsManager:
+         if h:
+             return h.notes
+ 
++    def set_notes_for_highlight(self, uuid, notes):
++        h = self.highlights[uuid]
++        if h:
++            if notes:
++                h.notes = notes
++            else:
++                v'delete h.notes'
++            if ui_operations.highlights_changed:
++                ui_operations.highlights_changed(Object.values(self.highlights))
++            return True
++        return False
++
+     def style_for_highlight(self, uuid):
+         h = self.highlights[uuid]
+         if h:
+@@ -811,6 +823,10 @@ class ViewAnnotation:
+         self.container.style.display = 'none'
+         self.showing_uuid = None
+ 
++    @property
++    def is_visible(self):
++        return self.container.style.display is not 'none'
++
+     def edit_current(self):
+         if self.showing_uuid:
+             self.view.create_annotation.edit_highlight(self.showing_uuid)
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index afa528c8d3..10560a8995 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -998,6 +998,11 @@ class View:
+         if reading_pos_cfi:
+             self.goto_cfi(reading_pos_cfi)
+ 
++    def set_notes_for_highlight(self, uuid, notes):
++        if self.annotations_manager.set_notes_for_highlight(uuid, notes):
++            if self.view_annotation.is_visible and self.view_annotation.showing_uuid is uuid:
++                self.view_annotation.show(uuid)
++
+     def on_next_spine_item(self, data):
+         spine = self.book.manifest.spine
+         idx = spine.indexOf(self.currently_showing.name)
+diff --git a/src/pyj/viewer-main.pyj b/src/pyj/viewer-main.pyj
+index 154f6ffa57..9ba62fed43 100644
+--- a/src/pyj/viewer-main.pyj
++++ b/src/pyj/viewer-main.pyj
+@@ -197,6 +197,12 @@ def highlight_action(uuid, which):
+         view.highlight_action(uuid, which)
+ 
+ 
++@from_python
++def generic_action(which, data):
++    if which is 'set-notes-in-highlight':
++        view.set_notes_for_highlight(data.uuid, data.notes or '')
++
++
+ @from_python
+ def show_home_page():
+     view.overlay.open_book(False)
+-- 
+2.28.0.rc0
+

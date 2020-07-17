@@ -1,0 +1,114 @@
+From 7918a93642fe524739dfabb89486589e53bdb93e Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 26 Jun 2020 17:35:42 +0530
+Subject: [PATCH 156/201] Hide annots UI behind develop mode in preparation for
+ merge into master
+
+---
+ src/calibre/customize/builtins.py |  4 +++-
+ src/pyj/read_book/overlay.pyj     | 14 ++++++++------
+ src/pyj/read_book/shortcuts.pyj   | 25 +++++++++++++------------
+ 3 files changed, 24 insertions(+), 19 deletions(-)
+
+diff --git a/src/calibre/customize/builtins.py b/src/calibre/customize/builtins.py
+index 73a6bbcf62..088c8388b5 100644
+--- a/src/calibre/customize/builtins.py
++++ b/src/calibre/customize/builtins.py
+@@ -1101,7 +1101,9 @@ plugins += [ActionAdd, ActionFetchAnnotations, ActionGenerateCatalog,
+         ActionCopyToLibrary, ActionTweakEpub, ActionUnpackBook, ActionNextMatch, ActionStore,
+         ActionPluginUpdater, ActionPickRandom, ActionEditToC, ActionSortBy,
+         ActionMarkBooks, ActionEmbed, ActionTemplateTester, ActionTagMapper, ActionAuthorMapper,
+-        ActionVirtualLibrary, ActionBrowseAnnotations]
++        ActionVirtualLibrary]
++if os.environ.get('CALIBRE_ENABLE_DEVELOP_MODE') == '1':
++    plugins.append(ActionBrowseAnnotations)
+ 
+ # }}}
+ 
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index 00684900b1..767bb84b05 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -318,12 +318,13 @@ class MainOverlay:  # {{{
+             actions_div.appendChild(E.ul(
+                 ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
+                    def(): self.overlay.hide(), ui_operations.toggle_lookup();, 'library')
+-                ,
+-                highlight_action,
+-                ac(_('Browse highlights'), _('Browse all highlights'),
+-                   def(): self.overlay.hide(), ui_operations.toggle_highlights();, 'image')
+-                ,
+             ))
++            if runtime.in_develop_mode:
++                actions_div.lastChild.appendChild(highlight_action)
++                actions_div.lastChild.appendChild(
++                    ac(_('Browse highlights'), _('Browse all highlights'),
++                        def(): self.overlay.hide(), ui_operations.toggle_highlights();, 'image')
++                )
+             copy_actions = E.ul()
+             if self.overlay.view.currently_showing.selected_text:
+                 copy_actions.appendChild(ac(_('Copy selection'), _('Copy the current selection'), def():
+@@ -352,7 +353,8 @@ class MainOverlay:  # {{{
+                    def(): self.overlay.hide(), ui_operations.quit();, 'remove'),
+             ))
+         else:
+-            actions_div.appendChild(E.ul(highlight_action))
++            if runtime.in_develop_mode:
++                actions_div.appendChild(E.ul(highlight_action))
+         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
+             onclick=def (evt):evt.stopPropagation();,
+ 
+diff --git a/src/pyj/read_book/shortcuts.pyj b/src/pyj/read_book/shortcuts.pyj
+index afbc76c566..0048a35e41 100644
+--- a/src/pyj/read_book/shortcuts.pyj
++++ b/src/pyj/read_book/shortcuts.pyj
+@@ -3,6 +3,7 @@
+ from __python__ import bound_methods, hash_literals
+ 
+ from gettext import gettext as _
++from read_book.globals import runtime
+ 
+ 
+ def parse_key_repr(sc):
+@@ -328,14 +329,13 @@ def shortcuts_definition():
+         _('Auto scroll slower'),
+     ),
+ 
+-    'create_annotation': desc(
+-        "Ctrl+h",
+-        'ui',
+-        _('Create a highlight'),
+-    ),
+-
+     }
+-
++    if runtime.in_develop_mode:
++        ans.create_annotation = desc(
++            "Ctrl+h",
++            'ui',
++            _('Create a highlight'),
++        )
+     return ans
+ 
+ 
+@@ -395,11 +395,12 @@ def add_standalone_viewer_shortcuts():
+         'ui',
+         _('Toggle the toolbar'),
+     )
+-    sc['toggle_highlights'] = desc(
+-        "Ctrl+Alt+h",
+-        'ui',
+-        _('Toggle the highlights panel')
+-    )
++    if runtime.in_develop_mode:
++        sc['toggle_highlights'] = desc(
++            "Ctrl+Alt+h",
++            'ui',
++            _('Toggle the highlights panel')
++        )
+ 
+ 
+ def create_shortcut_map(custom_shortcuts):
+-- 
+2.28.0.rc0
+

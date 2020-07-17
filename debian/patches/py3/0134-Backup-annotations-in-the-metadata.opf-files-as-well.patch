@@ -1,0 +1,211 @@
+From 5577f4ea17ea36d57f4d28b44fda6771ef9c5f14 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 12 Jun 2020 17:08:29 +0530
+Subject: [PATCH 134/201] Backup annotations in the metadata.opf files as well
+
+---
+ src/calibre/db/backend.py           |  7 +++++++
+ src/calibre/db/cache.py             | 22 +++++++++++++++++++++-
+ src/calibre/db/restore.py           |  7 +++++--
+ src/calibre/db/tests/writing.py     | 22 +++++++++++++++++++---
+ src/calibre/ebooks/metadata/opf2.py | 22 ++++++++++++++++++++++
+ 5 files changed, 74 insertions(+), 6 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index f22e195dbc..2fdea75f65 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -1774,6 +1774,13 @@ class DB(object):
+         for x in annotations_for_book(self.conn, book_id, fmt, user_type, user):
+             yield x
+ 
++    def all_annotations_for_book(self, book_id):
++        for (fmt, user_type, user, data) in self.execute('SELECT format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)):
++            try:
++                yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': json.loads(data)}
++            except Exception:
++                pass
++
+     def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
+         try:
+             with self.conn:  # Disable autocommit mode, for performance
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index bfdf2a3b05..d649504c9c 100644
+--- a/src/calibre/db/cache.py
++++ b/src/calibre/db/cache.py
+@@ -1191,6 +1191,7 @@ class Cache(object):
+                     # no harm done. This way no need to call dirtied when
+                     # cover is set/removed
+                     mi.cover = 'cover.jpg'
++                    mi.all_annotations = self._all_annotations_for_book(book_id)
+             except:
+                 # This almost certainly means that the book has been deleted while
+                 # the backup operation sat in the queue.
+@@ -2126,7 +2127,7 @@ class Cache(object):
+         self.backend.close()
+ 
+     @write_api
+-    def restore_book(self, book_id, mi, last_modified, path, formats):
++    def restore_book(self, book_id, mi, last_modified, path, formats, annotations=()):
+         ''' Restore the book entry in the database for a book that already exists on the filesystem '''
+         cover = mi.cover
+         mi.cover = None
+@@ -2136,6 +2137,8 @@ class Cache(object):
+         if cover and os.path.exists(cover):
+             self._set_field('cover', {book_id:1})
+         self.backend.restore_book(book_id, path, formats)
++        if annotations:
++            self._restore_annotations(book_id, annotations)
+ 
+     @read_api
+     def virtual_libraries_for_books(self, book_ids):
+@@ -2294,6 +2297,23 @@ class Cache(object):
+             ans.setdefault(annot['type'], []).append(annot)
+         return ans
+ 
++    @read_api
++    def all_annotations_for_book(self, book_id):
++        return tuple(self.backend.all_annotations_for_book(book_id))
++
++    @write_api
++    def restore_annotations(self, book_id, annotations):
++        from calibre.utils.iso8601 import parse_iso8601
++        from calibre.utils.date import EPOCH
++        umap = defaultdict(list)
++        for adata in annotations:
++            key = adata['user_type'], adata['user'], adata['format']
++            a = adata['annotation']
++            ts = (parse_iso8601(a['timestamp']) - EPOCH).total_seconds()
++            umap[key].append((a, ts))
++        for (user_type, user, fmt), annots_list in iteritems(umap):
++            self._set_annotations_for_book(book_id, fmt, annots_list, user_type=user_type, user=user)
++
+     @write_api
+     def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
+         self.backend.set_annotations_for_book(book_id, fmt, annots_list, user_type, user)
+diff --git a/src/calibre/db/restore.py b/src/calibre/db/restore.py
+index d44f220e41..b15c7cd6d1 100644
+--- a/src/calibre/db/restore.py
++++ b/src/calibre/db/restore.py
+@@ -190,7 +190,9 @@ class Restore(Thread):
+         sizes   = [os.path.getsize(os.path.join(dirpath, x)) for x in formats]
+         names   = [os.path.splitext(x)[0] for x in formats]
+         opf = os.path.join(dirpath, 'metadata.opf')
+-        mi = OPF(opf, basedir=dirpath).to_book_metadata()
++        parsed_opf = OPF(opf, basedir=dirpath)
++        mi = parsed_opf.to_book_metadata()
++        annotations = tuple(parsed_opf.read_annotations())
+         timestamp = os.path.getmtime(opf)
+         path = os.path.relpath(dirpath, self.src_library_path).replace(os.sep,
+                 '/')
+@@ -203,6 +205,7 @@ class Restore(Thread):
+                 'id': book_id,
+                 'dirpath': dirpath,
+                 'path': path,
++                'annotations': annotations
+             })
+         else:
+             self.mismatched_dirs.append(dirpath)
+@@ -254,7 +257,7 @@ class Restore(Thread):
+ 
+         for i, book in enumerate(self.books):
+             try:
+-                db.restore_book(book['id'], book['mi'], utcfromtimestamp(book['timestamp']), book['path'], book['formats'])
++                db.restore_book(book['id'], book['mi'], utcfromtimestamp(book['timestamp']), book['path'], book['formats'], book['annotations'])
+                 self.successes += 1
+             except:
+                 self.failed_restores.append((book, traceback.format_exc()))
+diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
+index 489fa836f2..5ba484e0d9 100644
+--- a/src/calibre/db/tests/writing.py
++++ b/src/calibre/db/tests/writing.py
+@@ -763,15 +763,22 @@ class WritingTest(BaseTest):
+ 
+     def test_annotations(self):  # {{{
+         'Test handling of annotations'
++        from calibre.utils.date import utcnow, EPOCH
+         cl = self.cloned_library
+         cache = self.init_cache(cl)
+         # First empty dirtied
+         cache.dump_metadata()
+         self.assertFalse(cache.dirtied_cache)
++
++        def a(**kw):
++            ts = utcnow()
++            kw['timestamp'] = utcnow().isoformat()
++            return kw, (ts - EPOCH).total_seconds()
++
+         annot_list = [
+-                ({'type': 'bookmark', 'title': 'bookmark1', 'seq': 1}, 1.1),
+-                ({'type': 'highlight', 'highlighted_text': 'text1', 'uuid': '1', 'seq': 2}, 0.3),
+-                ({'type': 'highlight', 'highlighted_text': 'text2', 'notes': 'notes2', 'uuid': '2', 'seq': 3}, 3),
++            a(type='bookmark', title='bookmark1', seq=1),
++            a(type='highlight', highlighted_text='text1', uuid='1', seq=2),
++            a(type='highlight', highlighted_text='text2', uuid='2', seq=3, notes='notes2'),
+         ]
+ 
+         def map_as_list(amap):
+@@ -800,4 +807,13 @@ class WritingTest(BaseTest):
+         cache.set_annotations_for_book(1, 'moo', annot_list)
+         amap = cache.annotations_map_for_book(1, 'moo')
+         self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
++        cache.check_dirtied_annotations()
++        cache.dump_metadata()
++        from calibre.ebooks.metadata.opf2 import OPF
++        raw = cache.read_backup(1)
++        opf = OPF(BytesIO(raw))
++        cache.restore_annotations(1, list(opf.read_annotations()))
++        amap = cache.annotations_map_for_book(1, 'moo')
++        self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
++
+     # }}}
+diff --git a/src/calibre/ebooks/metadata/opf2.py b/src/calibre/ebooks/metadata/opf2.py
+index 7ebfbfdc07..20447f9b83 100644
+--- a/src/calibre/ebooks/metadata/opf2.py
++++ b/src/calibre/ebooks/metadata/opf2.py
+@@ -503,6 +503,18 @@ def serialize_user_metadata(metadata_elem, all_user_metadata, tail='\n'+(' '*8))
+         metadata_elem.append(meta)
+ 
+ 
++def serialize_annotations(metadata_elem, annotations, tail='\n'+(' '*8)):
++    for item in annotations:
++        data = json.dumps(item, ensure_ascii=False)
++        if isinstance(data, bytes):
++            data = data.decode('utf-8')
++        meta = metadata_elem.makeelement('meta')
++        meta.set('name', 'calibre:annotation')
++        meta.set('content', data)
++        meta.tail = tail
++        metadata_elem.append(meta)
++
++
+ def dump_dict(cats):
+     if not cats:
+         cats = {}
+@@ -647,6 +659,13 @@ class OPF(object):  # {{{
+ 
+         return ans
+ 
++    def read_annotations(self):
++        for elem in self.root.xpath('//*[name() = "meta" and @name = "calibre:annotation" and @content]'):
++            try:
++                yield json.loads(elem.get('content'))
++            except Exception:
++                pass
++
+     def write_user_metadata(self):
+         elems = self.root.xpath('//*[name() = "meta" and starts-with(@name,'
+                 '"calibre:user_metadata:") and @content]')
+@@ -1664,6 +1683,9 @@ def metadata_to_opf(mi, as_string=True, default_lang=None):
+         meta('user_categories', dump_dict(mi.user_categories))
+ 
+     serialize_user_metadata(metadata, mi.get_all_user_metadata(False))
++    all_annotations = getattr(mi, 'all_annotations', None)
++    if all_annotations:
++        serialize_annotations(metadata, all_annotations)
+ 
+     metadata[-1].tail = '\n' +(' '*4)
+ 
+-- 
+2.28.0.rc0
+
