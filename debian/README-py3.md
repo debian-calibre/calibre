@@ -21,3 +21,5 @@ Current Debian's Calibre source code uses upstream newest release code with
    quilt(1) patch set.
 4. Update `debian/patches/series` file to quilt(1) works.
 5. Refresh `debian/patches/py3` patches to quilt(1) works well.
+6. If "py3" branch patch uses Git style binary patch, add those binary patches
+   to `debian/patches/py3-binary`.
