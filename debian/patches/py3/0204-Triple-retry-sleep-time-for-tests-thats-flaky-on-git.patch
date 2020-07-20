@@ -1,0 +1,26 @@
+From 0722e54cc0fa94038a2327f023e4c6e6be2176bf Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 19 Jul 2020 16:17:57 +0530
+Subject: [PATCH 204/204] Triple retry sleep time for tests thats flaky on
+ github CI
+
+---
+ src/calibre/srv/tests/http.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
+index 58ebcd4946..28d8838e21 100644
+--- a/src/calibre/srv/tests/http.py
++++ b/src/calibre/srv/tests/http.py
+@@ -132,7 +132,7 @@ class TestHTTP(BaseTest):
+             self.do_http_basic()
+         except Exception:
+             # this test is a little flaky on the windows CI machine.
+-            time.sleep(1)
++            time.sleep(3)
+             self.do_http_basic()
+ 
+     def do_http_basic(self):
+-- 
+2.28.0.rc1
+

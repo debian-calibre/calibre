@@ -1,0 +1,132 @@
+From d6b87cd19357ebd8e7a10a27b9236155c679ccbd Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 19 Jul 2020 15:14:56 +0530
+Subject: [PATCH 203/204] calibre portable: Add launchers for standalone viewer
+ and editor
+
+---
+ bypy/windows/__main__.py            | 41 +++++++++++++++++------------
+ bypy/windows/portable-installer.cpp | 10 +++++++
+ bypy/windows/portable.c             |  2 +-
+ src/pyj/read_book/cfi.pyj           |  7 +++--
+ 4 files changed, 40 insertions(+), 20 deletions(-)
+
+diff --git a/bypy/windows/__main__.py b/bypy/windows/__main__.py
+index 02982d05b5..8f69a1392d 100644
+--- a/bypy/windows/__main__.py
++++ b/bypy/windows/__main__.py
+@@ -313,14 +313,16 @@ def extract_pyd_modules(env, site_packages_dir):
+ 
+ def embed_resources(env, module, desc=None, extra_data=None, product_description=None):
+     icon_base = j(env.src_root, 'icons')
+-    icon_map = {'calibre': 'library', 'ebook-viewer': 'viewer', 'ebook-edit': 'ebook-edit',
+-                'lrfviewer': 'viewer', 'calibre-portable': 'library'}
++    icon_map = {
++        'calibre': 'library', 'ebook-viewer': 'viewer', 'ebook-edit': 'ebook-edit',
++        'lrfviewer': 'viewer',
++    }
+     file_type = 'DLL' if module.endswith('.dll') else 'APP'
+     with open(env.rc_template, 'rb') as f:
+         template = f.read().decode('utf-8')
+     bname = b(module)
+     internal_name = os.path.splitext(bname)[0]
+-    icon = icon_map.get(internal_name, 'command-prompt')
++    icon = icon_map.get(internal_name.replace('-portable', ''), 'command-prompt')
+     if internal_name.startswith('calibre-portable-'):
+         icon = 'install'
+     icon = j(icon_base, icon + '.ico')
+@@ -415,20 +417,25 @@ def build_portable(env):
+     obj = j(env.obj_dir, b(src) + '.obj')
+     cflags = '/c /EHsc /MT /W3 /Ox /nologo /D_UNICODE /DUNICODE'.split()
+ 
+-    printf('Compiling', obj)
+-    cmd = [CL] + cflags + ['/Fo' + obj, '/Tc' + src]
+-    run_compiler(env, *cmd)
+-
+-    exe = j(base, 'calibre-portable.exe')
+-    printf('Linking', exe)
+-    cmd = [LINK] + [
+-        '/INCREMENTAL:NO', '/MACHINE:' + machine,
+-        '/LIBPATH:' + env.obj_dir, '/SUBSYSTEM:WINDOWS',
+-        '/RELEASE',
+-        '/ENTRY:wWinMainCRTStartup',
+-        '/OUT:' + exe, embed_resources(env, exe, desc='Calibre Portable', product_description='Calibre Portable'),
+-        obj, 'User32.lib']
+-    run(*cmd)
++    for exe_name in ('calibre.exe', 'ebook-viewer.exe', 'ebook-edit.exe'):
++        exe = j(base, exe_name.replace('.exe', '-portable.exe'))
++        printf('Compiling', exe)
++        cmd = [CL] + cflags + ['/DEXE_NAME="%s"' % exe_name, '/Fo' + obj, '/Tc' + src]
++        run_compiler(env, *cmd)
++        printf('Linking', exe)
++        desc = {
++            'calibre.exe': 'Calibre Portable',
++            'ebook-viewer.exe': 'Calibre Portable Viewer',
++            'ebook-edit.exe': 'Calibre Portable Editor'
++        }[exe_name]
++        cmd = [LINK] + [
++            '/INCREMENTAL:NO', '/MACHINE:' + machine,
++            '/LIBPATH:' + env.obj_dir, '/SUBSYSTEM:WINDOWS',
++            '/RELEASE',
++            '/ENTRY:wWinMainCRTStartup',
++            '/OUT:' + exe, embed_resources(env, exe, desc=desc, product_description=desc),
++            obj, 'User32.lib']
++        run(*cmd)
+ 
+     printf('Creating portable installer')
+     shutil.copytree(env.base, j(base, 'Calibre'))
+diff --git a/bypy/windows/portable-installer.cpp b/bypy/windows/portable-installer.cpp
+index 5a61fee101..52fd996e61 100644
+--- a/bypy/windows/portable-installer.cpp
++++ b/bypy/windows/portable-installer.cpp
+@@ -407,6 +407,16 @@ static BOOL move_program() {
+         show_last_error(L"Failed to move calibre-portable.exe, make sure calibre is not running");
+         return false;
+     }
++    if (MoveFileEx(L"Calibre Portable\\ebook-viewer-portable.exe",
++                L"..\\ebook-viewer-portable.exe", MOVEFILE_REPLACE_EXISTING) == 0) {
++        show_last_error(L"Failed to move ebook-viewer-portable.exe, make sure calibre is not running");
++        return false;
++    }
++    if (MoveFileEx(L"Calibre Portable\\ebook-edit-portable.exe",
++                L"..\\ebook-edit-portable.exe", MOVEFILE_REPLACE_EXISTING) == 0) {
++        show_last_error(L"Failed to move ebook-edit-portable.exe, make sure calibre is not running");
++        return false;
++    }
+ 
+     if (directory_exists(L"..\\Calibre")) {
+         if (!rmtree(L"..\\Calibre")) {
+diff --git a/bypy/windows/portable.c b/bypy/windows/portable.c
+index 98f63b0155..ff3121d079 100644
+--- a/bypy/windows/portable.c
++++ b/bypy/windows/portable.c
+@@ -148,7 +148,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
+     exe = (LPTSTR)calloc(BUFSIZE, sizeof(TCHAR));
+ 
+     _sntprintf_s(config_dir, BUFSIZE, _TRUNCATE, _T("%sCalibre Settings"), app_dir);
+-    _sntprintf_s(exe, BUFSIZE, _TRUNCATE, _T("%sCalibre\\calibre.exe"), app_dir);
++    _sntprintf_s(exe, BUFSIZE, _TRUNCATE, _T("%sCalibre\\%s"), app_dir, _T(EXE_NAME));
+ 
+     launch_calibre(exe, config_dir);
+ 
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 006aa6bc12..adeb7f3258 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -331,8 +331,11 @@ def decode(cfi, doc):
+                 node = q
+                 cfi = cfi.substr(r[0].length)
+             else:
+-                error = "No matching child found for CFI: " + cfi
+-                break
++                if target:
++                    error = "No matching child found for CFI: " + cfi
++                    break
++                else:
++                    cfi = cfi.substr(r[0].length)
+         else if cfi[0] is '!': # Indirection
+             if node.contentDocument:
+                 node = node.contentDocument
+-- 
+2.28.0.rc1
+
