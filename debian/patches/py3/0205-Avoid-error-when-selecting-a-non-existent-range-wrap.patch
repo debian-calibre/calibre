@@ -1,0 +1,56 @@
+From 3640a7873df67b2b8461927f373be119f2e83f1f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 20 Jul 2020 09:48:14 +0530
+Subject: [PATCH 205/206] Avoid error when selecting a non-existent range
+ wrapper
+
+---
+ src/pyj/range_utils.pyj      | 17 +++++++++++------
+ src/pyj/read_book/iframe.pyj |  3 +--
+ 2 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/src/pyj/range_utils.pyj b/src/pyj/range_utils.pyj
+index cccd972168..2686a753ea 100644
+--- a/src/pyj/range_utils.pyj
++++ b/src/pyj/range_utils.pyj
+@@ -60,12 +60,17 @@ def unwrap_all_crw():
+ 
+ def select_crw(crw):
+     nodes = document.querySelectorAll(f'span[data-calibre-range-wrapper="{crw}"]')
+-    r = document.createRange()
+-    r.setStart(nodes[0].firstChild, 0)
+-    r.setEnd(nodes[-1].lastChild, nodes[-1].lastChild.nodeValue.length)
+-    sel = window.getSelection()
+-    sel.removeAllRanges()
+-    sel.addRange(r)
++    if nodes and nodes.length:
++        r = document.createRange()
++        r.setStart(nodes[0].firstChild, 0)
++        r.setEnd(nodes[-1].lastChild, nodes[-1].lastChild.nodeValue.length)
++        sel = window.getSelection()
++        sel.removeAllRanges()
++        sel.addRange(r)
++        return True
++    else:
++        print(f'range-wrapper: {crw} does not exist')
++    return False
+ 
+ 
+ def create_wrapper_function(wrapper_elem, r, intersecting_wrappers, process_wrapper):
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index 215f5108b3..0e17e74d6e 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -730,8 +730,7 @@ class IframeBoss:
+             set_selection_style(data.style)
+         elif data.type is 'edit-highlight':
+             crw_ = {v: k for k, v in Object.entries(annot_id_uuid_map)}[data.uuid]
+-            if crw_:
+-                select_crw(crw_)
++            if crw_ and select_crw(crw_):
+                 self.ensure_selection_visible()
+                 self.initiate_creation_of_annotation(data.uuid)
+         elif data.type is 'remove-highlight':
+-- 
+2.28.0.rc1
+
