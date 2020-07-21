@@ -1,0 +1,79 @@
+From 2e4faac6f4a533dd39146e3f291fab019acf7546 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 20 Jul 2020 14:44:49 +0530
+Subject: [PATCH 208/213] Fix incorrect CFI when selecting text in a range
+ wrapper that is the first child
+
+---
+ src/pyj/read_book/cfi.pyj      | 14 +++++++++-----
+ src/pyj/read_book/test_cfi.pyj | 10 ++++++++++
+ 2 files changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 7b18299126..a0444d8d2c 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -150,6 +150,7 @@ def text_length_in_range_wrapper(node):
+ 
+ def adjust_node_for_text_offset(node):
+     offset = 0
++    adjusted = False
+     while True:
+         p = node.previousSibling
+         if not p or p.nodeType > Node.COMMENT_NODE:
+@@ -159,7 +160,8 @@ def adjust_node_for_text_offset(node):
+         elif p.nodeType is Node.ELEMENT_NODE and p.dataset.calibreRangeWrapper:
+             offset += text_length_in_range_wrapper(p)
+         node = p
+-    return node, offset
++        adjusted = True
++    return node, offset, adjusted
+ 
+ 
+ def unwrapped_nodes(range_wrapper):
+@@ -219,10 +221,13 @@ def encode(doc, node, offset, tail):
+             node = node.firstChild
+     if is_text_node(node):
+         offset = offset or 0
++        adjust_node = node
+         if node.parentNode and node.parentNode.dataset.calibreRangeWrapper:
+-            node = node.parentNode
+-        node, additional_offset = adjust_node_for_text_offset(node)
+-        offset += additional_offset
++            adjust_node = node.parentNode
++        adjusted_node, additional_offset, adjusted = adjust_node_for_text_offset(adjust_node)
++        if adjusted:
++            node = adjusted_node
++            offset += additional_offset
+         cfi = ":" + offset + cfi
+     elif node.nodeType is not Node.ELEMENT_NODE: # Not handled
+         print(f"Offsets for nodes of type {node.nodeType} are not handled")
+@@ -255,7 +260,6 @@ def encode(doc, node, offset, tail):
+     return cfi
+ # }}}
+ 
+-
+ # def decode(cfi, doc):  {{{
+ 
+ def node_at_index(nodes, target, index, iter_text_nodes):
+diff --git a/src/pyj/read_book/test_cfi.pyj b/src/pyj/read_book/test_cfi.pyj
+index e1871d1998..433c6c6c75 100644
+--- a/src/pyj/read_book/test_cfi.pyj
++++ b/src/pyj/read_book/test_cfi.pyj
+@@ -85,3 +85,13 @@ def cfi_with_range_wrappers():
+     p.appendChild(document.createTextNode('def'))
+     assert_equal(decode(f'{path_to_p}/1:2'), {'node': p.firstChild, 'offset': 2})
+     assert_equal(decode(f'{path_to_p}/3:2'), {'node': p.lastChild, 'offset': 2})
++
++    document.body.appendChild(E.p('abc'))
++    p = document.body.lastChild
++    path_to_p = encode(document, p)
++    without_wrapper = encode(document, p.firstChild, 0)
++    assert_equal(without_wrapper, f'{path_to_p}/1:0')
++    p.removeChild(p.firstChild)
++    p.appendChild(E.span('abc', data_calibre_range_wrapper='7'))
++    with_wrapper = encode(document, p.firstChild.firstChild, 0)
++    assert_equal(without_wrapper, with_wrapper)
+-- 
+2.28.0.rc1
+
