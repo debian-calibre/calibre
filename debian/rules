@@ -32,6 +32,8 @@ override_dh_auto_configure:
 	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/MathJax-3.0.5.tar.gz"
 
 override_dh_auto_build:
+#	# Add false-positive info for blhc(1) check
+	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	[ -d build ] || $(SETUP) build
 
 # Invoke "test" target with automatic "HOME" and "XDG_*" variables.
