@@ -26,9 +26,9 @@ DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${Version}' -W
 export QT_SELECT=qt5
 
 override_dh_auto_configure:
-	# apply binary patch
+#	# apply binary patch
 	find debian/patches/py3-binary/ -type f -name "*.patch"  | sort | xargs --verbose --no-run-if-empty git apply
-	# use system mathjax
+#	# use system mathjax
 	$(SETUP) mathjax --mathjax-url="file://$(CURDIR)/debian/mathjax/MathJax-3.0.5.tar.gz"
 
 override_dh_auto_build:
@@ -53,22 +53,22 @@ override_dh_auto_install:
 	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
 	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 
-	# not needed
+#	# not needed
 	rm debian/tmp/usr/share/calibre/calibre-portable.*
 	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
 
-	# do not ship a copy of fonts-liberation
+#	# do not ship a copy of fonts-liberation
 	rm -r debian/tmp/usr/share/calibre/fonts/liberation/
 	ln -s /usr/share/fonts/truetype/liberation/ debian/tmp/usr/share/calibre/fonts/liberation
 
-	# fix executable permissions
+#	# fix executable permissions
 	find debian/tmp/usr/lib/calibre/calibre -type f -executable | xargs --no-run-if-empty chmod a-x
 
-	# fix "env python3" style hashbangs
+#	# fix "env python3" style hashbangs
 	find debian/tmp -type f | xargs sed -i '1 { /^#!.*python/ s_^.*$$_#!/usr/bin/python3_ }'
 
 override_dh_installman:
-	# Create and install some of the man pages
+#	# Create and install some of the man pages
 	ln -sf $(CURDIR)/man-pages debian/man
 	dh_installman
 
