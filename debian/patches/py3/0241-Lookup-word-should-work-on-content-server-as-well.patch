@@ -1,0 +1,64 @@
+From 7935f31cd8a3c3ccc579a8fe4f80cd8d372670d3 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Jul 2020 18:01:02 +0530
+Subject: [PATCH 241/284] Lookup word should work on content server as well
+
+---
+ src/pyj/read_book/selection_bar.pyj | 8 +++++---
+ src/pyj/read_book/view.pyj          | 7 -------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 44d812cd51..d321828f53 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -44,8 +44,7 @@ class SelectionBar:
+ 
+         if ui_operations.copy_selection:
+             bar.appendChild(cb('copy', _('Copy to clipboard'), self.copy_to_clipboard))
+-        if ui_operations.toggle_lookup:
+-            bar.appendChild(cb('library', _('Lookup/search selected word'), self.lookup))
++        bar.appendChild(cb('library', _('Lookup/search selected word'), self.lookup))
+         bar.appendChild(cb('highlight', _('Highlight selection'), self.create_highlight))
+         bar.appendChild(cb('close', _('Clear the selection'), self.clear_selection))
+         self.show_notes(bar_container, notes)
+@@ -79,7 +78,10 @@ class SelectionBar:
+             ui_operations.copy_selection(self.view.currently_showing.selection.text)
+ 
+     def lookup(self):
+-        ui_operations.toggle_lookup(True)
++        if ui_operations.toggle_lookup:
++            ui_operations.toggle_lookup(True)
++        else:
++            self.view.overlay.show_word_actions(self.view.currently_showing.selection.text)
+ 
+     def clear_selection(self):
+         self.view.on_handle_shortcut({'name': 'clear_selection'})
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index fb48cfcd0c..73c0c2a0a8 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -250,7 +250,6 @@ class View:
+             'handle_keypress': self.on_handle_keypress,
+             'handle_shortcut': self.on_handle_shortcut,
+             'human_scroll': self.on_human_scroll,
+-            'lookup_word': self.on_lookup_word,
+             'next_section': self.on_next_section,
+             'next_spine_item': self.on_next_spine_item,
+             'print': self.on_print,
+@@ -316,12 +315,6 @@ class View:
+         sd = get_session_data()
+         self.set_scrollbar_visibility(not sd.get('book_scrollbar'))
+ 
+-    def on_lookup_word(self, data):
+-        if runtime.is_standalone_viewer:
+-            ui_operations.selection_changed(data.word)
+-            return
+-        self.overlay.show_word_actions(data.word)
+-
+     def on_annotations_message(self, data):
+         self.create_annotation.handle_message(data)
+ 
+-- 
+2.28.0
+

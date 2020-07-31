@@ -1,0 +1,25 @@
+From 844dad7bb59526dafeaa86e9250d7ef0b7bf9d41 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 23 Jul 2020 21:16:59 +0530
+Subject: [PATCH 226/284] Ensure pre-middle-close-callback is called only once
+ if it returns True
+
+---
+ src/pyj/read_book/create_annotation.pyj | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 70697a9025..60e81952f4 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -452,6 +452,7 @@ class CreateAnnotation:
+             if self.pre_middle_close_callback:
+                 if not self.pre_middle_close_callback():
+                     return
++                self.pre_middle_close_callback = None
+             self.unhide_handles()
+             m.style.display = 'none'
+             self.container.focus()
+-- 
+2.28.0
+

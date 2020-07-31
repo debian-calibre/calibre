@@ -1,0 +1,50 @@
+From 300bd6643847200f24a9a7b4b01cd6c35cfedc5f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Jul 2020 16:28:17 +0530
+Subject: [PATCH 237/284] Hide buttons when showing middle
+
+---
+ src/pyj/read_book/create_annotation.pyj | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index aa89526417..ae7d492cfa 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -21,6 +21,7 @@ from widgets import create_button
+ # Google lookup for selections
+ # Export all annots as plain text/JSON
+ # Remove lookup and create highlight buttons from chrome
++# Fix selection bar remaining open after removing highlight
+ 
+ 
+ class AnnotationsManager:
+@@ -355,6 +356,7 @@ class CreateAnnotation:
+             cb.style.marginLeft = '0.5rem'
+             cb.style.marginRight = '0.5rem'
+             cb.classList.add('simple-link')
++            cb.classList.add('adjust-button')
+             cb.classList.add(f'button-{name}')
+             cb.addEventListener('click', def(ev):
+                 ev.preventDefault(), ev.stopPropagation()
+@@ -448,6 +450,8 @@ class CreateAnnotation:
+         self.pre_middle_close_callback = pre_close_callback
+         self.temporarily_hide_handles()
+         self.middle.style.display = 'block'
++        for button in self.container.querySelectorAll('.adjust-button'):
++            button.style.visibility = 'hidden'
+ 
+     def hide_middle(self):
+         m = self.middle
+@@ -457,6 +461,8 @@ class CreateAnnotation:
+                     return
+                 self.pre_middle_close_callback = None
+             self.unhide_handles()
++            for button in self.container.querySelectorAll('.adjust-button'):
++                button.style.visibility = 'unset'
+             m.style.display = 'none'
+             self.container.focus()
+ 
+-- 
+2.28.0
+

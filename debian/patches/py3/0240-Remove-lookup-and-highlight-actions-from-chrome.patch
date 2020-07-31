@@ -1,0 +1,55 @@
+From 888ea826cb65f47c975d24ca02ea97c489320943 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Jul 2020 17:55:53 +0530
+Subject: [PATCH 240/284] Remove lookup and highlight actions from chrome
+
+They are better accessed via the selection bar
+---
+ src/pyj/read_book/create_annotation.pyj |  1 -
+ src/pyj/read_book/overlay.pyj           | 10 ----------
+ 2 files changed, 11 deletions(-)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 044b49ba5c..05f7184b2a 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -20,7 +20,6 @@ from widgets import create_button
+ # Custom colors for highlights
+ # Google lookup for selections
+ # Export all annots as plain text/JSON
+-# Remove lookup and create highlight buttons from chrome
+ # Fix selection bar remaining open after removing highlight
+ 
+ 
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index 6d59e2cd61..ff46f33cdc 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -314,15 +314,7 @@ class MainOverlay:  # {{{
+         if full_screen_actions.length:
+             actions_div.appendChild(E.ul(*full_screen_actions))
+ 
+-        highlight_action = ac(_('Highlight'), _('Highlight text in the book'),
+-                def(): self.overlay.hide(), self.overlay.view.initiate_create_annotation();, 'highlight')
+-
+         if runtime.is_standalone_viewer:
+-            actions_div.appendChild(E.ul(
+-                ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
+-                   def(): self.overlay.hide(), ui_operations.toggle_lookup(True);, 'library')
+-            ))
+-            actions_div.lastChild.appendChild(highlight_action)
+             actions_div.lastChild.appendChild(
+                 ac(_('Browse highlights'), _('Browse all highlights'),
+                     def(): self.overlay.hide(), ui_operations.toggle_highlights();, 'image')
+@@ -350,8 +342,6 @@ class MainOverlay:  # {{{
+                 ac(_('Quit'), _('Close the viewer'),
+                    def(): self.overlay.hide(), ui_operations.quit();, 'remove'),
+             ))
+-        else:
+-            actions_div.appendChild(E.ul(highlight_action))
+         container.appendChild(set_css(E.div(class_=MAIN_OVERLAY_TS_CLASS,  # top section
+             onclick=def (evt):evt.stopPropagation();,
+ 
+-- 
+2.28.0
+

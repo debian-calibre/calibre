@@ -1,0 +1,812 @@
+From ed7f8521592cd9aeb1e92f0245b6b6172dd77a0c Mon Sep 17 00:00:00 2001
+From: "Mark W. Gabby-Li" <mark@gabby.li>
+Date: Sun, 26 Jul 2020 15:31:57 -0700
+Subject: [PATCH 258/284] Support for Books in RTL Languages, Such as Hebrew
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Three parts: RTL layout support, made inputs behave naturally in RTL modes, and updated tutorial for RTL books.
+
+To add RTL layout support:
+ ‣ Don't force LTR layout on DOM when loading.
+ ‣ Disable "overflow: hidden" in RTL mode to compensate for an issue in Chrome, and disable scrollbars on all browsers to compensate for the side effect of this turning on scrollbars.
+ ‣ Have viewport hide the RTL mode by negating scrolls and viewport position requests in RTL mode.
+ ‣ Initialize viewport in paged mode layout so that it properly saves RTL mode.
+ ‣ Remove all raw calls to pageXOffset and pageYOffset
+ ‣ Put viewport_to_document in ScrollViewport so that it can abstract away RTL mode in this case, too.
+   ‣ Get rid of calls to reset_transforms and make it private, since it is only called to prepare for viewport_to_document. Put the call there, instead.
+ ‣ Use bounding box right instead of left for position of various elements when the viewport is in RTL mode, since the right side is the beginning of the element in this case.
+
+To made input behave naturally in RTL:
+ ‣ Get page progression direction from ePub.
+ ‣ Add rtl_page_progression() function to return whether we're in this mode.
+ ‣ Added support to tell page advance functions whether they should flip their direction if RTL is on.
+ ‣ Changed touch behavior to support different position for going back and forward in RTL books.
+
+Tutorial changes:
+ ‣ Flipped tutorial so that next and previous page are reversed in position and size in RTL mode.
+ ‣ Added a new counter so that RTL tutorial is shown even if user has already seen LTR tutorial.
+---
+ src/calibre/srv/render_book.py   |  7 ++++
+ src/pyj/read_book/cfi.pyj        | 31 +++++----------
+ src/pyj/read_book/flow_mode.pyj  | 41 +++++++++++++-------
+ src/pyj/read_book/globals.pyj    |  8 ++++
+ src/pyj/read_book/iframe.pyj     |  4 +-
+ src/pyj/read_book/paged_mode.pyj | 66 +++++++++++++++++---------------
+ src/pyj/read_book/settings.pyj   |  7 ++++
+ src/pyj/read_book/touch.pyj      | 19 +++++++--
+ src/pyj/read_book/view.pyj       | 45 ++++++++++++++++------
+ src/pyj/read_book/viewport.pyj   | 54 +++++++++++++++++++++++---
+ src/pyj/session.pyj              |  2 +
+ src/pyj/utils.pyj                | 18 ---------
+ 12 files changed, 195 insertions(+), 107 deletions(-)
+
+diff --git a/src/calibre/srv/render_book.py b/src/calibre/srv/render_book.py
+index b52570e4bb..24f44afe33 100644
+--- a/src/calibre/srv/render_book.py
++++ b/src/calibre/srv/render_book.py
+@@ -639,6 +639,12 @@ def process_exploded_book(
+     spineq = frozenset(spine)
+     landmarks = [l for l in get_landmarks(container) if l['dest'] in spineq]
+ 
++    page_progression_direction = None
++    try:
++        page_progression_direction = container.opf_xpath('//opf:spine/@page-progression-direction')[0]
++    except IndexError:
++        pass
++
+     book_render_data = {
+         'version': RENDER_VERSION,
+         'toc':toc,
+@@ -655,6 +661,7 @@ def process_exploded_book(
+         'toc_anchor_map': toc_anchor_map(toc),
+         'landmarks': landmarks,
+         'link_to_map': {},
++        'page_progression_direction': page_progression_direction,
+     }
+ 
+     names = sorted(
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index e6e39da769..82167ce307 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -57,21 +57,6 @@ def window_scroll_pos(w):  # {{{
+     return w.pageXOffset, w.pageYOffset
+ # }}}
+ 
+-def viewport_to_document(x, y, doc):  # {{{
+-    doc = doc or window.document
+-    while doc is not window.document:
+-        # we are in a frame
+-        frame = doc.defaultView.frameElement
+-        rect = frame.getBoundingClientRect()
+-        x += rect.left
+-        y += rect.top
+-        doc = frame.ownerDocument
+-    wx, wy = window_scroll_pos(doc.defaultView)
+-    x += wx
+-    y += wy
+-    return x, y
+-# }}}
+-
+ # Convert point to character offset {{{
+ def range_has_point(range_, x, y):
+     rects = range_.getClientRects()
+@@ -634,7 +619,6 @@ def scroll_to(cfi, callback, doc):  # {{{
+         span.setAttribute('style', 'border-width: 0; padding: 0; margin: 0')
+         r.surroundContents(span)
+         scroll_viewport.scroll_into_view(span)
+-        scroll_viewport.reset_transforms()  # needed for viewport_to_document()
+         fn = def():
+             # Remove the span and get the new position now that scrolling
+             # has (hopefully) completed
+@@ -677,17 +661,18 @@ def scroll_to(cfi, callback, doc):  # {{{
+ 
+             x = (point_.a*rect.left + (1-point_.a)*rect.right)
+             y = (rect.top + rect.bottom)/2
+-            x, y = viewport_to_document(x, y, ndoc)
++            x, y = scroll_viewport.viewport_to_document(x, y, ndoc)
+             if callback:
+                 callback(x, y)
+     else:
+         node = point_.node
+         scroll_viewport.scroll_into_view(node)
+-        scroll_viewport.reset_transforms()  # needed for viewport_to_document()
+ 
+         fn = def():
+             r = node.getBoundingClientRect()
+-            x, y = viewport_to_document(r.left, r.top, node.ownerDocument)
++            # Start of element is right side in RTL, so be sure to get that side in RTL mode
++            x, y = scroll_viewport.viewport_to_document(
++                r.left if scroll_viewport.ltr() else r.right, r.top, node.ownerDocument)
+             if jstype(point_.x) is 'number' and node.offsetWidth:
+                 x += (point_.x*node.offsetWidth)/100
+             if jstype(point_.y) is 'number' and node.offsetHeight:
+@@ -725,17 +710,19 @@ def at_point(ox, oy):  # {{{
+ 
+             x = (p.a*rect.left + (1-p.a)*rect.right)
+             y = (rect.top + rect.bottom)/2
+-            x, y = viewport_to_document(x, y, r.startContainer.ownerDocument)
++            x, y = scroll_viewport.viewport_to_document(x, y, r.startContainer.ownerDocument)
+         else:
+             node = p.node
+             r = node.getBoundingClientRect()
+-            x, y = viewport_to_document(r.left, r.top, node.ownerDocument)
++            # Start of element is right side in RTL, so be sure to get that side in RTL mode
++            x, y = scroll_viewport.viewport_to_document(
++                r.left if scroll_viewport.ltr() else r.right, r.top, node.ownerDocument)
+             if jstype(p.x) is 'number' and node.offsetWidth:
+                 x += (p.x*node.offsetWidth)/100
+             if jstype(p.y) is 'number' and node.offsetHeight:
+                 y += (p.y*node.offsetHeight)/100
+ 
+-        if dist(viewport_to_document(ox, oy), v'[x, y]') > 50:
++        if dist(scroll_viewport.viewport_to_document(ox, oy), v'[x, y]') > 50:
+             cfi = None
+ 
+     return cfi
+diff --git a/src/pyj/read_book/flow_mode.pyj b/src/pyj/read_book/flow_mode.pyj
+index 3dbdda5cb9..83409f8448 100644
+--- a/src/pyj/read_book/flow_mode.pyj
++++ b/src/pyj/read_book/flow_mode.pyj
+@@ -3,10 +3,10 @@
+ from __python__ import bound_methods, hash_literals
+ 
+ from dom import set_css
+-from read_book.globals import current_spine_item, get_boss
++from read_book.globals import current_spine_item, get_boss, rtl_page_progression, ltr_page_progression
+ from read_book.settings import opts
+ from read_book.viewport import line_height, scroll_viewport
+-from utils import document_height, viewport_to_document
++from utils import document_height
+ 
+ 
+ def flow_to_scroll_fraction(frac, on_initial_load):
+@@ -57,7 +57,7 @@ last_change_spine_item_request = {}
+ 
+ def _check_for_scroll_end(func, obj, args, report):
+     before = window.pageYOffset
+-    func.apply(obj, args)
++    should_flip_progression_direction = func.apply(obj, args)
+ 
+     now = window.performance.now()
+     scroll_animator.sync(now)
+@@ -68,7 +68,10 @@ def _check_for_scroll_end(func, obj, args, report):
+             return False
+         last_change_spine_item_request.name = csi.name
+         last_change_spine_item_request.at = now
+-        get_boss().send_message('next_spine_item', previous=args[0] < 0)
++        go_to_previous_page = args[0] < 0
++        if (should_flip_progression_direction):
++            go_to_previous_page = not go_to_previous_page
++        get_boss().send_message('next_spine_item', previous=go_to_previous_page)
+         return False
+     if report:
+         report_human_scroll(window.pageYOffset - before)
+@@ -88,7 +91,9 @@ def check_for_scroll_end_and_report(func):
+ @check_for_scroll_end_and_report
+ def scroll_by(y):
+     window.scrollBy(0, y)
+-
++    # This indicates to check_for_scroll_end_and_report that it should not
++    # flip the page progression direction.
++    return False
+ 
+ def flow_onwheel(evt):
+     dx = dy = 0
+@@ -114,15 +119,19 @@ def flow_onwheel(evt):
+ 
+ @check_for_scroll_end
+ def goto_boundary(dir):
+-    scroll_viewport.scroll_to(window.pageXOffset, 0 if dir is DIRECTION.Up else document_height())
++    scroll_viewport.scroll_to(scroll_viewport.x(), 0 if dir is DIRECTION.Up else document_height())
+     get_boss().report_human_scroll()
+ 
+ 
+ @check_for_scroll_end_and_report
+-def scroll_by_page(direction):
++def scroll_by_page(direction, flip_if_rtl_page_progression):
+     h = scroll_viewport.height() - 10
+     window.scrollBy(0, h * direction)
+ 
++    # Let check_for_scroll_end_and_report know whether or not it should flip
++    # the progression direction.
++    return flip_if_rtl_page_progression and rtl_page_progression()
++
+ def scroll_to_extend_annotation(backward, horizontal, by_page):
+     direction = -1 if backward else 1
+     h = line_height()
+@@ -168,10 +177,10 @@ def handle_shortcut(sc_name, evt):
+         goto_boundary(DIRECTION.Down)
+         return True
+     if sc_name is 'left':
+-        window.scrollBy(-15, 0)
++        window.scrollBy(-15 if ltr_page_progression() else 15, 0)
+         return True
+     if sc_name is 'right':
+-        window.scrollBy(15, 0)
++        window.scrollBy(15 if ltr_page_progression() else -15, 0)
+         return True
+     if sc_name is 'start_of_book':
+         get_boss().send_message('goto_doc_boundary', start=True)
+@@ -180,10 +189,10 @@ def handle_shortcut(sc_name, evt):
+         get_boss().send_message('goto_doc_boundary', start=False)
+         return True
+     if sc_name is 'pageup':
+-        scroll_by_page(-1)
++        scroll_by_page(-1, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'pagedown':
+-        scroll_by_page(1)
++        scroll_by_page(1, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'toggle_autoscroll':
+         toggle_autoscroll()
+@@ -480,9 +489,9 @@ def handle_gesture(gesture):
+         if not gesture.active and not gesture.is_held:
+             flick_animator.start(gesture)
+     elif gesture.type is 'prev-page':
+-        scroll_by_page(-1)
++        scroll_by_page(-1, flip_if_rtl_page_progression=False)
+     elif gesture.type is 'next-page':
+-        scroll_by_page(1)
++        scroll_by_page(1, flip_if_rtl_page_progression=False)
+ 
+ 
+ anchor_funcs = {
+@@ -490,7 +499,11 @@ anchor_funcs = {
+         if not elem:
+             return 0, 0
+         br = elem.getBoundingClientRect()
+-        x, y = viewport_to_document(br.left, br.top, elem.ownerDocument)
++        # Elements start on the right side in RTL mode,
++        # so be sure to return that side if in RTL.
++        x, y = scroll_viewport.viewport_to_document(
++            br.left if scroll_viewport.ltr() else br.right,
++            br.top, elem.ownerDocument)
+         return y, x
+     ,
+     'visibility': def visibility(pos):
+diff --git a/src/pyj/read_book/globals.pyj b/src/pyj/read_book/globals.pyj
+index a5ead3463c..9af3272eef 100644
+--- a/src/pyj/read_book/globals.pyj
++++ b/src/pyj/read_book/globals.pyj
+@@ -21,6 +21,14 @@ def current_book():
+     return current_book.book
+ current_book.book = None
+ 
++def rtl_page_progression():
++    # Other options are "ltr" and "default." For Calibre, "default" is LTR.
++    return current_book().manifest.page_progression_direction == 'rtl'
++
++def ltr_page_progression():
++    # Only RTL and LTR are supported, so it must be LTR if not RTL.
++    return not rtl_page_progression()
++
+ uid = 'calibre-' + hexlify(random_bytes(12))
+ 
+ def viewport_mode_changer(val):
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index cb7f6d3f0a..057d8193e2 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -323,9 +323,9 @@ class IframeBoss:
+     def on_next_screen(self, data):
+         backwards = data.backwards
+         if current_layout_mode() is 'flow':
+-            flow_scroll_by_page(-1 if backwards else 1)
++            flow_scroll_by_page(-1 if backwards else 1, data.flip_if_rtl_page_progression)
+         else:
+-            paged_scroll_by_page(backwards, data.all_pages_on_screen)
++            paged_scroll_by_page(backwards, data.all_pages_on_screen, data.flip_if_rtl_page_progression)
+ 
+ 
+     def change_font_size(self, data):
+diff --git a/src/pyj/read_book/paged_mode.pyj b/src/pyj/read_book/paged_mode.pyj
+index 38065d2155..06d3cf72f9 100644
+--- a/src/pyj/read_book/paged_mode.pyj
++++ b/src/pyj/read_book/paged_mode.pyj
+@@ -11,12 +11,11 @@ from read_book.cfi import (
+     at_current as cfi_at_current, at_point as cfi_at_point,
+     scroll_to as cfi_scroll_to
+ )
+-from read_book.globals import current_spine_item, get_boss
++from read_book.globals import current_spine_item, get_boss, rtl_page_progression
+ from read_book.settings import opts
+ from read_book.viewport import scroll_viewport, line_height
+ from utils import (
+-    document_height, document_width, get_elem_data, set_elem_data,
+-    viewport_to_document
++    document_height, document_width, get_elem_data, set_elem_data
+ )
+ 
+ 
+@@ -40,14 +39,9 @@ def has_start_text(elem):
+     return False
+ 
+ def handle_rtl_body(body_style):
+-    # Make the body and root nodes have direction ltr so that column layout
+-    # works as expected
+     if body_style.direction is "rtl":
+-        for node in document.body.childNodes:
+-            if node.nodeType is Node.ELEMENT_NODE and window.getComputedStyle(node).direction is "rtl":
+-                node.style.setProperty("direction", "rtl")
+-        document.body.style.direction = "ltr"
+-        document.documentElement.style.direction = 'ltr'
++        # If this in not set, Chrome scrolling breaks for some RTL and vertical content.
++        document.documentElement.style.overflow = 'visible'
+ 
+ def create_page_div(elem):
+     div = E('blank-page-div', ' \n    ')
+@@ -97,7 +91,7 @@ def fit_images():
+         if data is None:
+             data = {'left':br.left, 'right':br.right, 'height':br.height, 'display': img.style.display}
+             set_elem_data(img, 'img-data', data)
+-        left = viewport_to_document(br.left, 0, img.ownerDocument)[0]
++        left = scroll_viewport.viewport_to_document(br.left, 0, img.ownerDocument)[0]
+         col = column_at(left) * col_and_gap
+         rleft = left - col
+         width  = br.right - br.left
+@@ -170,6 +164,7 @@ def current_page_width():
+ def layout(is_single_page, on_resize):
+     nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen, number_of_cols
+     line_height(True)
++    scroll_viewport.initialize_on_layout()
+     body_style = window.getComputedStyle(document.body)
+     first_layout = not _in_paged_mode
+     cps = calc_columns_per_screen()
+@@ -420,7 +415,6 @@ def jump_to_anchor(name):
+ 
+ def scroll_to_elem(elem):
+     scroll_viewport.scroll_into_view(elem)
+-    scroll_viewport.reset_transforms()  # needed for viewport_to_document()
+ 
+     if in_paged_mode():
+         # Ensure we are scrolled to the column containing elem
+@@ -435,25 +429,29 @@ def scroll_to_elem(elem):
+             # elem.scrollIntoView(). However, in some cases it gives
+             # inaccurate results, so we prefer the bounding client rect,
+             # when possible.
+-            left = elem.scrollLeft
++            # Columns start on the right side in RTL mode, so get that instead here...
++            pos = elem.scrollLeft if scroll_viewport.ltr() else elem.scrollRight
+         else:
+-            left = br.left
+-        scroll_to_xpos(viewport_to_document(
+-            left+2, elem.scrollTop, elem.ownerDocument)[0])
++            # and here.
++            pos = br.left if scroll_viewport.ltr() else br.right
++        scroll_to_xpos(scroll_viewport.viewport_to_document(
++            pos+2, elem.scrollTop, elem.ownerDocument)[0])
+ 
+ def snap_to_selection():
+     # Ensure that the viewport is positioned at the start of the column
+     # containing the start of the current selection
+     if in_paged_mode():
+-        scroll_viewport.reset_transforms()  # needed for viewport_to_document()
+         sel = window.getSelection()
+         r = sel.getRangeAt(0).getBoundingClientRect()
+         node = sel.anchorNode
+-        left = viewport_to_document(r.left, r.top, doc=node.ownerDocument)[0]
++        # In RTL mode, the "start" of selection is on the right side.
++        pos = scroll_viewport.viewport_to_document(
++            r.left if scroll_viewport.ltr() else r.right,
++            r.top, doc=node.ownerDocument)[0]
+ 
+         # Ensure we are scrolled to the column containing the start of the
+         # selection
+-        scroll_to_xpos(left+5)
++        scroll_to_xpos(pos+5)
+ 
+ def jump_to_cfi(cfi):
+     # Jump to the position indicated by the specified conformal fragment
+@@ -585,7 +583,10 @@ wheel_handler = HandleWheel()
+ onwheel = wheel_handler.onwheel.bind(wheel_handler)
+ 
+ 
+-def scroll_by_page(backward, by_screen):
++def scroll_by_page(backward, by_screen, flip_if_rtl_page_progression):
++    if (flip_if_rtl_page_progression and rtl_page_progression()):
++        backward = not backward
++
+     if by_screen:
+         pos = previous_screen_location() if backward else next_screen_location()
+         pages = cols_per_screen
+@@ -615,10 +616,10 @@ def scroll_to_extend_annotation(backward):
+ 
+ def handle_shortcut(sc_name, evt):
+     if sc_name is 'up':
+-        scroll_by_page(True, True)
++        scroll_by_page(backward=True, by_screen=True, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'down':
+-        scroll_by_page(False, True)
++        scroll_by_page(backward=False, by_screen=True, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'start_of_file':
+         get_boss().report_human_scroll()
+@@ -629,10 +630,10 @@ def handle_shortcut(sc_name, evt):
+         scroll_to_offset(document_width())
+         return True
+     if sc_name is 'left':
+-        scroll_by_page(True, False)
++        scroll_by_page(backward=True, by_screen=False, flip_if_rtl_page_progression=True)
+         return True
+     if sc_name is 'right':
+-        scroll_by_page(False, False)
++        scroll_by_page(backward=False, by_screen=False, flip_if_rtl_page_progression=True)
+         return True
+     if sc_name is 'start_of_book':
+         get_boss().report_human_scroll()
+@@ -643,10 +644,10 @@ def handle_shortcut(sc_name, evt):
+         get_boss().send_message('goto_doc_boundary', start=False)
+         return True
+     if sc_name is 'pageup':
+-        scroll_by_page(True, True)
++        scroll_by_page(backward=True, by_screen=True, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'pagedown':
+-        scroll_by_page(False, True)
++        scroll_by_page(backward=False, by_screen=True, flip_if_rtl_page_progression=False)
+         return True
+     if sc_name is 'toggle_autoscroll':
+         auto_scroll_action('toggle')
+@@ -661,11 +662,13 @@ def handle_gesture(gesture):
+                 get_boss().send_message('next_section', forward=gesture.direction is 'up')
+         else:
+             if not gesture.active or gesture.is_held:
+-                scroll_by_page(gesture.direction is 'right', True)
++                scroll_by_page(gesture.direction is 'right', True, flip_if_rtl_page_progression=True)
++    # Gesture progression direction is determined in the gesture code;
++    # don't set flip_if_rtl_page_progression=True here.
+     elif gesture.type is 'prev-page':
+-        scroll_by_page(True, opts.paged_taps_scroll_by_screen)
++        scroll_by_page(True, opts.paged_taps_scroll_by_screen, flip_if_rtl_page_progression=False)
+     elif gesture.type is 'next-page':
+-        scroll_by_page(False, opts.paged_taps_scroll_by_screen)
++        scroll_by_page(False, opts.paged_taps_scroll_by_screen, flip_if_rtl_page_progression=False)
+ 
+ 
+ anchor_funcs = {
+@@ -673,7 +676,10 @@ anchor_funcs = {
+         if not elem:
+             return 0
+         br = elem.getBoundingClientRect()
+-        x = viewport_to_document(br.left, br.top, elem.ownerDocument)[0]
++        # In RTL mode, the start of something is on the right side.
++        x = scroll_viewport.viewport_to_document(
++            br.left if scroll_viewport.ltr() else br.right,
++            br.top, elem.ownerDocument)[0]
+         return column_at(x)
+     ,
+     'visibility': def visibility(pos):
+diff --git a/src/pyj/read_book/settings.pyj b/src/pyj/read_book/settings.pyj
+index a322e6dd73..fe46d4edb1 100644
+--- a/src/pyj/read_book/settings.pyj
++++ b/src/pyj/read_book/settings.pyj
+@@ -88,6 +88,13 @@ def apply_colors():
+     selbg = make_selection_background_opaque(selbg)
+     text += f'\n::selection {{ background-color: {selbg}; color: {selfg} }}'
+     text += f'\n::selection:window-inactive {{ background-color: {selbg}; color: {selfg} }}'
++    # In Chrome when content overflows in RTL and vertical layouts on the left side,
++    # it is not displayed properly when scrolling unless overflow:visible is set,
++    # but this causes scrollbars to appear.
++    # Force disable scrollbars in Chrome, Safari, and Firefox to address this side effect.
++    text += '\nhtml::-webkit-scrollbar, body::-webkit-scrollbar { display: none }'
++    text += '\nhtml { scrollbar-width: none; }'
++    text += '\nbody { scrollbar-width: none; }'
+ 
+     ss.textContent = text
+ 
+diff --git a/src/pyj/read_book/touch.pyj b/src/pyj/read_book/touch.pyj
+index fe1b12821b..b114bce521 100644
+--- a/src/pyj/read_book/touch.pyj
++++ b/src/pyj/read_book/touch.pyj
+@@ -2,7 +2,7 @@
+ # License: GPL v3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+ from __python__ import bound_methods, hash_literals
+ 
+-from read_book.globals import get_boss, ui_operations
++from read_book.globals import get_boss, ui_operations, ltr_page_progression
+ from read_book.viewport import scroll_viewport
+ 
+ HOLD_THRESHOLD = 750  # milliseconds
+@@ -248,10 +248,21 @@ class BookTouchHandler(TouchHandler):
+                     if gesture.viewport_y < min(100, scroll_viewport.height() / 4):
+                         gesture.type = 'show-chrome'
+                     else:
+-                        if gesture.viewport_x < min(100, scroll_viewport.width() / 4):
+-                            gesture.type = 'prev-page'
++                        # Calibre's default, books that go left to right.
++                        if ltr_page_progression():
++                            if gesture.viewport_x < min(100, scroll_viewport.width() / 4):
++                                gesture.type = 'prev-page'
++                            else:
++                                gesture.type = 'next-page'
++                        # We swap the sizes in RTL mode, so that going to the next page is always the bigger touch region.
+                         else:
+-                            gesture.type = 'next-page'
++                            # The "going back" area should not be more than 100 units big,
++                            # even if 1/4 of the scroll viewport is more than 100 units.
++                            # Checking against the larger of the width minus the 100 units and 3/4 of the width will accomplish that.
++                            if gesture.viewport_x > max(scroll_viewport.width() - 100, scroll_viewport.width() * (3/4)):
++                                gesture.type = 'prev-page'
++                            else:
++                                gesture.type = 'next-page'
+         if gesture.type is 'pinch':
+             if gesture.active:
+                 return
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index b4097563e5..8abc1275bb 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -15,7 +15,7 @@ from modals import error_dialog, warning_dialog
+ from read_book.content_popup import ContentPopupOverlay
+ from read_book.create_annotation import AnnotationsManager, CreateAnnotation
+ from read_book.globals import (
+-    current_book, runtime, set_current_spine_item, ui_operations
++    current_book, runtime, set_current_spine_item, ui_operations, rtl_page_progression
+ )
+ from read_book.goto import get_next_section
+ from read_book.open_book import add_book_to_recently_viewed
+@@ -107,6 +107,19 @@ def show_controls_help():
+     def msg(txt):
+         return set_css(E.div(txt), padding='1ex 1em', text_align='center', margin='auto')
+ 
++    left_msg = msg(_('Tap to turn back'))
++    left_width = '25vw'
++    right_msg = msg(_('Tap to turn page'))
++    right_width = '75vw'
++    if rtl_page_progression():
++        left_msg, right_msg = right_msg, left_msg
++        left_width, right_width = right_width, left_width
++
++    # Clear it out if this is not the first time it's created.
++    # Needed to correctly show it again in a different page progression direction.
++    if container.firstChild:
++        container.removeChild(container.firstChild)
++
+     container.appendChild(E.div(
+         style=f'overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: {get_color("window-background")};' +
+                 'display:flex; flex-direction: column; align-items: stretch',
+@@ -117,12 +130,12 @@ def show_controls_help():
+         E.div(
+             style="display: flex; align-items: stretch; flex-grow: 10",
+             E.div(
+-                msg(_('Tap to turn back')),
+-                style='width: 25vw; display:flex; align-items: center; border-right: solid 2px currentColor',
++                left_msg,
++                style=f'width: {left_width}; display:flex; align-items: center; border-right: solid 2px currentColor',
+             ),
+             E.div(
+-                msg(_('Tap to turn page')),
+-                style='width: 75vw; display:flex; align-items: center',
++                right_msg,
++                style=f'width: {right_width}; display:flex; align-items: center',
+             )
+         )
+     ))
+@@ -321,7 +334,10 @@ class View:
+         if event.button is 0:
+             event.preventDefault(), event.stopPropagation()
+             sd = get_session_data()
+-            self.iframe_wrapper.send_message('next_screen', backwards=True, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
++            self.iframe_wrapper.send_message(
++                'next_screen', backwards=True,
++                flip_if_rtl_page_progression=True,
++                all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+         elif event.button is 2:
+             event.preventDefault(), event.stopPropagation()
+             window.setTimeout(self.show_chrome, 0)
+@@ -331,7 +347,10 @@ class View:
+         if event.button is 0:
+             event.preventDefault(), event.stopPropagation()
+             sd = get_session_data()
+-            self.iframe_wrapper.send_message('next_screen', backwards=False, all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
++            self.iframe_wrapper.send_message(
++                'next_screen', backwards=False,
++                flip_if_rtl_page_progression=True,
++                all_pages_on_screen=sd.get('paged_margin_clicks_scroll_by_screen'))
+         elif event.button is 2:
+             event.preventDefault(), event.stopPropagation()
+             window.setTimeout(self.show_chrome, 0)
+@@ -474,10 +493,14 @@ class View:
+             self.overlay.open_book()
+         elif data.name is 'next':
+             self.iframe_wrapper.send_message(
+-                'next_screen', backwards=False, all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
++                'next_screen', backwards=False,
++                flip_if_rtl_page_progression=False,
++                all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
+         elif data.name is 'previous':
+             self.iframe_wrapper.send_message(
+-                'next_screen', backwards=True, all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
++                'next_screen', backwards=True,
++                flip_if_rtl_page_progression=False,
++                all_pages_on_screen=get_session_data().get('paged_margin_clicks_scroll_by_screen'))
+         elif data.name is 'clear_selection':
+             self.iframe_wrapper.send_message('clear_selection')
+         elif data.name is 'print':
+@@ -826,10 +849,10 @@ class View:
+         else:
+             self.show_name(name, initial_position=pos)
+         sd = get_session_data()
+-        c = sd.get('controls_help_shown_count', 0)
++        c = sd.get('controls_help_shown_count' + ('_rtl_page_progression' if rtl_page_progression() else ''), 0)
+         if c < 2:
+             show_controls_help()
+-            sd.set('controls_help_shown_count', c + 1)
++            sd.set('controls_help_shown_count' + ('_rtl_page_progression' if rtl_page_progression() else ''), c + 1)
+ 
+     def preferences_changed(self):
+         ui_operations.update_url_state(True)
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index cdad564a30..164744462a 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -2,7 +2,7 @@
+ # License: GPL v3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
+ from __python__ import bound_methods, hash_literals
+ 
+-FUNCTIONS = 'x y scroll_to scroll_into_view reset_globals reset_transforms'.split(' ')
++FUNCTIONS = 'x y scroll_to scroll_into_view reset_globals __reset_transforms'.split(' ')
+ 
+ from read_book.globals import get_boss, viewport_mode_changer
+ from utils import is_ios
+@@ -12,13 +12,28 @@ class ScrollViewport:
+     def __init__(self):
+         self.set_mode('flow')
+         self.window_width_from_parent = self.window_height_from_parent = None
++        # In RTL mode, we hide the fact that we are scrolling to the left by negating the
++        # current X position and the requested X scroll position, which fools the reader
++        # code into thinking that it's always scrolling in positive X.
++        self.rtl = False
+ 
+     def set_mode(self, mode):
+         prefix = ('flow' if mode is 'flow' else 'paged') + '_'
+         for attr in FUNCTIONS:
+             self[attr] = self[prefix + attr]
+ 
++    def initialize_on_layout(self):
++        self.rtl = False
++        body_style = window.getComputedStyle(document.body)
++        if body_style.direction is "rtl":
++            self.rtl = True
++
++    def ltr(self):
++        return not self.rtl
++
+     def flow_x(self):
++        if self.rtl:
++            return -window.pageXOffset
+         return window.pageXOffset
+ 
+     def flow_y(self):
+@@ -28,7 +43,10 @@ class ScrollViewport:
+         return 0
+ 
+     def flow_scroll_to(self, x, y):
+-        window.scrollTo(x, y)
++        if self.rtl:
++            window.scrollTo(-x,y)
++        else:
++            window.scrollTo(x, y)
+ 
+     def flow_scroll_into_view(self, elem):
+         elem.scrollIntoView()
+@@ -36,7 +54,7 @@ class ScrollViewport:
+     def flow_reset_globals(self):
+         pass
+ 
+-    def flow_reset_transforms(self):
++    def flow___reset_transforms(self):
+         pass
+ 
+     def paged_content_width(self):
+@@ -52,6 +70,29 @@ class ScrollViewport:
+     def height(self):
+         return window.innerHeight
+ 
++    # Assure that the viewport position returned is corrected for the RTL
++    # mode of ScrollViewport.
++    def viewport_to_document(self, x, y, doc):
++        self.__reset_transforms()
++
++        # Convert x, y from the viewport (window) co-ordinate system to the
++        # document (body) co-ordinate system
++        doc = doc or window.document
++        topdoc = window.document
++        while doc is not topdoc:
++            # We are in a frame
++            frame = doc.defaultView.frameElement
++            rect = frame.getBoundingClientRect()
++            x += rect.left
++            y += rect.top
++            doc = frame.ownerDocument
++        win = doc.defaultView
++        wx, wy = win.pageXOffset, win.pageYOffset
++        x += wx
++        y += wy
++        if self.rtl:
++            return -x, y
++        return x, y
+ 
+ class IOSScrollViewport(ScrollViewport):
+ 
+@@ -82,7 +123,8 @@ class IOSScrollViewport(ScrollViewport):
+         ans = parseInt(raw)
+         if isNaN(ans):
+             return 0
+-        ans *= -1
++        if not self.rtl:
++            ans *= -1
+         return ans
+ 
+     def paged_scroll_into_view(self, elem):
+@@ -98,11 +140,11 @@ class IOSScrollViewport(ScrollViewport):
+         # left -= window_width() // 2
+         self._scroll_implementation(max(0, left))
+ 
+-    def paged_reset_transforms(self):
++    def paged___reset_transforms(self):
+         document.documentElement.style.transform = 'none'
+ 
+     def paged_reset_globals(self):
+-        self.paged_reset_transforms()
++        self.__reset_transforms()
+ 
+ 
+ if is_ios:
+diff --git a/src/pyj/session.pyj b/src/pyj/session.pyj
+index 21a456ae2b..18412d49b2 100644
+--- a/src/pyj/session.pyj
++++ b/src/pyj/session.pyj
+@@ -31,6 +31,7 @@ defaults = {
+     'book_scrollbar': False,
+     'columns_per_screen': {'portrait':0, 'landscape':0},
+     'controls_help_shown_count': 0,
++    'controls_help_shown_count_rtl_page_progression': 0,
+     'cover_preserve_aspect_ratio': True,
+     'current_color_scheme': 'system',
+     'footer': {'right': 'progress'},
+@@ -72,6 +73,7 @@ is_local_setting = {
+     'base_font_size': True,
+     'columns_per_screen': True,
+     'controls_help_shown_count': True,
++    'controls_help_shown_count_rtl_page_progression': True,
+     'current_color_scheme': True,
+     'lines_per_sec_auto': True,
+     'lines_per_sec_smooth': True,
+diff --git a/src/pyj/utils.pyj b/src/pyj/utils.pyj
+index 8e489d8832..a6101821fb 100644
+--- a/src/pyj/utils.pyj
++++ b/src/pyj/utils.pyj
+@@ -172,24 +172,6 @@ def get_elem_data(elem, name, defval):
+ def set_elem_data(elem, name, val):
+     elem.setAttribute(data_ns(name), JSON.stringify(val))
+ 
+-def viewport_to_document(x, y, doc):
+-    # Convert x, y from the viewport (window) co-ordinate system to the
+-    # document (body) co-ordinate system
+-    doc = doc or window.document
+-    topdoc = window.document
+-    while doc is not topdoc:
+-        # We are in a frame
+-        frame = doc.defaultView.frameElement
+-        rect = frame.getBoundingClientRect()
+-        x += rect.left
+-        y += rect.top
+-        doc = frame.ownerDocument
+-    win = doc.defaultView
+-    wx, wy = win.pageXOffset, win.pageYOffset
+-    x += wx
+-    y += wy
+-    return x, y
+-
+ def username_key(username):
+     return ('u' if username else 'n') + username
+ 
+-- 
+2.28.0
+

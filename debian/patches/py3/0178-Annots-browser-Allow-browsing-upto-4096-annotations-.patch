@@ -1,7 +1,7 @@
-From a889825cdd7257471c1ec0c8459194e35e5899a3 Mon Sep 17 00:00:00 2001
+From 9452b7c43ab7121ea884552f90c571e18fcf22bd Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 9 Jul 2020 16:43:50 +0530
-Subject: [PATCH 178/201] Annots browser: Allow browsing upto 4096 annotations
+Subject: [PATCH 178/284] Annots browser: Allow browsing upto 4096 annotations
  with no search query
 
 ---
@@ -67,7 +67,7 @@ index 46d1e2cdcb..61ced67000 100644
          return self.execute('SELECT DISTINCT user_type, user FROM annotations')
  
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index 954213ada7..74a7848cc5 100644
+index e26f1c55bc..b58e936aee 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -2310,6 +2310,10 @@ class Cache(object):
@@ -249,5 +249,5 @@ index c70d816e95..8de34d0d80 100644
              rect = option.rect.adjusted(option.decorationSize.width() + 4 if is_hidden else 0, 0, 0, 0)
              painter.setClipRect(rect)
 -- 
-2.28.0.rc0
+2.28.0
 

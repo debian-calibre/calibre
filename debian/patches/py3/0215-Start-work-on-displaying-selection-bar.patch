@@ -1,0 +1,202 @@
+From 77d1ebdf427fe7f96345e1ce1dbcc360f354b972 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 21 Jul 2020 22:45:16 +0530
+Subject: [PATCH 215/284] Start work on displaying selection bar
+
+---
+ src/pyj/read_book/iframe.pyj        |  4 +-
+ src/pyj/read_book/selection_bar.pyj | 81 +++++++++++++++++++++++++++++
+ src/pyj/read_book/view.pyj          |  6 +++
+ src/pyj/select.pyj                  | 14 +++--
+ 4 files changed, 100 insertions(+), 5 deletions(-)
+ create mode 100644 src/pyj/read_book/selection_bar.pyj
+
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index eea76d5ed0..4edf3d7728 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -507,7 +507,7 @@ class IframeBoss:
+             'update_progress_frac', progress_frac=pf, file_progress_frac=fpf)
+         sel = window.getSelection()
+         if sel and not sel.isCollapsed:
+-            self.send_message('update_selection_position', selection_extents=selection_extents(current_layout_mode() is 'flow'))
++            self.send_message('update_selection_position', selection_extents=selection_extents(current_layout_mode() is 'flow', True))
+ 
+     def onresize(self):
+         self.send_message('request_size')
+@@ -528,7 +528,7 @@ class IframeBoss:
+             text = sel.toString()
+         self.send_message(
+             'selectionchange', text=text, empty=v'!!collapsed',
+-            selection_extents=selection_extents(current_layout_mode() is 'flow'))
++            selection_extents=selection_extents(current_layout_mode() is 'flow', True))
+ 
+     def onresize_stage2(self):
+         if scroll_viewport.width() is self.last_window_width and scroll_viewport.height() is self.last_window_height:
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+new file mode 100644
+index 0000000000..bdcf74c9c2
+--- /dev/null
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -0,0 +1,81 @@
++# vim:fileencoding=utf-8
++# License: GPL v3 Copyright: 2020, Kovid Goyal <kovid at kovidgoyal.net>
++from __python__ import bound_methods, hash_literals
++
++from elementmaker import E
++
++from book_list.theme import get_color
++
++
++class SelectionBar:
++
++    def __init__(self, view):
++        self.view = view
++        c = self.container
++        bar = E.div(
++            style='position: absolute; left: 0; top: 0; height: 3ex; border: solid 1px currentColor; border-radius: 5px; overflow: hidden;'
++            'pointer-events: auto; min-width: 50px; padding: 5px; background-color: {}'.format(get_color("window-background"))
++        )
++        c.appendChild(bar)
++
++    @property
++    def container(self):
++        return document.getElementById('book-selection-bar-overlay')
++
++    @property
++    def bar(self):
++        return self.container.firstChild
++
++    def hide(self):
++        self.container.style.display = 'none'
++
++    def show(self):
++        self.container.style.display = 'block'
++
++    @property
++    def is_visible(self):
++        return self.container.style.display is not 'none'
++
++    def update_position(self):
++        cs = self.view.currently_showing
++        if not cs.has_selection:
++            return self.hide()
++
++        margins = {
++            'top': document.getElementById('book-top-margin').offsetHeight,
++            'bottom': document.getElementById('book-bottom-margin').offsetHeight,
++            'left': document.getElementById('book-left-margin').offsetWidth,
++            'right': document.getElementById('book-right-margin').offsetWidth,
++        }
++
++        def map_boundary(x):
++            return {'x': x.x + margins.left, 'y': x.y + margins.top, 'height': x.height, 'onscreen': x.onscreen}
++
++        start = map_boundary(cs.selection_start)
++        end = map_boundary(cs.selection_end)
++        if not start.onscreen and not end.onscreen:
++            return self.hide()
++
++        self.show()
++        end_after_start = start.y < end.y or (start.y is end.y and start.x < end.x)
++        container = self.container
++        bar = self.bar
++
++        # vertical position
++        bar_height = bar.offsetHeight
++        buffer = 2
++        if end_after_start:
++            has_space_below = end.y + end.height < container.offsetHeight - bar_height - buffer
++            put_below = has_space_below
++        else:
++            has_space_above = end.y + bar_height - buffer > 0
++            put_below = not has_space_above
++        top = (end.y + end.height + buffer) if put_below else (end.y - bar_height - buffer)
++        top = max(buffer, min(top, container.offsetHeight - bar_height - buffer))
++        bar.style.top = top + 'px'
++
++        # horizontal position
++        bar_width = bar.offsetWidth
++        left = end.x - bar_width // 2
++        left = max(buffer, min(left, container.offsetWidth - bar_width - buffer))
++        bar.style.left = left + 'px'
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 136d66dfc3..7b22e642d1 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -32,6 +32,7 @@ from read_book.prefs.scrolling import (
+ from read_book.resources import load_resources
+ from read_book.scrollbar import BookScrollbar
+ from read_book.search import SearchOverlay, find_in_spine
++from read_book.selection_bar import SelectionBar
+ from read_book.shortcuts import create_shortcut_map
+ from read_book.timers import Timers
+ from read_book.toc import get_current_toc_nodes, update_visible_toc_nodes
+@@ -222,6 +223,7 @@ class View:
+                         ),
+                         right_margin,
+                         self.book_scrollbar.create(),
++                        E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none; pointer-events: none', id='book-selection-bar-overlay'),  # selection bar overlay
+                         E.div(style='position: absolute; top:0; left:0; width: 100%; pointer-events:none; display:none', id='book-search-overlay'),  # search overlay
+                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; display:none', id='book-content-popup-overlay'),  # content popup overlay
+                         E.div(style='position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none', id='book-overlay'),  # main overlay
+@@ -292,6 +294,7 @@ class View:
+         self.search_overlay = SearchOverlay(self)
+         self.content_popup_overlay = ContentPopupOverlay(self)
+         self.overlay = Overlay(self)
++        self.selection_bar = SelectionBar(self)
+         self.processing_spine_item_display = False
+         self.pending_load = None
+         self.currently_showing = {}
+@@ -519,10 +522,12 @@ class View:
+         self.currently_showing.selection_end = data.selection_extents.end
+         if ui_operations.selection_changed:
+             ui_operations.selection_changed(self.currently_showing.selected_text)
++        self.selection_bar.update_position()
+ 
+     def update_selection_position(self, data):
+         self.currently_showing.selection_start = data.selection_extents.start
+         self.currently_showing.selection_end = data.selection_extents.end
++        self.selection_bar.update_position()
+ 
+     def on_columns_per_screen_changed(self, data):
+         sd = get_session_data()
+@@ -1168,6 +1173,7 @@ class View:
+         )
+ 
+     def on_content_loaded(self, data):
++        self.selection_bar.hide()
+         self.processing_spine_item_display = False
+         self.currently_showing.loading = False
+         self.hide_loading()
+diff --git a/src/pyj/select.pyj b/src/pyj/select.pyj
+index edd02177e5..563304cf9b 100644
+--- a/src/pyj/select.pyj
++++ b/src/pyj/select.pyj
+@@ -73,12 +73,20 @@ def range_extents(start, end, in_flow_mode):
+ 
+ 
+ 
+-def selection_extents(in_flow_mode):
++def selection_extents(in_flow_mode, end_must_be_focus):
+     sel = window.getSelection()
+     if not sel or not sel.rangeCount or sel.isCollapsed:
+         return range_extents()
+-    start = sel.getRangeAt(0)
+-    end = sel.getRangeAt(sel.rangeCount - 1)
++    if end_must_be_focus:
++        start = document.createRange()
++        start.setStart(sel.anchorNode, sel.anchorOffset)
++        start.setEnd(sel.anchorNode, sel.anchorOffset)
++        end = document.createRange()
++        end.setStart(sel.focusNode, sel.focusOffset)
++        end.setEnd(sel.focusNode, sel.focusOffset)
++    else:
++        start = sel.getRangeAt(0)
++        end = sel.getRangeAt(sel.rangeCount - 1)
+     return range_extents(start, end, in_flow_mode)
+ 
+ 
+-- 
+2.28.0
+

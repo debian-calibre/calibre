@@ -1,0 +1,177 @@
+From 27f79e4a3b68a42683f9022d0105a7b0aef75f32 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Thu, 23 Jul 2020 09:11:09 +0530
+Subject: [PATCH 223/284] Buttons to finish editing highlight
+
+---
+ imgsrc/srv/arrows-h.svg                 |  1 +
+ src/pyj/read_book/create_annotation.pyj | 48 ++++++++++++++++++++-----
+ src/pyj/read_book/iframe.pyj            |  8 ++---
+ src/pyj/read_book/view.pyj              |  2 +-
+ 4 files changed, 44 insertions(+), 15 deletions(-)
+ create mode 100644 imgsrc/srv/arrows-h.svg
+
+diff --git a/imgsrc/srv/arrows-h.svg b/imgsrc/srv/arrows-h.svg
+new file mode 100644
+index 0000000000..f781c7b237
+--- /dev/null
++++ b/imgsrc/srv/arrows-h.svg
+@@ -0,0 +1 @@
++<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z"/></svg>
+\ No newline at end of file
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index c2ee466823..6981452eb4 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -13,6 +13,7 @@ from modals import error_dialog, question_dialog
+ from read_book.annotations import merge_annotation_maps
+ from read_book.globals import ui_operations
+ from read_book.shortcuts import shortcut_for_key_event
++from widgets import create_button
+ 
+ 
+ class AnnotationsManager:
+@@ -203,7 +204,21 @@ def create_bar():
+ 
+ class EditNotesAndColors:
+ 
+-    def __init__(self, container, hide_middle, current_notes, current_style):
++    def __init__(self, container, hide_middle, accept, current_notes, current_style):
++        def separator():
++            return E.hr(style='max-width: 80em; width: 80vw; border-top: solid 1px; margin: auto; margin-top: 2ex; margin-bottom: 2ex')
++
++        def finish():
++            hide_middle()
++            accept()
++
++        def handle_keypress(ev):
++            ev.stopPropagation()
++            if ev.key is 'Escape':
++                hide_middle()
++            elif ev.key is 'Enter' and ev.ctrlKey:
++                finish()
++
+         c = E.div(
+             style=f'background: {get_color("window-background")}; margin: auto; padding: 1rem',
+             id=unique_id(),
+@@ -211,18 +226,29 @@ class EditNotesAndColors:
+             E.textarea(
+                 current_notes or '',
+                 rows='10', spellcheck='true', style='resize: none; width: 80vw; max-width: 80em; margin: 1ex',
+-                onkeydown=def(ev):
+-                    ev.stopPropagation()
+-                    if ev.key is 'Escape':
+-                        hide_middle()
+-                ,
++                onkeydown=handle_keypress,
+             ),
+-            E.h3(_('Choose the color for this highlight'), style='margin-top: 2ex'),
++            E.div(
++                style='margin: 1ex; font-size: smaller',
++                _('Double click or long tap on a highlight to see its notes')
++            ),
++
++            separator(),
++
++            E.h3(_('Choose the color for this highlight'), style='margin-bottom: 2ex'),
+             E.div(
+                 class_='color-block',
+                 style=f'display: flex; flex-wrap: wrap; max-width: calc({BAR_SIZE}px * 8); margin: auto',
+             ),
+ 
++            separator(),
++
++            E.div(
++                style='max-width: 80em; width: 80vw; margin: auto; display: flex; justify-content: space-between',
++                create_button(_('Adjust selection'), 'arrows-h', hide_middle, _('Accept changes and then adjust the selected text') + ' [Esc]'),
++                create_button(_('Finish'), 'check', finish, _('Finish editing highlight') + ' [Ctrl+Enter]', True),
++            )
++
+         )
+         self.container_id = c.id
+         seen_colors = {}
+@@ -270,7 +296,7 @@ class EditNotesAndColors:
+ 
+     @property
+     def current_notes(self):
+-        self.container.querySelector('textarea').value or ''
++        self.container.getElementsByTagName('textarea')[0].value or ''
+ 
+     @property
+     def current_style(self):
+@@ -383,7 +409,7 @@ class CreateAnnotation:
+         self.show_middle(self.editing_done)
+         container = self.middle
+         clear(container)
+-        self.editor = EditNotesAndColors(container, self.hide_middle, current_notes, current_style)
++        self.editor = EditNotesAndColors(container, self.hide_middle, self.accept, current_notes, current_style)
+ 
+     def editing_done(self):
+         self.current_notes = self.editor.current_notes
+@@ -393,6 +419,7 @@ class CreateAnnotation:
+             self.send_message('set-highlight-style', style=self.current_highlight_style)
+             get_session_data().set('highlight_style', self.current_highlight_style)
+             self.update_handle_colors()
++        return True
+ 
+     def update_handle_colors(self):
+         fill = self.current_highlight_style['background-color']
+@@ -628,6 +655,9 @@ class CreateAnnotation:
+     def send_message(self, type, **kw):
+         self.view.iframe_wrapper.send_message('annotations', type=type, **kw)
+ 
++    def initiate_create_annotation(self, start_in_notes_edit):
++        self.send_message('create', start_in_notes_edit=v'!!start_in_notes_edit')
++
+     def edit_highlight(self, uuid):
+         self.send_message('edit-highlight', uuid=uuid)
+         self.show()
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index de526c0740..170f4128fa 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -136,7 +136,6 @@ class IframeBoss:
+             'scroll_to_frac': self.on_scroll_to_frac,
+             'scroll_to_ref': self.on_scroll_to_ref,
+             'set_reference_mode': self.set_reference_mode,
+-            'create_annotation': self.create_annotation,
+             'toggle_autoscroll': self.toggle_autoscroll,
+             'wheel_from_margin': self.wheel_from_margin,
+             'window_size': self.received_window_size,
+@@ -703,9 +702,6 @@ class IframeBoss:
+         else:
+             end_reference_mode()
+ 
+-    def create_annotation(self, data):
+-        self.initiate_creation_of_annotation(None, data.start_in_notes_edit)
+-
+     def initiate_creation_of_annotation(self, existing, start_in_notes_edit):
+         self.auto_scroll_action('stop')
+         in_flow_mode = current_layout_mode() is 'flow'
+@@ -720,7 +716,9 @@ class IframeBoss:
+ 
+     def annotations_msg_received(self, data):
+         in_flow_mode = current_layout_mode() is 'flow'
+-        if data.type is 'set-selection':
++        if data.type is 'create':
++            self.initiate_creation_of_annotation(None, data.start_in_notes_edit)
++        elif data.type is 'set-selection':
+             set_selections_extents_to(data.extents)
+         elif data.type is 'position-handles-at-point':
+             extents = selection_extents_at_point(data.x, data.y, in_flow_mode)
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 0c27652596..6b34005097 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -1236,7 +1236,7 @@ class View:
+             self.show_name(sr.file_name, initial_position={'type':'search_result', 'search_result':sr, 'replace_history':True})
+ 
+     def initiate_create_annotation(self, start_in_notes_edit):
+-        self.iframe_wrapper.send_message('create_annotation', start_in_notes_edit=v'!!start_in_notes_edit')
++        self.create_annotation.initiate_create_annotation(start_in_notes_edit)
+ 
+     def highlight_action(self, uuid, which):
+         if self.create_annotation.is_visible:
+-- 
+2.28.0
+

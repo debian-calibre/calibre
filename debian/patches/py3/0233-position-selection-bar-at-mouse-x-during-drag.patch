@@ -1,0 +1,99 @@
+From d8f78b401dd8d894aead5b60425fa22d9d1a8c60 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Jul 2020 15:55:57 +0530
+Subject: [PATCH 233/284] position selection bar at mouse x during drag
+
+---
+ src/pyj/read_book/create_annotation.pyj | 1 -
+ src/pyj/read_book/iframe.pyj            | 3 ++-
+ src/pyj/read_book/selection_bar.pyj     | 5 ++++-
+ src/pyj/read_book/view.pyj              | 4 ++--
+ 4 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 373aa45e62..aa89526417 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -21,7 +21,6 @@ from widgets import create_button
+ # Google lookup for selections
+ # Export all annots as plain text/JSON
+ # Remove lookup and create highlight buttons from chrome
+-# position bar at mouse x during drag
+ 
+ 
+ class AnnotationsManager:
+diff --git a/src/pyj/read_book/iframe.pyj b/src/pyj/read_book/iframe.pyj
+index 50bf0255d0..d5bc48d99a 100644
+--- a/src/pyj/read_book/iframe.pyj
++++ b/src/pyj/read_book/iframe.pyj
+@@ -83,7 +83,6 @@ drag_mouse_position = {'x': None, 'y': None}
+ def cancel_drag_scroll():
+     cancel_drag_scroll_flow()
+     cancel_drag_scroll_paged()
+-    drag_mouse_position.x = drag_mouse_position.y = None
+ 
+ 
+ class EPUBReadingSystem:
+@@ -218,6 +217,7 @@ class IframeBoss:
+ 
+     def display(self, data):
+         cancel_drag_scroll()
++        drag_mouse_position.x = drag_mouse_position.y = None
+         self.length_before = None
+         self.content_ready = False
+         clear_annot_id_uuid_map()
+@@ -582,6 +582,7 @@ class IframeBoss:
+ 
+     def onmouseup(self, evt):
+         cancel_drag_scroll()
++        drag_mouse_position.x = drag_mouse_position.y = None
+ 
+     def onkeydown(self, evt):
+         if current_layout_mode() is not 'flow' and evt.key is 'Tab':
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index e9c892036f..d676fd6fe5 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -121,7 +121,7 @@ class SelectionBar:
+         container = self.container
+         clear(container)
+         cs = self.view.currently_showing.selection
+-        if cs.empty:
++        if not cs or cs.empty:
+             return self.hide()
+ 
+         if not cs.start.onscreen and not cs.end.onscreen:
+@@ -161,5 +161,8 @@ class SelectionBar:
+         bar_width = bar.offsetWidth
+         left = end.x - bar_width // 2
+         # - 10 ensures we dont cover scroll bar
++        if cs.drag_mouse_position.x?:
++            mouse = map_boundary(cs.drag_mouse_position)
++            left = mouse.x - bar_width // 2
+         left = max(buffer, min(left, container.offsetWidth - bar_width - buffer - 10))
+         bar.style.left = left + 'px'
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 36cb2cb73b..fb48cfcd0c 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -294,7 +294,7 @@ class View:
+         self.selection_bar = SelectionBar(self)
+         self.processing_spine_item_display = False
+         self.pending_load = None
+-        self.currently_showing = {}
++        self.currently_showing = {'selection': {'empty': True}}
+         self.book_scrollbar.apply_visibility()
+         self.annotations_manager = AnnotationsManager(self)
+         self.create_annotation = CreateAnnotation(self)
+@@ -894,7 +894,7 @@ class View:
+         idx = spine.indexOf(name)
+         self.currently_showing = {
+             'name':name, 'settings':self.iframe_settings(name), 'initial_position':initial_position,
+-            'loading':True, 'spine_index': idx
++            'loading':True, 'spine_index': idx, 'selection': {'empty': True},
+         }
+         self.show_loading()
+         set_current_spine_item(name)
+-- 
+2.28.0
+

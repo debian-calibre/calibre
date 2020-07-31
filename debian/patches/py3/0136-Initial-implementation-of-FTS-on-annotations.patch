@@ -1,7 +1,7 @@
-From 1574b8db97839db3e3510c12231063892cc5399e Mon Sep 17 00:00:00 2001
+From 22d23754ebaa1711317dc4c19f1c4752fd20c24d Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Sat, 13 Jun 2020 14:51:32 +0530
-Subject: [PATCH 136/201] Initial implementation of FTS on annotations
+Subject: [PATCH 136/284] Initial implementation of FTS on annotations
 
 ---
  resources/metadata_sqlite.sql     |  26 ++++++++++++++++++++++-
@@ -9,18 +9,14 @@ Subject: [PATCH 136/201] Initial implementation of FTS on annotations
  src/calibre/db/cache.py           |  16 +++++++++++++++
  src/calibre/db/schema_upgrades.py |  33 +++++++++++++++++++++++++++++-
  src/calibre/db/tests/metadata.db  | Bin 252928 -> 264192 bytes
- resources/metadata_sqlite.sql     |   26 +++++++++++++++++++++++++-
- src/calibre/db/backend.py         |   21 ++++++++++++++++++++-
- src/calibre/db/cache.py           |   16 ++++++++++++++++
- src/calibre/db/schema_upgrades.py |   33 ++++++++++++++++++++++++++++++++-
- src/calibre/db/tests/writing.py   |   14 ++++++++++++--
- 5 files changed, 105 insertions(+), 5 deletions(-)
+ src/calibre/db/tests/writing.py   |  14 +++++++++++--
+ 6 files changed, 105 insertions(+), 5 deletions(-)
 
-Index: b/resources/metadata_sqlite.sql
-===================================================================
+diff --git a/resources/metadata_sqlite.sql b/resources/metadata_sqlite.sql
+index 84237e58c9..3f8459f74c 100644
 --- a/resources/metadata_sqlite.sql
 +++ b/resources/metadata_sqlite.sql
-@@ -151,10 +151,34 @@ CREATE TABLE annotations ( id INTEGER PR
+@@ -151,10 +151,34 @@ CREATE TABLE annotations ( id INTEGER PRIMARY KEY,
  	annot_id TEXT NOT NULL,
  	annot_type TEXT NOT NULL,
  	annot_data TEXT NOT NULL,
@@ -56,11 +52,11 @@ Index: b/resources/metadata_sqlite.sql
  CREATE VIEW meta AS
          SELECT id, title,
                 (SELECT sortconcat(bal.id, name) FROM books_authors_link AS bal JOIN authors ON(author = authors.id) WHERE book = books.id) authors,
-Index: b/src/calibre/db/backend.py
-===================================================================
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index af44ef4293..113ac36bd4 100644
 --- a/src/calibre/db/backend.py
 +++ b/src/calibre/db/backend.py
-@@ -307,7 +307,7 @@ def save_annotations_for_book(cursor, bo
+@@ -307,7 +307,7 @@ def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='loca
              text = annot.get('highlighed_text') or ''
              notes = annot.get('notes') or ''
              if notes:
@@ -95,8 +91,8 @@ Index: b/src/calibre/db/backend.py
      def all_annotations_for_book(self, book_id):
          for (fmt, user_type, user, data) in self.execute('SELECT format, user_type, user, annot_data FROM annotations WHERE book=?', (book_id,)):
              try:
-Index: b/src/calibre/db/cache.py
-===================================================================
+diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
+index 267673244d..4a2d5df514 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -2301,6 +2301,22 @@ class Cache(object):
@@ -122,11 +118,11 @@ Index: b/src/calibre/db/cache.py
      @write_api
      def restore_annotations(self, book_id, annotations):
          from calibre.utils.iso8601 import parse_iso8601
-Index: b/src/calibre/db/schema_upgrades.py
-===================================================================
+diff --git a/src/calibre/db/schema_upgrades.py b/src/calibre/db/schema_upgrades.py
+index d79796dbc2..bdf9a72b64 100644
 --- a/src/calibre/db/schema_upgrades.py
 +++ b/src/calibre/db/schema_upgrades.py
-@@ -714,13 +714,44 @@ CREATE TABLE annotations ( id INTEGER PR
+@@ -714,13 +714,44 @@ CREATE TABLE annotations ( id INTEGER PRIMARY KEY,
      annot_id TEXT NOT NULL,
      annot_type TEXT NOT NULL,
      annot_data TEXT NOT NULL,
@@ -172,8 +168,45 @@ Index: b/src/calibre/db/schema_upgrades.py
  DROP TRIGGER IF EXISTS books_delete_trg;
  CREATE TRIGGER books_delete_trg
      AFTER DELETE ON books
-Index: b/src/calibre/db/tests/writing.py
-===================================================================
+diff --git a/src/calibre/db/tests/metadata.db b/src/calibre/db/tests/metadata.db
+index d86bd55a8c920d1473a15b1fe210a0057b03a240..d0df012f3fb90f4948779a1ec5bea85b92cfad58 100644
+GIT binary patch
+delta 3322
+zcmdT`U2NM_6u!PUt=sfx3$S@>8NH&QBs7ebtVL6`hqQ5v)hwyfbk*P?%3?1yZR5)E
+zO4Tx4yW>YZt*Tfgct=9oo(jtz%0M7MNFenM#w$-Cr1CI+Hz?PMy}GWGM(hbo@paBQ
+zIX|Dz`A(K^9$3C|@Jgqz1po?yo$Ke-P?!jh4}ID|gfGH2a;M<x-1X)z_#`|EABJsf
+zzSbWfrzoAMD4@3zgL}G{+<(zja{o;?ez>JAt@Oe-dLczVu+$6D=7&d#903i$Yt$Gy
+z4wJ8y>s{h8=g~&BrBd)FT0&Q+sK)krfJ)Rh^#wH#f*`mWVIcaJ*u4YM06DIsGn!hw
+zwt+D9Yw?>66r%gJR~s3wySVuoJW~Ap7V2nOIjLQuneJ}*`qL%PM<`7dx8H`|HT)1=
+z6mOx^XjprtxcxqQv`Bx9o_g;SbnpYp<53$)I24BK@G+`L9U@;aSg{f%XLI>ko6;L-
+zW?-O67nRKU86lI;OG-u&rF<cMK`EpQiZDAX@KwY^Nj8#V@mVgJnux@3Dl!;jv1zM1
+zec*|4E<S>Z*S<hO$jI3#BVbw)7L<?|lPfFb6(O(S)7Wo|=MPzmv@E?W@`hUEiByrM
+zg}k^Z7=k%TRs<Pe%!^rx7y5g#EU2^6ypZO_OjZ^ZF<ZdT`h%+Op_x;spvJfsOA@#s
+z=4`Rc5LBe#FSFQ6k@gI2R{p>=9!qj(BFS?q9%avk@O%(Ya;fJN6DgcbOma~T>Bs;a
+zYMrh*@KUxwigG4liou_?voOv40g+z|XCF~RxUh%^V~N3_=F=g~gu_r9ag8hT3(lBC
+z1pcTUkC^z$%gl*9c^`s28^UwBycF7nfn6VTpm9m3Xr`~PDi|3h<IIXDGVputv<w>?
+z2Ips_?6e63rvsYl>1onO-C%G8Go!fnx7FVJwRO&F-~ZCr_J(%pXM@uq+5+e<+FJLe
+zen3927l96Q$`OS?>y2gTX=<d<9f0nv`|kaOj<ldoYF>~FqyWzz2i<!d7$yy%AHc6+
+z7qyH8&`((FiI6_5d+E+dchlvtB8$14AUm*2i}`{eD``c}72mpzI@)*Z*N$}^Q*9#e
+zAUndv%RIov$Jt~GbMaKdA`=VjK$!waSMTPJAU+$3O|auQ5N9Wk8_j5(PNM;*ch%|M
+zqPqtS!^Wdpr`|*}qoYvkaqF{6pce!_U1i=)-nG==pV|%YF!u-6db5Y^(;w7nni(2`
+z+GO=~NH#7kV7WHf;P3jfFj+yZMhgZr)?x+iklsi$EL#&i13MRbu+k;EXENY!eF<0i
+z!o<wZ7L49ZGaLsse@)oj7l)OKxj?q-$tB3AE9SOM;=V}g7;JC?z(sJPJg=9B_15yd
+zzFBQvFU}Dd$UZjb)jpi%4Y#Amk>M1Z#1mstWBVuK_A#n+j%|}~I1k}HgRPeT8Ca7Y
+z@bkiqpa^8|Ct}g^h#Tj=BW_R42vq-MtMxF5)BSw{anxtYUFxh>rusm2S^?{?*IDk#
+z1tmD(B~-Qo^_Ftyyw+2N=_{|Mdgtuu&CZFkG4}t~IrkCW_tg%%FQ>X&m|%W&6MYHw
+fw$fLd=s9%bJM<C-^#i4u+bB*R+DjYXqbT(+9lub#
+
+delta 294
+zcmZpeAkeUbe}c3iD+2?=cOZs=eG_$zfr5I@hd?qBO!6R!?-L8wGOIGlZx-ZXV&wnY
+zm<$yA(3k`y-#5lJ8#1*UGBE-%({@89<_lYSnU^pyGpI5!1u%SJP@U)~&eG`J7`MH3
+z2Xi$u3s6tYWI>(?0bZv23@i*Q8JJ!${A60juo5UZli9a1X?o>eW(CG?(`W5v*5Pi}
+zY)oJmS5{_f6W`9Yk2#)kI$s(S+w`ja%(m=ijfrgHp32iN9A=W3{&X+16c4i@11HdY
+z1_rmr`04*wGRsWAwx3xGWaW9F>8H1~FtKnfX8FT0m4)RnQ)BYhlPu=U+j<yTS+=vX
+Zu%t3FHKuOQVP)|HGE%nhVPkP&1OWG!Pi6oB
+
+diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
+index 5ba484e0d9..72cdef723d 100644
 --- a/src/calibre/db/tests/writing.py
 +++ b/src/calibre/db/tests/writing.py
 @@ -776,9 +776,9 @@ class WritingTest(BaseTest):
@@ -205,3 +238,6 @@ Index: b/src/calibre/db/tests/writing.py
          annot_list[0][0]['title'] = 'changed title'
          cache.set_annotations_for_book(1, 'moo', annot_list)
          amap = cache.annotations_map_for_book(1, 'moo')
+-- 
+2.28.0
+

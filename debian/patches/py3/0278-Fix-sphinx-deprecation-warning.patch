@@ -1,0 +1,28 @@
+From c8f01bc02d14948ec626a8e328b563992baa3c89 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 28 Jul 2020 20:06:14 +0530
+Subject: [PATCH 278/284] Fix sphinx deprecation warning
+
+---
+ manual/custom.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/manual/custom.py b/manual/custom.py
+index f768988c15..7b62f838de 100644
+--- a/manual/custom.py
++++ b/manual/custom.py
+@@ -339,9 +339,9 @@ def add_html_context(app, pagename, templatename, context, *args):
+ 
+ 
+ def guilabel_role(typ, rawtext, text, *args, **kwargs):
+-    from sphinx.roles import menusel_role
++    from sphinx.roles import GUILabel
+     text = text.replace(u'->', u'\N{THIN SPACE}\N{RIGHTWARDS ARROW}\N{THIN SPACE}')
+-    return menusel_role(typ, rawtext, text, *args, **kwargs)
++    return GUILabel()(typ, rawtext, text, *args, **kwargs)
+ 
+ 
+ def setup_man_pages(app):
+-- 
+2.28.0
+

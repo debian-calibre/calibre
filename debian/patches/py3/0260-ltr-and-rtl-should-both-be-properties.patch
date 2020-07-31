@@ -1,0 +1,122 @@
+From 3452a9699b29f37159cfa1c2da8c14d5b9e79305 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 27 Jul 2020 13:40:07 +0530
+Subject: [PATCH 260/284] ltr and rtl should both be properties
+
+Otherwise its easy to forget which is which
+---
+ src/pyj/read_book/cfi.pyj        |  4 ++--
+ src/pyj/read_book/flow_mode.pyj  |  2 +-
+ src/pyj/read_book/paged_mode.pyj | 10 +++++-----
+ src/pyj/read_book/viewport.pyj   |  6 +++---
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index 82167ce307..05f38ddba4 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -672,7 +672,7 @@ def scroll_to(cfi, callback, doc):  # {{{
+             r = node.getBoundingClientRect()
+             # Start of element is right side in RTL, so be sure to get that side in RTL mode
+             x, y = scroll_viewport.viewport_to_document(
+-                r.left if scroll_viewport.ltr() else r.right, r.top, node.ownerDocument)
++                r.left if scroll_viewport.ltr else r.right, r.top, node.ownerDocument)
+             if jstype(point_.x) is 'number' and node.offsetWidth:
+                 x += (point_.x*node.offsetWidth)/100
+             if jstype(point_.y) is 'number' and node.offsetHeight:
+@@ -716,7 +716,7 @@ def at_point(ox, oy):  # {{{
+             r = node.getBoundingClientRect()
+             # Start of element is right side in RTL, so be sure to get that side in RTL mode
+             x, y = scroll_viewport.viewport_to_document(
+-                r.left if scroll_viewport.ltr() else r.right, r.top, node.ownerDocument)
++                r.left if scroll_viewport.ltr else r.right, r.top, node.ownerDocument)
+             if jstype(p.x) is 'number' and node.offsetWidth:
+                 x += (p.x*node.offsetWidth)/100
+             if jstype(p.y) is 'number' and node.offsetHeight:
+diff --git a/src/pyj/read_book/flow_mode.pyj b/src/pyj/read_book/flow_mode.pyj
+index 83409f8448..eff206e7e1 100644
+--- a/src/pyj/read_book/flow_mode.pyj
++++ b/src/pyj/read_book/flow_mode.pyj
+@@ -502,7 +502,7 @@ anchor_funcs = {
+         # Elements start on the right side in RTL mode,
+         # so be sure to return that side if in RTL.
+         x, y = scroll_viewport.viewport_to_document(
+-            br.left if scroll_viewport.ltr() else br.right,
++            br.left if scroll_viewport.ltr else br.right,
+             br.top, elem.ownerDocument)
+         return y, x
+     ,
+diff --git a/src/pyj/read_book/paged_mode.pyj b/src/pyj/read_book/paged_mode.pyj
+index 06d3cf72f9..d2fc6ad201 100644
+--- a/src/pyj/read_book/paged_mode.pyj
++++ b/src/pyj/read_book/paged_mode.pyj
+@@ -430,10 +430,10 @@ def scroll_to_elem(elem):
+             # inaccurate results, so we prefer the bounding client rect,
+             # when possible.
+             # Columns start on the right side in RTL mode, so get that instead here...
+-            pos = elem.scrollLeft if scroll_viewport.ltr() else elem.scrollRight
++            pos = elem.scrollLeft if scroll_viewport.ltr else elem.scrollRight
+         else:
+             # and here.
+-            pos = br.left if scroll_viewport.ltr() else br.right
++            pos = br.left if scroll_viewport.ltr else br.right
+         scroll_to_xpos(scroll_viewport.viewport_to_document(
+             pos+2, elem.scrollTop, elem.ownerDocument)[0])
+ 
+@@ -446,7 +446,7 @@ def snap_to_selection():
+         node = sel.anchorNode
+         # In RTL mode, the "start" of selection is on the right side.
+         pos = scroll_viewport.viewport_to_document(
+-            r.left if scroll_viewport.ltr() else r.right,
++            r.left if scroll_viewport.ltr else r.right,
+             r.top, doc=node.ownerDocument)[0]
+ 
+         # Ensure we are scrolled to the column containing the start of the
+@@ -663,7 +663,7 @@ def handle_gesture(gesture):
+         else:
+             if not gesture.active or gesture.is_held:
+                 scroll_by_page(gesture.direction is 'right', True, flip_if_rtl_page_progression=True)
+-    # Gesture progression direction is determined in the gesture code;
++    # Gesture progression direction is determined in the gesture code,
+     # don't set flip_if_rtl_page_progression=True here.
+     elif gesture.type is 'prev-page':
+         scroll_by_page(True, opts.paged_taps_scroll_by_screen, flip_if_rtl_page_progression=False)
+@@ -678,7 +678,7 @@ anchor_funcs = {
+         br = elem.getBoundingClientRect()
+         # In RTL mode, the start of something is on the right side.
+         x = scroll_viewport.viewport_to_document(
+-            br.left if scroll_viewport.ltr() else br.right,
++            br.left if scroll_viewport.ltr else br.right,
+             br.top, elem.ownerDocument)[0]
+         return column_at(x)
+     ,
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index abcd6909fa..abe5d6ab37 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -16,6 +16,7 @@ class ScrollViewport:
+         # current X position and the requested X scroll position, which fools the reader
+         # code into thinking that it's always scrolling in positive X.
+         self.rtl = False
++        self.ltr = True
+ 
+     def set_mode(self, mode):
+         prefix = ('flow' if mode is 'flow' else 'paged') + '_'
+@@ -24,12 +25,11 @@ class ScrollViewport:
+ 
+     def initialize_on_layout(self):
+         self.rtl = False
++        self.ltr = True
+         body_style = window.getComputedStyle(document.body)
+         if body_style.direction is "rtl":
+             self.rtl = True
+-
+-    def ltr(self):
+-        return not self.rtl
++            self.ltr = False
+ 
+     def flow_x(self):
+         if self.rtl:
+-- 
+2.28.0
+

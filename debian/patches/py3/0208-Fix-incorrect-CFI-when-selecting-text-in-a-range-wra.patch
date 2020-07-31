@@ -1,7 +1,7 @@
-From 2e4faac6f4a533dd39146e3f291fab019acf7546 Mon Sep 17 00:00:00 2001
+From 3dac1ea98ce19648312c5a40c9516fbd02264c4a Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 20 Jul 2020 14:44:49 +0530
-Subject: [PATCH 208/213] Fix incorrect CFI when selecting text in a range
+Subject: [PATCH 208/284] Fix incorrect CFI when selecting text in a range
  wrapper that is the first child
 
 ---
@@ -75,5 +75,5 @@ index e1871d1998..433c6c6c75 100644
 +    with_wrapper = encode(document, p.firstChild.firstChild, 0)
 +    assert_equal(without_wrapper, with_wrapper)
 -- 
-2.28.0.rc1
+2.28.0
 

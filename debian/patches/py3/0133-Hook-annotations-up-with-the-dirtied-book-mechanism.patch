@@ -1,7 +1,7 @@
-From 8683398b9debcb841840db0ae123881c61bc6127 Mon Sep 17 00:00:00 2001
+From 6a0a1b392bbdb394d7d620f56f0fa674a2fd4998 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 12 Jun 2020 09:49:46 +0530
-Subject: [PATCH 133/201] Hook annotations up with the dirtied book mechanism
+Subject: [PATCH 133/284] Hook annotations up with the dirtied book mechanism
 
 Add some simple tests
 ---
@@ -87,7 +87,7 @@ index e103769564..db9e4931c9 100644
          pass
 -
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index 83b81c2622..bfdf2a3b05 100644
+index 148d6dc2ed..6b82806c31 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -212,6 +212,7 @@ class Cache(object):
@@ -177,5 +177,5 @@ index da6404cc75..489fa836f2 100644
 +        self.assertEqual([x[0] for x in annot_list], map_as_list(amap))
 +    # }}}
 -- 
-2.28.0.rc0
+2.28.0
 

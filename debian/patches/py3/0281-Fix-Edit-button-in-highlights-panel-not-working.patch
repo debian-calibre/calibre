@@ -1,0 +1,34 @@
+From a819c4a7ac71634ca413df6681367da4f87b0541 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 29 Jul 2020 09:42:35 +0530
+Subject: [PATCH 281/284] Fix Edit button in highlights panel not working
+
+I dont know why defaultView is undefined, seems like a chrome bug
+---
+ src/pyj/read_book/viewport.pyj | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index 37565fda08..696c7fd5b2 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -79,14 +79,14 @@ class ScrollViewport:
+         # document (body) co-ordinate system
+         doc = doc or window.document
+         topdoc = window.document
+-        while doc is not topdoc:
++        while doc is not topdoc and doc.defaultView:
+             # We are in a frame
+             frame = doc.defaultView.frameElement
+             rect = frame.getBoundingClientRect()
+             x += rect.left
+             y += rect.top
+             doc = frame.ownerDocument
+-        win = doc.defaultView
++        win = doc.defaultView or window
+         wx, wy = win.pageXOffset, win.pageYOffset
+         x += wx
+         y += wy
+-- 
+2.28.0
+

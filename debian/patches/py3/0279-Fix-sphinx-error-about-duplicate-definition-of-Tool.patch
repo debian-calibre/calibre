@@ -1,0 +1,25 @@
+From 1d248a81d2819cf0a9e850001305bed05c5072fa Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 28 Jul 2020 20:11:09 +0530
+Subject: [PATCH 279/284] Fix sphinx error about duplicate definition of Tool
+
+---
+ src/calibre/gui2/tweak_book/plugin.py | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/calibre/gui2/tweak_book/plugin.py b/src/calibre/gui2/tweak_book/plugin.py
+index 18b17fa88f..b07d195d57 100644
+--- a/src/calibre/gui2/tweak_book/plugin.py
++++ b/src/calibre/gui2/tweak_book/plugin.py
+@@ -19,8 +19,6 @@ from polyglot.builtins import itervalues, unicode_type
+ class Tool(object):
+ 
+     '''
+-    .. module:: calibre.gui2.tweak_book.plugin.Tool
+-
+     The base class for individual tools in an Edit Book plugin. Useful members include:
+ 
+         * ``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object to which this tool belongs.
+-- 
+2.28.0
+

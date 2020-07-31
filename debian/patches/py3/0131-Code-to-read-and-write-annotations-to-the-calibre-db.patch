@@ -1,7 +1,7 @@
-From 255863831461823787f43368e15b7237dfa2fa76 Mon Sep 17 00:00:00 2001
+From f91d5a42d0137f798eac602b0e6b6efe1c56f289 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 11 Jun 2020 08:47:33 +0530
-Subject: [PATCH 131/201] Code to read and write annotations to the calibre db
+Subject: [PATCH 131/284] Code to read and write annotations to the calibre db
 
 ---
  resources/metadata_sqlite.sql          |  2 +-
@@ -86,7 +86,7 @@ index 13b1cd14d0..b326321e82 100644
          for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):
              if data:
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index 9aa1f258db..b2e8ffbb67 100644
+index 8361f9e423..55f8fb08e7 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -2279,6 +2279,13 @@ class Cache(object):
@@ -566,5 +566,5 @@ index 22933f48ef..5f3f4b646d 100644
              import traceback
              traceback.print_exc()
 -- 
-2.28.0.rc0
+2.28.0
 

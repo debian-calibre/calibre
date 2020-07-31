@@ -1,7 +1,7 @@
-From 5577f4ea17ea36d57f4d28b44fda6771ef9c5f14 Mon Sep 17 00:00:00 2001
+From 2d91cb3614ab8d2914f020b294b349d0e2aa67f2 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 12 Jun 2020 17:08:29 +0530
-Subject: [PATCH 134/201] Backup annotations in the metadata.opf files as well
+Subject: [PATCH 134/284] Backup annotations in the metadata.opf files as well
 
 ---
  src/calibre/db/backend.py           |  7 +++++++
@@ -30,7 +30,7 @@ index f22e195dbc..2fdea75f65 100644
          try:
              with self.conn:  # Disable autocommit mode, for performance
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index bfdf2a3b05..d649504c9c 100644
+index 6b82806c31..267673244d 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -1191,6 +1191,7 @@ class Cache(object):
@@ -207,5 +207,5 @@ index 7ebfbfdc07..20447f9b83 100644
      metadata[-1].tail = '\n' +(' '*4)
  
 -- 
-2.28.0.rc0
+2.28.0
 

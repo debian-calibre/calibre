@@ -1,7 +1,7 @@
-From 8aeb0ab821eb1783d9c677d9d3ef2df7d8fd7a6e Mon Sep 17 00:00:00 2001
+From 0aa97ddcedba0f6e61d73b8d49ce828a3cd3072d Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 1 Jul 2020 12:40:42 +0530
-Subject: [PATCH 163/201] Add syncing of annotations along with last read
+Subject: [PATCH 163/284] Add syncing of annotations along with last read
  position
 
 ---
@@ -195,10 +195,10 @@ index 4b3fa5e7ff..b228523867 100644
      def url_data(self):
          ans = {'library_id':self.base_url_data.library_id, 'book_id':self.base_url_data.book_id, 'fmt': self.base_url_data.fmt}
 diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
-index 7fbd842e21..afa528c8d3 100644
+index 72e7576d05..30f4afc33d 100644
 --- a/src/pyj/read_book/view.pyj
 +++ b/src/pyj/read_book/view.pyj
-@@ -988,6 +988,16 @@ class View:
+@@ -989,6 +989,16 @@ class View:
              process_node(toc)
          return found
  
@@ -216,5 +216,5 @@ index 7fbd842e21..afa528c8d3 100644
          spine = self.book.manifest.spine
          idx = spine.indexOf(self.currently_showing.name)
 -- 
-2.28.0.rc0
+2.28.0
 

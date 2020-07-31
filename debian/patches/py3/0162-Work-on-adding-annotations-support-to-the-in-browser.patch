@@ -1,7 +1,7 @@
-From c5254bb706ff341f081669fc30da6a3abe3ddb1e Mon Sep 17 00:00:00 2001
+From c28849e2b22f43d8f16ed738491d805bd0a5971b Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Tue, 30 Jun 2020 22:47:42 +0530
-Subject: [PATCH 162/201] Work on adding annotations support to the in-browser
+Subject: [PATCH 162/284] Work on adding annotations support to the in-browser
  viewer
 
 As part of that desktop viewer's annotations handling has been made more
@@ -120,7 +120,7 @@ index 0000000000..18cc81cc64
 +            continue
 +        changed, annots_map[annot_type] = merge_annots_with_identical_field(a or [], b, field=field)
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index 5cadaddc5f..c1abceafc6 100644
+index 2313622f91..295316348e 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -17,6 +17,7 @@ from calibre import isbytestring, as_unicode
@@ -708,7 +708,7 @@ index 667f01e5f3..4b3fa5e7ff 100644
      def url_data(self):
          ans = {'library_id':self.base_url_data.library_id, 'book_id':self.base_url_data.book_id, 'fmt': self.base_url_data.fmt}
 diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
-index fbede8ec44..7fbd842e21 100644
+index 1fe818517f..72e7576d05 100644
 --- a/src/pyj/read_book/view.pyj
 +++ b/src/pyj/read_book/view.pyj
 @@ -774,14 +774,21 @@ class View:
@@ -736,5 +736,5 @@ index fbede8ec44..7fbd842e21 100644
          cfi = None
          if initial_position and initial_position.type is 'cfi' and initial_position.data.startswith('epubcfi(/'):
 -- 
-2.28.0.rc0
+2.28.0
 

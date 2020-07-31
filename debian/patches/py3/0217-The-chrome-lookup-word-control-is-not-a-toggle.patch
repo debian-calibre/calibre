@@ -1,0 +1,64 @@
+From 971303b74edcfeb1f06c6c4fb7ab35057f7d5762 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 22 Jul 2020 15:26:53 +0530
+Subject: [PATCH 217/284] The chrome lookup word control is not a toggle
+
+---
+ src/calibre/gui2/viewer/ui.py       | 4 ++--
+ src/calibre/gui2/viewer/web_view.py | 4 ++--
+ src/pyj/read_book/overlay.pyj       | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
+index 91cae9e0de..d4a7e53796 100644
+--- a/src/calibre/gui2/viewer/ui.py
++++ b/src/calibre/gui2/viewer/ui.py
+@@ -333,8 +333,8 @@ class EbookViewer(MainWindow):
+         else:
+             self.highlights_widget.focus()
+ 
+-    def toggle_lookup(self):
+-        self.lookup_dock.setVisible(not self.lookup_dock.isVisible())
++    def toggle_lookup(self, force_show=False):
++        self.lookup_dock.setVisible(force_show or not self.lookup_dock.isVisible())
+ 
+     def toc_clicked(self, index):
+         item = self.toc_model.itemFromIndex(index)
+diff --git a/src/calibre/gui2/viewer/web_view.py b/src/calibre/gui2/viewer/web_view.py
+index 42ee8f55d2..0dcb91c6f1 100644
+--- a/src/calibre/gui2/viewer/web_view.py
++++ b/src/calibre/gui2/viewer/web_view.py
+@@ -240,7 +240,7 @@ class ViewerBridge(Bridge):
+     toggle_highlights = from_js()
+     new_bookmark = from_js()
+     toggle_inspector = from_js()
+-    toggle_lookup = from_js()
++    toggle_lookup = from_js(object)
+     show_search = from_js()
+     search_result_not_found = from_js(object)
+     find_next = from_js(object)
+@@ -437,7 +437,7 @@ class WebView(RestartingWebEngineView):
+     toggle_highlights = pyqtSignal()
+     new_bookmark = pyqtSignal()
+     toggle_inspector = pyqtSignal()
+-    toggle_lookup = pyqtSignal()
++    toggle_lookup = pyqtSignal(object)
+     quit = pyqtSignal()
+     update_current_toc_nodes = pyqtSignal(object, object)
+     toggle_full_screen = pyqtSignal()
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index 0931c0cdd6..f97a8ed5b0 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -320,7 +320,7 @@ class MainOverlay:  # {{{
+         if runtime.is_standalone_viewer:
+             actions_div.appendChild(E.ul(
+                 ac(_('Lookup/search word'), _('Lookup or search for the currently selected word'),
+-                   def(): self.overlay.hide(), ui_operations.toggle_lookup();, 'library')
++                   def(): self.overlay.hide(), ui_operations.toggle_lookup(True);, 'library')
+             ))
+             actions_div.lastChild.appendChild(highlight_action)
+             actions_div.lastChild.appendChild(
+-- 
+2.28.0
+

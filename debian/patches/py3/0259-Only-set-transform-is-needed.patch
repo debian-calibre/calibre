@@ -1,0 +1,29 @@
+From 6b947a69f9410aba3072b1de36cffa0beaea9c47 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 27 Jul 2020 13:21:56 +0530
+Subject: [PATCH 259/284] Only set transform is needed
+
+Probably browsers dont do anything if the value doesn't change anyway,
+but I'd rather not rely on that
+---
+ src/pyj/read_book/viewport.pyj | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index 164744462a..abcd6909fa 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -141,7 +141,9 @@ class IOSScrollViewport(ScrollViewport):
+         self._scroll_implementation(max(0, left))
+ 
+     def paged___reset_transforms(self):
+-        document.documentElement.style.transform = 'none'
++        s = document.documentElement.style
++        if s.transform is not 'none':
++            s.transform = 'none'
+ 
+     def paged_reset_globals(self):
+         self.__reset_transforms()
+-- 
+2.28.0
+

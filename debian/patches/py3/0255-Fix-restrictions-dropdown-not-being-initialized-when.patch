@@ -1,0 +1,25 @@
+From 2fc9348c838b4cadb86e8e0c82c9efb814d3e06f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 26 Jul 2020 20:18:46 +0530
+Subject: [PATCH 255/284] Fix restrictions dropdown not being initialized when
+ using annots browser from within main GUI
+
+---
+ src/calibre/gui2/library/annotations.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index b06137f289..96aae0a6dc 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -494,6 +494,7 @@ class AnnotationsBrowser(Dialog):
+         if self.parent() is None:
+             self.exec_()
+         else:
++            self.reinitialize()
+             self.show()
+             self.raise_()
+ 
+-- 
+2.28.0
+

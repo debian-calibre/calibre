@@ -1,0 +1,49 @@
+From c56d75654feb2e426947c8941275126922207136 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 27 Jul 2020 13:42:13 +0530
+Subject: [PATCH 261/284] Avoid multiple calls to getComputedStyle()
+
+---
+ src/pyj/read_book/paged_mode.pyj | 2 +-
+ src/pyj/read_book/viewport.pyj   | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/paged_mode.pyj b/src/pyj/read_book/paged_mode.pyj
+index d2fc6ad201..7493cfd37e 100644
+--- a/src/pyj/read_book/paged_mode.pyj
++++ b/src/pyj/read_book/paged_mode.pyj
+@@ -164,8 +164,8 @@ def current_page_width():
+ def layout(is_single_page, on_resize):
+     nonlocal _in_paged_mode, col_width, col_and_gap, screen_height, gap, screen_width, is_full_screen_layout, cols_per_screen, number_of_cols
+     line_height(True)
+-    scroll_viewport.initialize_on_layout()
+     body_style = window.getComputedStyle(document.body)
++    scroll_viewport.initialize_on_layout(body_style)
+     first_layout = not _in_paged_mode
+     cps = calc_columns_per_screen()
+     if first_layout:
+diff --git a/src/pyj/read_book/viewport.pyj b/src/pyj/read_book/viewport.pyj
+index abe5d6ab37..37565fda08 100644
+--- a/src/pyj/read_book/viewport.pyj
++++ b/src/pyj/read_book/viewport.pyj
+@@ -23,13 +23,13 @@ class ScrollViewport:
+         for attr in FUNCTIONS:
+             self[attr] = self[prefix + attr]
+ 
+-    def initialize_on_layout(self):
+-        self.rtl = False
+-        self.ltr = True
+-        body_style = window.getComputedStyle(document.body)
++    def initialize_on_layout(self, body_style):
+         if body_style.direction is "rtl":
+             self.rtl = True
+             self.ltr = False
++        else:
++            self.rtl = False
++            self.ltr = True
+ 
+     def flow_x(self):
+         if self.rtl:
+-- 
+2.28.0
+

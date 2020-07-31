@@ -1,0 +1,53 @@
+From 2d4c40634ba0cbdc0c014df398be69c32dc6f65f Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 28 Jul 2020 21:49:59 +0530
+Subject: [PATCH 280/284] Retry vendored dependency download failures on CI
+
+GitHub Actions is getting insanely flaky
+---
+ setup/revendor.py | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/setup/revendor.py b/setup/revendor.py
+index 3060c91f8f..819a0e64a0 100755
+--- a/setup/revendor.py
++++ b/setup/revendor.py
+@@ -2,13 +2,16 @@
+ # vim:fileencoding=utf-8
+ # License: GPL v3 Copyright: 2019, Eli Schwartz <eschwartz@archlinux.org>
+ 
+-import os, shutil
+-from io import BytesIO
++import os
++import shutil
+ import tarfile
+-
++import time
++from io import BytesIO
+ 
+ from setup import Command, download_securely
+ 
++is_ci = os.environ.get('CI', '').lower() == 'true'
++
+ 
+ class ReVendor(Command):
+ 
+@@ -25,7 +28,14 @@ class ReVendor(Command):
+ 
+     def download_vendor_release(self, tdir, url):
+         self.info('Downloading %s:' % self.TAR_NAME, url)
+-        raw = download_securely(url)
++        try:
++            raw = download_securely(url)
++        except Exception:
++            if not is_ci:
++                raise
++            self.info('Download failed, sleeping and retrying...')
++            time.sleep(2)
++            raw = download_securely(url)
+         with tarfile.open(fileobj=BytesIO(raw)) as tf:
+             tf.extractall(tdir)
+             if len(os.listdir(tdir)) == 1:
+-- 
+2.28.0
+

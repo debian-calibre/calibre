@@ -1,7 +1,7 @@
-From 4b69e98e58e6a43f4532f2387fff46015c1bcc0d Mon Sep 17 00:00:00 2001
+From 69cfd0838df85d90e17564d56ccfe86fbcfc2c43 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 26 Jun 2020 17:22:30 +0530
-Subject: [PATCH 155/201] Add actions for highlighting to viewer chrome
+Subject: [PATCH 155/284] Add actions for highlighting to viewer chrome
 
 ---
  src/pyj/read_book/overlay.pyj | 10 ++++++++++
@@ -41,7 +41,7 @@ index f4f853c06b..00684900b1 100644
              onclick=def (evt):evt.stopPropagation();,
  
 diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
-index 82d67f4825..fbede8ec44 100644
+index f9fb298560..1fe818517f 100644
 --- a/src/pyj/read_book/view.pyj
 +++ b/src/pyj/read_book/view.pyj
 @@ -433,7 +433,7 @@ class View:
@@ -53,7 +53,7 @@ index 82d67f4825..fbede8ec44 100644
          elif data.name is 'new_bookmark':
              ui_operations.new_bookmark()
          elif data.name is 'toggle_inspector':
-@@ -1192,6 +1192,9 @@ class View:
+@@ -1193,6 +1193,9 @@ class View:
          else:
              self.show_name(sr.file_name, initial_position={'type':'search_result', 'search_result':sr, 'replace_history':True})
  
@@ -64,5 +64,5 @@ index 82d67f4825..fbede8ec44 100644
          if self.create_annotation.is_visible:
              return
 -- 
-2.28.0.rc0
+2.28.0
 

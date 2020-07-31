@@ -1,7 +1,7 @@
-From 969f307c010bd5d33dc060ebc4997dda4cdeb2f7 Mon Sep 17 00:00:00 2001
+From f3c6bb0ee2b0cd2723e6091204a8bb75a9888cc7 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Mon, 13 Jul 2020 15:56:45 +0530
-Subject: [PATCH 188/201] Allow easily editing notes in the highlights panel
+Subject: [PATCH 188/284] Allow easily editing notes in the highlights panel
 
 ---
  src/calibre/gui2/viewer/highlights.py   | 75 ++++++++++++++++++++++---
@@ -202,10 +202,10 @@ index 34502d4285..9e00c3951f 100644
          if self.showing_uuid:
              self.view.create_annotation.edit_highlight(self.showing_uuid)
 diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
-index afa528c8d3..10560a8995 100644
+index 30f4afc33d..7bbd97c959 100644
 --- a/src/pyj/read_book/view.pyj
 +++ b/src/pyj/read_book/view.pyj
-@@ -998,6 +998,11 @@ class View:
+@@ -999,6 +999,11 @@ class View:
          if reading_pos_cfi:
              self.goto_cfi(reading_pos_cfi)
  
@@ -235,5 +235,5 @@ index 154f6ffa57..9ba62fed43 100644
  def show_home_page():
      view.overlay.open_book(False)
 -- 
-2.28.0.rc0
+2.28.0
 

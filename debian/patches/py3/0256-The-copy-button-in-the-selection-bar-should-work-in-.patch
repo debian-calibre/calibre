@@ -1,0 +1,91 @@
+From e6eaabb9082b41e844260604c1c8fbb11b5e7e8b Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Mon, 27 Jul 2020 12:35:26 +0530
+Subject: [PATCH 256/284] The copy button in the selection bar should work in
+ the browser viewer as well
+
+---
+ src/pyj/read_book/create_annotation.pyj | 5 ++---
+ src/pyj/read_book/selection_bar.pyj     | 5 ++---
+ src/pyj/read_book/ui.pyj                | 4 ++++
+ src/pyj/read_book/view.pyj              | 3 +--
+ 4 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 5e584d31cb..2fa17adf73 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -409,8 +409,7 @@ class CreateAnnotation:  # {{{
+         container.appendChild(tb)
+         button('close', tb.firstChild, 'close', _('Cancel creation of highlight') + ' [Esc]', self.hide)
+         button('up', tb.firstChild.nextSibling, 'chevron-up', _('Scroll up') + ' [Up]', self.button_scroll.bind(None, True))
+-        if ui_operations.copy_selection:
+-            button('copy', tb.lastChild, 'copy', _('Copy to clipboard'), self.copy_to_clipboard)
++        button('copy', tb.lastChild, 'copy', _('Copy to clipboard'), self.copy_to_clipboard)
+         button('finish', tb.lastChild, 'check', _('Finish creation of highlight') + ' [Enter]', self.accept)
+ 
+         middle = E.div(id=unique_id('middle'), style='display: none; text-align: center; z-index: 90000')
+@@ -449,7 +448,7 @@ class CreateAnnotation:  # {{{
+         container.addEventListener('keydown', self.on_keydown, {'passive': False})
+ 
+     def copy_to_clipboard(self):
+-        self.view.iframe_wrapper.send_message('copy_selection')
++        ui_operations.copy_selection(self.view.currently_showing.selection.text or '')
+ 
+     @property
+     def middle(self):
+diff --git a/src/pyj/read_book/selection_bar.pyj b/src/pyj/read_book/selection_bar.pyj
+index 7fcba88cf0..e6d795dcf9 100644
+--- a/src/pyj/read_book/selection_bar.pyj
++++ b/src/pyj/read_book/selection_bar.pyj
+@@ -42,8 +42,7 @@ class SelectionBar:
+             ans.style.marginLeft = ans.style.marginRight = '0.5rem'
+             return ans
+ 
+-        if ui_operations.copy_selection:
+-            bar.appendChild(cb('copy', _('Copy to clipboard'), self.copy_to_clipboard))
++        bar.appendChild(cb('copy', _('Copy to clipboard'), self.copy_to_clipboard))
+         bar.appendChild(cb('library', _('Lookup/search selected word'), self.lookup))
+         bar.appendChild(cb('highlight', _('Highlight selection'), self.create_highlight))
+         bar.appendChild(cb('search', _('Search for selection on the net'), self.internet_search))
+@@ -75,7 +74,7 @@ class SelectionBar:
+         return self.container.style.display is not 'none'
+ 
+     def copy_to_clipboard(self):
+-        if self.view.currently_showing.selection.text and ui_operations.copy_selection:
++        if self.view.currently_showing.selection.text:
+             ui_operations.copy_selection(self.view.currently_showing.selection.text)
+ 
+     def lookup(self):
+diff --git a/src/pyj/read_book/ui.pyj b/src/pyj/read_book/ui.pyj
+index d0dd974759..3fab594aa6 100644
+--- a/src/pyj/read_book/ui.pyj
++++ b/src/pyj/read_book/ui.pyj
+@@ -77,6 +77,10 @@ class ReadUI:
+         ui_operations.annotations_synced = self.annotations_synced.bind(self)
+         ui_operations.open_url = def(url):
+             window.open(url, '_blank')
++        ui_operations.copy_selection = def(text):
++            window.navigator.clipboard.writeText(text or '').then(def (): pass;, def():
++                error_dialog(_('Could not copy to clipboard'), _('No permission to write to clipboard'))
++            )
+ 
+     def on_resize(self):
+         self.view.on_resize()
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 1a99c5dfe2..b4097563e5 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -272,8 +272,7 @@ class View:
+             ,
+             'annotations': self.on_annotations_message,
+             'copy_text_to_clipboard': def(data):
+-                if ui_operations.copy_selection:
+-                    ui_operations.copy_selection(data.text)
++                ui_operations.copy_selection(data.text)
+             ,
+             'view_image': def(data):
+                 if ui_operations.view_image:
+-- 
+2.28.0
+

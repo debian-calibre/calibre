@@ -1,0 +1,41 @@
+From fe1857a44f65e43114455142bfda6f27445a31b3 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 29 Jul 2020 10:43:56 +0530
+Subject: [PATCH 282/284] Fix browse annotations empty on ever second
+ invocation
+
+---
+ src/calibre/gui2/library/annotations.py | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/src/calibre/gui2/library/annotations.py b/src/calibre/gui2/library/annotations.py
+index 96aae0a6dc..7b993a2b8b 100644
+--- a/src/calibre/gui2/library/annotations.py
++++ b/src/calibre/gui2/library/annotations.py
+@@ -304,7 +304,6 @@ class BrowsePanel(QWidget):
+                     highlight_start='\x1d', highlight_end='\x1d', snippet_size=64,
+                     ignore_removed=True, **q
+                 )
+-
+             self.results_list.set_results(results, bool(q['fts_engine_query']))
+             self.current_query = q
+ 
+@@ -489,14 +488,13 @@ class AnnotationsBrowser(Dialog):
+         h.addWidget(us), h.addStretch(10), h.addWidget(self.bb)
+ 
+     def show_dialog(self):
+-        if self.browse_panel.current_query is None:
+-            QTimer.singleShot(80, self.browse_panel.effective_query_changed)
+         if self.parent() is None:
+             self.exec_()
+         else:
+             self.reinitialize()
+             self.show()
+             self.raise_()
++            QTimer.singleShot(80, self.browse_panel.effective_query_changed)
+ 
+     def reinitialize(self):
+         self.browse_panel.re_initialize()
+-- 
+2.28.0
+

@@ -1,0 +1,33 @@
+From 8d474ec9316d438f9caa3bcdfcf489a63ea32a98 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Wed, 22 Jul 2020 22:40:06 +0530
+Subject: [PATCH 222/284] Ensure handle colors are set properly
+
+---
+ src/pyj/read_book/create_annotation.pyj | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/pyj/read_book/create_annotation.pyj b/src/pyj/read_book/create_annotation.pyj
+index 3fa3f1496e..c2ee466823 100644
+--- a/src/pyj/read_book/create_annotation.pyj
++++ b/src/pyj/read_book/create_annotation.pyj
+@@ -343,6 +343,8 @@ class CreateAnnotation:
+ 
+         sd = get_session_data()
+         style = sd.get('highlight_style') or default_highlight_style()
++        if not style['background-color'] or not style['color']:
++            style = default_highlight_style()
+         self.current_highlight_style = style
+ 
+         lh = selection_handle(False, style)
+@@ -613,6 +615,7 @@ class CreateAnnotation:
+         c = self.container
+         c.style.display = 'flex'
+         c.focus()
++        self.update_handle_colors()
+         self.view.selection_bar.hide()
+ 
+     def hide(self):
+-- 
+2.28.0
+

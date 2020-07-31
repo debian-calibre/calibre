@@ -1,7 +1,7 @@
-From 875b07dc5ba1a14df0b9c54bf90834c889b8bd8a Mon Sep 17 00:00:00 2001
+From ba807b7e66c3ff9c25539f59526c7b2251803b6f Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Sun, 17 Nov 2019 18:27:50 +0530
-Subject: [PATCH 003/201] Remove useless __future__ imports
+Subject: [PATCH 003/284] Remove useless __future__ imports
 
 Not needed on python3
 ---
@@ -1917,7 +1917,7 @@ index 30d38f621c..65155fb3db 100644
  __license__   = 'GPL v3'
  __copyright__ = '2008, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index e99507a013..2c4d17dad0 100644
+index ab72677603..fe7df90cdd 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
 @@ -1,7 +1,6 @@
@@ -2042,7 +2042,7 @@ index 4acf367089..e103769564 100644
  __license__   = 'GPL v3'
  __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index c382e4873a..9aa1f258db 100644
+index b7d1b15675..8361f9e423 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -1,6 +1,6 @@
@@ -4035,7 +4035,7 @@ index f5eab986e6..792623e752 100644
  __license__ = 'GPL 3'
  __copyright__ = '2009, John Schember <john@nachtimwald.com>'
 diff --git a/src/calibre/ebooks/conversion/plugins/pdf_output.py b/src/calibre/ebooks/conversion/plugins/pdf_output.py
-index 81971289dc..738f83e3d0 100644
+index b212e0bdbf..cb26fd0b18 100644
 --- a/src/calibre/ebooks/conversion/plugins/pdf_output.py
 +++ b/src/calibre/ebooks/conversion/plugins/pdf_output.py
 @@ -1,5 +1,5 @@
@@ -6342,7 +6342,7 @@ index f2df70ce3e..1473b00378 100644
  __license__ = 'GPL v3'
  __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/ebooks/oeb/polish/container.py b/src/calibre/ebooks/oeb/polish/container.py
-index b63464d8d4..ac4ebff4ba 100644
+index 4472324973..fffcd93603 100644
 --- a/src/calibre/ebooks/oeb/polish/container.py
 +++ b/src/calibre/ebooks/oeb/polish/container.py
 @@ -1,7 +1,7 @@
@@ -7226,7 +7226,7 @@ index 928184f194..67ad81f2c9 100644
  import sys
  
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index a8d85f04d4..9f71ed28e8 100644
+index 8eca73ee37..be00d1bb3c 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
 @@ -3,7 +3,7 @@
@@ -8918,7 +8918,7 @@ index d49a5472f9..f4aec49b84 100644
  __license__   = 'GPL v3'
  __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/gui2/book_details.py b/src/calibre/gui2/book_details.py
-index 7c4997458f..d499ca52e3 100644
+index 3a9c2fb5c4..fd9e24cb08 100644
 --- a/src/calibre/gui2/book_details.py
 +++ b/src/calibre/gui2/book_details.py
 @@ -1,7 +1,7 @@
@@ -9834,7 +9834,7 @@ index f7c076aef5..57c9402e1b 100644
  __license__   = 'GPL v3'
  __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/gui2/dialogs/edit_authors_dialog.py b/src/calibre/gui2/dialogs/edit_authors_dialog.py
-index 4a0e5bacf5..73139bd39c 100644
+index 7c41a15413..80afed8788 100644
 --- a/src/calibre/gui2/dialogs/edit_authors_dialog.py
 +++ b/src/calibre/gui2/dialogs/edit_authors_dialog.py
 @@ -1,5 +1,5 @@
@@ -9964,7 +9964,7 @@ index 6bc3ea5a15..f4353fe4a2 100644
  from PyQt5.Qt import (QDialog, QLabel, QVBoxLayout, QDialogButtonBox,
          QProgressBar, QSize, QTimer, pyqtSignal, Qt)
 diff --git a/src/calibre/gui2/dialogs/saved_search_editor.py b/src/calibre/gui2/dialogs/saved_search_editor.py
-index 6ed972d441..9f02e773ac 100644
+index 42b26005d3..efaa255692 100644
 --- a/src/calibre/gui2/dialogs/saved_search_editor.py
 +++ b/src/calibre/gui2/dialogs/saved_search_editor.py
 @@ -1,7 +1,7 @@
@@ -10269,7 +10269,7 @@ index 645932c8b9..086cf66194 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/gui2/library/alternate_views.py b/src/calibre/gui2/library/alternate_views.py
-index 179ed08887..cf96c93d5a 100644
+index 32f7e39a45..348eea6955 100644
 --- a/src/calibre/gui2/library/alternate_views.py
 +++ b/src/calibre/gui2/library/alternate_views.py
 @@ -1,6 +1,6 @@
@@ -10584,7 +10584,7 @@ index 20ccb44803..d5c4ab8779 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/gui2/preferences/coloring.py b/src/calibre/gui2/preferences/coloring.py
-index 3425eb5783..f2e9c948af 100644
+index 175a23bf1d..4957c7a580 100644
 --- a/src/calibre/gui2/preferences/coloring.py
 +++ b/src/calibre/gui2/preferences/coloring.py
 @@ -1,6 +1,6 @@
@@ -10620,7 +10620,7 @@ index b8236ed252..1a41bb6086 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/gui2/preferences/create_custom_column.py b/src/calibre/gui2/preferences/create_custom_column.py
-index 82b5466897..2295cd008d 100644
+index 51d8c12974..33ffba27e3 100644
 --- a/src/calibre/gui2/preferences/create_custom_column.py
 +++ b/src/calibre/gui2/preferences/create_custom_column.py
 @@ -1,6 +1,6 @@
@@ -11347,7 +11347,7 @@ index 4833e480d5..9e36987ad4 100644
  __license__ = 'GPL v3'
  __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/gui2/tweak_book/boss.py b/src/calibre/gui2/tweak_book/boss.py
-index 9a29ddd5fd..da2475f704 100644
+index 9e605164d2..910276d825 100644
 --- a/src/calibre/gui2/tweak_book/boss.py
 +++ b/src/calibre/gui2/tweak_book/boss.py
 @@ -1,7 +1,7 @@
@@ -12004,7 +12004,7 @@ index 893db597f4..7809bf153d 100644
  __license__ = 'GPL v3'
  __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/gui2/tweak_book/ui.py b/src/calibre/gui2/tweak_book/ui.py
-index c6f77c3288..869cb39e93 100644
+index a42b6213e8..7155c2841d 100644
 --- a/src/calibre/gui2/tweak_book/ui.py
 +++ b/src/calibre/gui2/tweak_book/ui.py
 @@ -1,6 +1,6 @@
@@ -12277,7 +12277,7 @@ index 9c6a3b0bdf..bf308a3824 100644
  import os
  import struct
 diff --git a/src/calibre/gui2/wizard/__init__.py b/src/calibre/gui2/wizard/__init__.py
-index 1ddc521c7c..54b5e6d683 100644
+index 13e03ae09d..dca9deb1a2 100644
 --- a/src/calibre/gui2/wizard/__init__.py
 +++ b/src/calibre/gui2/wizard/__init__.py
 @@ -1,6 +1,6 @@
@@ -12432,7 +12432,7 @@ index 81ba156299..0757b98f5b 100644
  __license__   = 'GPL v3'
  __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 diff --git a/src/calibre/library/coloring.py b/src/calibre/library/coloring.py
-index dc818be3db..48043053cd 100644
+index 51f2b79702..6f98352928 100644
 --- a/src/calibre/library/coloring.py
 +++ b/src/calibre/library/coloring.py
 @@ -1,7 +1,7 @@
@@ -13455,7 +13455,7 @@ index 7386c6dc41..8171702881 100644
  __license__   = 'GPL v3'
  __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 diff --git a/src/calibre/utils/fonts/scanner.py b/src/calibre/utils/fonts/scanner.py
-index a49591aad0..b7194c54b1 100644
+index bf6acff568..0092072b3f 100644
 --- a/src/calibre/utils/fonts/scanner.py
 +++ b/src/calibre/utils/fonts/scanner.py
 @@ -1,6 +1,6 @@
@@ -15642,5 +15642,5 @@ index 154c111e20..4aaf32ce3a 100644
  from tinycss import token_data
  
 -- 
-2.28.0.rc0
+2.28.0
 

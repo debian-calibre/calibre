@@ -1,0 +1,25 @@
+From c4018f84b5696b741808a948af87d1a4f6187514 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Jul 2020 08:16:52 +0530
+Subject: [PATCH 229/284] Dont use zero offset for element selections
+
+---
+ src/pyj/read_book/cfi.pyj | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/pyj/read_book/cfi.pyj b/src/pyj/read_book/cfi.pyj
+index e1ca71c8fc..e6e39da769 100644
+--- a/src/pyj/read_book/cfi.pyj
++++ b/src/pyj/read_book/cfi.pyj
+@@ -793,7 +793,7 @@ def cfi_for_selection(r):  # {{{
+         nt = container.nodeType
+         if nt is Node.TEXT_NODE or nt is Node.CDATA_SECTION_NODE or nt is Node.COMMENT_NODE:
+             return container, offset
+-        if nt is Node.ELEMENT_NODE:
++        if nt is Node.ELEMENT_NODE and offset and container.childNodes.length > offset:
+             return container.childNodes[offset], 0
+         return container, offset
+ 
+-- 
+2.28.0
+

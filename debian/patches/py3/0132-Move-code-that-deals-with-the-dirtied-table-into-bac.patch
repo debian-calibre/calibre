@@ -1,7 +1,7 @@
-From 57c03239439c9fa82dc6847b99838f2f72afa216 Mon Sep 17 00:00:00 2001
+From 2bb94392296dc8d3ac5421d889540ebcc2aacb60 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Thu, 11 Jun 2020 09:03:35 +0530
-Subject: [PATCH 132/201] Move code that deals with the dirtied table into
+Subject: [PATCH 132/284] Move code that deals with the dirtied table into
  backend
 
 ---
@@ -31,7 +31,7 @@ index b326321e82..047bd393b9 100644
          return frozenset(r[0] for r in self.execute('SELECT book FROM books_plugin_data WHERE name=?', (name,)))
  
 diff --git a/src/calibre/db/cache.py b/src/calibre/db/cache.py
-index b2e8ffbb67..83b81c2622 100644
+index 55f8fb08e7..148d6dc2ed 100644
 --- a/src/calibre/db/cache.py
 +++ b/src/calibre/db/cache.py
 @@ -212,8 +212,7 @@ class Cache(object):
@@ -76,5 +76,5 @@ index b2e8ffbb67..83b81c2622 100644
  
      @write_api
 -- 
-2.28.0.rc0
+2.28.0
 

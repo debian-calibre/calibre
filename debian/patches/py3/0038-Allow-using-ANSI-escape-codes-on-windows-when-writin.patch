@@ -1,7 +1,7 @@
-From 32009d77c6be634ca73862eb2fb817153665f11a Mon Sep 17 00:00:00 2001
+From 23f69f932139dbb54a31621f9251aef6b105f0e1 Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Wed, 4 Dec 2019 17:59:40 +0530
-Subject: [PATCH 038/201] Allow using ANSI escape codes on windows when writing
+Subject: [PATCH 038/284] Allow using ANSI escape codes on windows when writing
  to the console
 
 ---
@@ -117,5 +117,5 @@ index d9a5c5f415..fa22e5c000 100644
      _set_invalid_parameter_handler(null_invalid_parameter_handler);
      interpreter_data.argv = CommandLineToArgvW(GetCommandLineW(), &interpreter_data.argc);
 -- 
-2.28.0.rc0
+2.28.0
 

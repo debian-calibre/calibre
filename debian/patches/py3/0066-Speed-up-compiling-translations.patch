@@ -1,7 +1,7 @@
-From 46a893a98b209d0ce3fb89f8556b3a1af13d580c Mon Sep 17 00:00:00 2001
+From 0700af5545657d5967b283604213048799b8d38e Mon Sep 17 00:00:00 2001
 From: Kovid Goyal <kovid@kovidgoyal.net>
 Date: Fri, 6 Dec 2019 09:38:15 +0530
-Subject: [PATCH 066/201] Speed up compiling translations
+Subject: [PATCH 066/284] Speed up compiling translations
 
 Avoids calling a separate msgfmt binary for ever .po file since there
 are almost 4000 of them. Instead use msgfmt.py
@@ -224,5 +224,5 @@ index 5054d7c737..44f92df4a9 100644
              print(STATS['translated'], 'translated messages,', STATS['untranslated'], 'untranslated messages.')
  
 -- 
-2.28.0.rc0
+2.28.0
 

@@ -1,0 +1,89 @@
+From 02526ff27531bb03abeabd942a9b3cbddd4bf771 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 28 Jul 2020 09:37:42 +0530
+Subject: [PATCH 269/284] Browser viewer: Fix context menu not working in input
+ controls
+
+---
+ src/pyj/read_book/overlay.pyj | 5 +++--
+ src/pyj/read_book/view.pyj    | 9 ++++++---
+ src/pyj/utils.pyj             | 6 ++++++
+ 3 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/src/pyj/read_book/overlay.pyj b/src/pyj/read_book/overlay.pyj
+index c331ab4a2d..0203e8510b 100644
+--- a/src/pyj/read_book/overlay.pyj
++++ b/src/pyj/read_book/overlay.pyj
+@@ -21,7 +21,8 @@ from read_book.toc import create_toc_panel
+ from read_book.word_actions import create_word_actions_panel
+ from session import get_device_uuid
+ from utils import (
+-    full_screen_element, full_screen_supported, is_ios, safe_set_inner_html
++    default_context_menu_should_be_allowed, full_screen_element,
++    full_screen_supported, is_ios, safe_set_inner_html
+ )
+ from widgets import create_button, create_spinner
+ 
+@@ -537,7 +538,7 @@ class Overlay:
+         self.panels = []
+ 
+     def oncontextmenu(self, evt):
+-        if evt.target and evt.target.tagName and evt.target.tagName.toLowerCase() in ('input', 'textarea'):
++        if default_context_menu_should_be_allowed(evt):
+             return
+         evt.preventDefault()
+         self.handling_context_menu_event = evt
+diff --git a/src/pyj/read_book/view.pyj b/src/pyj/read_book/view.pyj
+index 8abc1275bb..1693a7d3d0 100644
+--- a/src/pyj/read_book/view.pyj
++++ b/src/pyj/read_book/view.pyj
+@@ -15,7 +15,8 @@ from modals import error_dialog, warning_dialog
+ from read_book.content_popup import ContentPopupOverlay
+ from read_book.create_annotation import AnnotationsManager, CreateAnnotation
+ from read_book.globals import (
+-    current_book, runtime, set_current_spine_item, ui_operations, rtl_page_progression
++    current_book, rtl_page_progression, runtime, set_current_spine_item,
++    ui_operations
+ )
+ from read_book.goto import get_next_section
+ from read_book.open_book import add_book_to_recently_viewed
+@@ -37,7 +38,8 @@ from read_book.toc import get_current_toc_nodes, update_visible_toc_nodes
+ from read_book.touch import set_left_margin_handler, set_right_margin_handler
+ from session import get_device_uuid, get_interface_data
+ from utils import (
+-    html_escape, is_ios, parse_url_params, safe_set_inner_html, username_key
++    default_context_menu_should_be_allowed, html_escape, is_ios, parse_url_params,
++    safe_set_inner_html, username_key
+ )
+ from viewer.constants import READER_BACKGROUND_URL
+ 
+@@ -221,7 +223,8 @@ class View:
+         container.appendChild(
+             E.div(style='max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch',  # container for horizontally aligned panels
+                 oncontextmenu=def (ev):
+-                    ev.preventDefault()
++                    if not default_context_menu_should_be_allowed(ev):
++                        ev.preventDefault()
+                 ,
+ 
+                 E.div(style='max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2',  # container for iframe and any other panels in the same column
+diff --git a/src/pyj/utils.pyj b/src/pyj/utils.pyj
+index a6101821fb..d212127fa1 100644
+--- a/src/pyj/utils.pyj
++++ b/src/pyj/utils.pyj
+@@ -13,6 +13,12 @@ if !is_ios and window.navigator.platform is 'MacIntel' and window.navigator.maxT
+     is_ios = True
+ 
+ 
++def default_context_menu_should_be_allowed(evt):
++    if evt.target and evt.target.tagName and evt.target.tagName.toLowerCase() in ('input', 'textarea'):
++        return True
++    return False
++
++
+ def debounce(func, wait, immediate=False):
+     # Returns a function, that, as long as it continues to be invoked, will not
+     # be triggered. The function will be called after it stops being called for
+-- 
+2.28.0
+
