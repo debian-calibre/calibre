@@ -4,25 +4,25 @@ Date: Thu, 16 Jul 2020 16:39:57 +0530
 Subject: [PATCH 202/284] Slight dulling of text brigthness in dark mode
 
 ---
- src/calibre/gui2/palette.py    | 2 +-
- src/pyj/read_book/settings.pyj | 2 +-
+ src/calibre/gui2/palette.py    |    2 +-
+ src/pyj/read_book/settings.pyj |    2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
-index c96886a4da..0b6846e4d9 100644
+Index: b/src/calibre/gui2/palette.py
+===================================================================
 --- a/src/calibre/gui2/palette.py
 +++ b/src/calibre/gui2/palette.py
-@@ -13,7 +13,7 @@ def dark_palette():
-     p = QPalette()
-     dark_color = QColor(45,45,45)
-     disabled_color = QColor(127,127,127)
--    text_color = QColor('#eee')
-+    text_color = QColor('#ddd')
-     p.setColor(p.Window, dark_color)
-     p.setColor(p.WindowText, text_color)
-     p.setColor(p.Base, QColor(18,18,18))
-diff --git a/src/pyj/read_book/settings.pyj b/src/pyj/read_book/settings.pyj
-index ab846cb196..df48046d78 100644
+@@ -8,7 +8,7 @@ from calibre.constants import dark_link_
+ 
+ dark_link_color = QColor(dark_link_color)
+ dark_color = QColor(45,45,45)
+-dark_text_color = QColor('#eee')
++dark_text_color = QColor('#ddd')
+ 
+ 
+ def dark_palette():
+Index: b/src/pyj/read_book/settings.pyj
+===================================================================
 --- a/src/pyj/read_book/settings.pyj
 +++ b/src/pyj/read_book/settings.pyj
 @@ -43,7 +43,7 @@ def apply_font_size():
@@ -34,6 +34,3 @@ index ab846cb196..df48046d78 100644
  
  
  styles_id = 'calibre-color-scheme-style-overrides'
--- 
-2.28.0
-
