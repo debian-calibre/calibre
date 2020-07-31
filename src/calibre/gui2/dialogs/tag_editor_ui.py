@@ -133,7 +133,7 @@ class Ui_TagEditor(object):
         self.label_3.setText(_("&Add item:"))
         self.add_tag_button.setToolTip(_("Apply item(s) to the current book"))
         self.available_filter_input.setPlaceholderText(_("Filter the available items"))
-        self.delete_button.setToolTip(_("Delete the item from database. This will unapply the item from all books and then remove it from the database."))
+        self.delete_button.setToolTip(_("Delete the selected items from database. This will unapply the items from all books and then remove them from the database."))
         self.label.setText(_("Ava&ilable items"))
         self.apply_button.setToolTip(_("Apply item to current book"))
         self.unapply_button.setToolTip(_("Unapply (remove) the item from current book"))

@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Kevin Rong <kevin@royal.ac.cn>, 2016
+# tony shen <anthanny@hotmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 09:13+0530\n"
-"PO-Revision-Date: 2020-05-02 03:44+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
+"POT-Creation-Date: 2020-07-16 22:47+0530\n"
+"PO-Revision-Date: 2020-07-27 01:53+0000\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:4
 msgid "API documentation for the e-book editing tools"
-msgstr ""
+msgstr "电子书编辑工具的API文档"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:6
 msgid ""
@@ -30,35 +31,35 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr ""
+msgstr "电子书编辑工具包括一个：class：`calibre.ebooks.oeb.polish.container.Container`对象，该对象将一本书表示为一组HTML+资源文件，以及可用于在容器上执行操作的各种工具。所有工具都是各种``Calibre.ebooks.oeb.polish.*``模块中模块级函数的形式。"
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
-msgstr ""
+msgstr "您可以在如下路径获取图书的容器对象："
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:20
 msgid ""
 "If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr ""
+msgstr "如果您正在为电子书编辑器编写插件，您将获得正在编辑的图书的当前容器，如下所示："
 
 #: ../../home/kovid/work/calibre/manual/polish.rst:30
 msgid "The Container object"
-msgstr ""
+msgstr "容器对象"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
 "A container represents an Open E-Book as a directory full of files and an "
 "opf file. There are two important concepts:"
-msgstr ""
+msgstr "容器将打开的电子书表示为充满文件和opf文件的目录。有两个重要的概念："
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root directory. This is the base of the e-book. All the e-books files "
 "are inside this directory or in its sub-directories."
-msgstr ""
+msgstr "根目录。这是电子书的基础。所有的电子书文件都在这个目录或它的子目录中。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -68,7 +69,7 @@ msgid ""
 "of as canonical identifiers for files in the book. Most methods on the "
 "container object work with names. Names are always in the NFC unicode normal"
 " form."
-msgstr ""
+msgstr "名称：这些是图书文件相对于根目录的路径。它们始终包含POSIX分隔符，并且不带引号。它们可以被认为是书中文件的规范标识符。容器对象上的大多数方法都使用名称。名称始终采用NFC Unicode标准格式。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -78,19 +79,19 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr ""
+msgstr "克隆：容器对象支持高效的磁盘克隆，用于在电子书编辑器中实现检查点。为了实现这一点，您不应该直接访问文件系统上的文件。相反，可以使用：meth:`raw_data`或：meth:`open`来读/写书中的组件文件。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
 msgid ""
 "When converting between hrefs and names use the methods provided by this "
 "class, they assume all hrefs are quoted."
-msgstr ""
+msgstr "当使用此类提供的方法在href和名称之间进行转换时，它们假定所有href都被引用。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr ""
+msgstr "将绝对路径转换为相对于：attr:`root的规范名称`"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
@@ -129,32 +130,32 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
 msgid "Parameters"
-msgstr ""
+msgstr "参数"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base directory. By default the root for this container object is used."
-msgstr ""
+msgstr "基本目录。默认情况下，使用此容器对象的根。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr ""
+msgstr "将文件添加到此容器。文件条目自动在OPF清单和书脊中创建（如果文件是文本文档）"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr ""
+msgstr "向具有指定名称的文件的清单中添加条目。返回清单ID。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr ""
+msgstr "将指定的属性添加到由名称标识的清单项。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -162,32 +163,32 @@ msgid ""
 "Ensure that the specified properties are set on only the manifest item "
 "identified by name. You can pass None as the name to remove the property "
 "from all items."
-msgstr ""
+msgstr "请确保仅对由名称标识的清单项设置指定的属性。您可以传递None作为名称，以从所有项中移除属性。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.book_type:1
 msgid "The type of book (epub for EPUB files and azw3 for AZW3 files)"
-msgstr ""
+msgstr "图书类型(epub用于EPUB文件，azw3用于AZW3文件)"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr ""
+msgstr "将所有有害的解析对象提交到文件系统，并在outpath写出电子书文件。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
 "The path to write the saved e-book file to. If None, the path of the "
 "original book file is used."
-msgstr ""
+msgstr "要将保存的电子书文件写入的路径。如果没有，则使用原始书籍文件的路径。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
 msgid ""
 "If True the parsed representations of committed items are kept in the cache."
-msgstr ""
+msgstr "如果为True，则已提交项的解析表示形式保留在缓存中。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
@@ -226,7 +227,7 @@ msgstr ""
 msgid ""
 "Add an item to the manifest with href derived from the given name. Ensures "
 "uniqueness of href and id automatically. Returns generated item."
-msgstr ""
+msgstr "使用从给定名称派生的HREF将项目添加到清单中。自动保证href和id的唯一性。返回生成的项。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -234,12 +235,12 @@ msgstr ""
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr ""
+msgstr "与open()类似，不同之处在于它返回文件路径，而不是打开的文件对象。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
 msgid "Mapping of guide type to canonical name"
-msgstr ""
+msgstr "指南类型到规范名称的映射"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.has_name:1
@@ -260,12 +261,12 @@ msgstr ""
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr ""
+msgstr "将项目插入父级(如果索引为无，则追加)，修复缩进。仅适用于自动关闭的项目。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.is_dir:1
 msgid "If this container represents an unzipped book (a directory)"
-msgstr ""
+msgstr "如果此容器表示解压缩的图书(目录)"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.iterlinks:1
@@ -275,7 +276,7 @@ msgid ""
 "line_number at which the link occurs and offset is the number of characters "
 "from the start of the line. Note that offset could actually encompass "
 "several lines if not zero."
-msgstr ""
+msgstr "遍历名称中的所有链接。如果get_line_numbers为“真”，则生成表单结果(链接、行号、偏移量)。其中line_number是发生链接的line_number，偏移量是从行开始算起的字符数。请注意，偏移量实际上可以包含多行(如果不是零的话)。"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
@@ -287,12 +288,12 @@ msgstr ""
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
 msgid "Return True if the manifest has an entry corresponding to name"
-msgstr ""
+msgstr "如果清单具有与Name对应的条目，则返回True"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
-msgstr ""
+msgstr "清单ID到规范名称的映射"
 
 #: ../../home/kovid/work/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1

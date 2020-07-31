@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "CALIBREDB" "1" "julho 16, 2020" "4.21.0" "calibre"
+.TH "CALIBREDB" "1" "julho 31, 2020" "4.22.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .
@@ -145,7 +145,7 @@ Path to the calibre library. Default is to use the path stored in the settings. 
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Senha para se ligar a um servidor de conteúdos Calibre. Para ler a senha da entrada padrão, use o valor especial: <stdin>. Para ler a senha de um ficheiro use: <f:/path/to/file> (isto é: <f: followed by the full path to the file and a trailing >). Os parênteses angulares acima são obrigatórios, lembre\-se de os escapar ou use aspas para a sua Shell.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -180,7 +180,7 @@ Ordenar os resultados por ordem crescente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid Default: title,authors. The special field \fB"\fPall\fB"\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Os campos a apresentar ao listar os livros na base dados. Deve ser uma lista de campos separados por virgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, timestamp, title, uuid A predefinição é: title,authors. O campo especial \fB"\fPall\fB"\fP pode ser utilizado para seleccionar todos os campos. Para além dos campos internos acima, os campos personalizados também estão disponíveis como *field_name, por exemplo, para o campo personalizado #rating, use o nome: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
