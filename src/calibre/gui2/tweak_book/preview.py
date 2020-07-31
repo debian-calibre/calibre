@@ -3,6 +3,7 @@
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import json
 import textwrap
 import time
 from collections import defaultdict
@@ -10,8 +11,8 @@ from functools import partial
 from threading import Thread
 
 from PyQt5.Qt import (
-    QApplication, QByteArray, QHBoxLayout, QIcon, QMenu, QSize, QTimer, QToolBar,
-    QUrl, QVBoxLayout, QWidget, pyqtSignal
+    QApplication, QByteArray, QHBoxLayout, QIcon, QLabel, QMenu, QSize, QSizePolicy,
+    QStackedLayout, Qt, QTimer, QToolBar, QUrl, QVBoxLayout, QWidget, pyqtSignal
 )
 from PyQt5.QtWebEngineCore import QWebEngineUrlSchemeHandler
 from PyQt5.QtWebEngineWidgets import (
@@ -24,7 +25,8 @@ from calibre.constants import (
 )
 from calibre.ebooks.oeb.base import OEB_DOCS, XHTML_MIME, serialize
 from calibre.ebooks.oeb.polish.parsing import parse
-from calibre.gui2 import NO_URL_FORMATTING, error_dialog, open_url
+from calibre.gui2 import NO_URL_FORMATTING, error_dialog, is_dark_theme, open_url
+from calibre.gui2.palette import dark_color, dark_text_color
 from calibre.gui2.tweak_book import TOP, actions, current_container, editors, tprefs
 from calibre.gui2.tweak_book.file_list import OpenWithHandler
 from calibre.gui2.viewer.web_view import handle_mathjax_request, send_reply
@@ -243,10 +245,37 @@ def create_profile():
             compile_editor()
         js = P('editor.js', data=True, allow_user_override=False)
         cparser = P('csscolorparser.js', data=True, allow_user_override=False)
+        dark_mode_css = P('dark_mode.css', data=True, allow_user_override=False).decode('utf-8')
 
         insert_scripts(ans,
             create_script('csscolorparser.js', cparser),
             create_script('editor.js', js),
+            create_script('dark-mode.js', '''
+            (function() {if (%s) {
+                var dark_bg = "%s", dark_fg = "%s", css = %s;
+                function apply_css() {
+                    var style = document.createElement('style');
+                    style.textContent = css;
+                    document.documentElement.appendChild(style);
+                }
+
+                function apply_dark_mode(event) {
+                    if (document.documentElement) {
+                        document.documentElement.style.backgroundColor = dark_bg;
+                        document.documentElement.style.color = dark_fg;
+                    }
+                    if (document.body) {
+                        document.body.style.backgroundColor = dark_bg;
+                        document.body.style.color = dark_fg;
+                    }
+                }
+                apply_dark_mode();
+                document.addEventListener("DOMContentLoaded", apply_css);
+                document.addEventListener("DOMContentLoaded", apply_dark_mode);
+            } })();
+            ''' % (
+            'true' if is_dark_theme() else 'false', dark_color.name(), dark_text_color.name(), json.dumps(dark_mode_css)),
+            injection_point=QWebEngineScript.DocumentCreation)
         )
         url_handler = UrlSchemeHandler(ans)
         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
@@ -438,16 +467,27 @@ class Preview(QWidget):
         self.l = l = QVBoxLayout()
         self.setLayout(l)
         l.setContentsMargins(0, 0, 0, 0)
+        self.stack = QStackedLayout(l)
+        self.stack.setStackingMode(self.stack.StackAll)
         self.current_sync_retry_count = 0
         self.view = WebView(self)
         self.view._page.bridge.request_sync.connect(self.request_sync)
         self.view._page.bridge.request_split.connect(self.request_split)
         self.view._page.bridge.live_css_data.connect(self.live_css_data)
+        self.view._page.bridge.bridge_ready.connect(self.on_bridge_ready)
         self.view._page.loadFinished.connect(self.load_finished)
+        self.view._page.loadStarted.connect(self.load_started)
         self.view.render_process_restarted.connect(self.render_process_restarted)
         self.pending_go_to_anchor = None
         self.inspector = self.view.inspector
-        l.addWidget(self.view)
+        self.stack.addWidget(self.view)
+        self.cover = c = QLabel(_('Loading preview, please wait...'))
+        c.setWordWrap(True)
+        c.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        c.setStyleSheet('QLabel { background-color: palette(window); }')
+        c.setAlignment(Qt.AlignCenter)
+        self.stack.addWidget(self.cover)
+        self.stack.setCurrentIndex(self.stack.indexOf(self.cover))
         self.bar = QToolBar(self)
         l.addWidget(self.bar)
 
@@ -649,7 +689,14 @@ class Preview(QWidget):
     def stop_split(self):
         actions['split-in-preview'].setChecked(False)
 
+    def load_started(self):
+        self.stack.setCurrentIndex(self.stack.indexOf(self.cover))
+
+    def on_bridge_ready(self):
+        self.stack.setCurrentIndex(self.stack.indexOf(self.view))
+
     def load_finished(self, ok):
+        self.stack.setCurrentIndex(self.stack.indexOf(self.view))
         if self.pending_go_to_anchor:
             self.view._page.go_to_anchor(self.pending_go_to_anchor)
             self.pending_go_to_anchor = None

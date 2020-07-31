@@ -91,9 +91,9 @@ class Ui_Quickview(object):
     def retranslateUi(self, Quickview):
 
         Quickview.setWindowTitle(_("Quickview"))
-        self.apply_vls.setText(_("&Apply virtual libraries"))
+        self.apply_vls.setText(_("&Apply Virtual libraries"))
         self.apply_vls.setToolTip(_("<p>Select to make Quickview show only books in the current\n"
-"        virtual library</p>"))
+"        Virtual library</p>"))
         self.lock_qv.setText(_("&Lock Quickview contents"))
         self.lock_qv.setToolTip(_("<p>Select to prevent Quickview from changing content when the\n"
 "        selection on the library view is changed</p>"))

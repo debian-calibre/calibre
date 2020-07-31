@@ -456,6 +456,7 @@ class Boss(QObject):
         c = current_container()
         if c.opf_name in editors and not editors[c.opf_name].is_synced_to_container:
             self.commit_editor_to_container(c.opf_name)
+            self.gui.update_window_title()
 
     def reorder_spine(self, items):
         self.add_savepoint(_('Before: Re-order text'))
@@ -603,6 +604,7 @@ class Boss(QObject):
                 raise
             if changed:
                 self.apply_container_update_to_gui()
+                self.gui.update_window_title()
         if not changed:
             self.rewind_savepoint()
         show_report(changed, self.current_metadata.title, report, parent or self.gui, self.show_current_diff)
@@ -1139,6 +1141,7 @@ class Boss(QObject):
 
     def save_book(self):
         ' Save the book. Saving is performed in the background '
+        self.gui.update_window_title()
         c = current_container()
         for name, ed in iteritems(editors):
             if ed.is_modified or not ed.is_synced_to_container:
@@ -1169,6 +1172,7 @@ class Boss(QObject):
         self.save_manager.schedule(tdir, container)
 
     def save_copy(self):
+        self.gui.update_window_title()
         c = current_container()
         if c.is_dir:
             return error_dialog(self.gui, _('Cannot save a copy'), _(
@@ -1272,7 +1276,7 @@ class Boss(QObject):
             if not syntax:
                 return error_dialog(
                     self.gui, _('Unsupported file format'),
-                    _('Editing files of type %s is not supported' % mt), show=True)
+                    _('Editing files of type %s is not supported') % mt, show=True)
             editor = self.edit_file(name, syntax)
         if anchor and editor is not None:
             if editor.go_to_anchor(anchor):
@@ -1489,19 +1493,29 @@ class Boss(QObject):
         finally:
             self.ignore_preview_to_editor_sync = False
 
-    def sync_preview_to_editor(self):
-        ' Sync the position of the preview panel to the current cursor position in the current editor '
+    def do_sync_preview_to_editor(self, wait_for_highlight_to_finish=False):
         if self.ignore_preview_to_editor_sync:
             return
         ed = self.gui.central.current_editor
         if ed is not None:
             name = editor_name(ed)
             if name is not None and getattr(ed, 'syntax', None) == 'html':
+                hl = getattr(ed, 'highlighter', None)
+                if wait_for_highlight_to_finish:
+                    if getattr(hl, 'is_working', False):
+                        QTimer.singleShot(75, self.sync_preview_to_editor_on_highlight_finish)
+                        return
                 ct = ed.current_tag()
                 self.gui.preview.sync_to_editor(name, ct)
-                hl = getattr(ed, 'highlighter', None)
                 if hl is not None and hl.is_working:
-                    QTimer.singleShot(75, self.sync_preview_to_editor)
+                    QTimer.singleShot(75, self.sync_preview_to_editor_on_highlight_finish)
+
+    def sync_preview_to_editor(self):
+        ' Sync the position of the preview panel to the current cursor position in the current editor '
+        self.do_sync_preview_to_editor()
+
+    def sync_preview_to_editor_on_highlight_finish(self):
+        self.do_sync_preview_to_editor(wait_for_highlight_to_finish=True)
 
     def show_partial_cfi_in_editor(self, name, cfi):
         editor = self.edit_file(name, 'html')
@@ -1599,7 +1613,7 @@ class Boss(QObject):
         if not syntax:
             return error_dialog(
                 self.gui, _('Unsupported file format'),
-                _('Editing files of type %s is not supported' % mime), show=True)
+                _('Editing files of type %s is not supported') % mime, show=True)
         return self.edit_file(name, syntax)
 
     def edit_next_file(self, backwards=False):

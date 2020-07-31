@@ -49,6 +49,8 @@ def change_font_size_by(frac):
     sd = get_session_data()
     sz = sd.get('base_font_size')
     amt = sz * frac
+    if abs(amt) < 1:
+        amt = -1 if amt < 0 else 1
     nsz = int(sz + amt)
     nsz = max(MIN_FONT_SIZE, min(nsz, MAX_FONT_SIZE))
     change_font_size(nsz)
@@ -94,6 +96,15 @@ def create_font_size_panel(container, close):
                 set_quick_size(ev)
         ))
 
+    def set_size(ev):
+        newval = ev.currentTarget.value
+        try:
+            q = int(newval)
+        except:
+            return
+        if MIN_FONT_SIZE <= q <= MAX_FONT_SIZE:
+            set_quick_size(ev)
+
     container.appendChild(E.div(
         style='display: flex; margin-top: 1rem',
         E.input(
@@ -102,7 +113,7 @@ def create_font_size_panel(container, close):
         ),
 
         E.span('\xa0', E.input(
-            value=f'{cfs}', type='text', oninput=set_quick_size, type='number', min=MIN_FONT_SIZE, max=MAX_FONT_SIZE,
+            value=f'{cfs}', oninput=set_size, type='number', min=MIN_FONT_SIZE + '', max=MAX_FONT_SIZE + '',
             step='1', style='width: 3em',
         ), '\xa0px')
     ))

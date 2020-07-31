@@ -6587,6 +6587,7 @@ return parser;
             ρσ_d["paged_margin_clicks_scroll_by_screen"] = true;
             ρσ_d["paged_wheel_scrolls_by_screen"] = false;
             ρσ_d["paged_taps_scroll_by_screen"] = false;
+            ρσ_d["paged_pixel_scroll_threshold"] = 60;
             ρσ_d["read_mode"] = "paged";
             ρσ_d["scroll_auto_boundary_delay"] = 5;
             ρσ_d["scroll_stop_boundaries"] = false;
@@ -13424,6 +13425,7 @@ return this.__repr__();
             opts.margin_bottom = max(0, settings.margin_bottom);
             opts.override_book_colors = settings.override_book_colors;
             opts.paged_wheel_scrolls_by_screen = !!settings.paged_wheel_scrolls_by_screen;
+            opts.paged_pixel_scroll_threshold = settings.paged_pixel_scroll_threshold;
             opts.paged_taps_scroll_by_screen = !!settings.paged_taps_scroll_by_screen;
             opts.scroll_auto_boundary_delay = settings.scroll_auto_boundary_delay;
             opts.scroll_stop_boundaries = !!settings.scroll_stop_boundaries;
@@ -19100,7 +19102,7 @@ return this.__repr__();
         });
         HandleWheel.prototype.add_pixel_scroll = function add_pixel_scroll(backward, deltaY) {
             var self = this;
-            var now, lh;
+            var now;
             now = window.performance.now();
             if (now - self.last_event_at > 1e3 || self.last_event_backwards !== backward || self.last_event_mode !== "pixel") {
                 self.accumulated_scroll = 0;
@@ -19109,8 +19111,7 @@ return this.__repr__();
             self.last_event_at = now;
             self.last_event_backwards = backward;
             self.accumulated_scroll += deltaY;
-            lh = line_height();
-            if (self.accumulated_scroll > 5 * lh) {
+            if (self.accumulated_scroll > opts.paged_pixel_scroll_threshold) {
                 self.do_scroll(backward);
             }
         };
@@ -31104,6 +31105,9 @@ return this.__repr__();
             sd = get_session_data();
             sz = sd.get("base_font_size");
             amt = sz * frac;
+            if (abs(amt) < 1) {
+                amt = (amt < 0) ? -1 : 1;
+            }
             nsz = int(sz + amt);
             nsz = max(MIN_FONT_SIZE, min(nsz, MAX_FONT_SIZE));
             change_font_size(nsz);
@@ -31173,7 +31177,27 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })()})])));
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", value: cfs + "", style: "flex-grow: 4", oninput: set_quick_size})]), E.span(" ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({value: "" + ρσ_str.format("{}", cfs) + "", type: "text", oninput: set_quick_size, type: "number", min: MIN_FONT_SIZE, max: MAX_FONT_SIZE, step: "1", style: "width: 3em"})]), " px")].concat([ρσ_desugar_kwargs({style: "display: flex; margin-top: 1rem"})])));
+            function set_size(ev) {
+                var newval, q;
+                newval = ev.currentTarget.value;
+                try {
+                    q = int(newval);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        return;
+                    } 
+                }
+                if (MIN_FONT_SIZE <= q && q <= MAX_FONT_SIZE) {
+                    set_quick_size(ev);
+                }
+            };
+            if (!set_size.__argnames__) Object.defineProperties(set_size, {
+                __argnames__ : {value: ["ev"]},
+                __module__ : {value: "read_book.prefs.font_size"}
+            });
+
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", value: cfs + "", style: "flex-grow: 4", oninput: set_quick_size})]), E.span(" ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({value: "" + ρσ_str.format("{}", cfs) + "", oninput: set_size, type: "number", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", step: "1", style: "width: 3em"})]), " px")].concat([ρσ_desugar_kwargs({style: "display: flex; margin-top: 1rem"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Sample to preview font size")].concat([ρσ_desugar_kwargs({class_: "cfs_preview"})]))].concat([ρσ_desugar_kwargs({style: "font-size: " + ρσ_str.format("{}", cfs) + "px; margin-top: 1rem; min-height: 60px; max-height: 60px; overflow: hidden; display: flex;"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({highlight: true, action: (function() {
                 var ρσ_anonfunc = function () {
@@ -32335,6 +32359,7 @@ return this.__repr__();
             container.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
             container.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
             container.appendChild(cb("paged_taps_scroll_by_screen", _("Tapping scrolls by screen fulls instead of pages")));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e3})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
             container.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
@@ -36997,6 +37022,7 @@ return this.__repr__();
                 ρσ_d["hide_tooltips"] = sd.get("hide_tooltips");
                 ρσ_d["cover_preserve_aspect_ratio"] = sd.get("cover_preserve_aspect_ratio");
                 ρσ_d["paged_wheel_scrolls_by_screen"] = sd.get("paged_wheel_scrolls_by_screen");
+                ρσ_d["paged_pixel_scroll_threshold"] = sd.get("paged_pixel_scroll_threshold");
                 ρσ_d["paged_taps_scroll_by_screen"] = sd.get("paged_taps_scroll_by_screen");
                 ρσ_d["lines_per_sec_auto"] = sd.get("lines_per_sec_auto");
                 ρσ_d["lines_per_sec_smooth"] = sd.get("lines_per_sec_smooth");
